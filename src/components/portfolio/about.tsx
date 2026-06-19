@@ -37,7 +37,7 @@ const facts = [
   "3+ years of full-stack experience",
   "Quickbase Professional Builder certified",
   "100+ public GitHub repositories",
-  "Conference speaker on React & testing",
+  "20+ conference talks delivered",
   "GitHub Developer Program Member",
 ];
 

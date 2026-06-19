@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mic, Calendar, Tag } from "lucide-react";
+import { Mic, Calendar, Tag, Presentation } from "lucide-react";
 import { talks } from "@/lib/portfolio-data";
 import { Reveal, SectionHeading } from "./reveal";
 
@@ -13,12 +13,32 @@ export function Speaking() {
           eyebrow="Speaking"
           title={
             <>
-              Talks on rendering, testing &amp;{" "}
+              20+ talks on rendering, testing &amp;{" "}
               <span className="text-gradient">mobile dev</span>
             </>
           }
-          description="I love sharing what I learn with the developer community. Here are some sessions I've delivered."
+          description="I'm a frequent conference speaker — here are a few signature sessions from the 20+ I've delivered."
         />
+
+        {/* Talks counter banner */}
+        <Reveal delay={0.1}>
+          <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl mx-auto">
+            {[
+              { value: "20+", label: "Talks delivered" },
+              { value: "3", label: "Signature topics" },
+              { value: "React", label: "Server Components" },
+              { value: "Playwright", label: "E2E testing" },
+            ].map((s) => (
+              <div
+                key={s.label}
+                className="glass rounded-2xl p-4 text-center hover:border-primary/30 transition-colors"
+              >
+                <p className="font-display text-2xl font-bold text-gradient">{s.value}</p>
+                <p className="mt-0.5 text-xs text-muted-foreground">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </Reveal>
 
         <div className="mt-12 grid lg:grid-cols-3 gap-5">
           {talks.map((talk, i) => (
@@ -70,6 +90,10 @@ export function Speaking() {
 
         <Reveal delay={0.3}>
           <div className="mt-10 glass rounded-2xl p-6 sm:p-8 text-center">
+            <div className="inline-flex items-center gap-2 rounded-full bg-primary/15 px-3 py-1 text-xs font-medium text-primary mb-3">
+              <Presentation className="size-3.5" />
+              20+ talks delivered & counting
+            </div>
             <p className="text-base sm:text-lg text-foreground">
               Want me to speak at your meetup or conference?
             </p>

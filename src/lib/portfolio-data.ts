@@ -49,9 +49,9 @@ export const profile = {
   // Quick-scan tech badges for hero
   coreStack: ["React", "Next.js", "Node.js", "TypeScript", "Angular", "Quickbase"],
   summary:
-    "Nairobi-based Software Engineer with 3+ years shipping scalable full-stack apps, low-code solutions, and the support layer that keeps them healthy. Quickbase Professional Builder certified. I build with Node.js, Angular, and React/Next.js — and I'm equally comfortable triaging bugs, writing runbooks, and walking non-technical users through fixes.",
+    "Nairobi-based Software Engineer with 3+ years shipping scalable full-stack apps, low-code solutions, and the support layer that keeps them healthy. Quickbase Professional Builder certified. I've delivered 20+ conference talks on React, testing, and Svelte — and I'm equally comfortable triaging bugs, writing runbooks, and walking non-technical users through fixes.",
   longSummary:
-    "I'm a Nairobi-based software engineer who lives at the intersection of full-stack engineering, low-code platforms, and developer support. Currently building at Imminent Transcendent Solutions, I specialize in Quickbase (Professional Builder certified) and the modern JavaScript ecosystem — Node.js, Angular, React, Next.js, Vue, and Svelte.\n\nI also wear the support hat: triaging production issues, writing runbooks, reproducing bugs end-to-end with Playwright, and translating technical findings into plain-language fixes for non-technical users. Beyond the keyboard, I'm an active conference speaker, an open-source contributor with 100+ public repositories, and a proud member of the Quickbase Qrew community.",
+    "I'm a Nairobi-based software engineer who lives at the intersection of full-stack engineering, low-code platforms, and developer support. Currently building at Imminent Transcendent Solutions, I specialize in Quickbase (Professional Builder certified) and the modern JavaScript ecosystem — Node.js, Angular, React, Next.js, Vue, and Svelte.\n\nI also wear the support hat: triaging production issues, writing runbooks, reproducing bugs end-to-end with Playwright, and translating technical findings into plain-language fixes for non-technical users. Beyond the keyboard, I'm a frequent conference speaker with 20+ delivered talks on React Server Components, E2E testing, and Svelte Native, an open-source contributor with 100+ public repositories, and a proud member of the Quickbase Qrew community.",
   roles: [
     "Software Engineer",
     "Technical Support Engineer",
@@ -93,7 +93,7 @@ export const impactMetrics = [
   { value: "100+", label: "Public repositories", sublabel: "shipped & maintained" },
   { value: "33★", label: "Top repo (TechnicalWritingProgram)", sublabel: "curated dev resource" },
   { value: "37", label: "Forks on cars-plates-checker", sublabel: "used by other devs" },
-  { value: "3+", label: "Conference talks delivered", sublabel: "React, testing, Svelte" },
+  { value: "20+", label: "Conference talks delivered", sublabel: "React, testing, Svelte, DevX" },
   { value: "Pro", label: "Quickbase Builder certified", sublabel: "2024 credential" },
   { value: "93", label: "GitHub followers", sublabel: "organic reach" },
 ];
@@ -443,7 +443,7 @@ export const stats = [
   { label: "Years Experience", value: "3+" },
   { label: "GitHub Repos", value: "108" },
   { label: "GitHub Followers", value: "93" },
-  { label: "Conference Talks", value: "3+" },
+  { label: "Conference Talks", value: "20+" },
 ];
 
 export const navLinks = [

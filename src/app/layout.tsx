@@ -22,7 +22,7 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "Royford Wanyoike — Software Engineer & Developer Advocate",
   description:
-    "Royford Wanyoike is a Nairobi-based Software Engineer and Developer Advocate with 3+ years building scalable full-stack applications and low-code solutions. Quickbase Professional Builder, speaker, and open-source contributor.",
+    "Royford Wanyoike is a Nairobi-based Software Engineer and Developer Advocate with 3+ years building scalable full-stack applications and low-code solutions. Quickbase Professional Builder, 20x+ conference speaker, and open-source contributor.",
   keywords: [
     "Royford Wanyoike",
     "Roy Wanyoike",
@@ -58,7 +58,7 @@ const personJsonLd = {
   name: "Royford Wanyoike",
   jobTitle: "Software Engineer & Developer Advocate",
   description:
-    "Software Engineer with 3+ years building scalable full-stack applications and low-code solutions. Quickbase Professional Builder certified.",
+    "Software Engineer with 3+ years building scalable full-stack applications and low-code solutions. Quickbase Professional Builder certified. 20+ conference talks delivered.",
   email: "mailto:roywanyoike328@gmail.com",
   telephone: "+254706103000",
   address: {

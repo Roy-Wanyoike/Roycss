@@ -51,6 +51,51 @@ export const metadata: Metadata = {
   },
 };
 
+// JSON-LD Person schema — helps recruiters find Royford via Google/search engines
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Royford Wanyoike",
+  jobTitle: "Software Engineer & Developer Advocate",
+  description:
+    "Software Engineer with 3+ years building scalable full-stack applications and low-code solutions. Quickbase Professional Builder certified.",
+  email: "mailto:roywanyoike328@gmail.com",
+  telephone: "+254706103000",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Nairobi",
+    addressCountry: "Kenya",
+  },
+  knowsAbout: [
+    "React",
+    "Next.js",
+    "Node.js",
+    "TypeScript",
+    "Angular",
+    "Vue.js",
+    "Svelte",
+    "Quickbase",
+    "Developer Advocacy",
+    "Technical Speaking",
+  ],
+  sameAs: [
+    "https://www.linkedin.com/in/roywanyoike/",
+    "https://github.com/Roy-Wanyoike",
+    "https://x.com/WanyoikeRoyford",
+    "https://sessionize.com/royford-wanyoike",
+    "https://linktr.ee/roywanyoike",
+    "https://public.tableau.com/app/profile/royford.wanyoike",
+  ],
+  worksFor: {
+    "@type": "Organization",
+    name: "Imminent Transcendent Solutions",
+  },
+  alumniOf: {
+    "@type": "CollegeOrUniversity",
+    name: "Kibabii University",
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -61,6 +106,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} antialiased bg-background text-foreground`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
         {children}
         <Toaster />
       </body>

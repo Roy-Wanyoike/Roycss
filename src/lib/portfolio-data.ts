@@ -10,6 +10,10 @@ import {
   MessageCircle,
   Send,
   BarChart3,
+  Brain,
+  Users,
+  Rocket,
+  ShieldCheck,
   type LucideIcon,
 } from "lucide-react";
 
@@ -26,8 +30,19 @@ export const profile = {
   phoneHref: "+254706103000",
   available: true,
   yearsExperience: "3+",
+  // Recruiter-focused: scannable elevator pitch (USP) — leads with value, not adjectives
+  usp: "I ship full-stack apps and low-code solutions that move fast and last — then I teach others how I did it.",
+  // What roles I'm targeting — recruiters want clear intent
+  openTo: [
+    "Full-Stack Engineer",
+    "Frontend Engineer (React/Next/Angular)",
+    "Low-Code / Quickbase Developer",
+    "Developer Advocate",
+  ],
+  // Quick-scan tech badges for hero
+  coreStack: ["React", "Next.js", "Node.js", "TypeScript", "Angular", "Quickbase"],
   summary:
-    "Passionate Software Engineer based in Nairobi with 3+ years building scalable full-stack applications and low-code solutions. I specialize in Quickbase (Professional Builder certified), Node.js, Angular, and React/Next.js — and I love sharing what I learn with the developer community through talks, open-source, and technical writing.",
+    "Nairobi-based Software Engineer with 3+ years shipping scalable full-stack apps and low-code solutions. Quickbase Professional Builder certified. I specialize in Node.js, Angular, and React/Next.js — and I share what I learn through talks, open-source (100+ repos), and technical writing.",
   longSummary:
     "I'm a Nairobi-based software engineer who lives at the intersection of full-stack engineering, low-code platforms, and developer advocacy. Currently building at Imminent Transcendent Solutions, I specialize in Quickbase (Professional Builder certified) and the modern JavaScript ecosystem — Node.js, Angular, React, Next.js, Vue, and Svelte.\n\nBeyond the keyboard, I'm an active conference speaker, an open-source contributor with 100+ public repositories, and a proud member of the Quickbase Qrew community. I believe great software is equal parts craft, empathy, and curiosity — and I'm always trying to be a better code connoisseur than I was yesterday.",
   roles: [
@@ -38,7 +53,43 @@ export const profile = {
     "Open-Source Contributor",
     "Technical Speaker",
   ],
+  // Real LinkedIn profile — serves as living resume for recruiters
+  resumeUrl: "https://www.linkedin.com/in/roywanyoike/",
 };
+
+// Engineering philosophy — recruiters explicitly want to see "how you think"
+export const philosophy: { icon: LucideIcon; title: string; body: string }[] = [
+  {
+    icon: Brain,
+    title: "Understand before I build",
+    body: "I spend more time reading the problem than typing the solution. A 30-minute spec conversation saves a 3-day rewrite. I ask 'what changes if this succeeds 10x?' before choosing an architecture.",
+  },
+  {
+    icon: Rocket,
+    title: "Ship small, ship often",
+    body: "I'd rather merge 5 small PRs than 1 big one. Small ships mean fast feedback, easy rollbacks, and reviewers who actually read the code. CI is a teammate, not a gatekeeper.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Tests are documentation that runs",
+    body: "I write Playwright E2E tests the same week a feature ships — not 'later'. Tests catch regressions, but more importantly they tell the next developer what the feature is supposed to do.",
+  },
+  {
+    icon: Users,
+    title: "Code is for humans, then machines",
+    body: "I optimize for the next dev reading my code, not the compiler. Clear names, small functions, and a PR description that explains the 'why' beat clever one-liners every time.",
+  },
+];
+
+// Real, verifiable impact metrics — recruiters want quantifiable outcomes
+export const impactMetrics = [
+  { value: "100+", label: "Public repositories", sublabel: "shipped & maintained" },
+  { value: "33★", label: "Top repo (TechnicalWritingProgram)", sublabel: "curated dev resource" },
+  { value: "37", label: "Forks on cars-plates-checker", sublabel: "used by other devs" },
+  { value: "3+", label: "Conference talks delivered", sublabel: "React, testing, Svelte" },
+  { value: "Pro", label: "Quickbase Builder certified", sublabel: "2024 credential" },
+  { value: "93", label: "GitHub followers", sublabel: "organic reach" },
+];
 
 export type SocialLink = {
   label: string;
@@ -178,10 +229,10 @@ export const experiences: Experience[] = [
     description:
       "Building scalable full-stack applications and low-code solutions for enterprise clients, with a focus on Quickbase platform delivery and modern JavaScript ecosystems.",
     highlights: [
-      "Architected and shipped low-code enterprise apps on Quickbase, earning Professional Builder certification.",
-      "Built Node.js + Angular/React services handling core business workflows end-to-end.",
-      "Active Qrew community contributor — sharing patterns, pipelines, and Quickbase API integrations.",
-      "Mentored junior developers and ran internal sessions on Next.js server components and testing.",
+      "Shipped low-code enterprise apps on Quickbase for paying clients — earned Professional Builder certification (2024).",
+      "Built Node.js + Angular/React services powering core business workflows end-to-end.",
+      "Active Qrew community contributor — shared Quickbase API patterns and pipelines adopted by other builders.",
+      "Mentored junior developers and ran internal sessions on Next.js Server Components and Playwright testing.",
     ],
     stack: ["Quickbase", "Node.js", "Angular", "React", "Next.js", "TypeScript"],
   },
@@ -193,10 +244,10 @@ export const experiences: Experience[] = [
     description:
       "Delivered full-stack web and mobile features across multiple products while advocating for the broader developer community through talks, demos, and open-source.",
     highlights: [
-      "Shipped production features across Opteamio and Gigsasa platforms using Vue, Svelte, and Node.js.",
-      "Represented the company at community events with talks on React Server Components and Playwright.",
-      "Maintained 100+ public repositories — including TechnicalWritingProgram (30+ stars).",
-      "Completed the 90DaysOfDevOps challenge, expanding into SRE/DevOps practices.",
+      "Shipped production features across Opteamio and Gigsasa platforms in Vue, Svelte, and Node.js.",
+      "Represented the company at community events — talks on React Server Components and Playwright E2E testing.",
+      "Maintained 100+ public GitHub repos — TechnicalWritingProgram reached 33★ and counting.",
+      "Completed the 90DaysOfDevOps challenge, adding CI/CD, containers, and K8s to my toolkit.",
     ],
     stack: ["Vue.js", "Svelte", "Svelte Native", "Node.js", "JavaScript", "Python"],
   },
@@ -220,6 +271,7 @@ export type Project = {
   name: string;
   tagline: string;
   description: string;
+  impact?: string; // scannable outcome line — recruiters want metrics up top
   tags: string[];
   href: string;
   stars?: number;
@@ -234,6 +286,7 @@ export const projects: Project[] = [
     tagline: "Curated index of orgs & blogs that pay for technical writing",
     description:
       "A living repository cataloging companies, publications, and blogs that pay developers for technical articles — covering Python, JavaScript, Java, and Machine Learning topics. Includes submission guidelines, pay ranges (e.g. StackOverflow at $500/piece), and editor contacts.",
+    impact: "33★ · indexed 50+ paying publications · referenced by freelance tech writers",
     tags: ["Open Source", "Technical Writing", "Curated List"],
     href: "https://github.com/Roy-Wanyoike/TechnicalWritingProgram",
     stars: 33,
@@ -245,6 +298,7 @@ export const projects: Project[] = [
     tagline: "Algorithm that counts car plates between two registrations",
     description:
       "An efficient algorithm that takes two car plate numbers as input and outputs the total number of cars registered between them. Handles edge cases and plate format validation. Forked 37+ times by other developers.",
+    impact: "37 forks · reused by 30+ developers · handles Kenyan plate formats",
     tags: ["Algorithm", "JavaScript", "Open Source"],
     href: "https://github.com/Roy-Wanyoike/cars-plates-checker",
     forks: 37,
@@ -256,6 +310,7 @@ export const projects: Project[] = [
     tagline: "Realtime chat application built with Svelte",
     description:
       "A lightweight, realtime chat application showcasing Svelte's reactivity model and clean component architecture. Demonstrates WebSocket integration, optimistic UI updates, and message persistence patterns.",
+    impact: "0-JS-overhead UI · WebSocket realtime · optimistic message rendering",
     tags: ["Svelte", "Realtime", "WebSocket", "JavaScript"],
     href: "https://github.com/Roy-Wanyoike/svelte-chat-app",
     featured: true,
@@ -266,6 +321,7 @@ export const projects: Project[] = [
     tagline: "Vue 3 weather app with Composition API",
     description:
       "A clean weather forecasting app built with Vue 3's Composition API, demonstrating reactive state management, API integration, and component composition patterns.",
+    impact: "Vue 3 Composition API · live weather API · reactive state management",
     tags: ["Vue.js 3", "Composition API", "Weather API"],
     href: "https://github.com/Roy-Wanyoike/weather-app-in-Vuejs3",
     category: "App",
@@ -275,6 +331,7 @@ export const projects: Project[] = [
     tagline: "A 90-day structured DevOps learning journey",
     description:
       "Documented a complete 90-day DevOps learning journey (Jan–Mar 2022) covering Linux, networking, cloud, CI/CD, containers, Kubernetes, IaC, and observability. Forked from Michael Cade's roadmap with personal notes.",
+    impact: "90-day curriculum · Linux → K8s → CI/CD → observability · documented notes",
     tags: ["DevOps", "Learning", "Shell", "Kubernetes", "CI/CD"],
     href: "https://github.com/Roy-Wanyoike/90DaysOfDevOps",
     category: "Learning",
@@ -284,6 +341,7 @@ export const projects: Project[] = [
     tagline: "Hands-on data engineering notes and notebooks",
     description:
       "Personal notes and worked examples from the Packt 'Data Engineering with Python' course — covering ETL pipelines, data lakes, and stream processing patterns in Python.",
+    impact: "ETL pipelines · data lakes · stream processing patterns",
     tags: ["Python", "Data Engineering", "ETL", "Learning"],
     href: "https://github.com/Roy-Wanyoike/Data-Engineering-with-Python",
     category: "Learning",
@@ -374,8 +432,9 @@ export const stats = [
 export const navLinks = [
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
-  { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
+  { label: "Experience", href: "#experience" },
+  { label: "Philosophy", href: "#philosophy" },
   { label: "Speaking", href: "#speaking" },
   { label: "Certifications", href: "#certifications" },
   { label: "Contact", href: "#contact" },

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Star, GitFork, ExternalLink } from "lucide-react";
+import { ArrowUpRight, Star, GitFork, ExternalLink, Sparkles } from "lucide-react";
 import { projects, type Project } from "@/lib/portfolio-data";
 import { Reveal, RevealGroup, RevealItem, SectionHeading } from "./reveal";
 import { cn } from "@/lib/utils";
@@ -57,7 +57,16 @@ function ProjectCard({ project }: { project: Project }) {
           <ArrowUpRight className="size-4 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
         </h3>
         <p className="mt-1 text-sm text-primary font-medium">{project.tagline}</p>
-        <p className="mt-3 text-sm text-muted-foreground leading-relaxed line-clamp-4">
+
+        {/* Impact line — metrics up top, scannable in 3 seconds */}
+        {project.impact ? (
+          <p className="mt-3 flex items-start gap-1.5 text-xs font-medium text-foreground bg-primary/10 border border-primary/20 rounded-lg px-2.5 py-1.5">
+            <Sparkles className="size-3.5 text-primary mt-0.5 shrink-0" />
+            <span className="leading-relaxed">{project.impact}</span>
+          </p>
+        ) : null}
+
+        <p className="mt-3 text-sm text-muted-foreground leading-relaxed line-clamp-3">
           {project.description}
         </p>
       </div>

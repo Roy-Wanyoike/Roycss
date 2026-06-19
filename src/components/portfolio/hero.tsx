@@ -1,8 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDown, Download, MapPin, Sparkles } from "lucide-react";
-import { profile, socials, stats } from "@/lib/portfolio-data";
+import {
+  ArrowDown,
+  FileText,
+  MapPin,
+  Sparkles,
+  Target,
+  CheckCircle2,
+} from "lucide-react";
+import { profile, socials, impactMetrics } from "@/lib/portfolio-data";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Typewriter } from "./typewriter";
@@ -61,19 +68,60 @@ export function Hero() {
               <Typewriter words={profile.roles} />
             </motion.div>
 
+            {/* USP — recruiter elevator pitch, first thing they read after the name */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.25 }}
-              className="mt-6 max-w-xl text-base sm:text-lg text-muted-foreground leading-relaxed"
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mt-5 max-w-xl text-base sm:text-lg text-foreground leading-relaxed font-medium"
+            >
+              {profile.usp}
+            </motion.p>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.28 }}
+              className="mt-3 max-w-xl text-sm sm:text-base text-muted-foreground leading-relaxed"
             >
               {profile.summary}
             </motion.p>
 
+            {/* Core stack — quick-scan tech badges recruiters look for */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.35 }}
+              className="mt-6 flex flex-wrap gap-2"
+            >
+              {profile.coreStack.map((tech) => (
+                <span
+                  key={tech}
+                  className="rounded-lg glass px-3 py-1.5 text-xs sm:text-sm font-medium text-foreground border-primary/20"
+                >
+                  {tech}
+                </span>
+              ))}
+            </motion.div>
+
+            {/* Open to — clear role targeting (recruiters want intent) */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.42 }}
+              className="mt-5 flex items-start gap-2 text-sm text-muted-foreground"
+            >
+              <Target className="size-4 text-primary mt-0.5 shrink-0" />
+              <span>
+                <span className="text-foreground font-medium">Open to:</span>{" "}
+                {profile.openTo.join(" · ")}
+              </span>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
               className="mt-8 flex flex-wrap items-center gap-3"
             >
               <Button
@@ -89,31 +137,46 @@ export function Hero() {
               <Button
                 size="lg"
                 variant="outline"
+                asChild
+                className="h-12 px-6 glass border-white/10 hover:bg-white/5"
+              >
+                <a href={profile.resumeUrl} target="_blank" rel="noopener noreferrer">
+                  <FileText className="size-4" />
+                  View Résumé
+                </a>
+              </Button>
+              <Button
+                size="lg"
+                variant="ghost"
                 onClick={() =>
                   document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })
                 }
-                className="h-12 px-6 glass border-white/10 hover:bg-white/5"
+                className="h-12 px-6 text-muted-foreground hover:text-foreground"
               >
-                <Download className="size-4" />
-                Let&apos;s Talk
+                Get in touch
               </Button>
             </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.45 }}
+              transition={{ duration: 0.6, delay: 0.58 }}
               className="mt-6 flex items-center gap-2 text-sm text-muted-foreground"
             >
               <MapPin className="size-4 text-primary" />
               {profile.location}
+              <span className="mx-1.5">·</span>
+              <span className="inline-flex items-center gap-1">
+                <CheckCircle2 className="size-3.5 text-primary" />
+                Remote-friendly
+              </span>
             </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.55 }}
-              className="mt-8 flex items-center gap-3"
+              transition={{ duration: 0.6, delay: 0.66 }}
+              className="mt-6 flex items-center gap-3"
             >
               {socials.slice(0, 6).map((s) => {
                 const Icon = s.icon;
@@ -134,7 +197,7 @@ export function Hero() {
             </motion.div>
           </div>
 
-          {/* Right: portrait */}
+          {/* Right: real photo */}
           <div className="lg:col-span-5 order-1 lg:order-2">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
@@ -149,14 +212,21 @@ export function Hero() {
               <div className="relative aspect-square rounded-[2rem] overflow-hidden glass-strong p-2">
                 <div className="relative size-full rounded-[1.6rem] overflow-hidden bg-gradient-to-br from-primary/20 to-background">
                   <Image
-                    src="/images/roy-portrait.png"
-                    alt={`Illustrated portrait of ${profile.name}`}
+                    src="/images/roy-photo.jpg"
+                    alt={`Photo of ${profile.name}`}
                     fill
                     priority
                     sizes="(max-width: 1024px) 80vw, 40vw"
-                    className="object-cover"
+                    className="object-cover object-center"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
+                  {/* Name plate overlay */}
+                  <div className="absolute bottom-3 left-3 right-3 glass-strong rounded-xl px-3 py-2">
+                    <p className="font-display text-sm font-semibold text-foreground">
+                      {profile.name}
+                    </p>
+                    <p className="text-[11px] text-muted-foreground">{profile.title}</p>
+                  </div>
                 </div>
               </div>
 
@@ -183,7 +253,7 @@ export function Hero() {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.8 }}
-                className="absolute -right-4 sm:-right-8 bottom-16 glass-strong rounded-2xl p-3 shadow-xl"
+                className="absolute -right-4 sm:-right-8 bottom-24 glass-strong rounded-2xl p-3 shadow-xl"
               >
                 <div className="leading-tight">
                   <p className="text-xl font-bold font-display text-gradient">100+</p>
@@ -205,22 +275,27 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Stats strip */}
+        {/* Impact metrics strip — quantifiable outcomes recruiters want up top */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4"
+          className="mt-16 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3"
         >
-          {stats.map((s) => (
+          {impactMetrics.map((s) => (
             <div
               key={s.label}
-              className="glass rounded-2xl p-4 sm:p-5 text-center hover:border-primary/30 transition-colors"
+              className="glass rounded-2xl p-4 text-center hover:border-primary/30 transition-colors"
             >
-              <p className="font-display text-3xl sm:text-4xl font-bold text-gradient">
+              <p className="font-display text-2xl sm:text-3xl font-bold text-gradient">
                 {s.value}
               </p>
-              <p className="mt-1 text-xs sm:text-sm text-muted-foreground">{s.label}</p>
+              <p className="mt-1 text-xs font-medium text-foreground leading-tight">
+                {s.label}
+              </p>
+              <p className="text-[10px] text-muted-foreground leading-tight mt-0.5">
+                {s.sublabel}
+              </p>
             </div>
           ))}
         </motion.div>

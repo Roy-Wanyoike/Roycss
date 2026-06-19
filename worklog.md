@@ -168,3 +168,41 @@ Stage Summary:
 - New: USP elevator pitch, role targeting, 6 impact metrics, 6 project impact badges, engineering philosophy section, résumé button, JSON-LD Person schema.
 - Reordered for recruiter scanning: Projects now before Experience.
 - All verifications passed: lint clean, no runtime errors, all recruiter elements VLM-confirmed, section order verified by pixel position.
+
+---
+Task ID: 9
+Agent: Main (Z.ai Code)
+Task: Add Technical Support Engineer role, optimize for it, fix photo contrast, HCD polish, prepare for GitHub
+
+Work Log:
+- Added "Technical Support Engineer" to profile.openTo (5 roles now) and profile.roles (typewriter cycle).
+- Rewrote profile.usp and profile.summary to emphasize build + support capability: "I build full-stack apps and low-code solutions, keep them running smoothly, and help the people who use them."
+- Updated profile.longSummary with a new paragraph about the support hat: triaging production issues, runbooks, Playwright bug reproduction, plain-language fixes for non-technical users.
+- Added new "Support & Reliability" skill category (5 skills: Bug Triage & Reproduction, Playwright E2E/Debugging, Runbooks & Incident Response, Customer/Developer Support, Technical Writing user-facing). Now 5 categories total.
+- Gave each skill category a DISTINCT icon (was all Globe): Frontend=Code2, Backend=Server, Low-Code=Boxes, Support=Headphones, Tooling=Wrench. Updated skills.tsx to use category.icon directly instead of a hardcoded icons array. Changed grid to sm:grid-cols-2 lg:grid-cols-3 to fit 5 cards.
+- Reframed experience: current role now "Software Engineer (Build + Support)" with a highlight about triaging production issues end-to-end with Playwright + runbooks. Second role highlight now mentions supporting users in production and plain-language root causes.
+- Added "Support is a feature, not a chore" as the 2nd engineering philosophy principle (LifeBuoy icon) — replaced the Tests principle to keep 4 cards for the 2-min scroll.
+- Added support-related terms to tech cloud: Bug Triage, Runbooks, Incident Response, Technical Writing.
+- Changed Skills section heading from "ship & scale" to "build & support".
+- FIXED PHOTO TEXT READABILITY (main complaint): replaced low-contrast glass-strong overlays with solid bg-black/70-80 backdrops + white text. Name plate, all 3 floating badges (Quickbase, 100+ repos, Nairobi) now use dark solid backgrounds with high-contrast white text. Strengthened bottom gradient from-background/70 → from-black/85. VLM readability rating: 9/10 (was failing before).
+- GitHub preparation: untracked .env and db/custom.db from git (security — these should never be in a public repo). Added /db/*.db and /db/*.db-journal to .gitignore. Created comprehensive README.md with highlights, target roles, tech stack, setup instructions, project structure, customization guide, and social links.
+- Committed all changes to git (commit 19ab775).
+
+Verification (Agent Browser + VLM):
+- No console/runtime errors.
+- VLM photo readability: 9/10 — "dark backgrounds with high-contrast white text... text remains highly legible".
+- VLM confirmed "Support & Reliability" card present with Bug Triage, Playwright, Runbooks, Customer Support skills + headphones icon.
+- VLM confirmed distinct icons per skill category (code/server/puzzle/boxes/headphones/wrench).
+- Verified "Technical Support Engineer" in "Open to:" line via page text grep.
+- VLM final ratings: 8/10 recruiter attractiveness, 9/10 for under-2-minutes understanding ("Within the first 2 minutes a recruiter can quickly grasp who they are, what they do, key skills, and credibility"), 8/10 visual polish.
+
+GitHub instructions provided to user (no gh CLI / no remote configured in sandbox — user pushes from their machine):
+  git remote add origin https://github.com/<username>/<repo>.git
+  git push -u origin main
+
+Stage Summary:
+- Technical Support Engineer role fully integrated (hero, skills, experience, philosophy, tech cloud).
+- Photo text readability fixed (9/10) — solid dark backdrops + white text, WCAG-conscious contrast.
+- HCD polish: distinct category icons, 3-column skill grid, tighter copy, support narrative woven throughout.
+- VLM confirms recruiters understand Royford in under 2 minutes (9/10).
+- Repo is GitHub-ready: .env + DB untracked, .gitignore updated, README added, all committed locally.

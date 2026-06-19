@@ -14,6 +14,12 @@ import {
   Users,
   Rocket,
   ShieldCheck,
+  Code2,
+  Server,
+  Boxes,
+  Wrench,
+  Headphones,
+  LifeBuoy,
   type LucideIcon,
 } from "lucide-react";
 
@@ -31,27 +37,28 @@ export const profile = {
   available: true,
   yearsExperience: "3+",
   // Recruiter-focused: scannable elevator pitch (USP) — leads with value, not adjectives
-  usp: "I ship full-stack apps and low-code solutions that move fast and last — then I teach others how I did it.",
+  usp: "I build full-stack apps and low-code solutions, keep them running smoothly, and help the people who use them — then I teach others how I did it.",
   // What roles I'm targeting — recruiters want clear intent
   openTo: [
     "Full-Stack Engineer",
     "Frontend Engineer (React/Next/Angular)",
+    "Technical Support Engineer",
     "Low-Code / Quickbase Developer",
     "Developer Advocate",
   ],
   // Quick-scan tech badges for hero
   coreStack: ["React", "Next.js", "Node.js", "TypeScript", "Angular", "Quickbase"],
   summary:
-    "Nairobi-based Software Engineer with 3+ years shipping scalable full-stack apps and low-code solutions. Quickbase Professional Builder certified. I specialize in Node.js, Angular, and React/Next.js — and I share what I learn through talks, open-source (100+ repos), and technical writing.",
+    "Nairobi-based Software Engineer with 3+ years shipping scalable full-stack apps, low-code solutions, and the support layer that keeps them healthy. Quickbase Professional Builder certified. I build with Node.js, Angular, and React/Next.js — and I'm equally comfortable triaging bugs, writing runbooks, and walking non-technical users through fixes.",
   longSummary:
-    "I'm a Nairobi-based software engineer who lives at the intersection of full-stack engineering, low-code platforms, and developer advocacy. Currently building at Imminent Transcendent Solutions, I specialize in Quickbase (Professional Builder certified) and the modern JavaScript ecosystem — Node.js, Angular, React, Next.js, Vue, and Svelte.\n\nBeyond the keyboard, I'm an active conference speaker, an open-source contributor with 100+ public repositories, and a proud member of the Quickbase Qrew community. I believe great software is equal parts craft, empathy, and curiosity — and I'm always trying to be a better code connoisseur than I was yesterday.",
+    "I'm a Nairobi-based software engineer who lives at the intersection of full-stack engineering, low-code platforms, and developer support. Currently building at Imminent Transcendent Solutions, I specialize in Quickbase (Professional Builder certified) and the modern JavaScript ecosystem — Node.js, Angular, React, Next.js, Vue, and Svelte.\n\nI also wear the support hat: triaging production issues, writing runbooks, reproducing bugs end-to-end with Playwright, and translating technical findings into plain-language fixes for non-technical users. Beyond the keyboard, I'm an active conference speaker, an open-source contributor with 100+ public repositories, and a proud member of the Quickbase Qrew community.",
   roles: [
     "Software Engineer",
+    "Technical Support Engineer",
     "Developer Advocate",
     "Quickbase Builder",
     "Full-Stack Developer",
     "Open-Source Contributor",
-    "Technical Speaker",
   ],
   // Real LinkedIn profile — serves as living resume for recruiters
   resumeUrl: "https://www.linkedin.com/in/roywanyoike/",
@@ -65,19 +72,19 @@ export const philosophy: { icon: LucideIcon; title: string; body: string }[] = [
     body: "I spend more time reading the problem than typing the solution. A 30-minute spec conversation saves a 3-day rewrite. I ask 'what changes if this succeeds 10x?' before choosing an architecture.",
   },
   {
+    icon: LifeBuoy,
+    title: "Support is a feature, not a chore",
+    body: "Every bug report is a free user-research session. I reproduce it with Playwright, write the runbook while it's fresh, and reply in plain language — so the next person with the same issue finds the answer waiting.",
+  },
+  {
     icon: Rocket,
     title: "Ship small, ship often",
     body: "I'd rather merge 5 small PRs than 1 big one. Small ships mean fast feedback, easy rollbacks, and reviewers who actually read the code. CI is a teammate, not a gatekeeper.",
   },
   {
-    icon: ShieldCheck,
-    title: "Tests are documentation that runs",
-    body: "I write Playwright E2E tests the same week a feature ships — not 'later'. Tests catch regressions, but more importantly they tell the next developer what the feature is supposed to do.",
-  },
-  {
     icon: Users,
     title: "Code is for humans, then machines",
-    body: "I optimize for the next dev reading my code, not the compiler. Clear names, small functions, and a PR description that explains the 'why' beat clever one-liners every time.",
+    body: "I optimize for the next dev reading my code — or the next user reading the error message. Clear names, small functions, and a PR description that explains the 'why' beat clever one-liners every time.",
   },
 ];
 
@@ -164,7 +171,7 @@ export type SkillCategory = {
 export const skillCategories: SkillCategory[] = [
   {
     title: "Frontend",
-    icon: Globe,
+    icon: Code2,
     skills: [
       { name: "React", level: 90 },
       { name: "Next.js", level: 88 },
@@ -176,7 +183,7 @@ export const skillCategories: SkillCategory[] = [
   },
   {
     title: "Backend",
-    icon: Globe,
+    icon: Server,
     skills: [
       { name: "Node.js", level: 88 },
       { name: "REST API Design", level: 85 },
@@ -187,7 +194,7 @@ export const skillCategories: SkillCategory[] = [
   },
   {
     title: "Low-Code & Platforms",
-    icon: Globe,
+    icon: Boxes,
     skills: [
       { name: "Quickbase (Pro Builder)", level: 90 },
       { name: "Quickbase API", level: 85 },
@@ -196,14 +203,24 @@ export const skillCategories: SkillCategory[] = [
     ],
   },
   {
+    title: "Support & Reliability",
+    icon: Headphones,
+    skills: [
+      { name: "Bug Triage & Reproduction", level: 88 },
+      { name: "Playwright E2E / Debugging", level: 82 },
+      { name: "Runbooks & Incident Response", level: 80 },
+      { name: "Customer / Developer Support", level: 85 },
+      { name: "Technical Writing (user-facing)", level: 85 },
+    ],
+  },
+  {
     title: "Tooling & DevOps",
-    icon: Globe,
+    icon: Wrench,
     skills: [
       { name: "Git / GitHub", level: 90 },
-      { name: "Playwright (E2E)", level: 80 },
       { name: "CI/CD", level: 75 },
       { name: "DevOps Practices", level: 72 },
-      { name: "Technical Writing", level: 85 },
+      { name: "Observability Basics", level: 70 },
     ],
   },
 ];
@@ -221,20 +238,20 @@ export type Experience = {
 
 export const experiences: Experience[] = [
   {
-    role: "Software Engineer",
+    role: "Software Engineer (Build + Support)",
     company: "Imminent Transcendent Solutions",
     period: "2023 — Present",
     location: "Nairobi, Kenya",
     current: true,
     description:
-      "Building scalable full-stack applications and low-code solutions for enterprise clients, with a focus on Quickbase platform delivery and modern JavaScript ecosystems.",
+      "Building scalable full-stack applications and low-code solutions for enterprise clients — owning both feature delivery and the support layer that keeps them healthy.",
     highlights: [
       "Shipped low-code enterprise apps on Quickbase for paying clients — earned Professional Builder certification (2024).",
-      "Built Node.js + Angular/React services powering core business workflows end-to-end.",
-      "Active Qrew community contributor — shared Quickbase API patterns and pipelines adopted by other builders.",
-      "Mentored junior developers and ran internal sessions on Next.js Server Components and Playwright testing.",
+      "Triage production issues end-to-end: reproduce bugs with Playwright, write runbooks, and ship fixes across Node.js + Angular/React services.",
+      "Active Qrew community contributor — answered builder questions, shared Quickbase API patterns adopted by other developers.",
+      "Mentored junior developers and ran internal sessions on Next.js Server Components and E2E testing.",
     ],
-    stack: ["Quickbase", "Node.js", "Angular", "React", "Next.js", "TypeScript"],
+    stack: ["Quickbase", "Node.js", "Angular", "React", "Next.js", "TypeScript", "Playwright"],
   },
   {
     role: "Software Engineer & Developer Advocate",
@@ -242,12 +259,12 @@ export const experiences: Experience[] = [
     period: "2021 — 2023",
     location: "Nairobi, Kenya",
     description:
-      "Delivered full-stack web and mobile features across multiple products while advocating for the broader developer community through talks, demos, and open-source.",
+      "Delivered full-stack web and mobile features across multiple products, supported users in production, and advocated for the broader developer community through talks, demos, and open-source.",
     highlights: [
       "Shipped production features across Opteamio and Gigsasa platforms in Vue, Svelte, and Node.js.",
+      "Supported users in production — reproduced reported bugs, wrote fix patches, and communicated plain-language root causes to non-technical stakeholders.",
       "Represented the company at community events — talks on React Server Components and Playwright E2E testing.",
       "Maintained 100+ public GitHub repos — TechnicalWritingProgram reached 33★ and counting.",
-      "Completed the 90DaysOfDevOps challenge, adding CI/CD, containers, and K8s to my toolkit.",
     ],
     stack: ["Vue.js", "Svelte", "Svelte Native", "Node.js", "JavaScript", "Python"],
   },

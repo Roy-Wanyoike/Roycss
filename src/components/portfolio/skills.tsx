@@ -1,11 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Code2, Server, Boxes, Wrench } from "lucide-react";
 import { skillCategories, type SkillCategory } from "@/lib/portfolio-data";
 import { Reveal, RevealGroup, RevealItem, SectionHeading } from "./reveal";
-
-const icons = [Code2, Server, Boxes, Wrench];
 
 function SkillBar({ name, level, delay }: { name: string; level: number; delay: number }) {
   return (
@@ -29,8 +26,8 @@ function SkillBar({ name, level, delay }: { name: string; level: number; delay: 
   );
 }
 
-function CategoryCard({ category, index }: { category: SkillCategory; index: number }) {
-  const Icon = icons[index % icons.length];
+function CategoryCard({ category }: { category: SkillCategory }) {
+  const Icon = category.icon;
   return (
     <RevealItem>
       <motion.div
@@ -66,16 +63,16 @@ export function Skills() {
           title={
             <>
               The tools I use to{" "}
-              <span className="text-gradient">ship &amp; scale</span>
+              <span className="text-gradient">build &amp; support</span>
             </>
           }
-          description="From low-code enterprise platforms to modern JavaScript frameworks, here's what I reach for daily."
+          description="From low-code enterprise platforms to modern JavaScript frameworks and the support tooling that keeps them healthy."
           align="center"
         />
 
-        <RevealGroup className="mt-12 grid sm:grid-cols-2 gap-5">
-          {skillCategories.map((cat, i) => (
-            <CategoryCard key={cat.title} category={cat} index={i} />
+        <RevealGroup className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {skillCategories.map((cat) => (
+            <CategoryCard key={cat.title} category={cat} />
           ))}
         </RevealGroup>
 
@@ -85,8 +82,9 @@ export function Skills() {
             {[
               "React", "Next.js", "NextAuth", "Node.js", "TypeScript", "JavaScript",
               "Angular", "Vue.js", "Svelte", "Svelte Native", "Python", "Quickbase",
-              "Quickbase API", "Playwright", "Git", "GitHub", "Tailwind CSS",
-              "REST APIs", "Data Engineering", "Tableau", "DevOps", "CI/CD",
+              "Quickbase API", "Playwright", "Bug Triage", "Runbooks", "Incident Response",
+              "Git", "GitHub", "Tailwind CSS", "REST APIs", "Data Engineering",
+              "Tableau", "DevOps", "CI/CD", "Technical Writing",
             ].map((tech) => (
               <span
                 key={tech}

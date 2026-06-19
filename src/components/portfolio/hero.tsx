@@ -219,57 +219,59 @@ export function Hero() {
                     sizes="(max-width: 1024px) 80vw, 40vw"
                     className="object-cover object-center"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
-                  {/* Name plate overlay */}
-                  <div className="absolute bottom-3 left-3 right-3 glass-strong rounded-xl px-3 py-2">
-                    <p className="font-display text-sm font-semibold text-foreground">
+                  {/* Stronger dark gradient at bottom for legible text */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+
+                  {/* Name plate — solid dark backdrop for WCAG contrast */}
+                  <div className="absolute bottom-3 left-3 right-3 rounded-xl bg-black/70 backdrop-blur-md px-3.5 py-2.5 border border-white/15">
+                    <p className="font-display text-sm font-bold text-white leading-tight">
                       {profile.name}
                     </p>
-                    <p className="text-[11px] text-muted-foreground">{profile.title}</p>
+                    <p className="text-[11px] text-white/80 mt-0.5">{profile.title}</p>
                   </div>
                 </div>
               </div>
 
-              {/* Floating badge: Quickbase */}
+              {/* Floating badge: Quickbase — solid dark backdrop */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.7 }}
-                className="absolute -left-4 sm:-left-8 top-12 glass-strong rounded-2xl p-3 shadow-xl"
+                className="absolute -left-4 sm:-left-8 top-12 rounded-2xl bg-black/75 backdrop-blur-md border border-white/15 p-3 shadow-xl"
               >
                 <div className="flex items-center gap-2">
-                  <span className="flex size-8 items-center justify-center rounded-lg bg-primary/20 text-primary text-xs font-bold">
+                  <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground text-xs font-bold">
                     QB
                   </span>
                   <div className="leading-tight">
-                    <p className="text-xs font-semibold text-foreground">Quickbase</p>
-                    <p className="text-[10px] text-muted-foreground">Pro Builder</p>
+                    <p className="text-xs font-semibold text-white">Quickbase</p>
+                    <p className="text-[10px] text-white/70">Pro Builder</p>
                   </div>
                 </div>
               </motion.div>
 
-              {/* Floating badge: open source */}
+              {/* Floating badge: open source — solid dark backdrop */}
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.8 }}
-                className="absolute -right-4 sm:-right-8 bottom-24 glass-strong rounded-2xl p-3 shadow-xl"
+                className="absolute -right-4 sm:-right-8 bottom-24 rounded-2xl bg-black/75 backdrop-blur-md border border-white/15 p-3 shadow-xl"
               >
                 <div className="leading-tight">
-                  <p className="text-xl font-bold font-display text-gradient">100+</p>
-                  <p className="text-[10px] text-muted-foreground">Public repos</p>
+                  <p className="text-xl font-bold font-display text-white">100+</p>
+                  <p className="text-[10px] text-white/70">Public repos</p>
                 </div>
               </motion.div>
 
-              {/* Floating badge: location */}
+              {/* Floating badge: location — solid dark backdrop */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.9 }}
-                className="absolute right-6 -top-3 glass-strong rounded-full px-3 py-1.5 shadow-xl flex items-center gap-1.5"
+                className="absolute right-6 -top-3 rounded-full bg-black/80 backdrop-blur-md border border-white/15 px-3 py-1.5 shadow-xl flex items-center gap-1.5"
               >
                 <MapPin className="size-3 text-primary" />
-                <span className="text-xs font-medium text-foreground">Nairobi, KE</span>
+                <span className="text-xs font-semibold text-white">Nairobi, KE</span>
               </motion.div>
             </motion.div>
           </div>

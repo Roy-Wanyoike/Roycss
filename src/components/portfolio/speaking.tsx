@@ -77,7 +77,7 @@ export function Speaking() {
               I talk about React Server Components, E2E testing with Playwright, Svelte/Svelte Native, and developer experience.
             </p>
             <a
-              href="mailto:roywamaitha2001@gmail.com?subject=Speaking%20Invitation"
+              href="mailto:roywanyoike328@gmail.com?subject=Speaking%20Invitation"
               className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
             >
               Invite me to speak

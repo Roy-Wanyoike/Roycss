@@ -21,7 +21,7 @@ export const profile = {
   title: "Software Engineer & Developer Advocate",
   tagline: "trying to be a code connoisseur",
   location: "Nairobi, Kenya",
-  email: "roywamaitha2001@gmail.com",
+  email: "roywanyoike328@gmail.com",
   phone: "+254706103000",
   phoneHref: "+254706103000",
   available: true,
@@ -99,7 +99,7 @@ export const socials: SocialLink[] = [
 ];
 
 export const contactMethods = [
-  { label: "Email", value: "roywamaitha2001@gmail.com", href: "mailto:roywamaitha2001@gmail.com", icon: Mail },
+  { label: "Email", value: "roywanyoike328@gmail.com", href: "mailto:roywanyoike328@gmail.com", icon: Mail },
   { label: "Phone", value: "+254 706 103 000", href: "tel:+254706103000", icon: Phone },
   { label: "Location", value: "Nairobi, Kenya", href: "https://maps.google.com/?q=Nairobi,Kenya", icon: MapPin },
 ];

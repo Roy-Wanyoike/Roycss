@@ -235,3 +235,42 @@ Stage Summary:
 - Summary text rewritten in both summary and longSummary to incorporate the 20+ talks figure naturally.
 - Speaking section enhanced with a new stats banner and CTA badge reinforcing the 20+ count.
 - SEO metadata + JSON-LD schema updated for recruiter/search engine consistency.
+
+---
+Task ID: 11
+Agent: Main (Z.ai Code)
+Task: Sync portfolio with RoyW Resume 26.pdf — add all missing content
+
+Work Log:
+- Extracted resume text via PDF skill (extract.text) — 3 pages, 6309 chars.
+- Gap analysis identified 6 missing experience roles, 8 missing skills, 2 missing certs, missing community/volunteering section, missing publications, missing education GPA, and 8 incorrect fields (name, title, dates, education degree/dates, cert status, talk topics).
+- Updated src/lib/portfolio-data.ts profile: full name "Royford Wanyoike Wamaitha", title "Software Engineer | Quickbase Solutions Engineer | Developer Advocate", rewrote USP/summary/longSummary with healthcare/HIPAA + support + Skystock metrics, updated openTo roles, coreStack badges (added Temporal.io).
+- Updated skillCategories: 5 categories now include Temporal.io, Supabase, Microsoft Power Automate, Workday HCM/Integrations, Active Directory, Network & Security, Hardware Maintenance, HIPAA/Healthcare domain, Root Cause Analysis. Renamed "Tooling & DevOps" → "Cross-Cutting".
+- Rewrote experiences array with all 8 resume roles: (1) Software Solutions Engineer @ Imminent Sep 2025-Present, (2) Quickbase Solutions Engineer @ Ethos Therapy Solutions Aug 2025-Present (HIPAA healthcare), (3) Founding Engineer @ Skystock Jan-Jul 2025 (10k+ req/day, 99.9% uptime, 2d→4h, 50+ businesses), (4) Junior Software Engineer @ Opteamio Jan 2022-Dec 2024 (500+ users, Workday HCM), (5) Full-Stack Developer @ G-Roll Sep 2022-Apr 2023, (6) Cyber Security Consultant @ Opteamio Sep 2022-Feb 2023 (UK, ISMS/ISO), (7) IT Support Engineer @ Gigsasa Jan-Jun 2023 (Active Directory), (8) IT Support @ TheJitu.com Aug-Dec 2022.
+- Added new exports: community[] (Lux Tech Academy, She Hacks KE, Andela), education{} (BSc IT, Kibabii, GPA 3.4), publications[] ('Beyond Data Risk').
+- Updated certifications: added Microsoft Azure/Cloud Computing (2021-2022) + Ruby Programming (in progress), marked Data Engineering with Python as "In Progress".
+- Updated talks: replaced Svelte Native talk with "Angular at Scale" and "API Security: Defending the Front Door" to match resume topics (Angular, Next.js, Server Components, API Security).
+- Updated impactMetrics: now leads with Skystock killer metrics (10k+ req, 99.9% uptime, 2d→4h, 500+ users) instead of GitHub repo counts.
+- Updated stats: replaced GitHub Repos/Followers with "API req/day 10k+" and "Uptime 99.9%".
+- Updated navLinks: replaced Philosophy with Community (Philosophy section kept in page but not in nav to stay under 8 items).
+- Created src/components/portfolio/community.tsx — new section rendering volunteering (3 cards), education card (with GPA badge), and publications card.
+- Updated src/app/page.tsx to include <Community /> between Philosophy and Speaking.
+- Updated src/components/portfolio/about.tsx facts: now mentions healthcare/HIPAA, 'Beyond Data Risk' authorship, and Angular/Next.js/API Security talk topics.
+- Updated src/components/portfolio/speaking.tsx: stats banner + CTA now reflect Angular/Next.js/API Security topics.
+- Updated src/app/layout.tsx: metadata title/description/keywords + JSON-LD Person schema updated with full name, new skills (Temporal.io, Supabase, Workday, HIPAA, Active Directory), healthcare positioning.
+- Untracked upload/ folder (resume PDF is personal — should not be on public GitHub). Added to .gitignore.
+- Ran `bun run lint` → clean (0 errors).
+
+Verification (Agent Browser + VLM):
+- No console/runtime errors. Page title now "Royford Wanyoike Wamaitha — Software Engineer | Quickbase Solutions Engineer".
+- Verified all 8 experience roles render (Software Solutions Engineer → Quickbase Solutions Engineer → Founding Engineer → Junior Software Engineer → Full-Stack Developer → Cyber Security Consultant → IT Support Engineer → IT Support).
+- Verified Community section: Lux Tech Academy, She Hacks KE, Andela volunteering + BSc IT Kibabii GPA 3.4 + 'Beyond Data Risk' publication all render.
+- Verified hero metrics: 10k+ daily API requests, 99.9% uptime, 2d→4h onboarding cut, 500+ users.
+- VLM ratings: 8/10 recruiter attractiveness, 9/10 completeness, 7/10 scannability.
+- Committed as 8c89f9e (amended to exclude resume PDF).
+
+Stage Summary:
+- Portfolio now fully synced with RoyW Resume 26.pdf — all 8 work roles, 3 volunteering roles, education with GPA, publication, 6 certifications, and corrected skills/titles/dates.
+- Healthcare/HIPAA positioning + Skystock killer metrics (10k+ req, 99.9% uptime) now front and center.
+- New Community section renders volunteering + education + publications.
+- Resume PDF untracked from git (personal document).

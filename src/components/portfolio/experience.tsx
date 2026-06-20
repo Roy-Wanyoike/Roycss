@@ -26,7 +26,7 @@ export function Experience() {
 
           <div className="space-y-8">
             {experiences.map((exp, i) => (
-              <Reveal key={exp.company} delay={i * 0.1}>
+              <Reveal key={`${exp.company}-${exp.role}-${exp.period}`} delay={i * 0.1}>
                 <div className="relative pl-12 sm:pl-16">
                   {/* Node */}
                   <div className="absolute left-0 top-1.5">

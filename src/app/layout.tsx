@@ -20,34 +20,37 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Royford Wanyoike — Software Engineer & Developer Advocate",
+  title: "Royford Wanyoike Wamaitha — Software Engineer | Quickbase Solutions Engineer",
   description:
-    "Royford Wanyoike is a Nairobi-based Software Engineer and Developer Advocate with 3+ years building scalable full-stack applications and low-code solutions. Quickbase Professional Builder, 20x+ conference speaker, and open-source contributor.",
+    "Nairobi-based Software Engineer and Technical Support professional with 3+ years building, debugging, and supporting full-stack apps and enterprise systems. Quickbase Professional Builder, HIPAA-compliant healthcare experience, 20x+ conference speaker.",
   keywords: [
     "Royford Wanyoike",
-    "Roy Wanyoike",
+    "Roy Wanyoike Wamaitha",
     "Software Engineer Nairobi",
+    "Quickbase Solutions Engineer",
     "Developer Advocate Kenya",
-    "Quickbase Builder",
-    "Full-Stack Developer",
+    "Technical Support Engineer",
+    "Temporal.io",
+    "Supabase",
+    "HIPAA healthcare",
     "React",
     "Next.js",
     "Node.js",
     "Angular",
-    "Svelte",
+    "Workday HCM",
   ],
-  authors: [{ name: "Royford Wanyoike" }],
+  authors: [{ name: "Royford Wanyoike Wamaitha" }],
   openGraph: {
-    title: "Royford Wanyoike — Software Engineer & Developer Advocate",
+    title: "Royford Wanyoike Wamaitha — Software Engineer | Quickbase Solutions Engineer",
     description:
-      "Building scalable full-stack applications and low-code solutions from Nairobi, Kenya.",
+      "Building, debugging, and supporting full-stack apps and enterprise systems from Nairobi, Kenya — including HIPAA-compliant healthcare solutions.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Royford Wanyoike — Software Engineer & Developer Advocate",
+    title: "Royford Wanyoike Wamaitha — Software Engineer | Quickbase Solutions Engineer",
     description:
-      "Building scalable full-stack applications and low-code solutions from Nairobi, Kenya.",
+      "Building, debugging, and supporting full-stack apps and enterprise systems from Nairobi, Kenya.",
   },
 };
 
@@ -55,10 +58,10 @@ export const metadata: Metadata = {
 const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: "Royford Wanyoike",
-  jobTitle: "Software Engineer & Developer Advocate",
+  name: "Royford Wanyoike Wamaitha",
+  jobTitle: "Software Engineer | Quickbase Solutions Engineer | Developer Advocate",
   description:
-    "Software Engineer with 3+ years building scalable full-stack applications and low-code solutions. Quickbase Professional Builder certified. 20+ conference talks delivered.",
+    "Software Engineer and Technical Support professional with 3+ years building, debugging, and supporting full-stack applications and enterprise systems. Quickbase Professional Builder certified. HIPAA-compliant healthcare experience. 20+ conference talks.",
   email: "mailto:roywanyoike328@gmail.com",
   telephone: "+254706103000",
   address: {
@@ -67,14 +70,17 @@ const personJsonLd = {
     addressCountry: "Kenya",
   },
   knowsAbout: [
+    "Quickbase",
+    "Temporal.io",
+    "Supabase",
     "React",
     "Next.js",
     "Node.js",
-    "TypeScript",
     "Angular",
-    "Vue.js",
     "Svelte",
-    "Quickbase",
+    "Workday HCM",
+    "Active Directory",
+    "HIPAA",
     "Developer Advocacy",
     "Technical Speaking",
   ],

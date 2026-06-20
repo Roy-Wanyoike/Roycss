@@ -33,12 +33,12 @@ const pillars = [
 ];
 
 const facts = [
-  "Based in Nairobi, Kenya",
-  "3+ years of full-stack experience",
+  "Based in Nairobi, Kenya (remote-friendly)",
+  "3+ years building, debugging & supporting full-stack apps",
   "Quickbase Professional Builder certified",
-  "100+ public GitHub repositories",
-  "20+ conference talks delivered",
-  "GitHub Developer Program Member",
+  "Healthcare domain — HIPAA-compliant clinical solutions",
+  "20+ conference talks (Angular · Next.js · API Security)",
+  "Author of 'Beyond Data Risk' technical article",
 ];
 
 export function About() {

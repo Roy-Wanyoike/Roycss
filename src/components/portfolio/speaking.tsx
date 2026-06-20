@@ -26,8 +26,8 @@ export function Speaking() {
             {[
               { value: "20+", label: "Talks delivered" },
               { value: "3", label: "Signature topics" },
-              { value: "React", label: "Server Components" },
-              { value: "Playwright", label: "E2E testing" },
+              { value: "Next.js", label: "Server Components" },
+              { value: "API", label: "Security" },
             ].map((s) => (
               <div
                 key={s.label}
@@ -98,7 +98,7 @@ export function Speaking() {
               Want me to speak at your meetup or conference?
             </p>
             <p className="mt-1 text-sm text-muted-foreground">
-              I talk about React Server Components, E2E testing with Playwright, Svelte/Svelte Native, and developer experience.
+              I talk about Angular, Next.js, Server Components, and API Security — and developer experience.
             </p>
             <a
               href="mailto:roywanyoike328@gmail.com?subject=Speaking%20Invitation"

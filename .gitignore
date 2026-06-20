@@ -56,4 +56,4 @@ server.log
 # Database (SQLite binary — each environment regenerates its own)
 /db/*.db
 /db/*.db-journal
-/prisma/migrations/dev.db*
+/prisma/migrations/dev.db*upload/

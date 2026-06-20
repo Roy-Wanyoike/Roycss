@@ -24,39 +24,39 @@ import {
 } from "lucide-react";
 
 export const profile = {
-  name: "Royford Wanyoike",
+  name: "Royford Wanyoike Wamaitha",
   alias: "Youngshark3",
   firstName: "Royford",
   lastName: "Wanyoike",
-  title: "Software Engineer & Developer Advocate",
+  title: "Software Engineer | Quickbase Solutions Engineer | Developer Advocate",
   tagline: "trying to be a code connoisseur",
   location: "Nairobi, Kenya",
   email: "roywanyoike328@gmail.com",
-  phone: "+254706103000",
+  phone: "+254 706 103 000",
   phoneHref: "+254706103000",
   available: true,
   yearsExperience: "3+",
   // Recruiter-focused: scannable elevator pitch (USP) — leads with value, not adjectives
-  usp: "I build full-stack apps and low-code solutions, keep them running smoothly, and help the people who use them — then I teach others how I did it.",
+  usp: "I build, debug, and support full-stack apps and enterprise systems — from Quickbase low-code to Node.js backends, including HIPAA-compliant healthcare solutions.",
   // What roles I'm targeting — recruiters want clear intent
   openTo: [
-    "Full-Stack Engineer",
-    "Frontend Engineer (React/Next/Angular)",
+    "Software / Solutions Engineer",
+    "Quickbase Solutions Engineer",
     "Technical Support Engineer",
-    "Low-Code / Quickbase Developer",
+    "Full-Stack Engineer",
     "Developer Advocate",
   ],
   // Quick-scan tech badges for hero
-  coreStack: ["React", "Next.js", "Node.js", "TypeScript", "Angular", "Quickbase"],
+  coreStack: ["Quickbase", "Node.js", "React", "Next.js", "Angular", "Temporal.io"],
   summary:
-    "Nairobi-based Software Engineer with 3+ years shipping scalable full-stack apps, low-code solutions, and the support layer that keeps them healthy. Quickbase Professional Builder certified. I've delivered 20+ conference talks on React, testing, and Svelte — and I'm equally comfortable triaging bugs, writing runbooks, and walking non-technical users through fixes.",
+    "Software Engineer and Technical Support professional with 3+ years building, debugging, and supporting full-stack applications and enterprise systems. Proven first-line technical support background, strong debugging and root-cause analysis, and recent healthcare domain experience with HIPAA-compliant clinical solutions. Quickbase Professional Builder certified.",
   longSummary:
-    "I'm a Nairobi-based software engineer who lives at the intersection of full-stack engineering, low-code platforms, and developer support. Currently building at Imminent Transcendent Solutions, I specialize in Quickbase (Professional Builder certified) and the modern JavaScript ecosystem — Node.js, Angular, React, Next.js, Vue, and Svelte.\n\nI also wear the support hat: triaging production issues, writing runbooks, reproducing bugs end-to-end with Playwright, and translating technical findings into plain-language fixes for non-technical users. Beyond the keyboard, I'm a frequent conference speaker with 20+ delivered talks on React Server Components, E2E testing, and Svelte Native, an open-source contributor with 100+ public repositories, and a proud member of the Quickbase Qrew community.",
+    "I'm a Nairobi-based software engineer who builds, debugs, and supports full-stack applications and enterprise systems. Currently I split my time between two roles: Software Solutions Engineer at Imminent Transcendent Solutions (Quickbase platform delivery) and Quickbase Solutions Engineer at Ethos Therapy Solutions (HIPAA-compliant healthcare apps for the US market).\n\nMy toolkit spans low-code platforms (Quickbase, Microsoft Power Automate), modern JavaScript (Node.js, React, Next.js, Angular, Svelte), workflow orchestration (Temporal.io, Supabase), and enterprise integrations (Workday HCM, Active Directory). I've also worn the IT support hat — diagnosing hardware, software, and network issues and managing AD user accounts at Gigsasa.\n\nBeyond the keyboard, I'm a frequent conference speaker (20+ talks on Angular, Next.js, Server Components, and API Security), author of 'Beyond Data Risk', and an active open-source contributor with 100+ public repositories.",
   roles: [
     "Software Engineer",
+    "Quickbase Solutions Engineer",
     "Technical Support Engineer",
     "Developer Advocate",
-    "Quickbase Builder",
     "Full-Stack Developer",
     "Open-Source Contributor",
   ],
@@ -90,12 +90,12 @@ export const philosophy: { icon: LucideIcon; title: string; body: string }[] = [
 
 // Real, verifiable impact metrics — recruiters want quantifiable outcomes
 export const impactMetrics = [
-  { value: "100+", label: "Public repositories", sublabel: "shipped & maintained" },
-  { value: "33★", label: "Top repo (TechnicalWritingProgram)", sublabel: "curated dev resource" },
-  { value: "37", label: "Forks on cars-plates-checker", sublabel: "used by other devs" },
-  { value: "20+", label: "Conference talks delivered", sublabel: "React, testing, Svelte, DevX" },
-  { value: "Pro", label: "Quickbase Builder certified", sublabel: "2024 credential" },
-  { value: "93", label: "GitHub followers", sublabel: "organic reach" },
+  { value: "10k+", label: "Daily API requests", sublabel: "at Skystock (Founding Eng)" },
+  { value: "99.9%", label: "System uptime", sublabel: "via Temporal.io orchestration" },
+  { value: "2d→4h", label: "Onboarding time cut", sublabel: "50+ businesses onboarded" },
+  { value: "500+", label: "Users served", sublabel: "Opteamio commercial platform" },
+  { value: "20+", label: "Conference talks", sublabel: "Angular · Next.js · API Security" },
+  { value: "Pro", label: "Quickbase Builder certified", sublabel: "HIPAA-compliant apps" },
 ];
 
 export type SocialLink = {
@@ -173,23 +173,24 @@ export const skillCategories: SkillCategory[] = [
     title: "Frontend",
     icon: Code2,
     skills: [
-      { name: "React", level: 90 },
+      { name: "React.js", level: 90 },
       { name: "Next.js", level: 88 },
       { name: "Angular", level: 82 },
-      { name: "Vue.js", level: 78 },
-      { name: "Svelte / Svelte Native", level: 80 },
+      { name: "Svelte", level: 80 },
       { name: "TypeScript", level: 85 },
+      { name: "JavaScript", level: 90 },
     ],
   },
   {
-    title: "Backend",
+    title: "Backend & Orchestration",
     icon: Server,
     skills: [
       { name: "Node.js", level: 88 },
+      { name: "Temporal.io (Workflow)", level: 80 },
+      { name: "Supabase", level: 78 },
       { name: "REST API Design", level: 85 },
-      { name: "NextAuth", level: 80 },
       { name: "Python", level: 75 },
-      { name: "Data Engineering", level: 72 },
+      { name: "Ruby (in progress)", level: 55 },
     ],
   },
   {
@@ -197,8 +198,9 @@ export const skillCategories: SkillCategory[] = [
     icon: Boxes,
     skills: [
       { name: "Quickbase (Pro Builder)", level: 90 },
-      { name: "Quickbase API", level: 85 },
-      { name: "Qrew Community", level: 88 },
+      { name: "Quickbase API / Pipelines", level: 88 },
+      { name: "Microsoft Power Automate", level: 78 },
+      { name: "Workday HCM / Integrations", level: 70 },
       { name: "Tableau", level: 70 },
     ],
   },
@@ -206,21 +208,22 @@ export const skillCategories: SkillCategory[] = [
     title: "Support & Reliability",
     icon: Headphones,
     skills: [
-      { name: "Bug Triage & Reproduction", level: 88 },
-      { name: "Playwright E2E / Debugging", level: 82 },
-      { name: "Runbooks & Incident Response", level: 80 },
-      { name: "Customer / Developer Support", level: 85 },
-      { name: "Technical Writing (user-facing)", level: 85 },
+      { name: "Hardware / Software Troubleshooting", level: 85 },
+      { name: "Active Directory / User Mgmt", level: 82 },
+      { name: "Network & Security", level: 80 },
+      { name: "Root Cause Analysis", level: 88 },
+      { name: "Bug Triage & Reproduction", level: 85 },
     ],
   },
   {
-    title: "Tooling & DevOps",
+    title: "Cross-Cutting",
     icon: Wrench,
     skills: [
+      { name: "Technical Writing", level: 85 },
+      { name: "Public Speaking", level: 88 },
       { name: "Git / GitHub", level: 90 },
-      { name: "CI/CD", level: 75 },
-      { name: "DevOps Practices", level: 72 },
-      { name: "Observability Basics", level: 70 },
+      { name: "HIPAA / Healthcare Domain", level: 75 },
+      { name: "Workflow Automation", level: 85 },
     ],
   },
 ];
@@ -238,51 +241,172 @@ export type Experience = {
 
 export const experiences: Experience[] = [
   {
-    role: "Software Engineer (Build + Support)",
+    role: "Software Solutions Engineer",
     company: "Imminent Transcendent Solutions",
-    period: "2023 — Present",
-    location: "Nairobi, Kenya",
+    period: "Sep 2025 — Present",
+    location: "Karen, Nairobi, Kenya",
     current: true,
     description:
-      "Building scalable full-stack applications and low-code solutions for enterprise clients — owning both feature delivery and the support layer that keeps them healthy.",
+      "Designing, building, and maintaining scalable Quickbase applications that drive operational efficiency across multiple business units.",
     highlights: [
-      "Shipped low-code enterprise apps on Quickbase for paying clients — earned Professional Builder certification (2024).",
-      "Triage production issues end-to-end: reproduce bugs with Playwright, write runbooks, and ship fixes across Node.js + Angular/React services.",
-      "Active Qrew community contributor — answered builder questions, shared Quickbase API patterns adopted by other developers.",
-      "Mentored junior developers and ran internal sessions on Next.js Server Components and E2E testing.",
+      "Build and maintain scalable Quickbase applications supporting operational efficiency across multiple business units.",
+      "Automate workflows and integrate systems to reduce manual processes and improve data accuracy.",
+      "Develop custom dashboards, UIs, and reporting tools for real-time decision-making.",
+      "Implement data governance — permission structures, validation rules, and secure access controls.",
+      "Evaluate and integrate APIs and third-party tools; conduct user training and onboarding for high adoption.",
     ],
-    stack: ["Quickbase", "Node.js", "Angular", "React", "Next.js", "TypeScript", "Playwright"],
+    stack: ["Quickbase", "Quickbase Pipelines", "REST APIs", "Workday HCM", "Power Automate"],
   },
   {
-    role: "Software Engineer & Developer Advocate",
-    company: "Youngshark Technologies / Opteamio / Gigsasa",
-    period: "2021 — 2023",
+    role: "Quickbase Solutions Engineer",
+    company: "Ethos Therapy Solutions",
+    period: "Aug 2025 — Present",
+    location: "United States (Remote)",
+    current: true,
+    description:
+      "Leading end-to-end Quickbase development for HIPAA-compliant healthcare applications serving US clinical teams.",
+    highlights: [
+      "Led end-to-end Quickbase development — schema design, custom dashboarding, and advanced formula fields.",
+      "Engineered integrations via Quickbase Pipelines and APIs to sync therapy data with external billing and CRM platforms.",
+      "Optimized performance by auditing legacy structures and refactoring complex many-to-many relationships for faster reporting.",
+      "Built automated workflows and notifications for real-time communication between clinical and admin staff.",
+      "Ensured HIPAA compliance and data security across all solutions with clinical stakeholders.",
+    ],
+    stack: ["Quickbase", "Quickbase Pipelines", "HIPAA", "Healthcare", "REST APIs"],
+  },
+  {
+    role: "Founding Engineer",
+    company: "Skystock Developer Limited",
+    period: "Jan 2025 — Jul 2025",
+    location: "Remote",
+    description:
+      "Led backend architecture and development for an event-driven platform using Node.js, Temporal.io, and Supabase.",
+    highlights: [
+      "Built secure APIs handling 10,000+ daily requests with third-party system integrations.",
+      "Implemented workflow orchestration with Temporal.io — improved system reliability to 99.9% uptime.",
+      "Streamlined business onboarding, cutting setup time from 2 days to under 4 hours.",
+      "Drove MVP launch supporting 50+ active businesses within the first 3 months.",
+    ],
+    stack: ["Node.js", "Temporal.io", "Supabase", "REST APIs", "Event-Driven"],
+  },
+  {
+    role: "Junior Software Engineer",
+    company: "Opteamio Ltd",
+    period: "Jan 2022 — Dec 2024",
     location: "Nairobi, Kenya",
     description:
-      "Delivered full-stack web and mobile features across multiple products, supported users in production, and advocated for the broader developer community through talks, demos, and open-source.",
+      "Built and maintained a commercial platform serving 500+ users, with cross-functional collaboration and Workday HCM analysis.",
     highlights: [
-      "Shipped production features across Opteamio and Gigsasa platforms in Vue, Svelte, and Node.js.",
-      "Supported users in production — reproduced reported bugs, wrote fix patches, and communicated plain-language root causes to non-technical stakeholders.",
-      "Represented the company at community events — talks on React Server Components and Playwright E2E testing.",
-      "Maintained 100+ public GitHub repos — TechnicalWritingProgram reached 33★ and counting.",
+      "Built and maintained a commercial platform using Svelte, React.js, and Node.js serving 500+ users.",
+      "Improved the user experience for the Gigsasa user platform.",
+      "Worked as Workday Analyst (HCM): wrote integration reports, diagnosed tenant system issues, learned Workday Integration.",
+      "Collaborated on KPI development and aligned tech solutions with business objectives.",
+      "Supported client onboarding and smooth transitions to new technologies.",
     ],
-    stack: ["Vue.js", "Svelte", "Svelte Native", "Node.js", "JavaScript", "Python"],
+    stack: ["Svelte", "React.js", "Node.js", "Workday HCM", "JavaScript"],
   },
   {
-    role: "Computer Science Student & Academic Nominee",
-    company: "Kibabii University",
-    period: "2019 — 2023",
-    location: "Bungoma, Kenya",
+    role: "Full-Stack Developer (Subcontracted)",
+    company: "G-Roll / via UK client for Gigsasa Ltd",
+    period: "Sep 2022 — Apr 2023",
+    location: "Nairobi, Kenya",
     description:
-      "Studied Computer Science and served as SCAI Academic Nominee Aspirant — organizing academic initiatives and leading peer developer communities.",
+      "Built G-Roll, a Kenya-based HR and payroll management system, subcontracted via a UK client on behalf of Gigsasa Ltd.",
     highlights: [
-      "Served as SCAI Academic Nominee Aspirant for the 2021/2022 academic year.",
-      "Founded and contributed to student-led developer communities and hackathons.",
-      "Self-taught modern web frameworks alongside coursework — React, Angular, Svelte, Vue.",
+      "Built G-Roll, a Kenya-based HR and payroll management system, as a subcontracted project.",
+      "Coordinated business, management, and data teams to implement KPIs aligned with HR and payroll operations.",
     ],
-    stack: ["JavaScript", "Python", "Java", "Data Structures", "Algorithms"],
+    stack: ["JavaScript", "Node.js", "React", "HR/Payroll Domain"],
+  },
+  {
+    role: "Cyber Security Consultant",
+    company: "Opteamio Ltd",
+    period: "Sep 2022 — Feb 2023",
+    location: "United Kingdom (Remote)",
+    description:
+      "Led a 3-person team delivering an ISMS project and guiding other companies through ISO certification.",
+    highlights: [
+      "Led a team of three in implementing an ISMS project for the company.",
+      "Guided other companies through ISO certification processes.",
+      "Conducted software security assessments for company products.",
+    ],
+    stack: ["ISMS", "ISO Certification", "Security Assessment", "Network Security"],
+  },
+  {
+    role: "IT Support Engineer",
+    company: "Gigsasa Ltd",
+    period: "Jan 2023 — Jun 2023",
+    location: "Nairobi, Kenya",
+    description:
+      "Provided first-line technical support to end-users — diagnosing and resolving hardware, software, and network issues.",
+    highlights: [
+      "Diagnosed and resolved hardware, software, and network issues for end-users.",
+      "Installed, configured, and maintained workstations, peripherals, software, and network infrastructure.",
+      "Managed user accounts and access permissions in Active Directory.",
+      "Maintained accurate records of support requests, solutions, and system configurations.",
+    ],
+    stack: ["Active Directory", "Hardware", "Networking", "Windows", "IT Support"],
+  },
+  {
+    role: "IT Support",
+    company: "TheJitu.com",
+    period: "Aug 2022 — Dec 2022",
+    location: "Nyeri, Kenya",
+    description:
+      "Collaborated with the testing team and delivered end-user training and remote support.",
+    highlights: [
+      "Collaborated with the software testing team to identify bugs and vulnerabilities before client delivery.",
+      "Delivered end-user training on IT resources, software, and hardware.",
+      "Provided remote support using desktop tools in distributed work environments.",
+    ],
+    stack: ["Software Testing", "Remote Support", "User Training"],
   },
 ];
+
+// Community & Volunteering — recruiters value this for culture-fit signal
+export type Community = {
+  role: string;
+  org: string;
+  period: string;
+  location: string;
+  description: string;
+};
+
+export const community: Community[] = [
+  {
+    role: "Developer Advocate",
+    org: "Lux Tech Academy",
+    period: "May 2021 — Present",
+    location: "Nairobi, Kenya",
+    description:
+      "Help developers learn tools and technologies at Lux DevHQ; mentor front-end students through their learning journey.",
+  },
+  {
+    role: "Campus Ambassador & Cybersecurity Analyst",
+    org: "She Hacks KE",
+    period: "Apr 2021 — Feb 2023",
+    location: "Nairobi, Kenya",
+    description:
+      "Organized campus cybersecurity programmes and tested products pre-production for security vulnerabilities.",
+  },
+  {
+    role: "Mobile Web Specialist Mentor",
+    org: "Andela Community",
+    period: "2021",
+    location: "Nairobi, Kenya",
+    description:
+      "Mentored web-track students and served as a panel judge during project reviews.",
+  },
+];
+
+// Education
+export const education = {
+  degree: "BSc. Information Technology",
+  school: "Kibabii University",
+  period: "2018 — 2023",
+  gpa: "3.4",
+  location: "Kenya",
+};
 
 export type Project = {
   name: string;
@@ -376,23 +500,23 @@ export const talks: Talk[] = [
   {
     title: "Server Components: The Epic Tale of Rendering UX",
     abstract:
-      "A fun, story-driven talk tracing how we moved from client-side rendering to SSR and finally to React Server Components. Covers the 0-JS-bundle benefit, a live demo comparing CSR/SSR/RSC, performance analysis, and my take on the future of UI rendering.",
-    topics: ["React", "Server Components", "SSR", "Performance"],
+      "A story-driven talk tracing the move from client-side rendering to SSR and finally to React/Next.js Server Components. Covers the 0-JS-bundle benefit, a live demo comparing CSR/SSR/RSC, performance analysis, and my take on the future of UI rendering.",
+    topics: ["Next.js", "Server Components", "SSR", "Performance"],
     venue: "Community / Conference Talk",
   },
   {
-    title: "Everyone Can Easily Write Tests",
+    title: "Angular at Scale: Patterns That Survive Growth",
     abstract:
-      "A practical session showing how Playwright's Codegen generates end-to-end tests from user interactions. Covers UI Mode for better DX, tips to avoid flaky tests, and how to scale tests on CI using shards and debugging strategies.",
-    topics: ["Playwright", "E2E Testing", "CI/CD", "DX"],
-    venue: "Community / Workshop",
+      "A practical session on structuring large Angular applications — module boundaries, lazy loading, state management, and testing strategies that hold up as teams and features grow.",
+    topics: ["Angular", "Architecture", "Scaling", "Testing"],
+    venue: "Community / Conference Talk",
   },
   {
-    title: "Showcasing Real-World Mobile Apps Built with Svelte Native",
+    title: "API Security: Defending the Front Door",
     abstract:
-      "An inspiring tour through real-world mobile apps built with Svelte Native — highlighting the framework's elegance, efficiency, and cross-platform capabilities across diverse app scenarios.",
-    topics: ["Svelte Native", "Mobile", "Cross-Platform"],
-    venue: "Concept Paper / Talk",
+      "A security-focused talk covering common API vulnerabilities — broken auth, mass assignment, injection — and the defensive patterns (rate limiting, schema validation, least-privilege tokens) that keep production APIs safe.",
+    topics: ["API Security", "Authentication", "OWASP", "Backend"],
+    venue: "Community / Conference Talk",
   },
 ];
 
@@ -410,8 +534,30 @@ export const certifications: Certification[] = [
     issuer: "Quickbase University",
     description:
       "Certified as a Professional Builder on the Quickbase ESP platform — demonstrating proficiency in building scalable low-code business applications, workflows, and integrations.",
-    date: "2024",
+    date: "Certified",
     credentialUrl: "https://www.linkedin.com/posts/roywanyoike_quickbase-quickbaseuniversity-activity-7378721729277308928-Yrnb",
+  },
+  {
+    title: "Microsoft Azure / Cloud Computing",
+    issuer: "Microsoft",
+    description:
+      "Microsoft 365 Student Trainee (2021–2022) — cloud computing fundamentals and Microsoft 365 administration.",
+    date: "2021–2022",
+  },
+  {
+    title: "Data Engineering with Python",
+    issuer: "Packt",
+    description:
+      "Currently in progress — covering ETL pipelines, data lakes, and stream processing patterns in Python.",
+    date: "In Progress",
+    credentialUrl: "https://github.com/Roy-Wanyoike/Data-Engineering-with-Python",
+  },
+  {
+    title: "Ruby Programming for Backend",
+    issuer: "Self-study",
+    description:
+      "Currently in progress — building backend Ruby skills to round out my language toolkit.",
+    date: "In Progress",
   },
   {
     title: "GitHub Developer Program Member",
@@ -420,14 +566,6 @@ export const certifications: Certification[] = [
       "Active member of the GitHub Developer Program — building integrations, contributing to open source, and engaging with the broader GitHub developer community.",
     date: "Ongoing",
     credentialUrl: "https://github.com/Roy-Wanyoike",
-  },
-  {
-    title: "Data Engineering with Python",
-    issuer: "Packt",
-    description:
-      "Completed the comprehensive Data Engineering with Python course covering ETL pipelines, data lakes, and stream processing patterns.",
-    date: "2022",
-    credentialUrl: "https://github.com/Roy-Wanyoike/Data-Engineering-with-Python",
   },
   {
     title: "90 Days of DevOps",
@@ -439,10 +577,20 @@ export const certifications: Certification[] = [
   },
 ];
 
+// Publications — recruiters value authorship signals
+export const publications = [
+  {
+    title: "Beyond Data Risk",
+    type: "Technical Article",
+    description:
+      "A published technical article exploring data risk, security, and how engineering teams can move beyond reactive controls toward proactive resilience.",
+  },
+];
+
 export const stats = [
   { label: "Years Experience", value: "3+" },
-  { label: "GitHub Repos", value: "108" },
-  { label: "GitHub Followers", value: "93" },
+  { label: "API req/day", value: "10k+" },
+  { label: "Uptime", value: "99.9%" },
   { label: "Conference Talks", value: "20+" },
 ];
 
@@ -451,7 +599,7 @@ export const navLinks = [
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
   { label: "Experience", href: "#experience" },
-  { label: "Philosophy", href: "#philosophy" },
+  { label: "Community", href: "#community" },
   { label: "Speaking", href: "#speaking" },
   { label: "Certifications", href: "#certifications" },
   { label: "Contact", href: "#contact" },

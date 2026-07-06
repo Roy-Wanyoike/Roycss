@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
+import { type Metadata } from "next";
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import "./roycss.css";
 import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = Geist({
@@ -20,85 +21,28 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Royford Wanyoike Wamaitha — Software Engineer | Quickbase Solutions Engineer",
+  title: "RoyCSS — Beautiful CSS Effects Library with Live Demos",
   description:
-    "Nairobi-based Software Engineer and Technical Support professional with 3+ years building, debugging, and supporting full-stack apps and enterprise systems. Quickbase Professional Builder, HIPAA-compliant healthcare experience, 20x+ conference speaker.",
+    "A curated collection of 35+ production-ready CSS effects by Roy Wanyoike. Animations, hover effects, text effects, loaders, 3D transforms, buttons, and cards — all with live demonstrations and copy-paste code.",
   keywords: [
-    "Royford Wanyoike",
-    "Roy Wanyoike Wamaitha",
-    "Software Engineer Nairobi",
-    "Quickbase Solutions Engineer",
-    "Developer Advocate Kenya",
-    "Technical Support Engineer",
-    "Temporal.io",
-    "Supabase",
-    "HIPAA healthcare",
-    "React",
-    "Next.js",
-    "Node.js",
-    "Angular",
-    "Workday HCM",
+    "RoyCSS",
+    "CSS effects library",
+    "CSS animations",
+    "hover effects",
+    "CSS text effects",
+    "glassmorphism",
+    "neon effects",
+    "CSS loaders",
+    "3D CSS transforms",
+    "Roy Wanyoike",
+    "CSS library",
   ],
   authors: [{ name: "Royford Wanyoike Wamaitha" }],
   openGraph: {
-    title: "Royford Wanyoike Wamaitha — Software Engineer | Quickbase Solutions Engineer",
+    title: "RoyCSS — Beautiful CSS Effects Library",
     description:
-      "Building, debugging, and supporting full-stack apps and enterprise systems from Nairobi, Kenya — including HIPAA-compliant healthcare solutions.",
+      "Production-ready CSS effects with live demonstrations and copy-paste code. 35+ effects across 8 categories.",
     type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Royford Wanyoike Wamaitha — Software Engineer | Quickbase Solutions Engineer",
-    description:
-      "Building, debugging, and supporting full-stack apps and enterprise systems from Nairobi, Kenya.",
-  },
-};
-
-// JSON-LD Person schema — helps recruiters find Royford via Google/search engines
-const personJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Royford Wanyoike Wamaitha",
-  jobTitle: "Software Engineer | Quickbase Solutions Engineer | Developer Advocate",
-  description:
-    "Software Engineer and Technical Support professional with 3+ years building, debugging, and supporting full-stack applications and enterprise systems. Quickbase Professional Builder certified. HIPAA-compliant healthcare experience. 20+ conference talks.",
-  email: "mailto:roywanyoike328@gmail.com",
-  telephone: "+254706103000",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Nairobi",
-    addressCountry: "Kenya",
-  },
-  knowsAbout: [
-    "Quickbase",
-    "Temporal.io",
-    "Supabase",
-    "React",
-    "Next.js",
-    "Node.js",
-    "Angular",
-    "Svelte",
-    "Workday HCM",
-    "Active Directory",
-    "HIPAA",
-    "Developer Advocacy",
-    "Technical Speaking",
-  ],
-  sameAs: [
-    "https://www.linkedin.com/in/roywanyoike/",
-    "https://github.com/Roy-Wanyoike",
-    "https://x.com/WanyoikeRoyford",
-    "https://sessionize.com/royford-wanyoike",
-    "https://linktr.ee/roywanyoike",
-    "https://public.tableau.com/app/profile/royford.wanyoike",
-  ],
-  worksFor: {
-    "@type": "Organization",
-    name: "Imminent Transcendent Solutions",
-  },
-  alumniOf: {
-    "@type": "CollegeOrUniversity",
-    name: "Kibabii University",
   },
 };
 
@@ -112,10 +56,6 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} antialiased bg-background text-foreground`}
       >
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
-        />
         {children}
         <Toaster />
       </body>

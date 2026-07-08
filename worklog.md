@@ -296,3 +296,30 @@ Stage Summary:
 - Features: live demos, copy-paste CSS code, search, category filtering, dark/light mode, responsive grid
 - All effects have complete CSS code ready to copy and use
 - Zero lint errors, clean compilation
+
+---
+Task ID: 2
+Agent: Main Agent
+Task: Add animations and motions inspired by animos.app and tailwindcss.com
+
+Work Log:
+- Created `/src/components/roycss/motion-primitives.tsx` with 14 reusable motion components
+- Added new CSS to `/src/app/roycss.css` for marquee, animated gradient text, shine border, scroll progress bar, spotlight background, shimmer text, fade mask
+- Enhanced hero section with word-by-word TextReveal, AnimatedGradientText, Floating logo, MagneticButton for CTA, parallax background blobs
+- Added ScrollProgress bar at top of page (gradient, spring-animated)
+- Added CursorGlow follower effect (desktop only, radial gradient follows mouse)
+- Added Marquee strip with category names scrolling infinitely (pause on hover)
+- Added FeaturedShowcase section with 4 large TiltCard demos (Gradient Text, Glassmorphism, Aurora, Shine Sweep)
+- Added AnimatedCounter stats (count up on scroll into view via IntersectionObserver)
+- Added SectionHeading with TextReveal for sections
+- Added StaggerGroup wrapper for effect grid (staggered reveal animations)
+- Added CTA banner section with ShineBorder (rotating gradient ring) and MagneticButton
+- Applied whileHover lift effect to effect cards
+- Fixed AnimatedCounter to use IntersectionObserver instead of useInView (more reliable)
+- Verified all features with Agent Browser: counters animate (43/8/~2500+), filtering works, search works, copy works, theme toggle works, all sections render
+
+Stage Summary:
+- Added 14 motion primitives: ScrollReveal, StaggerGroup, TextReveal, MagneticButton, TiltCard, AnimatedCounter, Marquee, CursorGlow, Parallax, AnimatedGradientText, Floating, ShineBorder, StatCounter, SectionHeading
+- Page now has: scroll progress bar, cursor glow follower, parallax hero blobs, word-by-word text reveal, animated gradient text, magnetic buttons, tilt cards, marquee strip, featured showcase, animated counters, staggered grid reveals, shine border CTA
+- Zero lint errors, no runtime errors
+- All interactivity verified: search, filter, copy code, theme toggle

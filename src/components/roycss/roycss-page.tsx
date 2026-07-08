@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   Search,
   Sun,
@@ -12,6 +12,7 @@ import {
   Package,
   X,
   ChevronDown,
+  ChevronRight,
   Layers,
   Play,
   Type,
@@ -20,6 +21,10 @@ import {
   MousePointer,
   MousePointerClick,
   Square,
+  ArrowRight,
+  Star,
+  Code2,
+  Wand2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,7 +37,25 @@ import {
   type EffectCategory,
 } from "@/lib/roycss-effects";
 import { EffectCard } from "@/components/roycss/effect-card";
-import { motion } from "framer-motion";
+import { motion, useScroll, useSpring } from "framer-motion";
+import {
+  ScrollReveal,
+  StaggerGroup,
+  TextReveal,
+  MagneticButton,
+  TiltCard,
+  AnimatedCounter,
+  Marquee,
+  CursorGlow,
+  Parallax,
+  AnimatedGradientText,
+  Floating,
+  ShineBorder,
+  StatCounter,
+  SectionHeading,
+  staggerContainer,
+  staggerItem,
+} from "@/components/roycss/motion-primitives";
 
 /* ─── Icon map for categories ───────────────────────────────── */
 const catIcons: Record<EffectCategory, React.ComponentType<{ className?: string }>> = {
@@ -45,6 +68,22 @@ const catIcons: Record<EffectCategory, React.ComponentType<{ className?: string 
   buttons: MousePointerClick,
   cards: Square,
 };
+
+/* ─── Scroll Progress Bar ───────────────────────────────────── */
+function ScrollProgress() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 30,
+    restDelta: 0.001,
+  });
+  return (
+    <motion.div
+      style={{ scaleX }}
+      className="roycss-scroll-progress"
+    />
+  );
+}
 
 /* ─── Theme Toggle ──────────────────────────────────────────── */
 function ThemeToggle() {
@@ -106,29 +145,6 @@ function CategoryPill({
   );
 }
 
-/* ─── Stats Bar ─────────────────────────────────────────────── */
-function StatsBar() {
-  const stats = [
-    { label: "Effects", value: effects.length, icon: Sparkles },
-    { label: "Categories", value: categoryOrder.length, icon: BookOpen },
-    { label: "Lines of CSS", value: "~2,500+", icon: Zap },
-  ];
-  return (
-    <div className="flex flex-wrap items-center justify-center gap-6 text-center">
-      {stats.map((s) => {
-        const Icon = s.icon;
-        return (
-          <div key={s.label} className="flex items-center gap-2">
-            <Icon className="size-4 text-primary" />
-            <span className="font-display font-bold text-foreground">{s.value}</span>
-            <span className="text-xs text-muted-foreground hidden sm:inline">{s.label}</span>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
 /* ─── Install Command ───────────────────────────────────────── */
 function InstallCommand() {
   const [copied, setCopied] = useState(false);
@@ -143,27 +159,163 @@ function InstallCommand() {
   };
 
   return (
-    <div
-      className="inline-flex items-center gap-2 rounded-xl glass-strong px-4 py-2.5 group cursor-pointer hover:border-primary/30 transition-all"
-      onClick={handleCopy}
+    <MagneticButton
+      strength={0.25}
+      className="inline-block"
     >
-      <span className="text-sm font-mono text-muted-foreground">$</span>
-      <code className="text-sm font-mono text-foreground">npm install roycss</code>
-      <button
-        className="text-muted-foreground hover:text-foreground transition-colors ml-2 cursor-pointer"
-        aria-label="Copy install command"
+      <div
+        className="inline-flex items-center gap-2 rounded-xl glass-strong px-4 py-2.5 group cursor-pointer hover:border-primary/30 transition-all"
+        onClick={handleCopy}
       >
-        {copied ? (
-          <span className="text-xs text-emerald-500 font-medium">Copied!</span>
-        ) : (
-          <svg className="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <rect x="9" y="9" width="13" height="13" rx="2" strokeWidth="2" />
-            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" strokeWidth="2" />
-          </svg>
-        )}
-      </button>
+        <span className="text-sm font-mono text-muted-foreground">$</span>
+        <code className="text-sm font-mono text-foreground">npm install roycss</code>
+        <button
+          className="text-muted-foreground hover:text-foreground transition-colors ml-2 cursor-pointer"
+          aria-label="Copy install command"
+        >
+          {copied ? (
+            <span className="text-xs text-emerald-500 font-medium">Copied!</span>
+          ) : (
+            <svg className="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <rect x="9" y="9" width="13" height="13" rx="2" strokeWidth="2" />
+              <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" strokeWidth="2" />
+            </svg>
+          )}
+        </button>
+      </div>
+    </MagneticButton>
+  );
+}
+
+/* ─── Marquee Item ──────────────────────────────────────────── */
+function MarqueeItem({ icon: Icon, label }: { icon: React.ComponentType<{ className?: string }>; label: string }) {
+  return (
+    <div className="flex items-center gap-2.5 px-5 py-2.5 rounded-2xl glass shrink-0">
+      <Icon className="size-4 text-primary" />
+      <span className="font-display font-semibold text-sm text-foreground whitespace-nowrap">
+        {label}
+      </span>
+      <Star className="size-3 text-primary/40" />
     </div>
   );
+}
+
+/* ─── Featured Showcase Card ────────────────────────────────── */
+function FeaturedShowcase() {
+  const featuredEffects = effects.filter((e) =>
+    ["text-gradient", "card-glassmorphism", "bg-aurora", "btn-shine-sweep"].includes(e.id)
+  );
+
+  return (
+    <section className="py-16 sm:py-20 relative overflow-hidden">
+      <div className="absolute inset-0 -z-10 bg-grid opacity-20 roycss-fade-mask-b" />
+      <div className="container mx-auto px-4 sm:px-6">
+        <SectionHeading
+          eyebrow="Hand-picked highlights"
+          title="Featured Effects"
+          subtitle="A curated selection of our most-loved effects, showcased in larger interactive demos."
+        />
+
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-5">
+          {featuredEffects.map((effect, i) => (
+            <ScrollReveal key={effect.id} delay={i * 0.1}>
+              <TiltCard
+                maxTilt={8}
+                className="rounded-3xl border border-border bg-card overflow-hidden h-full hover:border-primary/40 transition-colors"
+              >
+                <div className="grid sm:grid-cols-2">
+                  {/* Preview */}
+                  <div className="relative h-56 sm:h-full min-h-[14rem] bg-gradient-to-br from-muted/60 to-muted/20 flex items-center justify-center p-6">
+                    <FeaturedPreview id={effect.id} name={effect.name} />
+                  </div>
+                  {/* Info */}
+                  <div className="p-6 flex flex-col">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge variant="secondary" className="text-[10px] bg-primary/10 text-primary border-primary/20">
+                        <Star className="size-2.5 mr-1 fill-primary" />
+                        Featured
+                      </Badge>
+                      <Badge variant="outline" className="text-[10px] capitalize">
+                        {categoryMeta[effect.category].label}
+                      </Badge>
+                    </div>
+                    <h3 className="font-display text-xl font-bold text-foreground">
+                      {effect.name}
+                    </h3>
+                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">
+                      {effect.description}
+                    </p>
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {effect.tags.slice(0, 4).map((tag) => (
+                        <Badge
+                          key={tag}
+                          variant="secondary"
+                          className="text-[10px] px-1.5 py-0 bg-muted/80 text-muted-foreground"
+                        >
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                    <button
+                      onClick={() =>
+                        document.querySelector("#effects")?.scrollIntoView({ behavior: "smooth" })
+                      }
+                      className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:gap-2.5 transition-all cursor-pointer w-fit"
+                    >
+                      View all effects
+                      <ArrowRight className="size-3.5" />
+                    </button>
+                  </div>
+                </div>
+              </TiltCard>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Featured Preview (larger, more dramatic) ──────────────── */
+function FeaturedPreview({ id, name }: { id: string; name: string }) {
+  if (id === "text-gradient") {
+    return (
+      <div className="text-center">
+        <div className="roycss-animated-gradient-text font-display text-4xl sm:text-5xl font-bold">
+          RoyCSS
+        </div>
+        <p className="mt-2 text-xs text-muted-foreground">Animated gradient text</p>
+      </div>
+    );
+  }
+  if (id === "card-glassmorphism") {
+    return (
+      <div className="roycss-card-glass p-6 w-full max-w-xs">
+        <div className="size-10 rounded-xl bg-primary/30 mb-3" />
+        <div className="h-3 w-3/4 rounded-full bg-foreground/20 mb-2" />
+        <div className="h-3 w-1/2 rounded-full bg-foreground/10" />
+        <p className="mt-3 text-xs text-muted-foreground">{name}</p>
+      </div>
+    );
+  }
+  if (id === "bg-aurora") {
+    return (
+      <div className="roycss-bg-aurora w-full h-full rounded-2xl flex items-center justify-center min-h-[12rem]">
+        <span className="font-display font-bold text-2xl text-white/90 relative z-10">Aurora</span>
+      </div>
+    );
+  }
+  if (id === "btn-shine-sweep") {
+    return (
+      <div className="flex flex-col items-center gap-3">
+        <button className="roycss-btn-shine bg-primary text-primary-foreground px-8 py-3 rounded-xl font-medium shadow-lg shadow-primary/20">
+          Shine Sweep
+        </button>
+        <p className="text-xs text-muted-foreground">Hover the button</p>
+      </div>
+    );
+  }
+  return null;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -189,14 +341,20 @@ export default function RoyCSSPage() {
     effects.filter((e) => e.category === cat).length;
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
+    <div className="min-h-screen flex flex-col bg-background text-foreground relative">
+      {/* Cursor glow follower (desktop only) */}
+      <CursorGlow />
+
+      {/* Scroll progress bar */}
+      <ScrollProgress />
+
       {/* ─── Hero ──────────────────────────────────────────── */}
       <section className="relative overflow-hidden pt-20 pb-12 sm:pt-28 sm:pb-16">
         {/* Background effects */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
-          <div className="absolute top-[-10%] left-[-5%] size-[40rem] rounded-full bg-primary/15 blur-3xl animate-blob" />
-          <div className="absolute top-[20%] right-[-10%] size-[35rem] rounded-full bg-emerald-500/8 blur-3xl animate-blob animation-delay-2000" />
-          <div className="absolute bottom-[-15%] left-[30%] size-[30rem] rounded-full bg-teal-500/8 blur-3xl animate-blob animation-delay-4000" />
+          <Parallax offset={60} className="absolute top-[-10%] left-[-5%] size-[40rem] rounded-full bg-primary/15 blur-3xl animate-blob" />
+          <Parallax offset={40} className="absolute top-[20%] right-[-10%] size-[35rem] rounded-full bg-emerald-500/8 blur-3xl animate-blob animation-delay-2000" />
+          <Parallax offset={80} className="absolute bottom-[-15%] left-[30%] size-[30rem] rounded-full bg-teal-500/8 blur-3xl animate-blob animation-delay-4000" />
           <div className="absolute inset-0 bg-grid opacity-30" />
           <div className="absolute inset-0 bg-gradient-to-b from-background/0 via-background/40 to-background" />
         </div>
@@ -204,19 +362,31 @@ export default function RoyCSSPage() {
         <div className="container mx-auto px-4 sm:px-6">
           {/* Nav bar */}
           <nav className="flex items-center justify-between mb-16 sm:mb-20">
-            <div className="flex items-center gap-2.5">
-              <div className="size-9 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
-                <Sparkles className="size-4.5 text-primary-foreground" />
-              </div>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center gap-2.5"
+            >
+              <Floating duration={5} distance={4}>
+                <div className="size-9 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
+                  <Sparkles className="size-4.5 text-primary-foreground" />
+                </div>
+              </Floating>
               <span className="font-display font-bold text-lg text-foreground">
                 Roy<span className="text-primary">CSS</span>
               </span>
               <Badge variant="secondary" className="text-[10px] px-1.5 py-0 bg-primary/10 text-primary border-primary/20 font-semibold">
                 v1.0
               </Badge>
-            </div>
+            </motion.div>
 
-            <div className="flex items-center gap-2">
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center gap-2"
+            >
               <ThemeToggle />
               <a
                 href="https://github.com/Roy-Wanyoike"
@@ -227,79 +397,102 @@ export default function RoyCSSPage() {
               >
                 <Github className="size-4" />
               </a>
-            </div>
+            </motion.div>
           </nav>
 
           {/* Hero content */}
           <div className="text-center max-w-3xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 rounded-full glass px-3 py-1.5 text-xs sm:text-sm font-medium text-primary mb-6"
-            >
-              <Package className="size-3.5" />
-              A CSS effect library by Roy Wanyoike
-            </motion.div>
+            <ScrollReveal y={16}>
+              <div className="inline-flex items-center gap-2 rounded-full glass px-3 py-1.5 text-xs sm:text-sm font-medium text-primary mb-6">
+                <motion.span
+                  animate={{ scale: [1, 1.3, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="size-1.5 rounded-full bg-primary"
+                />
+                <Package className="size-3.5" />
+                A CSS effect library by Roy Wanyoike
+              </div>
+            </ScrollReveal>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.05 }}
-              className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.08]"
-            >
-              <span className="block text-foreground">Beautiful CSS</span>
-              <span className="block text-gradient mt-1">Effects Library</span>
-            </motion.h1>
+            <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.08]">
+              <span className="block text-foreground">
+                <TextReveal text="Beautiful CSS" />
+              </span>
+              <span className="block mt-1">
+                <AnimatedGradientText className="font-display font-bold">
+                  <TextReveal text="Effects Library" delay={0.3} />
+                </AnimatedGradientText>
+              </span>
+            </h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="mt-5 max-w-xl mx-auto text-base sm:text-lg text-muted-foreground leading-relaxed"
-            >
-              A curated collection of production-ready CSS effects with live demonstrations
-              and copy-paste code. Animations, hover effects, text effects, and more.
-            </motion.p>
+            <ScrollReveal delay={0.5}>
+              <p className="mt-5 max-w-xl mx-auto text-base sm:text-lg text-muted-foreground leading-relaxed">
+                A curated collection of production-ready CSS effects with live demonstrations
+                and copy-paste code. Animations, hover effects, text effects, and more.
+              </p>
+            </ScrollReveal>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.25 }}
-              className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4"
-            >
-              <InstallCommand />
-              <Button
-                size="lg"
-                onClick={() =>
-                  document.querySelector("#effects")?.scrollIntoView({ behavior: "smooth" })
-                }
-                className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20 h-11 px-6"
-              >
-                Explore Effects
-                <ChevronDown className="size-4 ml-1" />
-              </Button>
-            </motion.div>
+            <ScrollReveal delay={0.6}>
+              <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <InstallCommand />
+                <MagneticButton strength={0.3} className="inline-block">
+                  <Button
+                    size="lg"
+                    onClick={() =>
+                      document.querySelector("#effects")?.scrollIntoView({ behavior: "smooth" })
+                    }
+                    className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20 h-11 px-6"
+                  >
+                    Explore Effects
+                    <ChevronDown className="size-4 ml-1" />
+                  </Button>
+                </MagneticButton>
+              </div>
+            </ScrollReveal>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.35 }}
-              className="mt-10"
-            >
-              <StatsBar />
-            </motion.div>
+            {/* Animated stats counters */}
+            <ScrollReveal delay={0.7}>
+              <div className="mt-10 grid grid-cols-3 gap-3 max-w-2xl mx-auto">
+                <StatCounter icon={Sparkles} value={effects.length} label="Effects" />
+                <StatCounter icon={BookOpen} value={categoryOrder.length} label="Categories" />
+                <StatCounter icon={Zap} value={2500} label="Lines of CSS" suffix="+" prefix="~" />
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
+
+      {/* ─── Marquee Strip ──────────────────────────────────── */}
+      <div className="py-6 border-y border-border/40 bg-card/30 backdrop-blur-sm overflow-hidden">
+        <Marquee speed={35}>
+          {categoryOrder.map((cat) => (
+            <MarqueeItem
+              key={cat}
+              icon={catIcons[cat]}
+              label={categoryMeta[cat].label}
+            />
+          ))}
+        </Marquee>
+      </div>
+
+      {/* ─── Featured Showcase ──────────────────────────────── */}
+      <FeaturedShowcase />
 
       <Separator className="opacity-50" />
 
       {/* ─── Effects Section ────────────────────────────────── */}
       <section id="effects" className="flex-1 py-10 sm:py-14">
         <div className="container mx-auto px-4 sm:px-6">
+          {/* Section heading */}
+          <SectionHeading
+            eyebrow="Browse the collection"
+            title="All Effects"
+            subtitle="Filter by category or search by name, description, or tag. Click any card to view its CSS code."
+            className="mb-10"
+          />
+
           {/* Search */}
-          <div className="max-w-md mx-auto mb-8">
+          <ScrollReveal className="max-w-md mx-auto mb-8">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
               <Input
@@ -317,10 +510,10 @@ export default function RoyCSSPage() {
                 </button>
               )}
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Category pills */}
-          <div className="mb-8 overflow-x-auto scrollbar-thin pb-2">
+          <ScrollReveal delay={0.1} className="mb-8 overflow-x-auto scrollbar-thin pb-2">
             <div className="flex items-center gap-2 min-w-max px-1">
               <button
                 onClick={() => setActiveCategory("all")}
@@ -350,10 +543,10 @@ export default function RoyCSSPage() {
                 />
               ))}
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Results count */}
-          <div className="mb-6 flex items-center justify-between">
+          <ScrollReveal delay={0.15} className="mb-6 flex items-center justify-between">
             <p className="text-sm text-muted-foreground">
               Showing{" "}
               <span className="font-semibold text-foreground">{filteredEffects.length}</span>{" "}
@@ -375,15 +568,15 @@ export default function RoyCSSPage() {
                 </span>
               )}
             </p>
-          </div>
+          </ScrollReveal>
 
-          {/* Effects Grid */}
+          {/* Effects Grid with stagger reveal */}
           {filteredEffects.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
-              {filteredEffects.map((effect, i) => (
-                <EffectCard key={effect.id} effect={effect} index={i} />
+            <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
+              {filteredEffects.map((effect) => (
+                <EffectCard key={effect.id} effect={effect} index={0} />
               ))}
-            </div>
+            </StaggerGroup>
           ) : (
             <motion.div
               initial={{ opacity: 0 }}
@@ -411,6 +604,62 @@ export default function RoyCSSPage() {
               </Button>
             </motion.div>
           )}
+        </div>
+      </section>
+
+      {/* ─── CTA Banner ─────────────────────────────────────── */}
+      <section className="py-16 sm:py-20">
+        <div className="container mx-auto px-4 sm:px-6">
+          <ScrollReveal>
+            <ShineBorder className="max-w-4xl mx-auto rounded-3xl bg-card overflow-hidden">
+              <div className="p-8 sm:p-12 text-center">
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                  className="inline-flex size-14 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-4"
+                >
+                  <Wand2 className="size-7" />
+                </motion.div>
+                <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground">
+                  <TextReveal text="Ready to build something beautiful?" />
+                </h2>
+                <ScrollReveal delay={0.2}>
+                  <p className="mt-3 text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
+                    Copy any effect&apos;s CSS, paste it into your project, and ship delightful
+                    interfaces in minutes — no dependencies required.
+                  </p>
+                </ScrollReveal>
+                <ScrollReveal delay={0.3}>
+                  <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <MagneticButton strength={0.25} className="inline-block">
+                      <Button
+                        size="lg"
+                        onClick={() =>
+                          document.querySelector("#effects")?.scrollIntoView({ behavior: "smooth" })
+                        }
+                        className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20 h-11 px-6"
+                      >
+                        <Code2 className="size-4" />
+                        Browse all {effects.length} effects
+                      </Button>
+                    </MagneticButton>
+                    <a
+                      href="https://github.com/Roy-Wanyoike"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 h-11 px-6 rounded-xl glass text-foreground hover:border-primary/30 transition-all font-medium text-sm"
+                    >
+                      <Github className="size-4" />
+                      Star on GitHub
+                      <ChevronRight className="size-3.5" />
+                    </a>
+                  </div>
+                </ScrollReveal>
+              </div>
+            </ShineBorder>
+          </ScrollReveal>
         </div>
       </section>
 

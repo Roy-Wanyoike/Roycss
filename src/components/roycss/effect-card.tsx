@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Copy, Check, ChevronDown, ChevronUp, Code2, Eye } from "lucide-react";
+import { staggerItem } from "@/components/roycss/motion-primitives";
 import type { CSSEffect } from "@/lib/roycss-effects";
 import { Badge } from "@/components/ui/badge";
 
@@ -240,10 +241,9 @@ export function EffectCard({ effect, index }: { effect: CSSEffect; index: number
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: Math.min(index * 0.04, 0.4) }}
-      className="group rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/30 transition-all duration-300"
+      variants={staggerItem}
+      whileHover={{ y: -6, transition: { duration: 0.25 } }}
+      className="group rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300"
     >
       {/* Preview Area */}
       <div className="relative h-48 bg-gradient-to-br from-muted/50 to-muted/30 overflow-hidden">

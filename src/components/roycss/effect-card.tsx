@@ -262,7 +262,15 @@ function BackgroundPreview({
    EFFECT CARD COMPONENT
    ═══════════════════════════════════════════════════════════════ */
 
-export function EffectCard({ effect, index }: { effect: CSSEffect; index: number }) {
+export function EffectCard({
+  effect,
+  index,
+  onClick,
+}: {
+  effect: CSSEffect;
+  index: number;
+  onClick?: (effect: CSSEffect) => void;
+}) {
   const [showCode, setShowCode] = useState(false);
   const [copied, setCopied] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -285,7 +293,8 @@ export function EffectCard({ effect, index }: { effect: CSSEffect; index: number
       animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 24, scale: 0.96 }}
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -6, transition: { duration: 0.25 } }}
-      className="group rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300"
+      onClick={() => onClick?.(effect)}
+      className="group rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 cursor-pointer"
     >
       {/* Preview Area */}
       <div className="relative h-48 bg-gradient-to-br from-muted/50 to-muted/30 overflow-hidden">
@@ -339,7 +348,10 @@ export function EffectCard({ effect, index }: { effect: CSSEffect; index: number
 
         {/* Code Toggle */}
         <button
-          onClick={() => setShowCode(!showCode)}
+          onClick={(e) => {
+            e.stopPropagation();
+            setShowCode(!showCode);
+          }}
           className="mt-3 flex items-center gap-1.5 text-xs text-primary hover:text-primary/80 transition-colors font-medium cursor-pointer"
         >
           {showCode ? (
@@ -366,7 +378,10 @@ export function EffectCard({ effect, index }: { effect: CSSEffect; index: number
           >
             <div className="relative rounded-xl bg-muted/80 border border-border/50 overflow-hidden">
               <button
-                onClick={handleCopy}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleCopy();
+                }}
                 className="absolute top-2 right-2 flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-medium bg-background/90 border border-border/50 text-muted-foreground hover:text-foreground hover:bg-background transition-all z-10 cursor-pointer"
                 aria-label="Copy CSS code"
               >

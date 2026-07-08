@@ -687,3 +687,38 @@ Stage Summary:
 - Logo integrated into nav, hero, footer; favicon set
 - Logo demonstrates the library's own CSS effects (meta branding — a CSS effects library with a CSS-animated logo)
 - Zero lint errors, zero runtime errors
+
+---
+Task ID: 7
+Agent: Main Agent
+Task: Build interactive Effect Detail Modal with live playground
+
+Work Log:
+- Created `/src/components/roycss/effect-detail-dialog.tsx` with full-featured modal:
+  - Large live preview (h-64/h-80) with background toggles (Dark/Light/Color gradient)
+  - Live CSS editing — textarea with real-time preview updates via scoped style injection
+  - Syntax highlighting — custom tokenizer with 9 token types (comment, atrule, selector, property, number, hex, func, string, punctuation)
+  - Edit/Reset/Copy buttons with "Modified" badge when CSS differs from original
+  - Tags display
+  - Related Effects section — finds 4 effects in same category with shared tags, click to navigate
+- Wired dialog into page: EffectCard now accepts onClick, opens dialog with selected effect
+- Added stopPropagation on View Code and Copy buttons so they don't trigger card click
+- Used key={effect.id} on dialog to reset state when switching effects (avoids setState-in-effect lint error)
+- Fixed variable redeclaration error in syntax highlighter (scoped with block)
+- Verified with Agent Browser:
+  - Dialog opens on card click ✓
+  - Syntax highlighting renders correctly (155 spans, clean text) ✓
+  - Edit mode shows textarea ✓
+  - Live editing updates preview in real-time ✓
+  - "Modified" badge appears, Reset enables ✓
+  - Copy button shows "Copied!" ✓
+  - Background toggles work (Dark/Light/Color) ✓
+  - Related Effects clickable, switches dialog content ✓
+  - Escape key closes dialog ✓
+  - Zero runtime errors ✓
+
+Stage Summary:
+- Interactive Effect Detail Modal with live CSS playground
+- Features: large preview, 3 background modes, live code editing, syntax highlighting, copy, reset, related effects
+- Transforms RoyCSS from gallery to interactive tool
+- Zero lint errors, zero runtime errors

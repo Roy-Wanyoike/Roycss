@@ -45,8 +45,10 @@ import {
   categoryMeta,
   categoryOrder,
   type EffectCategory,
+  type CSSEffect,
 } from "@/lib/roycss-effects";
 import { EffectCard } from "@/components/roycss/effect-card";
+import { EffectDetailDialog } from "@/components/roycss/effect-detail-dialog";
 import { RoyCSSLogo, RoyCSSHeroLogo } from "@/components/roycss/roycss-logo";
 import { motion, useScroll, useSpring } from "framer-motion";
 import {
@@ -347,6 +349,8 @@ function FeaturedPreview({ id, name }: { id: string; name: string }) {
 export default function RoyCSSPage() {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState<EffectCategory | "all">("all");
+  const [selectedEffect, setSelectedEffect] = useState<CSSEffect | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const filteredEffects = effects.filter((e) => {
     const matchesSearch =
@@ -597,7 +601,15 @@ export default function RoyCSSPage() {
           {filteredEffects.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
               {filteredEffects.map((effect) => (
-                <EffectCard key={effect.id} effect={effect} index={0} />
+                <EffectCard
+                  key={effect.id}
+                  effect={effect}
+                  index={0}
+                  onClick={(e) => {
+                    setSelectedEffect(e);
+                    setDialogOpen(true);
+                  }}
+                />
               ))}
             </div>
           ) : (
@@ -720,6 +732,19 @@ export default function RoyCSSPage() {
           </div>
         </div>
       </footer>
+
+      {/* Effect Detail Dialog */}
+      {selectedEffect && (
+        <EffectDetailDialog
+          key={selectedEffect.id}
+          effect={selectedEffect}
+          open={dialogOpen}
+          onOpenChange={setDialogOpen}
+          onSelectEffect={(e) => {
+            setSelectedEffect(e);
+          }}
+        />
+      )}
     </div>
   );
 }

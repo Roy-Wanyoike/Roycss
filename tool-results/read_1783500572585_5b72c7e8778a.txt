@@ -1,0 +1,1255 @@
+     1→export type EffectCategory =
+     2→  | "animations"
+     3→  | "hover"
+     4→  | "text"
+     5→  | "backgrounds"
+     6→  | "loaders"
+     7→  | "3d-transforms"
+     8→  | "buttons"
+     9→  | "cards";
+    10→
+    11→export interface CSSEffect {
+    12→  id: string;
+    13→  name: string;
+    14→  category: EffectCategory;
+    15→  description: string;
+    16→  tags: string[];
+    17→  cssCode: string;
+    18→  previewType: "box" | "text" | "button" | "loader" | "card" | "background" | "group";
+    19→}
+    20→
+    21→export const categoryMeta: Record<
+    22→  EffectCategory,
+    23→  { label: string; icon: string; color: string; description: string }
+    24→> = {
+    25→  animations: {
+    26→    label: "Animations",
+    27→    icon: "Play",
+    28→    color: "emerald",
+    29→    description: "Keyframe animations that bring elements to life",
+    30→  },
+    31→  hover: {
+    32→    label: "Hover Effects",
+    33→    icon: "MousePointer",
+    34→    color: "amber",
+    35→    description: "Interactive effects triggered on mouse hover",
+    36→  },
+    37→  text: {
+    38→    label: "Text Effects",
+    39→    icon: "Type",
+    40→    color: "rose",
+    41→    description: "Stunning text transformations and decorations",
+    42→  },
+    43→  backgrounds: {
+    44→    label: "Backgrounds",
+    45→    icon: "Layers",
+    46→    color: "violet",
+    47→    description: "Dynamic background patterns and gradients",
+    48→  },
+    49→  loaders: {
+    50→    label: "Loaders",
+    51→    icon: "Loader2",
+    52→    color: "sky",
+    53→    description: "Loading indicators and spinners",
+    54→  },
+    55→  "3d-transforms": {
+    56→    label: "3D & Transforms",
+    57→    icon: "Box",
+    58→    color: "orange",
+    59→    description: "Three-dimensional transformations and perspective effects",
+    60→  },
+    61→  buttons: {
+    62→    label: "Button Effects",
+    63→    icon: "MousePointerClick",
+    64→    color: "teal",
+    65→    description: "Interactive button animations and feedback",
+    66→  },
+    67→  cards: {
+    68→    label: "Card Effects",
+    69→    icon: "Square",
+    70→    color: "pink",
+    71→    description: "Card components with glass, borders, and reveals",
+    72→  },
+    73→};
+    74→
+    75→export const effects: CSSEffect[] = [
+    76→  // ─── ANIMATIONS ─────────────────────────────────────────────
+    77→  {
+    78→    id: "pulse-glow",
+    79→    name: "Pulse Glow",
+    80→    category: "animations",
+    81→    description: "A smooth pulsing glow effect that draws attention to elements",
+    82→    tags: ["glow", "pulse", "attention", "animate"],
+    83→    previewType: "box",
+    84→    cssCode: `/* Pulse Glow */
+    85→.roycss-pulse-glow {
+    86→  animation: roy-pulse-glow 2s ease-in-out infinite;
+    87→}
+    88→
+    89→@keyframes roy-pulse-glow {
+    90→  0%, 100% {
+    91→    box-shadow: 0 0 5px rgba(16, 185, 129, 0.3),
+    92→                0 0 10px rgba(16, 185, 129, 0.1);
+    93→  }
+    94→  50% {
+    95→    box-shadow: 0 0 20px rgba(16, 185, 129, 0.6),
+    96→                0 0 40px rgba(16, 185, 129, 0.3),
+    97→                0 0 60px rgba(16, 185, 129, 0.1);
+    98→  }
+    99→}`,
+   100→  },
+   101→  {
+   102→    id: "bounce-in",
+   103→    name: "Bounce In",
+   104→    category: "animations",
+   105→    description: "Elements spring into view with an elastic bounce effect",
+   106→    tags: ["bounce", "spring", "entrance", "animate"],
+   107→    previewType: "box",
+   108→    cssCode: `/* Bounce In */
+   109→.roycss-bounce-in {
+   110→  animation: roy-bounce-in 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) both;
+   111→}
+   112→
+   113→@keyframes roy-bounce-in {
+   114→  0% {
+   115→    opacity: 0;
+   116→    transform: scale(0.3);
+   117→  }
+   118→  50% {
+   119→    opacity: 1;
+   120→    transform: scale(1.05);
+   121→  }
+   122→  70% {
+   123→    transform: scale(0.95);
+   124→  }
+   125→  100% {
+   126→    transform: scale(1);
+   127→  }
+   128→}`,
+   129→  },
+   130→  {
+   131→    id: "fade-in-up",
+   132→    name: "Fade In Up",
+   133→    category: "animations",
+   134→    description: "Elements gracefully fade in while sliding upward",
+   135→    tags: ["fade", "slide", "entrance", "animate"],
+   136→    previewType: "box",
+   137→    cssCode: `/* Fade In Up */
+   138→.roycss-fade-in-up {
+   139→  animation: roy-fade-in-up 0.6s ease-out both;
+   140→}
+   141→
+   142→@keyframes roy-fade-in-up {
+   143→  from {
+   144→    opacity: 0;
+   145→    transform: translateY(30px);
+   146→  }
+   147→  to {
+   148→    opacity: 1;
+   149→    transform: translateY(0);
+   150→  }
+   151→}`,
+   152→  },
+   153→  {
+   154→    id: "rotate-spin",
+   155→    name: "Rotate Spin",
+   156→    category: "animations",
+   157→    description: "Continuous smooth rotation with configurable speed",
+   158→    tags: ["rotate", "spin", "infinite", "animate"],
+   159→    previewType: "box",
+   160→    cssCode: `/* Rotate Spin */
+   161→.roycss-rotate-spin {
+   162→  animation: roy-rotate-spin 2s linear infinite;
+   163→}
+   164→
+   165→@keyframes roy-rotate-spin {
+   166→  from {
+   167→    transform: rotate(0deg);
+   168→  }
+   169→  to {
+   170→    transform: rotate(360deg);
+   171→  }
+   172→}`,
+   173→  },
+   174→  {
+   175→    id: "shake",
+   176→    name: "Shake",
+   177→    category: "animations",
+   178→    description: "A vigorous shake animation perfect for error states or alerts",
+   179→    tags: ["shake", "error", "alert", "animate"],
+   180→    previewType: "box",
+   181→    cssCode: `/* Shake */
+   182→.roycss-shake {
+   183→  animation: roy-shake 0.5s ease-in-out;
+   184→}
+   185→
+   186→@keyframes roy-shake {
+   187→  0%, 100% { transform: translateX(0); }
+   188→  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+   189→  20%, 40%, 60%, 80% { transform: translateX(4px); }
+   190→}`,
+   191→  },
+   192→  {
+   193→    id: "float",
+   194→    name: "Float",
+   195→    category: "animations",
+   196→    description: "A gentle floating motion that gives elements a weightless feel",
+   197→    tags: ["float", "gentle", "hover", "animate"],
+   198→    previewType: "box",
+   199→    cssCode: `/* Float */
+   200→.roycss-float {
+   201→  animation: roy-float 3s ease-in-out infinite;
+   202→}
+   203→
+   204→@keyframes roy-float {
+   205→  0%, 100% {
+   206→    transform: translateY(0);
+   207→  }
+   208→  50% {
+   209→    transform: translateY(-12px);
+   210→  }
+   211→}`,
+   212→  },
+   213→  {
+   214→    id: "jello",
+   215→    name: "Jello",
+   216→    category: "animations",
+   217→    description: "A fun wobbly jello-like animation with skew transforms",
+   218→    tags: ["jello", "wobble", "fun", "animate", "skew"],
+   219→    previewType: "box",
+   220→    cssCode: `/* Jello */
+   221→.roycss-jello {
+   222→  animation: roy-jello 0.9s ease both;
+   223→}
+   224→
+   225→@keyframes roy-jello {
+   226→  0% { transform: scale3d(1, 1, 1); }
+   227→  30% { transform: scale3d(1.25, 0.75, 1); }
+   228→  40% { transform: scale3d(0.75, 1.25, 1); }
+   229→  50% { transform: scale3d(1.15, 0.85, 1); }
+   230→  65% { transform: scale3d(0.95, 1.05, 1); }
+   231→  75% { transform: scale3d(1.05, 0.95, 1); }
+   232→  100% { transform: scale3d(1, 1, 1); }
+   233→}`,
+   234→  },
+   235→  {
+   236→    id: "heartbeat",
+   237→    name: "Heartbeat",
+   238→    category: "animations",
+   239→    description: "A rhythmic pulsing animation mimicking a heartbeat",
+   240→    tags: ["heartbeat", "pulse", "rhythm", "animate"],
+   241→    previewType: "box",
+   242→    cssCode: `/* Heartbeat */
+   243→.roycss-heartbeat {
+   244→  animation: roy-heartbeat 1.5s ease-in-out infinite;
+   245→}
+   246→
+   247→@keyframes roy-heartbeat {
+   248→  0%, 100% { transform: scale(1); }
+   249→  14% { transform: scale(1.15); }
+   250→  28% { transform: scale(1); }
+   251→  42% { transform: scale(1.15); }
+   252→  70% { transform: scale(1); }
+   253→}`,
+   254→  },
+   255→
+   256→  // ─── HOVER EFFECTS ──────────────────────────────────────────
+   257→  {
+   258→    id: "hover-scale",
+   259→    name: "Scale Up",
+   260→    category: "hover",
+   261→    description: "Smooth scale transformation on hover with a subtle shadow boost",
+   262→    tags: ["scale", "grow", "hover", "zoom"],
+   263→    previewType: "box",
+   264→    cssCode: `/* Hover Scale Up */
+   265→.roycss-hover-scale {
+   266→  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+   267→              box-shadow 0.3s ease;
+   268→}
+   269→
+   270→.roycss-hover-scale:hover {
+   271→  transform: scale(1.08);
+   272→  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.2);
+   273→}`,
+   274→  },
+   275→  {
+   276→    id: "hover-underline-slide",
+   277→    name: "Underline Slide",
+   278→    category: "hover",
+   279→    description: "An animated underline that slides in from left on hover",
+   280→    tags: ["underline", "slide", "text", "hover"],
+   281→    previewType: "text",
+   282→    cssCode: `/* Underline Slide */
+   283→.roycss-underline-slide {
+   284→  position: relative;
+   285→  display: inline-block;
+   286→  text-decoration: none;
+   287→}
+   288→
+   289→.roycss-underline-slide::after {
+   290→  content: '';
+   291→  position: absolute;
+   292→  bottom: -2px;
+   293→  left: 0;
+   294→  width: 0;
+   295→  height: 2px;
+   296→  background: linear-gradient(90deg, #10b981, #14b8a6);
+   297→  transition: width 0.3s ease;
+   298→}
+   299→
+   300→.roycss-underline-slide:hover::after {
+   301→  width: 100%;
+   302→}`,
+   303→  },
+   304→  {
+   305→    id: "hover-glow-border",
+   306→    name: "Glow Border",
+   307→    category: "hover",
+   308→    description: "A glowing border effect that illuminates on hover",
+   309→    tags: ["glow", "border", "hover", "neon"],
+   310→    previewType: "box",
+   311→    cssCode: `/* Hover Glow Border */
+   312→.roycss-hover-glow-border {
+   313→  border: 2px solid transparent;
+   314→  background-clip: padding-box;
+   315→  position: relative;
+   316→  transition: all 0.3s ease;
+   317→}
+   318→
+   319→.roycss-hover-glow-border::before {
+   320→  content: '';
+   321→  position: absolute;
+   322→  inset: -2px;
+   323→  border-radius: inherit;
+   324→  background: linear-gradient(135deg, #10b981, #14b8a6, #06b6d4);
+   325→  z-index: -1;
+   326→  opacity: 0;
+   327→  transition: opacity 0.3s ease;
+   328→  filter: blur(8px);
+   329→}
+   330→
+   331→.roycss-hover-glow-border:hover::before {
+   332→  opacity: 1;
+   333→}
+   334→
+   335→.roycss-hover-glow-border:hover {
+   336→  border-color: rgba(16, 185, 129, 0.5);
+   337→  box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+   338→}`,
+   339→  },
+   340→  {
+   341→    id: "hover-shadow-grow",
+   342→    name: "Shadow Grow",
+   343→    category: "hover",
+   344→    description: "Box shadow expands and intensifies on hover",
+   345→    tags: ["shadow", "depth", "hover", "elevation"],
+   346→    previewType: "box",
+   347→    cssCode: `/* Hover Shadow Grow */
+   348→.roycss-hover-shadow-grow {
+   349→  transition: transform 0.3s ease,
+   350→              box-shadow 0.3s ease;
+   351→  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+   352→}
+   353→
+   354→.roycss-hover-shadow-grow:hover {
+   355→  transform: translateY(-4px);
+   356→  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12),
+   357→              0 4px 8px rgba(0, 0, 0, 0.06);
+   358→}`,
+   359→  },
+   360→  {
+   361→    id: "hover-color-shift",
+   362→    name: "Color Shift",
+   363→    category: "hover",
+   364→    description: "Smooth background color transition between states",
+   365→    tags: ["color", "transition", "hover", "gradient"],
+   366→    previewType: "box",
+   367→    cssCode: `/* Hover Color Shift */
+   368→.roycss-hover-color-shift {
+   369→  background: linear-gradient(135deg, #10b981, #059669);
+   370→  transition: all 0.4s ease;
+   371→  background-size: 200% 200%;
+   372→  background-position: 0% 50%;
+   373→}
+   374→
+   375→.roycss-hover-color-shift:hover {
+   376→  background: linear-gradient(135deg, #f59e0b, #ef4444);
+   377→  background-size: 200% 200%;
+   378→  background-position: 100% 50%;
+   379→}`,
+   380→  },
+   381→  {
+   382→    id: "hover-rotate-slight",
+   383→    name: "Tilt Rotate",
+   384→    category: "hover",
+   385→    description: "Subtle 3D tilt rotation on hover for depth",
+   386→    tags: ["rotate", "tilt", "3d", "hover"],
+   387→    previewType: "box",
+   388→    cssCode: `/* Hover Tilt Rotate */
+   389→.roycss-hover-tilt-rotate {
+   390→  transition: transform 0.3s ease;
+   391→  transform-style: preserve-3d;
+   392→  perspective: 1000px;
+   393→}
+   394→
+   395→.roycss-hover-tilt-rotate:hover {
+   396→  transform: rotateY(8deg) rotateX(-5deg) scale(1.02);
+   397→}`,
+   398→  },
+   399→
+   400→  // ─── TEXT EFFECTS ───────────────────────────────────────────
+   401→  {
+   402→    id: "text-gradient",
+   403→    name: "Gradient Text",
+   404→    category: "text",
+   405→    description: "Text filled with a vibrant multi-color gradient",
+   406→    tags: ["gradient", "text", "colorful", "typography"],
+   407→    previewType: "text",
+   408→    cssCode: `/* Gradient Text */
+   409→.roycss-text-gradient {
+   410→  background: linear-gradient(135deg, #10b981 0%, #14b8a6 40%, #06b6d4 70%, #8b5cf6 100%);
+   411→  -webkit-background-clip: text;
+   412→  background-clip: text;
+   413→  -webkit-text-fill-color: transparent;
+   414→  color: transparent;
+   415→  font-weight: 700;
+   416→}`,
+   417→  },
+   418→  {
+   419→    id: "text-glow",
+   420→    name: "Neon Glow Text",
+   421→    category: "text",
+   422→    description: "Text with a vivid neon glow effect, like a neon sign",
+   423→    tags: ["neon", "glow", "text", "light"],
+   424→    previewType: "text",
+   425→    cssCode: `/* Neon Glow Text */
+   426→.roycss-text-neon-glow {
+   427→  color: #10b981;
+   428→  text-shadow:
+   429→    0 0 7px rgba(16, 185, 129, 0.8),
+   430→    0 0 10px rgba(16, 185, 129, 0.6),
+   431→    0 0 21px rgba(16, 185, 129, 0.4),
+   432→    0 0 42px rgba(16, 185, 129, 0.2),
+   433→    0 0 82px rgba(16, 185, 129, 0.1);
+   434→}`,
+   435→  },
+   436→  {
+   437→    id: "text-stroke",
+   438→    name: "Text Stroke",
+   439→    category: "text",
+   440→    description: "Outlined text with a transparent fill for a modern look",
+   441→    tags: ["stroke", "outline", "text", "hollow"],
+   442→    previewType: "text",
+   443→    cssCode: `/* Text Stroke */
+   444→.roycss-text-stroke {
+   445→  -webkit-text-stroke: 2px currentColor;
+   446→  color: transparent;
+   447→  font-weight: 700;
+   448→}`,
+   449→  },
+   450→  {
+   451→    id: "text-typing-cursor",
+   452→    name: "Typing Cursor",
+   453→    category: "text",
+   454→    description: "A blinking cursor effect that follows text",
+   455→    tags: ["typing", "cursor", "blink", "text"],
+   456→    previewType: "text",
+   457→    cssCode: `/* Typing Cursor */
+   458→.roycss-typing-cursor {
+   459→  border-right: 3px solid #10b981;
+   460→  animation: roy-blink-cursor 1s step-end infinite;
+   461→  padding-right: 4px;
+   462→}
+   463→
+   464→@keyframes roy-blink-cursor {
+   465→  0%, 100% { border-color: #10b981; }
+   466→  50% { border-color: transparent; }
+   467→}`,
+   468→  },
+   469→  {
+   470→    id: "text-glitch",
+   471→    name: "Glitch Text",
+   472→    category: "text",
+   473→    description: "A cyberpunk-inspired glitch effect with color channel splitting",
+   474→    tags: ["glitch", "cyberpunk", "distort", "text"],
+   475→    previewType: "text",
+   476→    cssCode: `/* Glitch Text */
+   477→.roycss-text-glitch {
+   478→  position: relative;
+   479→  font-weight: 700;
+   480→}
+   481→
+   482→.roycss-text-glitch::before,
+   483→.roycss-text-glitch::after {
+   484→  content: attr(data-text);
+   485→  position: absolute;
+   486→  top: 0;
+   487→  left: 0;
+   488→  width: 100%;
+   489→  height: 100%;
+   490→}
+   491→
+   492→.roycss-text-glitch::before {
+   493→  animation: roy-glitch-1 2s infinite linear alternate-reverse;
+   494→  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+   495→  color: #ef4444;
+   496→}
+   497→
+   498→.roycss-text-glitch::after {
+   499→  animation: roy-glitch-2 3s infinite linear alternate-reverse;
+   500→  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+   501→  color: #3b82f6;
+   502→}
+   503→
+   504→@keyframes roy-glitch-1 {
+   505→  0% { transform: translate(0); }
+   506→  20% { transform: translate(-3px, 3px); }
+   507→  40% { transform: translate(-3px, -3px); }
+   508→  60% { transform: translate(3px, 3px); }
+   509→  80% { transform: translate(3px, -3px); }
+   510→  100% { transform: translate(0); }
+   511→}
+   512→
+   513→@keyframes roy-glitch-2 {
+   514→  0% { transform: translate(0); }
+   515→  20% { transform: translate(3px, -3px); }
+   516→  40% { transform: translate(3px, 3px); }
+   517→  60% { transform: translate(-3px, -3px); }
+   518→  80% { transform: translate(-3px, 3px); }
+   519→  100% { transform: translate(0); }
+   520→}`,
+   521→  },
+   522→  {
+   523→    id: "text-shadow-depth",
+   524→    name: "3D Text Shadow",
+   525→    category: "text",
+   526→    description: "Multiple layered shadows creating a 3D extrusion effect",
+   527→    tags: ["3d", "shadow", "text", "depth", "extrude"],
+   528→    previewType: "text",
+   529→    cssCode: `/* 3D Text Shadow */
+   530→.roycss-text-3d-shadow {
+   531→  color: #f0fdf4;
+   532→  text-shadow:
+   533→    1px 1px 0 #065f46,
+   534→    2px 2px 0 #047857,
+   535→    3px 3px 0 #059669,
+   536→    4px 4px 0 #10b981,
+   537→    5px 5px 0 rgba(16, 185, 129, 0.4),
+   538→    6px 6px 10px rgba(0, 0, 0, 0.3);
+   539→  font-weight: 700;
+   540→}`,
+   541→  },
+   542→
+   543→  // ─── BACKGROUNDS ────────────────────────────────────────────
+   544→  {
+   545→    id: "bg-animated-gradient",
+   546→    name: "Animated Gradient",
+   547→    category: "backgrounds",
+   548→    description: "A slowly morphing gradient background with shifting colors",
+   549→    tags: ["gradient", "animated", "background", "morph"],
+   550→    previewType: "background",
+   551→    cssCode: `/* Animated Gradient Background */
+   552→.roycss-bg-animated-gradient {
+   553→  background: linear-gradient(-45deg, #065f46, #10b981, #06b6d4, #8b5cf6);
+   554→  background-size: 400% 400%;
+   555→  animation: roy-gradient-shift 8s ease infinite;
+   556→}
+   557→
+   558→@keyframes roy-gradient-shift {
+   559→  0% { background-position: 0% 50%; }
+   560→  50% { background-position: 100% 50%; }
+   561→  100% { background-position: 0% 50%; }
+   562→}`,
+   563→  },
+   564→  {
+   565→    id: "bg-dot-pattern",
+   566→    name: "Dot Grid Pattern",
+   567→    category: "backgrounds",
+   568→    description: "A clean dot grid pattern for structured backgrounds",
+   569→    tags: ["dots", "grid", "pattern", "background"],
+   570→    previewType: "background",
+   571→    cssCode: `/* Dot Grid Pattern */
+   572→.roycss-bg-dot-pattern {
+   573→  background-color: #0f172a;
+   574→  background-image: radial-gradient(circle, #10b981 1px, transparent 1px);
+   575→  background-size: 24px 24px;
+   576→}`,
+   577→  },
+   578→  {
+   579→    id: "bg-mesh-gradient",
+   580→    name: "Mesh Gradient",
+   581→    category: "backgrounds",
+   582→    description: "A modern mesh gradient with multiple blurred color spots",
+   583→    tags: ["mesh", "gradient", "modern", "background"],
+   584→    previewType: "background",
+   585→    cssCode: `/* Mesh Gradient Background */
+   586→.roycss-bg-mesh-gradient {
+   587→  background-color: #0f172a;
+   588→  position: relative;
+   589→  overflow: hidden;
+   590→}
+   591→
+   592→.roycss-bg-mesh-gradient::before {
+   593→  content: '';
+   594→  position: absolute;
+   595→  inset: 0;
+   596→  background:
+   597→    radial-gradient(at 20% 30%, rgba(16, 185, 129, 0.3) 0, transparent 50%),
+   598→    radial-gradient(at 80% 20%, rgba(6, 182, 212, 0.25) 0, transparent 50%),
+   599→    radial-gradient(at 50% 80%, rgba(139, 92, 246, 0.2) 0, transparent 50%);
+   600→  filter: blur(60px);
+   601→}`,
+   602→  },
+   603→  {
+   604→    id: "bg-grid-lines",
+   605→    name: "Grid Lines",
+   606→    category: "backgrounds",
+   607→    description: "Subtle intersecting grid lines for technical layouts",
+   608→    tags: ["grid", "lines", "technical", "background"],
+   609→    previewType: "background",
+   610→    cssCode: `/* Grid Lines Background */
+   611→.roycss-bg-grid-lines {
+   612→  background-color: #0f172a;
+   613→  background-image:
+   614→    linear-gradient(rgba(16, 185, 129, 0.06) 1px, transparent 1px),
+   615→    linear-gradient(90deg, rgba(16, 185, 129, 0.06) 1px, transparent 1px);
+   616→  background-size: 48px 48px;
+   617→}`,
+   618→  },
+   619→  {
+   620→    id: "bg-noise",
+   621→    name: "Noise Texture",
+   622→    category: "backgrounds",
+   623→    description: "A subtle noise/grain texture overlay for visual depth",
+   624→    tags: ["noise", "grain", "texture", "background"],
+   625→    previewType: "background",
+   626→    cssCode: `/* Noise Texture Background */
+   627→.roycss-bg-noise {
+   628→  position: relative;
+   629→}
+   630→
+   631→.roycss-bg-noise::before {
+   632→  content: '';
+   633→  position: absolute;
+   634→  inset: 0;
+   635→  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.15'/%3E%3C/svg%3E");
+   636→  background-repeat: repeat;
+   637→  pointer-events: none;
+   638→  z-index: 1;
+   639→}`,
+   640→  },
+   641→  {
+   642→    id: "bg-aurora",
+   643→    name: "Aurora",
+   644→    category: "backgrounds",
+   645→    description: "An ethereal aurora borealis effect with flowing lights",
+   646→    tags: ["aurora", "northern lights", "flow", "background"],
+   647→    previewType: "background",
+   648→    cssCode: `/* Aurora Background */
+   649→.roycss-bg-aurora {
+   650→  background: linear-gradient(135deg, #0f172a 0%, #0c1e2e 100%);
+   651→  position: relative;
+   652→  overflow: hidden;
+   653→}
+   654→
+   655→.roycss-bg-aurora::before {
+   656→  content: '';
+   657→  position: absolute;
+   658→  top: -50%;
+   659→  left: -50%;
+   660→  width: 200%;
+   661→  height: 200%;
+   662→  background: conic-gradient(
+   663→    from 0deg at 50% 50%,
+   664→    transparent 0deg,
+   665→    rgba(16, 185, 129, 0.15) 60deg,
+   666→    transparent 120deg,
+   667→    rgba(6, 182, 212, 0.1) 180deg,
+   668→    transparent 240deg,
+   669→    rgba(139, 92, 246, 0.1) 300deg,
+   670→    transparent 360deg
+   671→  );
+   672→  animation: roy-aurora 12s linear infinite;
+   673→}
+   674→
+   675→@keyframes roy-aurora {
+   676→  from { transform: rotate(0deg); }
+   677→  to { transform: rotate(360deg); }
+   678→}`,
+   679→  },
+   680→
+   681→  // ─── LOADERS ────────────────────────────────────────────────
+   682→  {
+   683→    id: "loader-spinner",
+   684→    name: "Ring Spinner",
+   685→    category: "loaders",
+   686→    description: "A clean circular spinner with a trailing arc",
+   687→    tags: ["spinner", "loader", "loading", "circle"],
+   688→    previewType: "loader",
+   689→    cssCode: `/* Ring Spinner */
+   690→.roycss-loader-spinner {
+   691→  width: 40px;
+   692→  height: 40px;
+   693→  border: 3px solid rgba(16, 185, 129, 0.2);
+   694→  border-top-color: #10b981;
+   695→  border-radius: 50%;
+   696→  animation: roy-spin 0.8s linear infinite;
+   697→}
+   698→
+   699→@keyframes roy-spin {
+   700→  to { transform: rotate(360deg); }
+   701→}`,
+   702→  },
+   703→  {
+   704→    id: "loader-dots",
+   705→    name: "Bouncing Dots",
+   706→    category: "loaders",
+   707→    description: "Three dots bouncing in sequence for a playful loading state",
+   708→    tags: ["dots", "bounce", "loader", "loading"],
+   709→    previewType: "loader",
+   710→    cssCode: `/* Bouncing Dots Loader */
+   711→.roycss-loader-dots {
+   712→  display: flex;
+   713→  gap: 6px;
+   714→  align-items: center;
+   715→}
+   716→
+   717→.roycss-loader-dots span {
+   718→  width: 10px;
+   719→  height: 10px;
+   720→  border-radius: 50%;
+   721→  background: #10b981;
+   722→  animation: roy-bounce-dots 1.4s ease-in-out infinite;
+   723→}
+   724→
+   725→.roycss-loader-dots span:nth-child(2) { animation-delay: 0.16s; }
+   726→.roycss-loader-dots span:nth-child(3) { animation-delay: 0.32s; }
+   727→
+   728→@keyframes roy-bounce-dots {
+   729→  0%, 80%, 100% {
+   730→    transform: scale(0.6);
+   731→    opacity: 0.4;
+   732→  }
+   733→  40% {
+   734→    transform: scale(1);
+   735→    opacity: 1;
+   736→  }
+   737→}`,
+   738→  },
+   739→  {
+   740→    id: "loader-bars",
+   741→    name: "Equalizer Bars",
+   742→    category: "loaders",
+   743→    description: "Audio equalizer-style bars that animate at different speeds",
+   744→    tags: ["bars", "equalizer", "loader", "loading", "audio"],
+   745→    previewType: "loader",
+   746→    cssCode: `/* Equalizer Bars Loader */
+   747→.roycss-loader-bars {
+   748→  display: flex;
+   749→  gap: 3px;
+   750→  align-items: flex-end;
+   751→  height: 32px;
+   752→}
+   753→
+   754→.roycss-loader-bars span {
+   755→  width: 4px;
+   756→  border-radius: 2px;
+   757→  background: #10b981;
+   758→  animation: roy-eq-bar 1.2s ease-in-out infinite;
+   759→}
+   760→
+   761→.roycss-loader-bars span:nth-child(1) { animation-delay: 0s; }
+   762→.roycss-loader-bars span:nth-child(2) { animation-delay: 0.1s; }
+   763→.roycss-loader-bars span:nth-child(3) { animation-delay: 0.2s; }
+   764→.roycss-loader-bars span:nth-child(4) { animation-delay: 0.3s; }
+   765→.roycss-loader-bars span:nth-child(5) { animation-delay: 0.4s; }
+   766→
+   767→@keyframes roy-eq-bar {
+   768→  0%, 100% { height: 8px; }
+   769→  50% { height: 28px; }
+   770→}`,
+   771→  },
+   772→  {
+   773→    id: "loader-orbit",
+   774→    name: "Orbit",
+   775→    category: "loaders",
+   776→    description: "A satellite orbiting around a center point",
+   777→    tags: ["orbit", "satellite", "loader", "loading", "rotate"],
+   778→    previewType: "loader",
+   779→    cssCode: `/* Orbit Loader */
+   780→.roycss-loader-orbit {
+   781→  width: 40px;
+   782→  height: 40px;
+   783→  position: relative;
+   784→}
+   785→
+   786→.roycss-loader-orbit::before {
+   787→  content: '';
+   788→  position: absolute;
+   789→  inset: 0;
+   790→  border-radius: 50%;
+   791→  border: 2px solid transparent;
+   792→  border-top-color: #10b981;
+   793→  animation: roy-spin 1s linear infinite;
+   794→}
+   795→
+   796→.roycss-loader-orbit::after {
+   797→  content: '';
+   798→  position: absolute;
+   799→  top: -3px;
+   800→  left: 50%;
+   801→  width: 8px;
+   802→  height: 8px;
+   803→  margin-left: -4px;
+   804→  border-radius: 50%;
+   805→  background: #10b981;
+   806→  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+   807→  animation: roy-orbit-move 1s linear infinite;
+   808→}
+   809→
+   810→@keyframes roy-orbit-move {
+   811→  0% { transform: rotate(0deg) translateX(20px) rotate(0deg); }
+   812→  100% { transform: rotate(360deg) translateX(20px) rotate(-360deg); }
+   813→}`,
+   814→  },
+   815→  {
+   816→    id: "loader-pulse-ring",
+   817→    name: "Pulse Ring",
+   818→    category: "loaders",
+   819→    description: "Expanding concentric rings that fade out",
+   820→    tags: ["pulse", "ring", "expand", "loader"],
+   821→    previewType: "loader",
+   822→    cssCode: `/* Pulse Ring Loader */
+   823→.roycss-loader-pulse-ring {
+   824→  width: 40px;
+   825→  height: 40px;
+   826→  position: relative;
+   827→}
+   828→
+   829→.roycss-loader-pulse-ring::before,
+   830→.roycss-loader-pulse-ring::after {
+   831→  content: '';
+   832→  position: absolute;
+   833→  inset: 0;
+   834→  border-radius: 50%;
+   835→  border: 2px solid #10b981;
+   836→  animation: roy-pulse-ring 1.5s ease-out infinite;
+   837→}
+   838→
+   839→.roycss-loader-pulse-ring::after {
+   840→  animation-delay: 0.5s;
+   841→}
+   842→
+   843→@keyframes roy-pulse-ring {
+   844→  0% {
+   845→    transform: scale(0.5);
+   846→    opacity: 1;
+   847→  }
+   848→  100% {
+   849→    transform: scale(1.5);
+   850→    opacity: 0;
+   851→  }
+   852→}`,
+   853→  },
+   854→
+   855→  // ─── 3D & TRANSFORMS ───────────────────────────────────────
+   856→  {
+   857→    id: "card-flip",
+   858→    name: "Card Flip",
+   859→    category: "3d-transforms",
+   860→    description: "A full 3D card flip revealing content on the back",
+   861→    tags: ["flip", "card", "3d", "transform", "perspective"],
+   862→    previewType: "card",
+   863→    cssCode: `/* Card Flip */
+   864→.roycss-card-flip {
+   865→  perspective: 1000px;
+   866→  width: 200px;
+   867→  height: 120px;
+   868→}
+   869→
+   870→.roycss-card-flip-inner {
+   871→  position: relative;
+   872→  width: 100%;
+   873→  height: 100%;
+   874→  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+   875→  transform-style: preserve-3d;
+   876→}
+   877→
+   878→.roycss-card-flip:hover .roycss-card-flip-inner {
+   879→  transform: rotateY(180deg);
+   880→}
+   881→
+   882→.roycss-card-flip-front,
+   883→.roycss-card-flip-back {
+   884→  position: absolute;
+   885→  inset: 0;
+   886→  backface-visibility: hidden;
+   887→  border-radius: 12px;
+   888→  display: flex;
+   889→  align-items: center;
+   890→  justify-content: center;
+   891→}
+   892→
+   893→.roycss-card-flip-back {
+   894→  transform: rotateY(180deg);
+   895→}`,
+   896→  },
+   897→  {
+   898→    id: "perspective-tilt",
+   899→    name: "Perspective Tilt",
+   900→    category: "3d-transforms",
+   901→    description: "Dynamic perspective shift creating depth on interaction",
+   902→    tags: ["perspective", "tilt", "3d", "depth"],
+   903→    previewType: "box",
+   904→    cssCode: `/* Perspective Tilt */
+   905→.roycss-perspective-tilt {
+   906→  transform-style: preserve-3d;
+   907→  transform: perspective(800px) rotateX(5deg) rotateY(-5deg);
+   908→  transition: transform 0.4s ease;
+   909→  box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.2);
+   910→}
+   911→
+   912→.roycss-perspective-tilt:hover {
+   913→  transform: perspective(800px) rotateX(-5deg) rotateY(5deg);
+   914→}`,
+   915→  },
+   916→  {
+   917→    id: "cube-rotate",
+   918→    name: "Cube Rotate",
+   919→    category: "3d-transforms",
+   920→    description: "A 3D cube that continuously rotates showing all faces",
+   921→    tags: ["cube", "rotate", "3d", "transform"],
+   922→    previewType: "box",
+   923→    cssCode: `/* Cube Rotate */
+   924→.roycss-cube-rotate {
+   925→  width: 60px;
+   926→  height: 60px;
+   927→  transform-style: preserve-3d;
+   928→  animation: roy-cube-rotate 6s linear infinite;
+   929→}
+   930→
+   931→@keyframes roy-cube-rotate {
+   932→  0% { transform: rotateX(0deg) rotateY(0deg); }
+   933→  100% { transform: rotateX(360deg) rotateY(360deg); }
+   934→}
+   935→
+   936→.roycss-cube-face {
+   937→  position: absolute;
+   938→  width: 60px;
+   939→  height: 60px;
+   940→  border: 2px solid rgba(16, 185, 129, 0.5);
+   941→  background: rgba(16, 185, 129, 0.08);
+   942→  border-radius: 4px;
+   943→}`,
+   944→  },
+   945→  {
+   946→    id: "depth-shadow",
+   947→    name: "Depth Shadow Layers",
+   948→    category: "3d-transforms",
+   949→    description: "Layered shadows creating a 3D depth extrusion effect",
+   950→    tags: ["shadow", "depth", "layers", "3d", "extrude"],
+   951→    previewType: "box",
+   952→    cssCode: `/* Depth Shadow Layers */
+   953→.roycss-depth-shadow {
+   954→  box-shadow:
+   955→    1px 1px 0 #065f46,
+   956→    2px 2px 0 #059669,
+   957→    3px 3px 0 #047857,
+   958→    4px 4px 0 #10b981,
+   959→    5px 5px 0 rgba(16, 185, 129, 0.6),
+   960→    6px 6px 0 rgba(16, 185, 129, 0.4),
+   961→    7px 7px 0 rgba(16, 185, 129, 0.2),
+   962→    8px 8px 20px rgba(0, 0, 0, 0.15);
+   963→  transition: all 0.3s ease;
+   964→}
+   965→
+   966→.roycss-depth-shadow:hover {
+   967→  transform: translate(-2px, -2px);
+   968→  box-shadow:
+   969→    3px 3px 0 #065f46,
+   970→    4px 4px 0 #059669,
+   971→    5px 5px 0 #047857,
+   972→    6px 6px 0 #10b981,
+   973→    7px 7px 0 rgba(16, 185, 129, 0.6),
+   974→    8px 8px 0 rgba(16, 185, 129, 0.4),
+   975→    9px 9px 0 rgba(16, 185, 129, 0.2),
+   976→    10px 10px 30px rgba(0, 0, 0, 0.2);
+   977→}`,
+   978→  },
+   979→
+   980→  // ─── BUTTON EFFECTS ────────────────────────────────────────
+   981→  {
+   982→    id: "btn-shine-sweep",
+   983→    name: "Shine Sweep",
+   984→    category: "buttons",
+   985→    description: "A sweeping shine/highlight that glides across the button",
+   986→    tags: ["shine", "sweep", "button", "glide"],
+   987→    previewType: "button",
+   988→    cssCode: `/* Shine Sweep Button */
+   989→.roycss-btn-shine {
+   990→  position: relative;
+   991→  overflow: hidden;
+   992→}
+   993→
+   994→.roycss-btn-shine::after {
+   995→  content: '';
+   996→  position: absolute;
+   997→  top: -50%;
+   998→  left: -60%;
+   999→  width: 40%;
+  1000→  height: 200%;
+  1001→  background: linear-gradient(
+  1002→    90deg,
+  1003→    transparent,
+  1004→    rgba(255, 255, 255, 0.2),
+  1005→    transparent
+  1006→  );
+  1007→  transform: skewX(-20deg);
+  1008→  transition: left 0.6s ease;
+  1009→}
+  1010→
+  1011→.roycss-btn-shine:hover::after {
+  1012→  left: 120%;
+  1013→}`,
+  1014→  },
+  1015→  {
+  1016→    id: "btn-fill-slide",
+  1017→    name: "Fill Slide",
+  1018→    category: "buttons",
+  1019→    description: "Background slides in from one side on hover",
+  1020→    tags: ["fill", "slide", "button", "background"],
+  1021→    previewType: "button",
+  1022→    cssCode: `/* Fill Slide Button */
+  1023→.roycss-btn-fill-slide {
+  1024→  position: relative;
+  1025→  overflow: hidden;
+  1026→  z-index: 1;
+  1027→  border: 2px solid #10b981;
+  1028→  color: #10b981;
+  1029→  background: transparent;
+  1030→  transition: color 0.4s ease;
+  1031→}
+  1032→
+  1033→.roycss-btn-fill-slide::before {
+  1034→  content: '';
+  1035→  position: absolute;
+  1036→  bottom: 0;
+  1037→  left: 0;
+  1038→  width: 100%;
+  1039→  height: 0%;
+  1040→  background: #10b981;
+  1041→  z-index: -1;
+  1042→  transition: height 0.4s ease;
+  1043→}
+  1044→
+  1045→.roycss-btn-fill-slide:hover {
+  1046→  color: #fff;
+  1047→}
+  1048→
+  1049→.roycss-btn-fill-slide:hover::before {
+  1050→  height: 100%;
+  1051→}`,
+  1052→  },
+  1053→  {
+  1054→    id: "btn-ripple",
+  1055→    name: "Ripple Click",
+  1056→    category: "buttons",
+  1057→    description: "Material Design inspired ripple effect emanating from click point",
+  1058→    tags: ["ripple", "material", "click", "button"],
+  1059→    previewType: "button",
+  1060→    cssCode: `/* Ripple Button */
+  1061→.roycss-btn-ripple {
+  1062→  position: relative;
+  1063→  overflow: hidden;
+  1064→}
+  1065→
+  1066→.roycss-btn-ripple .ripple {
+  1067→  position: absolute;
+  1068→  border-radius: 50%;
+  1069→  background: rgba(255, 255, 255, 0.3);
+  1070→  transform: scale(0);
+  1071→  animation: roy-ripple-anim 0.6s linear;
+  1072→  pointer-events: none;
+  1073→}
+  1074→
+  1075→@keyframes roy-ripple-anim {
+  1076→  to {
+  1077→    transform: scale(4);
+  1078→    opacity: 0;
+  1079→  }
+  1080→}
+  1081→
+  1082→/* JavaScript needed: create a span.ripple on click,
+  1083→   position it at click coordinates, set width/height to
+  1084→   the largest dimension of the button */`,
+  1085→  },
+  1086→  {
+  1087→    id: "btn-border-draw",
+  1088→    name: "Border Draw",
+  1089→    category: "buttons",
+  1090→    description: "Animated border that draws itself around the button",
+  1091→    tags: ["border", "draw", "animate", "button"],
+  1092→    previewType: "button",
+  1093→    cssCode: `/* Border Draw Button */
+  1094→.roycss-btn-border-draw {
+  1095→  position: relative;
+  1096→  background: transparent;
+  1097→  color: #10b981;
+  1098→  z-index: 1;
+  1099→}
+  1100→
+  1101→.roycss-btn-border-draw::before {
+  1102→  content: '';
+  1103→  position: absolute;
+  1104→  inset: 0;
+  1105→  border: 2px solid #10b981;
+  1106→  border-radius: inherit;
+  1107→  clip-path: polygon(
+  1108→    0 0, 0 0, 0 0, 0 0
+  1109→  );
+  1110→  transition: clip-path 0.4s ease;
+  1111→  z-index: -1;
+  1112→}
+  1113→
+  1114→.roycss-btn-border-draw:hover::before {
+  1115→  clip-path: polygon(
+  1116→    0 0, 100% 0, 100% 100%, 0 100%
+  1117→  );
+  1118→  background: rgba(16, 185, 129, 0.08);
+  1119→}`,
+  1120→  },
+  1121→
+  1122→  // ─── CARD EFFECTS ──────────────────────────────────────────
+  1123→  {
+  1124→    id: "card-glassmorphism",
+  1125→    name: "Glassmorphism",
+  1126→    category: "cards",
+  1127→    description: "Frosted glass effect with blur and transparency",
+  1128→    tags: ["glass", "frosted", "blur", "card", "modern"],
+  1129→    previewType: "card",
+  1130→    cssCode: `/* Glassmorphism Card */
+  1131→.roycss-card-glass {
+  1132→  background: rgba(255, 255, 255, 0.05);
+  1133→  backdrop-filter: blur(16px);
+  1134→  -webkit-backdrop-filter: blur(16px);
+  1135→  border: 1px solid rgba(255, 255, 255, 0.1);
+  1136→  border-radius: 16px;
+  1137→  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  1138→}`,
+  1139→  },
+  1140→  {
+  1141→    id: "card-neon-border",
+  1142→    name: "Neon Border",
+  1143→    category: "cards",
+  1144→    description: "A glowing neon border that pulses around the card",
+  1145→    tags: ["neon", "glow", "border", "card", "pulse"],
+  1146→    previewType: "card",
+  1147→    cssCode: `/* Neon Border Card */
+  1148→.roycss-card-neon {
+  1149→  border: 1px solid rgba(16, 185, 129, 0.3);
+  1150→  border-radius: 16px;
+  1151→  animation: roy-neon-border 2s ease-in-out infinite alternate;
+  1152→}
+  1153→
+  1154→@keyframes roy-neon-border {
+  1155→  from {
+  1156→    box-shadow: 0 0 5px rgba(16, 185, 129, 0.1),
+  1157→                inset 0 0 5px rgba(16, 185, 129, 0.05);
+  1158→  }
+  1159→  to {
+  1160→    box-shadow: 0 0 20px rgba(16, 185, 129, 0.3),
+  1161→                0 0 40px rgba(16, 185, 129, 0.1),
+  1162→                inset 0 0 20px rgba(16, 185, 129, 0.05);
+  1163→  }
+  1164→}`,
+  1165→  },
+  1166→  {
+  1167→    id: "card-spotlight",
+  1168→    name: "Spotlight Hover",
+  1169→    category: "cards",
+  1170→    description: "A light source that follows your cursor across the card",
+  1171→    tags: ["spotlight", "cursor", "light", "card", "interactive"],
+  1172→    previewType: "card",
+  1173→    cssCode: `/* Spotlight Hover Card */
+  1174→.roycss-card-spotlight {
+  1175→  position: relative;
+  1176→  overflow: hidden;
+  1177→  border-radius: 16px;
+  1178→  border: 1px solid rgba(255, 255, 255, 0.08);
+  1179→}
+  1180→
+  1181→.roycss-card-spotlight::before {
+  1182→  content: '';
+  1183→  position: absolute;
+  1184→  width: 200px;
+  1185→  height: 200px;
+  1186→  background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+  1187→  border-radius: 50%;
+  1188→  transform: translate(-50%, -50%);
+  1189→  opacity: 0;
+  1190→  transition: opacity 0.3s ease;
+  1191→  pointer-events: none;
+  1192→}
+  1193→
+  1194→.roycss-card-spotlight:hover::before {
+  1195→  opacity: 1;
+  1196→}
+  1197→
+  1198→/* JavaScript needed: update the top/left of ::before
+  1199→   to follow the mouse position on mousemove */`,
+  1200→  },
+  1201→  {
+  1202→    id: "card-gradient-border",
+  1203→    name: "Gradient Border",
+  1204→    category: "cards",
+  1205→    description: "A smooth animated gradient running around the card border",
+  1206→    tags: ["gradient", "border", "animate", "card"],
+  1207→    previewType: "card",
+  1208→    cssCode: `/* Gradient Border Card */
+  1209→.roycss-card-gradient-border {
+  1210→  position: relative;
+  1211→  background: #0f172a;
+  1212→  border-radius: 16px;
+  1213→  padding: 2px;
+  1214→}
+  1215→
+  1216→.roycss-card-gradient-border::before {
+  1217→  content: '';
+  1218→  position: absolute;
+  1219→  inset: 0;
+  1220→  border-radius: inherit;
+  1221→  padding: 2px;
+  1222→  background: linear-gradient(
+  1223→    var(--angle, 0deg),
+  1224→    #10b981, #06b6d4, #8b5cf6, #f59e0b, #10b981
+  1225→  );
+  1226→  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  1227→  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  1228→  -webkit-mask-composite: xor;
+  1229→  mask-composite: exclude;
+  1230→  animation: roy-rotate-border 4s linear infinite;
+  1231→}
+  1232→
+  1233→@keyframes roy-rotate-border {
+  1234→  to { --angle: 360deg; }
+  1235→}
+  1236→
+  1237→/* Note: requires @property declaration:
+  1238→@property --angle {
+  1239→  syntax: '<angle>';
+  1240→  initial-value: 0deg;
+  1241→  inherits: false;
+  1242→} */`,
+  1243→  },
+  1244→];
+  1245→
+  1246→export const categoryOrder: EffectCategory[] = [
+  1247→  "animations",
+  1248→  "hover",
+  1249→  "text",
+  1250→  "backgrounds",
+  1251→  "loaders",
+  1252→  "3d-transforms",
+  1253→  "buttons",
+  1254→  "cards",
+  1255→];

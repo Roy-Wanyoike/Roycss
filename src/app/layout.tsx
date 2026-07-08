@@ -2,6 +2,7 @@ import { type Metadata } from "next";
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import "./roycss.css";
+import { allEffectCSS } from "@/lib/roycss-effects";
 import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = Geist({
@@ -21,9 +22,9 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "RoyCSS — Beautiful CSS Effects Library with Live Demos",
+  title: "RoyCSS — 260+ Beautiful CSS Effects Library with Live Demos",
   description:
-    "A curated collection of 35+ production-ready CSS effects by Roy Wanyoike. Animations, hover effects, text effects, loaders, 3D transforms, buttons, and cards — all with live demonstrations and copy-paste code.",
+    "A curated collection of 260+ production-ready CSS effects by Roy Wanyoike. Animations, hover effects, text effects, loaders, 3D transforms, buttons, cards, borders, filters, forms, navigation, and more — all with live demonstrations and copy-paste code.",
   keywords: [
     "RoyCSS",
     "CSS effects library",
@@ -34,14 +35,16 @@ export const metadata: Metadata = {
     "neon effects",
     "CSS loaders",
     "3D CSS transforms",
+    "CSS filters",
+    "CSS borders",
     "Roy Wanyoike",
     "CSS library",
   ],
   authors: [{ name: "Royford Wanyoike Wamaitha" }],
   openGraph: {
-    title: "RoyCSS — Beautiful CSS Effects Library",
+    title: "RoyCSS — 260+ Beautiful CSS Effects Library",
     description:
-      "Production-ready CSS effects with live demonstrations and copy-paste code. 35+ effects across 8 categories.",
+      "Production-ready CSS effects with live demonstrations and copy-paste code. 260+ effects across 13 categories.",
     type: "website",
   },
 };
@@ -53,6 +56,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="dark">
+      <head>
+        {/* Inject all effect CSS server-side to avoid FOUC */}
+        <style dangerouslySetInnerHTML={{ __html: allEffectCSS }} />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} antialiased bg-background text-foreground`}
       >

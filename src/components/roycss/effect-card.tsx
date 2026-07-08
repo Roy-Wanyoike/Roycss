@@ -1,36 +1,49 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { Copy, Check, ChevronDown, ChevronUp, Code2, Eye } from "lucide-react";
-import { staggerItem } from "@/components/roycss/motion-primitives";
-import type { CSSEffect } from "@/lib/roycss-effects";
+import type { CSSEffect } from "@/lib/roycss-types";
 import { Badge } from "@/components/ui/badge";
 
-/* ─── Live Preview Renderer ─────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   LIVE PREVIEW RENDERER
+   Handles all preview types: box, text, button, loader, card, background
+   ═══════════════════════════════════════════════════════════════ */
 
 function LivePreview({ effect }: { effect: CSSEffect }) {
+  const className = `roycss-${effect.id}`;
+  const previewText = effect.previewText || "RoyCSS";
+
   switch (effect.previewType) {
     case "text":
-      return <TextPreview effect={effect} />;
+      return <TextPreview effect={effect} className={className} text={previewText} />;
     case "button":
-      return <ButtonPreview effect={effect} />;
+      return <ButtonPreview effect={effect} className={className} text={previewText} />;
     case "loader":
-      return <LoaderPreview effect={effect} />;
+      return <LoaderPreview effect={effect} className={className} />;
     case "card":
-      return <CardPreview effect={effect} />;
+      return <CardPreview effect={effect} className={className} />;
     case "background":
-      return <BackgroundPreview effect={effect} />;
+      return <BackgroundPreview effect={effect} className={className} />;
     default:
-      return <BoxPreview effect={effect} />;
+      return <BoxPreview effect={effect} className={className} />;
   }
 }
 
-function BoxPreview({ effect }: { effect: CSSEffect }) {
+/* ─── Box Preview (animations, hover, 3d-transforms, borders) ─── */
+function BoxPreview({
+  effect,
+  className,
+}: {
+  effect: CSSEffect;
+  className: string;
+}) {
+  // Special case: cube-rotate needs 6 faces
   if (effect.id === "cube-rotate") {
     return (
-      <div className="flex items-center justify-center h-full">
-        <div className="roycss-cube-rotate" style={{ transformStyle: "preserve-3d" }}>
+      <div className="flex items-center justify-center h-full" style={{ perspective: 600 }}>
+        <div className={className} style={{ transformStyle: "preserve-3d" }}>
           <div className="roycss-cube-face" style={{ transform: "rotateY(0deg) translateZ(30px)" }} />
           <div className="roycss-cube-face" style={{ transform: "rotateY(90deg) translateZ(30px)" }} />
           <div className="roycss-cube-face" style={{ transform: "rotateY(180deg) translateZ(30px)" }} />
@@ -41,11 +54,25 @@ function BoxPreview({ effect }: { effect: CSSEffect }) {
       </div>
     );
   }
+
+  // Special case: shake effect — apply infinite animation for demo
+  if (effect.id === "shake") {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <div
+          className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 flex items-center justify-center"
+          style={{ animation: "roy-shake 0.5s ease-in-out infinite" }}
+        >
+          <div className="w-6 h-6 rounded-lg bg-primary/60" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex items-center justify-center h-full">
       <div
-        className={`${effect.id === "shake" ? "" : "roycss-" + effect.id} w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 flex items-center justify-center`}
-        style={effect.id === "shake" ? { animation: "roy-shake 0.5s ease-in-out infinite" } : undefined}
+        className={`${className} w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 flex items-center justify-center`}
       >
         <div className="w-6 h-6 rounded-lg bg-primary/60" />
       </div>
@@ -53,38 +80,49 @@ function BoxPreview({ effect }: { effect: CSSEffect }) {
   );
 }
 
-function TextPreview({ effect }: { effect: CSSEffect }) {
+/* ─── Text Preview (text effects) ───────────────────────────── */
+function TextPreview({
+  effect,
+  className,
+  text,
+}: {
+  effect: CSSEffect;
+  className: string;
+  text: string;
+}) {
+  // Glitch text needs data-text attribute
   if (effect.id === "text-glitch") {
     return (
       <div className="flex items-center justify-center h-full">
         <span
-          className="roycss-text-glitch text-2xl font-display font-bold text-foreground"
-          data-text="RoyCSS"
+          className={`${className} text-2xl font-display font-bold text-foreground`}
+          data-text={text}
         >
-          RoyCSS
+          {text}
         </span>
       </div>
     );
   }
-  if (effect.id === "text-typing-cursor") {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <span className="roycss-typing-cursor text-2xl font-display font-bold text-foreground">
-          RoyCSS
-        </span>
-      </div>
-    );
-  }
+
   return (
-    <div className="flex items-center justify-center h-full">
-      <span className={`roycss-${effect.id} text-2xl font-display font-bold`}>
-        RoyCSS
+    <div className="flex items-center justify-center h-full px-4">
+      <span className={`${className} text-2xl font-display font-bold`}>
+        {text}
       </span>
     </div>
   );
 }
 
-function ButtonPreview({ effect }: { effect: CSSEffect }) {
+/* ─── Button Preview (button effects) ───────────────────────── */
+function ButtonPreview({
+  effect,
+  className,
+  text,
+}: {
+  effect: CSSEffect;
+  className: string;
+  text: string;
+}) {
   const btnRef = useRef<HTMLButtonElement>(null);
 
   const handleClick = useCallback(
@@ -112,55 +150,49 @@ function ButtonPreview({ effect }: { effect: CSSEffect }) {
       <button
         ref={btnRef}
         onClick={handleClick}
-        className={`roycss-${effect.id} px-6 py-2.5 rounded-xl font-medium text-sm cursor-pointer ${
-          effect.id === "btn-fill-slide"
-            ? "border-2 border-primary text-primary bg-transparent"
-            : "bg-primary text-primary-foreground"
-        }`}
+        className={className}
       >
-        Hover Me
+        {text}
       </button>
     </div>
   );
 }
 
-function LoaderPreview({ effect }: { effect: CSSEffect }) {
-  if (effect.id === "loader-dots") {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div className="roycss-loader-dots">
-          <span />
-          <span />
-          <span />
-        </div>
-      </div>
-    );
-  }
-  if (effect.id === "loader-bars") {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div className="roycss-loader-bars">
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
-        </div>
-      </div>
-    );
-  }
+/* ─── Loader Preview (loading indicators) ───────────────────── */
+function LoaderPreview({
+  effect,
+  className,
+}: {
+  effect: CSSEffect;
+  className: string;
+}) {
+  const childCount = effect.childCount || 0;
+
   return (
     <div className="flex items-center justify-center h-full">
-      <div className={`roycss-${effect.id}`} />
+      <div className={className}>
+        {childCount > 0 &&
+          Array.from({ length: childCount }).map((_, i) => (
+            <span key={i} />
+          ))}
+      </div>
     </div>
   );
 }
 
-function CardPreview({ effect }: { effect: CSSEffect }) {
+/* ─── Card Preview (card effects) ───────────────────────────── */
+function CardPreview({
+  effect,
+  className,
+}: {
+  effect: CSSEffect;
+  className: string;
+}) {
+  // Card flip needs front/back structure
   if (effect.id === "card-flip") {
     return (
       <div className="flex items-center justify-center h-full">
-        <div className="roycss-card-flip w-36 h-24">
+        <div className={`${className} w-36 h-24`}>
           <div className="roycss-card-flip-inner">
             <div className="roycss-card-flip-front bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20">
               <span className="text-xs font-medium text-foreground">Front</span>
@@ -174,22 +206,11 @@ function CardPreview({ effect }: { effect: CSSEffect }) {
     );
   }
 
-  if (effect.id === "card-spotlight") {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div
-          className="roycss-card-spotlight w-36 h-24 bg-card flex items-center justify-center"
-        >
-          <span className="text-xs text-muted-foreground relative z-10">Hover me</span>
-        </div>
-      </div>
-    );
-  }
-
+  // Gradient border card needs inner content
   if (effect.id === "card-gradient-border") {
     return (
       <div className="flex items-center justify-center h-full">
-        <div className="roycss-card-gradient-border w-36 h-24">
+        <div className={`${className} w-36 h-24`}>
           <div className="w-full h-full rounded-[14px] bg-card flex items-center justify-center relative z-10">
             <span className="text-xs text-muted-foreground">Gradient</span>
           </div>
@@ -201,33 +222,46 @@ function CardPreview({ effect }: { effect: CSSEffect }) {
   return (
     <div className="flex items-center justify-center h-full">
       <div
-        className={`roycss-${effect.id} w-36 h-24 flex items-center justify-center ${
-          effect.id === "card-neon" ? "" : "bg-card"
-        }`}
+        className={`${className} w-36 h-24 flex items-center justify-center`}
       >
         <span className="text-xs text-muted-foreground relative z-10">
-          {effect.id === "card-glass" ? "Glass" : "Neon"}
+          {effect.name}
         </span>
       </div>
     </div>
   );
 }
 
-function BackgroundPreview({ effect }: { effect: CSSEffect }) {
+/* ─── Background Preview (backgrounds, filters) ─────────────── */
+function BackgroundPreview({
+  effect,
+  className,
+}: {
+  effect: CSSEffect;
+  className: string;
+}) {
   return (
     <div className="w-full h-full">
-      <div className={`roycss-${effect.id} w-full h-full rounded-lg flex items-end p-3`}>
-        <span className="text-[10px] text-white/60 font-medium">{effect.name}</span>
+      <div
+        className={`${className} w-full h-full rounded-lg flex items-end p-3`}
+      >
+        <span className="text-[10px] text-white/70 font-medium relative z-10">
+          {effect.name}
+        </span>
       </div>
     </div>
   );
 }
 
-/* ─── Effect Card Component ─────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   EFFECT CARD COMPONENT
+   ═══════════════════════════════════════════════════════════════ */
 
 export function EffectCard({ effect, index }: { effect: CSSEffect; index: number }) {
   const [showCode, setShowCode] = useState(false);
   const [copied, setCopied] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-40px" });
 
   const handleCopy = async () => {
     try {
@@ -241,7 +275,10 @@ export function EffectCard({ effect, index }: { effect: CSSEffect; index: number
 
   return (
     <motion.div
-      variants={staggerItem}
+      ref={ref}
+      initial={{ opacity: 0, y: 24, scale: 0.96 }}
+      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 24, scale: 0.96 }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -6, transition: { duration: 0.25 } }}
       className="group rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300"
     >
@@ -250,13 +287,19 @@ export function EffectCard({ effect, index }: { effect: CSSEffect; index: number
         <LivePreview effect={effect} />
         {/* Hover overlay badges */}
         <div className="absolute top-3 right-3 flex gap-1.5">
-          <Badge variant="secondary" className="text-[10px] px-2 py-0.5 bg-background/80 backdrop-blur-sm border-border/50">
+          <Badge
+            variant="secondary"
+            className="text-[10px] px-2 py-0.5 bg-background/80 backdrop-blur-sm border-border/50"
+          >
             <Eye className="size-3 mr-1" />
             Live
           </Badge>
         </div>
         <div className="absolute bottom-3 left-3">
-          <Badge variant="outline" className="text-[10px] px-2 py-0.5 bg-background/80 backdrop-blur-sm border-border/50">
+          <Badge
+            variant="outline"
+            className="text-[10px] px-2 py-0.5 bg-background/80 backdrop-blur-sm border-border/50"
+          >
             <Code2 className="size-3 mr-1" />
             CSS
           </Badge>
@@ -335,7 +378,9 @@ export function EffectCard({ effect, index }: { effect: CSSEffect; index: number
                 )}
               </button>
               <pre className="p-3 pt-2 overflow-x-auto text-[11px] leading-relaxed scrollbar-thin max-h-52 overflow-y-auto">
-                <code className="text-foreground/80 font-mono">{effect.cssCode}</code>
+                <code className="text-foreground/80 font-mono">
+                  {effect.cssCode}
+                </code>
               </pre>
             </div>
           </motion.div>

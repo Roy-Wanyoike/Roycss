@@ -25,6 +25,11 @@ import {
   Star,
   Code2,
   Wand2,
+  Frame,
+  SlidersHorizontal,
+  Navigation,
+  Sparkle,
+  FormInput,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -67,6 +72,11 @@ const catIcons: Record<EffectCategory, React.ComponentType<{ className?: string 
   "3d-transforms": Box,
   buttons: MousePointerClick,
   cards: Square,
+  borders: Frame,
+  filters: SlidersHorizontal,
+  forms: FormInput,
+  navigation: Navigation,
+  misc: Sparkle,
 };
 
 /* ─── Scroll Progress Bar ───────────────────────────────────── */
@@ -572,11 +582,11 @@ export default function RoyCSSPage() {
 
           {/* Effects Grid with stagger reveal */}
           {filteredEffects.length > 0 ? (
-            <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
               {filteredEffects.map((effect) => (
                 <EffectCard key={effect.id} effect={effect} index={0} />
               ))}
-            </StaggerGroup>
+            </div>
           ) : (
             <motion.div
               initial={{ opacity: 0 }}

@@ -115,3 +115,22 @@
   -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   LOGO ANIMATIONS
+   ═══════════════════════════════════════════════════════════════ */
+@keyframes roy-logo-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.roycss-logo-text {
+  background: linear-gradient(90deg, #10b981, #06b6d4, #8b5cf6, #10b981);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: roy-logo-gradient 4s linear infinite;
+}

@@ -47,6 +47,7 @@ import {
   type EffectCategory,
 } from "@/lib/roycss-effects";
 import { EffectCard } from "@/components/roycss/effect-card";
+import { RoyCSSLogo, RoyCSSHeroLogo } from "@/components/roycss/roycss-logo";
 import { motion, useScroll, useSpring } from "framer-motion";
 import {
   ScrollReveal,
@@ -390,14 +391,7 @@ export default function RoyCSSPage() {
               transition={{ duration: 0.5 }}
               className="flex items-center gap-2.5"
             >
-              <Floating duration={5} distance={4}>
-                <div className="size-9 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
-                  <Sparkles className="size-4.5 text-primary-foreground" />
-                </div>
-              </Floating>
-              <span className="font-display font-bold text-lg text-foreground">
-                Roy<span className="text-primary">CSS</span>
-              </span>
+              <RoyCSSLogo size="md" animated={true} />
               <Badge variant="secondary" className="text-[10px] px-1.5 py-0 bg-primary/10 text-primary border-primary/20 font-semibold">
                 v1.0
               </Badge>
@@ -424,7 +418,14 @@ export default function RoyCSSPage() {
 
           {/* Hero content */}
           <div className="text-center max-w-3xl mx-auto">
-            <ScrollReveal y={16}>
+            {/* Hero Logo */}
+            <ScrollReveal y={20}>
+              <div className="flex justify-center mb-8">
+                <RoyCSSHeroLogo />
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal y={16} delay={0.2}>
               <div className="inline-flex items-center gap-2 rounded-full glass px-3 py-1.5 text-xs sm:text-sm font-medium text-primary mb-6">
                 <motion.span
                   animate={{ scale: [1, 1.3, 1] }}
@@ -689,14 +690,7 @@ export default function RoyCSSPage() {
       <footer className="border-t border-border/50 bg-card/50 backdrop-blur-sm mt-auto">
         <div className="container mx-auto px-4 sm:px-6 py-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2.5">
-              <div className="size-7 rounded-lg bg-primary flex items-center justify-center">
-                <Sparkles className="size-3.5 text-primary-foreground" />
-              </div>
-              <span className="font-display font-bold text-sm text-foreground">
-                Roy<span className="text-primary">CSS</span>
-              </span>
-            </div>
+            <RoyCSSLogo size="sm" animated={false} />
 
             <p className="text-xs text-muted-foreground text-center">
               Crafted with care by{" "}

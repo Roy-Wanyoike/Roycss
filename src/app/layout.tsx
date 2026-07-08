@@ -25,6 +25,10 @@ export const metadata: Metadata = {
   title: "RoyCSS — 410+ Beautiful CSS Effects Library with Live Demos",
   description:
     "A curated collection of 410+ production-ready CSS effects by Roy Wanyoike. Animations, hover, text, backgrounds, loaders, 3D transforms, buttons, cards, borders, filters, forms, navigation, scroll, cursor, page transitions, glass UI, particles, microinteractions, visual effects, and more — all with live demonstrations and copy-paste code.",
+  icons: {
+    icon: "/favicon.png",
+    apple: "/apple-icon.png",
+  },
   keywords: [
     "RoyCSS",
     "CSS effects library",

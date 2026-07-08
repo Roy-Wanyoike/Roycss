@@ -240,11 +240,16 @@ function BackgroundPreview({
   effect: CSSEffect;
   className: string;
 }) {
+  const childCount = effect.childCount || 0;
   return (
     <div className="w-full h-full">
       <div
         className={`${className} w-full h-full rounded-lg flex items-end p-3`}
       >
+        {childCount > 0 &&
+          Array.from({ length: childCount }).map((_, i) => (
+            <span key={i} />
+          ))}
         <span className="text-[10px] text-white/70 font-medium relative z-10">
           {effect.name}
         </span>

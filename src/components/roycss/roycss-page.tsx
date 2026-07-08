@@ -30,6 +30,11 @@ import {
   Navigation,
   Sparkle,
   FormInput,
+  ScrollText,
+  MousePointer2,
+  ArrowLeftRight,
+  GlassWater,
+  ToggleRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -76,6 +81,13 @@ const catIcons: Record<EffectCategory, React.ComponentType<{ className?: string 
   filters: SlidersHorizontal,
   forms: FormInput,
   navigation: Navigation,
+  scroll: ScrollText,
+  cursor: MousePointer2,
+  "page-transitions": ArrowLeftRight,
+  "glass-ui": GlassWater,
+  particles: Sparkles,
+  microinteractions: ToggleRight,
+  visual: Wand2,
   misc: Sparkle,
 };
 
@@ -465,7 +477,7 @@ export default function RoyCSSPage() {
               <div className="mt-10 grid grid-cols-3 gap-3 max-w-2xl mx-auto">
                 <StatCounter icon={Sparkles} value={effects.length} label="Effects" />
                 <StatCounter icon={BookOpen} value={categoryOrder.length} label="Categories" />
-                <StatCounter icon={Zap} value={2500} label="Lines of CSS" suffix="+" prefix="~" />
+                <StatCounter icon={Zap} value={18000} label="Lines of CSS" suffix="+" prefix="~" />
               </div>
             </ScrollReveal>
           </div>

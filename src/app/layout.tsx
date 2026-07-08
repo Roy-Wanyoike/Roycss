@@ -22,9 +22,9 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "RoyCSS — 260+ Beautiful CSS Effects Library with Live Demos",
+  title: "RoyCSS — 410+ Beautiful CSS Effects Library with Live Demos",
   description:
-    "A curated collection of 260+ production-ready CSS effects by Roy Wanyoike. Animations, hover effects, text effects, loaders, 3D transforms, buttons, cards, borders, filters, forms, navigation, and more — all with live demonstrations and copy-paste code.",
+    "A curated collection of 410+ production-ready CSS effects by Roy Wanyoike. Animations, hover, text, backgrounds, loaders, 3D transforms, buttons, cards, borders, filters, forms, navigation, scroll, cursor, page transitions, glass UI, particles, microinteractions, visual effects, and more — all with live demonstrations and copy-paste code.",
   keywords: [
     "RoyCSS",
     "CSS effects library",

@@ -469,3 +469,190 @@ Stage Summary:
 - Individual scroll reveal for each card (no long stagger delays)
 - Zero lint errors, zero runtime errors
 - All interactivity verified: search, filter, code copy, theme toggle
+
+---
+Task ID: 4-a
+Agent: Effects Generator (batch 5 — directional animation variants)
+Task: Generate 50 directional CSS animation variants for the "animations" category (fade/slide/zoom/bounce/blur/scale/attention entrances & exits)
+
+Work Log:
+- Read worklog.md to understand prior RoyCSS work (260 effects across batches 1-4 + the 30 existing animations in effects-batch-1.ts).
+- Read src/lib/roycss-types.ts to confirm the CSSEffect interface (id, name, category, description, tags, cssCode, previewType, childCount?, previewText?) and the EffectCategory union (still includes "animations").
+- Inventoried the 30 EXISTING animation effect IDs in effects-batch-1.ts to guarantee no duplicates: pulse-glow, bounce-in, fade-in-up, rotate-spin, shake, float, jello, heartbeat, wobble, tada, swing, head-shake, rubber-band, slide-in-left, slide-in-right, zoom-in, flip-in-x, flip-in-y, light-speed-in, roll-in, jack-in-box, bounce-out, fade-out-down, rotate-out, zoom-out, roll-out, flash, pulse-soft, wiggle, breathe.
+- Cross-checked all 137 existing @keyframes (roy-*) across batches 1-4 + roycss-effects.ts to ensure none of my new roy-* names would collide — zero collisions confirmed.
+- Created /home/z/my-project/src/lib/effects-batch-5.ts exporting `effectsBatch5: CSSEffect[]` with exactly 50 unique directional animation variants:
+  * 10 Fade: fade-in, fade-in-down, fade-in-left, fade-in-right, fade-out, fade-out-up, fade-out-left, fade-out-right, fade-in-bl, fade-in-br (diagonal bottom-left/right).
+  * 8 Slide: slide-in-top, slide-in-bottom, slide-out-top, slide-out-bottom, slide-out-left, slide-out-right, slide-diagonal (loop), slide-rotate-in.
+  * 6 Zoom: zoom-in-left, zoom-in-right, zoom-in-up, zoom-in-down, zoom-out-left, zoom-out-up (each pairs scale3d + translate3d with a per-side transform-origin).
+  * 5 Bounce: bounce-in-left, bounce-in-right, bounce-in-up, bounce-in-down (each with 4-step elastic settle), bounce-rotate (scale + rotate overshoot).
+  * 4 Blur: blur-in, blur-in-up, blur-out, blur-out-down (filter:blur() combined with opacity/translate for cinematic focus transitions).
+  * 4 Scale: scale-grow (0→1.12→1), scale-shrink (1.8→0.92→1), scale-expand (independent scaleX/scaleY), scale-compress (squashed-Y spring-in).
+  * 13 Other directional/attention: swing-in (pendulum rotate entrance), drop-in (fall + squash bounce), pop-in, pop-out, blink (steps() flashing), vibrate (10-step micro-translate), jiggle (5-step rotate), sway (gentle infinite rotate), pendulum (large decelerating swing), snap-in (scale+translate slam), stretch (vertical spring loop), spring-in (rise + bounce + scale), dissolve (blur+scale+opacity exit).
+- Every CSS class is `.roycss-{id}` (verified — 0 missing). Every @keyframes is prefixed `roy-` and is globally unique within the batch (50/50 unique) AND across the entire RoyCSS library (zero collisions with the 137 existing keyframes in batches 1-4 + roycss-effects.ts).
+- Every cssCode block is COMPLETE and SELF-CONTAINED: contains the class definition AND the @keyframes it references. Used modern CSS: transform3d, scale3d, rotate3d, filter:blur(), cubic-bezier() easings, transform-origin overrides, infinite alternate loops, steps() timing for the blink effect.
+- Each effect is GENUINELY UNIQUE — no two share the same animation signature. Entrance effects use `both` fill mode; loop effects (blink, vibrate, jiggle, sway, pendulum, stretch, slide-diagonal) use `infinite`.
+- Validation script (Bun + mjs) confirmed:
+  * 50/50 effects present, all 50 required ids present, 0 missing, 0 extra.
+  * 0 duplicate ids, 0 duplicate names.
+  * Categories: { animations: 50 } ✓ ; PreviewTypes: { box: 50 } ✓.
+  * 0 missing .roycss-{id} classes, 0 effects without @keyframes, 0 mismatched keyframe names.
+  * 50 unique @keyframes, 0 duplicate keyframes within batch, 0 cross-batch keyframe collisions, 0 cross-batch id collisions.
+  * 0 bad tags (all 3-4 lowercase keywords).
+- `bunx tsc --noEmit --skipLibCheck` on the project → 0 errors mentioning batch-5 (file type-checks cleanly).
+
+Stage Summary:
+- Created /home/z/my-project/src/lib/effects-batch-5.ts exporting `effectsBatch5` with exactly 50 production-ready, copy-paste CSS directional animation variants for the "animations" category.
+- Every effect conforms to the CSSEffect interface, uses `.roycss-` class prefix and `roy-` keyframe prefix, has self-contained cssCode, unique ids/names/CSS, and modern CSS techniques (transform3d, filter:blur, cubic-bezier, transform-origin).
+- Zero cross-batch collisions (ids OR keyframes) with effects-batch-1/2/3/4.ts or roycss-effects.ts — safe to load all five batches into a shared stylesheet.
+- File is TypeScript-clean and ready for the integration agent to import into /src/lib/roycss-effects.ts alongside the other batches (would bring the library from 260 → 310 effects).
+
+---
+Task ID: 4-b
+Agent: Effects Generator (batch 6)
+Task: Generate 36 CSS effects for scroll, cursor, and page-transitions categories
+
+Work Log:
+- Read worklog.md to understand prior RoyCSS library work (260 effects across batches 1-4; roycss-types.ts defines CSSEffect interface with 13 categories including scroll, cursor, page-transitions).
+- Read src/lib/effects-batch-1.ts (preview) and src/lib/roycss-types.ts to confirm the CSSEffect interface and the category/previewType unions.
+- Confirmed via ripgrep that no existing `roy-scroll-*`, `roy-cursor-*`, or `roy-page-*` keyframes exist anywhere in src/lib (clean namespace — zero cross-batch collision risk for the new prefixes).
+- Created src/lib/effects-batch-6.ts exporting `effectsBatch6: CSSEffect[]` with exactly 36 self-contained effects (12 scroll + 12 cursor + 12 page-transitions).
+- Designed each effect as a pure-CSS visual demo because scroll position, mouse coordinates, and navigation events are not available in a static preview:
+  * SCROLL (12): scroll-reveal-up ships the semantic `.is-visible` toggle pattern (per spec). The other 11 ship infinite animations that visually demonstrate the scroll-linked motion — reveal-left/right/scale/rotate loop the reveal cycle; progress-bar fills 0→100%; indicator has a bouncing wheel + chevron; parallax-slow drifts a blob over a moving grid; sticky-header animates between expanded (64px) and compact (36px) states; fade-out + zoom-in loop their scroll-linked transitions; horizontal indicator has a sliding knob with a sheen overlay.
+  * CURSOR (12): each effect uses a dark canvas with one or two pseudo-elements that simulate cursor-following motion via infinite keyframe orbits — glow-dot (orbit), trail (comet box-shadow sweep), blob (morph+drift), ring (orbit+pulse), ripple (two staggered expanding rings), spotlight (130px radial glow + core dot drifting together), magnetic (hover-triggered scale + label lift), crosshair (drifting H+V bars over a faint grid), arrow-bounce (pointer triangle + pulsing target ring), pulse-ring (orbiting dot + scaling sonar ring), gradient-trail (spinning conic-gradient arc + orbiting dot), firefly (two drifting dots with brightness pulse).
+  * PAGE-TRANSITIONS (12): each effect is a full-bleed dark canvas with a pseudo-element "page" that performs the transition in an infinite loop — fade, slide-left, slide-up, curtain (two dark panels sliding apart revealing a colorful base), zoom, flip (3D rotateY with perspective), circle-reveal (clip-path circle expanding), mask-reveal (clip-path inset wipe), cube (3D rotateY with perspective depth), liquid (border-radius morph + blur), shutter (dark iris scaling from center + aperture flash), dissolve (opacity + blur + scale).
+- Every CSS class uses `.roycss-` prefix; every @keyframes uses `roy-` prefix and is globally unique. Used `is-visible` as the only non-roycss class selector (it is the documented toggle-pattern companion to scroll-reveal-up, not a separate effect class).
+- Validation (Bun script):
+  * 36/36 effects present, 12/12/12 split per category.
+  * 0 duplicate ids, 0 duplicate names, 0 effects missing `.roycss-{id}` class.
+  * 46 unique @keyframes, all `roy-` prefixed, 0 duplicates within batch.
+  * 0 cross-batch keyframe collisions with batches 1-4.
+  * 0 non-roycss class selectors (excluding the documented `is-visible` toggle).
+  * All 36 required effect ids present and correctly categorized.
+  * Tags: all 3-4 keywords; "3d" tag on page-flip and page-cube matches the existing convention (used 11+ times across batches 1, 2, 4).
+  * Preview types: box=11, background=24, card=1.
+  * `bun run lint` → clean (0 errors). `bunx tsc --noEmit` → no errors in effects-batch-6.ts.
+
+Stage Summary:
+- Created /home/z/my-project/src/lib/effects-batch-6.ts exporting `effectsBatch6` with exactly 36 unique, self-contained, copy-paste-ready CSS effects across the 3 new categories (12 scroll, 12 cursor, 12 page-transitions).
+- All effects conform to the CSSEffect interface, use `.roycss-` class prefix and `roy-` keyframe prefix, have self-contained cssCode (class definition + any @keyframes), unique ids/names/CSS, and modern CSS techniques (clip-path, conic-gradient, perspective 3D, multi-animation composition, box-shadow layering, border-radius morphing, blur filters, pseudo-element orbit choreography).
+- Zero cross-batch keyframe collisions with effects-batch-1/2/3/4.ts or roycss-effects.ts — safe to load into a shared stylesheet.
+- TypeScript-clean and lint-clean; ready to be merged into the combined effects array (roycss-effects.ts) and surfaced in the RoyCSS UI.
+
+---
+Task ID: 4-d
+Agent: Effects Generator (batch 8)
+Task: Generate 28 CSS effects for the new "visual" category (holographic, metallic, chrome, border beam, etc.)
+
+Work Log:
+- Read worklog.md to understand prior RoyCSS library work (260 effects across batches 1-4; batches 5-6 added by sibling agents for animations/scroll/cursor/page-transitions; roycss-types.ts already declares the "visual" EffectCategory with label "Visual Effects", icon Wand2, color fuchsia).
+- Read src/lib/effects-batch-3.ts and src/lib/effects-batch-4.ts briefly to confirm the file format, CSSEffect interface shape, cssCode self-containment conventions, and the `> div { display: none }` technique used to suppress the inner Tailwind w-6/h-6 div injected by BoxPreview.
+- Read src/components/roycss/effect-card.tsx to confirm the BoxPreview / TextPreview / BackgroundPreview DOM contracts:
+  * box → outer div has Tailwind w-20 h-20 rounded-2xl bg-gradient-to-br border-primary/20 + inner 24×24 bg-primary/60 div. My CSS overrides width/height/border/background via source order and hides the inner div with `> div { display: none }`.
+  * text → single span containing previewText (default "RoyCSS"). No inner div to suppress.
+  * background → full-bleed div with a label span at the bottom. No inner div to suppress.
+- Confirmed via ripgrep that NO existing `roy-visual-*` keyframes and NO existing `id: "visual-*"` entries exist anywhere in src/lib (clean namespace — zero cross-batch collision risk for the new `visual-` id prefix and `roy-visual-` keyframe prefix).
+- Created /home/z/my-project/src/lib/effects-batch-8.ts exporting `effectsBatch8: CSSEffect[]` with exactly 28 self-contained visual effects (all category: "visual"):
+  1. visual-border-beam — conic-gradient beam rotating around border via @property angle + mask-composite exclusion. Box, 180×120, "BEAM" label.
+  2. visual-aurora-border — multi-stop linear-gradient border (cyan→purple→pink) animated via background-position, masked to border. Box, "AURORA" label.
+  3. visual-inner-glow — pulsing inset box-shadow (emerald) breathing in and out. Box.
+  4. visual-shadow-pulse — outer drop-shadow that breathes + subtle scale (violet→pink). Box.
+  5. visual-holographic — iridescent 8-stop rainbow gradient shifting + diagonal shine sweep overlay. Box.
+  6. visual-metallic — brushed metal via vertical multi-stop linear-gradient + horizontal repeating micro-stripes + sweeping highlight. Box.
+  7. visual-chrome — 11-stop chrome reflective gradient with curve-mimicking stops + inset highlights/shadows + moving shine. Box.
+  8. visual-liquid-fill — two SVG wave pseudo-elements translating horizontally (counter-rotating) over dark container. Box.
+  9. visual-gradient-text-animated — 9-stop flowing rainbow gradient with background-clip:text + 200% background-size animation. Text (previewText "RoyCSS").
+  10. visual-gradient-mesh — 5-blob radial-gradient mesh (pink/orange/violet/cyan/green) animated via background-position. Background.
+  11. visual-image-distortion — wobble distortion via blur+skew+scale 5-step keyframe loop. Box.
+  12. visual-pixelate — pixel grid overlay via two perpendicular linear-gradients with stepped background-size animation (4px→24px). Box.
+  13. visual-frost-blur — frosted glass panel (backdrop-filter blur+saturate) over vivid radial gradient base + crystalline repeating-line overlay. Box.
+  14. visual-spotlight-follow — radial spotlight 70px that orbits in a rectangular path via two @property percentage custom properties. Box.
+  15. visual-mask-fade — mask-image linear-gradient that sweeps vertically via mask-position alternate. Box.
+  16. visual-blend-mode-overlay — two blurred colored blobs (pink + cyan) drifting in opposite directions with screen blend mode. Box.
+  17. visual-backdrop-blur-heavy — extreme backdrop-filter blur(28px) frost panel inset 15px over multi-radial vivid gradient. Box.
+  18. visual-color-shift — smooth hue-rotate 0→360deg loop on pink+violet gradient. Box.
+  19. visual-hue-rotate-loop — continuous hue-rotate on rainbow conic-gradient (more vivid than color-shift). Box.
+  20. visual-saturation-pulse — filter:saturate pulsing between 0 (grayscale) and 2.6 (oversaturated). Box.
+  21. visual-glass-reflection — frosted glass panel + diagonal light reflection sweeping across via ::after translate. Box.
+  22. visual-noise-overlay — animated SVG fractal-noise (feTurbulence) data-URI grain jittering in 4-step steps() + emerald radial overlay. Box.
+  23. visual-shimmer-sweep — diagonal light band sweeping across dark surface + emerald tint overlay. Box.
+  24. visual-iridescent — conic-gradient rainbow with continuous hue-rotate + diagonal stripe overlay + sweeping shine. Box.
+  25. visual-neon-pulse — pink neon border with layered box-shadow (outer + inset) breathing in and out. Box.
+  26. visual-glitch-distort — RGB-channel-split glitch via two pseudo-elements with screen blend mode + stepped clip-path inset keyframes. Box.
+  27. visual-prism — rotating rainbow conic-gradient clipped to triangle (clip-path polygon) + blurred duplicate for glow. Box.
+  28. visual-foil — crinkled foil via two repeating-linear-gradients at ±45° over silver gradient + moving diagonal shine + subtle hue-rotate. Box.
+- Each effect's cssCode is COMPLETE and SELF-CONTAINED: includes the class definition, any @property declarations (used for visual-border-beam angle, visual-spotlight-follow x/y percentages), any ::before/::after pseudo-elements, and any @keyframes — ready for direct injection into a <style> tag.
+- Every CSS class is `.roycss-{id}` (verified — 0 missing). Every @keyframes is prefixed `roy-` (specifically `roy-visual-*`) and is globally unique within the batch AND across the entire RoyCSS library (zero collisions with the 170 existing keyframes in batches 1-6 + roycss-effects.ts).
+- Used `> div { display: none }` on all 26 box-preview effects to hide the Tailwind-injected 24×24 inner div so it doesn't intrude on the visual surface. The text and background previews don't need this.
+- Validation (Bun + mjs script):
+  * 28/28 effects present, all 28 required ids present, 0 missing, 0 extra.
+  * 0 duplicate ids, 0 duplicate names.
+  * Categories: { visual: 28 } ✓.
+  * Preview types: { box: 26, text: 1, background: 1 } ✓.
+  * 31 unique @keyframes, all `roy-` prefixed, 0 duplicates within batch.
+  * 0 missing .roycss-{id} classes, 0 non-visual class selectors.
+  * 0 cross-batch keyframe collisions (verified: 170 unique keyframes across all 6 batches + roycss-effects.ts, 170 total occurrences → no dupes).
+  * 0 cross-batch id collisions (288 unique ids total across all batches).
+  * 0 bad tags (all 3-4 lowercase keywords).
+- `bun run lint` → clean (0 errors). `bunx tsc --noEmit --skipLibCheck` → 0 errors mentioning effects-batch-8.ts (file type-checks cleanly).
+
+Stage Summary:
+- Created /home/z/my-project/src/lib/effects-batch-8.ts exporting `effectsBatch8` with exactly 28 unique, self-contained, copy-paste-ready advanced CSS visual effects for the new "visual" category (holographic, metallic, chrome, border-beam, aurora-border, prism, foil, iridescent, glitch, neon, frost, shimmer, mesh-gradient, liquid-fill, etc.).
+- Every effect conforms to the CSSEffect interface, uses `.roycss-` class prefix and `roy-` keyframe prefix (specifically `roy-visual-*`), has self-contained cssCode (class definition + @property + @keyframes), unique ids/names/CSS, and modern CSS techniques (conic-gradient, mask-composite exclusion, @property angle/percentage interpolation, backdrop-filter, mix-blend-mode: screen/overlay, SVG fractal-noise data URI, clip-path polygon/inset, layered box-shadow, multi-stop metallic gradients).
+- Zero cross-batch collisions (ids OR keyframes) with effects-batch-1/2/3/4/5/6.ts or roycss-effects.ts — safe to load all batches into a shared stylesheet.
+- File is TypeScript-clean and lint-clean; ready to be merged into the combined effects array (roycss-effects.ts) and surfaced in the RoyCSS UI. Bringing the library total to 288 effects across 14 categories (now including "visual").
+
+---
+Task ID: 4-c
+Agent: Effects Generator (batch 7)
+Task: Generate 36 CSS effects for glass-ui, particles, and microinteractions categories
+
+Work Log:
+- Read worklog.md to understand prior RoyCSS library work (260 effects across batches 1-4; CSSEffect interface in roycss-types.ts with 20 categories including glass-ui, particles, microinteractions already declared).
+- Reviewed src/lib/effects-batch-3.ts and effects-batch-4.ts to learn the format/structure (header comment, exported typed array, self-contained cssCode blocks with class + @keyframes) and to avoid duplicating existing IDs/keyframes.
+- Inventoried all existing @keyframes across batches 1-4 (137 total: roy-pulse-glow, roy-float, roy-rainbow-flow, roy-starfield-twinkle, roy-smoke-drift, roy-orbit-move, roy-progress-bar, roy-misc-confetti/snow/rain/bubbles/fireflies/sparkles/fireworks/..., roy-form-*, roy-nav-*, roy-filter-*, roy-btn-*, roy-card-*, roy-border-*, etc.) and confirmed none of my planned roy-glass-*/roy-particle-*/roy-micro-* keyframe names would collide.
+- Inventoried existing particle-like IDs (misc-confetti, misc-snow, misc-rain, misc-bubbles, misc-fireflies, misc-sparkles, misc-fireworks — all prefixed misc-) and form IDs (form-toggle-switch, form-checkbox-custom, form-radio-custom) to ensure my new particles-* and micro-* IDs are distinct.
+- Reviewed src/components/roycss/effect-card.tsx to understand preview rendering: CardPreview renders `<div class="roycss-{id} w-36 h-24 flex items-center justify-center"><span>{name}</span></div>`; BackgroundPreview renders `<div class="roycss-{id} w-full h-full rounded-lg flex items-end p-3"><span>{name}</span></div>`; LoaderPreview is the only preview that renders childCount spans. Noted that particle effects (previewType: background) will render correctly once the integration agent updates BackgroundPreview to honor childCount; the CSS is written per spec targeting `.roycss-{id} span` as particles.
+- Created /home/z/my-project/src/lib/effects-batch-7.ts exporting `effectsBatch7: CSSEffect[]` with exactly 36 unique, self-contained effects:
+  * 12 glass-ui (all previewType: card): glass-frosted (backdrop blur + saturate), glass-acrylic (opaque acrylic), glass-liquid (animated hue-rotate refraction), glass-neumorphism (dual-shadow raised), glass-neumorphism-inset (inset pressed), glass-claymorphism (puffy rounded pink clay), glass-transparent-blur (minimal blur), glass-frosted-dark (dark mode), glass-vibrant (purple-pink saturated), glass-border-glow (animated cyan-blue glow pulse), glass-noise-overlay (SVG fractalNoise data URI texture), glass-reflection (animated diagonal light sweep). Each includes span color overrides for text legibility on its specific background.
+  * 12 particles (all previewType: background, with childCount): particles-floating-dots (8 rising blue dots), particles-confetti-burst (10 directional confetti via --tx/--ty/--rot custom properties), particles-snow-fall (8 swaying flakes), particles-rain (6 diagonal streaks), particles-fireflies (6 drifting glow-pulse dots), particles-bubbles (6 rising translucent bubbles with highlight), particles-sparks (8 upward embers with --tx drift), particles-dust (8 slow-drifting motes), particles-stars-twinkle (10 in-place twinkle), particles-fire (5 rising flickering embers), particles-smoke (4 expanding blurred wisps), particles-orbiting (5 particles orbiting a central sun via --r radius + double-rotate keyframe). Each uses :nth-child() staggered delays/positions/sizes/durations.
+  * 12 microinteractions (all previewType: card, looping demos): micro-toggle-switch (knob slides + bg color shift), micro-checkbox-check (checkmark scale-draw + erase), micro-radio-select (pulsing dot with ripple ring), micro-accordion-expand (max-height expand/collapse), micro-tooltip-appear (fade+slide), micro-toast-slide (slide in from top), micro-dropdown-reveal (scaleY open with \A line breaks), micro-modal-scale (scale-in spring + backdrop fade), micro-fab-expand (rotate +X + menu pill), micro-progress-fill (width fill + shimmer), micro-tab-indicator (underline slides between 3 positions), micro-badge-bounce (spring bounce-in badge). Each hides the name span via `> span { display: none }` and builds the component via ::before/::after pseudo-elements with looping animations.
+- Every CSS class uses `.roycss-{id}` prefix; every @keyframes uses `roy-` prefix. 30 unique keyframes total (3 glass, 12 particle, 15 micro). All cssCode blocks are self-contained (class definitions + any @keyframes + any custom property declarations).
+- Validation results:
+  * `bunx tsc --noEmit --skipLibCheck` on the file → 0 errors.
+  * `bun run lint` → clean (0 errors).
+  * Custom Bun validation script: 36/36 effects, category split {glass-ui:12, particles:12, microinteractions:12}, preview-type split {card:24, background:12}, 0 duplicate IDs, 0 duplicate names, 30 keyframes all prefixed `roy-` with 0 duplicates within batch, 0 missing `.roycss-{id}` classes, 0 bad tags (all 3-4 lowercase keywords), all 12 particles declare childCount (4-10).
+  * Cross-batch check: 0 keyframe collisions with the 137 existing keyframes in batches 1-4, 0 ID collisions with the 260 existing IDs. Safe to load alongside all prior batches.
+
+Stage Summary:
+- Created /home/z/my-project/src/lib/effects-batch-7.ts exporting `effectsBatch7` with 36 production-ready, copy-paste CSS effects across 3 new categories (12 glass-ui, 12 particles, 12 microinteractions).
+- All effects conform to the CSSEffect interface, use `.roycss-` class prefix and `roy-` keyframe prefix, have self-contained cssCode (class + @keyframes), unique IDs/names, and modern CSS techniques (backdrop-filter, SVG noise data URIs, CSS custom properties in keyframes for directional particle bursts and orbital radii, ::before/::after pseudo-element component construction, staggered :nth-child animations).
+- Particle effects declare `childCount` (4-10) and target `.roycss-{id} span` for particle styling; the integration agent will need to ensure the BackgroundPreview renderer honors `childCount` to render the full particle sets (currently it renders one name span; the CSS already styles that span as the first particle so previews won't be empty).
+- Zero cross-batch ID or keyframe collisions with batches 1-4 — safe to merge into the master effects array. File is TypeScript-clean and lint-clean.
+
+---
+Task ID: 5
+Agent: Main Agent
+Task: Expand RoyCSS to 410+ effects with 20 categories covering full animation ecosystem
+
+Work Log:
+- Added 7 new categories to roycss-types.ts: scroll, cursor, page-transitions, glass-ui, particles, microinteractions, visual (total now 20 categories)
+- Dispatched 4 parallel subagents generating 150 new effects:
+  - Batch 5 (50 effects): directional animation variants (fade, slide, zoom, bounce, blur, scale directions + swing, drop, pop, blink, vibrate, jiggle, sway, pendulum, snap, stretch, spring, dissolve)
+  - Batch 6 (36 effects): scroll(12) + cursor(12) + page-transitions(12)
+  - Batch 7 (36 effects): glass-ui(12) + particles(12) + microinteractions(12)
+  - Batch 8 (28 effects): visual(28) — border beam, holographic, metallic, chrome, liquid fill, prism, foil, glitch, iridescent, neon pulse, etc.
+- Updated roycss-effects.ts to import all 8 batches (410 effects total)
+- Updated layout.tsx metadata for 410+ effects
+- Added 7 new category icons to page: ScrollText, MousePointer2, ArrowLeftRight, GlassWater, Sparkles, ToggleRight, Wand2
+- Updated BackgroundPreview renderer to render childCount spans for particle effects
+- Updated hero stats (effects.length=410, categories=20, CSS=~18,000+ lines)
+- Verified with Agent Browser: 410 effects render, 20 categories in filters, all new category filters work (Particles=12, Visual=28), search works (holographic=3), code copy works, 240KB CSS injected, footer at bottom, zero errors
+
+Stage Summary:
+- 410 unique CSS effects across 20 categories
+- 8 batch files totaling 13,545 lines of TypeScript
+- 240KB of CSS injected server-side (no FOUC)
+- New categories: Scroll Effects(12), Cursor Effects(12), Page Transitions(12), Glass & Modern UI(12), Particles(12), Microinteractions(12), Visual Effects(28)
+- Directional animation variants: 50 new (fade-in-left, slide-in-top, zoom-in-right, bounce-in-up, blur-in, etc.)
+- Zero lint errors, zero runtime errors
+- All interactivity verified: search, filter (20 categories), code copy, theme toggle

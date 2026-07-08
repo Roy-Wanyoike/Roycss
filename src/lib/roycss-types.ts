@@ -11,6 +11,13 @@ export type EffectCategory =
   | "filters"
   | "forms"
   | "navigation"
+  | "scroll"
+  | "cursor"
+  | "page-transitions"
+  | "glass-ui"
+  | "particles"
+  | "microinteractions"
+  | "visual"
   | "misc";
 
 export type PreviewType =
@@ -101,7 +108,7 @@ export const categoryMeta: Record<
   },
   forms: {
     label: "Forms & Inputs",
-    icon: "Input",
+    icon: "FormInput",
     color: "lime",
     description: "Form input effects and validations",
   },
@@ -110,6 +117,48 @@ export const categoryMeta: Record<
     icon: "Navigation",
     color: "fuchsia",
     description: "Menu, tab, and navigation animations",
+  },
+  scroll: {
+    label: "Scroll Effects",
+    icon: "ScrollText",
+    color: "teal",
+    description: "Scroll-triggered and scroll-linked animations",
+  },
+  cursor: {
+    label: "Cursor Effects",
+    icon: "MousePointer2",
+    color: "rose",
+    description: "Custom cursor and cursor-following effects",
+  },
+  "page-transitions": {
+    label: "Page Transitions",
+    icon: "ArrowLeftRight",
+    color: "violet",
+    description: "Full-page transition animations",
+  },
+  "glass-ui": {
+    label: "Glass & Modern UI",
+    icon: "GlassWater",
+    color: "sky",
+    description: "Glassmorphism, neumorphism, and modern surface effects",
+  },
+  particles: {
+    label: "Particles",
+    icon: "Sparkles",
+    color: "amber",
+    description: "Particle systems and environmental effects",
+  },
+  microinteractions: {
+    label: "Microinteractions",
+    icon: "ToggleRight",
+    color: "emerald",
+    description: "Small interactive component animations",
+  },
+  visual: {
+    label: "Visual Effects",
+    icon: "Wand2",
+    color: "fuchsia",
+    description: "Holographic, metallic, chrome, and advanced visual styles",
   },
   misc: {
     label: "Miscellaneous",
@@ -132,5 +181,12 @@ export const categoryOrder: EffectCategory[] = [
   "filters",
   "forms",
   "navigation",
+  "scroll",
+  "cursor",
+  "page-transitions",
+  "glass-ui",
+  "particles",
+  "microinteractions",
+  "visual",
   "misc",
 ];

@@ -960,3 +960,241 @@ Stage Summary:
 - Site fully updated with all 540 effects across 11 batch files
 - Metadata, title, and counters all synchronized to 540
 - Zero lint errors, zero runtime errors
+
+## Task 13-A: Batch 13 — Experimental / Artistic CSS Effects (40 effects)
+
+**Agent:** Effects Generator (batch 13 — experimental / artistic CSS art & illusions)
+**Task ID:** 13-A
+**File created:** `/home/z/my-project/src/lib/effects-batch-13.ts` (70,139 bytes, 2,274 lines)
+
+### Context
+- Read `/home/z/my-project/worklog.md` to inventory prior RoyCSS work: 540 production effects across batches 1-11 (batches 1-8 = 410, batch 9 = 50, batch 10 = 40, batch 11 = 40).
+- Confirmed `/home/z/my-project/src/lib/effects-batch-13.ts` did NOT exist before this task.
+- Read `/home/z/my-project/src/lib/roycss-types.ts` for the `CSSEffect` interface.
+- Inventoried all 540 existing `id:` values and all 412 existing `roy-*` @keyframes names from effects-batch-1..11.ts into `/tmp/all_ids.txt` and `/tmp/all_keyframes.txt` for cross-collision verification. Chose `roy-b13-` keyframe prefix (no existing keyframe uses the `b13-` segment).
+
+### Effects created (40 total, all unique)
+- **backgrounds (12)** — pure-CSS painted landscapes & scenes:
+  1. css-painting-sunset — sunset over layered mountain silhouettes (clip-path polygons, radial sun glow)
+  2. css-painting-forest — misty forest with conic tree silhouettes & fog overlay
+  3. css-painting-ocean — ocean horizon with rippling water & sun glint
+  4. css-painting-desert — desert dunes with blazing sun & multi-layer dunes
+  5. css-painting-city-night — city skyline at night with window-grid illumination
+  6. css-painting-galaxy — top-down spiral galaxy with core, dust lanes & stars
+  7. css-rainbow-arc — rainbow arc with sky gradient & cloud highlights
+  8. css-aurora-landscape — aurora borealis over snow-capped peaks (animated ribbons)
+  9. css-underwater-scene — underwater god rays piercing deep blue
+  10. css-volcano-eruption — erupting volcano with glowing lava, smoke plume & falling embers
+  11. css-snowy-mountain — snow-capped peak with drifts on slopes
+  12. css-tropical-beach — tropical beach with palm tree silhouette & turquoise water
+
+- **visual (12)** — optical illusions & generative art:
+  13. optical-illusion-hypnosis — spinning two-armed conic spiral
+  14. optical-illusion-depth — nested radial/conic gradients forming infinite tunnel
+  15. optical-illusion-motion — static high-contrast pattern inducing apparent motion
+  16. optical-illusion-impossible — Penrose triangle with three shaded faces
+  17. optical-illusion-barber-pole — animated red/white/blue diagonal stripes moving upward
+  18. optical-illusion-cafe-wall — offset checker tiles with mortar lines (parallel rows appear sloped)
+  19. art-mondrian — Piet Mondrian composition with bold black lines & primary blocks
+  20. art-pixel-portrait — 8-bit pixel face (eyes, hair, mouth, skin shading)
+  21. art-geometric-mandala — symmetric mandala of layered conic gradients & radial petals
+  22. art-fractal-tree — recursive fractal tree built from box-shadow branches
+  23. art-tessellation — hexagonal honeycomb tessellation with 3D shading
+  24. art-voronoi — Voronoi-like cellular pattern with polygon seams & seeds
+
+- **animations (10)** — mesmerizing mechanical loops:
+  25. hypnotic-spiral — infinite-zoom conic spiral with pulsing core
+  26. infinite-zoom-tunnel — concentric rings continuously expanding outward
+  27. matrix-rain-fall — green digital rain in vertical streams (animated background-position)
+  28. star-wars-crawl — perspective-tilted text receding into distance (3D perspective)
+  29. conveyor-belt — chevron tread scrolling horizontally on rollers
+  30. escalator-steps — diagonal escalator with rising step segments
+  31. windmill-spin — windmill tower with 4 rotating conic blades
+  32. ferris-wheel — rotating ferris wheel with 8 colored cart segments
+  33. clock-tick — analog clock face with hour markers & 3 hands at relative speeds (uses child .hands & .hour spans)
+  34. pendulum-clock — grandfather clock cabinet with swinging brass pendulum & bob
+
+- **text (6)** — artistic typography:
+  35. text-typewriter-erase — types out then erases with blinking cursor (steps() + width animation)
+  36. text-scramble — scrambled garbage characters resolving into clean text
+  37. text-gradient-flow-3d — 3D extruded text with flowing multi-color gradient
+  38. text-glitch-matrix — Matrix-style glitch with chromatic aberration & flicker
+  39. text-rainbow-breathe — rainbow gradient text that breathes in scale & shifts hue
+  40. text-shadow-perspective — floating text with long perspective shadow on ground plane
+
+### Verification
+- **File exists:** `ls -la /home/z/my-project/src/lib/effects-batch-13.ts` → 70,139 bytes ✓
+- **Line count:** `wc -l` → 2,274 lines ✓
+- **Effect count:** 40 (verified via `id:` count = 40, `previewType:` count = 40)
+- **Category breakdown:** backgrounds=12, visual=12, animations=10, text=6 ✓
+- **PreviewType breakdown:** background=12, box=22, text=6 ✓
+- **Unique IDs:** 40/40 within batch (0 duplicates) ✓
+- **Cross-batch ID collisions:** 0 (verified against all 540 existing IDs via `comm -12`) ✓
+- **Unique @keyframes:** 32 unique `roy-b13-*` keyframes within batch (some effects are static) ✓
+- **Within-batch keyframe duplicates:** 0 ✓
+- **Cross-batch keyframe collisions:** 0 (verified against all 412 existing `roy-*` keyframes via `comm -12`) ✓
+- **All CSS classes:** 40 unique `.roycss-{id}` classes ✓
+- **All keyframes prefixed `roy-`:** yes, all 32 use `roy-b13-` prefix ✓
+- **TypeScript:** `bunx tsc --noEmit --skipLibCheck src/lib/effects-batch-13.ts` → exit 0, 0 errors ✓
+
+### Techniques showcased
+- **`clip-path: polygon()`** — mountain silhouettes, palm fronds, windmill tower, fractal tree branches
+- **`repeating-conic-gradient()`** — spiral hypnosis, mandala petals, ferris wheel carts, barber pole, clock markers
+- **`repeating-radial-gradient()`** — galaxy stars, infinite depth tunnel, rainbow arc
+- **`repeating-linear-gradient()`** — city windows, conveyor belt, escalator steps, café wall, matrix rain
+- **`mix-blend-mode: screen/multiply`** — aurora ribbons, galaxy arms, Mondrian lines, voronoi overlays
+- **`-webkit-mask: radial-gradient/linear-gradient`** — barber pole taper, spiral borders, clock face rings
+- **`background-blend-mode`** — Mondrian layered linear gradients
+- **`perspective + rotateX/rotateY`** — Star Wars crawl, 3D gradient text, perspective shadow
+- **`transform-origin` + swing animation** — pendulum, clock hands, ferris wheel
+- **`steps()` timing function** — typewriter typing, clock ticking, scramble decode
+- **`box-shadow` recursion** — fractal tree branches, falling embers
+- **`-webkit-background-clip: text`** — gradient text effects (3D flow, rainbow breathe, perspective shadow)
+- **`@keyframes` content swapping** — text-scramble uses content property keyframes
+- **`filter: drop-shadow + blur`** — galaxy blur, aurora glow, ferris wheel glow
+
+### Notes for integration agent
+- Created `/home/z/my-project/src/lib/effects-batch-13.ts` exporting `effectsBatch13` with exactly **40 production-ready, copy-paste CSS art effects** — visually-stunning CSS paintings, optical illusions, generative art, mechanical animations, and artistic typography.
+- **Zero cross-batch collisions** (IDs OR keyframes) with effects-batch-1/2/3/4/5/6/7/8/9/10/11.ts — safe to load alongside all prior batches in a shared stylesheet.
+- File is **TypeScript-clean** (`bunx tsc --noEmit --skipLibCheck` exit 0) and ready for the integration agent to import into `/src/lib/roycss-effects.ts` alongside the other 11 batches (would bring the library from 540 → 580 effects).
+- Two effects use child `<span>` elements: `clock-tick` (uses `.hands` and `.hour` child spans for minute/hour hands), `pendulum-clock` (uses `.bob` child for pendulum bob). `volcano-eruption` and `tropical-beach` use optional `.embers` / `.fronds` children but degrade gracefully without them (the painted scene is complete via `::before`/`::after`).
+
+## Task 12-A: Batch 12 — Interactive UI, Data Viz & Practical Component Effects (40 effects)
+
+**Agent:** Effects Generator (batch 12 — practical UI components, data visualization, and UI state animations)
+**Task ID:** 12-A
+**File created:** `/home/z/my-project/src/lib/effects-batch-12.ts` (76,110 bytes, 2,222 lines)
+
+### Context
+- Read `/home/z/my-project/worklog.md` to inventory prior RoyCSS work: 540 production effects across batches 1-11 (batches 1-8 = 410, batch 9 = 50, batch 10 = 40, batch 11 = 40).
+- Confirmed `/home/z/my-project/src/lib/effects-batch-12.ts` did NOT exist before this task.
+- Read `/home/z/my-project/src/lib/roycss-types.ts` for the `CSSEffect` interface and `EffectCategory`/`PreviewType` unions.
+- Inventoried all 540 existing `id:` values and all existing `roy-*` @keyframes names from effects-batch-1..11.ts to verify no cross-collisions. Chose `roy-b12-` keyframe prefix (no existing keyframe uses the `b12-` segment).
+- Used unique `@property --roy-b12-*` custom-property names (4 total) since the global `<style>` block concatenates all effect CSS into one stylesheet (verified in `src/app/layout.tsx`).
+
+### Effects created (40 total, all unique)
+- **microinteractions (12)** — practical UI components:
+  1. progress-radial-percentage — conic-gradient ring with `@property`-animated angle and discrete label
+  2. progress-step-indicator — three connected dots with animated gradient fill line between them
+  3. rating-stars — five-star rating that animates fill via `@property` percentage gradient stop
+  4. like-button-particle — beating heart with 8-dot outward particle burst
+  5. copy-feedback — circle pop with L-border checkmark draw + expanding ring
+  6. toggle-dark-mode — sun/moon morph toggle with day-to-night background transition
+  7. password-strength — gradient meter (red→amber→green) with discrete Weak/Good/Strong label
+  8. upload-progress — labeled file-upload bar with fill that completes to green
+  9. notification-badge — count-up badge (1→3→7→9+) with expanding pulse ring
+  10. skeleton-card-shimmer — avatar + title + text skeleton with shimmer sweep
+  11. skeleton-text-lines — five staggered text-bar placeholders with shimmer sweep
+  12. countdown-timer — conic-gradient arc depleting with discrete number (5→0)
+
+- **visual (10)** — data viz & practical visuals:
+  13. chart-bar-grow — five colored bars growing from baseline with cubic-bezier overshoot
+  14. chart-line-draw — polyline drawn left-to-right via `clip-path` polygon + `mask` linear-gradient reveal, with data dots
+  15. chart-donut — four-segment conic-gradient donut with counter-rotating center label
+  16. gauge-meter — speedometer semicircle arc with sweeping needle (green→amber→red)
+  17. thermometer — vertical tube with rising mercury and bulb at base
+  18. battery-level — battery body with terminal nub and color-shifting level fill
+  19. signal-strength — four ascending bars with pulsing wave + drop-shadow glow
+  20. loading-skeleton-grid — 2×3 grid of placeholder cards with shimmer sweep
+  21. data-table-row-highlight — table with header row, column dividers, and scanning highlight row
+  22. code-block-syntax — editor window with traffic-light dots and 5 lines of syntax-token stripes (keyword/ident/string/number/comment colors)
+
+- **animations (10)** — UI state animations:
+  23. shake-error-input — input with red border + ! badge that shakes horizontally on a loop
+  24. pulse-attention — CTA button with expanding pulse ring (gradient fill + arrow)
+  25. bounce-notification — toast that slides in from right, bounces to settle, then slides out
+  26. flip-card-reveal — 3D Y-axis flip between front and back faces with `perspective` and `backface-visibility`
+  27. expand-collapse — accordion section with smooth height keyframe animation (no JS)
+  28. slide-in-panel — drawer that slides in from right edge with backdrop dim fade
+  29. modal-backdrop-blur — modal dialog with backdrop that blurs in + card that scales up
+  30. tooltip-follow — tooltip that moves around a hover target area on a loop
+  31. drag-handle-grip — 6-dot grip handle (2×3) with subtle shake + hover halo
+  32. context-menu — popup menu that scales in from top-left origin with item bars + dismiss hint
+
+- **cards (8)** — practical card patterns:
+  33. card-skeleton-loader — full card with image/title/text skeleton placeholders and shimmer
+  34. card-empty-state — empty box illustration with floating animation + "No items found" text
+  35. card-error-state — pulsing red circle with crossed-gradient X mark + error text
+  36. card-success-state — green circle with animated checkmark draw + success text
+  37. card-pricing-highlight — pricing card with animated gradient border (mask cutout) + "POPULAR" badge + plan content bars
+  38. card-profile-avatar — profile card with rotating conic-gradient avatar ring + bio text bars
+  39. card-notification — notification card with icon, message bars and dismiss X button
+  40. card-search-result — search result card with SVG magnifier icon and title with highlighted match
+
+### Verification
+- **File exists:** `ls -la /home/z/my-project/src/lib/effects-batch-12.ts` → 76,110 bytes ✓
+- **Line count:** `wc -l` → 2,222 lines ✓
+- **Effect count:** 40 (verified via `id:` count = 40)
+- **Category breakdown:** microinteractions=12, visual=10, animations=10, cards=8 ✓
+- **PreviewType breakdown:** box=27, loader=4, card=8, background=0, text=0, button=0 ✓ (matches expected: 4 loaders = skeleton-card-shimmer, skeleton-text-lines, loading-skeleton-grid, card-skeleton-loader; 8 cards; rest = box)
+- **Unique IDs:** 40/40 within batch (0 duplicates via `sort | uniq -d`) ✓
+- **Cross-batch ID collisions:** 0 (verified against all 540 existing IDs across batches 1-11 via `grep -h '^\s*id:' | sort | uniq -d`) ✓
+- **Unique @keyframes:** 57 unique `roy-b12-*` keyframes within batch ✓
+- **Within-batch keyframe duplicates:** 0 ✓
+- **Cross-batch keyframe collisions:** 0 (no existing keyframe uses `roy-b12-` prefix; existing batches use `roy-`, `roy-b11-`, etc.) ✓
+- **All CSS classes:** 40 unique `.roycss-{id}` classes ✓
+- **All keyframes prefixed `roy-`:** yes, all 57 use `roy-b12-` prefix ✓
+- **All @property names unique:** 4 unique (`--roy-b12-radial-progress`, `--roy-b12-rating-fill`, `--roy-b12-countdown-remaining`, `--roy-b12-line-reveal`) ✓
+- **TypeScript:** `npx tsc --noEmit --skipLibCheck src/lib/effects-batch-12.ts` → exit 0, 0 errors ✓
+- **Module exports:** `effectsBatch12` (verified via `node -e "require(...)"` returns `{ effectsBatch12 }`)
+
+### Techniques showcased
+- **`@property` registered custom properties** — animatable gradient stops and conic angles (progress-radial, rating-stars, countdown-timer, chart-line-draw)
+- **`conic-gradient` for radial/gauge/donut** — circular progress, countdown arc, donut chart segments, gauge semicircle
+- **`background-clip: text` with animated gradient** — rating-stars fill sweep
+- **`clip-path: polygon()` + `mask`** — chart-line-draw polyline shape + left-to-right reveal mask
+- **Multiple `linear-gradient` background layers** — chart-bar-grow bars, signal-strength bars, data-table grid, code-block token stripes, search-result text bars (animated via `background-size`)
+- **`mask-composite: exclude` / `-webkit-mask-composite: xor`** — pricing-card animated gradient border (cutout ring)
+- **`backface-visibility: hidden` + `perspective`** — flip-card-reveal 3D Y-axis flip
+- **`content` property animation via `steps(1)`** — notification-badge count-up, countdown-timer number, password-strength label (discrete keyframe jumps)
+- **`background-size` multi-layer animation** — chart-bar-grow (5 bars), signal-strength (4 bars) with comma-separated size values
+- **SVG `data:image/svg+xml` URL** — search-result magnifier icon (clean vector with no extra HTTP request)
+- **`@keyframes` choreographed sequences** — bounce-notification slide+bounce+settle+slide-out, context-menu scale-in/hold/scale-out
+- **`filter: blur`** — modal-backdrop-blur entrance
+- **`filter: drop-shadow` glow** — signal-strength, like-button heart, rating-stars
+- **`-webkit-background-clip: text` + `color: transparent`** — rating-stars gradient fill across star glyphs
+- **`box-shadow` traffic-light dots** — code-block-syntax window controls (multi-offset shadow)
+- **Crossed `linear-gradient` lines** — card-error-state X mark (45deg + -45deg gradient stripes inside circle)
+- **`border-left + border-bottom` rotated** — copy-feedback and card-success-state checkmarks (L-shape rotated -45deg)
+- **`inset` mask cutout for ring effect** — gauge-meter inner half-circle creating the ring channel
+
+### Notes for integration agent
+- Created `/home/z/my-project/src/lib/effects-batch-12.ts` exporting `effectsBatch12` with exactly **40 production-ready, copy-paste CSS effects** focused on interactive UI patterns, data visualization, and practical component states.
+- **Zero cross-batch collisions** (IDs, keyframes, or @property names) with effects-batch-1/2/3/4/5/6/7/8/9/10/11.ts — safe to load alongside all prior batches in the shared `<style>` block injected server-side in `src/app/layout.tsx`.
+- File is **TypeScript-clean** (`npx tsc --noEmit --skipLibCheck` exit 0) and ready for the integration agent to import into `/src/lib/roycss-effects.ts` alongside the other 11 batches (would bring the library from 540 → 580 effects).
+- All 40 effects are **self-contained** — every effect draws its full visual via the `.roycss-{id}` class + `::before` + `::after` (no reliance on child `<span>` elements; `childCount` left unset, defaults to 0).
+- For `box` and `card` preview types, the default inner `<div>` (box) and `<span>` (card) are explicitly hidden via `> div { display: none }` or `> span { display: none }` where the effect draws its own complete visuals via backgrounds and pseudos.
+- The 4 effects using `@property` use unique names (`--roy-b12-*`) so the global stylesheet does not suffer `@property` redefinition conflicts.
+
+---
+Task ID: 16
+Agent: Main Agent
+Task: Add 80 more unique effects (batches 12 & 13)
+
+Work Log:
+- Dispatched 2 parallel subagents to generate 80 new unique effects:
+  - Batch 12 (40 effects): Interactive UI patterns, data visualization, practical components
+    - microinteractions (12): radial progress, step indicator, rating stars, like particle, copy feedback, dark mode toggle, password strength, upload progress, notification badge, skeleton card, skeleton text, countdown timer
+    - visual (10): bar chart grow, line chart draw, donut chart, gauge meter, thermometer, battery level, signal strength, skeleton grid, table row highlight, code block syntax
+    - animations (10): shake error input, pulse attention, bounce notification, flip card reveal, expand collapse, slide-in panel, modal backdrop blur, tooltip follow, drag handle grip, context menu
+    - cards (8): skeleton loader, empty state, error state, success state, pricing highlight, profile avatar, notification, search result
+  - Batch 13 (40 effects): Experimental/artistic CSS — paintings, optical illusions, mechanical animations
+    - backgrounds (12): CSS paintings (sunset, forest, ocean, desert, city night, galaxy, rainbow, aurora landscape, underwater, volcano, snowy mountain, tropical beach)
+    - visual (12): optical illusions (hypnosis, depth, motion, impossible triangle, barber pole, cafe wall) + generative art (Mondrian, pixel portrait, mandala, fractal tree, tessellation, Voronoi)
+    - animations (10): mesmerizing loops (hypnotic spiral, zoom tunnel, Matrix rain, Star Wars crawl, conveyor belt, escalator, windmill, ferris wheel, clock tick, pendulum)
+    - text (6): artistic typography (typewriter erase, scramble, 3D gradient flow, Matrix glitch, rainbow breathe, perspective shadow)
+- Verified both files exist (batch-12: 76KB, batch-13: 70KB)
+- Updated roycss-effects.ts to import all 13 batches (620 total)
+- Verified: 620 effects, 0 duplicate IDs
+- Updated layout.tsx metadata: "620+ Beautiful CSS Effects Library"
+- Verified with Agent Browser:
+  - Title: "RoyCSS — 620+ Beautiful CSS Effects Library with Live Demos" ✓
+  - Counters: 620 Effects, 20 Categories ✓
+  - New effects searchable (radial progress, sunset, hypnosis, ferris wheel, mondrian, battery level) ✓
+  - Zero errors, zero hydration issues ✓
+
+Stage Summary:
+- 80 new unique effects added (620 total across 20 categories, 13 batch files)
+- Batch 12: practical UI components (progress indicators, charts, state cards, form feedback)
+- Batch 13: CSS art (paintings, optical illusions, generative art, mechanical animations)
+- Zero lint errors, zero runtime errors

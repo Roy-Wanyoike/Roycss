@@ -10,6 +10,8 @@ import { effectsBatch8 } from "./effects-batch-8";
 import { effectsBatch9 } from "./effects-batch-9";
 import { effectsBatch10 } from "./effects-batch-10";
 import { effectsBatch11 } from "./effects-batch-11";
+import { effectsBatch12 } from "./effects-batch-12";
+import { effectsBatch13 } from "./effects-batch-13";
 
 // Re-export types and metadata
 export type { CSSEffect, EffectCategory, PreviewType } from "./roycss-types";
@@ -28,6 +30,8 @@ export const effects: CSSEffect[] = [
   ...effectsBatch9,
   ...effectsBatch10,
   ...effectsBatch11,
+  ...effectsBatch12,
+  ...effectsBatch13,
 ];
 
 // Generate combined CSS string for injection (avoids FOUC by rendering server-side)

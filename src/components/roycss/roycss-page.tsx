@@ -482,7 +482,7 @@ export default function RoyCSSPage() {
               <div className="mt-10 grid grid-cols-3 gap-3 max-w-2xl mx-auto">
                 <StatCounter icon={Sparkles} value={effects.length} label="Effects" />
                 <StatCounter icon={BookOpen} value={categoryOrder.length} label="Categories" />
-                <StatCounter icon={Zap} value={18000} label="Lines of CSS" suffix="+" prefix="~" />
+                <StatCounter icon={Zap} value={22000} label="Lines of CSS" suffix="+" prefix="~" />
               </div>
             </ScrollReveal>
           </div>

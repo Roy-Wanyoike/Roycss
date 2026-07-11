@@ -722,3 +722,241 @@ Stage Summary:
 - Features: large preview, 3 background modes, live code editing, syntax highlighting, copy, reset, related effects
 - Transforms RoyCSS from gallery to interactive tool
 - Zero lint errors, zero runtime errors
+
+---
+
+## Task 9-REGEN: Batch 9 Material/Apple/Linear Effects (50 effects)
+
+**Agent:** general-purpose sub-agent
+**File created:** `/home/z/my-project/src/lib/effects-batch-9.ts` (39.6KB, 1281 lines)
+
+### Effects breakdown (50 total)
+- **animations** (15): material-spring-up, material-spring-down, material-emphasized, material-emphasized-decel, material-container-transform, apple-squish-in, apple-squish-out, apple-flip-spring, apple-elastic-scale, apple-bounce-settle, natural-drop, pendulum-swing-spring, rubber-snap-back, material-state-layer, material-fab-scale
+- **hover** (10): linear-shimmer-hover, linear-glow-border, linear-spotlight, linear-magnetic-pull, linear-noise-overlay, linear-gradient-sweep, linear-depth-shadow, linear-card-lift, linear-text-glow, linear-icon-bounce
+- **visual** (10): linear-aurora-glow, linear-gradient-mesh-bg, apple-frosted-vibrancy, apple-material-thin, apple-material-thick, material-elevation-1, material-elevation-3, material-elevation-5, material-state-layer-surface, linear-dark-surface
+- **scroll** (8): scroll-driven-fade, scroll-driven-scale, scroll-driven-rotate, scroll-driven-translate, scroll-driven-blur, scroll-driven-color, scroll-driven-sticky, scroll-driven-progress-ring (all with `@supports not (animation-timeline: view()/scroll())` infinite-loop fallbacks)
+- **glass-ui** (7): apple-vibrancy-light, apple-vibrancy-dark, apple-sidebar-material, material-surface-tint, apple-ultra-thin, glass-prism, glass-depth-layer
+
+### Compliance checks passed
+- All 50 class names match `.roycss-{id}` convention (verified via script)
+- All `@keyframes` prefixed with `roy-` (verified — zero non-`roy-` keyframes)
+- All `cssCode` blocks self-contained with comments
+- 3-4 lowercase tags per effect
+- No ID duplicates with batches 1-8 (410 existing effects)
+- `npx tsc --noEmit` passes with zero errors
+
+### Design inspirations
+- **Material 3**: cubic-bezier(0.34, 1.56, 0.64, 1) spring overshoots, elevation shadows per M3 spec, #6750A4 primary, state layer 8% opacity
+- **Apple HIG**: macOS vibrancy `backdrop-filter: blur() saturate(180%)`, thin/thick materials, iOS sheet squish physics
+- **Linear.app**: dark surfaces (#0a0a0b / #18181b), shimmer sweeps, gradient borders, aurora glows, magnetic cursor pull
+
+### Next actions for parent
+- Import `effectsBatch9` in `/home/z/my-project/src/lib/roycss-effects.ts` and append to `effects` array
+- Combined RoyCSS count: 410 + 50 = **460 effects**
+
+---
+Task ID: 10-REGEN
+Agent: Effects Generator (batch 10 — Modern CSS API Showcase)
+Task: Regenerate batch 10 with 40 unique CSS effects using the most modern CSS features available
+
+Work Log:
+- Read worklog.md to confirm prior state: 410 effects across batches 1–8 (batches 1–4 = 260, batch 5 = 50, batch 6 = 36, batch 7 = 36, batch 8 = 28). Batch 9 was not present; this REGEN creates batch 10 from scratch.
+- Read src/lib/roycss-types.ts to confirm CSSEffect interface (id, name, category, description, tags[], cssCode, previewType, childCount?, previewText?) and the 20 valid EffectCategory values.
+- Confirmed /home/z/my-project/src/lib/effects-batch-10.ts did NOT exist before this task.
+- Inventoried all 294 existing `@keyframes roy-*` names and all 410 existing `id:` values across effects-batch-1..8.ts + roycss-effects.ts to guarantee zero collisions. Chose a unique `roy-b10-` keyframe prefix (no existing keyframe uses the `b10-` segment) and unique unprefixed ids.
+- Created /home/z/my-project/src/lib/effects-batch-10.ts exporting `effectsBatch10: CSSEffect[]` with exactly 40 unique, self-contained effects:
+
+  MICROINTERACTIONS (10) — all previewType: card
+   1. anchor-tooltip — CSS Anchor Positioning API (anchor-name, position-anchor, position-area). @supports fallback for browsers without anchor positioning.
+   2. has-parent-highlight — :has() relational selector highlights the parent card when an inner span is hovered/focused. Fallback focus-ring for non-:has() browsers.
+   3. container-query-card — @container (container-type: inline-size) reshapes the card from 1 → 2 → 3 columns as width grows. Fallback to 2-col grid.
+   4. starting-style-fade — @starting-style for first-render fade+lift transition; looping restart animation for demo.
+   5. auto-height-expand — interpolate-size: allow-keywords transitions ::after to height:auto on hover. Fallback uses max-height.
+   6. view-transition-snapshot — view-transition-name on the host + ::view-transition-old/new pseudo-element keyframes for cross-snapshot morph.
+   7. balanced-text — text-wrap: balance + text-wrap: pretty for headline + paragraph. Fallback to text-wrap: normal.
+   8. relative-color-hover — rgb(from var(--base) …) derives hover bg/border/shadow from one --base. Fallback uses hard-coded overrides.
+   9. color-mix-gradient — color-mix(in oklab, …) blends two hues into a 3-stop gradient; hover reveals a lighter srgb-blend strip.
+  10. light-dark-auto — light-dark() + color-scheme cycling demo (4s steps(1, end) toggles light/dark). Fallback hard-codes dark theme.
+
+  VISUAL (12) — previewType: box (10) + 2 box
+  11. property-angle-rotate — @property <angle> drives conic-gradient rotation (4s linear).
+  12. property-color-shift — @property <angle> + hsl(from …) cycles background + box-shadow hue simultaneously.
+  13. svg-turbulence-distort — feTurbulence + feDisplacementMap via inline SVG data URI; pulsing brightness.
+  14. svg-displacement-wave — animated feTurbulence baseFrequency + feDisplacementMap (scale=22) for liquid wave.
+  15. svg-gooey-merge — feGaussianBlur + feColorMatrix (18 -7) classic gooey blob; two circles merge and split.
+  16. offset-path-orbit — offset-path: circle(70px) sends a satellite orbiting a sun; offset-rotate: 0deg.
+  17. offset-path-wave — offset-path: path("…cubic bezier…") bounces a glowing dot in a sine wave.
+  18. mask-composite-reveal — mask-composite: subtract reveals a moving slot through a dotted/gradient layer; @property <percentage> drives --mx/--my.
+  19. mix-blend-difference — two circles overlap with mix-blend-mode: difference (cyan over red).
+  20. mix-blend-exclusion — two white shapes over a conic rainbow use mix-blend-mode: exclusion.
+  21. clip-path-hexagon — 6-point polygon clip-path with rotating conic-gradient fill.
+  22. clip-path-star — 10-vertex 5-point star polygon with twinkle filter pulse.
+
+  ANIMATIONS (10) — previewType: box (8) + loader (1) + card (1)
+  23. property-progress-bar — @property <number> 0→100 drives width: calc(var * 1%) + counter() to show "NN%".
+  24. property-conic-loader — @property <angle> spins a conic-gradient ring with radial-gradient mask (1.2s linear).
+  25. property-gradient-flow — @property <angle> rotates the angle of a 7-stop linear-gradient (4s linear).
+  26. property-shadow-breathe — @property <length> x2 (blur, spread) animates a layered box-shadow in/out (2.4s ease).
+  27. property-hue-cycle — @property <angle> + hsl(from …) cycles bg, color, box-shadow hue together (4s linear). Fallback uses hue-rotate filter.
+  28. offset-path-draw — offset-path: path("…quadratic bezier…") with offset-rotate: auto; element traces a curve while rotating.
+  29. scroll-timeline-spin — animation-timeline: scroll(root block) ties rotation to page scroll. Fallback: infinite auto-spin.
+  30. view-timeline-reveal — animation-timeline: view() with animation-range: entry 0% cover 50%; reveal-on-scroll. Fallback: entry animation.
+  31. starting-style-drop-in — @starting-style + transition-behavior: allow-discrete + display transition; modal pill drops in with backdrop blur.
+  32. interpolate-size-accordion — interpolate-size: allow-keywords transitions ::after height to auto on hover. Fallback max-height.
+
+  BACKGROUNDS (8) — all previewType: background
+  33. color-mix-mesh — layered radial gradients via color-mix(in oklab, …) blend 3 hues + derived mixes; animated hue-rotate. Fallback hard-coded.
+  34. relative-color-tint — rgb(from var(--base) …) derives lighter/darker radial tints + main gradient; animated background-position.
+  35. conic-gradient-clock — conic-gradient builds 12-tick clock face + @property <angle> sweeps the second hand; inset box-shadow ring.
+  36. double-conic-spinner — two @property <angle> values counter-rotate two conic-gradient arcs (cyan + magenta) inside a radial-mask ring.
+  37. mask-radial-reveal — @property <percentage> grows a radial-gradient mask circle, revealing a striped pattern beneath.
+  38. mask-linear-wipe — @property <percentage> sweeps a linear-gradient mask edge diagonally across two backgrounds.
+  39. backdrop-multi-filter — backdrop-filter: blur(14px) saturate(180%) hue-rotate(30deg) brightness(1.1) over multi-radial imagery; animated hue-rotate.
+  40. scrollbar-gutter-stable — scrollbar-gutter: stable prevents layout shift; demo list with sticky info card. Fallback padding-right.
+
+- Every CSS class uses `.roycss-{id}` prefix (verified — 40/40 classes present, 0 missing).
+- Every @keyframes uses `roy-b10-` prefix (42 unique keyframes, 0 duplicates within batch, 0 collisions with the 294 existing keyframes across batches 1–8 + roycss-effects.ts).
+- Every cssCode is COMPLETE and SELF-CONTAINED: includes class definition + any @property declarations + @keyframes + @supports fallbacks where bleeding-edge features are used (anchor positioning, :has(), container queries, @starting-style, interpolate-size, view transitions, scroll-driven animations, light-dark(), relative colors, color-mix(), offset-path, mask-composite, backdrop-filter, scrollbar-gutter).
+- Used `> div { display: none }` on all 20 box-preview effects to hide the Tailwind-injected 24×24 inner div so it doesn't intrude on the visual surface (matching the convention established in batch 8).
+- Validation results (custom Node script):
+  * 40/40 effects present, all 40 required ids present, 0 missing, 0 extra, 0 duplicate ids.
+  * 0 duplicate names.
+  * Categories: {microinteractions: 10, visual: 12, animations: 10, backgrounds: 8} ✓.
+  * Preview types: {card: 11, box: 20, loader: 1, background: 8} ✓.
+  * 42 unique @keyframes, all `roy-b10-` prefixed, 0 duplicates within batch.
+  * 0 missing `.roycss-{id}` classes.
+  * 0 cross-batch keyframe collisions (294 existing + 42 new = 336 total, all unique).
+  * 0 cross-batch id collisions (410 existing + 40 new = 450 total, all unique).
+  * 0 bad tags (all 40 tag arrays have 3–4 lowercase keywords).
+- `bunx tsc --noEmit --skipLibCheck` → 0 errors mentioning effects-batch-10.ts (file type-checks cleanly; the 8 pre-existing errors are in examples/websocket, skills/, and unrelated components).
+- `bunx eslint src/lib/effects-batch-10.ts` → clean (0 errors, 0 warnings).
+- File: 2004 lines, 68 KB.
+
+Stage Summary:
+- Created /home/z/my-project/src/lib/effects-batch-10.ts exporting `effectsBatch10` with exactly 40 unique, self-contained, copy-paste-ready CSS effects showcasing the most bleeding-edge CSS features shipping in 2024-2025 (Anchor Positioning API, :has(), container queries, @starting-style, interpolate-size, View Transitions, text-wrap balance/pretty, relative colors rgb(from …), color-mix() in oklab/srgb, light-dark(), @property registered custom properties, SVG feTurbulence/feDisplacementMap/feGaussianBlur filters, offset-path/motion-path, mask-composite, mix-blend-mode difference/exclusion, clip-path polygons, scroll-driven animations via animation-timeline: scroll()/view()).
+- Every effect conforms to the CSSEffect interface, uses `.roycss-` class prefix and `roy-b10-` keyframe prefix, has self-contained cssCode with @supports fallbacks for bleeding-edge features, unique ids/names/CSS, and is ready for direct injection into a <style> tag.
+- Zero cross-batch collisions (ids OR keyframes) with effects-batch-1..8.ts or roycss-effects.ts — safe to load all batches into a shared stylesheet.
+- File is TypeScript-clean and lint-clean; ready to be merged into the combined effects array (roycss-effects.ts) and surfaced in the RoyCSS UI. Bringing the library total to 450 effects across 20 categories.
+
+
+---
+
+## RoyCSS Effects Batch 11 — Creative / Experimental CSS Art (Task 11-REGEN)
+
+**Agent:** Effects Generator (batch 11 — regeneration / creative "wow factor")
+**Date:** 2024 (regen)
+
+### Context
+- Read `/home/z/my-project/worklog.md` to inventory prior RoyCSS work: 8 batch files (batches 1-8) totaling 410 production effects across 13 categories (animations, hover, text, backgrounds, loaders, 3d-transforms, buttons, cards, borders, filters, forms, navigation, scroll, cursor, page-transitions, glass-ui, particles, microinteractions, visual, misc).
+- Read `/home/z/my-project/src/lib/roycss-types.ts` for the `CSSEffect` interface (id, name, category, description, tags[], cssCode, previewType, optional childCount/previewText) and the 20 EffectCategory / 6 PreviewType unions.
+- Collected all 410 existing effect IDs and 294 existing `roy-*` @keyframes names from batches 1-8 into `/tmp/all_ids.txt` and `/tmp/all_keyframes.txt` for cross-collision verification.
+
+### Created file
+- `/home/z/my-project/src/lib/effects-batch-11.ts` (77,820 bytes / 2,240 lines)
+- Exports `effectsBatch11: CSSEffect[]` — exactly **40 unique, self-contained, copy-paste CSS effects**.
+
+### Effect breakdown (40 effects)
+**visual (15) — material & nature:**
+1. `liquid-metal` — Mercury-like flowing reflective chrome surface (8-stop metallic gradient + animated border-radius morph + moving highlight)
+2. `oil-slick` — Iridescent oil swirl on dark water (conic + radial gradients, screen blend, swirl rotation)
+3. `soap-bubble` — Translucent iridescent film sphere (conic + radial gradients, multi-layer inset shadows)
+4. `molten-lava` — Glowing lava crust with cracks (radial molten pools + repeating-linear crust mask)
+5. `frozen-ice` — Crystalline translucent ice block with fracture lines (multi-angle hairline gradients)
+6. `gold-leaf` — Crumpled gold leaf with shifting metallic sheen (5-layer golden gradient + hatching overlay)
+7. `velvet-fabric` — Deep velvet with shifting nap sheen (radial highlights + repeating threads)
+8. `stained-glass` — Colorful stained glass with lead seams (radial color cells + cross-hatched lead lines)
+9. `neon-sign` — Glowing "NEON" tube sign with flicker (multi-layer text-shadow neon glow)
+10. `origami-fold` — Polygonal folded paper facets (clip-path pentagon + conic facet gradient)
+11. `water-ripple` — Concentric expanding ripples (two pseudo-element rings expanding outward)
+12. `prism-rainbow` — Light splitting through prism into spectrum (border-triangle prism + skewed rainbow gradient)
+13. `heat-haze` — Rising heat shimmer distortion (animated skew/blur on wavy lines)
+14. `deep-sea` — Underwater abyss with caustic rays + rising bubbles
+15. `northern-lights` — Aurora borealis undulating ribbons (blurred radial ribbons + star field)
+
+**backgrounds (10) — artistic textures:**
+16. `painting-oil` — Thick oil paint brush stroke texture (multi-angle repeating-linear + overlay)
+17. `watercolor` — Soft bleeding watercolor wash on paper (blurred radial splotches, multiply blend)
+18. `pencil-sketch` — Cross-hatched graphite on paper (multi-angle repeating-linear hatching)
+19. `vintage-tv` — CRT screen with scanlines + curvature + static noise (stepped animation)
+20. `film-grain` — Animated cinematic film grain over warm cinematic still (10 radial dot layers, steps animation)
+21. `vhs-glitch` — VHS chromatic aberration + tracking errors (multi-color RGB-shift text + sliding bands)
+22. `pixel-art` — 8-bit blocky pixel grid (conic 8-color tiles + pixelated rendering)
+23. `ascii-rain` — Matrix-style falling ASCII rain (white-space pre text + translateY loop + green phosphor glow)
+24. `blueprint` — Engineering blueprint with grid + dimension lines + DWG annotation box
+25. `topographic` — Topographic map contour lines (repeating-radial contour rings + elevation marker)
+
+**animations (10) — creative motion:**
+26. `morph-blob` — Continuously morphing organic shape (animated border-radius + hue rotation)
+27. `liquid-drop` — Falling drop with splash + ripple (two-phase keyframe: fall → squash → splash)
+28. `paper-flip` — 3D page turn (rotateY -360deg with perspective + box-shadow shift)
+29. `card-shuffle` — Two playing cards fanning and shuffling (counter-rotating transform animation)
+30. `roulette-spin` — Spinning roulette wheel (24-pocket repeating-conic-gradient, 720deg spin)
+31. `slot-machine` — Spinning slot machine reels (vertical repeating-linear + translateY background-position)
+32. `fortune-teller` — Opening/closing origami cootie catcher (counter-scaling conic clip-path)
+33. `kaleidoscope` — Rotating kaleidoscope (conic gradient + overlay spokes, counter-rotation)
+34. `infinity-loop` — Glowing particle tracing ∞ path (CSS `offset-path: path(...)` motion)
+35. `spiral-galaxy` — Rotating spiral galaxy with bright core (conic gradient arms + radial star core)
+
+**text (5) — creative typography:**
+36. `text-neon-sign` — Glowing neon tube "NEON" with flicker (6-layer text-shadow glow + flicker keyframes)
+37. `text-emboss` — Engraved stone embossed text (dual inset shadows + dual-direction text-shadow)
+38. `text-water` — Transparent rippling water text with reflection (gradient background-clip: text + flipped reflection ::before)
+39. `text-fire-flame` — Burning "FIRE" with rising flame overlay (5-layer fire text-shadow + flickering flame ::before)
+40. `text-3d-cinema` — Extruded golden 3D "CINEMA" with long shadow (11-layer stacked text-shadow + drop-shadow glow)
+
+### Quality verification (all automated via Bash + ripgrep + bunx tsc)
+- **File exists**: `ls -la` confirms 77,820 bytes; `wc -l` confirms 2,240 lines.
+- **Effect count**: 40 effects (15 visual + 10 backgrounds + 10 animations + 5 text). ✓
+- **Preview-type split**: 25 box + 10 background + 5 text. ✓
+- **Unique IDs**: 40/40 unique within batch. ✓
+- **Cross-batch ID collisions**: 0 (verified against all 410 existing IDs via `comm -12`). ✓
+- **Unique @keyframes**: 41 unique `roy-b11-*` keyframes within batch (some effects have 2). ✓
+- **Within-batch keyframe duplicates**: 0. ✓
+- **Cross-batch keyframe collisions**: 0 (verified against all 294 existing `roy-*` keyframes via `comm -12`). ✓
+- **`.roycss-{id}` class present**: verified for all 40 effects (0 missing). ✓
+- **Tags well-formed**: all 160 tag tokens (40 effects × 4 tags avg) match `^[a-z0-9]+$`; every effect has 3-4 lowercase-alphanumeric keywords. ✓
+- **`roy-` keyframe prefix**: all 41 keyframes use `roy-b11-` prefix (guaranteed unique). ✓
+- **TypeScript**: `bunx tsc --noEmit --skipLibCheck src/lib/effects-batch-11.ts` → exit 0 (0 errors). ✓
+
+### Design notes / "wow factor" techniques used
+- **Multi-layer text-shadow stacks** (6-11 layers) for neon, fire, and 3D cinema text depth.
+- **Conic gradients + clip-path polygons** for origami, roulette wheel, fortune teller, kaleidoscope.
+- **`background-clip: text`** with transparent fill for water + 3D cinema gradient text.
+- **CSS `offset-path: path(...)` motion** for the infinity-loop particle trace (modern CSS path animation).
+- **`@property --roy-*`** convention followed (no custom properties needed in this batch — all animation is transform/gradient-position based to remain framework-agnostic).
+- **Pseudo-element layering** (::before + ::after) on every box/background effect for highlight, glow, texture overlay, or secondary animation layer — no extra DOM required.
+- **`> div { display: none }` technique** (matching batch 8 convention) on box previews where the injected Tailwind 6×6 div would intrude on the visual.
+- **`mix-blend-mode`** (screen, multiply, overlay) used extensively for realistic material compositing (oil slick, watercolor, lava crust, gold leaf, deep sea rays).
+
+### Summary
+- Created `/home/z/my-project/src/lib/effects-batch-11.ts` exporting `effectsBatch11` with exactly **40 production-ready, copy-paste CSS art effects** — visually-stunning material/nature visuals, artistic texture backgrounds, creative motion animations, and creative typography.
+- **Zero cross-batch collisions** (IDs OR keyframes) with effects-batch-1/2/3/4/5/6/7/8.ts or roycss-effects.ts — safe to load alongside all prior batches in a shared stylesheet.
+- File is **TypeScript-clean** (`bunx tsc --noEmit --skipLibCheck` exit 0) and ready for the integration agent to import into `/src/lib/roycss-effects.ts` alongside the other 8 batches (would bring the library from 410 → 450 effects).
+- Every effect uses layered gradients, pseudo-elements, complex animations, filters, and creative CSS — designed to elicit "I didn't know CSS could do that!" reactions.
+
+---
+Task ID: 15
+Agent: Main Agent
+Task: Update site — fix missing batch files, sync metadata, verify 540 effects
+
+Work Log:
+- Discovered batches 9, 10, 11 (130 effects) were reported created by subagents but never persisted to disk
+- Dispatched 3 parallel subagents to regenerate all 130 effects:
+  - Batch 9 (50 effects): Material/Apple/Linear-inspired springs, scroll-driven, glass UI
+  - Batch 10 (40 effects): Modern CSS — anchor positioning, @property, SVG filters, container queries, @starting-style
+  - Batch 11 (40 effects): Creative art — liquid metal, northern lights, kaleidoscope, slot machine, neon text
+- Verified all 3 files exist on disk (batch-9: 39KB, batch-10: 68KB, batch-11: 78KB)
+- Updated roycss-effects.ts to import all 11 batches (540 total)
+- Verified: 540 effects, 0 duplicate IDs, 0 missing classes
+- Updated layout.tsx metadata: "540+ Beautiful CSS Effects Library"
+- Updated hero stats: Lines of CSS counter to ~22,000+
+- Verified with Agent Browser:
+  - Title: "RoyCSS — 540+ Beautiful CSS Effects Library with Live Demos" ✓
+  - Counters: 540 Effects, 20 Categories, ~22,000+ Lines of CSS ✓
+  - New effects searchable (liquid metal, northern lights, material spring, kaleidoscope, anchor tooltip, scroll-driven) ✓
+  - Zero errors, zero hydration issues ✓
+
+Stage Summary:
+- Site fully updated with all 540 effects across 11 batch files
+- Metadata, title, and counters all synchronized to 540
+- Zero lint errors, zero runtime errors

@@ -1198,3 +1198,221 @@ Stage Summary:
 - Batch 12: practical UI components (progress indicators, charts, state cards, form feedback)
 - Batch 13: CSS art (paintings, optical illusions, generative art, mechanical animations)
 - Zero lint errors, zero runtime errors
+
+## Task 15-A: Batch 15 — Game / Retro / Tech CSS Effects (40 effects)
+
+**Agent:** Effects Generator (batch 15 — game, retro, and tech-themed CSS effects)
+**Date:** 2025-07-13
+**File created:** `/home/z/my-project/src/lib/effects-batch-15.ts` (60,126 bytes, 1,873 lines)
+
+### Summary
+- Read `/home/z/my-project/worklog.md` to inventory prior RoyCSS work: 620 production effects across batches 1-13.
+- Confirmed `/home/z/my-project/src/lib/effects-batch-15.ts` did NOT exist before this task.
+- Inventoried all 620 existing `id:` values and all 500 existing `roy-*` @keyframes names from effects-batch-1..13.ts to verify no cross-collisions. Chose `roy-b15-` keyframe prefix (no existing keyframe uses the `b15-` segment).
+- Created `/home/z/my-project/src/lib/effects-batch-15.ts` exporting `effectsBatch15` with exactly **40 production-ready, copy-paste CSS effects** with game, retro, and tech themes.
+
+### Effect Breakdown (40 effects)
+- **visual (12)** — game UI elements:
+  1. `game-health-bar` — animated red health bar with damage flicker
+  2. `game-mana-bar` — blue mana bar with shimmer flow
+  3. `game-exp-bar` — golden XP bar with traveling shine sweep
+  4. `game-shield-icon` — heraldic shield with pulsing protection aura
+  5. `game-sword-icon` — CSS sword with steel blade, crossguard, grip
+  6. `game-coin-spin` — spinning gold coin with 3D rotateY
+  7. `game-potion-bubble` — red health potion with bubbling liquid
+  8. `game-chest-glow` — treasure chest with pulsing golden aura
+  9. `game-minimap` — circular minimap with rotating sweep radar
+  10. `game-crosshair` — FPS targeting crosshair with center dot
+  11. `game-combo-counter` — combo hit counter with punch animation
+  12. `game-achievement-badge` — achievement unlocked badge with pop-in
+- **backgrounds (10)** — retro/tech backgrounds:
+  13. `retro-grid-sun` — 80s retro grid floor with vanishing point + sun
+  14. `retro-synthwave` — synthwave neon sunset with animated grid
+  15. `retro-pixel-sky` — 8-bit pixel art sky with blocky clouds
+  16. `retro-terminal` — green phosphor CRT terminal with scanlines
+  17. `retro-cassette` — cassette tape pattern with spinning reels
+  18. `retro-arcade` — arcade CRT screen with starfield + scanlines
+  19. `tech-circuit-board` — PCB with copper traces + pulsing signals
+  20. `tech-matrix-code` — Matrix digital rain with cascading glyphs
+  21. `tech-hologram-grid` — sci-fi hologram projection grid
+  22. `tech-scan-radar` — radar scope with rotating sweep beam
+- **animations (10)** — game/retro animations:
+  23. `game-pixel-walk` — pixel character walk cycle
+  24. `game-mario-jump` — platformer jump arc with squash/stretch
+  25. `game-enemy-bob` — RPG slime enemy bobbing with squish
+  26. `game-projectile` — magic fireball with trailing tail
+  27. `game-explosion` — pixel explosion burst with debris
+  28. `game-level-up` — level up shine burst with expanding rings
+  29. `game-screen-shake` — screen shake impact feedback
+  30. `game-loading-bar` — retro segmented loading bar
+  31. `game-cursor-blink` — retro text adventure cursor blink
+  32. `game-float-bobble` — RPG floating item with drift + sway
+- **text (8)** — retro/game typography:
+  33. `text-pixel-font` — pixelated blocky 8-bit text
+  34. `text-arcade-neon` — arcade neon sign with flicker
+  35. `text-terminal-green` — green phosphor terminal text
+  36. `text-glitch-cyberpunk` — cyberpunk RGB split glitch text
+  37. `text-rpg-dialogue` — RPG dialogue box with parchment border
+  38. `text-score-counter` — arcade score counter with bounce
+  39. `text-8bit-shadow` — 8-bit text with chunky layered shadow
+  40. `text-hologram-scan` — sci-fi hologram text with scan bar
+
+### Verification
+- **File exists:** `ls -la /home/z/my-project/src/lib/effects-batch-15.ts` → 60,126 bytes ✓
+- **Line count:** `wc -l` → 1,873 lines ✓
+- **Total effects:** 40 (12 visual + 10 backgrounds + 10 animations + 8 text) ✓
+- **Unique IDs:** 40/40 within batch (0 duplicates via `sort | uniq -d`) ✓
+- **Cross-batch ID collisions:** 0 (verified against all 620 existing IDs across batches 1-13 via `comm -12`) ✓
+- **Unique @keyframes:** 50 unique `roy-b15-*` keyframes within batch ✓
+- **Within-batch keyframe duplicates:** 0 ✓
+- **Cross-batch keyframe collisions:** 0 (no existing keyframe uses `roy-b15-` prefix; verified against all 500 existing `roy-*` keyframes) ✓
+- **All keyframes use `roy-b15-` prefix:** verified via `grep` (no keyframe outside the prefix) ✓
+- **All 40 CSS classes match their effect IDs:** each `.roycss-{id}` verified present ✓
+- **TypeScript:** `npx tsc --noEmit --skipLibCheck src/lib/effects-batch-15.ts` → exit 0, 0 errors ✓
+- **Module exports:** `effectsBatch15` (verified via grep)
+
+### Convention Compliance
+- All CSS classes use `.roycss-{id}` prefix ✓
+- All keyframes use `roy-b15-` prefix ✓
+- Each `cssCode` is complete and self-contained (no external dependencies) ✓
+- Tags: 3-4 lowercase keywords per effect ✓
+- previewType per spec: `"box"` for game UI/visuals, `"background"` for retro/tech backgrounds, `"text"` (with `previewText: "RoyCSS"`) for typography effects ✓
+- Zero cross-batch collisions (IDs, keyframes, or @property names) with effects-batch-1..13.ts — safe to load alongside all prior batches in the shared `<style>` block.
+- File is **TypeScript-clean** (`npx tsc --noEmit --skipLibCheck` exit 0) and ready for the integration agent to import into `/src/lib/roycss-effects.ts` alongside the other 13 batches (would bring the library from 620 → 660 effects).
+
+---
+Task ID: 14-A
+Agent: Sub-agent (general-purpose)
+Task: Generate batch 14 seasonal/themed CSS effects (40 effects)
+
+Work Log:
+- Read worklog.md and roycss-types.ts for context and CSSEffect interface
+- Verified `/home/z/my-project/src/lib/effects-batch-14.ts` did NOT exist (required to create)
+- Verified zero existing `seasonal-` IDs across batches 1-13 (620 effects total) — no risk of duplication
+- Studied existing batch-7 particle effect format and batch-13 background painting format for consistency
+- Created `/home/z/my-project/src/lib/effects-batch-14.ts` (78,276 bytes, 2,198 lines) with **40 unique seasonal/holiday CSS effects**
+
+File created:
+- `effectsBatch14: CSSEffect[]` exported from `/home/z/my-project/src/lib/effects-batch-14.ts`
+- All 40 CSS classes use `.roycss-{id}` prefix
+- All 40 @keyframes use unique `roy-b14-` prefix (zero cross-batch keyframe collisions)
+- Each `cssCode` is complete and self-contained (works with just `.roycss-{id}` class + pseudos/child spans)
+
+Effect breakdown (40 effects):
+- **particles (10)** — seasonal particle systems:
+  1. seasonal-falling-leaves — autumn leaves falling with rotation (6 children)
+  2. seasonal-snowfall-gentle — gentle winter snowflakes (8 children)
+  3. seasonal-rain-spring — spring rain shower diagonal (10 children)
+  4. seasonal-petals-blossom — cherry blossom petals drifting (8 children)
+  5. seasonal-fireworks-newyear — New Year fireworks burst (8 children)
+  6. seasonal-hearts-valentine — Valentine hearts rising (8 children, pseudo-element heart shapes)
+  7. seasonal-bubbles-summer — summer soap bubbles rising (8 children)
+  8. seasonal-sparks-diwali — Diwali sparkler sparks (10 children, CSS custom props --tx/--ty)
+  9. seasonal-pollen-spring — spring pollen dust floating (10 children)
+  10. seasonal-meteor-shower — meteor streaks across starfield (6 children with tail ::before)
+
+- **backgrounds (10)** — themed scene backgrounds (all `previewType: "background"`):
+  11. seasonal-christmas-tree — CSS Christmas tree with lights + star topper
+  12. seasonal-pumpkin-jackolantern — Halloween jack-o'-lantern with carved face
+  13. seasonal-easter-egg — colorful Easter egg pattern on pastel background
+  14. seasonal-heart-valentine — repeating heart pattern on rose background
+  15. seasonal-firework-sky — night sky with multiple firework blooms + stars
+  16. seasonal-autumn-gradient — warm autumn sky with bare tree silhouettes
+  17. seasonal-winter-snow-scene — snowy hills + pine trees + pale sky
+  18. seasonal-spring-meadow — green meadow with scattered flowers + sun
+  19. seasonal-summer-beach-ball — repeating beach ball conic-gradient pattern
+  20. seasonal-halloween-spooky — foggy night with full moon + dead trees
+
+- **visual (10)** — themed object visuals (all `previewType: "box"`):
+  21. seasonal-snowflake-crystal — 6-pointed CSS snowflake with shimmer
+  22. seasonal-pumpkin-glow — glowing pumpkin with stem + carved face
+  23. seasonal-christmas-lights — string of 6 colored bulbs blinking (6 children)
+  24. seasonal-heart-pulse-valentine — red heart pulsing in heartbeat rhythm
+  25. seasonal-firework-burst — single radial firework with conic spokes
+  26. seasonal-ghost-float — cute ghost with wavy bottom edge floating
+  27. seasonal-bat-fly — bat silhouette with flapping wings flying
+  28. seasonal-witch-hat — witch hat with purple band + golden buckle
+  29. seasonal-sun-summer — bright summer sun with conic ray corona
+  30. seasonal-moon-halloween — crescent moon with flying bat silhouettes
+
+- **animations (10)** — themed keyframe animations (all `previewType: "box"`):
+  31. seasonal-sleigh-fly — Santa's sleigh + reindeer flying across night sky
+  32. seasonal-ghost-wobble — ghost wobbling side-to-side with sway
+  33. seasonal-pumpkin-bounce — pumpkin with squash-and-stretch bouncing
+  34. seasonal-snowman-build — snowman appearing piece by piece (3 stacked snowballs + face)
+  35. seasonal-egg-roll — Easter egg rolling across meadow with rotation
+  36. seasonal-heart-beat — Valentine heart with realistic two-thump cardiac rhythm
+  37. seasonal-firework-launch — rocket launching + trail + colored spark explosion
+  38. seasonal-leaf-swirl — two leaves swirling in circular wind pattern
+  39. seasonal-snow-accumulate — snow falling + growing snowdrift at bottom
+  40. seasonal-sun-rotate — sun with two counter-rotating ray layers + core pulse
+
+### Verification
+- **File exists:** `ls -la /home/z/my-project/src/lib/effects-batch-14.ts` → 78,276 bytes ✓
+- **Line count:** `wc -l` → 2,198 lines ✓
+- **Effect count:** 40 (verified via `grep -c '^\s*id:'` = 40) ✓
+- **Category breakdown:** particles=10, backgrounds=10, visual=10, animations=10 ✓
+- **PreviewType breakdown:** background=20, box=20 ✓
+- **Tag count:** all 40 effects have exactly 4 lowercase tags (within required 3-4 range) ✓
+- **Unique IDs within batch:** 40/40 (0 duplicates via `sort | uniq -d`) ✓
+- **Cross-batch ID collisions:** 0 (verified against all 620 existing IDs across batches 1-13 via `comm -12`) ✓
+- **Unique @keyframes:** 40 unique `roy-b14-*` keyframes within batch ✓
+- **Within-batch keyframe duplicates:** 0 ✓
+- **Cross-batch keyframe collisions:** 0 (no existing keyframe uses `roy-b14-` prefix) ✓
+- **All CSS classes:** 40 unique `.roycss-{id}` classes ✓
+- **TypeScript:** `npx tsc --noEmit --skipLibCheck src/lib/effects-batch-14.ts` → exit 0, 0 errors ✓
+
+### Techniques showcased
+- **CSS custom properties (`--tx`, `--ty`, `--rot`)** for particle burst trajectories (fireworks-newyear, sparks-diwali)
+- **`clip-path: polygon()` for organic shapes** — ghost wavy bottom, autumn tree silhouettes, witch hat branches
+- **`conic-gradient` for radial patterns** — beach ball segments, firework burst spokes, sun rays
+- **Multi-layer `radial-gradient` backgrounds** — firework sky blooms, star fields, foggy night
+- **`box-shadow` multi-offset tricks** — Christmas lights string wire, bat silhouettes, sleigh reindeer
+- **Pseudo-element heart construction** — `::before`/`::after` rotated rectangles forming heart halves (heart-pulse-valentine, heart-beat, hearts-valentine)
+- **`border-radius: 50% 50% 45% 45% / 55% 55% 45% 45%`** — pumpkin body shape
+- **Squash-and-stretch with `scaleX/scaleY`** — pumpkin-bounce landing deformation
+- **Two-thump cardiac rhythm keyframes** — heart-beat realistic double-beat (10%/30% scale spikes)
+- **Choreographed launch + explode sequences** — firework-launch with two synchronized keyframes
+- **Counter-rotating ray layers** — sun-rotate with `::before` CW and `::after` CCW for parallax rays
+- **Snow accumulation** — growing height keyframe synced with falling particle keyframe
+
+### Notes for integration agent
+- Created `/home/z/my-project/src/lib/effects-batch-14.ts` exporting `effectsBatch14` with exactly **40 production-ready, copy-paste seasonal/holiday CSS effects**.
+- **Zero cross-batch collisions** (IDs, keyframes) with effects-batch-1 through effects-batch-13.ts — safe to load alongside all prior batches in the shared `<style>` block.
+- File is **TypeScript-clean** (`npx tsc --noEmit --skipLibCheck` exit 0) and ready for the integration agent to import into `/src/lib/roycss-effects.ts` alongside the other 13 batches (would bring the library from 620 → 660 effects).
+- Particle effects (10) use `childCount` from 6 to 10 — the preview renderer must inject `<span>` children into the `.roycss-{id}` container.
+- Object/scene effects (30) are fully self-contained via `.roycss-{id}` + `::before` + `::after` (no reliance on children).
+- All effects themed around seasonal events: Autumn, Winter, Spring, Summer, Christmas, Halloween, Valentine's Day, Easter, New Year, Diwali.
+
+---
+Task ID: 17
+Agent: Main Agent
+Task: Add 80 more unique effects (batches 14 & 15)
+
+Work Log:
+- Dispatched 2 parallel subagents to generate 80 new unique effects:
+  - Batch 14 (40 effects): Seasonal/holiday themed
+    - particles (10): falling leaves, snowfall, spring rain, cherry blossom petals, New Year fireworks, Valentine hearts, summer bubbles, Diwali sparks, spring pollen, meteor shower
+    - backgrounds (10): Christmas tree, jack-o'-lantern, Easter egg, Valentine heart, firework sky, autumn gradient, winter snow scene, spring meadow, summer beach ball, Halloween spooky
+    - visual (10): snowflake crystal, pumpkin glow, Christmas lights, heart pulse, firework burst, ghost float, bat fly, witch hat, summer sun, Halloween moon
+    - animations (10): sleigh fly, ghost wobble, pumpkin bounce, snowman build, egg roll, heart beat, firework launch, leaf swirl, snow accumulate, sun rotate
+  - Batch 15 (40 effects): Game/retro/tech themed
+    - visual (12): health bar, mana bar, exp bar, shield icon, sword icon, coin spin, potion bubble, chest glow, minimap, crosshair, combo counter, achievement badge
+    - backgrounds (10): retro grid sun, synthwave, pixel sky, terminal, cassette, arcade, circuit board, Matrix code, hologram grid, scan radar
+    - animations (10): pixel walk, Mario jump, enemy bob, projectile, explosion, level up, screen shake, loading bar, cursor blink, float bobble
+    - text (8): pixel font, arcade neon, terminal green, cyberpunk glitch, RPG dialogue, score counter, 8-bit shadow, hologram scan
+- Verified both files exist (batch-14: 78KB, batch-15: 60KB)
+- Updated roycss-effects.ts to import all 15 batches (700 total)
+- Verified: 700 effects, 0 duplicate IDs
+- Updated layout.tsx metadata: "700+ Beautiful CSS Effects Library"
+- Verified with Agent Browser:
+  - Title: "RoyCSS — 700+ Beautiful CSS Effects Library with Live Demos" ✓
+  - Counters: 700 Effects, 20 Categories ✓
+  - New effects searchable (falling leaves, christmas tree, game health, retro synthwave, pixel font, pumpkin) ✓
+  - Zero errors, zero hydration issues ✓
+
+Stage Summary:
+- 80 new unique effects added (700 total across 20 categories, 15 batch files)
+- Batch 14: seasonal/holiday effects (Christmas, Halloween, Valentine, Easter, autumn, summer, Diwali)
+- Batch 15: game/retro/tech effects (health bars, synthwave, pixel art, terminal, Matrix, arcade)
+- Zero lint errors, zero runtime errors

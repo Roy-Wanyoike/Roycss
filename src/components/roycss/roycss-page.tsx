@@ -35,6 +35,7 @@ import {
   ArrowLeftRight,
   GlassWater,
   ToggleRight,
+  Heart,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -49,7 +50,11 @@ import {
 } from "@/lib/roycss-effects";
 import { EffectCard } from "@/components/roycss/effect-card";
 import { EffectDetailDialog } from "@/components/roycss/effect-detail-dialog";
+import { FavoritesSheet } from "@/components/roycss/favorites-sheet";
+import { ScrollToTop } from "@/components/roycss/scroll-to-top";
+import { SectionScrollbar } from "@/components/roycss/section-scrollbar";
 import { RoyCSSLogo, RoyCSSHeroLogo } from "@/components/roycss/roycss-logo";
+import { useFavorites } from "@/hooks/use-favorites";
 import { motion, useScroll, useSpring } from "framer-motion";
 import {
   ScrollReveal,
@@ -351,6 +356,10 @@ export default function RoyCSSPage() {
   const [activeCategory, setActiveCategory] = useState<EffectCategory | "all">("all");
   const [selectedEffect, setSelectedEffect] = useState<CSSEffect | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [favoritesOpen, setFavoritesOpen] = useState(false);
+  const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
+
+  const favoriteEffects = effects.filter((e) => isFavorite(e.id));
 
   const filteredEffects = effects.filter((e) => {
     const matchesSearch =
@@ -408,6 +417,22 @@ export default function RoyCSSPage() {
               className="flex items-center gap-2"
             >
               <ThemeToggle />
+              <button
+                onClick={() => setFavoritesOpen(true)}
+                className="relative flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-rose-500 transition-all hover:-translate-y-0.5 cursor-pointer"
+                aria-label="Open favorites"
+              >
+                <Heart className={`size-4 ${count > 0 ? "fill-rose-500/20 text-rose-500" : ""}`} />
+                {count > 0 && (
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="absolute -top-1 -right-1 flex items-center justify-center min-w-4 h-4 px-1 rounded-full bg-rose-500 text-white text-[9px] font-bold"
+                  >
+                    {count}
+                  </motion.span>
+                )}
+              </button>
               <a
                 href="https://github.com/Roy-Wanyoike"
                 target="_blank"
@@ -605,6 +630,8 @@ export default function RoyCSSPage() {
                   key={effect.id}
                   effect={effect}
                   index={0}
+                  isFavorite={isFavorite(effect.id)}
+                  onToggleFavorite={toggleFavorite}
                   onClick={(e) => {
                     setSelectedEffect(e);
                     setDialogOpen(true);
@@ -745,6 +772,31 @@ export default function RoyCSSPage() {
           }}
         />
       )}
+
+      {/* Favorites Sheet */}
+      <FavoritesSheet
+        open={favoritesOpen}
+        onOpenChange={setFavoritesOpen}
+        favoriteEffects={favoriteEffects}
+        onToggleFavorite={toggleFavorite}
+        onSelectEffect={(e) => {
+          setSelectedEffect(e);
+          setDialogOpen(true);
+        }}
+        onClearAll={clearAll}
+      />
+
+      {/* Scroll to Top Button */}
+      <ScrollToTop />
+
+      {/* Section Scrollbar (desktop only) */}
+      <SectionScrollbar
+        activeCategory={activeCategory}
+        onCategoryClick={(cat) => {
+          setActiveCategory(cat);
+          document.querySelector("#effects")?.scrollIntoView({ behavior: "smooth" });
+        }}
+      />
     </div>
   );
 }

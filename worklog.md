@@ -1416,3 +1416,75 @@ Stage Summary:
 - Batch 14: seasonal/holiday effects (Christmas, Halloween, Valentine, Easter, autumn, summer, Diwali)
 - Batch 15: game/retro/tech effects (health bars, synthwave, pixel art, terminal, Matrix, arcade)
 - Zero lint errors, zero runtime errors
+
+---
+Task ID: 18
+Agent: Main Agent
+Task: Verify all effects, add scrollbar navigation, research competitors, audit production readiness
+
+Work Log:
+- Ran comprehensive programmatic audit of all 700 effects:
+  - Check 1: Every effect has .roycss-{id} class ✓
+  - Check 2: All animation @keyframes defined ✓
+  - Check 3: No text-stroke currentColor+transparent bugs (found 1, fixed)
+  - Check 4: No empty CSS ✓
+  - Check 5: No animation without @keyframes ✓
+  - Result: 0 issues — ALL 700 EFFECTS PASS
+- Fixed text-stroke effect (currentColor → #10b981) — was invisible before
+- Recreated missing files lost in previous edits:
+  - /src/hooks/use-favorites.ts (useSyncExternalStore with localStorage)
+  - /src/components/roycss/favorites-sheet.tsx (slide-out favorites panel)
+  - /src/components/roycss/scroll-to-top.tsx (floating scroll-to-top button)
+- Created new /src/components/roycss/section-scrollbar.tsx:
+  - Vertical scrollbar on right side (desktop only, lg+)
+  - Progress bar track showing scroll position
+  - 22 clickable section dots (Home, All Effects, 20 categories)
+  - Hover tooltips with category name and count
+  - Active category highlighted with primary color
+- Restored favorite heart button on EffectCard (was lost in edits)
+- Restored favorites button in nav bar with counter badge
+- Verified with Agent Browser:
+  - 700 Effects, 20 Categories ✓
+  - Favorites work (heart click → counter shows 1) ✓
+  - Scroll-to-top button visible ✓
+  - Section scrollbar visible ✓
+  - Zero errors, zero hydration issues ✓
+
+Research findings (shadcn/ui and competitors):
+- shadcn/ui offers: 1721 blocks, 1684 components, 17 templates, charts (Recharts), data tables (TanStack)
+- Animate.css: cross-browser, simple class-based, no JS
+- Motion (Framer Motion): JS-based, React/Vue, complex timelines
+- GSAP: industry standard, large API, JS-based
+- Key differentiator for RoyCSS: 700 pure-CSS effects with live editing, favorites, export, framework-agnostic
+
+Production readiness audit:
+COMPLETE & READY:
+✅ 700 CSS effects (all pass audit, all self-contained)
+✅ Live preview rendering (6 preview types)
+✅ Copy-paste CSS code with syntax highlighting
+✅ Interactive effect detail dialog with live editing
+✅ Favorites system with localStorage persistence
+✅ Export favorites as .css file
+✅ Framework-agnostic (React, Vue, Angular, Svelte, Solid, Astro, vanilla)
+✅ Search and filter (by category, keyword, tags)
+✅ Sticky category navigation bar
+✅ Section scrollbar with quick navigation
+✅ Scroll-to-top button
+✅ Custom scrollbar styling
+✅ Dark/light theme toggle
+✅ Animated logo
+✅ Responsive design
+✅ Memoized EffectCard for performance
+✅ Scroll-driven animations support
+✅ Hydration-safe (useSyncExternalStore)
+
+NEEDS WORK FOR FULL PRODUCTION:
+⚠️ No npm package published (would need package.json, build config)
+⚠️ No CDN distribution
+⚠️ No documentation site (separate from demo)
+⚠️ No VS Code extension
+⚠️ No accessibility audit (WCAG compliance)
+⚠️ No benchmark dashboard
+⚠️ No migration assistant (Bootstrap/Tailwind → RoyCSS)
+⚠️ Some bleeding-edge effects need @supports fallbacks verified
+⚠️ No SSR testing across frameworks

@@ -1424,7 +1424,7 @@ export const effectsBatch1: CSSEffect[] = [
     previewType: "text",
     cssCode: `/* Text Stroke */
 .roycss-text-stroke {
-  -webkit-text-stroke: 2px currentColor;
+  -webkit-text-stroke: 2px #10b981;
   color: transparent;
   font-weight: 700;
 }`,

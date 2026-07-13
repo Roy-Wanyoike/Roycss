@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, memo } from "react";
 import { motion, useInView } from "framer-motion";
-import { Copy, Check, ChevronDown, ChevronUp, Code2, Eye } from "lucide-react";
+import { Copy, Check, ChevronDown, ChevronUp, Code2, Eye, Heart } from "lucide-react";
 import type { CSSEffect } from "@/lib/roycss-types";
 import { Badge } from "@/components/ui/badge";
 
@@ -262,14 +262,18 @@ function BackgroundPreview({
    EFFECT CARD COMPONENT
    ═══════════════════════════════════════════════════════════════ */
 
-export function EffectCard({
+export const EffectCard = memo(function EffectCard({
   effect,
   index,
   onClick,
+  isFavorite = false,
+  onToggleFavorite,
 }: {
   effect: CSSEffect;
   index: number;
   onClick?: (effect: CSSEffect) => void;
+  isFavorite?: boolean;
+  onToggleFavorite?: (id: string) => void;
 }) {
   const [showCode, setShowCode] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -299,8 +303,28 @@ export function EffectCard({
       {/* Preview Area */}
       <div className="relative h-48 bg-gradient-to-br from-muted/50 to-muted/30 overflow-hidden">
         <LivePreview effect={effect} />
-        {/* Hover overlay badges */}
-        <div className="absolute top-3 right-3 flex gap-1.5">
+        {/* Favorite button */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggleFavorite?.(effect.id);
+          }}
+          className="absolute top-3 right-3 flex items-center justify-center size-8 rounded-lg bg-background/80 backdrop-blur-sm border border-border/50 hover:bg-background transition-all cursor-pointer z-10"
+          aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+        >
+          <motion.span
+            animate={isFavorite ? { scale: [1, 1.3, 1] } : { scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Heart
+              className={`size-3.5 transition-colors ${
+                isFavorite ? "fill-rose-500 text-rose-500" : "text-muted-foreground hover:text-rose-500"
+              }`}
+            />
+          </motion.span>
+        </button>
+        {/* Live badge */}
+        <div className="absolute top-3 left-3">
           <Badge
             variant="secondary"
             className="text-[10px] px-2 py-0.5 bg-background/80 backdrop-blur-sm border-border/50"
@@ -408,4 +432,4 @@ export function EffectCard({
       </div>
     </motion.div>
   );
-}
+});

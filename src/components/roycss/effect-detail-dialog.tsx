@@ -350,7 +350,7 @@ function RelatedEffects({
             </div>
             <div className="min-w-0">
               <p className="text-xs font-medium text-foreground truncate">{e.name}</p>
-              <p className="text-[10px] text-muted-foreground truncate">{categoryMeta[e.category].label}</p>
+              <p className="text-xs text-muted-foreground truncate">{categoryMeta[e.category].label}</p>
             </div>
           </button>
         ))}
@@ -420,7 +420,7 @@ export function EffectDetailDialog({
               </div>
             </div>
             <div className="flex items-center gap-2 shrink-0">
-              <Badge variant="secondary" className="text-[10px] bg-primary/10 text-primary border-primary/20">
+              <Badge variant="secondary" className="text-xs bg-primary/10 text-primary border-primary/20">
                 {meta.label}
               </Badge>
             </div>
@@ -439,7 +439,7 @@ export function EffectDetailDialog({
                 <div className="flex items-center gap-1 p-0.5 rounded-lg bg-muted/80">
                   <button
                     onClick={() => setBgType("dark")}
-                    className={`flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-medium transition-all cursor-pointer ${
+                    className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${
                       bgType === "dark" ? "bg-slate-900 text-white" : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
@@ -448,7 +448,7 @@ export function EffectDetailDialog({
                   </button>
                   <button
                     onClick={() => setBgType("light")}
-                    className={`flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-medium transition-all cursor-pointer ${
+                    className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${
                       bgType === "light" ? "bg-white text-slate-900 shadow-sm" : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
@@ -457,7 +457,7 @@ export function EffectDetailDialog({
                   </button>
                   <button
                     onClick={() => setBgType("gradient")}
-                    className={`flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-medium transition-all cursor-pointer ${
+                    className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${
                       bgType === "gradient" ? "bg-gradient-to-r from-violet-500 to-cyan-500 text-white" : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
@@ -471,7 +471,7 @@ export function EffectDetailDialog({
 
             {/* Tags */}
             <div className="px-4 pb-3 flex flex-wrap gap-1.5">
-              <span className="text-[10px] text-muted-foreground flex items-center gap-1 mr-1">
+              <span className="text-xs text-muted-foreground flex items-center gap-1 mr-1">
                 <Tag className="size-2.5" />
                 Tags:
               </span>
@@ -479,7 +479,7 @@ export function EffectDetailDialog({
                 <Badge
                   key={tag}
                   variant="secondary"
-                  className="text-[10px] px-1.5 py-0 bg-muted/80 text-muted-foreground"
+                  className="text-xs px-1.5 py-0 bg-muted/80 text-muted-foreground"
                 >
                   {tag}
                 </Badge>
@@ -502,7 +502,7 @@ export function EffectDetailDialog({
                   <Code2 className="size-3" />
                   CSS Code
                   {isModified && (
-                    <Badge variant="outline" className="text-[9px] px-1 py-0 border-amber-500/50 text-amber-500 ml-1">
+                    <Badge variant="outline" className="text-xs px-1 py-0 border-amber-500/50 text-amber-500 ml-1">
                       Modified
                     </Badge>
                   )}
@@ -510,7 +510,7 @@ export function EffectDetailDialog({
                 <div className="flex items-center gap-1.5">
                   <button
                     onClick={() => setIsEditing(!isEditing)}
-                    className={`flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-medium transition-all cursor-pointer ${
+                    className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${
                       isEditing
                         ? "bg-primary text-primary-foreground"
                         : "bg-muted text-muted-foreground hover:text-foreground"
@@ -521,14 +521,14 @@ export function EffectDetailDialog({
                   <button
                     onClick={handleReset}
                     disabled={!isModified}
-                    className="flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-medium bg-muted text-muted-foreground hover:text-foreground disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+                    className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium bg-muted text-muted-foreground hover:text-foreground disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
                   >
                     <RotateCcw className="size-2.5" />
                     Reset
                   </button>
                   <button
                     onClick={handleCopy}
-                    className="flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-all cursor-pointer"
+                    className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-all cursor-pointer"
                   >
                     {copied ? (
                       <>
@@ -549,19 +549,19 @@ export function EffectDetailDialog({
                 <textarea
                   value={editedCSS}
                   onChange={(e) => setEditedCSS(e.target.value)}
-                  className="w-full h-72 p-3 rounded-xl bg-muted/80 border border-border/50 text-[11px] font-mono text-foreground leading-relaxed resize-none focus:outline-none focus:border-primary/50 scrollbar-thin"
+                  className="w-full h-72 p-3 rounded-xl bg-muted/80 border border-border/50 text-xs font-mono text-foreground leading-relaxed resize-none focus:outline-none focus:border-primary/50 scrollbar-thin"
                   spellCheck={false}
                 />
               ) : (
                 <div className="relative rounded-xl bg-muted/80 border border-border/50 overflow-hidden">
-                  <pre className="p-3 overflow-x-auto text-[11px] leading-relaxed scrollbar-thin max-h-72 overflow-y-auto">
+                  <pre className="p-3 overflow-x-auto text-xs leading-relaxed scrollbar-thin max-h-72 overflow-y-auto">
                     <code className="font-mono">
                       <HighlightedCode code={editedCSS} />
                     </code>
                   </pre>
                 </div>
               )}
-              <p className="mt-2 text-[10px] text-muted-foreground">
+              <p className="mt-2 text-xs text-muted-foreground">
                 {isEditing
                   ? "Edit the CSS above — the preview updates live. Click Copy to save your version."
                   : "Click Edit to customize this effect. Changes preview live."}

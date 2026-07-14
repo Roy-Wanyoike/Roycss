@@ -250,7 +250,7 @@ function BackgroundPreview({
           Array.from({ length: childCount }).map((_, i) => (
             <span key={i} />
           ))}
-        <span className="text-[10px] text-white/70 font-medium relative z-10">
+        <span className="text-xs text-white/70 font-medium relative z-10">
           {effect.name}
         </span>
       </div>
@@ -298,7 +298,7 @@ export const EffectCard = memo(function EffectCard({
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -6, transition: { duration: 0.25 } }}
       onClick={() => onClick?.(effect)}
-      className="group rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 cursor-pointer"
+      className="group rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 cursor-pointer perf-auto"
     >
       {/* Preview Area */}
       <div className="relative h-48 bg-gradient-to-br from-muted/50 to-muted/30 overflow-hidden">
@@ -309,7 +309,7 @@ export const EffectCard = memo(function EffectCard({
             e.stopPropagation();
             onToggleFavorite?.(effect.id);
           }}
-          className="absolute top-3 right-3 flex items-center justify-center size-8 rounded-lg bg-background/80 backdrop-blur-sm border border-border/50 hover:bg-background transition-all cursor-pointer z-10"
+          className="absolute top-3 right-3 flex items-center justify-center size-11 rounded-lg bg-background/80 backdrop-blur-sm border border-border/50 hover:bg-background transition-all cursor-pointer z-10"
           aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
         >
           <motion.span
@@ -327,7 +327,7 @@ export const EffectCard = memo(function EffectCard({
         <div className="absolute top-3 left-3">
           <Badge
             variant="secondary"
-            className="text-[10px] px-2 py-0.5 bg-background/80 backdrop-blur-sm border-border/50"
+            className="text-xs px-2 py-0.5 bg-background/80 backdrop-blur-sm border-border/50"
           >
             <Eye className="size-3 mr-1" />
             Live
@@ -336,7 +336,7 @@ export const EffectCard = memo(function EffectCard({
         <div className="absolute bottom-3 left-3">
           <Badge
             variant="outline"
-            className="text-[10px] px-2 py-0.5 bg-background/80 backdrop-blur-sm border-border/50"
+            className="text-xs px-2 py-0.5 bg-background/80 backdrop-blur-sm border-border/50"
           >
             <Code2 className="size-3 mr-1" />
             CSS
@@ -363,7 +363,7 @@ export const EffectCard = memo(function EffectCard({
             <Badge
               key={tag}
               variant="secondary"
-              className="text-[10px] px-1.5 py-0 bg-muted/80 text-muted-foreground"
+              className="text-xs px-1.5 py-0 bg-muted/80 text-muted-foreground"
             >
               {tag}
             </Badge>
@@ -406,7 +406,7 @@ export const EffectCard = memo(function EffectCard({
                   e.stopPropagation();
                   handleCopy();
                 }}
-                className="absolute top-2 right-2 flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-medium bg-background/90 border border-border/50 text-muted-foreground hover:text-foreground hover:bg-background transition-all z-10 cursor-pointer"
+                className="absolute top-2 right-2 flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-background/90 border border-border/50 text-muted-foreground hover:text-foreground hover:bg-background transition-all z-10 cursor-pointer"
                 aria-label="Copy CSS code"
               >
                 {copied ? (
@@ -421,7 +421,7 @@ export const EffectCard = memo(function EffectCard({
                   </>
                 )}
               </button>
-              <pre className="p-3 pt-2 overflow-x-auto text-[11px] leading-relaxed scrollbar-thin max-h-52 overflow-y-auto">
+              <pre className="p-3 pt-2 overflow-x-auto text-xs leading-relaxed scrollbar-thin max-h-52 overflow-y-auto">
                 <code className="text-foreground/80 font-mono">
                   {effect.cssCode}
                 </code>

@@ -114,7 +114,7 @@ function CopyButton({ text }: { text: string }) {
       type="button"
       onClick={handleCopy}
       aria-label="Copy recolored CSS"
-      className={`flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-medium transition-all cursor-pointer ${
+      className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${
         copied
           ? "bg-emerald-500/15 text-emerald-500"
           : "bg-muted text-muted-foreground hover:text-foreground"
@@ -216,7 +216,7 @@ export function ColorCustomizer({
         Customize Color
       </h4>
 
-      <p className="text-[11px] text-muted-foreground mb-3 leading-relaxed">
+      <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
         Pick a preset or paste any hex code. RoyCSS rotates every OKLCH hue from
         emerald (162.48°) to your target — instantly recoloring the whole effect.
       </p>
@@ -254,7 +254,7 @@ export function ColorCustomizer({
           htmlFor="roy-hex-input"
           className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg border border-border/60 bg-muted/40 flex-1 min-w-[12rem]"
         >
-          <span className="text-[10px] font-mono text-muted-foreground">#</span>
+          <span className="text-xs font-mono text-muted-foreground">#</span>
           <input
             id="roy-hex-input"
             type="text"
@@ -286,7 +286,7 @@ export function ColorCustomizer({
         <button
           type="button"
           onClick={handleReset}
-          className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-medium bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer"
+          className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer"
         >
           <RotateCcw className="size-3" />
           Reset
@@ -300,7 +300,7 @@ export function ColorCustomizer({
             className="size-4 rounded-md ring-1 ring-border/60 shrink-0"
             style={{ backgroundColor: activeSwatchColor }}
           />
-          <span className="text-[11px] font-mono text-muted-foreground truncate">
+          <span className="text-xs font-mono text-muted-foreground truncate">
             {activePreset ? activePreset.name : "Custom"} · hue{" "}
             {Math.round(targetHue)}° · {normalizeHex(hexInput) ?? "—"}
           </span>
@@ -309,13 +309,13 @@ export function ColorCustomizer({
       </div>
 
       {error && (
-        <p className="text-[11px] text-rose-500 mb-2" role="alert">
+        <p className="text-xs text-rose-500 mb-2" role="alert">
           {error}
         </p>
       )}
 
       {/* Preview of the recolored CSS (truncated) */}
-      <pre className="p-2.5 rounded-lg bg-muted/50 border border-border/40 text-[10px] leading-relaxed font-mono text-foreground/80 overflow-x-auto scrollbar-thin max-h-32 overflow-y-auto">
+      <pre className="p-2.5 rounded-lg bg-muted/50 border border-border/40 text-xs leading-relaxed font-mono text-foreground/80 overflow-x-auto scrollbar-thin max-h-32 overflow-y-auto">
         <code className="whitespace-pre">
           {recoloredCss.length > 600
             ? `${recoloredCss.slice(0, 600)}\n/* …${recoloredCss.length - 600} more chars */`

@@ -61,13 +61,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="dark">
-      <head>
-        {/* Inject all effect CSS server-side to avoid FOUC */}
-        <style dangerouslySetInnerHTML={{ __html: allEffectCSS }} />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} antialiased bg-background text-foreground`}
       >
+        {/* Effect CSS — server-side injected for no FOUC */}
+        <style dangerouslySetInnerHTML={{ __html: allEffectCSS }} />
         {children}
         <Toaster />
       </body>

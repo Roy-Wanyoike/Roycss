@@ -660,3 +660,33 @@
     }
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   PERFORMANCE OPTIMIZATIONS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Skip rendering offscreen effect cards — massive paint savings */
+.perf-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 320px;
+}
+
+/* GPU acceleration for animated elements */
+.perf-gpu {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* Reduce paint complexity for glass elements on scroll */
+@media (prefers-reduced-motion: no-preference) {
+  .glass, .glass-strong {
+    contain: layout style;
+  }
+}
+
+/* Font display swap — prevent invisible text during font load */
+@font-face {
+  font-family: 'Geist';
+  font-display: swap;
+  src: local('Geist');
+}

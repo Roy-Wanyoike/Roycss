@@ -88,7 +88,7 @@ function CopyChip({
       type="button"
       onClick={handleCopy}
       aria-label={`Copy ${label}`}
-      className={`shrink-0 flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-medium transition-all cursor-pointer ${
+      className={`shrink-0 flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${
         copied
           ? "bg-emerald-500/15 text-emerald-500"
           : "bg-muted text-muted-foreground hover:text-foreground"
@@ -114,14 +114,14 @@ function CodeBlock({
     <div className="rounded-xl border border-border/50 bg-muted/50 overflow-hidden">
       {title && (
         <div className="flex items-center justify-between px-3 py-1.5 border-b border-border/40 bg-muted/30">
-          <span className="flex items-center gap-1.5 text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
+          <span className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
             {Icon && <Icon className="size-3" />}
             {title}
           </span>
           <CopyChip text={code} />
         </div>
       )}
-      <pre className="p-3 overflow-x-auto text-[11px] leading-relaxed scrollbar-thin">
+      <pre className="p-3 overflow-x-auto text-xs leading-relaxed scrollbar-thin">
         <code className="font-mono text-foreground whitespace-pre">{code}</code>
       </pre>
     </div>
@@ -146,14 +146,14 @@ function StepHeader({
         <Icon className="size-4" />
       </div>
       <div className="min-w-0">
-        <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest">
+        <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest">
           Step {index}
         </p>
         <h3 className="font-display text-base font-semibold text-foreground leading-tight">
           {title}
         </h3>
         {hint && (
-          <p className="text-[11px] text-muted-foreground mt-0.5">{hint}</p>
+          <p className="text-xs text-muted-foreground mt-0.5">{hint}</p>
         )}
       </div>
     </div>
@@ -165,7 +165,7 @@ function ProTip({ children }: { children: ReactNode }) {
   return (
     <div className="flex gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
       <Lightbulb className="size-4 text-amber-500 shrink-0 mt-0.5" />
-      <div className="text-[11px] text-amber-200/90 leading-relaxed">
+      <div className="text-xs text-amber-200/90 leading-relaxed">
         <span className="font-semibold text-amber-400">Pro tip: </span>
         {children}
       </div>

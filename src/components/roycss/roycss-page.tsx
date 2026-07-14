@@ -493,11 +493,11 @@ function FeaturedShowcase() {
                   {/* Info */}
                   <div className="p-6 flex flex-col">
                     <div className="flex items-center gap-2 mb-2">
-                      <Badge variant="secondary" className="text-[10px] bg-primary/10 text-primary border-primary/20">
+                      <Badge variant="secondary" className="text-xs bg-primary/10 text-primary border-primary/20">
                         <Star className="size-2.5 mr-1 fill-primary" />
                         Featured
                       </Badge>
-                      <Badge variant="outline" className="text-[10px] capitalize">
+                      <Badge variant="outline" className="text-xs capitalize">
                         {categoryMeta[effect.category].label}
                       </Badge>
                     </div>
@@ -512,7 +512,7 @@ function FeaturedShowcase() {
                         <Badge
                           key={tag}
                           variant="secondary"
-                          className="text-[10px] px-1.5 py-0 bg-muted/80 text-muted-foreground"
+                          className="text-xs px-1.5 py-0 bg-muted/80 text-muted-foreground"
                         >
                           {tag}
                         </Badge>
@@ -667,7 +667,7 @@ export default function RoyCSSPage() {
               className="flex items-center gap-2.5"
             >
               <RoyCSSLogo size="md" animated={true} />
-              <Badge variant="secondary" className="text-[10px] px-1.5 py-0 bg-primary/10 text-primary border-primary/20 font-semibold">
+              <Badge variant="secondary" className="text-xs px-1.5 py-0 bg-primary/10 text-primary border-primary/20 font-semibold">
                 v1.0
               </Badge>
             </motion.div>
@@ -946,7 +946,7 @@ export default function RoyCSSPage() {
 
           {/* Effects Grid with stagger reveal */}
           {filteredEffects.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5" style={{ contain: 'layout style' }}>
               {filteredEffects.map((effect) => (
                 <EffectCard
                   key={effect.id}

@@ -24,7 +24,7 @@ function Section({
   return (
     <div className="rounded-2xl border border-border/50 bg-card/60 backdrop-blur-sm p-5 sm:p-6">
       <div className="mb-4">
-        <p className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 text-primary px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest">
+        <p className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 text-primary px-2.5 py-1 text-xs font-semibold uppercase tracking-widest">
           <Sparkles className="size-3" />
           {eyebrow}
         </p>
@@ -72,7 +72,7 @@ function DemoTile({
           {children}
         </span>
       </div>
-      <span className="text-[10px] font-mono text-muted-foreground group-hover:text-foreground transition-colors">
+      <span className="text-xs font-mono text-muted-foreground group-hover:text-foreground transition-colors">
         {label}
       </span>
     </button>
@@ -92,7 +92,7 @@ function HoverTile({
       <div className="flex items-center justify-center size-16 rounded-xl bg-background/60 border border-border/40 overflow-hidden">
         <div className={`size-10 rounded-lg bg-primary/80 ${className}`} />
       </div>
-      <span className="text-[10px] font-mono text-muted-foreground">
+      <span className="text-xs font-mono text-muted-foreground">
         {label}
       </span>
     </div>
@@ -152,8 +152,8 @@ function TokenChip({ name, value }: { name: string; value: string }) {
       className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-muted/50 hover:bg-muted border border-border/40 text-left transition-colors cursor-pointer"
       title="Click to copy"
     >
-      <code className="text-[10px] font-mono text-primary">--{name}</code>
-      <code className="text-[10px] font-mono text-muted-foreground truncate">
+      <code className="text-xs font-mono text-primary">--{name}</code>
+      <code className="text-xs font-mono text-muted-foreground truncate">
         {value}
       </code>
       {copied && <Check className="size-3 text-emerald-500" />}
@@ -227,7 +227,7 @@ export function RoyMotionShowcase() {
                 <span className="text-xs font-semibold text-foreground">Bounce</span>
               </DemoTile>
             </div>
-            <p className="mt-3 text-[10px] text-muted-foreground">
+            <p className="mt-3 text-xs text-muted-foreground">
               Click any tile to replay the animation.
             </p>
           </Section>
@@ -246,7 +246,7 @@ export function RoyMotionShowcase() {
               <HoverTile label="roy-hover-underline" className="roy-hover-underline" />
               <HoverTile label="roy-hover-overlay" className="roy-hover-overlay" />
             </div>
-            <p className="mt-3 text-[10px] text-muted-foreground">
+            <p className="mt-3 text-xs text-muted-foreground">
               Hover the colored swatches to see each effect.
             </p>
           </Section>
@@ -294,16 +294,16 @@ export function RoyMotionShowcase() {
                 <div className="roy-skel-text mt-3" />
               </div>
               <div className="flex flex-wrap gap-2">
-                <code className="text-[10px] font-mono text-muted-foreground px-2 py-1 rounded bg-muted/40">
+                <code className="text-xs font-mono text-muted-foreground px-2 py-1 rounded bg-muted/40">
                   .roy-skel-text
                 </code>
-                <code className="text-[10px] font-mono text-muted-foreground px-2 py-1 rounded bg-muted/40">
+                <code className="text-xs font-mono text-muted-foreground px-2 py-1 rounded bg-muted/40">
                   .roy-skel-circle
                 </code>
-                <code className="text-[10px] font-mono text-muted-foreground px-2 py-1 rounded bg-muted/40">
+                <code className="text-xs font-mono text-muted-foreground px-2 py-1 rounded bg-muted/40">
                   .roy-skel-rect
                 </code>
-                <code className="text-[10px] font-mono text-muted-foreground px-2 py-1 rounded bg-muted/40">
+                <code className="text-xs font-mono text-muted-foreground px-2 py-1 rounded bg-muted/40">
                   .roy-skel-card
                 </code>
               </div>
@@ -380,7 +380,7 @@ export function RoyMotionShowcase() {
                 value="1100ms"
               />
             </div>
-            <p className="mt-3 text-[10px] text-muted-foreground">
+            <p className="mt-3 text-xs text-muted-foreground">
               Click any chip to copy the CSS declaration. Use these tokens
               anywhere — they cascade from the <code>:root</code> block in{" "}
               <code>roymotion.css</code>.

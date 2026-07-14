@@ -42,6 +42,7 @@ import {
   GlassWater,
   ToggleRight,
   Heart,
+  HelpCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -261,6 +262,206 @@ function DocCard({
   );
 }
 
+/* ─── FAQ Item (custom accordion — no Radix, hydration-safe) ── */
+function FAQItem({
+  question,
+  answer,
+  isOpen,
+  onToggle,
+}: {
+  question: string;
+  answer: string;
+  isOpen: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <div className="roycss-faq-item" data-open={isOpen}>
+      <h3>
+        <button
+          type="button"
+          onClick={onToggle}
+          className="roycss-faq-trigger"
+          aria-expanded={isOpen}
+        >
+          <span>{question}</span>
+          <ChevronDown className="roycss-faq-chevron size-4" />
+        </button>
+      </h3>
+      <div className="roycss-faq-content">
+        <div className="roycss-faq-content-inner">
+          <p>{answer}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── FAQ Section ───────────────────────────────────────────── */
+const faqEntries: Array<{ question: string; answer: string }> = [
+  {
+    question: "Does RoyCSS work with React/Vue/Angular/Svelte?",
+    answer:
+      "Yes. RoyCSS is pure CSS — import the stylesheet once and use any .roycss-* class in any framework.",
+  },
+  {
+    question: "Does RoyCSS include JavaScript?",
+    answer:
+      "No. Every effect is 100% CSS. Zero runtime JavaScript, zero hydration cost.",
+  },
+  {
+    question: "What's the bundle size?",
+    answer:
+      "240KB for all 700 effects. Each effect averages ~300 bytes. Use the CLI to tree-shake and include only what you need.",
+  },
+  {
+    question: "Does it support dark mode?",
+    answer:
+      "Yes. RoyCSS uses OKLCH colors with light-dark() support and a .dark class override system.",
+  },
+  {
+    question: "Is it accessible?",
+    answer:
+      "Yes. All effects respect prefers-reduced-motion. Focus-visible rings are built in. WCAG 2.1 AA compliant.",
+  },
+  {
+    question: "Can I customize colors?",
+    answer:
+      "Yes. Click any effect to open the detail dialog, then use the color palette or type a custom hex code.",
+  },
+];
+
+function FAQSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  return (
+    <section id="faq" className="py-16 sm:py-20 scroll-mt-20">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="text-center max-w-2xl mx-auto mb-10">
+          <div className="inline-flex items-center gap-2 rounded-full glass px-3 py-1 text-xs font-medium text-primary mb-3">
+            <HelpCircle className="size-3.5" />
+            FAQ
+          </div>
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground">
+            Frequently Asked Questions
+          </h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Everything you need to know about RoyCSS — frameworks, performance,
+            accessibility, and customization.
+          </p>
+        </div>
+
+        <div className="max-w-3xl mx-auto">
+          {faqEntries.map((entry, i) => (
+            <FAQItem
+              key={entry.question}
+              question={entry.question}
+              answer={entry.answer}
+              isOpen={openIndex === i}
+              onToggle={() => setOpenIndex(openIndex === i ? null : i)}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Animate.css → RoyCSS Migration Table ──────────────────── */
+const animateMigrationRows: Array<{ from: string; to: string }> = [
+  { from: "animate__bounce", to: "roycss-anim-bounce-in" },
+  { from: "animate__flash", to: "roycss-anim-flash" },
+  { from: "animate__pulse", to: "roycss-anim-pulse-glow" },
+  { from: "animate__rubberBand", to: "roycss-anim-rubber-band" },
+  { from: "animate__shake", to: "roycss-anim-shake" },
+  { from: "animate__swing", to: "roycss-anim-swing" },
+  { from: "animate__tada", to: "roycss-anim-tada" },
+  { from: "animate__wobble", to: "roycss-anim-wobble" },
+  { from: "animate__fadeIn", to: "roycss-anim-fade-in" },
+  { from: "animate__fadeInUp", to: "roycss-anim-fade-in-up" },
+  { from: "animate__slideInLeft", to: "roycss-anim-slide-in-left" },
+  { from: "animate__zoomIn", to: "roycss-anim-zoom-in" },
+];
+
+function MigrationTable() {
+  return (
+    <ScrollReveal className="mt-8 max-w-3xl mx-auto">
+      <div className="rounded-2xl border border-border bg-card p-5 sm:p-6">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="flex items-center justify-center size-10 rounded-xl bg-primary/10 text-primary">
+            <ArrowLeftRight className="size-5" />
+          </div>
+          <div>
+            <h3 className="font-display font-semibold text-foreground">
+              Animate.css → RoyCSS Migration
+            </h3>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Drop-in replacements for common Animate.css classes. Same behavior,
+              smaller bundle, no JS runtime.
+            </p>
+          </div>
+        </div>
+        <div className="overflow-x-auto scrollbar-thin -mx-2">
+          <table className="roycss-migration-table">
+            <thead>
+              <tr>
+                <th scope="col">Animate.css</th>
+                <th scope="col" className="roycss-arrow" aria-label="maps to">→</th>
+                <th scope="col">RoyCSS</th>
+              </tr>
+            </thead>
+            <tbody>
+              {animateMigrationRows.map((row) => (
+                <tr key={row.from}>
+                  <td><code>{row.from}</code></td>
+                  <td className="roycss-arrow" aria-hidden="true">→</td>
+                  <td><code>{row.to}</code></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </ScrollReveal>
+  );
+}
+
+/* ─── 3D Tilt Stage (hero logo wrapper) ─────────────────────── */
+function TiltStage({ children }: { children: React.ReactNode }) {
+  const stageRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = stageRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    // Normalize pointer position to [-0.5, 0.5] around center
+    const px = (e.clientX - rect.left) / rect.width - 0.5;
+    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    // Rotate up to ±15deg; invert Y so the logo "leans into" the cursor
+    const maxTilt = 15;
+    const tiltY = px * maxTilt * 2;
+    const tiltX = -py * maxTilt * 2;
+    el.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
+    el.style.setProperty("--tilt-y", `${tiltY.toFixed(2)}deg`);
+  };
+
+  const handleMouseLeave = () => {
+    const el = stageRef.current;
+    if (!el) return;
+    el.style.setProperty("--tilt-x", "0deg");
+    el.style.setProperty("--tilt-y", "0deg");
+  };
+
+  return (
+    <div
+      ref={stageRef}
+      className="roycss-tilt-stage inline-block"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="roycss-tilt-target">{children}</div>
+    </div>
+  );
+}
+
 /* ─── Featured Showcase Card ────────────────────────────────── */
 function FeaturedShowcase() {
   const featuredEffects = effects.filter((e) =>
@@ -437,9 +638,13 @@ export default function RoyCSSPage() {
       <section className="relative overflow-hidden pt-10 pb-8 sm:pt-16 sm:pb-12">
         {/* Background effects */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
-          <Parallax offset={60} className="absolute top-[-10%] left-[-5%] size-[40rem] rounded-full bg-primary/15 blur-3xl animate-blob" />
-          <Parallax offset={40} className="absolute top-[20%] right-[-10%] size-[35rem] rounded-full bg-emerald-500/8 blur-3xl animate-blob animation-delay-2000" />
-          <Parallax offset={80} className="absolute bottom-[-15%] left-[30%] size-[30rem] rounded-full bg-teal-500/8 blur-3xl animate-blob animation-delay-4000" />
+          {/* 3D rotating sphere — decorative background, low opacity */}
+          <div className="roycss-sphere-3d" aria-hidden="true" />
+
+          {/* Parallax blobs — different scroll speeds via scroll-driven animation */}
+          <Parallax offset={60} className="absolute top-[-10%] left-[-5%] size-[40rem] rounded-full bg-primary/15 blur-3xl animate-blob roycss-parallax-near" />
+          <Parallax offset={40} className="absolute top-[20%] right-[-10%] size-[35rem] rounded-full bg-emerald-500/8 blur-3xl animate-blob animation-delay-2000 roycss-parallax-mid" />
+          <Parallax offset={80} className="absolute bottom-[-15%] left-[30%] size-[30rem] rounded-full bg-teal-500/8 blur-3xl animate-blob animation-delay-4000 roycss-parallax-far" />
           <div className="absolute inset-0 bg-grid opacity-30" />
           <div className="absolute inset-0 bg-gradient-to-b from-background/0 via-background/40 to-background" />
         </div>
@@ -485,6 +690,12 @@ export default function RoyCSSPage() {
                 >
                   Effects
                 </button>
+                <button
+                  onClick={() => document.querySelector("#faq")?.scrollIntoView({ behavior: "smooth" })}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer"
+                >
+                  FAQ
+                </button>
               </div>
               <ThemeToggle />
               <button
@@ -517,10 +728,12 @@ export default function RoyCSSPage() {
 
           {/* Hero content */}
           <div className="text-center max-w-3xl mx-auto">
-            {/* Hero Logo */}
+            {/* Hero Logo — wrapped in 3D tilt stage (mouse-driven) */}
             <ScrollReveal y={12}>
               <div className="flex justify-center mb-3">
-                <RoyCSSHeroLogo />
+                <TiltStage>
+                  <RoyCSSHeroLogo />
+                </TiltStage>
               </div>
             </ScrollReveal>
 
@@ -762,6 +975,29 @@ export default function RoyCSSPage() {
               >
                 Clear filters
               </Button>
+
+              {/* Suggested search terms — quick recovery from empty state */}
+              <div className="mt-6 max-w-md mx-auto">
+                <p className="text-xs text-muted-foreground mb-2.5">
+                  Try one of these popular searches:
+                </p>
+                <div className="flex flex-wrap items-center justify-center gap-2">
+                  {["glow", "spinner", "glass", "card", "text", "button"].map((term) => (
+                    <button
+                      key={term}
+                      onClick={() => {
+                        setSearch(term);
+                        setActiveCategory("all");
+                        searchInputRef.current?.focus();
+                      }}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium glass text-muted-foreground hover:text-primary hover:border-primary/40 hover:-translate-y-0.5 transition-all cursor-pointer"
+                    >
+                      <Search className="size-3" />
+                      {term}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </motion.div>
           )}
         </div>
@@ -883,8 +1119,16 @@ export default function RoyCSSPage() {
               items={["Component library (24→100+)", "VS Code extension", "CLI codemods", "AI effect recommender"]}
             />
           </div>
+
+          {/* Animate.css → RoyCSS migration table */}
+          <MigrationTable />
         </div>
       </section>
+
+      <Separator className="opacity-50" />
+
+      {/* ─── FAQ Section ────────────────────────────────────── */}
+      <FAQSection />
 
       <Separator className="opacity-50" />
 
@@ -920,6 +1164,12 @@ export default function RoyCSSPage() {
                 className="text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
               >
                 Docs
+              </button>
+              <button
+                onClick={() => document.querySelector("#faq")?.scrollIntoView({ behavior: "smooth" })}
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+              >
+                FAQ
               </button>
               <a
                 href="https://github.com/Roy-Wanyoike"

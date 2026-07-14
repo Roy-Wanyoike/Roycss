@@ -1,0 +1,977 @@
+     1→     1→"use client";
+     2→     2→
+     3→     3→import { useEffect, useState, useRef } from "react";
+     4→     4→import {
+     5→     5→  Search,
+     6→     6→  Sun,
+     7→     7→  Moon,
+     8→     8→  Sparkles,
+     9→     9→  Github,
+    10→    10→  BookOpen,
+    11→    11→  Zap,
+    12→    12→  Package,
+    13→    13→  X,
+    14→    14→  ChevronDown,
+    15→    15→  ChevronRight,
+    16→    16→  CheckCircle2,
+    17→    17→  Accessibility,
+    18→    18→  Gauge,
+    19→    19→  ArrowLeftRight,
+    20→    20→  LayoutDashboard,
+    21→    21→  History,
+    22→    22→  Rocket,
+    23→    23→  Layers,
+    24→    24→  Play,
+    25→    25→  Type,
+    26→    26→  Loader2,
+    27→    27→  Box,
+    28→    28→  MousePointer,
+    29→    29→  MousePointerClick,
+    30→    30→  Square,
+    31→    31→  ArrowRight,
+    32→    32→  Star,
+    33→    33→  Code2,
+    34→    34→  Wand2,
+    35→    35→  Frame,
+    36→    36→  SlidersHorizontal,
+    37→    37→  Navigation,
+    38→    38→  Sparkle,
+    39→    39→  FormInput,
+    40→    40→  ScrollText,
+    41→    41→  MousePointer2,
+    42→    42→  GlassWater,
+    43→    43→  ToggleRight,
+    44→    44→  Heart,
+    45→    45→} from "lucide-react";
+    46→    46→import { Button } from "@/components/ui/button";
+    47→    47→import { Input } from "@/components/ui/input";
+    48→    48→import { Badge } from "@/components/ui/badge";
+    49→    49→import { Separator } from "@/components/ui/separator";
+    50→    50→import {
+    51→    51→  effects,
+    52→    52→  categoryMeta,
+    53→    53→  categoryOrder,
+    54→    54→  type EffectCategory,
+    55→    55→  type CSSEffect,
+    56→    56→} from "@/lib/roycss-effects";
+    57→    57→import { EffectCard } from "@/components/roycss/effect-card";
+    58→    58→import { EffectDetailDialog } from "@/components/roycss/effect-detail-dialog";
+    59→    59→import { FavoritesSheet } from "@/components/roycss/favorites-sheet";
+    60→    60→import { ScrollToTop } from "@/components/roycss/scroll-to-top";
+    61→    61→import { SectionScrollbar } from "@/components/roycss/section-scrollbar";
+    62→    62→import { RoyCSSLogo, RoyCSSHeroLogo } from "@/components/roycss/roycss-logo";
+    63→    63→import { GetStarted } from "@/components/roycss/get-started";
+    64→    64→import { RoyMotionShowcase } from "@/components/roycss/roymotion-showcase";
+    65→    65→import { useFavorites } from "@/hooks/use-favorites";
+    66→    66→import { motion, useScroll, useSpring } from "framer-motion";
+    67→    67→import {
+    68→    68→  ScrollReveal,
+    69→    69→  StaggerGroup,
+    70→    70→  TextReveal,
+    71→    71→  MagneticButton,
+    72→    72→  TiltCard,
+    73→    73→  AnimatedCounter,
+    74→    74→  Marquee,
+    75→    75→  CursorGlow,
+    76→    76→  Parallax,
+    77→    77→  AnimatedGradientText,
+    78→    78→  Floating,
+    79→    79→  ShineBorder,
+    80→    80→  StatCounter,
+    81→    81→  SectionHeading,
+    82→    82→  staggerContainer,
+    83→    83→  staggerItem,
+    84→    84→} from "@/components/roycss/motion-primitives";
+    85→    85→
+    86→    86→/* ─── Icon map for categories ───────────────────────────────── */
+    87→    87→const catIcons: Record<EffectCategory, React.ComponentType<{ className?: string }>> = {
+    88→    88→  animations: Play,
+    89→    89→  hover: MousePointer,
+    90→    90→  text: Type,
+    91→    91→  backgrounds: Layers,
+    92→    92→  loaders: Loader2,
+    93→    93→  "3d-transforms": Box,
+    94→    94→  buttons: MousePointerClick,
+    95→    95→  cards: Square,
+    96→    96→  borders: Frame,
+    97→    97→  filters: SlidersHorizontal,
+    98→    98→  forms: FormInput,
+    99→    99→  navigation: Navigation,
+   100→   100→  scroll: ScrollText,
+   101→   101→  cursor: MousePointer2,
+   102→   102→  "page-transitions": ArrowLeftRight,
+   103→   103→  "glass-ui": GlassWater,
+   104→   104→  particles: Sparkles,
+   105→   105→  microinteractions: ToggleRight,
+   106→   106→  visual: Wand2,
+   107→   107→  misc: Sparkle,
+   108→   108→};
+   109→   109→
+   110→   110→/* ─── Scroll Progress Bar ───────────────────────────────────── */
+   111→   111→function ScrollProgress() {
+   112→   112→  const { scrollYProgress } = useScroll();
+   113→   113→  const scaleX = useSpring(scrollYProgress, {
+   114→   114→    stiffness: 120,
+   115→   115→    damping: 30,
+   116→   116→    restDelta: 0.001,
+   117→   117→  });
+   118→   118→  return (
+   119→   119→    <motion.div
+   120→   120→      style={{ scaleX }}
+   121→   121→      className="roycss-scroll-progress"
+   122→   122→    />
+   123→   123→  );
+   124→   124→}
+   125→   125→
+   126→   126→/* ─── Theme Toggle ──────────────────────────────────────────── */
+   127→   127→function ThemeToggle() {
+   128→   128→  const [dark, setDark] = useState(true);
+   129→   129→
+   130→   130→  useEffect(() => {
+   131→   131→    const root = document.documentElement;
+   132→   132→    if (dark) {
+   133→   133→      root.classList.add("dark");
+   134→   134→    } else {
+   135→   135→      root.classList.remove("dark");
+   136→   136→    }
+   137→   137→  }, [dark]);
+   138→   138→
+   139→   139→  return (
+   140→   140→    <button
+   141→   141→      onClick={() => setDark(!dark)}
+   142→   142→      className="flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-foreground transition-all hover:-translate-y-0.5 cursor-pointer"
+   143→   143→      aria-label="Toggle theme"
+   144→   144→    >
+   145→   145→      {dark ? <Sun className="size-4" /> : <Moon className="size-4" />}
+   146→   146→    </button>
+   147→   147→  );
+   148→   148→}
+   149→   149→
+   150→   150→/* ─── Category Pill ─────────────────────────────────────────── */
+   151→   151→function CategoryPill({
+   152→   152→  category,
+   153→   153→  active,
+   154→   154→  count,
+   155→   155→  onClick,
+   156→   156→}: {
+   157→   157→  category: EffectCategory;
+   158→   158→  active: boolean;
+   159→   159→  count: number;
+   160→   160→  onClick: () => void;
+   161→   161→}) {
+   162→   162→  const meta = categoryMeta[category];
+   163→   163→  const Icon = catIcons[category];
+   164→   164→  return (
+   165→   165→    <button
+   166→   166→      onClick={onClick}
+   167→   167→      className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all whitespace-nowrap cursor-pointer ${
+   168→   168→        active
+   169→   169→          ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+   170→   170→          : "glass text-muted-foreground hover:text-foreground hover:border-primary/30"
+   171→   171→      }`}
+   172→   172→    >
+   173→   173→      <Icon className="size-3.5" />
+   174→   174→      {meta.label}
+   175→   175→      <span
+   176→   176→        className={`text-xs px-1.5 py-0.5 rounded-md ${
+   177→   177→          active ? "bg-primary-foreground/20" : "bg-muted"
+   178→   178→        }`}
+   179→   179→      >
+   180→   180→        {count}
+   181→   181→      </span>
+   182→   182→    </button>
+   183→   183→  );
+   184→   184→}
+   185→   185→
+   186→   186→/* ─── Install Command ───────────────────────────────────────── */
+   187→   187→function InstallCommand() {
+   188→   188→  const [copied, setCopied] = useState(false);
+   189→   189→  const handleCopy = async () => {
+   190→   190→    try {
+   191→   191→      await navigator.clipboard.writeText("npm install roycss");
+   192→   192→      setCopied(true);
+   193→   193→      setTimeout(() => setCopied(false), 2000);
+   194→   194→    } catch {
+   195→   195→      /* noop */
+   196→   196→    }
+   197→   197→  };
+   198→   198→
+   199→   199→  return (
+   200→   200→    <MagneticButton
+   201→   201→      strength={0.25}
+   202→   202→      className="inline-block"
+   203→   203→    >
+   204→   204→      <div
+   205→   205→        className="inline-flex items-center gap-2 rounded-xl glass-strong px-4 py-2.5 group cursor-pointer hover:border-primary/30 transition-all"
+   206→   206→        onClick={handleCopy}
+   207→   207→      >
+   208→   208→        <span className="text-sm font-mono text-muted-foreground">$</span>
+   209→   209→        <code className="text-sm font-mono text-foreground">npm install roycss</code>
+   210→   210→        <span className={`text-xs font-medium ml-2 transition-colors ${copied ? "text-emerald-500" : "text-muted-foreground group-hover:text-foreground"}`}>
+   211→   211→          {copied ? "✓ Copied!" : "Copy"}
+   212→   212→        </span>
+   213→   213→      </div>
+   214→   214→    </MagneticButton>
+   215→   215→  );
+   216→   216→}
+   217→   217→
+   218→   218→/* ─── Marquee Item ──────────────────────────────────────────── */
+   219→   219→function MarqueeItem({ icon: Icon, label }: { icon: React.ComponentType<{ className?: string }>; label: string }) {
+   220→   220→  return (
+   221→   221→    <div className="flex items-center gap-2.5 px-5 py-2.5 rounded-2xl glass shrink-0">
+   222→   222→      <Icon className="size-4 text-primary" />
+   223→   223→      <span className="font-display font-semibold text-sm text-foreground whitespace-nowrap">
+   224→   224→        {label}
+   225→   225→      </span>
+   226→   226→      <Star className="size-3 text-primary/40" />
+   227→   227→    </div>
+   228→   228→  );
+   229→   229→}
+   230→   230→
+   231→   231→/* ─── Doc Card ──────────────────────────────────────────────── */
+   232→   232→function DocCard({
+   233→   233→  icon: Icon,
+   234→   234→  title,
+   235→   235→  description,
+   236→   236→  items,
+   237→   237→}: {
+   238→   238→  icon: React.ComponentType<{ className?: string }>;
+   239→   239→  title: string;
+   240→   240→  description: string;
+   241→   241→  items: string[];
+   242→   242→}) {
+   243→   243→  return (
+   244→   244→    <div className="group rounded-2xl border border-border bg-card p-5 hover:border-primary/40 hover:shadow-lg transition-all">
+   245→   245→      <div className="flex items-center gap-3 mb-3">
+   246→   246→        <div className="flex items-center justify-center size-10 rounded-xl bg-primary/10 text-primary">
+   247→   247→          <Icon className="size-5" />
+   248→   248→        </div>
+   249→   249→        <h3 className="font-display font-semibold text-foreground">{title}</h3>
+   250→   250→      </div>
+   251→   251→      <p className="text-xs text-muted-foreground leading-relaxed mb-3">{description}</p>
+   252→   252→      <ul className="space-y-1.5">
+   253→   253→        {items.map((item, i) => (
+   254→   254→          <li key={i} className="flex items-center gap-2 text-xs text-foreground">
+   255→   255→            <CheckCircle2 className="size-3 text-primary shrink-0" />
+   256→   256→            {item}
+   257→   257→          </li>
+   258→   258→        ))}
+   259→   259→      </ul>
+   260→   260→    </div>
+   261→   261→  );
+   262→   262→}
+   263→   263→
+   264→   264→/* ─── Featured Showcase Card ────────────────────────────────── */
+   265→   265→function FeaturedShowcase() {
+   266→   266→  const featuredEffects = effects.filter((e) =>
+   267→   267→    ["text-gradient", "card-glassmorphism", "bg-aurora", "btn-shine-sweep"].includes(e.id)
+   268→   268→  );
+   269→   269→
+   270→   270→  return (
+   271→   271→    <section className="py-16 sm:py-20 relative overflow-hidden">
+   272→   272→      <div className="absolute inset-0 -z-10 bg-grid opacity-20 roycss-fade-mask-b" />
+   273→   273→      <div className="container mx-auto px-4 sm:px-6">
+   274→   274→        <SectionHeading
+   275→   275→          eyebrow="Hand-picked highlights"
+   276→   276→          title="Featured Effects"
+   277→   277→          subtitle="A curated selection of our most-loved effects, showcased in larger interactive demos."
+   278→   278→        />
+   279→   279→
+   280→   280→        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-5">
+   281→   281→          {featuredEffects.map((effect, i) => (
+   282→   282→            <ScrollReveal key={effect.id} delay={i * 0.1}>
+   283→   283→              <TiltCard
+   284→   284→                maxTilt={8}
+   285→   285→                className="rounded-3xl border border-border bg-card overflow-hidden h-full hover:border-primary/40 transition-colors"
+   286→   286→              >
+   287→   287→                <div className="grid sm:grid-cols-2">
+   288→   288→                  {/* Preview */}
+   289→   289→                  <div className="relative h-56 sm:h-full min-h-[14rem] bg-gradient-to-br from-muted/60 to-muted/20 flex items-center justify-center p-6">
+   290→   290→                    <FeaturedPreview id={effect.id} name={effect.name} />
+   291→   291→                  </div>
+   292→   292→                  {/* Info */}
+   293→   293→                  <div className="p-6 flex flex-col">
+   294→   294→                    <div className="flex items-center gap-2 mb-2">
+   295→   295→                      <Badge variant="secondary" className="text-[10px] bg-primary/10 text-primary border-primary/20">
+   296→   296→                        <Star className="size-2.5 mr-1 fill-primary" />
+   297→   297→                        Featured
+   298→   298→                      </Badge>
+   299→   299→                      <Badge variant="outline" className="text-[10px] capitalize">
+   300→   300→                        {categoryMeta[effect.category].label}
+   301→   301→                      </Badge>
+   302→   302→                    </div>
+   303→   303→                    <h3 className="font-display text-xl font-bold text-foreground">
+   304→   304→                      {effect.name}
+   305→   305→                    </h3>
+   306→   306→                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">
+   307→   307→                      {effect.description}
+   308→   308→                    </p>
+   309→   309→                    <div className="mt-4 flex flex-wrap gap-1.5">
+   310→   310→                      {effect.tags.slice(0, 4).map((tag) => (
+   311→   311→                        <Badge
+   312→   312→                          key={tag}
+   313→   313→                          variant="secondary"
+   314→   314→                          className="text-[10px] px-1.5 py-0 bg-muted/80 text-muted-foreground"
+   315→   315→                        >
+   316→   316→                          {tag}
+   317→   317→                        </Badge>
+   318→   318→                      ))}
+   319→   319→                    </div>
+   320→   320→                    <button
+   321→   321→                      onClick={() =>
+   322→   322→                        document.querySelector("#effects")?.scrollIntoView({ behavior: "smooth" })
+   323→   323→                      }
+   324→   324→                      className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:gap-2.5 transition-all cursor-pointer w-fit"
+   325→   325→                    >
+   326→   326→                      View all effects
+   327→   327→                      <ArrowRight className="size-3.5" />
+   328→   328→                    </button>
+   329→   329→                  </div>
+   330→   330→                </div>
+   331→   331→              </TiltCard>
+   332→   332→            </ScrollReveal>
+   333→   333→          ))}
+   334→   334→        </div>
+   335→   335→      </div>
+   336→   336→    </section>
+   337→   337→  );
+   338→   338→}
+   339→   339→
+   340→   340→/* ─── Featured Preview (larger, more dramatic) ──────────────── */
+   341→   341→function FeaturedPreview({ id, name }: { id: string; name: string }) {
+   342→   342→  if (id === "text-gradient") {
+   343→   343→    return (
+   344→   344→      <div className="text-center">
+   345→   345→        <div className="roycss-animated-gradient-text font-display text-4xl sm:text-5xl font-bold">
+   346→   346→          RoyCSS
+   347→   347→        </div>
+   348→   348→        <p className="mt-2 text-xs text-muted-foreground">Animated gradient text</p>
+   349→   349→      </div>
+   350→   350→    );
+   351→   351→  }
+   352→   352→  if (id === "card-glassmorphism") {
+   353→   353→    return (
+   354→   354→      <div className="roycss-card-glass p-6 w-full max-w-xs">
+   355→   355→        <div className="size-10 rounded-xl bg-primary/30 mb-3" />
+   356→   356→        <div className="h-3 w-3/4 rounded-full bg-foreground/20 mb-2" />
+   357→   357→        <div className="h-3 w-1/2 rounded-full bg-foreground/10" />
+   358→   358→        <p className="mt-3 text-xs text-muted-foreground">{name}</p>
+   359→   359→      </div>
+   360→   360→    );
+   361→   361→  }
+   362→   362→  if (id === "bg-aurora") {
+   363→   363→    return (
+   364→   364→      <div className="roycss-bg-aurora w-full h-full rounded-2xl flex items-center justify-center min-h-[12rem]">
+   365→   365→        <span className="font-display font-bold text-2xl text-white/90 relative z-10">Aurora</span>
+   366→   366→      </div>
+   367→   367→    );
+   368→   368→  }
+   369→   369→  if (id === "btn-shine-sweep") {
+   370→   370→    return (
+   371→   371→      <div className="flex flex-col items-center gap-3">
+   372→   372→        <button className="roycss-btn-shine bg-primary text-primary-foreground px-8 py-3 rounded-xl font-medium shadow-lg shadow-primary/20">
+   373→   373→          Shine Sweep
+   374→   374→        </button>
+   375→   375→        <p className="text-xs text-muted-foreground">Hover the button</p>
+   376→   376→      </div>
+   377→   377→    );
+   378→   378→  }
+   379→   379→  return null;
+   380→   380→}
+   381→   381→
+   382→   382→/* ═══════════════════════════════════════════════════════════════
+   383→   383→   MAIN PAGE
+   384→   384→   ═══════════════════════════════════════════════════════════════ */
+   385→   385→export default function RoyCSSPage() {
+   386→   386→  const [search, setSearch] = useState("");
+   387→   387→  const [activeCategory, setActiveCategory] = useState<EffectCategory | "all">("all");
+   388→   388→  const [selectedEffect, setSelectedEffect] = useState<CSSEffect | null>(null);
+   389→   389→  const [dialogOpen, setDialogOpen] = useState(false);
+   390→   390→  const [favoritesOpen, setFavoritesOpen] = useState(false);
+   391→   391→  const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
+   392→   392→  const searchInputRef = useRef<HTMLInputElement>(null);
+   393→   393→
+   394→   394→  // ⌘K / Ctrl+K to focus search
+   395→   395→  useEffect(() => {
+   396→   396→    const handleKeyDown = (e: KeyboardEvent) => {
+   397→   397→      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+   398→   398→        e.preventDefault();
+   399→   399→        searchInputRef.current?.focus();
+   400→   400→        searchInputRef.current?.select();
+   401→   401→      }
+   402→   402→      if (e.key === "Escape" && document.activeElement === searchInputRef.current) {
+   403→   403→        setSearch("");
+   404→   404→        searchInputRef.current?.blur();
+   405→   405→      }
+   406→   406→    };
+   407→   407→    window.addEventListener("keydown", handleKeyDown);
+   408→   408→    return () => window.removeEventListener("keydown", handleKeyDown);
+   409→   409→  }, []);
+   410→   410→
+   411→   411→  const favoriteEffects = effects.filter((e) => isFavorite(e.id));
+   412→   412→
+   413→   413→  const filteredEffects = effects.filter((e) => {
+   414→   414→    const matchesSearch =
+   415→   415→      search === "" ||
+   416→   416→      e.name.toLowerCase().includes(search.toLowerCase()) ||
+   417→   417→      e.description.toLowerCase().includes(search.toLowerCase()) ||
+   418→   418→      e.tags.some((t) => t.toLowerCase().includes(search.toLowerCase()));
+   419→   419→
+   420→   420→    const matchesCategory = activeCategory === "all" || e.category === activeCategory;
+   421→   421→
+   422→   422→    return matchesSearch && matchesCategory;
+   423→   423→  });
+   424→   424→
+   425→   425→  const getCategoryCount = (cat: EffectCategory) =>
+   426→   426→    effects.filter((e) => e.category === cat).length;
+   427→   427→
+   428→   428→  return (
+   429→   429→    <div className="min-h-screen flex flex-col bg-background text-foreground relative">
+   430→   430→      {/* Cursor glow follower (desktop only) */}
+   431→   431→      <CursorGlow />
+   432→   432→
+   433→   433→      {/* Scroll progress bar */}
+   434→   434→      <ScrollProgress />
+   435→   435→
+   436→   436→      {/* ─── Hero ──────────────────────────────────────────── */}
+   437→   437→      <section className="relative overflow-hidden pt-10 pb-8 sm:pt-16 sm:pb-12">
+   438→   438→        {/* Background effects */}
+   439→   439→        <div className="absolute inset-0 -z-10 overflow-hidden">
+   440→   440→          <Parallax offset={60} className="absolute top-[-10%] left-[-5%] size-[40rem] rounded-full bg-primary/15 blur-3xl animate-blob" />
+   441→   441→          <Parallax offset={40} className="absolute top-[20%] right-[-10%] size-[35rem] rounded-full bg-emerald-500/8 blur-3xl animate-blob animation-delay-2000" />
+   442→   442→          <Parallax offset={80} className="absolute bottom-[-15%] left-[30%] size-[30rem] rounded-full bg-teal-500/8 blur-3xl animate-blob animation-delay-4000" />
+   443→   443→          <div className="absolute inset-0 bg-grid opacity-30" />
+   444→   444→          <div className="absolute inset-0 bg-gradient-to-b from-background/0 via-background/40 to-background" />
+   445→   445→        </div>
+   446→   446→
+   447→   447→        <div className="container mx-auto px-4 sm:px-6">
+   448→   448→          {/* Nav bar */}
+   449→   449→          <nav className="flex items-center justify-between mb-8 sm:mb-12">
+   450→   450→            <motion.div
+   451→   451→              initial={{ opacity: 0, x: -20 }}
+   452→   452→              animate={{ opacity: 1, x: 0 }}
+   453→   453→              transition={{ duration: 0.5 }}
+   454→   454→              className="flex items-center gap-2.5"
+   455→   455→            >
+   456→   456→              <RoyCSSLogo size="md" animated={true} />
+   457→   457→              <Badge variant="secondary" className="text-[10px] px-1.5 py-0 bg-primary/10 text-primary border-primary/20 font-semibold">
+   458→   458→                v1.0
+   459→   459→              </Badge>
+   460→   460→            </motion.div>
+   461→   461→
+   462→   462→            <motion.div
+   463→   463→              initial={{ opacity: 0, x: 20 }}
+   464→   464→              animate={{ opacity: 1, x: 0 }}
+   465→   465→              transition={{ duration: 0.5 }}
+   466→   466→              className="flex items-center gap-2"
+   467→   467→            >
+   468→   468→              {/* Docs nav links */}
+   469→   469→              <div className="hidden md:flex items-center gap-1 mr-2">
+   470→   470→                <button
+   471→   471→                  onClick={() => document.querySelector("#get-started")?.scrollIntoView({ behavior: "smooth" })}
+   472→   472→                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer"
+   473→   473→                >
+   474→   474→                  Get Started
+   475→   475→                </button>
+   476→   476→                <button
+   477→   477→                  onClick={() => document.querySelector("#docs")?.scrollIntoView({ behavior: "smooth" })}
+   478→   478→                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer"
+   479→   479→                >
+   480→   480→                  Docs
+   481→   481→                </button>
+   482→   482→                <button
+   483→   483→                  onClick={() => document.querySelector("#effects")?.scrollIntoView({ behavior: "smooth" })}
+   484→   484→                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer"
+   485→   485→                >
+   486→   486→                  Effects
+   487→   487→                </button>
+   488→   488→              </div>
+   489→   489→              <ThemeToggle />
+   490→   490→              <button
+   491→   491→                onClick={() => setFavoritesOpen(true)}
+   492→   492→                className="relative flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-rose-500 transition-all hover:-translate-y-0.5 cursor-pointer"
+   493→   493→                aria-label="Open favorites"
+   494→   494→              >
+   495→   495→                <Heart className={`size-4 ${count > 0 ? "fill-rose-500/20 text-rose-500" : ""}`} />
+   496→   496→                {count > 0 && (
+   497→   497→                  <motion.span
+   498→   498→                    initial={{ scale: 0 }}
+   499→   499→                    animate={{ scale: 1 }}
+   500→   500→                    className="absolute -top-1 -right-1 flex items-center justify-center min-w-4 h-4 px-1 rounded-full bg-rose-500 text-white text-[9px] font-bold"
+   501→   501→                  >
+   502→   502→                    {count}
+   503→   503→                  </motion.span>
+   504→   504→                )}
+   505→   505→              </button>
+   506→   506→              <a
+   507→   507→                href="https://github.com/Roy-Wanyoike"
+   508→   508→                target="_blank"
+   509→   509→                rel="noopener noreferrer"
+   510→   510→                className="flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-foreground transition-all hover:-translate-y-0.5"
+   511→   511→                aria-label="GitHub"
+   512→   512→              >
+   513→   513→                <Github className="size-4" />
+   514→   514→              </a>
+   515→   515→            </motion.div>
+   516→   516→          </nav>
+   517→   517→
+   518→   518→          {/* Hero content */}
+   519→   519→          <div className="text-center max-w-3xl mx-auto">
+   520→   520→            {/* Hero Logo */}
+   521→   521→            <ScrollReveal y={12}>
+   522→   522→              <div className="flex justify-center mb-3">
+   523→   523→                <RoyCSSHeroLogo />
+   524→   524→              </div>
+   525→   525→            </ScrollReveal>
+   526→   526→
+   527→   527→            <ScrollReveal y={12} delay={0.1}>
+   528→   528→              <div className="inline-flex items-center gap-2 rounded-full glass px-3 py-1.5 text-xs sm:text-sm font-medium text-primary mb-3">
+   529→   529→                <motion.span
+   530→   530→                  animate={{ scale: [1, 1.3, 1] }}
+   531→   531→                  transition={{ duration: 2, repeat: Infinity }}
+   532→   532→                  className="size-1.5 rounded-full bg-primary"
+   533→   533→                />
+   534→   534→                <Package className="size-3.5" />
+   535→   535→                700+ CSS effects · React · Vue · Angular · Svelte
+   536→   536→              </div>
+   537→   537→            </ScrollReveal>
+   538→   538→
+   539→   539→            <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.05]">
+   540→   540→              <span className="block text-foreground">
+   541→   541→                <TextReveal text="Beautiful CSS" />
+   542→   542→              </span>
+   543→   543→              <span className="block mt-1">
+   544→   544→                <AnimatedGradientText className="font-display font-bold">
+   545→   545→                  <TextReveal text="Effects Library" delay={0.3} />
+   546→   546→                </AnimatedGradientText>
+   547→   547→              </span>
+   548→   548→            </h1>
+   549→   549→
+   550→   550→            <ScrollReveal delay={0.3}>
+   551→   551→              <p className="mt-2 max-w-lg mx-auto text-base sm:text-lg text-muted-foreground leading-relaxed">
+   552→   552→                Production-ready CSS effects with live demos, color customization, and
+   553→   553→                copy-paste code. Works in any framework — no JavaScript required.
+   554→   554→              </p>
+   555→   555→            </ScrollReveal>
+   556→   556→
+   557→   557→            <ScrollReveal delay={0.35}>
+   558→   558→              <div className="mt-5 flex flex-col sm:flex-row items-center justify-center gap-3">
+   559→   559→                <InstallCommand />
+   560→   560→                <MagneticButton strength={0.3} className="inline-block">
+   561→   561→                  <Button
+   562→   562→                    size="lg"
+   563→   563→                    onClick={() =>
+   564→   564→                      document.querySelector("#effects")?.scrollIntoView({ behavior: "smooth" })
+   565→   565→                    }
+   566→   566→                    className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20 h-11 px-6"
+   567→   567→                  >
+   568→   568→                    Browse 700 Effects
+   569→   569→                    <ChevronDown className="size-4 ml-1" />
+   570→   570→                  </Button>
+   571→   571→                </MagneticButton>
+   572→   572→              </div>
+   573→   573→            </ScrollReveal>
+   574→   574→
+   575→   575→            {/* Stats — trust signals */}
+   576→   576→            <ScrollReveal delay={0.4}>
+   577→   577→              <div className="mt-8 flex items-center justify-center gap-6 text-sm text-muted-foreground">
+   578→   578→                <span className="flex items-center gap-1.5">
+   579→   579→                  <CheckCircle2 className="size-4 text-primary" />
+   580→   580→                  OKLCH colors
+   581→   581→                </span>
+   582→   582→                <span className="flex items-center gap-1.5">
+   583→   583→                  <CheckCircle2 className="size-4 text-primary" />
+   584→   584→                  Zero JS runtime
+   585→   585→                </span>
+   586→   586→                <span className="flex items-center gap-1.5">
+   587→   587→                  <CheckCircle2 className="size-4 text-primary" />
+   588→   588→                  MIT licensed
+   589→   589→                </span>
+   590→   590→              </div>
+   591→   591→            </ScrollReveal>
+   592→   592→
+   593→   593→            {/* Animated stats counters */}
+   594→   594→            <ScrollReveal delay={0.45}>
+   595→   595→              <div className="mt-8 grid grid-cols-3 gap-3 max-w-2xl mx-auto">
+   596→   596→                <StatCounter icon={Sparkles} value={effects.length} label="Effects" />
+   597→   597→                <StatCounter icon={BookOpen} value={categoryOrder.length} label="Categories" />
+   598→   598→                <StatCounter icon={Zap} value={22000} label="Lines of CSS" suffix="+" prefix="~" />
+   599→   599→              </div>
+   600→   600→            </ScrollReveal>
+   601→   601→          </div>
+   602→   602→        </div>
+   603→   603→      </section>
+   604→   604→
+   605→   605→      {/* ─── Marquee Strip ──────────────────────────────────── */}
+   606→   606→      <div className="py-6 border-y border-border/40 bg-card/30 backdrop-blur-sm overflow-hidden">
+   607→   607→        <Marquee speed={35}>
+   608→   608→          {categoryOrder.map((cat) => (
+   609→   609→            <MarqueeItem
+   610→   610→              key={cat}
+   611→   611→              icon={catIcons[cat]}
+   612→   612→              label={categoryMeta[cat].label}
+   613→   613→            />
+   614→   614→          ))}
+   615→   615→        </Marquee>
+   616→   616→      </div>
+   617→   617→
+   618→   618→      {/* ─── Featured Showcase ──────────────────────────────── */}
+   619→   619→      <FeaturedShowcase />
+   620→   620→
+   621→   621→      <Separator className="opacity-50" />
+   622→   622→
+   623→   623→      {/* ─── Get Started ─────────────────────────────────────── */}
+   624→   624→      <GetStarted />
+   625→   625→
+   626→   626→      <Separator className="opacity-50" />
+   627→   627→
+   628→   628→      {/* ─── Effects Section ────────────────────────────────── */}
+   629→   629→      <section id="effects" className="flex-1 py-10 sm:py-14">
+   630→   630→        <div className="container mx-auto px-4 sm:px-6">
+   631→   631→          {/* Section heading */}
+   632→   632→          <SectionHeading
+   633→   633→            eyebrow="Browse the collection"
+   634→   634→            title="All Effects"
+   635→   635→            subtitle="Filter by category or search by name, description, or tag. Click any card to view its CSS code."
+   636→   636→            className="mb-10"
+   637→   637→          />
+   638→   638→
+   639→   639→          {/* Search */}
+   640→   640→          <ScrollReveal className="max-w-md mx-auto mb-8">
+   641→   641→            <div className="relative">
+   642→   642→              <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+   643→   643→              <Input
+   644→   644→                ref={searchInputRef}
+   645→   645→                placeholder="Search 700 effects... (⌘K)"
+   646→   646→                value={search}
+   647→   647→                onChange={(e) => setSearch(e.target.value)}
+   648→   648→                className="pl-10 pr-14 h-11 rounded-xl glass bg-background/80 border-border/50 focus:border-primary/50"
+   649→   649→              />
+   650→   650→              {search ? (
+   651→   651→                <button
+   652→   652→                  onClick={() => setSearch("")}
+   653→   653→                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground cursor-pointer"
+   654→   654→                >
+   655→   655→                  <X className="size-4" />
+   656→   656→                </button>
+   657→   657→              ) : (
+   658→   658→                <kbd className="absolute right-3 top-1/2 -translate-y-1/2 hidden sm:flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-muted/80 border border-border/50 text-[9px] font-medium text-muted-foreground">
+   659→   659→                  ⌘K
+   660→   660→                </kbd>
+   661→   661→              )}
+   662→   662→            </div>
+   663→   663→          </ScrollReveal>
+   664→   664→
+   665→   665→          {/* Category pills */}
+   666→   666→          <ScrollReveal delay={0.1} className="mb-8 overflow-x-auto scrollbar-thin pb-2">
+   667→   667→            <div className="flex items-center gap-2 min-w-max px-1">
+   668→   668→              <button
+   669→   669→                onClick={() => setActiveCategory("all")}
+   670→   670→                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all whitespace-nowrap cursor-pointer ${
+   671→   671→                  activeCategory === "all"
+   672→   672→                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+   673→   673→                    : "glass text-muted-foreground hover:text-foreground hover:border-primary/30"
+   674→   674→                }`}
+   675→   675→              >
+   676→   676→                <Sparkles className="size-3.5" />
+   677→   677→                All
+   678→   678→                <span
+   679→   679→                  className={`text-xs px-1.5 py-0.5 rounded-md ${
+   680→   680→                    activeCategory === "all" ? "bg-primary-foreground/20" : "bg-muted"
+   681→   681→                  }`}
+   682→   682→                >
+   683→   683→                  {effects.length}
+   684→   684→                </span>
+   685→   685→              </button>
+   686→   686→              {categoryOrder.map((cat) => (
+   687→   687→                <CategoryPill
+   688→   688→                  key={cat}
+   689→   689→                  category={cat}
+   690→   690→                  active={activeCategory === cat}
+   691→   691→                  count={getCategoryCount(cat)}
+   692→   692→                  onClick={() => setActiveCategory(activeCategory === cat ? "all" : cat)}
+   693→   693→                />
+   694→   694→              ))}
+   695→   695→            </div>
+   696→   696→          </ScrollReveal>
+   697→   697→
+   698→   698→          {/* Results count */}
+   699→   699→          <ScrollReveal delay={0.15} className="mb-6 flex items-center justify-between">
+   700→   700→            <p className="text-sm text-muted-foreground">
+   701→   701→              Showing{" "}
+   702→   702→              <span className="font-semibold text-foreground">{filteredEffects.length}</span>{" "}
+   703→   703→              {filteredEffects.length === 1 ? "effect" : "effects"}
+   704→   704→              {activeCategory !== "all" && (
+   705→   705→                <span>
+   706→   706→                  {" "}
+   707→   707→                  in{" "}
+   708→   708→                  <span className="text-primary font-medium">
+   709→   709→                    {categoryMeta[activeCategory].label}
+   710→   710→                  </span>
+   711→   711→                </span>
+   712→   712→              )}
+   713→   713→              {search && (
+   714→   714→                <span>
+   715→   715→                  {" "}
+   716→   716→                  matching &ldquo;
+   717→   717→                  <span className="text-primary font-medium">{search}</span>&rdquo;
+   718→   718→                </span>
+   719→   719→              )}
+   720→   720→            </p>
+   721→   721→          </ScrollReveal>
+   722→   722→
+   723→   723→          {/* Effects Grid with stagger reveal */}
+   724→   724→          {filteredEffects.length > 0 ? (
+   725→   725→            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
+   726→   726→              {filteredEffects.map((effect) => (
+   727→   727→                <EffectCard
+   728→   728→                  key={effect.id}
+   729→   729→                  effect={effect}
+   730→   730→                  index={0}
+   731→   731→                  isFavorite={isFavorite(effect.id)}
+   732→   732→                  onToggleFavorite={toggleFavorite}
+   733→   733→                  onClick={(e) => {
+   734→   734→                    setSelectedEffect(e);
+   735→   735→                    setDialogOpen(true);
+   736→   736→                  }}
+   737→   737→                />
+   738→   738→              ))}
+   739→   739→            </div>
+   740→   740→          ) : (
+   741→   741→            <motion.div
+   742→   742→              initial={{ opacity: 0 }}
+   743→   743→              animate={{ opacity: 1 }}
+   744→   744→              className="text-center py-20"
+   745→   745→            >
+   746→   746→              <div className="size-16 mx-auto rounded-2xl bg-muted flex items-center justify-center mb-4">
+   747→   747→                <Search className="size-7 text-muted-foreground" />
+   748→   748→              </div>
+   749→   749→              <h3 className="font-display font-semibold text-lg text-foreground">
+   750→   750→                No effects found
+   751→   751→              </h3>
+   752→   752→              <p className="mt-2 text-sm text-muted-foreground max-w-sm mx-auto">
+   753→   753→                Try a different search term or browse all categories to find what you need.
+   754→   754→              </p>
+   755→   755→              <Button
+   756→   756→                variant="outline"
+   757→   757→                className="mt-4"
+   758→   758→                onClick={() => {
+   759→   759→                  setSearch("");
+   760→   760→                  setActiveCategory("all");
+   761→   761→                }}
+   762→   762→              >
+   763→   763→                Clear filters
+   764→   764→              </Button>
+   765→   765→            </motion.div>
+   766→   766→          )}
+   767→   767→        </div>
+   768→   768→      </section>
+   769→   769→
+   770→   770→      {/* ─── CTA Banner ─────────────────────────────────────── */}
+   771→   771→      <section className="py-16 sm:py-20">
+   772→   772→        <div className="container mx-auto px-4 sm:px-6">
+   773→   773→          <ScrollReveal>
+   774→   774→            <ShineBorder className="max-w-4xl mx-auto rounded-3xl bg-card overflow-hidden">
+   775→   775→              <div className="p-8 sm:p-12 text-center">
+   776→   776→                <motion.div
+   777→   777→                  initial={{ scale: 0.8, opacity: 0 }}
+   778→   778→                  whileInView={{ scale: 1, opacity: 1 }}
+   779→   779→                  viewport={{ once: true }}
+   780→   780→                  transition={{ duration: 0.5 }}
+   781→   781→                  className="inline-flex size-14 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-3"
+   782→   782→                >
+   783→   783→                  <Wand2 className="size-7" />
+   784→   784→                </motion.div>
+   785→   785→                <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground">
+   786→   786→                  <TextReveal text="Ready to build something beautiful?" />
+   787→   787→                </h2>
+   788→   788→                <ScrollReveal delay={0.2}>
+   789→   789→                  <p className="mt-3 text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
+   790→   790→                    Copy any effect&apos;s CSS, paste it into your project, and ship delightful
+   791→   791→                    interfaces in minutes — no dependencies required.
+   792→   792→                  </p>
+   793→   793→                </ScrollReveal>
+   794→   794→                <ScrollReveal delay={0.3}>
+   795→   795→                  <div className="mt-5 flex flex-col sm:flex-row items-center justify-center gap-3">
+   796→   796→                    <MagneticButton strength={0.25} className="inline-block">
+   797→   797→                      <Button
+   798→   798→                        size="lg"
+   799→   799→                        onClick={() =>
+   800→   800→                          document.querySelector("#effects")?.scrollIntoView({ behavior: "smooth" })
+   801→   801→                        }
+   802→   802→                        className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20 h-11 px-6"
+   803→   803→                      >
+   804→   804→                        <Code2 className="size-4" />
+   805→   805→                        Browse all {effects.length} effects
+   806→   806→                      </Button>
+   807→   807→                    </MagneticButton>
+   808→   808→                    <a
+   809→   809→                      href="https://github.com/Roy-Wanyoike"
+   810→   810→                      target="_blank"
+   811→   811→                      rel="noopener noreferrer"
+   812→   812→                      className="inline-flex items-center gap-2 h-11 px-6 rounded-xl glass text-foreground hover:border-primary/30 transition-all font-medium text-sm"
+   813→   813→                    >
+   814→   814→                      <Github className="size-4" />
+   815→   815→                      Star on GitHub
+   816→   816→                      <ChevronRight className="size-3.5" />
+   817→   817→                    </a>
+   818→   818→                  </div>
+   819→   819→                </ScrollReveal>
+   820→   820→              </div>
+   821→   821→            </ShineBorder>
+   822→   822→          </ScrollReveal>
+   823→   823→        </div>
+   824→   824→      </section>
+   825→   825→
+   826→   826→      {/* ─── RoyMotion Showcase ─────────────────────────────── */}
+   827→   827→      <RoyMotionShowcase />
+   828→   828→
+   829→   829→      <Separator className="opacity-50" />
+   830→   830→
+   831→   831→      {/* ─── Documentation Section ──────────────────────────── */}
+   832→   832→      <section id="docs" className="py-16 scroll-mt-20">
+   833→   833→        <div className="container mx-auto px-4 sm:px-6">
+   834→   834→          <div className="text-center max-w-2xl mx-auto mb-10">
+   835→   835→            <div className="inline-flex items-center gap-2 rounded-full glass px-3 py-1 text-xs font-medium text-primary mb-3">
+   836→   836→              <BookOpen className="size-3.5" />
+   837→   837→              Documentation
+   838→   838→            </div>
+   839→   839→            <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground">
+   840→   840→              Everything You Need to Know
+   841→   841→            </h2>
+   842→   842→            <p className="mt-2 text-sm text-muted-foreground">
+   843→   843→              Guides, tutorials, and references to help you ship faster.
+   844→   844→            </p>
+   845→   845→          </div>
+   846→   846→
+   847→   847→          {/* Docs grid */}
+   848→   848→          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+   849→   849→            <DocCard
+   850→   850→              icon={Accessibility}
+   851→   851→              title="Accessibility"
+   852→   852→              description="WCAG 2.1 AA compliant. Every effect respects prefers-reduced-motion. Full keyboard navigation. ARIA-ready."
+   853→   853→              items={["Reduced motion support", "Focus-visible rings", "Screen reader safe", "High contrast mode"]}
+   854→   854→            />
+   855→   855→            <DocCard
+   856→   856→              icon={Gauge}
+   857→   857→              title="Performance"
+   858→   858→              description="Zero JavaScript runtime. Pure CSS — no hydration cost, no bundle bloat. Tree-shakeable per-effect."
+   859→   859→              items={["240KB total CSS", "~300 bytes per effect", "Zero JS runtime", "Tree-shakeable exports"]}
+   860→   860→            />
+   861→   861→            <DocCard
+   862→   862→              icon={ArrowLeftRight}
+   863→   863→              title="Migration"
+   864→   864→              description="Switch from Animate.css, Tailwind, or Bootstrap with our migration guides and codemods."
+   865→   865→              items={["Animate.css → RoyCSS map", "Tailwind integration", "Bootstrap conversion", "Automatic codemods"]}
+   866→   866→            />
+   867→   867→            <DocCard
+   868→   868→              icon={LayoutDashboard}
+   869→   869→              title="Dashboard Tutorial"
+   870→   870→              description="Build a complete dashboard in 15 minutes using RoyCSS components and effects."
+   871→   871→              items={["Grid + StatCards", "Charts + Tables", "Tabs + Progress", "Copy-paste template"]}
+   872→   872→            />
+   873→   873→            <DocCard
+   874→   874→              icon={History}
+   875→   875→              title="Changelog"
+   876→   876→              description="Track every release — new effects, breaking changes, deprecations, and bug fixes."
+   877→   877→              items={["v1.0 — 700 effects launch", "20 categories", "OKLCH color system", "RoyMotion animation system"]}
+   878→   878→            />
+   879→   879→            <DocCard
+   880→   880→              icon={Rocket}
+   881→   881→              title="Roadmap"
+   882→   882→              description="What's coming next — component library expansion, VS Code extension, AI-powered suggestions."
+   883→   883→              items={["Component library (24→100+)", "VS Code extension", "CLI codemods", "AI effect recommender"]}
+   884→   884→            />
+   885→   885→          </div>
+   886→   886→        </div>
+   887→   887→      </section>
+   888→   888→
+   889→   889→      <Separator className="opacity-50" />
+   890→   890→
+   891→   891→      {/* ─── Footer ─────────────────────────────────────────── */}
+   892→   892→      <footer className="border-t border-border/50 bg-card/50 backdrop-blur-sm mt-auto">
+   893→   893→        <div className="container mx-auto px-4 sm:px-6 py-8">
+   894→   894→          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+   895→   895→            <RoyCSSLogo size="sm" animated={false} />
+   896→   896→
+   897→   897→            <p className="text-xs text-muted-foreground text-center">
+   898→   898→              Crafted with care by{" "}
+   899→   899→              <a
+   900→   900→                href="https://github.com/Roy-Wanyoike"
+   901→   901→                target="_blank"
+   902→   902→                rel="noopener noreferrer"
+   903→   903→                className="text-primary hover:underline"
+   904→   904→              >
+   905→   905→                Royford Wanyoike Wamaitha
+   906→   906→              </a>
+   907→   907→              {" "}&middot;{" "}
+   908→   908→              Production-ready CSS effects with live demos
+   909→   909→            </p>
+   910→   910→
+   911→   911→            <div className="flex items-center gap-3">
+   912→   912→              <button
+   913→   913→                onClick={() => document.querySelector("#get-started")?.scrollIntoView({ behavior: "smooth" })}
+   914→   914→                className="text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+   915→   915→              >
+   916→   916→                Get Started
+   917→   917→              </button>
+   918→   918→              <button
+   919→   919→                onClick={() => document.querySelector("#docs")?.scrollIntoView({ behavior: "smooth" })}
+   920→   920→                className="text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+   921→   921→              >
+   922→   922→                Docs
+   923→   923→              </button>
+   924→   924→              <a
+   925→   925→                href="https://github.com/Roy-Wanyoike"
+   926→   926→                target="_blank"
+   927→   927→                rel="noopener noreferrer"
+   928→   928→                className="text-muted-foreground hover:text-foreground transition-colors"
+   929→   929→                aria-label="GitHub"
+   930→   930→              >
+   931→   931→                <Github className="size-4" />
+   932→   932→              </a>
+   933→   933→            </div>
+   934→   934→          </div>
+   935→   935→        </div>
+   936→   936→      </footer>
+   937→   937→
+   938→   938→      {/* Effect Detail Dialog */}
+   939→   939→      {selectedEffect && (
+   940→   940→        <EffectDetailDialog
+   941→   941→          key={selectedEffect.id}
+   942→   942→          effect={selectedEffect}
+   943→   943→          open={dialogOpen}
+   944→   944→          onOpenChange={setDialogOpen}
+   945→   945→          onSelectEffect={(e) => {
+   946→   946→            setSelectedEffect(e);
+   947→   947→          }}
+   948→   948→        />
+   949→   949→      )}
+   950→   950→
+   951→   951→      {/* Favorites Sheet */}
+   952→   952→      <FavoritesSheet
+   953→   953→        open={favoritesOpen}
+   954→   954→        onOpenChange={setFavoritesOpen}
+   955→   955→        favoriteEffects={favoriteEffects}
+   956→   956→        onToggleFavorite={toggleFavorite}
+   957→   957→        onSelectEffect={(e) => {
+   958→   958→          setSelectedEffect(e);
+   959→   959→          setDialogOpen(true);
+   960→   960→        }}
+   961→   961→        onClearAll={clearAll}
+   962→   962→      />
+   963→   963→
+   964→   964→      {/* Scroll to Top Button */}
+   965→   965→      <ScrollToTop />
+   966→   966→
+   967→   967→      {/* Section Scrollbar (desktop only) */}
+   968→   968→      <SectionScrollbar
+   969→   969→        activeCategory={activeCategory}
+   970→   970→        onCategoryClick={(cat) => {
+   971→   971→          setActiveCategory(cat);
+   972→   972→          document.querySelector("#effects")?.scrollIntoView({ behavior: "smooth" });
+   973→   973→        }}
+   974→   974→      />
+   975→   975→    </div>
+   976→   976→  );
+   977→   977→}

@@ -358,3 +358,305 @@
     padding-block-end: 4rem;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   3D TILT CARD — inspired by originkit.dev
+   Mouse-driven 3D perspective tilt using CSS custom properties
+   ═══════════════════════════════════════════════════════════════ */
+.roycss-tilt-stage {
+  /* Default tilt values (no mouse) */
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --tilt-scale: 1;
+  perspective: 800px;
+  perspective-origin: center;
+  transition: perspective 0.4s ease;
+
+  & .roycss-tilt-target {
+    transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) scale(var(--tilt-scale));
+    transform-style: preserve-3d;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+
+  &:hover .roycss-tilt-target {
+    --tilt-scale: 1.04;
+  }
+
+  /* Reduced motion fallback — disable tilt entirely */
+  @media (prefers-reduced-motion: reduce) {
+    --tilt-x: 0deg;
+    --tilt-y: 0deg;
+
+    & .roycss-tilt-target {
+      transform: none;
+      transition: none;
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   3D ROTATING SPHERE — pure CSS, conic-gradient + transforms
+   Used as a decorative background element in the hero
+   ═══════════════════════════════════════════════════════════════ */
+.roycss-sphere-3d {
+  position: absolute;
+  inset-inline-start: 50%;
+  inset-block-start: 50%;
+  translate: -50% -50%;
+  width: clamp(18rem, 38vw, 32rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  opacity: 0.18;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  animation: roycss-sphere-spin 22s linear infinite;
+
+  /* Build the sphere surface from a conic gradient — gives a "latitudinal" feel */
+  background:
+    conic-gradient(
+      from 0deg at 50% 50%,
+      color-mix(in oklch, var(--primary) 75%, transparent),
+      color-mix(in oklch, oklch(0.7 0.14 180) 70%, transparent),
+      color-mix(in oklch, oklch(0.65 0.13 200) 70%, transparent),
+      color-mix(in oklch, var(--primary) 75%, transparent)
+    );
+
+  /* Radial overlay adds the 3D "shading" — light top-left, dark bottom-right */
+  mask-image: radial-gradient(
+    circle at 35% 30%,
+    oklch(1 0 0 / 95%) 0%,
+    oklch(1 0 0 / 60%) 45%,
+    oklch(1 0 0 / 10%) 80%,
+    transparent 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle at 35% 30%,
+    oklch(1 0 0 / 95%) 0%,
+    oklch(1 0 0 / 60%) 45%,
+    oklch(1 0 0 / 10%) 80%,
+    transparent 100%
+  );
+
+  /* Latitude rings for extra 3D depth */
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid color-mix(in oklch, var(--primary) 35%, transparent);
+    pointer-events: none;
+  }
+
+  &::before {
+    transform: rotateX(70deg);
+    box-shadow: 0 0 30px -5px color-mix(in oklch, var(--primary) 30%, transparent);
+  }
+
+  &::after {
+    transform: rotateX(70deg) scale(0.7);
+    border-color: color-mix(in oklch, oklch(0.7 0.14 200) 35%, transparent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes roycss-sphere-spin {
+  0% {
+    transform: rotateY(0deg) rotateZ(0deg);
+  }
+  50% {
+    transform: rotateY(180deg) rotateZ(10deg);
+  }
+  100% {
+    transform: rotateY(360deg) rotateZ(0deg);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLL-DRIVEN PARALLAX — 3D depth for hero blobs
+   Uses animation-timeline: scroll() where supported, with fallback
+   ═══════════════════════════════════════════════════════════════ */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .roycss-parallax-near,
+    .roycss-parallax-mid,
+    .roycss-parallax-far {
+      animation: roycss-blob-float linear both;
+      animation-timeline: scroll(root);
+    }
+
+    .roycss-parallax-near {
+      --parallax-translate-z: 80px;
+      --parallax-translate-amount: -8%;
+      animation-range: 0 60vh;
+    }
+
+    .roycss-parallax-mid {
+      --parallax-translate-z: 40px;
+      --parallax-translate-amount: -4%;
+      animation-range: 0 60vh;
+    }
+
+    .roycss-parallax-far {
+      --parallax-translate-z: 10px;
+      --parallax-translate-amount: -1%;
+      animation-range: 0 60vh;
+    }
+  }
+}
+
+@keyframes roycss-blob-float {
+  from {
+    transform: translate3d(0, 0, var(--parallax-translate-z, 0));
+  }
+  to {
+    transform: translate3d(0, var(--parallax-translate-amount, 0), 0);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CUSTOM ACCORDION (FAQ) — pure CSS + minimal JS toggle
+   Avoids Radix to prevent hydration mismatch warnings
+   ═══════════════════════════════════════════════════════════════ */
+.roycss-faq-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  overflow: hidden;
+  transition: border-color 0.2s ease, background 0.2s ease;
+
+  & + & {
+    margin-block-start: 0.75rem;
+  }
+
+  &:hover {
+    border-color: color-mix(in oklch, var(--primary) 35%, var(--border));
+  }
+
+  /* Open state — controlled by [data-open="true"] on the item */
+  &[data-open="true"] {
+    border-color: color-mix(in oklch, var(--primary) 50%, var(--border));
+    background: color-mix(in oklch, var(--primary) 4%, var(--card));
+  }
+
+  &[data-open="true"] .roycss-faq-content {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  &[data-open="true"] .roycss-faq-chevron {
+    transform: rotate(180deg);
+  }
+}
+
+.roycss-faq-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  inline-size: 100%;
+  padding: 1rem 1.25rem;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-align: start;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--foreground);
+
+  &:hover {
+    background: color-mix(in oklch, var(--primary) 5%, transparent);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+  }
+}
+
+.roycss-faq-chevron {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+/* Animated grid-row trick for smooth height animation without JS */
+.roycss-faq-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.3s ease, opacity 0.2s ease;
+}
+
+.roycss-faq-content-inner {
+  overflow: hidden;
+  min-block-size: 0;
+}
+
+.roycss-faq-content-inner > p {
+  padding: 0 1.25rem 1rem;
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MIGRATION TABLE — Animate.css → RoyCSS
+   ═══════════════════════════════════════════════════════════════ */
+.roycss-migration-table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+
+  & th,
+  & td {
+    padding: 0.625rem 0.875rem;
+    text-align: start;
+    border-block-end: 1px solid var(--border);
+  }
+
+  & th {
+    font-weight: 600;
+    color: var(--foreground);
+    background: color-mix(in oklch, var(--primary) 8%, transparent);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  & tr:hover td {
+    background: color-mix(in oklch, var(--primary) 4%, transparent);
+  }
+
+  & code {
+    font-family: var(--font-mono), monospace;
+    font-size: 0.78rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 0.375rem;
+    background: var(--muted);
+    color: var(--foreground);
+  }
+
+  & .roycss-arrow {
+    color: var(--primary);
+    font-weight: 700;
+    text-align: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .roycss-migration-table {
+    font-size: 0.78rem;
+
+    & th,
+    & td {
+      padding: 0.5rem 0.5rem;
+    }
+  }
+}

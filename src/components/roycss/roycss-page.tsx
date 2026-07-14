@@ -13,6 +13,7 @@ import {
   X,
   ChevronDown,
   ChevronRight,
+  CheckCircle2,
   Layers,
   Play,
   Type,
@@ -387,7 +388,7 @@ export default function RoyCSSPage() {
       <ScrollProgress />
 
       {/* ─── Hero ──────────────────────────────────────────── */}
-      <section className="relative overflow-hidden pt-20 pb-12 sm:pt-28 sm:pb-16">
+      <section className="relative overflow-hidden pt-10 pb-8 sm:pt-16 sm:pb-12">
         {/* Background effects */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <Parallax offset={60} className="absolute top-[-10%] left-[-5%] size-[40rem] rounded-full bg-primary/15 blur-3xl animate-blob" />
@@ -399,7 +400,7 @@ export default function RoyCSSPage() {
 
         <div className="container mx-auto px-4 sm:px-6">
           {/* Nav bar */}
-          <nav className="flex items-center justify-between mb-16 sm:mb-20">
+          <nav className="flex items-center justify-between mb-8 sm:mb-12">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -450,25 +451,25 @@ export default function RoyCSSPage() {
           {/* Hero content */}
           <div className="text-center max-w-3xl mx-auto">
             {/* Hero Logo */}
-            <ScrollReveal y={20}>
-              <div className="flex justify-center mb-8">
+            <ScrollReveal y={12}>
+              <div className="flex justify-center mb-3">
                 <RoyCSSHeroLogo />
               </div>
             </ScrollReveal>
 
-            <ScrollReveal y={16} delay={0.2}>
-              <div className="inline-flex items-center gap-2 rounded-full glass px-3 py-1.5 text-xs sm:text-sm font-medium text-primary mb-6">
+            <ScrollReveal y={12} delay={0.1}>
+              <div className="inline-flex items-center gap-2 rounded-full glass px-3 py-1.5 text-xs sm:text-sm font-medium text-primary mb-3">
                 <motion.span
                   animate={{ scale: [1, 1.3, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
                   className="size-1.5 rounded-full bg-primary"
                 />
                 <Package className="size-3.5" />
-                A CSS effect library by Roy Wanyoike
+                700+ CSS effects · React · Vue · Angular · Svelte
               </div>
             </ScrollReveal>
 
-            <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.08]">
+            <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.05]">
               <span className="block text-foreground">
                 <TextReveal text="Beautiful CSS" />
               </span>
@@ -479,15 +480,15 @@ export default function RoyCSSPage() {
               </span>
             </h1>
 
-            <ScrollReveal delay={0.5}>
-              <p className="mt-5 max-w-xl mx-auto text-base sm:text-lg text-muted-foreground leading-relaxed">
-                A curated collection of production-ready CSS effects with live demonstrations
-                and copy-paste code. Animations, hover effects, text effects, and more.
+            <ScrollReveal delay={0.3}>
+              <p className="mt-2 max-w-lg mx-auto text-base sm:text-lg text-muted-foreground leading-relaxed">
+                Production-ready CSS effects with live demos, color customization, and
+                copy-paste code. Works in any framework — no JavaScript required.
               </p>
             </ScrollReveal>
 
-            <ScrollReveal delay={0.6}>
-              <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <ScrollReveal delay={0.35}>
+              <div className="mt-5 flex flex-col sm:flex-row items-center justify-center gap-3">
                 <InstallCommand />
                 <MagneticButton strength={0.3} className="inline-block">
                   <Button
@@ -497,16 +498,34 @@ export default function RoyCSSPage() {
                     }
                     className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20 h-11 px-6"
                   >
-                    Explore Effects
+                    Browse 700 Effects
                     <ChevronDown className="size-4 ml-1" />
                   </Button>
                 </MagneticButton>
               </div>
             </ScrollReveal>
 
+            {/* Stats — trust signals */}
+            <ScrollReveal delay={0.4}>
+              <div className="mt-8 flex items-center justify-center gap-6 text-sm text-muted-foreground">
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="size-4 text-primary" />
+                  OKLCH colors
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="size-4 text-primary" />
+                  Zero JS runtime
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="size-4 text-primary" />
+                  MIT licensed
+                </span>
+              </div>
+            </ScrollReveal>
+
             {/* Animated stats counters */}
-            <ScrollReveal delay={0.7}>
-              <div className="mt-10 grid grid-cols-3 gap-3 max-w-2xl mx-auto">
+            <ScrollReveal delay={0.45}>
+              <div className="mt-8 grid grid-cols-3 gap-3 max-w-2xl mx-auto">
                 <StatCounter icon={Sparkles} value={effects.length} label="Effects" />
                 <StatCounter icon={BookOpen} value={categoryOrder.length} label="Categories" />
                 <StatCounter icon={Zap} value={22000} label="Lines of CSS" suffix="+" prefix="~" />
@@ -687,7 +706,7 @@ export default function RoyCSSPage() {
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5 }}
-                  className="inline-flex size-14 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-4"
+                  className="inline-flex size-14 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-3"
                 >
                   <Wand2 className="size-7" />
                 </motion.div>
@@ -701,7 +720,7 @@ export default function RoyCSSPage() {
                   </p>
                 </ScrollReveal>
                 <ScrollReveal delay={0.3}>
-                  <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <div className="mt-5 flex flex-col sm:flex-row items-center justify-center gap-3">
                     <MagneticButton strength={0.25} className="inline-block">
                       <Button
                         size="lg"

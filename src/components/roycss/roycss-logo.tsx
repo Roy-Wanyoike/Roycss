@@ -236,7 +236,7 @@ export function RoyCSSHeroLogo({ className = "" }: { className?: string }) {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="relative size-24 sm:size-28 rounded-3xl overflow-hidden shadow-2xl"
+        className="relative size-20 sm:size-24 rounded-3xl overflow-hidden shadow-2xl"
       >
         {/* Use AI-generated logo as base */}
         {/* Fallback: Animated gradient with brackets */}

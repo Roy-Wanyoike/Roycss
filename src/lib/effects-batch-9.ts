@@ -274,14 +274,14 @@ export const effectsBatch9: CSSEffect[] = [
     cssCode: `/* Material State Layer */
 .roycss-material-state-layer {
   position: relative;
-  background: #6750A4;
-  color: #fff;
+  background: oklch(0.496 0.13 293.71);
+  color: oklch(1 0 89.88);
 }
 .roycss-material-state-layer::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: #ffffff;
+  background: oklch(1 0 89.88);
   opacity: 0;
   animation: roy-mat-state-layer 1.6s ease-in-out infinite;
   pointer-events: none;
@@ -305,8 +305,8 @@ export const effectsBatch9: CSSEffect[] = [
 .roycss-material-fab-scale {
   animation: roy-mat-fab-scale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   border-radius: 16px;
-  background: #6750A4;
-  color: #fff;
+  background: oklch(0.496 0.13 293.71);
+  color: oklch(1 0 89.88);
 }
 
 @keyframes roy-mat-fab-scale {
@@ -329,29 +329,29 @@ export const effectsBatch9: CSSEffect[] = [
     cssCode: `/* Linear Shimmer Hover */
 .roycss-linear-shimmer-hover {
   position: relative;
-  background: #0f0f10;
-  color: #e4e4e7;
+  background: oklch(0.169 0.002 286.18);
+  color: oklch(0.92 0.004 286.32);
   overflow: hidden;
-  border: 1px solid #27272a;
+  border: 1px solid oklch(0.274 0.005 286.03);
 }
 .roycss-linear-shimmer-hover::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: -150%;
-  width: 100%;
-  height: 100%;
+  inset-block-start: 0;
+  inset-inline-start: -150%;
+  inline-size: 100%;
+  block-size: 100%;
   background: linear-gradient(
     100deg,
     transparent 20%,
-    rgba(255, 255, 255, 0.12) 50%,
+    color-mix(in oklch, oklch(1 0 89.88) 12%, transparent) 50%,
     transparent 80%
   );
   transform: skewX(-20deg);
   transition: left 0.7s ease;
 }
 .roycss-linear-shimmer-hover:hover::before {
-  left: 150%;
+  inset-inline-start: 150%;
 }`
   },
   {
@@ -364,8 +364,8 @@ export const effectsBatch9: CSSEffect[] = [
     cssCode: `/* Linear Glow Border */
 .roycss-linear-glow-border {
   position: relative;
-  background: #111113;
-  color: #fafafa;
+  background: oklch(0.179 0.004 285.98);
+  color: oklch(0.985 0 89.88);
   border-radius: 12px;
   z-index: 0;
 }
@@ -375,9 +375,9 @@ export const effectsBatch9: CSSEffect[] = [
   inset: -1px;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(135deg, #5e6ad2, #8b5cf6, #ec4899, #5e6ad2);
+  background: linear-gradient(135deg, oklch(0.567 0.159 275.21), oklch(0.606 0.219 292.72), oklch(0.656 0.212 354.31), oklch(0.567 0.159 275.21));
   background-size: 300% 300%;
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask: linear-gradient(oklch(0 0 0) 0 0) content-box, linear-gradient(oklch(0 0 0) 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
@@ -405,9 +405,9 @@ export const effectsBatch9: CSSEffect[] = [
     cssCode: `/* Linear Spotlight */
 .roycss-linear-spotlight {
   position: relative;
-  background: #0d0d0f;
-  color: #e4e4e7;
-  border: 1px solid #1f1f23;
+  background: oklch(0.16 0.004 285.92);
+  color: oklch(0.92 0.004 286.32);
+  border: 1px solid oklch(0.241 0.008 285.82);
   border-radius: 12px;
   overflow: hidden;
 }
@@ -417,7 +417,7 @@ export const effectsBatch9: CSSEffect[] = [
   inset: 0;
   background: radial-gradient(
     300px circle at var(--mx, 50%) var(--my, 50%),
-    rgba(94, 106, 210, 0.18),
+    color-mix(in oklch, oklch(0.567 0.159 275.21) 18%, transparent),
     transparent 60%
   );
   opacity: 0;
@@ -428,7 +428,7 @@ export const effectsBatch9: CSSEffect[] = [
   opacity: 1;
 }
 .roycss-linear-spotlight:hover {
-  border-color: #3f3f46;
+  border-color: oklch(0.37 0.012 285.81);
   transition: border-color 0.3s ease;
 }`
   },
@@ -441,8 +441,8 @@ export const effectsBatch9: CSSEffect[] = [
     previewType: "button",
     cssCode: `/* Linear Magnetic Pull */
 .roycss-linear-magnetic-pull {
-  background: #5e6ad2;
-  color: #fff;
+  background: oklch(0.567 0.159 275.21);
+  color: oklch(1 0 89.88);
   border-radius: 8px;
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   will-change: transform;
@@ -465,9 +465,9 @@ export const effectsBatch9: CSSEffect[] = [
     cssCode: `/* Linear Noise Overlay */
 .roycss-linear-noise-overlay {
   position: relative;
-  background: #0a0a0b;
-  color: #e4e4e7;
-  border: 1px solid #1a1a1d;
+  background: oklch(0.145 0.002 286.13);
+  color: oklch(0.92 0.004 286.32);
+  border: 1px solid oklch(0.219 0.006 285.91);
   border-radius: 10px;
   overflow: hidden;
 }
@@ -495,9 +495,9 @@ export const effectsBatch9: CSSEffect[] = [
     cssCode: `/* Linear Gradient Sweep */
 .roycss-linear-gradient-sweep {
   position: relative;
-  background: #18181b;
-  color: #fafafa;
-  border: 1px solid #27272a;
+  background: oklch(0.21 0.006 285.89);
+  color: oklch(0.985 0 89.88);
+  border: 1px solid oklch(0.274 0.005 286.03);
   border-radius: 8px;
   overflow: hidden;
   z-index: 0;
@@ -506,7 +506,7 @@ export const effectsBatch9: CSSEffect[] = [
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #5e6ad2, #8b5cf6 50%, #ec4899);
+  background: linear-gradient(135deg, oklch(0.567 0.159 275.21), oklch(0.606 0.219 292.72) 50%, oklch(0.656 0.212 354.31));
   transform: translateY(100%);
   transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: -1;
@@ -527,18 +527,18 @@ export const effectsBatch9: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Linear Depth Shadow */
 .roycss-linear-depth-shadow {
-  background: #18181b;
-  color: #fafafa;
-  border: 1px solid #27272a;
+  background: oklch(0.21 0.006 285.89);
+  color: oklch(0.985 0 89.88);
+  border: 1px solid oklch(0.274 0.005 286.03);
   border-radius: 12px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 1px 2px color-mix(in oklch, oklch(0 0 0) 40%, transparent);
   transition: box-shadow 0.4s ease, transform 0.4s ease;
 }
 .roycss-linear-depth-shadow:hover {
   box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.3),
-    0 8px 16px rgba(0, 0, 0, 0.4),
-    0 16px 32px rgba(94, 106, 210, 0.15);
+    0 2px 4px color-mix(in oklch, oklch(0 0 0) 30%, transparent),
+    0 8px 16px color-mix(in oklch, oklch(0 0 0) 40%, transparent),
+    0 16px 32px color-mix(in oklch, oklch(0.567 0.159 275.21) 15%, transparent);
   transform: translateY(-2px);
 }`
   },
@@ -551,19 +551,19 @@ export const effectsBatch9: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Linear Card Lift */
 .roycss-linear-card-lift {
-  background: #18181b;
-  color: #fafafa;
-  border: 1px solid #27272a;
+  background: oklch(0.21 0.006 285.89);
+  color: oklch(0.985 0 89.88);
+  border: 1px solid oklch(0.274 0.005 286.03);
   border-radius: 14px;
-  box-shadow: 0 0 0 0 rgba(94, 106, 210, 0);
+  box-shadow: 0 0 0 0 color-mix(in oklch, oklch(0.567 0.159 275.21) 0%, transparent);
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
               box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
               border-color 0.35s ease;
 }
 .roycss-linear-card-lift:hover {
   transform: translateY(-6px) scale(1.015);
-  box-shadow: 0 18px 40px -12px rgba(94, 106, 210, 0.4);
-  border-color: #3f3f46;
+  box-shadow: 0 18px 40px -12px color-mix(in oklch, oklch(0.567 0.159 275.21) 40%, transparent);
+  border-color: oklch(0.37 0.012 285.81);
 }`
   },
   {
@@ -576,16 +576,16 @@ export const effectsBatch9: CSSEffect[] = [
     previewText: "Linear Glow",
     cssCode: `/* Linear Text Glow */
 .roycss-linear-text-glow {
-  color: #a1a1aa;
+  color: oklch(0.712 0.013 286.07);
   font-weight: 600;
   letter-spacing: 0.02em;
   transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 .roycss-linear-text-glow:hover {
-  color: #fafafa;
+  color: oklch(0.985 0 89.88);
   text-shadow:
-    0 0 14px rgba(94, 106, 210, 0.6),
-    0 0 30px rgba(139, 92, 246, 0.3);
+    0 0 14px color-mix(in oklch, oklch(0.567 0.159 275.21) 60%, transparent),
+    0 0 30px color-mix(in oklch, oklch(0.606 0.219 292.72) 30%, transparent);
 }`
   },
   {
@@ -597,21 +597,21 @@ export const effectsBatch9: CSSEffect[] = [
     previewType: "button",
     cssCode: `/* Linear Icon Bounce */
 .roycss-linear-icon-bounce {
-  background: #18181b;
-  color: #fafafa;
-  border: 1px solid #27272a;
+  background: oklch(0.21 0.006 285.89);
+  color: oklch(0.985 0 89.88);
+  border: 1px solid oklch(0.274 0.005 286.03);
   border-radius: 8px;
   transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 .roycss-linear-icon-bounce::before {
   content: "\\2192";
   display: inline-block;
-  margin-right: 6px;
+  margin-inline-end: 6px;
   transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .roycss-linear-icon-bounce:hover {
-  background: #27272a;
-  border-color: #3f3f46;
+  background: oklch(0.274 0.005 286.03);
+  border-color: oklch(0.37 0.012 285.81);
 }
 .roycss-linear-icon-bounce:hover::before {
   transform: translateX(6px) scale(1.2);
@@ -631,29 +631,29 @@ export const effectsBatch9: CSSEffect[] = [
     cssCode: `/* Linear Aurora Glow */
 .roycss-linear-aurora-glow {
   position: relative;
-  background: #0a0a0b;
+  background: oklch(0.145 0.002 286.13);
   overflow: hidden;
 }
 .roycss-linear-aurora-glow::before,
 .roycss-linear-aurora-glow::after {
   content: "";
   position: absolute;
-  width: 60%;
-  height: 60%;
+  inline-size: 60%;
+  block-size: 60%;
   border-radius: 50%;
   filter: blur(60px);
   opacity: 0.5;
   animation: roy-aurora-float 10s ease-in-out infinite;
 }
 .roycss-linear-aurora-glow::before {
-  background: radial-gradient(circle, #5e6ad2, transparent 70%);
-  top: -20%;
-  left: -10%;
+  background: radial-gradient(circle, oklch(0.567 0.159 275.21), transparent 70%);
+  inset-block-start: -20%;
+  inset-inline-start: -10%;
 }
 .roycss-linear-aurora-glow::after {
-  background: radial-gradient(circle, #8b5cf6, transparent 70%);
-  bottom: -20%;
-  right: -10%;
+  background: radial-gradient(circle, oklch(0.606 0.219 292.72), transparent 70%);
+  inset-block-end: -20%;
+  inset-inline-end: -10%;
   animation-delay: -5s;
 }
 
@@ -672,12 +672,12 @@ export const effectsBatch9: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Linear Gradient Mesh BG */
 .roycss-linear-gradient-mesh-bg {
-  background-color: #0a0a0b;
+  background-color: oklch(0.145 0.002 286.13);
   background-image:
-    radial-gradient(at 20% 20%, rgba(94, 106, 210, 0.35) 0px, transparent 50%),
-    radial-gradient(at 80% 10%, rgba(139, 92, 246, 0.3) 0px, transparent 50%),
-    radial-gradient(at 70% 80%, rgba(236, 72, 153, 0.25) 0px, transparent 50%),
-    radial-gradient(at 10% 90%, rgba(59, 130, 246, 0.25) 0px, transparent 50%);
+    radial-gradient(at 20% 20%, color-mix(in oklch, oklch(0.567 0.159 275.21) 35%, transparent) 0px, transparent 50%),
+    radial-gradient(at 80% 10%, color-mix(in oklch, oklch(0.606 0.219 292.72) 30%, transparent) 0px, transparent 50%),
+    radial-gradient(at 70% 80%, color-mix(in oklch, oklch(0.656 0.212 354.31) 25%, transparent) 0px, transparent 50%),
+    radial-gradient(at 10% 90%, color-mix(in oklch, oklch(0.623 0.188 259.81) 25%, transparent) 0px, transparent 50%);
   background-size: 200% 200%;
   animation: roy-mesh-drift 18s ease-in-out infinite;
 }
@@ -696,15 +696,15 @@ export const effectsBatch9: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Apple Frosted Vibrancy */
 .roycss-apple-frosted-vibrancy {
-  background: rgba(255, 255, 255, 0.55);
+  background: color-mix(in oklch, oklch(1 0 89.88) 55%, transparent);
   backdrop-filter: blur(30px) saturate(180%);
   -webkit-backdrop-filter: blur(30px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 40%, transparent);
   border-radius: 14px;
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.6) inset,
-    0 10px 30px rgba(0, 0, 0, 0.15);
-  color: #1d1d1f;
+    0 1px 0 color-mix(in oklch, oklch(1 0 89.88) 60%, transparent) inset,
+    0 10px 30px color-mix(in oklch, oklch(0 0 0) 15%, transparent);
+  color: oklch(0.232 0.004 286.1);
 }`
   },
   {
@@ -716,13 +716,13 @@ export const effectsBatch9: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Apple Material Thin */
 .roycss-apple-material-thin {
-  background: rgba(250, 250, 252, 0.5);
+  background: color-mix(in oklch, oklch(0.986 0.003 286.35) 50%, transparent);
   backdrop-filter: blur(12px) saturate(120%);
   -webkit-backdrop-filter: blur(12px) saturate(120%);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 50%, transparent);
   border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  color: #1d1d1f;
+  box-shadow: 0 4px 16px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
+  color: oklch(0.232 0.004 286.1);
 }`
   },
   {
@@ -734,15 +734,15 @@ export const effectsBatch9: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Apple Material Thick */
 .roycss-apple-material-thick {
-  background: rgba(245, 245, 247, 0.75);
+  background: color-mix(in oklch, oklch(0.971 0.003 286.35) 75%, transparent);
   backdrop-filter: blur(40px) saturate(200%);
   -webkit-backdrop-filter: blur(40px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 30%, transparent);
   border-radius: 16px;
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.5) inset,
-    0 20px 50px rgba(0, 0, 0, 0.2);
-  color: #1d1d1f;
+    0 1px 0 color-mix(in oklch, oklch(1 0 89.88) 50%, transparent) inset,
+    0 20px 50px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
+  color: oklch(0.232 0.004 286.1);
 }`
   },
   {
@@ -754,12 +754,12 @@ export const effectsBatch9: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Material Elevation 1 */
 .roycss-material-elevation-1 {
-  background: #FFFBFE;
-  color: #1C1B1F;
+  background: oklch(0.992 0.006 333.98);
+  color: oklch(0.225 0.008 297.21);
   border-radius: 12px;
   box-shadow:
-    0px 1px 2px rgba(0, 0, 0, 0.30),
-    0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+    0px 1px 2px color-mix(in oklch, oklch(0 0 0) 30%, transparent),
+    0px 1px 3px 1px color-mix(in oklch, oklch(0 0 0) 15%, transparent);
 }`
   },
   {
@@ -771,12 +771,12 @@ export const effectsBatch9: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Material Elevation 3 */
 .roycss-material-elevation-3 {
-  background: #FFFBFE;
-  color: #1C1B1F;
+  background: oklch(0.992 0.006 333.98);
+  color: oklch(0.225 0.008 297.21);
   border-radius: 16px;
   box-shadow:
-    0px 1px 3px rgba(0, 0, 0, 0.30),
-    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+    0px 1px 3px color-mix(in oklch, oklch(0 0 0) 30%, transparent),
+    0px 4px 8px 3px color-mix(in oklch, oklch(0 0 0) 15%, transparent);
 }`
   },
   {
@@ -788,12 +788,12 @@ export const effectsBatch9: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Material Elevation 5 */
 .roycss-material-elevation-5 {
-  background: #FFFBFE;
-  color: #1C1B1F;
+  background: oklch(0.992 0.006 333.98);
+  color: oklch(0.225 0.008 297.21);
   border-radius: 28px;
   box-shadow:
-    0px 1px 3px rgba(0, 0, 0, 0.30),
-    0px 14px 28px 5px rgba(0, 0, 0, 0.25);
+    0px 1px 3px color-mix(in oklch, oklch(0 0 0) 30%, transparent),
+    0px 14px 28px 5px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
 }`
   },
   {
@@ -806,8 +806,8 @@ export const effectsBatch9: CSSEffect[] = [
     cssCode: `/* Material State Layer Surface */
 .roycss-material-state-layer-surface {
   position: relative;
-  background: #1C1B1F;
-  color: #E6E1E5;
+  background: oklch(0.225 0.008 297.21);
+  color: oklch(0.915 0.008 332.13);
   border-radius: 12px;
   overflow: hidden;
 }
@@ -815,7 +815,7 @@ export const effectsBatch9: CSSEffect[] = [
   content: "";
   position: absolute;
   inset: 0;
-  background: #D0BCFF;
+  background: oklch(0.835 0.095 298.02);
   opacity: 0.08;
   pointer-events: none;
 }`
@@ -829,13 +829,13 @@ export const effectsBatch9: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Linear Dark Surface */
 .roycss-linear-dark-surface {
-  background: linear-gradient(180deg, #18181b 0%, #0f0f10 100%);
-  color: #e4e4e7;
-  border: 1px solid #27272a;
+  background: linear-gradient(180deg, oklch(0.21 0.006 285.89) 0%, oklch(0.169 0.002 286.18) 100%);
+  color: oklch(0.92 0.004 286.32);
+  border: 1px solid oklch(0.274 0.005 286.03);
   border-radius: 12px;
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.04) inset,
-    0 4px 16px rgba(0, 0, 0, 0.5);
+    0 1px 0 color-mix(in oklch, oklch(1 0 89.88) 4%, transparent) inset,
+    0 4px 16px color-mix(in oklch, oklch(0 0 0) 50%, transparent);
 }`
   },
 
@@ -1002,9 +1002,9 @@ export const effectsBatch9: CSSEffect[] = [
 }
 
 @keyframes roy-scroll-color {
-  0% { background: #5e6ad2; color: #fff; }
-  50% { background: #8b5cf6; color: #fff; }
-  100% { background: #ec4899; color: #fff; }
+  0% { background: oklch(0.567 0.159 275.21); color: oklch(1 0 89.88); }
+  50% { background: oklch(0.606 0.219 292.72); color: oklch(1 0 89.88); }
+  100% { background: oklch(0.656 0.212 354.31); color: oklch(1 0 89.88); }
 }
 
 @supports not (animation-timeline: view()) {
@@ -1012,9 +1012,9 @@ export const effectsBatch9: CSSEffect[] = [
     animation: roy-scroll-color-fallback 4s ease-in-out infinite alternate;
   }
   @keyframes roy-scroll-color-fallback {
-    0% { background: #5e6ad2; color: #fff; }
-    50% { background: #8b5cf6; color: #fff; }
-    100% { background: #ec4899; color: #fff; }
+    0% { background: oklch(0.567 0.159 275.21); color: oklch(1 0 89.88); }
+    50% { background: oklch(0.606 0.219 292.72); color: oklch(1 0 89.88); }
+    100% { background: oklch(0.656 0.212 354.31); color: oklch(1 0 89.88); }
   }
 }`
   },
@@ -1028,10 +1028,10 @@ export const effectsBatch9: CSSEffect[] = [
     cssCode: `/* Scroll Driven Sticky */
 .roycss-scroll-driven-sticky {
   position: sticky;
-  top: 0;
-  background: #18181b;
-  color: #fafafa;
-  border: 1px solid #27272a;
+  inset-block-start: 0;
+  background: oklch(0.21 0.006 285.89);
+  color: oklch(0.985 0 89.88);
+  border: 1px solid oklch(0.274 0.005 286.03);
   border-radius: 8px;
   animation: roy-scroll-sticky linear both;
   animation-timeline: scroll(root);
@@ -1039,8 +1039,8 @@ export const effectsBatch9: CSSEffect[] = [
 }
 
 @keyframes roy-scroll-sticky {
-  0% { box-shadow: 0 0 0 rgba(0, 0, 0, 0); }
-  100% { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); border-color: #3f3f46; }
+  0% { box-shadow: 0 0 0 color-mix(in oklch, oklch(0 0 0) 0%, transparent); }
+  100% { box-shadow: 0 8px 24px color-mix(in oklch, oklch(0 0 0) 40%, transparent); border-color: oklch(0.37 0.012 285.81); }
 }
 
 @supports not (animation-timeline: scroll()) {
@@ -1048,8 +1048,8 @@ export const effectsBatch9: CSSEffect[] = [
     animation: roy-scroll-sticky-fallback 2s ease-in-out infinite alternate;
   }
   @keyframes roy-scroll-sticky-fallback {
-    0% { box-shadow: 0 0 0 rgba(0, 0, 0, 0); border-color: #27272a; }
-    100% { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); border-color: #3f3f46; }
+    0% { box-shadow: 0 0 0 color-mix(in oklch, oklch(0 0 0) 0%, transparent); border-color: oklch(0.274 0.005 286.03); }
+    100% { box-shadow: 0 8px 24px color-mix(in oklch, oklch(0 0 0) 40%, transparent); border-color: oklch(0.37 0.012 285.81); }
   }
 }`
   },
@@ -1065,7 +1065,7 @@ export const effectsBatch9: CSSEffect[] = [
   position: relative;
   border-radius: 50%;
   background:
-    conic-gradient(#5e6ad2 0deg, #5e6ad2 0deg, #27272a 0deg, #27272a 360deg);
+    conic-gradient(oklch(0.567 0.159 275.21) 0deg, oklch(0.567 0.159 275.21) 0deg, oklch(0.274 0.005 286.03) 0deg, oklch(0.274 0.005 286.03) 360deg);
   animation: roy-scroll-ring linear both;
   animation-timeline: scroll(root);
   animation-range: 0 100%;
@@ -1075,17 +1075,17 @@ export const effectsBatch9: CSSEffect[] = [
   position: absolute;
   inset: 8px;
   border-radius: 50%;
-  background: #0a0a0b;
+  background: oklch(0.145 0.002 286.13);
 }
 
 @keyframes roy-scroll-ring {
   0% {
     background:
-      conic-gradient(#5e6ad2 0deg, #5e6ad2 0deg, #27272a 0deg, #27272a 360deg);
+      conic-gradient(oklch(0.567 0.159 275.21) 0deg, oklch(0.567 0.159 275.21) 0deg, oklch(0.274 0.005 286.03) 0deg, oklch(0.274 0.005 286.03) 360deg);
   }
   100% {
     background:
-      conic-gradient(#5e6ad2 0deg, #5e6ad2 360deg, #27272a 360deg, #27272a 360deg);
+      conic-gradient(oklch(0.567 0.159 275.21) 0deg, oklch(0.567 0.159 275.21) 360deg, oklch(0.274 0.005 286.03) 360deg, oklch(0.274 0.005 286.03) 360deg);
   }
 }
 
@@ -1096,11 +1096,11 @@ export const effectsBatch9: CSSEffect[] = [
   @keyframes roy-scroll-ring-fallback {
     0% {
       background:
-        conic-gradient(#5e6ad2 0deg, #5e6ad2 0deg, #27272a 0deg, #27272a 360deg);
+        conic-gradient(oklch(0.567 0.159 275.21) 0deg, oklch(0.567 0.159 275.21) 0deg, oklch(0.274 0.005 286.03) 0deg, oklch(0.274 0.005 286.03) 360deg);
     }
     100% {
       background:
-        conic-gradient(#5e6ad2 0deg, #5e6ad2 360deg, #27272a 360deg, #27272a 360deg);
+        conic-gradient(oklch(0.567 0.159 275.21) 0deg, oklch(0.567 0.159 275.21) 360deg, oklch(0.274 0.005 286.03) 360deg, oklch(0.274 0.005 286.03) 360deg);
     }
   }
 }`
@@ -1118,15 +1118,15 @@ export const effectsBatch9: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Apple Vibrancy Light */
 .roycss-apple-vibrancy-light {
-  background: rgba(255, 255, 255, 0.6);
+  background: color-mix(in oklch, oklch(1 0 89.88) 60%, transparent);
   backdrop-filter: blur(20px) saturate(180%) brightness(1.05);
   -webkit-backdrop-filter: blur(20px) saturate(180%) brightness(1.05);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 50%, transparent);
   border-radius: 14px;
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.7) inset,
-    0 10px 30px rgba(0, 0, 0, 0.1);
-  color: #1d1d1f;
+    0 1px 0 color-mix(in oklch, oklch(1 0 89.88) 70%, transparent) inset,
+    0 10px 30px color-mix(in oklch, oklch(0 0 0) 10%, transparent);
+  color: oklch(0.232 0.004 286.1);
 }`
   },
   {
@@ -1138,15 +1138,15 @@ export const effectsBatch9: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Apple Vibrancy Dark */
 .roycss-apple-vibrancy-dark {
-  background: rgba(30, 30, 32, 0.55);
+  background: color-mix(in oklch, oklch(0.236 0.004 286.11) 55%, transparent);
   backdrop-filter: blur(24px) saturate(180%) brightness(0.95);
   -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 10%, transparent);
   border-radius: 14px;
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.08) inset,
-    0 10px 30px rgba(0, 0, 0, 0.4);
-  color: #f5f5f7;
+    0 1px 0 color-mix(in oklch, oklch(1 0 89.88) 8%, transparent) inset,
+    0 10px 30px color-mix(in oklch, oklch(0 0 0) 40%, transparent);
+  color: oklch(0.971 0.003 286.35);
 }`
   },
   {
@@ -1160,17 +1160,17 @@ export const effectsBatch9: CSSEffect[] = [
 .roycss-apple-sidebar-material {
   background: linear-gradient(
     180deg,
-    rgba(245, 245, 247, 0.7) 0%,
-    rgba(235, 235, 240, 0.6) 100%
+    color-mix(in oklch, oklch(0.971 0.003 286.35) 70%, transparent) 0%,
+    color-mix(in oklch, oklch(0.941 0.007 286.27) 60%, transparent) 100%
   );
   backdrop-filter: blur(40px) saturate(150%);
   -webkit-backdrop-filter: blur(40px) saturate(150%);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border: 1px solid color-mix(in oklch, oklch(0 0 0) 6%, transparent);
   border-radius: 12px;
   box-shadow:
-    inset 1px 0 0 rgba(255, 255, 255, 0.5),
-    0 6px 20px rgba(0, 0, 0, 0.1);
-  color: #1d1d1f;
+    inset 1px 0 0 color-mix(in oklch, oklch(1 0 89.88) 50%, transparent),
+    0 6px 20px color-mix(in oklch, oklch(0 0 0) 10%, transparent);
+  color: oklch(0.232 0.004 286.1);
 }`
   },
   {
@@ -1183,15 +1183,15 @@ export const effectsBatch9: CSSEffect[] = [
     cssCode: `/* Material Surface Tint */
 .roycss-material-surface-tint {
   position: relative;
-  background: rgba(103, 80, 164, 0.08);
+  background: color-mix(in oklch, oklch(0.496 0.13 293.71) 8%, transparent);
   backdrop-filter: blur(20px) saturate(140%);
   -webkit-backdrop-filter: blur(20px) saturate(140%);
-  border: 1px solid rgba(103, 80, 164, 0.15);
+  border: 1px solid color-mix(in oklch, oklch(0.496 0.13 293.71) 15%, transparent);
   border-radius: 16px;
-  color: #1C1B1F;
+  color: oklch(0.225 0.008 297.21);
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.1),
-    0 4px 12px rgba(103, 80, 164, 0.08);
+    0 1px 2px color-mix(in oklch, oklch(0 0 0) 10%, transparent),
+    0 4px 12px color-mix(in oklch, oklch(0.496 0.13 293.71) 8%, transparent);
 }`
   },
   {
@@ -1203,15 +1203,15 @@ export const effectsBatch9: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Apple Ultra Thin */
 .roycss-apple-ultra-thin {
-  background: rgba(255, 255, 255, 0.4);
+  background: color-mix(in oklch, oklch(1 0 89.88) 40%, transparent);
   backdrop-filter: blur(8px) saturate(110%);
   -webkit-backdrop-filter: blur(8px) saturate(110%);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 60%, transparent);
   border-radius: 10px;
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.5) inset,
-    0 2px 8px rgba(0, 0, 0, 0.06);
-  color: #1d1d1f;
+    0 1px 0 color-mix(in oklch, oklch(1 0 89.88) 50%, transparent) inset,
+    0 2px 8px color-mix(in oklch, oklch(0 0 0) 6%, transparent);
+  color: oklch(0.232 0.004 286.1);
 }`
   },
   {
@@ -1224,11 +1224,11 @@ export const effectsBatch9: CSSEffect[] = [
     cssCode: `/* Glass Prism */
 .roycss-glass-prism {
   position: relative;
-  background: rgba(255, 255, 255, 0.15);
+  background: color-mix(in oklch, oklch(1 0 89.88) 15%, transparent);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
   border-radius: 16px;
-  color: #fff;
+  color: oklch(1 0 89.88);
 }
 .roycss-glass-prism::before {
   content: "";
@@ -1238,10 +1238,10 @@ export const effectsBatch9: CSSEffect[] = [
   padding: 1.5px;
   background: linear-gradient(
     135deg,
-    #ff0080, #ff8c00, #ffe600, #00e676, #00b0ff, #651fff, #ff0080
+    oklch(0.645 0.26 2.47), oklch(0.751 0.179 58.28), oklch(0.917 0.192 101.41), oklch(0.81 0.214 151.77), oklch(0.721 0.163 239.29), oklch(0.514 0.285 284.29), oklch(0.645 0.26 2.47)
   );
   background-size: 300% 300%;
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask: linear-gradient(oklch(0 0 0) 0 0) content-box, linear-gradient(oklch(0 0 0) 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   animation: roy-prism-shift 6s linear infinite;
@@ -1264,18 +1264,18 @@ export const effectsBatch9: CSSEffect[] = [
     cssCode: `/* Glass Depth Layer */
 .roycss-glass-depth-layer {
   position: relative;
-  background: rgba(255, 255, 255, 0.18);
+  background: color-mix(in oklch, oklch(1 0 89.88) 18%, transparent);
   backdrop-filter: blur(28px) saturate(160%);
   -webkit-backdrop-filter: blur(28px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 30%, transparent);
   border-radius: 18px;
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.5) inset,
-    0 -1px 0 rgba(0, 0, 0, 0.05) inset,
-    0 2px 4px rgba(0, 0, 0, 0.08),
-    0 8px 16px rgba(0, 0, 0, 0.12),
-    0 20px 40px rgba(0, 0, 0, 0.15);
-  color: #1d1d1f;
+    0 1px 0 color-mix(in oklch, oklch(1 0 89.88) 50%, transparent) inset,
+    0 -1px 0 color-mix(in oklch, oklch(0 0 0) 5%, transparent) inset,
+    0 2px 4px color-mix(in oklch, oklch(0 0 0) 8%, transparent),
+    0 8px 16px color-mix(in oklch, oklch(0 0 0) 12%, transparent),
+    0 20px 40px color-mix(in oklch, oklch(0 0 0) 15%, transparent);
+  color: oklch(0.232 0.004 286.1);
 }`
   }
 ];

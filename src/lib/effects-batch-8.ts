@@ -36,10 +36,10 @@ export const effectsBatch8: CSSEffect[] = [
 
 .roycss-visual-border-beam {
   position: relative;
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
-  background: #0f172a;
+  background: oklch(0.208 0.04 265.75);
   border: none;
   overflow: hidden;
 }
@@ -55,14 +55,14 @@ export const effectsBatch8: CSSEffect[] = [
   background: conic-gradient(
     from var(--roy-vbb-angle),
     transparent 0deg,
-    #10b981 30deg,
-    #34d399 50deg,
+    oklch(0.696 0.149 162.48) 30deg,
+    oklch(0.773 0.153 163.22) 50deg,
     transparent 90deg,
     transparent 360deg
   );
   -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
+    linear-gradient(oklch(0 0 0) 0 0) content-box,
+    linear-gradient(oklch(0 0 0) 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   animation: roy-visual-border-beam 3s linear infinite;
@@ -74,10 +74,10 @@ export const effectsBatch8: CSSEffect[] = [
   inset: 0;
   display: grid;
   place-items: center;
-  color: #34d399;
+  color: oklch(0.773 0.153 163.22);
   font: 700 13px/1 system-ui, sans-serif;
   letter-spacing: 0.25em;
-  text-shadow: 0 0 8px rgba(52, 211, 153, 0.6);
+  text-shadow: 0 0 8px color-mix(in oklch, oklch(0.773 0.153 163.22) 60%, transparent);
 }
 
 @keyframes roy-visual-border-beam {
@@ -96,10 +96,10 @@ export const effectsBatch8: CSSEffect[] = [
     cssCode: `/* Aurora Border */
 .roycss-visual-aurora-border {
   position: relative;
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
-  background: #0b1026;
+  background: oklch(0.182 0.046 271.58);
   border: none;
   overflow: hidden;
 }
@@ -114,16 +114,16 @@ export const effectsBatch8: CSSEffect[] = [
   padding: 2px;
   background: linear-gradient(
     120deg,
-    #22d3ee 0%,
-    #a855f7 25%,
-    #ec4899 50%,
-    #22d3ee 75%,
-    #a855f7 100%
+    oklch(0.797 0.134 211.53) 0%,
+    oklch(0.627 0.233 303.9) 25%,
+    oklch(0.656 0.212 354.31) 50%,
+    oklch(0.797 0.134 211.53) 75%,
+    oklch(0.627 0.233 303.9) 100%
   );
   background-size: 300% 300%;
   -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
+    linear-gradient(oklch(0 0 0) 0 0) content-box,
+    linear-gradient(oklch(0 0 0) 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   animation: roy-visual-aurora-border 6s ease infinite;
@@ -135,7 +135,7 @@ export const effectsBatch8: CSSEffect[] = [
   inset: 0;
   display: grid;
   place-items: center;
-  color: #e0e7ff;
+  color: oklch(0.93 0.033 272.79);
   font: 600 13px/1 system-ui, sans-serif;
   letter-spacing: 0.25em;
 }
@@ -157,10 +157,10 @@ export const effectsBatch8: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Inner Glow */
 .roycss-visual-inner-glow {
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
-  background: #0f172a;
+  background: oklch(0.208 0.04 265.75);
   border: none;
   animation: roy-visual-inner-glow 2.6s ease-in-out infinite;
 }
@@ -170,13 +170,13 @@ export const effectsBatch8: CSSEffect[] = [
 @keyframes roy-visual-inner-glow {
   0%, 100% {
     box-shadow:
-      inset 0 0 20px rgba(16, 185, 129, 0.3),
-      inset 0 0 40px rgba(16, 185, 129, 0.1);
+      inset 0 0 20px color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent),
+      inset 0 0 40px color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent);
   }
   50% {
     box-shadow:
-      inset 0 0 50px rgba(16, 185, 129, 0.7),
-      inset 0 0 100px rgba(16, 185, 129, 0.35);
+      inset 0 0 50px color-mix(in oklch, oklch(0.696 0.149 162.48) 70%, transparent),
+      inset 0 0 100px color-mix(in oklch, oklch(0.696 0.149 162.48) 35%, transparent);
   }
 }`,
   },
@@ -191,10 +191,10 @@ export const effectsBatch8: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Shadow Pulse */
 .roycss-visual-shadow-pulse {
-  width: 140px;
-  height: 100px;
+  inline-size: 140px;
+  block-size: 100px;
   border-radius: 14px;
-  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  background: linear-gradient(135deg, oklch(0.606 0.219 292.72), oklch(0.656 0.212 354.31));
   border: none;
   animation: roy-visual-shadow-pulse 2s ease-in-out infinite;
 }
@@ -203,11 +203,11 @@ export const effectsBatch8: CSSEffect[] = [
 
 @keyframes roy-visual-shadow-pulse {
   0%, 100% {
-    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+    box-shadow: 0 4px 12px color-mix(in oklch, oklch(0.606 0.219 292.72) 30%, transparent);
     transform: scale(1);
   }
   50% {
-    box-shadow: 0 14px 38px rgba(236, 72, 153, 0.6);
+    box-shadow: 0 14px 38px color-mix(in oklch, oklch(0.656 0.212 354.31) 60%, transparent);
     transform: scale(1.04);
   }
 }`,
@@ -224,20 +224,20 @@ export const effectsBatch8: CSSEffect[] = [
     cssCode: `/* Holographic Surface */
 .roycss-visual-holographic {
   position: relative;
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
   border: none;
   background: linear-gradient(
     115deg,
-    #ff0080 0%,
-    #ff8a00 14%,
-    #ffe600 28%,
-    #00ff96 42%,
-    #00d4ff 56%,
-    #6f00ff 70%,
-    #ff00d4 84%,
-    #ff0080 100%
+    oklch(0.645 0.26 2.47) 0%,
+    oklch(0.747 0.18 57.36) 14%,
+    oklch(0.917 0.192 101.41) 28%,
+    oklch(0.879 0.216 155.3) 42%,
+    oklch(0.804 0.146 219.52) 56%,
+    oklch(0.513 0.293 288.34) 70%,
+    oklch(0.678 0.297 338.33) 84%,
+    oklch(0.645 0.26 2.47) 100%
   );
   background-size: 300% 300%;
   overflow: hidden;
@@ -253,7 +253,7 @@ export const effectsBatch8: CSSEffect[] = [
   background: linear-gradient(
     115deg,
     transparent 30%,
-    rgba(255, 255, 255, 0.5) 50%,
+    color-mix(in oklch, oklch(1 0 89.88) 50%, transparent) 50%,
     transparent 70%
   );
   background-size: 200% 100%;
@@ -282,26 +282,26 @@ export const effectsBatch8: CSSEffect[] = [
     cssCode: `/* Brushed Metallic Surface */
 .roycss-visual-metallic {
   position: relative;
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
   border: none;
   background:
     linear-gradient(
       180deg,
-      #f5f5f5 0%,
-      #d0d0d8 14%,
-      #a0a0a8 28%,
-      #808088 42%,
-      #c0c0c8 58%,
-      #f0f0f5 74%,
-      #b0b0b8 88%,
-      #d0d0d8 100%
+      oklch(0.97 0 89.88) 0%,
+      oklch(0.86 0.011 286.17) 14%,
+      oklch(0.708 0.012 286.1) 28%,
+      oklch(0.602 0.012 286.03) 42%,
+      oklch(0.81 0.011 286.15) 58%,
+      oklch(0.957 0.007 286.27) 74%,
+      oklch(0.76 0.011 286.13) 88%,
+      oklch(0.86 0.011 286.17) 100%
     );
   overflow: hidden;
   box-shadow:
-    inset 0 2px 4px rgba(255, 255, 255, 0.7),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.25);
+    inset 0 2px 4px color-mix(in oklch, oklch(1 0 89.88) 70%, transparent),
+    inset 0 -2px 4px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
 }
 
 .roycss-visual-metallic > div { display: none; }
@@ -312,9 +312,9 @@ export const effectsBatch8: CSSEffect[] = [
   inset: 0;
   background: repeating-linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0.06) 0px,
-    rgba(0, 0, 0, 0.06) 1px,
-    rgba(255, 255, 255, 0.06) 2px
+    color-mix(in oklch, oklch(1 0 89.88) 6%, transparent) 0px,
+    color-mix(in oklch, oklch(0 0 0) 6%, transparent) 1px,
+    color-mix(in oklch, oklch(1 0 89.88) 6%, transparent) 2px
   );
   mix-blend-mode: overlay;
 }
@@ -322,22 +322,22 @@ export const effectsBatch8: CSSEffect[] = [
 .roycss-visual-metallic::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
+  inset-block-start: 0;
+  inset-inline-start: -100%;
+  inline-size: 50%;
+  block-size: 100%;
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.5),
+    color-mix(in oklch, oklch(1 0 89.88) 50%, transparent),
     transparent
   );
   animation: roy-visual-metallic 4s ease-in-out infinite;
 }
 
 @keyframes roy-visual-metallic {
-  0%, 100% { left: -100%; }
-  50%      { left: 200%; }
+  0%, 100% { inset-inline-start: -100%; }
+  50%      { inset-inline-start: 200%; }
 }`,
   },
 
@@ -352,28 +352,28 @@ export const effectsBatch8: CSSEffect[] = [
     cssCode: `/* Chrome Reflective Surface */
 .roycss-visual-chrome {
   position: relative;
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
   border: none;
   background: linear-gradient(
     180deg,
-    #fefefe 0%,
-    #c8c8d0 10%,
-    #888890 20%,
-    #d8d8e0 30%,
-    #f8f8fc 45%,
-    #a0a0a8 55%,
-    #686870 65%,
-    #d0d0d8 75%,
-    #f0f0f5 85%,
-    #b0b0b8 95%,
-    #808088 100%
+    oklch(0.997 0 89.88) 0%,
+    oklch(0.835 0.011 286.16) 10%,
+    oklch(0.629 0.012 286.05) 20%,
+    oklch(0.885 0.011 286.18) 30%,
+    oklch(0.98 0.005 286.3) 45%,
+    oklch(0.708 0.012 286.1) 55%,
+    oklch(0.52 0.012 285.96) 65%,
+    oklch(0.86 0.011 286.17) 75%,
+    oklch(0.957 0.007 286.27) 85%,
+    oklch(0.76 0.011 286.13) 95%,
+    oklch(0.602 0.012 286.03) 100%
   );
   overflow: hidden;
   box-shadow:
-    inset 0 2px 4px rgba(255, 255, 255, 0.7),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.35);
+    inset 0 2px 4px color-mix(in oklch, oklch(1 0 89.88) 70%, transparent),
+    inset 0 -2px 4px color-mix(in oklch, oklch(0 0 0) 35%, transparent);
 }
 
 .roycss-visual-chrome > div { display: none; }
@@ -381,22 +381,22 @@ export const effectsBatch8: CSSEffect[] = [
 .roycss-visual-chrome::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: -50%;
-  width: 50%;
-  height: 100%;
+  inset-block-start: 0;
+  inset-inline-start: -50%;
+  inline-size: 50%;
+  block-size: 100%;
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.85),
+    color-mix(in oklch, oklch(1 0 89.88) 85%, transparent),
     transparent
   );
   animation: roy-visual-chrome 5s ease-in-out infinite;
 }
 
 @keyframes roy-visual-chrome {
-  0%, 100% { left: -50%; }
-  50%      { left: 100%; }
+  0%, 100% { inset-inline-start: -50%; }
+  50%      { inset-inline-start: 100%; }
 }`,
   },
 
@@ -411,10 +411,10 @@ export const effectsBatch8: CSSEffect[] = [
     cssCode: `/* Liquid Fill */
 .roycss-visual-liquid-fill {
   position: relative;
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
-  background: #0f172a;
+  background: oklch(0.208 0.04 265.75);
   border: none;
   overflow: hidden;
 }
@@ -425,23 +425,23 @@ export const effectsBatch8: CSSEffect[] = [
 .roycss-visual-liquid-fill::after {
   content: '';
   position: absolute;
-  left: -50%;
-  width: 200%;
-  height: 50%;
-  bottom: 0;
+  inset-inline-start: -50%;
+  inline-size: 200%;
+  block-size: 50%;
+  inset-block-end: 0;
   background-repeat: repeat-x;
   background-size: 100px 40px;
 }
 
 .roycss-visual-liquid-fill::before {
-  bottom: 0;
+  inset-block-end: 0;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40' preserveAspectRatio='none'%3E%3Cpath d='M0,20 Q25,0 50,20 T100,20 L100,40 L0,40 Z' fill='%2306b6d4'/%3E%3C/svg%3E");
   animation: roy-visual-liquid-wave 2.4s linear infinite;
 }
 
 .roycss-visual-liquid-fill::after {
-  bottom: 4px;
-  height: 46%;
+  inset-block-end: 4px;
+  block-size: 46%;
   opacity: 0.55;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40' preserveAspectRatio='none'%3E%3Cpath d='M0,20 Q25,40 50,20 T100,20 L100,40 L0,40 Z' fill='%2322d3ee'/%3E%3C/svg%3E");
   animation: roy-visual-liquid-wave 1.8s linear infinite reverse;
@@ -466,15 +466,15 @@ export const effectsBatch8: CSSEffect[] = [
 .roycss-visual-gradient-text-animated {
   background: linear-gradient(
     90deg,
-    #ef4444,
-    #f59e0b,
-    #eab308,
-    #22c55e,
-    #06b6d4,
-    #3b82f6,
-    #8b5cf6,
-    #ec4899,
-    #ef4444
+    oklch(0.637 0.208 25.33),
+    oklch(0.769 0.165 70.08),
+    oklch(0.795 0.162 86.05),
+    oklch(0.723 0.192 149.58),
+    oklch(0.715 0.126 215.22),
+    oklch(0.623 0.188 259.81),
+    oklch(0.606 0.219 292.72),
+    oklch(0.656 0.212 354.31),
+    oklch(0.637 0.208 25.33)
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -500,12 +500,12 @@ export const effectsBatch8: CSSEffect[] = [
     cssCode: `/* Animated Mesh Gradient */
 .roycss-visual-gradient-mesh {
   background:
-    radial-gradient(at 20% 20%, #ec4899 0px, transparent 50%),
-    radial-gradient(at 80% 0%,  #f59e0b 0px, transparent 50%),
-    radial-gradient(at 0% 50%,  #8b5cf6 0px, transparent 50%),
-    radial-gradient(at 80% 80%, #06b6d4 0px, transparent 50%),
-    radial-gradient(at 50% 100%, #22c55e 0px, transparent 50%),
-    #0f172a;
+    radial-gradient(at 20% 20%, oklch(0.656 0.212 354.31) 0px, transparent 50%),
+    radial-gradient(at 80% 0%,  oklch(0.769 0.165 70.08) 0px, transparent 50%),
+    radial-gradient(at 0% 50%,  oklch(0.606 0.219 292.72) 0px, transparent 50%),
+    radial-gradient(at 80% 80%, oklch(0.715 0.126 215.22) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, oklch(0.723 0.192 149.58) 0px, transparent 50%),
+    oklch(0.208 0.04 265.75);
   background-size: 200% 200%;
   animation: roy-visual-gradient-mesh 10s ease-in-out infinite;
 }
@@ -528,11 +528,11 @@ export const effectsBatch8: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Distortion Wobble */
 .roycss-visual-image-distortion {
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
   border: none;
-  background: linear-gradient(135deg, #f59e0b, #ec4899, #8b5cf6, #06b6d4);
+  background: linear-gradient(135deg, oklch(0.769 0.165 70.08), oklch(0.656 0.212 354.31), oklch(0.606 0.219 292.72), oklch(0.715 0.126 215.22));
   animation: roy-visual-image-distortion 2.4s ease-in-out infinite;
 }
 
@@ -573,11 +573,11 @@ export const effectsBatch8: CSSEffect[] = [
     cssCode: `/* Pixelate Grid */
 .roycss-visual-pixelate {
   position: relative;
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
   border: none;
-  background: linear-gradient(135deg, #f59e0b, #ec4899, #8b5cf6, #06b6d4);
+  background: linear-gradient(135deg, oklch(0.769 0.165 70.08), oklch(0.656 0.212 354.31), oklch(0.606 0.219 292.72), oklch(0.715 0.126 215.22));
   overflow: hidden;
 }
 
@@ -588,8 +588,8 @@ export const effectsBatch8: CSSEffect[] = [
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(0, 0, 0, 0.25) 50%, transparent 50%),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.25) 50%, transparent 50%);
+    linear-gradient(color-mix(in oklch, oklch(0 0 0) 25%, transparent) 50%, transparent 50%),
+    linear-gradient(90deg, color-mix(in oklch, oklch(0 0 0) 25%, transparent) 50%, transparent 50%);
   background-size: 12px 12px, 12px 12px;
   mix-blend-mode: overlay;
   animation: roy-visual-pixelate 1.4s steps(4) infinite;
@@ -615,14 +615,14 @@ export const effectsBatch8: CSSEffect[] = [
     cssCode: `/* Frost Blur Overlay */
 .roycss-visual-frost-blur {
   position: relative;
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
   border: none;
   background:
-    radial-gradient(circle at 30% 30%, #06b6d4 0%, transparent 50%),
-    radial-gradient(circle at 70% 70%, #ec4899 0%, transparent 50%),
-    linear-gradient(135deg, #8b5cf6, #f59e0b);
+    radial-gradient(circle at 30% 30%, oklch(0.715 0.126 215.22) 0%, transparent 50%),
+    radial-gradient(circle at 70% 70%, oklch(0.656 0.212 354.31) 0%, transparent 50%),
+    linear-gradient(135deg, oklch(0.606 0.219 292.72), oklch(0.769 0.165 70.08));
   overflow: hidden;
 }
 
@@ -632,7 +632,7 @@ export const effectsBatch8: CSSEffect[] = [
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.25);
+  background: color-mix(in oklch, oklch(1 0 89.88) 25%, transparent);
   backdrop-filter: blur(14px) saturate(160%);
   -webkit-backdrop-filter: blur(14px) saturate(160%);
   border-radius: inherit;
@@ -645,15 +645,15 @@ export const effectsBatch8: CSSEffect[] = [
   background:
     repeating-linear-gradient(
       45deg,
-      rgba(255, 255, 255, 0.08) 0px,
-      rgba(255, 255, 255, 0.08) 1px,
+      color-mix(in oklch, oklch(1 0 89.88) 8%, transparent) 0px,
+      color-mix(in oklch, oklch(1 0 89.88) 8%, transparent) 1px,
       transparent 1px,
       transparent 3px
     ),
     repeating-linear-gradient(
       -45deg,
-      rgba(255, 255, 255, 0.08) 0px,
-      rgba(255, 255, 255, 0.08) 1px,
+      color-mix(in oklch, oklch(1 0 89.88) 8%, transparent) 0px,
+      color-mix(in oklch, oklch(1 0 89.88) 8%, transparent) 1px,
       transparent 1px,
       transparent 3px
     );
@@ -684,10 +684,10 @@ export const effectsBatch8: CSSEffect[] = [
 
 .roycss-visual-spotlight-follow {
   position: relative;
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
-  background: #0a0a0f;
+  background: oklch(0.147 0.011 285.01);
   border: none;
   overflow: hidden;
 }
@@ -700,8 +700,8 @@ export const effectsBatch8: CSSEffect[] = [
   inset: 0;
   background: radial-gradient(
     circle 70px at var(--roy-vsf-x) var(--roy-vsf-y),
-    rgba(255, 255, 255, 0.5) 0%,
-    rgba(255, 255, 255, 0.1) 40%,
+    color-mix(in oklch, oklch(1 0 89.88) 50%, transparent) 0%,
+    color-mix(in oklch, oklch(1 0 89.88) 10%, transparent) 40%,
     transparent 70%
   );
   animation: roy-visual-spotlight-follow 5s ease-in-out infinite;
@@ -726,13 +726,13 @@ export const effectsBatch8: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Mask Fade Reveal */
 .roycss-visual-mask-fade {
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
   border: none;
-  background: linear-gradient(135deg, #ec4899, #8b5cf6, #06b6d4);
-  -webkit-mask: linear-gradient(180deg, transparent 0%, #000 50%, transparent 100%) no-repeat;
-  mask: linear-gradient(180deg, transparent 0%, #000 50%, transparent 100%) no-repeat;
+  background: linear-gradient(135deg, oklch(0.656 0.212 354.31), oklch(0.606 0.219 292.72), oklch(0.715 0.126 215.22));
+  -webkit-mask: linear-gradient(180deg, transparent 0%, oklch(0 0 0) 50%, transparent 100%) no-repeat;
+  mask: linear-gradient(180deg, transparent 0%, oklch(0 0 0) 50%, transparent 100%) no-repeat;
   -webkit-mask-size: 100% 200%;
   mask-size: 100% 200%;
   animation: roy-visual-mask-fade 3s ease-in-out infinite alternate;
@@ -763,11 +763,11 @@ export const effectsBatch8: CSSEffect[] = [
     cssCode: `/* Blend Mode Overlay */
 .roycss-visual-blend-mode-overlay {
   position: relative;
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
   border: none;
-  background: linear-gradient(135deg, #1e293b, #0f172a);
+  background: linear-gradient(135deg, oklch(0.279 0.037 260.03), oklch(0.208 0.04 265.75));
   overflow: hidden;
 }
 
@@ -777,24 +777,24 @@ export const effectsBatch8: CSSEffect[] = [
 .roycss-visual-blend-mode-overlay::after {
   content: '';
   position: absolute;
-  width: 130px;
-  height: 130px;
+  inline-size: 130px;
+  block-size: 130px;
   border-radius: 50%;
   filter: blur(22px);
   mix-blend-mode: screen;
 }
 
 .roycss-visual-blend-mode-overlay::before {
-  top: -25px;
-  left: -25px;
-  background: #ec4899;
+  inset-block-start: -25px;
+  inset-inline-start: -25px;
+  background: oklch(0.656 0.212 354.31);
   animation: roy-visual-blend-mode-1 5s ease-in-out infinite alternate;
 }
 
 .roycss-visual-blend-mode-overlay::after {
-  bottom: -25px;
-  right: -25px;
-  background: #06b6d4;
+  inset-block-end: -25px;
+  inset-inline-end: -25px;
+  background: oklch(0.715 0.126 215.22);
   animation: roy-visual-blend-mode-2 5s ease-in-out infinite alternate;
 }
 
@@ -820,15 +820,15 @@ export const effectsBatch8: CSSEffect[] = [
     cssCode: `/* Heavy Backdrop Blur */
 .roycss-visual-backdrop-blur-heavy {
   position: relative;
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
   border: none;
   background:
-    radial-gradient(circle at 20% 30%, #ec4899 0%, transparent 40%),
-    radial-gradient(circle at 80% 70%, #06b6d4 0%, transparent 40%),
-    radial-gradient(circle at 50% 50%, #f59e0b 0%, transparent 50%),
-    linear-gradient(135deg, #8b5cf6, #10b981);
+    radial-gradient(circle at 20% 30%, oklch(0.656 0.212 354.31) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, oklch(0.715 0.126 215.22) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, oklch(0.769 0.165 70.08) 0%, transparent 50%),
+    linear-gradient(135deg, oklch(0.606 0.219 292.72), oklch(0.696 0.149 162.48));
   overflow: hidden;
 }
 
@@ -838,12 +838,12 @@ export const effectsBatch8: CSSEffect[] = [
   content: '';
   position: absolute;
   inset: 15px;
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: color-mix(in oklch, oklch(1 0 89.88) 18%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 45%, transparent);
   border-radius: 10px;
   backdrop-filter: blur(28px) saturate(180%);
   -webkit-backdrop-filter: blur(28px) saturate(180%);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 32px color-mix(in oklch, oklch(0 0 0) 15%, transparent);
 }`,
   },
 
@@ -857,11 +857,11 @@ export const effectsBatch8: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Color Shift */
 .roycss-visual-color-shift {
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
   border: none;
-  background: linear-gradient(135deg, #ec4899, #8b5cf6);
+  background: linear-gradient(135deg, oklch(0.656 0.212 354.31), oklch(0.606 0.219 292.72));
   animation: roy-visual-color-shift 6s linear infinite;
 }
 
@@ -883,21 +883,21 @@ export const effectsBatch8: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Hue Rotate Loop */
 .roycss-visual-hue-rotate-loop {
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
   border: none;
   background: conic-gradient(
     from 0deg,
-    #ef4444,
-    #f59e0b,
-    #eab308,
-    #22c55e,
-    #06b6d4,
-    #3b82f6,
-    #8b5cf6,
-    #ec4899,
-    #ef4444
+    oklch(0.637 0.208 25.33),
+    oklch(0.769 0.165 70.08),
+    oklch(0.795 0.162 86.05),
+    oklch(0.723 0.192 149.58),
+    oklch(0.715 0.126 215.22),
+    oklch(0.623 0.188 259.81),
+    oklch(0.606 0.219 292.72),
+    oklch(0.656 0.212 354.31),
+    oklch(0.637 0.208 25.33)
   );
   animation: roy-visual-hue-rotate-loop 4s linear infinite;
 }
@@ -920,11 +920,11 @@ export const effectsBatch8: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Saturation Pulse */
 .roycss-visual-saturation-pulse {
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
   border: none;
-  background: linear-gradient(135deg, #ec4899, #f59e0b, #06b6d4);
+  background: linear-gradient(135deg, oklch(0.656 0.212 354.31), oklch(0.769 0.165 70.08), oklch(0.715 0.126 215.22));
   animation: roy-visual-saturation-pulse 2.4s ease-in-out infinite;
 }
 
@@ -947,14 +947,14 @@ export const effectsBatch8: CSSEffect[] = [
     cssCode: `/* Glass Reflection */
 .roycss-visual-glass-reflection {
   position: relative;
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
   border: none;
   background:
-    radial-gradient(circle at 30% 30%, #ec4899 0%, transparent 50%),
-    radial-gradient(circle at 70% 70%, #06b6d4 0%, transparent 50%),
-    linear-gradient(135deg, #8b5cf6, #f59e0b);
+    radial-gradient(circle at 30% 30%, oklch(0.656 0.212 354.31) 0%, transparent 50%),
+    radial-gradient(circle at 70% 70%, oklch(0.715 0.126 215.22) 0%, transparent 50%),
+    linear-gradient(135deg, oklch(0.606 0.219 292.72), oklch(0.769 0.165 70.08));
   overflow: hidden;
 }
 
@@ -964,8 +964,8 @@ export const effectsBatch8: CSSEffect[] = [
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: color-mix(in oklch, oklch(1 0 89.88) 18%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 35%, transparent);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-radius: inherit;
@@ -974,14 +974,14 @@ export const effectsBatch8: CSSEffect[] = [
 .roycss-visual-glass-reflection::after {
   content: '';
   position: absolute;
-  top: -100%;
-  left: -50%;
-  width: 50%;
-  height: 300%;
+  inset-block-start: -100%;
+  inset-inline-start: -50%;
+  inline-size: 50%;
+  block-size: 300%;
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.7),
+    color-mix(in oklch, oklch(1 0 89.88) 70%, transparent),
     transparent
   );
   transform: rotate(25deg);
@@ -989,8 +989,8 @@ export const effectsBatch8: CSSEffect[] = [
 }
 
 @keyframes roy-visual-glass-reflection {
-  0%, 100% { left: -50%; }
-  50%      { left: 120%; }
+  0%, 100% { inset-inline-start: -50%; }
+  50%      { inset-inline-start: 120%; }
 }`,
   },
 
@@ -1005,11 +1005,11 @@ export const effectsBatch8: CSSEffect[] = [
     cssCode: `/* Animated Noise Overlay */
 .roycss-visual-noise-overlay {
   position: relative;
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
   border: none;
-  background: linear-gradient(135deg, #1e293b, #0f172a);
+  background: linear-gradient(135deg, oklch(0.279 0.037 260.03), oklch(0.208 0.04 265.75));
   overflow: hidden;
 }
 
@@ -1030,7 +1030,7 @@ export const effectsBatch8: CSSEffect[] = [
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.25), transparent 60%);
+  background: radial-gradient(circle at 50% 50%, color-mix(in oklch, oklch(0.696 0.149 162.48) 25%, transparent), transparent 60%);
   mix-blend-mode: overlay;
 }
 
@@ -1054,11 +1054,11 @@ export const effectsBatch8: CSSEffect[] = [
     cssCode: `/* Shimmer Sweep */
 .roycss-visual-shimmer-sweep {
   position: relative;
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
   border: none;
-  background: linear-gradient(135deg, #1e293b, #334155);
+  background: linear-gradient(135deg, oklch(0.279 0.037 260.03), oklch(0.372 0.039 257.29));
   overflow: hidden;
 }
 
@@ -1067,16 +1067,16 @@ export const effectsBatch8: CSSEffect[] = [
 .roycss-visual-shimmer-sweep::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
+  inset-block-start: 0;
+  inset-inline-start: -100%;
+  inline-size: 100%;
+  block-size: 100%;
   background: linear-gradient(
     100deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.08) 35%,
-    rgba(255, 255, 255, 0.55) 50%,
-    rgba(255, 255, 255, 0.08) 65%,
+    color-mix(in oklch, oklch(1 0 89.88) 8%, transparent) 35%,
+    color-mix(in oklch, oklch(1 0 89.88) 55%, transparent) 50%,
+    color-mix(in oklch, oklch(1 0 89.88) 8%, transparent) 65%,
     transparent 100%
   );
   animation: roy-visual-shimmer-sweep 2.6s ease-in-out infinite;
@@ -1086,13 +1086,13 @@ export const effectsBatch8: CSSEffect[] = [
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, transparent 40%, rgba(16, 185, 129, 0.15) 50%, transparent 60%);
+  background: linear-gradient(135deg, transparent 40%, color-mix(in oklch, oklch(0.696 0.149 162.48) 15%, transparent) 50%, transparent 60%);
   mix-blend-mode: overlay;
 }
 
 @keyframes roy-visual-shimmer-sweep {
-  0%   { left: -100%; }
-  100% { left: 100%; }
+  0%   { inset-inline-start: -100%; }
+  100% { inset-inline-start: 100%; }
 }`,
   },
 
@@ -1107,20 +1107,20 @@ export const effectsBatch8: CSSEffect[] = [
     cssCode: `/* Iridescent Shimmer */
 .roycss-visual-iridescent {
   position: relative;
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
   border: none;
   background: conic-gradient(
     from 0deg at 50% 50%,
-    #ff0080,
-    #ff8a00,
-    #ffe600,
-    #00ff96,
-    #00d4ff,
-    #6f00ff,
-    #ff00d4,
-    #ff0080
+    oklch(0.645 0.26 2.47),
+    oklch(0.747 0.18 57.36),
+    oklch(0.917 0.192 101.41),
+    oklch(0.879 0.216 155.3),
+    oklch(0.804 0.146 219.52),
+    oklch(0.513 0.293 288.34),
+    oklch(0.678 0.297 338.33),
+    oklch(0.645 0.26 2.47)
   );
   animation: roy-visual-iridescent 8s linear infinite;
   overflow: hidden;
@@ -1134,8 +1134,8 @@ export const effectsBatch8: CSSEffect[] = [
   inset: 0;
   background: repeating-linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.12) 0px,
-    rgba(255, 255, 255, 0.12) 4px,
+    color-mix(in oklch, oklch(1 0 89.88) 12%, transparent) 0px,
+    color-mix(in oklch, oklch(1 0 89.88) 12%, transparent) 4px,
     transparent 4px,
     transparent 8px
   );
@@ -1146,7 +1146,7 @@ export const effectsBatch8: CSSEffect[] = [
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.35) 50%, transparent 60%);
+  background: linear-gradient(115deg, transparent 40%, color-mix(in oklch, oklch(1 0 89.88) 35%, transparent) 50%, transparent 60%);
   background-size: 200% 100%;
   animation: roy-visual-iridescent-shine 3s linear infinite;
 }
@@ -1172,11 +1172,11 @@ export const effectsBatch8: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Neon Pulse */
 .roycss-visual-neon-pulse {
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
-  background: #0a0a0f;
-  border: 2px solid #ec4899;
+  background: oklch(0.147 0.011 285.01);
+  border: 2px solid oklch(0.656 0.212 354.31);
   animation: roy-visual-neon-pulse 1.6s ease-in-out infinite;
 }
 
@@ -1185,21 +1185,21 @@ export const effectsBatch8: CSSEffect[] = [
 @keyframes roy-visual-neon-pulse {
   0%, 100% {
     box-shadow:
-      0 0 6px #ec4899,
-      0 0 12px #ec4899,
-      0 0 24px #ec4899,
-      inset 0 0 8px #ec4899,
-      inset 0 0 16px rgba(236, 72, 153, 0.5);
-    border-color: #ec4899;
+      0 0 6px oklch(0.656 0.212 354.31),
+      0 0 12px oklch(0.656 0.212 354.31),
+      0 0 24px oklch(0.656 0.212 354.31),
+      inset 0 0 8px oklch(0.656 0.212 354.31),
+      inset 0 0 16px color-mix(in oklch, oklch(0.656 0.212 354.31) 50%, transparent);
+    border-color: oklch(0.656 0.212 354.31);
   }
   50% {
     box-shadow:
-      0 0 16px #ec4899,
-      0 0 36px #ec4899,
-      0 0 60px #ec4899,
-      inset 0 0 18px #ec4899,
-      inset 0 0 36px rgba(236, 72, 153, 0.75);
-    border-color: #f472b6;
+      0 0 16px oklch(0.656 0.212 354.31),
+      0 0 36px oklch(0.656 0.212 354.31),
+      0 0 60px oklch(0.656 0.212 354.31),
+      inset 0 0 18px oklch(0.656 0.212 354.31),
+      inset 0 0 36px color-mix(in oklch, oklch(0.656 0.212 354.31) 75%, transparent);
+    border-color: oklch(0.725 0.175 349.76);
   }
 }`,
   },
@@ -1215,11 +1215,11 @@ export const effectsBatch8: CSSEffect[] = [
     cssCode: `/* Glitch Distort */
 .roycss-visual-glitch-distort {
   position: relative;
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
   border: none;
-  background: linear-gradient(135deg, #ec4899, #8b5cf6, #06b6d4);
+  background: linear-gradient(135deg, oklch(0.656 0.212 354.31), oklch(0.606 0.219 292.72), oklch(0.715 0.126 215.22));
   overflow: hidden;
 }
 
@@ -1235,12 +1235,12 @@ export const effectsBatch8: CSSEffect[] = [
 }
 
 .roycss-visual-glitch-distort::before {
-  background: linear-gradient(135deg, #ff003c, #ff003c, #06b6d4);
+  background: linear-gradient(135deg, oklch(0.632 0.254 21.75), oklch(0.632 0.254 21.75), oklch(0.715 0.126 215.22));
   animation: roy-visual-glitch-1 1.5s steps(2) infinite;
 }
 
 .roycss-visual-glitch-distort::after {
-  background: linear-gradient(135deg, #00fff0, #ec4899, #00fff0);
+  background: linear-gradient(135deg, oklch(0.901 0.157 187.23), oklch(0.656 0.212 354.31), oklch(0.901 0.157 187.23));
   animation: roy-visual-glitch-2 1.7s steps(2) infinite;
 }
 
@@ -1271,11 +1271,11 @@ export const effectsBatch8: CSSEffect[] = [
     cssCode: `/* Prism Split */
 .roycss-visual-prism {
   position: relative;
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
   border: none;
-  background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #0a0a0f 100%);
+  background: radial-gradient(circle at 50% 50%, oklch(0.228 0.038 282.93) 0%, oklch(0.147 0.011 285.01) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1288,21 +1288,21 @@ export const effectsBatch8: CSSEffect[] = [
 .roycss-visual-prism::after {
   content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 90px;
-  height: 90px;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inline-size: 90px;
+  block-size: 90px;
   background: conic-gradient(
     from 0deg,
-    #ef4444,
-    #f59e0b,
-    #eab308,
-    #22c55e,
-    #06b6d4,
-    #3b82f6,
-    #8b5cf6,
-    #ec4899,
-    #ef4444
+    oklch(0.637 0.208 25.33),
+    oklch(0.769 0.165 70.08),
+    oklch(0.795 0.162 86.05),
+    oklch(0.723 0.192 149.58),
+    oklch(0.715 0.126 215.22),
+    oklch(0.623 0.188 259.81),
+    oklch(0.606 0.219 292.72),
+    oklch(0.656 0.212 354.31),
+    oklch(0.637 0.208 25.33)
   );
   clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
   transform-origin: 50% 60%;
@@ -1336,39 +1336,39 @@ export const effectsBatch8: CSSEffect[] = [
     cssCode: `/* Foil Mylar */
 .roycss-visual-foil {
   position: relative;
-  width: 180px;
-  height: 120px;
+  inline-size: 180px;
+  block-size: 120px;
   border-radius: 14px;
   border: none;
   background:
     repeating-linear-gradient(
       45deg,
-      rgba(255, 255, 255, 0.12) 0px,
-      rgba(255, 255, 255, 0.12) 2px,
+      color-mix(in oklch, oklch(1 0 89.88) 12%, transparent) 0px,
+      color-mix(in oklch, oklch(1 0 89.88) 12%, transparent) 2px,
       transparent 2px,
       transparent 5px
     ),
     repeating-linear-gradient(
       -45deg,
-      rgba(0, 0, 0, 0.12) 0px,
-      rgba(0, 0, 0, 0.12) 2px,
+      color-mix(in oklch, oklch(0 0 0) 12%, transparent) 0px,
+      color-mix(in oklch, oklch(0 0 0) 12%, transparent) 2px,
       transparent 2px,
       transparent 5px
     ),
     linear-gradient(
       135deg,
-      #f0f0f5 0%,
-      #c0c0d0 25%,
-      #f8f8ff 50%,
-      #b0b0c0 75%,
-      #e8e8f0 100%
+      oklch(0.957 0.007 286.27) 0%,
+      oklch(0.813 0.022 285.89) 25%,
+      oklch(0.981 0.009 286.23) 50%,
+      oklch(0.762 0.023 285.85) 75%,
+      oklch(0.933 0.011 286.19) 100%
     );
   background-size: 8px 8px, 8px 8px, 100% 100%;
   overflow: hidden;
   animation: roy-visual-foil-hue 6s ease-in-out infinite;
   box-shadow:
-    inset 0 2px 6px rgba(255, 255, 255, 0.7),
-    inset 0 -2px 6px rgba(0, 0, 0, 0.25);
+    inset 0 2px 6px color-mix(in oklch, oklch(1 0 89.88) 70%, transparent),
+    inset 0 -2px 6px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
 }
 
 .roycss-visual-foil > div { display: none; }
@@ -1380,7 +1380,7 @@ export const effectsBatch8: CSSEffect[] = [
   background: linear-gradient(
     60deg,
     transparent 30%,
-    rgba(255, 255, 255, 0.7) 50%,
+    color-mix(in oklch, oklch(1 0 89.88) 70%, transparent) 50%,
     transparent 70%
   );
   background-size: 200% 100%;

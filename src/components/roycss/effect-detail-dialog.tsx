@@ -28,6 +28,8 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { effects, categoryMeta } from "@/lib/roycss-effects";
+import { ColorCustomizer } from "@/components/roycss/color-customizer";
+import { FrameworkUsage } from "@/components/roycss/framework-usage";
 
 /* ═══════════════════════════════════════════════════════════════
    LIVE PREVIEW (reused from effect-card, adapted for large size)
@@ -486,6 +488,13 @@ export function EffectDetailDialog({
 
             <Separator className="opacity-50" />
 
+            {/* Color Customizer */}
+            <div className="p-4">
+              <ColorCustomizer cssCode={editedCSS} />
+            </div>
+
+            <Separator className="opacity-50" />
+
             {/* CSS Code Editor */}
             <div className="p-4">
               <div className="flex items-center justify-between mb-2">
@@ -557,6 +566,13 @@ export function EffectDetailDialog({
                   ? "Edit the CSS above — the preview updates live. Click Copy to save your version."
                   : "Click Edit to customize this effect. Changes preview live."}
               </p>
+            </div>
+
+            <Separator className="opacity-50" />
+
+            {/* Framework Usage */}
+            <div className="p-4">
+              <FrameworkUsage effectId={effect.id} effectName={effect.name} />
             </div>
 
             <Separator className="opacity-50" />

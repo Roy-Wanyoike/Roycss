@@ -139,9 +139,9 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Scroll Progress Bar */
 .roycss-scroll-progress-bar {
   position: relative;
-  width: 100%;
-  height: 8px;
-  background: rgba(148, 163, 184, 0.25);
+  inline-size: 100%;
+  block-size: 8px;
+  background: color-mix(in oklch, oklch(0.711 0.035 256.79) 25%, transparent);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -150,16 +150,16 @@ export const effectsBatch6: CSSEffect[] = [
   content: "";
   position: absolute;
   inset: 0 auto 0 0;
-  width: 0;
-  background: linear-gradient(90deg, #10b981, #06b6d4, #6366f1);
+  inline-size: 0;
+  background: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22), oklch(0.585 0.204 277.12));
   border-radius: inherit;
-  box-shadow: 0 0 12px rgba(34, 211, 238, 0.5);
+  box-shadow: 0 0 12px color-mix(in oklch, oklch(0.797 0.134 211.53) 50%, transparent);
   animation: roy-scroll-progress-fill 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 @keyframes roy-scroll-progress-fill {
-  0% { width: 0; }
-  70%, 100% { width: 100%; }
+  0% { inline-size: 0; }
+  70%, 100% { inline-size: 100%; }
 }`,
   },
 
@@ -175,9 +175,9 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Scroll Indicator */
 .roycss-scroll-indicator {
   position: relative;
-  width: 28px;
-  height: 46px;
-  border: 2px solid rgba(16, 185, 129, 0.65);
+  inline-size: 28px;
+  block-size: 46px;
+  border: 2px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 65%, transparent);
   border-radius: 14px;
   background: transparent;
 }
@@ -185,12 +185,12 @@ export const effectsBatch6: CSSEffect[] = [
 .roycss-scroll-indicator::before {
   content: "";
   position: absolute;
-  top: 8px;
-  left: 50%;
-  width: 4px;
-  height: 8px;
-  margin-left: -2px;
-  background: #10b981;
+  inset-block-start: 8px;
+  inset-inline-start: 50%;
+  inline-size: 4px;
+  block-size: 8px;
+  margin-inline-start: -2px;
+  background: oklch(0.696 0.149 162.48);
   border-radius: 2px;
   animation: roy-scroll-indicator-wheel 1.8s ease-in-out infinite;
 }
@@ -198,13 +198,13 @@ export const effectsBatch6: CSSEffect[] = [
 .roycss-scroll-indicator::after {
   content: "";
   position: absolute;
-  bottom: 6px;
-  left: 50%;
-  width: 7px;
-  height: 7px;
-  margin-left: -3.5px;
-  border-right: 2px solid #10b981;
-  border-bottom: 2px solid #10b981;
+  inset-block-end: 6px;
+  inset-inline-start: 50%;
+  inline-size: 7px;
+  block-size: 7px;
+  margin-inline-start: -3.5px;
+  border-inline-end: 2px solid oklch(0.696 0.149 162.48);
+  border-block-end: 2px solid oklch(0.696 0.149 162.48);
   transform: rotate(45deg);
   animation: roy-scroll-indicator-arrow 1.8s ease-in-out infinite;
 }
@@ -233,19 +233,19 @@ export const effectsBatch6: CSSEffect[] = [
 .roycss-scroll-parallax-slow {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background: linear-gradient(135deg, oklch(0.208 0.04 265.75), oklch(0.279 0.037 260.03));
 }
 
 .roycss-scroll-parallax-slow::before {
   content: "";
   position: absolute;
-  width: 90px;
-  height: 90px;
+  inline-size: 90px;
+  block-size: 90px;
   border-radius: 50%;
-  top: 50%;
-  left: 50%;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
   margin: -45px 0 0 -45px;
-  background: radial-gradient(circle at 30% 30%, #6366f1, #06b6d4 70%);
+  background: radial-gradient(circle at 30% 30%, oklch(0.585 0.204 277.12), oklch(0.715 0.126 215.22) 70%);
   filter: blur(2px);
   animation: roy-scroll-parallax-drift 6s ease-in-out infinite;
 }
@@ -257,7 +257,7 @@ export const effectsBatch6: CSSEffect[] = [
   background: repeating-linear-gradient(
     0deg,
     transparent 0 18px,
-    rgba(148, 163, 184, 0.08) 18px 19px
+    color-mix(in oklch, oklch(0.711 0.035 256.79) 8%, transparent) 18px 19px
   );
   animation: roy-scroll-parallax-grid 6s linear infinite;
 }
@@ -286,37 +286,37 @@ export const effectsBatch6: CSSEffect[] = [
 .roycss-scroll-sticky-header {
   display: flex;
   align-items: center;
-  height: 64px;
+  block-size: 64px;
   padding: 0 22px;
-  background: linear-gradient(90deg, #0f172a, #1e293b);
-  border: 1px solid rgba(148, 163, 184, 0.3);
+  background: linear-gradient(90deg, oklch(0.208 0.04 265.75), oklch(0.279 0.037 260.03));
+  border: 1px solid color-mix(in oklch, oklch(0.711 0.035 256.79) 30%, transparent);
   border-radius: 10px;
-  color: #e2e8f0;
+  color: oklch(0.929 0.013 255.51);
   font-size: 18px;
   font-weight: 700;
   letter-spacing: 0.02em;
-  box-shadow: 0 6px 20px rgba(2, 6, 23, 0.4);
+  box-shadow: 0 6px 20px color-mix(in oklch, oklch(0.129 0.041 264.7) 40%, transparent);
   animation: roy-scroll-sticky-shrink 3.2s ease-in-out infinite;
 }
 
 @keyframes roy-scroll-sticky-shrink {
   0%, 35% {
-    height: 64px;
+    block-size: 64px;
     font-size: 18px;
     padding: 0 22px;
-    background: linear-gradient(90deg, #0f172a, #1e293b);
-    box-shadow: 0 6px 20px rgba(2, 6, 23, 0.4);
+    background: linear-gradient(90deg, oklch(0.208 0.04 265.75), oklch(0.279 0.037 260.03));
+    box-shadow: 0 6px 20px color-mix(in oklch, oklch(0.129 0.041 264.7) 40%, transparent);
   }
   50%, 85% {
-    height: 36px;
+    block-size: 36px;
     font-size: 13px;
     padding: 0 14px;
-    background: linear-gradient(90deg, #020617, #0f172a);
-    box-shadow: 0 10px 26px rgba(2, 6, 23, 0.7);
+    background: linear-gradient(90deg, oklch(0.129 0.041 264.7), oklch(0.208 0.04 265.75));
+    box-shadow: 0 10px 26px color-mix(in oklch, oklch(0.129 0.041 264.7) 70%, transparent);
     letter-spacing: 0.04em;
   }
   100% {
-    height: 64px;
+    block-size: 64px;
     font-size: 18px;
     padding: 0 22px;
   }
@@ -378,9 +378,9 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Scroll Horizontal Indicator */
 .roycss-scroll-horizontal {
   position: relative;
-  width: 100%;
-  height: 6px;
-  background: rgba(148, 163, 184, 0.25);
+  inline-size: 100%;
+  block-size: 6px;
+  background: color-mix(in oklch, oklch(0.711 0.035 256.79) 25%, transparent);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -389,7 +389,7 @@ export const effectsBatch6: CSSEffect[] = [
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.25), transparent);
+  background: linear-gradient(90deg, transparent, color-mix(in oklch, oklch(0.769 0.165 70.08) 25%, transparent), transparent);
   background-size: 80px 100%;
   animation: roy-scroll-horizontal-sheen 1.6s linear infinite;
 }
@@ -397,13 +397,13 @@ export const effectsBatch6: CSSEffect[] = [
 .roycss-scroll-horizontal::after {
   content: "";
   position: absolute;
-  top: -3px;
-  left: 0;
-  width: 24px;
-  height: 12px;
+  inset-block-start: -3px;
+  inset-inline-start: 0;
+  inline-size: 24px;
+  block-size: 12px;
   border-radius: 999px;
-  background: linear-gradient(90deg, #f59e0b, #ef4444);
-  box-shadow: 0 0 12px rgba(245, 158, 11, 0.6);
+  background: linear-gradient(90deg, oklch(0.769 0.165 70.08), oklch(0.637 0.208 25.33));
+  box-shadow: 0 0 12px color-mix(in oklch, oklch(0.769 0.165 70.08) 60%, transparent);
   animation: roy-scroll-horizontal-move 2.8s ease-in-out infinite;
 }
 
@@ -413,8 +413,8 @@ export const effectsBatch6: CSSEffect[] = [
 }
 
 @keyframes roy-scroll-horizontal-move {
-  0%, 100% { left: 0; }
-  50% { left: calc(100% - 24px); }
+  0%, 100% { inset-inline-start: 0; }
+  50% { inset-inline-start: calc(100% - 24px); }
 }`,
   },
 
@@ -434,23 +434,23 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Cursor Glow Dot */
 .roycss-cursor-glow-dot {
   position: relative;
-  background: radial-gradient(circle at 50% 50%, #111827, #0b1020);
+  background: radial-gradient(circle at 50% 50%, oklch(0.21 0.032 264.66), oklch(0.177 0.034 269.56));
   overflow: hidden;
 }
 
 .roycss-cursor-glow-dot::before {
   content: "";
   position: absolute;
-  width: 10px;
-  height: 10px;
+  inline-size: 10px;
+  block-size: 10px;
   border-radius: 50%;
-  top: 50%;
-  left: 50%;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
   margin: -5px 0 0 -5px;
-  background: #22d3ee;
+  background: oklch(0.797 0.134 211.53);
   box-shadow:
-    0 0 12px 4px rgba(34, 211, 238, 0.85),
-    0 0 28px 8px rgba(34, 211, 238, 0.4);
+    0 0 12px 4px color-mix(in oklch, oklch(0.797 0.134 211.53) 85%, transparent),
+    0 0 28px 8px color-mix(in oklch, oklch(0.797 0.134 211.53) 40%, transparent);
   animation: roy-cursor-glow-orbit 3s linear infinite;
 }
 
@@ -475,26 +475,26 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Cursor Trail */
 .roycss-cursor-trail {
   position: relative;
-  background: radial-gradient(circle at 50% 50%, #1a0f2e, #0b1020);
+  background: radial-gradient(circle at 50% 50%, oklch(0.203 0.06 297.11), oklch(0.177 0.034 269.56));
   overflow: hidden;
 }
 
 .roycss-cursor-trail::before {
   content: "";
   position: absolute;
-  width: 9px;
-  height: 9px;
+  inline-size: 9px;
+  block-size: 9px;
   border-radius: 50%;
-  top: 50%;
-  left: 50%;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
   margin: -4.5px 0 0 -4.5px;
-  background: #f472b6;
+  background: oklch(0.725 0.175 349.76);
   box-shadow:
-    0 0 10px 2px rgba(244, 114, 182, 0.7),
-    -10px 5px 0 -1px rgba(244, 114, 182, 0.8),
-    -20px 10px 0 -2px rgba(244, 114, 182, 0.55),
-    -30px 15px 0 -3px rgba(244, 114, 182, 0.35),
-    -40px 20px 0 -3px rgba(244, 114, 182, 0.18);
+    0 0 10px 2px color-mix(in oklch, oklch(0.725 0.175 349.76) 70%, transparent),
+    -10px 5px 0 -1px color-mix(in oklch, oklch(0.725 0.175 349.76) 80%, transparent),
+    -20px 10px 0 -2px color-mix(in oklch, oklch(0.725 0.175 349.76) 55%, transparent),
+    -30px 15px 0 -3px color-mix(in oklch, oklch(0.725 0.175 349.76) 35%, transparent),
+    -40px 20px 0 -3px color-mix(in oklch, oklch(0.725 0.175 349.76) 18%, transparent);
   animation: roy-cursor-trail-sweep 3.2s ease-in-out infinite;
 }
 
@@ -516,19 +516,19 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Cursor Blob */
 .roycss-cursor-blob {
   position: relative;
-  background: radial-gradient(circle at 50% 50%, #111827, #0b1020);
+  background: radial-gradient(circle at 50% 50%, oklch(0.21 0.032 264.66), oklch(0.177 0.034 269.56));
   overflow: hidden;
 }
 
 .roycss-cursor-blob::before {
   content: "";
   position: absolute;
-  width: 44px;
-  height: 44px;
-  top: 50%;
-  left: 50%;
+  inline-size: 44px;
+  block-size: 44px;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
   margin: -22px 0 0 -22px;
-  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  background: linear-gradient(135deg, oklch(0.606 0.219 292.72), oklch(0.656 0.212 354.31));
   filter: blur(3px);
   border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
   animation:
@@ -562,20 +562,20 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Cursor Ring */
 .roycss-cursor-ring {
   position: relative;
-  background: radial-gradient(circle at 50% 50%, #0c1426, #0b1020);
+  background: radial-gradient(circle at 50% 50%, oklch(0.194 0.039 264.9), oklch(0.177 0.034 269.56));
   overflow: hidden;
 }
 
 .roycss-cursor-ring::before {
   content: "";
   position: absolute;
-  width: 14px;
-  height: 14px;
+  inline-size: 14px;
+  block-size: 14px;
   border-radius: 50%;
-  top: 50%;
-  left: 50%;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
   margin: -7px 0 0 -7px;
-  border: 2px solid #22d3ee;
+  border: 2px solid oklch(0.797 0.134 211.53);
   animation:
     roy-cursor-ring-orbit 3s linear infinite,
     roy-cursor-ring-pulse 1.6s ease-out infinite;
@@ -584,14 +584,14 @@ export const effectsBatch6: CSSEffect[] = [
 .roycss-cursor-ring::after {
   content: "";
   position: absolute;
-  width: 6px;
-  height: 6px;
+  inline-size: 6px;
+  block-size: 6px;
   border-radius: 50%;
-  top: 50%;
-  left: 50%;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
   margin: -3px 0 0 -3px;
-  background: #22d3ee;
-  box-shadow: 0 0 10px 2px rgba(34, 211, 238, 0.8);
+  background: oklch(0.797 0.134 211.53);
+  box-shadow: 0 0 10px 2px color-mix(in oklch, oklch(0.797 0.134 211.53) 80%, transparent);
   animation: roy-cursor-ring-orbit 3s linear infinite;
 }
 
@@ -602,8 +602,8 @@ export const effectsBatch6: CSSEffect[] = [
 }
 
 @keyframes roy-cursor-ring-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.6); }
-  100% { box-shadow: 0 0 0 16px rgba(34, 211, 238, 0); }
+  0% { box-shadow: 0 0 0 0 color-mix(in oklch, oklch(0.797 0.134 211.53) 60%, transparent); }
+  100% { box-shadow: 0 0 0 16px color-mix(in oklch, oklch(0.797 0.134 211.53) 0%, transparent); }
 }`,
   },
 
@@ -619,7 +619,7 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Cursor Ripple */
 .roycss-cursor-ripple {
   position: relative;
-  background: radial-gradient(circle at 50% 50%, #0c2a1f, #0b1020);
+  background: radial-gradient(circle at 50% 50%, oklch(0.258 0.042 166.13), oklch(0.177 0.034 269.56));
   overflow: hidden;
 }
 
@@ -627,19 +627,19 @@ export const effectsBatch6: CSSEffect[] = [
 .roycss-cursor-ripple::after {
   content: "";
   position: absolute;
-  width: 16px;
-  height: 16px;
+  inline-size: 16px;
+  block-size: 16px;
   border-radius: 50%;
-  top: 50%;
-  left: 50%;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
   margin: -8px 0 0 -8px;
-  border: 2px solid #10b981;
+  border: 2px solid oklch(0.696 0.149 162.48);
   animation: roy-cursor-ripple-expand 1.8s ease-out infinite;
 }
 
 .roycss-cursor-ripple::after {
   animation-delay: 0.9s;
-  border-color: #34d399;
+  border-color: oklch(0.773 0.153 163.22);
 }
 
 @keyframes roy-cursor-ripple-expand {
@@ -660,20 +660,20 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Cursor Spotlight */
 .roycss-cursor-spotlight {
   position: relative;
-  background: linear-gradient(135deg, #0f172a, #1e1b4b);
+  background: linear-gradient(135deg, oklch(0.208 0.04 265.75), oklch(0.257 0.086 281.29));
   overflow: hidden;
 }
 
 .roycss-cursor-spotlight::before {
   content: "";
   position: absolute;
-  width: 130px;
-  height: 130px;
+  inline-size: 130px;
+  block-size: 130px;
   border-radius: 50%;
-  top: 50%;
-  left: 50%;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
   margin: -65px 0 0 -65px;
-  background: radial-gradient(circle, rgba(34, 211, 238, 0.45), rgba(34, 211, 238, 0.15) 40%, transparent 70%);
+  background: radial-gradient(circle, color-mix(in oklch, oklch(0.797 0.134 211.53) 45%, transparent), color-mix(in oklch, oklch(0.797 0.134 211.53) 15%, transparent) 40%, transparent 70%);
   pointer-events: none;
   animation: roy-cursor-spotlight-move 4.5s ease-in-out infinite;
 }
@@ -681,14 +681,14 @@ export const effectsBatch6: CSSEffect[] = [
 .roycss-cursor-spotlight::after {
   content: "";
   position: absolute;
-  width: 9px;
-  height: 9px;
+  inline-size: 9px;
+  block-size: 9px;
   border-radius: 50%;
-  top: 50%;
-  left: 50%;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
   margin: -4.5px 0 0 -4.5px;
-  background: #67e8f9;
-  box-shadow: 0 0 14px 3px rgba(34, 211, 238, 0.85);
+  background: oklch(0.865 0.115 207.08);
+  box-shadow: 0 0 14px 3px color-mix(in oklch, oklch(0.797 0.134 211.53) 85%, transparent);
   animation: roy-cursor-spotlight-move 4.5s ease-in-out infinite;
 }
 
@@ -715,8 +715,8 @@ export const effectsBatch6: CSSEffect[] = [
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #0b1020, #111827);
-  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: linear-gradient(135deg, oklch(0.177 0.034 269.56), oklch(0.21 0.032 264.66));
+  border: 1px solid color-mix(in oklch, oklch(0.711 0.035 256.79) 25%, transparent);
   border-radius: 10px;
   cursor: pointer;
   transition:
@@ -727,7 +727,7 @@ export const effectsBatch6: CSSEffect[] = [
 
 .roycss-cursor-magnetic::before {
   content: "Hover";
-  color: #94a3b8;
+  color: oklch(0.711 0.035 256.79);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -739,13 +739,13 @@ export const effectsBatch6: CSSEffect[] = [
 
 .roycss-cursor-magnetic:hover {
   transform: scale(1.1);
-  border-color: rgba(34, 211, 238, 0.6);
-  box-shadow: 0 0 24px rgba(34, 211, 238, 0.35);
+  border-color: color-mix(in oklch, oklch(0.797 0.134 211.53) 60%, transparent);
+  box-shadow: 0 0 24px color-mix(in oklch, oklch(0.797 0.134 211.53) 35%, transparent);
 }
 
 .roycss-cursor-magnetic:hover::before {
   transform: translateY(-5px) scale(1.12);
-  color: #22d3ee;
+  color: oklch(0.797 0.134 211.53);
 }`,
   },
 
@@ -762,9 +762,9 @@ export const effectsBatch6: CSSEffect[] = [
 .roycss-cursor-crosshair {
   position: relative;
   background:
-    linear-gradient(0deg, transparent 49.5%, rgba(148, 163, 184, 0.08) 49.5% 50.5%, transparent 50.5%),
-    linear-gradient(90deg, transparent 49.5%, rgba(148, 163, 184, 0.08) 49.5% 50.5%, transparent 50.5%),
-    radial-gradient(circle at 50% 50%, #1a0f1f, #0b1020);
+    linear-gradient(0deg, transparent 49.5%, color-mix(in oklch, oklch(0.711 0.035 256.79) 8%, transparent) 49.5% 50.5%, transparent 50.5%),
+    linear-gradient(90deg, transparent 49.5%, color-mix(in oklch, oklch(0.711 0.035 256.79) 8%, transparent) 49.5% 50.5%, transparent 50.5%),
+    radial-gradient(circle at 50% 50%, oklch(0.192 0.035 314.78), oklch(0.177 0.034 269.56));
   overflow: hidden;
 }
 
@@ -772,22 +772,22 @@ export const effectsBatch6: CSSEffect[] = [
 .roycss-cursor-crosshair::after {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
-  background: #f43f5e;
-  box-shadow: 0 0 10px rgba(244, 63, 94, 0.85);
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  background: oklch(0.645 0.215 16.44);
+  box-shadow: 0 0 10px color-mix(in oklch, oklch(0.645 0.215 16.44) 85%, transparent);
   animation: roy-cursor-crosshair-move 3s ease-in-out infinite;
 }
 
 .roycss-cursor-crosshair::before {
-  width: 26px;
-  height: 2px;
+  inline-size: 26px;
+  block-size: 2px;
   margin: -1px 0 0 -13px;
 }
 
 .roycss-cursor-crosshair::after {
-  width: 2px;
-  height: 26px;
+  inline-size: 2px;
+  block-size: 26px;
   margin: -13px 0 0 -1px;
 }
 
@@ -809,20 +809,20 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Cursor Arrow Bounce */
 .roycss-cursor-arrow-bounce {
   position: relative;
-  background: radial-gradient(circle at 50% 50%, #2a1a08, #0b1020);
+  background: radial-gradient(circle at 50% 50%, oklch(0.234 0.039 67.22), oklch(0.177 0.034 269.56));
   overflow: hidden;
 }
 
 .roycss-cursor-arrow-bounce::before {
   content: "";
   position: absolute;
-  width: 0;
-  height: 0;
-  top: 50%;
-  left: 50%;
-  border-left: 9px solid transparent;
-  border-top: 15px solid #f59e0b;
-  filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.75));
+  inline-size: 0;
+  block-size: 0;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  border-inline-start: 9px solid transparent;
+  border-block-start: 15px solid oklch(0.769 0.165 70.08);
+  filter: drop-shadow(0 0 6px color-mix(in oklch, oklch(0.769 0.165 70.08) 75%, transparent));
   transform-origin: 0 0;
   animation: roy-cursor-arrow-bounce 1.4s ease-in-out infinite;
 }
@@ -830,13 +830,13 @@ export const effectsBatch6: CSSEffect[] = [
 .roycss-cursor-arrow-bounce::after {
   content: "";
   position: absolute;
-  width: 26px;
-  height: 26px;
+  inline-size: 26px;
+  block-size: 26px;
   border-radius: 50%;
-  top: 50%;
-  left: 50%;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
   margin: -13px 0 0 -13px;
-  border: 1.5px dashed rgba(245, 158, 11, 0.55);
+  border: 1.5px dashed color-mix(in oklch, oklch(0.769 0.165 70.08) 55%, transparent);
   animation: roy-cursor-arrow-ring 1.4s ease-out infinite;
 }
 
@@ -863,34 +863,34 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Cursor Pulse Ring */
 .roycss-cursor-pulse-ring {
   position: relative;
-  background: radial-gradient(circle at 50% 50%, #1f0f2e, #0b1020);
+  background: radial-gradient(circle at 50% 50%, oklch(0.209 0.061 305.58), oklch(0.177 0.034 269.56));
   overflow: hidden;
 }
 
 .roycss-cursor-pulse-ring::before {
   content: "";
   position: absolute;
-  width: 9px;
-  height: 9px;
+  inline-size: 9px;
+  block-size: 9px;
   border-radius: 50%;
-  top: 50%;
-  left: 50%;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
   margin: -4.5px 0 0 -4.5px;
-  background: #a855f7;
-  box-shadow: 0 0 12px 3px rgba(168, 85, 247, 0.85);
+  background: oklch(0.627 0.233 303.9);
+  box-shadow: 0 0 12px 3px color-mix(in oklch, oklch(0.627 0.233 303.9) 85%, transparent);
   animation: roy-cursor-pulse-dot 3s ease-in-out infinite;
 }
 
 .roycss-cursor-pulse-ring::after {
   content: "";
   position: absolute;
-  width: 26px;
-  height: 26px;
+  inline-size: 26px;
+  block-size: 26px;
   border-radius: 50%;
-  top: 50%;
-  left: 50%;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
   margin: -13px 0 0 -13px;
-  border: 2px solid #a855f7;
+  border: 2px solid oklch(0.627 0.233 303.9);
   animation: roy-cursor-pulse-ring 3s ease-in-out infinite;
 }
 
@@ -917,24 +917,24 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Cursor Gradient Trail */
 .roycss-cursor-gradient-trail {
   position: relative;
-  background: radial-gradient(circle at 50% 50%, #1a0f2e, #0b1020);
+  background: radial-gradient(circle at 50% 50%, oklch(0.203 0.06 297.11), oklch(0.177 0.034 269.56));
   overflow: hidden;
 }
 
 .roycss-cursor-gradient-trail::before {
   content: "";
   position: absolute;
-  width: 76px;
-  height: 76px;
+  inline-size: 76px;
+  block-size: 76px;
   border-radius: 50%;
-  top: 50%;
-  left: 50%;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
   margin: -38px 0 0 -38px;
   background: conic-gradient(
     from 0deg,
     transparent 0deg,
-    rgba(244, 114, 182, 0.9) 60deg,
-    rgba(34, 211, 238, 0.9) 120deg,
+    color-mix(in oklch, oklch(0.725 0.175 349.76) 90%, transparent) 60deg,
+    color-mix(in oklch, oklch(0.797 0.134 211.53) 90%, transparent) 120deg,
     transparent 180deg,
     transparent 360deg
   );
@@ -945,14 +945,14 @@ export const effectsBatch6: CSSEffect[] = [
 .roycss-cursor-gradient-trail::after {
   content: "";
   position: absolute;
-  width: 10px;
-  height: 10px;
+  inline-size: 10px;
+  block-size: 10px;
   border-radius: 50%;
-  top: 50%;
-  left: 50%;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
   margin: -5px 0 0 -5px;
-  background: #22d3ee;
-  box-shadow: 0 0 12px 3px rgba(34, 211, 238, 0.85);
+  background: oklch(0.797 0.134 211.53);
+  box-shadow: 0 0 12px 3px color-mix(in oklch, oklch(0.797 0.134 211.53) 85%, transparent);
   animation: roy-cursor-gradient-orbit 3s linear infinite;
 }
 
@@ -978,23 +978,23 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Cursor Firefly */
 .roycss-cursor-firefly {
   position: relative;
-  background: linear-gradient(135deg, #0a0f1f, #1a0f2e);
+  background: linear-gradient(135deg, oklch(0.173 0.034 269.46), oklch(0.203 0.06 297.11));
   overflow: hidden;
 }
 
 .roycss-cursor-firefly::before {
   content: "";
   position: absolute;
-  width: 7px;
-  height: 7px;
+  inline-size: 7px;
+  block-size: 7px;
   border-radius: 50%;
-  top: 50%;
-  left: 50%;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
   margin: -3.5px 0 0 -3.5px;
-  background: #fde047;
+  background: oklch(0.905 0.166 98.11);
   box-shadow:
-    0 0 8px 2px rgba(253, 224, 71, 0.95),
-    0 0 22px 6px rgba(253, 224, 71, 0.4);
+    0 0 8px 2px color-mix(in oklch, oklch(0.905 0.166 98.11) 95%, transparent),
+    0 0 22px 6px color-mix(in oklch, oklch(0.905 0.166 98.11) 40%, transparent);
   animation:
     roy-cursor-firefly-drift 5s ease-in-out infinite,
     roy-cursor-firefly-glow 1.4s ease-in-out infinite;
@@ -1003,15 +1003,15 @@ export const effectsBatch6: CSSEffect[] = [
 .roycss-cursor-firefly::after {
   content: "";
   position: absolute;
-  width: 5px;
-  height: 5px;
+  inline-size: 5px;
+  block-size: 5px;
   border-radius: 50%;
-  top: 32%;
-  left: 30%;
-  background: #fef08a;
+  inset-block-start: 32%;
+  inset-inline-start: 30%;
+  background: oklch(0.945 0.124 101.54);
   box-shadow:
-    0 0 7px 1px rgba(254, 240, 138, 0.85),
-    0 0 16px 4px rgba(254, 240, 138, 0.35);
+    0 0 7px 1px color-mix(in oklch, oklch(0.945 0.124 101.54) 85%, transparent),
+    0 0 16px 4px color-mix(in oklch, oklch(0.945 0.124 101.54) 35%, transparent);
   animation:
     roy-cursor-firefly-drift2 6s ease-in-out infinite,
     roy-cursor-firefly-glow 1.8s ease-in-out 0.5s infinite;
@@ -1052,7 +1052,7 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Page Fade */
 .roycss-page-fade {
   position: relative;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background: linear-gradient(135deg, oklch(0.208 0.04 265.75), oklch(0.279 0.037 260.03));
   overflow: hidden;
 }
 
@@ -1060,9 +1060,9 @@ export const effectsBatch6: CSSEffect[] = [
   content: "";
   position: absolute;
   inset: 8px;
-  background: linear-gradient(135deg, #6366f1, #ec4899);
+  background: linear-gradient(135deg, oklch(0.585 0.204 277.12), oklch(0.656 0.212 354.31));
   border-radius: 6px;
-  box-shadow: 0 12px 32px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 12px 32px color-mix(in oklch, oklch(0.585 0.204 277.12) 40%, transparent);
   animation: roy-page-fade 2.8s ease-in-out infinite;
 }
 
@@ -1085,17 +1085,17 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Page Slide Left */
 .roycss-page-slide-left {
   position: relative;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background: linear-gradient(135deg, oklch(0.208 0.04 265.75), oklch(0.279 0.037 260.03));
   overflow: hidden;
 }
 
-.roycss-page-slide-left::before {
+.roycss-page-slide-inset-inline-start::before {
   content: "";
   position: absolute;
   inset: 8px;
-  background: linear-gradient(135deg, #06b6d4, #3b82f6);
+  background: linear-gradient(135deg, oklch(0.715 0.126 215.22), oklch(0.623 0.188 259.81));
   border-radius: 6px;
-  box-shadow: 0 12px 32px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 12px 32px color-mix(in oklch, oklch(0.623 0.188 259.81) 40%, transparent);
   animation: roy-page-slide-left 3.2s ease-in-out infinite;
 }
 
@@ -1118,7 +1118,7 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Page Slide Up */
 .roycss-page-slide-up {
   position: relative;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background: linear-gradient(135deg, oklch(0.208 0.04 265.75), oklch(0.279 0.037 260.03));
   overflow: hidden;
 }
 
@@ -1126,9 +1126,9 @@ export const effectsBatch6: CSSEffect[] = [
   content: "";
   position: absolute;
   inset: 8px;
-  background: linear-gradient(135deg, #10b981, #84cc16);
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.768 0.204 130.85));
   border-radius: 6px;
-  box-shadow: 0 12px 32px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 12px 32px color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent);
   animation: roy-page-slide-up 3.2s ease-in-out infinite;
 }
 
@@ -1151,7 +1151,7 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Page Curtain */
 .roycss-page-curtain {
   position: relative;
-  background: linear-gradient(135deg, #7c3aed, #db2777);
+  background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.592 0.218 0.58));
   overflow: hidden;
 }
 
@@ -1159,21 +1159,21 @@ export const effectsBatch6: CSSEffect[] = [
 .roycss-page-curtain::after {
   content: "";
   position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 50%;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  inset-block-start: 0;
+  inset-block-end: 0;
+  inline-size: 50%;
+  background: linear-gradient(135deg, oklch(0.208 0.04 265.75), oklch(0.279 0.037 260.03));
 }
 
 .roycss-page-curtain::before {
-  left: 0;
-  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  inset-inline-start: 0;
+  border-inline-end: 1px solid color-mix(in oklch, oklch(1 0 89.88) 12%, transparent);
   animation: roy-page-curtain-left 3.4s ease-in-out infinite;
 }
 
 .roycss-page-curtain::after {
-  right: 0;
-  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  inset-inline-end: 0;
+  border-inline-start: 1px solid color-mix(in oklch, oklch(1 0 89.88) 12%, transparent);
   animation: roy-page-curtain-right 3.4s ease-in-out infinite;
 }
 
@@ -1202,7 +1202,7 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Page Zoom */
 .roycss-page-zoom {
   position: relative;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background: linear-gradient(135deg, oklch(0.208 0.04 265.75), oklch(0.279 0.037 260.03));
   overflow: hidden;
 }
 
@@ -1210,9 +1210,9 @@ export const effectsBatch6: CSSEffect[] = [
   content: "";
   position: absolute;
   inset: 8px;
-  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  background: linear-gradient(135deg, oklch(0.769 0.165 70.08), oklch(0.637 0.208 25.33));
   border-radius: 6px;
-  box-shadow: 0 12px 32px rgba(239, 68, 68, 0.4);
+  box-shadow: 0 12px 32px color-mix(in oklch, oklch(0.637 0.208 25.33) 40%, transparent);
   animation: roy-page-zoom 2.8s ease-in-out infinite;
 }
 
@@ -1235,7 +1235,7 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Page Flip */
 .roycss-page-flip {
   position: relative;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background: linear-gradient(135deg, oklch(0.208 0.04 265.75), oklch(0.279 0.037 260.03));
   overflow: hidden;
   perspective: 800px;
 }
@@ -1244,9 +1244,9 @@ export const effectsBatch6: CSSEffect[] = [
   content: "";
   position: absolute;
   inset: 8px;
-  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  background: linear-gradient(135deg, oklch(0.769 0.165 70.08), oklch(0.637 0.208 25.33));
   border-radius: 6px;
-  box-shadow: 0 12px 32px rgba(245, 158, 11, 0.4);
+  box-shadow: 0 12px 32px color-mix(in oklch, oklch(0.769 0.165 70.08) 40%, transparent);
   backface-visibility: hidden;
   transform-origin: left center;
   animation: roy-page-flip 3.4s ease-in-out infinite;
@@ -1273,7 +1273,7 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Page Circle Reveal */
 .roycss-page-circle-reveal {
   position: relative;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background: linear-gradient(135deg, oklch(0.208 0.04 265.75), oklch(0.279 0.037 260.03));
   overflow: hidden;
 }
 
@@ -1281,9 +1281,9 @@ export const effectsBatch6: CSSEffect[] = [
   content: "";
   position: absolute;
   inset: 8px;
-  background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+  background: linear-gradient(135deg, oklch(0.715 0.126 215.22), oklch(0.606 0.219 292.72));
   border-radius: 6px;
-  box-shadow: 0 12px 32px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 12px 32px color-mix(in oklch, oklch(0.606 0.219 292.72) 40%, transparent);
   clip-path: circle(0% at 50% 50%);
   animation: roy-page-circle-reveal 3s ease-in-out infinite;
 }
@@ -1307,7 +1307,7 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Page Mask Reveal */
 .roycss-page-mask-reveal {
   position: relative;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background: linear-gradient(135deg, oklch(0.208 0.04 265.75), oklch(0.279 0.037 260.03));
   overflow: hidden;
 }
 
@@ -1315,9 +1315,9 @@ export const effectsBatch6: CSSEffect[] = [
   content: "";
   position: absolute;
   inset: 8px;
-  background: linear-gradient(135deg, #ec4899, #8b5cf6);
+  background: linear-gradient(135deg, oklch(0.656 0.212 354.31), oklch(0.606 0.219 292.72));
   border-radius: 6px;
-  box-shadow: 0 12px 32px rgba(236, 72, 153, 0.4);
+  box-shadow: 0 12px 32px color-mix(in oklch, oklch(0.656 0.212 354.31) 40%, transparent);
   clip-path: inset(0 100% 0 0);
   animation: roy-page-mask-reveal 3s ease-in-out infinite;
 }
@@ -1341,7 +1341,7 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Page Cube */
 .roycss-page-cube {
   position: relative;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background: linear-gradient(135deg, oklch(0.208 0.04 265.75), oklch(0.279 0.037 260.03));
   overflow: hidden;
   perspective: 700px;
 }
@@ -1350,9 +1350,9 @@ export const effectsBatch6: CSSEffect[] = [
   content: "";
   position: absolute;
   inset: 12px;
-  background: linear-gradient(135deg, #10b981, #06b6d4);
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
   border-radius: 6px;
-  box-shadow: 0 12px 32px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 12px 32px color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent);
   animation: roy-page-cube 3.6s ease-in-out infinite;
 }
 
@@ -1377,7 +1377,7 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Page Liquid */
 .roycss-page-liquid {
   position: relative;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background: linear-gradient(135deg, oklch(0.208 0.04 265.75), oklch(0.279 0.037 260.03));
   overflow: hidden;
 }
 
@@ -1385,7 +1385,7 @@ export const effectsBatch6: CSSEffect[] = [
   content: "";
   position: absolute;
   inset: 10px;
-  background: linear-gradient(135deg, #ec4899, #8b5cf6);
+  background: linear-gradient(135deg, oklch(0.656 0.212 354.31), oklch(0.606 0.219 292.72));
   filter: blur(0px);
   animation: roy-page-liquid 3.4s ease-in-out infinite;
 }
@@ -1424,7 +1424,7 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Page Shutter */
 .roycss-page-shutter {
   position: relative;
-  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  background: linear-gradient(135deg, oklch(0.769 0.165 70.08), oklch(0.637 0.208 25.33));
   overflow: hidden;
 }
 
@@ -1432,7 +1432,7 @@ export const effectsBatch6: CSSEffect[] = [
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background: linear-gradient(135deg, oklch(0.208 0.04 265.75), oklch(0.279 0.037 260.03));
   border-radius: 50%;
   transform: scale(0);
   animation: roy-page-shutter 3.2s ease-in-out infinite;
@@ -1441,14 +1441,14 @@ export const effectsBatch6: CSSEffect[] = [
 .roycss-page-shutter::after {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 10px;
-  height: 10px;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inline-size: 10px;
+  block-size: 10px;
   margin: -5px 0 0 -5px;
   border-radius: 50%;
-  background: #fde047;
-  box-shadow: 0 0 14px 3px rgba(253, 224, 71, 0.85);
+  background: oklch(0.905 0.166 98.11);
+  box-shadow: 0 0 14px 3px color-mix(in oklch, oklch(0.905 0.166 98.11) 85%, transparent);
   opacity: 0;
   animation: roy-page-shutter-aperture 3.2s ease-in-out infinite;
 }
@@ -1476,7 +1476,7 @@ export const effectsBatch6: CSSEffect[] = [
     cssCode: `/* Page Dissolve */
 .roycss-page-dissolve {
   position: relative;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background: linear-gradient(135deg, oklch(0.208 0.04 265.75), oklch(0.279 0.037 260.03));
   overflow: hidden;
 }
 
@@ -1484,9 +1484,9 @@ export const effectsBatch6: CSSEffect[] = [
   content: "";
   position: absolute;
   inset: 8px;
-  background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+  background: linear-gradient(135deg, oklch(0.715 0.126 215.22), oklch(0.606 0.219 292.72));
   border-radius: 6px;
-  box-shadow: 0 12px 32px rgba(34, 211, 238, 0.4);
+  box-shadow: 0 12px 32px color-mix(in oklch, oklch(0.797 0.134 211.53) 40%, transparent);
   animation: roy-page-dissolve 3.2s ease-in-out infinite;
 }
 

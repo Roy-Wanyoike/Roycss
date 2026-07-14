@@ -42,12 +42,12 @@ export const effectsBatch12: CSSEffect[] = [
     cssCode: `/* Radial Progress — conic-gradient ring with @property */
 .roycss-progress-radial-percentage {
   --roy-b12-radial-progress: 0;
-  width: 100px;
-  height: 100px;
+  inline-size: 100px;
+  block-size: 100px;
   border-radius: 50%;
   background: conic-gradient(
-    #10b981 calc(var(--roy-b12-radial-progress) * 360deg),
-    #1e293b 0
+    oklch(0.696 0.149 162.48) calc(var(--roy-b12-radial-progress) * 360deg),
+    oklch(0.279 0.037 260.03) 0
   );
   display: flex;
   align-items: center;
@@ -58,16 +58,16 @@ export const effectsBatch12: CSSEffect[] = [
 .roycss-progress-radial-percentage > div { display: none; }
 .roycss-progress-radial-percentage::before {
   content: "";
-  width: 78px;
-  height: 78px;
+  inline-size: 78px;
+  block-size: 78px;
   border-radius: 50%;
-  background: #0f172a;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+  background: oklch(0.208 0.04 265.75);
+  box-shadow: inset 0 0 0 1px color-mix(in oklch, oklch(1 0 89.88) 6%, transparent);
 }
 .roycss-progress-radial-percentage::after {
   content: "75%";
   position: absolute;
-  color: #10b981;
+  color: oklch(0.696 0.149 162.48);
   font-family: ui-monospace, monospace;
   font-size: 18px;
   font-weight: 700;
@@ -84,9 +84,9 @@ export const effectsBatch12: CSSEffect[] = [
   100% { --roy-b12-radial-progress: 1; }
 }
 @keyframes roy-b12-radial-label {
-  0%, 33%  { content: "25%"; color: #f59e0b; }
-  34%, 66% { content: "75%"; color: #10b981; }
-  67%, 100%{ content: "100%"; color: #22c55e; }
+  0%, 33%  { content: "25%"; color: oklch(0.769 0.165 70.08); }
+  34%, 66% { content: "75%"; color: oklch(0.696 0.149 162.48); }
+  67%, 100%{ content: "100%"; color: oklch(0.723 0.192 149.58); }
 }`,
   },
 
@@ -100,38 +100,38 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Step Indicator — connected dots with progress line */
 .roycss-progress-step-indicator {
-  width: 220px;
-  height: 30px;
+  inline-size: 220px;
+  block-size: 30px;
   position: relative;
   background:
-    radial-gradient(circle at 10px 15px, #3b82f6 0 6px, #1e293b 7px 8px, transparent 9px),
-    radial-gradient(circle at 110px 15px, #8b5cf6 0 6px, #1e293b 7px 8px, transparent 9px),
-    radial-gradient(circle at 210px 15px, #1e293b 0 6px, #334155 7px 8px, transparent 9px);
+    radial-gradient(circle at 10px 15px, oklch(0.623 0.188 259.81) 0 6px, oklch(0.279 0.037 260.03) 7px 8px, transparent 9px),
+    radial-gradient(circle at 110px 15px, oklch(0.606 0.219 292.72) 0 6px, oklch(0.279 0.037 260.03) 7px 8px, transparent 9px),
+    radial-gradient(circle at 210px 15px, oklch(0.279 0.037 260.03) 0 6px, oklch(0.372 0.039 257.29) 7px 8px, transparent 9px);
 }
 .roycss-progress-step-indicator > div { display: none; }
 .roycss-progress-step-indicator::before {
   content: "";
   position: absolute;
-  top: 14px; left: 16px; right: 16px;
-  height: 2px;
-  background: #1e293b;
+  inset-block-start: 14px; inset-inline-start: 16px; inset-inline-end: 16px;
+  block-size: 2px;
+  background: oklch(0.279 0.037 260.03);
   border-radius: 1px;
 }
 .roycss-progress-step-indicator::after {
   content: "";
   position: absolute;
-  top: 14px; left: 16px;
-  height: 2px;
-  width: 0;
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  inset-block-start: 14px; inset-inline-start: 16px;
+  block-size: 2px;
+  inline-size: 0;
+  background: linear-gradient(90deg, oklch(0.623 0.188 259.81), oklch(0.606 0.219 292.72));
   border-radius: 1px;
-  box-shadow: 0 0 6px rgba(139,92,246,0.6);
+  box-shadow: 0 0 6px color-mix(in oklch, oklch(0.606 0.219 292.72) 60%, transparent);
   animation: roy-b12-step-fill 4s ease-in-out infinite;
 }
 @keyframes roy-b12-step-fill {
-  0%, 10%   { width: 0; }
-  35%, 55%  { width: 94px; }
-  80%, 100% { width: 194px; }
+  0%, 10%   { inline-size: 0; }
+  35%, 55%  { inline-size: 94px; }
+  80%, 100% { inline-size: 194px; }
 }`,
   },
 
@@ -146,22 +146,22 @@ export const effectsBatch12: CSSEffect[] = [
     cssCode: `/* Rating Stars — animated gradient fill across star glyphs */
 .roycss-rating-stars {
   --roy-b12-rating-fill: 0%;
-  width: 200px;
-  height: 40px;
+  inline-size: 200px;
+  block-size: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 30px;
   letter-spacing: 4px;
-  line-height: 1;
+  line-block-size: 1;
   background: linear-gradient(90deg,
-    #fbbf24 var(--roy-b12-rating-fill),
-    #475569 var(--roy-b12-rating-fill));
+    oklch(0.837 0.164 84.43) var(--roy-b12-rating-fill),
+    oklch(0.446 0.037 257.28) var(--roy-b12-rating-fill));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
-  filter: drop-shadow(0 2px 6px rgba(251,191,36,0.35));
+  filter: drop-shadow(0 2px 6px color-mix(in oklch, oklch(0.837 0.164 84.43) 35%, transparent));
   animation: roy-b12-rating-cycle 4s ease-in-out infinite;
 }
 .roycss-rating-stars > div { display: none; }
@@ -192,8 +192,8 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Like Button — beating heart with particle burst */
 .roycss-like-button-particle {
-  width: 80px;
-  height: 80px;
+  inline-size: 80px;
+  block-size: 80px;
   position: relative;
 }
 .roycss-like-button-particle > div { display: none; }
@@ -205,8 +205,8 @@ export const effectsBatch12: CSSEffect[] = [
   align-items: center;
   justify-content: center;
   font-size: 44px;
-  color: #ef4444;
-  filter: drop-shadow(0 0 10px rgba(239,68,68,0.6));
+  color: oklch(0.637 0.208 25.33);
+  filter: drop-shadow(0 0 10px color-mix(in oklch, oklch(0.637 0.208 25.33) 60%, transparent));
   animation: roy-b12-like-beat 1.6s ease-in-out infinite;
 }
 .roycss-like-button-particle::after {
@@ -214,14 +214,14 @@ export const effectsBatch12: CSSEffect[] = [
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 20% 50%, #f87171 0 3px, transparent 4px),
-    radial-gradient(circle at 80% 50%, #fbbf24 0 3px, transparent 4px),
-    radial-gradient(circle at 50% 20%, #f472b6 0 3px, transparent 4px),
-    radial-gradient(circle at 50% 80%, #f87171 0 3px, transparent 4px),
-    radial-gradient(circle at 30% 25%, #fbbf24 0 3px, transparent 4px),
-    radial-gradient(circle at 70% 25%, #f472b6 0 3px, transparent 4px),
-    radial-gradient(circle at 30% 75%, #fbbf24 0 3px, transparent 4px),
-    radial-gradient(circle at 70% 75%, #f472b6 0 3px, transparent 4px);
+    radial-gradient(circle at 20% 50%, oklch(0.711 0.166 22.22) 0 3px, transparent 4px),
+    radial-gradient(circle at 80% 50%, oklch(0.837 0.164 84.43) 0 3px, transparent 4px),
+    radial-gradient(circle at 50% 20%, oklch(0.725 0.175 349.76) 0 3px, transparent 4px),
+    radial-gradient(circle at 50% 80%, oklch(0.711 0.166 22.22) 0 3px, transparent 4px),
+    radial-gradient(circle at 30% 25%, oklch(0.837 0.164 84.43) 0 3px, transparent 4px),
+    radial-gradient(circle at 70% 25%, oklch(0.725 0.175 349.76) 0 3px, transparent 4px),
+    radial-gradient(circle at 30% 75%, oklch(0.837 0.164 84.43) 0 3px, transparent 4px),
+    radial-gradient(circle at 70% 75%, oklch(0.725 0.175 349.76) 0 3px, transparent 4px);
   background-repeat: no-repeat;
   opacity: 0;
   transform: scale(0.5);
@@ -250,11 +250,11 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Copy Feedback — checkmark pop with circle pulse */
 .roycss-copy-feedback {
-  width: 80px;
-  height: 80px;
+  inline-size: 80px;
+  block-size: 80px;
   border-radius: 50%;
-  background: rgba(16,185,129,0.12);
-  border: 2px solid #10b981;
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 12%, transparent);
+  border: 2px solid oklch(0.696 0.149 162.48);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -264,10 +264,10 @@ export const effectsBatch12: CSSEffect[] = [
 .roycss-copy-feedback > div { display: none; }
 .roycss-copy-feedback::before {
   content: "";
-  width: 26px;
-  height: 13px;
-  border-left: 4px solid #10b981;
-  border-bottom: 4px solid #10b981;
+  inline-size: 26px;
+  block-size: 13px;
+  border-inline-start: 4px solid oklch(0.696 0.149 162.48);
+  border-block-end: 4px solid oklch(0.696 0.149 162.48);
   transform: rotate(-45deg) translate(2px, -3px);
   border-radius: 1px;
   animation: roy-b12-copy-check 2.4s ease-in-out infinite;
@@ -277,7 +277,7 @@ export const effectsBatch12: CSSEffect[] = [
   position: absolute;
   inset: -6px;
   border-radius: 50%;
-  border: 2px solid #10b981;
+  border: 2px solid oklch(0.696 0.149 162.48);
   opacity: 0;
   animation: roy-b12-copy-ring 2.4s ease-out infinite;
 }
@@ -307,59 +307,59 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Dark Mode Toggle — sun/moon morph switch */
 .roycss-toggle-dark-mode {
-  width: 90px;
-  height: 38px;
+  inline-size: 90px;
+  block-size: 38px;
   border-radius: 19px;
-  background: linear-gradient(90deg, #93c5fd, #3b82f6);
-  border: 1px solid #60a5fa;
+  background: linear-gradient(90deg, oklch(0.809 0.096 251.81), oklch(0.623 0.188 259.81));
+  border: 1px solid oklch(0.714 0.143 254.62);
   position: relative;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.2), 0 4px 12px rgba(59,130,246,0.25);
+  box-shadow: inset 0 1px 3px color-mix(in oklch, oklch(0 0 0) 20%, transparent), 0 4px 12px color-mix(in oklch, oklch(0.623 0.188 259.81) 25%, transparent);
   animation: roy-b12-toggle-bg 4s ease-in-out infinite;
 }
 .roycss-toggle-dark-mode > div { display: none; }
 .roycss-toggle-dark-mode::before {
   content: "";
   position: absolute;
-  top: 3px; left: 3px;
-  width: 30px; height: 30px;
+  inset-block-start: 3px; inset-inline-start: 3px;
+  inline-size: 30px; block-size: 30px;
   border-radius: 50%;
-  background: radial-gradient(circle, #fde047, #f59e0b);
-  box-shadow: 0 0 14px rgba(253,224,71,0.7), inset -2px -2px 4px rgba(0,0,0,0.15);
+  background: radial-gradient(circle, oklch(0.905 0.166 98.11), oklch(0.769 0.165 70.08));
+  box-shadow: 0 0 14px color-mix(in oklch, oklch(0.905 0.166 98.11) 70%, transparent), inset -2px -2px 4px color-mix(in oklch, oklch(0 0 0) 15%, transparent);
   animation: roy-b12-toggle-knob 4s ease-in-out infinite;
 }
 .roycss-toggle-dark-mode::after {
   content: "";
   position: absolute;
-  top: 11px; right: 14px;
-  width: 14px; height: 14px;
+  inset-block-start: 11px; inset-inline-end: 14px;
+  inline-size: 14px; block-size: 14px;
   border-radius: 50%;
-  background: radial-gradient(circle at 70% 30%, #e2e8f0, #94a3b8);
+  background: radial-gradient(circle at 70% 30%, oklch(0.929 0.013 255.51), oklch(0.711 0.035 256.79));
   opacity: 0;
-  box-shadow: 0 0 8px rgba(148,163,184,0.5);
+  box-shadow: 0 0 8px color-mix(in oklch, oklch(0.711 0.035 256.79) 50%, transparent);
   animation: roy-b12-toggle-stars 4s ease-in-out infinite;
 }
 @keyframes roy-b12-toggle-bg {
   0%, 45% {
-    background: linear-gradient(90deg, #93c5fd, #3b82f6);
-    border-color: #60a5fa;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2), 0 4px 12px rgba(59,130,246,0.25);
+    background: linear-gradient(90deg, oklch(0.809 0.096 251.81), oklch(0.623 0.188 259.81));
+    border-color: oklch(0.714 0.143 254.62);
+    box-shadow: inset 0 1px 3px color-mix(in oklch, oklch(0 0 0) 20%, transparent), 0 4px 12px color-mix(in oklch, oklch(0.623 0.188 259.81) 25%, transparent);
   }
   55%, 100% {
-    background: linear-gradient(90deg, #1e293b, #0f172a);
-    border-color: #334155;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.4), 0 4px 12px rgba(0,0,0,0.4);
+    background: linear-gradient(90deg, oklch(0.279 0.037 260.03), oklch(0.208 0.04 265.75));
+    border-color: oklch(0.372 0.039 257.29);
+    box-shadow: inset 0 1px 3px color-mix(in oklch, oklch(0 0 0) 40%, transparent), 0 4px 12px color-mix(in oklch, oklch(0 0 0) 40%, transparent);
   }
 }
 @keyframes roy-b12-toggle-knob {
   0%, 45% {
-    left: 3px;
-    background: radial-gradient(circle, #fde047, #f59e0b);
-    box-shadow: 0 0 14px rgba(253,224,71,0.7), inset -2px -2px 4px rgba(0,0,0,0.15);
+    inset-inline-start: 3px;
+    background: radial-gradient(circle, oklch(0.905 0.166 98.11), oklch(0.769 0.165 70.08));
+    box-shadow: 0 0 14px color-mix(in oklch, oklch(0.905 0.166 98.11) 70%, transparent), inset -2px -2px 4px color-mix(in oklch, oklch(0 0 0) 15%, transparent);
   }
   55%, 100% {
-    left: 57px;
-    background: radial-gradient(circle at 65% 35%, #e2e8f0, #94a3b8);
-    box-shadow: 0 0 10px rgba(148,163,184,0.6), inset -6px -3px 0 0 #475569, inset -2px -2px 4px rgba(0,0,0,0.2);
+    inset-inline-start: 57px;
+    background: radial-gradient(circle at 65% 35%, oklch(0.929 0.013 255.51), oklch(0.711 0.035 256.79));
+    box-shadow: 0 0 10px color-mix(in oklch, oklch(0.711 0.035 256.79) 60%, transparent), inset -6px -3px 0 0 oklch(0.446 0.037 257.28), inset -2px -2px 4px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
   }
 }
 @keyframes roy-b12-toggle-stars {
@@ -378,8 +378,8 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Password Strength — meter with color gradient and label */
 .roycss-password-strength {
-  width: 220px;
-  height: 24px;
+  inline-size: 220px;
+  block-size: 24px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -389,11 +389,11 @@ export const effectsBatch12: CSSEffect[] = [
 .roycss-password-strength > div { display: none; }
 .roycss-password-strength::before {
   content: "";
-  width: 100%;
-  height: 8px;
+  inline-size: 100%;
+  block-size: 8px;
   border-radius: 4px;
-  background: #1e293b;
-  background-image: linear-gradient(90deg, #ef4444, #f59e0b 50%, #22c55e);
+  background: oklch(0.279 0.037 260.03);
+  background-image: linear-gradient(90deg, oklch(0.637 0.208 25.33), oklch(0.769 0.165 70.08) 50%, oklch(0.723 0.192 149.58));
   background-size: 25% 100%;
   background-repeat: no-repeat;
   background-position: 0 0;
@@ -403,12 +403,12 @@ export const effectsBatch12: CSSEffect[] = [
 .roycss-password-strength::after {
   content: "Weak";
   position: absolute;
-  top: -2px; left: 0;
+  inset-block-start: -2px; inset-inline-start: 0;
   font-family: ui-monospace, monospace;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.5px;
-  color: #94a3b8;
+  color: oklch(0.711 0.035 256.79);
   animation: roy-b12-pw-label 3s steps(1) infinite;
 }
 @keyframes roy-b12-pw-fill {
@@ -417,9 +417,9 @@ export const effectsBatch12: CSSEffect[] = [
   70%, 100% { background-size: 100% 100%; }
 }
 @keyframes roy-b12-pw-label {
-  0%, 32%  { content: "Weak"; color: #ef4444; }
-  33%, 65% { content: "Good"; color: #f59e0b; }
-  66%, 100%{ content: "Strong"; color: #22c55e; }
+  0%, 32%  { content: "Weak"; color: oklch(0.637 0.208 25.33); }
+  33%, 65% { content: "Good"; color: oklch(0.769 0.165 70.08); }
+  66%, 100%{ content: "Strong"; color: oklch(0.723 0.192 149.58); }
 }`,
   },
 
@@ -433,10 +433,10 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Upload Progress — labeled bar with smooth fill animation */
 .roycss-upload-progress {
-  width: 240px;
-  height: 64px;
-  background: #0f172a;
-  border: 1px solid #1e293b;
+  inline-size: 240px;
+  block-size: 64px;
+  background: oklch(0.208 0.04 265.75);
+  border: 1px solid oklch(0.279 0.037 260.03);
   border-radius: 10px;
   padding: 12px 14px;
   box-sizing: border-box;
@@ -451,17 +451,17 @@ export const effectsBatch12: CSSEffect[] = [
   content: "↑  uploading file.zip";
   font-family: ui-monospace, monospace;
   font-size: 12px;
-  color: #cbd5e1;
+  color: oklch(0.869 0.02 252.89);
   font-weight: 500;
 }
 .roycss-upload-progress::after {
   content: "";
   position: absolute;
-  bottom: 12px; left: 14px; right: 14px;
-  height: 8px;
+  inset-block-end: 12px; inset-inline-start: 14px; inset-inline-end: 14px;
+  block-size: 8px;
   border-radius: 4px;
-  background: #1e293b;
-  background-image: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  background: oklch(0.279 0.037 260.03);
+  background-image: linear-gradient(90deg, oklch(0.623 0.188 259.81), oklch(0.606 0.219 292.72));
   background-size: 0% 100%;
   background-repeat: no-repeat;
   animation: roy-b12-upload-fill 4s ease-in-out infinite;
@@ -469,8 +469,8 @@ export const effectsBatch12: CSSEffect[] = [
 @keyframes roy-b12-upload-fill {
   0%   { background-size: 0% 100%; }
   80%  { background-size: 100% 100%; }
-  90%  { background-size: 100% 100%; background-image: linear-gradient(90deg, #10b981, #22c55e); }
-  100% { background-size: 100% 100%; background-image: linear-gradient(90deg, #10b981, #22c55e); }
+  90%  { background-size: 100% 100%; background-image: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.723 0.192 149.58)); }
+  100% { background-size: 100% 100%; background-image: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.723 0.192 149.58)); }
 }`,
   },
 
@@ -484,10 +484,10 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Notification Badge — count-up with pulse ring */
 .roycss-notification-badge {
-  width: 64px;
-  height: 64px;
+  inline-size: 64px;
+  block-size: 64px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #ef4444, #dc2626);
+  background: linear-gradient(135deg, oklch(0.637 0.208 25.33), oklch(0.577 0.215 27.33));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -495,7 +495,7 @@ export const effectsBatch12: CSSEffect[] = [
   font-size: 20px;
   font-weight: 700;
   color: white;
-  box-shadow: 0 6px 18px rgba(239,68,68,0.5), inset 0 -3px 6px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 18px color-mix(in oklch, oklch(0.637 0.208 25.33) 50%, transparent), inset 0 -3px 6px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
   position: relative;
 }
 .roycss-notification-badge > div { display: none; }
@@ -508,7 +508,7 @@ export const effectsBatch12: CSSEffect[] = [
   position: absolute;
   inset: -4px;
   border-radius: 50%;
-  border: 2px solid #ef4444;
+  border: 2px solid oklch(0.637 0.208 25.33);
   opacity: 0;
   animation: roy-b12-notif-ring 2s ease-out infinite;
 }
@@ -534,16 +534,16 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "loader",
     cssCode: `/* Skeleton Card Shimmer — placeholder with shimmer sweep */
 .roycss-skeleton-card-shimmer {
-  width: 220px;
-  height: 130px;
+  inline-size: 220px;
+  block-size: 130px;
   background:
-    radial-gradient(circle 22px at 36px 38px, #1e293b 99%, transparent 100%),
-    linear-gradient(#1e293b, #1e293b) 76px 22px / 130px 12px no-repeat,
-    linear-gradient(#1e293b, #1e293b) 76px 42px / 100px 10px no-repeat,
-    linear-gradient(#1e293b, #1e293b) 14px 80px / 192px 10px no-repeat,
-    linear-gradient(#1e293b, #1e293b) 14px 98px / 150px 10px no-repeat,
-    #0f172a;
-  border: 1px solid #1e293b;
+    radial-gradient(circle 22px at 36px 38px, oklch(0.279 0.037 260.03) 99%, transparent 100%),
+    linear-gradient(oklch(0.279 0.037 260.03), oklch(0.279 0.037 260.03)) 76px 22px / 130px 12px no-repeat,
+    linear-gradient(oklch(0.279 0.037 260.03), oklch(0.279 0.037 260.03)) 76px 42px / 100px 10px no-repeat,
+    linear-gradient(oklch(0.279 0.037 260.03), oklch(0.279 0.037 260.03)) 14px 80px / 192px 10px no-repeat,
+    linear-gradient(oklch(0.279 0.037 260.03), oklch(0.279 0.037 260.03)) 14px 98px / 150px 10px no-repeat,
+    oklch(0.208 0.04 265.75);
+  border: 1px solid oklch(0.279 0.037 260.03);
   border-radius: 10px;
   position: relative;
   overflow: hidden;
@@ -554,7 +554,7 @@ export const effectsBatch12: CSSEffect[] = [
   inset: 0;
   background: linear-gradient(110deg,
     transparent 30%,
-    rgba(148,163,184,0.14) 50%,
+    color-mix(in oklch, oklch(0.711 0.035 256.79) 14%, transparent) 50%,
     transparent 70%);
   background-size: 250% 100%;
   background-repeat: no-repeat;
@@ -576,14 +576,14 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "loader",
     cssCode: `/* Skeleton Text Lines — shimmering placeholder text bars */
 .roycss-skeleton-text-lines {
-  width: 220px;
-  height: 110px;
+  inline-size: 220px;
+  block-size: 110px;
   background:
-    linear-gradient(#1e293b, #1e293b) 0 0 / 100% 12px no-repeat,
-    linear-gradient(#1e293b, #1e293b) 0 22px / 92% 12px no-repeat,
-    linear-gradient(#1e293b, #1e293b) 0 44px / 85% 12px no-repeat,
-    linear-gradient(#1e293b, #1e293b) 0 66px / 60% 12px no-repeat,
-    linear-gradient(#1e293b, #1e293b) 0 88px / 40% 12px no-repeat,
+    linear-gradient(oklch(0.279 0.037 260.03), oklch(0.279 0.037 260.03)) 0 0 / 100% 12px no-repeat,
+    linear-gradient(oklch(0.279 0.037 260.03), oklch(0.279 0.037 260.03)) 0 22px / 92% 12px no-repeat,
+    linear-gradient(oklch(0.279 0.037 260.03), oklch(0.279 0.037 260.03)) 0 44px / 85% 12px no-repeat,
+    linear-gradient(oklch(0.279 0.037 260.03), oklch(0.279 0.037 260.03)) 0 66px / 60% 12px no-repeat,
+    linear-gradient(oklch(0.279 0.037 260.03), oklch(0.279 0.037 260.03)) 0 88px / 40% 12px no-repeat,
     transparent;
   position: relative;
   overflow: hidden;
@@ -595,7 +595,7 @@ export const effectsBatch12: CSSEffect[] = [
   inset: 0;
   background: linear-gradient(110deg,
     transparent 35%,
-    rgba(148,163,184,0.18) 50%,
+    color-mix(in oklch, oklch(0.711 0.035 256.79) 18%, transparent) 50%,
     transparent 65%);
   background-size: 250% 100%;
   background-repeat: no-repeat;
@@ -618,12 +618,12 @@ export const effectsBatch12: CSSEffect[] = [
     cssCode: `/* Countdown Timer — circular arc depletion with number */
 .roycss-countdown-timer {
   --roy-b12-countdown-remaining: 1;
-  width: 100px;
-  height: 100px;
+  inline-size: 100px;
+  block-size: 100px;
   border-radius: 50%;
   background: conic-gradient(
-    #3b82f6 calc(var(--roy-b12-countdown-remaining) * 360deg),
-    #1e293b 0
+    oklch(0.623 0.188 259.81) calc(var(--roy-b12-countdown-remaining) * 360deg),
+    oklch(0.279 0.037 260.03) 0
   );
   display: flex;
   align-items: center;
@@ -634,16 +634,16 @@ export const effectsBatch12: CSSEffect[] = [
 .roycss-countdown-timer > div { display: none; }
 .roycss-countdown-timer::before {
   content: "";
-  width: 80px;
-  height: 80px;
+  inline-size: 80px;
+  block-size: 80px;
   border-radius: 50%;
-  background: #0f172a;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+  background: oklch(0.208 0.04 265.75);
+  box-shadow: inset 0 0 0 1px color-mix(in oklch, oklch(1 0 89.88) 6%, transparent);
 }
 .roycss-countdown-timer::after {
   content: "5";
   position: absolute;
-  color: #60a5fa;
+  color: oklch(0.714 0.143 254.62);
   font-family: ui-monospace, monospace;
   font-size: 26px;
   font-weight: 700;
@@ -682,18 +682,18 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Bar Chart Grow — multi-bar chart with staggered growth */
 .roycss-chart-bar-grow {
-  width: 220px;
-  height: 140px;
-  background-color: #0f172a;
+  inline-size: 220px;
+  block-size: 140px;
+  background-color: oklch(0.208 0.04 265.75);
   border-radius: 6px;
   position: relative;
   overflow: hidden;
   background-image:
-    linear-gradient(180deg, #3b82f6, #1e40af),
-    linear-gradient(180deg, #8b5cf6, #5b21b6),
-    linear-gradient(180deg, #ec4899, #9d174d),
-    linear-gradient(180deg, #10b981, #065f46),
-    linear-gradient(180deg, #f59e0b, #92400e);
+    linear-gradient(180deg, oklch(0.623 0.188 259.81), oklch(0.424 0.181 265.64)),
+    linear-gradient(180deg, oklch(0.606 0.219 292.72), oklch(0.432 0.211 292.76)),
+    linear-gradient(180deg, oklch(0.656 0.212 354.31), oklch(0.459 0.17 3.82)),
+    linear-gradient(180deg, oklch(0.696 0.149 162.48), oklch(0.432 0.086 166.91)),
+    linear-gradient(180deg, oklch(0.769 0.165 70.08), oklch(0.473 0.125 46.2));
   background-position:
     16px bottom,
     56px bottom,
@@ -708,16 +708,16 @@ export const effectsBatch12: CSSEffect[] = [
 .roycss-chart-bar-grow::before {
   content: "";
   position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 2px;
-  background: #334155;
+  inset-inline-start: 0; inset-inline-end: 0; inset-block-end: 0;
+  block-size: 2px;
+  background: oklch(0.372 0.039 257.29);
 }
 .roycss-chart-bar-grow::after {
   content: "";
   position: absolute;
-  left: 0; right: 0; top: 50%;
-  height: 1px;
-  background: #1e293b;
+  inset-inline-start: 0; inset-inline-end: 0; inset-block-start: 50%;
+  block-size: 1px;
+  background: oklch(0.279 0.037 260.03);
 }
 @keyframes roy-b12-bars-grow {
   0% {
@@ -739,9 +739,9 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Line Chart Draw — polyline reveal with data dots */
 .roycss-chart-line-draw {
-  width: 220px;
-  height: 140px;
-  background-color: #0f172a;
+  inline-size: 220px;
+  block-size: 140px;
+  background-color: oklch(0.208 0.04 265.75);
   border-radius: 6px;
   position: relative;
   overflow: hidden;
@@ -752,8 +752,8 @@ export const effectsBatch12: CSSEffect[] = [
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(#1e293b, #1e293b) 0 50% / 100% 1px no-repeat,
-    linear-gradient(#1e293b, #1e293b) 50% 0 / 1px 100% no-repeat;
+    linear-gradient(oklch(0.279 0.037 260.03), oklch(0.279 0.037 260.03)) 0 50% / 100% 1px no-repeat,
+    linear-gradient(oklch(0.279 0.037 260.03), oklch(0.279 0.037 260.03)) 50% 0 / 1px 100% no-repeat;
 }
 .roycss-chart-line-draw::after {
   --roy-b12-line-reveal: 0%;
@@ -761,20 +761,20 @@ export const effectsBatch12: CSSEffect[] = [
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle, #60a5fa 0 4px, transparent 5px) 8px 110px / 9px 9px no-repeat,
-    radial-gradient(circle, #60a5fa 0 4px, transparent 5px) 72px 78px / 9px 9px no-repeat,
-    radial-gradient(circle, #60a5fa 0 4px, transparent 5px) 136px 50px / 9px 9px no-repeat,
-    radial-gradient(circle, #60a5fa 0 4px, transparent 5px) 200px 22px / 9px 9px no-repeat,
-    #3b82f6;
+    radial-gradient(circle, oklch(0.714 0.143 254.62) 0 4px, transparent 5px) 8px 110px / 9px 9px no-repeat,
+    radial-gradient(circle, oklch(0.714 0.143 254.62) 0 4px, transparent 5px) 72px 78px / 9px 9px no-repeat,
+    radial-gradient(circle, oklch(0.714 0.143 254.62) 0 4px, transparent 5px) 136px 50px / 9px 9px no-repeat,
+    radial-gradient(circle, oklch(0.714 0.143 254.62) 0 4px, transparent 5px) 200px 22px / 9px 9px no-repeat,
+    oklch(0.623 0.188 259.81);
   clip-path: polygon(
     -2% 100%, 33% 70%, 66% 40%, 102% 12%,
     102% 18%, 66% 46%, 33% 76%, -2% 100%
   );
   -webkit-mask: linear-gradient(90deg,
-    #000 var(--roy-b12-line-reveal),
+    oklch(0 0 0) var(--roy-b12-line-reveal),
     transparent var(--roy-b12-line-reveal));
   mask: linear-gradient(90deg,
-    #000 var(--roy-b12-line-reveal),
+    oklch(0 0 0) var(--roy-b12-line-reveal),
     transparent var(--roy-b12-line-reveal));
   animation: roy-b12-line-draw 2.5s ease-in-out infinite;
 }
@@ -800,17 +800,17 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Donut Chart — rotating conic-gradient ring with centered label */
 .roycss-chart-donut {
-  width: 140px;
-  height: 140px;
+  inline-size: 140px;
+  block-size: 140px;
   border-radius: 50%;
   background: conic-gradient(
-    #3b82f6 0deg 130deg,
-    #8b5cf6 130deg 230deg,
-    #ec4899 230deg 310deg,
-    #10b981 310deg 360deg
+    oklch(0.623 0.188 259.81) 0deg 130deg,
+    oklch(0.606 0.219 292.72) 130deg 230deg,
+    oklch(0.656 0.212 354.31) 230deg 310deg,
+    oklch(0.696 0.149 162.48) 310deg 360deg
   );
   position: relative;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 6px 20px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
   animation: roy-b12-donut-spin 12s linear infinite;
 }
 .roycss-chart-donut > div { display: none; }
@@ -819,8 +819,8 @@ export const effectsBatch12: CSSEffect[] = [
   position: absolute;
   inset: 22px;
   border-radius: 50%;
-  background: #0f172a;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+  background: oklch(0.208 0.04 265.75);
+  box-shadow: inset 0 0 0 1px color-mix(in oklch, oklch(1 0 89.88) 6%, transparent);
 }
 .roycss-chart-donut::after {
   content: "TOTAL";
@@ -829,7 +829,7 @@ export const effectsBatch12: CSSEffect[] = [
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #94a3b8;
+  color: oklch(0.711 0.035 256.79);
   font-family: ui-monospace, monospace;
   font-size: 13px;
   font-weight: 700;
@@ -856,14 +856,14 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Gauge Meter — semicircle arc with sweeping needle */
 .roycss-gauge-meter {
-  width: 180px;
-  height: 110px;
+  inline-size: 180px;
+  block-size: 110px;
   border-radius: 90px 90px 8px 8px;
   position: relative;
   background: conic-gradient(from -90deg at 50% 100%,
-    #22c55e 0deg 60deg,
-    #eab308 60deg 120deg,
-    #ef4444 120deg 180deg,
+    oklch(0.723 0.192 149.58) 0deg 60deg,
+    oklch(0.795 0.162 86.05) 60deg 120deg,
+    oklch(0.637 0.208 25.33) 120deg 180deg,
     transparent 180deg 360deg
   );
   overflow: hidden;
@@ -873,22 +873,22 @@ export const effectsBatch12: CSSEffect[] = [
   /* inner mask creating the ring */
   content: "";
   position: absolute;
-  bottom: 0; left: 30px;
-  width: 120px; height: 60px;
+  inset-block-end: 0; inset-inline-start: 30px;
+  inline-size: 120px; block-size: 60px;
   border-radius: 60px 60px 0 0;
-  background: #0f172a;
+  background: oklch(0.208 0.04 265.75);
 }
 .roycss-gauge-meter::after {
   /* needle */
   content: "";
   position: absolute;
-  bottom: 6px; left: 50%;
-  width: 4px; height: 70px;
-  background: linear-gradient(180deg, #f8fafc, #cbd5e1);
+  inset-block-end: 6px; inset-inline-start: 50%;
+  inline-size: 4px; block-size: 70px;
+  background: linear-gradient(180deg, oklch(0.984 0.003 247.86), oklch(0.869 0.02 252.89));
   border-radius: 2px;
   transform-origin: bottom center;
   transform: translateX(-50%) rotate(-80deg);
-  box-shadow: 0 0 6px rgba(0,0,0,0.6);
+  box-shadow: 0 0 6px color-mix(in oklch, oklch(0 0 0) 60%, transparent);
   animation: roy-b12-gauge-needle 4s ease-in-out infinite alternate;
 }
 @keyframes roy-b12-gauge-needle {
@@ -908,12 +908,12 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Thermometer — vertical tube with rising mercury and bulb */
 .roycss-thermometer {
-  width: 40px;
-  height: 200px;
+  inline-size: 40px;
+  block-size: 200px;
   position: relative;
-  background: #1e293b;
+  background: oklch(0.279 0.037 260.03);
   border-radius: 20px;
-  border: 2px solid #334155;
+  border: 2px solid oklch(0.372 0.039 257.29);
   box-sizing: border-box;
 }
 .roycss-thermometer > div { display: none; }
@@ -921,33 +921,33 @@ export const effectsBatch12: CSSEffect[] = [
   /* mercury column */
   content: "";
   position: absolute;
-  bottom: 0; left: 50%;
-  width: 14px;
-  height: 8%;
-  background: linear-gradient(180deg, #f87171 0%, #ef4444 100%);
+  inset-block-end: 0; inset-inline-start: 50%;
+  inline-size: 14px;
+  block-size: 8%;
+  background: linear-gradient(180deg, oklch(0.711 0.166 22.22) 0%, oklch(0.637 0.208 25.33) 100%);
   border-radius: 7px 7px 0 0;
   transform: translateX(-50%);
-  box-shadow: inset 1px 0 1px rgba(255,255,255,0.25);
+  box-shadow: inset 1px 0 1px color-mix(in oklch, oklch(1 0 89.88) 25%, transparent);
   animation: roy-b12-therm-fill 3s ease-in-out infinite alternate;
 }
 .roycss-thermometer::after {
   /* bulb */
   content: "";
   position: absolute;
-  bottom: -24px; left: 50%;
-  width: 46px; height: 46px;
+  inset-block-end: -24px; inset-inline-start: 50%;
+  inline-size: 46px; block-size: 46px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #f87171, #b91c1c);
+  background: radial-gradient(circle at 35% 35%, oklch(0.711 0.166 22.22), oklch(0.505 0.19 27.52));
   transform: translateX(-50%);
   box-shadow:
-    0 0 14px rgba(239,68,68,0.5),
-    inset -4px -4px 8px rgba(0,0,0,0.3),
-    inset 3px 3px 6px rgba(255,255,255,0.15);
+    0 0 14px color-mix(in oklch, oklch(0.637 0.208 25.33) 50%, transparent),
+    inset -4px -4px 8px color-mix(in oklch, oklch(0 0 0) 30%, transparent),
+    inset 3px 3px 6px color-mix(in oklch, oklch(1 0 89.88) 15%, transparent);
 }
 @keyframes roy-b12-therm-fill {
-  0%   { height: 8%; }
-  50%  { height: 40%; background: linear-gradient(180deg, #fbbf24, #f59e0b); }
-  100% { height: 75%; background: linear-gradient(180deg, #f87171, #dc2626); }
+  0%   { block-size: 8%; }
+  50%  { block-size: 40%; background: linear-gradient(180deg, oklch(0.837 0.164 84.43), oklch(0.769 0.165 70.08)); }
+  100% { block-size: 75%; background: linear-gradient(180deg, oklch(0.711 0.166 22.22), oklch(0.577 0.215 27.33)); }
 }`,
   },
 
@@ -961,12 +961,12 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Battery Level — battery body with animated level fill */
 .roycss-battery-level {
-  width: 100px;
-  height: 48px;
+  inline-size: 100px;
+  block-size: 48px;
   position: relative;
-  border: 2px solid #475569;
+  border: 2px solid oklch(0.446 0.037 257.28);
   border-radius: 8px;
-  background: #0f172a;
+  background: oklch(0.208 0.04 265.75);
   box-sizing: border-box;
 }
 .roycss-battery-level > div { display: none; }
@@ -974,29 +974,29 @@ export const effectsBatch12: CSSEffect[] = [
   /* terminal nub */
   content: "";
   position: absolute;
-  top: 14px; right: -6px;
-  width: 4px; height: 16px;
-  background: #475569;
+  inset-block-start: 14px; inset-inline-end: -6px;
+  inline-size: 4px; block-size: 16px;
+  background: oklch(0.446 0.037 257.28);
   border-radius: 0 2px 2px 0;
 }
 .roycss-battery-level::after {
   /* level fill */
   content: "";
   position: absolute;
-  top: 4px; left: 4px; bottom: 4px;
-  width: 75%;
+  inset-block-start: 4px; inset-inline-start: 4px; inset-block-end: 4px;
+  inline-size: 75%;
   border-radius: 4px;
-  background: linear-gradient(180deg, #4ade80, #16a34a);
+  background: linear-gradient(180deg, oklch(0.8 0.182 151.71), oklch(0.627 0.17 149.21));
   box-shadow:
-    inset 0 -3px 6px rgba(0,0,0,0.2),
-    0 0 8px rgba(74,222,128,0.5);
+    inset 0 -3px 6px color-mix(in oklch, oklch(0 0 0) 20%, transparent),
+    0 0 8px color-mix(in oklch, oklch(0.8 0.182 151.71) 50%, transparent);
   animation: roy-b12-battery-level 4s ease-in-out infinite;
 }
 @keyframes roy-b12-battery-level {
-  0%, 10%   { width: 85%; background: linear-gradient(180deg, #4ade80, #16a34a); box-shadow: inset 0 -3px 6px rgba(0,0,0,0.2), 0 0 8px rgba(74,222,128,0.5); }
-  40%, 55%  { width: 50%; background: linear-gradient(180deg, #facc15, #ca8a04); box-shadow: inset 0 -3px 6px rgba(0,0,0,0.2), 0 0 8px rgba(250,204,21,0.5); }
-  75%, 90%  { width: 20%; background: linear-gradient(180deg, #f87171, #dc2626); box-shadow: inset 0 -3px 6px rgba(0,0,0,0.2), 0 0 8px rgba(239,68,68,0.5); }
-  100%      { width: 85%; background: linear-gradient(180deg, #4ade80, #16a34a); box-shadow: inset 0 -3px 6px rgba(0,0,0,0.2), 0 0 8px rgba(74,222,128,0.5); }
+  0%, 10%   { inline-size: 85%; background: linear-gradient(180deg, oklch(0.8 0.182 151.71), oklch(0.627 0.17 149.21)); box-shadow: inset 0 -3px 6px color-mix(in oklch, oklch(0 0 0) 20%, transparent), 0 0 8px color-mix(in oklch, oklch(0.8 0.182 151.71) 50%, transparent); }
+  40%, 55%  { inline-size: 50%; background: linear-gradient(180deg, oklch(0.861 0.173 91.94), oklch(0.681 0.142 75.83)); box-shadow: inset 0 -3px 6px color-mix(in oklch, oklch(0 0 0) 20%, transparent), 0 0 8px color-mix(in oklch, oklch(0.861 0.173 91.94) 50%, transparent); }
+  75%, 90%  { inline-size: 20%; background: linear-gradient(180deg, oklch(0.711 0.166 22.22), oklch(0.577 0.215 27.33)); box-shadow: inset 0 -3px 6px color-mix(in oklch, oklch(0 0 0) 20%, transparent), 0 0 8px color-mix(in oklch, oklch(0.637 0.208 25.33) 50%, transparent); }
+  100%      { inline-size: 85%; background: linear-gradient(180deg, oklch(0.8 0.182 151.71), oklch(0.627 0.17 149.21)); box-shadow: inset 0 -3px 6px color-mix(in oklch, oklch(0 0 0) 20%, transparent), 0 0 8px color-mix(in oklch, oklch(0.8 0.182 151.71) 50%, transparent); }
 }`,
   },
 
@@ -1010,14 +1010,14 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Signal Strength — ascending bars with pulse wave */
 .roycss-signal-strength {
-  width: 80px;
-  height: 60px;
+  inline-size: 80px;
+  block-size: 60px;
   position: relative;
   background-image:
-    linear-gradient(180deg, #4ade80, #16a34a),
-    linear-gradient(180deg, #4ade80, #16a34a),
-    linear-gradient(180deg, #4ade80, #16a34a),
-    linear-gradient(180deg, #4ade80, #16a34a);
+    linear-gradient(180deg, oklch(0.8 0.182 151.71), oklch(0.627 0.17 149.21)),
+    linear-gradient(180deg, oklch(0.8 0.182 151.71), oklch(0.627 0.17 149.21)),
+    linear-gradient(180deg, oklch(0.8 0.182 151.71), oklch(0.627 0.17 149.21)),
+    linear-gradient(180deg, oklch(0.8 0.182 151.71), oklch(0.627 0.17 149.21));
   background-position:
     8px bottom,
     24px bottom,
@@ -1025,18 +1025,18 @@ export const effectsBatch12: CSSEffect[] = [
     56px bottom;
   background-repeat: no-repeat;
   background-size: 12px 14px, 12px 24px, 12px 34px, 12px 44px;
-  filter: drop-shadow(0 0 6px rgba(74,222,128,0.4));
+  filter: drop-shadow(0 0 6px color-mix(in oklch, oklch(0.8 0.182 151.71) 40%, transparent));
   animation: roy-b12-signal-wave 1.6s ease-in-out infinite;
 }
 .roycss-signal-strength > div { display: none; }
 @keyframes roy-b12-signal-wave {
   0%, 100% {
     background-size: 12px 8px, 12px 16px, 12px 24px, 12px 32px;
-    filter: drop-shadow(0 0 4px rgba(74,222,128,0.3));
+    filter: drop-shadow(0 0 4px color-mix(in oklch, oklch(0.8 0.182 151.71) 30%, transparent));
   }
   50% {
     background-size: 12px 18px, 12px 28px, 12px 38px, 12px 50px;
-    filter: drop-shadow(0 0 12px rgba(74,222,128,0.8));
+    filter: drop-shadow(0 0 12px color-mix(in oklch, oklch(0.8 0.182 151.71) 80%, transparent));
   }
 }`,
   },
@@ -1051,19 +1051,19 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "loader",
     cssCode: `/* Skeleton Grid — 2x3 grid of placeholder cards with shimmer */
 .roycss-loading-skeleton-grid {
-  width: 220px;
-  height: 140px;
-  background-color: #0f172a;
+  inline-size: 220px;
+  block-size: 140px;
+  background-color: oklch(0.208 0.04 265.75);
   border-radius: 6px;
   position: relative;
   overflow: hidden;
   background-image:
-    linear-gradient(#1e293b, #1e293b),
-    linear-gradient(#1e293b, #1e293b),
-    linear-gradient(#1e293b, #1e293b),
-    linear-gradient(#1e293b, #1e293b),
-    linear-gradient(#1e293b, #1e293b),
-    linear-gradient(#1e293b, #1e293b);
+    linear-gradient(oklch(0.279 0.037 260.03), oklch(0.279 0.037 260.03)),
+    linear-gradient(oklch(0.279 0.037 260.03), oklch(0.279 0.037 260.03)),
+    linear-gradient(oklch(0.279 0.037 260.03), oklch(0.279 0.037 260.03)),
+    linear-gradient(oklch(0.279 0.037 260.03), oklch(0.279 0.037 260.03)),
+    linear-gradient(oklch(0.279 0.037 260.03), oklch(0.279 0.037 260.03)),
+    linear-gradient(oklch(0.279 0.037 260.03), oklch(0.279 0.037 260.03));
   background-position:
     10px 10px,
     84px 10px,
@@ -1086,7 +1086,7 @@ export const effectsBatch12: CSSEffect[] = [
   inset: 0;
   background: linear-gradient(110deg,
     transparent 35%,
-    rgba(148,163,184,0.15) 50%,
+    color-mix(in oklch, oklch(0.711 0.035 256.79) 15%, transparent) 50%,
     transparent 65%);
   background-size: 250% 100%;
   background-repeat: no-repeat;
@@ -1108,46 +1108,46 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Data Table Row Highlight — header + striped body with scanning row */
 .roycss-data-table-row-highlight {
-  width: 240px;
-  height: 160px;
+  inline-size: 240px;
+  block-size: 160px;
   position: relative;
   background:
-    linear-gradient(#1e293b, #1e293b) 0 0 / 100% 28px no-repeat,
-    linear-gradient(#0f172a, #0f172a) 0 28px / 100% 132px no-repeat,
+    linear-gradient(oklch(0.279 0.037 260.03), oklch(0.279 0.037 260.03)) 0 0 / 100% 28px no-repeat,
+    linear-gradient(oklch(0.208 0.04 265.75), oklch(0.208 0.04 265.75)) 0 28px / 100% 132px no-repeat,
     repeating-linear-gradient(180deg,
       transparent 0 30px,
-      rgba(148,163,184,0.04) 30px 60px) 0 28px / 100% 132px no-repeat;
+      color-mix(in oklch, oklch(0.711 0.035 256.79) 4%, transparent) 30px 60px) 0 28px / 100% 132px no-repeat;
   border-radius: 6px;
   overflow: hidden;
-  border: 1px solid #1e293b;
+  border: 1px solid oklch(0.279 0.037 260.03);
 }
 .roycss-data-table-row-highlight > div { display: none; }
 .roycss-data-table-row-highlight::before {
   /* column dividers */
   content: "";
   position: absolute;
-  top: 28px; left: 0; right: 0; bottom: 0;
+  inset-block-start: 28px; inset-inline-start: 0; inset-inline-end: 0; inset-block-end: 0;
   background:
-    linear-gradient(#334155, #334155) 80px 0 / 1px 100% no-repeat,
-    linear-gradient(#334155, #334155) 160px 0 / 1px 100% no-repeat;
+    linear-gradient(oklch(0.372 0.039 257.29), oklch(0.372 0.039 257.29)) 80px 0 / 1px 100% no-repeat,
+    linear-gradient(oklch(0.372 0.039 257.29), oklch(0.372 0.039 257.29)) 160px 0 / 1px 100% no-repeat;
 }
 .roycss-data-table-row-highlight::after {
   /* scanning highlight row */
   content: "";
   position: absolute;
-  left: 0; right: 0;
-  top: 28px;
-  height: 26px;
+  inset-inline-start: 0; inset-inline-end: 0;
+  inset-block-start: 28px;
+  block-size: 26px;
   background: linear-gradient(90deg,
-    rgba(59,130,246,0.25),
-    rgba(139,92,246,0.25));
-  border-left: 3px solid #3b82f6;
-  border-right: 3px solid #8b5cf6;
+    color-mix(in oklch, oklch(0.623 0.188 259.81) 25%, transparent),
+    color-mix(in oklch, oklch(0.606 0.219 292.72) 25%, transparent));
+  border-inline-start: 3px solid oklch(0.623 0.188 259.81);
+  border-inline-end: 3px solid oklch(0.606 0.219 292.72);
   animation: roy-b12-table-scan 3s ease-in-out infinite;
 }
 @keyframes roy-b12-table-scan {
-  0%   { top: 28px; }
-  100% { top: 134px; }
+  0%   { inset-block-start: 28px; }
+  100% { inset-block-start: 134px; }
 }`,
   },
 
@@ -1161,10 +1161,10 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Code Block Syntax — editor window with colored token stripes */
 .roycss-code-block-syntax {
-  width: 240px;
-  height: 160px;
-  background: #0f172a;
-  border: 1px solid #1e293b;
+  inline-size: 240px;
+  block-size: 160px;
+  background: oklch(0.208 0.04 265.75);
+  border: 1px solid oklch(0.279 0.037 260.03);
   border-radius: 8px;
   position: relative;
   overflow: hidden;
@@ -1174,39 +1174,39 @@ export const effectsBatch12: CSSEffect[] = [
   /* traffic light dots */
   content: "";
   position: absolute;
-  top: 10px; left: 12px;
-  width: 10px; height: 10px;
-  background: #ef4444;
+  inset-block-start: 10px; inset-inline-start: 12px;
+  inline-size: 10px; block-size: 10px;
+  background: oklch(0.637 0.208 25.33);
   border-radius: 50%;
-  box-shadow: 18px 0 0 #f59e0b, 36px 0 0 #10b981;
+  box-shadow: 18px 0 0 oklch(0.769 0.165 70.08), 36px 0 0 oklch(0.696 0.149 162.48);
 }
 .roycss-code-block-syntax::after {
   /* token stripes per line */
   content: "";
   position: absolute;
-  top: 36px; left: 14px; right: 14px; bottom: 14px;
+  inset-block-start: 36px; inset-inline-start: 14px; inset-inline-end: 14px; inset-block-end: 14px;
   background:
     /* line 1: keyword | ident | = | string */
-    linear-gradient(#c084fc, #c084fc) 0 0 / 40px 7px no-repeat,
-    linear-gradient(#60a5fa, #60a5fa) 44px 0 / 50px 7px no-repeat,
-    linear-gradient(#94a3b8, #94a3b8) 98px 0 / 6px 7px no-repeat,
-    linear-gradient(#10b981, #10b981) 108px 0 / 80px 7px no-repeat,
+    linear-gradient(oklch(0.722 0.177 305.5), oklch(0.722 0.177 305.5)) 0 0 / 40px 7px no-repeat,
+    linear-gradient(oklch(0.714 0.143 254.62), oklch(0.714 0.143 254.62)) 44px 0 / 50px 7px no-repeat,
+    linear-gradient(oklch(0.711 0.035 256.79), oklch(0.711 0.035 256.79)) 98px 0 / 6px 7px no-repeat,
+    linear-gradient(oklch(0.696 0.149 162.48), oklch(0.696 0.149 162.48)) 108px 0 / 80px 7px no-repeat,
     /* line 2: keyword | ident | = | number */
-    linear-gradient(#c084fc, #c084fc) 0 16px / 30px 7px no-repeat,
-    linear-gradient(#60a5fa, #60a5fa) 34px 16px / 60px 7px no-repeat,
-    linear-gradient(#94a3b8, #94a3b8) 98px 16px / 6px 7px no-repeat,
-    linear-gradient(#fb923c, #fb923c) 108px 16px / 22px 7px no-repeat,
+    linear-gradient(oklch(0.722 0.177 305.5), oklch(0.722 0.177 305.5)) 0 16px / 30px 7px no-repeat,
+    linear-gradient(oklch(0.714 0.143 254.62), oklch(0.714 0.143 254.62)) 34px 16px / 60px 7px no-repeat,
+    linear-gradient(oklch(0.711 0.035 256.79), oklch(0.711 0.035 256.79)) 98px 16px / 6px 7px no-repeat,
+    linear-gradient(oklch(0.758 0.159 55.93), oklch(0.758 0.159 55.93)) 108px 16px / 22px 7px no-repeat,
     /* line 3: function call */
-    linear-gradient(#f472b6, #f472b6) 0 32px / 40px 7px no-repeat,
-    linear-gradient(#94a3b8, #94a3b8) 42px 32px / 8px 7px no-repeat,
-    linear-gradient(#60a5fa, #60a5fa) 52px 32px / 80px 7px no-repeat,
-    linear-gradient(#94a3b8, #94a3b8) 134px 32px / 6px 7px no-repeat,
+    linear-gradient(oklch(0.725 0.175 349.76), oklch(0.725 0.175 349.76)) 0 32px / 40px 7px no-repeat,
+    linear-gradient(oklch(0.711 0.035 256.79), oklch(0.711 0.035 256.79)) 42px 32px / 8px 7px no-repeat,
+    linear-gradient(oklch(0.714 0.143 254.62), oklch(0.714 0.143 254.62)) 52px 32px / 80px 7px no-repeat,
+    linear-gradient(oklch(0.711 0.035 256.79), oklch(0.711 0.035 256.79)) 134px 32px / 6px 7px no-repeat,
     /* line 4: comment */
-    linear-gradient(#64748b, #64748b) 0 48px / 170px 7px no-repeat,
+    linear-gradient(oklch(0.554 0.041 257.42), oklch(0.554 0.041 257.42)) 0 48px / 170px 7px no-repeat,
     /* line 5: chain */
-    linear-gradient(#60a5fa, #60a5fa) 0 64px / 30px 7px no-repeat,
-    linear-gradient(#94a3b8, #94a3b8) 32px 64px / 12px 7px no-repeat,
-    linear-gradient(#f472b6, #f472b6) 46px 64px / 50px 7px no-repeat;
+    linear-gradient(oklch(0.714 0.143 254.62), oklch(0.714 0.143 254.62)) 0 64px / 30px 7px no-repeat,
+    linear-gradient(oklch(0.711 0.035 256.79), oklch(0.711 0.035 256.79)) 32px 64px / 12px 7px no-repeat,
+    linear-gradient(oklch(0.725 0.175 349.76), oklch(0.725 0.175 349.76)) 46px 64px / 50px 7px no-repeat;
   background-repeat: no-repeat;
   animation: roy-b12-code-blink 1.5s ease-in-out infinite;
 }
@@ -1230,22 +1230,22 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Shake Error Input — horizontal shake on validation error */
 .roycss-shake-error-input {
-  width: 240px;
-  height: 44px;
-  background: #1c1010;
-  border: 2px solid #ef4444;
+  inline-size: 240px;
+  block-size: 44px;
+  background: oklch(0.19 0.02 19.14);
+  border: 2px solid oklch(0.637 0.208 25.33);
   border-radius: 8px;
   position: relative;
-  box-shadow: 0 0 0 4px rgba(239,68,68,0.15), 0 4px 12px rgba(0,0,0,0.3);
+  box-shadow: 0 0 0 4px color-mix(in oklch, oklch(0.637 0.208 25.33) 15%, transparent), 0 4px 12px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
   animation: roy-b12-shake-error 3s ease-in-out infinite;
 }
 .roycss-shake-error-input > div { display: none; }
 .roycss-shake-error-input::before {
   content: "✉  invalid@email";
   position: absolute;
-  top: 50%; left: 14px;
+  inset-block-start: 50%; inset-inline-start: 14px;
   transform: translateY(-50%);
-  color: #fca5a5;
+  color: oklch(0.808 0.103 19.57);
   font-family: ui-monospace, monospace;
   font-size: 13px;
   font-weight: 500;
@@ -1253,10 +1253,10 @@ export const effectsBatch12: CSSEffect[] = [
 .roycss-shake-error-input::after {
   content: "!";
   position: absolute;
-  top: 50%; right: 12px;
+  inset-block-start: 50%; inset-inline-end: 12px;
   transform: translateY(-50%);
-  width: 22px; height: 22px;
-  background: #ef4444;
+  inline-size: 22px; block-size: 22px;
+  background: oklch(0.637 0.208 25.33);
   color: white;
   border-radius: 50%;
   display: flex;
@@ -1265,7 +1265,7 @@ export const effectsBatch12: CSSEffect[] = [
   font-family: ui-sans-serif, sans-serif;
   font-size: 13px;
   font-weight: 700;
-  box-shadow: 0 0 8px rgba(239,68,68,0.6);
+  box-shadow: 0 0 8px color-mix(in oklch, oklch(0.637 0.208 25.33) 60%, transparent);
 }
 @keyframes roy-b12-shake-error {
   0%, 70%, 100% { transform: translateX(0); }
@@ -1289,15 +1289,15 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Pulse Attention — CTA button with expanding pulse ring */
 .roycss-pulse-attention {
-  width: 160px;
-  height: 44px;
+  inline-size: 160px;
+  block-size: 44px;
   border-radius: 22px;
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(135deg, oklch(0.623 0.188 259.81), oklch(0.606 0.219 292.72));
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  box-shadow: 0 6px 18px rgba(59,130,246,0.4), inset 0 1px 0 rgba(255,255,255,0.25);
+  box-shadow: 0 6px 18px color-mix(in oklch, oklch(0.623 0.188 259.81) 40%, transparent), inset 0 1px 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent);
 }
 .roycss-pulse-attention > div { display: none; }
 .roycss-pulse-attention::before {
@@ -1313,7 +1313,7 @@ export const effectsBatch12: CSSEffect[] = [
   position: absolute;
   inset: 0;
   border-radius: 22px;
-  border: 2px solid #8b5cf6;
+  border: 2px solid oklch(0.606 0.219 292.72);
   animation: roy-b12-attention-pulse 2s ease-out infinite;
   pointer-events: none;
 }
@@ -1333,13 +1333,13 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Bounce Notification — slides in and bounces to settle */
 .roycss-bounce-notification {
-  width: 240px;
-  height: 56px;
-  background: #1e293b;
-  border-left: 4px solid #10b981;
+  inline-size: 240px;
+  block-size: 56px;
+  background: oklch(0.279 0.037 260.03);
+  border-inline-start: 4px solid oklch(0.696 0.149 162.48);
   border-radius: 8px;
   position: relative;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  box-shadow: 0 10px 30px color-mix(in oklch, oklch(0 0 0) 40%, transparent);
   display: flex;
   align-items: center;
   padding: 0 14px;
@@ -1349,8 +1349,8 @@ export const effectsBatch12: CSSEffect[] = [
 .roycss-bounce-notification > div { display: none; }
 .roycss-bounce-notification::before {
   content: "✓";
-  width: 28px; height: 28px;
-  background: #10b981;
+  inline-size: 28px; block-size: 28px;
+  background: oklch(0.696 0.149 162.48);
   color: white;
   border-radius: 50%;
   display: flex;
@@ -1358,13 +1358,13 @@ export const effectsBatch12: CSSEffect[] = [
   justify-content: center;
   font-size: 16px;
   font-weight: 700;
-  margin-right: 10px;
+  margin-inline-end: 10px;
   flex-shrink: 0;
-  box-shadow: 0 0 10px rgba(16,185,129,0.5);
+  box-shadow: 0 0 10px color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent);
 }
 .roycss-bounce-notification::after {
   content: "Saved successfully";
-  color: #e2e8f0;
+  color: oklch(0.929 0.013 255.51);
   font-family: ui-sans-serif, sans-serif;
   font-size: 13px;
   font-weight: 500;
@@ -1390,8 +1390,8 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Flip Card Reveal — 3D flip between front and back faces */
 .roycss-flip-card-reveal {
-  width: 160px;
-  height: 100px;
+  inline-size: 160px;
+  block-size: 100px;
   position: relative;
   perspective: 800px;
   background: transparent;
@@ -1405,14 +1405,14 @@ export const effectsBatch12: CSSEffect[] = [
   border-radius: 10px;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  box-shadow: 0 8px 24px color-mix(in oklch, oklch(0 0 0) 40%, transparent);
 }
 .roycss-flip-card-reveal::before {
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(135deg, oklch(0.623 0.188 259.81), oklch(0.606 0.219 292.72));
   animation: roy-b12-flip-front 4s ease-in-out infinite;
 }
 .roycss-flip-card-reveal::after {
-  background: linear-gradient(135deg, #ec4899, #f59e0b);
+  background: linear-gradient(135deg, oklch(0.656 0.212 354.31), oklch(0.769 0.165 70.08));
   transform: rotateY(180deg);
   animation: roy-b12-flip-back 4s ease-in-out infinite;
 }
@@ -1438,10 +1438,10 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Expand Collapse — smooth height animation for accordion content */
 .roycss-expand-collapse {
-  width: 220px;
-  height: 100px;
-  background: #1e293b;
-  border: 1px solid #334155;
+  inline-size: 220px;
+  block-size: 100px;
+  background: oklch(0.279 0.037 260.03);
+  border: 1px solid oklch(0.372 0.039 257.29);
   border-radius: 8px;
   position: relative;
   overflow: hidden;
@@ -1452,31 +1452,31 @@ export const effectsBatch12: CSSEffect[] = [
   content: "▼  Expandable section";
   display: block;
   padding: 12px 14px;
-  color: #e2e8f0;
+  color: oklch(0.929 0.013 255.51);
   font-family: ui-sans-serif, sans-serif;
   font-size: 13px;
   font-weight: 600;
-  background: #0f172a;
-  border-bottom: 1px solid #334155;
+  background: oklch(0.208 0.04 265.75);
+  border-block-end: 1px solid oklch(0.372 0.039 257.29);
 }
 .roycss-expand-collapse::after {
   content: "Hidden content reveals smoothly using CSS height keyframe animation. No JavaScript required.";
   display: block;
   padding: 10px 14px;
-  color: #94a3b8;
+  color: oklch(0.711 0.035 256.79);
   font-family: ui-sans-serif, sans-serif;
   font-size: 11px;
-  line-height: 1.5;
-  background: #1e293b;
-  height: 0;
+  line-block-size: 1.5;
+  background: oklch(0.279 0.037 260.03);
+  block-size: 0;
   opacity: 0;
   overflow: hidden;
   animation: roy-b12-expand-collapse 4s ease-in-out infinite;
 }
 @keyframes roy-b12-expand-collapse {
-  0%, 30%   { height: 0; opacity: 0; }
-  50%, 80%  { height: 56px; opacity: 1; }
-  100%      { height: 0; opacity: 0; }
+  0%, 30%   { block-size: 0; opacity: 0; }
+  50%, 80%  { block-size: 56px; opacity: 1; }
+  100%      { block-size: 0; opacity: 0; }
 }`,
   },
 
@@ -1490,13 +1490,13 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Slide In Panel — drawer that slides in from the right edge */
 .roycss-slide-in-panel {
-  width: 240px;
-  height: 160px;
-  background: #0f172a;
+  inline-size: 240px;
+  block-size: 160px;
+  background: oklch(0.208 0.04 265.75);
   border-radius: 8px;
   position: relative;
   overflow: hidden;
-  border: 1px solid #1e293b;
+  border: 1px solid oklch(0.279 0.037 260.03);
 }
 .roycss-slide-in-panel > div { display: none; }
 .roycss-slide-in-panel::before {
@@ -1506,20 +1506,20 @@ export const effectsBatch12: CSSEffect[] = [
   inset: 0;
   background:
     repeating-linear-gradient(45deg,
-      rgba(59,130,246,0.15) 0 12px,
-      rgba(139,92,246,0.15) 12px 24px);
+      color-mix(in oklch, oklch(0.623 0.188 259.81) 15%, transparent) 0 12px,
+      color-mix(in oklch, oklch(0.606 0.219 292.72) 15%, transparent) 12px 24px);
   animation: roy-b12-panel-backdrop 3.5s ease-in-out infinite;
 }
 .roycss-slide-in-panel::after {
   /* the panel */
   content: "";
   position: absolute;
-  top: 0; right: 0;
-  width: 55%;
-  height: 100%;
-  background: linear-gradient(180deg, #1e293b, #0f172a);
-  border-left: 1px solid #334155;
-  box-shadow: -10px 0 30px rgba(0,0,0,0.4);
+  inset-block-start: 0; inset-inline-end: 0;
+  inline-size: 55%;
+  block-size: 100%;
+  background: linear-gradient(180deg, oklch(0.279 0.037 260.03), oklch(0.208 0.04 265.75));
+  border-inline-start: 1px solid oklch(0.372 0.039 257.29);
+  box-shadow: -10px 0 30px color-mix(in oklch, oklch(0 0 0) 40%, transparent);
   transform: translateX(100%);
   animation: roy-b12-panel-slide 3.5s ease-in-out infinite;
 }
@@ -1545,13 +1545,13 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Modal Backdrop Blur — backdrop blurs in as modal scales up */
 .roycss-modal-backdrop-blur {
-  width: 240px;
-  height: 160px;
+  inline-size: 240px;
+  block-size: 160px;
   position: relative;
-  background: #1e293b;
+  background: oklch(0.279 0.037 260.03);
   border-radius: 8px;
   overflow: hidden;
-  border: 1px solid #1e293b;
+  border: 1px solid oklch(0.279 0.037 260.03);
 }
 .roycss-modal-backdrop-blur > div { display: none; }
 .roycss-modal-backdrop-blur::before {
@@ -1560,10 +1560,10 @@ export const effectsBatch12: CSSEffect[] = [
   position: absolute;
   inset: 0;
   background: repeating-linear-gradient(45deg,
-    #3b82f6 0 12px,
-    #8b5cf6 12px 24px,
-    #ec4899 24px 36px,
-    #f59e0b 36px 48px);
+    oklch(0.623 0.188 259.81) 0 12px,
+    oklch(0.606 0.219 292.72) 12px 24px,
+    oklch(0.656 0.212 354.31) 24px 36px,
+    oklch(0.769 0.165 70.08) 36px 48px);
   filter: blur(0px) brightness(1);
   animation: roy-b12-modal-blur 3.5s ease-in-out infinite;
 }
@@ -1571,22 +1571,22 @@ export const effectsBatch12: CSSEffect[] = [
   /* modal card */
   content: "Modal";
   position: absolute;
-  top: 50%; left: 50%;
-  width: 60%; height: 50%;
-  background: #0f172a;
-  border: 1px solid #334155;
+  inset-block-start: 50%; inset-inline-start: 50%;
+  inline-size: 60%; block-size: 50%;
+  background: oklch(0.208 0.04 265.75);
+  border: 1px solid oklch(0.372 0.039 257.29);
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #e2e8f0;
+  color: oklch(0.929 0.013 255.51);
   font-family: ui-sans-serif, sans-serif;
   font-weight: 600;
   font-size: 16px;
   letter-spacing: 1px;
   transform: translate(-50%, -50%) scale(0.8);
   opacity: 0;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  box-shadow: 0 20px 50px color-mix(in oklch, oklch(0 0 0) 50%, transparent);
   animation: roy-b12-modal-card 3.5s ease-in-out infinite;
 }
 @keyframes roy-b12-modal-blur {
@@ -1611,11 +1611,11 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Tooltip Follow — tooltip moves around target area */
 .roycss-tooltip-follow {
-  width: 240px;
-  height: 100px;
+  inline-size: 240px;
+  block-size: 100px;
   position: relative;
-  background: #0f172a;
-  border: 1px dashed #334155;
+  background: oklch(0.208 0.04 265.75);
+  border: 1px dashed oklch(0.372 0.039 257.29);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -1624,7 +1624,7 @@ export const effectsBatch12: CSSEffect[] = [
 .roycss-tooltip-follow > div { display: none; }
 .roycss-tooltip-follow::before {
   content: "Hover target";
-  color: #94a3b8;
+  color: oklch(0.711 0.035 256.79);
   font-family: ui-sans-serif, sans-serif;
   font-size: 14px;
   font-weight: 500;
@@ -1632,25 +1632,25 @@ export const effectsBatch12: CSSEffect[] = [
 .roycss-tooltip-follow::after {
   content: "Following cursor ↑";
   position: absolute;
-  top: 8px; left: 20%;
+  inset-block-start: 8px; inset-inline-start: 20%;
   padding: 6px 10px;
-  background: #1e293b;
-  color: #e2e8f0;
+  background: oklch(0.279 0.037 260.03);
+  color: oklch(0.929 0.013 255.51);
   font-family: ui-sans-serif, sans-serif;
   font-size: 11px;
   font-weight: 500;
   border-radius: 6px;
-  border: 1px solid #334155;
+  border: 1px solid oklch(0.372 0.039 257.29);
   white-space: nowrap;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 12px color-mix(in oklch, oklch(0 0 0) 50%, transparent);
   animation: roy-b12-tooltip-move 4s ease-in-out infinite;
 }
 @keyframes roy-b12-tooltip-move {
-  0%   { top: 8px;  left: 15%; }
-  25%  { top: 40px; left: 35%; }
-  50%  { top: 15px; left: 60%; }
-  75%  { top: 50px; left: 40%; }
-  100% { top: 8px;  left: 15%; }
+  0%   { inset-block-start: 8px;  inset-inline-start: 15%; }
+  25%  { inset-block-start: 40px; inset-inline-start: 35%; }
+  50%  { inset-block-start: 15px; inset-inline-start: 60%; }
+  75%  { inset-block-start: 50px; inset-inline-start: 40%; }
+  100% { inset-block-start: 8px;  inset-inline-start: 15%; }
 }`,
   },
 
@@ -1664,10 +1664,10 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Drag Handle Grip — 6-dot grip with subtle shake hint */
 .roycss-drag-handle-grip {
-  width: 60px;
-  height: 100px;
-  background: #1e293b;
-  border: 1px solid #334155;
+  inline-size: 60px;
+  block-size: 100px;
+  background: oklch(0.279 0.037 260.03);
+  border: 1px solid oklch(0.372 0.039 257.29);
   border-radius: 8px;
   position: relative;
   display: flex;
@@ -1679,15 +1679,15 @@ export const effectsBatch12: CSSEffect[] = [
 .roycss-drag-handle-grip::before {
   /* 6 grip dots in a 2x3 grid */
   content: "";
-  width: 16px;
-  height: 40px;
+  inline-size: 16px;
+  block-size: 40px;
   background:
-    radial-gradient(circle at 4px 5px,  #94a3b8 0 2.5px, transparent 3px),
-    radial-gradient(circle at 12px 5px, #94a3b8 0 2.5px, transparent 3px),
-    radial-gradient(circle at 4px 20px, #94a3b8 0 2.5px, transparent 3px),
-    radial-gradient(circle at 12px 20px,#94a3b8 0 2.5px, transparent 3px),
-    radial-gradient(circle at 4px 35px, #94a3b8 0 2.5px, transparent 3px),
-    radial-gradient(circle at 12px 35px,#94a3b8 0 2.5px, transparent 3px);
+    radial-gradient(circle at 4px 5px,  oklch(0.711 0.035 256.79) 0 2.5px, transparent 3px),
+    radial-gradient(circle at 12px 5px, oklch(0.711 0.035 256.79) 0 2.5px, transparent 3px),
+    radial-gradient(circle at 4px 20px, oklch(0.711 0.035 256.79) 0 2.5px, transparent 3px),
+    radial-gradient(circle at 12px 20px,oklch(0.711 0.035 256.79) 0 2.5px, transparent 3px),
+    radial-gradient(circle at 4px 35px, oklch(0.711 0.035 256.79) 0 2.5px, transparent 3px),
+    radial-gradient(circle at 12px 35px,oklch(0.711 0.035 256.79) 0 2.5px, transparent 3px);
   background-repeat: no-repeat;
   animation: roy-b12-grip-shake 1.6s ease-in-out infinite;
 }
@@ -1697,7 +1697,7 @@ export const effectsBatch12: CSSEffect[] = [
   position: absolute;
   inset: 0;
   border-radius: 8px;
-  background: rgba(59,130,246,0);
+  background: color-mix(in oklch, oklch(0.623 0.188 259.81) 0%, transparent);
   animation: roy-b12-grip-hover 1.6s ease-in-out infinite;
 }
 @keyframes roy-b12-grip-shake {
@@ -1706,8 +1706,8 @@ export const effectsBatch12: CSSEffect[] = [
   75% { transform: translateY(-2px) rotate(2deg); }
 }
 @keyframes roy-b12-grip-hover {
-  0%, 100% { background: rgba(59,130,246,0); }
-  50% { background: rgba(59,130,246,0.12); }
+  0%, 100% { background: color-mix(in oklch, oklch(0.623 0.188 259.81) 0%, transparent); }
+  50% { background: color-mix(in oklch, oklch(0.623 0.188 259.81) 12%, transparent); }
 }`,
   },
 
@@ -1721,36 +1721,36 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Context Menu — popup menu that scales in from top-left */
 .roycss-context-menu {
-  width: 200px;
-  height: 160px;
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  inline-size: 200px;
+  block-size: 160px;
+  background: linear-gradient(135deg, oklch(0.279 0.037 260.03) 0%, oklch(0.208 0.04 265.75) 100%);
   border-radius: 8px;
   position: relative;
   overflow: hidden;
-  border: 1px solid #1e293b;
+  border: 1px solid oklch(0.279 0.037 260.03);
 }
 .roycss-context-menu > div { display: none; }
 .roycss-context-menu::before {
   /* menu panel with item bars */
   content: "";
   position: absolute;
-  top: 30px; left: 30px;
-  width: 140px;
-  height: 110px;
+  inset-block-start: 30px; inset-inline-start: 30px;
+  inline-size: 140px;
+  block-size: 110px;
   background:
-    linear-gradient(#60a5fa, #60a5fa) 10px 10px / 10px 10px no-repeat,
-    linear-gradient(#e2e8f0, #e2e8f0) 26px 10px / 80px 10px no-repeat,
-    linear-gradient(#94a3b8, #94a3b8) 10px 28px / 10px 10px no-repeat,
-    linear-gradient(#e2e8f0, #e2e8f0) 26px 28px / 70px 10px no-repeat,
-    linear-gradient(#94a3b8, #94a3b8) 10px 46px / 10px 10px no-repeat,
-    linear-gradient(#e2e8f0, #e2e8f0) 26px 46px / 60px 10px no-repeat,
-    linear-gradient(#334155, #334155) 10px 62px / 120px 1px no-repeat,
-    linear-gradient(#94a3b8, #94a3b8) 10px 70px / 10px 10px no-repeat,
-    linear-gradient(#ef4444, #ef4444) 26px 70px / 50px 10px no-repeat,
-    #1e293b;
-  border: 1px solid #334155;
+    linear-gradient(oklch(0.714 0.143 254.62), oklch(0.714 0.143 254.62)) 10px 10px / 10px 10px no-repeat,
+    linear-gradient(oklch(0.929 0.013 255.51), oklch(0.929 0.013 255.51)) 26px 10px / 80px 10px no-repeat,
+    linear-gradient(oklch(0.711 0.035 256.79), oklch(0.711 0.035 256.79)) 10px 28px / 10px 10px no-repeat,
+    linear-gradient(oklch(0.929 0.013 255.51), oklch(0.929 0.013 255.51)) 26px 28px / 70px 10px no-repeat,
+    linear-gradient(oklch(0.711 0.035 256.79), oklch(0.711 0.035 256.79)) 10px 46px / 10px 10px no-repeat,
+    linear-gradient(oklch(0.929 0.013 255.51), oklch(0.929 0.013 255.51)) 26px 46px / 60px 10px no-repeat,
+    linear-gradient(oklch(0.372 0.039 257.29), oklch(0.372 0.039 257.29)) 10px 62px / 120px 1px no-repeat,
+    linear-gradient(oklch(0.711 0.035 256.79), oklch(0.711 0.035 256.79)) 10px 70px / 10px 10px no-repeat,
+    linear-gradient(oklch(0.637 0.208 25.33), oklch(0.637 0.208 25.33)) 26px 70px / 50px 10px no-repeat,
+    oklch(0.279 0.037 260.03);
+  border: 1px solid oklch(0.372 0.039 257.29);
   border-radius: 6px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  box-shadow: 0 10px 30px color-mix(in oklch, oklch(0 0 0) 60%, transparent);
   transform: scale(0.3);
   transform-origin: top left;
   opacity: 0;
@@ -1759,8 +1759,8 @@ export const effectsBatch12: CSSEffect[] = [
 .roycss-context-menu::after {
   content: "Right-click here";
   position: absolute;
-  bottom: 12px; right: 14px;
-  color: #64748b;
+  inset-block-end: 12px; inset-inline-end: 14px;
+  color: oklch(0.554 0.041 257.42);
   font-family: ui-sans-serif, sans-serif;
   font-size: 10px;
   font-weight: 500;
@@ -1791,18 +1791,18 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Card Skeleton Loader — full card with skeleton placeholders */
 .roycss-card-skeleton-loader {
-  width: 240px;
-  height: 160px;
-  background-color: #0f172a;
-  border: 1px solid #1e293b;
+  inline-size: 240px;
+  block-size: 160px;
+  background-color: oklch(0.208 0.04 265.75);
+  border: 1px solid oklch(0.279 0.037 260.03);
   border-radius: 10px;
   position: relative;
   overflow: hidden;
   background-image:
-    linear-gradient(#1e293b, #1e293b) 16px 16px / 208px 60px no-repeat,
-    linear-gradient(#1e293b, #1e293b) 16px 92px / 160px 12px no-repeat,
-    linear-gradient(#1e293b, #1e293b) 16px 114px / 200px 8px no-repeat,
-    linear-gradient(#1e293b, #1e293b) 16px 130px / 180px 8px no-repeat;
+    linear-gradient(oklch(0.279 0.037 260.03), oklch(0.279 0.037 260.03)) 16px 16px / 208px 60px no-repeat,
+    linear-gradient(oklch(0.279 0.037 260.03), oklch(0.279 0.037 260.03)) 16px 92px / 160px 12px no-repeat,
+    linear-gradient(oklch(0.279 0.037 260.03), oklch(0.279 0.037 260.03)) 16px 114px / 200px 8px no-repeat,
+    linear-gradient(oklch(0.279 0.037 260.03), oklch(0.279 0.037 260.03)) 16px 130px / 180px 8px no-repeat;
 }
 .roycss-card-skeleton-loader > span { display: none; }
 .roycss-card-skeleton-loader::before {
@@ -1811,7 +1811,7 @@ export const effectsBatch12: CSSEffect[] = [
   inset: 0;
   background: linear-gradient(110deg,
     transparent 30%,
-    rgba(148,163,184,0.12) 50%,
+    color-mix(in oklch, oklch(0.711 0.035 256.79) 12%, transparent) 50%,
     transparent 70%);
   background-size: 250% 100%;
   background-repeat: no-repeat;
@@ -1833,10 +1833,10 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Card Empty State — empty box illustration with floating animation */
 .roycss-card-empty-state {
-  width: 240px;
-  height: 180px;
-  background: linear-gradient(180deg, #0f172a, #1e293b);
-  border: 1px solid #334155;
+  inline-size: 240px;
+  block-size: 180px;
+  background: linear-gradient(180deg, oklch(0.208 0.04 265.75), oklch(0.279 0.037 260.03));
+  border: 1px solid oklch(0.372 0.039 257.29);
   border-radius: 12px;
   padding: 20px;
   box-sizing: border-box;
@@ -1851,14 +1851,14 @@ export const effectsBatch12: CSSEffect[] = [
 .roycss-card-empty-state::before {
   /* open-box illustration */
   content: "";
-  width: 60px;
-  height: 50px;
-  margin-bottom: 14px;
+  inline-size: 60px;
+  block-size: 50px;
+  margin-block-end: 14px;
   background:
     /* lid (trapezoid via clip-path on a gradient) */
-    linear-gradient(135deg, #64748b, #475569),
+    linear-gradient(135deg, oklch(0.554 0.041 257.42), oklch(0.446 0.037 257.28)),
     /* box body */
-    linear-gradient(180deg, #475569, #334155);
+    linear-gradient(180deg, oklch(0.446 0.037 257.28), oklch(0.372 0.039 257.29));
   background-position: 0 0, 0 12px;
   background-size: 100% 12px, 100% 38px;
   background-repeat: no-repeat;
@@ -1871,7 +1871,7 @@ export const effectsBatch12: CSSEffect[] = [
 }
 .roycss-card-empty-state::after {
   content: "No items found";
-  color: #94a3b8;
+  color: oklch(0.711 0.035 256.79);
   font-family: ui-sans-serif, sans-serif;
   font-size: 13px;
   font-weight: 600;
@@ -1893,44 +1893,44 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Card Error State — pulsing red circle with X mark */
 .roycss-card-error-state {
-  width: 240px;
-  height: 160px;
-  background: linear-gradient(180deg, #0f172a, #1c1010);
-  border: 1px solid #7f1d1d;
+  inline-size: 240px;
+  block-size: 160px;
+  background: linear-gradient(180deg, oklch(0.208 0.04 265.75), oklch(0.19 0.02 19.14));
+  border: 1px solid oklch(0.396 0.133 25.72);
   border-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
-  box-shadow: 0 0 30px rgba(239,68,68,0.2), inset 0 1px 0 rgba(255,255,255,0.04);
+  box-shadow: 0 0 30px color-mix(in oklch, oklch(0.637 0.208 25.33) 20%, transparent), inset 0 1px 0 color-mix(in oklch, oklch(1 0 89.88) 4%, transparent);
 }
 .roycss-card-error-state > span { display: none; }
 .roycss-card-error-state::before {
   /* circle with X drawn via crossed gradients */
   content: "";
-  width: 56px;
-  height: 56px;
+  inline-size: 56px;
+  block-size: 56px;
   border-radius: 50%;
   background:
-    linear-gradient(45deg, transparent 45%, #ef4444 45% 55%, transparent 55%) 0 0 / 100% 100% no-repeat,
-    linear-gradient(-45deg, transparent 45%, #ef4444 45% 55%, transparent 55%) 0 0 / 100% 100% no-repeat,
-    rgba(239,68,68,0.15);
-  border: 2px solid #ef4444;
-  margin-bottom: 14px;
+    linear-gradient(45deg, transparent 45%, oklch(0.637 0.208 25.33) 45% 55%, transparent 55%) 0 0 / 100% 100% no-repeat,
+    linear-gradient(-45deg, transparent 45%, oklch(0.637 0.208 25.33) 45% 55%, transparent 55%) 0 0 / 100% 100% no-repeat,
+    color-mix(in oklch, oklch(0.637 0.208 25.33) 15%, transparent);
+  border: 2px solid oklch(0.637 0.208 25.33);
+  margin-block-end: 14px;
   animation: roy-b12-error-pulse 2s ease-in-out infinite;
 }
 .roycss-card-error-state::after {
   content: "Something went wrong";
-  color: #fca5a5;
+  color: oklch(0.808 0.103 19.57);
   font-family: ui-sans-serif, sans-serif;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.3px;
 }
 @keyframes roy-b12-error-pulse {
-  0%, 100% { box-shadow: 0 0 20px rgba(239,68,68,0.4); }
-  50% { box-shadow: 0 0 35px rgba(239,68,68,0.7); }
+  0%, 100% { box-shadow: 0 0 20px color-mix(in oklch, oklch(0.637 0.208 25.33) 40%, transparent); }
+  50% { box-shadow: 0 0 35px color-mix(in oklch, oklch(0.637 0.208 25.33) 70%, transparent); }
 }`,
   },
 
@@ -1944,46 +1944,46 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Card Success State — green circle with checkmark reveal */
 .roycss-card-success-state {
-  width: 240px;
-  height: 160px;
-  background: linear-gradient(180deg, #0f172a, #052e1a);
-  border: 1px solid #10b981;
+  inline-size: 240px;
+  block-size: 160px;
+  background: linear-gradient(180deg, oklch(0.208 0.04 265.75), oklch(0.267 0.058 157.13));
+  border: 1px solid oklch(0.696 0.149 162.48);
   border-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
-  box-shadow: 0 0 30px rgba(16,185,129,0.2), inset 0 1px 0 rgba(255,255,255,0.04);
+  box-shadow: 0 0 30px color-mix(in oklch, oklch(0.696 0.149 162.48) 20%, transparent), inset 0 1px 0 color-mix(in oklch, oklch(1 0 89.88) 4%, transparent);
 }
 .roycss-card-success-state > span { display: none; }
 .roycss-card-success-state::before {
   /* circle */
   content: "";
-  width: 64px;
-  height: 64px;
+  inline-size: 64px;
+  block-size: 64px;
   border-radius: 50%;
-  background: rgba(16,185,129,0.15);
-  border: 2px solid #10b981;
-  margin-bottom: 14px;
-  box-shadow: 0 0 20px rgba(16,185,129,0.4);
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 15%, transparent);
+  border: 2px solid oklch(0.696 0.149 162.48);
+  margin-block-end: 14px;
+  box-shadow: 0 0 20px color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent);
   animation: roy-b12-success-pulse 2.2s ease-in-out infinite;
 }
 .roycss-card-success-state::after {
   /* checkmark drawn via borders, positioned over the circle */
   content: "";
   position: absolute;
-  top: 50%; left: 50%;
-  width: 22px;
-  height: 11px;
-  border-left: 4px solid #10b981;
-  border-bottom: 4px solid #10b981;
+  inset-block-start: 50%; inset-inline-start: 50%;
+  inline-size: 22px;
+  block-size: 11px;
+  border-inline-start: 4px solid oklch(0.696 0.149 162.48);
+  border-block-end: 4px solid oklch(0.696 0.149 162.48);
   transform: translate(-50%, calc(-50% - 18px)) rotate(-45deg);
   animation: roy-b12-check-draw 2.2s ease-in-out infinite;
 }
 @keyframes roy-b12-success-pulse {
-  0%, 100% { box-shadow: 0 0 20px rgba(16,185,129,0.4); }
-  50% { box-shadow: 0 0 32px rgba(16,185,129,0.7); }
+  0%, 100% { box-shadow: 0 0 20px color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent); }
+  50% { box-shadow: 0 0 32px color-mix(in oklch, oklch(0.696 0.149 162.48) 70%, transparent); }
 }
 @keyframes roy-b12-check-draw {
   0%, 30%  { opacity: 0; transform: translate(-50%, calc(-50% - 18px)) rotate(-45deg) scale(0.4); }
@@ -2001,22 +2001,22 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Pricing Card Highlight — animated gradient border + popular badge */
 .roycss-card-pricing-highlight {
-  width: 200px;
-  height: 260px;
+  inline-size: 200px;
+  block-size: 260px;
   background:
-    linear-gradient(#60a5fa, #60a5fa) 50% 30px / 70px 12px no-repeat,
-    linear-gradient(#e2e8f0, #e2e8f0) 50% 56px / 90px 30px no-repeat,
-    linear-gradient(#94a3b8, #94a3b8) 50% 92px / 40px 8px no-repeat,
-    linear-gradient(#334155, #334155) 16px 112px / 168px 1px no-repeat,
-    linear-gradient(#475569, #475569) 50% 128px / 140px 8px no-repeat,
-    linear-gradient(#475569, #475569) 50% 148px / 120px 8px no-repeat,
-    linear-gradient(#475569, #475569) 50% 168px / 100px 8px no-repeat,
-    linear-gradient(135deg, #3b82f6, #8b5cf6) 50% 200px / 168px 36px no-repeat,
-    linear-gradient(180deg, #1e293b, #0f172a);
+    linear-gradient(oklch(0.714 0.143 254.62), oklch(0.714 0.143 254.62)) 50% 30px / 70px 12px no-repeat,
+    linear-gradient(oklch(0.929 0.013 255.51), oklch(0.929 0.013 255.51)) 50% 56px / 90px 30px no-repeat,
+    linear-gradient(oklch(0.711 0.035 256.79), oklch(0.711 0.035 256.79)) 50% 92px / 40px 8px no-repeat,
+    linear-gradient(oklch(0.372 0.039 257.29), oklch(0.372 0.039 257.29)) 16px 112px / 168px 1px no-repeat,
+    linear-gradient(oklch(0.446 0.037 257.28), oklch(0.446 0.037 257.28)) 50% 128px / 140px 8px no-repeat,
+    linear-gradient(oklch(0.446 0.037 257.28), oklch(0.446 0.037 257.28)) 50% 148px / 120px 8px no-repeat,
+    linear-gradient(oklch(0.446 0.037 257.28), oklch(0.446 0.037 257.28)) 50% 168px / 100px 8px no-repeat,
+    linear-gradient(135deg, oklch(0.623 0.188 259.81), oklch(0.606 0.219 292.72)) 50% 200px / 168px 36px no-repeat,
+    linear-gradient(180deg, oklch(0.279 0.037 260.03), oklch(0.208 0.04 265.75));
   border-radius: 14px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+  box-shadow: 0 12px 30px color-mix(in oklch, oklch(0 0 0) 40%, transparent);
 }
 .roycss-card-pricing-highlight > span { display: none; }
 .roycss-card-pricing-highlight::before {
@@ -2026,11 +2026,11 @@ export const effectsBatch12: CSSEffect[] = [
   inset: 0;
   border-radius: 14px;
   padding: 2px;
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b, #3b82f6);
+  background: linear-gradient(135deg, oklch(0.623 0.188 259.81), oklch(0.606 0.219 292.72), oklch(0.656 0.212 354.31), oklch(0.769 0.165 70.08), oklch(0.623 0.188 259.81));
   background-size: 300% 300%;
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask: linear-gradient(oklch(0 0 0) 0 0) content-box, linear-gradient(oklch(0 0 0) 0 0);
   -webkit-mask-composite: xor;
-          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(oklch(0 0 0) 0 0) content-box, linear-gradient(oklch(0 0 0) 0 0);
           mask-composite: exclude;
   animation: roy-b12-pricing-border 4s linear infinite;
   pointer-events: none;
@@ -2039,16 +2039,16 @@ export const effectsBatch12: CSSEffect[] = [
   /* "POPULAR" badge */
   content: "★ POPULAR";
   position: absolute;
-  top: 0; right: 18px;
+  inset-block-start: 0; inset-inline-end: 18px;
   padding: 4px 10px 6px;
-  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  background: linear-gradient(135deg, oklch(0.769 0.165 70.08), oklch(0.637 0.208 25.33));
   color: white;
   font-family: ui-sans-serif, sans-serif;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 1.5px;
   border-radius: 0 0 6px 6px;
-  box-shadow: 0 4px 10px rgba(245,158,11,0.5);
+  box-shadow: 0 4px 10px color-mix(in oklch, oklch(0.769 0.165 70.08) 50%, transparent);
 }
 @keyframes roy-b12-pricing-border {
   0%   { background-position: 0% 50%; }
@@ -2066,30 +2066,30 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Profile Card Avatar — rotating gradient ring around avatar */
 .roycss-card-profile-avatar {
-  width: 200px;
-  height: 240px;
+  inline-size: 200px;
+  block-size: 240px;
   background:
-    linear-gradient(#e2e8f0, #e2e8f0) 50% 124px / 100px 14px no-repeat,
-    linear-gradient(#60a5fa, #60a5fa) 50% 146px / 60px 8px no-repeat,
-    linear-gradient(#475569, #475569) 50% 170px / 160px 6px no-repeat,
-    linear-gradient(#475569, #475569) 50% 182px / 140px 6px no-repeat,
-    linear-gradient(#475569, #475569) 50% 194px / 120px 6px no-repeat,
-    linear-gradient(180deg, #1e293b, #0f172a);
+    linear-gradient(oklch(0.929 0.013 255.51), oklch(0.929 0.013 255.51)) 50% 124px / 100px 14px no-repeat,
+    linear-gradient(oklch(0.714 0.143 254.62), oklch(0.714 0.143 254.62)) 50% 146px / 60px 8px no-repeat,
+    linear-gradient(oklch(0.446 0.037 257.28), oklch(0.446 0.037 257.28)) 50% 170px / 160px 6px no-repeat,
+    linear-gradient(oklch(0.446 0.037 257.28), oklch(0.446 0.037 257.28)) 50% 182px / 140px 6px no-repeat,
+    linear-gradient(oklch(0.446 0.037 257.28), oklch(0.446 0.037 257.28)) 50% 194px / 120px 6px no-repeat,
+    linear-gradient(180deg, oklch(0.279 0.037 260.03), oklch(0.208 0.04 265.75));
   border-radius: 14px;
   position: relative;
   overflow: hidden;
-  border: 1px solid #1e293b;
+  border: 1px solid oklch(0.279 0.037 260.03);
 }
 .roycss-card-profile-avatar > span { display: none; }
 .roycss-card-profile-avatar::before {
   /* rotating gradient ring */
   content: "";
   position: absolute;
-  top: 22px; left: 50%;
-  width: 86px; height: 86px;
+  inset-block-start: 22px; inset-inline-start: 50%;
+  inline-size: 86px; block-size: 86px;
   border-radius: 50%;
   background: conic-gradient(from 0deg,
-    #3b82f6, #8b5cf6, #ec4899, #f59e0b, #3b82f6);
+    oklch(0.623 0.188 259.81), oklch(0.606 0.219 292.72), oklch(0.656 0.212 354.31), oklch(0.769 0.165 70.08), oklch(0.623 0.188 259.81));
   transform: translateX(-50%);
   animation: roy-b12-avatar-spin 4s linear infinite;
 }
@@ -2097,15 +2097,15 @@ export const effectsBatch12: CSSEffect[] = [
   /* avatar face (static, on top of ring) */
   content: "";
   position: absolute;
-  top: 28px; left: 50%;
-  width: 74px; height: 74px;
+  inset-block-start: 28px; inset-inline-start: 50%;
+  inline-size: 74px; block-size: 74px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #fbbf24, #d97706);
+  background: radial-gradient(circle at 35% 35%, oklch(0.837 0.164 84.43), oklch(0.666 0.157 58.32));
   transform: translateX(-50%);
   box-shadow:
-    inset 0 0 0 3px #1e293b,
-    inset -3px -4px 8px rgba(0,0,0,0.25),
-    0 4px 12px rgba(0,0,0,0.3);
+    inset 0 0 0 3px oklch(0.279 0.037 260.03),
+    inset -3px -4px 8px color-mix(in oklch, oklch(0 0 0) 25%, transparent),
+    0 4px 12px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
 }
 @keyframes roy-b12-avatar-spin {
   from { transform: translateX(-50%) rotate(0deg); }
@@ -2123,13 +2123,13 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Notification Card — icon + text bars + dismiss button */
 .roycss-card-notification {
-  width: 240px;
-  height: 80px;
-  background: #1e293b;
+  inline-size: 240px;
+  block-size: 80px;
+  background: oklch(0.279 0.037 260.03);
   border-radius: 10px;
   position: relative;
-  border-left: 4px solid #3b82f6;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  border-inline-start: 4px solid oklch(0.623 0.188 259.81);
+  box-shadow: 0 8px 24px color-mix(in oklch, oklch(0 0 0) 40%, transparent);
   overflow: hidden;
 }
 .roycss-card-notification > span { display: none; }
@@ -2137,22 +2137,22 @@ export const effectsBatch12: CSSEffect[] = [
   /* info icon + title + body bars */
   content: "";
   position: absolute;
-  top: 14px; left: 14px; right: 36px; bottom: 14px;
+  inset-block-start: 14px; inset-inline-start: 14px; inset-inline-end: 36px; inset-block-end: 14px;
   background:
-    radial-gradient(circle, #60a5fa 0 12px, transparent 13px) 0 6px / 24px 24px no-repeat,
-    linear-gradient(#e2e8f0, #e2e8f0) 32px 4px / 160px 12px no-repeat,
-    linear-gradient(#94a3b8, #94a3b8) 32px 24px / 130px 8px no-repeat;
+    radial-gradient(circle, oklch(0.714 0.143 254.62) 0 12px, transparent 13px) 0 6px / 24px 24px no-repeat,
+    linear-gradient(oklch(0.929 0.013 255.51), oklch(0.929 0.013 255.51)) 32px 4px / 160px 12px no-repeat,
+    linear-gradient(oklch(0.711 0.035 256.79), oklch(0.711 0.035 256.79)) 32px 24px / 130px 8px no-repeat;
 }
 .roycss-card-notification::after {
   /* dismiss X button */
   content: "✕";
   position: absolute;
-  top: 10px; right: 8px;
-  width: 22px; height: 22px;
+  inset-block-start: 10px; inset-inline-end: 8px;
+  inline-size: 22px; block-size: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #94a3b8;
+  color: oklch(0.711 0.035 256.79);
   font-family: ui-sans-serif, sans-serif;
   font-size: 13px;
   font-weight: 600;
@@ -2160,8 +2160,8 @@ export const effectsBatch12: CSSEffect[] = [
   animation: roy-b12-dismiss-pulse 2s ease-in-out infinite;
 }
 @keyframes roy-b12-dismiss-pulse {
-  0%, 100% { background: rgba(148,163,184,0); color: #94a3b8; }
-  50% { background: rgba(148,163,184,0.18); color: #e2e8f0; }
+  0%, 100% { background: color-mix(in oklch, oklch(0.711 0.035 256.79) 0%, transparent); color: oklch(0.711 0.035 256.79); }
+  50% { background: color-mix(in oklch, oklch(0.711 0.035 256.79) 18%, transparent); color: oklch(0.929 0.013 255.51); }
 }`,
   },
 
@@ -2175,21 +2175,21 @@ export const effectsBatch12: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Search Result Card — magnifier icon + highlighted match in title */
 .roycss-card-search-result {
-  width: 240px;
-  height: 80px;
-  background: #1e293b;
+  inline-size: 240px;
+  block-size: 80px;
+  background: oklch(0.279 0.037 260.03);
   border-radius: 8px;
   position: relative;
   overflow: hidden;
-  border: 1px solid #334155;
+  border: 1px solid oklch(0.372 0.039 257.29);
 }
 .roycss-card-search-result > span { display: none; }
 .roycss-card-search-result::before {
   /* magnifier glass icon (SVG data URI) */
   content: "";
   position: absolute;
-  top: 18px; left: 14px;
-  width: 22px; height: 22px;
+  inset-block-start: 18px; inset-inline-start: 14px;
+  inline-size: 22px; block-size: 22px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2360a5fa' stroke-width='2.5' stroke-linecap='round'%3E%3Ccircle cx='10' cy='10' r='6'/%3E%3Cline x1='14.5' y1='14.5' x2='20' y2='20'/%3E%3C/svg%3E");
   background-size: contain;
   background-repeat: no-repeat;
@@ -2198,19 +2198,19 @@ export const effectsBatch12: CSSEffect[] = [
   /* title with highlighted match + url + snippet */
   content: "";
   position: absolute;
-  top: 12px; left: 46px; right: 14px; bottom: 12px;
+  inset-block-start: 12px; inset-inline-start: 46px; inset-inline-end: 14px; inset-block-end: 12px;
   background:
     /* title: "lorem " + highlighted "ips" + " dolor" */
-    linear-gradient(#e2e8f0, #e2e8f0) 0 4px / 50px 12px no-repeat,
-    linear-gradient(#fbbf24, #fbbf24) 50px 4px / 30px 12px no-repeat,
-    linear-gradient(#fde68a, #fde68a) 50px 4px / 30px 12px no-repeat,
-    linear-gradient(#e2e8f0, #e2e8f0) 84px 4px / 70px 12px no-repeat,
+    linear-gradient(oklch(0.929 0.013 255.51), oklch(0.929 0.013 255.51)) 0 4px / 50px 12px no-repeat,
+    linear-gradient(oklch(0.837 0.164 84.43), oklch(0.837 0.164 84.43)) 50px 4px / 30px 12px no-repeat,
+    linear-gradient(oklch(0.924 0.115 95.75), oklch(0.924 0.115 95.75)) 50px 4px / 30px 12px no-repeat,
+    linear-gradient(oklch(0.929 0.013 255.51), oklch(0.929 0.013 255.51)) 84px 4px / 70px 12px no-repeat,
     /* url */
-    linear-gradient(#60a5fa, #60a5fa) 0 22px / 110px 8px no-repeat,
+    linear-gradient(oklch(0.714 0.143 254.62), oklch(0.714 0.143 254.62)) 0 22px / 110px 8px no-repeat,
     /* snippet line 1 */
-    linear-gradient(#94a3b8, #94a3b8) 0 38px / 170px 6px no-repeat,
+    linear-gradient(oklch(0.711 0.035 256.79), oklch(0.711 0.035 256.79)) 0 38px / 170px 6px no-repeat,
     /* snippet line 2 */
-    linear-gradient(#94a3b8, #94a3b8) 0 48px / 140px 6px no-repeat;
+    linear-gradient(oklch(0.711 0.035 256.79), oklch(0.711 0.035 256.79)) 0 48px / 140px 6px no-repeat;
   background-repeat: no-repeat;
   animation: roy-b12-search-glow 2s ease-in-out infinite;
 }

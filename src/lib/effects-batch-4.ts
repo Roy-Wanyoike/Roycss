@@ -25,7 +25,7 @@ export const effectsBatch4: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Vintage Filter */
 .roycss-filter-vintage {
-  background: linear-gradient(135deg, #ff6b6b 0%, #feca57 40%, #ff9ff3 80%, #48dbfb 100%);
+  background: linear-gradient(135deg, oklch(0.712 0.181 22.84) 0%, oklch(0.864 0.143 84.36) 40%, oklch(0.826 0.154 331.46) 80%, oklch(0.827 0.128 215.58) 100%);
   filter: sepia(0.55) saturate(0.8) contrast(0.9) brightness(0.95) hue-rotate(-10deg);
 }`,
   },
@@ -38,7 +38,7 @@ export const effectsBatch4: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Cinematic Filter */
 .roycss-filter-cinematic {
-  background: linear-gradient(135deg, #f12711 0%, #f5af19 40%, #2193b0 80%, #6dd5ed 100%);
+  background: linear-gradient(135deg, oklch(0.615 0.235 30.43) 0%, oklch(0.8 0.162 78.77) 40%, oklch(0.616 0.104 219.93) 80%, oklch(0.82 0.102 214.8) 100%);
   filter: contrast(1.25) saturate(1.3) brightness(0.92) hue-rotate(-8deg) sepia(0.18);
 }`,
   },
@@ -51,7 +51,7 @@ export const effectsBatch4: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Dramatic Filter */
 .roycss-filter-dramatic {
-  background: linear-gradient(135deg, #ee9ca7 0%, #ffdde1 30%, #ff758c 60%, #ff7e5f 100%);
+  background: linear-gradient(135deg, oklch(0.777 0.099 10.85) 0%, oklch(0.927 0.038 9.81) 30%, oklch(0.732 0.169 11.89) 60%, oklch(0.736 0.164 34.71) 100%);
   filter: contrast(1.6) saturate(1.5) brightness(0.82);
 }`,
   },
@@ -64,7 +64,7 @@ export const effectsBatch4: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Dreamy Filter */
 .roycss-filter-dreamy {
-  background: linear-gradient(135deg, #c471f5 0%, #fa71cd 40%, #89f7fe 100%);
+  background: linear-gradient(135deg, oklch(0.694 0.199 311.3) 0%, oklch(0.74 0.195 341.99) 40%, oklch(0.913 0.102 200.91) 100%);
   filter: blur(1.2px) brightness(1.18) saturate(1.4) contrast(0.92);
 }`,
   },
@@ -77,7 +77,7 @@ export const effectsBatch4: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Glitch Filter */
 .roycss-filter-glitch {
-  background: linear-gradient(135deg, #00f260 0%, #0575e6 50%, #f7971e 100%);
+  background: linear-gradient(135deg, oklch(0.838 0.245 147.59) 0%, oklch(0.574 0.192 255.75) 50%, oklch(0.759 0.164 64.36) 100%);
   animation: roy-filter-glitch 1.2s steps(2, end) infinite;
 }
 @keyframes roy-filter-glitch {
@@ -98,7 +98,7 @@ export const effectsBatch4: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Duotone Filter */
 .roycss-filter-duotone {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 50%, #fbc2eb 100%);
+  background: linear-gradient(135deg, oklch(0.975 0.005 258.32) 0%, oklch(0.851 0.03 259.59) 50%, oklch(0.877 0.084 336.72) 100%);
   filter: grayscale(1) sepia(1) hue-rotate(180deg) saturate(3) contrast(1.3);
 }`,
   },
@@ -112,8 +112,8 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Halftone Filter */
 .roycss-filter-halftone {
   background:
-    radial-gradient(circle, rgba(0,0,0,0.85) 1px, transparent 1.6px) 0 0 / 5px 5px,
-    linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 50%, #ffe66d 100%);
+    radial-gradient(circle, color-mix(in oklch, oklch(0 0 0) 85%, transparent) 1px, transparent 1.6px) 0 0 / 5px 5px,
+    linear-gradient(135deg, oklch(0.712 0.181 22.84) 0%, oklch(0.776 0.112 188.54) 50%, oklch(0.922 0.143 97.78) 100%);
   filter: contrast(1.4) saturate(1.3);
 }`,
   },
@@ -126,10 +126,10 @@ export const effectsBatch4: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Emboss Filter */
 .roycss-filter-emboss {
-  background: linear-gradient(135deg, #414d0b 0%, #727a17 50%, #d7e850 100%);
+  background: linear-gradient(135deg, oklch(0.396 0.087 119.89) 0%, oklch(0.555 0.117 114.38) 50%, oklch(0.891 0.172 115.45) 100%);
   filter: grayscale(1) brightness(1.1) contrast(1.4)
-    drop-shadow(2px 2px 1px rgba(255,255,255,0.5))
-    drop-shadow(-2px -2px 1px rgba(0,0,0,0.6));
+    drop-shadow(2px 2px 1px color-mix(in oklch, oklch(1 0 89.88) 50%, transparent))
+    drop-shadow(-2px -2px 1px color-mix(in oklch, oklch(0 0 0) 60%, transparent));
 }`,
   },
   {
@@ -141,7 +141,7 @@ export const effectsBatch4: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Blur To Focus */
 .roycss-filter-blur-focus {
-  background: linear-gradient(135deg, #f7797d 0%, #fbd786 50%, #c6ffdd 100%);
+  background: linear-gradient(135deg, oklch(0.723 0.155 19.75) 0%, oklch(0.892 0.108 86.3) 50%, oklch(0.952 0.074 158.47) 100%);
   filter: blur(8px) saturate(1.2);
   animation: roy-filter-blur-focus 3s ease-in-out infinite;
 }
@@ -159,7 +159,7 @@ export const effectsBatch4: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Grayscale Hover */
 .roycss-filter-grayscale-hover {
-  background: linear-gradient(135deg, #fc466b 0%, #3f5efb 50%, #fc466b 100%);
+  background: linear-gradient(135deg, oklch(0.667 0.217 13.9) 0%, oklch(0.56 0.235 268.65) 50%, oklch(0.667 0.217 13.9) 100%);
   filter: grayscale(1) brightness(0.85);
   transition: filter 0.5s ease;
 }
@@ -176,7 +176,7 @@ export const effectsBatch4: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Sepia Filter */
 .roycss-filter-sepia {
-  background: linear-gradient(135deg, #00c9ff 0%, #92fe9d 50%, #fef9d7 100%);
+  background: linear-gradient(135deg, oklch(0.779 0.149 226.02) 0%, oklch(0.909 0.165 146.32) 50%, oklch(0.977 0.044 100.28) 100%);
   filter: sepia(0.85) contrast(1.1) brightness(1.05);
 }`,
   },
@@ -189,7 +189,7 @@ export const effectsBatch4: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Hue Rotate Loop */
 .roycss-filter-hue-rotate {
-  background: linear-gradient(135deg, #ff006e 0%, #8338ec 50%, #3a86ff 100%);
+  background: linear-gradient(135deg, oklch(0.641 0.257 8.07) 0%, oklch(0.546 0.248 295.88) 50%, oklch(0.637 0.195 259.51) 100%);
   animation: roy-filter-hue-rotate 4s linear infinite;
 }
 @keyframes roy-filter-hue-rotate {
@@ -206,7 +206,7 @@ export const effectsBatch4: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Invert Filter */
 .roycss-filter-invert {
-  background: linear-gradient(135deg, #ff6a00 0%, #ee0979 50%, #ff6a00 100%);
+  background: linear-gradient(135deg, oklch(0.701 0.201 44.77) 0%, oklch(0.615 0.246 2.02) 50%, oklch(0.701 0.201 44.77) 100%);
   filter: invert(1) hue-rotate(180deg);
 }`,
   },
@@ -219,7 +219,7 @@ export const effectsBatch4: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Hyper Saturate */
 .roycss-filter-saturate {
-  background: linear-gradient(135deg, #c94b4b 0%, #4b134f 50%, #c94b4b 100%);
+  background: linear-gradient(135deg, oklch(0.583 0.161 23.52) 0%, oklch(0.308 0.116 325.06) 50%, oklch(0.583 0.161 23.52) 100%);
   filter: saturate(3.2) contrast(1.1);
 }`,
   },
@@ -232,7 +232,7 @@ export const effectsBatch4: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Extreme Contrast */
 .roycss-filter-contrast {
-  background: linear-gradient(135deg, #bdc3c7 0%, #2c3e50 50%, #bdc3c7 100%);
+  background: linear-gradient(135deg, oklch(0.814 0.009 236.59) 0%, oklch(0.356 0.039 248.97) 50%, oklch(0.814 0.009 236.59) 100%);
   filter: contrast(2.4) brightness(1.05);
 }`,
   },
@@ -251,16 +251,16 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Focus Glow Input */
 .roycss-form-focus-glow {
   position: relative;
-  width: 170px;
-  height: 40px;
+  inline-size: 170px;
+  block-size: 40px;
   padding: 0 14px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.18);
+  background: color-mix(in oklch, oklch(1 0 89.88) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 18%, transparent);
   border-radius: 10px;
   display: flex;
   align-items: center;
   font: 12px/1 system-ui, sans-serif;
-  color: rgba(255,255,255,0.55);
+  color: color-mix(in oklch, oklch(1 0 89.88) 55%, transparent);
   transition: all 0.3s ease;
 }
 .roycss-form-focus-glow > span { display: none; }
@@ -268,22 +268,22 @@ export const effectsBatch4: CSSEffect[] = [
 .roycss-form-focus-glow::after {
   content: "";
   position: absolute;
-  right: 14px;
-  top: 50%;
-  width: 12px;
-  height: 12px;
-  margin-top: -6px;
-  background: linear-gradient(135deg, #10b981, #34d399);
+  inset-inline-end: 14px;
+  inset-block-start: 50%;
+  inline-size: 12px;
+  block-size: 12px;
+  margin-block-start: -6px;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.773 0.153 163.22));
   border-radius: 50%;
   opacity: 0;
   transform: scale(0.4);
   transition: all 0.3s ease;
 }
 .roycss-form-focus-glow:hover {
-  border-color: #10b981;
-  background: rgba(16,185,129,0.06);
-  color: #ecfdf5;
-  box-shadow: 0 0 0 3px rgba(16,185,129,0.18), 0 0 24px rgba(16,185,129,0.35);
+  border-color: oklch(0.696 0.149 162.48);
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 6%, transparent);
+  color: oklch(0.979 0.021 166.11);
+  box-shadow: 0 0 0 3px color-mix(in oklch, oklch(0.696 0.149 162.48) 18%, transparent), 0 0 24px color-mix(in oklch, oklch(0.696 0.149 162.48) 35%, transparent);
 }
 .roycss-form-focus-glow:hover::after {
   opacity: 1;
@@ -300,10 +300,10 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Floating Label */
 .roycss-form-label-float {
   position: relative;
-  width: 170px;
-  height: 48px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.18);
+  inline-size: 170px;
+  block-size: 48px;
+  background: color-mix(in oklch, oklch(1 0 89.88) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 18%, transparent);
   border-radius: 10px;
   transition: all 0.3s ease;
 }
@@ -311,30 +311,30 @@ export const effectsBatch4: CSSEffect[] = [
 .roycss-form-label-float::before {
   content: "Full name";
   position: absolute;
-  left: 14px;
-  top: 50%;
+  inset-inline-start: 14px;
+  inset-block-start: 50%;
   transform: translateY(-50%);
   font: 13px/1 system-ui, sans-serif;
-  color: rgba(255,255,255,0.5);
+  color: color-mix(in oklch, oklch(1 0 89.88) 50%, transparent);
   transition: all 0.25s ease;
   pointer-events: none;
 }
 .roycss-form-label-float::after {
   content: "Roy Wanyoike";
   position: absolute;
-  left: 14px;
-  top: 24px;
+  inset-inline-start: 14px;
+  inset-block-start: 24px;
   font: 12px/1 system-ui, sans-serif;
-  color: rgba(255,255,255,0.85);
+  color: color-mix(in oklch, oklch(1 0 89.88) 85%, transparent);
 }
 .roycss-form-label-float:hover {
-  border-color: #10b981;
-  background: rgba(16,185,129,0.05);
+  border-color: oklch(0.696 0.149 162.48);
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 5%, transparent);
 }
 .roycss-form-label-float:hover::before {
-  top: 9px;
+  inset-block-start: 9px;
   font-size: 9px;
-  color: #10b981;
+  color: oklch(0.696 0.149 162.48);
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }`,
@@ -349,11 +349,11 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Shimmer Placeholder */
 .roycss-form-placeholder-shimmer {
   position: relative;
-  width: 180px;
-  height: 40px;
+  inline-size: 180px;
+  block-size: 40px;
   padding: 0 14px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.18);
+  background: color-mix(in oklch, oklch(1 0 89.88) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 18%, transparent);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -364,9 +364,9 @@ export const effectsBatch4: CSSEffect[] = [
 .roycss-form-placeholder-shimmer::before {
   content: "Start typing...";
   background: linear-gradient(90deg,
-    rgba(255,255,255,0.3) 0%,
-    rgba(255,255,255,0.95) 50%,
-    rgba(255,255,255,0.3) 100%);
+    color-mix(in oklch, oklch(1 0 89.88) 30%, transparent) 0%,
+    color-mix(in oklch, oklch(1 0 89.88) 95%, transparent) 50%,
+    color-mix(in oklch, oklch(1 0 89.88) 30%, transparent) 100%);
   background-size: 200% 100%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -388,16 +388,16 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Error Shake */
 .roycss-form-error-shake {
   position: relative;
-  width: 160px;
-  height: 40px;
+  inline-size: 160px;
+  block-size: 40px;
   padding: 0 14px;
-  background: rgba(239,68,68,0.08);
-  border: 1px solid #ef4444;
+  background: color-mix(in oklch, oklch(0.637 0.208 25.33) 8%, transparent);
+  border: 1px solid oklch(0.637 0.208 25.33);
   border-radius: 10px;
   display: flex;
   align-items: center;
   font: 12px/1 system-ui, sans-serif;
-  color: #fca5a5;
+  color: oklch(0.808 0.103 19.57);
   animation: roy-form-error-shake 0.5s ease-in-out infinite;
 }
 .roycss-form-error-shake > div { display: none; }
@@ -420,29 +420,29 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Success Checkmark */
 .roycss-form-success-check {
   position: relative;
-  width: 160px;
-  height: 40px;
+  inline-size: 160px;
+  block-size: 40px;
   padding: 0 14px 0 38px;
-  background: rgba(16,185,129,0.1);
-  border: 1px solid #10b981;
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent);
+  border: 1px solid oklch(0.696 0.149 162.48);
   border-radius: 10px;
   display: flex;
   align-items: center;
   font: 12px/1 system-ui, sans-serif;
-  color: #6ee7b7;
+  color: oklch(0.845 0.13 164.98);
 }
 .roycss-form-success-check > div { display: none; }
 .roycss-form-success-check::before { content: "Submitted!"; }
 .roycss-form-success-check::after {
   content: "";
   position: absolute;
-  left: 14px;
-  top: 50%;
-  width: 16px;
-  height: 8px;
-  margin-top: -4px;
-  border-left: 2px solid #10b981;
-  border-bottom: 2px solid #10b981;
+  inset-inline-start: 14px;
+  inset-block-start: 50%;
+  inline-size: 16px;
+  block-size: 8px;
+  margin-block-start: -4px;
+  border-inline-start: 2px solid oklch(0.696 0.149 162.48);
+  border-block-end: 2px solid oklch(0.696 0.149 162.48);
   transform: rotate(-45deg) scale(0);
   animation: roy-form-check 0.6s 0.2s ease-out forwards;
 }
@@ -462,28 +462,28 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Toggle Switch */
 .roycss-form-toggle-switch {
   position: relative;
-  width: 54px;
-  height: 28px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.2);
+  inline-size: 54px;
+  block-size: 28px;
+  background: color-mix(in oklch, oklch(1 0 89.88) 8%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 20%, transparent);
   border-radius: 14px;
   transition: background 0.3s ease, border-color 0.3s ease;
 }
 .roycss-form-toggle-switch > div {
-  width: 22px !important;
-  height: 22px !important;
+  inline-size: 22px !important;
+  block-size: 22px !important;
   margin: 0 !important;
-  background: #fff !important;
+  background: oklch(1 0 89.88) !important;
   border-radius: 50% !important;
   position: absolute;
-  top: 2px;
-  left: 2px;
+  inset-block-start: 2px;
+  inset-inline-start: 2px;
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 6px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
 }
 .roycss-form-toggle-switch:hover {
-  background: #10b981;
-  border-color: #10b981;
+  background: oklch(0.696 0.149 162.48);
+  border-color: oklch(0.696 0.149 162.48);
 }
 .roycss-form-toggle-switch:hover > div {
   transform: translateX(26px);
@@ -499,10 +499,10 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Custom Checkbox */
 .roycss-form-checkbox-custom {
   position: relative;
-  width: 32px;
-  height: 32px;
+  inline-size: 32px;
+  block-size: 32px;
   background: transparent;
-  border: 2px solid #10b981;
+  border: 2px solid oklch(0.696 0.149 162.48);
   border-radius: 7px;
   display: flex;
   align-items: center;
@@ -511,10 +511,10 @@ export const effectsBatch4: CSSEffect[] = [
 .roycss-form-checkbox-custom > div { display: none; }
 .roycss-form-checkbox-custom::after {
   content: "";
-  width: 14px;
-  height: 7px;
-  border-left: 2px solid #10b981;
-  border-bottom: 2px solid #10b981;
+  inline-size: 14px;
+  block-size: 7px;
+  border-inline-start: 2px solid oklch(0.696 0.149 162.48);
+  border-block-end: 2px solid oklch(0.696 0.149 162.48);
   transform: rotate(-45deg) translate(1px, -1px) scale(0);
   animation: roy-form-checkbox 0.5s 0.2s ease-out forwards;
 }
@@ -534,10 +534,10 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Custom Radio */
 .roycss-form-radio-custom {
   position: relative;
-  width: 32px;
-  height: 32px;
+  inline-size: 32px;
+  block-size: 32px;
   background: transparent;
-  border: 2px solid #10b981;
+  border: 2px solid oklch(0.696 0.149 162.48);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -546,16 +546,16 @@ export const effectsBatch4: CSSEffect[] = [
 .roycss-form-radio-custom > div { display: none; }
 .roycss-form-radio-custom::after {
   content: "";
-  width: 14px;
-  height: 14px;
-  background: #10b981;
+  inline-size: 14px;
+  block-size: 14px;
+  background: oklch(0.696 0.149 162.48);
   border-radius: 50%;
   transform: scale(0.4);
   animation: roy-form-radio 0.9s ease-in-out infinite alternate;
 }
 @keyframes roy-form-radio {
-  0%   { transform: scale(0.5); box-shadow: 0 0 0 0 rgba(16,185,129,0.5); }
-  100% { transform: scale(1); box-shadow: 0 0 0 4px rgba(16,185,129,0); }
+  0%   { transform: scale(0.5); box-shadow: 0 0 0 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent); }
+  100% { transform: scale(1); box-shadow: 0 0 0 4px color-mix(in oklch, oklch(0.696 0.149 162.48) 0%, transparent); }
 }`,
   },
   {
@@ -568,16 +568,16 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Search Expand */
 .roycss-form-search-expand {
   position: relative;
-  width: 56px;
-  height: 40px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.18);
+  inline-size: 56px;
+  block-size: 40px;
+  background: color-mix(in oklch, oklch(1 0 89.88) 5%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 18%, transparent);
   border-radius: 20px;
   display: flex;
   align-items: center;
   padding: 0 14px;
   font: 12px/1 system-ui, sans-serif;
-  color: rgba(255,255,255,0.6);
+  color: color-mix(in oklch, oklch(1 0 89.88) 60%, transparent);
   overflow: hidden;
   transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
               border-color 0.4s ease;
@@ -585,25 +585,25 @@ export const effectsBatch4: CSSEffect[] = [
 .roycss-form-search-expand > span { display: none; }
 .roycss-form-search-expand::before {
   content: "";
-  width: 14px;
-  height: 14px;
-  border: 2px solid #10b981;
+  inline-size: 14px;
+  block-size: 14px;
+  border: 2px solid oklch(0.696 0.149 162.48);
   border-radius: 50%;
   flex-shrink: 0;
-  box-shadow: 6px 6px 0 -1px #10b981;
+  box-shadow: 6px 6px 0 -1px oklch(0.696 0.149 162.48);
   transform: rotate(-45deg);
 }
 .roycss-form-search-expand::after {
   content: "Search docs...";
-  margin-left: 12px;
+  margin-inline-start: 12px;
   white-space: nowrap;
   opacity: 0;
   transition: opacity 0.3s 0.2s ease;
 }
 .roycss-form-search-expand:hover {
-  width: 200px;
-  border-color: #10b981;
-  background: rgba(16,185,129,0.05);
+  inline-size: 200px;
+  border-color: oklch(0.696 0.149 162.48);
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 5%, transparent);
 }
 .roycss-form-search-expand:hover::after { opacity: 1; }`,
   },
@@ -617,33 +617,33 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Underline Draw */
 .roycss-form-underline-draw {
   position: relative;
-  width: 180px;
-  height: 40px;
+  inline-size: 180px;
+  block-size: 40px;
   padding: 0 4px;
   background: transparent;
   border: none;
-  border-bottom: 2px solid rgba(255,255,255,0.18);
+  border-block-end: 2px solid color-mix(in oklch, oklch(1 0 89.88) 18%, transparent);
   display: flex;
   align-items: center;
   font: 13px/1 system-ui, sans-serif;
-  color: rgba(255,255,255,0.7);
+  color: color-mix(in oklch, oklch(1 0 89.88) 70%, transparent);
 }
 .roycss-form-underline-draw > span { display: none; }
 .roycss-form-underline-draw::before { content: "@username"; }
 .roycss-form-underline-draw::after {
   content: "";
   position: absolute;
-  left: 0;
-  bottom: -2px;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #10b981, #34d399, #10b981);
+  inset-inline-start: 0;
+  inset-block-end: -2px;
+  inline-size: 0;
+  block-size: 2px;
+  background: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.773 0.153 163.22), oklch(0.696 0.149 162.48));
   transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .roycss-form-underline-draw:hover {
-  color: #ecfdf5;
+  color: oklch(0.979 0.021 166.11);
 }
-.roycss-form-underline-draw:hover::after { width: 100%; }`,
+.roycss-form-underline-draw:hover::after { inline-size: 100%; }`,
   },
 
   /* ═════════════════════════════════════════════════════════════
@@ -660,16 +660,16 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Menu Slide */
 .roycss-nav-menu-slide {
   position: relative;
-  width: 220px;
-  height: 40px;
+  inline-size: 220px;
+  block-size: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: color-mix(in oklch, oklch(1 0 89.88) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 10%, transparent);
   border-radius: 10px;
   font: 11px/1 system-ui, sans-serif;
-  color: rgba(255,255,255,0.7);
+  color: color-mix(in oklch, oklch(1 0 89.88) 70%, transparent);
   overflow: hidden;
   letter-spacing: 0.15em;
 }
@@ -681,14 +681,14 @@ export const effectsBatch4: CSSEffect[] = [
 .roycss-nav-menu-slide::after {
   content: "→ HOME   ABOUT   WORK   BLOG";
   position: absolute;
-  left: 0; right: 0;
-  top: 100%;
+  inset-inline-start: 0; inset-inline-end: 0;
+  inset-block-start: 100%;
   text-align: center;
-  color: #10b981;
+  color: oklch(0.696 0.149 162.48);
   transition: top 0.4s cubic-bezier(0.65, 0, 0.35, 1);
 }
 .roycss-nav-menu-slide:hover::before { transform: translateY(-100%); }
-.roycss-nav-menu-slide:hover::after  { top: 50%; transform: translateY(-50%); }`,
+.roycss-nav-menu-slide:hover::after  { inset-block-start: 50%; transform: translateY(-50%); }`,
   },
   {
     id: "nav-menu-fade",
@@ -700,16 +700,16 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Menu Fade Scale */
 .roycss-nav-menu-fade {
   position: relative;
-  width: 220px;
-  height: 40px;
+  inline-size: 220px;
+  block-size: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: color-mix(in oklch, oklch(1 0 89.88) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 10%, transparent);
   border-radius: 10px;
   font: 11px/1 system-ui, sans-serif;
-  color: rgba(255,255,255,0.7);
+  color: color-mix(in oklch, oklch(1 0 89.88) 70%, transparent);
   overflow: hidden;
   letter-spacing: 0.15em;
 }
@@ -725,7 +725,7 @@ export const effectsBatch4: CSSEffect[] = [
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #10b981;
+  color: oklch(0.696 0.149 162.48);
   opacity: 0;
   transform: scale(0.92);
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -749,16 +749,16 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Menu Scale */
 .roycss-nav-menu-scale {
   position: relative;
-  width: 220px;
-  height: 40px;
+  inline-size: 220px;
+  block-size: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: color-mix(in oklch, oklch(1 0 89.88) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 10%, transparent);
   border-radius: 10px;
   font: 11px/1 system-ui, sans-serif;
-  color: rgba(255,255,255,0.7);
+  color: color-mix(in oklch, oklch(1 0 89.88) 70%, transparent);
   letter-spacing: 0.15em;
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -768,22 +768,22 @@ export const effectsBatch4: CSSEffect[] = [
   content: "";
   position: absolute;
   inset: 0;
-  border: 1px solid #10b981;
+  border: 1px solid oklch(0.696 0.149 162.48);
   border-radius: 10px;
   opacity: 0;
   transform: scale(0.94);
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .roycss-nav-menu-scale:hover {
-  background: rgba(16,185,129,0.08);
-  color: #10b981;
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 8%, transparent);
+  color: oklch(0.696 0.149 162.48);
   transform: scale(1.06);
   letter-spacing: 0.22em;
 }
 .roycss-nav-menu-scale:hover::after {
   opacity: 1;
   transform: scale(1);
-  box-shadow: 0 0 22px rgba(16,185,129,0.35);
+  box-shadow: 0 0 22px color-mix(in oklch, oklch(0.696 0.149 162.48) 35%, transparent);
 }`,
   },
   {
@@ -796,13 +796,13 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Accordion Menu */
 .roycss-nav-accordion {
   position: relative;
-  width: 180px;
-  height: 34px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.12);
+  inline-size: 180px;
+  block-size: 34px;
+  background: color-mix(in oklch, oklch(1 0 89.88) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 12%, transparent);
   border-radius: 8px;
   font: 11px/1 system-ui, sans-serif;
-  color: rgba(255,255,255,0.8);
+  color: color-mix(in oklch, oklch(1 0 89.88) 80%, transparent);
   overflow: hidden;
   transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
               border-color 0.3s ease;
@@ -812,26 +812,26 @@ export const effectsBatch4: CSSEffect[] = [
   content: "▸  Menu Item";
   display: block;
   padding: 11px 14px;
-  color: rgba(255,255,255,0.8);
+  color: color-mix(in oklch, oklch(1 0 89.88) 80%, transparent);
   transition: color 0.3s ease;
 }
 .roycss-nav-accordion::after {
   content: "Sub 1  ·  Sub 2  ·  Sub 3";
   display: block;
   padding: 0 14px 10px 28px;
-  color: rgba(16,185,129,0.75);
+  color: color-mix(in oklch, oklch(0.696 0.149 162.48) 75%, transparent);
   font-size: 10px;
   opacity: 0;
   transform: translateY(-6px);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 .roycss-nav-accordion:hover {
-  height: 70px;
-  border-color: rgba(16,185,129,0.4);
+  block-size: 70px;
+  border-color: color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent);
 }
 .roycss-nav-accordion:hover::before {
   content: "▾  Menu Item";
-  color: #10b981;
+  color: oklch(0.696 0.149 162.48);
 }
 .roycss-nav-accordion:hover::after {
   opacity: 1;
@@ -848,13 +848,13 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Tabs Underline */
 .roycss-nav-tabs-underline {
   position: relative;
-  width: 200px;
-  height: 36px;
+  inline-size: 200px;
+  block-size: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   font: 11px/1 system-ui, sans-serif;
-  color: rgba(255,255,255,0.6);
+  color: color-mix(in oklch, oklch(1 0 89.88) 60%, transparent);
   letter-spacing: 0.12em;
 }
 .roycss-nav-tabs-underline > span { display: none; }
@@ -862,18 +862,18 @@ export const effectsBatch4: CSSEffect[] = [
 .roycss-nav-tabs-underline::after {
   content: "";
   position: absolute;
-  left: 24px;
-  bottom: 0;
-  width: 40px;
-  height: 2px;
-  background: linear-gradient(90deg, #10b981, #34d399);
+  inset-inline-start: 24px;
+  inset-block-end: 0;
+  inline-size: 40px;
+  block-size: 2px;
+  background: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.773 0.153 163.22));
   border-radius: 1px;
   animation: roy-nav-tabs-underline 3s ease-in-out infinite;
 }
 @keyframes roy-nav-tabs-underline {
-  0%, 100% { left: 24px; }
-  33%      { left: 80px; }
-  66%      { left: 136px; }
+  0%, 100% { inset-inline-start: 24px; }
+  33%      { inset-inline-start: 80px; }
+  66%      { inset-inline-start: 136px; }
 }`,
   },
   {
@@ -886,8 +886,8 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Breadcrumb Path */
 .roycss-nav-breadcrumb {
   position: relative;
-  width: 240px;
-  height: 36px;
+  inline-size: 240px;
+  block-size: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -897,16 +897,16 @@ export const effectsBatch4: CSSEffect[] = [
 .roycss-nav-breadcrumb > span { display: none; }
 .roycss-nav-breadcrumb::before {
   content: "Home  ›  Shop  ›  Electronics  ›  Phones";
-  color: rgba(255,255,255,0.5);
+  color: color-mix(in oklch, oklch(1 0 89.88) 50%, transparent);
 }
 .roycss-nav-breadcrumb::after {
   content: "";
   position: absolute;
-  bottom: 2px;
-  left: 50%;
-  width: 40px;
-  height: 2px;
-  background: #10b981;
+  inset-block-end: 2px;
+  inset-inline-start: 50%;
+  inline-size: 40px;
+  block-size: 2px;
+  background: oklch(0.696 0.149 162.48);
   border-radius: 1px;
   transform: translateX(-50%);
   animation: roy-nav-breadcrumb 3s ease-in-out infinite;
@@ -926,13 +926,13 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Pagination Pulse */
 .roycss-nav-pagination {
   position: relative;
-  width: 200px;
-  height: 40px;
+  inline-size: 200px;
+  block-size: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   font: 11px/1 system-ui, sans-serif;
-  color: rgba(255,255,255,0.6);
+  color: color-mix(in oklch, oklch(1 0 89.88) 60%, transparent);
   letter-spacing: 0.3em;
 }
 .roycss-nav-pagination > span { display: none; }
@@ -940,14 +940,14 @@ export const effectsBatch4: CSSEffect[] = [
 .roycss-nav-pagination::after {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 18px;
-  height: 18px;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inline-size: 18px;
+  block-size: 18px;
   margin: -9px 0 0 -9px;
-  border: 1.5px solid #10b981;
+  border: 1.5px solid oklch(0.696 0.149 162.48);
   border-radius: 50%;
-  background: rgba(16,185,129,0.15);
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 15%, transparent);
   animation: roy-nav-pagination 3.5s steps(5, end) infinite;
 }
 @keyframes roy-nav-pagination {
@@ -968,8 +968,8 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Stepper Progress */
 .roycss-nav-stepper {
   position: relative;
-  width: 220px;
-  height: 50px;
+  inline-size: 220px;
+  block-size: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -977,26 +977,26 @@ export const effectsBatch4: CSSEffect[] = [
 .roycss-nav-stepper > span { display: none; }
 .roycss-nav-stepper::before {
   content: "";
-  width: 180px;
-  height: 4px;
+  inline-size: 180px;
+  block-size: 4px;
   border-radius: 2px;
   background:
-    linear-gradient(90deg, #10b981 0 66%, rgba(255,255,255,0.2) 66% 100%),
+    linear-gradient(90deg, oklch(0.696 0.149 162.48) 0 66%, color-mix(in oklch, oklch(1 0 89.88) 20%, transparent) 66% 100%),
     repeating-linear-gradient(90deg,
       transparent 0 42px,
-      rgba(255,255,255,0.6) 42px 46px,
+      color-mix(in oklch, oklch(1 0 89.88) 60%, transparent) 42px 46px,
       transparent 46px 88px,
-      rgba(255,255,255,0.6) 88px 92px,
+      color-mix(in oklch, oklch(1 0 89.88) 60%, transparent) 88px 92px,
       transparent 92px 134px,
-      rgba(255,255,255,0.6) 134px 138px,
+      color-mix(in oklch, oklch(1 0 89.88) 60%, transparent) 134px 138px,
       transparent 138px 180px);
 }
 .roycss-nav-stepper::after {
   content: "Step 3 of 4";
   position: absolute;
-  bottom: 4px;
+  inset-block-end: 4px;
   font: 10px/1 system-ui, sans-serif;
-  color: #10b981;
+  color: oklch(0.696 0.149 162.48);
   letter-spacing: 0.18em;
   text-transform: uppercase;
 }`,
@@ -1011,8 +1011,8 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Progress Dots */
 .roycss-nav-progress-indicator {
   position: relative;
-  width: 120px;
-  height: 16px;
+  inline-size: 120px;
+  block-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1021,43 +1021,43 @@ export const effectsBatch4: CSSEffect[] = [
 .roycss-nav-progress-indicator > div { display: none; }
 .roycss-nav-progress-indicator::before {
   content: "";
-  width: 8px;
-  height: 8px;
+  inline-size: 8px;
+  block-size: 8px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.25);
+  background: color-mix(in oklch, oklch(1 0 89.88) 25%, transparent);
   box-shadow:
-    16px 0 0 rgba(255,255,255,0.25),
-    32px 0 0 rgba(255,255,255,0.25),
-    48px 0 0 rgba(255,255,255,0.25),
-    64px 0 0 rgba(255,255,255,0.25);
+    16px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    32px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    48px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    64px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent);
   animation: roy-nav-progress 1.6s steps(5, end) infinite;
 }
 @keyframes roy-nav-progress {
-  0%   { background: #10b981; box-shadow:
-    16px 0 0 rgba(255,255,255,0.25),
-    32px 0 0 rgba(255,255,255,0.25),
-    48px 0 0 rgba(255,255,255,0.25),
-    64px 0 0 rgba(255,255,255,0.25); }
-  20%  { background: rgba(255,255,255,0.25); box-shadow:
-    16px 0 0 #10b981,
-    32px 0 0 rgba(255,255,255,0.25),
-    48px 0 0 rgba(255,255,255,0.25),
-    64px 0 0 rgba(255,255,255,0.25); }
-  40%  { background: rgba(255,255,255,0.25); box-shadow:
-    16px 0 0 rgba(255,255,255,0.25),
-    32px 0 0 #10b981,
-    48px 0 0 rgba(255,255,255,0.25),
-    64px 0 0 rgba(255,255,255,0.25); }
-  60%  { background: rgba(255,255,255,0.25); box-shadow:
-    16px 0 0 rgba(255,255,255,0.25),
-    32px 0 0 rgba(255,255,255,0.25),
-    48px 0 0 #10b981,
-    64px 0 0 rgba(255,255,255,0.25); }
-  80%, 100% { background: rgba(255,255,255,0.25); box-shadow:
-    16px 0 0 rgba(255,255,255,0.25),
-    32px 0 0 rgba(255,255,255,0.25),
-    48px 0 0 rgba(255,255,255,0.25),
-    64px 0 0 #10b981; }
+  0%   { background: oklch(0.696 0.149 162.48); box-shadow:
+    16px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    32px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    48px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    64px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent); }
+  20%  { background: color-mix(in oklch, oklch(1 0 89.88) 25%, transparent); box-shadow:
+    16px 0 0 oklch(0.696 0.149 162.48),
+    32px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    48px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    64px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent); }
+  40%  { background: color-mix(in oklch, oklch(1 0 89.88) 25%, transparent); box-shadow:
+    16px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    32px 0 0 oklch(0.696 0.149 162.48),
+    48px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    64px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent); }
+  60%  { background: color-mix(in oklch, oklch(1 0 89.88) 25%, transparent); box-shadow:
+    16px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    32px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    48px 0 0 oklch(0.696 0.149 162.48),
+    64px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent); }
+  80%, 100% { background: color-mix(in oklch, oklch(1 0 89.88) 25%, transparent); box-shadow:
+    16px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    32px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    48px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    64px 0 0 oklch(0.696 0.149 162.48); }
 }`,
   },
   {
@@ -1070,17 +1070,17 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Dropdown Reveal */
 .roycss-nav-dropdown {
   position: relative;
-  width: 180px;
-  height: 34px;
+  inline-size: 180px;
+  block-size: 34px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 14px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.12);
+  background: color-mix(in oklch, oklch(1 0 89.88) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 12%, transparent);
   border-radius: 8px;
   font: 11px/1 system-ui, sans-serif;
-  color: rgba(255,255,255,0.8);
+  color: color-mix(in oklch, oklch(1 0 89.88) 80%, transparent);
   overflow: hidden;
   transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
               border-color 0.3s ease;
@@ -1094,23 +1094,23 @@ export const effectsBatch4: CSSEffect[] = [
   content: "↳ First choice\\A ↳ Second choice\\A ↳ Third choice";
   white-space: pre;
   position: absolute;
-  top: 34px;
-  left: 0;
-  right: 0;
+  inset-block-start: 34px;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
   padding: 6px 14px 10px;
-  background: rgba(16,185,129,0.08);
-  color: #6ee7b7;
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 8%, transparent);
+  color: oklch(0.845 0.13 164.98);
   font-size: 10px;
-  line-height: 1.7;
+  line-block-size: 1.7;
   opacity: 0;
   transform: translateY(-6px);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 .roycss-nav-dropdown:hover {
-  height: 86px;
-  border-color: rgba(16,185,129,0.4);
+  block-size: 86px;
+  border-color: color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent);
 }
-.roycss-nav-dropdown:hover::before { color: #10b981; }
+.roycss-nav-dropdown:hover::before { color: oklch(0.696 0.149 162.48); }
 .roycss-nav-dropdown:hover::after {
   opacity: 1;
   transform: translateY(0);
@@ -1131,12 +1131,12 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Confetti Rain */
 .roycss-misc-confetti {
   background:
-    radial-gradient(circle at 15% 0%, #ff6b6b 0 3px, transparent 4px) 0 0 / 40px 40px,
-    radial-gradient(circle at 45% 0%, #feca57 0 3px, transparent 4px) 0 0 / 55px 55px,
-    radial-gradient(circle at 75% 0%, #48dbfb 0 3px, transparent 4px) 0 0 / 45px 45px,
-    radial-gradient(circle at 30% 0%, #1dd1a1 0 3px, transparent 4px) 0 0 / 60px 60px,
-    radial-gradient(circle at 90% 0%, #ff9ff3 0 3px, transparent 4px) 0 0 / 50px 50px,
-    linear-gradient(135deg, #1a1a2e, #16213e);
+    radial-gradient(circle at 15% 0%, oklch(0.712 0.181 22.84) 0 3px, transparent 4px) 0 0 / 40px 40px,
+    radial-gradient(circle at 45% 0%, oklch(0.864 0.143 84.36) 0 3px, transparent 4px) 0 0 / 55px 55px,
+    radial-gradient(circle at 75% 0%, oklch(0.827 0.128 215.58) 0 3px, transparent 4px) 0 0 / 45px 45px,
+    radial-gradient(circle at 30% 0%, oklch(0.767 0.15 168.19) 0 3px, transparent 4px) 0 0 / 60px 60px,
+    radial-gradient(circle at 90% 0%, oklch(0.826 0.154 331.46) 0 3px, transparent 4px) 0 0 / 50px 50px,
+    linear-gradient(135deg, oklch(0.228 0.038 282.93), oklch(0.254 0.057 266.71));
   background-repeat: repeat;
   animation: roy-misc-confetti 2.5s linear infinite;
 }
@@ -1155,11 +1155,11 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Snowfall */
 .roycss-misc-snow {
   background:
-    radial-gradient(circle at 10% 0%, #fff 0 2px, transparent 3px) 0 0 / 30px 30px,
-    radial-gradient(circle at 60% 0%, #fff 0 1.5px, transparent 2px) 0 0 / 45px 45px,
-    radial-gradient(circle at 80% 0%, #fff 0 2.5px, transparent 3px) 0 0 / 35px 35px,
-    radial-gradient(circle at 30% 0%, rgba(255,255,255,0.7) 0 1px, transparent 2px) 0 0 / 25px 25px,
-    linear-gradient(180deg, #0f2027, #203a43, #2c5364);
+    radial-gradient(circle at 10% 0%, oklch(1 0 89.88) 0 2px, transparent 3px) 0 0 / 30px 30px,
+    radial-gradient(circle at 60% 0%, oklch(1 0 89.88) 0 1.5px, transparent 2px) 0 0 / 45px 45px,
+    radial-gradient(circle at 80% 0%, oklch(1 0 89.88) 0 2.5px, transparent 3px) 0 0 / 35px 35px,
+    radial-gradient(circle at 30% 0%, color-mix(in oklch, oklch(1 0 89.88) 70%, transparent) 0 1px, transparent 2px) 0 0 / 25px 25px,
+    linear-gradient(180deg, oklch(0.232 0.026 226.41), oklch(0.332 0.036 222.19), oklch(0.421 0.052 228.22));
   background-repeat: repeat;
   animation: roy-misc-snow 3s linear infinite;
 }
@@ -1178,9 +1178,9 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Rain Streaks */
 .roycss-misc-rain {
   background:
-    linear-gradient(105deg, transparent 0 48%, rgba(174,194,224,0.6) 48% 50%, transparent 50% 100%) 0 0 / 15px 30px,
-    linear-gradient(105deg, transparent 0 49%, rgba(174,194,224,0.35) 49% 50%, transparent 50% 100%) 0 0 / 25px 40px,
-    linear-gradient(180deg, #1a2a3a, #2c3e50);
+    linear-gradient(105deg, transparent 0 48%, color-mix(in oklch, oklch(0.809 0.048 258.37) 60%, transparent) 48% 50%, transparent 50% 100%) 0 0 / 15px 30px,
+    linear-gradient(105deg, transparent 0 49%, color-mix(in oklch, oklch(0.809 0.048 258.37) 35%, transparent) 49% 50%, transparent 50% 100%) 0 0 / 25px 40px,
+    linear-gradient(180deg, oklch(0.279 0.037 249.26), oklch(0.356 0.039 248.97));
   background-repeat: repeat;
   animation: roy-misc-rain 0.6s linear infinite;
 }
@@ -1199,10 +1199,10 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Rising Bubbles */
 .roycss-misc-bubbles {
   background:
-    radial-gradient(circle at 20% 100%, rgba(255,255,255,0.7) 0 4px, transparent 5px) 0 0 / 60px 60px,
-    radial-gradient(circle at 50% 100%, rgba(255,255,255,0.5) 0 6px, transparent 7px) 0 0 / 80px 80px,
-    radial-gradient(circle at 80% 100%, rgba(255,255,255,0.6) 0 3px, transparent 4px) 0 0 / 50px 50px,
-    linear-gradient(180deg, #2193b0, #6dd5ed);
+    radial-gradient(circle at 20% 100%, color-mix(in oklch, oklch(1 0 89.88) 70%, transparent) 0 4px, transparent 5px) 0 0 / 60px 60px,
+    radial-gradient(circle at 50% 100%, color-mix(in oklch, oklch(1 0 89.88) 50%, transparent) 0 6px, transparent 7px) 0 0 / 80px 80px,
+    radial-gradient(circle at 80% 100%, color-mix(in oklch, oklch(1 0 89.88) 60%, transparent) 0 3px, transparent 4px) 0 0 / 50px 50px,
+    linear-gradient(180deg, oklch(0.616 0.104 219.93), oklch(0.82 0.102 214.8));
   background-repeat: repeat;
   animation: roy-misc-bubbles 4s linear infinite;
 }
@@ -1221,10 +1221,10 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Fireflies */
 .roycss-misc-fireflies {
   background:
-    radial-gradient(circle at 20% 30%, rgba(212,255,127,0.9) 0 2px, transparent 5px) 0 0 / 100px 100px,
-    radial-gradient(circle at 70% 60%, rgba(212,255,127,0.7) 0 2.5px, transparent 6px) 0 0 / 130px 130px,
-    radial-gradient(circle at 40% 80%, rgba(212,255,127,0.8) 0 1.5px, transparent 4px) 0 0 / 90px 90px,
-    linear-gradient(180deg, #0f0c29, #302b63, #24243e);
+    radial-gradient(circle at 20% 30%, color-mix(in oklch, oklch(0.943 0.162 124.78) 90%, transparent) 0 2px, transparent 5px) 0 0 / 100px 100px,
+    radial-gradient(circle at 70% 60%, color-mix(in oklch, oklch(0.943 0.162 124.78) 70%, transparent) 0 2.5px, transparent 6px) 0 0 / 130px 130px,
+    radial-gradient(circle at 40% 80%, color-mix(in oklch, oklch(0.943 0.162 124.78) 80%, transparent) 0 1.5px, transparent 4px) 0 0 / 90px 90px,
+    linear-gradient(180deg, oklch(0.179 0.057 283.68), oklch(0.327 0.096 283.81), oklch(0.274 0.048 282.79));
   background-repeat: repeat;
   animation: roy-misc-fireflies 5s ease-in-out infinite alternate;
 }
@@ -1244,11 +1244,11 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Twinkling Sparkles */
 .roycss-misc-sparkles {
   background:
-    radial-gradient(circle at 15% 25%, #fff 0 1px, transparent 2px) 0 0 / 50px 50px,
-    radial-gradient(circle at 65% 75%, #fff 0 1.5px, transparent 2.5px) 0 0 / 70px 70px,
-    radial-gradient(circle at 85% 15%, #fff 0 1px, transparent 2px) 0 0 / 40px 40px,
-    radial-gradient(circle at 35% 85%, #fff 0 2px, transparent 3px) 0 0 / 60px 60px,
-    linear-gradient(135deg, #0a0a23, #1a1a4e);
+    radial-gradient(circle at 15% 25%, oklch(1 0 89.88) 0 1px, transparent 2px) 0 0 / 50px 50px,
+    radial-gradient(circle at 65% 75%, oklch(1 0 89.88) 0 1.5px, transparent 2.5px) 0 0 / 70px 70px,
+    radial-gradient(circle at 85% 15%, oklch(1 0 89.88) 0 1px, transparent 2px) 0 0 / 40px 40px,
+    radial-gradient(circle at 35% 85%, oklch(1 0 89.88) 0 2px, transparent 3px) 0 0 / 60px 60px,
+    linear-gradient(135deg, oklch(0.163 0.051 279.14), oklch(0.255 0.093 277.48));
   background-repeat: repeat;
   animation: roy-misc-sparkles 1.8s ease-in-out infinite alternate;
 }
@@ -1267,39 +1267,39 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Fireworks Burst */
 .roycss-misc-fireworks {
   position: relative;
-  background: linear-gradient(180deg, #0a0a23, #1a1a4e);
+  background: linear-gradient(180deg, oklch(0.163 0.051 279.14), oklch(0.255 0.093 277.48));
   overflow: hidden;
 }
 .roycss-misc-fireworks::before {
   content: "";
   position: absolute;
-  top: 30%;
-  left: 30%;
-  width: 4px;
-  height: 4px;
+  inset-block-start: 30%;
+  inset-inline-start: 30%;
+  inline-size: 4px;
+  block-size: 4px;
   border-radius: 50%;
   box-shadow:
-    0 0 0 2px #ff6b6b,
-    0 -20px 0 -1px #ff6b6b, 0 20px 0 -1px #ff6b6b,
-    -20px 0 0 -1px #ff6b6b, 20px 0 0 -1px #ff6b6b,
-    -14px -14px 0 -1px #ff6b6b, 14px 14px 0 -1px #ff6b6b,
-    -14px 14px 0 -1px #ff6b6b, 14px -14px 0 -1px #ff6b6b;
+    0 0 0 2px oklch(0.712 0.181 22.84),
+    0 -20px 0 -1px oklch(0.712 0.181 22.84), 0 20px 0 -1px oklch(0.712 0.181 22.84),
+    -20px 0 0 -1px oklch(0.712 0.181 22.84), 20px 0 0 -1px oklch(0.712 0.181 22.84),
+    -14px -14px 0 -1px oklch(0.712 0.181 22.84), 14px 14px 0 -1px oklch(0.712 0.181 22.84),
+    -14px 14px 0 -1px oklch(0.712 0.181 22.84), 14px -14px 0 -1px oklch(0.712 0.181 22.84);
   animation: roy-misc-firework1 2s ease-out infinite;
 }
 .roycss-misc-fireworks::after {
   content: "";
   position: absolute;
-  top: 60%;
-  left: 70%;
-  width: 4px;
-  height: 4px;
+  inset-block-start: 60%;
+  inset-inline-start: 70%;
+  inline-size: 4px;
+  block-size: 4px;
   border-radius: 50%;
   box-shadow:
-    0 0 0 2px #feca57,
-    0 -16px 0 -1px #feca57, 0 16px 0 -1px #feca57,
-    -16px 0 0 -1px #feca57, 16px 0 0 -1px #feca57,
-    -11px -11px 0 -1px #feca57, 11px 11px 0 -1px #feca57,
-    -11px 11px 0 -1px #feca57, 11px -11px 0 -1px #feca57;
+    0 0 0 2px oklch(0.864 0.143 84.36),
+    0 -16px 0 -1px oklch(0.864 0.143 84.36), 0 16px 0 -1px oklch(0.864 0.143 84.36),
+    -16px 0 0 -1px oklch(0.864 0.143 84.36), 16px 0 0 -1px oklch(0.864 0.143 84.36),
+    -11px -11px 0 -1px oklch(0.864 0.143 84.36), 11px 11px 0 -1px oklch(0.864 0.143 84.36),
+    -11px 11px 0 -1px oklch(0.864 0.143 84.36), 11px -11px 0 -1px oklch(0.864 0.143 84.36);
   animation: roy-misc-firework2 2s ease-out 1s infinite;
 }
 @keyframes roy-misc-firework1 {
@@ -1321,10 +1321,10 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Ripple Click */
 .roycss-misc-ripple-click {
   position: relative;
-  width: 80px;
-  height: 80px;
-  background: rgba(16,185,129,0.1);
-  border: 1px solid rgba(16,185,129,0.3);
+  inline-size: 80px;
+  block-size: 80px;
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent);
   border-radius: 16px;
   overflow: hidden;
   cursor: pointer;
@@ -1333,23 +1333,23 @@ export const effectsBatch4: CSSEffect[] = [
 .roycss-misc-ripple-click::before {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 8px;
-  height: 8px;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inline-size: 8px;
+  block-size: 8px;
   margin: -4px 0 0 -4px;
-  background: #10b981;
+  background: oklch(0.696 0.149 162.48);
   border-radius: 50%;
   transform: scale(0);
 }
 .roycss-misc-ripple-click::after {
   content: "Click";
   position: absolute;
-  top: 50%;
-  left: 50%;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
   transform: translate(-50%, -50%);
   font: 11px/1 system-ui, sans-serif;
-  color: #10b981;
+  color: oklch(0.696 0.149 162.48);
   z-index: 1;
 }
 .roycss-misc-ripple-click:hover::before {
@@ -1370,10 +1370,10 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Wave Lines */
 .roycss-misc-wave {
   background:
-    linear-gradient(90deg, transparent 0%, rgba(16,185,129,0.6) 50%, transparent 100%) 0 30% / 40px 4px repeat-x,
-    linear-gradient(90deg, transparent 0%, rgba(20,184,166,0.5) 50%, transparent 100%) 0 50% / 30px 3px repeat-x,
-    linear-gradient(90deg, transparent 0%, rgba(52,211,153,0.5) 50%, transparent 100%) 0 70% / 50px 4px repeat-x,
-    linear-gradient(180deg, #04293a, #063b52);
+    linear-gradient(90deg, transparent 0%, color-mix(in oklch, oklch(0.696 0.149 162.48) 60%, transparent) 50%, transparent 100%) 0 30% / 40px 4px repeat-x,
+    linear-gradient(90deg, transparent 0%, color-mix(in oklch, oklch(0.704 0.123 182.5) 50%, transparent) 50%, transparent 100%) 0 50% / 30px 3px repeat-x,
+    linear-gradient(90deg, transparent 0%, color-mix(in oklch, oklch(0.773 0.153 163.22) 50%, transparent) 50%, transparent 100%) 0 70% / 50px 4px repeat-x,
+    linear-gradient(180deg, oklch(0.265 0.051 233.41), oklch(0.332 0.065 233.43));
   animation: roy-misc-wave 1.5s linear infinite;
 }
 @keyframes roy-misc-wave {
@@ -1391,8 +1391,8 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Pulse Ring Expand */
 .roycss-misc-pulse-ring-expand {
   position: relative;
-  width: 80px;
-  height: 80px;
+  inline-size: 80px;
+  block-size: 80px;
   background: transparent;
   border: none;
   border-radius: 50%;
@@ -1401,22 +1401,22 @@ export const effectsBatch4: CSSEffect[] = [
   justify-content: center;
 }
 .roycss-misc-pulse-ring-expand > div {
-  width: 16px !important;
-  height: 16px !important;
-  background: #10b981 !important;
+  inline-size: 16px !important;
+  block-size: 16px !important;
+  background: oklch(0.696 0.149 162.48) !important;
   border-radius: 50% !important;
-  box-shadow: 0 0 12px #10b981;
+  box-shadow: 0 0 12px oklch(0.696 0.149 162.48);
 }
 .roycss-misc-pulse-ring-expand::before,
 .roycss-misc-pulse-ring-expand::after {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 16px;
-  height: 16px;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inline-size: 16px;
+  block-size: 16px;
   margin: -8px 0 0 -8px;
-  border: 2px solid #10b981;
+  border: 2px solid oklch(0.696 0.149 162.48);
   border-radius: 50%;
   animation: roy-misc-pulse-ring 2s ease-out infinite;
 }
@@ -1436,9 +1436,9 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Shimmer Overlay */
 .roycss-misc-shimmer-overlay {
   position: relative;
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(135deg, #10b981, #34d399);
+  inline-size: 80px;
+  block-size: 80px;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.773 0.153 163.22));
   border-radius: 16px;
   overflow: hidden;
 }
@@ -1446,11 +1446,11 @@ export const effectsBatch4: CSSEffect[] = [
 .roycss-misc-shimmer-overlay::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(105deg, transparent, rgba(255,255,255,0.6), transparent);
+  inset-block-start: 0;
+  inset-inline-start: -100%;
+  inline-size: 60%;
+  block-size: 100%;
+  background: linear-gradient(105deg, transparent, color-mix(in oklch, oklch(1 0 89.88) 60%, transparent), transparent);
   transform: skewX(-20deg);
   animation: roy-misc-shimmer 2.5s ease-in-out infinite;
 }
@@ -1458,12 +1458,12 @@ export const effectsBatch4: CSSEffect[] = [
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,0.25) 100%);
+  background: radial-gradient(circle at 50% 50%, transparent 0%, color-mix(in oklch, oklch(0 0 0) 25%, transparent) 100%);
   pointer-events: none;
 }
 @keyframes roy-misc-shimmer {
-  0%        { left: -100%; }
-  60%, 100% { left: 200%; }
+  0%        { inset-inline-start: -100%; }
+  60%, 100% { inset-inline-start: 200%; }
 }`,
   },
   {
@@ -1477,35 +1477,35 @@ export const effectsBatch4: CSSEffect[] = [
 .roycss-misc-scan-line {
   position: relative;
   background:
-    repeating-linear-gradient(0deg, rgba(16,185,129,0.06) 0 2px, transparent 2px 4px),
-    linear-gradient(180deg, #0a1a14, #142822);
+    repeating-linear-gradient(0deg, color-mix(in oklch, oklch(0.696 0.149 162.48) 6%, transparent) 0 2px, transparent 2px 4px),
+    linear-gradient(180deg, oklch(0.201 0.025 167.64), oklch(0.258 0.029 172.78));
   overflow: hidden;
 }
-.roycss-misc-scan-line > span { color: rgba(16,185,129,0.5) !important; }
+.roycss-misc-scan-line > span { color: color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent) !important; }
 .roycss-misc-scan-line::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(180deg, transparent, rgba(16,185,129,0.9), transparent);
-  box-shadow: 0 0 20px rgba(16,185,129,0.7);
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  block-size: 4px;
+  background: linear-gradient(180deg, transparent, color-mix(in oklch, oklch(0.696 0.149 162.48) 90%, transparent), transparent);
+  box-shadow: 0 0 20px color-mix(in oklch, oklch(0.696 0.149 162.48) 70%, transparent);
   animation: roy-misc-scan 2.5s ease-in-out infinite;
 }
 .roycss-misc-scan-line::after {
   content: "SCAN";
   position: absolute;
-  top: 50%;
-  left: 50%;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
   transform: translate(-50%, -50%);
   font: bold 14px/1 'Courier New', monospace;
-  color: rgba(16,185,129,0.4);
+  color: color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent);
   letter-spacing: 0.4em;
 }
 @keyframes roy-misc-scan {
-  0%, 100% { top: 0; }
-  50%      { top: 100%; }
+  0%, 100% { inset-block-start: 0; }
+  50%      { inset-block-start: 100%; }
 }`,
   },
   {
@@ -1518,34 +1518,34 @@ export const effectsBatch4: CSSEffect[] = [
     cssCode: `/* Hologram Card */
 .roycss-misc-hologram {
   position: relative;
-  width: 80px;
-  height: 80px;
+  inline-size: 80px;
+  block-size: 80px;
   background: linear-gradient(115deg,
-    #ff006e 0%, #8338ec 25%, #3a86ff 50%, #06ffa5 75%, #ffbe0b 100%);
+    oklch(0.641 0.257 8.07) 0%, oklch(0.546 0.248 295.88) 25%, oklch(0.637 0.195 259.51) 50%, oklch(0.882 0.203 158.76) 75%, oklch(0.839 0.171 83.34) 100%);
   background-size: 400% 100%;
   border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.3);
-  box-shadow: 0 0 22px rgba(131,56,236,0.45);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 30%, transparent);
+  box-shadow: 0 0 22px color-mix(in oklch, oklch(0.546 0.248 295.88) 45%, transparent);
   animation: roy-misc-hologram 4s linear infinite;
 }
 .roycss-misc-hologram > div { display: none; }
 .roycss-misc-hologram::before {
   content: "HOLO";
   position: absolute;
-  top: 50%;
-  left: 50%;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
   transform: translate(-50%, -50%);
   font: bold 14px/1 system-ui, sans-serif;
-  color: rgba(255,255,255,0.95);
+  color: color-mix(in oklch, oklch(1 0 89.88) 95%, transparent);
   letter-spacing: 0.3em;
-  text-shadow: 0 0 8px rgba(255,255,255,0.8);
+  text-shadow: 0 0 8px color-mix(in oklch, oklch(1 0 89.88) 80%, transparent);
 }
 .roycss-misc-hologram::after {
   content: "";
   position: absolute;
   inset: 0;
   background: repeating-linear-gradient(0deg,
-    rgba(255,255,255,0.12) 0 1px,
+    color-mix(in oklch, oklch(1 0 89.88) 12%, transparent) 0 1px,
     transparent 1px 3px);
   border-radius: 16px;
   pointer-events: none;
@@ -1566,40 +1566,40 @@ export const effectsBatch4: CSSEffect[] = [
 .roycss-misc-vhs-effect {
   position: relative;
   background:
-    repeating-linear-gradient(0deg, rgba(0,0,0,0.18) 0 2px, transparent 2px 4px),
-    linear-gradient(135deg, #2a0845, #6441a5);
+    repeating-linear-gradient(0deg, color-mix(in oklch, oklch(0 0 0) 18%, transparent) 0 2px, transparent 2px 4px),
+    linear-gradient(135deg, oklch(0.236 0.106 304.47), oklch(0.468 0.154 296.01));
   overflow: hidden;
 }
-.roycss-misc-vhs-effect > span { color: rgba(255,255,255,0.9) !important; }
+.roycss-misc-vhs-effect > span { color: color-mix(in oklch, oklch(1 0 89.88) 90%, transparent) !important; }
 .roycss-misc-vhs-effect::before {
   content: "▶ REC";
   position: absolute;
-  top: 10px;
-  left: 12px;
+  inset-block-start: 10px;
+  inset-inline-start: 12px;
   font: 12px/1 'Courier New', monospace;
-  color: rgba(255,80,80,0.95);
+  color: color-mix(in oklch, oklch(0.676 0.212 24.81) 95%, transparent);
   letter-spacing: 0.18em;
   z-index: 2;
 }
 .roycss-misc-vhs-effect::after {
   content: "";
   position: absolute;
-  top: -50%;
-  left: 0;
-  right: 0;
-  height: 50%;
+  inset-block-start: -50%;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  block-size: 50%;
   background: linear-gradient(180deg,
     transparent,
-    rgba(255,255,255,0.18) 40%,
-    rgba(255,255,255,0.32) 50%,
-    rgba(255,255,255,0.18) 60%,
+    color-mix(in oklch, oklch(1 0 89.88) 18%, transparent) 40%,
+    color-mix(in oklch, oklch(1 0 89.88) 32%, transparent) 50%,
+    color-mix(in oklch, oklch(1 0 89.88) 18%, transparent) 60%,
     transparent);
   animation: roy-misc-vhs 3s linear infinite;
   z-index: 1;
 }
 @keyframes roy-misc-vhs {
-  0%   { top: -50%; }
-  100% { top: 100%; }
+  0%   { inset-block-start: -50%; }
+  100% { inset-block-start: 100%; }
 }`,
   },
   {
@@ -1615,21 +1615,21 @@ export const effectsBatch4: CSSEffect[] = [
   display: inline-block;
   font-family: 'Courier New', monospace;
   font-weight: bold;
-  color: #10b981;
+  color: oklch(0.696 0.149 162.48);
   overflow: hidden;
   white-space: nowrap;
-  border-right: 3px solid #10b981;
-  width: 0;
+  border-inline-end: 3px solid oklch(0.696 0.149 162.48);
+  inline-size: 0;
   animation:
     roy-misc-typewriter-type 2.5s steps(6) infinite,
     roy-misc-typewriter-cursor 0.6s step-end infinite;
 }
 @keyframes roy-misc-typewriter-type {
-  0%, 90%, 100% { width: 0; }
-  40%, 60%      { width: 6ch; }
+  0%, 90%, 100% { inline-size: 0; }
+  40%, 60%      { inline-size: 6ch; }
 }
 @keyframes roy-misc-typewriter-cursor {
-  0%, 100% { border-color: #10b981; }
+  0%, 100% { border-color: oklch(0.696 0.149 162.48); }
   50%      { border-color: transparent; }
 }`,
   },

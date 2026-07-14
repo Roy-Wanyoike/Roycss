@@ -54,6 +54,8 @@ import { FavoritesSheet } from "@/components/roycss/favorites-sheet";
 import { ScrollToTop } from "@/components/roycss/scroll-to-top";
 import { SectionScrollbar } from "@/components/roycss/section-scrollbar";
 import { RoyCSSLogo, RoyCSSHeroLogo } from "@/components/roycss/roycss-logo";
+import { GetStarted } from "@/components/roycss/get-started";
+import { RoyMotionShowcase } from "@/components/roycss/roymotion-showcase";
 import { useFavorites } from "@/hooks/use-favorites";
 import { motion, useScroll, useSpring } from "framer-motion";
 import {
@@ -532,6 +534,11 @@ export default function RoyCSSPage() {
 
       <Separator className="opacity-50" />
 
+      {/* ─── Get Started ─────────────────────────────────────── */}
+      <GetStarted />
+
+      <Separator className="opacity-50" />
+
       {/* ─── Effects Section ────────────────────────────────── */}
       <section id="effects" className="flex-1 py-10 sm:py-14">
         <div className="container mx-auto px-4 sm:px-6">
@@ -724,6 +731,11 @@ export default function RoyCSSPage() {
           </ScrollReveal>
         </div>
       </section>
+
+      {/* ─── RoyMotion Showcase ─────────────────────────────── */}
+      <RoyMotionShowcase />
+
+      <Separator className="opacity-50" />
 
       {/* ─── Footer ─────────────────────────────────────────── */}
       <footer className="border-t border-border/50 bg-card/50 backdrop-blur-sm mt-auto">

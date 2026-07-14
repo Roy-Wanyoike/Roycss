@@ -25,13 +25,13 @@ export const effectsBatch1: CSSEffect[] = [
 
 @keyframes roy-pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 5px rgba(16, 185, 129, 0.3),
-                0 0 10px rgba(16, 185, 129, 0.1);
+    box-shadow: 0 0 5px color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent),
+                0 0 10px color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent);
   }
   50% {
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.6),
-                0 0 40px rgba(16, 185, 129, 0.3),
-                0 0 60px rgba(16, 185, 129, 0.1);
+    box-shadow: 0 0 20px color-mix(in oklch, oklch(0.696 0.149 162.48) 60%, transparent),
+                0 0 40px color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent),
+                0 0 60px color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent);
   }
 }`,
   },
@@ -772,7 +772,7 @@ export const effectsBatch1: CSSEffect[] = [
 
 .roycss-hover-scale:hover {
   transform: scale(1.08);
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 30px -5px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
 }`,
   },
 
@@ -794,16 +794,16 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-hover-underline-slide::after {
   content: '';
   position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #10b981, #14b8a6);
+  inset-block-end: -2px;
+  inset-inline-start: 0;
+  inline-size: 0;
+  block-size: 2px;
+  background: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.704 0.123 182.5));
   transition: width 0.3s ease;
 }
 
 .roycss-hover-underline-slide:hover::after {
-  width: 100%;
+  inline-size: 100%;
 }`,
   },
 
@@ -828,7 +828,7 @@ export const effectsBatch1: CSSEffect[] = [
   position: absolute;
   inset: -2px;
   border-radius: inherit;
-  background: linear-gradient(135deg, #10b981, #14b8a6, #06b6d4);
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.704 0.123 182.5), oklch(0.715 0.126 215.22));
   z-index: -1;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -840,8 +840,8 @@ export const effectsBatch1: CSSEffect[] = [
 }
 
 .roycss-hover-glow-border:hover {
-  border-color: rgba(16, 185, 129, 0.5);
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+  border-color: color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent);
+  box-shadow: 0 0 20px color-mix(in oklch, oklch(0.696 0.149 162.48) 15%, transparent);
 }`,
   },
 
@@ -857,13 +857,13 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-hover-shadow-grow {
   transition: transform 0.3s ease,
               box-shadow 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 4px color-mix(in oklch, oklch(0 0 0) 6%, transparent);
 }
 
 .roycss-hover-shadow-grow:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12),
-              0 4px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 12px 24px color-mix(in oklch, oklch(0 0 0) 12%, transparent),
+              0 4px 8px color-mix(in oklch, oklch(0 0 0) 6%, transparent);
 }`,
   },
 
@@ -877,14 +877,14 @@ export const effectsBatch1: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Hover Color Shift */
 .roycss-hover-color-shift {
-  background: linear-gradient(135deg, #10b981, #059669);
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.596 0.127 163.23));
   transition: all 0.4s ease;
   background-size: 200% 200%;
   background-position: 0% 50%;
 }
 
 .roycss-hover-color-shift:hover {
-  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  background: linear-gradient(135deg, oklch(0.769 0.165 70.08), oklch(0.637 0.208 25.33));
   background-size: 200% 200%;
   background-position: 100% 50%;
 }`,
@@ -948,7 +948,7 @@ export const effectsBatch1: CSSEffect[] = [
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 0%, rgba(16, 185, 129, 0.85) 100%);
+  background: linear-gradient(180deg, transparent 0%, color-mix(in oklch, oklch(0.696 0.149 162.48) 85%, transparent) 100%);
   transform: translateY(100%);
   transition: transform 0.4s ease;
   z-index: 0;
@@ -980,7 +980,7 @@ export const effectsBatch1: CSSEffect[] = [
 
 .roycss-hover-push-up:hover {
   transform: translateY(-10px);
-  box-shadow: 0 20px 40px -10px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 20px 40px -10px color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent);
 }`,
   },
 
@@ -1002,21 +1002,21 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-hover-slide-overlay::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #10b981, #06b6d4);
+  inset-block-start: 0;
+  inset-inline-start: -100%;
+  inline-size: 100%;
+  block-size: 100%;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
   transition: left 0.4s ease;
   z-index: 0;
 }
 
 .roycss-hover-slide-overlay:hover::before {
-  left: 0;
+  inset-inline-start: 0;
 }
 
 .roycss-hover-slide-overlay:hover {
-  color: #ffffff;
+  color: oklch(1 0 89.88);
 }
 
 .roycss-hover-slide-overlay > * {
@@ -1043,7 +1043,7 @@ export const effectsBatch1: CSSEffect[] = [
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(16, 185, 129, 0.35);
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 35%, transparent);
   opacity: 0;
   transition: opacity 0.35s ease;
   border-radius: inherit;
@@ -1112,7 +1112,7 @@ export const effectsBatch1: CSSEffect[] = [
 
 .roycss-hover-drop-shadow:hover {
   transform: translateY(-3px);
-  filter: drop-shadow(0 8px 14px rgba(16, 185, 129, 0.55));
+  filter: drop-shadow(0 8px 14px color-mix(in oklch, oklch(0.696 0.149 162.48) 55%, transparent));
 }`,
   },
 
@@ -1226,31 +1226,31 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-hover-border-draw::after {
   content: '';
   position: absolute;
-  border: 2px solid #10b981;
+  border: 2px solid oklch(0.696 0.149 162.48);
   box-sizing: border-box;
   transition: width 0.3s ease, height 0.3s ease;
-  width: 0;
-  height: 0;
+  inline-size: 0;
+  block-size: 0;
 }
 
 .roycss-hover-border-draw::before {
-  top: 0;
-  left: 0;
-  border-right: none;
-  border-bottom: none;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  border-inline-end: none;
+  border-block-end: none;
 }
 
 .roycss-hover-border-draw::after {
-  bottom: 0;
-  right: 0;
-  border-left: none;
-  border-top: none;
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  border-inline-start: none;
+  border-block-start: none;
 }
 
 .roycss-hover-border-draw:hover::before,
 .roycss-hover-border-draw:hover::after {
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
 }`,
   },
 
@@ -1274,11 +1274,11 @@ export const effectsBatch1: CSSEffect[] = [
 @keyframes roy-neon-flicker {
   0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
     box-shadow:
-      0 0 4px #10b981,
-      0 0 11px #10b981,
-      0 0 19px #10b981,
-      0 0 40px #0d9668,
-      0 0 80px #0d9668;
+      0 0 4px oklch(0.696 0.149 162.48),
+      0 0 11px oklch(0.696 0.149 162.48),
+      0 0 19px oklch(0.696 0.149 162.48),
+      0 0 40px oklch(0.596 0.127 162.48),
+      0 0 80px oklch(0.596 0.127 162.48);
   }
   20%, 24%, 55% {
     box-shadow: none;
@@ -1298,16 +1298,16 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-hover-depth {
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
               box-shadow 0.4s ease;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08),
-              0 2px 4px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 2px color-mix(in oklch, oklch(0 0 0) 8%, transparent),
+              0 2px 4px color-mix(in oklch, oklch(0 0 0) 6%, transparent);
 }
 
 .roycss-hover-depth:hover {
   transform: translateY(-6px);
   box-shadow:
-    0 4px 8px rgba(16, 185, 129, 0.12),
-    0 12px 24px rgba(16, 185, 129, 0.18),
-    0 24px 48px rgba(16, 185, 129, 0.12);
+    0 4px 8px color-mix(in oklch, oklch(0.696 0.149 162.48) 12%, transparent),
+    0 12px 24px color-mix(in oklch, oklch(0.696 0.149 162.48) 18%, transparent),
+    0 24px 48px color-mix(in oklch, oklch(0.696 0.149 162.48) 12%, transparent);
 }`,
   },
 
@@ -1323,12 +1323,12 @@ export const effectsBatch1: CSSEffect[] = [
     cssCode: `/* Hover Press Down */
 .roycss-hover-press {
   transition: transform 0.15s ease, box-shadow 0.15s ease;
-  box-shadow: 0 6px 0 #047857, 0 8px 14px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 0 oklch(0.508 0.105 165.61), 0 8px 14px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
 }
 
 .roycss-hover-press:hover {
   transform: translateY(3px);
-  box-shadow: 0 3px 0 #047857, 0 5px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 0 oklch(0.508 0.105 165.61), 0 5px 10px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
 }`,
   },
 
@@ -1346,7 +1346,7 @@ export const effectsBatch1: CSSEffect[] = [
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.roycss-hover-slide-right:hover {
+.roycss-hover-slide-inset-inline-end:hover {
   transform: translateX(12px);
 }`,
   },
@@ -1385,7 +1385,7 @@ export const effectsBatch1: CSSEffect[] = [
     previewType: "text",
     cssCode: `/* Gradient Text */
 .roycss-text-gradient {
-  background: linear-gradient(135deg, #10b981 0%, #14b8a6 40%, #06b6d4 70%, #8b5cf6 100%);
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48) 0%, oklch(0.704 0.123 182.5) 40%, oklch(0.715 0.126 215.22) 70%, oklch(0.606 0.219 292.72) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1404,13 +1404,13 @@ export const effectsBatch1: CSSEffect[] = [
     previewType: "text",
     cssCode: `/* Neon Glow Text */
 .roycss-text-neon-glow {
-  color: #10b981;
+  color: oklch(0.696 0.149 162.48);
   text-shadow:
-    0 0 7px rgba(16, 185, 129, 0.8),
-    0 0 10px rgba(16, 185, 129, 0.6),
-    0 0 21px rgba(16, 185, 129, 0.4),
-    0 0 42px rgba(16, 185, 129, 0.2),
-    0 0 82px rgba(16, 185, 129, 0.1);
+    0 0 7px color-mix(in oklch, oklch(0.696 0.149 162.48) 80%, transparent),
+    0 0 10px color-mix(in oklch, oklch(0.696 0.149 162.48) 60%, transparent),
+    0 0 21px color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent),
+    0 0 42px color-mix(in oklch, oklch(0.696 0.149 162.48) 20%, transparent),
+    0 0 82px color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent);
 }`,
   },
 
@@ -1424,7 +1424,7 @@ export const effectsBatch1: CSSEffect[] = [
     previewType: "text",
     cssCode: `/* Text Stroke */
 .roycss-text-stroke {
-  -webkit-text-stroke: 2px #10b981;
+  -webkit-text-stroke: 2px oklch(0.696 0.149 162.48);
   color: transparent;
   font-weight: 700;
 }`,
@@ -1440,13 +1440,13 @@ export const effectsBatch1: CSSEffect[] = [
     previewType: "text",
     cssCode: `/* Typing Cursor */
 .roycss-text-typing-cursor {
-  border-right: 3px solid #10b981;
+  border-inline-end: 3px solid oklch(0.696 0.149 162.48);
   animation: roy-text-blink-cursor 1s step-end infinite;
-  padding-right: 4px;
+  padding-inline-end: 4px;
 }
 
 @keyframes roy-text-blink-cursor {
-  0%, 100% { border-color: #10b981; }
+  0%, 100% { border-color: oklch(0.696 0.149 162.48); }
   50% { border-color: transparent; }
 }`,
   },
@@ -1469,22 +1469,22 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-text-glitch::after {
   content: attr(data-text);
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
 }
 
 .roycss-text-glitch::before {
   animation: roy-glitch-1 2s infinite linear alternate-reverse;
   clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
-  color: #ef4444;
+  color: oklch(0.637 0.208 25.33);
 }
 
 .roycss-text-glitch::after {
   animation: roy-glitch-2 3s infinite linear alternate-reverse;
   clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
-  color: #06b6d4;
+  color: oklch(0.715 0.126 215.22);
 }
 
 @keyframes roy-glitch-1 {
@@ -1516,14 +1516,14 @@ export const effectsBatch1: CSSEffect[] = [
     previewType: "text",
     cssCode: `/* 3D Text Shadow */
 .roycss-text-3d-shadow {
-  color: #f0fdf4;
+  color: oklch(0.982 0.018 155.83);
   text-shadow:
-    1px 1px 0 #065f46,
-    2px 2px 0 #047857,
-    3px 3px 0 #059669,
-    4px 4px 0 #10b981,
-    5px 5px 0 rgba(16, 185, 129, 0.4),
-    6px 6px 10px rgba(0, 0, 0, 0.3);
+    1px 1px 0 oklch(0.432 0.086 166.91),
+    2px 2px 0 oklch(0.508 0.105 165.61),
+    3px 3px 0 oklch(0.596 0.127 163.23),
+    4px 4px 0 oklch(0.696 0.149 162.48),
+    5px 5px 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent),
+    6px 6px 10px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
   font-weight: 700;
 }`,
   },
@@ -1540,7 +1540,7 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-text-rainbow {
   background: linear-gradient(
     90deg,
-    #ef4444, #f59e0b, #eab308, #10b981, #06b6d4, #8b5cf6, #ec4899, #ef4444
+    oklch(0.637 0.208 25.33), oklch(0.769 0.165 70.08), oklch(0.795 0.162 86.05), oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22), oklch(0.606 0.219 292.72), oklch(0.656 0.212 354.31), oklch(0.637 0.208 25.33)
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -1569,11 +1569,11 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-text-shimmer {
   background: linear-gradient(
     110deg,
-    #475569 0%,
-    #475569 35%,
-    #f1f5f9 50%,
-    #475569 65%,
-    #475569 100%
+    oklch(0.446 0.037 257.28) 0%,
+    oklch(0.446 0.037 257.28) 35%,
+    oklch(0.968 0.007 247.9) 50%,
+    oklch(0.446 0.037 257.28) 65%,
+    oklch(0.446 0.037 257.28) 100%
   );
   background-size: 200% 100%;
   -webkit-background-clip: text;
@@ -1600,7 +1600,7 @@ export const effectsBatch1: CSSEffect[] = [
     previewType: "text",
     cssCode: `/* Gradient Shift Text */
 .roycss-text-gradient-shift {
-  background: linear-gradient(45deg, #10b981, #06b6d4, #8b5cf6, #ec4899, #10b981);
+  background: linear-gradient(45deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22), oklch(0.606 0.219 292.72), oklch(0.656 0.212 354.31), oklch(0.696 0.149 162.48));
   background-size: 300% 300%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -1626,7 +1626,7 @@ export const effectsBatch1: CSSEffect[] = [
     previewType: "text",
     cssCode: `/* Blur Reveal Text */
 .roycss-text-blur-reveal {
-  color: #10b981;
+  color: oklch(0.696 0.149 162.48);
   font-weight: 700;
   animation: roy-blur-reveal 4s ease-in-out infinite;
 }
@@ -1650,7 +1650,7 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-text-wave {
   display: inline-flex;
   font-weight: 700;
-  color: #10b981;
+  color: oklch(0.696 0.149 162.48);
 }
 
 .roycss-text-wave > span {
@@ -1684,7 +1684,7 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-text-bounce-letters {
   display: inline-flex;
   font-weight: 700;
-  color: #06b6d4;
+  color: oklch(0.715 0.126 215.22);
 }
 
 .roycss-text-bounce-letters > span {
@@ -1718,7 +1718,7 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-text-flip {
   display: inline-block;
   font-weight: 700;
-  color: #8b5cf6;
+  color: oklch(0.606 0.219 292.72);
   transform-style: preserve-3d;
   perspective: 400px;
   animation: roy-text-flip 3s ease-in-out infinite;
@@ -1741,7 +1741,7 @@ export const effectsBatch1: CSSEffect[] = [
     cssCode: `/* Stretch Text */
 .roycss-text-stretch {
   font-weight: 700;
-  color: #f59e0b;
+  color: oklch(0.769 0.165 70.08);
   animation: roy-text-stretch 3s ease-in-out infinite;
 }
 
@@ -1764,17 +1764,17 @@ export const effectsBatch1: CSSEffect[] = [
   position: relative;
   display: inline-block;
   font-weight: 700;
-  color: #10b981;
+  color: oklch(0.696 0.149 162.48);
 }
 
 .roycss-text-underline-draw::after {
   content: '';
   position: absolute;
-  bottom: -4px;
-  left: 0;
-  height: 3px;
-  width: 100%;
-  background: linear-gradient(90deg, #10b981, #06b6d4);
+  inset-block-end: -4px;
+  inset-inline-start: 0;
+  block-size: 3px;
+  inline-size: 100%;
+  background: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
   transform: scaleX(0);
   transform-origin: left center;
   animation: roy-underline-draw 2.5s ease-in-out infinite;
@@ -1799,8 +1799,8 @@ export const effectsBatch1: CSSEffect[] = [
     cssCode: `/* Marker Highlight Text */
 .roycss-text-highlight-marker {
   font-weight: 700;
-  color: #0f172a;
-  background: linear-gradient(180deg, transparent 50%, #fde047 50%);
+  color: oklch(0.208 0.04 265.75);
+  background: linear-gradient(180deg, transparent 50%, oklch(0.905 0.166 98.11) 50%);
   padding: 0 4px;
 }`,
   },
@@ -1815,19 +1815,19 @@ export const effectsBatch1: CSSEffect[] = [
     previewType: "text",
     cssCode: `/* Long Shadow Text */
 .roycss-text-shadow-long {
-  color: #f0fdf4;
+  color: oklch(0.982 0.018 155.83);
   font-weight: 700;
   text-shadow:
-    1px 1px 0 #10b981,
-    2px 2px 0 #0d9668,
-    3px 3px 0 #059669,
-    4px 4px 0 #047857,
-    5px 5px 0 #065f46,
-    6px 6px 0 #064e3b,
-    7px 7px 0 #053b30,
-    8px 8px 0 #042f24,
-    9px 9px 0 #03241c,
-    10px 10px 12px rgba(0, 0, 0, 0.4);
+    1px 1px 0 oklch(0.696 0.149 162.48),
+    2px 2px 0 oklch(0.596 0.127 162.48),
+    3px 3px 0 oklch(0.596 0.127 163.23),
+    4px 4px 0 oklch(0.508 0.105 165.61),
+    5px 5px 0 oklch(0.432 0.086 166.91),
+    6px 6px 0 oklch(0.378 0.073 168.94),
+    7px 7px 0 oklch(0.316 0.057 174.79),
+    8px 8px 0 oklch(0.273 0.05 171.23),
+    9px 9px 0 oklch(0.234 0.041 173.33),
+    10px 10px 12px color-mix(in oklch, oklch(0 0 0) 40%, transparent);
 }`,
   },
 
@@ -1841,12 +1841,12 @@ export const effectsBatch1: CSSEffect[] = [
     previewType: "text",
     cssCode: `/* Soft Shadow Text */
 .roycss-text-shadow-soft {
-  color: #f8fafc;
+  color: oklch(0.984 0.003 247.86);
   font-weight: 600;
   text-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.18),
-    0 4px 12px rgba(16, 185, 129, 0.25),
-    0 8px 24px rgba(16, 185, 129, 0.15);
+    0 1px 2px color-mix(in oklch, oklch(0 0 0) 18%, transparent),
+    0 4px 12px color-mix(in oklch, oklch(0.696 0.149 162.48) 25%, transparent),
+    0 8px 24px color-mix(in oklch, oklch(0.696 0.149 162.48) 15%, transparent);
 }`,
   },
 
@@ -1861,11 +1861,11 @@ export const effectsBatch1: CSSEffect[] = [
     cssCode: `/* Outline Offset Text */
 .roycss-text-outline-offset {
   font-weight: 700;
-  color: #10b981;
-  -webkit-text-stroke: 2px rgba(16, 185, 129, 0.5);
+  color: oklch(0.696 0.149 162.48);
+  -webkit-text-stroke: 2px color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent);
   text-shadow:
-    4px 4px 0 rgba(6, 182, 212, 0.5),
-    8px 8px 0 rgba(139, 92, 246, 0.4);
+    4px 4px 0 color-mix(in oklch, oklch(0.715 0.126 215.22) 50%, transparent),
+    8px 8px 0 color-mix(in oklch, oklch(0.606 0.219 292.72) 40%, transparent);
 }`,
   },
 
@@ -1881,7 +1881,7 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-text-holographic {
   background: conic-gradient(
     from 0deg,
-    #ff6ec7, #ffd93d, #6bcf7f, #4ecdc4, #a78bfa, #ff6ec7
+    oklch(0.741 0.2 345.28), oklch(0.893 0.167 94.55), oklch(0.774 0.148 148.57), oklch(0.776 0.112 188.54), oklch(0.709 0.159 293.54), oklch(0.741 0.2 345.28)
   );
   background-size: 200% 200%;
   -webkit-background-clip: text;
@@ -1889,7 +1889,7 @@ export const effectsBatch1: CSSEffect[] = [
   -webkit-text-fill-color: transparent;
   color: transparent;
   font-weight: 700;
-  filter: drop-shadow(0 0 6px rgba(255, 110, 199, 0.5));
+  filter: drop-shadow(0 0 6px color-mix(in oklch, oklch(0.741 0.2 345.28) 50%, transparent));
   animation: roy-holo-shift 5s linear infinite;
 }
 
@@ -1911,11 +1911,11 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-text-chrome {
   background: linear-gradient(
     180deg,
-    #fef3c7 0%,
-    #f8fafc 25%,
-    #94a3b8 50%,
-    #f8fafc 75%,
-    #cbd5e1 100%
+    oklch(0.962 0.058 95.62) 0%,
+    oklch(0.984 0.003 247.86) 25%,
+    oklch(0.711 0.035 256.79) 50%,
+    oklch(0.984 0.003 247.86) 75%,
+    oklch(0.869 0.02 252.89) 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -1923,7 +1923,7 @@ export const effectsBatch1: CSSEffect[] = [
   color: transparent;
   font-weight: 800;
   letter-spacing: 1px;
-  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(0 2px 2px color-mix(in oklch, oklch(0 0 0) 40%, transparent));
 }`,
   },
 
@@ -1938,14 +1938,14 @@ export const effectsBatch1: CSSEffect[] = [
     cssCode: `/* Fire Text */
 .roycss-text-fire {
   font-weight: 800;
-  color: #fde047;
+  color: oklch(0.905 0.166 98.11);
   text-shadow:
-    0 -2px 4px #fef08a,
-    0 -3px 6px #fde047,
-    0 -6px 10px #facc15,
-    0 -10px 16px #f59e0b,
-    0 -16px 24px #ea580c,
-    0 -22px 32px #dc2626;
+    0 -2px 4px oklch(0.945 0.124 101.54),
+    0 -3px 6px oklch(0.905 0.166 98.11),
+    0 -6px 10px oklch(0.861 0.173 91.94),
+    0 -10px 16px oklch(0.769 0.165 70.08),
+    0 -16px 24px oklch(0.646 0.194 41.12),
+    0 -22px 32px oklch(0.577 0.215 27.33);
   animation: roy-fire-flicker 0.4s ease-in-out infinite alternate;
 }
 
@@ -1968,17 +1968,17 @@ export const effectsBatch1: CSSEffect[] = [
   position: relative;
   display: inline-block;
   font-weight: 700;
-  color: #06b6d4;
+  color: oklch(0.715 0.126 215.22);
 }
 
 .roycss-text-reflection::after {
   content: attr(data-text);
   position: absolute;
-  left: 0;
-  top: 100%;
+  inset-inline-start: 0;
+  inset-block-start: 100%;
   transform: scaleY(-1);
   transform-origin: top;
-  background: linear-gradient(180deg, rgba(6, 182, 212, 0.5) 0%, transparent 70%);
+  background: linear-gradient(180deg, color-mix(in oklch, oklch(0.715 0.126 215.22) 50%, transparent) 0%, transparent 70%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -2000,14 +2000,14 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-text-mirror {
   display: inline-flex;
   font-weight: 700;
-  color: #8b5cf6;
+  color: oklch(0.606 0.219 292.72);
 }
 
 .roycss-text-mirror::after {
   content: attr(data-text);
   transform: scaleX(-1);
-  margin-left: 0.5ch;
-  background: linear-gradient(90deg, #8b5cf6, #ec4899);
+  margin-inline-start: 0.5ch;
+  background: linear-gradient(90deg, oklch(0.606 0.219 292.72), oklch(0.656 0.212 354.31));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -2028,13 +2028,13 @@ export const effectsBatch1: CSSEffect[] = [
   display: inline-block;
   font-weight: 800;
   font-style: italic;
-  color: #f8fafc;
-  background: linear-gradient(135deg, #10b981, #06b6d4);
+  color: oklch(0.984 0.003 247.86);
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
   padding: 4px 14px;
   transform: skew(-10deg);
   letter-spacing: 2px;
   text-transform: uppercase;
-  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 4px 4px 0 color-mix(in oklch, oklch(0 0 0) 25%, transparent);
 }`,
   },
 ];

@@ -20,7 +20,7 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Animated Gradient Background */
 .roycss-bg-animated-gradient {
-  background: linear-gradient(-45deg, #065f46, #10b981, #06b6d4, #8b5cf6);
+  background: linear-gradient(-45deg, oklch(0.432 0.086 166.91), oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22), oklch(0.606 0.219 292.72));
   background-size: 400% 400%;
   animation: roy-gradient-shift 8s ease infinite;
 }
@@ -40,8 +40,8 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Dot Grid Pattern */
 .roycss-bg-dot-pattern {
-  background-color: #0f172a;
-  background-image: radial-gradient(circle, #10b981 1px, transparent 1px);
+  background-color: oklch(0.208 0.04 265.75);
+  background-image: radial-gradient(circle, oklch(0.696 0.149 162.48) 1px, transparent 1px);
   background-size: 24px 24px;
 }`,
   },
@@ -54,7 +54,7 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Mesh Gradient Background */
 .roycss-bg-mesh-gradient {
-  background-color: #0f172a;
+  background-color: oklch(0.208 0.04 265.75);
   position: relative;
   overflow: hidden;
 }
@@ -64,9 +64,9 @@ export const effectsBatch2: CSSEffect[] = [
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(at 20% 30%, rgba(16, 185, 129, 0.3) 0, transparent 50%),
-    radial-gradient(at 80% 20%, rgba(6, 182, 212, 0.25) 0, transparent 50%),
-    radial-gradient(at 50% 80%, rgba(139, 92, 246, 0.2) 0, transparent 50%);
+    radial-gradient(at 20% 30%, color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent) 0, transparent 50%),
+    radial-gradient(at 80% 20%, color-mix(in oklch, oklch(0.715 0.126 215.22) 25%, transparent) 0, transparent 50%),
+    radial-gradient(at 50% 80%, color-mix(in oklch, oklch(0.606 0.219 292.72) 20%, transparent) 0, transparent 50%);
   filter: blur(60px);
 }`,
   },
@@ -79,10 +79,10 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Grid Lines Background */
 .roycss-bg-grid-lines {
-  background-color: #0f172a;
+  background-color: oklch(0.208 0.04 265.75);
   background-image:
-    linear-gradient(rgba(16, 185, 129, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(16, 185, 129, 0.06) 1px, transparent 1px);
+    linear-gradient(color-mix(in oklch, oklch(0.696 0.149 162.48) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklch, oklch(0.696 0.149 162.48) 6%, transparent) 1px, transparent 1px);
   background-size: 48px 48px;
 }`,
   },
@@ -96,7 +96,7 @@ export const effectsBatch2: CSSEffect[] = [
     cssCode: `/* Noise Texture Background */
 .roycss-bg-noise {
   position: relative;
-  background-color: #0f172a;
+  background-color: oklch(0.208 0.04 265.75);
 }
 
 .roycss-bg-noise::before {
@@ -118,7 +118,7 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Aurora Background */
 .roycss-bg-aurora {
-  background: linear-gradient(135deg, #0f172a 0%, #0c1e2e 100%);
+  background: linear-gradient(135deg, oklch(0.208 0.04 265.75) 0%, oklch(0.228 0.039 247.3) 100%);
   position: relative;
   overflow: hidden;
 }
@@ -126,18 +126,18 @@ export const effectsBatch2: CSSEffect[] = [
 .roycss-bg-aurora::before {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
+  inset-block-start: -50%;
+  inset-inline-start: -50%;
+  inline-size: 200%;
+  block-size: 200%;
   background: conic-gradient(
     from 0deg at 50% 50%,
     transparent 0deg,
-    rgba(16, 185, 129, 0.15) 60deg,
+    color-mix(in oklch, oklch(0.696 0.149 162.48) 15%, transparent) 60deg,
     transparent 120deg,
-    rgba(6, 182, 212, 0.1) 180deg,
+    color-mix(in oklch, oklch(0.715 0.126 215.22) 10%, transparent) 180deg,
     transparent 240deg,
-    rgba(139, 92, 246, 0.1) 300deg,
+    color-mix(in oklch, oklch(0.606 0.219 292.72) 10%, transparent) 300deg,
     transparent 360deg
   );
   animation: roy-aurora 12s linear infinite;
@@ -159,10 +159,10 @@ export const effectsBatch2: CSSEffect[] = [
 .roycss-bg-stripes {
   background: repeating-linear-gradient(
     45deg,
-    #10b981,
-    #10b981 10px,
-    #0f172a 10px,
-    #0f172a 20px
+    oklch(0.696 0.149 162.48),
+    oklch(0.696 0.149 162.48) 10px,
+    oklch(0.208 0.04 265.75) 10px,
+    oklch(0.208 0.04 265.75) 20px
   );
 }`,
   },
@@ -175,13 +175,13 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Animated Diagonal Stripes Background */
 .roycss-bg-diagonal-stripes {
-  background-color: #0f172a;
+  background-color: oklch(0.208 0.04 265.75);
   background-image: repeating-linear-gradient(
     -60deg,
-    #06b6d4 0,
-    #06b6d4 12px,
-    #0e7490 12px,
-    #0e7490 24px
+    oklch(0.715 0.126 215.22) 0,
+    oklch(0.715 0.126 215.22) 12px,
+    oklch(0.52 0.094 223.13) 12px,
+    oklch(0.52 0.094 223.13) 24px
   );
   background-size: 200% 200%;
   animation: roy-diagonal-shift 6s linear infinite;
@@ -201,12 +201,12 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Checkerboard Background */
 .roycss-bg-checkerboard {
-  background-color: #0f172a;
+  background-color: oklch(0.208 0.04 265.75);
   background-image:
-    linear-gradient(45deg, #10b981 25%, transparent 25%),
-    linear-gradient(-45deg, #10b981 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #10b981 75%),
-    linear-gradient(-45deg, transparent 75%, #10b981 75%);
+    linear-gradient(45deg, oklch(0.696 0.149 162.48) 25%, transparent 25%),
+    linear-gradient(-45deg, oklch(0.696 0.149 162.48) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, oklch(0.696 0.149 162.48) 75%),
+    linear-gradient(-45deg, transparent 75%, oklch(0.696 0.149 162.48) 75%);
   background-size: 32px 32px;
   background-position: 0 0, 0 16px, 16px -16px, -16px 0;
 }`,
@@ -220,7 +220,7 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Hexagon Honeycomb Background */
 .roycss-bg-hexagon {
-  background-color: #0f172a;
+  background-color: oklch(0.208 0.04 265.75);
   background-image: url("data:image/svg+xml,%3Csvg width='56' height='100' viewBox='0 0 56 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M28 0L56 16.18V50.5L28 66.68L0 50.5V16.18L28 0z' fill='none' stroke='%2310b981' stroke-width='1' opacity='0.5'/%3E%3Cpath d='M28 33.32L56 49.5V83.82L28 100L0 83.82V49.5L28 33.32z' fill='none' stroke='%2310b981' stroke-width='1' opacity='0.5'/%3E%3C/svg%3E");
   background-size: 56px 100px;
 }`,
@@ -234,12 +234,12 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Triangle Mosaic Background */
 .roycss-bg-triangles {
-  background-color: #0f172a;
+  background-color: oklch(0.208 0.04 265.75);
   background-image:
-    linear-gradient(45deg, #10b981 25%, transparent 25%),
-    linear-gradient(-45deg, #06b6d4 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #06b6d4 75%),
-    linear-gradient(-45deg, transparent 75%, #10b981 75%);
+    linear-gradient(45deg, oklch(0.696 0.149 162.48) 25%, transparent 25%),
+    linear-gradient(-45deg, oklch(0.715 0.126 215.22) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, oklch(0.715 0.126 215.22) 75%),
+    linear-gradient(-45deg, transparent 75%, oklch(0.696 0.149 162.48) 75%);
   background-size: 40px 40px;
   background-position: 0 0, 0 20px, 20px -20px, -20px 0;
 }`,
@@ -253,12 +253,12 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Zigzag Background */
 .roycss-bg-zigzag {
-  background-color: #0f172a;
+  background-color: oklch(0.208 0.04 265.75);
   background-image:
-    linear-gradient(135deg, #10b981 25%, transparent 25%) -10px 0,
-    linear-gradient(225deg, #10b981 25%, transparent 25%) -10px 0,
-    linear-gradient(315deg, #10b981 25%, transparent 25%),
-    linear-gradient(45deg, #10b981 25%, transparent 25%);
+    linear-gradient(135deg, oklch(0.696 0.149 162.48) 25%, transparent 25%) -10px 0,
+    linear-gradient(225deg, oklch(0.696 0.149 162.48) 25%, transparent 25%) -10px 0,
+    linear-gradient(315deg, oklch(0.696 0.149 162.48) 25%, transparent 25%),
+    linear-gradient(45deg, oklch(0.696 0.149 162.48) 25%, transparent 25%);
   background-size: 20px 20px;
 }`,
   },
@@ -271,7 +271,7 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Wave Pattern Background */
 .roycss-bg-waves {
-  background-color: #0c1e2e;
+  background-color: oklch(0.228 0.039 247.3);
   background-image: url("data:image/svg+xml,%3Csvg width='120' height='40' viewBox='0 0 120 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20 Q 30 0 60 20 T 120 20' stroke='%2310b981' stroke-width='1.5' fill='none' opacity='0.55'/%3E%3Cpath d='M0 30 Q 30 10 60 30 T 120 30' stroke='%2306b6d4' stroke-width='1.5' fill='none' opacity='0.45'/%3E%3C/svg%3E");
   background-size: 120px 40px;
 }`,
@@ -287,10 +287,10 @@ export const effectsBatch2: CSSEffect[] = [
 .roycss-bg-concentric {
   background: repeating-radial-gradient(
     circle at center,
-    #10b981 0,
-    #10b981 8px,
-    #0f172a 8px,
-    #0f172a 16px
+    oklch(0.696 0.149 162.48) 0,
+    oklch(0.696 0.149 162.48) 8px,
+    oklch(0.208 0.04 265.75) 8px,
+    oklch(0.208 0.04 265.75) 16px
   );
 }`,
   },
@@ -303,10 +303,10 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Radial Rays Background */
 .roycss-bg-radial-rays {
-  background-color: #0f172a;
+  background-color: oklch(0.208 0.04 265.75);
   background-image: repeating-conic-gradient(
     from 0deg at 50% 50%,
-    #10b981 0deg 4deg,
+    oklch(0.696 0.149 162.48) 0deg 4deg,
     transparent 4deg 12deg
   );
 }`,
@@ -320,7 +320,7 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Sunburst Background */
 .roycss-bg-sunburst {
-  background-color: #1a1205;
+  background-color: oklch(0.189 0.028 79.8);
   position: relative;
   overflow: hidden;
 }
@@ -328,14 +328,14 @@ export const effectsBatch2: CSSEffect[] = [
 .roycss-bg-sunburst::before {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
+  inset-block-start: -50%;
+  inset-inline-start: -50%;
+  inline-size: 200%;
+  block-size: 200%;
   background: repeating-conic-gradient(
     from 0deg at 50% 50%,
-    #fbbf24 0deg 6deg,
-    #f59e0b 6deg 12deg
+    oklch(0.837 0.164 84.43) 0deg 6deg,
+    oklch(0.769 0.165 70.08) 6deg 12deg
   );
   animation: roy-sunburst-rotate 20s linear infinite;
 }
@@ -353,12 +353,12 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Plaid Background */
 .roycss-bg-plaid {
-  background-color: #0f172a;
+  background-color: oklch(0.208 0.04 265.75);
   background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(16, 185, 129, 0.4) 18px, rgba(16, 185, 129, 0.4) 20px),
-    repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(16, 185, 129, 0.4) 18px, rgba(16, 185, 129, 0.4) 20px),
-    repeating-linear-gradient(45deg, transparent, transparent 24px, rgba(6, 182, 212, 0.3) 24px, rgba(6, 182, 212, 0.3) 26px),
-    repeating-linear-gradient(-45deg, transparent, transparent 24px, rgba(6, 182, 212, 0.3) 24px, rgba(6, 182, 212, 0.3) 26px);
+    repeating-linear-gradient(0deg, transparent, transparent 18px, color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent) 18px, color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent) 20px),
+    repeating-linear-gradient(90deg, transparent, transparent 18px, color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent) 18px, color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent) 20px),
+    repeating-linear-gradient(45deg, transparent, transparent 24px, color-mix(in oklch, oklch(0.715 0.126 215.22) 30%, transparent) 24px, color-mix(in oklch, oklch(0.715 0.126 215.22) 30%, transparent) 26px),
+    repeating-linear-gradient(-45deg, transparent, transparent 24px, color-mix(in oklch, oklch(0.715 0.126 215.22) 30%, transparent) 24px, color-mix(in oklch, oklch(0.715 0.126 215.22) 30%, transparent) 26px);
 }`,
   },
   {
@@ -372,12 +372,12 @@ export const effectsBatch2: CSSEffect[] = [
 .roycss-bg-conic-gradient {
   background: conic-gradient(
     from 0deg at 50% 50%,
-    #10b981,
-    #06b6d4,
-    #8b5cf6,
-    #ec4899,
-    #f59e0b,
-    #10b981
+    oklch(0.696 0.149 162.48),
+    oklch(0.715 0.126 215.22),
+    oklch(0.606 0.219 292.72),
+    oklch(0.656 0.212 354.31),
+    oklch(0.769 0.165 70.08),
+    oklch(0.696 0.149 162.48)
   );
   animation: roy-conic-hue 6s linear infinite;
 }
@@ -395,16 +395,16 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Starfield Background */
 .roycss-bg-starfield {
-  background-color: #050810;
+  background-color: oklch(0.135 0.019 264.32);
   background-image:
-    radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
-    radial-gradient(1px 1px at 40px 70px, #ffffff, transparent),
-    radial-gradient(1px 1px at 90px 40px, #ffffff, transparent),
-    radial-gradient(2px 2px at 130px 80px, #ffffff, transparent),
-    radial-gradient(1px 1px at 160px 30px, #ffffff, transparent),
-    radial-gradient(1px 1px at 50px 120px, #ffffff, transparent),
-    radial-gradient(2px 2px at 180px 100px, #ffffff, transparent),
-    radial-gradient(1px 1px at 220px 60px, #ffffff, transparent);
+    radial-gradient(2px 2px at 20px 30px, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 40px 70px, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 90px 40px, oklch(1 0 89.88), transparent),
+    radial-gradient(2px 2px at 130px 80px, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 160px 30px, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 50px 120px, oklch(1 0 89.88), transparent),
+    radial-gradient(2px 2px at 180px 100px, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 220px 60px, oklch(1 0 89.88), transparent);
   background-size: 250px 150px;
   animation: roy-starfield-twinkle 3s ease-in-out infinite alternate;
 }
@@ -425,11 +425,11 @@ export const effectsBatch2: CSSEffect[] = [
 .roycss-bg-gradient-sweep {
   background: linear-gradient(
     90deg,
-    #0f172a 0%,
-    #10b981 25%,
-    #06b6d4 50%,
-    #10b981 75%,
-    #0f172a 100%
+    oklch(0.208 0.04 265.75) 0%,
+    oklch(0.696 0.149 162.48) 25%,
+    oklch(0.715 0.126 215.22) 50%,
+    oklch(0.696 0.149 162.48) 75%,
+    oklch(0.208 0.04 265.75) 100%
   );
   background-size: 200% 100%;
   animation: roy-gradient-sweep 4s linear infinite;
@@ -449,11 +449,11 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Gradient Pulse Background */
 .roycss-bg-gradient-pulse {
-  background-color: #0f172a;
+  background-color: oklch(0.208 0.04 265.75);
   background-image:
-    radial-gradient(circle at 50% 50%, #10b981 0%, rgba(16, 185, 129, 0) 40%),
-    radial-gradient(circle at 30% 70%, #06b6d4 0%, rgba(6, 182, 212, 0) 40%),
-    radial-gradient(circle at 70% 30%, #8b5cf6 0%, rgba(139, 92, 246, 0) 40%);
+    radial-gradient(circle at 50% 50%, oklch(0.696 0.149 162.48) 0%, color-mix(in oklch, oklch(0.696 0.149 162.48) 0%, transparent) 40%),
+    radial-gradient(circle at 30% 70%, oklch(0.715 0.126 215.22) 0%, color-mix(in oklch, oklch(0.715 0.126 215.22) 0%, transparent) 40%),
+    radial-gradient(circle at 70% 30%, oklch(0.606 0.219 292.72) 0%, color-mix(in oklch, oklch(0.606 0.219 292.72) 0%, transparent) 40%);
   animation: roy-gradient-pulse 4s ease-in-out infinite;
 }
 
@@ -471,7 +471,7 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Lava Lamp Background */
 .roycss-bg-lava-lamp {
-  background-color: #1a0b2e;
+  background-color: oklch(0.195 0.067 299.87);
   position: relative;
   overflow: hidden;
 }
@@ -485,20 +485,20 @@ export const effectsBatch2: CSSEffect[] = [
 }
 
 .roycss-bg-lava-lamp::before {
-  width: 120px;
-  height: 120px;
-  background: radial-gradient(circle, #ec4899, transparent);
-  top: 15%;
-  left: 15%;
+  inline-size: 120px;
+  block-size: 120px;
+  background: radial-gradient(circle, oklch(0.656 0.212 354.31), transparent);
+  inset-block-start: 15%;
+  inset-inline-start: 15%;
   animation: roy-lava-1 6s ease-in-out infinite alternate;
 }
 
 .roycss-bg-lava-lamp::after {
-  width: 150px;
-  height: 150px;
-  background: radial-gradient(circle, #f59e0b, transparent);
-  bottom: 15%;
-  right: 15%;
+  inline-size: 150px;
+  block-size: 150px;
+  background: radial-gradient(circle, oklch(0.769 0.165 70.08), transparent);
+  inset-block-end: 15%;
+  inset-inline-end: 15%;
   animation: roy-lava-2 7s ease-in-out infinite alternate;
 }
 
@@ -521,12 +521,12 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Plasma Background */
 .roycss-bg-plasma {
-  background-color: #0f172a;
+  background-color: oklch(0.208 0.04 265.75);
   background-image:
-    radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.4) 0%, transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(236, 72, 153, 0.4) 0%, transparent 40%),
-    radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.3) 0%, transparent 50%),
-    linear-gradient(135deg, #0f172a, #1a0b2e);
+    radial-gradient(circle at 20% 30%, color-mix(in oklch, oklch(0.606 0.219 292.72) 40%, transparent) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, color-mix(in oklch, oklch(0.656 0.212 354.31) 40%, transparent) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent) 0%, transparent 50%),
+    linear-gradient(135deg, oklch(0.208 0.04 265.75), oklch(0.195 0.067 299.87));
   background-size: 150% 150%, 150% 150%, 200% 200%, 100% 100%;
   animation: roy-plasma-flow 12s ease-in-out infinite;
 }
@@ -546,7 +546,7 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "background",
     cssCode: `/* Smoke Background */
 .roycss-bg-smoke {
-  background-color: #0f172a;
+  background-color: oklch(0.208 0.04 265.75);
   position: relative;
   overflow: hidden;
 }
@@ -554,14 +554,14 @@ export const effectsBatch2: CSSEffect[] = [
 .roycss-bg-smoke::before {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
+  inset-block-start: -50%;
+  inset-inline-start: -50%;
+  inline-size: 200%;
+  block-size: 200%;
   background:
-    radial-gradient(ellipse at 30% 50%, rgba(255, 255, 255, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 70% 60%, rgba(255, 255, 255, 0.04) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    radial-gradient(ellipse at 30% 50%, color-mix(in oklch, oklch(1 0 89.88) 6%, transparent) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 60%, color-mix(in oklch, oklch(1 0 89.88) 4%, transparent) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 40%, color-mix(in oklch, oklch(1 0 89.88) 5%, transparent) 0%, transparent 50%);
   filter: blur(20px);
   animation: roy-smoke-drift 15s ease-in-out infinite;
 }
@@ -582,11 +582,11 @@ export const effectsBatch2: CSSEffect[] = [
 .roycss-bg-sunset {
   background: linear-gradient(
     180deg,
-    #0c1e2e 0%,
-    #5b2c6f 25%,
-    #c2185b 50%,
-    #f59e0b 75%,
-    #fde68a 100%
+    oklch(0.228 0.039 247.3) 0%,
+    oklch(0.387 0.119 314.64) 25%,
+    oklch(0.531 0.202 5.62) 50%,
+    oklch(0.769 0.165 70.08) 75%,
+    oklch(0.924 0.115 95.75) 100%
   );
   background-size: 100% 200%;
   animation: roy-sunset-shift 8s ease-in-out infinite;
@@ -608,10 +608,10 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "loader",
     cssCode: `/* Ring Spinner */
 .roycss-loader-spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(16, 185, 129, 0.2);
-  border-top-color: #10b981;
+  inline-size: 40px;
+  block-size: 40px;
+  border: 3px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 20%, transparent);
+  border-top-color: oklch(0.696 0.149 162.48);
   border-radius: 50%;
   animation: roy-spin 0.8s linear infinite;
 }
@@ -636,10 +636,10 @@ export const effectsBatch2: CSSEffect[] = [
 }
 
 .roycss-loader-dots span {
-  width: 10px;
-  height: 10px;
+  inline-size: 10px;
+  block-size: 10px;
   border-radius: 50%;
-  background: #10b981;
+  background: oklch(0.696 0.149 162.48);
   animation: roy-bounce-dots 1.4s ease-in-out infinite;
 }
 
@@ -670,13 +670,13 @@ export const effectsBatch2: CSSEffect[] = [
   display: flex;
   gap: 3px;
   align-items: flex-end;
-  height: 32px;
+  block-size: 32px;
 }
 
 .roycss-loader-bars span {
-  width: 4px;
+  inline-size: 4px;
   border-radius: 2px;
-  background: #10b981;
+  background: oklch(0.696 0.149 162.48);
   animation: roy-eq-bar 1.2s ease-in-out infinite;
 }
 
@@ -687,8 +687,8 @@ export const effectsBatch2: CSSEffect[] = [
 .roycss-loader-bars span:nth-child(5) { animation-delay: 0.4s; }
 
 @keyframes roy-eq-bar {
-  0%, 100% { height: 8px; }
-  50% { height: 28px; }
+  0%, 100% { block-size: 8px; }
+  50% { block-size: 28px; }
 }`,
   },
   {
@@ -700,8 +700,8 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "loader",
     cssCode: `/* Orbit Loader */
 .roycss-loader-orbit {
-  width: 40px;
-  height: 40px;
+  inline-size: 40px;
+  block-size: 40px;
   position: relative;
 }
 
@@ -711,21 +711,21 @@ export const effectsBatch2: CSSEffect[] = [
   inset: 0;
   border-radius: 50%;
   border: 2px solid transparent;
-  border-top-color: #10b981;
+  border-top-color: oklch(0.696 0.149 162.48);
   animation: roy-spin 1s linear infinite;
 }
 
 .roycss-loader-orbit::after {
   content: '';
   position: absolute;
-  top: -3px;
-  left: 50%;
-  width: 8px;
-  height: 8px;
-  margin-left: -4px;
+  inset-block-start: -3px;
+  inset-inline-start: 50%;
+  inline-size: 8px;
+  block-size: 8px;
+  margin-inline-start: -4px;
   border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+  background: oklch(0.696 0.149 162.48);
+  box-shadow: 0 0 10px color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent);
   animation: roy-orbit-move 1s linear infinite;
 }
 
@@ -743,8 +743,8 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "loader",
     cssCode: `/* Pulse Ring Loader */
 .roycss-loader-pulse-ring {
-  width: 40px;
-  height: 40px;
+  inline-size: 40px;
+  block-size: 40px;
   position: relative;
 }
 
@@ -754,7 +754,7 @@ export const effectsBatch2: CSSEffect[] = [
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  border: 2px solid #10b981;
+  border: 2px solid oklch(0.696 0.149 162.48);
   animation: roy-pulse-ring 1.5s ease-out infinite;
 }
 
@@ -782,12 +782,12 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "loader",
     cssCode: `/* Dual Ring Loader */
 .roycss-loader-dual-ring {
-  width: 48px;
-  height: 48px;
+  inline-size: 48px;
+  block-size: 48px;
   border-radius: 50%;
-  border: 4px solid rgba(16, 185, 129, 0.15);
-  border-top-color: #10b981;
-  border-bottom-color: #06b6d4;
+  border: 4px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 15%, transparent);
+  border-top-color: oklch(0.696 0.149 162.48);
+  border-bottom-color: oklch(0.715 0.126 215.22);
   animation: roy-dual-ring-spin 1.2s linear infinite;
 }
 
@@ -805,8 +805,8 @@ export const effectsBatch2: CSSEffect[] = [
     childCount: 6,
     cssCode: `/* 3D Cube Loader */
 .roycss-loader-cube {
-  width: 40px;
-  height: 40px;
+  inline-size: 40px;
+  block-size: 40px;
   position: relative;
   transform-style: preserve-3d;
   animation: roy-loader-cube-rotate 4s linear infinite;
@@ -814,10 +814,10 @@ export const effectsBatch2: CSSEffect[] = [
 
 .roycss-loader-cube span {
   position: absolute;
-  width: 40px;
-  height: 40px;
-  background: rgba(16, 185, 129, 0.7);
-  border: 1px solid #10b981;
+  inline-size: 40px;
+  block-size: 40px;
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 70%, transparent);
+  border: 1px solid oklch(0.696 0.149 162.48);
   display: block;
 }
 
@@ -843,16 +843,16 @@ export const effectsBatch2: CSSEffect[] = [
     childCount: 4,
     cssCode: `/* Folding Cube Loader */
 .roycss-loader-folding-cube {
-  width: 40px;
-  height: 40px;
+  inline-size: 40px;
+  block-size: 40px;
   position: relative;
   transform: rotateZ(45deg);
 }
 
 .roycss-loader-folding-cube span {
-  float: left;
-  width: 50%;
-  height: 50%;
+  float: inline-start;
+  inline-size: 50%;
+  block-size: 50%;
   position: relative;
   transform: scale(1.1);
 }
@@ -860,11 +860,11 @@ export const effectsBatch2: CSSEffect[] = [
 .roycss-loader-folding-cube span::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #10b981;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  background-color: oklch(0.696 0.149 162.48);
   animation: roy-fold-cube 2.4s infinite linear both;
   transform-origin: 100% 100%;
 }
@@ -892,26 +892,26 @@ export const effectsBatch2: CSSEffect[] = [
     childCount: 2,
     cssCode: `/* Chasing Dots Loader */
 .roycss-loader-chasing-dots {
-  width: 40px;
-  height: 40px;
+  inline-size: 40px;
+  block-size: 40px;
   position: relative;
   animation: roy-chasing-rotate 2s infinite linear;
 }
 
 .roycss-loader-chasing-dots span {
-  width: 60%;
-  height: 60%;
+  inline-size: 60%;
+  block-size: 60%;
   display: inline-block;
   position: absolute;
-  top: 0;
-  background-color: #10b981;
+  inset-block-start: 0;
+  background-color: oklch(0.696 0.149 162.48);
   border-radius: 100%;
   animation: roy-chasing-bounce 2s infinite ease-in-out;
 }
 
 .roycss-loader-chasing-dots span:nth-child(2) {
-  top: auto;
-  bottom: 0;
+  inset-block-start: auto;
+  inset-block-end: 0;
   animation-delay: -1s;
 }
 
@@ -934,16 +934,16 @@ export const effectsBatch2: CSSEffect[] = [
     childCount: 5,
     cssCode: `/* Fading Dots Loader */
 .roycss-loader-fading-dots {
-  width: 80px;
+  inline-size: 80px;
   text-align: center;
 }
 
 .roycss-loader-fading-dots span {
   display: inline-block;
-  width: 12px;
-  height: 12px;
+  inline-size: 12px;
+  block-size: 12px;
   margin: 0 2px;
-  background-color: #10b981;
+  background-color: oklch(0.696 0.149 162.48);
   border-radius: 50%;
   animation: roy-fading-dots 1.4s ease-in-out infinite both;
 }
@@ -969,8 +969,8 @@ export const effectsBatch2: CSSEffect[] = [
     childCount: 9,
     cssCode: `/* Grid Pulse Loader */
 .roycss-loader-grid {
-  width: 40px;
-  height: 40px;
+  inline-size: 40px;
+  block-size: 40px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
@@ -978,7 +978,7 @@ export const effectsBatch2: CSSEffect[] = [
 }
 
 .roycss-loader-grid span {
-  background-color: #10b981;
+  background-color: oklch(0.696 0.149 162.48);
   border-radius: 2px;
   animation: roy-grid-fade 1.2s ease-in-out infinite;
 }
@@ -1009,13 +1009,13 @@ export const effectsBatch2: CSSEffect[] = [
     cssCode: `/* Ripple Loader */
 .roycss-loader-ripple {
   position: relative;
-  width: 64px;
-  height: 64px;
+  inline-size: 64px;
+  block-size: 64px;
 }
 
 .roycss-loader-ripple span {
   position: absolute;
-  border: 4px solid #10b981;
+  border: 4px solid oklch(0.696 0.149 162.48);
   opacity: 1;
   border-radius: 50%;
   animation: roy-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
@@ -1024,8 +1024,8 @@ export const effectsBatch2: CSSEffect[] = [
 .roycss-loader-ripple span:nth-child(2) { animation-delay: -0.5s; }
 
 @keyframes roy-ripple {
-  0% { top: 28px; left: 28px; width: 0; height: 0; opacity: 1; }
-  100% { top: 0; left: 0; width: 56px; height: 56px; opacity: 0; }
+  0% { inset-block-start: 28px; inset-inline-start: 28px; inline-size: 0; block-size: 0; opacity: 1; }
+  100% { inset-block-start: 0; inset-inline-start: 0; inline-size: 56px; block-size: 56px; opacity: 0; }
 }`,
   },
   {
@@ -1037,9 +1037,9 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "loader",
     cssCode: `/* Square Spin Loader */
 .roycss-loader-square-spin {
-  width: 40px;
-  height: 40px;
-  background-color: #10b981;
+  inline-size: 40px;
+  block-size: 40px;
+  background-color: oklch(0.696 0.149 162.48);
   border-radius: 4px;
   animation: roy-square-spin 3s ease-in-out infinite;
 }
@@ -1061,8 +1061,8 @@ export const effectsBatch2: CSSEffect[] = [
     childCount: 9,
     cssCode: `/* Bouncing Grid Loader */
 .roycss-loader-bouncing-grid {
-  width: 42px;
-  height: 42px;
+  inline-size: 42px;
+  block-size: 42px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
@@ -1070,7 +1070,7 @@ export const effectsBatch2: CSSEffect[] = [
 }
 
 .roycss-loader-bouncing-grid span {
-  background-color: #06b6d4;
+  background-color: oklch(0.715 0.126 215.22);
   border-radius: 50%;
   animation: roy-bouncing-grid 1.5s ease-in-out infinite;
 }
@@ -1103,13 +1103,13 @@ export const effectsBatch2: CSSEffect[] = [
   display: flex;
   gap: 4px;
   align-items: center;
-  height: 40px;
+  block-size: 40px;
 }
 
 .roycss-loader-line-scale span {
-  width: 4px;
-  height: 32px;
-  background-color: #10b981;
+  inline-size: 4px;
+  block-size: 32px;
+  background-color: oklch(0.696 0.149 162.48);
   border-radius: 2px;
   animation: roy-line-scale 1s ease-in-out infinite;
 }
@@ -1135,18 +1135,18 @@ export const effectsBatch2: CSSEffect[] = [
     cssCode: `/* Pacman Loader */
 .roycss-loader-pacman {
   position: relative;
-  width: 60px;
-  height: 40px;
+  inline-size: 60px;
+  block-size: 40px;
 }
 
 .roycss-loader-pacman::before {
   content: '';
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 40px;
-  height: 40px;
-  background: #f59e0b;
+  inset-inline-start: 0;
+  inset-block-start: 0;
+  inline-size: 40px;
+  block-size: 40px;
+  background: oklch(0.769 0.165 70.08);
   border-radius: 50%;
   clip-path: polygon(100% 35%, 50% 50%, 100% 65%, 50% 100%, 0% 50%, 50% 0%);
   animation: roy-pacman-chomp 0.4s ease-in-out infinite alternate;
@@ -1155,15 +1155,15 @@ export const effectsBatch2: CSSEffect[] = [
 .roycss-loader-pacman::after {
   content: '';
   position: absolute;
-  top: 50%;
-  right: 0;
-  width: 4px;
-  height: 4px;
-  background: #10b981;
+  inset-block-start: 50%;
+  inset-inline-end: 0;
+  inline-size: 4px;
+  block-size: 4px;
+  background: oklch(0.696 0.149 162.48);
   border-radius: 50%;
   box-shadow:
-    -10px 0 0 #10b981,
-    -20px 0 0 #10b981;
+    -10px 0 0 oklch(0.696 0.149 162.48),
+    -20px 0 0 oklch(0.696 0.149 162.48);
   transform: translateY(-50%);
 }
 
@@ -1181,19 +1181,19 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "loader",
     cssCode: `/* Circle Fade Loader */
 .roycss-loader-circle-fade {
-  width: 8px;
-  height: 8px;
+  inline-size: 8px;
+  block-size: 8px;
   border-radius: 50%;
   background: transparent;
   box-shadow:
-    0 -20px 0 0 #10b981,
-    14px -14px 0 0 rgba(16, 185, 129, 0.85),
-    20px 0 0 0 rgba(16, 185, 129, 0.65),
-    14px 14px 0 0 rgba(16, 185, 129, 0.45),
-    0 20px 0 0 rgba(16, 185, 129, 0.3),
-    -14px 14px 0 0 rgba(16, 185, 129, 0.45),
-    -20px 0 0 0 rgba(16, 185, 129, 0.65),
-    -14px -14px 0 0 rgba(16, 185, 129, 0.85);
+    0 -20px 0 0 oklch(0.696 0.149 162.48),
+    14px -14px 0 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 85%, transparent),
+    20px 0 0 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 65%, transparent),
+    14px 14px 0 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 45%, transparent),
+    0 20px 0 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent),
+    -14px 14px 0 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 45%, transparent),
+    -20px 0 0 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 65%, transparent),
+    -14px -14px 0 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 85%, transparent);
   animation: roy-circle-fade-spin 2s linear infinite;
 }
 
@@ -1210,12 +1210,12 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "loader",
     cssCode: `/* Circle Notch Loader */
 .roycss-loader-circle-notch {
-  width: 40px;
-  height: 40px;
+  inline-size: 40px;
+  block-size: 40px;
   border-radius: 50%;
-  border: 4px solid #10b981;
+  border: 4px solid oklch(0.696 0.149 162.48);
   border-top-color: transparent;
-  border-left-color: transparent;
+  border-inline-start-color: transparent;
   animation: roy-circle-notch 0.9s linear infinite;
 }
 
@@ -1235,17 +1235,17 @@ export const effectsBatch2: CSSEffect[] = [
     childCount: 3,
     cssCode: `/* Three Bounce Loader */
 .roycss-loader-three-bounce {
-  width: 80px;
+  inline-size: 80px;
   text-align: center;
 }
 
 .roycss-loader-three-bounce span {
   display: inline-block;
-  width: 18px;
-  height: 18px;
+  inline-size: 18px;
+  block-size: 18px;
   margin: 0 3px;
   border-radius: 50%;
-  background-color: #10b981;
+  background-color: oklch(0.696 0.149 162.48);
   animation: roy-three-bounce 1.4s ease-in-out infinite both;
 }
 
@@ -1266,9 +1266,9 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "loader",
     cssCode: `/* Progress Bar Loader */
 .roycss-loader-progress-bar {
-  width: 200px;
-  height: 8px;
-  background-color: rgba(16, 185, 129, 0.15);
+  inline-size: 200px;
+  block-size: 8px;
+  background-color: color-mix(in oklch, oklch(0.696 0.149 162.48) 15%, transparent);
   border-radius: 4px;
   position: relative;
   overflow: hidden;
@@ -1277,19 +1277,19 @@ export const effectsBatch2: CSSEffect[] = [
 .roycss-loader-progress-bar::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 40%;
-  background: linear-gradient(90deg, #10b981, #06b6d4);
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  block-size: 100%;
+  inline-size: 40%;
+  background: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
   border-radius: 4px;
   animation: roy-progress-bar 2s ease-in-out infinite;
 }
 
 @keyframes roy-progress-bar {
-  0% { left: -40%; }
-  50% { left: 50%; }
-  100% { left: 100%; }
+  0% { inset-inline-start: -40%; }
+  50% { inset-inline-start: 50%; }
+  100% { inset-inline-start: 100%; }
 }`,
   },
   {
@@ -1301,9 +1301,9 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "loader",
     cssCode: `/* Indeterminate Bar Loader */
 .roycss-loader-indeterminate {
-  width: 200px;
-  height: 4px;
-  background-color: rgba(16, 185, 129, 0.15);
+  inline-size: 200px;
+  block-size: 4px;
+  background-color: color-mix(in oklch, oklch(0.696 0.149 162.48) 15%, transparent);
   border-radius: 2px;
   position: relative;
   overflow: hidden;
@@ -1313,10 +1313,10 @@ export const effectsBatch2: CSSEffect[] = [
 .roycss-loader-indeterminate::after {
   content: '';
   position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 40%;
-  background-color: #10b981;
+  inset-block-start: 0;
+  inset-block-end: 0;
+  inline-size: 40%;
+  background-color: oklch(0.696 0.149 162.48);
   border-radius: 2px;
 }
 
@@ -1330,14 +1330,14 @@ export const effectsBatch2: CSSEffect[] = [
 }
 
 @keyframes roy-indeterminate {
-  0% { left: -40%; }
-  100% { left: 100%; }
+  0% { inset-inline-start: -40%; }
+  100% { inset-inline-start: 100%; }
 }
 
 @keyframes roy-indeterminate-short {
-  0% { left: -40%; }
-  50% { left: 60%; }
-  100% { left: 100%; }
+  0% { inset-inline-start: -40%; }
+  50% { inset-inline-start: 60%; }
+  100% { inset-inline-start: 100%; }
 }`,
   },
   {
@@ -1349,9 +1349,9 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "loader",
     cssCode: `/* Skeleton Shimmer Loader */
 .roycss-loader-skeleton {
-  width: 200px;
-  height: 12px;
-  background-color: rgba(255, 255, 255, 0.06);
+  inline-size: 200px;
+  block-size: 12px;
+  background-color: color-mix(in oklch, oklch(1 0 89.88) 6%, transparent);
   border-radius: 4px;
   position: relative;
   overflow: hidden;
@@ -1364,7 +1364,7 @@ export const effectsBatch2: CSSEffect[] = [
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.1),
+    color-mix(in oklch, oklch(1 0 89.88) 10%, transparent),
     transparent
   );
   animation: roy-skeleton-shimmer 1.5s infinite;
@@ -1388,16 +1388,16 @@ export const effectsBatch2: CSSEffect[] = [
   display: flex;
   gap: 4px;
   align-items: center;
-  background-color: rgba(16, 185, 129, 0.1);
+  background-color: color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent);
   padding: 8px 12px;
   border-radius: 16px;
 }
 
 .roycss-loader-typing span {
-  width: 6px;
-  height: 6px;
+  inline-size: 6px;
+  block-size: 6px;
   border-radius: 50%;
-  background-color: #10b981;
+  background-color: oklch(0.696 0.149 162.48);
   animation: roy-typing 1.4s infinite ease-in-out;
 }
 
@@ -1419,19 +1419,19 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "loader",
     cssCode: `/* Whale Spout Loader */
 .roycss-loader-whale {
-  width: 50px;
-  height: 40px;
+  inline-size: 50px;
+  block-size: 40px;
   position: relative;
 }
 
 .roycss-loader-whale::before {
   content: '';
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 18px;
-  background: #06b6d4;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 18px;
+  background: oklch(0.715 0.126 215.22);
   border-radius: 50% 50% 8px 8px / 100% 100% 8px 8px;
   animation: roy-whale-float 1.5s ease-in-out infinite;
 }
@@ -1439,11 +1439,11 @@ export const effectsBatch2: CSSEffect[] = [
 .roycss-loader-whale::after {
   content: '';
   position: absolute;
-  bottom: 16px;
-  left: 50%;
-  width: 4px;
-  height: 18px;
-  background: linear-gradient(to top, #06b6d4, transparent);
+  inset-block-end: 16px;
+  inset-inline-start: 50%;
+  inline-size: 4px;
+  block-size: 18px;
+  background: linear-gradient(to top, oklch(0.715 0.126 215.22), transparent);
   border-radius: 2px;
   transform: translateX(-50%) scaleY(0);
   transform-origin: bottom center;
@@ -1470,10 +1470,10 @@ export const effectsBatch2: CSSEffect[] = [
     cssCode: `/* Clock Loader */
 .roycss-loader-clock {
   position: relative;
-  width: 40px;
-  height: 40px;
+  inline-size: 40px;
+  block-size: 40px;
   border-radius: 50%;
-  border: 3px solid #10b981;
+  border: 3px solid oklch(0.696 0.149 162.48);
   background: transparent;
 }
 
@@ -1481,22 +1481,22 @@ export const effectsBatch2: CSSEffect[] = [
 .roycss-loader-clock::after {
   content: '';
   position: absolute;
-  bottom: 50%;
-  left: 50%;
-  width: 2px;
-  background: #10b981;
+  inset-block-end: 50%;
+  inset-inline-start: 50%;
+  inline-size: 2px;
+  background: oklch(0.696 0.149 162.48);
   transform-origin: bottom center;
   border-radius: 2px;
-  margin-left: -1px;
+  margin-inline-start: -1px;
 }
 
 .roycss-loader-clock::before {
-  height: 12px;
+  block-size: 12px;
   animation: roy-clock-hour 4s linear infinite;
 }
 
 .roycss-loader-clock::after {
-  height: 16px;
+  block-size: 16px;
   animation: roy-clock-minute 1s linear infinite;
 }
 
@@ -1520,14 +1520,14 @@ export const effectsBatch2: CSSEffect[] = [
     cssCode: `/* Card Flip */
 .roycss-card-flip {
   perspective: 1000px;
-  width: 200px;
-  height: 120px;
+  inline-size: 200px;
+  block-size: 120px;
 }
 
 .roycss-card-flip-inner {
   position: relative;
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   transform-style: preserve-3d;
 }
@@ -1563,7 +1563,7 @@ export const effectsBatch2: CSSEffect[] = [
   transform-style: preserve-3d;
   transform: perspective(800px) rotateX(5deg) rotateY(-5deg);
   transition: transform 0.4s ease;
-  box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 8px 8px 20px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
 }
 
 .roycss-perspective-tilt:hover {
@@ -1579,8 +1579,8 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Cube Rotate */
 .roycss-cube-rotate {
-  width: 60px;
-  height: 60px;
+  inline-size: 60px;
+  block-size: 60px;
   transform-style: preserve-3d;
   animation: roy-cube-rotate 6s linear infinite;
 }
@@ -1592,10 +1592,10 @@ export const effectsBatch2: CSSEffect[] = [
 
 .roycss-cube-face {
   position: absolute;
-  width: 60px;
-  height: 60px;
-  border: 2px solid rgba(16, 185, 129, 0.5);
-  background: rgba(16, 185, 129, 0.08);
+  inline-size: 60px;
+  block-size: 60px;
+  border: 2px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent);
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 8%, transparent);
   border-radius: 4px;
 }`,
   },
@@ -1609,28 +1609,28 @@ export const effectsBatch2: CSSEffect[] = [
     cssCode: `/* Depth Shadow Layers */
 .roycss-depth-shadow {
   box-shadow:
-    1px 1px 0 #065f46,
-    2px 2px 0 #059669,
-    3px 3px 0 #047857,
-    4px 4px 0 #10b981,
-    5px 5px 0 rgba(16, 185, 129, 0.6),
-    6px 6px 0 rgba(16, 185, 129, 0.4),
-    7px 7px 0 rgba(16, 185, 129, 0.2),
-    8px 8px 20px rgba(0, 0, 0, 0.15);
+    1px 1px 0 oklch(0.432 0.086 166.91),
+    2px 2px 0 oklch(0.596 0.127 163.23),
+    3px 3px 0 oklch(0.508 0.105 165.61),
+    4px 4px 0 oklch(0.696 0.149 162.48),
+    5px 5px 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 60%, transparent),
+    6px 6px 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent),
+    7px 7px 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 20%, transparent),
+    8px 8px 20px color-mix(in oklch, oklch(0 0 0) 15%, transparent);
   transition: all 0.3s ease;
 }
 
 .roycss-depth-shadow:hover {
   transform: translate(-2px, -2px);
   box-shadow:
-    3px 3px 0 #065f46,
-    4px 4px 0 #059669,
-    5px 5px 0 #047857,
-    6px 6px 0 #10b981,
-    7px 7px 0 rgba(16, 185, 129, 0.6),
-    8px 8px 0 rgba(16, 185, 129, 0.4),
-    9px 9px 0 rgba(16, 185, 129, 0.2),
-    10px 10px 30px rgba(0, 0, 0, 0.2);
+    3px 3px 0 oklch(0.432 0.086 166.91),
+    4px 4px 0 oklch(0.596 0.127 163.23),
+    5px 5px 0 oklch(0.508 0.105 165.61),
+    6px 6px 0 oklch(0.696 0.149 162.48),
+    7px 7px 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 60%, transparent),
+    8px 8px 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent),
+    9px 9px 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 20%, transparent),
+    10px 10px 30px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
 }`,
   },
   {
@@ -1645,7 +1645,7 @@ export const effectsBatch2: CSSEffect[] = [
   perspective: 800px;
   transition: transform 0.6s ease;
   transform-style: preserve-3d;
-  background: linear-gradient(135deg, #10b981, #06b6d4);
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
   border-radius: 12px;
 }
 
@@ -1665,7 +1665,7 @@ export const effectsBatch2: CSSEffect[] = [
   perspective: 800px;
   transition: transform 0.6s ease;
   transform-style: preserve-3d;
-  background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+  background: linear-gradient(135deg, oklch(0.715 0.126 215.22), oklch(0.606 0.219 292.72));
   border-radius: 12px;
 }
 
@@ -1683,7 +1683,7 @@ export const effectsBatch2: CSSEffect[] = [
     cssCode: `/* Rotate 3D */
 .roycss-rotate-3d {
   transform-style: preserve-3d;
-  background: linear-gradient(135deg, #10b981, #8b5cf6);
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.606 0.219 292.72));
   border-radius: 12px;
   animation: roy-rotate-3d 4s linear infinite;
 }
@@ -1703,8 +1703,8 @@ export const effectsBatch2: CSSEffect[] = [
     cssCode: `/* Book Open */
 .roycss-book-open {
   perspective: 1000px;
-  width: 80px;
-  height: 60px;
+  inline-size: 80px;
+  block-size: 60px;
   position: relative;
   transform-style: preserve-3d;
   background: transparent;
@@ -1714,23 +1714,23 @@ export const effectsBatch2: CSSEffect[] = [
 .roycss-book-open::after {
   content: '';
   position: absolute;
-  top: 0;
-  width: 50%;
-  height: 100%;
+  inset-block-start: 0;
+  inline-size: 50%;
+  block-size: 100%;
   transition: transform 0.8s ease;
   border-radius: 2px 8px 8px 2px;
 }
 
 .roycss-book-open::before {
-  left: 0;
-  background: linear-gradient(135deg, #10b981, #06b6d4);
+  inset-inline-start: 0;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
   transform-origin: right center;
 }
 
 .roycss-book-open::after {
-  right: 0;
+  inset-inline-end: 0;
   transform-origin: left center;
-  background: linear-gradient(225deg, #10b981, #06b6d4);
+  background: linear-gradient(225deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
   border-radius: 8px 2px 2px 8px;
 }
 
@@ -1752,11 +1752,11 @@ export const effectsBatch2: CSSEffect[] = [
     cssCode: `/* Door Open */
 .roycss-door-open {
   perspective: 800px;
-  width: 60px;
-  height: 80px;
+  inline-size: 60px;
+  block-size: 80px;
   position: relative;
-  background: rgba(16, 185, 129, 0.1);
-  border: 2px solid rgba(16, 185, 129, 0.3);
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent);
+  border: 2px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent);
   border-radius: 4px;
 }
 
@@ -1764,7 +1764,7 @@ export const effectsBatch2: CSSEffect[] = [
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, #10b981, #065f46);
+  background: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.432 0.086 166.91));
   border-radius: 4px;
   transform-origin: left center;
   transition: transform 0.8s ease;
@@ -1784,24 +1784,24 @@ export const effectsBatch2: CSSEffect[] = [
     cssCode: `/* Drawer Slide */
 .roycss-drawer-slide {
   perspective: 800px;
-  width: 80px;
-  height: 60px;
+  inline-size: 80px;
+  block-size: 60px;
   position: relative;
-  background: rgba(16, 185, 129, 0.08);
-  border: 2px solid rgba(16, 185, 129, 0.25);
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 8%, transparent);
+  border: 2px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 25%, transparent);
   border-radius: 6px;
 }
 
 .roycss-drawer-slide::before {
   content: '';
   position: absolute;
-  top: 25%;
-  left: 10%;
-  width: 80%;
-  height: 50%;
-  background: linear-gradient(135deg, #10b981, #06b6d4);
+  inset-block-start: 25%;
+  inset-inline-start: 10%;
+  inline-size: 80%;
+  block-size: 50%;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
   border-radius: 3px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 10px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: top center;
 }
@@ -1820,9 +1820,9 @@ export const effectsBatch2: CSSEffect[] = [
     cssCode: `/* Fold */
 .roycss-fold {
   perspective: 800px;
-  width: 80px;
-  height: 60px;
-  background: linear-gradient(135deg, #10b981, #06b6d4);
+  inline-size: 80px;
+  block-size: 60px;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
   border-radius: 6px;
   transition: transform 0.8s ease;
   transform-origin: top center;
@@ -1842,8 +1842,8 @@ export const effectsBatch2: CSSEffect[] = [
     cssCode: `/* 3D Accordion */
 .roycss-accordion-3d {
   perspective: 800px;
-  width: 80px;
-  height: 60px;
+  inline-size: 80px;
+  block-size: 60px;
   position: relative;
   transform-style: preserve-3d;
 }
@@ -1852,23 +1852,23 @@ export const effectsBatch2: CSSEffect[] = [
 .roycss-accordion-3d::after {
   content: '';
   position: absolute;
-  left: 50%;
-  width: 60px;
-  height: 16px;
-  margin-left: -30px;
+  inset-inline-start: 50%;
+  inline-size: 60px;
+  block-size: 16px;
+  margin-inline-start: -30px;
   border-radius: 3px;
   transition: transform 0.6s ease;
 }
 
 .roycss-accordion-3d::before {
-  top: 8px;
-  background: linear-gradient(90deg, #10b981, #06b6d4);
+  inset-block-start: 8px;
+  background: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
   transform-origin: bottom center;
 }
 
 .roycss-accordion-3d::after {
-  bottom: 8px;
-  background: linear-gradient(90deg, #06b6d4, #8b5cf6);
+  inset-block-end: 8px;
+  background: linear-gradient(90deg, oklch(0.715 0.126 215.22), oklch(0.606 0.219 292.72));
   transform-origin: top center;
 }
 
@@ -1890,8 +1890,8 @@ export const effectsBatch2: CSSEffect[] = [
     cssCode: `/* 3D Book */
 .roycss-3d-book {
   perspective: 800px;
-  width: 60px;
-  height: 80px;
+  inline-size: 60px;
+  block-size: 80px;
   position: relative;
   transform-style: preserve-3d;
   transform: rotateY(-25deg);
@@ -1902,21 +1902,21 @@ export const effectsBatch2: CSSEffect[] = [
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #10b981, #065f46);
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.432 0.086 166.91));
   border-radius: 2px 6px 6px 2px;
   box-shadow:
-    -5px 5px 0 #047857,
-    -10px 10px 20px rgba(0, 0, 0, 0.3);
+    -5px 5px 0 oklch(0.508 0.105 165.61),
+    -10px 10px 20px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
 }
 
 .roycss-3d-book::after {
   content: '';
   position: absolute;
-  top: 4px;
-  left: 4px;
-  width: calc(100% - 12px);
-  height: 4px;
-  background: #f59e0b;
+  inset-block-start: 4px;
+  inset-inline-start: 4px;
+  inline-size: calc(100% - 12px);
+  block-size: 4px;
+  background: oklch(0.769 0.165 70.08);
   border-radius: 1px;
 }
 
@@ -1934,15 +1934,15 @@ export const effectsBatch2: CSSEffect[] = [
     cssCode: `/* 3D Poster */
 .roycss-3d-poster {
   perspective: 1000px;
-  width: 80px;
-  height: 100px;
+  inline-size: 80px;
+  block-size: 100px;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent),
-    linear-gradient(135deg, #8b5cf6, #ec4899);
+    linear-gradient(135deg, color-mix(in oklch, oklch(1 0 89.88) 10%, transparent), transparent),
+    linear-gradient(135deg, oklch(0.606 0.219 292.72), oklch(0.656 0.212 354.31));
   border-radius: 6px;
   box-shadow:
-    0 10px 30px rgba(139, 92, 246, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
+    0 10px 30px color-mix(in oklch, oklch(0.606 0.219 292.72) 40%, transparent),
+    0 0 0 1px color-mix(in oklch, oklch(1 0 89.88) 10%, transparent);
   transform: perspective(1000px) rotateY(-15deg) rotateX(5deg);
   transition: transform 0.5s ease;
 }
@@ -1961,8 +1961,8 @@ export const effectsBatch2: CSSEffect[] = [
     cssCode: `/* 3D Gallery */
 .roycss-3d-gallery {
   perspective: 1000px;
-  width: 80px;
-  height: 60px;
+  inline-size: 80px;
+  block-size: 60px;
   position: relative;
   transform-style: preserve-3d;
   animation: roy-3d-gallery-rotate 8s linear infinite;
@@ -1977,12 +1977,12 @@ export const effectsBatch2: CSSEffect[] = [
 }
 
 .roycss-3d-gallery::before {
-  background: linear-gradient(135deg, #10b981, #06b6d4);
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
   transform: rotateY(0deg) translateZ(20px);
 }
 
 .roycss-3d-gallery::after {
-  background: linear-gradient(135deg, #ec4899, #8b5cf6);
+  background: linear-gradient(135deg, oklch(0.656 0.212 354.31), oklch(0.606 0.219 292.72));
   transform: rotateY(90deg) translateZ(20px);
 }
 
@@ -2000,9 +2000,9 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Transform Origin Spin */
 .roycss-transform-origin-spin {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, #10b981, #06b6d4);
+  inline-size: 60px;
+  block-size: 60px;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
   border-radius: 8px;
   transform-origin: 0% 0%;
   animation: roy-origin-spin 2s linear infinite;
@@ -2022,13 +2022,13 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Scale 3D */
 .roycss-scale-3d {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, #10b981, #065f46);
+  inline-size: 60px;
+  block-size: 60px;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.432 0.086 166.91));
   border-radius: 8px;
   transform-style: preserve-3d;
   transition: transform 0.5s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 10px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
 }
 
 .roycss-scale-3d:hover {
@@ -2044,13 +2044,13 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Skew 3D */
 .roycss-skew-3d {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+  inline-size: 60px;
+  block-size: 60px;
+  background: linear-gradient(135deg, oklch(0.715 0.126 215.22), oklch(0.606 0.219 292.72));
   border-radius: 8px;
   transform: perspective(800px) skew(-15deg, 5deg);
   transition: transform 0.5s ease;
-  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 6px 6px 12px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
 }
 
 .roycss-skew-3d:hover {
@@ -2066,9 +2066,9 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Rotate X */
 .roycss-rotate-x {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, #10b981, #06b6d4);
+  inline-size: 60px;
+  block-size: 60px;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
   border-radius: 8px;
   transform-style: preserve-3d;
   animation: roy-rotate-x 3s linear infinite;
@@ -2088,9 +2088,9 @@ export const effectsBatch2: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Rotate Y */
 .roycss-rotate-y {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, #ec4899, #8b5cf6);
+  inline-size: 60px;
+  block-size: 60px;
+  background: linear-gradient(135deg, oklch(0.656 0.212 354.31), oklch(0.606 0.219 292.72));
   border-radius: 8px;
   transform-style: preserve-3d;
   animation: roy-rotate-y 3s linear infinite;

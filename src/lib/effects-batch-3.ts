@@ -24,8 +24,8 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-btn-shine-sweep {
   position: relative;
   overflow: hidden;
-  background: #10b981;
-  color: #fff;
+  background: oklch(0.696 0.149 162.48);
+  color: oklch(1 0 89.88);
   border: none;
   padding: 10px 24px;
   border-radius: 12px;
@@ -37,18 +37,18 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-btn-shine-sweep::after {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -60%;
-  width: 40%;
-  height: 200%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  inset-block-start: -50%;
+  inset-inline-start: -60%;
+  inline-size: 40%;
+  block-size: 200%;
+  background: linear-gradient(90deg, transparent, color-mix(in oklch, oklch(1 0 89.88) 45%, transparent), transparent);
   transform: skewX(-20deg);
   transition: left 0.6s ease;
   pointer-events: none;
 }
 
 .roycss-btn-shine-sweep:hover::after {
-  left: 120%;
+  inset-inline-start: 120%;
 }`,
   },
 
@@ -67,8 +67,8 @@ export const effectsBatch3: CSSEffect[] = [
   overflow: hidden;
   z-index: 1;
   background: transparent;
-  color: #10b981;
-  border: 2px solid #10b981;
+  color: oklch(0.696 0.149 162.48);
+  border: 2px solid oklch(0.696 0.149 162.48);
   padding: 10px 24px;
   border-radius: 12px;
   cursor: pointer;
@@ -80,21 +80,21 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-btn-fill-slide::before {
   content: '';
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 0%;
-  background: #10b981;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 0%;
+  background: oklch(0.696 0.149 162.48);
   z-index: -1;
   transition: height 0.4s ease;
 }
 
 .roycss-btn-fill-slide:hover {
-  color: #fff;
+  color: oklch(1 0 89.88);
 }
 
 .roycss-btn-fill-slide:hover::before {
-  height: 100%;
+  block-size: 100%;
 }`,
   },
 
@@ -111,8 +111,8 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-btn-ripple {
   position: relative;
   overflow: hidden;
-  background: #10b981;
-  color: #fff;
+  background: oklch(0.696 0.149 162.48);
+  color: oklch(1 0 89.88);
   border: none;
   padding: 10px 24px;
   border-radius: 12px;
@@ -124,11 +124,11 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-btn-ripple::after {
   content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(255, 255, 255, 0.45);
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inline-size: 0;
+  block-size: 0;
+  background: color-mix(in oklch, oklch(1 0 89.88) 45%, transparent);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   opacity: 0;
@@ -137,8 +137,8 @@ export const effectsBatch3: CSSEffect[] = [
 }
 
 .roycss-btn-ripple:active::after {
-  width: 320px;
-  height: 320px;
+  inline-size: 320px;
+  block-size: 320px;
   opacity: 1;
   transition: 0s;
 }`,
@@ -157,7 +157,7 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-btn-border-draw {
   position: relative;
   background: transparent;
-  color: #10b981;
+  color: oklch(0.696 0.149 162.48);
   border: 2px solid transparent;
   padding: 10px 24px;
   border-radius: 12px;
@@ -171,7 +171,7 @@ export const effectsBatch3: CSSEffect[] = [
   content: '';
   position: absolute;
   inset: 0;
-  border: 2px solid #10b981;
+  border: 2px solid oklch(0.696 0.149 162.48);
   border-radius: inherit;
   clip-path: polygon(0 0, 0 0, 0 0, 0 0);
   transition: clip-path 0.45s ease;
@@ -180,7 +180,7 @@ export const effectsBatch3: CSSEffect[] = [
 
 .roycss-btn-border-draw:hover::before {
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-  background: rgba(16, 185, 129, 0.08);
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 8%, transparent);
 }`,
   },
 
@@ -195,8 +195,8 @@ export const effectsBatch3: CSSEffect[] = [
     previewText: "Hover Me",
     cssCode: `/* Glow Button */
 .roycss-btn-glow {
-  background: #10b981;
-  color: #fff;
+  background: oklch(0.696 0.149 162.48);
+  color: oklch(1 0 89.88);
   border: none;
   padding: 10px 24px;
   border-radius: 12px;
@@ -207,7 +207,7 @@ export const effectsBatch3: CSSEffect[] = [
 }
 
 .roycss-btn-glow:hover {
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.6), 0 0 40px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 0 20px color-mix(in oklch, oklch(0.696 0.149 162.48) 60%, transparent), 0 0 40px color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent);
 }`,
   },
 
@@ -222,8 +222,8 @@ export const effectsBatch3: CSSEffect[] = [
     previewText: "Hover Me",
     cssCode: `/* Pulse Button */
 .roycss-btn-pulse {
-  background: #ef4444;
-  color: #fff;
+  background: oklch(0.637 0.208 25.33);
+  color: oklch(1 0 89.88);
   border: none;
   padding: 10px 24px;
   border-radius: 12px;
@@ -234,7 +234,7 @@ export const effectsBatch3: CSSEffect[] = [
 }
 
 .roycss-btn-pulse:hover {
-  background: #dc2626;
+  background: oklch(0.577 0.215 27.33);
   animation: roy-btn-pulse 0.8s ease-in-out infinite;
 }
 
@@ -255,8 +255,8 @@ export const effectsBatch3: CSSEffect[] = [
     previewText: "Hover Me",
     cssCode: `/* Bounce Button */
 .roycss-btn-bounce {
-  background: #f59e0b;
-  color: #fff;
+  background: oklch(0.769 0.165 70.08);
+  color: oklch(1 0 89.88);
   border: none;
   padding: 10px 24px;
   border-radius: 12px;
@@ -289,21 +289,21 @@ export const effectsBatch3: CSSEffect[] = [
     previewText: "Press Me",
     cssCode: `/* 3D Press Button */
 .roycss-btn-press {
-  background: #8b5cf6;
-  color: #fff;
+  background: oklch(0.606 0.219 292.72);
+  color: oklch(1 0 89.88);
   border: none;
   padding: 10px 24px;
   border-radius: 12px;
   cursor: pointer;
   font-weight: 600;
   font-size: 14px;
-  box-shadow: 0 6px 0 #6d28d9, 0 8px 14px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 0 oklch(0.491 0.241 292.58), 0 8px 14px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
   transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
 .roycss-btn-press:active {
   transform: translateY(6px);
-  box-shadow: 0 0 0 #6d28d9, 0 2px 6px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 0 oklch(0.491 0.241 292.58), 0 2px 6px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
 }`,
   },
 
@@ -318,21 +318,21 @@ export const effectsBatch3: CSSEffect[] = [
     previewText: "Hover Me",
     cssCode: `/* Lift Button */
 .roycss-btn-lift {
-  background: #14b8a6;
-  color: #fff;
+  background: oklch(0.704 0.123 182.5);
+  color: oklch(1 0 89.88);
   border: none;
   padding: 10px 24px;
   border-radius: 12px;
   cursor: pointer;
   font-weight: 600;
   font-size: 14px;
-  box-shadow: 0 4px 10px rgba(20, 184, 166, 0.25);
+  box-shadow: 0 4px 10px color-mix(in oklch, oklch(0.704 0.123 182.5) 25%, transparent);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .roycss-btn-lift:hover {
   transform: translateY(-5px);
-  box-shadow: 0 14px 28px rgba(20, 184, 166, 0.45);
+  box-shadow: 0 14px 28px color-mix(in oklch, oklch(0.704 0.123 182.5) 45%, transparent);
 }`,
   },
 
@@ -349,9 +349,9 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-btn-slide-bg {
   position: relative;
   overflow: hidden;
-  background: #0f172a;
-  color: #f59e0b;
-  border: 2px solid #f59e0b;
+  background: oklch(0.208 0.04 265.75);
+  color: oklch(0.769 0.165 70.08);
+  border: 2px solid oklch(0.769 0.165 70.08);
   padding: 10px 24px;
   border-radius: 12px;
   cursor: pointer;
@@ -364,21 +364,21 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-btn-slide-bg::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: #f59e0b;
+  inset-block-start: 0;
+  inset-inline-start: -100%;
+  inline-size: 100%;
+  block-size: 100%;
+  background: oklch(0.769 0.165 70.08);
   z-index: -1;
   transition: left 0.4s ease;
 }
 
 .roycss-btn-slide-bg:hover {
-  color: #0f172a;
+  color: oklch(0.208 0.04 265.75);
 }
 
 .roycss-btn-slide-bg:hover::before {
-  left: 0;
+  inset-inline-start: 0;
 }`,
   },
 
@@ -393,8 +393,8 @@ export const effectsBatch3: CSSEffect[] = [
     previewText: "Flip Me",
     cssCode: `/* Flip Button */
 .roycss-btn-flip {
-  background: #ec4899;
-  color: #fff;
+  background: oklch(0.656 0.212 354.31);
+  color: oklch(1 0 89.88);
   border: none;
   padding: 10px 24px;
   border-radius: 12px;
@@ -407,7 +407,7 @@ export const effectsBatch3: CSSEffect[] = [
 
 .roycss-btn-flip:hover {
   transform: rotateY(360deg);
-  background: #f43f5e;
+  background: oklch(0.645 0.215 16.44);
 }`,
   },
 
@@ -423,26 +423,26 @@ export const effectsBatch3: CSSEffect[] = [
     cssCode: `/* 3D Push Button */
 .roycss-btn-3d-push {
   position: relative;
-  background: #84cc16;
-  color: #1a2e05;
+  background: oklch(0.768 0.204 130.85);
+  color: oklch(0.274 0.069 132.11);
   border: none;
   padding: 10px 24px;
   border-radius: 10px;
   cursor: pointer;
   font-weight: 700;
   font-size: 14px;
-  box-shadow: 0 5px 0 #65a30d, 0 7px 14px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 5px 0 oklch(0.648 0.175 131.68), 0 7px 14px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
 .roycss-btn-3d-push:hover {
   transform: translateY(-2px);
-  box-shadow: 0 7px 0 #65a30d, 0 10px 18px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 7px 0 oklch(0.648 0.175 131.68), 0 10px 18px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
 }
 
 .roycss-btn-3d-push:active {
   transform: translateY(5px);
-  box-shadow: 0 0 0 #65a30d, 0 1px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 oklch(0.648 0.175 131.68), 0 1px 4px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
 }`,
   },
 
@@ -457,9 +457,9 @@ export const effectsBatch3: CSSEffect[] = [
     previewText: "NEON",
     cssCode: `/* Neon Button */
 .roycss-btn-neon {
-  background: #0a0a0a;
-  color: #06b6d4;
-  border: 2px solid #06b6d4;
+  background: oklch(0.145 0 89.88);
+  color: oklch(0.715 0.126 215.22);
+  border: 2px solid oklch(0.715 0.126 215.22);
   padding: 10px 24px;
   border-radius: 8px;
   cursor: pointer;
@@ -467,15 +467,15 @@ export const effectsBatch3: CSSEffect[] = [
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 2px;
-  box-shadow: 0 0 5px #06b6d4, inset 0 0 5px rgba(6, 182, 212, 0.4);
-  text-shadow: 0 0 5px #06b6d4;
+  box-shadow: 0 0 5px oklch(0.715 0.126 215.22), inset 0 0 5px color-mix(in oklch, oklch(0.715 0.126 215.22) 40%, transparent);
+  text-shadow: 0 0 5px oklch(0.715 0.126 215.22);
   transition: all 0.3s ease;
 }
 
 .roycss-btn-neon:hover {
-  color: #fff;
-  box-shadow: 0 0 20px #06b6d4, 0 0 40px #06b6d4, inset 0 0 15px rgba(6, 182, 212, 0.6);
-  text-shadow: 0 0 10px #fff, 0 0 20px #06b6d4;
+  color: oklch(1 0 89.88);
+  box-shadow: 0 0 20px oklch(0.715 0.126 215.22), 0 0 40px oklch(0.715 0.126 215.22), inset 0 0 15px color-mix(in oklch, oklch(0.715 0.126 215.22) 60%, transparent);
+  text-shadow: 0 0 10px oklch(1 0 89.88), 0 0 20px oklch(0.715 0.126 215.22);
 }`,
   },
 
@@ -490,9 +490,9 @@ export const effectsBatch3: CSSEffect[] = [
     previewText: "Gradient",
     cssCode: `/* Animated Gradient Button */
 .roycss-btn-gradient {
-  background: linear-gradient(45deg, #10b981, #06b6d4, #8b5cf6, #ec4899, #10b981);
+  background: linear-gradient(45deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22), oklch(0.606 0.219 292.72), oklch(0.656 0.212 354.31), oklch(0.696 0.149 162.48));
   background-size: 300% 300%;
-  color: #fff;
+  color: oklch(1 0 89.88);
   border: none;
   padding: 10px 24px;
   border-radius: 12px;
@@ -527,8 +527,8 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-btn-outline-fill {
   position: relative;
   background: transparent;
-  color: #f43f5e;
-  border: 2px solid #f43f5e;
+  color: oklch(0.645 0.215 16.44);
+  border: 2px solid oklch(0.645 0.215 16.44);
   padding: 10px 24px;
   border-radius: 30px;
   cursor: pointer;
@@ -542,11 +542,11 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-btn-outline-fill::before {
   content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: #f43f5e;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inline-size: 0;
+  block-size: 0;
+  background: oklch(0.645 0.215 16.44);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   z-index: -1;
@@ -554,12 +554,12 @@ export const effectsBatch3: CSSEffect[] = [
 }
 
 .roycss-btn-outline-fill:hover {
-  color: #fff;
+  color: oklch(1 0 89.88);
 }
 
 .roycss-btn-outline-fill:hover::before {
-  width: 320px;
-  height: 320px;
+  inline-size: 320px;
+  block-size: 320px;
 }`,
   },
 
@@ -574,8 +574,8 @@ export const effectsBatch3: CSSEffect[] = [
     previewText: "Learn More",
     cssCode: `/* Icon Slide-In Button */
 .roycss-btn-icon-slide {
-  background: #d946ef;
-  color: #fff;
+  background: oklch(0.667 0.259 322.15);
+  color: oklch(1 0 89.88);
   border: none;
   padding: 10px 24px;
   border-radius: 12px;
@@ -592,7 +592,7 @@ export const effectsBatch3: CSSEffect[] = [
   content: '→';
   display: inline-block;
   opacity: 0;
-  width: 0;
+  inline-size: 0;
   overflow: hidden;
   transform: translateX(-8px);
   transition: opacity 0.3s ease, width 0.3s ease, transform 0.3s ease;
@@ -600,13 +600,13 @@ export const effectsBatch3: CSSEffect[] = [
 }
 
 .roycss-btn-icon-slide:hover {
-  padding-left: 20px;
-  padding-right: 32px;
+  padding-inline-start: 20px;
+  padding-inline-end: 32px;
 }
 
 .roycss-btn-icon-slide:hover::after {
   opacity: 1;
-  width: 16px;
+  inline-size: 16px;
   transform: translateX(0);
 }`,
   },
@@ -622,8 +622,8 @@ export const effectsBatch3: CSSEffect[] = [
     previewText: "Get Started",
     cssCode: `/* Arrow Slide Button */
 .roycss-btn-arrow-slide {
-  background: #f97316;
-  color: #fff;
+  background: oklch(0.705 0.187 47.6);
+  color: oklch(1 0 89.88);
   border: none;
   padding: 10px 24px;
   border-radius: 12px;
@@ -644,7 +644,7 @@ export const effectsBatch3: CSSEffect[] = [
 
 .roycss-btn-arrow-slide:hover {
   gap: 16px;
-  background: #ea580c;
+  background: oklch(0.646 0.194 41.12);
 }
 
 .roycss-btn-arrow-slide:hover::after {
@@ -663,9 +663,9 @@ export const effectsBatch3: CSSEffect[] = [
     previewText: "Hover Me",
     cssCode: `/* Border Glow Button */
 .roycss-btn-border-glow {
-  background: #1e293b;
-  color: #14b8a6;
-  border: 2px solid rgba(20, 184, 166, 0.35);
+  background: oklch(0.279 0.037 260.03);
+  color: oklch(0.704 0.123 182.5);
+  border: 2px solid color-mix(in oklch, oklch(0.704 0.123 182.5) 35%, transparent);
   padding: 10px 24px;
   border-radius: 12px;
   cursor: pointer;
@@ -675,9 +675,9 @@ export const effectsBatch3: CSSEffect[] = [
 }
 
 .roycss-btn-border-glow:hover {
-  border-color: #14b8a6;
-  color: #5eead4;
-  box-shadow: 0 0 18px rgba(20, 184, 166, 0.55), inset 0 0 12px rgba(20, 184, 166, 0.2);
+  border-color: oklch(0.704 0.123 182.5);
+  color: oklch(0.855 0.125 181.07);
+  box-shadow: 0 0 18px color-mix(in oklch, oklch(0.704 0.123 182.5) 55%, transparent), inset 0 0 12px color-mix(in oklch, oklch(0.704 0.123 182.5) 20%, transparent);
 }`,
   },
 
@@ -692,26 +692,26 @@ export const effectsBatch3: CSSEffect[] = [
     previewText: "Push Me",
     cssCode: `/* Shadow Push Button */
 .roycss-btn-shadow-push {
-  background: #ef4444;
-  color: #fff;
+  background: oklch(0.637 0.208 25.33);
+  color: oklch(1 0 89.88);
   border: none;
   padding: 10px 24px;
   border-radius: 12px;
   cursor: pointer;
   font-weight: 700;
   font-size: 14px;
-  box-shadow: 5px 5px 0 #7f1d1d;
+  box-shadow: 5px 5px 0 oklch(0.396 0.133 25.72);
   transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
 .roycss-btn-shadow-push:hover {
   transform: translate(2px, 2px);
-  box-shadow: 3px 3px 0 #7f1d1d;
+  box-shadow: 3px 3px 0 oklch(0.396 0.133 25.72);
 }
 
 .roycss-btn-shadow-push:active {
   transform: translate(5px, 5px);
-  box-shadow: 0 0 0 #7f1d1d;
+  box-shadow: 0 0 0 oklch(0.396 0.133 25.72);
 }`,
   },
 
@@ -726,8 +726,8 @@ export const effectsBatch3: CSSEffect[] = [
     previewText: "Hover Me",
     cssCode: `/* Liquid Button */
 .roycss-btn-liquid {
-  background: #06b6d4;
-  color: #fff;
+  background: oklch(0.715 0.126 215.22);
+  color: oklch(1 0 89.88);
   border: none;
   padding: 10px 24px;
   border-radius: 30px;
@@ -739,7 +739,7 @@ export const effectsBatch3: CSSEffect[] = [
 
 .roycss-btn-liquid:hover {
   border-radius: 8px;
-  background: #0891b2;
+  background: oklch(0.609 0.111 221.72);
   animation: roy-btn-liquid 0.6s ease;
 }
 
@@ -761,8 +761,8 @@ export const effectsBatch3: CSSEffect[] = [
     previewText: "Morph",
     cssCode: `/* Morph Button */
 .roycss-btn-morph {
-  background: #8b5cf6;
-  color: #fff;
+  background: oklch(0.606 0.219 292.72);
+  color: oklch(1 0 89.88);
   border: none;
   padding: 10px 24px;
   border-radius: 12px;
@@ -776,7 +776,7 @@ export const effectsBatch3: CSSEffect[] = [
   border-radius: 50%;
   padding: 18px 28px;
   transform: rotate(8deg);
-  background: #a78bfa;
+  background: oklch(0.709 0.159 293.54);
 }`,
   },
 
@@ -791,8 +791,8 @@ export const effectsBatch3: CSSEffect[] = [
     previewText: "EXPLORE",
     cssCode: `/* Expand Button */
 .roycss-btn-expand {
-  background: #10b981;
-  color: #fff;
+  background: oklch(0.696 0.149 162.48);
+  color: oklch(1 0 89.88);
   border: none;
   padding: 10px 20px;
   border-radius: 12px;
@@ -806,7 +806,7 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-btn-expand:hover {
   padding: 10px 38px;
   letter-spacing: 4px;
-  background: #059669;
+  background: oklch(0.596 0.127 163.23);
 }`,
   },
 
@@ -821,8 +821,8 @@ export const effectsBatch3: CSSEffect[] = [
     previewText: "Hover Me",
     cssCode: `/* Rotate Button */
 .roycss-btn-rotate {
-  background: #f59e0b;
-  color: #fff;
+  background: oklch(0.769 0.165 70.08);
+  color: oklch(1 0 89.88);
   border: none;
   padding: 10px 24px;
   border-radius: 12px;
@@ -834,7 +834,7 @@ export const effectsBatch3: CSSEffect[] = [
 
 .roycss-btn-rotate:hover {
   transform: rotate(-4deg) scale(1.06);
-  background: #d97706;
+  background: oklch(0.666 0.157 58.32);
 }`,
   },
 
@@ -849,8 +849,8 @@ export const effectsBatch3: CSSEffect[] = [
     previewText: "Hover Me",
     cssCode: `/* Skew Button */
 .roycss-btn-skew {
-  background: #ec4899;
-  color: #fff;
+  background: oklch(0.656 0.212 354.31);
+  color: oklch(1 0 89.88);
   border: none;
   padding: 10px 24px;
   border-radius: 8px;
@@ -862,7 +862,7 @@ export const effectsBatch3: CSSEffect[] = [
 
 .roycss-btn-skew:hover {
   transform: skewX(-15deg);
-  background: #db2777;
+  background: oklch(0.592 0.218 0.58);
 }`,
   },
 
@@ -878,9 +878,9 @@ export const effectsBatch3: CSSEffect[] = [
     cssCode: `/* Sparkle Button */
 .roycss-btn-sparkle {
   position: relative;
-  background: #1e293b;
-  color: #fde68a;
-  border: 1px solid #f59e0b;
+  background: oklch(0.279 0.037 260.03);
+  color: oklch(0.924 0.115 95.75);
+  border: 1px solid oklch(0.769 0.165 70.08);
   padding: 10px 24px;
   border-radius: 12px;
   cursor: pointer;
@@ -893,7 +893,7 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-btn-sparkle::after {
   content: '✦';
   position: absolute;
-  color: #fbbf24;
+  color: oklch(0.837 0.164 84.43);
   font-size: 14px;
   opacity: 0;
   transition: opacity 0.4s ease, transform 0.5s ease;
@@ -901,18 +901,18 @@ export const effectsBatch3: CSSEffect[] = [
 }
 
 .roycss-btn-sparkle::before {
-  top: -6px;
-  left: 8%;
+  inset-block-start: -6px;
+  inset-inline-start: 8%;
 }
 
 .roycss-btn-sparkle::after {
-  bottom: -6px;
-  right: 8%;
+  inset-block-end: -6px;
+  inset-inline-end: 8%;
 }
 
 .roycss-btn-sparkle:hover {
-  color: #fbbf24;
-  box-shadow: 0 0 18px rgba(251, 191, 36, 0.55);
+  color: oklch(0.837 0.164 84.43);
+  box-shadow: 0 0 18px color-mix(in oklch, oklch(0.837 0.164 84.43) 55%, transparent);
 }
 
 .roycss-btn-sparkle:hover::before {
@@ -940,14 +940,14 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Glassmorphism Card */
 .roycss-card-glassmorphism {
-  background: rgba(255, 255, 255, 0.08);
+  background: color-mix(in oklch, oklch(1 0 89.88) 8%, transparent);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 15%, transparent);
   border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  color: #f1f5f9;
+  box-shadow: 0 8px 32px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
+  color: oklch(0.968 0.007 247.9);
 }`,
   },
 
@@ -961,20 +961,20 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Neon Card */
 .roycss-card-neon {
-  background: #0f172a;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: oklch(0.208 0.04 265.75);
+  border: 1px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent);
   border-radius: 16px;
   padding: 24px;
-  color: #d1fae5;
+  color: oklch(0.95 0.051 163.05);
   animation: roy-card-neon 2s ease-in-out infinite alternate;
 }
 
 @keyframes roy-card-neon {
   from {
-    box-shadow: 0 0 5px rgba(16, 185, 129, 0.1), inset 0 0 5px rgba(16, 185, 129, 0.05);
+    box-shadow: 0 0 5px color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent), inset 0 0 5px color-mix(in oklch, oklch(0.696 0.149 162.48) 5%, transparent);
   }
   to {
-    box-shadow: 0 0 22px rgba(16, 185, 129, 0.5), 0 0 44px rgba(16, 185, 129, 0.2), inset 0 0 22px rgba(16, 185, 129, 0.1);
+    box-shadow: 0 0 22px color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent), 0 0 44px color-mix(in oklch, oklch(0.696 0.149 162.48) 20%, transparent), inset 0 0 22px color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent);
   }
 }`,
   },
@@ -991,21 +991,21 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-card-spotlight {
   position: relative;
   overflow: hidden;
-  background: #1e293b;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: oklch(0.279 0.037 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 8%, transparent);
   border-radius: 16px;
   padding: 24px;
-  color: #e2e8f0;
+  color: oklch(0.929 0.013 255.51);
 }
 
 .roycss-card-spotlight::before {
   content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 240px;
-  height: 240px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.35) 0%, transparent 70%);
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inline-size: 240px;
+  block-size: 240px;
+  background: radial-gradient(circle, color-mix(in oklch, oklch(0.696 0.149 162.48) 35%, transparent) 0%, transparent 70%);
   border-radius: 50%;
   transform: translate(-50%, -50%) scale(0.6);
   opacity: 0;
@@ -1036,10 +1036,10 @@ export const effectsBatch3: CSSEffect[] = [
 
 .roycss-card-gradient-border {
   position: relative;
-  background: #0f172a;
+  background: oklch(0.208 0.04 265.75);
   border-radius: 16px;
   padding: 24px;
-  color: #e2e8f0;
+  color: oklch(0.929 0.013 255.51);
 }
 
 .roycss-card-gradient-border::before {
@@ -1048,9 +1048,9 @@ export const effectsBatch3: CSSEffect[] = [
   inset: 0;
   border-radius: inherit;
   padding: 2px;
-  background: linear-gradient(var(--roy-gb-angle), #10b981, #06b6d4, #8b5cf6, #f59e0b, #10b981);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  background: linear-gradient(var(--roy-gb-angle), oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22), oklch(0.606 0.219 292.72), oklch(0.769 0.165 70.08), oklch(0.696 0.149 162.48));
+  -webkit-mask: linear-gradient(oklch(1 0 89.88) 0 0) content-box, linear-gradient(oklch(1 0 89.88) 0 0);
+  mask: linear-gradient(oklch(1 0 89.88) 0 0) content-box, linear-gradient(oklch(1 0 89.88) 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   animation: roy-card-gb-rotate 4s linear infinite;
@@ -1072,18 +1072,18 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Hover Lift Card */
 .roycss-card-hover-lift {
-  background: #1e293b;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: oklch(0.279 0.037 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 10%, transparent);
   border-radius: 16px;
   padding: 24px;
-  color: #e2e8f0;
+  color: oklch(0.929 0.013 255.51);
   transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
 .roycss-card-hover-lift:hover {
   transform: translateY(-10px);
-  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.45);
-  border-color: rgba(16, 185, 129, 0.45);
+  box-shadow: 0 22px 44px color-mix(in oklch, oklch(0 0 0) 45%, transparent);
+  border-color: color-mix(in oklch, oklch(0.696 0.149 162.48) 45%, transparent);
 }`,
   },
 
@@ -1097,17 +1097,17 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Hover Zoom Card */
 .roycss-card-hover-zoom {
-  background: linear-gradient(135deg, #134e4a, #1e293b);
-  border: 1px solid rgba(20, 184, 166, 0.25);
+  background: linear-gradient(135deg, oklch(0.386 0.059 188.42), oklch(0.279 0.037 260.03));
+  border: 1px solid color-mix(in oklch, oklch(0.704 0.123 182.5) 25%, transparent);
   border-radius: 16px;
   padding: 24px;
-  color: #ccfbf1;
+  color: oklch(0.953 0.05 180.8);
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 .roycss-card-hover-zoom:hover {
   transform: scale(1.08);
-  box-shadow: 0 16px 32px rgba(20, 184, 166, 0.3);
+  box-shadow: 0 16px 32px color-mix(in oklch, oklch(0.704 0.123 182.5) 30%, transparent);
 }`,
   },
 
@@ -1121,19 +1121,19 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Hover Flip Card */
 .roycss-card-hover-flip {
-  background: #1e293b;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: oklch(0.279 0.037 260.03);
+  border: 1px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent);
   border-radius: 16px;
   padding: 24px;
-  color: #e2e8f0;
+  color: oklch(0.929 0.013 255.51);
   transform-style: preserve-3d;
   transition: transform 0.7s ease, background 0.4s ease, color 0.4s ease;
 }
 
 .roycss-card-hover-flip:hover {
   transform: rotateY(360deg);
-  background: linear-gradient(135deg, #10b981, #06b6d4);
-  color: #fff;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
+  color: oklch(1 0 89.88);
 }`,
   },
 
@@ -1148,22 +1148,22 @@ export const effectsBatch3: CSSEffect[] = [
     cssCode: `/* Reveal Banner Card */
 .roycss-card-hover-reveal {
   position: relative;
-  background: #1e293b;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: oklch(0.279 0.037 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 10%, transparent);
   border-radius: 16px;
   padding: 24px;
-  color: #e2e8f0;
+  color: oklch(0.929 0.013 255.51);
   overflow: hidden;
 }
 
 .roycss-card-hover-reveal::after {
   content: '★ Featured ★';
   position: absolute;
-  bottom: -42px;
-  left: 0;
-  right: 0;
-  background: linear-gradient(90deg, #10b981, #06b6d4);
-  color: #fff;
+  inset-block-end: -42px;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  background: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
+  color: oklch(1 0 89.88);
   padding: 10px;
   text-align: center;
   font-size: 12px;
@@ -1173,7 +1173,7 @@ export const effectsBatch3: CSSEffect[] = [
 }
 
 .roycss-card-hover-reveal:hover::after {
-  bottom: 0;
+  inset-block-end: 0;
 }`,
   },
 
@@ -1187,18 +1187,18 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Slide Card */
 .roycss-card-hover-slide {
-  background: #1e293b;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: oklch(0.279 0.037 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 10%, transparent);
   border-radius: 16px;
   padding: 24px;
-  color: #e2e8f0;
+  color: oklch(0.929 0.013 255.51);
   transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
 .roycss-card-hover-slide:hover {
   transform: translateX(14px);
-  border-color: rgba(16, 185, 129, 0.5);
-  box-shadow: -12px 0 30px rgba(16, 185, 129, 0.25);
+  border-color: color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent);
+  box-shadow: -12px 0 30px color-mix(in oklch, oklch(0.696 0.149 162.48) 25%, transparent);
 }`,
   },
 
@@ -1213,11 +1213,11 @@ export const effectsBatch3: CSSEffect[] = [
     cssCode: `/* Fade Overlay Card */
 .roycss-card-hover-fade {
   position: relative;
-  background: #1e293b;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: oklch(0.279 0.037 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 10%, transparent);
   border-radius: 16px;
   padding: 24px;
-  color: #e2e8f0;
+  color: oklch(0.929 0.013 255.51);
   overflow: hidden;
 }
 
@@ -1225,7 +1225,7 @@ export const effectsBatch3: CSSEffect[] = [
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.35), rgba(6, 182, 212, 0.35));
+  background: linear-gradient(135deg, color-mix(in oklch, oklch(0.696 0.149 162.48) 35%, transparent), color-mix(in oklch, oklch(0.715 0.126 215.22) 35%, transparent));
   opacity: 0;
   transition: opacity 0.45s ease;
   pointer-events: none;
@@ -1246,17 +1246,17 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Glow Card */
 .roycss-card-hover-glow {
-  background: #0f172a;
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  background: oklch(0.208 0.04 265.75);
+  border: 1px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 20%, transparent);
   border-radius: 16px;
   padding: 24px;
-  color: #e2e8f0;
+  color: oklch(0.929 0.013 255.51);
   transition: box-shadow 0.4s ease, border-color 0.4s ease;
 }
 
 .roycss-card-hover-glow:hover {
-  border-color: rgba(16, 185, 129, 0.85);
-  box-shadow: 0 0 28px rgba(16, 185, 129, 0.5), 0 0 56px rgba(16, 185, 129, 0.3);
+  border-color: color-mix(in oklch, oklch(0.696 0.149 162.48) 85%, transparent);
+  box-shadow: 0 0 28px color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent), 0 0 56px color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent);
 }`,
   },
 
@@ -1271,17 +1271,17 @@ export const effectsBatch3: CSSEffect[] = [
     cssCode: `/* Border Draw Card */
 .roycss-card-hover-border {
   position: relative;
-  background: #1e293b;
+  background: oklch(0.279 0.037 260.03);
   border-radius: 16px;
   padding: 24px;
-  color: #e2e8f0;
+  color: oklch(0.929 0.013 255.51);
 }
 
 .roycss-card-hover-border::before {
   content: '';
   position: absolute;
   inset: 0;
-  border: 2px solid #10b981;
+  border: 2px solid oklch(0.696 0.149 162.48);
   border-radius: inherit;
   clip-path: polygon(0 0, 0 0, 0 0, 0 0);
   transition: clip-path 0.5s ease;
@@ -1303,18 +1303,18 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Color Shift Card */
 .roycss-card-hover-color {
-  background: #1e293b;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: oklch(0.279 0.037 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 10%, transparent);
   border-radius: 16px;
   padding: 24px;
-  color: #e2e8f0;
+  color: oklch(0.929 0.013 255.51);
   transition: background 0.5s ease, color 0.5s ease, border-color 0.5s ease;
 }
 
 .roycss-card-hover-color:hover {
-  background: linear-gradient(135deg, #10b981, #06b6d4);
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.3);
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
+  color: oklch(1 0 89.88);
+  border-color: color-mix(in oklch, oklch(1 0 89.88) 30%, transparent);
 }`,
   },
 
@@ -1328,11 +1328,11 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* 3D Rotate Card */
 .roycss-card-hover-rotate {
-  background: #1e293b;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: oklch(0.279 0.037 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 10%, transparent);
   border-radius: 16px;
   padding: 24px;
-  color: #e2e8f0;
+  color: oklch(0.929 0.013 255.51);
   perspective: 800px;
   transform-style: preserve-3d;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
@@ -1340,7 +1340,7 @@ export const effectsBatch3: CSSEffect[] = [
 
 .roycss-card-hover-rotate:hover {
   transform: rotateX(14deg) rotateY(-14deg);
-  box-shadow: -10px 14px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: -10px 14px 30px color-mix(in oklch, oklch(0 0 0) 40%, transparent);
 }`,
   },
 
@@ -1354,18 +1354,18 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Skew Card */
 .roycss-card-hover-skew {
-  background: #1e293b;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: oklch(0.279 0.037 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 10%, transparent);
   border-radius: 16px;
   padding: 24px;
-  color: #e2e8f0;
+  color: oklch(0.929 0.013 255.51);
   transition: transform 0.35s ease, background 0.35s ease, color 0.35s ease;
 }
 
 .roycss-card-hover-skew:hover {
   transform: skew(-8deg, 2deg);
-  background: linear-gradient(135deg, #8b5cf6, #ec4899);
-  color: #fff;
+  background: linear-gradient(135deg, oklch(0.606 0.219 292.72), oklch(0.656 0.212 354.31));
+  color: oklch(1 0 89.88);
 }`,
   },
 
@@ -1380,11 +1380,11 @@ export const effectsBatch3: CSSEffect[] = [
     cssCode: `/* Depth Push Card */
 .roycss-card-hover-push {
   position: relative;
-  background: #1e293b;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: oklch(0.279 0.037 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 10%, transparent);
   border-radius: 16px;
   padding: 24px;
-  color: #e2e8f0;
+  color: oklch(0.929 0.013 255.51);
   transform-style: preserve-3d;
   transition: transform 0.35s ease;
 }
@@ -1394,7 +1394,7 @@ export const effectsBatch3: CSSEffect[] = [
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: #10b981;
+  background: oklch(0.696 0.149 162.48);
   transform: translateZ(-30px);
   transition: transform 0.35s ease;
   pointer-events: none;
@@ -1419,20 +1419,20 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Press Card */
 .roycss-card-hover-press {
-  background: #1e293b;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: oklch(0.279 0.037 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 10%, transparent);
   border-radius: 16px;
   padding: 24px;
-  color: #e2e8f0;
-  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.3);
+  color: oklch(0.929 0.013 255.51);
+  box-shadow: 0 12px 22px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
 }
 
 .roycss-card-hover-press:hover {
   transform: scale(0.95);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
-  background: #10b981;
-  color: #fff;
+  box-shadow: 0 3px 8px color-mix(in oklch, oklch(0 0 0) 40%, transparent);
+  background: oklch(0.696 0.149 162.48);
+  color: oklch(1 0 89.88);
 }`,
   },
 
@@ -1446,11 +1446,11 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Swing Card */
 .roycss-card-hover-swing {
-  background: #1e293b;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: oklch(0.279 0.037 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 10%, transparent);
   border-radius: 16px;
   padding: 24px;
-  color: #e2e8f0;
+  color: oklch(0.929 0.013 255.51);
   transform-origin: top center;
   transition: transform 0.3s ease;
 }
@@ -1478,11 +1478,11 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Wobble Card */
 .roycss-card-hover-wobble {
-  background: #1e293b;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: oklch(0.279 0.037 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 10%, transparent);
   border-radius: 16px;
   padding: 24px;
-  color: #e2e8f0;
+  color: oklch(0.929 0.013 255.51);
   transition: transform 0.3s ease;
 }
 
@@ -1510,11 +1510,11 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Tada Card */
 .roycss-card-hover-tada {
-  background: #1e293b;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: oklch(0.279 0.037 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 10%, transparent);
   border-radius: 16px;
   padding: 24px;
-  color: #e2e8f0;
+  color: oklch(0.929 0.013 255.51);
   transition: transform 0.3s ease;
 }
 
@@ -1545,15 +1545,15 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Animated Dash Border */
 .roycss-border-animated-dash {
-  width: 140px;
-  height: 80px;
-  background: #0f172a;
-  border: 3px dashed #10b981;
+  inline-size: 140px;
+  block-size: 80px;
+  background: oklch(0.208 0.04 265.75);
+  border: 3px dashed oklch(0.696 0.149 162.48);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #d1fae5;
+  color: oklch(0.95 0.051 163.05);
   font-size: 12px;
   font-weight: 600;
   animation: roy-border-dash-glow 1.6s ease-in-out infinite;
@@ -1561,12 +1561,12 @@ export const effectsBatch3: CSSEffect[] = [
 
 @keyframes roy-border-dash-glow {
   0%, 100% {
-    border-color: #10b981;
-    box-shadow: 0 0 5px rgba(16, 185, 129, 0.3);
+    border-color: oklch(0.696 0.149 162.48);
+    box-shadow: 0 0 5px color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent);
   }
   50% {
-    border-color: #34d399;
-    box-shadow: 0 0 18px rgba(16, 185, 129, 0.65);
+    border-color: oklch(0.773 0.153 163.22);
+    box-shadow: 0 0 18px color-mix(in oklch, oklch(0.696 0.149 162.48) 65%, transparent);
   }
 }`,
   },
@@ -1581,14 +1581,14 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Marching Ants Border */
 .roycss-border-marching-ants {
-  width: 140px;
-  height: 80px;
-  background-color: #0f172a;
+  inline-size: 140px;
+  block-size: 80px;
+  background-color: oklch(0.208 0.04 265.75);
   background-image:
-    repeating-linear-gradient(90deg, #f59e0b 0 6px, transparent 6px 12px),
-    repeating-linear-gradient(90deg, #f59e0b 0 6px, transparent 6px 12px),
-    repeating-linear-gradient(0deg, #f59e0b 0 6px, transparent 6px 12px),
-    repeating-linear-gradient(0deg, #f59e0b 0 6px, transparent 6px 12px);
+    repeating-linear-gradient(90deg, oklch(0.769 0.165 70.08) 0 6px, transparent 6px 12px),
+    repeating-linear-gradient(90deg, oklch(0.769 0.165 70.08) 0 6px, transparent 6px 12px),
+    repeating-linear-gradient(0deg, oklch(0.769 0.165 70.08) 0 6px, transparent 6px 12px),
+    repeating-linear-gradient(0deg, oklch(0.769 0.165 70.08) 0 6px, transparent 6px 12px);
   background-position: 0 0, 0 100%, 0 0, 100% 0;
   background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
   background-size: 12px 2px, 12px 2px, 2px 12px, 2px 12px;
@@ -1596,7 +1596,7 @@ export const effectsBatch3: CSSEffect[] = [
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fde68a;
+  color: oklch(0.924 0.115 95.75);
   font-size: 12px;
   font-weight: 600;
   animation: roy-border-march 0.7s linear infinite;
@@ -1620,18 +1620,18 @@ export const effectsBatch3: CSSEffect[] = [
     cssCode: `/* Corner Brackets Border */
 .roycss-border-corner-brackets {
   position: relative;
-  width: 140px;
-  height: 80px;
-  background: #0f172a;
+  inline-size: 140px;
+  block-size: 80px;
+  background: oklch(0.208 0.04 265.75);
   background-image:
-    linear-gradient(#06b6d4, #06b6d4),
-    linear-gradient(#06b6d4, #06b6d4),
-    linear-gradient(#06b6d4, #06b6d4),
-    linear-gradient(#06b6d4, #06b6d4),
-    linear-gradient(#06b6d4, #06b6d4),
-    linear-gradient(#06b6d4, #06b6d4),
-    linear-gradient(#06b6d4, #06b6d4),
-    linear-gradient(#06b6d4, #06b6d4);
+    linear-gradient(oklch(0.715 0.126 215.22), oklch(0.715 0.126 215.22)),
+    linear-gradient(oklch(0.715 0.126 215.22), oklch(0.715 0.126 215.22)),
+    linear-gradient(oklch(0.715 0.126 215.22), oklch(0.715 0.126 215.22)),
+    linear-gradient(oklch(0.715 0.126 215.22), oklch(0.715 0.126 215.22)),
+    linear-gradient(oklch(0.715 0.126 215.22), oklch(0.715 0.126 215.22)),
+    linear-gradient(oklch(0.715 0.126 215.22), oklch(0.715 0.126 215.22)),
+    linear-gradient(oklch(0.715 0.126 215.22), oklch(0.715 0.126 215.22)),
+    linear-gradient(oklch(0.715 0.126 215.22), oklch(0.715 0.126 215.22));
   background-position:
     top left, top left,
     top right, top right,
@@ -1647,7 +1647,7 @@ export const effectsBatch3: CSSEffect[] = [
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #67e8f9;
+  color: oklch(0.865 0.115 207.08);
   font-size: 12px;
   font-weight: 600;
 }`,
@@ -1664,14 +1664,14 @@ export const effectsBatch3: CSSEffect[] = [
     cssCode: `/* Clip-Path Angled Border */
 .roycss-border-clip-path {
   position: relative;
-  width: 140px;
-  height: 80px;
-  background: linear-gradient(135deg, #10b981, #06b6d4);
+  inline-size: 140px;
+  block-size: 80px;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
   clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: oklch(1 0 89.88);
   font-size: 12px;
   font-weight: 600;
 }
@@ -1680,7 +1680,7 @@ export const effectsBatch3: CSSEffect[] = [
   content: '';
   position: absolute;
   inset: 3px;
-  background: #0f172a;
+  background: oklch(0.208 0.04 265.75);
   clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
 }`,
   },
@@ -1702,14 +1702,14 @@ export const effectsBatch3: CSSEffect[] = [
 
 .roycss-border-gradient-animated {
   position: relative;
-  width: 140px;
-  height: 80px;
-  background: #0f172a;
+  inline-size: 140px;
+  block-size: 80px;
+  background: oklch(0.208 0.04 265.75);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #e2e8f0;
+  color: oklch(0.929 0.013 255.51);
   font-size: 12px;
   font-weight: 600;
 }
@@ -1720,9 +1720,9 @@ export const effectsBatch3: CSSEffect[] = [
   inset: 0;
   border-radius: inherit;
   padding: 3px;
-  background: linear-gradient(var(--roy-bg-angle), #10b981, #ec4899, #f59e0b, #06b6d4, #10b981);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  background: linear-gradient(var(--roy-bg-angle), oklch(0.696 0.149 162.48), oklch(0.656 0.212 354.31), oklch(0.769 0.165 70.08), oklch(0.715 0.126 215.22), oklch(0.696 0.149 162.48));
+  -webkit-mask: linear-gradient(oklch(1 0 89.88) 0 0) content-box, linear-gradient(oklch(1 0 89.88) 0 0);
+  mask: linear-gradient(oklch(1 0 89.88) 0 0) content-box, linear-gradient(oklch(1 0 89.88) 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   animation: roy-border-gradient 4s linear infinite;
@@ -1744,15 +1744,15 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Neon Pulse Border */
 .roycss-border-neon-pulse {
-  width: 140px;
-  height: 80px;
-  background: #0a0a0a;
-  border: 2px solid #ec4899;
+  inline-size: 140px;
+  block-size: 80px;
+  background: oklch(0.145 0 89.88);
+  border: 2px solid oklch(0.656 0.212 354.31);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #f9a8d4;
+  color: oklch(0.823 0.11 346.02);
   font-size: 12px;
   font-weight: 600;
   animation: roy-border-neon 1.5s ease-in-out infinite;
@@ -1760,12 +1760,12 @@ export const effectsBatch3: CSSEffect[] = [
 
 @keyframes roy-border-neon {
   0%, 100% {
-    border-color: #ec4899;
-    box-shadow: 0 0 5px #ec4899, inset 0 0 5px #ec4899;
+    border-color: oklch(0.656 0.212 354.31);
+    box-shadow: 0 0 5px oklch(0.656 0.212 354.31), inset 0 0 5px oklch(0.656 0.212 354.31);
   }
   50% {
-    border-color: #f472b6;
-    box-shadow: 0 0 22px #ec4899, 0 0 44px #ec4899, inset 0 0 16px #ec4899;
+    border-color: oklch(0.725 0.175 349.76);
+    box-shadow: 0 0 22px oklch(0.656 0.212 354.31), 0 0 44px oklch(0.656 0.212 354.31), inset 0 0 16px oklch(0.656 0.212 354.31);
   }
 }`,
   },
@@ -1780,10 +1780,10 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Torn Paper Border */
 .roycss-border-torn-paper {
-  width: 140px;
-  height: 80px;
-  background: #f8fafc;
-  color: #1e293b;
+  inline-size: 140px;
+  block-size: 80px;
+  background: oklch(0.984 0.003 247.86);
+  color: oklch(0.279 0.037 260.03);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1793,7 +1793,7 @@ export const effectsBatch3: CSSEffect[] = [
     0% 6%, 5% 0%, 12% 6%, 20% 1%, 28% 5%, 35% 0%, 42% 4%, 50% 1%, 58% 5%, 65% 0%, 72% 4%, 80% 1%, 88% 5%, 95% 0%, 100% 6%,
     100% 94%, 95% 100%, 88% 94%, 80% 99%, 72% 95%, 65% 100%, 58% 96%, 50% 99%, 42% 95%, 35% 100%, 28% 96%, 20% 99%, 12% 95%, 5% 100%, 0% 94%
   );
-  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(2px 2px 4px color-mix(in oklch, oklch(0 0 0) 25%, transparent));
 }`,
   },
 
@@ -1807,18 +1807,18 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Sticker Border */
 .roycss-border-sticker {
-  width: 140px;
-  height: 80px;
-  background: linear-gradient(135deg, #10b981, #06b6d4);
-  border: 6px solid #fff;
+  inline-size: 140px;
+  block-size: 80px;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
+  border: 6px solid oklch(1 0 89.88);
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: oklch(1 0 89.88);
   font-size: 12px;
   font-weight: 700;
-  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 14px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
   transform: rotate(-3deg);
 }`,
   },
@@ -1833,17 +1833,17 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Ribbon Banner Border */
 .roycss-border-ribbon {
-  width: 140px;
-  height: 90px;
-  background: #ef4444;
+  inline-size: 140px;
+  block-size: 90px;
+  background: oklch(0.637 0.208 25.33);
   clip-path: polygon(0 0, 100% 0, 100% 100%, 52% 78%, 0 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: oklch(1 0 89.88);
   font-size: 12px;
   font-weight: 700;
-  padding-bottom: 14px;
+  padding-block-end: 14px;
   box-sizing: border-box;
 }`,
   },
@@ -1858,17 +1858,17 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Pennant Banner Border */
 .roycss-border-banner {
-  width: 140px;
-  height: 80px;
-  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  inline-size: 140px;
+  block-size: 80px;
+  background: linear-gradient(135deg, oklch(0.769 0.165 70.08), oklch(0.637 0.208 25.33));
   clip-path: polygon(0 0, 100% 0, calc(100% - 16px) 50%, 100% 100%, 0 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: oklch(1 0 89.88);
   font-size: 12px;
   font-weight: 700;
-  padding-right: 16px;
+  padding-inline-end: 16px;
   box-sizing: border-box;
 }`,
   },
@@ -1884,18 +1884,18 @@ export const effectsBatch3: CSSEffect[] = [
     cssCode: `/* Decorative Frame Border */
 .roycss-border-frame {
   position: relative;
-  width: 140px;
-  height: 80px;
-  background: #1e293b;
-  border: 3px double #f59e0b;
+  inline-size: 140px;
+  block-size: 80px;
+  background: oklch(0.279 0.037 260.03);
+  border: 3px double oklch(0.769 0.165 70.08);
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fde68a;
+  color: oklch(0.924 0.115 95.75);
   font-size: 12px;
   font-weight: 600;
-  outline: 1px solid #f59e0b;
+  outline: 1px solid oklch(0.769 0.165 70.08);
   outline-offset: 4px;
 }
 
@@ -1903,7 +1903,7 @@ export const effectsBatch3: CSSEffect[] = [
   content: '';
   position: absolute;
   inset: 5px;
-  border: 1px solid rgba(245, 158, 11, 0.45);
+  border: 1px solid color-mix(in oklch, oklch(0.769 0.165 70.08) 45%, transparent);
   border-radius: 2px;
   pointer-events: none;
 }`,
@@ -1919,12 +1919,12 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Polaroid Frame Border */
 .roycss-border-polaroid {
-  width: 140px;
-  height: 110px;
-  background: #fff;
+  inline-size: 140px;
+  block-size: 110px;
+  background: oklch(1 0 89.88);
   padding: 8px 8px 30px;
   box-sizing: border-box;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 16px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1943,28 +1943,28 @@ export const effectsBatch3: CSSEffect[] = [
     cssCode: `/* Double Glow Ring Border */
 .roycss-border-double-glow {
   position: relative;
-  width: 140px;
-  height: 80px;
-  background: #0f172a;
-  border: 1px solid #10b981;
+  inline-size: 140px;
+  block-size: 80px;
+  background: oklch(0.208 0.04 265.75);
+  border: 1px solid oklch(0.696 0.149 162.48);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #6ee7b7;
+  color: oklch(0.845 0.13 164.98);
   font-size: 12px;
   font-weight: 600;
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.5), 0 0 24px rgba(16, 185, 129, 0.3), inset 0 0 12px rgba(16, 185, 129, 0.2);
+  box-shadow: 0 0 12px color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent), 0 0 24px color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent), inset 0 0 12px color-mix(in oklch, oklch(0.696 0.149 162.48) 20%, transparent);
 }
 
 .roycss-border-double-glow::before {
   content: '';
   position: absolute;
   inset: -7px;
-  border: 1px solid rgba(16, 185, 129, 0.45);
+  border: 1px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 45%, transparent);
   border-radius: 12px;
   pointer-events: none;
-  box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
+  box-shadow: 0 0 10px color-mix(in oklch, oklch(0.696 0.149 162.48) 25%, transparent);
 }`,
   },
 
@@ -1979,14 +1979,14 @@ export const effectsBatch3: CSSEffect[] = [
     cssCode: `/* Dashed Draw Border */
 .roycss-border-dashed-draw {
   position: relative;
-  width: 140px;
-  height: 80px;
-  background: #0f172a;
+  inline-size: 140px;
+  block-size: 80px;
+  background: oklch(0.208 0.04 265.75);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #a78bfa;
+  color: oklch(0.709 0.159 293.54);
   font-size: 12px;
   font-weight: 600;
 }
@@ -1995,7 +1995,7 @@ export const effectsBatch3: CSSEffect[] = [
   content: '';
   position: absolute;
   inset: 0;
-  border: 2px dashed #8b5cf6;
+  border: 2px dashed oklch(0.606 0.219 292.72);
   border-radius: inherit;
   clip-path: polygon(0 0, 0 0, 0 0, 0 0);
   transition: clip-path 0.6s ease;
@@ -2017,20 +2017,20 @@ export const effectsBatch3: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Inset Glow Border */
 .roycss-border-inset-glow {
-  width: 140px;
-  height: 80px;
-  background: #0a0a0a;
-  border: 1px solid rgba(6, 182, 212, 0.5);
+  inline-size: 140px;
+  block-size: 80px;
+  background: oklch(0.145 0 89.88);
+  border: 1px solid color-mix(in oklch, oklch(0.715 0.126 215.22) 50%, transparent);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #67e8f9;
+  color: oklch(0.865 0.115 207.08);
   font-size: 12px;
   font-weight: 600;
   box-shadow:
-    inset 0 0 22px rgba(6, 182, 212, 0.4),
-    inset 0 0 4px rgba(6, 182, 212, 0.7);
+    inset 0 0 22px color-mix(in oklch, oklch(0.715 0.126 215.22) 40%, transparent),
+    inset 0 0 4px color-mix(in oklch, oklch(0.715 0.126 215.22) 70%, transparent);
 }`,
   },
 ];

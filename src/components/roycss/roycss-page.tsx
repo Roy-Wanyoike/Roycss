@@ -207,19 +207,9 @@ function InstallCommand() {
       >
         <span className="text-sm font-mono text-muted-foreground">$</span>
         <code className="text-sm font-mono text-foreground">npm install roycss</code>
-        <button
-          className="text-muted-foreground hover:text-foreground transition-colors ml-2 cursor-pointer"
-          aria-label="Copy install command"
-        >
-          {copied ? (
-            <span className="text-xs text-emerald-500 font-medium">Copied!</span>
-          ) : (
-            <svg className="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <rect x="9" y="9" width="13" height="13" rx="2" strokeWidth="2" />
-              <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" strokeWidth="2" />
-            </svg>
-          )}
-        </button>
+        <span className={`text-xs font-medium ml-2 transition-colors ${copied ? "text-emerald-500" : "text-muted-foreground group-hover:text-foreground"}`}>
+          {copied ? "✓ Copied!" : "Copy"}
+        </span>
       </div>
     </MagneticButton>
   );

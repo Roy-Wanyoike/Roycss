@@ -177,7 +177,7 @@ function ProTip({ children }: { children: ReactNode }) {
 export function GetStarted() {
   const [openStep, setOpenStep] = useState(1);
   return (
-    <section className="py-16 sm:py-20 relative overflow-hidden">
+    <section id="get-started" className="py-16 sm:py-20 relative overflow-hidden scroll-mt-20">
       <div className="absolute inset-0 -z-10 bg-grid opacity-15 roycss-fade-mask-b" />
       <div className="container mx-auto px-4 sm:px-6">
         <SectionHeading

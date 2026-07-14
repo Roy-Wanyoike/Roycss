@@ -628,6 +628,14 @@ export default function RoyCSSPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground relative">
+      {/* Skip to main content — keyboard accessibility */}
+      <a
+        href="#effects"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-primary focus:text-primary-foreground focus:shadow-lg"
+      >
+        Skip to effects
+      </a>
+
       {/* Cursor glow follower (desktop only) */}
       <CursorGlow />
 
@@ -635,23 +643,23 @@ export default function RoyCSSPage() {
       <ScrollProgress />
 
       {/* ─── Hero ──────────────────────────────────────────── */}
-      <section className="relative overflow-hidden pt-10 pb-8 sm:pt-16 sm:pb-12">
+      <header className="relative overflow-hidden pt-10 pb-8 sm:pt-16 sm:pb-12">
         {/* Background effects */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
           {/* 3D rotating sphere — decorative background, low opacity */}
           <div className="roycss-sphere-3d" aria-hidden="true" />
 
           {/* Parallax blobs — different scroll speeds via scroll-driven animation */}
-          <Parallax offset={60} className="absolute top-[-10%] left-[-5%] size-[40rem] rounded-full bg-primary/15 blur-3xl animate-blob roycss-parallax-near" />
-          <Parallax offset={40} className="absolute top-[20%] right-[-10%] size-[35rem] rounded-full bg-emerald-500/8 blur-3xl animate-blob animation-delay-2000 roycss-parallax-mid" />
-          <Parallax offset={80} className="absolute bottom-[-15%] left-[30%] size-[30rem] rounded-full bg-teal-500/8 blur-3xl animate-blob animation-delay-4000 roycss-parallax-far" />
-          <div className="absolute inset-0 bg-grid opacity-30" />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/0 via-background/40 to-background" />
+          <Parallax offset={60} className="absolute top-[-10%] left-[-5%] size-[40rem] rounded-full bg-primary/15 blur-3xl animate-blob roycss-parallax-near" aria-hidden="true" />
+          <Parallax offset={40} className="absolute top-[20%] right-[-10%] size-[35rem] rounded-full bg-emerald-500/8 blur-3xl animate-blob animation-delay-2000 roycss-parallax-mid" aria-hidden="true" />
+          <Parallax offset={80} className="absolute bottom-[-15%] left-[30%] size-[30rem] rounded-full bg-teal-500/8 blur-3xl animate-blob animation-delay-4000 roycss-parallax-far" aria-hidden="true" />
+          <div className="absolute inset-0 bg-grid opacity-30" aria-hidden="true" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/0 via-background/40 to-background" aria-hidden="true" />
         </div>
 
         <div className="container mx-auto px-4 sm:px-6">
           {/* Nav bar */}
-          <nav className="flex items-center justify-between mb-8 sm:mb-12">
+          <nav aria-label="Primary navigation" className="flex items-center justify-between mb-8 sm:mb-12">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -813,7 +821,7 @@ export default function RoyCSSPage() {
             </ScrollReveal>
           </div>
         </div>
-      </section>
+      </header>
 
       {/* ─── Marquee Strip ──────────────────────────────────── */}
       <div className="py-6 border-y border-border/40 bg-card/30 backdrop-blur-sm overflow-hidden">
@@ -839,7 +847,7 @@ export default function RoyCSSPage() {
       <Separator className="opacity-50" />
 
       {/* ─── Effects Section ────────────────────────────────── */}
-      <section id="effects" className="flex-1 py-10 sm:py-14">
+      <main id="effects" className="flex-1 py-10 sm:py-14 scroll-mt-20">
         <div className="container mx-auto px-4 sm:px-6">
           {/* Section heading */}
           <SectionHeading
@@ -852,9 +860,12 @@ export default function RoyCSSPage() {
           {/* Search */}
           <ScrollReveal className="max-w-md mx-auto mb-8">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" aria-hidden="true" />
               <Input
                 ref={searchInputRef}
+                type="text"
+                role="searchbox"
+                aria-label="Search CSS effects by name, tag, or category"
                 placeholder="Search 700 effects... (⌘K)"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -868,7 +879,7 @@ export default function RoyCSSPage() {
                   <X className="size-4" />
                 </button>
               ) : (
-                <kbd className="absolute right-3 top-1/2 -translate-y-1/2 hidden sm:flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-muted/80 border border-border/50 text-[9px] font-medium text-muted-foreground">
+                <kbd aria-hidden="true" className="absolute right-3 top-1/2 -translate-y-1/2 hidden sm:flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-muted/80 border border-border/50 text-[9px] font-medium text-muted-foreground">
                   ⌘K
                 </kbd>
               )}
@@ -1001,7 +1012,6 @@ export default function RoyCSSPage() {
             </motion.div>
           )}
         </div>
-      </section>
 
       {/* ─── CTA Banner ─────────────────────────────────────── */}
       <section className="py-16 sm:py-20">
@@ -1058,6 +1068,7 @@ export default function RoyCSSPage() {
           </ScrollReveal>
         </div>
       </section>
+      </main>
 
       {/* ─── RoyMotion Showcase ─────────────────────────────── */}
       <RoyMotionShowcase />
@@ -1133,7 +1144,7 @@ export default function RoyCSSPage() {
       <Separator className="opacity-50" />
 
       {/* ─── Footer ─────────────────────────────────────────── */}
-      <footer className="border-t border-border/50 bg-card/50 backdrop-blur-sm mt-auto">
+      <footer aria-label="Site footer" className="border-t border-border/50 bg-card/50 backdrop-blur-sm mt-auto">
         <div className="container mx-auto px-4 sm:px-6 py-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <RoyCSSLogo size="sm" animated={false} />

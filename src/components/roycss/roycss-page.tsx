@@ -14,6 +14,12 @@ import {
   ChevronDown,
   ChevronRight,
   CheckCircle2,
+  Accessibility,
+  Gauge,
+  ArrowLeftRight,
+  LayoutDashboard,
+  History,
+  Rocket,
   Layers,
   Play,
   Type,
@@ -33,7 +39,6 @@ import {
   FormInput,
   ScrollText,
   MousePointer2,
-  ArrowLeftRight,
   GlassWater,
   ToggleRight,
   Heart,
@@ -233,6 +238,39 @@ function MarqueeItem({ icon: Icon, label }: { icon: React.ComponentType<{ classN
   );
 }
 
+/* ─── Doc Card ──────────────────────────────────────────────── */
+function DocCard({
+  icon: Icon,
+  title,
+  description,
+  items,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  description: string;
+  items: string[];
+}) {
+  return (
+    <div className="group rounded-2xl border border-border bg-card p-5 hover:border-primary/40 hover:shadow-lg transition-all">
+      <div className="flex items-center gap-3 mb-3">
+        <div className="flex items-center justify-center size-10 rounded-xl bg-primary/10 text-primary">
+          <Icon className="size-5" />
+        </div>
+        <h3 className="font-display font-semibold text-foreground">{title}</h3>
+      </div>
+      <p className="text-xs text-muted-foreground leading-relaxed mb-3">{description}</p>
+      <ul className="space-y-1.5">
+        {items.map((item, i) => (
+          <li key={i} className="flex items-center gap-2 text-xs text-foreground">
+            <CheckCircle2 className="size-3 text-primary shrink-0" />
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 /* ─── Featured Showcase Card ────────────────────────────────── */
 function FeaturedShowcase() {
   const featuredEffects = effects.filter((e) =>
@@ -361,6 +399,24 @@ export default function RoyCSSPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [favoritesOpen, setFavoritesOpen] = useState(false);
   const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // ⌘K / Ctrl+K to focus search
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+        searchInputRef.current?.select();
+      }
+      if (e.key === "Escape" && document.activeElement === searchInputRef.current) {
+        setSearch("");
+        searchInputRef.current?.blur();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const favoriteEffects = effects.filter((e) => isFavorite(e.id));
 
@@ -419,6 +475,27 @@ export default function RoyCSSPage() {
               transition={{ duration: 0.5 }}
               className="flex items-center gap-2"
             >
+              {/* Docs nav links */}
+              <div className="hidden md:flex items-center gap-1 mr-2">
+                <button
+                  onClick={() => document.querySelector("#get-started")?.scrollIntoView({ behavior: "smooth" })}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer"
+                >
+                  Get Started
+                </button>
+                <button
+                  onClick={() => document.querySelector("#docs")?.scrollIntoView({ behavior: "smooth" })}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer"
+                >
+                  Docs
+                </button>
+                <button
+                  onClick={() => document.querySelector("#effects")?.scrollIntoView({ behavior: "smooth" })}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer"
+                >
+                  Effects
+                </button>
+              </div>
               <ThemeToggle />
               <button
                 onClick={() => setFavoritesOpen(true)}
@@ -574,18 +651,23 @@ export default function RoyCSSPage() {
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
               <Input
-                placeholder="Search effects, tags, or categories..."
+                ref={searchInputRef}
+                placeholder="Search 700 effects... (⌘K)"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="pl-10 h-11 rounded-xl glass bg-background/80 border-border/50 focus:border-primary/50"
+                className="pl-10 pr-14 h-11 rounded-xl glass bg-background/80 border-border/50 focus:border-primary/50"
               />
-              {search && (
+              {search ? (
                 <button
                   onClick={() => setSearch("")}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground cursor-pointer"
                 >
                   <X className="size-4" />
                 </button>
+              ) : (
+                <kbd className="absolute right-3 top-1/2 -translate-y-1/2 hidden sm:flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-muted/80 border border-border/50 text-[9px] font-medium text-muted-foreground">
+                  ⌘K
+                </kbd>
               )}
             </div>
           </ScrollReveal>
@@ -756,6 +838,66 @@ export default function RoyCSSPage() {
 
       <Separator className="opacity-50" />
 
+      {/* ─── Documentation Section ──────────────────────────── */}
+      <section id="docs" className="py-16 scroll-mt-20">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <div className="inline-flex items-center gap-2 rounded-full glass px-3 py-1 text-xs font-medium text-primary mb-3">
+              <BookOpen className="size-3.5" />
+              Documentation
+            </div>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground">
+              Everything You Need to Know
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Guides, tutorials, and references to help you ship faster.
+            </p>
+          </div>
+
+          {/* Docs grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+            <DocCard
+              icon={Accessibility}
+              title="Accessibility"
+              description="WCAG 2.1 AA compliant. Every effect respects prefers-reduced-motion. Full keyboard navigation. ARIA-ready."
+              items={["Reduced motion support", "Focus-visible rings", "Screen reader safe", "High contrast mode"]}
+            />
+            <DocCard
+              icon={Gauge}
+              title="Performance"
+              description="Zero JavaScript runtime. Pure CSS — no hydration cost, no bundle bloat. Tree-shakeable per-effect."
+              items={["240KB total CSS", "~300 bytes per effect", "Zero JS runtime", "Tree-shakeable exports"]}
+            />
+            <DocCard
+              icon={ArrowLeftRight}
+              title="Migration"
+              description="Switch from Animate.css, Tailwind, or Bootstrap with our migration guides and codemods."
+              items={["Animate.css → RoyCSS map", "Tailwind integration", "Bootstrap conversion", "Automatic codemods"]}
+            />
+            <DocCard
+              icon={LayoutDashboard}
+              title="Dashboard Tutorial"
+              description="Build a complete dashboard in 15 minutes using RoyCSS components and effects."
+              items={["Grid + StatCards", "Charts + Tables", "Tabs + Progress", "Copy-paste template"]}
+            />
+            <DocCard
+              icon={History}
+              title="Changelog"
+              description="Track every release — new effects, breaking changes, deprecations, and bug fixes."
+              items={["v1.0 — 700 effects launch", "20 categories", "OKLCH color system", "RoyMotion animation system"]}
+            />
+            <DocCard
+              icon={Rocket}
+              title="Roadmap"
+              description="What's coming next — component library expansion, VS Code extension, AI-powered suggestions."
+              items={["Component library (24→100+)", "VS Code extension", "CLI codemods", "AI effect recommender"]}
+            />
+          </div>
+        </div>
+      </section>
+
+      <Separator className="opacity-50" />
+
       {/* ─── Footer ─────────────────────────────────────────── */}
       <footer className="border-t border-border/50 bg-card/50 backdrop-blur-sm mt-auto">
         <div className="container mx-auto px-4 sm:px-6 py-8">
@@ -777,6 +919,18 @@ export default function RoyCSSPage() {
             </p>
 
             <div className="flex items-center gap-3">
+              <button
+                onClick={() => document.querySelector("#get-started")?.scrollIntoView({ behavior: "smooth" })}
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+              >
+                Get Started
+              </button>
+              <button
+                onClick={() => document.querySelector("#docs")?.scrollIntoView({ behavior: "smooth" })}
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+              >
+                Docs
+              </button>
               <a
                 href="https://github.com/Roy-Wanyoike"
                 target="_blank"

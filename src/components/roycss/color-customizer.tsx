@@ -213,7 +213,7 @@ export function ColorCustomizer({
     <div>
       <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
         <Palette className="size-3.5 text-primary" />
-        Recolor this effect
+        Customize Color
       </h4>
 
       <p className="text-[11px] text-muted-foreground mb-3 leading-relaxed">

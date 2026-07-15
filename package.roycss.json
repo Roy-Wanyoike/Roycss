@@ -1,0 +1,68 @@
+{
+  "name": "roycss",
+  "version": "1.0.0",
+  "description": "700+ production-ready CSS effects with live demos, color customization, and framework support for React, Vue, Angular, Svelte, and vanilla HTML.",
+  "type": "module",
+  "main": "./dist/roycss.cjs",
+  "module": "./dist/roycss.js",
+  "types": "./dist/roycss.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/roycss.js",
+      "require": "./dist/roycss.cjs",
+      "types": "./dist/roycss.d.ts"
+    },
+    "./css": "./dist/roycss.css",
+    "./effects": {
+      "import": "./dist/effects.js",
+      "require": "./dist/effects.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "bin": {
+    "roycss": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "bun run scripts/build.ts",
+    "dev": "next dev -p 3000",
+    "lint": "eslint .",
+    "prepublishOnly": "bun run build"
+  },
+  "keywords": [
+    "css",
+    "css-framework",
+    "css-effects",
+    "animation",
+    "animations",
+    "oklch",
+    "color-mix",
+    "glassmorphism",
+    "hover-effects",
+    "loaders",
+    "react",
+    "vue",
+    "angular",
+    "svelte",
+    "framework-agnostic"
+  ],
+  "author": "Royford Wanyoike Wamaitha <roywanyoike328@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Roy-Wanyoike/roycss"
+  },
+  "homepage": "https://roycss.dev",
+  "bugs": {
+    "url": "https://github.com/Roy-Wanyoike/roycss/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

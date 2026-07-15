@@ -1,0 +1,492 @@
+     1→TOTAL EFFECTS: 410
+     2→CATEGORIES: 20
+     3→
+     4→═══════════════════════════════════════════════════════════
+     5→CATEGORY: ANIMATIONS (80 effects)
+     6→═══════════════════════════════════════════════════════════
+     7→• pulse-glow — Pulse Glow: A smooth pulsing glow effect that draws attention to elements
+     8→• bounce-in — Bounce In: Elements spring into view with an elastic bounce effect
+     9→• fade-in-up — Fade In Up: Elements gracefully fade in while sliding upward
+    10→• rotate-spin — Rotate Spin: Continuous smooth rotation with configurable speed
+    11→• shake — Shake: A vigorous shake animation perfect for error states or alerts
+    12→• float — Float: A gentle floating motion that gives elements a weightless feel
+    13→• jello — Jello: A fun wobbly jello-like animation with skew transforms
+    14→• heartbeat — Heartbeat: A rhythmic pulsing animation mimicking a heartbeat
+    15→• wobble — Wobble: A playful wobble animation that sways side to side with rotation
+    16→• tada — Tada: A celebratory scaling and rotating animation that announces an element
+    17→• swing — Swing: A pendulum-like swing animation around the top center pivot
+    18→• head-shake — Head Shake: A horizontal head-shake gesture with subtle rotation
+    19→• rubber-band — Rubber Band: An elastic stretch animation that snaps like a rubber band
+    20→• slide-in-left — Slide In Left: Element enters the viewport sliding in from the left edge
+    21→• slide-in-right — Slide In Right: Element enters the viewport sliding in from the right edge
+    22→• zoom-in — Zoom In: Element scales up from zero into focus with a smooth fade
+    23→• flip-in-x — Flip In X: Element flips into view around its horizontal X axis
+    24→• flip-in-y — Flip In Y: Element flips into view around its vertical Y axis like a card
+    25→• light-speed-in — Light Speed In: Element streaks in from the left with a skew and decelerates
+    26→• roll-in — Roll In: Element rolls into view from the left with a rotation
+    27→• jack-in-box — Jack In The Box: Element springs out like a jack-in-the-box with a celebratory spin
+    28→• bounce-out — Bounce Out: Element bounces away and exits the viewport with energy
+    29→• fade-out-down — Fade Out Down: Element fades out while sliding downward out of view
+    30→• rotate-out — Rotate Out: Element rotates clockwise while fading out of view
+    31→• zoom-out — Zoom Out: Element scales up briefly then shrinks to nothing as it exits
+    32→• roll-out — Roll Out: Element rolls off to the right with a rotation as it exits
+    33→• flash — Flash: Element opacity flashes twice to grab instant attention
+    34→• pulse-soft — Pulse Soft: A subtle gentle pulse that breathes opacity without motion
+    35→• wiggle — Wiggle: A small playful wiggle with rotation back and forth
+    36→• breathe — Breathe: A slow meditative scaling animation that mimics calm breathing
+    37→• fade-in — Fade In: Simple opacity fade in from transparent to fully visible
+    38→• fade-in-down — Fade In Down: Fade in while descending from above into final position
+    39→• fade-in-left — Fade In Left: Fade in while sliding in from the left edge
+    40→• fade-in-right — Fade In Right: Fade in while sliding in from the right edge
+    41→• fade-out — Fade Out: Simple opacity fade out from visible to transparent
+    42→• fade-out-up — Fade Out Up: Fade out while ascending upward out of view
+    43→• fade-out-left — Fade Out Left: Fade out while sliding toward the left edge
+    44→• fade-out-right — Fade Out Right: Fade out while sliding toward the right edge
+    45→• fade-in-bl — Fade In Bottom-Left: Diagonal fade-in entering from the bottom-left corner
+    46→• fade-in-br — Fade In Bottom-Right: Diagonal fade-in entering from the bottom-right corner
+    47→• slide-in-top — Slide In Top: Slide in from the top edge, fully off-screen to position
+    48→• slide-in-bottom — Slide In Bottom: Slide in from the bottom edge, fully off-screen to position
+    49→• slide-out-top — Slide Out Top: Slide out upward, completely exiting through the top edge
+    50→• slide-out-bottom — Slide Out Bottom: Slide out downward, completely exiting through the bottom edge
+    51→• slide-out-left — Slide Out Left: Slide out leftward, completely exiting through the left edge
+    52→• slide-out-right — Slide Out Right: Slide out rightward, completely exiting through the right edge
+    53→• slide-diagonal — Slide Diagonal: Continuous diagonal slide that loops across the preview area
+    54→• slide-rotate-in — Slide Rotate In: Combined slide and rotate entrance with a finishing spin
+    55→• zoom-in-left — Zoom In Left: Scale up from zero while sliding in from the left
+    56→• zoom-in-right — Zoom In Right: Scale up from zero while sliding in from the right
+    57→• zoom-in-up — Zoom In Up: Scale up from zero while rising from below
+    58→• zoom-in-down — Zoom In Down: Scale up from zero while dropping from above
+    59→• zoom-out-left — Zoom Out Left: Shrink and exit diagonally toward the left edge
+    60→• zoom-out-up — Zoom Out Up: Shrink and exit diagonally upward out of view
+    61→• bounce-in-left — Bounce In Left: Elastic bounce entrance traveling in from the left
+    62→• bounce-in-right — Bounce In Right: Elastic bounce entrance traveling in from the right
+    63→• bounce-in-up — Bounce In Up: Elastic bounce entrance rising upward from below
+    64→• bounce-in-down — Bounce In Down: Elastic bounce entrance dropping downward from above
+    65→• bounce-rotate — Bounce Rotate: Bouncing entrance combined with a playful rotation
+    66→• blur-in — Blur In: Element fades in while a heavy blur resolves into focus
+    67→• blur-in-up — Blur In Up: Blurred element rises from below while resolving into focus
+    68→• blur-out — Blur Out: Element blurs out of focus while fading away
+    69→• blur-out-down — Blur Out Down: Element blurs and descends out of view
+    70→• scale-grow — Scale Grow: Element grows from nothing with a slight overshoot
+    71→• scale-shrink — Scale Shrink: Element starts oversized and shrinks into its final size
+    72→• scale-expand — Scale Expand: Width and height expand independently to fill out the element
+    73→• scale-compress — Scale Compress: Element springs in from a vertically compressed state
+    74→• swing-in — Swing In: Element swings in from above with a pendulum-like motion
+    75→• drop-in — Drop In: Element falls from above and bounces on landing
+    76→• pop-in — Pop In: Snappy scale pop entrance with a quick overshoot
+    77→• pop-out — Pop Out: Snappy scale pop exit with a final shrink to nothing
+    78→• blink — Blink: Continuous opacity blink that flashes on and off
+    79→• vibrate — Vibrate: Rapid tiny translates that simulate a phone vibration
+    80→• jiggle — Jiggle: Quick rotational jiggle loop that wiggles side to side
+    81→• sway — Sway: Gentle continuous sway as if moved by a soft breeze
+    82→• pendulum — Pendulum: Pendulum swing that decelerates at each end of the arc
+    83→• snap-in — Snap In: Quick snap entrance that slams into place and settles
+    84→• stretch — Stretch: Vertical stretch spring loop that elongates and compresses
+    85→• spring-in — Spring In: Bouncy spring entrance that overshoots and oscillates to rest
+    86→• dissolve — Dissolve: Element dissolves into particles via scale, blur, and opacity
+    87→
+    88→═══════════════════════════════════════════════════════════
+    89→CATEGORY: HOVER EFFECTS (25 effects)
+    90→═══════════════════════════════════════════════════════════
+    91→• hover-scale — Scale Up: Smooth scale transformation on hover with a subtle shadow boost
+    92→• hover-underline-slide — Underline Slide: An animated underline that slides in from left on hover
+    93→• hover-glow-border — Glow Border: A glowing border effect that illuminates on hover
+    94→• hover-shadow-grow — Shadow Grow: Box shadow expands and intensifies on hover
+    95→• hover-color-shift — Color Shift: Smooth background color transition between states
+    96→• hover-tilt-rotate — Tilt Rotate: Subtle 3D tilt rotation on hover for depth
+    97→• hover-zoom-blur — Zoom Blur: Element scales up slightly while a soft blur blooms on hover
+    98→• hover-overlay-reveal — Overlay Reveal: A colored overlay slides up from the bottom on hover
+    99→• hover-push-up — Push Up: Element lifts up while a shadow grows beneath it like it's floating
+   100→• hover-slide-overlay — Slide Overlay: A diagonal overlay wipes across the element on hover
+   101→• hover-fade-overlay — Fade Overlay: A semi-transparent overlay fades in over the element on hover
+   102→• hover-grayscale-to-color — Grayscale to Color: Element starts desaturated and bursts into full color on hover
+   103→• hover-hue-rotate — Hue Rotate: Continuous hue rotation creates a rainbow cycling effect on hover
+   104→• hover-drop-shadow — Drop Shadow: A colored drop shadow filter blooms around the element on hover
+   105→• hover-skew — Skew: Element skews diagonally on hover for a dynamic tilt
+   106→• hover-flip — Flip: Element performs a 3D vertical flip on hover
+   107→• hover-rotate — Rotate: Element spins 90 degrees on hover for a snappy rotation
+   108→• hover-scale-down — Scale Down: Element shrinks slightly on hover creating a press-into-bg effect
+   109→• hover-opacity — Opacity Fade: Element dims to translucent on hover to indicate non-focus
+   110→• hover-border-draw — Border Draw: A border draws itself around the element clockwise on hover
+   111→• hover-neon-flicker — Neon Flicker: Element glows with a flickering neon light on hover
+   112→• hover-depth — Depth Lift: Element lifts with multi-layered shadows giving real 3D depth
+   113→• hover-press — Press Down: Element presses down into the surface like a physical button
+   114→• hover-slide-right — Slide Right: Element nudges to the right on hover with an arrow-like motion
+   115→• hover-bounce — Bounce: Element performs a springy bounce when hovered
+   116→
+   117→═══════════════════════════════════════════════════════════
+   118→CATEGORY: TEXT EFFECTS (25 effects)
+   119→═══════════════════════════════════════════════════════════
+   120→• text-gradient — Gradient Text: Text filled with a vibrant multi-color gradient
+   121→• text-neon-glow — Neon Glow Text: Text with a vivid neon glow effect, like a neon sign
+   122→• text-stroke — Text Stroke: Outlined text with a transparent fill for a modern look
+   123→• text-typing-cursor — Typing Cursor: A blinking cursor effect that follows text
+   124→• text-glitch — Glitch Text: A cyberpunk-inspired glitch effect with color channel splitting
+   125→• text-3d-shadow — 3D Text Shadow: Multiple layered shadows creating a 3D extrusion effect
+   126→• text-rainbow — Rainbow Text: Animated rainbow gradient that flows horizontally across text
+   127→• text-shimmer — Shimmer Text: A glossy shimmer sweeps across the text like a moving highlight
+   128→• text-gradient-shift — Gradient Shift: Text with a smoothly morphing multi-color gradient background
+   129→• text-blur-reveal — Blur Reveal: Text starts blurred and continuously focuses in and out
+   130→• text-wave — Wave Text: Letters ride up and down in a continuous sine wave
+   131→• text-bounce-letters — Bounce Letters: Each letter bounces independently in a staggered rhythm
+   132→• text-flip — Flip Text: Text continuously flips on its X axis like a rotating sign
+   133→• text-stretch — Stretch Text: Letter spacing expands and contracts for a stretching effect
+   134→• text-underline-draw — Underline Draw: An animated underline draws itself from left to right continuously
+   135→• text-highlight-marker — Marker Highlight: Text appears highlighted by a yellow marker stroke behind it
+   136→• text-shadow-long — Long Shadow: A long diagonal shadow extends from text for dramatic depth
+   137→• text-shadow-soft — Soft Shadow: A gentle blurred shadow gives text a soft floating appearance
+   138→• text-outline-offset — Outline Offset: Text with an outline drawn at an offset creating a ghosted echo
+   139→• text-holographic — Holographic: Text shifts through iridescent holographic colors with conic gradient
+   140→• text-chrome — Chrome Text: Metallic chrome finish with reflective gradient layers
+   141→• text-fire — Fire Text: Text glows with warm flickering fire colors
+   142→• text-reflection — Reflection: Text with a soft mirrored reflection beneath it
+   143→• text-mirror — Mirror Text: Text is split with a vertical mirrored duplicate side by side
+   144→• text-skew — Skew Text: Text is statically skewed into a fast italic-forward stance
+   145→
+   146→═══════════════════════════════════════════════════════════
+   147→CATEGORY: BACKGROUNDS (25 effects)
+   148→═══════════════════════════════════════════════════════════
+   149→• bg-animated-gradient — Animated Gradient: A slowly morphing gradient background with shifting colors
+   150→• bg-dot-pattern — Dot Grid Pattern: A clean dot grid pattern for structured backgrounds
+   151→• bg-mesh-gradient — Mesh Gradient: A modern mesh gradient with multiple blurred color spots
+   152→• bg-grid-lines — Grid Lines: Subtle intersecting grid lines for technical layouts
+   153→• bg-noise — Noise Texture: A subtle noise/grain texture overlay for visual depth
+   154→• bg-aurora — Aurora: An ethereal aurora borealis effect with flowing lights
+   155→• bg-stripes — Diagonal Stripes: Classic diagonal stripe pattern with configurable colors
+   156→• bg-diagonal-stripes — Animated Diagonal Stripes: Diagonal cyan stripes that scroll infinitely for a moving backdrop
+   157→• bg-checkerboard — Checkerboard: A two-tone checkerboard pattern built from layered linear gradients
+   158→• bg-hexagon — Hexagon Honeycomb: A tiled hexagon honeycomb outline pattern using an inline SVG
+   159→• bg-triangles — Triangle Mosaic: Four-color triangle mosaic pattern from layered 45deg gradients
+   160→• bg-zigzag — Zigzag: A sharp zigzag pattern generated from four opposing gradients
+   161→• bg-waves — Wave Pattern: Layered sine-like waves rendered from an inline SVG for smooth curves
+   162→• bg-concentric — Concentric Rings: Expanding concentric rings produced by a repeating radial gradient
+   163→• bg-radial-rays — Radial Rays: Thin radiating rays from a central point via repeating conic gradient
+   164→• bg-sunburst — Sunburst: A warm rotating sunburst formed from a conic gradient on a pseudo-element
+   165→• bg-plaid — Plaid: Tartan-style plaid built by crossing four repeating gradient layers
+   166→• bg-conic-gradient — Conic Gradient Hue Cycle: A vivid conic gradient whose hue continuously cycles around the wheel
+   167→• bg-starfield — Starfield: A deep-space starfield with multiple white pinpoints softly twinkling
+   168→• bg-gradient-sweep — Gradient Sweep: A colored gradient band sweeping left to right across a dark canvas
+   169→• bg-gradient-pulse — Gradient Pulse: Three radial color blobs that softly pulse on a dark base
+   170→• bg-lava-lamp — Lava Lamp: Two glowing blurred blobs drifting past each other like a lava lamp
+   171→• bg-plasma — Plasma: A flowing plasma field where three color blobs drift on a violet base
+   172→• bg-smoke — Smoke: Wispy white smoke clouds drifting across a dark backdrop
+   173→• bg-sunset — Sunset: A warm dusk-to-dawn sunset gradient that gently breathes vertically
+   174→
+   175→═══════════════════════════════════════════════════════════
+   176→CATEGORY: LOADERS (25 effects)
+   177→═══════════════════════════════════════════════════════════
+   178→• loader-spinner — Ring Spinner: A clean circular spinner with a trailing arc
+   179→• loader-dots — Bouncing Dots: Three dots bouncing in sequence for a playful loading state
+   180→• loader-bars — Equalizer Bars: Audio equalizer-style bars that animate at different speeds
+   181→• loader-orbit — Orbit: A satellite orbiting around a center point
+   182→• loader-pulse-ring — Pulse Ring: Expanding concentric rings that fade out
+   183→• loader-dual-ring — Dual Ring: A spinner with contrasting top and bottom arcs creating a dual-color ring
+   184→• loader-cube — 3D Cube Loader: A continuously rotating 3D cube built from six child span faces
+   185→• loader-folding-cube — Folding Cube: Four cube panels that fold inward and outward in sequence
+   186→• loader-chasing-dots — Chasing Dots: Two dots chasing each other around a circular orbit
+   187→• loader-fading-dots — Fading Dots: Five dots that pop in and fade out in a rolling wave
+   188→• loader-grid — Grid Pulse: A 3x3 grid of squares that ripple inward from the corners
+   189→• loader-ripple — Ripple: Two expanding circular ripples radiating outward from the center
+   190→• loader-square-spin — Square Spin: A single square that flips along both axes through 3D space
+   191→• loader-bouncing-grid — Bouncing Grid: A 3x3 grid of circular dots scaling in a diagonal wave
+   192→• loader-line-scale — Line Scale: Five vertical lines scaling vertically in a left-to-right wave
+   193→• loader-pacman — Pacman: A chomping pacman character next to three static dots
+   194→• loader-circle-fade — Circle Fade: Eight dots arranged in a circle with a faded tail that spins as a unit
+   195→• loader-circle-notch — Circle Notch: A half-circle notch that swings around with an asymmetric ease
+   196→• loader-three-bounce — Three Bounce: Three larger dots that scale and fade in a rolling bounce
+   197→• loader-progress-bar — Progress Bar: An indeterminate progress bar with a sweeping gradient fill
+   198→• loader-indeterminate — Indeterminate Bar: Material-style indeterminate bar with two overlapping sliding segments
+   199→• loader-skeleton — Skeleton Shimmer: A skeleton placeholder bar with a sweeping shimmer highlight
+   200→• loader-typing — Typing Indicator: Three dots bobbing up and down inside a chat-style pill bubble
+   201→• loader-whale — Whale Spout: A stylized whale bobbing with a pulsing water spout above it
+   202→• loader-clock — Clock: A clock face with hour and minute hands spinning at different speeds
+   203→
+   204→═══════════════════════════════════════════════════════════
+   205→CATEGORY: 3D & TRANSFORMS (20 effects)
+   206→═══════════════════════════════════════════════════════════
+   207→• card-flip — Card Flip: A full 3D card flip revealing content on the back
+   208→• perspective-tilt — Perspective Tilt: Dynamic perspective shift creating depth on interaction
+   209→• cube-rotate — Cube Rotate: A 3D cube that continuously rotates showing all faces
+   210→• depth-shadow — Depth Shadow Layers: Layered shadows creating a 3D depth extrusion effect
+   211→• flip-x — Flip X: Card that flips around the horizontal X axis on hover
+   212→• flip-y — Flip Y: Card that flips around the vertical Y axis on hover
+   213→• rotate-3d — Rotate 3D: Continuous rotation around a diagonal 3D axis using rotate3d
+   214→• book-open — Book Open: Two book covers that swing open like a book on hover
+   215→• door-open — Door Open: A door panel that swings open on its left hinge when hovered
+   216→• drawer-slide — Drawer Slide: A drawer that slides out and tilts forward in 3D on hover
+   217→• fold — Fold: A panel that folds flat backward along its top edge on hover
+   218→• accordion-3d — 3D Accordion: Two panels that fan outward in opposite 3D directions on hover
+   219→• 3d-book — 3D Book: A standing hardcover book with a spine and bookmark tilting on hover
+   220→• 3d-poster — 3D Poster: A floating poster card that tilts to the opposite angle on hover
+   221→• 3d-gallery — 3D Gallery: A two-panel 3D gallery frame that continuously rotates on the Y axis
+   222→• transform-origin-spin — Transform Origin Spin: A panel that spins around its top-left corner rather than its center
+   223→• scale-3d — Scale 3D: A panel that scales up and lifts toward the viewer on hover
+   224→• skew-3d — Skew 3D: A skewed panel that flips its skew and gains a Y rotation on hover
+   225→• rotate-x — Rotate X: A panel that continuously tumbles end-over-end around the X axis
+   226→• rotate-y — Rotate Y: A panel that continuously spins around its vertical Y axis
+   227→
+   228→═══════════════════════════════════════════════════════════
+   229→CATEGORY: BUTTON EFFECTS (25 effects)
+   230→═══════════════════════════════════════════════════════════
+   231→• btn-shine-sweep — Shine Sweep: A sweeping shine/highlight that glides across the button on hover
+   232→• btn-fill-slide — Fill Slide: Background fills up from the bottom on hover, inverting the text color
+   233→• btn-ripple — Ripple Click: A radial ripple emanates from the button center on click — pure CSS, no JS
+   234→• btn-border-draw — Border Draw: An animated border that draws itself around the button on hover
+   235→• btn-glow — Glow Button: A button with a soft pulsing emerald glow that blooms on hover
+   236→• btn-pulse — Pulse Button: Button rhythmically pulses in scale while hovered, drawing the eye
+   237→• btn-bounce — Bounce Button: Button bounces up and down playfully when hovered
+   238→• btn-press — 3D Press: Chunky 3D button that physically depresses on click with a solid shadow base
+   239→• btn-lift — Lift Button: Button gently lifts off the surface with an enlarged colored shadow on hover
+   240→• btn-slide-bg — Slide Background: Solid background panel slides in horizontally from the left on hover
+   241→• btn-flip — Flip Button: Button does a full 3D Y-axis flip on hover, swapping to a new color
+   242→• btn-3d-push — 3D Push: Lime button with a thick base that pushes down on hover and depresses on click
+   243→• btn-neon — Neon Button: Cyberpunk cyan neon outline with matching glow and text-shadow on hover
+   244→• btn-gradient — Animated Gradient: Button with a multi-color animated gradient background that flows continuously
+   245→• btn-outline-fill — Radial Fill: A pill-shaped outline button that fills from the center outward on hover
+   246→• btn-icon-slide — Icon Slide-In: An arrow icon slides in from the left and the button grows to make room on hover
+   247→• btn-arrow-slide — Arrow Slide: Trailing arrow nudges rightward as the gap grows on hover
+   248→• btn-border-glow — Border Glow: Dark button whose teal border ignites with an inner + outer glow on hover
+   249→• btn-shadow-push — Shadow Push: Retro hard-shadow button that pushes into its shadow on hover and click
+   250→• btn-liquid — Liquid Button: Pill button morphs to a squarer radius and wobbles like liquid on hover
+   251→• btn-morph — Morph Button: Button morphs into a circular pill and rotates slightly on hover
+   252→• btn-expand — Expand Button: Button grows in horizontal padding and letter-spacing on hover for emphasis
+   253→• btn-rotate — Rotate Button: Button tilts with a slight counter-rotation and scale-up on hover
+   254→• btn-skew — Skew Button: Button shears horizontally into a parallelogram on hover
+   255→• btn-sparkle — Sparkle Button: Dark starlit button with sparkles that twinkle into the corners on hover
+   256→
+   257→═══════════════════════════════════════════════════════════
+   258→CATEGORY: CARD EFFECTS (20 effects)
+   259→═══════════════════════════════════════════════════════════
+   260→• card-glassmorphism — Glassmorphism: Frosted glass card with backdrop blur, translucent layers and subtle border
+   261→• card-neon — Neon Card: Card with a pulsing emerald neon border that breathes in and out
+   262→• card-spotlight — Spotlight Card: A radial spotlight glow appears at the card center on hover
+   263→• card-gradient-border — Gradient Border: Card with a rainbow gradient border that rotates continuously around the edge
+   264→• card-hover-lift — Hover Lift Card: Card lifts off the surface with a deepening shadow and accent border on hover
+   265→• card-hover-zoom — Hover Zoom Card: Card scales up smoothly toward the viewer on hover
+   266→• card-hover-flip — Hover Flip Card: Card performs a full 3D Y-axis flip on hover, swapping its color theme
+   267→• card-hover-reveal — Reveal Banner Card: A colored banner slides up from the bottom of the card on hover
+   268→• card-hover-slide — Slide Card: Card slides to the right with a colored side-shadow on hover
+   269→• card-hover-fade — Fade Overlay Card: A colored gradient overlay fades in over the card on hover
+   270→• card-hover-glow — Glow Card: Card emits an emerald halo on hover with a brighter accent border
+   271→• card-hover-border — Border Draw Card: A solid accent border draws itself around the card on hover
+   272→• card-hover-color — Color Shift Card: Card background smoothly transitions to a vibrant gradient on hover
+   273→• card-hover-rotate — 3D Rotate Card: Card tilts in 3D space on hover using rotateX and rotateY for perspective
+   274→• card-hover-skew — Skew Card: Card shears diagonally and shifts to a pink-violet gradient on hover
+   275→• card-hover-push — Depth Push Card: Card pops forward in 3D while a shadow layer pushes back, creating depth
+   276→• card-hover-press — Press Card: Card squishes down and switches to emerald on hover, like a button press
+   277→• card-hover-swing — Swing Card: Card swings back and forth from its top edge on hover
+   278→• card-hover-wobble — Wobble Card: Card wobbles side-to-side with rotation on hover
+   279→• card-hover-tada — Tada Card: Card does an animated tada — scaling and wiggling with excitement on hover
+   280→
+   281→═══════════════════════════════════════════════════════════
+   282→CATEGORY: BORDERS (15 effects)
+   283→═══════════════════════════════════════════════════════════
+   284→• border-animated-dash — Animated Dash: Dashed emerald border whose color and glow pulse on a loop
+   285→• border-marching-ants — Marching Ants: Classic selection-rectangle marching ants — dashes march around the perimeter
+   286→• border-corner-brackets — Corner Brackets: Four cyan corner brackets frame the box like a camera viewfinder
+   287→• border-clip-path — Clip-Path Border: Angled notched corners created purely with clip-path and a gradient fill
+   288→• border-gradient-animated — Animated Gradient Border: A rotating rainbow gradient ring that flows around the box continuously
+   289→• border-neon-pulse — Neon Pulse Border: Pink neon border with a synchronized inner and outer glow that pulses
+   290→• border-torn-paper — Torn Paper: Ragged torn-paper edge created with a jagged clip-path polygon
+   291→• border-sticker — Sticker Border: Thick white border with a drop shadow and slight tilt — like a sticker
+   292→• border-ribbon — Ribbon Banner: Banner ribbon with a downward notch at the bottom-center
+   293→• border-banner — Pennant Banner: Pennant-shaped banner with a triangular notch cut from the right edge
+   294→• border-frame — Decorative Frame: Ornate amber double-line frame with an outer outline and inner accent border
+   295→• border-polaroid — Polaroid Frame: Classic instant-photo polaroid frame with extra-thick bottom margin and tilt
+   296→• border-double-glow — Double Glow Ring: Two concentric emerald rings each with their own glow halo
+   297→• border-dashed-draw — Dashed Draw: A violet dashed border that draws itself around the box on hover
+   298→• border-inset-glow — Inset Glow: Dark box with a cyan glow that radiates inward from the border edges
+   299→
+   300→═══════════════════════════════════════════════════════════
+   301→CATEGORY: FILTERS (15 effects)
+   302→═══════════════════════════════════════════════════════════
+   303→• filter-vintage — Vintage Filter: A warm vintage photo filter with sepia, reduced saturation and slight contrast drop
+   304→• filter-cinematic — Cinematic Filter: Teal & orange cinematic color grade with boosted contrast and saturation
+   305→• filter-dramatic — Dramatic Filter: High-contrast dramatic grade with deepened shadows and punched saturation
+   306→• filter-dreamy — Dreamy Filter: Soft dreamy haze with a slight blur, lifted brightness and gentle saturation
+   307→• filter-glitch — Glitch Filter: Animated hue-rotate glitch that cycles colors in stepped jumps
+   308→• filter-duotone — Duotone Filter: Two-tone color wash produced by stacking grayscale, sepia and hue rotation
+   309→• filter-halftone — Halftone Filter: Comic-book halftone dot pattern layered over a vibrant gradient with contrast boost
+   310→• filter-emboss — Emboss Filter: Emossed metal look via grayscale plus opposing drop-shadows for fake depth
+   311→• filter-blur-focus — Blur To Focus: Cinematic rack-focus animation that breathes from heavy blur to tack sharp
+   312→• filter-grayscale-hover — Grayscale Hover: Starts desaturated and bursts back to full color with smooth transition on hover
+   313→• filter-sepia — Sepia Filter: Strong sepia wash that turns any scene into an old photograph
+   314→• filter-hue-rotate — Hue Rotate Loop: Continuously rotates hue through the entire color wheel on a vivid gradient
+   315→• filter-invert — Invert Filter: Full color invert paired with a 180° hue-rotate for a believable negative
+   316→• filter-saturate — Hyper Saturate: Pushes saturation to 3× for an over-the-top punchy, acid-bright look
+   317→• filter-contrast — Extreme Contrast: Cranks contrast past 2× to crush shadows and highlights for graphic punch
+   318→
+   319→═══════════════════════════════════════════════════════════
+   320→CATEGORY: FORMS & INPUTS (10 effects)
+   321→═══════════════════════════════════════════════════════════
+   322→• form-focus-glow — Focus Glow Input: Email-style input that lights up with an emerald halo and reveal-dot on focus/hover
+   323→• form-label-float — Floating Label: Label that sits centered like a placeholder, then floats up small and green on focus
+   324→• form-placeholder-shimmer — Shimmer Placeholder: Placeholder text with a sweeping highlight that flows left-to-right forever
+   325→• form-error-shake — Error Shake: Red-bordered invalid input that jitters side-to-side with a warning glyph
+   326→• form-success-check — Success Checkmark: Green validated field with an animated checkmark that pops in with a spring
+   327→• form-toggle-switch — Toggle Switch: iOS-style toggle with a spring-loaded knob that slides and turns green when on
+   328→• form-checkbox-custom — Custom Checkbox: Squared checkbox border that springs a checkmark into view on render
+   329→• form-radio-custom — Custom Radio: Circular radio with an inner dot that pulses softly to draw the eye
+   330→• form-search-expand — Search Expand: Compact search icon that smoothly widens into a full search field on hover
+   331→• form-underline-draw — Underline Draw: Borderless input with a gradient underline that draws across on focus
+   332→
+   333→═══════════════════════════════════════════════════════════
+   334→CATEGORY: NAVIGATION (10 effects)
+   335→═══════════════════════════════════════════════════════════
+   336→• nav-menu-slide — Menu Slide: Menu row that slides up and out while a green arrow-led replacement slides in from below
+   337→• nav-menu-fade — Menu Fade Scale: Menu crossfades and scales out while a highlighted copy scales in
+   338→• nav-menu-scale — Menu Scale: Whole menu scales up slightly with letter-spacing widening and an inner glow ring
+   339→• nav-accordion — Accordion Menu: Collapsed menu header that expands downward to reveal sub-items on hover
+   340→• nav-tabs-underline — Tabs Underline: Three-tab row with a green gradient underline that slides between them on a loop
+   341→• nav-breadcrumb — Breadcrumb Path: Chevron-separated breadcrumb with a moving accent underline tracking the trail
+   342→• nav-pagination — Pagination Pulse: Numbered pagination with a ring marker that steps through each page on a loop
+   343→• nav-stepper — Stepper Progress: Four-step progress indicator with a glowing dot traversing the connecting line
+   344→• nav-progress-indicator — Progress Dots: Carousel-style dots where each dot lights up green in sequence
+   345→• nav-dropdown — Dropdown Reveal: Trigger that expands a panel of menu items downward with a stagger on hover
+   346→
+   347→═══════════════════════════════════════════════════════════
+   348→CATEGORY: SCROLL EFFECTS (12 effects)
+   349→═══════════════════════════════════════════════════════════
+   350→• scroll-reveal-up — Scroll Reveal Up: Element slides up and fades in when scrolled into view via the .is-visible toggle pattern
+   351→• scroll-reveal-left — Scroll Reveal Left: Element slides in from the left and fades — loops to demo the reveal motion
+   352→• scroll-reveal-right — Scroll Reveal Right: Element slides in from the right and fades — loops to demo the reveal motion
+   353→• scroll-reveal-scale — Scroll Reveal Scale: Element scales up from 0.6 and fades in — loops to demo the scroll-reveal motion
+   354→• scroll-reveal-rotate — Scroll Reveal Rotate: Element rotates from -15deg and fades in — loops to demo the scroll-reveal motion
+   355→• scroll-progress-bar — Scroll Progress Bar: A horizontal progress bar that fills based on scroll position — animates 0 to 100% to demo
+   356→• scroll-indicator — Scroll Indicator: A bouncing scroll-down mouse indicator with an animated wheel and arrow
+   357→• scroll-parallax-slow — Scroll Parallax Slow: Parallax layer that drifts slower than the scroll — blobs float across a grid backdrop
+   358→• scroll-sticky-header — Scroll Sticky Header: Header that sticks and shrinks on scroll — animates between expanded and compact states
+   359→• scroll-fade-out — Scroll Fade Out: Element fades and drifts upward as it scrolls out of view — loops to demo the exit motion
+   360→• scroll-zoom-in — Scroll Zoom In: Element zooms in as it scrolls into view — scales between 0.85 and 1.05 to demo the zoom
+   361→• scroll-horizontal — Scroll Horizontal Indicator: Horizontal scroll indicator with an animated knob sliding along a track
+   362→
+   363→═══════════════════════════════════════════════════════════
+   364→CATEGORY: CURSOR EFFECTS (12 effects)
+   365→═══════════════════════════════════════════════════════════
+   366→• cursor-glow-dot — Cursor Glow Dot: A glowing dot that orbits in a soft path — simulates a glow following the cursor
+   367→• cursor-trail — Cursor Trail: A comet-like dot with a fading multi-dot trail that sweeps across the canvas
+   368→• cursor-blob — Cursor Blob: A morphing gradient blob that drifts and reshapes — follows the cursor with elastic motion
+   369→• cursor-ring — Cursor Ring: An expanding ring with a small dot — simulates a cursor ring follower that pulses outward
+   370→• cursor-ripple — Cursor Ripple: Concentric ripples expanding outward from the cursor position — two staggered rings
+   371→• cursor-spotlight — Cursor Spotlight: A soft radial spotlight that follows the cursor — drifts across a dark surface with a glowing core
+   372→• cursor-magnetic — Cursor Magnetic: Magnetic attraction effect — the label gravitates toward the cursor and scales on hover
+   373→• cursor-crosshair — Cursor Crosshair: An animated crosshair with glowing horizontal and vertical bars that drift together
+   374→• cursor-arrow-bounce — Cursor Arrow Bounce: A bouncing pointer arrow with a pulsing target ring — simulates an active cursor indicator
+   375→• cursor-pulse-ring — Cursor Pulse Ring: A pulsing ring that orbits with a glowing dot — simulates a sonar pulse around the cursor
+   376→• cursor-gradient-trail — Cursor Gradient Trail: A spinning gradient arc with an orbiting dot — simulates a colorful trail swirling around the cursor
+   377→• cursor-firefly — Cursor Firefly: Two firefly-like glowing dots drifting and pulsing in brightness — a calming cursor companion
+   378→
+   379→═══════════════════════════════════════════════════════════
+   380→CATEGORY: PAGE TRANSITIONS (12 effects)
+   381→═══════════════════════════════════════════════════════════
+   382→• page-fade — Page Fade: Full-page fade transition — the incoming page fades in and out in a soft loop
+   383→• page-slide-left — Page Slide Left: Page slides in from the right and exits to the left — a horizontal pan transition loop
+   384→• page-slide-up — Page Slide Up: Page slides up from the bottom and exits through the top — a vertical pan transition loop
+   385→• page-curtain — Page Curtain: Curtain reveal transition — two dark panels slide apart to unveil the colorful page beneath
+   386→• page-zoom — Page Zoom: Page zooms in from the center and scales out — a focal zoom transition loop
+   387→• page-flip — Page Flip: 3D page flip transition — the page rotates on its vertical axis like a turning book page
+   388→• page-circle-reveal — Page Circle Reveal: Circular mask reveal transition — the page appears through an expanding circle clip-path
+   389→• page-mask-reveal — Page Mask Reveal: Mask wipe transition — the page is revealed left-to-right via an animated inset clip-path
+   390→• page-cube — Page Cube: 3D cube rotation transition — the page face rotates in 3D space with perspective depth
+   391→• page-liquid — Page Liquid: Liquid morph transition — the page dissolves through morphing border-radius and blur
+   392→• page-shutter — Page Shutter: Camera shutter transition — a dark iris expands from center to cover, then reopens
+   393→• page-dissolve — Page Dissolve: Dissolve transition — the page blurs and fades out, then re-condenses into view
+   394→
+   395→═══════════════════════════════════════════════════════════
+   396→CATEGORY: GLASS & MODERN UI (12 effects)
+   397→═══════════════════════════════════════════════════════════
+   398→• glass-frosted — Frosted Glass: Classic frosted glass with backdrop blur, saturation boost and soft inner highlight
+   399→• glass-acrylic — Acrylic Glass: Acrylic material effect — more opaque than frosted glass with subtle blur and texture
+   400→• glass-liquid — Liquid Glass: Liquid glass with refraction-like distortion that subtly shifts hue and blur over time
+   401→• glass-neumorphism — Neumorphism: Soft neumorphic raised surface with dual light and dark shadows for a 3D pop-out look
+   402→• glass-neumorphism-inset — Neumorphism Inset: Inset neumorphic surface that appears pressed into the background with concave shadows
+   403→• glass-claymorphism — Claymorphism: Claymorphism with rounded puffy edges, layered highlights and soft inner shadow for a clay look
+   404→• glass-transparent-blur — Transparent Blur: Minimal transparent blur overlay with the lightest touch of frost and a hairline border
+   405→• glass-frosted-dark — Dark Frosted Glass: Dark mode frosted glass with deep translucent background and subtle top-edge highlight
+   406→• glass-vibrant — Vibrant Glass: Vibrant colored glass with saturation boost and a purple-pink gradient tint
+   407→• glass-border-glow — Glowing Border Glass: Glass panel with an animated glowing border that pulses between cyan and blue
+   408→• glass-noise-overlay — Noise Texture Glass: Frosted glass with a subtle SVG noise texture overlaid for a granular, tactile feel
+   409→• glass-reflection — Light Reflection Glass: Glass panel with a diagonal light reflection streak that sweeps across periodically
+   410→
+   411→═══════════════════════════════════════════════════════════
+   412→CATEGORY: PARTICLES (12 effects)
+   413→═══════════════════════════════════════════════════════════
+   414→• particles-floating-dots — Floating Dots: Glowing blue dots rising upward at staggered intervals over a deep night gradient
+   415→• particles-confetti-burst — Confetti Burst: Colorful confetti pieces bursting outward from center in all directions, rotating as they fly
+   416→• particles-snow-fall — Snow Fall: Gentle snowflakes of varying sizes drifting downward with a subtle horizontal sway
+   417→• particles-rain — Rain Streaks: Thin diagonal rain streaks falling fast over a moody stormy night sky
+   418→• particles-fireflies — Fireflies: Glowing yellow-green fireflies drifting slowly and pulsing in brightness over a dark forest
+   419→• particles-bubbles — Rising Bubbles: Translucent bubbles with highlight glints rising upward through a teal aquatic gradient
+   420→• particles-sparks — Sparks: Bright orange-yellow sparks shooting upward and fading like embers from a fire
+   421→• particles-dust — Dust Motes: Tiny translucent dust motes drifting slowly in random directions through warm light
+   422→• particles-stars-twinkle — Twinkling Stars: Stars of varying sizes twinkling in place with scale and brightness pulses across a night sky
+   423→• particles-fire — Fire Embers: Glowing fire embers rising and flickering from the bottom with warm orange-red hues
+   424→• particles-smoke — Rising Smoke: Large translucent gray smoke wisps rising and expanding as they fade into the air
+   425→• particles-orbiting — Orbiting Particles: Colored particles orbiting a central glowing core at different radii and speeds
+   426→
+   427→═══════════════════════════════════════════════════════════
+   428→CATEGORY: MICROINTERACTIONS (12 effects)
+   429→═══════════════════════════════════════════════════════════
+   430→• micro-toggle-switch — Toggle Switch: Animated toggle switch that slides its knob and shifts background color on a loop
+   431→• micro-checkbox-check — Checkbox Check: Checkbox with an animated checkmark that draws in and erases on a repeating loop
+   432→• micro-radio-select — Radio Select: Radio button with an inner dot that pulses and emits a ripple ring to show selection
+   433→• micro-accordion-expand — Accordion Expand: Accordion section that expands to reveal content and collapses again in a smooth height loop
+   434→• micro-tooltip-appear — Tooltip Appear: Tooltip that fades and slides in above a trigger element, then disappears on a loop
+   435→• micro-toast-slide — Toast Slide: Success toast notification that slides in from the top, holds, then slides back out on a loop
+   436→• micro-dropdown-reveal — Dropdown Reveal: Dropdown menu that scales open to reveal stacked menu items, then closes on a loop
+   437→• micro-modal-scale — Modal Scale: Modal dialog that scales in with a spring overshoot over a fading backdrop, then dismisses
+   438→• micro-fab-expand — FAB Expand: Floating action button that rotates into an X while a menu item expands out beside it
+   439→• micro-progress-fill — Progress Fill: Progress bar that fills from zero to full with a shimmering gradient sweep, then repeats
+   440→• micro-tab-indicator — Tab Indicator: Tab bar with an underline indicator that slides between three tab positions on a loop
+   441→• micro-badge-bounce — Badge Bounce: Notification badge with a number that bounces in with spring overshoot on a repeating loop
+   442→
+   443→═══════════════════════════════════════════════════════════
+   444→CATEGORY: VISUAL EFFECTS (28 effects)
+   445→═══════════════════════════════════════════════════════════
+   446→• visual-border-beam — Border Beam: A glowing beam of light traveling around the element border
+   447→• visual-aurora-border — Aurora Border: Animated aurora-colored gradient border that shifts through neon hues
+   448→• visual-inner-glow — Inner Glow: Pulsing inset glow that radiates from inside the surface
+   449→• visual-shadow-pulse — Shadow Pulse: A colored drop shadow that breathes in and out around the element
+   450→• visual-holographic — Holographic Surface: Iridescent holographic surface with shifting rainbow gradient and shine sweep
+   451→• visual-metallic — Brushed Metallic: Brushed metal surface with vertical highlights and a sweeping light streak
+   452→• visual-chrome — Chrome Surface: Mirror-like chrome reflective surface with multi-stop gradients and moving highlight
+   453→• visual-liquid-fill — Liquid Fill: Animated liquid waves rising and falling inside the container
+   454→• visual-gradient-text-animated — Animated Gradient Text: A flowing rainbow gradient that animates continuously through the text
+   455→• visual-gradient-mesh — Animated Mesh Gradient: A flowing multi-color mesh gradient that drifts organically across the surface
+   456→• visual-image-distortion — Distortion Wobble: A wobble distortion effect using blur and skew transforms that ripples the surface
+   457→• visual-pixelate — Pixelate Grid: A pixel grid overlay that breathes between chunky and fine resolutions
+   458→• visual-frost-blur — Frost Blur: Heavy frosted glass overlay with crystalline pattern over a vibrant surface
+   459→• visual-spotlight-follow — Spotlight Follow: A radial spotlight that moves across the dark surface in a looping path
+   460→• visual-mask-fade — Mask Fade Reveal: A mask-image gradient that sweeps vertically to reveal and fade the surface
+   461→• visual-blend-mode-overlay — Blend Mode Overlay: Two colored blobs with screen blend mode that drift across a dark surface
+   462→• visual-backdrop-blur-heavy — Heavy Backdrop Blur: An extreme backdrop-blur frosted panel floating over a vivid gradient
+   463→• visual-color-shift — Color Shift: A smooth continuous hue-rotation cycling through the entire color spectrum
+   464→• visual-hue-rotate-loop — Hue Rotate Loop: A vivid rainbow conic gradient with continuous hue rotation looping forever
+   465→• visual-saturation-pulse — Saturation Pulse: Filter saturation pulsing between grayscale and oversaturated on a gradient
+   466→• visual-glass-reflection — Glass Reflection: Frosted glass surface with a diagonal light reflection sweeping across it
+   467→• visual-noise-overlay — Animated Noise Overlay: Animated film grain / fractal noise overlay that jitters across the surface
+   468→• visual-shimmer-sweep — Shimmer Sweep: A diagonal shimmering light band sweeping across a dark surface
+   469→• visual-iridescent — Iridescent Shimmer: Iridescent rainbow shimmer with rotating conic gradient and overlay stripes
+   470→• visual-neon-pulse — Neon Pulse: A neon pink glow that pulses in and out around the border
+   471→• visual-glitch-distort — Glitch Distort: RGB channel-split glitch with stepped clip-path distortion layers
+   472→• visual-prism — Prism Split: A rotating triangular prism splitting white light into a rainbow conic spectrum
+   473→• visual-foil — Foil Mylar: Crinkled metallic foil / mylar balloon effect with diagonal creases and moving shine
+   474→
+   475→═══════════════════════════════════════════════════════════
+   476→CATEGORY: MISCELLANEOUS (15 effects)
+   477→═══════════════════════════════════════════════════════════
+   478→• misc-confetti — Confetti Rain: Falling confetti dots in five colors drifting down at different speeds over a dark base
+   479→• misc-snow — Snowfall: White snowflakes of varying sizes drifting downward with subtle horizontal sway
+   480→• misc-rain — Rain Streaks: Diagonal light-blue rain streaks falling fast over a stormy night sky
+   481→• misc-bubbles — Rising Bubbles: Translucent bubbles floating upward through a teal aquatic gradient
+   482→• misc-fireflies — Fireflies: Glowing yellow-green fireflies drifting and pulsing in brightness over a dark forest
+   483→• misc-sparkles — Twinkling Sparkles: Star-like sparkles scattered across a deep night sky, twinkling in unison
+   484→• misc-fireworks — Fireworks Burst: Two exploding firework bursts that scale out and fade repeatedly in red and gold
+   485→• misc-ripple-click — Ripple Click: Material-style ripple that explodes outward from center on hover
+   486→• misc-wave — Wave Lines: Horizontal wave bands drifting sideways to mimic an audio equalizer or ocean surface
+   487→• misc-pulse-ring-expand — Pulse Ring Expand: Central dot emitting concentric rings that scale outward and fade like sonar pings
+   488→• misc-shimmer-overlay — Shimmer Overlay: Diagonal light sweep traveling across a colored panel like a loading shimmer
+   489→• misc-scan-line — Scan Line: CRT-style scan grid with a bright horizontal beam sweeping vertically
+   490→• misc-hologram — Hologram Card: Shifting iridescent rainbow surface with scan-lines and glowing label
+   491→• misc-vhs-effect — VHS Tracking: Retro VHS look with scanlines, a moving tracking distortion band and a PLAY badge
+   492→• misc-typewriter — Typewriter: Text that types itself out character by character with a blinking cursor

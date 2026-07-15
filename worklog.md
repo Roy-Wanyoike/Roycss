@@ -1488,3 +1488,121 @@ NEEDS WORK FOR FULL PRODUCTION:
 ⚠️ No migration assistant (Bootstrap/Tailwind → RoyCSS)
 ⚠️ Some bleeding-edge effects need @supports fallbacks verified
 ⚠️ No SSR testing across frameworks
+
+---
+
+## Batch 16 — Future-Trending CSS Effects (Task 16-A)
+
+**File**: `/home/z/my-project/src/lib/effects-batch-16.ts`
+**Effects added**: 30 (brings total to 735)
+**Lines**: 1,624
+**Keyframes**: 52 (all prefixed `roy-b16-`)
+**Classes**: 30 (all prefixed `.roycss-`)
+**TypeScript**: passes `tsc --noEmit` with zero errors
+
+### Category breakdown
+- visual (12): spatial-depth-card, liquid-glass-refract, kinetic-morph-blob, holographic-shift, aurora-flow-2, prism-light-split, adaptive-time-color, bento-depth-grid, glass-liquid-fill, mesh-gradient-flow, chromatic-aberration, metallic-flow
+- animations (8): spring-physics-bounce, gravity-drop, momentum-scroll, kinetic-typography, morph-shape-cycle, parallax-depth-scroll, elastic-snap, fluid-motion
+- text (4): text-variable-font-morph, text-kinetic-wave, text-scramble-decode, text-gradient-mesh
+- backgrounds (3): bg-neural-network, bg-quantum-field, bg-flowing-silk
+- hover (3): hover-magnetic-pull-2, hover-glass-shatter, hover-liquid-morph
+
+### Modern CSS features showcased
+- **@property** registered custom props (animated angles, hue values, numbers)
+- **OKLCH** color space throughout for perceptually uniform gradients
+- **color-mix(in oklch, ...)** for arithmetic color blending
+- **CSS nesting-ready** patterns (independent pseudo-elements)
+- **Logical properties** (inline-size, block-size, inset-block-*, inset-inline-*)
+- **animation-timeline: view()** for scroll-driven parallax (parallax-depth-scroll)
+- **container-type: inline-size** on bento-depth-grid
+- **offset-path / offset-distance** for fluid motion trajectories
+- **backdrop-filter + hue-rotate** for liquid glass refraction
+- **font-variation-settings** animated across wght/wdth/opsz axes
+- **clip-path polygon morphing** for shape cycling and glass shatter
+- **mix-blend-mode** (screen, overlay, soft-light, multiply) for layered compositing
+
+### Verification
+- 30 unique effect IDs (verified zero collision with batches 1-15's 705 effects)
+- 52 unique `roy-b16-` keyframe names (no overlap with `roy-b1-`..`roy-b15-` prefixes)
+- 30 `.roycss-` classes (prefixed per project convention)
+- Each `cssCode` is fully self-contained (no external dependencies beyond optional font families)
+- All keyframe names start with `roy-b16-`; all class names start with `.roycss-`
+
+### Next actions
+- Import `effectsBatch16` into the central effects registry so it appears in the demo UI
+- Verify scroll-driven animation (`animation-timeline: view()`) renders correctly in browsers without `@supports` fallback (currently progressive enhancement only)
+- Consider bundling a Variable Font (e.g., Inter or Roboto Flex) so kinetic-typography and text-variable-font-morph render at full fidelity even when the host page lacks the font
+
+---
+
+## Batch 17 — Future-Trending Effects (Task 17-A)
+
+**File created**: `/home/z/my-project/src/lib/effects-batch-17.ts`
+**Total effects**: 30 (all unique, verified zero duplicates with existing 700)
+**File size**: 46,119 bytes / 1,527 lines
+**TypeScript compilation**: Clean, zero errors
+
+### Effect Inventory
+
+**Visual (10) — Immersive surfaces:**
+1. `bio-luminescent-glow` — Deep-sea creature glow with animated OKLCH hues (@property)
+2. `neu-soft-raised` — Neumorphism 2.0 multi-layer raised surface
+3. `neu-soft-inset` — Neumorphism 2.0 pressed concave inset
+4. `glass-tinted-depth` — Glassmorphism 3.0 with tinted hue, blur, saturate, depth shadow
+5. `cyber-grid-perspective` — Synthwave perspective scrolling grid floor
+6. `holographic-iridescent` — Rotating OKLCH conic gradient iridescent surface (added to fill #6 gap)
+7. `ambient-breathing-surface` — Living surface that breathes via @property --roy-breath
+8. `oklch-gamut-ring` — OKLCH color gamut visualization ring with masked gradient
+9. `tactile-press-depth` — Realistic depressible button with :active depth
+10. `organic-noise-grain` — Animated SVG turbulence noise with color shift
+
+**Animations (8) — Next-gen motion:**
+11. `leaf-fall-spiral` — Leaf spiraling down with rotate+translate+scale
+12. `water-ripple-expand` — Concentric ripples expanding outward
+13. `wind-sway-organic` — Stalk swaying with asymmetric wind motion
+14. `scroll-cinematic-zoom` — Scroll-driven dolly zoom using animation-timeline: view() + @supports fallback
+15. `ambient-pulse-live` — Broadcasting pulse rings with breathing core
+16. `haptic-bump` — Vibration-feel micro-bump animation
+17. `data-flow-stream` — Marching dashes data flow with neon glow
+18. `breathing-gradient` — Gradient that breathes via position + hue-rotate
+
+**Backgrounds (5) — Immersive backgrounds:**
+19. `bg-synthwave-sun` — Retro sun with masked scanlines on lower half
+20. `bg-bioluminescent-deep` — Deep sea with twinkling organisms via box-shadow
+21. `bg-neural-mesh` — Neural network nodes with synchronized pulse glow
+22. `bg-cyber-rain` — Cyberpunk neon rain streaks with magenta horizon glow
+23. `bg-aurora-borealis-2` — Multi-layer aurora with hue rotation and star dots
+
+**Text (4) — Future typography:**
+24. `text-cyber-glitch-2` — RGB split + scanline overlay + chromatic jumps (uses data-text)
+25. `text-neon-flicker-2` — Realistic neon with flicker + electric buzz
+26. `text-typewriter-stream` — Endless streaming typewriter with blinking caret
+27. `text-depth-layered` — 3D extruded text with 13 layered shadows + gradient clip
+
+**Microinteractions (3) — Tactile feedback:**
+28. `micro-satisfying-check` — Checkmark with pop + draw + overshoot
+29. `micro-toggle-liquid` — Toggle that morphs border-radius like liquid
+30. `micro-pull-refresh` — Pull-to-refresh with elastic resistance + spinner
+
+### Modern CSS features used
+- `@property` for animatable custom properties (bio-luminescent-glow, ambient-breathing, holographic, breathing-gradient)
+- `color-mix(in oklch, ...)` for dynamic tinting (glass-tinted-depth)
+- OKLCH color space throughout for perceptual uniformity
+- `animation-timeline: view()` for scroll-driven animation (scroll-cinematic-zoom) with `@supports` fallback
+- CSS logical properties (`inset-block-start`, `inset-inline-start`, `border-inline-end`, etc.)
+- `backdrop-filter: blur() saturate()` for glassmorphism
+- `mask` / `-webkit-mask` for ring and scanline effects
+- `clip-path: inset()` for glitch slicing
+- SVG turbulence noise via data URI for organic grain
+- `background-clip: text` with gradient for holographic text fill
+- CSS nesting-style multi-shadow layering for neumorphism depth
+
+### Verification
+- 30/30 effects with unique IDs ✓
+- 0 duplicates vs existing 700 effects ✓
+- All keyframes prefixed `roy-` (36 unique keyframes) ✓
+- All classes `.roycss-{id}` ✓
+- TypeScript compilation passes with no errors ✓
+- Each cssCode is complete and self-contained ✓
+
+**Library total**: 700 → 730 effects

@@ -3,7 +3,6 @@ import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import "./roycss.css";
 import "./roymotion.css";
-import { allEffectCSS } from "@/lib/roycss-effects";
 import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = Geist({
@@ -64,8 +63,6 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} antialiased bg-background text-foreground`}
       >
-        {/* Effect CSS — server-side injected for no FOUC */}
-        <style dangerouslySetInnerHTML={{ __html: allEffectCSS }} />
         {children}
         <Toaster />
       </body>

@@ -60,6 +60,7 @@ import { EffectDetailDialog } from "@/components/roycss/effect-detail-dialog";
 import { FavoritesSheet } from "@/components/roycss/favorites-sheet";
 import { ScrollToTop } from "@/components/roycss/scroll-to-top";
 import { SectionScrollbar } from "@/components/roycss/section-scrollbar";
+import { DynamicEffectCSS } from "@/components/roycss/dynamic-effect-css";
 import { RoyCSSLogo, RoyCSSHeroLogo } from "@/components/roycss/roycss-logo";
 import { GetStarted } from "@/components/roycss/get-started";
 import { RoyMotionShowcase } from "@/components/roycss/roymotion-showcase";
@@ -641,6 +642,9 @@ export default function RoyCSSPage() {
 
       {/* Scroll progress bar */}
       <ScrollProgress />
+
+      {/* Dynamic effect CSS — loads only visible effects' CSS for performance */}
+      <DynamicEffectCSS />
 
       {/* ─── Hero ──────────────────────────────────────────── */}
       <header className="relative overflow-hidden pt-10 pb-8 sm:pt-16 sm:pb-12">

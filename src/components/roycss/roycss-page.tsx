@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo, useCallback, useSyncExternalStore } from "react";
 import {
   Search,
   Sun,
@@ -43,6 +43,9 @@ import {
   ToggleRight,
   Heart,
   HelpCircle,
+  Pause,
+  ChevronLeft,
+  Repeat,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -55,7 +58,7 @@ import {
   type EffectCategory,
   type CSSEffect,
 } from "@/lib/roycss-effects";
-import { EffectCard } from "@/components/roycss/effect-card";
+import { EffectCard, LivePreview } from "@/components/roycss/effect-card";
 import { EffectDetailDialog } from "@/components/roycss/effect-detail-dialog";
 import { FavoritesSheet } from "@/components/roycss/favorites-sheet";
 import { ScrollToTop } from "@/components/roycss/scroll-to-top";
@@ -67,7 +70,7 @@ import { RoyCSSLogo, RoyCSSHeroLogo } from "@/components/roycss/roycss-logo";
 import { GetStarted } from "@/components/roycss/get-started";
 import { RoyMotionShowcase } from "@/components/roycss/roymotion-showcase";
 import { useFavorites } from "@/hooks/use-favorites";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
   ScrollReveal,
   StaggerGroup,
@@ -465,122 +468,253 @@ function TiltStage({ children }: { children: React.ReactNode }) {
   );
 }
 
-/* ─── Featured Showcase Card ────────────────────────────────── */
-function FeaturedShowcase() {
-  const featuredEffects = effects.filter((e) =>
-    ["text-gradient", "card-glassmorphism", "bg-aurora", "btn-shine-sweep"].includes(e.id)
+/* ─── Featured Carousel — rotates through ALL effects ──────── */
+const FEATURED_BATCH_SIZE = 4;
+const FEATURED_INTERVAL_MS = 6000; // 6s per batch → full cycle ≈ 19 min for 760 effects
+
+/* useSyncExternalStore helpers for prefers-reduced-motion.
+   This is the React-idiomatic way to read an external system (the OS
+   accessibility setting) without setState-in-useEffect. */
+function subscribeReducedMotion(callback: () => void) {
+  const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+  mq.addEventListener("change", callback);
+  return () => mq.removeEventListener("change", callback);
+}
+function getReducedMotionSnapshot() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+function getReducedMotionSSR() {
+  return false; // Server: assume no reduced motion
+}
+
+function FeaturedCarousel({ onSelectEffect }: { onSelectEffect: (effect: CSSEffect) => void }) {
+  const [batchIndex, setBatchIndex] = useState(0);
+  // userPaused: null = user hasn't toggled → follow prefers-reduced-motion;
+  //             true/false = user explicitly paused or played.
+  const [userPaused, setUserPaused] = useState<boolean | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const prefersReducedMotion = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotionSnapshot,
+    getReducedMotionSSR,
   );
 
+  // Derive isPaused: user's explicit choice wins, otherwise follow OS setting.
+  const isPaused = userPaused ?? prefersReducedMotion;
+
+  const totalBatches = Math.ceil(effects.length / FEATURED_BATCH_SIZE);
+
+  const currentBatch = useMemo(() => {
+    const start = batchIndex * FEATURED_BATCH_SIZE;
+    return effects.slice(start, start + FEATURED_BATCH_SIZE);
+  }, [batchIndex]);
+
+  // Inject CSS for previous (exit anim) + current + next (preload) batches.
+  // This keeps the <style> tag small (~12 effects ≈ 12 KB) while ensuring
+  // seamless transitions and no FOUC when the batch advances.
+  const cssToInject = useMemo(() => {
+    const ids = new Set<string>();
+    for (let offset = -FEATURED_BATCH_SIZE; offset < FEATURED_BATCH_SIZE * 2; offset++) {
+      const raw = batchIndex * FEATURED_BATCH_SIZE + offset;
+      const idx = ((raw % effects.length) + effects.length) % effects.length;
+      ids.add(effects[idx].id);
+    }
+    return effects.filter((e) => ids.has(e.id)).map((e) => e.cssCode).join("\n\n");
+  }, [batchIndex]);
+
+  const goToPrev = useCallback(() => {
+    setBatchIndex((prev) => (prev - 1 + totalBatches) % totalBatches);
+  }, [totalBatches]);
+  const goToNext = useCallback(() => {
+    setBatchIndex((prev) => (prev + 1) % totalBatches);
+  }, [totalBatches]);
+
+  const startIdx = batchIndex * FEATURED_BATCH_SIZE + 1;
+  const endIdx = Math.min((batchIndex + 1) * FEATURED_BATCH_SIZE, effects.length);
+  const progressPaused = isPaused || isHovered;
+
   return (
-    <section className="py-16 sm:py-20 relative overflow-hidden">
+    <section
+      className="py-16 sm:py-20 relative overflow-hidden"
+      aria-label="Featured effects carousel"
+    >
       <div className="absolute inset-0 -z-10 bg-grid opacity-20 roycss-fade-mask-b" />
+
+      {/* Scoped CSS for the effects currently on stage (and neighbours) */}
+      <style dangerouslySetInnerHTML={{ __html: cssToInject }} />
+      {/* Keyframes for the progress bar (doubles as the auto-advance timer) */}
+      <style>{`@keyframes roy-featured-progress { from { width: 0% } to { width: 100% } }`}</style>
+
       <div className="container mx-auto px-4 sm:px-6">
         <SectionHeading
-          eyebrow="Hand-picked highlights"
+          eyebrow="Rotating showcase"
           title="Featured Effects"
-          subtitle="A curated selection of our most-loved effects, showcased in larger interactive demos."
+          subtitle={`Every effect gets its moment in the spotlight — cycling through all ${effects.length} in an infinite loop.`}
         />
 
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-5">
-          {featuredEffects.map((effect, i) => (
-            <ScrollReveal key={effect.id} delay={i * 0.1}>
-              <TiltCard
-                maxTilt={8}
-                className="rounded-3xl border border-border bg-card overflow-hidden h-full hover:border-primary/40 transition-colors"
-              >
-                <div className="grid sm:grid-cols-2">
-                  {/* Preview */}
-                  <div className="relative h-56 sm:h-full min-h-[14rem] bg-gradient-to-br from-muted/60 to-muted/20 flex items-center justify-center p-6">
-                    <FeaturedPreview id={effect.id} name={effect.name} />
-                  </div>
-                  {/* Info */}
-                  <div className="p-6 flex flex-col">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Badge variant="secondary" className="text-xs bg-primary/10 text-primary border-primary/20">
-                        <Star className="size-2.5 mr-1 fill-primary" />
-                        Featured
-                      </Badge>
-                      <Badge variant="outline" className="text-xs capitalize">
-                        {categoryMeta[effect.category].label}
-                      </Badge>
-                    </div>
-                    <h3 className="font-display text-xl font-bold text-foreground">
-                      {effect.name}
-                    </h3>
-                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">
-                      {effect.description}
-                    </p>
-                    <div className="mt-4 flex flex-wrap gap-1.5">
-                      {effect.tags.slice(0, 4).map((tag) => (
-                        <Badge
-                          key={tag}
-                          variant="secondary"
-                          className="text-xs px-1.5 py-0 bg-muted/80 text-muted-foreground"
-                        >
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                    <button
-                      onClick={() =>
-                        document.querySelector("#effects")?.scrollIntoView({ behavior: "smooth" })
-                      }
-                      className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:gap-2.5 transition-all cursor-pointer w-fit"
-                    >
-                      View all effects
-                      <ArrowRight className="size-3.5" />
-                    </button>
-                  </div>
-                </div>
-              </TiltCard>
-            </ScrollReveal>
-          ))}
+        {/* Controls + progress */}
+        <div
+          className="mt-8 flex items-center justify-between gap-3 flex-wrap"
+          role="toolbar"
+          aria-label="Featured carousel controls"
+        >
+          {/* Prev / counter / Next */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={goToPrev}
+              aria-label="Previous batch of effects"
+              className="flex items-center justify-center size-9 rounded-lg bg-muted/80 border border-border/50 text-muted-foreground hover:text-foreground hover:bg-muted transition-all cursor-pointer"
+            >
+              <ChevronLeft className="size-4" />
+            </button>
+            <span className="text-xs font-mono text-muted-foreground tabular-nums whitespace-nowrap px-1">
+              {startIdx}–{endIdx} <span className="opacity-50">/</span> {effects.length}
+            </span>
+            <button
+              onClick={goToNext}
+              aria-label="Next batch of effects"
+              className="flex items-center justify-center size-9 rounded-lg bg-muted/80 border border-border/50 text-muted-foreground hover:text-foreground hover:bg-muted transition-all cursor-pointer"
+            >
+              <ChevronRight className="size-4" />
+            </button>
+          </div>
+
+          {/* Progress bar — its CSS animation IS the auto-advance timer.
+              onAnimationEnd fires exactly when the bar fills, which advances
+              the batch. Pausing (button or hover) freezes both bar + timer. */}
+          <div
+            className="flex-1 min-w-[6rem] max-w-xs h-1.5 bg-muted rounded-full overflow-hidden"
+            aria-hidden="true"
+          >
+            <div
+              key={batchIndex}
+              className="h-full bg-primary rounded-full"
+              style={{
+                animation: `roy-featured-progress ${FEATURED_INTERVAL_MS}ms linear forwards`,
+                animationPlayState: progressPaused ? "paused" : "running",
+              }}
+              onAnimationEnd={() => {
+                if (!progressPaused) goToNext();
+              }}
+            />
+          </div>
+
+          {/* Play/Pause + loop badge */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setUserPaused(!isPaused)}
+              aria-label={isPaused ? "Play carousel" : "Pause carousel"}
+              aria-pressed={isPaused}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-muted/80 border border-border/50 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-all cursor-pointer"
+            >
+              {isPaused ? <Play className="size-3.5" /> : <Pause className="size-3.5" />}
+              {isPaused ? "Play" : "Pause"}
+            </button>
+            <span className="hidden sm:flex items-center gap-1 text-xs text-muted-foreground">
+              <Repeat className="size-3" />
+              Infinite loop
+            </span>
+          </div>
+        </div>
+
+        {/* Featured cards grid — pauses on hover so users can linger */}
+        <div
+          className="mt-8"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          aria-live="polite"
+          aria-label={`Showing effects ${startIdx} through ${endIdx} of ${effects.length}`}
+        >
+          <AnimatePresence mode="wait">
+            <div key={batchIndex} className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {currentBatch.map((effect, i) => (
+                <motion.div
+                  key={effect.id}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -16 }}
+                  transition={{ duration: 0.4, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <FeaturedCard effect={effect} onSelect={onSelectEffect} />
+                </motion.div>
+              ))}
+            </div>
+          </AnimatePresence>
         </div>
       </div>
     </section>
   );
 }
 
-/* ─── Featured Preview (larger, more dramatic) ──────────────── */
-function FeaturedPreview({ id, name }: { id: string; name: string }) {
-  if (id === "text-gradient") {
-    return (
-      <div className="text-center">
-        <div className="roycss-animated-gradient-text font-display text-4xl sm:text-5xl font-bold">
-          RoyCSS
+/* ─── Single Featured Card (clickable, opens detail dialog) ── */
+function FeaturedCard({
+  effect,
+  onSelect,
+}: {
+  effect: CSSEffect;
+  onSelect: (effect: CSSEffect) => void;
+}) {
+  const handleKey = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onSelect(effect);
+    }
+  };
+
+  return (
+    <TiltCard
+      maxTilt={6}
+      className="rounded-3xl border border-border bg-card overflow-hidden h-full hover:border-primary/40 transition-colors cursor-pointer"
+    >
+      <div
+        className="grid sm:grid-cols-2 h-full outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-3xl"
+        onClick={() => onSelect(effect)}
+        role="button"
+        tabIndex={0}
+        onKeyDown={handleKey}
+        aria-label={`View details for ${effect.name}`}
+      >
+        {/* Preview */}
+        <div className="relative h-56 sm:h-full min-h-[14rem] bg-gradient-to-br from-muted/60 to-muted/20 flex items-center justify-center p-6">
+          <LivePreview effect={effect} />
         </div>
-        <p className="mt-2 text-xs text-muted-foreground">Animated gradient text</p>
+        {/* Info */}
+        <div className="p-6 flex flex-col">
+          <div className="flex items-center gap-2 mb-2">
+            <Badge variant="secondary" className="text-xs bg-primary/10 text-primary border-primary/20">
+              <Star className="size-2.5 mr-1 fill-primary" />
+              Featured
+            </Badge>
+            <Badge variant="outline" className="text-xs capitalize">
+              {categoryMeta[effect.category].label}
+            </Badge>
+          </div>
+          <h3 className="font-display text-xl font-bold text-foreground">
+            {effect.name}
+          </h3>
+          <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1 line-clamp-3">
+            {effect.description}
+          </p>
+          <div className="mt-4 flex flex-wrap gap-1.5">
+            {effect.tags.slice(0, 4).map((tag) => (
+              <Badge
+                key={tag}
+                variant="secondary"
+                className="text-xs px-1.5 py-0 bg-muted/80 text-muted-foreground"
+              >
+                {tag}
+              </Badge>
+            ))}
+          </div>
+          <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary">
+            View details
+            <ArrowRight className="size-3.5" />
+          </span>
+        </div>
       </div>
-    );
-  }
-  if (id === "card-glassmorphism") {
-    return (
-      <div className="roycss-card-glass p-6 w-full max-w-xs">
-        <div className="size-10 rounded-xl bg-primary/30 mb-3" />
-        <div className="h-3 w-3/4 rounded-full bg-foreground/20 mb-2" />
-        <div className="h-3 w-1/2 rounded-full bg-foreground/10" />
-        <p className="mt-3 text-xs text-muted-foreground">{name}</p>
-      </div>
-    );
-  }
-  if (id === "bg-aurora") {
-    return (
-      <div className="roycss-bg-aurora w-full h-full rounded-2xl flex items-center justify-center min-h-[12rem]">
-        <span className="font-display font-bold text-2xl text-white/90 relative z-10">Aurora</span>
-      </div>
-    );
-  }
-  if (id === "btn-shine-sweep") {
-    return (
-      <div className="flex flex-col items-center gap-3">
-        <button className="roycss-btn-shine bg-primary text-primary-foreground px-8 py-3 rounded-xl font-medium shadow-lg shadow-primary/20">
-          Shine Sweep
-        </button>
-        <p className="text-xs text-muted-foreground">Hover the button</p>
-      </div>
-    );
-  }
-  return null;
+    </TiltCard>
+  );
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -845,8 +979,13 @@ export default function RoyCSSPage() {
         </Marquee>
       </div>
 
-      {/* ─── Featured Showcase ──────────────────────────────── */}
-      <FeaturedShowcase />
+      {/* ─── Featured Carousel (rotates through ALL effects) ─── */}
+      <FeaturedCarousel
+        onSelectEffect={(e) => {
+          setSelectedEffect(e);
+          setDialogOpen(true);
+        }}
+      />
 
       <Separator className="opacity-50" />
 

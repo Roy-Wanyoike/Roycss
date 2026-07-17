@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
    Handles all preview types: box, text, button, loader, card, background
    ═══════════════════════════════════════════════════════════════ */
 
-function LivePreview({ effect }: { effect: CSSEffect }) {
+export function LivePreview({ effect }: { effect: CSSEffect }) {
   const className = `roycss-${effect.id}`;
   const previewText = effect.previewText || "RoyCSS";
 

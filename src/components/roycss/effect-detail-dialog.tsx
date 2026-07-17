@@ -376,10 +376,21 @@ export function EffectDetailDialog({
   onOpenChange,
   onSelectEffect,
 }: EffectDetailDialogProps) {
-  const [editedCSS, setEditedCSS] = useState(effect.cssCode);
+  const [editedCSS, setEditedCSS] = useState(effect?.cssCode ?? "");
   const [copied, setCopied] = useState(false);
   const [bgType, setBgType] = useState<"dark" | "light" | "gradient">("dark");
   const [isEditing, setIsEditing] = useState(false);
+  // Track the previous effect ID so we can reset editable state when the
+  // user switches to a different effect (React "adjust state during render"
+  // pattern — avoids useEffect + setState which triggers cascading renders).
+  const [prevEffectId, setPrevEffectId] = useState(effect?.id);
+
+  if (effect && effect.id !== prevEffectId) {
+    setPrevEffectId(effect.id);
+    setEditedCSS(effect.cssCode);
+    setIsEditing(false);
+    setBgType("dark");
+  }
 
   const handleCopy = async () => {
     try {
@@ -394,6 +405,13 @@ export function EffectDetailDialog({
   const handleReset = () => {
     if (effect) setEditedCSS(effect.cssCode);
   };
+
+  // Called by ColorCustomizer whenever the recolored CSS changes.
+  // We always pass the ORIGINAL effect CSS to the customizer (not editedCSS)
+  // so OKLCH hue rotations don't compound on each successive color pick.
+  const handleApplyColor = useCallback((recoloredCss: string) => {
+    setEditedCSS(recoloredCss);
+  }, []);
 
   if (!effect) return null;
 
@@ -488,9 +506,17 @@ export function EffectDetailDialog({
 
             <Separator className="opacity-50" />
 
-            {/* Color Customizer */}
+            {/* Color Customizer
+                key={effect.id} forces a clean remount when switching effects,
+                resetting the selected color so each effect starts unmodified.
+                cssCode={effect.cssCode} (the ORIGINAL) ensures rotations never
+                compound — every color pick rotates fresh from the source hue. */}
             <div className="p-4">
-              <ColorCustomizer cssCode={editedCSS} />
+              <ColorCustomizer
+                key={effect.id}
+                cssCode={effect.cssCode}
+                onApply={handleApplyColor}
+              />
             </div>
 
             <Separator className="opacity-50" />

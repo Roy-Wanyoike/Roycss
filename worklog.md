@@ -1606,3 +1606,43 @@ NEEDS WORK FOR FULL PRODUCTION:
 - Each cssCode is complete and self-contained ✓
 
 **Library total**: 700 → 730 effects
+
+---
+Task ID: color-fix-and-featured-carousel
+Agent: main
+Task: Fix Customize Color not working in effect detail dialog + build rotating FeaturedCarousel that cycles through ALL effects in an infinite loop
+
+Work Log:
+- Root-caused ColorCustomizer issue: `onApply` callback was never passed from EffectDetailDialog, so recolored CSS was computed but discarded. Also `cssCode={editedCSS}` caused compounding rotations on each successive color pick.
+- Fixed effect-detail-dialog.tsx:
+  - Pass `onApply={handleApplyColor}` (useCallback-wrapped) to ColorCustomizer
+  - Pass `cssCode={effect.cssCode}` (ORIGINAL) instead of `editedCSS` so OKLCH hue rotations never compound
+  - Add `key={effect.id}` on ColorCustomizer to reset color state when switching effects
+  - Fixed null-safety: `useState(effect?.cssCode ?? "")` (was crashing when effect was null)
+  - Used React "adjust state during render" pattern (prevEffectId tracking) to reset editedCSS/isEditing/bgType on effect switch — avoids the `react-hooks/set-state-in-effect` lint rule
+- Exported `LivePreview` from effect-card.tsx for reuse in featured carousel
+- Built FeaturedCarousel replacing the old static FeaturedShowcase (which only showed 4 hardcoded effects):
+  - Cycles through ALL 760 effects in batches of 4 (190 batches, ~19 min full cycle)
+  - 6-second auto-advance driven by CSS animation `onAnimationEnd` (progress bar IS the timer — no setTimeout needed, perfectly synced)
+  - Crossfade transitions via AnimatePresence mode="wait" with staggered card entrance
+  - Prev/Next manual navigation buttons
+  - Play/Pause toggle (user choice overrides prefers-reduced-motion)
+  - Pause-on-hover so users can linger on an effect
+  - Respects prefers-reduced-motion via useSyncExternalStore (starts paused)
+  - Progress bar with animationPlayState pausing
+  - Counter: "1–4 / 760" tabular-nums display
+  - "Infinite loop" badge with Repeat icon
+  - Scoped CSS injection: only current + prev + next batch (~12 effects ≈ 12KB) for smooth transitions without FOUC
+  - Clicking a featured card opens the detail dialog (onSelectEffect prop)
+  - Keyboard accessible: role="button", tabIndex=0, Enter/Space activation, focus-visible ring
+  - ARIA: aria-label on section, toolbar role on controls, aria-live="polite" on card region, aria-pressed on Play/Pause
+- Added imports: useMemo, useCallback, useSyncExternalStore (React); AnimatePresence (framer-motion); Pause, ChevronLeft, Repeat (lucide-react); LivePreview (effect-card)
+- Lint: 0 errors, 0 warnings
+- Agent Browser verification:
+  - Color customizer: Applied Blue → OKLCH hue changed 162.48→244. Applied Violet → hue changed to 295 (not compounded). Both preview <style> and dialog code area show recolored CSS.
+  - Carousel: Clicked Next → batch advanced (Pulse Glow→Wobble). Auto-advance confirmed (batch changed after 6s). Pause → stayed on same batch 7s+. Play → resumed advancing. All 4 cards render with LivePreview.
+
+Stage Summary:
+- Customize Color now works end-to-end: pick preset → OKLCH hues rotate → preview updates live → code area shows recolored CSS → Copy saves recolored version
+- Featured Effects now rotates through ALL 760 effects in an infinite loop with full controls (Prev/Next/Play/Pause/hover-pause) and accessibility support
+- Key architectural decisions: (1) always rotate from original effect.cssCode not editedCSS to prevent compounding; (2) use CSS animation onAnimationEnd as the timer source for perfect progress-bar/timer sync; (3) useSyncExternalStore for prefers-reduced-motion to avoid setState-in-effect lint violation

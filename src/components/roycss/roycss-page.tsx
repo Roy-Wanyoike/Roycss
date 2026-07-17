@@ -69,6 +69,7 @@ import { AnimationPauser } from "@/components/roycss/animation-pauser";
 import { RoyCSSLogo, RoyCSSHeroLogo } from "@/components/roycss/roycss-logo";
 import { GetStarted } from "@/components/roycss/get-started";
 import { RoyMotionShowcase } from "@/components/roycss/roymotion-showcase";
+import { PlatformEcosystem } from "@/components/roycss/platform-ecosystem";
 import { useFavorites } from "@/hooks/use-favorites";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
@@ -842,6 +843,12 @@ export default function RoyCSSPage() {
                   Effects
                 </button>
                 <button
+                  onClick={() => document.querySelector("#platform")?.scrollIntoView({ behavior: "smooth" })}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer"
+                >
+                  Platform
+                </button>
+                <button
                   onClick={() => document.querySelector("#faq")?.scrollIntoView({ behavior: "smooth" })}
                   className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer"
                 >
@@ -1214,6 +1221,11 @@ export default function RoyCSSPage() {
 
       {/* ─── RoyMotion Showcase ─────────────────────────────── */}
       <RoyMotionShowcase />
+
+      <Separator className="opacity-50" />
+
+      {/* ─── Platform Ecosystem (15-product vision) ─────────── */}
+      <PlatformEcosystem />
 
       <Separator className="opacity-50" />
 

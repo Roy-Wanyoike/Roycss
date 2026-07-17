@@ -1646,3 +1646,36 @@ Stage Summary:
 - Customize Color now works end-to-end: pick preset → OKLCH hues rotate → preview updates live → code area shows recolored CSS → Copy saves recolored version
 - Featured Effects now rotates through ALL 760 effects in an infinite loop with full controls (Prev/Next/Play/Pause/hover-pause) and accessibility support
 - Key architectural decisions: (1) always rotate from original effect.cssCode not editedCSS to prevent compounding; (2) use CSS animation onAnimationEnd as the timer source for perfect progress-bar/timer sync; (3) useSyncExternalStore for prefers-reduced-motion to avoid setState-in-effect lint violation
+
+---
+Task ID: platform-ecosystem
+Agent: main
+Task: Build the RoyCSS Platform Ecosystem section — the user's 15-product vision (framework → platform → ecosystem) rendered as a major interactive section on the site
+
+Work Log:
+- Created /src/components/roycss/platform-ecosystem.tsx — a comprehensive 4-part section:
+  1. VisionDiagram: Free foundation (Framework/Components/CLI/Docs) → paid ecosystem (Pro/Studio/Cloud/Marketplace/AI/Enterprise/Academy) with the "framework is the entry point" quote
+  2. 15 Platform Products: filterable by tier (All/Free/Pro/Enterprise/Cloud), each card expandable to show included features, with star priority ratings (⭐⭐⭐⭐⭐), revenue model badges, and tier-colored icons
+  3. 10 Unique Differentiators: Live Utility Search, CSS Doctor, Component Genome, CSS Playground with AI, Design Diff, Utility Explorer, AI Migration, Pattern Library, CSS Benchmark, Community Challenges
+  4. 4 Sponsor Tiers: Community, Gold, Platinum, Technology Partner — each with perk lists and tier-colored icons
+  5. Competitive Moat: closing ShineBorder statement with 4 animated counters (15 products, 10 differentiators, 760 effects, 4 sponsor tiers)
+- Product data covers all 15 from the vision: Marketplace, Studio, Pro Components, RoyAI, CLI Premium, Inspector, Themes, Icons, Academy, Enterprise, DevTools, Motion Library, Accessibility Suite, Cloud, Analytics
+- Tier filter uses role="tablist"/role="tab" with aria-selected; AnimatePresence mode="popLayout" for smooth filter transitions; key={activeTier} on StaggerGroup for re-stagger on filter change
+- Product cards: role="button", tabIndex=0, aria-expanded, keyboard activation (Enter/Space), hover lift, expand/collapse with AnimatePresence
+- Used existing design system: SectionHeading, ScrollReveal, StaggerGroup, AnimatedCounter, Floating, ShineBorder, staggerContainer/staggerItem — all from motion-primitives.tsx
+- Added "Platform" nav link in the header between "Effects" and "FAQ" — scrolls to #platform
+- Wired into roycss-page.tsx between RoyMotion Showcase and Documentation section
+- Lint: 0 errors, 0 warnings
+- Agent Browser verification:
+  - Section renders with all 15 products, 10 differentiators, 4 sponsor tiers, and competitive moat
+  - Tier filter works: All=15, Pro=11, Enterprise=3, Cloud=1 — clicking Enterprise shows only 3 enterprise products
+  - Product cards expand: clicked RoyCSS Enterprise → shows all 8 features (Priority support, Migration, Training, SLA, Private registry, Custom themes, Security reviews, LTS)
+  - Nav "Platform" link scrolls to section
+  - 0 console errors, 0 page errors (only pre-existing harmless parallax position warning)
+  - Note: AnimatedCounter shows 0 in headless browser (IntersectionObserver timing limitation) but animates correctly for real users on scroll — confirmed same behavior on existing hero counters
+
+Stage Summary:
+- The user's complete platform vision (15 products, 10 differentiators, 4 sponsor tiers, competitive moat) is now a live, interactive section on the RoyCSS site
+- Visitors can filter products by tier, expand cards to see included features, and read the strategic narrative
+- The section reinforces the positioning: "The framework is the entry point, not the entire product"
+- Reusable PlatformProduct/Differentiator/SponsorTier data structures make it easy to add/remove products as the roadmap evolves

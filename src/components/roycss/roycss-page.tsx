@@ -61,6 +61,8 @@ import { FavoritesSheet } from "@/components/roycss/favorites-sheet";
 import { ScrollToTop } from "@/components/roycss/scroll-to-top";
 import { SectionScrollbar } from "@/components/roycss/section-scrollbar";
 import { DynamicEffectCSS } from "@/components/roycss/dynamic-effect-css";
+import { VirtualScrollGrid } from "@/components/roycss/virtual-scroll-grid";
+import { AnimationPauser } from "@/components/roycss/animation-pauser";
 import { RoyCSSLogo, RoyCSSHeroLogo } from "@/components/roycss/roycss-logo";
 import { GetStarted } from "@/components/roycss/get-started";
 import { RoyMotionShowcase } from "@/components/roycss/roymotion-showcase";
@@ -141,7 +143,7 @@ function ThemeToggle() {
   return (
     <button
       onClick={() => setDark(!dark)}
-      className="flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-foreground transition-all hover:-translate-y-0.5 cursor-pointer"
+      className="flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-foreground transition-all hover:-translate-y-0.5 cursor-pointer"
       aria-label="Toggle theme"
     >
       {dark ? <Sun className="size-4" /> : <Moon className="size-4" />}
@@ -646,6 +648,9 @@ export default function RoyCSSPage() {
       {/* Dynamic effect CSS — loads only visible effects' CSS for performance */}
       <DynamicEffectCSS />
 
+      {/* Pause offscreen animations for performance */}
+      <AnimationPauser />
+
       {/* ─── Hero ──────────────────────────────────────────── */}
       <header className="relative overflow-hidden pt-10 pb-8 sm:pt-16 sm:pb-12">
         {/* Background effects */}
@@ -712,7 +717,7 @@ export default function RoyCSSPage() {
               <ThemeToggle />
               <button
                 onClick={() => setFavoritesOpen(true)}
-                className="relative flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-rose-500 transition-all hover:-translate-y-0.5 cursor-pointer"
+                className="relative flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-rose-500 transition-all hover:-translate-y-0.5 cursor-pointer"
                 aria-label="Open favorites"
               >
                 <Heart className={`size-4 ${count > 0 ? "fill-rose-500/20 text-rose-500" : ""}`} />
@@ -730,7 +735,7 @@ export default function RoyCSSPage() {
                 href="https://github.com/Roy-Wanyoike"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-foreground transition-all hover:-translate-y-0.5"
+                className="flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-foreground transition-all hover:-translate-y-0.5"
                 aria-label="GitHub"
               >
                 <Github className="size-4" />
@@ -948,23 +953,17 @@ export default function RoyCSSPage() {
             </p>
           </ScrollReveal>
 
-          {/* Effects Grid with stagger reveal */}
+          {/* Effects Grid — virtualized for performance */}
           {filteredEffects.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5" style={{ contain: 'layout style' }}>
-              {filteredEffects.map((effect) => (
-                <EffectCard
-                  key={effect.id}
-                  effect={effect}
-                  index={0}
-                  isFavorite={isFavorite(effect.id)}
-                  onToggleFavorite={toggleFavorite}
-                  onClick={(e) => {
-                    setSelectedEffect(e);
-                    setDialogOpen(true);
-                  }}
-                />
-              ))}
-            </div>
+            <VirtualScrollGrid
+              effects={filteredEffects}
+              isFavorite={isFavorite}
+              onToggleFavorite={toggleFavorite}
+              onCardClick={(e) => {
+                setSelectedEffect(e);
+                setDialogOpen(true);
+              }}
+            />
           ) : (
             <motion.div
               initial={{ opacity: 0 }}

@@ -311,7 +311,7 @@ const faqEntries: Array<{ question: string; answer: string }> = [
   {
     question: "What's the bundle size?",
     answer:
-      "240KB for all 700 effects. Each effect averages ~300 bytes. Use the CLI to tree-shake and include only what you need.",
+      "240KB for all 760 effects. Each effect averages ~300 bytes. Use the CLI to tree-shake and include only what you need.",
   },
   {
     question: "Does it support dark mode?",
@@ -786,7 +786,7 @@ export default function RoyCSSPage() {
                     }
                     className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20 h-11 px-6"
                   >
-                    Browse 700 Effects
+                    Browse 760 Effects
                     <ChevronDown className="size-4 ml-1" />
                   </Button>
                 </MagneticButton>
@@ -866,7 +866,7 @@ export default function RoyCSSPage() {
                 type="text"
                 role="searchbox"
                 aria-label="Search CSS effects by name, tag, or category"
-                placeholder="Search 700 effects... (⌘K)"
+                placeholder="Search 760 effects... (⌘K)"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="pl-10 pr-14 h-11 rounded-xl glass bg-background/80 border-border/50 focus:border-primary/50"
@@ -1121,7 +1121,7 @@ export default function RoyCSSPage() {
               icon={History}
               title="Changelog"
               description="Track every release — new effects, breaking changes, deprecations, and bug fixes."
-              items={["v1.0 — 700 effects launch", "20 categories", "OKLCH color system", "RoyMotion animation system"]}
+              items={["v1.0 — 760 effects launch", "20 categories", "OKLCH color system", "RoyMotion animation system"]}
             />
             <DocCard
               icon={Rocket}

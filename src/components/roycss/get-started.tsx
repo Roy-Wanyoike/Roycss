@@ -74,13 +74,31 @@ function CopyChip({
   label?: string;
 }) {
   const [copied, setCopied] = useState(false);
+  const [failed, setFailed] = useState(false);
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
+      setFailed(false);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      /* noop */
+      // Fallback: use deprecated execCommand for non-HTTPS / older browsers
+      try {
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        setCopied(true);
+        setFailed(false);
+        setTimeout(() => setCopied(false), 2000);
+      } catch {
+        setFailed(true);
+        setTimeout(() => setFailed(false), 3000);
+      }
     }
   };
   return (
@@ -89,13 +107,15 @@ function CopyChip({
       onClick={handleCopy}
       aria-label={`Copy ${label}`}
       className={`shrink-0 flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${
-        copied
+        failed
+          ? "bg-rose-500/15 text-rose-500"
+          : copied
           ? "bg-emerald-500/15 text-emerald-500"
           : "bg-muted text-muted-foreground hover:text-foreground"
       }`}
     >
-      {copied ? <Check className="size-2.5" /> : <Copy className="size-2.5" />}
-      {copied ? "Copied" : label}
+      {failed ? <Copy className="size-2.5" /> : copied ? <Check className="size-2.5" /> : <Copy className="size-2.5" />}
+      {failed ? "Failed" : copied ? "Copied" : label}
     </button>
   );
 }
@@ -281,7 +301,7 @@ export function GetStarted() {
                     <CodeBlock title="init — scaffold RoyCSS in a project" icon={Rocket} code={`npx roycss init`} />
                     <CodeBlock title="search — find effects by keyword" icon={Search} code={`npx roycss search "glass card"\nnpx roycss search --category hover`} />
                     <CodeBlock title="add — copy an effect's CSS to your clipboard" icon={Plus} code={`npx roycss add btn-shine\nnpx roycss add text-gradient --copy`} />
-                    <CodeBlock title="list — browse all 700+ effects" icon={ListPlus} code={`npx roycss list\nnpx roycss list --category loaders --tag spinner`} />
+                    <CodeBlock title="list — browse all 760+ effects" icon={ListPlus} code={`npx roycss list\nnpx roycss list --category loaders --tag spinner`} />
                   </AccordionContent>
                 </>
               )}
@@ -296,7 +316,7 @@ export function GetStarted() {
                       index={5}
                       title="Install the VS Code snippets"
                       icon={FileCode2}
-                      hint="Type roycss- + Tab to insert any of the 700 effects instantly."
+                      hint="Type roycss- + Tab to insert any of the 760 effects instantly."
                     />
                   </AccordionTrigger>
                   <AccordionContent isOpen={isOpen}>

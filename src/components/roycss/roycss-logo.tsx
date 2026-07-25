@@ -317,7 +317,7 @@ function OrbitSparkle({
 }) {
   return (
     <motion.div
-      className="absolute top-1/2 left-1/2"
+      className="absolute top-1/2 left-1/2 pointer-events-none"
       animate={{ rotate: 360 }}
       transition={{
         duration,

@@ -48,6 +48,16 @@ export function VirtualScrollGrid({
     return () => observer.disconnect();
   }, [effects.length]);
 
+  // Listen for "load all cards" requests from nav buttons. When a user clicks
+  // a nav link to a section BELOW the effects grid, we must load all cards
+  // first to stabilize the document height — otherwise the lazy-loaded cards
+  // shift the target's position mid-smooth-scroll, causing overshoot.
+  useEffect(() => {
+    const handleLoadAll = () => setVisibleCount(effects.length);
+    window.addEventListener("roycss-load-all-cards", handleLoadAll);
+    return () => window.removeEventListener("roycss-load-all-cards", handleLoadAll);
+  }, [effects.length]);
+
   // Reset visible count when effects array changes (search/filter)
   // Using a key prop on the parent component to force remount is the cleanest pattern,
   // but since we can't control that here, we use a lazy reset via the sentinel observer

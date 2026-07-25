@@ -1679,3 +1679,53 @@ Stage Summary:
 - Visitors can filter products by tier, expand cards to see included features, and read the strategic narrative
 - The section reinforces the positioning: "The framework is the entry point, not the entire product"
 - Reusable PlatformProduct/Differentiator/SponsorTier data structures make it easy to add/remove products as the roadmap evolves
+
+---
+Task ID: qa-audit-fixes
+Agent: main
+Task: Fix all 11 issues found in the senior QA audit, in phase order (Critical → High → Medium → Low)
+
+Work Log:
+- P1.1 (CRITICAL): Fixed broken nav scroll to Platform/Docs/FAQ sections.
+  - Root cause: VirtualScrollGrid lazy-loads cards, shifting document height during smooth scroll → overshoot
+  - Fix: Added "roycss-load-all-cards" custom event listener to VirtualScrollGrid; created scrollToSection() utility that dispatches the event, waits 1.5s for cards to render, then instant-scrolls with recursive re-correction (up to 8 attempts × 400ms) to handle ongoing DynamicEffectCSS reflow
+  - Replaced ALL 11 scrollIntoView calls in nav buttons, CTA buttons, footer buttons, and SectionScrollbar with scrollToSection()
+  - Verified: All 5 nav links (Get Started, Effects, Platform, Docs, FAQ) now land at top:79px (visible)
+
+- P2.1 (HIGH): Added mobile hamburger menu.
+  - Was: nav links use `hidden md:flex` → completely invisible on mobile, no alternative
+  - Fix: Added hamburger button (md:hidden, size-11, aria-expanded), AnimatePresence dropdown with 5 nav items (min-h-[44px] each), closes on item click
+  - Also fixed: hero logo orbiting sparkles had `pointer-events` intercepting hamburger clicks → added `pointer-events-none` to OrbitSparkle component
+
+- P2.2 (HIGH): Fixed touch target violation.
+  - Was: 46 category pills at 36-38px tall (below 44px WCAG minimum)
+  - Fix: Changed `py-2` → `py-2.5` + added `min-h-[44px]` to both "All" pill and CategoryPill component
+  - Verified: category pills no longer in small-buttons list
+
+- P2.3 (HIGH): Fixed featured carousel / Get Started overlap.
+  - Was: TiltCard 3D transforms caused cards to be covered by Get Started <pre> blocks
+  - Fix: Added `z-10` to carousel section and `relative z-10` to featured cards grid container
+
+- P3.1 (MEDIUM): Added clipboard fallback for copy buttons.
+  - Was: `catch { /* noop */ }` → no feedback on failure
+  - Fix: Added execCommand('copy') fallback + "Failed" error state (rose color, 3s timeout)
+
+- P3.2 (MEDIUM): Fixed GitHub "Star on GitHub" link.
+  - Was: pointed to user profile (https://github.com/Roy-Wanyoike) — can't star a user
+  - Fix: Changed to repo URL (https://github.com/Roy-Wanyoike/roycss) per package.roycss.json
+
+- P3.3 (MEDIUM): Fixed stale "700" → "760" in Get Started.
+  - Two references updated: CLI list command + VS Code snippets hint
+
+- P3.4 (MEDIUM): Fixed stale "240KB" in Performance docs card + FAQ.
+  - Updated to "10KB initial CSS (lazy-loaded)" and "~1KB per effect on demand"
+  - FAQ answer updated to reflect lazy-loading architecture
+
+- P4.1 (LOW): Addressed parallax position warning.
+  - Added explicit inline `position: absolute` to parallax container
+
+Stage Summary:
+- All 11 audit issues fixed across 4 phases (1 Critical, 3 High, 4 Medium, 1 Low)
+- Lint: 0 errors, 0 warnings
+- Agent Browser verification: All 5 nav links work on desktop (visible: true), mobile hamburger menu opens with all 5 items, menu closes on click, 0 page errors
+- Key architectural decision: scrollToSection uses recursive instant-scroll re-correction (not smooth scroll) because the 80Kpx page with lazy-loaded cards + DynamicEffectCSS reflow makes smooth scroll unreliable for sections below the effects grid

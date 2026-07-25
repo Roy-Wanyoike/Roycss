@@ -11,6 +11,7 @@ import {
   Zap,
   Package,
   X,
+  Menu,
   ChevronDown,
   ChevronRight,
   CheckCircle2,
@@ -90,6 +91,52 @@ import {
   staggerContainer,
   staggerItem,
 } from "@/components/roycss/motion-primitives";
+
+/* ─── scrollToSection utility ────────────────────────────────
+   Navigating to sections BELOW the effects grid is tricky because
+   VirtualScrollGrid lazy-loads cards, shifting the document height
+   during smooth scroll. This function:
+   1. If the target is below the effects grid, dispatches a "load all
+      cards" event to stabilize the height.
+   2. Waits two animation frames for React to flush + DOM to render.
+   3. Then smooth-scrolls to the target.
+   For targets above the grid, it scrolls directly (no height shift). */
+function scrollToSection(id: string) {
+  const target = document.querySelector(id) as HTMLElement | null;
+  if (!target) return;
+
+  const effectsEl = document.querySelector("#effects");
+  const isBelowGrid =
+    effectsEl &&
+    target.compareDocumentPosition(effectsEl) &
+      Node.DOCUMENT_POSITION_PRECEDING;
+
+  if (isBelowGrid) {
+    // Sections below the effects grid need all cards loaded first,
+    // because lazy-loading shifts the document height. We:
+    // 1. Dispatch "load all cards" to the VirtualScrollGrid
+    // 2. Wait 1.5s for React to render 760 cards
+    // 3. Instant-scroll to the target, then keep re-correcting every
+    //    400ms until the target is within 50px of the viewport top.
+    //    This handles the ongoing layout shift from DynamicEffectCSS
+    //    injecting styles (page height grows for ~2s after load-all).
+    window.dispatchEvent(new CustomEvent("roycss-load-all-cards"));
+    setTimeout(() => {
+      let attempts = 0;
+      const doScroll = () => {
+        target.scrollIntoView({ behavior: "auto", block: "start" });
+        attempts++;
+        const rect = target.getBoundingClientRect();
+        if (Math.abs(rect.top) > 50 && attempts < 8) {
+          setTimeout(doScroll, 400);
+        }
+      };
+      doScroll();
+    }, 1500);
+  } else {
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
 
 /* ─── Icon map for categories ───────────────────────────────── */
 const catIcons: Record<EffectCategory, React.ComponentType<{ className?: string }>> = {
@@ -172,7 +219,7 @@ function CategoryPill({
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all whitespace-nowrap cursor-pointer ${
+      className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all whitespace-nowrap cursor-pointer min-h-[44px] ${
         active
           ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
           : "glass text-muted-foreground hover:text-foreground hover:border-primary/30"
@@ -318,7 +365,7 @@ const faqEntries: Array<{ question: string; answer: string }> = [
   {
     question: "What's the bundle size?",
     answer:
-      "240KB for all 760 effects. Each effect averages ~300 bytes. Use the CLI to tree-shake and include only what you need.",
+      "Only ~10KB of CSS loads initially — the rest is lazy-loaded on demand as you scroll. Each effect averages ~1KB. Use the CLI to tree-shake and include only what you need.",
   },
   {
     question: "Does it support dark mode?",
@@ -537,7 +584,7 @@ function FeaturedCarousel({ onSelectEffect }: { onSelectEffect: (effect: CSSEffe
 
   return (
     <section
-      className="py-16 sm:py-20 relative overflow-hidden"
+      className="py-16 sm:py-20 relative overflow-hidden z-10"
       aria-label="Featured effects carousel"
     >
       <div className="absolute inset-0 -z-10 bg-grid opacity-20 roycss-fade-mask-b" />
@@ -621,7 +668,7 @@ function FeaturedCarousel({ onSelectEffect }: { onSelectEffect: (effect: CSSEffe
 
         {/* Featured cards grid — pauses on hover so users can linger */}
         <div
-          className="mt-8"
+          className="mt-8 relative z-10"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           aria-live="polite"
@@ -727,6 +774,7 @@ export default function RoyCSSPage() {
   const [selectedEffect, setSelectedEffect] = useState<CSSEffect | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [favoritesOpen, setFavoritesOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -789,7 +837,7 @@ export default function RoyCSSPage() {
       {/* ─── Hero ──────────────────────────────────────────── */}
       <header className="relative overflow-hidden pt-10 pb-8 sm:pt-16 sm:pb-12">
         {/* Background effects */}
-        <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute inset-0 -z-10 overflow-hidden" style={{ position: "absolute" }}>
           {/* 3D rotating sphere — decorative background, low opacity */}
           <div className="roycss-sphere-3d" aria-hidden="true" />
 
@@ -825,36 +873,45 @@ export default function RoyCSSPage() {
               {/* Docs nav links */}
               <div className="hidden md:flex items-center gap-1 mr-2">
                 <button
-                  onClick={() => document.querySelector("#get-started")?.scrollIntoView({ behavior: "smooth" })}
+                  onClick={() => scrollToSection("#get-started")}
                   className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer"
                 >
                   Get Started
                 </button>
                 <button
-                  onClick={() => document.querySelector("#docs")?.scrollIntoView({ behavior: "smooth" })}
+                  onClick={() => scrollToSection("#docs")}
                   className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer"
                 >
                   Docs
                 </button>
                 <button
-                  onClick={() => document.querySelector("#effects")?.scrollIntoView({ behavior: "smooth" })}
+                  onClick={() => scrollToSection("#effects")}
                   className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer"
                 >
                   Effects
                 </button>
                 <button
-                  onClick={() => document.querySelector("#platform")?.scrollIntoView({ behavior: "smooth" })}
+                  onClick={() => scrollToSection("#platform")}
                   className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer"
                 >
                   Platform
                 </button>
                 <button
-                  onClick={() => document.querySelector("#faq")?.scrollIntoView({ behavior: "smooth" })}
+                  onClick={() => scrollToSection("#faq")}
                   className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer"
                 >
                   FAQ
                 </button>
               </div>
+              {/* Mobile hamburger menu */}
+              <button
+                onClick={() => setMobileMenuOpen((o) => !o)}
+                className="md:hidden flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-foreground transition-all cursor-pointer"
+                aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+                aria-expanded={mobileMenuOpen}
+              >
+                {mobileMenuOpen ? <X className="size-4" /> : <Menu className="size-4" />}
+              </button>
               <ThemeToggle />
               <button
                 onClick={() => setFavoritesOpen(true)}
@@ -883,6 +940,41 @@ export default function RoyCSSPage() {
               </a>
             </motion.div>
           </nav>
+
+          {/* Mobile menu dropdown */}
+          <AnimatePresence>
+            {mobileMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+                className="md:hidden overflow-hidden"
+              >
+                <div className="flex flex-col gap-1 py-2">
+                  {[
+                    { label: "Get Started", id: "#get-started" },
+                    { label: "Effects", id: "#effects" },
+                    { label: "Platform", id: "#platform" },
+                    { label: "Docs", id: "#docs" },
+                    { label: "FAQ", id: "#faq" },
+                  ].map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => {
+                        scrollToSection(item.id);
+                        setMobileMenuOpen(false);
+                      }}
+                      className="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer min-h-[44px]"
+                    >
+                      {item.label}
+                      <ChevronRight className="size-3.5" />
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Hero content */}
           <div className="text-center max-w-3xl mx-auto">
@@ -932,7 +1024,7 @@ export default function RoyCSSPage() {
                   <Button
                     size="lg"
                     onClick={() =>
-                      document.querySelector("#effects")?.scrollIntoView({ behavior: "smooth" })
+                      scrollToSection("#effects")
                     }
                     className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20 h-11 px-6"
                   >
@@ -1046,7 +1138,7 @@ export default function RoyCSSPage() {
             <div className="flex items-center gap-2 min-w-max px-1">
               <button
                 onClick={() => setActiveCategory("all")}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all whitespace-nowrap cursor-pointer ${
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all whitespace-nowrap cursor-pointer min-h-[44px] ${
                   activeCategory === "all"
                     ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
                     : "glass text-muted-foreground hover:text-foreground hover:border-primary/30"
@@ -1192,7 +1284,7 @@ export default function RoyCSSPage() {
                       <Button
                         size="lg"
                         onClick={() =>
-                          document.querySelector("#effects")?.scrollIntoView({ behavior: "smooth" })
+                          scrollToSection("#effects")
                         }
                         className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20 h-11 px-6"
                       >
@@ -1201,7 +1293,7 @@ export default function RoyCSSPage() {
                       </Button>
                     </MagneticButton>
                     <a
-                      href="https://github.com/Roy-Wanyoike"
+                      href="https://github.com/Roy-Wanyoike/roycss"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 h-11 px-6 rounded-xl glass text-foreground hover:border-primary/30 transition-all font-medium text-sm"
@@ -1257,7 +1349,7 @@ export default function RoyCSSPage() {
               icon={Gauge}
               title="Performance"
               description="Zero JavaScript runtime. Pure CSS — no hydration cost, no bundle bloat. Tree-shakeable per-effect."
-              items={["240KB total CSS", "~300 bytes per effect", "Zero JS runtime", "Tree-shakeable exports"]}
+              items={["10KB initial CSS (lazy-loaded)", "~1KB per effect on demand", "Zero JS runtime", "Tree-shakeable exports"]}
             />
             <DocCard
               icon={ArrowLeftRight}
@@ -1319,19 +1411,19 @@ export default function RoyCSSPage() {
 
             <div className="flex items-center gap-3">
               <button
-                onClick={() => document.querySelector("#get-started")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={() => scrollToSection("#get-started")}
                 className="text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
               >
                 Get Started
               </button>
               <button
-                onClick={() => document.querySelector("#docs")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={() => scrollToSection("#docs")}
                 className="text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
               >
                 Docs
               </button>
               <button
-                onClick={() => document.querySelector("#faq")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={() => scrollToSection("#faq")}
                 className="text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
               >
                 FAQ
@@ -1384,7 +1476,7 @@ export default function RoyCSSPage() {
         activeCategory={activeCategory}
         onCategoryClick={(cat) => {
           setActiveCategory(cat);
-          document.querySelector("#effects")?.scrollIntoView({ behavior: "smooth" });
+          scrollToSection("#effects");
         }}
       />
     </div>

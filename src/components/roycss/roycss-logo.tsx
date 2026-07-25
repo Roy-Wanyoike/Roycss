@@ -205,7 +205,7 @@ function SparkleIcon({ className = "" }: { className?: string }) {
 
 /* ═══════════════════════════════════════════════════════════════
    Hero Logo — large display version for hero section
-   Uses the AI-generated logo mark with animated ring
+   Animated gradient mark with rotating ring
    ═══════════════════════════════════════════════════════════════ */
 export function RoyCSSHeroLogo({ className = "" }: { className?: string }) {
   return (
@@ -238,8 +238,7 @@ export function RoyCSSHeroLogo({ className = "" }: { className?: string }) {
         }}
         className="relative size-20 sm:size-24 rounded-3xl overflow-hidden shadow-2xl"
       >
-        {/* Use AI-generated logo as base */}
-        {/* Fallback: Animated gradient with brackets */}
+        {/* Animated gradient mark with brackets */}
         <div
           className="absolute inset-0"
           style={{

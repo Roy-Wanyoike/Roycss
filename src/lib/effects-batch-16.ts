@@ -1208,8 +1208,8 @@ export const effectsBatch16: CSSEffect[] = [
     name: "Neural Network Field",
     category: "backgrounds",
     description:
-      "Animated neural network pattern — nodes pulse and emit signals along synaptic pathways, creating an AI-inspired background that feels like a thinking network",
-    tags: ["neural", "network", "ai", "synapse"],
+      "Animated neural network pattern — nodes pulse and emit signals along synaptic pathways, creating a thinking-network background.",
+    tags: ["neural", "network", "synapse", "data"],
     previewType: "background",
     cssCode: `/* Neural Network Field */
 .roycss-bg-neural-network {

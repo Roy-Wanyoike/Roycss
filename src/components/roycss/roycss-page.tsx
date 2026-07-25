@@ -44,6 +44,7 @@ import {
   ToggleRight,
   Heart,
   HelpCircle,
+  Mail,
   Pause,
   ChevronLeft,
   Repeat,
@@ -71,6 +72,7 @@ import { RoyCSSLogo, RoyCSSHeroLogo } from "@/components/roycss/roycss-logo";
 import { GetStarted } from "@/components/roycss/get-started";
 import { RoyMotionShowcase } from "@/components/roycss/roymotion-showcase";
 import { PlatformEcosystem } from "@/components/roycss/platform-ecosystem";
+import { ContactForm } from "@/components/roycss/contact-form";
 import { useFavorites } from "@/hooks/use-favorites";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
@@ -775,6 +777,7 @@ export default function RoyCSSPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [favoritesOpen, setFavoritesOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
   const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -971,6 +974,16 @@ export default function RoyCSSPage() {
                       <ChevronRight className="size-3.5" />
                     </button>
                   ))}
+                  <button
+                    onClick={() => {
+                      setContactOpen(true);
+                      setMobileMenuOpen(false);
+                    }}
+                    className="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer min-h-[44px]"
+                  >
+                    Contact
+                    <Mail className="size-3.5" />
+                  </button>
                 </div>
               </motion.div>
             )}
@@ -1302,6 +1315,13 @@ export default function RoyCSSPage() {
                       Star on GitHub
                       <ChevronRight className="size-3.5" />
                     </a>
+                    <button
+                      onClick={() => setContactOpen(true)}
+                      className="inline-flex items-center gap-2 h-11 px-6 rounded-xl glass text-foreground hover:border-primary/30 transition-all font-medium text-sm cursor-pointer"
+                    >
+                      <Mail className="size-4" />
+                      Contact Us
+                    </button>
                   </div>
                 </ScrollReveal>
               </div>
@@ -1428,8 +1448,14 @@ export default function RoyCSSPage() {
               >
                 FAQ
               </button>
+              <button
+                onClick={() => setContactOpen(true)}
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+              >
+                Contact
+              </button>
               <a
-                href="https://github.com/Roy-Wanyoike"
+                href="https://github.com/Roy-Wanyoike/roycss"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground transition-colors"
@@ -1470,6 +1496,9 @@ export default function RoyCSSPage() {
 
       {/* Scroll to Top Button */}
       <ScrollToTop />
+
+      {/* Contact / Suggestion Form */}
+      <ContactForm open={contactOpen} onOpenChange={setContactOpen} />
 
       {/* Section Scrollbar (desktop only) */}
       <SectionScrollbar

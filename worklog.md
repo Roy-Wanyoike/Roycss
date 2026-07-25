@@ -1729,3 +1729,39 @@ Stage Summary:
 - Lint: 0 errors, 0 warnings
 - Agent Browser verification: All 5 nav links work on desktop (visible: true), mobile hamburger menu opens with all 5 items, menu closes on click, 0 page errors
 - Key architectural decision: scrollToSection uses recursive instant-scroll re-correction (not smooth scroll) because the 80Kpx page with lazy-loaded cards + DynamicEffectCSS reflow makes smooth scroll unreliable for sections below the effects grid
+
+---
+Task ID: go-live-prep
+Agent: main
+Task: Principal engineer go-live preparation — fix pending issues, remove AI labels, add contact form, QA, zip source for publishing
+
+Work Log:
+- P1 (Critical audit): Verified 0 page errors, 0 hydration errors, server running clean (~180ms responses). Only harmless parallax position warning in console. All 5 nav links verified working.
+- P2 (AI label removal): Searched entire src/ for "AI-generated", "AI generated", "powered by AI", "built with AI" references.
+  - Removed: "AI-generated logo mark" comment in roycss-logo.tsx → "Animated gradient mark"
+  - Removed: "Use AI-generated logo as base" comment → "Animated gradient mark with brackets"
+  - Cleaned: neural network effect description removed "AI-inspired" phrasing, changed "ai" tag to "data"
+  - Kept: RoyAI platform product (legitimate product name like "GitHub Copilot"), AI Playground/Migration (platform features), roadmap "AI-powered suggestions" (forward-looking product feature)
+  - Verified: 0 "AI-generated" labels visible on page via Agent Browser text scan
+- P3 (Contact form): Built complete contact/suggestion form
+  - Backend: API route already existed at /api/contact with Prisma + SQLite (ContactMessage model), validated and tested
+  - Frontend: Created /src/components/roycss/contact-form.tsx — slide-out Sheet with name, email, subject (6 options: General/Bug/Feature/Suggestion/Partnership/Feedback), message (10-5000 chars), validation, loading state, success state, error state with fallback
+  - Integration: Added "Contact" button to footer, "Contact Us" button in CTA banner, "Contact" item in mobile menu, ContactForm render at page root
+  - Verified: Filled form → submitted → "Message sent!" success → confirmed in database (Jane Doe / Suggestion / message saved)
+- P4 (Final QA): Agent Browser verification on desktop (1440×900) and mobile (390×844)
+  - 0 page errors, 0 console errors (except harmless parallax warning)
+  - All 5 nav links: VISIBLE (Get Started, Effects, Platform, Docs, FAQ)
+  - Contact form opens from CTA "Contact Us", footer "Contact", and mobile menu "Contact"
+  - Form submission works end-to-end (UI + API + DB)
+  - Mobile form renders correctly (390px width, no overflow)
+  - 0 AI-generated labels visible
+- P5 (Zip source): Created /home/z/roycss-source.zip
+  - Excluded: node_modules, .next, .git, tool-results, portfolio, skills, .zscripts, agent-ctx, upload, download, dev.log, db/*.db, .env, bun.lock, .eslintcache, .turbo, .vercel, coverage, out
+  - Also excluded: src/components/portfolio/* (legacy portfolio components), src/lib/portfolio-data.ts
+  - Size: 1.1MB (188 files)
+  - Verified: all essential files present (package.json, prisma/schema.prisma, all 17 effect batches, all roycss components, contact-form, platform-ecosystem, public assets)
+
+Stage Summary:
+- Site is go-live ready: 0 errors, all features functional, contact form captures leads/suggestions, no AI labels in market-facing content
+- Source zip at /home/z/roycss-source.zip (1.1MB, 188 files) ready for publishing
+- Contact messages persist to SQLite via Prisma (ContactMessage model with name, email, subject, message, read, createdAt)

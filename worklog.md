@@ -1765,3 +1765,52 @@ Stage Summary:
 - Site is go-live ready: 0 errors, all features functional, contact form captures leads/suggestions, no AI labels in market-facing content
 - Source zip at /home/z/roycss-source.zip (1.1MB, 188 files) ready for publishing
 - Contact messages persist to SQLite via Prisma (ContactMessage model with name, email, subject, message, read, createdAt)
+
+---
+Task ID: readme-with-screenshots
+Agent: main
+Task: Create comprehensive README with image screenshots, written as senior technical engineer + product manager
+
+Work Log:
+- Captured 14 professional screenshots via Agent Browser (1440×900 desktop + 390×844 mobile):
+  - hero.png — landing page with animated logo, install command, CTAs
+  - featured-carousel.png — rotating showcase with controls
+  - get-started.png — 5-step install accordion
+  - effects-grid.png — virtual-scrolling grid with search + filters
+  - effect-detail.png — full dialog with preview, color, code, framework tabs
+  - color-customizer.png — OKLCH hue rotation with 12 presets
+  - platform-ecosystem.png — 15-product vision with tier filter
+  - platform-differentiators.png — 10 unique features competitors don't have
+  - contact-form.png — slide-out form with validation
+  - faq.png — accessible accordion
+  - cta-banner.png — call-to-action with Contact Us
+  - footer.png — sticky footer with nav
+  - mobile-hero.png — mobile responsive hero
+  - mobile-menu.png — hamburger menu with nav items
+- Wrote comprehensive 786-line README (3,490 words) covering:
+  - Product overview with value proposition table
+  - Key features for developers + site
+  - 13 embedded screenshots with captions
+  - Quick start with 5 package managers (npm/pnpm/yarn/bun/deno) + CDN
+  - Framework examples (React, Next.js, Vue, Svelte, Angular) in collapsible details
+  - CLI commands + VS Code snippets
+  - Full effect category table (20 categories, 760 effects, counts + examples)
+  - Architecture diagram (CSS architecture, rendering pipeline, design decisions)
+  - Technology stack table + CSS specifications used
+  - Complete project structure tree
+  - Platform vision (15 products with revenue models + competitive moat)
+  - Performance metrics table + 6 optimization techniques
+  - Accessibility compliance table (WCAG 2.1 AA)
+  - Browser support matrix
+  - Development setup, scripts, env vars, code quality
+  - Contributing guide (effect interface, guidelines)
+  - License + connect links
+- Saved to /home/z/my-project/README.md (replaced old portfolio README)
+- Saved screenshots to /home/z/my-project/docs/screenshots/
+- Recreated zip at /home/z/roycss-source.zip (3.6MB, includes README + screenshots)
+- Lint: 0 errors, 0 warnings. Dev server: running clean.
+
+Stage Summary:
+- Professional README with 13 embedded screenshots, written from senior engineer + product manager perspective
+- Covers: what it is, why it matters, how to use it, how it's built, how to contribute
+- Zip updated at /home/z/roycss-source.zip (3.6MB) with README + all screenshots

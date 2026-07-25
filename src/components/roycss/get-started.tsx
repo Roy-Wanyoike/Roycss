@@ -222,8 +222,10 @@ export function GetStarted() {
                   </AccordionTrigger>
                   <AccordionContent isOpen={isOpen}>
                     <CodeBlock title="npm" icon={Terminal} code={`npm install roycss`} />
+                    <CodeBlock title="pnpm" icon={Terminal} code={`pnpm add roycss`} />
                     <CodeBlock title="yarn" icon={Terminal} code={`yarn add roycss`} />
                     <CodeBlock title="bun" icon={Terminal} code={`bun add roycss`} />
+                    <CodeBlock title="deno" icon={Terminal} code={`deno add npm:roycss`} />
                     <CodeBlock
                       title="CDN (no install)"
                       icon={PackageOpen}

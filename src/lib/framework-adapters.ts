@@ -67,8 +67,11 @@ export function getFrameworkExamples(
       install: `# Option 1: CDN (no install)
 curl -L https://unpkg.com/roycss/dist/roycss.min.css -o roycss.css
 
-# Option 2: npm
-npm install roycss`,
+# Option 2: Package manager
+npm install roycss
+pnpm add roycss
+yarn add roycss
+bun add roycss`,
       import: `<link rel="stylesheet" href="roycss.css" />
 
 <!-- Or via CDN directly -->
@@ -91,7 +94,10 @@ npm install roycss
 pnpm add roycss
 
 # yarn
-yarn add roycss`,
+yarn add roycss
+
+# bun
+bun add roycss`,
       import: `// src/main.tsx (or src/index.tsx)
 import "roycss/dist/roycss.min.css";`,
       usage: `export function Demo() {
@@ -115,7 +121,10 @@ npm install roycss
 pnpm add roycss
 
 # yarn
-yarn add roycss`,
+yarn add roycss
+
+# bun
+bun add roycss`,
       import: `<!-- src/main.ts -->
 import { createApp } from "vue";
 import "roycss/dist/roycss.min.css";
@@ -141,8 +150,14 @@ createApp(App).mount("#app");`,
       install: `# npm
 npm install roycss
 
+# pnpm
+pnpm add roycss
+
 # yarn
 yarn add roycss
+
+# bun
+bun add roycss
 
 # Or with the Angular CLI
 ng add roycss`,
@@ -190,7 +205,10 @@ npm install roycss
 pnpm add roycss
 
 # yarn
-yarn add roycss`,
+yarn add roycss
+
+# bun
+bun add roycss`,
       import: `<!-- src/main.ts (or src/main.js) -->
 import "roycss/dist/roycss.min.css";`,
       usage: `<script lang="ts">

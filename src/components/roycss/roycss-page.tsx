@@ -75,6 +75,7 @@ import { RoyMotionShowcase } from "@/components/roycss/roymotion-showcase";
 import { PlatformEcosystem } from "@/components/roycss/platform-ecosystem";
 import { ContactForm } from "@/components/roycss/contact-form";
 import { FeaturedCompanies } from "@/components/roycss/featured-companies";
+import { RecipesSection } from "@/components/roycss/recipes-section";
 import { useFavorites } from "@/hooks/use-favorites";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
@@ -980,6 +981,12 @@ export default function RoyCSSPage() {
                   Effects
                 </button>
                 <button
+                  onClick={() => scrollToSection("#recipes")}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer"
+                >
+                  Recipes
+                </button>
+                <button
                   onClick={() => scrollToSection("#platform")}
                   className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer"
                 >
@@ -1055,6 +1062,7 @@ export default function RoyCSSPage() {
                   {[
                     { label: "Get Started", id: "#get-started" },
                     { label: "Effects", id: "#effects" },
+                    { label: "Recipes", id: "#recipes" },
                     { label: "Platform", id: "#platform" },
                     { label: "Docs", id: "#docs" },
                     { label: "FAQ", id: "#faq" },
@@ -1376,6 +1384,11 @@ export default function RoyCSSPage() {
             </motion.div>
           )}
         </div>
+
+      <Separator className="opacity-50" />
+
+      {/* ─── Recipes Section ─────────────────────────────────── */}
+      <RecipesSection />
 
       {/* ─── CTA Banner ─────────────────────────────────────── */}
       <section className="py-16 sm:py-20">

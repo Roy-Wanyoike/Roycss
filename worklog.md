@@ -2080,3 +2080,61 @@ Stage Summary:
 - Publishable to npm as `roycss-cli` — users run `npx roycss-cli init`
 - Doctor command provides project health check with actionable recommendations
 - All commands tested and working end-to-end
+
+---
+Task ID: recipes-build
+Agent: main
+Task: Build RoyCSS Recipes — curated UI pattern combinations that turn effects into solutions
+
+Work Log:
+- Created /src/lib/roycss-recipes.ts with 12 curated recipes across 8 categories:
+  Hero Sections (2): Animated Gradient Hero, Aurora Text Hero
+  Loading States (2): Triple Spinner Loading, Ring + Pulse Loader
+  Cards (2): Feature Card Grid, Glass Hover Card
+  Navigation (1): Glass Navigation Bar
+  Forms (1): Glass Login Form
+  Notifications (2): Pulsing Notification Badge, Glass Toast Notification
+  Empty States (1): Glowing Empty State
+  Buttons (1): CTA Button Group
+
+  Each recipe includes:
+  - id, name, category, description, tags, difficulty
+  - HTML code (copy-paste ready with inline styles for self-containment)
+  - effectIds (which RoyCSS effects are used)
+  - getRecipeWithEffects() helper (returns recipe + full CSS code for each effect)
+  - searchRecipes() helper (filter by query + category)
+
+- Created /src/components/roycss/recipes-section.tsx:
+  - Searchable grid (by name, tag, category, description)
+  - Category filter pills (8 categories + "All")
+  - Recipe cards with: name, description, difficulty badge, effect count, tags
+  - Click card to expand → shows HTML code + copy button + "Effects Used" list
+  - Framer Motion animations (expand/collapse, layout)
+  - Keyboard accessible (Enter/Space to toggle)
+  - "Browse all effects" CTA at bottom
+
+- Added Recipes section to roycss-page.tsx:
+  - Placed between Effects grid and CTA banner
+  - Added "Recipes" to desktop nav (between Effects and Platform)
+  - Added "Recipes" to mobile menu
+
+- Updated MCP server (mcp-server/index.ts):
+  - Synced RECIPES to match all 12 site recipes (was 5, now 12)
+  - Each recipe has the same id, title, description, effects, and HTML as the site
+  - AI assistants can now query all 12 recipes via get_recipes tool
+
+- QA Verified:
+  - 12 recipe cards render on the site
+  - All 12 recipe names confirmed: Animated Gradient Hero, Aurora Text Hero, Triple Spinner Loading, Ring + Pulse Loader, Feature Card Grid, Glass Hover Card, Glass Navigation Bar, Glass Login Form, Pulsing Notification Badge, Glass Toast Notification, Glowing Empty State, CTA Button Group
+  - Search "loading" → 2 results (Triple Spinner Loading, Ring + Pulse Loader)
+  - Category filter works (pills show counts)
+  - Expand shows HTML code + Copy button + Effects Used list
+  - MCP server returns 12 recipes
+  - 0 page errors, 0 lint errors
+  - Zip: /home/z/roycss-source.zip (4.2MB)
+
+Stage Summary:
+- RoyCSS Recipes is live — 12 curated UI patterns across 8 categories
+- Developers can search, filter, copy HTML, and see which effects are used
+- MCP server synced with all 12 recipes — AI assistants can query them
+- This is the content layer that turns RoyCSS from a utility library into a problem-solving platform

@@ -1,37 +1,39 @@
 {
   "name": "roycss",
   "version": "1.0.0",
-  "description": "700+ production-ready CSS effects with live demos, color customization, and framework support for React, Vue, Angular, Svelte, and vanilla HTML.",
+  "description": "840+ production-ready CSS effects with live demos, color customization, and framework support for React, Vue, Angular, Svelte, and vanilla HTML. Zero JavaScript runtime.",
   "type": "module",
-  "main": "./dist/roycss.cjs",
-  "module": "./dist/roycss.js",
-  "types": "./dist/roycss.d.ts",
+  "main": "./dist/roycss.css",
+  "style": "./dist/roycss.min.css",
   "exports": {
     ".": {
-      "import": "./dist/roycss.js",
-      "require": "./dist/roycss.cjs",
-      "types": "./dist/roycss.d.ts"
+      "import": "./dist/effects.js",
+      "require": "./dist/effects.cjs",
+      "types": "./dist/effects.d.ts"
     },
     "./css": "./dist/roycss.css",
+    "./min": "./dist/roycss.min.css",
+    "./dist/roycss.css": "./dist/roycss.css",
+    "./dist/roycss.min.css": "./dist/roycss.min.css",
     "./effects": {
       "import": "./dist/effects.js",
-      "require": "./dist/effects.cjs"
+      "require": "./dist/effects.cjs",
+      "types": "./dist/effects.d.ts"
     },
+    "./effects.json": "./dist/effects.json",
     "./package.json": "./package.json"
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
   ],
   "sideEffects": [
     "*.css"
   ],
-  "bin": {
-    "roycss": "./dist/cli.js"
-  },
   "scripts": {
-    "build": "bun run scripts/build.ts",
-    "dev": "next dev -p 3000",
+    "build": "bun run scripts/build-package.ts",
     "lint": "eslint .",
     "prepublishOnly": "bun run build"
   },
@@ -50,15 +52,19 @@
     "vue",
     "angular",
     "svelte",
-    "framework-agnostic"
+    "framework-agnostic",
+    "design-system",
+    "ui",
+    "frontend",
+    "roycss"
   ],
   "author": "Royford Wanyoike Wamaitha <roywanyoike328@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Roy-Wanyoike/roycss"
+    "url": "git+https://github.com/Roy-Wanyoike/roycss.git"
   },
-  "homepage": "https://roycss.dev",
+  "homepage": "https://github.com/Roy-Wanyoike/roycss#readme",
   "bugs": {
     "url": "https://github.com/Roy-Wanyoike/roycss/issues"
   },

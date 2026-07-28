@@ -22,9 +22,9 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "RoyCSS — 760+ Beautiful CSS Effects Library with Live Demos",
+  title: "RoyCSS — 840+ Beautiful CSS Effects Library with Live Demos",
   description:
-    "A curated collection of 760+ production-ready CSS effects by Roy Wanyoike. Future-trending effects for 2026-2030: spatial depth, liquid glass, bioluminescent UI, kinetic typography, holographic surfaces, neural networks, and more — with live demos, copy-paste code, and framework support for React, Vue, Angular, Svelte, and vanilla HTML.",
+    "A curated collection of 840+ production-ready CSS effects by Roy Wanyoike. Future-trending effects for 2026-2030: spatial depth, liquid glass, bioluminescent UI, kinetic typography, holographic surfaces, neural networks, and more — with live demos, copy-paste code, and framework support for React, Vue, Angular, Svelte, and vanilla HTML.",
   icons: {
     icon: "/favicon.png",
     apple: "/apple-icon.png",
@@ -46,9 +46,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Royford Wanyoike Wamaitha" }],
   openGraph: {
-    title: "RoyCSS — 760+ Beautiful CSS Effects Library with Live Demos",
+    title: "RoyCSS — 840+ Beautiful CSS Effects Library with Live Demos",
     description:
-      "760+ production-ready CSS effects with live demos, color customization, and framework support.",
+      "840+ production-ready CSS effects with live demos, color customization, and framework support.",
     type: "website",
   },
 };

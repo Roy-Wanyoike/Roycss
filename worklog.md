@@ -1814,3 +1814,53 @@ Stage Summary:
 - Professional README with 13 embedded screenshots, written from senior engineer + product manager perspective
 - Covers: what it is, why it matters, how to use it, how it's built, how to contribute
 - Zip updated at /home/z/roycss-source.zip (3.6MB) with README + all screenshots
+
+---
+Task ID: install-feedback-and-batch18-19
+Agent: main
+Task: Add visible click border to InstallCommand (light mode), add 80 more effects (batches 18+19)
+
+Work Log:
+- INSTALL COMMAND FIX: Added visible click feedback border for the "npm install roycss" command:
+  - Added border-2 (was no border by default — invisible in light mode)
+  - Default state: border-border/60 + glass-strong background (visible in both themes)
+  - Hover state: border-primary/50 + shadow
+  - Click state: border-primary + bg-primary/10 + shadow-lg (visible confirmation)
+  - Copied state: border-emerald-500 + bg-emerald-500/10 + shadow (success)
+  - Added keyboard support (role="button", tabIndex=0, Enter/Space activation)
+  - Added aria-label and aria-pressed for accessibility
+  - Added Check icon next to "Copied!" text
+  - Verified: border changes from transparent to emerald on click
+
+- BATCH 18 (40 effects): Recreated effects-batch-18.ts (was missing from previous session):
+  - Animations (5): Liquid Metal, Aurora Shift, Breathing Orb, Floating Cube, Pulse Ring Expand
+  - Text (5): Aurora Gradient, Glow Pulse, Shimmer Sweep, Outline to Fill, Gradient Mask
+  - Backgrounds (5): Mesh Gradient, Perspective Grid, Noise Texture, Aurora Waves, Animated Mesh
+  - Hover (5): Lift & Glow, Scale & Rotate, Border Trace, Shine Sweep, Depth Shift
+  - Visual (5): Holographic Foil, Chrome Surface, Frosted Glass v2, Iridescent Surface, Velvet Texture
+  - Glass-UI (5): Floating Glass Card, Glass Input Field, Glass Nav Bar, Glass Badge Pill, Glass Modal Backdrop
+  - Buttons (5): Glass Press, Gradient Glow, Outline Draw, 3D Push, Shine Line
+  - Microinteractions (5): Heart Beat, Bell Shake, Eye Blink, Thumbs Up Pop, Dot Spinner
+
+- BATCH 19 (40 effects): Created effects-batch-19.ts with advanced effects:
+  - Animations (6): Orbit System, Wave Flag, Morph Blob, Gradient Rotate, Typewriter Cursor, Pulse Dot Grid
+  - Text (5): Neon Sign, Retro Outline, Animated Gradient, 3D Extrude, Spaced Tracking
+  - Backgrounds (5): Cyber Grid, Conic Gradient, Dot Pattern, Diagonal Stripes, Radial Spotlight
+  - Hover (5): 3D Tilt, Slide Background, Pop Scale, Glow Pulse, Underline Grow
+  - Visual (5): Glassmorphism Card, Neumorphic Surface, Gradient Ring, Aurora Blur, Claymorphism
+  - Loaders (5): Bouncing Dots, Equalizer Bars, Spinning Ring, Pulse Circle, Orbit Spinner
+  - Microinteractions (5): Bounce In, Fade Up, Scale In, Shake Error, Pulse Attention
+  - Cards (4): Glass Hover, Gradient Border v2, Neumorphic, Spotlight
+
+- Recreated scripts/build-package.ts (was missing from previous session)
+- Registered batches 18 + 19 in roycss-effects.ts
+- Updated all "800+" → "840+" references (5 files)
+- Rebuilt dist/: 840 effects, 828KB full CSS, 692KB minified
+- QA verified: Orbit System (batch 19) searchable, InstallCommand border changes on click
+- Lint: 0 errors, 0 warnings
+- Zip: /home/z/roycss-source.zip (4.0MB)
+
+Stage Summary:
+- InstallCommand now has visible click feedback in both light and dark mode
+- Added 80 new effects (batches 18+19) — total now 840 effects across 20 categories
+- All new effects use OKLCH colors, logical properties, roycss-/roy- prefixes, prefers-reduced-motion

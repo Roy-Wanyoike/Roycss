@@ -15,6 +15,7 @@ import {
   ChevronDown,
   ChevronRight,
   CheckCircle2,
+  Check,
   Accessibility,
   Gauge,
   ArrowLeftRight,
@@ -243,11 +244,14 @@ function CategoryPill({
 /* ─── Install Command ───────────────────────────────────────── */
 function InstallCommand() {
   const [copied, setCopied] = useState(false);
+  const [clicked, setClicked] = useState(false);
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText("npm install roycss");
       setCopied(true);
+      setClicked(true);
       setTimeout(() => setCopied(false), 2000);
+      setTimeout(() => setClicked(false), 2500);
     } catch {
       /* noop */
     }
@@ -259,13 +263,36 @@ function InstallCommand() {
       className="inline-block"
     >
       <div
-        className="inline-flex items-center gap-2 rounded-xl glass-strong px-4 py-2.5 group cursor-pointer hover:border-primary/30 transition-all"
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleCopy();
+          }
+        }}
+        className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 group cursor-pointer transition-all outline-none border-2 ${
+          copied
+            ? "border-emerald-500 bg-emerald-500/10 shadow-lg shadow-emerald-500/20"
+            : clicked
+            ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
+            : "border-border/60 glass-strong hover:border-primary/50 hover:shadow-md focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/30"
+        }`}
         onClick={handleCopy}
+        aria-label="Copy npm install roycss command"
+        aria-pressed={copied}
       >
-        <span className="text-sm font-mono text-muted-foreground">$</span>
-        <code className="text-sm font-mono text-foreground">npm install roycss</code>
-        <span className={`text-xs font-medium ml-2 transition-colors ${copied ? "text-emerald-500" : "text-muted-foreground group-hover:text-foreground"}`}>
-          {copied ? "✓ Copied!" : "Copy"}
+        <span className={`text-sm font-mono transition-colors ${copied ? "text-emerald-600 dark:text-emerald-400" : "text-muted-foreground"}`}>$</span>
+        <code className={`text-sm font-mono transition-colors ${copied ? "text-emerald-600 dark:text-emerald-400" : "text-foreground"}`}>npm install roycss</code>
+        <span className={`text-xs font-medium ml-2 transition-colors flex items-center gap-1 ${copied ? "text-emerald-600 dark:text-emerald-400" : "text-muted-foreground group-hover:text-foreground"}`}>
+          {copied ? (
+            <>
+              <Check className="size-3" />
+              Copied!
+            </>
+          ) : (
+            "Copy"
+          )}
         </span>
       </div>
     </MagneticButton>

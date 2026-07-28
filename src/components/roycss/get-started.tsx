@@ -303,7 +303,7 @@ export function GetStarted() {
                     <CodeBlock title="init — scaffold RoyCSS in a project" icon={Rocket} code={`npx roycss init`} />
                     <CodeBlock title="search — find effects by keyword" icon={Search} code={`npx roycss search "glass card"\nnpx roycss search --category hover`} />
                     <CodeBlock title="add — copy an effect's CSS to your clipboard" icon={Plus} code={`npx roycss add btn-shine\nnpx roycss add text-gradient --copy`} />
-                    <CodeBlock title="list — browse all 760+ effects" icon={ListPlus} code={`npx roycss list\nnpx roycss list --category loaders --tag spinner`} />
+                    <CodeBlock title="list — browse all 840+ effects" icon={ListPlus} code={`npx roycss list\nnpx roycss list --category loaders --tag spinner`} />
                   </AccordionContent>
                 </>
               )}

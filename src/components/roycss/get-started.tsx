@@ -301,10 +301,12 @@ export function GetStarted() {
                     />
                   </AccordionTrigger>
                   <AccordionContent isOpen={isOpen}>
-                    <CodeBlock title="init — scaffold RoyCSS in a project" icon={Rocket} code={`npx roycss init`} />
-                    <CodeBlock title="search — find effects by keyword" icon={Search} code={`npx roycss search "glass card"\nnpx roycss search --category hover`} />
-                    <CodeBlock title="add — copy an effect's CSS to your clipboard" icon={Plus} code={`npx roycss add btn-shine\nnpx roycss add text-gradient --copy`} />
-                    <CodeBlock title="list — browse all 840+ effects" icon={ListPlus} code={`npx roycss list\nnpx roycss list --category loaders --tag spinner`} />
+                    <CodeBlock title="init — scaffold RoyCSS in a project" icon={Rocket} code={`npx roycss init\nnpx roycss init --framework react`} />
+                    <CodeBlock title="search — find effects by keyword or tag" icon={Search} code={`npx roycss search "glass card"\nnpx roycss search loading --tag spinner\nnpx roycss search glow --json`} />
+                    <CodeBlock title="add — copy an effect's CSS to a file or clipboard" icon={Plus} code={`npx roycss add btn-shine-sweep\nnpx roycss add text-gradient --copy`} />
+                    <CodeBlock title="info — show details with framework usage" icon={FileCode2} code={`npx roycss info pulse-glow\nnpx roycss info btn-shine-sweep --framework react`} />
+                    <CodeBlock title="doctor — check project health" icon={Lightbulb} code={`npx roycss doctor`} />
+                    <CodeBlock title="list — browse all 840+ effects" icon={ListPlus} code={`npx roycss list\nnpx roycss list animations\nnpx roycss list --json`} />
                   </AccordionContent>
                 </>
               )}

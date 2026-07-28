@@ -1996,3 +1996,87 @@ Stage Summary:
 - Integrated into Platform Ecosystem section as 16th product
 - FAQ updated with MCP entry
 - No CSS framework owns AI integration — this is RoyCSS's competitive moat
+
+---
+Task ID: cli-platform-build
+Agent: main
+Task: Build out the RoyCSS CLI platform — all commands, flags, doctor health check, build to standalone JS
+
+Work Log:
+- Audited existing CLI: 6 commands worked (init, add, search, list, categories, info) but had issues:
+  - Help text said "700+" (stale)
+  - Missing version, doctor commands
+  - Missing --copy, --tag, --framework, --json, --force flags
+  - No fuzzy match for misspelled IDs
+  - No framework-specific instructions for init
+
+- Rebuilt CLI with 8 commands + 5 flags:
+  Commands:
+    1. init — Initialize RoyCSS (with --framework flag for react/vue/angular/svelte/nextjs/vanilla)
+    2. add <id> — Add effect CSS file (with --copy to copy to clipboard)
+    3. search <query> — Search by name/tag/category (with --tag filter, --json output)
+    4. list [category] — List effects (with --json output)
+    5. categories — List all 20 categories
+    6. info <id> — Show effect details (with --framework for usage examples)
+    7. doctor — Project health check (checks roycss.css, package.json, imports, class usage)
+    8. version — Show version + effect count
+    9. help — Full help with flags + examples
+
+  Flags:
+    --copy              Copy CSS to clipboard (add)
+    --tag <tag>         Filter by tag (search/list)
+    --framework <name>  Framework usage (info/init)
+    --json              JSON output (search/list)
+    --force             Overwrite existing (init)
+
+  Improvements:
+    - Fuzzy match: wrong ID suggests "Did you mean?" alternatives
+    - Init generates framework-specific import instructions
+    - Doctor scans source files for roycss-* class usage count
+    - All counts show "840+" (not stale "700+")
+    - Colorful terminal output (green ✓, red ✗, cyan ℹ, yellow ⚠)
+    - JSON output mode for programmatic use
+
+- Created /cli/ directory with:
+  - package.json — npm-publishable package (name: roycss-cli, bin: roycss)
+  - README.md — Full command reference with examples
+  - index.js — Built standalone JS (1.1MB, includes all 840 effects)
+
+- Built CLI to standalone JS: `bun build ../src/cli/index.ts --outdir . --target node --outfile index.js`
+  - Works with `node index.js <command>` — no Bun required
+  - Can be published to npm as `roycss-cli`
+  - Usable via `npx roycss-cli <command>`
+
+- Tested ALL commands end-to-end:
+  - version → "RoyCSS CLI v1.0.0, 840+ effects across 20 categories"
+  - help → full help with all commands, flags, examples
+  - categories → 20 categories with counts
+  - search "neon" → 17 results
+  - search loader --tag spinner → 4 results
+  - search glow --json → JSON with 88 results
+  - info pulse-glow --framework react → CSS + React usage
+  - info btn-shine → fuzzy match suggests btn-shine-sweep, btn-shine-line-b18
+  - add pulse-glow → creates roycss-pulse-glow.css file
+  - add pulse-glow --copy → copies to clipboard (or outputs to stdout)
+  - init --framework react → creates 825KB roycss.css with react instructions
+  - doctor → checks roycss.css, package.json, imports, class usage (found 86 usages)
+  - list --json → JSON with all categories
+  - list animations → all animation effects
+
+- Updated Get Started Step 4 on site:
+  - Added info --framework example
+  - Added doctor example
+  - Added --tag, --json, --copy flags
+  - Updated search to use --tag filter
+  - All references use correct effect IDs (btn-shine-sweep, not btn-shine)
+
+- Lint: 0 errors, 0 warnings
+- 0 page errors
+- Zip: /home/z/roycss-source.zip (4.2MB) includes cli/ directory with built JS
+
+Stage Summary:
+- RoyCSS CLI is a complete, publish-ready tool with 8 commands + 5 flags
+- Built to standalone JS (1.1MB) — works with Node.js, no Bun required
+- Publishable to npm as `roycss-cli` — users run `npx roycss-cli init`
+- Doctor command provides project health check with actionable recommendations
+- All commands tested and working end-to-end

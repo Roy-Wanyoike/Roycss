@@ -16,6 +16,7 @@ import {
   Lightbulb,
   Rocket,
   ChevronDown,
+  BrainCircuit,
 } from "lucide-react";
 import { ScrollReveal, SectionHeading } from "@/components/roycss/motion-primitives";
 
@@ -332,6 +333,64 @@ export function GetStarted() {
                       Save the snippet file at{" "}
                       <code>.vscode/roycss.code-snippets</code> in your repo, or in{" "}
                       <code>~/.config/Code/User/snippets/</code> for global access.
+                    </ProTip>
+                  </AccordionContent>
+                </>
+              )}
+            </AccordionItem>
+
+            {/* ───── Step 6: MCP Server ───── */}
+            <AccordionItem isOpen={openStep === 6} onToggle={() => setOpenStep(openStep === 6 ? 0 : 6)}>
+              {(isOpen, onToggle) => (
+                <>
+                  <AccordionTrigger isOpen={isOpen} onToggle={onToggle}>
+                    <StepHeader
+                      index={6}
+                      title="Connect AI assistants (MCP Server)"
+                      icon={BrainCircuit}
+                      hint="Give Claude, Cursor, and Windsurf access to all 840+ effects — no hallucination."
+                    />
+                  </AccordionTrigger>
+                  <AccordionContent isOpen={isOpen}>
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+                      The RoyCSS MCP Server lets AI assistants search effects, get CSS code, and
+                      generate accurate RoyCSS — no made-up class names. Configure it once and every
+                      AI produces correct code.
+                    </p>
+                    <CodeBlock
+                      title="Claude Desktop — add to claude_desktop_config.json"
+                      icon={BrainCircuit}
+                      code={`{
+  "mcpServers": {
+    "roycss": {
+      "command": "bun",
+      "args": ["/path/to/roycss/mcp-server/index.ts"]
+    }
+  }
+}`}
+                    />
+                    <CodeBlock
+                      title="Cursor — add to ~/.cursor/mcp.json"
+                      icon={BrainCircuit}
+                      code={`{
+  "mcpServers": {
+    "roycss": {
+      "command": "bun",
+      "args": ["/path/to/roycss/mcp-server/index.ts"]
+    }
+  }
+}`}
+                    />
+                    <CodeBlock
+                      title="Claude Code (CLI)"
+                      icon={Terminal}
+                      code={`claude mcp add roycss bun /path/to/roycss/mcp-server/index.ts`}
+                    />
+                    <ProTip>
+                      Once connected, ask your AI:{" "}
+                      <code className="text-xs">"Give me a glassmorphism card in RoyCSS"</code> or{" "}
+                      <code className="text-xs">"Build a hero section using RoyCSS"</code> — it will
+                      query the MCP server and return accurate, official code.
                     </ProTip>
                   </AccordionContent>
                 </>

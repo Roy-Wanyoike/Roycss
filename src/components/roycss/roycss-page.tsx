@@ -319,14 +319,29 @@ function DocCard({
   title,
   description,
   items,
+  details,
 }: {
   icon: React.ComponentType<{ className?: string }>;
   title: string;
   description: string;
   items: string[];
+  details?: { label: string; content: string }[];
 }) {
+  const [expanded, setExpanded] = useState(false);
+
   return (
-    <div className="group rounded-2xl border border-border bg-card p-5 hover:border-primary/40 hover:shadow-lg transition-all">
+    <div
+      className="group rounded-2xl border border-border bg-card p-5 hover:border-primary/40 hover:shadow-lg transition-all cursor-pointer"
+      onClick={() => details && setExpanded((e) => !e)}
+      role={details ? "button" : undefined}
+      tabIndex={details ? 0 : undefined}
+      onKeyDown={(e) => {
+        if (details && (e.key === "Enter" || e.key === " ")) {
+          e.preventDefault();
+          setExpanded((x) => !x);
+        }
+      }}
+    >
       <div className="flex items-center gap-3 mb-3">
         <div className="flex items-center justify-center size-10 rounded-xl bg-primary/10 text-primary">
           <Icon className="size-5" />
@@ -342,6 +357,44 @@ function DocCard({
           </li>
         ))}
       </ul>
+
+      {/* Expandable details */}
+      {details && (
+        <>
+          <AnimatePresence>
+            {expanded && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="overflow-hidden"
+              >
+                <div className="mt-4 pt-4 border-t border-border/50 space-y-3">
+                  {details.map((d, i) => (
+                    <div key={i}>
+                      <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-1">
+                        {d.label}
+                      </p>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{d.content}</p>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setExpanded((e) => !e);
+            }}
+            className="mt-3 flex items-center gap-1 text-xs font-medium text-primary hover:gap-1.5 transition-all cursor-pointer"
+          >
+            {expanded ? "Show less" : "Learn more"}
+            <ChevronDown className={`size-3 transition-transform ${expanded ? "rotate-180" : ""}`} />
+          </button>
+        </>
+      )}
     </div>
   );
 }
@@ -1421,36 +1474,59 @@ export default function RoyCSSPage() {
               title="Accessibility"
               description="WCAG 2.1 AA compliant. Every effect respects prefers-reduced-motion. Full keyboard navigation. ARIA-ready."
               items={["Reduced motion support", "Focus-visible rings", "Screen reader safe", "High contrast mode"]}
+              details={[
+                { label: "How it works", content: "Every effect wraps infinite animations in a @media (prefers-reduced-motion: reduce) guard that reduces animation-duration to 0.01ms. Focus-visible rings use OKLCH-based outlines that adapt to light/dark mode automatically." },
+                { label: "Testing", content: "The showcase site passes WCAG 2.1 AA contrast checks. All interactive elements have 44px+ touch targets. Semantic HTML (main, nav, section, footer) and ARIA labels throughout." },
+              ]}
             />
             <DocCard
               icon={Gauge}
               title="Performance"
               description="Zero JavaScript runtime. Pure CSS — no hydration cost, no bundle bloat. Tree-shakeable per-effect."
               items={["10KB initial CSS (lazy-loaded)", "~1KB per effect on demand", "Zero JS runtime", "Tree-shakeable exports"]}
+              details={[
+                { label: "Dynamic Loading", content: "The showcase uses IntersectionObserver to inject CSS only for visible effects — 10KB initial, 98.7% reduction from the full 828KB. In your project, import the full CSS or use the CLI to copy individual effects." },
+                { label: "Virtual Scrolling", content: "The effects grid renders 24 cards at a time instead of 840 — a 97.7% DOM reduction. Offscreen animations are paused via animation-play-state: paused." },
+              ]}
             />
             <DocCard
               icon={ArrowLeftRight}
               title="Migration"
               description="Switch from Animate.css, Tailwind, or Bootstrap with our migration guides and codemods."
               items={["Animate.css → RoyCSS map", "Tailwind integration", "Bootstrap conversion", "Automatic codemods"]}
+              details={[
+                { label: "Animate.css", content: "Use the migration table above to map animate__fadeIn → roycss-fade-in, animate__bounce → roycss-bounce-in, etc. Run scripts/migrate-colors.ts to convert hex/rgba to OKLCH." },
+                { label: "Tailwind CSS", content: "RoyCSS is complementary to Tailwind — they coexist without conflicts. All RoyCSS classes are prefixed with .roycss- to avoid collisions. Use Tailwind for layout, RoyCSS for effects." },
+              ]}
             />
             <DocCard
               icon={LayoutDashboard}
               title="Dashboard Tutorial"
               description="Build a complete dashboard in 15 minutes using RoyCSS components and effects."
               items={["Grid + StatCards", "Charts + Tables", "Tabs + Progress", "Copy-paste template"]}
+              details={[
+                { label: "Quick Start", content: "Import RoyCSS, add .roycss-card-glass to your containers, .roycss-hover-lift-glow to interactive cards, and .roycss-loader-ring-spin for loading states. Combine effects for richer UIs." },
+                { label: "Recipes", content: "Use the MCP Server's get_recipes tool to get curated effect combinations for hero sections, loading states, feature cards, navigation bars, and notification badges." },
+              ]}
             />
             <DocCard
               icon={History}
               title="Changelog"
               description="Track every release — new effects, breaking changes, deprecations, and bug fixes."
-              items={["v1.0 — 840+ effects launch", "20 categories", "OKLCH color system", "RoyMotion animation system"]}
+              items={["v1.0 — 840+ effects launch", "20+ categories", "OKLCH color system", "RoyMotion animation system"]}
+              details={[
+                { label: "v1.0.0", content: "840+ CSS effects across 20 categories. OKLCH color space with color-mix() throughout. CSS logical properties for RTL/I18n. @property, container queries, :has(), light-dark(). MCP Server for AI assistants. 5-tier sponsorship system." },
+              ]}
             />
             <DocCard
               icon={Rocket}
               title="Roadmap"
               description="What's coming next — component library expansion, VS Code extension, AI-powered suggestions."
               items={["Component library (24→100+)", "VS Code extension", "CLI codemods", "AI effect recommender"]}
+              details={[
+                { label: "Next Quarter", content: "RoyCSS Recipes (solution-focused content), RoyCSS Patterns (UI state patterns), expanded component library, and a full LSP-based VS Code extension with autocomplete and hover previews." },
+                { label: "Platform Vision", content: "16+ platform products including Marketplace, Studio (visual builder), Pro Components, RoyAI, Inspector (Chrome extension), Cloud, and Academy (certification). See the Platform section above." },
+              ]}
             />
           </div>
 

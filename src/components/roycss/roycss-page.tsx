@@ -74,6 +74,7 @@ import { GetStarted } from "@/components/roycss/get-started";
 import { RoyMotionShowcase } from "@/components/roycss/roymotion-showcase";
 import { PlatformEcosystem } from "@/components/roycss/platform-ecosystem";
 import { ContactForm } from "@/components/roycss/contact-form";
+import { FeaturedCompanies } from "@/components/roycss/featured-companies";
 import { useFavorites } from "@/hooks/use-favorites";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
@@ -118,7 +119,7 @@ function scrollToSection(id: string) {
     // Sections below the effects grid need all cards loaded first,
     // because lazy-loading shifts the document height. We:
     // 1. Dispatch "load all cards" to the VirtualScrollGrid
-    // 2. Wait 1.5s for React to render 760 cards
+    // 2. Wait 1.5s for React to render 840+ cards
     // 3. Instant-scroll to the target, then keep re-correcting every
     //    400ms until the target is within 50px of the viewport top.
     //    This handles the ongoing layout shift from DynamicEffectCSS
@@ -547,7 +548,7 @@ function TiltStage({ children }: { children: React.ReactNode }) {
 
 /* ─── Featured Carousel — rotates through ALL effects ──────── */
 const FEATURED_BATCH_SIZE = 4;
-const FEATURED_INTERVAL_MS = 6000; // 6s per batch → full cycle ≈ 19 min for 760 effects
+const FEATURED_INTERVAL_MS = 6000; // 6s per batch → full cycle ≈ 19 min for 840+ effects
 
 /* useSyncExternalStore helpers for prefers-reduced-motion.
    This is the React-idiomatic way to read an external system (the OS
@@ -959,12 +960,23 @@ export default function RoyCSSPage() {
                   </motion.span>
                 )}
               </button>
+              {/* Sponsor button */}
               <a
-                href="https://github.com/Roy-Wanyoike"
+                href="https://github.com/sponsors/Roy-Wanyoike"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:inline-flex items-center gap-1.5 h-11 px-4 rounded-xl bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-all font-medium text-xs cursor-pointer"
+                aria-label="Sponsor RoyCSS on GitHub"
+              >
+                <Heart className="size-3.5" />
+                Sponsor
+              </a>
+              <a
+                href="https://github.com/Roy-Wanyoike/roycss"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-foreground transition-all hover:-translate-y-0.5"
-                aria-label="GitHub"
+                aria-label="GitHub repository"
               >
                 <Github className="size-4" />
               </a>
@@ -1011,6 +1023,16 @@ export default function RoyCSSPage() {
                     Contact
                     <Mail className="size-3.5" />
                   </button>
+                  <a
+                    href="https://github.com/sponsors/Roy-Wanyoike"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium text-primary hover:bg-primary/5 transition-all cursor-pointer min-h-[44px]"
+                  >
+                    Sponsor
+                    <Heart className="size-3.5" />
+                  </a>
                 </div>
               </motion.div>
             )}
@@ -1068,7 +1090,7 @@ export default function RoyCSSPage() {
                     }
                     className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20 h-11 px-6"
                   >
-                    Browse 760 Effects
+                    Browse 840+ Effects
                     <ChevronDown className="size-4 ml-1" />
                   </Button>
                 </MagneticButton>
@@ -1118,6 +1140,9 @@ export default function RoyCSSPage() {
         </Marquee>
       </div>
 
+      {/* ─── Featured Companies (logo strip) ───────────────── */}
+      <FeaturedCompanies />
+
       {/* ─── Featured Carousel (rotates through ALL effects) ─── */}
       <FeaturedCarousel
         onSelectEffect={(e) => {
@@ -1153,7 +1178,7 @@ export default function RoyCSSPage() {
                 type="text"
                 role="searchbox"
                 aria-label="Search CSS effects by name, tag, or category"
-                placeholder="Search 760 effects... (⌘K)"
+                placeholder="Search 840+ effects... (⌘K)"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="pl-10 pr-14 h-11 rounded-xl glass bg-background/80 border-border/50 focus:border-primary/50"
@@ -1414,7 +1439,7 @@ export default function RoyCSSPage() {
               icon={History}
               title="Changelog"
               description="Track every release — new effects, breaking changes, deprecations, and bug fixes."
-              items={["v1.0 — 760 effects launch", "20 categories", "OKLCH color system", "RoyMotion animation system"]}
+              items={["v1.0 — 840+ effects launch", "20 categories", "OKLCH color system", "RoyMotion animation system"]}
             />
             <DocCard
               icon={Rocket}
@@ -1445,7 +1470,7 @@ export default function RoyCSSPage() {
             <p className="text-xs text-muted-foreground text-center">
               Crafted with care by{" "}
               <a
-                href="https://github.com/Roy-Wanyoike"
+                href="https://www.linkedin.com/in/roywanyoike/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary hover:underline"
@@ -1482,11 +1507,20 @@ export default function RoyCSSPage() {
                 Contact
               </button>
               <a
+                href="https://github.com/sponsors/Roy-Wanyoike"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:text-primary/80 transition-colors"
+                aria-label="Sponsor RoyCSS"
+              >
+                <Heart className="size-4" />
+              </a>
+              <a
                 href="https://github.com/Roy-Wanyoike/roycss"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="GitHub"
+                aria-label="GitHub repository"
               >
                 <Github className="size-4" />
               </a>

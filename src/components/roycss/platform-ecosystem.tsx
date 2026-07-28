@@ -36,6 +36,7 @@ import {
   Rocket,
   Users,
   Shield,
+  Award,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -47,7 +48,14 @@ import {
   ShineBorder,
   staggerContainer,
   staggerItem,
+  Marquee,
 } from "@/components/roycss/motion-primitives";
+import {
+  COMPANIES as SPONSORED_COMPANIES,
+  getTierForCompany,
+  TIER_META as SPONSOR_TIER_META,
+  SponsorModal,
+} from "@/components/roycss/featured-companies";
 
 /* ═══════════════════════════════════════════════════════════════
    DATA: 15 platform products
@@ -334,15 +342,25 @@ interface SponsorTier {
   name: string;
   icon: React.ComponentType<{ className?: string }>;
   color: string;
+  amount: string;
   perks: string[];
 }
 
 const SPONSOR_TIERS: SponsorTier[] = [
   {
+    id: "founder",
+    name: "Founder",
+    icon: Award,
+    color: "text-emerald-500",
+    amount: "By recognition",
+    perks: ["The company that built RoyCSS", "Unique emerald glow", "Creator badge", "Permanent hero placement"],
+  },
+  {
     id: "community",
     name: "Community",
     icon: Heart,
     color: "text-rose-500",
+    amount: "Any amount",
     perks: ["Listed on homepage", "Logo in documentation", "Monthly newsletter mention"],
   },
   {
@@ -350,6 +368,7 @@ const SPONSOR_TIERS: SponsorTier[] = [
     name: "Gold",
     icon: Crown,
     color: "text-amber-500",
+    amount: "Suggested ~$1K+",
     perks: ["Featured on homepage", "Dedicated profile page", "Blog spotlight", "Conference sponsorship"],
   },
   {
@@ -357,6 +376,7 @@ const SPONSOR_TIERS: SponsorTier[] = [
     name: "Platinum",
     icon: Rocket,
     color: "text-violet-500",
+    amount: "Suggested ~$3K+",
     perks: ["Homepage hero placement", "Joint webinars", "Early roadmap access", "Direct engineering support"],
   },
   {
@@ -364,6 +384,7 @@ const SPONSOR_TIERS: SponsorTier[] = [
     name: "Technology Partner",
     icon: Layers,
     color: "text-cyan-500",
+    amount: "Suggested ~$10K+",
     perks: ["Framework integrations", "Co-marketing", "Joint technical content", "Mutual certification"],
   },
 ];
@@ -602,6 +623,7 @@ function SponsorCard({ tier }: { tier: SponsorTier }) {
           </div>
           <h4 className="font-display font-bold text-foreground">{tier.name}</h4>
         </div>
+        <p className={`text-xs font-semibold ${tier.color} mb-3`}>{tier.amount}</p>
         <ul className="space-y-2">
           {tier.perks.map((perk) => (
             <li key={perk} className="flex items-start gap-2 text-xs text-muted-foreground">
@@ -648,7 +670,7 @@ function CompetitiveMoat() {
               <p className="text-xs text-muted-foreground mt-1">Unique differentiators</p>
             </div>
             <div className="text-center">
-              <AnimatedCounter value={760} className="font-display text-3xl font-bold text-primary" />
+              <AnimatedCounter value={840} className="font-display text-3xl font-bold text-primary" />
               <p className="text-xs text-muted-foreground mt-1">Free CSS effects</p>
             </div>
             <div className="text-center">
@@ -668,6 +690,7 @@ function CompetitiveMoat() {
 
 export function PlatformEcosystem() {
   const [activeTier, setActiveTier] = useState<Tier | "all">("all");
+  const [sponsorOpen, setSponsorOpen] = useState(false);
 
   const filteredProducts = useMemo(() => {
     if (activeTier === "all") return PRODUCTS;
@@ -785,8 +808,22 @@ export function PlatformEcosystem() {
               <h3 className="font-display text-xl font-bold text-foreground">Sponsor Ecosystem</h3>
             </div>
             <p className="text-sm text-muted-foreground mb-6">
-              Don&apos;t just add logos — build an ecosystem. Four tiers from community to technology partner.
+              Don&apos;t just add logos — build an ecosystem. Amounts are suggestions — not requirements.
             </p>
+          </ScrollReveal>
+
+          {/* Sponsor button */}
+          <ScrollReveal delay={0.05}>
+            <div className="flex justify-center mb-8">
+              <button
+                onClick={() => setSponsorOpen(true)}
+                className="group inline-flex items-center gap-2 h-12 px-8 rounded-xl bg-primary text-primary-foreground font-semibold text-sm shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 transition-all cursor-pointer"
+              >
+                <Heart className="size-4 group-hover:scale-110 transition-transform" />
+                Become a Sponsor
+                <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
           </ScrollReveal>
 
           <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -794,11 +831,64 @@ export function PlatformEcosystem() {
               <SponsorCard key={tier.id} tier={tier} />
             ))}
           </StaggerGroup>
+
+          {/* Sponsored companies carousel */}
+          {SPONSORED_COMPANIES.length > 0 && (
+            <div className="mt-10">
+              <ScrollReveal>
+                <p className="text-center text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-4">
+                  Our Sponsors
+                </p>
+              </ScrollReveal>
+              <ScrollReveal delay={0.1}>
+                <div className="relative overflow-hidden rounded-2xl border border-border/40 bg-card/30 p-4">
+                  <Marquee speed={30}>
+                    {SPONSORED_COMPANIES.map((company) => {
+                      const tier = getTierForCompany(company);
+                      const meta = SPONSOR_TIER_META[tier];
+                      const TierIcon = meta.icon;
+                      return (
+                        <div
+                          key={company.name}
+                          className={`mx-2 flex items-center gap-3 rounded-xl border bg-card/80 px-4 py-3 shrink-0 ${meta.glowBorder}`}
+                          style={{ boxShadow: meta.glowShadow }}
+                        >
+                          <div className={`flex items-center justify-center size-9 rounded-lg ${meta.bg} ${meta.color} shrink-0`}>
+                            <Building2 className="size-4" />
+                          </div>
+                          <div className="min-w-0">
+                            <div className="flex items-center gap-1.5">
+                              <p className="font-display font-bold text-xs text-foreground leading-tight whitespace-nowrap">
+                                {company.name}
+                              </p>
+                              <span className={`inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[9px] font-semibold ${meta.bg} ${meta.color} whitespace-nowrap`}>
+                                <Check className="size-2" />
+                                <TierIcon className="size-2" />
+                                {meta.label}
+                              </span>
+                            </div>
+                            <p className="text-[10px] text-muted-foreground leading-tight mt-0.5 whitespace-nowrap">
+                              {company.amount
+                                ? `$${company.amount.toLocaleString()}+ contributed`
+                                : meta.suggestedAmount}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </Marquee>
+                </div>
+              </ScrollReveal>
+            </div>
+          )}
         </div>
 
         {/* ─── Competitive Moat ─── */}
         <CompetitiveMoat />
       </div>
+
+      {/* Sponsor Modal */}
+      <SponsorModal open={sponsorOpen} onOpenChange={setSponsorOpen} />
     </section>
   );
 }

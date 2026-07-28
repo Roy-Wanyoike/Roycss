@@ -318,7 +318,7 @@ export function GetStarted() {
                       index={5}
                       title="Install the VS Code snippets"
                       icon={FileCode2}
-                      hint="Type roycss- + Tab to insert any of the 760 effects instantly."
+                      hint="Type roycss- + Tab to insert any of the 840+ effects instantly."
                     />
                   </AccordionTrigger>
                   <AccordionContent isOpen={isOpen}>

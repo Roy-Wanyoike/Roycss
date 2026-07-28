@@ -123,9 +123,11 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
   }
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   /* ─── Focus Visible (uses token, not hardcoded) ──────────── */
@@ -232,17 +234,17 @@
   }
 
   .glass {
-    background: color-mix(in oklch, white 4%, transparent);
+    background: color-mix(in oklch, var(--foreground) 4%, transparent);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid color-mix(in oklch, white 8%, transparent);
+    border: 1px solid color-mix(in oklch, var(--foreground) 10%, transparent);
   }
 
   .glass-strong {
-    background: color-mix(in oklch, white 6%, transparent);
+    background: color-mix(in oklch, var(--foreground) 6%, transparent);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid color-mix(in oklch, white 10%, transparent);
+    border: 1px solid color-mix(in oklch, var(--foreground) 12%, transparent);
   }
 
   .animate-blob {

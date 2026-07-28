@@ -1,0 +1,42 @@
+{
+  "name": "@roycss/mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for RoyCSS — gives AI assistants (Claude, ChatGPT, Cursor, Windsurf) access to official RoyCSS effects, documentation, and framework examples.",
+  "type": "module",
+  "main": "index.ts",
+  "bin": {
+    "roycss-mcp": "index.ts"
+  },
+  "scripts": {
+    "dev": "bun --hot index.ts",
+    "start": "bun index.ts",
+    "build": "bun build index.ts --outdir dist --target node"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "roycss",
+    "css",
+    "ai",
+    "claude",
+    "cursor",
+    "copilot",
+    "framework"
+  ],
+  "author": "Royford Wanyoike Wamaitha",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Roy-Wanyoike/roycss"
+  },
+  "homepage": "https://github.com/Roy-Wanyoike/roycss",
+  "bugs": {
+    "url": "https://github.com/Roy-Wanyoike/roycss/issues"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

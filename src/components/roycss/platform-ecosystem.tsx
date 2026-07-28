@@ -58,7 +58,7 @@ import {
 } from "@/components/roycss/featured-companies";
 
 /* ═══════════════════════════════════════════════════════════════
-   DATA: 15 platform products
+   DATA: 16 platform products
    ═══════════════════════════════════════════════════════════════ */
 
 type Tier = "free" | "pro" | "enterprise" | "cloud";
@@ -256,6 +256,18 @@ const PRODUCTS: PlatformProduct[] = [
     priority: 4,
     revenue: "Enterprise license",
     features: ["Component usage", "Dead CSS detection", "Duplicate detection", "Performance metrics", "Accessibility score"],
+  },
+  {
+    id: "mcp-server",
+    name: "RoyCSS MCP Server",
+    tagline: "AI assistant integration — no hallucination",
+    description:
+      "Model Context Protocol server that gives AI assistants (Claude, ChatGPT, Cursor, Windsurf, Codex) access to official RoyCSS effects, documentation, and framework examples. Every AI produces accurate RoyCSS code — no hallucination.",
+    icon: BrainCircuit,
+    tier: "free",
+    priority: 5,
+    revenue: "Free / OSS",
+    features: ["Search 840+ effects", "Get CSS code by ID", "Framework examples", "Design tokens", "Recipes", "Claude + Cursor + Windsurf"],
   },
 ];
 
@@ -662,7 +674,7 @@ function CompetitiveMoat() {
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-6 sm:gap-10">
             <div className="text-center">
-              <AnimatedCounter value={15} className="font-display text-3xl font-bold text-primary" />
+              <AnimatedCounter value={16} className="font-display text-3xl font-bold text-primary" />
               <p className="text-xs text-muted-foreground mt-1">Platform products</p>
             </div>
             <div className="text-center">
@@ -726,7 +738,7 @@ export function PlatformEcosystem() {
           <ScrollReveal>
             <div className="flex items-center gap-2 mb-2">
               <Rocket className="size-4 text-primary" />
-              <h3 className="font-display text-xl font-bold text-foreground">15 Platform Products</h3>
+              <h3 className="font-display text-xl font-bold text-foreground">16+ Platform Products</h3>
             </div>
             <p className="text-sm text-muted-foreground mb-6">
               Filter by tier. Click any card to see what&apos;s included.

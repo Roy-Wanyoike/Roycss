@@ -412,6 +412,11 @@ const faqEntries: Array<{ question: string; answer: string }> = [
     answer:
       "Yes. Click any effect to open the detail dialog, then use the color palette or type a custom hex code.",
   },
+  {
+    question: "Is there an MCP server for AI assistants?",
+    answer:
+      "Yes. The RoyCSS MCP Server gives AI assistants (Claude, ChatGPT, Cursor, Windsurf, Codex) access to all 840+ effects, framework examples, and design tokens. Once configured, your AI can search effects, get CSS code, and generate accurate RoyCSS — no hallucination. See the mcp-server/ directory for setup instructions.",
+  },
 ];
 
 function FAQSection() {

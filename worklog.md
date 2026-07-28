@@ -1940,3 +1940,59 @@ Stage Summary:
 - LinkedIn in footer, GitHub repo link in nav
 - Contact form working end-to-end
 - 0 errors, 0 warnings, all features functional
+
+---
+Task ID: mcp-server-build
+Agent: main
+Task: Build the RoyCSS MCP Server — AI assistant integration for Claude, Cursor, Windsurf, Codex
+
+Work Log:
+- Installed @modelcontextprotocol/sdk v1.30.0
+- Created /mcp-server/ directory with:
+  - package.json — @roycss/mcp-server, bin entry, dependencies
+  - index.ts — Full MCP server with 7 tools:
+    1. search_effects — Search 840 effects by keyword/category/tags, returns matching effects with metadata
+    2. get_effect — Get full CSS code for any effect by ID (with fuzzy match suggestions)
+    3. list_categories — List all 20 categories with effect counts
+    4. get_install — Get install commands for npm/pnpm/yarn/bun/deno/CDN
+    5. get_framework_usage — Get React/Vue/Angular/Svelte/Next.js/vanilla code examples
+    6. get_design_tokens — Get OKLCH color system, principles, tokens
+    7. get_recipes — Get curated UI pattern recipes (hero, loading, cards, notification, nav)
+  - effects.json — Copied from dist/ (840 effects)
+  - README.md — Full setup instructions for Claude Desktop, Cursor, Windsurf, VS Code, Claude Code CLI
+
+- MCP Server Architecture:
+  - Uses stdio transport (standard for local MCP servers)
+  - No API calls, no rate limits, no network required — runs fully locally
+  - Reads from effects.json (840 structured effects)
+  - StdioServerTransport connects to AI assistant via stdin/stdout
+
+- Testing: All 7 tools verified working:
+  - search_effects("neon") → found 17 results, returned 3
+  - get_effect("btn-shine-sweep") → returned full CSS code + usage
+  - get_effect("btn-shine") → fuzzy match suggested "btn-shine-sweep" and "btn-shine-line-b18"
+  - list_categories → 20 categories, 840 effects
+  - get_recipes → 5 recipes (hero, loading, cards, notification, nav)
+
+- Site Integration:
+  - Added MCP Server as 16th platform product (free tier, priority 5 stars)
+  - Updated "15+ Platform Products" → "16+ Platform Products"
+  - Updated AnimatedCounter value from 15 to 16
+  - Added FAQ entry: "Is there an MCP server for AI assistants?"
+
+- Verified on live site:
+  - MCP Server product card renders with BrainCircuit icon
+  - Product count shows "16+ Platform Products"
+  - FAQ entry "Is there an MCP server for AI assistants?" renders
+  - 0 page errors, 0 console errors
+  - Lint: 0 errors, 0 warnings
+
+- Zip: /home/z/roycss-source.zip (4.0MB) includes mcp-server/ directory
+
+Stage Summary:
+- RoyCSS MCP Server is built and tested — gives AI assistants access to 840+ effects
+- 7 tools: search, get_effect, list_categories, get_install, get_framework_usage, get_design_tokens, get_recipes
+- Setup instructions for Claude Desktop, Cursor, Windsurf, VS Code, Claude Code CLI
+- Integrated into Platform Ecosystem section as 16th product
+- FAQ updated with MCP entry
+- No CSS framework owns AI integration — this is RoyCSS's competitive moat

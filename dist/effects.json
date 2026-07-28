@@ -12136,7 +12136,7 @@
     "childCount": null
   },
   {
-    "id": "text-neon-sign",
+    "id": "text-neon-sign-b19",
     "name": "Neon Sign",
     "category": "text",
     "description": "Text styled like a glowing neon sign with flicker animation — retro bar sign aesthetic",
@@ -12248,7 +12248,7 @@
     "childCount": null
   },
   {
-    "id": "bg-dot-pattern",
+    "id": "bg-dot-pattern-b19",
     "name": "Dot Pattern",
     "category": "backgrounds",
     "description": "A clean dot pattern background — subtle, professional, and modern",
@@ -12632,7 +12632,7 @@
     "childCount": null
   },
   {
-    "id": "card-gradient-border",
+    "id": "card-gradient-border-b19",
     "name": "Gradient Border Card",
     "category": "cards",
     "description": "A card with an animated gradient border that shifts colors — eye-catching container",
@@ -12664,7 +12664,7 @@
     "childCount": null
   },
   {
-    "id": "card-spotlight",
+    "id": "card-spotlight-b19",
     "name": "Spotlight Card",
     "category": "cards",
     "description": "A card with a radial spotlight effect — highlights content with a focused glow",

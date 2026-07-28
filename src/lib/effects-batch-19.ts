@@ -219,7 +219,7 @@ export const effectsBatch19: CSSEffect[] = [
   /* ───────────────────────── TEXT (5) ────────────────────────────── */
 
   {
-    id: "text-neon-sign",
+    id: "text-neon-sign-b19",
     name: "Neon Sign",
     category: "text",
     description:
@@ -227,7 +227,7 @@ export const effectsBatch19: CSSEffect[] = [
     tags: ["neon", "sign", "glow", "flicker", "retro"],
     previewType: "text",
     cssCode: `/* Neon Sign */
-.roycss-text-neon-sign {
+.roycss-text-neon-sign-b19 {
   color: oklch(0.85 0.2 330);
   text-shadow:
     0 0 5px oklch(0.7 0.25 330),
@@ -250,7 +250,7 @@ export const effectsBatch19: CSSEffect[] = [
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .roycss-text-neon-sign { animation: none; }
+  .roycss-text-neon-sign-b19 { animation: none; }
 }`,
   },
 
@@ -394,7 +394,7 @@ export const effectsBatch19: CSSEffect[] = [
   },
 
   {
-    id: "bg-dot-pattern",
+    id: "bg-dot-pattern-b19",
     name: "Dot Pattern",
     category: "backgrounds",
     description:
@@ -402,7 +402,7 @@ export const effectsBatch19: CSSEffect[] = [
     tags: ["dots", "pattern", "clean", "professional", "background"],
     previewType: "background",
     cssCode: `/* Dot Pattern */
-.roycss-bg-dot-pattern {
+.roycss-bg-dot-pattern-b19 {
   inline-size: 100%;
   block-size: 100%;
   background-color: oklch(0.15 0.02 250);
@@ -1091,7 +1091,7 @@ export const effectsBatch19: CSSEffect[] = [
   },
 
   {
-    id: "card-gradient-border",
+    id: "card-gradient-border-b19",
     name: "Gradient Border Card",
     category: "cards",
     description:
@@ -1099,7 +1099,7 @@ export const effectsBatch19: CSSEffect[] = [
     tags: ["gradient", "border", "card", "animated", "container"],
     previewType: "card",
     cssCode: `/* Gradient Border Card */
-.roycss-card-gradient-border-v2 {
+.roycss-card-gradient-border-b19-v2 {
   position: relative;
   inline-size: 144px;
   block-size: 96px;
@@ -1108,7 +1108,7 @@ export const effectsBatch19: CSSEffect[] = [
   overflow: hidden;
 }
 
-.roycss-card-gradient-border-v2::before {
+.roycss-card-gradient-border-b19-v2::before {
   content: "";
   position: absolute;
   inset: -2px;
@@ -1129,7 +1129,7 @@ export const effectsBatch19: CSSEffect[] = [
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .roycss-card-gradient-border-v2::before { animation: none; }
+  .roycss-card-gradient-border-b19-v2::before { animation: none; }
 }`,
   },
 
@@ -1154,7 +1154,7 @@ export const effectsBatch19: CSSEffect[] = [
   },
 
   {
-    id: "card-spotlight",
+    id: "card-spotlight-b19",
     name: "Spotlight Card",
     category: "cards",
     description:
@@ -1162,7 +1162,7 @@ export const effectsBatch19: CSSEffect[] = [
     tags: ["spotlight", "card", "radial", "glow", "focus"],
     previewType: "card",
     cssCode: `/* Spotlight Card */
-.roycss-card-spotlight {
+.roycss-card-spotlight-b19 {
   position: relative;
   inline-size: 144px;
   block-size: 96px;
@@ -1171,7 +1171,7 @@ export const effectsBatch19: CSSEffect[] = [
   overflow: hidden;
 }
 
-.roycss-card-spotlight::before {
+.roycss-card-spotlight-b19::before {
   content: "";
   position: absolute;
   inset: 0;

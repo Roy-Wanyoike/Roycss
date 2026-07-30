@@ -80,6 +80,7 @@ import { RecipesSection } from "@/components/roycss/recipes-section";
 import { PatternsSection } from "@/components/roycss/patterns-section";
 import { CollectionsSection } from "@/components/roycss/collections-section";
 import { ComparisonPanel } from "@/components/roycss/comparison-panel";
+import { PlatformTools } from "@/components/roycss/platform-tools";
 import { PlaygroundPanel } from "@/components/roycss/playground-panel";
 import { SearchOverlay } from "@/components/roycss/search-overlay";
 import { DocsViewer } from "@/components/roycss/docs-viewer";
@@ -842,6 +843,7 @@ export default function RoyCSSPage() {
   const [docsOpen, setDocsOpen] = useState(false);
   const [compareOpen, setCompareOpen] = useState(false);
   const [compareEffects, setCompareEffects] = useState<CSSEffect[]>([]);
+  const [platformTool, setPlatformTool] = useState<"ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | null>(null);
   const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -1536,7 +1538,11 @@ export default function RoyCSSPage() {
       <Separator className="opacity-50" />
 
       {/* ─── Platform Ecosystem (18-product vision) ─────────── */}
-      <PlatformEcosystem />
+      <PlatformEcosystem onLaunchTool={(toolId) => {
+        if (toolId === "ai-playground" || toolId === "css-doctor" || toolId === "utility-explorer" || toolId === "benchmark") {
+          setPlatformTool(toolId);
+        }
+      }} />
 
       <Separator className="opacity-50" />
 
@@ -1743,6 +1749,13 @@ export default function RoyCSSPage() {
         open={compareOpen}
         onOpenChange={setCompareOpen}
         initialEffects={compareEffects}
+        onSelectEffect={(e) => { setSelectedEffect(e); setDialogOpen(true); }}
+      />
+
+      {/* Platform Tools (AI Playground, CSS Doctor, Utility Explorer, Benchmark) */}
+      <PlatformTools
+        tool={platformTool}
+        onOpenChange={setPlatformTool}
         onSelectEffect={(e) => { setSelectedEffect(e); setDialogOpen(true); }}
       />
 

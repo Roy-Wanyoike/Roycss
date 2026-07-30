@@ -37,6 +37,7 @@ import {
   Users,
   Shield,
   Award,
+  Play,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -488,18 +489,27 @@ function VisionDiagram() {
    PRODUCT CARD
    ═══════════════════════════════════════════════════════════════ */
 
-function ProductCard({ product }: { product: PlatformProduct }) {
+function ProductCard({ product, onLaunchTool }: { product: PlatformProduct; onLaunchTool?: (toolId: string) => void }) {
   const [expanded, setExpanded] = useState(false);
   const Icon = product.icon;
   const tierMeta = TIER_META[product.tier];
   const TierIcon = tierMeta.icon;
+  const isInteractive = onLaunchTool && INTERACTIVE_TOOLS[product.id];
+
+  const handleClick = () => {
+    if (isInteractive) {
+      onLaunchTool!(product.id);
+    } else {
+      setExpanded((e) => !e);
+    }
+  };
 
   return (
     <motion.div
       variants={staggerItem}
       whileHover={{ y: -4 }}
       transition={{ duration: 0.2 }}
-      onClick={() => setExpanded((e) => !e)}
+      onClick={handleClick}
       className="group rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 cursor-pointer perf-auto"
       role="button"
       tabIndex={0}
@@ -508,7 +518,7 @@ function ProductCard({ product }: { product: PlatformProduct }) {
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          setExpanded((x) => !x);
+          if (isInteractive) { onLaunchTool!(product.id); } else { setExpanded((x) => !x); }
         }
       }}
     >
@@ -552,6 +562,11 @@ function ProductCard({ product }: { product: PlatformProduct }) {
           <Badge variant="secondary" className="text-xs bg-muted/80 text-muted-foreground">
             {product.revenue}
           </Badge>
+          {isInteractive && (
+            <Badge variant="secondary" className="text-xs bg-emerald-500/10 text-emerald-500 gap-1">
+              <Play className="size-2.5" /> Try it
+            </Badge>
+          )}
         </div>
 
         {/* Expanded features */}
@@ -598,21 +613,41 @@ function ProductCard({ product }: { product: PlatformProduct }) {
    DIFFERENTIATOR CARD
    ═══════════════════════════════════════════════════════════════ */
 
-function DifferentiatorCard({ item }: { item: Differentiator }) {
+function DifferentiatorCard({ item, onLaunchTool }: { item: Differentiator; onLaunchTool?: (toolId: string) => void }) {
   const Icon = item.icon;
+  const isInteractive = onLaunchTool && INTERACTIVE_TOOLS[item.id];
   return (
     <motion.div
       variants={staggerItem}
       whileHover={{ scale: 1.02 }}
       transition={{ duration: 0.2 }}
-      className="group rounded-xl border border-border bg-card p-4 hover:border-primary/40 hover:bg-muted/30 transition-all"
+      onClick={() => isInteractive && onLaunchTool!(item.id)}
+      className={`group rounded-xl border border-border bg-card p-4 hover:border-primary/40 hover:bg-muted/30 transition-all ${
+        isInteractive ? "cursor-pointer" : ""
+      }`}
+      role={isInteractive ? "button" : undefined}
+      tabIndex={isInteractive ? 0 : undefined}
+      aria-label={isInteractive ? `Launch ${item.name}` : undefined}
+      onKeyDown={(e) => {
+        if (isInteractive && (e.key === "Enter" || e.key === " ")) {
+          e.preventDefault();
+          onLaunchTool!(item.id);
+        }
+      }}
     >
       <div className="flex items-start gap-3">
         <div className="flex items-center justify-center size-9 rounded-lg bg-primary/10 text-primary shrink-0 group-hover:bg-primary/20 transition-colors">
           <Icon className="size-4" />
         </div>
-        <div className="min-w-0">
-          <h4 className="font-semibold text-foreground text-sm leading-tight">{item.name}</h4>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-2">
+            <h4 className="font-semibold text-foreground text-sm leading-tight">{item.name}</h4>
+            {isInteractive && (
+              <Badge variant="secondary" className="text-xs bg-emerald-500/10 text-emerald-500 gap-0.5 shrink-0">
+                <Play className="size-2" /> Try it
+              </Badge>
+            )}
+          </div>
           <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{item.description}</p>
         </div>
       </div>
@@ -700,7 +735,17 @@ function CompetitiveMoat() {
    MAIN SECTION
    ═══════════════════════════════════════════════════════════════ */
 
-export function PlatformEcosystem() {
+// Tool IDs that are interactive (open a panel instead of just expanding)
+const INTERACTIVE_TOOLS: Record<string, string> = {
+  "ai-playground": "ai-playground",
+  "css-doctor": "css-doctor",
+  "utility-explorer": "utility-explorer",
+  "benchmark": "benchmark",
+  "mcp-server": "mcp-server",
+  "inspector": "inspector",
+};
+
+export function PlatformEcosystem({ onLaunchTool }: { onLaunchTool?: (toolId: string) => void } = {}) {
   const [activeTier, setActiveTier] = useState<Tier | "all">("all");
   const [sponsorOpen, setSponsorOpen] = useState(false);
 
@@ -787,7 +832,7 @@ export function PlatformEcosystem() {
           >
             <AnimatePresence mode="popLayout">
               {filteredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <ProductCard key={product.id} product={product} onLaunchTool={onLaunchTool} />
               ))}
             </AnimatePresence>
           </StaggerGroup>
@@ -807,7 +852,7 @@ export function PlatformEcosystem() {
 
           <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {DIFFERENTIATORS.map((item) => (
-              <DifferentiatorCard key={item.id} item={item} />
+              <DifferentiatorCard key={item.id} item={item} onLaunchTool={onLaunchTool} />
             ))}
           </StaggerGroup>
         </div>

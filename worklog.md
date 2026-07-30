@@ -2795,3 +2795,30 @@ Stage Summary:
 - Git commit hash: **1195e96** (full: 1195e9611017e71dcfe317580b7d8c72ee6a1665), message: `cli-v2-reapply`.
 - Design docs (5 files in `docs/adr/cli-platform-v2/`) survived the reset and were included in the commit (untracked → tracked).
 - Future `git reset --hard HEAD` will now preserve v2 (HEAD = the cli-v2-reapply commit).
+
+---
+Task ID: mcp-server-v2-REAPPLY
+Agent: Distinguished Engineer — MCP Server v2 domain (general-purpose subagent, resuming agent d6cd01f8)
+Task: Re-apply the MCP Server v2 changes to `mcp-server/index.ts` after a `git reset --hard HEAD` reverted it to v1. The design docs in `docs/adr/mcp-server-v2/` and `mcp-server/patterns.json` survived (untracked). Commit immediately to prevent future resets.
+
+Work Log:
+- Verified the reset damage: `mcp-server/index.ts` was back to v1 (773 lines, 7 tools). `mcp-server/package.json` was back to v1 (version 1.0.0). `mcp-server/README.md` was back to v1 (275 lines). `mcp-server/patterns.json` survived (113 lines, 10 patterns, untracked). All 5 design docs in `docs/adr/mcp-server-v2/` survived (untracked).
+- Re-applied the full v2 `index.ts` (1,951 lines) — identical to the version from the previous session: 13 tools (7 v1 + 6 new: `get_patterns`, `get_pattern`, `validate_class_name`, `suggest_for_intent`, `get_accessibility_considerations`, `get_browser_support`), 5 resources (4 static + 1 template), 3 prompts (`design-a-landing-page`, `build-a-loading-state`, `accessibility-audit`), structured error format with 6-code enum, `loadPatterns()` with `FALLBACK_PATTERNS_DATA` fallback, `BROWSER_FEATURES` table (18 features), `A11Y_GUIDANCE` (4 sections + effect-specific notes), `INTENT_RULES` (17 intent rules), `truncateField()` prompt-injection defense, `levenshtein()` fuzzy matching, `inferFeatures()` heuristic. Server version `2.0.0`, capabilities `{tools:{}, resources:{listChanged:false}, prompts:{listChanged:false}}`.
+- Re-applied `package.json` version bump: `1.0.0 → 2.0.0` + updated description string.
+- Re-applied `README.md` (596 lines) — v2 docs with 13-tool table, 5-resource table, 3-prompt table, per-tool sections, Error Format section, v1→v2 Migration subsection, Design Documentation links.
+- Verified `patterns.json` intact: 10 patterns, first ID `pattern-empty-state`.
+- Test: `echo '{"jsonrpc":"2.0","method":"tools/list","id":1}' | bun mcp-server/index.ts` → 13 tools. All 6 new tool names present. All 7 v1 tool names present (backwards compatible).
+- Test: `get_patterns` → `totalPatterns: 10` ✅
+- Test: `validate_class_name("roycss-pulse-glow")` → `valid: true` ✅
+- Test: `validate_class_name("roycss-puls-glo")` → `valid: false`, top suggestion `pulse-glow` ✅
+- Test: `suggest_for_intent("loading state")` → patterns `["pattern-loading-state", "pattern-skeleton-state"]` ✅
+- Test: `resources/list` → 4 static resources ✅; `resources/templates/list` → 1 template ✅; `prompts/list` → 3 prompts ✅
+- Lint: `bun run lint` → exit 0, 0 errors, 0 warnings.
+- **CRITICAL: Committed to git** — `git add -A && git commit -m "mcp-v2-reapply"` → commit `f0df4b2`. Verified all 4 files at v2 in HEAD: `index.ts` (1,951 lines, v2 header), `package.json` (version 2.0.0), `README.md` (596 lines, v2), `patterns.json` (113 lines). Future `git reset --hard HEAD` will now preserve v2.
+
+Stage Summary:
+- MCP Server v2.0.0 re-applied and committed (commit `f0df4b2`).
+- 13 tools (7 v1 + 6 new), 5 resources (4 static + 1 template), 3 prompts — all verified via stdio.
+- `bun run lint` → 0 errors.
+- All v2 files are in HEAD; future resets will not revert them.
+- Design docs (5 files, 1,047 lines) in `docs/adr/mcp-server-v2/` survived the reset and remain valid reference material.

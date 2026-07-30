@@ -15,6 +15,7 @@ import {
   Play,
   Tag,
   Sparkles,
+  GitCompare,
 } from "lucide-react";
 import type { CSSEffect } from "@/lib/roycss-types";
 import { Badge } from "@/components/ui/badge";
@@ -368,6 +369,7 @@ interface EffectDetailDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSelectEffect: (effect: CSSEffect) => void;
+  onCompare?: (effect: CSSEffect) => void;
 }
 
 export function EffectDetailDialog({
@@ -375,6 +377,7 @@ export function EffectDetailDialog({
   open,
   onOpenChange,
   onSelectEffect,
+  onCompare,
 }: EffectDetailDialogProps) {
   const [editedCSS, setEditedCSS] = useState(effect?.cssCode ?? "");
   const [copied, setCopied] = useState(false);
@@ -441,6 +444,17 @@ export function EffectDetailDialog({
               <Badge variant="secondary" className="text-xs bg-primary/10 text-primary border-primary/20">
                 {meta.label}
               </Badge>
+              {onCompare && (
+                <button
+                  onClick={() => { onCompare(effect); onOpenChange(false); }}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-muted text-foreground hover:bg-primary hover:text-primary-foreground transition-all cursor-pointer"
+                  aria-label="Compare this effect"
+                  title="Add to comparison"
+                >
+                  <GitCompare className="size-3.5" />
+                  <span className="hidden sm:inline">Compare</span>
+                </button>
+              )}
             </div>
           </div>
 

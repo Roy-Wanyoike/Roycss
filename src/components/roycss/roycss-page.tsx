@@ -36,6 +36,7 @@ import {
   Wand2,
   Frame,
   SlidersHorizontal,
+  GitCompare,
   Navigation,
   Sparkle,
   FormInput,
@@ -78,6 +79,7 @@ import { FeaturedCompanies } from "@/components/roycss/featured-companies";
 import { RecipesSection } from "@/components/roycss/recipes-section";
 import { PatternsSection } from "@/components/roycss/patterns-section";
 import { CollectionsSection } from "@/components/roycss/collections-section";
+import { ComparisonPanel } from "@/components/roycss/comparison-panel";
 import { PlaygroundPanel } from "@/components/roycss/playground-panel";
 import { SearchOverlay } from "@/components/roycss/search-overlay";
 import { DocsViewer } from "@/components/roycss/docs-viewer";
@@ -838,6 +840,8 @@ export default function RoyCSSPage() {
   const [playgroundOpen, setPlaygroundOpen] = useState(false);
   const [searchOverlayOpen, setSearchOverlayOpen] = useState(false);
   const [docsOpen, setDocsOpen] = useState(false);
+  const [compareOpen, setCompareOpen] = useState(false);
+  const [compareEffects, setCompareEffects] = useState<CSSEffect[]>([]);
   const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -1027,6 +1031,15 @@ export default function RoyCSSPage() {
               >
                 <SlidersHorizontal className="size-4" />
               </button>
+              {/* Compare button */}
+              <button
+                onClick={() => { setCompareEffects([]); setCompareOpen(true); }}
+                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
+                aria-label="Open effect comparison"
+                title="Compare Effects"
+              >
+                <GitCompare className="size-4" />
+              </button>
               <ThemeToggle />
               <button
                 onClick={() => setFavoritesOpen(true)}
@@ -1118,6 +1131,17 @@ export default function RoyCSSPage() {
                   >
                     Playground
                     <SlidersHorizontal className="size-3.5" />
+                  </button>
+                  <button
+                    onClick={() => {
+                      setCompareEffects([]);
+                      setCompareOpen(true);
+                      setMobileMenuOpen(false);
+                    }}
+                    className="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer min-h-[44px]"
+                  >
+                    Compare
+                    <GitCompare className="size-3.5" />
                   </button>
                   <button
                     onClick={() => {
@@ -1685,6 +1709,10 @@ export default function RoyCSSPage() {
           onSelectEffect={(e) => {
             setSelectedEffect(e);
           }}
+          onCompare={(e) => {
+            setCompareEffects([e]);
+            setCompareOpen(true);
+          }}
         />
       )}
 
@@ -1709,6 +1737,14 @@ export default function RoyCSSPage() {
 
       {/* Animation Playground */}
       <PlaygroundPanel open={playgroundOpen} onOpenChange={setPlaygroundOpen} />
+
+      {/* Effect Comparison Panel */}
+      <ComparisonPanel
+        open={compareOpen}
+        onOpenChange={setCompareOpen}
+        initialEffects={compareEffects}
+        onSelectEffect={(e) => { setSelectedEffect(e); setDialogOpen(true); }}
+      />
 
       {/* Search Overlay (⌘K) */}
       <SearchOverlay

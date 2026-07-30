@@ -2761,3 +2761,37 @@ Work Log:
 4. Add axe-core + keyboard-nav to CI (both scripts already exit 1 on failure).
 5. Schedule quarterly NVDA + VoiceOver manual smoke test.
 
+
+---
+Task ID: cli-platform-v2-REAPPLY
+Agent: Principal Engineer — CLI Platform v2 domain (general-purpose subagent, resuming agent 6e5d3104)
+Task: Re-apply the v2 CLI changes to `src/cli/index.ts` after a periodic `git reset --hard HEAD` reverted the source file back to v1.0.0 (622 lines, 8 commands). Design docs in `docs/adr/cli-platform-v2/` survived (untracked). Rebuild `cli/index.js`, verify lint clean, then `git commit` to prevent future resets.
+
+Work Log:
+- Verified current state: `src/cli/index.ts` is at 622 lines (v1.0.0, `VERSION = "1.0.0"`, only 8 commands: init, add, search, list, categories, info, doctor, version, help). Design docs in `docs/adr/cli-platform-v2/` (DESIGN.md, ADR.md, THREAT-MODEL.md, IMPLEMENTATION-PLAN.md, REVIEW-CHECKLIST.md) are intact.
+- Re-read `docs/adr/cli-platform-v2/IMPLEMENTATION-PLAN.md` (293 lines) to re-anchor on the v2 design: 6 new commands (create, upgrade, stats, browse, export, plugin), enhanced doctor (8 checks total), 5 new flags (--template, --effect, --category, --out, --name), VERSION = "2.0.0".
+- Re-applied the full v2 implementation to `src/cli/index.ts` in a single Write operation (2,132 lines). All 6 new commands restored: `cmdCreate` (6 templates: vanilla/html/react/vue/svelte/nextjs with full per-template file scaffolding + path-traversal protection via `relative()` check), `cmdUpgrade` (report-only: roycss version check, OKLCH compliance, unprefixed class detection, prefers-reduced-motion), `cmdStats` (top-10 effects, category breakdown, unused effects, `--json` output), `cmdBrowse` (interactive TUI with readline + raw mode + non-TTY fallback + SIGINT cleanup), `cmdExport` (union selection with explicit IDs + `--category` + `--tag`, deduped, sorted by `(category, id)`, stable header with date), `cmdPlugin` (list/enable/disable/init, rename-based enable/disable, sample plugin scaffold). Enhanced `cmdDoctor` with 4 new checks (unknown classes/typos, OKLCH compliance, prefers-reduced-motion, bundle size > 1MB). Added shared helpers: `resolveCategory(arg)`, `scanSourceFiles(dirs)` with SKIP_DIRS set. Updated `cmdHelp` with 15 commands + 10 flags + 18 examples. Bumped VERSION to "2.0.0".
+- Rebuilt the standalone CLI: `cd /home/z/my-project && bun build src/cli/index.ts --outdir cli --target node --outfile index.js`. Bundled 37 modules in 22ms. Output: `cli/index.js` at 1,701,828 bytes (1.70 MB, up from 1.66 MB v1 baseline).
+- Verified version: `node cli/index.js version` → `RoyCSS CLI v2.0.0` ✓
+- Verified help: `node cli/index.js help` shows all 15 commands (init, add, search, list, categories, info, doctor, create, upgrade, stats, browse, export, plugin, version, help) + 10 flags + 18 examples. Command section between `Commands:` and `Flags:` headers contains 15 command lines. ✓
+- Lint: `cd /home/z/my-project && bun run lint` → exit 0, 0 errors, 0 warnings. ✓
+- Smoke-tested each new command:
+  * `node cli/index.js export pulse-glow bounce-in --out /tmp/cli-reapply-test.css` → 1.1 KB file, 2 effects sorted by ID (bounce-in before pulse-glow), header with date + categories + version v2.0.0 ✓
+  * `node cli/index.js create react-test --template react` (in /tmp/reapply-create) → created `package.json` + `roycss.css` + `index.html` + `src/main.tsx` + `src/App.tsx` + `tsconfig.json` + `vite.config.ts` + `README.md` ✓
+  * `node cli/index.js stats` (in react-test) → `Total usages: 1 across 1 unique effect in 2 source files. Top 1: roycss-pulse-glow ×1` ✓
+  * `node cli/index.js browse animations` → non-TTY fallback printed 30 of 312 animations, exited cleanly ✓
+  * `node cli/index.js plugin list` → `No plugins directory found at .roycss/plugins` ✓
+  * `node cli/index.js upgrade` → `roycss@^2.0.0 is up to date (v2.x). roycss.css is OKLCH-compliant. No unprefixed RoyCSS classes detected. 1 warning: missing prefers-reduced-motion` ✓
+- **CRITICAL — committed immediately to prevent future `git reset --hard HEAD`**: `cd /home/z/my-project && git add -A && git commit -m "cli-v2-reapply"`. Set `user.email = cli-v2-agent@roycss.local` and `user.name = "CLI v2 Agent"` (repo-local). Commit hash: **1195e9611017e71dcfe317580b7d8c72ee6a1665** (short: `1195e96`). Commit message: `cli-v2-reapply`.
+- Verified post-commit state: `git rev-parse HEAD` → 1195e9611017e71dcfe317580b7d8c72ee6a1665. `wc -l src/cli/index.ts` → 2132 lines. `ls -la cli/index.js` → 1,701,828 bytes. `node cli/index.js version` → `RoyCSS CLI v2.0.0`. All v2 changes persisted to git history; future `git reset --hard HEAD` will now reset to this commit (preserving v2) rather than v1.
+
+Stage Summary:
+- RoyCSS CLI v2.0.0 re-applied and committed in a single Write + build + commit cycle.
+- `src/cli/index.ts`: 2,132 lines (up from 622 v1 baseline) — 6 new commands + enhanced doctor + 5 new flags + VERSION = "2.0.0".
+- `cli/index.js`: 1,701,828 bytes (1.70 MB standalone, zero runtime deps).
+- Lint: exit 0, 0 errors, 0 warnings.
+- Version confirmed: `RoyCSS CLI v2.0.0`.
+- Command count confirmed: 15 commands in `help` output (8 v1 + 6 v2 + help/version).
+- Git commit hash: **1195e96** (full: 1195e9611017e71dcfe317580b7d8c72ee6a1665), message: `cli-v2-reapply`.
+- Design docs (5 files in `docs/adr/cli-platform-v2/`) survived the reset and were included in the commit (untracked → tracked).
+- Future `git reset --hard HEAD` will now preserve v2 (HEAD = the cli-v2-reapply commit).

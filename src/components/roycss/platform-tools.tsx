@@ -16,6 +16,15 @@ import {
   AlertCircle,
   RefreshCw,
   Play,
+  Dna,
+  ArrowLeftRight,
+  Trophy,
+  GitCompare,
+  ArrowRight,
+  Clock,
+  Award,
+  Flame,
+  Star,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
@@ -26,7 +35,7 @@ import type { CSSEffect } from "@/lib/roycss-types";
    Shared types
    ═══════════════════════════════════════════════════════════════ */
 
-type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark";
+type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff";
 
 interface PlatformToolsProps {
   tool: ToolType | null;
@@ -661,6 +670,716 @@ function BenchmarkMetric({ label, value, unit, good, ok }: { label: string; valu
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   5. Component Genome — effect metadata viewer
+   ═══════════════════════════════════════════════════════════════ */
+
+function ComponentGenome() {
+  const [search, setSearch] = useState("");
+  const [selected, setSelected] = useState<CSSEffect | null>(effects[0]);
+
+  const filtered = useMemo(() => {
+    const q = search.toLowerCase().trim();
+    if (!q) return effects.slice(0, 50);
+    return effects.filter(e => e.name.toLowerCase().includes(q) || e.id.includes(q) || e.tags.some(t => t.includes(q))).slice(0, 50);
+  }, [search]);
+
+  const genome = useMemo(() => {
+    if (!selected) return null;
+    const css = selected.cssCode;
+    const properties = new Set<string>();
+    const keyframes: string[] = [];
+    const pseudoElements: string[] = [];
+
+    // Extract properties
+    const propMatches = css.matchAll(/^\s*([a-z-]+)\s*:/gm);
+    for (const m of propMatches) properties.add(m[1]);
+
+    // Extract keyframe names
+    const kfMatches = css.matchAll(/@keyframes\s+([a-zA-Z0-9_-]+)/g);
+    for (const m of kfMatches) keyframes.push(m[1]);
+
+    // Extract pseudo-elements
+    const peMatches = css.matchAll(/::(before|after|first-letter|first-line|placeholder|selection)/g);
+    for (const m of peMatches) if (!pseudoElements.includes(m[1])) pseudoElements.push(m[1]);
+
+    // Extract selectors
+    const selectorMatches = css.matchAll(/^(\.[a-zA-Z0-9_-]+(?:[^{]*)?)\s*\{/gm);
+    const selectors = Array.from(new Set(Array.from(selectorMatches).map(m => m[1].trim())));
+
+    // Color analysis
+    const hasOKLCH = /oklch\(/.test(css);
+    const hasColorMix = /color-mix\(/.test(css);
+    const hasHex = /#[0-9a-fA-F]{3,8}\b/.test(css);
+    const hasRGBA = /rgba?\(/.test(css);
+    const hasHSL = /hsla?\(/.test(css);
+
+    // Animation analysis
+    const animMatch = css.match(/animation:\s*([^;]+)/);
+    const animation = animMatch ? animMatch[1].trim() : null;
+    const hasReducedMotion = /prefers-reduced-motion/.test(css);
+
+    // Feature detection
+    const hasProperty = /@property/.test(css);
+    const hasContainerQuery = /@container/.test(css);
+    const hasHasSelector = /:has\(/.test(css);
+    const hasNesting = /&/.test(css);
+
+    // Size
+    const sizeBytes = new Blob([css]).size;
+    const lineCount = css.split("\n").length;
+
+    // Tags as "dependencies"
+    const dependencies = selected.tags;
+
+    // A11y assessment
+    const a11yIssues: string[] = [];
+    if (animation && !hasReducedMotion) a11yIssues.push("Missing prefers-reduced-motion guard");
+    if (hasHex || hasRGBA || hasHSL) a11yIssues.push("Non-OKLCH color (may have contrast issues)");
+    if (animation && /infinite/.test(animation) && /spin|rotate|pulse/.test(animation)) a11yIssues.push("Infinite animation may cause vestibular issues");
+
+    return {
+      properties: Array.from(properties).sort(),
+      keyframes,
+      pseudoElements,
+      selectors,
+      colors: { hasOKLCH, hasColorMix, hasHex, hasRGBA, hasHSL },
+      animation,
+      hasReducedMotion,
+      features: { hasProperty, hasContainerQuery, hasHasSelector, hasNesting },
+      sizeBytes,
+      lineCount,
+      dependencies,
+      a11yIssues,
+      genomeScore: [
+        hasOKLCH, hasColorMix, !hasHex, !hasRGBA, !hasHSL,
+        hasReducedMotion || !animation,
+        hasProperty, lineCount < 30,
+      ].filter(Boolean).length * 100 / 8,
+    };
+  }, [selected]);
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 h-[60vh]">
+      {/* Effect list */}
+      <div className="flex flex-col rounded-xl border border-border/60 overflow-hidden">
+        <div className="p-2 border-b border-border/40 bg-muted/20">
+          <input
+            type="search"
+            placeholder="Search effects..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full h-9 px-3 rounded-lg bg-background border border-border/50 focus:border-primary/50 text-sm focus:outline-none"
+          />
+        </div>
+        <div className="flex-1 overflow-y-auto scrollbar-thin p-1.5">
+          {filtered.map((e) => (
+            <button
+              key={e.id}
+              onClick={() => setSelected(e)}
+              className={`w-full flex items-center gap-2 p-2 rounded-lg transition-all cursor-pointer text-left ${selected?.id === e.id ? "bg-primary/10" : "hover:bg-muted/50"}`}
+            >
+              <div className="flex items-center justify-center size-9 rounded-lg bg-muted/40 border border-border/50 overflow-hidden shrink-0">
+                <div className="scale-[0.4] origin-center"><LivePreview effect={e} /></div>
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-medium text-foreground truncate">{e.name}</p>
+                <p className="text-xs text-muted-foreground truncate font-mono">{e.id}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Genome detail */}
+      <div className="flex flex-col rounded-xl border border-border/60 overflow-hidden">
+        {selected && genome ? (
+          <>
+            <div className="p-3 border-b border-border/40 bg-muted/20">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-semibold text-foreground">{selected.name}</p>
+                  <p className="text-xs text-muted-foreground font-mono">{selected.id}</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs text-muted-foreground">Genome Score</p>
+                  <p className={`font-display text-xl font-bold ${genome.genomeScore >= 80 ? "text-emerald-500" : genome.genomeScore >= 60 ? "text-amber-500" : "text-rose-500"}`}>
+                    {Math.round(genome.genomeScore)}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex-1 overflow-y-auto scrollbar-thin p-3 space-y-3">
+              {/* Basic metrics */}
+              <div className="grid grid-cols-2 gap-2">
+                <div className="p-2 rounded-lg bg-muted/30"><p className="text-xs text-muted-foreground">Lines</p><p className="text-sm font-mono font-medium">{genome.lineCount}</p></div>
+                <div className="p-2 rounded-lg bg-muted/30"><p className="text-xs text-muted-foreground">Size</p><p className="text-sm font-mono font-medium">{genome.sizeBytes}B</p></div>
+              </div>
+
+              {/* Selectors */}
+              <GenomeSection title="Selectors" items={genome.selectors} mono />
+
+              {/* Keyframes */}
+              {genome.keyframes.length > 0 && <GenomeSection title="Keyframes" items={genome.keyframes} mono />}
+
+              {/* Pseudo-elements */}
+              {genome.pseudoElements.length > 0 && <GenomeSection title="Pseudo-elements" items={genome.pseudoElements} mono />}
+
+              {/* Properties */}
+              <GenomeSection title={`CSS Properties (${genome.properties.length})`} items={genome.properties} mono />
+
+              {/* Color system */}
+              <div className="space-y-1.5">
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Color System</p>
+                <ComplianceRow label="OKLCH" passed={genome.colors.hasOKLCH} />
+                <ComplianceRow label="color-mix()" passed={genome.colors.hasColorMix} />
+                <ComplianceRow label="No hex colors" passed={!genome.colors.hasHex} />
+                <ComplianceRow label="No rgba/hsl" passed={!genome.colors.hasRGBA && !genome.colors.hasHSL} />
+              </div>
+
+              {/* Modern features */}
+              <div className="space-y-1.5">
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Modern CSS Features</p>
+                <ComplianceRow label="@property" passed={genome.features.hasProperty} />
+                <ComplianceRow label="Container queries" passed={genome.features.hasContainerQuery} />
+                <ComplianceRow label=":has() selector" passed={genome.features.hasHasSelector} />
+                <ComplianceRow label="CSS nesting" passed={genome.features.hasNesting} />
+                <ComplianceRow label="prefers-reduced-motion" passed={genome.hasReducedMotion} />
+              </div>
+
+              {/* Dependencies (tags) */}
+              <GenomeSection title="Dependencies (tags)" items={genome.dependencies} />
+
+              {/* A11y */}
+              {genome.a11yIssues.length > 0 && (
+                <div className="space-y-1.5">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Accessibility Notes</p>
+                  {genome.a11yIssues.map((issue, i) => (
+                    <div key={i} className="flex items-start gap-2 text-xs text-amber-600 dark:text-amber-400">
+                      <AlertTriangle className="size-3.5 shrink-0 mt-0.5" /> {issue}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </>
+        ) : (
+          <div className="flex-1 flex items-center justify-center text-sm text-muted-foreground">Select an effect to view its genome</div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function GenomeSection({ title, items, mono }: { title: string; items: string[]; mono?: boolean }) {
+  if (items.length === 0) return null;
+  return (
+    <div>
+      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">{title}</p>
+      <div className="flex flex-wrap gap-1">
+        {items.map((item, i) => (
+          <code key={i} className={`text-xs px-1.5 py-0.5 rounded bg-muted/60 text-foreground/80 ${mono ? "font-mono" : ""}`}>{item}</code>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   6. AI Migration — convert Bootstrap/Tailwind → RoyCSS
+   ═══════════════════════════════════════════════════════════════ */
+
+const FRAMEWORKS = [
+  { id: "bootstrap", name: "Bootstrap" },
+  { id: "tailwind", name: "Tailwind CSS" },
+  { id: "material", name: "Material UI" },
+  { id: "bulma", name: "Bulma" },
+  { id: "foundation", name: "Foundation" },
+  { id: "plain", name: "Plain CSS" },
+];
+
+const MIGRATION_EXAMPLES: Record<string, string> = {
+  bootstrap: `.btn-primary {\n  background-color: #0d6efd;\n  border-color: #0d6efd;\n  color: #fff;\n  padding: 0.375rem 0.75rem;\n  border-radius: 0.25rem;\n  transition: all 0.15s;\n}`,
+  tailwind: `.card {\n  background-color: #ffffff;\n  border: 1px solid #e5e7eb;\n  border-radius: 0.5rem;\n  padding: 1.5rem;\n  box-shadow: 0 1px 3px rgba(0,0,0,0.1);\n}`,
+  material: `.mdc-button {\n  background: #6200ee;\n  color: white;\n  padding: 8px 16px;\n  border-radius: 4px;\n  text-transform: uppercase;\n  animation: ripple 0.3s;\n}`,
+  bulma: `.button.is-primary {\n  background-color: #00d1b2;\n  border-color: transparent;\n  color: #fff;\n  padding: 0.5em 1em;\n}`,
+  foundation: `.button {\n  background-color: #1779ba;\n  color: #fefefe;\n  padding: 0.85em 1em;\n  margin-bottom: 0;\n}`,
+  plain: `.my-element {\n  background: #10b981;\n  margin-left: 10px;\n  padding-right: 20px;\n  border-left: 2px solid #ccc;\n  animation: spin 2s linear infinite;\n}`,
+};
+
+function AIMigration() {
+  const [framework, setFramework] = useState("bootstrap");
+  const [inputCSS, setInputCSS] = useState(MIGRATION_EXAMPLES.bootstrap);
+  const [outputCSS, setOutputCSS] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [copied, setCopied] = useState(false);
+
+  const handleFrameworkChange = (fw: string) => {
+    setFramework(fw);
+    setInputCSS(MIGRATION_EXAMPLES[fw] || "");
+    setOutputCSS("");
+    setError("");
+  };
+
+  const handleMigrate = useCallback(async () => {
+    if (!inputCSS.trim() || loading) return;
+    setLoading(true);
+    setError("");
+    setOutputCSS("");
+    try {
+      const res = await fetch("/api/ai-migration", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ css: inputCSS, framework }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Migration failed");
+      setOutputCSS(data.css);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Failed to migrate");
+    } finally {
+      setLoading(false);
+    }
+  }, [inputCSS, framework, loading]);
+
+  const handleCopy = useCallback(async () => {
+    try { await navigator.clipboard.writeText(outputCSS); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch { /* noop */ }
+  }, [outputCSS]);
+
+  return (
+    <div className="space-y-4">
+      {/* Framework selector */}
+      <div>
+        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">Source Framework</label>
+        <div className="flex items-center gap-1.5 flex-wrap">
+          {FRAMEWORKS.map(fw => (
+            <button
+              key={fw.id}
+              onClick={() => handleFrameworkChange(fw.id)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+                framework === fw.id ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:bg-muted/80"
+              }`}
+            >
+              {fw.name}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Input CSS */}
+      <div>
+        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">Paste {FRAMEWORKS.find(f => f.id === framework)?.name} CSS</label>
+        <textarea
+          value={inputCSS}
+          onChange={(e) => setInputCSS(e.target.value)}
+          placeholder="Paste your CSS here..."
+          className="w-full h-32 p-3 rounded-xl bg-background border border-border/50 focus:border-primary/50 text-xs font-mono text-foreground focus:outline-none transition-all resize-none scrollbar-thin"
+          disabled={loading}
+        />
+      </div>
+
+      <button
+        onClick={handleMigrate}
+        disabled={loading || !inputCSS.trim()}
+        className="flex items-center gap-1.5 px-5 h-11 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer"
+      >
+        {loading ? <Loader2 className="size-4 animate-spin" /> : <ArrowLeftRight className="size-4" />}
+        {loading ? "Migrating..." : "Migrate to RoyCSS"}
+      </button>
+
+      {error && (
+        <div className="flex items-center gap-2 p-3 rounded-xl bg-rose-500/10 text-rose-500 text-sm">
+          <AlertCircle className="size-4 shrink-0" /> {error}
+        </div>
+      )}
+
+      <AnimatePresence>
+        {outputCSS && (
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-2">
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">RoyCSS Output (OKLCH + Logical Properties)</label>
+              <button
+                onClick={handleCopy}
+                className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+                  copied ? "bg-emerald-500/15 text-emerald-500" : "bg-primary/10 text-primary hover:bg-primary/20"
+                }`}
+              >
+                {copied ? <Check className="size-3" /> : <Copy className="size-3" />}
+                {copied ? "Copied!" : "Copy CSS"}
+              </button>
+            </div>
+            <pre className="p-3 rounded-xl bg-muted/50 border border-border/50 text-xs leading-relaxed font-mono text-foreground/80 overflow-x-auto scrollbar-thin max-h-64 overflow-y-auto">
+              <code>{outputCSS}</code>
+            </pre>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   7. Community Challenges — coding challenges + leaderboard
+   ═══════════════════════════════════════════════════════════════ */
+
+interface Challenge {
+  id: string;
+  title: string;
+  difficulty: "Easy" | "Medium" | "Hard";
+  description: string;
+  prompt: string;
+  hint: string;
+  xp: number;
+  completed: boolean;
+}
+
+const CHALLENGES: Challenge[] = [
+  {
+    id: "ch-1",
+    title: "Glassmorphism Card",
+    difficulty: "Easy",
+    description: "Create a frosted glass card with backdrop-blur, semi-transparent background, and subtle border.",
+    prompt: "Create a glassmorphism card that floats above a colorful background",
+    hint: "Use backdrop-filter: blur(), a semi-transparent background, and a 1px border with low opacity.",
+    xp: 50,
+    completed: false,
+  },
+  {
+    id: "ch-2",
+    title: "Neon Glow Text",
+    difficulty: "Easy",
+    description: "Make text glow with a neon effect using text-shadow layers.",
+    prompt: "Create neon glow text in cyan",
+    hint: "Stack multiple text-shadow values with increasing blur radius and decreasing opacity.",
+    xp: 50,
+    completed: false,
+  },
+  {
+    id: "ch-3",
+    title: "Animated Loader",
+    difficulty: "Medium",
+    description: "Build a spinner that rotates smoothly using @keyframes and transform.",
+    prompt: "Create a circular spinner loader",
+    hint: "Use @keyframes with transform: rotate(360deg) and animation: linear infinite.",
+    xp: 100,
+    completed: false,
+  },
+  {
+    id: "ch-4",
+    title: "Hover Shine Sweep",
+    difficulty: "Medium",
+    description: "Add a diagonal shine that sweeps across a button on hover.",
+    prompt: "Create a button with a shine sweep on hover",
+    hint: "Use ::before with a gradient and transform: translateX, triggered on :hover.",
+    xp: 100,
+    completed: false,
+  },
+  {
+    id: "ch-5",
+    title: "3D Card Flip",
+    difficulty: "Hard",
+    description: "Create a card that flips in 3D on hover, revealing back content.",
+    prompt: "Create a 3D card flip on hover",
+    hint: "Use perspective, transform-style: preserve-3d, backface-visibility: hidden, and rotateY(180deg).",
+    xp: 200,
+    completed: false,
+  },
+  {
+    id: "ch-6",
+    title: "Aurora Gradient",
+    difficulty: "Hard",
+    description: "Animate a multi-color aurora gradient background.",
+    prompt: "Create an animated aurora gradient background",
+    hint: "Use @keyframes with background-position shifts on a linear-gradient with multiple color stops.",
+    xp: 200,
+    completed: false,
+  },
+];
+
+const LEADERBOARD = [
+  { rank: 1, name: "CSS_Ninja", xp: 850, challenges: 6, badge: "gold" },
+  { rank: 2, name: "GlassMaster", xp: 700, challenges: 5, badge: "silver" },
+  { rank: 3, name: "NeonDream", xp: 650, challenges: 5, badge: "bronze" },
+  { rank: 4, name: "RoyWanyoike", xp: 500, challenges: 4, badge: null },
+  { rank: 5, name: "SpinnerKing", xp: 450, challenges: 4, badge: null },
+  { rank: 6, name: "HoverHero", xp: 300, challenges: 3, badge: null },
+  { rank: 7, name: "FlipWizard", xp: 200, challenges: 2, badge: null },
+  { rank: 8, name: "AuroraAce", xp: 200, challenges: 2, badge: null },
+];
+
+function CommunityChallenges() {
+  const [challenges, setChallenges] = useState(CHALLENGES);
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [showHint, setShowHint] = useState(false);
+
+  const totalXP = challenges.filter(c => c.completed).reduce((sum, c) => sum + c.xp, 0);
+  const completedCount = challenges.filter(c => c.completed).length;
+
+  const handleComplete = (id: string) => {
+    setChallenges(prev => prev.map(c => c.id === id ? { ...c, completed: !c.completed } : c));
+  };
+
+  return (
+    <div className="space-y-4">
+      {/* Stats */}
+      <div className="grid grid-cols-3 gap-3">
+        <div className="p-3 rounded-xl bg-muted/30 text-center">
+          <p className="text-xs text-muted-foreground">Completed</p>
+          <p className="font-display text-2xl font-bold text-foreground">{completedCount}/{challenges.length}</p>
+        </div>
+        <div className="p-3 rounded-xl bg-muted/30 text-center">
+          <p className="text-xs text-muted-foreground">XP Earned</p>
+          <p className="font-display text-2xl font-bold text-primary">{totalXP}</p>
+        </div>
+        <div className="p-3 rounded-xl bg-muted/30 text-center">
+          <p className="text-xs text-muted-foreground">Rank</p>
+          <p className="font-display text-2xl font-bold text-amber-500">#4</p>
+        </div>
+      </div>
+
+      {/* Challenges */}
+      <div className="space-y-2">
+        {challenges.map((ch) => {
+          const isExpanded = expandedId === ch.id;
+          const diffColor = ch.difficulty === "Easy" ? "text-emerald-500 bg-emerald-500/10" : ch.difficulty === "Medium" ? "text-amber-500 bg-amber-500/10" : "text-rose-500 bg-rose-500/10";
+          return (
+            <div key={ch.id} className={`rounded-xl border overflow-hidden transition-all ${ch.completed ? "border-emerald-500/40 bg-emerald-500/5" : "border-border/60 bg-card"}`}>
+              <button
+                onClick={() => { setExpandedId(isExpanded ? null : ch.id); setShowHint(false); }}
+                className="w-full flex items-center justify-between gap-3 p-3 cursor-pointer text-left"
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className={`flex items-center justify-center size-9 rounded-lg shrink-0 ${ch.completed ? "bg-emerald-500/20 text-emerald-500" : "bg-muted/60 text-muted-foreground"}`}>
+                    {ch.completed ? <Check className="size-4" /> : <span className="text-xs font-bold">{ch.xp}</span>}
+                  </div>
+                  <div className="min-w-0">
+                    <p className={`text-sm font-medium truncate ${ch.completed ? "text-muted-foreground line-through" : "text-foreground"}`}>{ch.title}</p>
+                    <p className="text-xs text-muted-foreground truncate">{ch.description}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <Badge variant="secondary" className={`text-xs ${diffColor}`}>{ch.difficulty}</Badge>
+                  <Badge variant="secondary" className="text-xs bg-amber-500/10 text-amber-500 gap-0.5">
+                    <Star className="size-2.5" /> {ch.xp} XP
+                  </Badge>
+                </div>
+              </button>
+              <AnimatePresence>
+                {isExpanded && (
+                  <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+                    <div className="p-3 pt-0 space-y-2 border-t border-border/40">
+                      <div className="pt-2">
+                        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">Prompt</p>
+                        <p className="text-sm text-foreground">{ch.prompt}</p>
+                      </div>
+                      {showHint && (
+                        <div className="p-2.5 rounded-lg bg-amber-500/10 text-xs text-amber-700 dark:text-amber-400">
+                          <strong>Hint:</strong> {ch.hint}
+                        </div>
+                      )}
+                      <div className="flex items-center gap-2 pt-1">
+                        <button
+                          onClick={() => setShowHint(s => !s)}
+                          className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-muted text-muted-foreground hover:bg-muted/80 transition-all cursor-pointer"
+                        >
+                          <Info className="size-3" /> {showHint ? "Hide hint" : "Show hint"}
+                        </button>
+                        <button
+                          onClick={() => handleComplete(ch.id)}
+                          className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+                            ch.completed ? "bg-muted text-muted-foreground hover:bg-muted/80" : "bg-primary text-primary-foreground hover:bg-primary/90"
+                          }`}
+                        >
+                          {ch.completed ? "Mark incomplete" : "Mark complete"}
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Leaderboard */}
+      <div className="rounded-xl border border-border/60 overflow-hidden">
+        <div className="p-3 border-b border-border/40 bg-muted/20 flex items-center gap-2">
+          <Trophy className="size-4 text-amber-500" />
+          <p className="text-xs font-semibold text-foreground uppercase tracking-wider">Leaderboard</p>
+        </div>
+        <div className="divide-y divide-border/30">
+          {LEADERBOARD.map((user) => (
+            <div key={user.rank} className={`flex items-center justify-between p-2.5 ${user.name === "RoyWanyoike" ? "bg-primary/5" : ""}`}>
+              <div className="flex items-center gap-3 min-w-0">
+                <div className={`flex items-center justify-center size-7 rounded-lg shrink-0 font-bold text-xs ${
+                  user.badge === "gold" ? "bg-amber-500/20 text-amber-500" :
+                  user.badge === "silver" ? "bg-zinc-400/20 text-zinc-400" :
+                  user.badge === "bronze" ? "bg-orange-700/20 text-orange-700" :
+                  "bg-muted text-muted-foreground"
+                }`}>
+                  {user.rank}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-foreground truncate">{user.name}{user.name === "RoyWanyoike" && <span className="text-xs text-primary ml-1">(you)</span>}</p>
+                  <p className="text-xs text-muted-foreground">{user.challenges} challenges completed</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-1 text-sm font-mono font-bold text-amber-500 shrink-0">
+                <Flame className="size-3.5" /> {user.xp}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   8. Design Diff — before/after CSS comparison
+   ═══════════════════════════════════════════════════════════════ */
+
+function DesignDiff() {
+  const [beforeCSS, setBeforeCSS] = useState("");
+  const [afterCSS, setAfterCSS] = useState("");
+  const [diff, setDiff] = useState<{ added: string[]; removed: string[]; changed: { prop: string; before: string; after: string }[] } | null>(null);
+
+  const computeDiff = useCallback(() => {
+    const parseProps = (css: string): Record<string, string> => {
+      const props: Record<string, string> = {};
+      const match = css.match(/\{([^}]+)\}/);
+      if (!match) return props;
+      for (const decl of match[1].split(";").map(d => d.trim()).filter(Boolean)) {
+        const idx = decl.indexOf(":");
+        if (idx > 0) props[decl.substring(0, idx).trim()] = decl.substring(idx + 1).trim();
+      }
+      return props;
+    };
+
+    const before = parseProps(beforeCSS);
+    const after = parseProps(afterCSS);
+    const allProps = new Set([...Object.keys(before), ...Object.keys(after)]);
+    const added: string[] = [];
+    const removed: string[] = [];
+    const changed: { prop: string; before: string; after: string }[] = [];
+
+    for (const prop of allProps) {
+      if (!before[prop] && after[prop]) added.push(prop);
+      else if (before[prop] && !after[prop]) removed.push(prop);
+      else if (before[prop] !== after[prop]) changed.push({ prop, before: before[prop], after: after[prop] });
+    }
+
+    setDiff({ added: added.sort(), removed: removed.sort(), changed: changed.sort((a, b) => a.prop.localeCompare(b.prop)) });
+  }, [beforeCSS, afterCSS]);
+
+  return (
+    <div className="space-y-4">
+      <p className="text-sm text-muted-foreground">Paste two CSS blocks to see exactly what changed — properties added, removed, and modified.</p>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {/* Before */}
+        <div>
+          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">Before (original CSS)</label>
+          <textarea
+            value={beforeCSS}
+            onChange={(e) => setBeforeCSS(e.target.value)}
+            placeholder=".card {\n  background: #fff;\n  border-radius: 4px;\n  padding: 16px;\n}"
+            className="w-full h-32 p-3 rounded-xl bg-background border border-rose-500/30 focus:border-rose-500/50 text-xs font-mono text-foreground focus:outline-none transition-all resize-none scrollbar-thin"
+          />
+        </div>
+        {/* After */}
+        <div>
+          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">After (updated CSS)</label>
+          <textarea
+            value={afterCSS}
+            onChange={(e) => setAfterCSS(e.target.value)}
+            placeholder=".card {\n  background: oklch(1 0 0);\n  border-radius: 0.5rem;\n  padding: 1rem;\n  box-shadow: 0 1px 3px oklch(0 0 0 / 0.1);\n}"
+            className="w-full h-32 p-3 rounded-xl bg-background border border-emerald-500/30 focus:border-emerald-500/50 text-xs font-mono text-foreground focus:outline-none transition-all resize-none scrollbar-thin"
+          />
+        </div>
+      </div>
+
+      <button
+        onClick={computeDiff}
+        disabled={!beforeCSS.trim() || !afterCSS.trim()}
+        className="flex items-center gap-1.5 px-5 h-11 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer"
+      >
+        <GitCompare className="size-4" /> Compare CSS
+      </button>
+
+      <AnimatePresence>
+        {diff && (
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-3">
+            {/* Summary */}
+            <div className="grid grid-cols-3 gap-2">
+              <div className="p-2.5 rounded-lg bg-emerald-500/10 text-center">
+                <p className="text-xs text-emerald-600 dark:text-emerald-400">Added</p>
+                <p className="font-display text-xl font-bold text-emerald-500">{diff.added.length}</p>
+              </div>
+              <div className="p-2.5 rounded-lg bg-amber-500/10 text-center">
+                <p className="text-xs text-amber-600 dark:text-amber-400">Changed</p>
+                <p className="font-display text-xl font-bold text-amber-500">{diff.changed.length}</p>
+              </div>
+              <div className="p-2.5 rounded-lg bg-rose-500/10 text-center">
+                <p className="text-xs text-rose-600 dark:text-rose-400">Removed</p>
+                <p className="font-display text-xl font-bold text-rose-500">{diff.removed.length}</p>
+              </div>
+            </div>
+
+            {/* Changed properties */}
+            {diff.changed.length > 0 && (
+              <div className="rounded-xl border border-border/60 overflow-hidden">
+                <div className="px-3 py-2 border-b border-border/40 bg-amber-500/5">
+                  <p className="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Changed Properties</p>
+                </div>
+                <div className="divide-y divide-border/30">
+                  {diff.changed.map((c, i) => (
+                    <div key={i} className="p-2.5 grid grid-cols-3 gap-2 text-xs">
+                      <code className="font-mono text-muted-foreground">{c.prop}</code>
+                      <code className="font-mono text-rose-500 line-through">{c.before}</code>
+                      <code className="font-mono text-emerald-500">{c.after}</code>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Added properties */}
+            {diff.added.length > 0 && (
+              <div className="rounded-xl border border-border/60 overflow-hidden">
+                <div className="px-3 py-2 border-b border-border/40 bg-emerald-500/5">
+                  <p className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Added Properties</p>
+                </div>
+                <div className="p-2.5 flex flex-wrap gap-1">
+                  {diff.added.map((p, i) => <code key={i} className="text-xs px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono">{p}</code>)}
+                </div>
+              </div>
+            )}
+
+            {/* Removed properties */}
+            {diff.removed.length > 0 && (
+              <div className="rounded-xl border border-border/60 overflow-hidden">
+                <div className="px-3 py-2 border-b border-border/40 bg-rose-500/5">
+                  <p className="text-xs font-semibold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Removed Properties</p>
+                </div>
+                <div className="p-2.5 flex flex-wrap gap-1">
+                  {diff.removed.map((p, i) => <code key={i} className="text-xs px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-600 dark:text-rose-400 font-mono line-through">{p}</code>)}
+                </div>
+              </div>
+            )}
+
+            {diff.added.length === 0 && diff.removed.length === 0 && diff.changed.length === 0 && (
+              <div className="text-center py-8 text-sm text-muted-foreground">No differences found — the CSS is identical.</div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
    Main component — routes to the active tool
    ═══════════════════════════════════════════════════════════════ */
 
@@ -669,6 +1388,10 @@ const TOOL_META: Record<ToolType, { title: string; icon: React.ComponentType<{ c
   "css-doctor": { title: "CSS Doctor", icon: Stethoscope, description: "Paste your CSS — get a health score, diagnostics, and auto-fixes." },
   "utility-explorer": { title: "Utility Explorer", icon: Microscope, description: "Hover any effect to see its CSS properties, size, and compliance score." },
   "benchmark": { title: "Benchmark Tool", icon: Gauge, description: "Live-performance test any effect with 100 simultaneous instances." },
+  "genome": { title: "Component Genome", icon: Dna, description: "Inspect any effect's DNA — selectors, keyframes, properties, color system, modern features, and accessibility notes." },
+  "ai-migration": { title: "AI Migration", icon: ArrowLeftRight, description: "Convert Bootstrap, Tailwind, Material, Bulma, or Foundation CSS to RoyCSS (OKLCH + logical properties)." },
+  "challenges": { title: "Community Challenges", icon: Trophy, description: "Complete CSS challenges, earn XP, and climb the leaderboard." },
+  "design-diff": { title: "Design Diff", icon: GitCompare, description: "Compare two CSS blocks — see exactly what properties were added, changed, or removed." },
 };
 
 export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformToolsProps) {
@@ -692,6 +1415,10 @@ export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformTo
               {tool === "css-doctor" && <CSSDoctor />}
               {tool === "utility-explorer" && <UtilityExplorer />}
               {tool === "benchmark" && <Benchmark />}
+              {tool === "genome" && <ComponentGenome />}
+              {tool === "ai-migration" && <AIMigration />}
+              {tool === "challenges" && <CommunityChallenges />}
+              {tool === "design-diff" && <DesignDiff />}
             </div>
           </>
         )}

@@ -741,6 +741,10 @@ const INTERACTIVE_TOOLS: Record<string, string> = {
   "css-doctor": "css-doctor",
   "utility-explorer": "utility-explorer",
   "benchmark": "benchmark",
+  "genome": "genome",
+  "ai-migration": "ai-migration",
+  "challenges": "challenges",
+  "design-diff": "design-diff",
   "mcp-server": "mcp-server",
   "inspector": "inspector",
 };

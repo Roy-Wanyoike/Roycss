@@ -2822,3 +2822,75 @@ Stage Summary:
 - `bun run lint` → 0 errors.
 - All v2 files are in HEAD; future resets will not revert them.
 - Design docs (5 files, 1,047 lines) in `docs/adr/mcp-server-v2/` survived the reset and remain valid reference material.
+
+---
+Task ID: defect-remediation-pass
+Agent: main
+Task: Fix known defects flagged by 12 domain agents — broken pattern refs, broken re-export, accessibility issues
+
+Work Log:
+- AUDIT: Reviewed all 12 agents' final reports for flagged defects. Found 5 actionable issues:
+  1. 7 broken pattern.effectIds (referenced non-existent -b20 batch effects)
+  2. Broken `effects` re-export in roycss-index.ts (used wrong alias in `from` clause)
+  3. EffectCard not keyboard-accessible (div with onClick, no role/tabIndex/onKeyDown)
+  4. Deprecated `role="searchbox"` on 3 search inputs (should use `type="search"`)
+  5. Search overlay had no focus trap (Tab could escape to background)
+
+- FIXED #1 — Broken pattern references:
+  - Mapped 7 broken IDs to existing effects:
+    - anim-confetti-burst-b20 → particles-confetti-burst
+    - anim-notification-dot-b20 → notification-badge
+    - loader-skeleton-card-b20 → skeleton-card-shimmer
+    - loader-skeleton-text-b20 → skeleton-text-lines
+    - micro-accordion-expand-b20 → interpolate-size-accordion
+    - micro-toast-slide-b20 → micro-toast-slide (just remove -b20 suffix)
+    - nav-stepper-b20 → nav-stepper (just remove -b20 suffix)
+  - Updated both `effectIds` arrays AND HTML `class=` attributes in roycss-patterns.ts
+  - Synced mcp-server/patterns.json and mcp-server/index.ts (FALLBACK_PATTERNS) with same fixes
+  - Updated test: removed "known-defect lock" (was expecting 7 dangling), now asserts 0 dangling
+
+- FIXED #2 — Broken roycss-index re-export:
+  - Was: `export { allEffects as effects, ... } from "./roycss-effects"` — `allEffects` doesn't exist in roycss-effects.ts (it exports `effects`)
+  - Changed to: `export { effects, allEffectCSS, categoryMeta, categoryOrder } from "./roycss-effects"`
+  - Updated test: was asserting `mod.effects === undefined` (locked defect), now asserts `mod.effects` is a defined array with length > 0
+
+- FIXED #3 — EffectCard keyboard accessibility:
+  - Added `role="button"`, `tabIndex={0}`, `onKeyDown` handler (Enter/Space triggers onClick)
+  - Added `aria-label` with effect name + description + "Press Enter to view details"
+  - Added `focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2` for visible focus indicator
+  - Verified: 36 EffectCards now have role="button" in the DOM
+
+- FIXED #4 — Deprecated role="searchbox":
+  - Changed `type="text" role="searchbox"` → `type="search"` in 3 files:
+    - roycss-page.tsx (effects search)
+    - recipes-section.tsx (recipes search)
+    - patterns-section.tsx (patterns search)
+  - `type="search"` has implicit `searchbox` role per ARIA spec — no explicit role needed
+  - Verified: 3 search inputs now use type="search"
+
+- FIXED #5 — Search overlay focus trap:
+  - Added `role="dialog"`, `aria-modal="true"`, `aria-label="Search RoyCSS"` to overlay container
+  - Added Tab key trap: cycles focus between first and last focusable elements in the overlay
+  - Verified: dialog with aria-modal="true" found in DOM when overlay opens
+
+- VERIFICATION:
+  - Lint: 0 errors, 0 warnings
+  - Unit tests: 111/111 pass (was 110/111 before fix)
+  - Dev server: HTTP 200, 0 page errors, 0 console errors
+  - Browser: 36 EffectCards have role="button", 3 search inputs use type="search", search overlay has role="dialog" aria-modal="true"
+  - Git committed: d6e60f4
+
+- NOT FIXED (documented as benign):
+  - 145 ferrum-twin keyframe collisions (identical keyframe bodies re-declared in ferrum-* variants) — benign at runtime, just CSS bloat. Would require renaming 145+ keyframes across batch files.
+  - 4 non-ferrum keyframe collisions (roy-bounce-in, roy-neon-flicker, roy-ferrum-skeleton-card, roy-ferrum-skeleton-grid) — intentional sharing (skeleton variants use same shimmer animation). Documented in test's KNOWN_NON_FERRUM_COLLISIONS set.
+
+Stage Summary:
+- 5 known defects fixed and verified end-to-end
+- 0 dangling pattern.effectIds (was 7)
+- roycss-index `effects` re-export now works (was undefined)
+- EffectCard is keyboard-accessible (was click-only)
+- Search inputs use native type="search" (was deprecated role="searchbox")
+- Search overlay has focus trap + ARIA dialog attributes
+- 111/111 unit tests pass (was 110/111)
+- 0 lint errors, 0 page errors
+- All changes committed (d6e60f4)

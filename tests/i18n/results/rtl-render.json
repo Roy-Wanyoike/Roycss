@@ -1,0 +1,81 @@
+{
+  "generatedAt": "2026-07-30T14:23:01.255Z",
+  "baseUrl": "http://localhost:3000/",
+  "summary": {
+    "totalPhases": 7,
+    "passed": 7,
+    "failed": 0,
+    "passRate": 100
+  },
+  "phases": [
+    {
+      "name": "LTR baseline",
+      "passed": true,
+      "details": "direction=ltr html.dir=(empty — defaults to ltr) html.lang=en screenshot=ok",
+      "screenshot": "tests/i18n/screenshots/ltr-home.png"
+    },
+    {
+      "name": "LTR no horizontal overflow",
+      "passed": true,
+      "details": "scrollWidth - innerWidth = 0.0px (threshold: 5px)"
+    },
+    {
+      "name": "RTL direction reversed",
+      "passed": true,
+      "details": "computed.direction=rtl html.dir=rtl html.lang=ar screenshot=ok",
+      "screenshot": "tests/i18n/screenshots/rtl-home.png"
+    },
+    {
+      "name": "RTL no horizontal overflow",
+      "passed": true,
+      "details": "scrollWidth - innerWidth = 0.0px (threshold: 5px)"
+    },
+    {
+      "name": "RTL no new console errors vs LTR",
+      "passed": true,
+      "details": "no new errors/warnings in RTL"
+    },
+    {
+      "name": "RTL heading text right-aligned",
+      "passed": true,
+      "details": "text-align=center right=1024px (viewport 1280px)"
+    },
+    {
+      "name": "Restore LTR after test",
+      "passed": true,
+      "details": "direction=ltr"
+    }
+  ],
+  "effectScreenshots": [
+    {
+      "effect": "pulse-glow",
+      "ltr": "tests/i18n/screenshots/effect-pulse-glow-ltr.png",
+      "rtl": "tests/i18n/screenshots/effect-pulse-glow-rtl.png"
+    },
+    {
+      "effect": "hover-lift",
+      "ltr": "tests/i18n/screenshots/effect-hover-lift-ltr.png",
+      "rtl": "tests/i18n/screenshots/effect-hover-lift-rtl.png"
+    },
+    {
+      "effect": "card-glow",
+      "ltr": "tests/i18n/screenshots/effect-card-glow-ltr.png",
+      "rtl": "tests/i18n/screenshots/effect-card-glow-rtl.png"
+    },
+    {
+      "effect": "border-accent",
+      "ltr": "tests/i18n/screenshots/effect-border-accent-ltr.png",
+      "rtl": "tests/i18n/screenshots/effect-border-accent-rtl.png"
+    },
+    {
+      "effect": "text-shimmer",
+      "ltr": "tests/i18n/screenshots/effect-text-shimmer-ltr.png",
+      "rtl": "tests/i18n/screenshots/effect-text-shimmer-rtl.png"
+    }
+  ],
+  "consoleDiff": {
+    "ltrMessageCount": 10,
+    "rtlMessageCount": 13,
+    "newRtlErrors": []
+  }
+}

@@ -164,7 +164,7 @@ function TokenChip({ name, value }: { name: string; value: string }) {
 /* ─── Main showcase ────────────────────────────────────────── */
 export function RoyMotionShowcase() {
   return (
-    <section className="py-16 sm:py-20 relative overflow-hidden">
+    <section aria-label="RoyMotion animation primitives" className="py-16 sm:py-20 relative overflow-hidden">
       <div className="absolute inset-0 -z-10 bg-grid opacity-15 roycss-fade-mask-b" />
       <div className="container mx-auto px-4 sm:px-6">
         {/* Heading */}

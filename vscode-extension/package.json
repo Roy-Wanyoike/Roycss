@@ -1,0 +1,230 @@
+{
+  "name": "roycss",
+  "displayName": "RoyCSS",
+  "publisher": "roycss",
+  "version": "1.0.0",
+  "description": "RoyCSS — completion, hover docs, snippets, diagnostics, and commands for all 1569 production-ready CSS effects. Zero runtime dependencies. Zero network calls.",
+  "license": "MIT",
+  "author": {
+    "name": "Royford Wanyoike Wamaitha",
+    "url": "https://roycss.com"
+  },
+  "homepage": "https://roycss.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Roy-Wanyoike/roycss.git",
+    "directory": "vscode-extension"
+  },
+  "bugs": {
+    "url": "https://github.com/Roy-Wanyoike/roycss/issues"
+  },
+  "categories": [
+    "Snippets",
+    "Programming Languages",
+    "Other"
+  ],
+  "keywords": [
+    "css",
+    "animations",
+    "effects",
+    "snippets",
+    "completion",
+    "hover",
+    "diagnostics",
+    "roycss",
+    "ui",
+    "frontend",
+    "oklch"
+  ],
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "icon": "icons/icon.png",
+  "galleryBanner": {
+    "color": "#0a0a0a",
+    "theme": "dark"
+  },
+  "badges": [
+    {
+      "url": "https://img.shields.io/badge/effects-1569-emerald",
+      "href": "https://roycss.com",
+      "description": "1569 effects"
+    },
+    {
+      "url": "https://img.shields.io/badge/dependencies-0-success",
+      "href": "https://github.com/Roy-Wanyoike/roycss/tree/main/vscode-extension",
+      "description": "Zero runtime dependencies"
+    }
+  ],
+  "activationEvents": [
+    "onLanguage:css",
+    "onLanguage:html",
+    "onLanguage:javascript",
+    "onLanguage:typescript",
+    "onLanguage:javascriptreact",
+    "onLanguage:typescriptreact",
+    "onLanguage:vue",
+    "onLanguage:svelte",
+    "onCommand:roycss.browseEffects",
+    "onCommand:roycss.searchEffect"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "snippets": [
+      {
+        "language": "css",
+        "path": "./snippets.json"
+      },
+      {
+        "language": "html",
+        "path": "./snippets.json"
+      },
+      {
+        "language": "javascript",
+        "path": "./snippets.json"
+      },
+      {
+        "language": "typescript",
+        "path": "./snippets.json"
+      },
+      {
+        "language": "javascriptreact",
+        "path": "./snippets.json"
+      },
+      {
+        "language": "typescriptreact",
+        "path": "./snippets.json"
+      },
+      {
+        "language": "vue",
+        "path": "./snippets.json"
+      },
+      {
+        "language": "svelte",
+        "path": "./snippets.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "roycss.browseEffects",
+        "title": "Browse Effects",
+        "category": "RoyCSS",
+        "icon": "$(library)"
+      },
+      {
+        "command": "roycss.searchEffect",
+        "title": "Search Effect",
+        "category": "RoyCSS",
+        "icon": "$(search)"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "roycss.searchEffect",
+        "key": "ctrl+shift+r",
+        "mac": "cmd+shift+r",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "roycss.browseEffects",
+        "key": "ctrl+shift+alt+r",
+        "mac": "cmd+shift+alt+r",
+        "when": "editorTextFocus"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "roycss.browseEffects"
+        },
+        {
+          "command": "roycss.searchEffect"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "roycss.searchEffect",
+          "group": "roycss@1",
+          "when": "editorLangId == html || editorLangId == css || editorLangId == javascript || editorLangId == typescript || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == vue || editorLangId == svelte"
+        },
+        {
+          "command": "roycss.browseEffects",
+          "group": "roycss@2",
+          "when": "editorLangId == html || editorLangId == css || editorLangId == javascript || editorLangId == typescript || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == vue || editorLangId == svelte"
+        }
+      ]
+    },
+    "languages": [
+      {
+        "id": "roycss",
+        "extensions": [
+          ".roycss"
+        ],
+        "aliases": [
+          "RoyCSS"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "configuration": {
+      "title": "RoyCSS",
+      "properties": {
+        "roycss.enableCompletion": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Register the `CompletionItemProvider`. When enabled, typing `roycss-` surfaces all 1569 classes with documentation."
+        },
+        "roycss.enableHover": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Register the `HoverProvider`. When enabled, hovering a `roycss-*` token shows the effect name, category, description, tags, and a fenced CSS preview block."
+        },
+        "roycss.enableDiagnostics": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Scan open documents for unknown `roycss-*` tokens and emit diagnostics. Disable if the diagnostics are too noisy for your workflow."
+        },
+        "roycss.enableCodeActions": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Register the `CodeActionProvider` for quick-fix suggestions on unknown `roycss-*` diagnostics. Disable to hide the \"Replace with …\" quick-fixes."
+        },
+        "roycss.maxCompletionItems": {
+          "type": "number",
+          "default": 1569,
+          "minimum": 50,
+          "maximum": 1569,
+          "markdownDescription": "Maximum number of completion items to return when typing `roycss-`. Lower values reduce memory and improve responsiveness on slower machines. Set to `1569` (default) to show the full catalog."
+        },
+        "roycss.diagnosticSeverity": {
+          "type": "string",
+          "enum": [
+            "error",
+            "warning",
+            "information",
+            "hint",
+            "none"
+          ],
+          "default": "warning",
+          "enumDescriptions": [
+            "Report unknown `roycss-*` classes as errors (red squiggle).",
+            "Report unknown `roycss-*` classes as warnings (yellow squiggle).",
+            "Report unknown `roycss-*` classes as information (blue squiggle).",
+            "Report unknown `roycss-*` classes as hints (faded).",
+            "Disable diagnostics entirely (equivalent to `roycss.enableDiagnostics: false`)."
+          ],
+          "markdownDescription": "Severity for `Unknown RoyCSS class` diagnostics."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node build-data.js",
+    "package": "bash build.sh",
+    "test": "node test/smoke.test.js",
+    "lint": "node -c extension.js"
+  },
+  "devDependencies": {},
+  "dependencies": {},
+  "trustedDependencies": []
+}

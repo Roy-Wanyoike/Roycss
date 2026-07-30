@@ -1,0 +1,713 @@
+     1→"use client";
+     2→
+     3→/**
+     4→ * DocsViewer — in-app documentation viewer.
+     5→ *
+     6→ * Opens from the navbar "Docs" button as a right-side Sheet. Renders the 19
+     7→ * markdown architecture documents from /docs/*.md (compiled into
+     8→ * src/lib/docs-data.ts at build time) with search, category filter, table of
+     9→ * contents, and styled code blocks.
+    10→ *
+    11→ * Design: docs/adr/documentation-viewer/DESIGN.md
+    12→ * ADRs:   docs/adr/documentation-viewer/ADR.md
+    13→ */
+    14→
+    15→import { useState, useMemo, useEffect, useCallback, useRef } from "react";
+    16→import {
+    17→  Search,
+    18→  ArrowLeft,
+    19→  Copy,
+    20→  Check,
+    21→  FileText,
+    22→  Hash,
+    23→  X,
+    24→} from "lucide-react";
+    25→import {
+    26→  Sheet,
+    27→  SheetContent,
+    28→  SheetHeader,
+    29→  SheetTitle,
+    30→  SheetDescription,
+    31→} from "@/components/ui/sheet";
+    32→import { Input } from "@/components/ui/input";
+    33→import { Badge } from "@/components/ui/badge";
+    34→import { cn } from "@/lib/utils";
+    35→import { docsIndex, type DocEntry } from "@/lib/docs-data";
+    36→
+    37→interface DocsViewerProps {
+    38→  open: boolean;
+    39→  onOpenChange: (open: boolean) => void;
+    40→}
+    41→
+    42→/* ─── Markdown rendering ─────────────────────────────────────────
+    43→   Hand-rolled CommonMark-subset renderer. See ADR-002 for rationale.
+    44→   Output is HTML string consumed via dangerouslySetInnerHTML. All text
+    45→   tokens are HTML-escaped before re-injection; javascript: URLs dropped. */
+    46→
+    47→function escapeHtml(s: string): string {
+    48→  return s
+    49→    .replace(/&/g, "&amp;")
+    50→    .replace(/</g, "&lt;")
+    51→    .replace(/>/g, "&gt;");
+    52→}
+    53→
+    54→function escapeAttr(s: string): string {
+    55→  return escapeHtml(s).replace(/"/g, "&quot;");
+    56→}
+    57→
+    58→function slugify(text: string): string {
+    59→  return text
+    60→    .toLowerCase()
+    61→    .replace(/[^\w\s-]/g, "")
+    62→    .replace(/\s+/g, "-")
+    63→    .replace(/-+/g, "-")
+    64→    .replace(/^-|-$/g, "");
+    65→}
+    66→
+    67→/** Render inline markdown (bold, italic, code, links, strikethrough). */
+    68→function renderInline(s: string): string {
+    69→  // Escape HTML first — no raw HTML passes through.
+    70→  let out = escapeHtml(s);
+    71→
+    72→  // Inline code — extract first so we don't process markdown inside.
+    73→  const codeSpans: string[] = [];
+    74→  out = out.replace(/`([^`]+)`/g, (_m, code: string) => {
+    75→    codeSpans.push(code);
+    76→    return `\u0000CODE${codeSpans.length - 1}\u0000`;
+    77→  });
+    78→
+    79→  // Links [text](url) — optional title "..." ignored.
+    80→  out = out.replace(
+    81→    /\[([^\]]+)\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g,
+    82→    (_m, text: string, url: string) => {
+    83→      if (/^javascript:/i.test(url)) return text;
+    84→      const safeUrl = /^(https?:|mailto:|\/|#)/i.test(url) ? url : "#";
+    85→      return `<a href="${escapeAttr(safeUrl)}" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline underline-offset-2">${text}</a>`;
+    86→    },
+    87→  );
+    88→
+    89→  // Bold **text**
+    90→  out = out.replace(/\*\*([^*]+)\*\*/g, '<strong class="font-semibold">$1</strong>');
+    91→
+    92→  // Italic *text* and _text_ (avoid matching inside bold leftovers).
+    93→  out = out.replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, "$1<em>$2</em>");
+    94→  out = out.replace(/(^|[^_])_([^_\n]+)_(?!_)/g, "$1<em>$2</em>");
+    95→
+    96→  // Strikethrough ~~text~~
+    97→  out = out.replace(/~~([^~]+)~~/g, "<del>$1</del>");
+    98→
+    99→  // Restore code spans.
+   100→  out = out.replace(
+   101→    /\u0000CODE(\d+)\u0000/g,
+   102→    (_m, i: string) =>
+   103→      `<code class="roycss-doc-inline-code px-1.5 py-0.5 rounded-md bg-muted text-foreground text-[0.85em] font-mono">${codeSpans[+i]}</code>`,
+   104→  );
+   105→
+   106→  return out;
+   107→}
+   108→
+   109→interface CodeBlock {
+   110→  lang: string;
+   111→  raw: string;
+   112→}
+   113→
+   114→/** Render a fenced code block to HTML with copy button + language badge. */
+   115→function renderCodeBlock(code: string, lang: string): string {
+   116→  const escaped = escapeHtml(code);
+   117→  const attrRaw = escapeAttr(code);
+   118→  const langLabel = lang || "text";
+   119→  return (
+   120→    `<div class="roycss-doc-code-wrap relative my-4 rounded-lg overflow-hidden border border-zinc-800 bg-zinc-950">` +
+   121→    `<div class="flex items-center justify-between px-3 py-1.5 border-b border-zinc-800 bg-zinc-900/60">` +
+   122→    `<span class="text-[10px] font-mono uppercase tracking-wider text-zinc-400">${escapeHtml(langLabel)}</span>` +
+   123→    `<button type="button" data-raw="${attrRaw}" class="roycss-doc-copy flex items-center gap-1 text-[10px] font-medium text-zinc-400 hover:text-zinc-100 transition-colors" aria-label="Copy code">` +
+   124→    `<svg class="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>` +
+   125→    `<span>Copy</span>` +
+   126→    `</button>` +
+   127→    `</div>` +
+   128→    `<pre class="roycss-doc-code overflow-x-auto p-4 text-[12.5px] leading-relaxed text-zinc-100 font-mono"><code>${escaped}</code></pre>` +
+   129→    `</div>`
+   130→  );
+   131→}
+   132→
+   133→/** Render a full markdown document to an HTML string. */
+   134→function renderMarkdown(src: string): string {
+   135→  const lines = src.replace(/\r\n/g, "\n").split("\n");
+   136→  const html: string[] = [];
+   137→  let i = 0;
+   138→
+   139→  while (i < lines.length) {
+   140→    const line = lines[i];
+   141→
+   142→    // Fenced code block
+   143→    const fence = line.match(/^```(\w+)?\s*$/);
+   144→    if (fence) {
+   145→      const lang = fence[1] || "";
+   146→      const code: string[] = [];
+   147→      i++;
+   148→      while (i < lines.length && !/^```\s*$/.test(lines[i])) {
+   149→        code.push(lines[i]);
+   150→        i++;
+   151→      }
+   152→      i++; // skip closing ```
+   153→      html.push(renderCodeBlock(code.join("\n"), lang));
+   154→      continue;
+   155→    }
+   156→
+   157→    // Heading
+   158→    const h = line.match(/^(#{1,4})\s+(.+?)\s*$/);
+   159→    if (h) {
+   160→      const level = h[1].length;
+   161→      const text = h[2];
+   162→      const slug = level === 2 ? slugify(text) : "";
+   163→      const idAttr = slug ? ` id="${slug}"` : "";
+   164→      const cls = [
+   165→        "roycss-doc-h",
+   166→        level === 1
+   167→          ? "text-2xl font-bold tracking-tight mt-2 mb-3 text-foreground"
+   168→          : level === 2
+   169→            ? "text-xl font-semibold mt-7 mb-3 text-foreground scroll-mt-4"
+   170→            : level === 3
+   171→              ? "text-base font-semibold mt-5 mb-2 text-foreground"
+   172→              : "text-sm font-semibold mt-4 mb-2 text-foreground uppercase tracking-wide",
+   173→      ].join(" ");
+   174→      html.push(`<h${level}${idAttr} class="${cls}">${renderInline(text)}</h${level}>`);
+   175→      i++;
+   176→      continue;
+   177→    }
+   178→
+   179→    // Horizontal rule
+   180→    if (/^---+\s*$/.test(line) || /^\*\*\*+\s*$/.test(line)) {
+   181→      html.push('<hr class="my-5 border-border/60" />');
+   182→      i++;
+   183→      continue;
+   184→    }
+   185→
+   186→    // Blockquote
+   187→    if (/^>\s?/.test(line)) {
+   188→      const quote: string[] = [];
+   189→      while (i < lines.length && /^>\s?/.test(lines[i])) {
+   190→        quote.push(lines[i].replace(/^>\s?/, ""));
+   191→        i++;
+   192→      }
+   193→      html.push(
+   194→        `<blockquote class="my-4 pl-4 py-1 border-l-2 border-primary/40 bg-muted/40 rounded-r-md text-muted-foreground italic">${renderInline(quote.join(" "))}</blockquote>`,
+   195→      );
+   196→      continue;
+   197→    }
+   198→
+   199→    // Unordered list
+   200→    if (/^\s*[-*+]\s+/.test(line)) {
+   201→      const items: Array<{ indent: number; text: string }> = [];
+   202→      while (i < lines.length && /^\s*[-*+]\s+/.test(lines[i])) {
+   203→        const m = lines[i].match(/^(\s*)[-*+]\s+(.+)$/);
+   204→        if (m) items.push({ indent: m[1].length, text: m[2] });
+   205→        i++;
+   206→      }
+   207→      html.push(renderList(items, "ul"));
+   208→      continue;
+   209→    }
+   210→
+   211→    // Ordered list
+   212→    if (/^\s*\d+\.\s+/.test(line)) {
+   213→      const items: Array<{ indent: number; text: string }> = [];
+   214→      while (i < lines.length && /^\s*\d+\.\s+/.test(lines[i])) {
+   215→        const m = lines[i].match(/^(\s*)\d+\.\s+(.+)$/);
+   216→        if (m) items.push({ indent: m[1].length, text: m[2] });
+   217→        i++;
+   218→      }
+   219→      html.push(renderList(items, "ol"));
+   220→      continue;
+   221→    }
+   222→
+   223→    // Empty line
+   224→    if (line.trim() === "") {
+   225→      i++;
+   226→      continue;
+   227→    }
+   228→
+   229→    // Paragraph (collect consecutive non-empty, non-block lines)
+   230→    const para: string[] = [];
+   231→    while (
+   232→      i < lines.length &&
+   233→      lines[i].trim() !== "" &&
+   234→      !/^(#{1,4}\s|```|---+\s*$|\*\*\*+\s*$|>\s?|\s*[-*+]\s+|\s*\d+\.\s+)/.test(lines[i])
+   235→    ) {
+   236→      para.push(lines[i]);
+   237→      i++;
+   238→    }
+   239→    if (para.length > 0) {
+   240→      html.push(
+   241→        `<p class="my-3 text-sm leading-relaxed text-foreground/90">${renderInline(para.join(" "))}</p>`,
+   242→      );
+   243→    }
+   244→  }
+   245→
+   246→  return html.join("\n");
+   247→}
+   248→
+   249→/** Render a list (ul/ol) with optional 1-level nesting. */
+   250→function renderList(
+   251→  items: Array<{ indent: number; text: string }>,
+   252→  tag: "ul" | "ol",
+   253→): string {
+   254→  const itemCls = "my-1 text-sm leading-relaxed text-foreground/90";
+   255→  const listCls =
+   256→    tag === "ul"
+   257→      ? "my-3 pl-5 space-y-1 list-disc text-foreground/90"
+   258→      : "my-3 pl-5 space-y-1 list-decimal text-foreground/90";
+   259→  const out: string[] = [`<${tag} class="${listCls}">`];
+   260→  let prevIndent = 0;
+   261→  for (const it of items) {
+   262→    if (it.indent > prevIndent) {
+   263→      out.push(`<${tag} class="${listCls}">`);
+   264→    } else if (it.indent < prevIndent) {
+   265→      out.push(`</${tag}>`);
+   266→    }
+   267→    out.push(`<li class="${itemCls}">${renderInline(it.text)}</li>`);
+   268→    prevIndent = it.indent;
+   269→  }
+   270→  while (prevIndent > 0) {
+   271→    out.push(`</${tag}>`);
+   272→    prevIndent -= 2;
+   273→  }
+   274→  out.push(`</${tag}>`);
+   275→  return out.join("");
+   276→}
+   277→
+   278→/** Build a table of contents (H2 headings only). */
+   279→function buildToc(src: string): Array<{ id: string; text: string }> {
+   280→  const lines = src.split("\n");
+   281→  const toc: Array<{ id: string; text: string }> = [];
+   282→  let inCodeBlock = false;
+   283→  for (const line of lines) {
+   284→    if (/^```/.test(line)) {
+   285→      inCodeBlock = !inCodeBlock;
+   286→      continue;
+   287→    }
+   288→    if (inCodeBlock) continue;
+   289→    const m = line.match(/^##\s+(.+?)\s*$/);
+   290→    if (m) {
+   291→      toc.push({ id: slugify(m[1]), text: m[1].trim() });
+   292→    }
+   293→  }
+   294→  return toc;
+   295→}
+   296→
+   297→/* ─── Component ────────────────────────────────────────────────── */
+   298→
+   299→export function DocsViewer({ open, onOpenChange }: DocsViewerProps) {
+   300→  const [query, setQuery] = useState("");
+   301→  const [debouncedQuery, setDebouncedQuery] = useState("");
+   302→  const [activeCategory, setActiveCategory] = useState<string>("all");
+   303→  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+   304→  const [activeIndex, setActiveIndex] = useState(0);
+   305→  const [copiedKey, setCopiedKey] = useState<string | null>(null);
+   306→
+   307→  const searchInputRef = useRef<HTMLInputElement>(null);
+   308→  const listRef = useRef<HTMLDivElement>(null);
+   309→  const contentScrollRef = useRef<HTMLDivElement>(null);
+   310→  const copyKeyRef = useRef(0);
+   311→
+   312→  /* Categories derived from docsIndex. */
+   313→  const categories = useMemo(() => {
+   314→    const map = new Map<string, string>();
+   315→    for (const d of docsIndex) map.set(d.category, d.categoryLabel);
+   316→    return Array.from(map.entries()).map(([category, label]) => ({ category, label }));
+   317→  }, []);
+   318→
+   319→  /* Debounce search input. */
+   320→  useEffect(() => {
+   321→    const t = setTimeout(() => {
+   322→      setDebouncedQuery(query);
+   323→      setActiveIndex(0);
+   324→    }, 80);
+   325→    return () => clearTimeout(t);
+   326→  }, [query]);
+   327→
+   328→  /* Filter + sort. */
+   329→  const filtered = useMemo(() => {
+   330→    const q = debouncedQuery.trim().toLowerCase();
+   331→    const results: Array<{ doc: DocEntry; bucket: number }> = [];
+   332→    for (const doc of docsIndex) {
+   333→      if (activeCategory !== "all" && doc.category !== activeCategory) continue;
+   334→      if (!q) {
+   335→        results.push({ doc, bucket: 3 });
+   336→        continue;
+   337→      }
+   338→      const titleHit = doc.title.toLowerCase().includes(q);
+   339→      const catHit = doc.categoryLabel.toLowerCase().includes(q);
+   340→      const contentHit = doc.content.toLowerCase().includes(q);
+   341→      if (titleHit) results.push({ doc, bucket: 0 });
+   342→      else if (catHit) results.push({ doc, bucket: 1 });
+   343→      else if (contentHit) results.push({ doc, bucket: 2 });
+   344→    }
+   345→    results.sort((a, b) => {
+   346→      if (a.bucket !== b.bucket) return a.bucket - b.bucket;
+   347→      return a.doc.title.localeCompare(b.doc.title, undefined, { sensitivity: "base" });
+   348→    });
+   349→    return results.map((r) => r.doc);
+   350→  }, [debouncedQuery, activeCategory]);
+   351→
+   352→  const selectedDoc = useMemo(
+   353→    () => (selectedSlug ? docsIndex.find((d) => d.slug === selectedSlug) ?? null : null),
+   354→    [selectedSlug],
+   355→  );
+   356→
+   357→  const toc = useMemo(
+   358→    () => (selectedDoc ? buildToc(selectedDoc.content) : []),
+   359→    [selectedDoc],
+   360→  );
+   361→
+   362→  const renderedHtml = useMemo(
+   363→    () => (selectedDoc ? renderMarkdown(selectedDoc.content) : ""),
+   364→    [selectedDoc],
+   365→  );
+   366→
+   367→  /* Reset state when the Sheet closes. */
+   368→  useEffect(() => {
+   369→    if (!open) {
+   370→      const t = setTimeout(() => {
+   371→        setSelectedSlug(null);
+   372→        setQuery("");
+   373→        setDebouncedQuery("");
+   374→        setActiveCategory("all");
+   375→        setActiveIndex(0);
+   376→      }, 250); // wait for close animation
+   377→      return () => clearTimeout(t);
+   378→    } else {
+   379→      // Focus search input when Sheet opens.
+   380→      const t = setTimeout(() => searchInputRef.current?.focus(), 250);
+   381→      return () => clearTimeout(t);
+   382→    }
+   383→  }, [open]);
+   384→
+   385→  /* Scroll active row into view. */
+   386→  useEffect(() => {
+   387→    if (!open || selectedSlug) return;
+   388→    const container = listRef.current;
+   389→    if (!container) return;
+   390→    const row = container.querySelector(`[data-idx="${activeIndex}"]`) as HTMLElement | null;
+   391→    if (row) row.scrollIntoView({ block: "nearest" });
+   392→  }, [activeIndex, open, selectedSlug]);
+   393→
+   394→  /* Reset content scroll when a doc opens. */
+   395→  useEffect(() => {
+   396→    if (selectedSlug && contentScrollRef.current) {
+   397→      contentScrollRef.current.scrollTo({ top: 0 });
+   398→    }
+   399→  }, [selectedSlug]);
+   400→
+   401→  /* Keyboard navigation: ArrowUp/ArrowDown/Enter in list mode. */
+   402→  const handleListKeyDown = useCallback(
+   403→    (e: React.KeyboardEvent<HTMLDivElement>) => {
+   404→      if (selectedSlug) return;
+   405→      const target = e.target as HTMLElement;
+   406→      if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") return;
+   407→      if (e.key === "ArrowDown") {
+   408→        e.preventDefault();
+   409→        setActiveIndex((i) => Math.min(i + 1, filtered.length - 1));
+   410→      } else if (e.key === "ArrowUp") {
+   411→        e.preventDefault();
+   412→        setActiveIndex((i) => Math.max(i - 1, 0));
+   413→      } else if (e.key === "Enter") {
+   414→        e.preventDefault();
+   415→        const doc = filtered[activeIndex];
+   416→        if (doc) setSelectedSlug(doc.slug);
+   417→      }
+   418→    },
+   419→    [selectedSlug, filtered, activeIndex],
+   420→  );
+   421→
+   422→  /* Copy code button — event delegation. */
+   423→  const handleContentClick = useCallback(
+   424→    (e: React.MouseEvent<HTMLDivElement>) => {
+   425→      const target = (e.target as HTMLElement).closest(".roycss-doc-copy") as HTMLElement | null;
+   426→      if (!target) return;
+   427→      const raw = target.getAttribute("data-raw") || "";
+   428→      const key = `c${++copyKeyRef.current}`;
+   429→      // Decode HTML entities (getAttribute already decodes them).
+   430→      navigator.clipboard
+   431→        .writeText(raw)
+   432→        .then(() => {
+   433→          setCopiedKey(key);
+   434→          target.setAttribute("data-copied", "1");
+   435→          const label = target.querySelector("span");
+   436→          if (label) label.textContent = "Copied";
+   437→          setTimeout(() => {
+   438→            setCopiedKey(null);
+   439→            target.removeAttribute("data-copied");
+   440→            if (label) label.textContent = "Copy";
+   441→          }, 1800);
+   442→        })
+   443→        .catch(() => {
+   444→          /* noop */
+   445→        });
+   446→    },
+   447→    [],
+   448→  );
+   449→
+   450→  /* TOC click — scroll content to heading. */
+   451→  const handleTocClick = useCallback(
+   452→    (e: React.MouseEvent<HTMLDivElement>, id: string) => {
+   453→      e.preventDefault();
+   454→      const container = contentScrollRef.current;
+   455→      if (!container) return;
+   456→      const el = container.querySelector(`#${CSS.escape(id)}`) as HTMLElement | null;
+   457→      if (el) el.scrollIntoView({ block: "start", behavior: "smooth" });
+   458→    },
+   459→    [],
+   460→  );
+   461→
+   462→  return (
+   463→    <Sheet open={open} onOpenChange={onOpenChange}>
+   464→      <SheetContent
+   465→        side="right"
+   466→        className="w-full sm:w-[672px] sm:max-w-2xl p-0 gap-0 flex flex-col"
+   467→        onKeyDown={handleListKeyDown}
+   468→      >
+   469→        {/* Header */}
+   470→        <SheetHeader className="px-5 py-4 border-b border-border/60 shrink-0">
+   471→          <SheetTitle className="flex items-center gap-2 font-display text-base">
+   472→            <FileText className="size-4 text-primary" />
+   473→            Documentation
+   474→            <Badge variant="secondary" className="text-[10px] bg-primary/10 text-primary border-primary/20">
+   475→              {docsIndex.length} docs
+   476→            </Badge>
+   477→          </SheetTitle>
+   478→          <SheetDescription className="text-xs">
+   479→            Architecture, labs, and blueprint documents. Search, browse, and read inline.
+   480→          </SheetDescription>
+   481→        </SheetHeader>
+   482→
+   483→        {/* Toolbar */}
+   484→        <div className="px-5 py-3 border-b border-border/60 shrink-0 space-y-3">
+   485→          <div className="relative">
+   486→            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground pointer-events-none" />
+   487→            <Input
+   488→              ref={searchInputRef}
+   489→              type="text"
+   490→              value={query}
+   491→              onChange={(e) => setQuery(e.target.value)}
+   492→              placeholder="Search docs by title, category, or content…"
+   493→              className="pl-9 pr-8 h-9 text-sm"
+   494→              aria-label="Search documentation"
+   495→            />
+   496→            {query && (
+   497→              <button
+   498→                onClick={() => setQuery("")}
+   499→                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+   500→                aria-label="Clear search"
+   501→              >
+   502→                <X className="size-3.5" />
+   503→              </button>
+   504→            )}
+   505→          </div>
+   506→          <div className="flex flex-wrap gap-1.5">
+   507→            <CategoryChip
+   508→              active={activeCategory === "all"}
+   509→              onClick={() => setActiveCategory("all")}
+   510→              label="All"
+   511→              count={docsIndex.length}
+   512→            />
+   513→            {categories.map((c) => {
+   514→              const count = docsIndex.filter((d) => d.category === c.category).length;
+   515→              return (
+   516→                <CategoryChip
+   517→                  key={c.category}
+   518→                  active={activeCategory === c.category}
+   519→                  onClick={() => setActiveCategory(c.category)}
+   520→                  label={c.label}
+   521→                  count={count}
+   522→                />
+   523→              );
+   524→            })}
+   525→          </div>
+   526→        </div>
+   527→
+   528→        {/* Body */}
+   529→        {selectedDoc ? (
+   530→          /* ── Detail view ── */
+   531→          <div className="flex-1 min-h-0 flex flex-col">
+   532→            <div className="px-5 py-2.5 border-b border-border/60 shrink-0 flex items-center justify-between gap-3">
+   533→              <button
+   534→                onClick={() => setSelectedSlug(null)}
+   535→                className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors min-h-[36px] cursor-pointer"
+   536→              >
+   537→                <ArrowLeft className="size-3.5" />
+   538→                Back to list
+   539→              </button>
+   540→              <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
+   541→                <Badge variant="outline" className="text-[10px] font-normal">
+   542→                  {selectedDoc.categoryLabel}
+   543→                </Badge>
+   544→                <span>{selectedDoc.wordCount.toLocaleString()} words</span>
+   545→              </div>
+   546→            </div>
+   547→            <div className="flex-1 min-h-0 flex">
+   548→              {/* TOC sidebar (sticky on sm+) */}
+   549→              {toc.length > 0 && (
+   550→                <nav
+   551→                  aria-label="Table of contents"
+   552→                  className="hidden sm:block w-44 shrink-0 border-r border-border/60 overflow-y-auto py-4 px-3"
+   553→                >
+   554→                  <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-2 px-1">
+   555→                    <Hash className="size-3" />
+   556→                    On this page
+   557→                  </div>
+   558→                  <ul className="space-y-0.5">
+   559→                    {toc.map((item) => (
+   560→                      <li key={item.id}>
+   561→                        <a
+   562→                          href={`#${item.id}`}
+   563→                          onClick={(e) => handleTocClick(e, item.id)}
+   564→                          className="block text-[11px] leading-snug text-muted-foreground hover:text-foreground py-1 px-2 rounded hover:bg-muted/50 transition-colors line-clamp-2"
+   565→                        >
+   566→                          {item.text}
+   567→                        </a>
+   568→                      </li>
+   569→                    ))}
+   570→                  </ul>
+   571→                </nav>
+   572→              )}
+   573→              {/* Markdown content */}
+   574→              <div
+   575→                ref={contentScrollRef}
+   576→                onClick={handleContentClick}
+   577→                className="flex-1 min-h-0 overflow-y-auto px-5 py-5"
+   578→              >
+   579→                <div
+   580→                  className="roycss-doc-prose max-w-none"
+   581→                  dangerouslySetInnerHTML={{ __html: renderedHtml }}
+   582→                />
+   583→                <div className="mt-8 pt-4 border-t border-border/40 text-[10px] text-muted-foreground">
+   584→                  Source: <code className="font-mono">docs/{selectedDoc.slug}.md</code>
+   585→                </div>
+   586→              </div>
+   587→            </div>
+   588→          </div>
+   589→        ) : (
+   590→          /* ── List view ── */
+   591→          <div
+   592→            ref={listRef}
+   593→            className="flex-1 min-h-0 overflow-y-auto"
+   594→            role="listbox"
+   595→            aria-label="Documentation list"
+   596→          >
+   597→            {filtered.length === 0 ? (
+   598→              <div className="flex flex-col items-center justify-center h-full px-6 text-center text-muted-foreground">
+   599→                <Search className="size-8 mb-2 opacity-40" />
+   600→                <p className="text-sm font-medium">No docs match &ldquo;{query}&rdquo;</p>
+   601→                <p className="text-xs mt-1">Try a different keyword or category.</p>
+   602→              </div>
+   603→            ) : (
+   604→              <ul className="divide-y divide-border/40">
+   605→                {filtered.map((doc, idx) => (
+   606→                  <li key={doc.slug} role="option" aria-selected={idx === activeIndex}>
+   607→                    <button
+   608→                      data-idx={idx}
+   609→                      onClick={() => setSelectedSlug(doc.slug)}
+   610→                      onMouseEnter={() => setActiveIndex(idx)}
+   611→                      className={cn(
+   612→                        "w-full text-left px-5 py-3.5 transition-colors min-h-[68px] flex flex-col gap-1 cursor-pointer",
+   613→                        idx === activeIndex
+   614→                          ? "bg-primary/5 border-l-2 border-primary"
+   615→                          : "hover:bg-muted/40 border-l-2 border-transparent",
+   616→                      )}
+   617→                    >
+   618→                      <div className="flex items-center justify-between gap-2">
+   619→                        <span className="text-sm font-medium text-foreground line-clamp-1">
+   620→                          {doc.title}
+   621→                        </span>
+   622→                        <Badge
+   623→                          variant="outline"
+   624→                          className="text-[9px] font-normal shrink-0 px-1.5 py-0"
+   625→                        >
+   626→                          {doc.categoryLabel}
+   627→                        </Badge>
+   628→                      </div>
+   629→                      <p className="text-xs text-muted-foreground line-clamp-2 leading-snug">
+   630→                        {doc.description}
+   631→                      </p>
+   632→                      <div className="flex items-center gap-2 text-[10px] text-muted-foreground/70 mt-0.5">
+   633→                        <span>{doc.wordCount.toLocaleString()} words</span>
+   634→                        <span>·</span>
+   635→                        <code className="font-mono">{doc.slug}.md</code>
+   636→                      </div>
+   637→                    </button>
+   638→                  </li>
+   639→                ))}
+   640→              </ul>
+   641→            )}
+   642→          </div>
+   643→        )}
+   644→
+   645→        {/* Footer — keyboard hints */}
+   646→        <div className="px-5 py-2 border-t border-border/60 shrink-0 flex items-center justify-between text-[10px] text-muted-foreground">
+   647→          <div className="flex items-center gap-3">
+   648→            {!selectedSlug && (
+   649→              <>
+   650→                <span className="flex items-center gap-1">
+   651→                  <kbd className="px-1 py-0.5 rounded bg-muted border border-border/60 font-mono text-[9px]">↑↓</kbd>
+   652→                  navigate
+   653→                </span>
+   654→                <span className="flex items-center gap-1">
+   655→                  <kbd className="px-1 py-0.5 rounded bg-muted border border-border/60 font-mono text-[9px]">Enter</kbd>
+   656→                  open
+   657→                </span>
+   658→              </>
+   659→            )}
+   660→            <span className="flex items-center gap-1">
+   661→              <kbd className="px-1 py-0.5 rounded bg-muted border border-border/60 font-mono text-[9px]">Esc</kbd>
+   662→              {selectedSlug ? "back to list" : "close"}
+   663→            </span>
+   664→          </div>
+   665→          <span className="hidden sm:inline">{filtered.length} of {docsIndex.length}</span>
+   666→        </div>
+   667→
+   668→        {/* Visually-hidden live region for copy announcements */}
+   669→        <span className="sr-only" aria-live="polite">
+   670→          {copiedKey ? "Code copied to clipboard" : ""}
+   671→        </span>
+   672→      </SheetContent>
+   673→    </Sheet>
+   674→  );
+   675→}
+   676→
+   677→/* ─── Category chip ────────────────────────────────────────────── */
+   678→
+   679→function CategoryChip({
+   680→  active,
+   681→  onClick,
+   682→  label,
+   683→  count,
+   684→}: {
+   685→  active: boolean;
+   686→  onClick: () => void;
+   687→  label: string;
+   688→  count: number;
+   689→}) {
+   690→  return (
+   691→    <button
+   692→      onClick={onClick}
+   693→      className={cn(
+   694→        "flex items-center gap-1.5 h-7 px-2.5 rounded-full text-[11px] font-medium transition-all cursor-pointer border",
+   695→        active
+   696→          ? "bg-primary text-primary-foreground border-primary"
+   697→          : "bg-transparent text-muted-foreground border-border/60 hover:text-foreground hover:border-border",
+   698→      )}
+   699→      aria-pressed={active}
+   700→    >
+   701→      {label}
+   702→      <span
+   703→        className={cn(
+   704→          "text-[9px] font-normal tabular-nums",
+   705→          active ? "text-primary-foreground/70" : "text-muted-foreground/60",
+   706→        )}
+   707→      >
+   708→        {count}
+   709→      </span>
+   710→    </button>
+   711→  );
+   712→}
+   713→

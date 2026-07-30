@@ -1772,7 +1772,7 @@
   font: 800 14px/1 system-ui, sans-serif;
   letter-spacing: 0.18em;
   --roy-b10-phc-hue: 0deg;
-  box-shadow: 0 12px 30px hsl(var(--roy-b10-phc-hue) 80% 60% / 0.5);
+  box-shadow: 0 12px 30px oklch(0.627 0.241 var(--roy-b10-phc-hue) / 0.5);
   animation: roy-b10-phc-cycle 4s linear infinite;
 }
 .roycss-property-hue-cycle > div { display: none; }
@@ -7923,7 +7923,7 @@
   padding: 2px;
   background: linear-gradient(135deg, oklch(0.6 0.2 162), oklch(0.55 0.25 200), oklch(0.5 0.2 280));
   background-size: 300% 300%;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(oklch(1 0 0) 0 0) content-box, linear-gradient(oklch(1 0 0) 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
@@ -8196,15 +8196,15 @@
   content: '';
   position: absolute;
   top: 0;
-  left: -100%;
+  inset-inline-start: -100%;
   width: 100%;
   height: 100%;
   background: color-mix(in oklch, oklch(0 0 0) 45%, transparent);
-  transition: left 0.4s ease;
+  transition: inset-inline-start 0.4s ease;
   z-index: 1;
 }
 .roycss-ferrum-hover-overlay-slide:hover::before {
-  left: 0;
+  inset-inline-start: 0;
 }
 
 .roycss-ferrum-hover-bg-slide {
@@ -8216,7 +8216,7 @@
   content: '';
   position: absolute;
   bottom: 0;
-  left: 0;
+  inset-inline-start: 0;
   width: 100%;
   height: 0;
   background: linear-gradient(to top, oklch(0.627 0.164 271.53), oklch(0.501 0.138 304.73));
@@ -8290,16 +8290,16 @@
   content: '';
   position: absolute;
   top: 0;
-  left: -110%;
+  inset-inline-start: -110%;
   width: 100%;
   height: 100%;
   background: linear-gradient(135deg, oklch(0.795 0.172 323.15), oklch(0.673 0.193 16.23));
   transform: skewX(-15deg);
-  transition: left 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+  transition: inset-inline-start 0.5s cubic-bezier(0.65, 0, 0.35, 1);
   z-index: -1;
 }
 .roycss-ferrum-hover-swipe:hover::before {
-  left: 0;
+  inset-inline-start: 0;
 }
 .roycss-ferrum-hover-swipe:hover {
   color: oklch(1 0 0);
@@ -8675,13 +8675,13 @@
   transition: transform 0.5s ease;
 }
 .roycss-ferrum-img-shutter::before {
-  left: 0;
+  inset-inline-start: 0;
   transform: translateX(-100%);
 }
 .roycss-ferrum-img-shutter::after {
   content: '';
-  right: 0;
-  left: auto;
+  inset-inline-end: 0;
+  inset-inline-start: auto;
   transform: translateX(100%);
 }
 .roycss-ferrum-img-shutter:hover::before {
@@ -10520,7 +10520,7 @@
 .roycss-ferrum-text-typewriter {
   overflow: hidden;
   white-space: nowrap;
-  border-right: 2px solid oklch(0.627 0.164 271.53);
+  border-inline-end: 2px solid oklch(0.627 0.164 271.53);
   width: 0;
   animation:
     roy-ferrum-text-typewriter-type 3s steps(24) forwards,
@@ -10738,7 +10738,7 @@
   content: attr(data-text);
   position: absolute;
   top: 0;
-  left: 0;
+  inset-inline-start: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
@@ -14549,7 +14549,7 @@
 .roycss-ferrum-bg-aurora::before {
   content: '';
   position: absolute;
-  top: -50%; left: -50%;
+  top: -50%; inset-inline-start: -50%;
   width: 200%; height: 200%;
   background:
     radial-gradient(ellipse at center, color-mix(in oklch, oklch(0.627 0.233 303.9) 30%, transparent) 0%, transparent 50%),
@@ -14721,13 +14721,13 @@
 .roycss-ferrum-bg-smoke::before {
   width: 200px; height: 200px;
   background: radial-gradient(circle, color-mix(in oklch, oklch(0.627 0.233 303.9) 50%, transparent) 0%, transparent 70%);
-  top: -50px; left: -50px;
+  top: -50px; inset-inline-start: -50px;
   animation: roy-ferrum-smoke-drift1 10s ease-in-out infinite;
 }
 .roycss-ferrum-bg-smoke::after {
   width: 250px; height: 250px;
   background: radial-gradient(circle, color-mix(in oklch, oklch(0.652 0.241 354.31) 40%, transparent) 0%, transparent 70%);
-  bottom: -70px; right: -70px;
+  bottom: -70px; inset-inline-end: -70px;
   animation: roy-ferrum-smoke-drift2 12s ease-in-out infinite;
 }
 
@@ -14816,13 +14816,13 @@
 .roycss-ferrum-bg-lava::before {
   width: 80px; height: 120px;
   background: radial-gradient(ellipse, color-mix(in oklch, oklch(0.652 0.241 354.31) 60%, transparent) 0%, color-mix(in oklch, oklch(0.627 0.233 303.9) 20%, transparent) 60%, transparent 100%);
-  left: 30%; bottom: -20%;
+  inset-inline-start: 30%; bottom: -20%;
   animation: roy-ferrum-lava-rise1 5s ease-in-out infinite;
 }
 .roycss-ferrum-bg-lava::after {
   width: 60px; height: 100px;
   background: radial-gradient(ellipse, color-mix(in oklch, oklch(0.705 0.213 51.16) 50%, transparent) 0%, color-mix(in oklch, oklch(0.652 0.241 354.31) 20%, transparent) 60%, transparent 100%);
-  left: 60%; bottom: -20%;
+  inset-inline-start: 60%; bottom: -20%;
   animation: roy-ferrum-lava-rise2 6s ease-in-out infinite;
   animation-delay: -2s;
 }
@@ -16122,8 +16122,8 @@
   border-bottom-color: oklch(0.627 0.233 303.9);
 }
 .roycss-ferrum-loader-ring span:nth-child(2) {
-  border-left-color: oklch(0.652 0.241 354.31);
-  border-right-color: oklch(0.652 0.241 354.31);
+  border-inline-start-color: oklch(0.652 0.241 354.31);
+  border-inline-end-color: oklch(0.652 0.241 354.31);
   animation-direction: reverse;
 }
 
@@ -16173,8 +16173,8 @@
   transform: translate(-50%, -50%);
 }
 .roycss-ferrum-loader-hourglass span:nth-child(1) {
-  border-left: 16px solid transparent;
-  border-right: 16px solid transparent;
+  border-inline-start: 16px solid transparent;
+  border-inline-end: 16px solid transparent;
   border-top: 20px solid oklch(0.627 0.233 303.9);
   transform: translate(-50%, -50%) translateY(4px);
 }
@@ -16282,8 +16282,8 @@
 }
 .roycss-ferrum-loader-pencil span:nth-child(2) {
   width: 0; height: 0;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
+  border-inline-start: 4px solid transparent;
+  border-inline-end: 4px solid transparent;
   border-top: 10px solid oklch(0.627 0.233 303.9);
   bottom: -2px;
 }
@@ -16707,8 +16707,8 @@ background-size: 300% 300%;
 animation: royPrismRefraction 4s ease-in-out infinite;
 box-shadow: 0 0 30px color-mix(in oklch, oklch(1 0 0) 15%, transparent);
 
-border-right: 3px solid currentColor;
-padding-right: 4px;
+border-inline-end: 3px solid currentColor;
+padding-inline-end: 4px;
 animation: royTypingCursor 1s step-end infinite;
 
 .btn-shine {
@@ -16962,8 +16962,8 @@ animation: royTypingCursor 1s step-end infinite;
     left: 0;
     right: 0;
     height: 100%;
-    border-left: 2px solid oklch(0.541 0.247 293.01);
-    border-right: 2px solid oklch(0.541 0.247 293.01);
+    border-inline-start: 2px solid oklch(0.541 0.247 293.01);
+    border-inline-end: 2px solid oklch(0.541 0.247 293.01);
     transform: scaleY(0);
     transition: transform 0.4s ease 0.15s, border-color 0.3s ease 0.15s;
 }
@@ -17041,14 +17041,14 @@ animation: royTypingCursor 1s step-end infinite;
     color: oklch(1 0 0);
     background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
     cursor: pointer;
-    padding-right: 48px;
+    padding-inline-end: 48px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .btn-slide-icon::after {
     content: '\2192';
     position: absolute;
     top: 50%;
-    right: 12px;
+    inset-inline-end: 12px;
     transform: translateY(-50%) translateX(24px);
     opacity: 0;
     font-size: 16px;
@@ -21888,7 +21888,7 @@ animation: royTypingCursor 1s step-end infinite;
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
+    inset-inline-start: -100%;
     width: 100%;
     height: 100%;
     background: linear-gradient(
@@ -21904,8 +21904,8 @@ animation: royTypingCursor 1s step-end infinite;
 
 @keyframes roy-ferrum-skeleton-wave {
 
-    0%   { left: -100%; }
-    100% { left: 100%; }
+    0%   { inset-inline-start: -100%; }
+    100% { inset-inline-start: 100%; }
 
 }
 
@@ -22040,7 +22040,7 @@ animation: royTypingCursor 1s step-end infinite;
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
+    inset-inline-start: -100%;
     width: 100%;
     height: 100%;
     background: linear-gradient(
@@ -22054,8 +22054,8 @@ animation: royTypingCursor 1s step-end infinite;
 
 @keyframes roy-ferrum-skeleton-circle {
 
-    0%   { left: -100%; }
-    100% { left: 100%; }
+    0%   { inset-inline-start: -100%; }
+    100% { inset-inline-start: 100%; }
 
 }
 
@@ -22956,18 +22956,18 @@ animation: royTypingCursor 1s step-end infinite;
     content: '';
     position: absolute;
     bottom: -2px;
-    left: 50%;
+    inset-inline-start: 50%;
     width: 0;
     height: 2px;
     background-color: oklch(0.658 0.169 248.81);
-    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), inset-inline-start 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .roycss-ferrum-tab-underline:hover {
     color: oklch(0.321 0.0 89.88);
 }
 .roycss-ferrum-tab-underline:hover::after {
     width: 100%;
-    left: 0;
+    inset-inline-start: 0;
 }
 .roycss-ferrum-tab-underline.roycss-ferrum-active,
 .roycss-ferrum-tab-underline:active {
@@ -27319,8 +27319,8 @@ animation: royTypingCursor 1s step-end infinite;
   content: '';
   position: absolute;
   bottom: 0;
-  left: 0;
-  right: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
   height: 20%;
   background: linear-gradient(to bottom, color-mix(in oklch, oklch(0.142 0.066 295.8) 0%, transparent) 0%, color-mix(in oklch, oklch(0.142 0.066 295.8) 70%, transparent) 100%);
 }
@@ -31618,7 +31618,7 @@ animation: royTypingCursor 1s step-end infinite;
   background: hsl(from hsl(var(--roy-b10-pcs-hue) 90% 55%) h s l);
   --roy-b10-pcs-hue: 0deg;
   animation: roy-b10-pcs-cycle 5s linear infinite;
-  box-shadow: 0 12px 30px hsl(var(--roy-b10-pcs-hue) 90% 55% / 0.4);
+  box-shadow: 0 12px 30px oklch(0.627 0.241 var(--roy-b10-pcs-hue) / 0.4);
   display: grid;
   place-items: center;
   color: oklch(1 0 89.88);

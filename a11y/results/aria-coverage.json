@@ -1,0 +1,166 @@
+{
+  "generatedAt": "2026-07-30T12:49:47.195Z",
+  "spec": "WCAG 4.1.2 A (Name, Role, Value)",
+  "files": [
+    {
+      "file": "src/components/roycss/animation-pauser.tsx",
+      "interactive": 0,
+      "withName": 0,
+      "coverage": 100,
+      "missing": []
+    },
+    {
+      "file": "src/components/roycss/color-customizer.tsx",
+      "interactive": 6,
+      "withName": 6,
+      "coverage": 100,
+      "missing": []
+    },
+    {
+      "file": "src/components/roycss/contact-form.tsx",
+      "interactive": 0,
+      "withName": 0,
+      "coverage": 100,
+      "missing": []
+    },
+    {
+      "file": "src/components/roycss/dynamic-effect-css.tsx",
+      "interactive": 0,
+      "withName": 0,
+      "coverage": 100,
+      "missing": []
+    },
+    {
+      "file": "src/components/roycss/effect-card.tsx",
+      "interactive": 4,
+      "withName": 4,
+      "coverage": 100,
+      "missing": []
+    },
+    {
+      "file": "src/components/roycss/effect-detail-dialog.tsx",
+      "interactive": 9,
+      "withName": 9,
+      "coverage": 100,
+      "missing": []
+    },
+    {
+      "file": "src/components/roycss/favorites-sheet.tsx",
+      "interactive": 3,
+      "withName": 3,
+      "coverage": 100,
+      "missing": []
+    },
+    {
+      "file": "src/components/roycss/featured-companies.tsx",
+      "interactive": 6,
+      "withName": 6,
+      "coverage": 100,
+      "missing": []
+    },
+    {
+      "file": "src/components/roycss/framework-usage.tsx",
+      "interactive": 2,
+      "withName": 2,
+      "coverage": 100,
+      "missing": []
+    },
+    {
+      "file": "src/components/roycss/get-started.tsx",
+      "interactive": 2,
+      "withName": 2,
+      "coverage": 100,
+      "missing": []
+    },
+    {
+      "file": "src/components/roycss/motion-primitives.tsx",
+      "interactive": 0,
+      "withName": 0,
+      "coverage": 100,
+      "missing": []
+    },
+    {
+      "file": "src/components/roycss/patterns-section.tsx",
+      "interactive": 6,
+      "withName": 6,
+      "coverage": 100,
+      "missing": []
+    },
+    {
+      "file": "src/components/roycss/platform-ecosystem.tsx",
+      "interactive": 4,
+      "withName": 4,
+      "coverage": 100,
+      "missing": []
+    },
+    {
+      "file": "src/components/roycss/playground-panel.tsx",
+      "interactive": 3,
+      "withName": 3,
+      "coverage": 100,
+      "missing": []
+    },
+    {
+      "file": "src/components/roycss/recipes-section.tsx",
+      "interactive": 6,
+      "withName": 6,
+      "coverage": 100,
+      "missing": []
+    },
+    {
+      "file": "src/components/roycss/roycss-logo.tsx",
+      "interactive": 0,
+      "withName": 0,
+      "coverage": 100,
+      "missing": []
+    },
+    {
+      "file": "src/components/roycss/roycss-page.tsx",
+      "interactive": 42,
+      "withName": 42,
+      "coverage": 100,
+      "missing": []
+    },
+    {
+      "file": "src/components/roycss/roymotion-showcase.tsx",
+      "interactive": 2,
+      "withName": 2,
+      "coverage": 100,
+      "missing": []
+    },
+    {
+      "file": "src/components/roycss/scroll-to-top.tsx",
+      "interactive": 0,
+      "withName": 0,
+      "coverage": 100,
+      "missing": []
+    },
+    {
+      "file": "src/components/roycss/search-overlay.tsx",
+      "interactive": 6,
+      "withName": 6,
+      "coverage": 100,
+      "missing": []
+    },
+    {
+      "file": "src/components/roycss/section-scrollbar.tsx",
+      "interactive": 1,
+      "withName": 1,
+      "coverage": 100,
+      "missing": []
+    },
+    {
+      "file": "src/components/roycss/virtual-scroll-grid.tsx",
+      "interactive": 0,
+      "withName": 0,
+      "coverage": 100,
+      "missing": []
+    }
+  ],
+  "summary": {
+    "filesScanned": 22,
+    "totalInteractive": 102,
+    "totalWithName": 102,
+    "overallCoverage": 100
+  }
+}

@@ -1,0 +1,907 @@
+     1→     1→"use client";
+     2→     2→
+     3→     3→import { useState, useMemo, useCallback } from "react";
+     4→     4→import { motion, AnimatePresence } from "framer-motion";
+     5→     5→import {
+     6→     6→  Store,
+     7→     7→  PenTool,
+     8→     8→  Blocks,
+     9→     9→  BrainCircuit,
+    10→    10→  Terminal,
+    11→    11→  Search,
+    12→    12→  Palette,
+    13→    13→  Shapes,
+    14→    14→  GraduationCap,
+    15→    15→  Building2,
+    16→    16→  Wrench,
+    17→    17→  Film,
+    18→    18→  Accessibility,
+    19→    19→  Cloud,
+    20→    20→  BarChart3,
+    21→    21→  Stethoscope,
+    22→    22→  Dna,
+    23→    23→  GitCompare,
+    24→    24→  MousePointer2,
+    25→    25→  ArrowLeftRight,
+    26→    26→  Library,
+    27→    27→  Gauge,
+    28→    28→  Trophy,
+    29→    29→  Microscope,
+    30→    30→  Sparkles,
+    31→    31→  ArrowRight,
+    32→    32→  Check,
+    33→    33→  Crown,
+    34→    34→  Heart,
+    35→    35→  Layers,
+    36→    36→  Rocket,
+    37→    37→  Users,
+    38→    38→  Shield,
+    39→    39→  Award,
+    40→    40→} from "lucide-react";
+    41→    41→import { Badge } from "@/components/ui/badge";
+    42→    42→import {
+    43→    43→  SectionHeading,
+    44→    44→  ScrollReveal,
+    45→    45→  StaggerGroup,
+    46→    46→  AnimatedCounter,
+    47→    47→  Floating,
+    48→    48→  ShineBorder,
+    49→    49→  staggerContainer,
+    50→    50→  staggerItem,
+    51→    51→  Marquee,
+    52→    52→} from "@/components/roycss/motion-primitives";
+    53→    53→import {
+    54→    54→  COMPANIES as SPONSORED_COMPANIES,
+    55→    55→  getTierForCompany,
+    56→    56→  TIER_META as SPONSOR_TIER_META,
+    57→    57→  SponsorModal,
+    58→    58→} from "@/components/roycss/featured-companies";
+    59→    59→
+    60→    60→/* ═══════════════════════════════════════════════════════════════
+    61→    61→   DATA: 16 platform products
+    62→    62→   ═══════════════════════════════════════════════════════════════ */
+    63→    63→
+    64→    64→type Tier = "free" | "pro" | "enterprise" | "cloud";
+    65→    65→type Priority = 5 | 4 | 3; // star rating from the vision
+    66→    66→
+    67→    67→interface PlatformProduct {
+    68→    68→  id: string;
+    69→    69→  name: string;
+    70→    70→  tagline: string;
+    71→    71→  description: string;
+    72→    72→  icon: React.ComponentType<{ className?: string }>;
+    73→    73→  tier: Tier;
+    74→    74→  priority: Priority;
+    75→    75→  revenue: string;
+    76→    76→  features: string[];
+    77→    77→}
+    78→    78→
+    79→    79→const PRODUCTS: PlatformProduct[] = [
+    80→    80→  {
+    81→    81→    id: "marketplace",
+    82→    82→    name: "RoyCSS Marketplace",
+    83→    83→    tagline: "One-click templates & components",
+    84→    84→    description:
+    85→    85→      "Developers install Healthcare Dashboards, Admin Panels, CRMs, POS systems, Banking themes, and more — like the VS Code Marketplace meets npm meets Figma Community.",
+    86→    86→    icon: Store,
+    87→    87→    tier: "pro",
+    88→    88→    priority: 5,
+    89→    89→    revenue: "15% transaction fee",
+    90→    90→    features: ["Healthcare Dashboard", "Admin Panel", "CRM", "POS", "Banking Theme", "Portfolio", "Pricing Tables", "Charts & Calendar"],
+    91→    91→  },
+    92→    92→  {
+    93→    93→    id: "studio",
+    94→    94→    name: "Roy Studio",
+    95→    95→    tagline: "Visual builder → RoyCSS code",
+    96→    96→    description:
+    97→    97→      "Figma meets Webflow. Drag a card, get RoyCSS code. Designers prototype visually; developers continue coding from the generated output.",
+    98→    98→    icon: PenTool,
+    99→    99→    tier: "pro",
+   100→   100→    priority: 5,
+   101→   101→    revenue: "Subscription",
+   102→   102→    features: ["Drag-and-drop canvas", "Exports clean RoyCSS", "Live code sync", "Component reuse", "Team collaboration"],
+   103→   103→  },
+   104→   104→  {
+   105→   105→    id: "pro-components",
+   106→   106→    name: "RoyCSS Pro Components",
+   107→   107→    tagline: "Enterprise-grade building blocks",
+   108→   108→    description:
+   109→   109→      "Not just buttons. Scheduler, Kanban, Data Grid, Charts, Calendar, Timeline, Tree View, Org Chart, Rich Text Editor, Pivot Table — exactly how Tailwind sells Tailwind UI.",
+   110→   110→    icon: Blocks,
+   111→   111→    tier: "pro",
+   112→   112→    priority: 5,
+   113→   113→    revenue: "$199 / year",
+   114→   114→    features: ["Scheduler", "Kanban", "Data Grid", "Charts", "Calendar", "Timeline", "Tree View", "Rich Text Editor", "Pivot Table"],
+   115→   115→  },
+   116→   116→  {
+   117→   117→    id: "roy-ai",
+   118→   118→    name: "RoyAI",
+   119→   119→    tagline: "The official AI assistant",
+   120→   120→    description:
+   121→   121→      "Prompt 'Create a Healthcare Dashboard' → RoyCSS code. Prompt 'Improve accessibility' → fixes. Prompt 'Reduce HTML classes' → optimizes. Credits or subscription.",
+   122→   122→    icon: BrainCircuit,
+   123→   123→    tier: "pro",
+   124→   124→    priority: 5,
+   125→   125→    revenue: "Credits + Subscription",
+   126→   126→    features: ["Generate from prompt", "Accessibility fixes", "Class optimization", "Natural-language search", "Code review"],
+   127→   127→  },
+   128→   128→  {
+   129→   129→    id: "cli-premium",
+   130→   130→    name: "RoyCLI Premium",
+   131→   131→    tagline: "Intelligent command-line tooling",
+   132→   132→    description:
+   133→   133→      "roy create dashboard. roy generate auth. roy convert bootstrap. roy convert tailwind. roy optimize. roy audit. roy lint. roy doctor. Advanced commands require Pro.",
+   134→   134→    icon: Terminal,
+   135→   135→    tier: "pro",
+   136→   136→    priority: 4,
+   137→   137→    revenue: "Pro upgrade",
+   138→   138→    features: ["roy create dashboard", "roy generate auth", "roy convert bootstrap", "roy convert tailwind", "roy optimize", "roy audit", "roy doctor"],
+   139→   139→  },
+   140→   140→  {
+   141→   141→    id: "inspector",
+   142→   142→    name: "RoyCSS Inspector",
+   143→   143→    tagline: "Chrome Extension — learn by exploring",
+   144→   144→    description:
+   145→   145→      "Inspect any website. See spacing, typography, radius, grid, shadow — and the RoyCSS equivalent. Premium: export the entire page as RoyCSS.",
+   146→   146→    icon: Microscope,
+   147→   147→    tier: "pro",
+   148→   148→    priority: 4,
+   149→   149→    revenue: "Premium export",
+   150→   150→    features: ["Inspect spacing", "Typography analysis", "Radius detection", "Grid mapping", "RoyCSS equivalent", "Page export (premium)"],
+   151→   151→  },
+   152→   152→  {
+   153→   153→    id: "themes",
+   154→   154→    name: "RoyCSS Themes",
+   155→   155→    tagline: "Professional theme store",
+   156→   156→    description:
+   157→   157→      "Healthcare, Apple, Material, Banking, Corporate, Education, Gaming, SaaS, Dashboard, Fintech — production-ready themes from the community and core team.",
+   158→   158→    icon: Palette,
+   159→   159→    tier: "pro",
+   160→   160→    priority: 4,
+   161→   161→    revenue: "Theme store",
+   162→   162→    features: ["Healthcare", "Apple", "Material", "Banking", "Corporate", "Education", "Gaming", "SaaS", "Fintech"],
+   163→   163→  },
+   164→   164→  {
+   165→   165→    id: "icons",
+   166→   166→    name: "RoyCSS Icons",
+   167→   167→    tagline: "Official icon pack",
+   168→   168→    description:
+   169→   169→      "An icon pack designed specifically for RoyCSS — consistent stroke width, optical sizes, and semantic naming that matches the utility classes.",
+   170→   170→    icon: Shapes,
+   171→   171→    tier: "pro",
+   172→   172→    priority: 3,
+   173→   173→    revenue: "Premium icons",
+   174→   174→    features: ["Consistent stroke width", "Optical sizing", "Semantic names", "Premium sets"],
+   175→   175→  },
+   176→   176→  {
+   177→   177→    id: "academy",
+   178→   178→    name: "Roy Academy",
+   179→   179→    tagline: "Courses + industry certification",
+   180→   180→    description:
+   181→   181→      "RoyCSS Associate, Professional, Expert, and Architect certifications. Companies hire certified developers. Courses, exams, and a verified credential registry.",
+   182→   182→    icon: GraduationCap,
+   183→   183→    tier: "pro",
+   184→   184→    priority: 4,
+   185→   185→    revenue: "Courses + Exams",
+   186→   186→    features: ["Associate cert", "Professional cert", "Expert cert", "Architect cert", "Verified registry"],
+   187→   187→  },
+   188→   188→  {
+   189→   189→    id: "enterprise",
+   190→   190→    name: "RoyCSS Enterprise",
+   191→   191→    tagline: "Support, migration, SLA, LTS",
+   192→   192→    description:
+   193→   193→      "Large companies get support, migration assistance, training, SLAs, private packages, private registry, custom themes, security reviews, and LTS versions.",
+   194→   194→    icon: Building2,
+   195→   195→    tier: "enterprise",
+   196→   196→    priority: 5,
+   197→   197→    revenue: "Annual contracts",
+   198→   198→    features: ["Priority support", "Migration assistance", "Team training", "SLA guarantees", "Private registry", "Custom themes", "Security reviews", "LTS versions"],
+   199→   199→  },
+   200→   200→  {
+   201→   201→    id: "devtools",
+   202→   202→    name: "Roy DevTools",
+   203→   203→    tagline: "Browser DevTools integration",
+   204→   204→    description:
+   205→   205→      "Select any element and instantly see RoyCSS classes, accessibility score, design tokens, suggestions, performance metrics, and contrast checks — inline.",
+   206→   206→    icon: Wrench,
+   207→   207→    tier: "pro",
+   208→   208→    priority: 3,
+   209→   209→    revenue: "Pro upgrade",
+   210→   210→    features: ["Class inspection", "Accessibility score", "Token display", "Suggestions", "Performance", "Contrast checks"],
+   211→   211→  },
+   212→   212→  {
+   213→   213→    id: "motion-library",
+   214→   214→    name: "Roy Motion Library",
+   215→   215→    tagline: "Premium animations & transitions",
+   216→   216→    description:
+   217→   217→      "Premium animations, transitions, interactions, micro-animations, and landing-page motion packs — built on the free RoyMotion foundation.",
+   218→   218→    icon: Film,
+   219→   219→    tier: "pro",
+   220→   220→    priority: 3,
+   221→   221→    revenue: "Premium pack",
+   222→   222→    features: ["Landing animations", "Micro-interactions", "Page transitions", "Scroll choreography", "Gesture-driven motion"],
+   223→   223→  },
+   224→   224→  {
+   225→   225→    id: "accessibility-suite",
+   226→   226→    name: "Roy Accessibility Suite",
+   227→   227→    tagline: "Audit & auto-fix entire apps",
+   228→   228→    description:
+   229→   229→      "Audit your entire application for contrast, ARIA, keyboard, focus, and reduced-motion issues — then auto-fix them. Enterprise loves this.",
+   230→   230→    icon: Accessibility,
+   231→   231→    tier: "enterprise",
+   232→   232→    priority: 4,
+   233→   233→    revenue: "Enterprise license",
+   234→   234→    features: ["Contrast audit", "ARIA audit", "Keyboard audit", "Focus audit", "Auto-fix", "WCAG reports"],
+   235→   235→  },
+   236→   236→  {
+   237→   237→    id: "cloud",
+   238→   238→    name: "Roy Cloud",
+   239→   239→    tagline: "Hosted design systems",
+   240→   240→    description:
+   241→   241→      "Cloud platform to host tokens, themes, components, design systems, and shared libraries — with versioning and real-time collaboration.",
+   242→   242→    icon: Cloud,
+   243→   243→    tier: "cloud",
+   244→   244→    priority: 5,
+   245→   245→    revenue: "Subscription",
+   246→   246→    features: ["Token hosting", "Theme versioning", "Component registry", "Shared libraries", "Real-time collaboration"],
+   247→   247→  },
+   248→   248→  {
+   249→   249→    id: "analytics",
+   250→   250→    name: "Roy Analytics",
+   251→   251→    tagline: "Usage, dead CSS, a11y scores",
+   252→   252→    description:
+   253→   253→      "Analyze which components are used, find unused utilities, detect duplicate styles, measure performance, dead CSS, and accessibility scores across your codebase.",
+   254→   254→    icon: BarChart3,
+   255→   255→    tier: "enterprise",
+   256→   256→    priority: 4,
+   257→   257→    revenue: "Enterprise license",
+   258→   258→    features: ["Component usage", "Dead CSS detection", "Duplicate detection", "Performance metrics", "Accessibility score"],
+   259→   259→  },
+   260→   260→  {
+   261→   261→    id: "mcp-server",
+   262→   262→    name: "RoyCSS MCP Server",
+   263→   263→    tagline: "AI assistant integration — no hallucination",
+   264→   264→    description:
+   265→   265→      "Model Context Protocol server that gives AI assistants (Claude, ChatGPT, Cursor, Windsurf, Codex) access to official RoyCSS effects, documentation, and framework examples. Every AI produces accurate RoyCSS code — no hallucination.",
+   266→   266→    icon: BrainCircuit,
+   267→   267→    tier: "free",
+   268→   268→    priority: 5,
+   269→   269→    revenue: "Free / OSS",
+   270→   270→    features: ["Search 1569+ effects", "Get CSS code by ID", "Framework examples", "Design tokens", "Recipes", "Claude + Cursor + Windsurf"],
+   271→   271→  },
+   272→   272→];
+   273→   273→
+   274→   274→/* ═══════════════════════════════════════════════════════════════
+   275→   275→   DATA: 10 unique differentiators (features competitors don't have)
+   276→   276→   ═══════════════════════════════════════════════════════════════ */
+   277→   277→
+   278→   278→interface Differentiator {
+   279→   279→  id: string;
+   280→   280→  name: string;
+   281→   281→  description: string;
+   282→   282→  icon: React.ComponentType<{ className?: string }>;
+   283→   283→}
+   284→   284→
+   285→   285→const DIFFERENTIATORS: Differentiator[] = [
+   286→   286→  {
+   287→   287→    id: "live-search",
+   288→   288→    name: "Live Utility Search",
+   289→   289→    description: "Type 'I need a hero section' → the framework finds hero, stack, center, container. No more scrolling docs.",
+   290→   290→    icon: Search,
+   291→   291→  },
+   292→   292→  {
+   293→   293→    id: "css-doctor",
+   294→   294→    name: "CSS Doctor",
+   295→   295→    description: "Run `roy doctor` — finds bad spacing, duplicate utilities, accessibility issues, performance problems, and unused classes.",
+   296→   296→    icon: Stethoscope,
+   297→   297→  },
+   298→   298→  {
+   299→   299→    id: "genome",
+   300→   300→    name: "Component Genome",
+   301→   301→    description: "Every component knows its tokens, utilities, accessibility, animations, and dependencies — useful for AI and tooling.",
+   302→   302→    icon: Dna,
+   303→   303→  },
+   304→   304→  {
+   305→   305→    id: "ai-playground",
+   306→   306→    name: "CSS Playground with AI",
+   307→   307→    description: "Prompt 'Make this card Apple-like' → updates instantly. No more manual CSS editing.",
+   308→   308→    icon: Sparkles,
+   309→   309→  },
+   310→   310→  {
+   311→   311→    id: "design-diff",
+   312→   312→    name: "Design Diff",
+   313→   313→    description: "Upload two screenshots. RoyCSS tells you what changed in spacing, typography, radius, and shadow. Amazing for design systems.",
+   314→   314→    icon: GitCompare,
+   315→   315→  },
+   316→   316→  {
+   317→   317→    id: "utility-explorer",
+   318→   318→    name: "Utility Explorer",
+   319→   319→    description: "Hover any class to see generated CSS, performance, browser support, accessibility, and related utilities.",
+   320→   320→    icon: MousePointer2,
+   321→   321→  },
+   322→   322→  {
+   323→   323→    id: "ai-migration",
+   324→   324→    name: "AI Migration",
+   325→   325→    description: "Paste Bootstrap, Tailwind, or raw CSS → get RoyCSS. Automatic, intelligent, lossless conversion.",
+   326→   326→    icon: ArrowLeftRight,
+   327→   327→  },
+   328→   328→  {
+   329→   329→    id: "pattern-library",
+   330→   330→    name: "Pattern Library",
+   331→   331→    description: "Search 'Healthcare Dashboard' → 50 production examples. Real-world patterns, not toy demos.",
+   332→   332→    icon: Library,
+   333→   333→  },
+   334→   334→  {
+   335→   335→    id: "benchmark",
+   336→   336→    name: "CSS Benchmark",
+   337→   337→    description: "Benchmark RoyCSS against competitors — live, always. Bundle size, render time, feature parity.",
+   338→   338→    icon: Gauge,
+   339→   339→  },
+   340→   340→  {
+   341→   341→    id: "challenges",
+   342→   342→    name: "Community Challenges",
+   343→   343→    description: "Monthly challenges. Developers submit landing pages, dashboards, components, and animations. Win prizes, grow the ecosystem.",
+   344→   344→    icon: Trophy,
+   345→   345→  },
+   346→   346→];
+   347→   347→
+   348→   348→/* ═══════════════════════════════════════════════════════════════
+   349→   349→   DATA: Sponsor tiers
+   350→   350→   ═══════════════════════════════════════════════════════════════ */
+   351→   351→
+   352→   352→interface SponsorTier {
+   353→   353→  id: string;
+   354→   354→  name: string;
+   355→   355→  icon: React.ComponentType<{ className?: string }>;
+   356→   356→  color: string;
+   357→   357→  amount: string;
+   358→   358→  perks: string[];
+   359→   359→}
+   360→   360→
+   361→   361→const SPONSOR_TIERS: SponsorTier[] = [
+   362→   362→  {
+   363→   363→    id: "founder",
+   364→   364→    name: "Founder",
+   365→   365→    icon: Award,
+   366→   366→    color: "text-emerald-500",
+   367→   367→    amount: "By recognition",
+   368→   368→    perks: ["The company that built RoyCSS", "Unique emerald glow", "Creator badge", "Permanent hero placement"],
+   369→   369→  },
+   370→   370→  {
+   371→   371→    id: "community",
+   372→   372→    name: "Community",
+   373→   373→    icon: Heart,
+   374→   374→    color: "text-rose-500",
+   375→   375→    amount: "Any amount",
+   376→   376→    perks: ["Listed on homepage", "Logo in documentation", "Monthly newsletter mention"],
+   377→   377→  },
+   378→   378→  {
+   379→   379→    id: "gold",
+   380→   380→    name: "Gold",
+   381→   381→    icon: Crown,
+   382→   382→    color: "text-amber-500",
+   383→   383→    amount: "Suggested ~$1K+",
+   384→   384→    perks: ["Featured on homepage", "Dedicated profile page", "Blog spotlight", "Conference sponsorship"],
+   385→   385→  },
+   386→   386→  {
+   387→   387→    id: "platinum",
+   388→   388→    name: "Platinum",
+   389→   389→    icon: Rocket,
+   390→   390→    color: "text-violet-500",
+   391→   391→    amount: "Suggested ~$3K+",
+   392→   392→    perks: ["Homepage hero placement", "Joint webinars", "Early roadmap access", "Direct engineering support"],
+   393→   393→  },
+   394→   394→  {
+   395→   395→    id: "tech-partner",
+   396→   396→    name: "Technology Partner",
+   397→   397→    icon: Layers,
+   398→   398→    color: "text-cyan-500",
+   399→   399→    amount: "Suggested ~$10K+",
+   400→   400→    perks: ["Framework integrations", "Co-marketing", "Joint technical content", "Mutual certification"],
+   401→   401→  },
+   402→   402→];
+   403→   403→
+   404→   404→/* ═══════════════════════════════════════════════════════════════
+   405→   405→   TIER METADATA
+   406→   406→   ═══════════════════════════════════════════════════════════════ */
+   407→   407→
+   408→   408→const TIER_META: Record<Tier | "all", { label: string; icon: React.ComponentType<{ className?: string }>; color: string }> = {
+   409→   409→  all: { label: "All Products", icon: Sparkles, color: "text-primary" },
+   410→   410→  free: { label: "Free / OSS", icon: Heart, color: "text-emerald-500" },
+   411→   411→  pro: { label: "Pro", icon: Crown, color: "text-amber-500" },
+   412→   412→  enterprise: { label: "Enterprise", icon: Building2, color: "text-violet-500" },
+   413→   413→  cloud: { label: "Cloud", icon: Cloud, color: "text-cyan-500" },
+   414→   414→};
+   415→   415→
+   416→   416→/* ═══════════════════════════════════════════════════════════════
+   417→   417→   VISION DIAGRAM — Free foundation + paid ecosystem
+   418→   418→   ═══════════════════════════════════════════════════════════════ */
+   419→   419→
+   420→   420→function VisionDiagram() {
+   421→   421→  const freeProducts = ["Framework", "Components", "CLI", "Documentation"];
+   422→   422→  const paidProducts = ["Pro", "Studio", "Cloud", "Marketplace", "AI", "Enterprise", "Academy"];
+   423→   423→
+   424→   424→  return (
+   425→   425→    <ScrollReveal className="max-w-3xl mx-auto">
+   426→   426→      <div className="rounded-3xl border border-border bg-card p-6 sm:p-8 overflow-hidden">
+   427→   427→        {/* RoyCSS core */}
+   428→   428→        <div className="flex justify-center mb-6">
+   429→   429→          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-primary/10 border border-primary/30">
+   430→   430→            <span className="font-display font-bold text-primary text-lg">RoyCSS</span>
+   431→   431→            <span className="text-xs text-muted-foreground">core</span>
+   432→   432→          </div>
+   433→   433→        </div>
+   434→   434→
+   435→   435→        {/* Free layer */}
+   436→   436→        <div className="mb-4">
+   437→   437→          <p className="text-xs font-semibold text-emerald-500 uppercase tracking-wider mb-2 text-center flex items-center justify-center gap-1.5">
+   438→   438→            <Heart className="size-3" />
+   439→   439→            Free &amp; Open Source — the entry point
+   440→   440→          </p>
+   441→   441→          <div className="flex flex-wrap justify-center gap-2">
+   442→   442→            {freeProducts.map((p) => (
+   443→   443→              <span
+   444→   444→                key={p}
+   445→   445→                className="px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs font-medium text-emerald-600 dark:text-emerald-400"
+   446→   446→              >
+   447→   447→                {p}
+   448→   448→              </span>
+   449→   449→            ))}
+   450→   450→          </div>
+   451→   451→        </div>
+   452→   452→
+   453→   453→        {/* Divider */}
+   454→   454→        <div className="flex items-center gap-3 my-5">
+   455→   455→          <div className="flex-1 h-px bg-border" />
+   456→   456→          <ArrowRight className="size-4 text-muted-foreground rotate-90" />
+   457→   457→          <div className="flex-1 h-px bg-border" />
+   458→   458→        </div>
+   459→   459→
+   460→   460→        {/* Paid layer */}
+   461→   461→        <div>
+   462→   462→          <p className="text-xs font-semibold text-amber-500 uppercase tracking-wider mb-2 text-center flex items-center justify-center gap-1.5">
+   463→   463→            <Crown className="size-3" />
+   464→   464→            Everything around it becomes valuable
+   465→   465→          </p>
+   466→   466→          <div className="flex flex-wrap justify-center gap-2">
+   467→   467→            {paidProducts.map((p) => (
+   468→   468→              <span
+   469→   469→                key={p}
+   470→   470→                className="px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs font-medium text-amber-600 dark:text-amber-400"
+   471→   471→              >
+   472→   472→                {p}
+   473→   473→              </span>
+   474→   474→            ))}
+   475→   475→          </div>
+   476→   476→        </div>
+   477→   477→
+   478→   478→        <p className="mt-6 text-center text-xs text-muted-foreground italic leading-relaxed">
+   479→   479→          &ldquo;A competitor can recreate utility classes in months. What is much harder to reproduce is a mature
+   480→   480→          ecosystem — marketplace, docs, tools, plugins, enterprise support, and an active community.&rdquo;
+   481→   481→        </p>
+   482→   482→      </div>
+   483→   483→    </ScrollReveal>
+   484→   484→  );
+   485→   485→}
+   486→   486→
+   487→   487→/* ═══════════════════════════════════════════════════════════════
+   488→   488→   PRODUCT CARD
+   489→   489→   ═══════════════════════════════════════════════════════════════ */
+   490→   490→
+   491→   491→function ProductCard({ product }: { product: PlatformProduct }) {
+   492→   492→  const [expanded, setExpanded] = useState(false);
+   493→   493→  const Icon = product.icon;
+   494→   494→  const tierMeta = TIER_META[product.tier];
+   495→   495→  const TierIcon = tierMeta.icon;
+   496→   496→
+   497→   497→  return (
+   498→   498→    <motion.div
+   499→   499→      variants={staggerItem}
+   500→   500→      whileHover={{ y: -4 }}
+   501→   501→      transition={{ duration: 0.2 }}
+   502→   502→      onClick={() => setExpanded((e) => !e)}
+   503→   503→      className="group rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 cursor-pointer perf-auto"
+   504→   504→      role="button"
+   505→   505→      tabIndex={0}
+   506→   506→      aria-expanded={expanded}
+   507→   507→      aria-label={`${product.name} — ${product.tagline}`}
+   508→   508→      onKeyDown={(e) => {
+   509→   509→        if (e.key === "Enter" || e.key === " ") {
+   510→   510→          e.preventDefault();
+   511→   511→          setExpanded((x) => !x);
+   512→   512→        }
+   513→   513→      }}
+   514→   514→    >
+   515→   515→      {/* Header */}
+   516→   516→      <div className="p-5">
+   517→   517→        <div className="flex items-start justify-between gap-3 mb-3">
+   518→   518→          <div className="flex items-center gap-3 min-w-0">
+   519→   519→            <div className="flex items-center justify-center size-10 rounded-xl bg-primary/10 text-primary shrink-0 group-hover:bg-primary/20 transition-colors">
+   520→   520→              <Icon className="size-5" />
+   521→   521→            </div>
+   522→   522→            <div className="min-w-0">
+   523→   523→              <h3 className="font-display font-bold text-foreground text-sm leading-tight truncate">
+   524→   524→                {product.name}
+   525→   525→              </h3>
+   526→   526→              <p className="text-xs text-muted-foreground truncate mt-0.5">{product.tagline}</p>
+   527→   527→            </div>
+   528→   528→          </div>
+   529→   529→          {/* Priority stars */}
+   530→   530→          <div className="flex items-center gap-0.5 shrink-0" aria-label={`${product.priority} out of 5 priority`}>
+   531→   531→            {Array.from({ length: 5 }).map((_, i) => (
+   532→   532→              <span
+   533→   533→                key={i}
+   534→   534→                className={`text-[8px] ${i < product.priority ? "text-amber-500" : "text-muted-foreground/30"}`}
+   535→   535→              >
+   536→   536→                ★
+   537→   537→              </span>
+   538→   538→            ))}
+   539→   539→          </div>
+   540→   540→        </div>
+   541→   541→
+   542→   542→        <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+   543→   543→          {product.description}
+   544→   544→        </p>
+   545→   545→
+   546→   546→        {/* Tier + revenue badges */}
+   547→   547→        <div className="mt-3 flex items-center gap-2 flex-wrap">
+   548→   548→          <Badge variant="outline" className={`text-xs gap-1 capitalize ${tierMeta.color}`}>
+   549→   549→            <TierIcon className="size-2.5" />
+   550→   550→            {tierMeta.label}
+   551→   551→          </Badge>
+   552→   552→          <Badge variant="secondary" className="text-xs bg-muted/80 text-muted-foreground">
+   553→   553→            {product.revenue}
+   554→   554→          </Badge>
+   555→   555→        </div>
+   556→   556→
+   557→   557→        {/* Expanded features */}
+   558→   558→        <AnimatePresence>
+   559→   559→          {expanded && (
+   560→   560→            <motion.div
+   561→   561→              initial={{ height: 0, opacity: 0 }}
+   562→   562→              animate={{ height: "auto", opacity: 1 }}
+   563→   563→              exit={{ height: 0, opacity: 0 }}
+   564→   564→              transition={{ duration: 0.25 }}
+   565→   565→              className="overflow-hidden"
+   566→   566→            >
+   567→   567→              <div className="mt-4 pt-4 border-t border-border/50">
+   568→   568→                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+   569→   569→                  Includes
+   570→   570→                </p>
+   571→   571→                <div className="flex flex-wrap gap-1.5">
+   572→   572→                  {product.features.map((f) => (
+   573→   573→                    <span
+   574→   574→                      key={f}
+   575→   575→                      className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-muted/60 text-xs text-foreground/80"
+   576→   576→                    >
+   577→   577→                      <Check className="size-2.5 text-emerald-500 shrink-0" />
+   578→   578→                      {f}
+   579→   579→                    </span>
+   580→   580→                  ))}
+   581→   581→                </div>
+   582→   582→              </div>
+   583→   583→            </motion.div>
+   584→   584→          )}
+   585→   585→        </AnimatePresence>
+   586→   586→
+   587→   587→        {/* Hint */}
+   588→   588→        <div className="mt-3 flex items-center gap-1 text-xs text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+   589→   589→          {expanded ? "Show less" : "Show details"}
+   590→   590→          <ArrowRight className={`size-3 transition-transform ${expanded ? "rotate-90" : ""}`} />
+   591→   591→        </div>
+   592→   592→      </div>
+   593→   593→    </motion.div>
+   594→   594→  );
+   595→   595→}
+   596→   596→
+   597→   597→/* ═══════════════════════════════════════════════════════════════
+   598→   598→   DIFFERENTIATOR CARD
+   599→   599→   ═══════════════════════════════════════════════════════════════ */
+   600→   600→
+   601→   601→function DifferentiatorCard({ item }: { item: Differentiator }) {
+   602→   602→  const Icon = item.icon;
+   603→   603→  return (
+   604→   604→    <motion.div
+   605→   605→      variants={staggerItem}
+   606→   606→      whileHover={{ scale: 1.02 }}
+   607→   607→      transition={{ duration: 0.2 }}
+   608→   608→      className="group rounded-xl border border-border bg-card p-4 hover:border-primary/40 hover:bg-muted/30 transition-all"
+   609→   609→    >
+   610→   610→      <div className="flex items-start gap-3">
+   611→   611→        <div className="flex items-center justify-center size-9 rounded-lg bg-primary/10 text-primary shrink-0 group-hover:bg-primary/20 transition-colors">
+   612→   612→          <Icon className="size-4" />
+   613→   613→        </div>
+   614→   614→        <div className="min-w-0">
+   615→   615→          <h4 className="font-semibold text-foreground text-sm leading-tight">{item.name}</h4>
+   616→   616→          <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{item.description}</p>
+   617→   617→        </div>
+   618→   618→      </div>
+   619→   619→    </motion.div>
+   620→   620→  );
+   621→   621→}
+   622→   622→
+   623→   623→/* ═══════════════════════════════════════════════════════════════
+   624→   624→   SPONSOR TIER CARD
+   625→   625→   ═══════════════════════════════════════════════════════════════ */
+   626→   626→
+   627→   627→function SponsorCard({ tier }: { tier: SponsorTier }) {
+   628→   628→  const Icon = tier.icon;
+   629→   629→  return (
+   630→   630→    <motion.div variants={staggerItem} className="h-full">
+   631→   631→      <div className="rounded-2xl border border-border bg-card p-5 h-full hover:border-primary/40 transition-colors">
+   632→   632→        <div className="flex items-center gap-2 mb-3">
+   633→   633→          <div className={`flex items-center justify-center size-9 rounded-lg bg-muted/60 ${tier.color}`}>
+   634→   634→            <Icon className="size-4" />
+   635→   635→          </div>
+   636→   636→          <h4 className="font-display font-bold text-foreground">{tier.name}</h4>
+   637→   637→        </div>
+   638→   638→        <p className={`text-xs font-semibold ${tier.color} mb-3`}>{tier.amount}</p>
+   639→   639→        <ul className="space-y-2">
+   640→   640→          {tier.perks.map((perk) => (
+   641→   641→            <li key={perk} className="flex items-start gap-2 text-xs text-muted-foreground">
+   642→   642→              <Check className={`size-3.5 shrink-0 mt-0.5 ${tier.color}`} />
+   643→   643→              <span className="leading-relaxed">{perk}</span>
+   644→   644→            </li>
+   645→   645→          ))}
+   646→   646→        </ul>
+   647→   647→      </div>
+   648→   648→    </motion.div>
+   649→   649→  );
+   650→   650→}
+   651→   651→
+   652→   652→/* ═══════════════════════════════════════════════════════════════
+   653→   653→   COMPETITIVE MOAT — closing statement
+   654→   654→   ═══════════════════════════════════════════════════════════════ */
+   655→   655→
+   656→   656→function CompetitiveMoat() {
+   657→   657→  return (
+   658→   658→    <ScrollReveal className="max-w-4xl mx-auto mt-16">
+   659→   659→      <ShineBorder className="rounded-3xl bg-card overflow-hidden">
+   660→   660→        <div className="p-8 sm:p-10 text-center">
+   661→   661→          <Floating className="inline-block mb-4">
+   662→   662→            <div className="flex items-center justify-center size-14 rounded-2xl bg-primary/10 text-primary">
+   663→   663→              <Shield className="size-7" />
+   664→   664→            </div>
+   665→   665→          </Floating>
+   666→   666→          <h3 className="font-display text-2xl sm:text-3xl font-bold text-foreground">
+   667→   667→            The framework is the entry point, not the entire product
+   668→   668→          </h3>
+   669→   669→          <p className="mt-4 text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+   670→   670→            Frameworks are relatively easy to copy; ecosystems are not. If RoyCSS becomes the center of a trusted
+   671→   671→            marketplace, high-quality documentation, excellent developer tools, a strong plugin and theme ecosystem,
+   672→   672→            enterprise support, and an active community — that&apos;s a much stronger long-term position than competing
+   673→   673→            on utility classes alone.
+   674→   674→          </p>
+   675→   675→          <div className="mt-6 flex flex-wrap justify-center gap-6 sm:gap-10">
+   676→   676→            <div className="text-center">
+   677→   677→              <AnimatedCounter value={16} className="font-display text-3xl font-bold text-primary" />
+   678→   678→              <p className="text-xs text-muted-foreground mt-1">Platform products</p>
+   679→   679→            </div>
+   680→   680→            <div className="text-center">
+   681→   681→              <AnimatedCounter value={10} className="font-display text-3xl font-bold text-primary" />
+   682→   682→              <p className="text-xs text-muted-foreground mt-1">Unique differentiators</p>
+   683→   683→            </div>
+   684→   684→            <div className="text-center">
+   685→   685→              <AnimatedCounter value={1569} className="font-display text-3xl font-bold text-primary" />
+   686→   686→              <p className="text-xs text-muted-foreground mt-1">Free CSS effects</p>
+   687→   687→            </div>
+   688→   688→            <div className="text-center">
+   689→   689→              <AnimatedCounter value={4} className="font-display text-3xl font-bold text-primary" />
+   690→   690→              <p className="text-xs text-muted-foreground mt-1">Sponsor tiers</p>
+   691→   691→            </div>
+   692→   692→          </div>
+   693→   693→        </div>
+   694→   694→      </ShineBorder>
+   695→   695→    </ScrollReveal>
+   696→   696→  );
+   697→   697→}
+   698→   698→
+   699→   699→/* ═══════════════════════════════════════════════════════════════
+   700→   700→   MAIN SECTION
+   701→   701→   ═══════════════════════════════════════════════════════════════ */
+   702→   702→
+   703→   703→export function PlatformEcosystem() {
+   704→   704→  const [activeTier, setActiveTier] = useState<Tier | "all">("all");
+   705→   705→  const [sponsorOpen, setSponsorOpen] = useState(false);
+   706→   706→
+   707→   707→  const filteredProducts = useMemo(() => {
+   708→   708→    if (activeTier === "all") return PRODUCTS;
+   709→   709→    return PRODUCTS.filter((p) => p.tier === activeTier);
+   710→   710→  }, [activeTier]);
+   711→   711→
+   712→   712→  const tierKeys: (Tier | "all")[] = ["all", "free", "pro", "enterprise", "cloud"];
+   713→   713→
+   714→   714→  const handleTierChange = useCallback((tier: Tier | "all") => {
+   715→   715→    setActiveTier(tier);
+   716→   716→  }, []);
+   717→   717→
+   718→   718→  return (
+   719→   719→    <section id="platform" className="py-16 sm:py-20 scroll-mt-20 relative overflow-hidden">
+   720→   720→      {/* Subtle background */}
+   721→   721→      <div className="absolute inset-0 -z-10 bg-grid opacity-10" />
+   722→   722→
+   723→   723→      <div className="container mx-auto px-4 sm:px-6">
+   724→   724→        {/* ─── Heading ─── */}
+   725→   725→        <SectionHeading
+   726→   726→          eyebrow="Not just a framework — a platform"
+   727→   727→          title="The RoyCSS Ecosystem"
+   728→   728→          subtitle="The framework remains free and open source. Everything around it — marketplace, studio, AI, cloud, enterprise — becomes the business. This is how Tailwind, Vercel, and Prisma won."
+   729→   729→        />
+   730→   730→
+   731→   731→        {/* ─── Vision Diagram ─── */}
+   732→   732→        <div className="mt-12">
+   733→   733→          <VisionDiagram />
+   734→   734→        </div>
+   735→   735→
+   736→   736→        {/* ─── Products ─── */}
+   737→   737→        <div className="mt-16">
+   738→   738→          <ScrollReveal>
+   739→   739→            <div className="flex items-center gap-2 mb-2">
+   740→   740→              <Rocket className="size-4 text-primary" />
+   741→   741→              <h3 className="font-display text-xl font-bold text-foreground">16+ Platform Products</h3>
+   742→   742→            </div>
+   743→   743→            <p className="text-sm text-muted-foreground mb-6">
+   744→   744→              Filter by tier. Click any card to see what&apos;s included.
+   745→   745→            </p>
+   746→   746→          </ScrollReveal>
+   747→   747→
+   748→   748→          {/* Tier filter pills */}
+   749→   749→          <ScrollReveal delay={0.1}>
+   750→   750→            <div
+   751→   751→              className="flex flex-wrap gap-2 mb-6"
+   752→   752→              role="tablist"
+   753→   753→              aria-label="Filter platform products by tier"
+   754→   754→            >
+   755→   755→              {tierKeys.map((tier) => {
+   756→   756→                const meta = TIER_META[tier];
+   757→   757→                const TierIcon = meta.icon;
+   758→   758→                const isActive = activeTier === tier;
+   759→   759→                const count = tier === "all" ? PRODUCTS.length : PRODUCTS.filter((p) => p.tier === tier).length;
+   760→   760→                return (
+   761→   761→                  <button
+   762→   762→                    key={tier}
+   763→   763→                    role="tab"
+   764→   764→                    aria-selected={isActive}
+   765→   765→                    onClick={() => handleTierChange(tier)}
+   766→   766→                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+   767→   767→                      isActive
+   768→   768→                        ? "bg-primary text-primary-foreground shadow-sm"
+   769→   769→                        : "bg-muted/80 text-muted-foreground hover:text-foreground hover:bg-muted"
+   770→   770→                    }`}
+   771→   771→                  >
+   772→   772→                    <TierIcon className="size-3" />
+   773→   773→                    {meta.label}
+   774→   774→                    <span className={`text-[10px] tabular-nums ${isActive ? "text-primary-foreground/70" : "text-muted-foreground/60"}`}>
+   775→   775→                      {count}
+   776→   776→                    </span>
+   777→   777→                  </button>
+   778→   778→                );
+   779→   779→              })}
+   780→   780→            </div>
+   781→   781→          </ScrollReveal>
+   782→   782→
+   783→   783→          {/* Product grid */}
+   784→   784→          <StaggerGroup
+   785→   785→            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+   786→   786→            key={activeTier} // remount on filter change for re-stagger
+   787→   787→          >
+   788→   788→            <AnimatePresence mode="popLayout">
+   789→   789→              {filteredProducts.map((product) => (
+   790→   790→                <ProductCard key={product.id} product={product} />
+   791→   791→              ))}
+   792→   792→            </AnimatePresence>
+   793→   793→          </StaggerGroup>
+   794→   794→        </div>
+   795→   795→
+   796→   796→        {/* ─── Differentiators ─── */}
+   797→   797→        <div className="mt-20">
+   798→   798→          <ScrollReveal>
+   799→   799→            <div className="flex items-center gap-2 mb-2">
+   800→   800→              <Sparkles className="size-4 text-primary" />
+   801→   801→              <h3 className="font-display text-xl font-bold text-foreground">Features Competitors Don&apos;t Have</h3>
+   802→   802→            </div>
+   803→   803→            <p className="text-sm text-muted-foreground mb-6">
+   804→   804→              Ten differentiators that make RoyCSS more than a CSS library.
+   805→   805→            </p>
+   806→   806→          </ScrollReveal>
+   807→   807→
+   808→   808→          <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+   809→   809→            {DIFFERENTIATORS.map((item) => (
+   810→   810→              <DifferentiatorCard key={item.id} item={item} />
+   811→   811→            ))}
+   812→   812→          </StaggerGroup>
+   813→   813→        </div>
+   814→   814→
+   815→   815→        {/* ─── Sponsor Tiers ─── */}
+   816→   816→        <div className="mt-20">
+   817→   817→          <ScrollReveal>
+   818→   818→            <div className="flex items-center gap-2 mb-2">
+   819→   819→              <Users className="size-4 text-primary" />
+   820→   820→              <h3 className="font-display text-xl font-bold text-foreground">Sponsor Ecosystem</h3>
+   821→   821→            </div>
+   822→   822→            <p className="text-sm text-muted-foreground mb-6">
+   823→   823→              Don&apos;t just add logos — build an ecosystem. Amounts are suggestions — not requirements.
+   824→   824→            </p>
+   825→   825→          </ScrollReveal>
+   826→   826→
+   827→   827→          {/* Sponsor button */}
+   828→   828→          <ScrollReveal delay={0.05}>
+   829→   829→            <div className="flex justify-center mb-8">
+   830→   830→              <button
+   831→   831→                onClick={() => setSponsorOpen(true)}
+   832→   832→                className="group inline-flex items-center gap-2 h-12 px-8 rounded-xl bg-primary text-primary-foreground font-semibold text-sm shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 transition-all cursor-pointer"
+   833→   833→              >
+   834→   834→                <Heart className="size-4 group-hover:scale-110 transition-transform" />
+   835→   835→                Become a Sponsor
+   836→   836→                <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
+   837→   837→              </button>
+   838→   838→            </div>
+   839→   839→          </ScrollReveal>
+   840→   840→
+   841→   841→          <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+   842→   842→            {SPONSOR_TIERS.map((tier) => (
+   843→   843→              <SponsorCard key={tier.id} tier={tier} />
+   844→   844→            ))}
+   845→   845→          </StaggerGroup>
+   846→   846→
+   847→   847→          {/* Sponsored companies carousel */}
+   848→   848→          {SPONSORED_COMPANIES.length > 0 && (
+   849→   849→            <div className="mt-10">
+   850→   850→              <ScrollReveal>
+   851→   851→                <p className="text-center text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-4">
+   852→   852→                  Our Sponsors
+   853→   853→                </p>
+   854→   854→              </ScrollReveal>
+   855→   855→              <ScrollReveal delay={0.1}>
+   856→   856→                <div className="relative overflow-hidden rounded-2xl border border-border/40 bg-card/30 p-4">
+   857→   857→                  <Marquee speed={30}>
+   858→   858→                    {SPONSORED_COMPANIES.map((company) => {
+   859→   859→                      const tier = getTierForCompany(company);
+   860→   860→                      const meta = SPONSOR_TIER_META[tier];
+   861→   861→                      const TierIcon = meta.icon;
+   862→   862→                      return (
+   863→   863→                        <div
+   864→   864→                          key={company.name}
+   865→   865→                          className={`mx-2 flex items-center gap-3 rounded-xl border bg-card/80 px-4 py-3 shrink-0 ${meta.glowBorder}`}
+   866→   866→                          style={{ boxShadow: meta.glowShadow }}
+   867→   867→                        >
+   868→   868→                          <div className={`flex items-center justify-center size-9 rounded-lg ${meta.bg} ${meta.color} shrink-0`}>
+   869→   869→                            <Building2 className="size-4" />
+   870→   870→                          </div>
+   871→   871→                          <div className="min-w-0">
+   872→   872→                            <div className="flex items-center gap-1.5">
+   873→   873→                              <p className="font-display font-bold text-xs text-foreground leading-tight whitespace-nowrap">
+   874→   874→                                {company.name}
+   875→   875→                              </p>
+   876→   876→                              <span className={`inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[9px] font-semibold ${meta.bg} ${meta.color} whitespace-nowrap`}>
+   877→   877→                                <Check className="size-2" />
+   878→   878→                                <TierIcon className="size-2" />
+   879→   879→                                {meta.label}
+   880→   880→                              </span>
+   881→   881→                            </div>
+   882→   882→                            <p className="text-[10px] text-muted-foreground leading-tight mt-0.5 whitespace-nowrap">
+   883→   883→                              {company.amount
+   884→   884→                                ? `$${company.amount.toLocaleString()}+ contributed`
+   885→   885→                                : meta.suggestedAmount}
+   886→   886→                            </p>
+   887→   887→                          </div>
+   888→   888→                        </div>
+   889→   889→                      );
+   890→   890→                    })}
+   891→   891→                  </Marquee>
+   892→   892→                </div>
+   893→   893→              </ScrollReveal>
+   894→   894→            </div>
+   895→   895→          )}
+   896→   896→        </div>
+   897→   897→
+   898→   898→        {/* ─── Competitive Moat ─── */}
+   899→   899→        <CompetitiveMoat />
+   900→   900→      </div>
+   901→   901→
+   902→   902→      {/* Sponsor Modal */}
+   903→   903→      <SponsorModal open={sponsorOpen} onOpenChange={setSponsorOpen} />
+   904→   904→    </section>
+   905→   905→  );
+   906→   906→}
+   907→   907→

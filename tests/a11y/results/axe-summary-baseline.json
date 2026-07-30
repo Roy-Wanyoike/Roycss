@@ -1,0 +1,37 @@
+{
+  "generatedAt": "2026-07-30T14:26:03.574Z",
+  "targetUrl": "http://localhost:3000/",
+  "axeVersion": "4.12.1",
+  "summary": {
+    "critical": 0,
+    "serious": 2,
+    "moderate": 1,
+    "minor": 0,
+    "none": 0,
+    "totalRulesViolated": 3,
+    "totalNodeViolations": 145,
+    "passes": 48,
+    "incomplete": 2,
+    "inapplicable": 37
+  },
+  "violations": [
+    {
+      "id": "link-in-text-block",
+      "impact": "serious",
+      "help": "Links must be distinguishable without relying on color",
+      "nodeCount": 1
+    },
+    {
+      "id": "nested-interactive",
+      "impact": "serious",
+      "help": "Interactive controls must not be nested",
+      "nodeCount": 6
+    },
+    {
+      "id": "region",
+      "impact": "moderate",
+      "help": "All page content should be contained by landmarks",
+      "nodeCount": 138
+    }
+  ]
+}

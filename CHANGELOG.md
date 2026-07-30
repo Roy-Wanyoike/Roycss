@@ -5,6 +5,39 @@ All notable changes to RoyCSS will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+> Add new entries by dropping a markdown file in
+> `scripts/release/changelog-entries/` (see `_EXAMPLE.md` for the
+> template). `bun run scripts/release/generate-changelog.ts` assembles
+> this section from those entries. When cutting a release, rename
+> `[Unreleased]` to `[x.y.z] — YYYY-MM-DD` and add a fresh empty
+> `[Unreleased]` above it.
+
+### Added
+
+- _(nothing yet)_
+
+### Changed
+
+- _(nothing yet)_
+
+### Deprecated
+
+- _(nothing yet)_
+
+### Removed
+
+- _(nothing yet)_
+
+### Fixed
+
+- _(nothing yet)_
+
+### Security
+
+- _(nothing yet)_
+
 ## [1.0.0] — 2026-07-28
 
 ### Added
@@ -67,3 +100,8 @@ deno add npm:roycss
 ```html
 <link rel="stylesheet" href="https://unpkg.com/roycss/dist/roycss.min.css" />
 ```
+
+---
+
+[Unreleased]: https://github.com/Roy-Wanyoike/roycss/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/Roy-Wanyoike/roycss/releases/tag/v1.0.0

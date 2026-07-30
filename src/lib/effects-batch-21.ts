@@ -421,15 +421,15 @@ export const effectsBatch21: CSSEffect[] = [
   content: '';
   position: absolute;
   top: 0;
-  left: -100%;
+  inset-inline-start: -100%;
   width: 100%;
   height: 100%;
   background: color-mix(in oklch, oklch(0 0 0) 45%, transparent);
-  transition: left 0.4s ease;
+  transition: inset-inline-start 0.4s ease;
   z-index: 1;
 }
 .roycss-ferrum-hover-overlay-slide:hover::before {
-  left: 0;
+  inset-inline-start: 0;
 }`,
 },
 
@@ -449,7 +449,7 @@ export const effectsBatch21: CSSEffect[] = [
   content: '';
   position: absolute;
   bottom: 0;
-  left: 0;
+  inset-inline-start: 0;
   width: 100%;
   height: 0;
   background: linear-gradient(to top, oklch(0.627 0.164 271.53), oklch(0.501 0.138 304.73));
@@ -563,16 +563,16 @@ export const effectsBatch21: CSSEffect[] = [
   content: '';
   position: absolute;
   top: 0;
-  left: -110%;
+  inset-inline-start: -110%;
   width: 100%;
   height: 100%;
   background: linear-gradient(135deg, oklch(0.795 0.172 323.15), oklch(0.673 0.193 16.23));
   transform: skewX(-15deg);
-  transition: left 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+  transition: inset-inline-start 0.5s cubic-bezier(0.65, 0, 0.35, 1);
   z-index: -1;
 }
 .roycss-ferrum-hover-swipe:hover::before {
-  left: 0;
+  inset-inline-start: 0;
 }
 .roycss-ferrum-hover-swipe:hover {
   color: oklch(1 0 0);
@@ -837,7 +837,7 @@ export const effectsBatch21: CSSEffect[] = [
   cssCode: `.roycss-ferrum-text-typewriter {
   overflow: hidden;
   white-space: nowrap;
-  border-right: 2px solid oklch(0.627 0.164 271.53);
+  border-inline-end: 2px solid oklch(0.627 0.164 271.53);
   width: 0;
   animation:
     roy-ferrum-text-typewriter-type 3s steps(24) forwards,
@@ -1119,7 +1119,7 @@ export const effectsBatch21: CSSEffect[] = [
   content: attr(data-text);
   position: absolute;
   top: 0;
-  left: 0;
+  inset-inline-start: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;

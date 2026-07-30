@@ -572,7 +572,7 @@ export const effectsBatch18: CSSEffect[] = [
   padding: 2px;
   background: linear-gradient(135deg, oklch(0.6 0.2 162), oklch(0.55 0.25 200), oklch(0.5 0.2 280));
   background-size: 300% 300%;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(oklch(1 0 0) 0 0) content-box, linear-gradient(oklch(1 0 0) 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;

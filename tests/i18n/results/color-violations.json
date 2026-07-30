@@ -1,0 +1,14 @@
+{
+  "generatedAt": "2026-07-30T14:26:20.263Z",
+  "summary": {
+    "totalEffects": 1569,
+    "effectsWithColorViolations": 0,
+    "totalColorViolations": 0,
+    "violationsByFormat": {},
+    "violationsByFile": {},
+    "oklchOccurrences": 7806,
+    "compliancePercent": 100
+  },
+  "topViolations": [],
+  "violations": []
+}

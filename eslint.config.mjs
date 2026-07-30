@@ -44,7 +44,33 @@ const eslintConfig = [...nextCoreWebVitals, ...nextTypescript, {
     "no-useless-escape": "off",
   },
 }, {
-  ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts", "examples/**", "skills"]
+  ignores: [
+    "node_modules/**",
+    ".next/**",
+    "out/**",
+    "build/**",
+    "next-env.d.ts",
+    "examples/**",
+    "skills",
+    // Large generated/built files that cause ESLint OOM
+    "src/lib/docs-data.ts",
+    "public/__axe.min.js",
+    "cli/index.js",
+    "cli/index.ts",
+    // Standalone platform artifacts (separate packages, linted independently)
+    "inspector/**",
+    "vscode-extension/**",
+    "mcp-server/**",
+    "dist/**",
+    "tests/coverage/**",
+    "tests/a11y/results/**",
+    "tests/i18n/results/**",
+    "tests/i18n/screenshots/**",
+    "scripts/curate-results/**",
+    "performance/_playwright_bench.py",
+    // Test fixtures and results
+    "tests/**/*.json",
+  ]
 }];
 
 export default eslintConfig;

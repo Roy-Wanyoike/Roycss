@@ -1,0 +1,522 @@
+{
+  "generatedAt": "2026-07-30T12:49:47.051Z",
+  "spec": "WCAG 2.1 AA (1.4.3 normal text ≥4.5:1, 1.4.3 large text + 1.4.11 non-text UI ≥3:1)",
+  "method": "OKLCH → linear sRGB → relative luminance (WCAG §1.4.3 formula)",
+  "presets": [
+    {
+      "id": "emerald",
+      "name": "Emerald",
+      "hue": 162.48,
+      "hex": "#059669",
+      "oklch": {
+        "L": 0.49,
+        "C": 0.12,
+        "H": 162.48
+      }
+    },
+    {
+      "id": "blue",
+      "name": "Blue",
+      "hue": 244,
+      "hex": "#2563eb",
+      "oklch": {
+        "L": 0.45,
+        "C": 0.18,
+        "H": 264
+      }
+    },
+    {
+      "id": "violet",
+      "name": "Violet",
+      "hue": 295,
+      "hex": "#7c3aed",
+      "oklch": {
+        "L": 0.45,
+        "C": 0.2,
+        "H": 295
+      }
+    },
+    {
+      "id": "rose",
+      "name": "Rose",
+      "hue": 12,
+      "hex": "#e11d48",
+      "oklch": {
+        "L": 0.5,
+        "C": 0.2,
+        "H": 12
+      }
+    },
+    {
+      "id": "amber",
+      "name": "Amber",
+      "hue": 75,
+      "hex": "#b45309",
+      "oklch": {
+        "L": 0.5,
+        "C": 0.13,
+        "H": 60
+      }
+    },
+    {
+      "id": "cyan",
+      "name": "Cyan",
+      "hue": 205,
+      "hex": "#0891b2",
+      "oklch": {
+        "L": 0.5,
+        "C": 0.11,
+        "H": 220
+      }
+    },
+    {
+      "id": "orange",
+      "name": "Orange",
+      "hue": 55,
+      "hex": "#c2410c",
+      "oklch": {
+        "L": 0.5,
+        "C": 0.16,
+        "H": 50
+      }
+    },
+    {
+      "id": "pink",
+      "name": "Pink",
+      "hue": 350,
+      "hex": "#db2777",
+      "oklch": {
+        "L": 0.55,
+        "C": 0.18,
+        "H": 350
+      }
+    },
+    {
+      "id": "lime",
+      "name": "Lime",
+      "hue": 130,
+      "hex": "#4d7c0f",
+      "oklch": {
+        "L": 0.48,
+        "C": 0.13,
+        "H": 130
+      }
+    },
+    {
+      "id": "red",
+      "name": "Red",
+      "hue": 25,
+      "hex": "#dc2626",
+      "oklch": {
+        "L": 0.5,
+        "C": 0.2,
+        "H": 25
+      }
+    },
+    {
+      "id": "indigo",
+      "name": "Indigo",
+      "hue": 268,
+      "hex": "#6366f1",
+      "oklch": {
+        "L": 0.5,
+        "C": 0.18,
+        "H": 268
+      }
+    },
+    {
+      "id": "teal",
+      "name": "Teal",
+      "hue": 178,
+      "hex": "#0f766e",
+      "oklch": {
+        "L": 0.46,
+        "C": 0.07,
+        "H": 178
+      }
+    }
+  ],
+  "backgrounds": {
+    "white": {
+      "hex": "#ffffff",
+      "linearLuminance": 1
+    },
+    "dark": {
+      "oklch": {
+        "L": 0.21,
+        "C": 0.034,
+        "H": 264.67
+      },
+      "linearLuminance": 0.009166281783892904
+    }
+  },
+  "results": [
+    {
+      "preset": "emerald",
+      "scenario": "white-on-preset",
+      "fg": "#ffffff",
+      "bg": "#059669 (oklch 0.49 0.12 162.48)",
+      "ratio": 3.77,
+      "passesNormal": false,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "emerald",
+      "scenario": "preset-on-white",
+      "fg": "#059669 (oklch 0.49 0.12 162.48)",
+      "bg": "#ffffff",
+      "ratio": 3.77,
+      "passesNormal": false,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "emerald",
+      "scenario": "preset-on-dark",
+      "fg": "#059669 (oklch 0.49 0.12 162.48)",
+      "bg": "oklch(0.21 0.034 264.67)",
+      "ratio": 4.71,
+      "passesNormal": true,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "blue",
+      "scenario": "white-on-preset",
+      "fg": "#ffffff",
+      "bg": "#2563eb (oklch 0.45 0.18 264)",
+      "ratio": 5.17,
+      "passesNormal": true,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "blue",
+      "scenario": "preset-on-white",
+      "fg": "#2563eb (oklch 0.45 0.18 264)",
+      "bg": "#ffffff",
+      "ratio": 5.17,
+      "passesNormal": true,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "blue",
+      "scenario": "preset-on-dark",
+      "fg": "#2563eb (oklch 0.45 0.18 264)",
+      "bg": "oklch(0.21 0.034 264.67)",
+      "ratio": 3.43,
+      "passesNormal": false,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "violet",
+      "scenario": "white-on-preset",
+      "fg": "#ffffff",
+      "bg": "#7c3aed (oklch 0.45 0.2 295)",
+      "ratio": 5.7,
+      "passesNormal": true,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "violet",
+      "scenario": "preset-on-white",
+      "fg": "#7c3aed (oklch 0.45 0.2 295)",
+      "bg": "#ffffff",
+      "ratio": 5.7,
+      "passesNormal": true,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "violet",
+      "scenario": "preset-on-dark",
+      "fg": "#7c3aed (oklch 0.45 0.2 295)",
+      "bg": "oklch(0.21 0.034 264.67)",
+      "ratio": 3.11,
+      "passesNormal": false,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "rose",
+      "scenario": "white-on-preset",
+      "fg": "#ffffff",
+      "bg": "#e11d48 (oklch 0.5 0.2 12)",
+      "ratio": 4.7,
+      "passesNormal": true,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "rose",
+      "scenario": "preset-on-white",
+      "fg": "#e11d48 (oklch 0.5 0.2 12)",
+      "bg": "#ffffff",
+      "ratio": 4.7,
+      "passesNormal": true,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "rose",
+      "scenario": "preset-on-dark",
+      "fg": "#e11d48 (oklch 0.5 0.2 12)",
+      "bg": "oklch(0.21 0.034 264.67)",
+      "ratio": 3.78,
+      "passesNormal": false,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "amber",
+      "scenario": "white-on-preset",
+      "fg": "#ffffff",
+      "bg": "#b45309 (oklch 0.5 0.13 60)",
+      "ratio": 5.02,
+      "passesNormal": true,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "amber",
+      "scenario": "preset-on-white",
+      "fg": "#b45309 (oklch 0.5 0.13 60)",
+      "bg": "#ffffff",
+      "ratio": 5.02,
+      "passesNormal": true,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "amber",
+      "scenario": "preset-on-dark",
+      "fg": "#b45309 (oklch 0.5 0.13 60)",
+      "bg": "oklch(0.21 0.034 264.67)",
+      "ratio": 3.53,
+      "passesNormal": false,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "cyan",
+      "scenario": "white-on-preset",
+      "fg": "#ffffff",
+      "bg": "#0891b2 (oklch 0.5 0.11 220)",
+      "ratio": 3.68,
+      "passesNormal": false,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "cyan",
+      "scenario": "preset-on-white",
+      "fg": "#0891b2 (oklch 0.5 0.11 220)",
+      "bg": "#ffffff",
+      "ratio": 3.68,
+      "passesNormal": false,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "cyan",
+      "scenario": "preset-on-dark",
+      "fg": "#0891b2 (oklch 0.5 0.11 220)",
+      "bg": "oklch(0.21 0.034 264.67)",
+      "ratio": 4.82,
+      "passesNormal": true,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "orange",
+      "scenario": "white-on-preset",
+      "fg": "#ffffff",
+      "bg": "#c2410c (oklch 0.5 0.16 50)",
+      "ratio": 5.18,
+      "passesNormal": true,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "orange",
+      "scenario": "preset-on-white",
+      "fg": "#c2410c (oklch 0.5 0.16 50)",
+      "bg": "#ffffff",
+      "ratio": 5.18,
+      "passesNormal": true,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "orange",
+      "scenario": "preset-on-dark",
+      "fg": "#c2410c (oklch 0.5 0.16 50)",
+      "bg": "oklch(0.21 0.034 264.67)",
+      "ratio": 3.43,
+      "passesNormal": false,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "pink",
+      "scenario": "white-on-preset",
+      "fg": "#ffffff",
+      "bg": "#db2777 (oklch 0.55 0.18 350)",
+      "ratio": 4.6,
+      "passesNormal": true,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "pink",
+      "scenario": "preset-on-white",
+      "fg": "#db2777 (oklch 0.55 0.18 350)",
+      "bg": "#ffffff",
+      "ratio": 4.6,
+      "passesNormal": true,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "pink",
+      "scenario": "preset-on-dark",
+      "fg": "#db2777 (oklch 0.55 0.18 350)",
+      "bg": "oklch(0.21 0.034 264.67)",
+      "ratio": 3.86,
+      "passesNormal": false,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "lime",
+      "scenario": "white-on-preset",
+      "fg": "#ffffff",
+      "bg": "#4d7c0f (oklch 0.48 0.13 130)",
+      "ratio": 4.99,
+      "passesNormal": true,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "lime",
+      "scenario": "preset-on-white",
+      "fg": "#4d7c0f (oklch 0.48 0.13 130)",
+      "bg": "#ffffff",
+      "ratio": 4.99,
+      "passesNormal": true,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "lime",
+      "scenario": "preset-on-dark",
+      "fg": "#4d7c0f (oklch 0.48 0.13 130)",
+      "bg": "oklch(0.21 0.034 264.67)",
+      "ratio": 3.55,
+      "passesNormal": false,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "red",
+      "scenario": "white-on-preset",
+      "fg": "#ffffff",
+      "bg": "#dc2626 (oklch 0.5 0.2 25)",
+      "ratio": 4.83,
+      "passesNormal": true,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "red",
+      "scenario": "preset-on-white",
+      "fg": "#dc2626 (oklch 0.5 0.2 25)",
+      "bg": "#ffffff",
+      "ratio": 4.83,
+      "passesNormal": true,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "red",
+      "scenario": "preset-on-dark",
+      "fg": "#dc2626 (oklch 0.5 0.2 25)",
+      "bg": "oklch(0.21 0.034 264.67)",
+      "ratio": 3.67,
+      "passesNormal": false,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "indigo",
+      "scenario": "white-on-preset",
+      "fg": "#ffffff",
+      "bg": "#6366f1 (oklch 0.5 0.18 268)",
+      "ratio": 4.47,
+      "passesNormal": false,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "indigo",
+      "scenario": "preset-on-white",
+      "fg": "#6366f1 (oklch 0.5 0.18 268)",
+      "bg": "#ffffff",
+      "ratio": 4.47,
+      "passesNormal": false,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "indigo",
+      "scenario": "preset-on-dark",
+      "fg": "#6366f1 (oklch 0.5 0.18 268)",
+      "bg": "oklch(0.21 0.034 264.67)",
+      "ratio": 3.97,
+      "passesNormal": false,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "teal",
+      "scenario": "white-on-preset",
+      "fg": "#ffffff",
+      "bg": "#0f766e (oklch 0.46 0.07 178)",
+      "ratio": 5.47,
+      "passesNormal": true,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "teal",
+      "scenario": "preset-on-white",
+      "fg": "#0f766e (oklch 0.46 0.07 178)",
+      "bg": "#ffffff",
+      "ratio": 5.47,
+      "passesNormal": true,
+      "passesLarge": true,
+      "passesAA": true
+    },
+    {
+      "preset": "teal",
+      "scenario": "preset-on-dark",
+      "fg": "#0f766e (oklch 0.46 0.07 178)",
+      "bg": "oklch(0.21 0.034 264.67)",
+      "ratio": 3.24,
+      "passesNormal": false,
+      "passesLarge": true,
+      "passesAA": true
+    }
+  ],
+  "summary": {
+    "total": 36,
+    "passNormal": 20,
+    "passLarge": 36,
+    "passAA": 36,
+    "failAA": 0
+  }
+}

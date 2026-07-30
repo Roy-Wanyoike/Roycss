@@ -1,0 +1,18 @@
+{
+  "generatedAt": "2026-07-30T14:49:06.206Z",
+  "targetUrl": "http://localhost:3000/",
+  "axeVersion": "4.11.1",
+  "summary": {
+    "critical": 0,
+    "serious": 0,
+    "moderate": 0,
+    "minor": 0,
+    "none": 0,
+    "totalRulesViolated": 0,
+    "totalNodeViolations": 0,
+    "passes": 49,
+    "incomplete": 2,
+    "inapplicable": 37
+  },
+  "violations": []
+}

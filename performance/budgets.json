@@ -1,0 +1,32 @@
+{
+  "$schema": "roycss.perf.budgets.v1",
+  "_comment": "Machine-readable performance budgets. The orchestrator (scripts/bench/run.ts) loads this file and emits PASS/FAIL per row. To change a budget, update this file AND add an ADR row in docs/adr/performance/ADR.md with written justification.",
+  "bundle": {
+    "roycssCssRaw": { "target": 1572864, "comparator": "lt", "unit": "bytes", "label": "dist/roycss.css (raw)" },
+    "roycssMinCssRaw": { "target": 1153434, "comparator": "lt", "unit": "bytes", "label": "dist/roycss.min.css (raw)" },
+    "roycssMinCssGz": { "target": 153600, "comparator": "lt", "unit": "bytes", "label": "dist/roycss.min.css (gzipped)" },
+    "roycssMinCssBr": { "target": 130000, "comparator": "lt", "unit": "bytes", "label": "dist/roycss.min.css (brotlied)", "info": true },
+    "effectsJsonRaw": { "target": 716800, "comparator": "lt", "unit": "bytes", "label": "dist/effects.json (raw)" },
+    "effectsJsonGz": { "target": 102400, "comparator": "lt", "unit": "bytes", "label": "dist/effects.json (gzipped)" },
+    "cliIndexJsRaw": { "target": 2097152, "comparator": "lt", "unit": "bytes", "label": "cli/index.js (raw)" },
+    "mcpServerIndexJsRaw": { "target": 102400, "comparator": "lt", "unit": "bytes", "label": "mcp-server/index.js (after build, raw)" }
+  },
+  "runtime": {
+    "ttfb": { "target": 800, "comparator": "lt", "unit": "ms", "label": "Time to First Byte", "info": true },
+    "fcp": { "target": 1800, "comparator": "lt", "unit": "ms", "label": "First Contentful Paint" },
+    "lcp": { "target": 2500, "comparator": "lt", "unit": "ms", "label": "Largest Contentful Paint" },
+    "tti": { "target": 3800, "comparator": "lt", "unit": "ms", "label": "Time to Interactive (approx)" },
+    "tbt": { "target": 200, "comparator": "lt", "unit": "ms", "label": "Total Blocking Time" },
+    "cls": { "target": 0.1, "comparator": "lt", "unit": "score", "label": "Cumulative Layout Shift" },
+    "domCount": { "target": 1000, "comparator": "lt", "unit": "count", "label": "DOM nodes on initial load" },
+    "scrollFps": { "target": 50, "comparator": "gte", "unit": "fps", "label": "Scroll FPS (5s average)" }
+  },
+  "render": {
+    "n10Time": { "target": 20, "comparator": "lt", "unit": "ms", "label": "Render time @ 10 cards", "info": true },
+    "n50Time": { "target": 50, "comparator": "lt", "unit": "ms", "label": "Render time @ 50 cards", "info": true },
+    "n100Time": { "target": 80, "comparator": "lt", "unit": "ms", "label": "Render time @ 100 cards", "info": true },
+    "n500Time": { "target": 150, "comparator": "lt", "unit": "ms", "label": "Render time @ 500 cards", "info": true },
+    "n1000Time": { "target": 200, "comparator": "lt", "unit": "ms", "label": "Render time @ 1000 cards" },
+    "initialCardCount": { "target": 48, "comparator": "lte", "unit": "count", "label": "Initial card count (virtual-scroll threshold)" }
+  }
+}

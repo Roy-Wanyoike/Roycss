@@ -120,7 +120,7 @@ export const effectsBatch23: CSSEffect[] = [
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
+    inset-inline-start: -100%;
     width: 100%;
     height: 100%;
     background: linear-gradient(
@@ -136,8 +136,8 @@ export const effectsBatch23: CSSEffect[] = [
 
 @keyframes roy-ferrum-skeleton-wave {
 
-    0%   { left: -100%; }
-    100% { left: 100%; }
+    0%   { inset-inline-start: -100%; }
+    100% { inset-inline-start: 100%; }
 
 }`,
 },
@@ -336,7 +336,7 @@ export const effectsBatch23: CSSEffect[] = [
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
+    inset-inline-start: -100%;
     width: 100%;
     height: 100%;
     background: linear-gradient(
@@ -350,8 +350,8 @@ export const effectsBatch23: CSSEffect[] = [
 
 @keyframes roy-ferrum-skeleton-circle {
 
-    0%   { left: -100%; }
-    100% { left: 100%; }
+    0%   { inset-inline-start: -100%; }
+    100% { inset-inline-start: 100%; }
 
 }`,
 },
@@ -1067,18 +1067,18 @@ export const effectsBatch23: CSSEffect[] = [
     content: '';
     position: absolute;
     bottom: -2px;
-    left: 50%;
+    inset-inline-start: 50%;
     width: 0;
     height: 2px;
     background-color: oklch(0.658 0.169 248.81);
-    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), inset-inline-start 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .roycss-ferrum-tab-underline:hover {
     color: oklch(0.321 0.0 89.88);
 }
 .roycss-ferrum-tab-underline:hover::after {
     width: 100%;
-    left: 0;
+    inset-inline-start: 0;
 }
 .roycss-ferrum-tab-underline.roycss-ferrum-active,
 .roycss-ferrum-tab-underline:active {

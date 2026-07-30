@@ -716,7 +716,7 @@ export function PlatformEcosystem() {
   }, []);
 
   return (
-    <section id="platform" className="py-16 sm:py-20 scroll-mt-20 relative overflow-hidden">
+    <section id="platform" aria-label="Platform ecosystem" className="py-16 sm:py-20 scroll-mt-20 relative overflow-hidden">
       {/* Subtle background */}
       <div className="absolute inset-0 -z-10 bg-grid opacity-10" />
 

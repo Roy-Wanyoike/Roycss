@@ -1,0 +1,1 @@
+default-src 'self'; script-src 'self' 'nonce-REPLACE_WITH_PER_REQUEST_NONCE' 'strict-dynamic'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; media-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests;

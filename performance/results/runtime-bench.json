@@ -1,0 +1,593 @@
+{
+  "schema": "roycss.perf.runtime.v1",
+  "timestamp": "2026-07-30T13:57:02.498Z",
+  "url": "http://localhost:3000/",
+  "runs": 3,
+  "python": "python3",
+  "playwright": "1.57.0 (chromium-1228, headless)",
+  "rows": [
+    {
+      "id": "ttfb",
+      "label": "Time to First Byte",
+      "unit": "ms",
+      "median": 245.39999999850988,
+      "min": 222.30000000074506,
+      "max": 402.30000000074506,
+      "variance": 73.3,
+      "budgetId": "ttfb",
+      "status": "INFO"
+    },
+    {
+      "id": "fcp",
+      "label": "First Contentful Paint",
+      "unit": "ms",
+      "median": 740,
+      "min": 704,
+      "max": 1320,
+      "variance": 83.2,
+      "budgetId": "fcp",
+      "status": "PASS"
+    },
+    {
+      "id": "lcp",
+      "label": "Largest Contentful Paint",
+      "unit": "ms",
+      "median": 0,
+      "min": 0,
+      "max": 0,
+      "variance": 0,
+      "budgetId": "lcp",
+      "status": "N/A",
+      "note": "LCP observer did not fire in this Playwright/Chromium configuration (known headless limitation). See BENCHMARKS.md §6."
+    },
+    {
+      "id": "tti",
+      "label": "Time to Interactive (approx)",
+      "unit": "ms",
+      "median": 3270,
+      "min": 2567.800000000745,
+      "max": 4044.300000000745,
+      "variance": 45.2,
+      "budgetId": "tti",
+      "status": "PASS"
+    },
+    {
+      "id": "tbt",
+      "label": "Total Blocking Time",
+      "unit": "ms",
+      "median": 374,
+      "min": 195,
+      "max": 577,
+      "variance": 102.1,
+      "budgetId": "tbt",
+      "status": "FAIL"
+    },
+    {
+      "id": "cls",
+      "label": "Cumulative Layout Shift",
+      "unit": "score",
+      "median": 0,
+      "min": 0,
+      "max": 0.10531312078237534,
+      "variance": 0,
+      "budgetId": "cls",
+      "status": "PASS"
+    },
+    {
+      "id": "dom-count",
+      "label": "DOM nodes on initial load",
+      "unit": "count",
+      "median": 4124,
+      "min": 4124,
+      "max": 4124,
+      "variance": 0,
+      "budgetId": "domCount",
+      "status": "FAIL"
+    },
+    {
+      "id": "scroll-fps",
+      "label": "Scroll FPS (5s average)",
+      "unit": "fps",
+      "median": 35.25053772005645,
+      "min": 33.7042798452245,
+      "max": 59.91611743556342,
+      "variance": 74.4,
+      "budgetId": "scrollFps",
+      "status": "FAIL"
+    },
+    {
+      "id": "scroll-p95",
+      "label": "scrollP95FrameMs",
+      "unit": "ms",
+      "median": 66.69999999999982,
+      "min": 16.700000000000728,
+      "max": 66.70000000000073,
+      "variance": 75,
+      "budgetId": null,
+      "status": "INFO"
+    },
+    {
+      "id": "scroll-max",
+      "label": "scrollMaxFrameMs",
+      "unit": "ms",
+      "median": 100,
+      "min": 16.80000000000109,
+      "max": 166.6999999999989,
+      "variance": 149.9,
+      "budgetId": null,
+      "status": "INFO"
+    },
+    {
+      "id": "js-heap",
+      "label": "jsHeapUsedSize",
+      "unit": "bytes",
+      "median": 58355640,
+      "min": 55141208,
+      "max": 59295328,
+      "variance": 7.1,
+      "budgetId": null,
+      "status": "INFO"
+    },
+    {
+      "id": "dom-nodes-cdp",
+      "label": "domNodesCdp",
+      "unit": "count",
+      "median": 15428,
+      "min": 15428,
+      "max": 15428,
+      "variance": 0,
+      "budgetId": null,
+      "status": "INFO"
+    },
+    {
+      "id": "layout-count",
+      "label": "layoutCount",
+      "unit": "count",
+      "median": 0,
+      "min": 0,
+      "max": 0,
+      "variance": 0,
+      "budgetId": null,
+      "status": "INFO"
+    },
+    {
+      "id": "recalc-style",
+      "label": "recalcStyleCount",
+      "unit": "count",
+      "median": 0,
+      "min": 0,
+      "max": 0,
+      "variance": 0,
+      "budgetId": null,
+      "status": "INFO"
+    },
+    {
+      "id": "script-duration",
+      "label": "scriptDuration",
+      "unit": "ms",
+      "median": 0,
+      "min": 0,
+      "max": 0.006134,
+      "variance": 0,
+      "budgetId": null,
+      "status": "INFO"
+    },
+    {
+      "id": "task-duration",
+      "label": "taskDuration",
+      "unit": "ms",
+      "median": 0.000026,
+      "min": 0.000024,
+      "max": 0.006148,
+      "variance": 23553.8,
+      "budgetId": null,
+      "status": "INFO"
+    },
+    {
+      "id": "long-task-count",
+      "label": "longTaskCount",
+      "unit": "count",
+      "median": 7,
+      "min": 6,
+      "max": 8,
+      "variance": 28.6,
+      "budgetId": null,
+      "status": "INFO"
+    }
+  ],
+  "raw": {
+    "ok": true,
+    "url": "http://localhost:3000/",
+    "runs": 3,
+    "errors": [],
+    "metrics": {
+      "ttfb": {
+        "median": 245.39999999850988,
+        "min": 222.30000000074506,
+        "max": 402.30000000074506,
+        "values": [
+          402.30000000074506,
+          245.39999999850988,
+          222.30000000074506
+        ],
+        "variancePct": 73.3
+      },
+      "fcp": {
+        "median": 740,
+        "min": 704,
+        "max": 1320,
+        "values": [
+          1320,
+          740,
+          704
+        ],
+        "variancePct": 83.2
+      },
+      "lcp": {
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "values": [
+          0,
+          0,
+          0
+        ],
+        "variancePct": 0
+      },
+      "tti": {
+        "median": 3270,
+        "min": 2567.800000000745,
+        "max": 4044.300000000745,
+        "values": [
+          4044.300000000745,
+          2567.800000000745,
+          3270
+        ],
+        "variancePct": 45.2
+      },
+      "tbt": {
+        "median": 374,
+        "min": 195,
+        "max": 577,
+        "values": [
+          577,
+          374,
+          195
+        ],
+        "variancePct": 102.1
+      },
+      "cls": {
+        "median": 0,
+        "min": 0,
+        "max": 0.10531312078237534,
+        "values": [
+          0,
+          0.10531312078237534,
+          0
+        ],
+        "variancePct": 0
+      },
+      "domCount": {
+        "median": 4124,
+        "min": 4124,
+        "max": 4124,
+        "values": [
+          4124,
+          4124,
+          4124
+        ],
+        "variancePct": 0
+      },
+      "scrollFps": {
+        "median": 35.25053772005645,
+        "min": 33.7042798452245,
+        "max": 59.91611743556342,
+        "values": [
+          33.7042798452245,
+          59.91611743556342,
+          35.25053772005645
+        ],
+        "variancePct": 74.4
+      },
+      "scrollP95FrameMs": {
+        "median": 66.69999999999982,
+        "min": 16.700000000000728,
+        "max": 66.70000000000073,
+        "values": [
+          66.70000000000073,
+          16.700000000000728,
+          66.69999999999982
+        ],
+        "variancePct": 75
+      },
+      "scrollMaxFrameMs": {
+        "median": 100,
+        "min": 16.80000000000109,
+        "max": 166.6999999999989,
+        "values": [
+          166.6999999999989,
+          16.80000000000109,
+          100
+        ],
+        "variancePct": 149.9
+      },
+      "jsHeapUsedSize": {
+        "median": 58355640,
+        "min": 55141208,
+        "max": 59295328,
+        "values": [
+          55141208,
+          59295328,
+          58355640
+        ],
+        "variancePct": 7.1
+      },
+      "domNodesCdp": {
+        "median": 15428,
+        "min": 15428,
+        "max": 15428,
+        "values": [
+          15428,
+          15428,
+          15428
+        ],
+        "variancePct": 0
+      },
+      "layoutCount": {
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "values": [
+          0,
+          0,
+          0
+        ],
+        "variancePct": 0
+      },
+      "recalcStyleCount": {
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "values": [
+          0,
+          0,
+          0
+        ],
+        "variancePct": 0
+      },
+      "scriptDuration": {
+        "median": 0,
+        "min": 0,
+        "max": 0.006134,
+        "values": [
+          0,
+          0,
+          0.006134
+        ],
+        "variancePct": 0
+      },
+      "taskDuration": {
+        "median": 0.000026,
+        "min": 0.000024,
+        "max": 0.006148,
+        "values": [
+          0.000026,
+          0.000024,
+          0.006148
+        ],
+        "variancePct": 23553.8
+      },
+      "longTaskCount": {
+        "median": 7,
+        "min": 6,
+        "max": 8,
+        "values": [
+          8,
+          7,
+          6
+        ],
+        "variancePct": 28.6
+      }
+    },
+    "perRun": [
+      {
+        "run": 1,
+        "wallClockMs": 4103.638410568237,
+        "perf": {
+          "ttfb": 402.30000000074506,
+          "fcp": 1320,
+          "lcp": 0,
+          "lcpSize": 0,
+          "lcpElement": null,
+          "cls": 0,
+          "tbt": 577,
+          "tti": 4044.300000000745,
+          "longTaskCount": 8,
+          "longTasks": [
+            {
+              "startTime": 546.5,
+              "duration": 52
+            },
+            {
+              "startTime": 652.5,
+              "duration": 408
+            },
+            {
+              "startTime": 1133,
+              "duration": 81
+            },
+            {
+              "startTime": 1217,
+              "duration": 381
+            },
+            {
+              "startTime": 1713.3999999985099,
+              "duration": 79
+            },
+            {
+              "startTime": 1953.3999999985099,
+              "duration": 88
+            },
+            {
+              "startTime": 2916.599999997765,
+              "duration": 85
+            },
+            {
+              "startTime": 3519.300000000745,
+              "duration": 525
+            }
+          ],
+          "domContentLoaded": 0,
+          "load": 0,
+          "domCount": 4124
+        },
+        "scroll": {
+          "fps": 33.7042798452245,
+          "frames": 169,
+          "durationMs": 5014.200000002234,
+          "p95FrameMs": 66.70000000000073,
+          "maxFrameMs": 166.6999999999989
+        },
+        "memory": {
+          "jsHeapUsedSize": 55141208,
+          "jsHeapTotalSize": 69509120,
+          "jsHeapLimit": 0,
+          "nodes": 15428,
+          "layoutCount": 0,
+          "recalcStyleCount": 0,
+          "scriptDuration": 0,
+          "taskDuration": 0.000026,
+          "jsEventListeners": 2601
+        }
+      },
+      {
+        "run": 2,
+        "wallClockMs": 3750.3693103790283,
+        "perf": {
+          "ttfb": 245.39999999850988,
+          "fcp": 740,
+          "lcp": 0,
+          "lcpSize": 0,
+          "lcpElement": null,
+          "cls": 0.10531312078237534,
+          "tbt": 374,
+          "tti": 2567.800000000745,
+          "longTaskCount": 7,
+          "longTasks": [
+            {
+              "startTime": 441.5999999977648,
+              "duration": 114
+            },
+            {
+              "startTime": 566.5999999977648,
+              "duration": 77
+            },
+            {
+              "startTime": 678.1999999992549,
+              "duration": 59
+            },
+            {
+              "startTime": 753.3999999985099,
+              "duration": 189
+            },
+            {
+              "startTime": 1772,
+              "duration": 79
+            },
+            {
+              "startTime": 2227.199999999255,
+              "duration": 201
+            },
+            {
+              "startTime": 2462.800000000745,
+              "duration": 105
+            }
+          ],
+          "domContentLoaded": 0,
+          "load": 0,
+          "domCount": 4124
+        },
+        "scroll": {
+          "fps": 59.91611743556342,
+          "frames": 300,
+          "durationMs": 5007.0000000022355,
+          "p95FrameMs": 16.700000000000728,
+          "maxFrameMs": 16.80000000000109
+        },
+        "memory": {
+          "jsHeapUsedSize": 59295328,
+          "jsHeapTotalSize": 88645632,
+          "jsHeapLimit": 0,
+          "nodes": 15428,
+          "layoutCount": 0,
+          "recalcStyleCount": 0,
+          "scriptDuration": 0,
+          "taskDuration": 0.000024,
+          "jsEventListeners": 4770
+        }
+      },
+      {
+        "run": 3,
+        "wallClockMs": 3613.2383346557617,
+        "perf": {
+          "ttfb": 222.30000000074506,
+          "fcp": 704,
+          "lcp": 0,
+          "lcpSize": 0,
+          "lcpElement": null,
+          "cls": 0,
+          "tbt": 195,
+          "tti": 3270,
+          "longTaskCount": 6,
+          "longTasks": [
+            {
+              "startTime": 373.30000000074506,
+              "duration": 230
+            },
+            {
+              "startTime": 665.3999999985099,
+              "duration": 143
+            },
+            {
+              "startTime": 830,
+              "duration": 52
+            },
+            {
+              "startTime": 1984.5,
+              "duration": 196
+            },
+            {
+              "startTime": 2246.800000000745,
+              "duration": 91
+            },
+            {
+              "startTime": 3214,
+              "duration": 56
+            }
+          ],
+          "domContentLoaded": 0,
+          "load": 0,
+          "domCount": 4124
+        },
+        "scroll": {
+          "fps": 35.25053772005645,
+          "frames": 177,
+          "durationMs": 5021.2000000014905,
+          "p95FrameMs": 66.69999999999982,
+          "maxFrameMs": 100
+        },
+        "memory": {
+          "jsHeapUsedSize": 58355640,
+          "jsHeapTotalSize": 77111296,
+          "jsHeapLimit": 0,
+          "nodes": 15428,
+          "layoutCount": 0,
+          "recalcStyleCount": 0,
+          "scriptDuration": 0.006134,
+          "taskDuration": 0.006148,
+          "jsEventListeners": 2954
+        }
+      }
+    ]
+  }
+}

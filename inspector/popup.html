@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RoyCSS Inspector</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      width: 360px;
+      font: 13px/1.5 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: oklch(0.18 0.01 240);
+      background: #fff;
+    }
+    .roycss-popup-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      background: linear-gradient(135deg, oklch(0.62 0.22 264), oklch(0.50 0.25 290));
+      color: #fff;
+    }
+    .roycss-popup-header__logo {
+      width: 32px; height: 32px;
+      border-radius: 7px;
+      background: rgba(255,255,255,0.18);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 16px;
+      flex-shrink: 0;
+    }
+    .roycss-popup-header__title { font-weight: 700; font-size: 14px; }
+    .roycss-popup-header__sub {
+      font-size: 11px; opacity: 0.85; margin-top: 2px;
+    }
+    .roycss-popup-body { padding: 12px 14px; }
+    .roycss-popup-stat {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .roycss-popup-stat__num {
+      font: 700 22px ui-sans-serif, system-ui, sans-serif;
+      color: oklch(0.40 0.20 264);
+    }
+    .roycss-popup-stat__label {
+      font-size: 12px;
+      color: oklch(0.50 0.01 240);
+    }
+    .roycss-popup-section-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: oklch(0.55 0.01 240);
+      margin: 14px 0 6px 0;
+    }
+    .roycss-popup-list { list-style: none; margin: 0; padding: 0; }
+    .roycss-popup-list li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 0;
+      border-bottom: 1px solid oklch(0.95 0.005 240);
+    }
+    .roycss-popup-list li:last-child { border-bottom: none; }
+    .roycss-popup-list__name {
+      flex: 1; min-width: 0;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      font-weight: 500;
+    }
+    .roycss-popup-list__id {
+      font: 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: oklch(0.55 0.01 240);
+    }
+    .roycss-popup-list__count {
+      font: 600 11px ui-monospace, monospace;
+      padding: 1px 7px;
+      background: oklch(0.93 0.02 264);
+      color: oklch(0.40 0.18 264);
+      border-radius: 9px;
+      flex-shrink: 0;
+    }
+    .roycss-popup-empty {
+      padding: 16px 0;
+      text-align: center;
+      color: oklch(0.55 0.01 240);
+      font-size: 12px;
+    }
+    .roycss-popup-footer {
+      padding: 10px 14px;
+      border-top: 1px solid oklch(0.93 0.005 240);
+      background: oklch(0.97 0.005 240);
+      font-size: 11px;
+      color: oklch(0.55 0.01 240);
+      line-height: 1.5;
+    }
+    .roycss-popup-footer strong { color: oklch(0.40 0.18 264); }
+    .roycss-popup-error {
+      padding: 14px;
+      font-size: 12px;
+      color: oklch(0.45 0.20 25);
+      background: oklch(0.95 0.03 25);
+      border-radius: 6px;
+      margin: 12px 14px;
+    }
+  </style>
+</head>
+<body>
+  <header class="roycss-popup-header">
+    <div class="roycss-popup-header__logo">R</div>
+    <div>
+      <div class="roycss-popup-header__title">RoyCSS Inspector</div>
+      <div class="roycss-popup-header__sub" id="sub">Scanning…</div>
+    </div>
+  </header>
+
+  <div class="roycss-popup-body">
+    <div class="roycss-popup-stat">
+      <span class="roycss-popup-stat__num" id="num">—</span>
+      <span class="roycss-popup-stat__label" id="label">RoyCSS classes</span>
+    </div>
+    <div class="roycss-popup-section-title" id="top-title" style="display:none">Top effects</div>
+    <ul class="roycss-popup-list" id="top-list"></ul>
+  </div>
+
+  <footer class="roycss-popup-footer">
+    Open <strong>DevTools → RoyCSS</strong> tab for the full inspector with categorized list, search, highlight, and CSS source.
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

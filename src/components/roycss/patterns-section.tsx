@@ -56,7 +56,7 @@ export function PatternsSection() {
   const filtered = useMemo(() => searchPatterns(search, activeCategory === "all" ? undefined : activeCategory), [search, activeCategory]);
 
   return (
-    <section id="patterns" className="py-16 sm:py-20 scroll-mt-20">
+    <section id="patterns" aria-label="Patterns" className="py-16 sm:py-20 scroll-mt-20">
       <div className="container mx-auto px-4 sm:px-6">
         <ScrollReveal>
           <div className="text-center max-w-2xl mx-auto mb-8">

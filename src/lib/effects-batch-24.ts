@@ -1085,8 +1085,8 @@ export const effectsBatch24: CSSEffect[] = [
   content: '';
   position: absolute;
   bottom: 0;
-  left: 0;
-  right: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
   height: 20%;
   background: linear-gradient(to bottom, color-mix(in oklch, oklch(0.142 0.066 295.8) 0%, transparent) 0%, color-mix(in oklch, oklch(0.142 0.066 295.8) 70%, transparent) 100%);
 }

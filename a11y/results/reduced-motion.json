@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-07-30T12:49:47.148Z",
+  "spec": "WCAG 2.3.3 AAA (Animation from Interactions)",
+  "files": [
+    {
+      "path": "/home/z/my-project/src/app/globals.css",
+      "exists": true,
+      "reducedMotionBlockCount": 5,
+      "surgicalOverrideCount": 0
+    },
+    {
+      "path": "/home/z/my-project/src/app/roycss.css",
+      "exists": true,
+      "reducedMotionBlockCount": 0,
+      "surgicalOverrideCount": 0
+    }
+  ],
+  "guarantees": [
+    {
+      "id": "G1",
+      "rule": "@media (prefers-reduced-motion: reduce) block exists",
+      "found": true,
+      "foundIn": "/home/z/my-project/src/app/globals.css",
+      "snippet": "@media (prefers-reduced-motion: reduce)"
+    },
+    {
+      "id": "G2",
+      "rule": "animation-duration ≤ 0.01ms !important (or animation: none !important)",
+      "found": true,
+      "foundIn": "reduced-motion block",
+      "snippet": "animation-duration: 0.01ms !important"
+    },
+    {
+      "id": "G3",
+      "rule": "transition-duration ≤ 0.01ms !important (or transition: none !important)",
+      "found": true,
+      "foundIn": "reduced-motion block",
+      "snippet": "transition-duration: 0.01ms !important"
+    },
+    {
+      "id": "G4",
+      "rule": "scroll-behavior: auto !important",
+      "found": true,
+      "foundIn": "reduced-motion block",
+      "snippet": "scroll-behavior: auto !important"
+    }
+  ],
+  "summary": {
+    "totalGuarantees": 4,
+    "passed": 4,
+    "failed": 0,
+    "surgicalOverrides": 0
+  }
+}

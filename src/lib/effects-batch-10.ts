@@ -620,7 +620,7 @@ export const effectsBatch10: CSSEffect[] = [
   background: hsl(from hsl(var(--roy-b10-pcs-hue) 90% 55%) h s l);
   --roy-b10-pcs-hue: 0deg;
   animation: roy-b10-pcs-cycle 5s linear infinite;
-  box-shadow: 0 12px 30px hsl(var(--roy-b10-pcs-hue) 90% 55% / 0.4);
+  box-shadow: 0 12px 30px oklch(0.627 0.241 var(--roy-b10-pcs-hue) / 0.4);
   display: grid;
   place-items: center;
   color: oklch(1 0 89.88);
@@ -1289,7 +1289,7 @@ export const effectsBatch10: CSSEffect[] = [
   font: 800 14px/1 system-ui, sans-serif;
   letter-spacing: 0.18em;
   --roy-b10-phc-hue: 0deg;
-  box-shadow: 0 12px 30px hsl(var(--roy-b10-phc-hue) 80% 60% / 0.5);
+  box-shadow: 0 12px 30px oklch(0.627 0.241 var(--roy-b10-phc-hue) / 0.5);
   animation: roy-b10-phc-cycle 4s linear infinite;
 }
 .roycss-property-hue-cycle > div { display: none; }

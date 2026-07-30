@@ -79,6 +79,7 @@ import { RecipesSection } from "@/components/roycss/recipes-section";
 import { PatternsSection } from "@/components/roycss/patterns-section";
 import { PlaygroundPanel } from "@/components/roycss/playground-panel";
 import { SearchOverlay } from "@/components/roycss/search-overlay";
+import { DocsViewer } from "@/components/roycss/docs-viewer";
 import { useFavorites } from "@/hooks/use-favorites";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
@@ -302,18 +303,14 @@ function DocCard({
 }) {
   const [expanded, setExpanded] = useState(false);
 
+  // The card body is click-to-expand for mouse users, but the inner
+  // <button> below is the only keyboard-accessible control. Removing
+  // role="button" + tabIndex from this outer <div> avoids the axe-core
+  // `nested-interactive` violation (WCAG 4.1.2). See ADR-05.
   return (
     <div
       className="group rounded-2xl border border-border bg-card p-5 hover:border-primary/40 hover:shadow-lg transition-all cursor-pointer"
       onClick={() => details && setExpanded((e) => !e)}
-      role={details ? "button" : undefined}
-      tabIndex={details ? 0 : undefined}
-      onKeyDown={(e) => {
-        if (details && (e.key === "Enter" || e.key === " ")) {
-          e.preventDefault();
-          setExpanded((x) => !x);
-        }
-      }}
     >
       <div className="flex items-center gap-3 mb-3">
         <div className="flex items-center justify-center size-10 rounded-xl bg-primary/10 text-primary">
@@ -448,7 +445,7 @@ const faqEntries: Array<{ question: string; answer: string }> = [
 function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   return (
-    <section id="faq" className="py-16 sm:py-20 scroll-mt-20">
+    <section id="faq" aria-label="Frequently asked questions" className="py-16 sm:py-20 scroll-mt-20">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="text-center max-w-2xl mx-auto mb-10">
           <div className="inline-flex items-center gap-2 rounded-full glass px-3 py-1 text-xs font-medium text-primary mb-3">
@@ -839,6 +836,7 @@ export default function RoyCSSPage() {
   const [contactOpen, setContactOpen] = useState(false);
   const [playgroundOpen, setPlaygroundOpen] = useState(false);
   const [searchOverlayOpen, setSearchOverlayOpen] = useState(false);
+  const [docsOpen, setDocsOpen] = useState(false);
   const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -960,8 +958,8 @@ export default function RoyCSSPage() {
                   Get Started
                 </button>
                 <button
-                  onClick={() => scrollToSection("#docs")}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === "docs" ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
+                  onClick={() => setDocsOpen(true)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${docsOpen ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
                 >
                   Docs
                 </button>
@@ -1078,7 +1076,6 @@ export default function RoyCSSPage() {
                     { label: "Effects", id: "#effects" },
                     { label: "Recipes", id: "#recipes" },
                     { label: "Platform", id: "#platform" },
-                    { label: "Docs", id: "#docs" },
                     { label: "FAQ", id: "#faq" },
                   ].map((item) => (
                     <button
@@ -1093,6 +1090,16 @@ export default function RoyCSSPage() {
                       <ChevronRight className="size-3.5" />
                     </button>
                   ))}
+                  <button
+                    onClick={() => {
+                      setDocsOpen(true);
+                      setMobileMenuOpen(false);
+                    }}
+                    className="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer min-h-[44px]"
+                  >
+                    Docs
+                    <BookOpen className="size-3.5" />
+                  </button>
                   <button
                     onClick={() => {
                       setPlaygroundOpen(true);
@@ -1217,29 +1224,32 @@ export default function RoyCSSPage() {
         </div>
       </header>
 
-      {/* ─── Marquee Strip ──────────────────────────────────── */}
-      <div className="py-6 border-y border-border/40 bg-card/30 backdrop-blur-sm overflow-hidden">
-        <Marquee speed={35}>
-          {categoryOrder.map((cat) => (
-            <MarqueeItem
-              key={cat}
-              icon={catIcons[cat]}
-              label={categoryMeta[cat].label}
-            />
-          ))}
-        </Marquee>
-      </div>
+      {/* ─── Featured highlights (landmark-wrapped for WCAG 2.4.1) ── */}
+      <section aria-label="Featured highlights" className="border-b border-border/40">
+        {/* ─── Marquee Strip ──────────────────────────────────── */}
+        <div className="py-6 border-y border-border/40 bg-card/30 backdrop-blur-sm overflow-hidden">
+          <Marquee speed={35}>
+            {categoryOrder.map((cat) => (
+              <MarqueeItem
+                key={cat}
+                icon={catIcons[cat]}
+                label={categoryMeta[cat].label}
+              />
+            ))}
+          </Marquee>
+        </div>
 
-      {/* ─── Featured Companies (logo strip) ───────────────── */}
-      <FeaturedCompanies />
+        {/* ─── Featured Companies (logo strip) ───────────────── */}
+        <FeaturedCompanies />
 
-      {/* ─── Featured Carousel (rotates through ALL effects) ─── */}
-      <FeaturedCarousel
-        onSelectEffect={(e) => {
-          setSelectedEffect(e);
-          setDialogOpen(true);
-        }}
-      />
+        {/* ─── Featured Carousel (rotates through ALL effects) ── */}
+        <FeaturedCarousel
+          onSelectEffect={(e) => {
+            setSelectedEffect(e);
+            setDialogOpen(true);
+          }}
+        />
+      </section>
 
       <Separator className="opacity-50" />
 
@@ -1249,7 +1259,7 @@ export default function RoyCSSPage() {
       <Separator className="opacity-50" />
 
       {/* ─── Effects Section ────────────────────────────────── */}
-      <main id="effects" className="flex-1 py-10 sm:py-14 scroll-mt-20">
+      <main id="effects" tabIndex={-1} className="flex-1 py-10 sm:py-14 scroll-mt-20 focus:outline-none">
         <div className="container mx-auto px-4 sm:px-6">
           {/* Section heading */}
           <SectionHeading
@@ -1415,7 +1425,7 @@ export default function RoyCSSPage() {
       <RecipesSection />
 
       {/* ─── CTA Banner ─────────────────────────────────────── */}
-      <section className="py-16 sm:py-20">
+      <section aria-label="Call to action" className="py-16 sm:py-20">
         <div className="container mx-auto px-4 sm:px-6">
           <ScrollReveal>
             <ShineBorder className="max-w-4xl mx-auto rounded-3xl bg-card overflow-hidden">
@@ -1494,7 +1504,7 @@ export default function RoyCSSPage() {
       <Separator className="opacity-50" />
 
       {/* ─── Documentation Section ──────────────────────────── */}
-      <section id="docs" className="py-16 scroll-mt-20">
+      <section id="docs" aria-label="Documentation" className="py-16 scroll-mt-20">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <div className="inline-flex items-center gap-2 rounded-full glass px-3 py-1 text-xs font-medium text-primary mb-3">
@@ -1596,7 +1606,7 @@ export default function RoyCSSPage() {
                 href="https://www.linkedin.com/in/roywanyoike/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary hover:underline"
+                className="text-primary underline underline-offset-2 hover:decoration-2"
               >
                 Royford Wanyoike Wamaitha
               </a>
@@ -1703,6 +1713,9 @@ export default function RoyCSSPage() {
           scrollToSection("#effects");
         }}
       />
+
+      {/* Documentation Viewer Sheet (opens from navbar "Docs" button) */}
+      <DocsViewer open={docsOpen} onOpenChange={setDocsOpen} />
     </div>
   );
 }

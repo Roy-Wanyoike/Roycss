@@ -1,0 +1,175 @@
+import type { CSSEffect } from "./roycss-types";
+
+export interface Pattern {
+  id: string;
+  name: string;
+  category: "states" | "feedback" | "layouts";
+  description: string;
+  whenToUse: string;
+  html: string;
+  effectIds: string[];
+  tags: string[];
+}
+
+export const patternCategoryMeta: Record<string, { label: string; description: string }> = {
+  states: { label: "States", description: "Empty, loading, error, success, and offline states" },
+  feedback: { label: "Feedback", description: "Skeleton loading, progressive disclosure, and toast notifications" },
+  layouts: { label: "Layouts", description: "Master-detail and wizard step layouts" },
+};
+
+export const patternCategoryOrder = ["states", "feedback", "layouts"];
+
+export const patterns: Pattern[] = [
+  {
+    id: "pattern-empty-state",
+    name: "Empty State",
+    category: "states",
+    description: "A calming empty state with a breathing orb and clear CTA",
+    whenToUse: "When a list or content area has no items. Always include a clear CTA button.",
+    effectIds: ["anim-breathing-orb-b18"],
+    tags: ["empty", "state", "placeholder", "cta"],
+    html: `<div style="display:flex;flex-direction:column;align-items:center;gap:1rem;padding:3rem;">
+  <div class="roycss-anim-breathing-orb-b18"></div>
+  <h3>Nothing here yet</h3>
+  <p>Create your first item to get started.</p>
+  <button style="padding:0.5rem 1.5rem;border-radius:0.5rem;background:oklch(0.6 0.2 162);color:white;border:none;cursor:pointer;">Create Item</button>
+</div>`,
+  },
+  {
+    id: "pattern-loading-state",
+    name: "Loading State",
+    category: "states",
+    description: "A loading state with spinner and progress text",
+    whenToUse: "When fetching data. Show a spinner for short waits, skeleton for long waits.",
+    effectIds: ["loader-spinner"],
+    tags: ["loading", "state", "spinner", "progress"],
+    html: `<div style="display:flex;flex-direction:column;align-items:center;gap:1rem;padding:2rem;">
+  <div class="roycss-loader-spinner"></div>
+  <p>Loading your dashboard...</p>
+</div>`,
+  },
+  {
+    id: "pattern-error-state",
+    name: "Error State",
+    category: "states",
+    description: "An error state with clear message and retry button",
+    whenToUse: "When an action fails. Always explain what went wrong and provide a retry button.",
+    effectIds: ["micro-shake-error"],
+    tags: ["error", "state", "retry", "feedback"],
+    html: `<div style="display:flex;flex-direction:column;align-items:center;gap:1rem;padding:2rem;background:oklch(0.25 0.05 25);border-radius:1rem;">
+  <span style="font-size:2rem;">⚠️</span>
+  <h3>Something went wrong</h3>
+  <p>We couldn't load your data. Please try again.</p>
+  <button style="padding:0.5rem 1.5rem;border-radius:0.5rem;background:oklch(0.6 0.2 25);color:white;border:none;cursor:pointer;">Retry</button>
+</div>`,
+  },
+  {
+    id: "pattern-success-state",
+    name: "Success State",
+    category: "states",
+    description: "A success state with confetti and confirmation",
+    whenToUse: "When a user completes a significant action. Use confetti for delight.",
+    effectIds: ["anim-confetti-burst-b20"],
+    tags: ["success", "state", "confetti", "celebration"],
+    html: `<div style="display:flex;flex-direction:column;align-items:center;gap:1rem;padding:2rem;">
+  <div class="roycss-anim-confetti-burst-b20"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  <span style="font-size:2rem;color:oklch(0.7 0.2 162);">✓</span>
+  <h3>Success!</h3>
+  <p>Your changes have been saved.</p>
+</div>`,
+  },
+  {
+    id: "pattern-offline-state",
+    name: "Offline State",
+    category: "states",
+    description: "An offline indicator with pulsing dot",
+    whenToUse: "When the app detects no internet. Show a banner, not a full-page block.",
+    effectIds: ["anim-notification-dot-b20"],
+    tags: ["offline", "state", "connectivity", "banner"],
+    html: `<div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.5rem;background:oklch(0.3 0.1 75);border-radius:0.5rem;">
+  <div class="roycss-anim-notification-dot-b20" style="inline-size:12px;block-size:12px;background:transparent;">
+    <span style="inline-size:8px;block-size:8px;border-radius:50%;background:oklch(0.7 0.2 75);display:block;"></span>
+  </div>
+  <p style="margin:0;font-size:0.875rem;color:oklch(0.9 0.1 75);">You're offline. Changes will sync when you reconnect.</p>
+</div>`,
+  },
+  {
+    id: "pattern-skeleton-state",
+    name: "Skeleton Loading",
+    category: "feedback",
+    description: "Skeleton placeholder that mimics content layout",
+    whenToUse: "When loading content with a known layout. Skeletons feel faster than spinners.",
+    effectIds: ["loader-skeleton-card-b20", "loader-skeleton-text-b20"],
+    tags: ["skeleton", "loading", "placeholder", "layout"],
+    html: `<div style="display:flex;flex-direction:column;gap:1rem;padding:1rem;">
+  <div class="roycss-loader-skeleton-card-b20" style="position:relative;"></div>
+  <div class="roycss-loader-skeleton-text-b20"></div>
+</div>`,
+  },
+  {
+    id: "pattern-progressive-disclosure",
+    name: "Progressive Disclosure",
+    category: "feedback",
+    description: "Content that reveals more on interaction",
+    whenToUse: "When you have a lot of content but don't want to overwhelm.",
+    effectIds: ["micro-accordion-expand-b20"],
+    tags: ["progressive", "disclosure", "accordion", "expand"],
+    html: `<div style="display:flex;flex-direction:column;gap:0.5rem;inline-size:200px;">
+  <div class="roycss-micro-accordion-expand-b20" style="background:oklch(0.2 0.02 250);border-radius:0.5rem;padding:0.5rem;font-size:12px;color:oklch(0.8 0.02 250);">Click to expand...</div>
+</div>`,
+  },
+  {
+    id: "pattern-toast-feedback",
+    name: "Toast Feedback",
+    category: "feedback",
+    description: "A slide-in toast for non-blocking feedback",
+    whenToUse: "When you need to confirm an action without blocking. Auto-dismiss after 3-5 seconds.",
+    effectIds: ["micro-toast-slide-b20"],
+    tags: ["toast", "feedback", "notification", "slide"],
+    html: `<div class="roycss-micro-toast-slide-b20" style="inline-size:auto;padding:0.5rem 1rem;">✓ Saved successfully</div>`,
+  },
+  {
+    id: "pattern-master-detail",
+    name: "Master-Detail Layout",
+    category: "layouts",
+    description: "A split layout with list and detail panel",
+    whenToUse: "When you have a list of items with detailed content. Email clients, file managers.",
+    effectIds: ["hover-lift-glow-b18"],
+    tags: ["master", "detail", "split", "layout"],
+    html: `<div style="display:flex;gap:1rem;inline-size:100%;">
+  <div style="inline-size:40%;display:flex;flex-direction:column;gap:0.5rem;">
+    <div class="roycss-hover-lift-glow-b18" style="inline-size:100%;block-size:40px;border-radius:0.5rem;"></div>
+    <div class="roycss-hover-lift-glow-b18" style="inline-size:100%;block-size:40px;border-radius:0.5rem;"></div>
+  </div>
+  <div style="flex:1;background:oklch(0.2 0.02 250);border-radius:0.5rem;min-block-size:120px;padding:1rem;">
+    <p style="color:oklch(0.6 0.02 250);font-size:0.875rem;">Detail panel</p>
+  </div>
+</div>`,
+  },
+  {
+    id: "pattern-wizard-steps",
+    name: "Wizard Steps",
+    category: "layouts",
+    description: "A multi-step wizard with progress indicator",
+    whenToUse: "When a process has multiple sequential steps. Show progress.",
+    effectIds: ["nav-stepper-b20"],
+    tags: ["wizard", "steps", "multi-step", "checkout"],
+    html: `<div style="display:flex;flex-direction:column;gap:1rem;padding:1rem;">
+  <div class="roycss-nav-stepper-b20">
+    <div class="step"></div><div class="connector"></div>
+    <div class="step"></div><div class="connector"></div>
+    <div class="step inactive"></div><div class="connector inactive"></div>
+    <div class="step inactive"></div>
+  </div>
+  <p style="margin:0;font-size:0.875rem;color:oklch(0.6 0.02 250);">Step 2 of 4: Shipping Information</p>
+</div>`,
+  },
+];
+
+export function searchPatterns(query: string, category?: string | null) {
+  const q = query.toLowerCase().trim();
+  let results = patterns;
+  if (category) results = results.filter(p => p.category === category);
+  if (q) results = results.filter(p => p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q) || p.whenToUse.toLowerCase().includes(q) || p.tags.some(t => t.toLowerCase().includes(q)));
+  return results;
+}

@@ -25,7 +25,7 @@ mkdirSync(DIST_DIR, { recursive: true });
 // Header banner
 const HEADER = `/*!
  * RoyCSS v1.0.0
- * 840+ production-ready CSS effects. Zero JavaScript runtime.
+ * 1569+ production-ready CSS effects. Zero JavaScript runtime.
  * https://github.com/Roy-Wanyoike/roycss
  *
  * Author: Royford Wanyoike Wamaitha

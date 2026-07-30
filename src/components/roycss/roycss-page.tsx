@@ -441,7 +441,7 @@ const faqEntries: Array<{ question: string; answer: string }> = [
   {
     question: "Is there an MCP server for AI assistants?",
     answer:
-      "Yes. The RoyCSS MCP Server gives AI assistants (Claude, ChatGPT, Cursor, Windsurf, Codex) access to all 840+ effects, framework examples, and design tokens. Once configured, your AI can search effects, get CSS code, and generate accurate RoyCSS — no hallucination. See the mcp-server/ directory for setup instructions.",
+      "Yes. The RoyCSS MCP Server gives AI assistants (Claude, ChatGPT, Cursor, Windsurf, Codex) access to all 1569+ effects, framework examples, and design tokens. Once configured, your AI can search effects, get CSS code, and generate accurate RoyCSS — no hallucination. See the mcp-server/ directory for setup instructions.",
   },
 ];
 
@@ -579,7 +579,7 @@ function TiltStage({ children }: { children: React.ReactNode }) {
 
 /* ─── Featured Carousel — rotates through ALL effects ──────── */
 const FEATURED_BATCH_SIZE = 4;
-const FEATURED_INTERVAL_MS = 6000; // 6s per batch → full cycle ≈ 19 min for 840+ effects
+const FEATURED_INTERVAL_MS = 6000; // 6s per batch → full cycle ≈ 19 min for 1569+ effects
 
 /* useSyncExternalStore helpers for prefers-reduced-motion.
    This is the React-idiomatic way to read an external system (the OS
@@ -1013,6 +1013,15 @@ export default function RoyCSSPage() {
               >
                 <Search className="size-4" />
               </button>
+              {/* Animation Playground button */}
+              <button
+                onClick={() => setPlaygroundOpen(true)}
+                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
+                aria-label="Open animation playground"
+                title="Animation Playground"
+              >
+                <SlidersHorizontal className="size-4" />
+              </button>
               <ThemeToggle />
               <button
                 onClick={() => setFavoritesOpen(true)}
@@ -1084,6 +1093,16 @@ export default function RoyCSSPage() {
                       <ChevronRight className="size-3.5" />
                     </button>
                   ))}
+                  <button
+                    onClick={() => {
+                      setPlaygroundOpen(true);
+                      setMobileMenuOpen(false);
+                    }}
+                    className="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer min-h-[44px]"
+                  >
+                    Playground
+                    <SlidersHorizontal className="size-3.5" />
+                  </button>
                   <button
                     onClick={() => {
                       setContactOpen(true);
@@ -1161,7 +1180,7 @@ export default function RoyCSSPage() {
                     }
                     className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20 h-11 px-6"
                   >
-                    Browse 840+ Effects
+                    Browse 1569+ Effects
                     <ChevronDown className="size-4 ml-1" />
                   </Button>
                 </MagneticButton>
@@ -1249,7 +1268,7 @@ export default function RoyCSSPage() {
                 type="text"
                 role="searchbox"
                 aria-label="Search CSS effects by name, tag, or category"
-                placeholder="Search 840+ effects... (⌘K)"
+                placeholder="Search 1569+ effects... (⌘K)"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="pl-10 pr-14 h-11 rounded-xl glass bg-background/80 border-border/50 focus:border-primary/50"
@@ -1509,7 +1528,7 @@ export default function RoyCSSPage() {
               items={["10KB initial CSS (lazy-loaded)", "~1KB per effect on demand", "Zero JS runtime", "Tree-shakeable exports"]}
               details={[
                 { label: "Dynamic Loading", content: "The showcase uses IntersectionObserver to inject CSS only for visible effects — 10KB initial, 98.7% reduction from the full 828KB. In your project, import the full CSS or use the CLI to copy individual effects." },
-                { label: "Virtual Scrolling", content: "The effects grid renders 24 cards at a time instead of 840 — a 97.7% DOM reduction. Offscreen animations are paused via animation-play-state: paused." },
+                { label: "Virtual Scrolling", content: "The effects grid renders 24 cards at a time instead of 1569 — a 97.7% DOM reduction. Offscreen animations are paused via animation-play-state: paused." },
               ]}
             />
             <DocCard
@@ -1536,9 +1555,9 @@ export default function RoyCSSPage() {
               icon={History}
               title="Changelog"
               description="Track every release — new effects, breaking changes, deprecations, and bug fixes."
-              items={["v1.0 — 840+ effects launch", "20+ categories", "OKLCH color system", "RoyMotion animation system"]}
+              items={["v1.0 — 1569+ effects launch", "20+ categories", "OKLCH color system", "RoyMotion animation system"]}
               details={[
-                { label: "v1.0.0", content: "840+ CSS effects across 20 categories. OKLCH color space with color-mix() throughout. CSS logical properties for RTL/I18n. @property, container queries, :has(), light-dark(). MCP Server for AI assistants. 5-tier sponsorship system." },
+                { label: "v1.0.0", content: "1569+ CSS effects across 20 categories. OKLCH color space with color-mix() throughout. CSS logical properties for RTL/I18n. @property, container queries, :has(), light-dark(). MCP Server for AI assistants. 5-tier sponsorship system." },
               ]}
             />
             <DocCard

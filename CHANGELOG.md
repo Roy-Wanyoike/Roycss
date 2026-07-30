@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **840+ CSS effects** across 20+ categories:
+- **1569+ CSS effects** across 20+ categories:
   - Animations (181), Visual Effects (131+), Backgrounds (93+), Text Effects (62+),
     Hover Effects (48+), Microinteractions (37+), Cards (32+), Loaders (30+),
     Buttons (30+), Particles (22+), Scroll Effects (21+), 3D & Transforms (20+),
@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Modern CSS features**: `@property`, container queries, `:has()`, `:where()`,
   CSS nesting, `light-dark()`, scroll-driven animations, View Transitions API
 - **Dynamic CSS loading** via `IntersectionObserver` (10KB initial, 98.7% reduction)
-- **Virtual scrolling** for the effects grid (840 cards → 24 rendered)
+- **Virtual scrolling** for the effects grid (1569 cards → 24 rendered)
 - **Offscreen animation pausing** (`animation-play-state: paused`)
 - **Color customization** with full OKLCH mapping (14 presets including white & black)
 - **Framework adapters** for React, Vue, Angular, Svelte, Next.js, and vanilla HTML

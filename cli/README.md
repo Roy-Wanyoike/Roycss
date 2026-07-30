@@ -1,6 +1,6 @@
 # RoyCSS CLI
 
-Command-line tool for RoyCSS — search, add, and manage 840+ production-ready CSS effects.
+Command-line tool for RoyCSS — search, add, and manage 1569+ production-ready CSS effects.
 
 ## Installation
 

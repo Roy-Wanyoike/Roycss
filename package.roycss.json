@@ -1,7 +1,7 @@
 {
   "name": "roycss",
   "version": "1.0.0",
-  "description": "840+ production-ready CSS effects with live demos, color customization, and framework support for React, Vue, Angular, Svelte, and vanilla HTML. Zero JavaScript runtime.",
+  "description": "1569+ production-ready CSS effects with live demos, color customization, and framework support for React, Vue, Angular, Svelte, and vanilla HTML. Zero JavaScript runtime.",
   "type": "module",
   "main": "./dist/roycss.css",
   "style": "./dist/roycss.min.css",

@@ -2,7 +2,7 @@
   "name": "roycss",
   "version": "1.0.0",
   "private": true,
-  "description": "RoyCSS — 840+ production-ready CSS effects. Zero JavaScript runtime. Showcases the RoyCSS library, CLI, MCP server, and platform ecosystem.",
+  "description": "RoyCSS — 1569+ production-ready CSS effects. Zero JavaScript runtime. Showcases the RoyCSS library, CLI, MCP server, and platform ecosystem.",
   "scripts": {
     "dev": "next dev -p 3000 2>&1 | tee dev.log",
     "build": "next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",

@@ -18,6 +18,21 @@ import { effectsBatch16 } from "./effects-batch-16";
 import { effectsBatch17 } from "./effects-batch-17";
 import { effectsBatch18 } from "./effects-batch-18";
 import { effectsBatch19 } from "./effects-batch-19";
+import { effectsBatch20 } from "./effects-batch-20";
+import { effectsBatch21 } from "./effects-batch-21";
+import { effectsBatch22 } from "./effects-batch-22";
+import { effectsBatch23 } from "./effects-batch-23";
+import { effectsBatch24 } from "./effects-batch-24";
+import { effectsBatch25 } from "./effects-batch-25";
+import { effectsBatch26 } from "./effects-batch-26";
+import { effectsBatch27 } from "./effects-batch-27";
+import { effectsBatch28 } from "./effects-batch-28";
+import { effectsBatch29 } from "./effects-batch-29";
+import { effectsBatch30 } from "./effects-batch-30";
+import { effectsBatch31 } from "./effects-batch-31";
+import { effectsBatch32 } from "./effects-batch-32";
+import { effectsBatch33 } from "./effects-batch-33";
+import { effectsBatch34 } from "./effects-batch-34";
 
 // Re-export types and metadata
 export type { CSSEffect, EffectCategory, PreviewType } from "./roycss-types";
@@ -44,6 +59,21 @@ export const effects: CSSEffect[] = [
   ...effectsBatch17,
   ...effectsBatch18,
   ...effectsBatch19,
+  ...effectsBatch20,
+  ...effectsBatch21,
+  ...effectsBatch22,
+  ...effectsBatch23,
+  ...effectsBatch24,
+  ...effectsBatch25,
+  ...effectsBatch26,
+  ...effectsBatch27,
+  ...effectsBatch28,
+  ...effectsBatch29,
+  ...effectsBatch30,
+  ...effectsBatch31,
+  ...effectsBatch32,
+  ...effectsBatch33,
+  ...effectsBatch34,
 ];
 
 // Generate combined CSS string for injection (avoids FOUC by rendering server-side)

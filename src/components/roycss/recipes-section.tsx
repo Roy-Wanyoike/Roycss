@@ -202,8 +202,7 @@ export function RecipesSection() {
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" aria-hidden="true" />
             <input
-              type="text"
-              role="searchbox"
+              type="search"
               aria-label="Search recipes by name, tag, or category"
               placeholder="Search recipes... (e.g., 'hero', 'loading', 'card')"
               value={search}

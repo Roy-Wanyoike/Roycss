@@ -69,10 +69,10 @@ export const patterns: Pattern[] = [
     category: "states",
     description: "A success state with confetti and confirmation",
     whenToUse: "When a user completes a significant action. Use confetti for delight.",
-    effectIds: ["anim-confetti-burst-b20"],
+    effectIds: ["particles-confetti-burst"],
     tags: ["success", "state", "confetti", "celebration"],
     html: `<div style="display:flex;flex-direction:column;align-items:center;gap:1rem;padding:2rem;">
-  <div class="roycss-anim-confetti-burst-b20"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="roycss-particles-confetti-burst"><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <span style="font-size:2rem;color:oklch(0.7 0.2 162);">✓</span>
   <h3>Success!</h3>
   <p>Your changes have been saved.</p>
@@ -84,10 +84,10 @@ export const patterns: Pattern[] = [
     category: "states",
     description: "An offline indicator with pulsing dot",
     whenToUse: "When the app detects no internet. Show a banner, not a full-page block.",
-    effectIds: ["anim-notification-dot-b20"],
+    effectIds: ["notification-badge"],
     tags: ["offline", "state", "connectivity", "banner"],
     html: `<div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.5rem;background:oklch(0.3 0.1 75);border-radius:0.5rem;">
-  <div class="roycss-anim-notification-dot-b20" style="inline-size:12px;block-size:12px;background:transparent;">
+  <div class="roycss-notification-badge" style="inline-size:12px;block-size:12px;background:transparent;">
     <span style="inline-size:8px;block-size:8px;border-radius:50%;background:oklch(0.7 0.2 75);display:block;"></span>
   </div>
   <p style="margin:0;font-size:0.875rem;color:oklch(0.9 0.1 75);">You're offline. Changes will sync when you reconnect.</p>
@@ -99,11 +99,11 @@ export const patterns: Pattern[] = [
     category: "feedback",
     description: "Skeleton placeholder that mimics content layout",
     whenToUse: "When loading content with a known layout. Skeletons feel faster than spinners.",
-    effectIds: ["loader-skeleton-card-b20", "loader-skeleton-text-b20"],
+    effectIds: ["skeleton-card-shimmer", "skeleton-text-lines"],
     tags: ["skeleton", "loading", "placeholder", "layout"],
     html: `<div style="display:flex;flex-direction:column;gap:1rem;padding:1rem;">
-  <div class="roycss-loader-skeleton-card-b20" style="position:relative;"></div>
-  <div class="roycss-loader-skeleton-text-b20"></div>
+  <div class="roycss-skeleton-card-shimmer" style="position:relative;"></div>
+  <div class="roycss-skeleton-text-lines"></div>
 </div>`,
   },
   {
@@ -112,10 +112,10 @@ export const patterns: Pattern[] = [
     category: "feedback",
     description: "Content that reveals more on interaction",
     whenToUse: "When you have a lot of content but don't want to overwhelm.",
-    effectIds: ["micro-accordion-expand-b20"],
+    effectIds: ["interpolate-size-accordion"],
     tags: ["progressive", "disclosure", "accordion", "expand"],
     html: `<div style="display:flex;flex-direction:column;gap:0.5rem;inline-size:200px;">
-  <div class="roycss-micro-accordion-expand-b20" style="background:oklch(0.2 0.02 250);border-radius:0.5rem;padding:0.5rem;font-size:12px;color:oklch(0.8 0.02 250);">Click to expand...</div>
+  <div class="roycss-interpolate-size-accordion" style="background:oklch(0.2 0.02 250);border-radius:0.5rem;padding:0.5rem;font-size:12px;color:oklch(0.8 0.02 250);">Click to expand...</div>
 </div>`,
   },
   {
@@ -124,9 +124,9 @@ export const patterns: Pattern[] = [
     category: "feedback",
     description: "A slide-in toast for non-blocking feedback",
     whenToUse: "When you need to confirm an action without blocking. Auto-dismiss after 3-5 seconds.",
-    effectIds: ["micro-toast-slide-b20"],
+    effectIds: ["micro-toast-slide"],
     tags: ["toast", "feedback", "notification", "slide"],
-    html: `<div class="roycss-micro-toast-slide-b20" style="inline-size:auto;padding:0.5rem 1rem;">✓ Saved successfully</div>`,
+    html: `<div class="roycss-micro-toast-slide" style="inline-size:auto;padding:0.5rem 1rem;">✓ Saved successfully</div>`,
   },
   {
     id: "pattern-master-detail",
@@ -152,10 +152,10 @@ export const patterns: Pattern[] = [
     category: "layouts",
     description: "A multi-step wizard with progress indicator",
     whenToUse: "When a process has multiple sequential steps. Show progress.",
-    effectIds: ["nav-stepper-b20"],
+    effectIds: ["nav-stepper"],
     tags: ["wizard", "steps", "multi-step", "checkout"],
     html: `<div style="display:flex;flex-direction:column;gap:1rem;padding:1rem;">
-  <div class="roycss-nav-stepper-b20">
+  <div class="roycss-nav-stepper">
     <div class="step"></div><div class="connector"></div>
     <div class="step"></div><div class="connector"></div>
     <div class="step inactive"></div><div class="connector inactive"></div>

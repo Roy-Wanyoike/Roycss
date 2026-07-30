@@ -127,41 +127,27 @@ describe("roycss-index public API", () => {
 });
 
 /**
- * Known-defect lock — the `effects` re-export from roycss-index.ts is broken.
- *
- * The module does:
- *   import { effects as allEffects, ... } from "./roycss-effects";
- *   export { allEffects as effects, allEffectCSS, categoryMeta, categoryOrder } from "./roycss-effects";
- *
- * The `from "./roycss-effects"` clause on the *export* makes it a re-export
- * (not a reference to the local import alias), but `roycss-effects.ts` does
- * NOT export `allEffects` — only `effects`. So `allEffects` resolves to
- * `undefined` at runtime, and consumers importing `{ effects }` from
- * `"roycss"` get `undefined`.
- *
- * The fix is to drop the `from` clause on the re-export:
- *   export { allEffects as effects, allEffectCSS, categoryMeta, categoryOrder };
- *
- * Until the fix lands, this test asserts the broken behavior so when the
- * fix lands, this test will fail (because `effects` will be defined) —
- * that's the prompt to delete this known-defect block.
- *
- * (Note: `categoryMeta`, `categoryOrder`, and `allEffectCSS` are correctly
- * re-exported because their names match in both modules.)
+ * FIXED: The `effects` re-export from roycss-index.ts was previously broken
+ * (it used `allEffects as effects` in a `from "./roycss-effects"` clause,
+ * but roycss-effects.ts exports `effects`, not `allEffects`). The fix was
+ * to change the re-export to `export { effects, ... } from "./roycss-effects"`.
+ * These tests now verify the fix holds.
  */
-describe("roycss-index known-defect: broken `effects` re-export", () => {
-  it("exposes `effects` as undefined (locked defect — see comment above)", async () => {
+describe("roycss-index re-exports", () => {
+  it("exports `effects` as a defined array (fix verified)", async () => {
     const mod = await import("@/lib/roycss-index");
-    expect(mod.effects).toBeUndefined();
+    expect(mod.effects).toBeDefined();
+    expect(Array.isArray(mod.effects)).toBe(true);
+    expect(mod.effects.length).toBeGreaterThan(0);
   });
 
-  it("still exports `allEffectCSS` correctly (sibling re-export works)", async () => {
+  it("exports `allEffectCSS` correctly", async () => {
     const mod = await import("@/lib/roycss-index");
     expect(typeof mod.allEffectCSS).toBe("string");
     expect(mod.allEffectCSS.length).toBeGreaterThan(0);
   });
 
-  it("still exports `categoryMeta` and `categoryOrder` correctly (sibling re-exports work)", async () => {
+  it("exports `categoryMeta` and `categoryOrder` correctly", async () => {
     const mod = await import("@/lib/roycss-index");
     expect(mod.categoryMeta).toBeDefined();
     expect(mod.categoryOrder).toBeInstanceOf(Array);

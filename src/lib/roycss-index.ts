@@ -22,7 +22,7 @@ import { effects as allEffects, allEffectCSS } from "./roycss-effects";
 import type { CSSEffect, EffectCategory, PreviewType } from "./roycss-types";
 
 // Re-export everything for programmatic use
-export { allEffects as effects, allEffectCSS, categoryMeta, categoryOrder } from "./roycss-effects";
+export { effects, allEffectCSS, categoryMeta, categoryOrder } from "./roycss-effects";
 export type { CSSEffect, EffectCategory, PreviewType } from "./roycss-types";
 
 /**

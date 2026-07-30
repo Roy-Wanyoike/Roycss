@@ -298,7 +298,16 @@ export const EffectCard = memo(function EffectCard({
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -6, transition: { duration: 0.25 } }}
       onClick={() => onClick?.(effect)}
-      className="group rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 cursor-pointer perf-auto"
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onClick?.(effect);
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={`${effect.name} — ${effect.description}. Press Enter to view details.`}
+      className="group rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 cursor-pointer perf-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
     >
       {/* Preview Area */}
       <div className="relative h-48 bg-gradient-to-br from-muted/50 to-muted/30 overflow-hidden">

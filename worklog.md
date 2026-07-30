@@ -2894,3 +2894,69 @@ Stage Summary:
 - 111/111 unit tests pass (was 110/111)
 - 0 lint errors, 0 page errors
 - All changes committed (d6e60f4)
+
+---
+Task ID: production-readiness-pass
+Agent: main
+Task: Fix scrollbar issues, audit everything, prepare for production go-live, update RoyCSS.zip
+
+Work Log:
+- AUDIT: Comprehensive end-to-end audit using Agent Browser + VLM (vision model) to identify all issues
+- Found scrollbar issues: main scrollbar too thin (scrollbar-width: thin), low contrast color (40% opacity), .scrollbar-thin utility was 6px/30% opacity (nearly invisible on dark backgrounds)
+- VLM confirmed: "The main browser scrollbar... extremely thin and subtle... low contrast... difficult to grab"
+- FIXED scrollbar CSS in globals.css:
+  - Main scrollbar: 10px → 14px width, 40% → 55% opacity, added border + background-clip for cleaner look, added :active state
+  - .scrollbar-thin utility: 6px → 10px width, 30% → 50% opacity, added track background, added border for cleaner look
+  - Firefox: scrollbar-width: thin → auto (better visibility), scrollbar-color with higher contrast
+  - Added scrollbar-gutter: stable on body to prevent layout shift
+
+- AUDIT: Checked all interactive features end-to-end:
+  - Navigation: 12 nav buttons (Get Started, Docs, Effects, Recipes, Patterns, Platform, FAQ, Search, Playground, Theme, Favorites, Sponsor) ✅
+  - Theme toggle: dark ↔ light works ✅
+  - Favorites sheet: opens/closes ✅
+  - Contact form: 4 fields (name, email, subject dropdown, message), fills + submits successfully, API returns {"ok":true} ✅
+  - Effects grid: 36 cards visible (virtual scrolling), category filter works (Backgrounds filter), search filter works ("pulse" returns matching effects) ✅
+  - Recipes: 12 recipe cards, expand on click shows HTML + Copy HTML button ✅
+  - Patterns: 10 pattern cards ✅
+  - FAQ: 7 items, accordion expand/collapse works ✅
+  - Platform section: 53 cards ✅
+  - Footer: present with LinkedIn, GitHub Sponsors, GitHub repo links ✅
+  - Mobile responsive: 375px viewport tested, layout adapts, mobile menu button visible ✅
+  - All links have href, all images have alt, heading hierarchy correct (122 headings) ✅
+  - 0 console errors, 0 page errors ✅
+
+- PRODUCTION READINESS improvements:
+  - Added src/app/error.tsx — error boundary with "Try again" + "Home" buttons
+  - Added src/app/loading.tsx — loading spinner for Suspense/streaming
+  - Added src/app/not-found.tsx — 404 page with link back to home
+  - Added src/app/sitemap.ts — dynamic sitemap.xml generation
+  - Added src/app/robots.ts — dynamic robots.txt with sitemap reference
+  - Removed conflicting public/robots.txt (was causing 500 error with robots.ts)
+  - Enhanced metadata in layout.tsx: added creator, publisher, metadataBase, canonical URL, openGraph.url/siteName/locale, twitter.card/creator, robots.googleBot, category
+
+- REBUILT all artifacts:
+  - dist/roycss.css (1.18MB), dist/roycss.min.css (990KB), dist/effects.json (547KB, 1569 effects), dist/effects.js/cjs (414KB each)
+  - cli/index.js (1.70MB, v2.0.0, 15 commands)
+  - mcp-server/effects.json synced (1569 effects)
+
+- CREATED RoyCSS.zip:
+  - /home/z/RoyCSS.zip (7.3MB, 549 files)
+  - public/RoyCSS.zip (copy for download from site)
+  - Excluded: node_modules, .next, .git, skills/, test artifacts, screenshots, coverage reports, old zips
+
+- VERIFICATION (all green):
+  - Lint: 0 errors, 0 warnings
+  - Unit tests: 111/111 pass
+  - Dev server: HTTP 200
+  - sitemap.xml: HTTP 200
+  - robots.txt: HTTP 200
+  - Browser: title correct, 0 errors, 36 effects, 12 recipes, 10 patterns, 7 FAQ items, 12 nav buttons, footer present, scrollbar-width: auto
+  - VLM confirmed scrollbar now "clearly visible" with "high-contrast teal color"
+  - Git committed: f5cef77
+
+Stage Summary:
+- Scrollbar fixed: 14px main (was 10px), 10px thin (was 6px), 55% opacity (was 40%), visible on dark backgrounds
+- All interactive features verified working end-to-end via Agent Browser
+- Production readiness: error boundary, loading state, 404 page, sitemap, robots, enhanced SEO metadata
+- RoyCSS.zip updated: 7.3MB, 549 files (excludes node_modules, build artifacts, test screenshots)
+- Everything is production-ready for client go-live

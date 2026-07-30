@@ -38,28 +38,13 @@ describe("patterns corpus", () => {
     }
   });
 
-  it("resolves every pattern.effectId to a real effect id (known-defect lock)", () => {
+  it("resolves every pattern.effectId to a real effect id", () => {
     // ─────────────────────────────────────────────────────────────────────
-    // KNOWN DEFECT (locked, do not widen without a fix):
-    // 7 pattern.effectIds reference batch-20 effects that were renamed or
-    // removed before the corpus shipped. The runtime `findEffect()` helper
-    // in roycss-recipes.ts has a fuzzy fallback that masks this for recipes,
-    // but `searchPatterns` / the UI renders the pattern HTML with the
-    // orphan `.roycss-<id>` class — the class is a no-op.
-    // Fix: either re-add the missing batch-20 effects or update the pattern
-    // `effectIds` arrays to point at the renamed ids. Until then, this test
-    // asserts the EXACT known dangling set so any NEW orphan fails CI.
+    // FIXED: All 7 previously-dangling pattern.effectIds were remapped to
+    // existing effects (the -b20 batch-20 IDs were renamed/removed during
+    // the FerrumCSS merge). Now every pattern.effectId resolves to a real
+    // effect. This test ensures no new orphans are introduced.
     // ─────────────────────────────────────────────────────────────────────
-    const KNOWN_DANGLING: ReadonlyArray<{ pattern: string; effectId: string }> = [
-      { pattern: "pattern-success-state", effectId: "anim-confetti-burst-b20" },
-      { pattern: "pattern-offline-state", effectId: "anim-notification-dot-b20" },
-      { pattern: "pattern-skeleton-state", effectId: "loader-skeleton-card-b20" },
-      { pattern: "pattern-skeleton-state", effectId: "loader-skeleton-text-b20" },
-      { pattern: "pattern-progressive-disclosure", effectId: "micro-accordion-expand-b20" },
-      { pattern: "pattern-toast-feedback", effectId: "micro-toast-slide-b20" },
-      { pattern: "pattern-wizard-steps", effectId: "nav-stepper-b20" },
-    ];
-
     const missing: string[] = [];
     for (const p of patterns) {
       for (const id of p.effectIds) {
@@ -68,18 +53,7 @@ describe("patterns corpus", () => {
         }
       }
     }
-
-    const expected = KNOWN_DANGLING.map((k) => `${k.pattern} → ${k.effectId}`).sort();
-    const actual = missing.slice().sort();
-
-    // Any new dangling reference (not in the known-defect table) fails the test.
-    const novel = actual.filter((m) => !expected.includes(m));
-    expect(
-      novel,
-      `NEW dangling pattern.effectIds (not in the known-defect table): ${novel.join("; ")}`,
-    ).toEqual([]);
-    // Sanity: the known-defect table itself stays accurate.
-    expect(actual.length, "known-defect count drift — update KNOWN_DANGLING").toBe(expected.length);
+    expect(missing, `dangling pattern.effectIds: ${missing.join("; ")}`).toEqual([]);
   });
 
   it("tags every pattern with at least one tag", () => {

@@ -86,7 +86,21 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
       {open && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
           className="fixed inset-0 z-[200] flex items-start justify-center pt-[15vh] px-4"
-          onClick={() => onOpenChange(false)}>
+          onClick={() => onOpenChange(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Search RoyCSS"
+          onKeyDown={(e) => {
+            if (e.key !== "Tab") return;
+            const overlay = e.currentTarget.querySelector(".relative.w-full.max-w-xl");
+            if (!overlay) return;
+            const focusable = overlay.querySelectorAll<HTMLElement>('button, a, input, [tabindex]:not([tabindex="-1"])');
+            if (focusable.length === 0) return;
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+          }}>
           <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
           <motion.div initial={{ scale: 0.95, y: -10 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: -10 }}
             transition={{ duration: 0.15 }}
@@ -94,7 +108,7 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
             onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center gap-3 p-4 border-b border-border/50">
               <Search className="size-5 text-muted-foreground shrink-0" />
-              <input ref={inputRef} type="text" value={query} onChange={(e) => { setQuery(e.target.value); setSelectedIndex(0); }}
+              <input ref={inputRef} type="search" value={query} onChange={(e) => { setQuery(e.target.value); setSelectedIndex(0); }}
                 onKeyDown={handleKeyDown} placeholder="Search effects, recipes, patterns, sections... (⌘K)"
                 className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none" autoComplete="off" spellCheck={false} />
               <button onClick={() => onOpenChange(false)} className="flex items-center justify-center size-7 rounded-md bg-muted text-muted-foreground hover:text-foreground transition-colors cursor-pointer shrink-0" aria-label="Close search">

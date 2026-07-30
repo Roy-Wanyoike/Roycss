@@ -68,7 +68,7 @@ export function PatternsSection() {
         <ScrollReveal delay={0.1} className="max-w-md mx-auto mb-6">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" aria-hidden="true" />
-            <input type="text" role="searchbox" aria-label="Search patterns" placeholder="Search patterns..." value={search}
+            <input type="search" aria-label="Search patterns" placeholder="Search patterns..." value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full pl-10 pr-4 h-11 rounded-xl glass bg-background/80 border-border/50 focus:border-primary/50 text-sm text-foreground focus:outline-none transition-all" />
           </div>

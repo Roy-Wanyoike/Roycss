@@ -1275,8 +1275,7 @@ export default function RoyCSSPage() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" aria-hidden="true" />
               <Input
                 ref={searchInputRef}
-                type="text"
-                role="searchbox"
+                type="search"
                 aria-label="Search CSS effects by name, tag, or category"
                 placeholder="Search 1569+ effects... (⌘K)"
                 value={search}

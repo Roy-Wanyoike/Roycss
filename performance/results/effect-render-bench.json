@@ -1,0 +1,176 @@
+{
+  "schema": "roycss.perf.effect-render.v1",
+  "timestamp": "2026-07-30T13:57:10.124Z",
+  "url": "http://localhost:3000/",
+  "counts": [
+    10,
+    50,
+    100,
+    500,
+    1000
+  ],
+  "python": "python3",
+  "initial": {
+    "initialCardCount": 40,
+    "domCount": 4124,
+    "previewElCount": 99,
+    "scrollHeight": 18710
+  },
+  "results": [
+    {
+      "n": 10,
+      "renderMs": 1.2000000029802322,
+      "domCount": 4245,
+      "memDeltaBytes": 0,
+      "containerChildCount": 10,
+      "cdpNodes": 15773,
+      "cdpJsHeapUsed": 50641816,
+      "cdpLayoutCount": 0,
+      "cdpRecalcStyleCount": 0
+    },
+    {
+      "n": 50,
+      "renderMs": 5.699999999254942,
+      "domCount": 4725,
+      "memDeltaBytes": 0,
+      "containerChildCount": 50,
+      "cdpNodes": 17374,
+      "cdpJsHeapUsed": 51004536,
+      "cdpLayoutCount": 0,
+      "cdpRecalcStyleCount": 0
+    },
+    {
+      "n": 100,
+      "renderMs": 9.699999999254942,
+      "domCount": 5325,
+      "memDeltaBytes": 0,
+      "containerChildCount": 100,
+      "cdpNodes": 20575,
+      "cdpJsHeapUsed": 51229876,
+      "cdpLayoutCount": 0,
+      "cdpRecalcStyleCount": 0
+    },
+    {
+      "n": 500,
+      "renderMs": 216.89999999850988,
+      "domCount": 10125,
+      "memDeltaBytes": 0,
+      "containerChildCount": 500,
+      "cdpNodes": 36576,
+      "cdpJsHeapUsed": 52067792,
+      "cdpLayoutCount": 0,
+      "cdpRecalcStyleCount": 0
+    },
+    {
+      "n": 1000,
+      "renderMs": 99.19999999925494,
+      "domCount": 16125,
+      "memDeltaBytes": 0,
+      "containerChildCount": 1000,
+      "cdpNodes": 63429,
+      "cdpJsHeapUsed": 36850876,
+      "cdpLayoutCount": 1,
+      "cdpRecalcStyleCount": 1
+    }
+  ],
+  "linearity": {
+    "r2": 0.39068834908698064,
+    "points": [
+      [
+        10,
+        1.2000000029802322
+      ],
+      [
+        50,
+        5.699999999254942
+      ],
+      [
+        100,
+        9.699999999254942
+      ],
+      [
+        500,
+        216.89999999850988
+      ],
+      [
+        1000,
+        99.19999999925494
+      ]
+    ]
+  },
+  "raw": {
+    "ok": true,
+    "url": "http://localhost:3000/",
+    "counts": [
+      10,
+      50,
+      100,
+      500,
+      1000
+    ],
+    "initial": {
+      "initialCardCount": 40,
+      "domCount": 4124,
+      "previewElCount": 99,
+      "scrollHeight": 18710
+    },
+    "results": [
+      {
+        "n": 10,
+        "renderMs": 1.2000000029802322,
+        "domCount": 4245,
+        "memDeltaBytes": 0,
+        "containerChildCount": 10,
+        "cdpNodes": 15773,
+        "cdpJsHeapUsed": 50641816,
+        "cdpLayoutCount": 0,
+        "cdpRecalcStyleCount": 0
+      },
+      {
+        "n": 50,
+        "renderMs": 5.699999999254942,
+        "domCount": 4725,
+        "memDeltaBytes": 0,
+        "containerChildCount": 50,
+        "cdpNodes": 17374,
+        "cdpJsHeapUsed": 51004536,
+        "cdpLayoutCount": 0,
+        "cdpRecalcStyleCount": 0
+      },
+      {
+        "n": 100,
+        "renderMs": 9.699999999254942,
+        "domCount": 5325,
+        "memDeltaBytes": 0,
+        "containerChildCount": 100,
+        "cdpNodes": 20575,
+        "cdpJsHeapUsed": 51229876,
+        "cdpLayoutCount": 0,
+        "cdpRecalcStyleCount": 0
+      },
+      {
+        "n": 500,
+        "renderMs": 216.89999999850988,
+        "domCount": 10125,
+        "memDeltaBytes": 0,
+        "containerChildCount": 500,
+        "cdpNodes": 36576,
+        "cdpJsHeapUsed": 52067792,
+        "cdpLayoutCount": 0,
+        "cdpRecalcStyleCount": 0
+      },
+      {
+        "n": 1000,
+        "renderMs": 99.19999999925494,
+        "domCount": 16125,
+        "memDeltaBytes": 0,
+        "containerChildCount": 1000,
+        "cdpNodes": 63429,
+        "cdpJsHeapUsed": 36850876,
+        "cdpLayoutCount": 1,
+        "cdpRecalcStyleCount": 1
+      }
+    ],
+    "errors": []
+  }
+}

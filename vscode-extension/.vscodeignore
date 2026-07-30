@@ -1,0 +1,30 @@
+# Build artifacts
+build-data.js
+test/
+*.vsix
+*.log
+
+# Source maps (we have none, but defensive)
+*.map
+
+# Editor / OS cruft
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Lockfiles (the extension has zero deps; no lockfile needed)
+bun.lock
+bun.lockb
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Node modules (if a developer runs `npm install` for some reason)
+node_modules/
+
+# TypeScript (we don't use it, but defensive in case a contributor adds it)
+tsconfig.json
+tsconfig.*.json
+src/
+out/

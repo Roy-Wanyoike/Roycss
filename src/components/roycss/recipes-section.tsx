@@ -178,7 +178,7 @@ export function RecipesSection() {
   }, [search, activeCategory]);
 
   return (
-    <section id="recipes" className="py-16 sm:py-20 scroll-mt-20">
+    <section id="recipes" aria-label="Recipes" className="py-16 sm:py-20 scroll-mt-20">
       <div className="container mx-auto px-4 sm:px-6">
         {/* Heading */}
         <ScrollReveal>

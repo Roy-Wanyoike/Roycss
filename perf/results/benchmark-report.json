@@ -1,0 +1,389 @@
+{
+  "schema": "roycss.perf.v1",
+  "startedAt": "2026-07-30T12:19:58.783Z",
+  "finishedAt": "2026-07-30T12:19:59.029Z",
+  "elapsedMs": 245.43,
+  "summary": {
+    "total": 36,
+    "pass": 25,
+    "fail": 3,
+    "info": 8,
+    "exitCode": 1
+  },
+  "suites": [
+    {
+      "name": "bundle-size",
+      "results": [
+        {
+          "id": "bundle-size/roycss.css",
+          "label": "roycss.css (raw)",
+          "value": 1209436,
+          "unit": "bytes",
+          "target": 1572864,
+          "comparator": "lt",
+          "details": "Initial CSS bundle (all 1569 effects)",
+          "status": "pass"
+        },
+        {
+          "id": "bundle-size/roycss.min.css",
+          "label": "roycss.min.css",
+          "value": 1013439,
+          "unit": "bytes",
+          "target": 1153433.6,
+          "comparator": "lt",
+          "details": "Minified production bundle",
+          "status": "pass"
+        },
+        {
+          "id": "bundle-size/effects.json",
+          "label": "effects.json",
+          "value": 547072,
+          "unit": "bytes",
+          "target": 716800,
+          "comparator": "lt",
+          "details": "Effect metadata (no cssCode — CSS lives in roycss.css)",
+          "status": "pass"
+        },
+        {
+          "id": "bundle-size/effects.js",
+          "label": "effects.js (ESM loader)",
+          "value": 3457,
+          "unit": "bytes",
+          "target": 10240,
+          "comparator": "lt",
+          "details": "ESM loader that reads effects.json at runtime",
+          "status": "pass"
+        },
+        {
+          "id": "bundle-size/effects.cjs",
+          "label": "effects.cjs (CJS loader)",
+          "value": 3465,
+          "unit": "bytes",
+          "target": 10240,
+          "comparator": "lt",
+          "details": "CommonJS loader (mirror of effects.js)",
+          "status": "pass"
+        },
+        {
+          "id": "bundle-size/min-ratio",
+          "label": "min/raw ratio",
+          "value": 0.8379434711716867,
+          "unit": "ratio",
+          "target": 0.95,
+          "comparator": "lt",
+          "details": "Lower is better — how aggressive is the minifier",
+          "status": "pass"
+        },
+        {
+          "id": "bundle-size/total-dist",
+          "label": "total dist/ size",
+          "value": 2776869,
+          "unit": "bytes",
+          "details": "Sum of all published artifacts (raw + min + json + js + cjs)",
+          "status": "info"
+        }
+      ]
+    },
+    {
+      "name": "effect-count",
+      "results": [
+        {
+          "id": "effect-count/total",
+          "label": "Total effects",
+          "value": 1569,
+          "unit": "count",
+          "target": 1569,
+          "comparator": "eq",
+          "details": "Effects published in dist/effects.json",
+          "status": "pass"
+        },
+        {
+          "id": "effect-count/categories",
+          "label": "Distinct categories",
+          "value": 20,
+          "unit": "count",
+          "target": 20,
+          "comparator": "eq",
+          "details": "Categories: animations, hover, text, backgrounds, loaders, 3d-transforms, buttons, cards, borders, filters, forms, navigation, misc, scroll, cursor, page-transitions, glass-ui, particles, microinteractions, visual",
+          "status": "pass"
+        },
+        {
+          "id": "effect-count/per-css-bytes",
+          "label": "Per-effect CSS avg size",
+          "value": 770.8323773103888,
+          "unit": "bytes",
+          "target": 1024,
+          "comparator": "lt",
+          "details": "Total CSS bytes ÷ 1569 effects",
+          "status": "pass"
+        },
+        {
+          "id": "effect-count/per-json-bytes",
+          "label": "Per-effect JSON avg size",
+          "value": 348.67558954748245,
+          "unit": "bytes",
+          "target": 400,
+          "comparator": "lt",
+          "details": "Total JSON bytes ÷ 1569 effects",
+          "status": "pass"
+        },
+        {
+          "id": "effect-count/duplicate-css",
+          "label": "Duplicate cssCode blocks",
+          "value": 0,
+          "unit": "count",
+          "target": 1,
+          "comparator": "lt",
+          "details": "No two effects share an identical cssCode body",
+          "status": "pass"
+        },
+        {
+          "id": "effect-count/keyframes-total",
+          "label": "Inline @keyframes (total)",
+          "value": 1082,
+          "unit": "count",
+          "details": "Total @keyframes blocks in roycss.css",
+          "status": "info"
+        },
+        {
+          "id": "effect-count/keyframes-distinct",
+          "label": "Inline @keyframes (distinct)",
+          "value": 932,
+          "unit": "count",
+          "details": "Distinct @keyframes names",
+          "status": "info"
+        },
+        {
+          "id": "effect-count/keyframes-duplicates",
+          "label": "Duplicate @keyframes names",
+          "value": 150,
+          "unit": "count",
+          "target": 1,
+          "comparator": "lt",
+          "details": "150 redundant @keyframes declarations (same name)",
+          "status": "fail"
+        },
+        {
+          "id": "effect-count/prefers-reduced-motion-coverage",
+          "label": "prefers-reduced-motion coverage",
+          "value": 1,
+          "unit": "ratio",
+          "target": 1,
+          "comparator": "gte",
+          "details": "42 @media blocks; global rule present: true",
+          "status": "pass"
+        },
+        {
+          "id": "effect-count/color-mix-usage",
+          "label": "color-mix() occurrences",
+          "value": 2156,
+          "unit": "count",
+          "target": 5000,
+          "comparator": "gt",
+          "details": "Modern color-mix(in oklch, …) for blending two colors",
+          "status": "fail"
+        },
+        {
+          "id": "effect-count/modern-translucency",
+          "label": "Modern translucency API calls",
+          "value": 2433,
+          "unit": "count",
+          "target": 5000,
+          "comparator": "gt",
+          "details": "color-mix=2156 + oklch(.../alpha)=277",
+          "status": "fail"
+        },
+        {
+          "id": "effect-count/oklch-ratio",
+          "label": "OKLCH color ratio",
+          "value": 0.9997437211686314,
+          "unit": "ratio",
+          "target": 0.9,
+          "comparator": "gt",
+          "details": "oklch=7802  legacy(hex+rgba)=2  rgb(from)=14  hsl(from)=5",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "name": "css-injection",
+      "results": [
+        {
+          "id": "css-injection/1",
+          "label": "Inject 1 effect",
+          "value": 0.000147,
+          "unit": "ms",
+          "target": 0.2,
+          "comparator": "lt",
+          "details": "601 bytes joined",
+          "status": "pass"
+        },
+        {
+          "id": "css-injection/10",
+          "label": "Inject 10 effects",
+          "value": 0.00512,
+          "unit": "ms",
+          "target": 2,
+          "comparator": "lt",
+          "details": "3255 bytes joined",
+          "status": "pass"
+        },
+        {
+          "id": "css-injection/100",
+          "label": "Inject 100 effects",
+          "value": 0.049353,
+          "unit": "ms",
+          "target": 20,
+          "comparator": "lt",
+          "details": "41357 bytes joined",
+          "status": "pass"
+        },
+        {
+          "id": "css-injection/all",
+          "label": "Inject all 1569 effects",
+          "value": 1.506737,
+          "unit": "ms",
+          "details": "1199681 bytes joined (worst-case DynamicEffectCSS payload)",
+          "status": "info"
+        }
+      ]
+    },
+    {
+      "name": "virtual-scroll",
+      "results": [
+        {
+          "id": "virtual-scroll/100",
+          "label": "Render 100 cards (slice+map+filter)",
+          "value": 0.079726,
+          "unit": "ms",
+          "target": 0.5,
+          "comparator": "lt",
+          "details": "Bounded below by VirtualScrollGrid's render work",
+          "status": "pass"
+        },
+        {
+          "id": "virtual-scroll/1000",
+          "label": "Render 1000 cards",
+          "value": 0.22103,
+          "unit": "ms",
+          "target": 5,
+          "comparator": "lt",
+          "details": "~⅔ of the catalog",
+          "status": "pass"
+        },
+        {
+          "id": "virtual-scroll/1569",
+          "label": "Render 1569 cards (load-all case)",
+          "value": 0.415737,
+          "unit": "ms",
+          "target": 8,
+          "comparator": "lt",
+          "details": "Triggered by roycss-load-all-cards event before smooth-scroll",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "name": "animation-jank",
+      "results": [
+        {
+          "id": "animation-jank/animated-ratio",
+          "label": "Animated effects (top 20)",
+          "value": 1,
+          "unit": "ratio",
+          "details": "20/20 effects use @keyframes or transition",
+          "status": "info"
+        },
+        {
+          "id": "animation-jank/gpu-accelerated",
+          "label": "GPU-accelerated ratio (top 20)",
+          "value": 0.95,
+          "unit": "ratio",
+          "target": 0.8,
+          "comparator": "gte",
+          "details": "19/20 effects animate only transform/opacity/filter",
+          "status": "pass"
+        },
+        {
+          "id": "animation-jank/guaranteed-fps",
+          "label": "Guaranteed fps (theoretical)",
+          "value": 57,
+          "unit": "fps",
+          "target": 48,
+          "comparator": "gte",
+          "details": "60 × 0.95 = 57.0 fps lower bound",
+          "status": "pass"
+        },
+        {
+          "id": "animation-jank/reduced-motion-coverage",
+          "label": "prefers-reduced-motion override (top 20)",
+          "value": 1,
+          "unit": "ratio",
+          "target": 1,
+          "comparator": "gte",
+          "details": "Global rule at top of roycss.css covers every effect",
+          "status": "pass"
+        },
+        {
+          "id": "animation-jank/offending-properties",
+          "label": "Top offending properties",
+          "value": 1,
+          "unit": "count",
+          "details": "box-shadow×1",
+          "status": "info"
+        }
+      ]
+    },
+    {
+      "name": "memory-footprint",
+      "results": [
+        {
+          "id": "memory-footprint/json-parse-ms",
+          "label": "JSON.parse(effects.json)",
+          "value": 2.624708,
+          "unit": "ms",
+          "target": 50,
+          "comparator": "lt",
+          "details": "Median of 25 runs; raw size 547072 bytes",
+          "status": "pass"
+        },
+        {
+          "id": "memory-footprint/catalog-heap",
+          "label": "Catalog heap (1569 effects)",
+          "value": 469137,
+          "unit": "bytes",
+          "target": 1048576,
+          "comparator": "lt",
+          "details": "process.memoryUsage().heapUsed delta after JSON.parse",
+          "status": "pass"
+        },
+        {
+          "id": "memory-footprint/per-effect-heap",
+          "label": "Per-effect metadata heap",
+          "value": 299.0038240917782,
+          "unit": "bytes",
+          "target": 2048,
+          "comparator": "lt",
+          "details": "Catalog heap ÷ 1569 effects",
+          "status": "pass"
+        },
+        {
+          "id": "memory-footprint/string-bytes",
+          "label": "String bytes (lower bound)",
+          "value": 213348,
+          "unit": "bytes",
+          "details": "Sum of all string field lengths in parsed effects array",
+          "status": "info"
+        },
+        {
+          "id": "memory-footprint/effects-count",
+          "label": "Effects held in memory",
+          "value": 1569,
+          "unit": "count",
+          "details": "Should equal 1569 — guards against accidental truncation",
+          "status": "info"
+        }
+      ]
+    }
+  ]
+}

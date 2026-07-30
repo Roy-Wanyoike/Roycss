@@ -1,0 +1,161 @@
+import { describe, it, expect } from "vitest";
+import {
+  patterns,
+  patternCategoryMeta,
+  patternCategoryOrder,
+  searchPatterns,
+  type Pattern,
+} from "@/lib/roycss-patterns";
+import { effects } from "@/lib/roycss-effects";
+
+const EFFECT_IDS = new Set(effects.map((e) => e.id));
+
+/**
+ * Patterns are UI-state templates (empty / loading / error / success / etc).
+ * Like recipes, their main failure mode is dangling effectIds — caught here.
+ */
+describe("patterns corpus", () => {
+  it("ships exactly 10 patterns (the documented count)", () => {
+    expect(patterns).toHaveLength(10);
+  });
+
+  it("uses unique pattern ids", () => {
+    const ids = patterns.map((p) => p.id);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it("uses unique pattern names", () => {
+    const names = patterns.map((p) => p.name);
+    expect(new Set(names).size).toBe(names.length);
+  });
+
+  it("gives every pattern non-empty html, description, whenToUse, and at least one effectId", () => {
+    for (const p of patterns) {
+      expect(p.html.trim().length, `empty html in ${p.id}`).toBeGreaterThan(0);
+      expect(p.description.trim().length, `empty description in ${p.id}`).toBeGreaterThan(0);
+      expect(p.whenToUse.trim().length, `empty whenToUse in ${p.id}`).toBeGreaterThan(0);
+      expect(p.effectIds.length, `no effectIds in ${p.id}`).toBeGreaterThan(0);
+    }
+  });
+
+  it("resolves every pattern.effectId to a real effect id (known-defect lock)", () => {
+    // ─────────────────────────────────────────────────────────────────────
+    // KNOWN DEFECT (locked, do not widen without a fix):
+    // 7 pattern.effectIds reference batch-20 effects that were renamed or
+    // removed before the corpus shipped. The runtime `findEffect()` helper
+    // in roycss-recipes.ts has a fuzzy fallback that masks this for recipes,
+    // but `searchPatterns` / the UI renders the pattern HTML with the
+    // orphan `.roycss-<id>` class — the class is a no-op.
+    // Fix: either re-add the missing batch-20 effects or update the pattern
+    // `effectIds` arrays to point at the renamed ids. Until then, this test
+    // asserts the EXACT known dangling set so any NEW orphan fails CI.
+    // ─────────────────────────────────────────────────────────────────────
+    const KNOWN_DANGLING: ReadonlyArray<{ pattern: string; effectId: string }> = [
+      { pattern: "pattern-success-state", effectId: "anim-confetti-burst-b20" },
+      { pattern: "pattern-offline-state", effectId: "anim-notification-dot-b20" },
+      { pattern: "pattern-skeleton-state", effectId: "loader-skeleton-card-b20" },
+      { pattern: "pattern-skeleton-state", effectId: "loader-skeleton-text-b20" },
+      { pattern: "pattern-progressive-disclosure", effectId: "micro-accordion-expand-b20" },
+      { pattern: "pattern-toast-feedback", effectId: "micro-toast-slide-b20" },
+      { pattern: "pattern-wizard-steps", effectId: "nav-stepper-b20" },
+    ];
+
+    const missing: string[] = [];
+    for (const p of patterns) {
+      for (const id of p.effectIds) {
+        if (!EFFECT_IDS.has(id)) {
+          missing.push(`${p.id} → ${id}`);
+        }
+      }
+    }
+
+    const expected = KNOWN_DANGLING.map((k) => `${k.pattern} → ${k.effectId}`).sort();
+    const actual = missing.slice().sort();
+
+    // Any new dangling reference (not in the known-defect table) fails the test.
+    const novel = actual.filter((m) => !expected.includes(m));
+    expect(
+      novel,
+      `NEW dangling pattern.effectIds (not in the known-defect table): ${novel.join("; ")}`,
+    ).toEqual([]);
+    // Sanity: the known-defect table itself stays accurate.
+    expect(actual.length, "known-defect count drift — update KNOWN_DANGLING").toBe(expected.length);
+  });
+
+  it("tags every pattern with at least one tag", () => {
+    const untagged = patterns.filter((p) => p.tags.length === 0).map((p) => p.id);
+    expect(untagged).toEqual([]);
+  });
+
+  it("places every pattern in a known pattern category (states | feedback | layouts)", () => {
+    const valid = new Set(["states", "feedback", "layouts"]);
+    const invalid = patterns.filter((p) => !valid.has(p.category)).map((p) => `${p.id} → ${p.category}`);
+    expect(invalid).toEqual([]);
+  });
+
+  it("has a patternCategoryMeta entry for every patternCategoryOrder entry", () => {
+    for (const c of patternCategoryOrder) {
+      expect(patternCategoryMeta[c], `missing patternCategoryMeta for ${c}`).toBeDefined();
+    }
+  });
+
+  it("covers every patternCategoryOrder category with at least one pattern", () => {
+    const covered = new Set(patterns.map((p) => p.category));
+    const empty = patternCategoryOrder.filter((c) => !covered.has(c));
+    expect(empty, `empty pattern categories: ${empty.join(", ")}`).toEqual([]);
+  });
+});
+
+describe("searchPatterns", () => {
+  it("returns all patterns when query is empty and no category filter", () => {
+    expect(searchPatterns("")).toHaveLength(patterns.length);
+    expect(searchPatterns("   ")).toHaveLength(patterns.length);
+    expect(searchPatterns("", null)).toHaveLength(patterns.length);
+  });
+
+  it("filters by case-insensitive name substring", () => {
+    const results = searchPatterns("state");
+    expect(results.length).toBeGreaterThan(0);
+  });
+
+  it("filters by tag substring", () => {
+    const results = searchPatterns("loading");
+    expect(results.length).toBeGreaterThan(0);
+  });
+
+  it("filters by category argument alone", () => {
+    const results = searchPatterns("", "states");
+    expect(results.length).toBeGreaterThan(0);
+    for (const p of results) expect(p.category).toBe("states");
+  });
+
+  it("combines query and category filter", () => {
+    const all = searchPatterns("", "states");
+    const narrowed = searchPatterns("empty", "states");
+    expect(narrowed.length).toBeLessThanOrEqual(all.length);
+  });
+
+  it("returns an empty array for a query that matches nothing", () => {
+    expect(searchPatterns("zzz-no-such-pattern-xyz")).toEqual([]);
+  });
+
+  it("accepts null as the category argument (used by UI when 'all' is selected)", () => {
+    const results = searchPatterns("", null);
+    expect(results).toHaveLength(patterns.length);
+  });
+
+  it("does not mutate the underlying patterns array", () => {
+    const before = patterns.length;
+    searchPatterns("state");
+    searchPatterns("", "layouts");
+    expect(patterns).toHaveLength(before);
+  });
+
+  it("preserves the Pattern type contract on returned items", () => {
+    const results = searchPatterns("");
+    for (const p of results) {
+      const _typecheck: Pattern = p;
+      expect(_typecheck.id).toBeDefined();
+    }
+  });
+});

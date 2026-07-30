@@ -1,7 +1,7 @@
 {
   "name": "@roycss/mcp-server",
-  "version": "1.0.0",
-  "description": "MCP server for RoyCSS — gives AI assistants (Claude, ChatGPT, Cursor, Windsurf) access to official RoyCSS effects, documentation, and framework examples.",
+  "version": "2.0.0",
+  "description": "MCP server v2 for RoyCSS — gives AI assistants (Claude, ChatGPT, Cursor, Windsurf) access to 1,569 effects, 10 UI patterns, 12 recipes, framework examples, design tokens, accessibility guidance, and browser-support info. 13 tools, 5 resources, 3 prompt templates.",
   "type": "module",
   "main": "index.ts",
   "bin": {

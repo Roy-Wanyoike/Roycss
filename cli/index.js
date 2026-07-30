@@ -14575,7 +14575,7 @@ var effectsBatch10 = [
   background: hsl(from hsl(var(--roy-b10-pcs-hue) 90% 55%) h s l);
   --roy-b10-pcs-hue: 0deg;
   animation: roy-b10-pcs-cycle 5s linear infinite;
-  box-shadow: 0 12px 30px hsl(var(--roy-b10-pcs-hue) 90% 55% / 0.4);
+  box-shadow: 0 12px 30px oklch(0.627 0.241 var(--roy-b10-pcs-hue) / 0.4);
   display: grid;
   place-items: center;
   color: oklch(1 0 89.88);
@@ -15210,7 +15210,7 @@ var effectsBatch10 = [
   font: 800 14px/1 system-ui, sans-serif;
   letter-spacing: 0.18em;
   --roy-b10-phc-hue: 0deg;
-  box-shadow: 0 12px 30px hsl(var(--roy-b10-phc-hue) 80% 60% / 0.5);
+  box-shadow: 0 12px 30px oklch(0.627 0.241 var(--roy-b10-phc-hue) / 0.5);
   animation: roy-b10-phc-cycle 4s linear infinite;
 }
 .roycss-property-hue-cycle > div { display: none; }
@@ -29747,7 +29747,7 @@ var effectsBatch18 = [
   padding: 2px;
   background: linear-gradient(135deg, oklch(0.6 0.2 162), oklch(0.55 0.25 200), oklch(0.5 0.2 280));
   background-size: 300% 300%;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(oklch(1 0 0) 0 0) content-box, linear-gradient(oklch(1 0 0) 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
@@ -32755,15 +32755,15 @@ var effectsBatch21 = [
   content: '';
   position: absolute;
   top: 0;
-  left: -100%;
+  inset-inline-start: -100%;
   width: 100%;
   height: 100%;
   background: color-mix(in oklch, oklch(0 0 0) 45%, transparent);
-  transition: left 0.4s ease;
+  transition: inset-inline-start 0.4s ease;
   z-index: 1;
 }
 .roycss-ferrum-hover-overlay-slide:hover::before {
-  left: 0;
+  inset-inline-start: 0;
 }`
   },
   {
@@ -32782,7 +32782,7 @@ var effectsBatch21 = [
   content: '';
   position: absolute;
   bottom: 0;
-  left: 0;
+  inset-inline-start: 0;
   width: 100%;
   height: 0;
   background: linear-gradient(to top, oklch(0.627 0.164 271.53), oklch(0.501 0.138 304.73));
@@ -32891,16 +32891,16 @@ var effectsBatch21 = [
   content: '';
   position: absolute;
   top: 0;
-  left: -110%;
+  inset-inline-start: -110%;
   width: 100%;
   height: 100%;
   background: linear-gradient(135deg, oklch(0.795 0.172 323.15), oklch(0.673 0.193 16.23));
   transform: skewX(-15deg);
-  transition: left 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+  transition: inset-inline-start 0.5s cubic-bezier(0.65, 0, 0.35, 1);
   z-index: -1;
 }
 .roycss-ferrum-hover-swipe:hover::before {
-  left: 0;
+  inset-inline-start: 0;
 }
 .roycss-ferrum-hover-swipe:hover {
   color: oklch(1 0 0);
@@ -33147,7 +33147,7 @@ var effectsBatch21 = [
     cssCode: `.roycss-ferrum-text-typewriter {
   overflow: hidden;
   white-space: nowrap;
-  border-right: 2px solid oklch(0.627 0.164 271.53);
+  border-inline-end: 2px solid oklch(0.627 0.164 271.53);
   width: 0;
   animation:
     roy-ferrum-text-typewriter-type 3s steps(24) forwards,
@@ -33421,7 +33421,7 @@ var effectsBatch21 = [
   content: attr(data-text);
   position: absolute;
   top: 0;
-  left: 0;
+  inset-inline-start: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
@@ -33542,7 +33542,7 @@ var effectsBatch22 = [
 .roycss-ferrum-bg-aurora::before {
   content: '';
   position: absolute;
-  top: -50%; left: -50%;
+  top: -50%; inset-inline-start: -50%;
   width: 200%; height: 200%;
   background:
     radial-gradient(ellipse at center, color-mix(in oklch, oklch(0.627 0.233 303.9) 30%, transparent) 0%, transparent 50%),
@@ -33756,13 +33756,13 @@ var effectsBatch22 = [
 .roycss-ferrum-bg-smoke::before {
   width: 200px; height: 200px;
   background: radial-gradient(circle, color-mix(in oklch, oklch(0.627 0.233 303.9) 50%, transparent) 0%, transparent 70%);
-  top: -50px; left: -50px;
+  top: -50px; inset-inline-start: -50px;
   animation: roy-ferrum-smoke-drift1 10s ease-in-out infinite;
 }
 .roycss-ferrum-bg-smoke::after {
   width: 250px; height: 250px;
   background: radial-gradient(circle, color-mix(in oklch, oklch(0.652 0.241 354.31) 40%, transparent) 0%, transparent 70%);
-  bottom: -70px; right: -70px;
+  bottom: -70px; inset-inline-end: -70px;
   animation: roy-ferrum-smoke-drift2 12s ease-in-out infinite;
 }
 
@@ -33865,13 +33865,13 @@ var effectsBatch22 = [
 .roycss-ferrum-bg-lava::before {
   width: 80px; height: 120px;
   background: radial-gradient(ellipse, color-mix(in oklch, oklch(0.652 0.241 354.31) 60%, transparent) 0%, color-mix(in oklch, oklch(0.627 0.233 303.9) 20%, transparent) 60%, transparent 100%);
-  left: 30%; bottom: -20%;
+  inset-inline-start: 30%; bottom: -20%;
   animation: roy-ferrum-lava-rise1 5s ease-in-out infinite;
 }
 .roycss-ferrum-bg-lava::after {
   width: 60px; height: 100px;
   background: radial-gradient(ellipse, color-mix(in oklch, oklch(0.705 0.213 51.16) 50%, transparent) 0%, color-mix(in oklch, oklch(0.652 0.241 354.31) 20%, transparent) 60%, transparent 100%);
-  left: 60%; bottom: -20%;
+  inset-inline-start: 60%; bottom: -20%;
   animation: roy-ferrum-lava-rise2 6s ease-in-out infinite;
   animation-delay: -2s;
 }
@@ -34268,13 +34268,13 @@ var effectsBatch22 = [
   transition: transform 0.5s ease;
 }
 .roycss-ferrum-img-shutter::before {
-  left: 0;
+  inset-inline-start: 0;
   transform: translateX(-100%);
 }
 .roycss-ferrum-img-shutter::after {
   content: '';
-  right: 0;
-  left: auto;
+  inset-inline-end: 0;
+  inset-inline-start: auto;
   transform: translateX(100%);
 }
 .roycss-ferrum-img-shutter:hover::before {
@@ -34621,8 +34621,8 @@ var effectsBatch22 = [
   border-bottom-color: oklch(0.627 0.233 303.9);
 }
 .roycss-ferrum-loader-ring span:nth-child(2) {
-  border-left-color: oklch(0.652 0.241 354.31);
-  border-right-color: oklch(0.652 0.241 354.31);
+  border-inline-start-color: oklch(0.652 0.241 354.31);
+  border-inline-end-color: oklch(0.652 0.241 354.31);
   animation-direction: reverse;
 }
 
@@ -34686,8 +34686,8 @@ var effectsBatch22 = [
   transform: translate(-50%, -50%);
 }
 .roycss-ferrum-loader-hourglass span:nth-child(1) {
-  border-left: 16px solid transparent;
-  border-right: 16px solid transparent;
+  border-inline-start: 16px solid transparent;
+  border-inline-end: 16px solid transparent;
   border-top: 20px solid oklch(0.627 0.233 303.9);
   transform: translate(-50%, -50%) translateY(4px);
 }
@@ -34823,8 +34823,8 @@ var effectsBatch22 = [
 }
 .roycss-ferrum-loader-pencil span:nth-child(2) {
   width: 0; height: 0;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
+  border-inline-start: 4px solid transparent;
+  border-inline-end: 4px solid transparent;
   border-top: 10px solid oklch(0.627 0.233 303.9);
   bottom: -2px;
 }
@@ -35290,8 +35290,8 @@ background-size: 300% 300%;
 animation: royPrismRefraction 4s ease-in-out infinite;
 box-shadow: 0 0 30px color-mix(in oklch, oklch(1 0 0) 15%, transparent);
 
-border-right: 3px solid currentColor;
-padding-right: 4px;
+border-inline-end: 3px solid currentColor;
+padding-inline-end: 4px;
 animation: royTypingCursor 1s step-end infinite;
 
 .btn-shine {
@@ -35545,8 +35545,8 @@ animation: royTypingCursor 1s step-end infinite;
     left: 0;
     right: 0;
     height: 100%;
-    border-left: 2px solid oklch(0.541 0.247 293.01);
-    border-right: 2px solid oklch(0.541 0.247 293.01);
+    border-inline-start: 2px solid oklch(0.541 0.247 293.01);
+    border-inline-end: 2px solid oklch(0.541 0.247 293.01);
     transform: scaleY(0);
     transition: transform 0.4s ease 0.15s, border-color 0.3s ease 0.15s;
 }
@@ -35624,14 +35624,14 @@ animation: royTypingCursor 1s step-end infinite;
     color: oklch(1 0 0);
     background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
     cursor: pointer;
-    padding-right: 48px;
+    padding-inline-end: 48px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .btn-slide-icon::after {
     content: '\\2192';
     position: absolute;
     top: 50%;
-    right: 12px;
+    inset-inline-end: 12px;
     transform: translateY(-50%) translateX(24px);
     opacity: 0;
     font-size: 16px;
@@ -36469,7 +36469,7 @@ var effectsBatch23 = [
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
+    inset-inline-start: -100%;
     width: 100%;
     height: 100%;
     background: linear-gradient(
@@ -36485,8 +36485,8 @@ var effectsBatch23 = [
 
 @keyframes roy-ferrum-skeleton-wave {
 
-    0%   { left: -100%; }
-    100% { left: 100%; }
+    0%   { inset-inline-start: -100%; }
+    100% { inset-inline-start: 100%; }
 
 }`
   },
@@ -36677,7 +36677,7 @@ var effectsBatch23 = [
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
+    inset-inline-start: -100%;
     width: 100%;
     height: 100%;
     background: linear-gradient(
@@ -36691,8 +36691,8 @@ var effectsBatch23 = [
 
 @keyframes roy-ferrum-skeleton-circle {
 
-    0%   { left: -100%; }
-    100% { left: 100%; }
+    0%   { inset-inline-start: -100%; }
+    100% { inset-inline-start: 100%; }
 
 }`
   },
@@ -37375,18 +37375,18 @@ var effectsBatch23 = [
     content: '';
     position: absolute;
     bottom: -2px;
-    left: 50%;
+    inset-inline-start: 50%;
     width: 0;
     height: 2px;
     background-color: oklch(0.658 0.169 248.81);
-    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), inset-inline-start 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .roycss-ferrum-tab-underline:hover {
     color: oklch(0.321 0.0 89.88);
 }
 .roycss-ferrum-tab-underline:hover::after {
     width: 100%;
-    left: 0;
+    inset-inline-start: 0;
 }
 .roycss-ferrum-tab-underline.roycss-ferrum-active,
 .roycss-ferrum-tab-underline:active {
@@ -38700,8 +38700,8 @@ var effectsBatch24 = [
   content: '';
   position: absolute;
   bottom: 0;
-  left: 0;
-  right: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
   height: 20%;
   background: linear-gradient(to bottom, color-mix(in oklch, oklch(0.142 0.066 295.8) 0%, transparent) 0%, color-mix(in oklch, oklch(0.142 0.066 295.8) 70%, transparent) 100%);
 }
@@ -49280,17 +49280,28 @@ var allEffectCSS = effects.map((e) => e.cssCode).join(`
 `);
 
 // src/cli/index.ts
-import { writeFileSync, readFileSync, existsSync, readdirSync } from "fs";
-import { join } from "path";
+import {
+  writeFileSync,
+  readFileSync,
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  statSync,
+  renameSync
+} from "fs";
+import { join, resolve, extname, relative } from "path";
+import * as readline from "readline";
 var c = {
   reset: "\x1B[0m",
   bold: "\x1B[1m",
   dim: "\x1B[2m",
+  underline: "\x1B[4m",
   green: "\x1B[32m",
   cyan: "\x1B[36m",
   yellow: "\x1B[33m",
   red: "\x1B[31m",
   magenta: "\x1B[35m",
+  blue: "\x1B[34m",
   gray: "\x1B[90m",
   bg: "\x1B[48;5;22m"
 };
@@ -49309,7 +49320,7 @@ function info(msg) {
 function warn(msg) {
   console.log(`${c.yellow}\u26A0${c.reset} ${msg}`);
 }
-var VERSION = "1.0.0";
+var VERSION = "2.0.0";
 function parseFlags(args) {
   const positional = [];
   const flags = {};
@@ -49356,6 +49367,39 @@ async function copyToClipboard(text) {
       return false;
     }
   }
+}
+function resolveCategory(arg) {
+  return categoryOrder.find((cat) => cat === arg || categoryMeta[cat].label.toLowerCase() === arg.toLowerCase());
+}
+var SOURCE_EXTENSIONS = new Set([".html", ".tsx", ".jsx", ".vue", ".svelte", ".ts", ".js", ".css", ".htm"]);
+var SKIP_DIRS = new Set(["node_modules", ".git", ".next", "dist", "build", ".cache", "coverage", ".turbo"]);
+function scanSourceFiles(dirs) {
+  const results = [];
+  function walk(dir) {
+    let entries;
+    try {
+      entries = readdirSync(dir, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const entry of entries) {
+      const fullPath = join(dir, entry.name);
+      if (entry.isDirectory()) {
+        if (entry.name.startsWith(".") || SKIP_DIRS.has(entry.name))
+          continue;
+        walk(fullPath);
+      } else if (entry.isFile()) {
+        if (SOURCE_EXTENSIONS.has(extname(entry.name).toLowerCase())) {
+          results.push(fullPath);
+        }
+      }
+    }
+  }
+  for (const dir of dirs) {
+    if (existsSync(dir))
+      walk(dir);
+  }
+  return results;
 }
 function cmdInit(flags) {
   const framework = flags.framework || "vanilla";
@@ -49417,6 +49461,9 @@ ${c.bold}Next steps (${framework}):${c.reset}`);
   log(`
   ${c.gray}Add a specific effect only:${c.reset}`);
   log(`  ${c.cyan}roycss add pulse-glow${c.reset}`);
+  log(`
+  ${c.gray}Scaffold a full project:${c.reset}`);
+  log(`  ${c.cyan}roycss create my-app --template react${c.reset}`);
   log(`
 ${c.green}Done!${c.reset} Visit ${c.cyan}https://github.com/Roy-Wanyoike/roycss${c.reset} for docs.`);
 }
@@ -49508,7 +49555,7 @@ ${c.dim}Add an effect: ${c.reset}${c.cyan}roycss add <effect-id>${c.reset}`);
 function cmdList(category, flags) {
   if (flags.json) {
     if (category) {
-      const cat = categoryOrder.find((c2) => c2 === category || categoryMeta[c2].label.toLowerCase() === category.toLowerCase());
+      const cat = resolveCategory(category);
       if (!cat) {
         error(`Category "${category}" not found.`);
         process.exit(1);
@@ -49528,7 +49575,7 @@ function cmdList(category, flags) {
     return;
   }
   if (category) {
-    const cat = categoryOrder.find((c2) => c2 === category || categoryMeta[c2].label.toLowerCase() === category.toLowerCase());
+    const cat = resolveCategory(category);
     if (!cat) {
       error(`Category "${category}" not found.`);
       log(`  Available: ${categoryOrder.join(", ")}`);
@@ -49566,6 +49613,7 @@ function cmdCategories() {
   log(`
 ${c.dim}Total: ${effects.length}+ effects${c.reset}`);
   log(`${c.dim}Browse: ${c.reset}${c.cyan}roycss list <category>${c.reset}`);
+  log(`${c.dim}Interactive: ${c.reset}${c.cyan}roycss browse <category>${c.reset}`);
 }
 function cmdInfo(effectId, flags) {
   const effect = effects.find((e) => e.id === effectId);
@@ -49611,17 +49659,27 @@ ${c.bold}CSS:${c.reset}`);
   log(`
 ${c.dim}Add to project: ${c.reset}${c.cyan}roycss add ${effect.id}${c.reset}`);
   log(`${c.dim}Copy to clipboard: ${c.reset}${c.cyan}roycss add ${effect.id} --copy${c.reset}`);
+  log(`${c.dim}Export with others: ${c.reset}${c.cyan}roycss export ${effect.id}${c.reset}`);
+}
+function cmdVersion() {
+  log(`RoyCSS CLI v${VERSION}`);
+  log(`${c.dim}${effects.length}+ effects across ${categoryOrder.length} categories${c.reset}`);
 }
 function cmdDoctor() {
   log(`${c.bold}${c.cyan}RoyCSS Doctor${c.reset} ${c.gray}v${VERSION}${c.reset}`);
   log(`${c.dim}Checking project health...${c.reset}
 `);
   let issues = 0;
+  let warnings = 0;
   if (existsSync("roycss.css")) {
     success(`${c.bold}roycss.css${c.reset} found`);
     const stat = readFileSync("roycss.css");
     if (stat.length > 1000) {
       success(`CSS file size: ${(stat.length / 1024).toFixed(1)}KB`);
+      if (stat.length > 1024 * 1024) {
+        warn(`CSS file > 1MB \u2014 consider ${c.cyan}roycss export${c.reset} for tree-shaking`);
+        warnings++;
+      }
     } else {
       warn(`CSS file seems small (${stat.length} bytes) \u2014 may be incomplete`);
       issues++;
@@ -49671,49 +49729,1174 @@ function cmdDoctor() {
     log(`  ${c.cyan}import "./roycss.css";${c.reset}`);
     issues++;
   }
-  let classesFound = 0;
-  const srcDirs = ["src", "app", "pages", "components"];
-  function scanDir(dir) {
+  const usageMap = new Map;
+  const srcFiles = scanSourceFiles(["src", "app", "pages", "components"]);
+  for (const file of srcFiles) {
     try {
-      const entries = readdirSync(dir, { withFileTypes: true });
-      for (const entry of entries) {
-        const fullPath = join(dir, entry.name);
-        if (entry.isDirectory() && !entry.name.startsWith(".") && entry.name !== "node_modules") {
-          scanDir(fullPath);
-        } else if (entry.name.endsWith(".tsx") || entry.name.endsWith(".jsx") || entry.name.endsWith(".vue") || entry.name.endsWith(".svelte") || entry.name.endsWith(".html")) {
-          try {
-            const content = readFileSync(fullPath, "utf-8");
-            const matches = content.match(/roycss-[a-z0-9-]+/g);
-            if (matches)
-              classesFound += matches.length;
-          } catch {}
+      const content = readFileSync(file, "utf-8");
+      const matches = content.match(/roycss-[a-z0-9-]+/g);
+      if (matches) {
+        for (const m of matches) {
+          usageMap.set(m, (usageMap.get(m) || 0) + 1);
         }
       }
     } catch {}
   }
-  for (const dir of srcDirs) {
-    if (existsSync(dir))
-      scanDir(dir);
-  }
-  if (classesFound > 0) {
-    success(`${c.bold}${classesFound}${c.reset} RoyCSS class usage${classesFound === 1 ? "" : "es"} found in source files`);
+  const totalUsages = [...usageMap.values()].reduce((a, b) => a + b, 0);
+  if (totalUsages > 0) {
+    success(`${c.bold}${totalUsages}${c.reset} RoyCSS class usage${totalUsages === 1 ? "" : "es"} found across ${usageMap.size} unique classes in ${srcFiles.length} source files`);
   } else {
     info(`No RoyCSS classes found in source files \u2014 start using them!`);
   }
+  const knownIds = new Set(effects.map((e) => `roycss-${e.id}`));
+  const unknownClasses = [];
+  for (const cls of usageMap.keys()) {
+    if (!knownIds.has(cls)) {
+      unknownClasses.push(cls);
+    }
+  }
+  if (unknownClasses.length > 0) {
+    warn(`${unknownClasses.length} unknown roycss-* class${unknownClasses.length === 1 ? "" : "es"} (possible typos):`);
+    unknownClasses.slice(0, 5).forEach((cls) => {
+      log(`    ${c.yellow}${cls}${c.reset}`);
+    });
+    if (unknownClasses.length > 5) {
+      log(`    ${c.dim}...and ${unknownClasses.length - 5} more${c.reset}`);
+    }
+    warnings++;
+  }
+  let oklchViolations = 0;
+  const userCssFiles = ["roycss.css", "src/app/globals.css", "src/index.css", "src/styles.css", "styles.css"];
+  for (const cssFile of userCssFiles) {
+    if (!existsSync(cssFile))
+      continue;
+    try {
+      const content = readFileSync(cssFile, "utf-8");
+      if (content.includes("Generated by: roycss init"))
+        continue;
+      const hexMatches = content.match(/#[0-9a-fA-F]{3,8}\b/g);
+      const rgbaMatches = content.match(/\brgba?\(/g);
+      const total = (hexMatches?.length || 0) + (rgbaMatches?.length || 0);
+      if (total > 0) {
+        oklchViolations += total;
+      }
+    } catch {}
+  }
+  if (oklchViolations > 0) {
+    warn(`Found ${oklchViolations} hex/rgba color literal${oklchViolations === 1 ? "" : "s"} in user CSS \u2014 RoyCSS v2 recommends ${c.cyan}oklch()${c.reset}`);
+    log(`  ${c.dim}Run: ${c.reset}${c.cyan}bun run scripts/migrate-colors.ts${c.reset}`);
+    warnings++;
+  } else {
+    success(`OKLCH compliance: no hex/rgba literals in user CSS`);
+  }
+  let hasReducedMotion = false;
+  for (const cssFile of userCssFiles) {
+    if (!existsSync(cssFile))
+      continue;
+    try {
+      const content = readFileSync(cssFile, "utf-8");
+      if (content.includes("prefers-reduced-motion")) {
+        hasReducedMotion = true;
+        break;
+      }
+    } catch {}
+  }
+  if (hasReducedMotion) {
+    success(`Accessibility: ${c.bold}prefers-reduced-motion${c.reset} media query found`);
+  } else {
+    warn(`No ${c.bold}prefers-reduced-motion${c.reset} media query in user CSS \u2014 add one for accessibility`);
+    log(`  ${c.dim}Example:${c.reset}`);
+    log(`  ${c.cyan}@media (prefers-reduced-motion: reduce) { *{ animation: none !important; transition: none !important; } }${c.reset}`);
+    warnings++;
+  }
   log(`
 ${c.bold}Summary:${c.reset}`);
-  if (issues === 0) {
+  if (issues === 0 && warnings === 0) {
     success(`${c.green}All checks passed!${c.reset} Your project is healthy.`);
   } else {
-    warn(`${issues} issue${issues === 1 ? "" : "s"} found. See above for recommendations.`);
+    if (issues > 0)
+      warn(`${issues} issue${issues === 1 ? "" : "s"} found.`);
+    if (warnings > 0)
+      info(`${warnings} warning${warnings === 1 ? "" : "s"} (non-blocking).`);
   }
   log(`
 ${c.dim}RoyCSS ${effects.length}+ effects available | ${categoryOrder.length} categories${c.reset}`);
   log(`${c.dim}Docs: https://github.com/Roy-Wanyoike/roycss${c.reset}`);
 }
-function cmdVersion() {
-  log(`RoyCSS CLI v${VERSION}`);
-  log(`${c.dim}${effects.length}+ effects across ${categoryOrder.length} categories${c.reset}`);
+function cmdCreate(projectName, flags) {
+  const template = flags.template || "vanilla";
+  const validTemplates = ["react", "vue", "svelte", "vanilla", "nextjs", "html"];
+  if (!validTemplates.includes(template)) {
+    error(`Invalid template "${template}". Valid: ${validTemplates.join(", ")}`);
+    process.exit(1);
+  }
+  const projectDir = resolve(projectName);
+  const cwd = process.cwd();
+  const rel = relative(cwd, projectDir);
+  if (rel.startsWith("..") && !flags.force) {
+    error(`Project path "${projectName}" is outside the current directory. Use --force to allow.`);
+    process.exit(1);
+  }
+  if (existsSync(projectDir)) {
+    if (!flags.force) {
+      error(`Directory "${projectName}" already exists. Use --force to overwrite.`);
+      process.exit(1);
+    }
+  } else {
+    mkdirSync(projectDir, { recursive: true });
+  }
+  const initialEffectId = flags.effect || "pulse-glow";
+  const effect = effects.find((e) => e.id === initialEffectId);
+  if (!effect) {
+    warn(`Initial effect "${initialEffectId}" not found \u2014 using pulse-glow as fallback`);
+  }
+  const initialEffect = effect || effects.find((e) => e.id === "pulse-glow") || effects[0];
+  log(`${c.bold}${c.cyan}RoyCSS${c.reset} ${c.gray}v${VERSION}${c.reset}`);
+  log(`${c.dim}Scaffolding ${c.bold}${template}${c.reset}${c.dim} project at ${c.bold}${projectName}${c.reset}${c.dim}...${c.reset}
+`);
+  const cssHeader = `/* RoyCSS \u2014 initial effect
+ * Generated by: roycss create
+ * Template: ${template}
+ * Add more: roycss add <effect-id> OR roycss export <ids...> --out roycss.css
+ */
+
+`;
+  writeFileSync(join(projectDir, "roycss.css"), cssHeader + initialEffect.cssCode + `
+`);
+  success(`Created ${c.bold}roycss.css${c.reset} with initial effect: ${c.cyan}roycss-${initialEffect.id}${c.reset}`);
+  const templates = {
+    vanilla: () => writeVanillaTemplate(projectDir, initialEffect),
+    html: () => writeHtmlTemplate(projectDir, initialEffect),
+    react: () => writeReactTemplate(projectDir, initialEffect, projectName),
+    vue: () => writeVueTemplate(projectDir, initialEffect, projectName),
+    svelte: () => writeSvelteTemplate(projectDir, initialEffect, projectName),
+    nextjs: () => writeNextjsTemplate(projectDir, initialEffect, projectName)
+  };
+  templates[template]();
+  writeFileSync(join(projectDir, "README.md"), `# ${projectName}
+
+Generated by \`roycss create\` (RoyCSS CLI v${VERSION}).
+
+## Getting started
+
+\`\`\`bash
+npm install
+npm run dev
+\`\`\`
+
+## RoyCSS
+
+This project uses [RoyCSS](https://github.com/Roy-Wanyoike/roycss) \u2014 ${effects.length}+ production-ready CSS effects, zero JavaScript runtime.
+
+Initial effect: \`roycss-${initialEffect.id}\`
+
+Add more effects:
+
+\`\`\`bash
+roycss search glow
+roycss add bounce-in
+roycss export pulse-glow bounce-in --out roycss.css
+\`\`\`
+
+## Commands
+
+- \`roycss stats\` \u2014 see which effects you're using
+- \`roycss doctor\` \u2014 check project health
+- \`roycss browse\` \u2014 interactive TUI browser
+- \`roycss help\` \u2014 full command list
+`);
+  log(`
+${c.green}\u2713${c.reset} Project created at ${c.bold}${projectDir}${c.reset}`);
+  log(`
+${c.bold}Next steps:${c.reset}`);
+  log(`  ${c.cyan}cd ${projectName}${c.reset}`);
+  if (template !== "html" && template !== "vanilla") {
+    log(`  ${c.cyan}npm install${c.reset} ${c.gray}(or: bun install)${c.reset}`);
+  }
+  log(`  ${c.cyan}npm run dev${c.reset} ${c.gray}(or: bun run dev)${c.reset}`);
+  log(`
+${c.bold}RoyCSS commands:${c.reset}`);
+  log(`  ${c.gray}Add effects:${c.reset} ${c.cyan}roycss add <effect-id>${c.reset}`);
+  log(`  ${c.gray}Search:${c.reset}     ${c.cyan}roycss search <query>${c.reset}`);
+  log(`  ${c.gray}Stats:${c.reset}      ${c.cyan}roycss stats${c.reset}`);
+  log(`  ${c.gray}Browse:${c.reset}     ${c.cyan}roycss browse${c.reset}`);
+  log(`
+${c.dim}Docs: https://github.com/Roy-Wanyoike/roycss${c.reset}`);
+}
+function writeVanillaTemplate(projectDir, effect) {
+  writeFileSync(join(projectDir, "package.json"), JSON.stringify({
+    name: projectDir.split("/").pop() || "roycss-project",
+    version: "0.1.0",
+    private: true,
+    scripts: {
+      dev: "npx serve .",
+      build: "echo 'No build step for vanilla template'"
+    }
+  }, null, 2) + `
+`);
+  writeFileSync(join(projectDir, "index.html"), `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RoyCSS Project</title>
+  <link rel="stylesheet" href="roycss.css" />
+</head>
+<body>
+  <main>
+    <h1>Hello, RoyCSS</h1>
+    <p>This project was scaffolded with <code>roycss create</code>.</p>
+    <div class="roycss-${effect.id}">
+      ${effect.previewText || "RoyCSS effect in action"}
+    </div>
+  </main>
+</body>
+</html>
+`);
+  writeFileSync(join(projectDir, "main.js"), `// Entry point \u2014 add your JavaScript here
+console.log("RoyCSS project ready");
+`);
+  success(`Created ${c.bold}package.json${c.reset}, ${c.bold}index.html${c.reset}, ${c.bold}main.js${c.reset}`);
+}
+function writeHtmlTemplate(projectDir, effect) {
+  writeFileSync(join(projectDir, "package.json"), JSON.stringify({
+    name: projectDir.split("/").pop() || "roycss-html",
+    version: "0.1.0",
+    private: true,
+    scripts: {
+      dev: "npx serve ."
+    }
+  }, null, 2) + `
+`);
+  writeFileSync(join(projectDir, "index.html"), `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RoyCSS Project</title>
+  <link rel="stylesheet" href="roycss.css" />
+</head>
+<body>
+  <main>
+    <h1>Hello, RoyCSS</h1>
+    <p>This project was scaffolded with <code>roycss create --template html</code>.</p>
+    <div class="roycss-${effect.id}">
+      ${effect.previewText || "RoyCSS effect in action"}
+    </div>
+  </main>
+</body>
+</html>
+`);
+  success(`Created ${c.bold}package.json${c.reset}, ${c.bold}index.html${c.reset}`);
+}
+function writeReactTemplate(projectDir, effect, projectName) {
+  mkdirSync(join(projectDir, "src"), { recursive: true });
+  writeFileSync(join(projectDir, "package.json"), JSON.stringify({
+    name: projectName,
+    version: "0.1.0",
+    private: true,
+    type: "module",
+    scripts: {
+      dev: "vite",
+      build: "vite build",
+      preview: "vite preview"
+    },
+    dependencies: {
+      react: "^19.0.0",
+      "react-dom": "^19.0.0",
+      roycss: "^2.0.0"
+    },
+    devDependencies: {
+      "@types/react": "^19",
+      "@types/react-dom": "^19",
+      "@vitejs/plugin-react": "^4.3.0",
+      typescript: "^5",
+      vite: "^6.0.0"
+    }
+  }, null, 2) + `
+`);
+  writeFileSync(join(projectDir, "index.html"), `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${projectName}</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+`);
+  writeFileSync(join(projectDir, "src", "main.tsx"), `import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App";
+import "./roycss.css";
+
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+);
+`);
+  writeFileSync(join(projectDir, "src", "App.tsx"), `export default function App() {
+  return (
+    <main style={{ padding: "2rem", fontFamily: "system-ui, sans-serif" }}>
+      <h1>Hello, RoyCSS</h1>
+      <p>This project was scaffolded with <code>roycss create --template react</code>.</p>
+      <div className="roycss-${effect.id}">${effect.previewText || "RoyCSS effect in action"}</div>
+    </main>
+  );
+}
+`);
+  writeFileSync(join(projectDir, "tsconfig.json"), JSON.stringify({
+    compilerOptions: {
+      target: "ES2022",
+      lib: ["ES2022", "DOM", "DOM.Iterable"],
+      module: "ESNext",
+      moduleResolution: "bundler",
+      jsx: "react-jsx",
+      strict: true,
+      skipLibCheck: true
+    },
+    include: ["src"]
+  }, null, 2) + `
+`);
+  writeFileSync(join(projectDir, "vite.config.ts"), `import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+export default defineConfig({
+  plugins: [react()],
+});
+`);
+  success(`Created ${c.bold}package.json${c.reset}, ${c.bold}index.html${c.reset}, ${c.bold}src/main.tsx${c.reset}, ${c.bold}src/App.tsx${c.reset}, ${c.bold}tsconfig.json${c.reset}, ${c.bold}vite.config.ts${c.reset}`);
+}
+function writeVueTemplate(projectDir, effect, projectName) {
+  mkdirSync(join(projectDir, "src"), { recursive: true });
+  writeFileSync(join(projectDir, "package.json"), JSON.stringify({
+    name: projectName,
+    version: "0.1.0",
+    private: true,
+    type: "module",
+    scripts: {
+      dev: "vite",
+      build: "vite build",
+      preview: "vite preview"
+    },
+    dependencies: {
+      vue: "^3.5.0",
+      roycss: "^2.0.0"
+    },
+    devDependencies: {
+      "@vitejs/plugin-vue": "^5.1.0",
+      typescript: "^5",
+      vite: "^6.0.0"
+    }
+  }, null, 2) + `
+`);
+  writeFileSync(join(projectDir, "index.html"), `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${projectName}</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
+`);
+  writeFileSync(join(projectDir, "src", "main.ts"), `import { createApp } from "vue";
+import App from "./App.vue";
+import "./roycss.css";
+
+createApp(App).mount("#app");
+`);
+  writeFileSync(join(projectDir, "src", "App.vue"), `<script setup lang="ts"></script>
+
+<template>
+  <main style="padding: 2rem; font-family: system-ui, sans-serif;">
+    <h1>Hello, RoyCSS</h1>
+    <p>This project was scaffolded with <code>roycss create --template vue</code>.</p>
+    <div class="roycss-${effect.id}">
+      ${effect.previewText || "RoyCSS effect in action"}
+    </div>
+  </main>
+</template>
+`);
+  writeFileSync(join(projectDir, "tsconfig.json"), JSON.stringify({
+    compilerOptions: {
+      target: "ES2022",
+      module: "ESNext",
+      moduleResolution: "bundler",
+      strict: true,
+      skipLibCheck: true
+    },
+    include: ["src"]
+  }, null, 2) + `
+`);
+  writeFileSync(join(projectDir, "vite.config.ts"), `import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+
+export default defineConfig({
+  plugins: [vue()],
+});
+`);
+  success(`Created ${c.bold}package.json${c.reset}, ${c.bold}index.html${c.reset}, ${c.bold}src/main.ts${c.reset}, ${c.bold}src/App.vue${c.reset}, ${c.bold}tsconfig.json${c.reset}, ${c.bold}vite.config.ts${c.reset}`);
+}
+function writeSvelteTemplate(projectDir, effect, projectName) {
+  mkdirSync(join(projectDir, "src"), { recursive: true });
+  writeFileSync(join(projectDir, "package.json"), JSON.stringify({
+    name: projectName,
+    version: "0.1.0",
+    private: true,
+    type: "module",
+    scripts: {
+      dev: "vite",
+      build: "vite build",
+      preview: "vite preview"
+    },
+    dependencies: {
+      roycss: "^2.0.0"
+    },
+    devDependencies: {
+      "@sveltejs/vite-plugin-svelte": "^4.0.0",
+      svelte: "^5.0.0",
+      typescript: "^5",
+      vite: "^6.0.0"
+    }
+  }, null, 2) + `
+`);
+  writeFileSync(join(projectDir, "index.html"), `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${projectName}</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
+`);
+  writeFileSync(join(projectDir, "src", "main.ts"), `import App from "./App.svelte";
+import "./roycss.css";
+
+const app = new App({
+  target: document.getElementById("app")!,
+});
+
+export default app;
+`);
+  writeFileSync(join(projectDir, "src", "App.svelte"), `<script lang="ts"></script>
+
+<main style="padding: 2rem; font-family: system-ui, sans-serif;">
+  <h1>Hello, RoyCSS</h1>
+  <p>This project was scaffolded with <code>roycss create --template svelte</code>.</p>
+  <div class="roycss-${effect.id}">
+    ${effect.previewText || "RoyCSS effect in action"}
+  </div>
+</main>
+`);
+  writeFileSync(join(projectDir, "tsconfig.json"), JSON.stringify({
+    compilerOptions: {
+      target: "ES2022",
+      module: "ESNext",
+      moduleResolution: "bundler",
+      strict: true,
+      skipLibCheck: true
+    },
+    include: ["src"]
+  }, null, 2) + `
+`);
+  writeFileSync(join(projectDir, "vite.config.ts"), `import { defineConfig } from "vite";
+import { svelte } from "@sveltejs/vite-plugin-svelte";
+
+export default defineConfig({
+  plugins: [svelte()],
+});
+`);
+  success(`Created ${c.bold}package.json${c.reset}, ${c.bold}index.html${c.reset}, ${c.bold}src/main.ts${c.reset}, ${c.bold}src/App.svelte${c.reset}, ${c.bold}tsconfig.json${c.reset}, ${c.bold}vite.config.ts${c.reset}`);
+}
+function writeNextjsTemplate(projectDir, effect, projectName) {
+  mkdirSync(join(projectDir, "src", "app"), { recursive: true });
+  writeFileSync(join(projectDir, "package.json"), JSON.stringify({
+    name: projectName,
+    version: "0.1.0",
+    private: true,
+    scripts: {
+      dev: "next dev",
+      build: "next build",
+      start: "next start",
+      lint: "next lint"
+    },
+    dependencies: {
+      next: "^16.0.0",
+      react: "^19.0.0",
+      "react-dom": "^19.0.0",
+      roycss: "^2.0.0"
+    },
+    devDependencies: {
+      "@types/node": "^22",
+      "@types/react": "^19",
+      "@types/react-dom": "^19",
+      typescript: "^5"
+    }
+  }, null, 2) + `
+`);
+  writeFileSync(join(projectDir, "src", "app", "layout.tsx"), `import type { Metadata } from "next";
+import "../roycss.css";
+
+export const metadata: Metadata = {
+  title: "${projectName}",
+  description: "Generated by roycss create --template nextjs",
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+`);
+  writeFileSync(join(projectDir, "src", "app", "page.tsx"), `export default function Home() {
+  return (
+    <main style={{ padding: "2rem", fontFamily: "system-ui, sans-serif" }}>
+      <h1>Hello, RoyCSS</h1>
+      <p>This project was scaffolded with <code>roycss create --template nextjs</code>.</p>
+      <div className="roycss-${effect.id}">
+        ${effect.previewText || "RoyCSS effect in action"}
+      </div>
+    </main>
+  );
+}
+`);
+  writeFileSync(join(projectDir, "tsconfig.json"), JSON.stringify({
+    compilerOptions: {
+      target: "ES2022",
+      lib: ["dom", "dom.iterable", "esnext"],
+      allowJs: true,
+      skipLibCheck: true,
+      strict: true,
+      noEmit: true,
+      esModuleInterop: true,
+      module: "esnext",
+      moduleResolution: "bundler",
+      resolveJsonModule: true,
+      isolatedModules: true,
+      jsx: "preserve",
+      incremental: true,
+      plugins: [{ name: "next" }],
+      paths: { "@/*": ["./src/*"] }
+    },
+    include: ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+    exclude: ["node_modules"]
+  }, null, 2) + `
+`);
+  writeFileSync(join(projectDir, "next.config.ts"), `import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {};
+export default nextConfig;
+`);
+  success(`Created ${c.bold}package.json${c.reset}, ${c.bold}src/app/layout.tsx${c.reset}, ${c.bold}src/app/page.tsx${c.reset}, ${c.bold}tsconfig.json${c.reset}, ${c.bold}next.config.ts${c.reset}`);
+}
+function cmdUpgrade() {
+  log(`${c.bold}${c.cyan}RoyCSS Upgrade${c.reset} ${c.gray}v${VERSION}${c.reset}`);
+  log(`${c.dim}Scanning for outdated RoyCSS versions and deprecated patterns...${c.reset}
+`);
+  let issues = 0;
+  let warnings = 0;
+  if (existsSync("package.json")) {
+    try {
+      const pkg = JSON.parse(readFileSync("package.json", "utf-8"));
+      const deps = { ...pkg.dependencies, ...pkg.devDependencies };
+      if (deps.roycss) {
+        const versionSpec = deps.roycss;
+        const version = versionSpec.replace(/[\^~>=<]/g, "");
+        const major = parseInt(version.split(".")[0] || "0", 10);
+        if (major < 2) {
+          warn(`roycss@${versionSpec} is outdated (v1.x). RoyCSS v2.0.0 is available.`);
+          log(`  ${c.dim}Upgrade:${c.reset} ${c.cyan}npm install roycss@latest${c.reset}`);
+          issues++;
+        } else if (major === 2) {
+          success(`roycss@${versionSpec} is up to date (v2.x)`);
+        } else {
+          info(`roycss@${versionSpec} \u2014 newer than v2.0.0 reference`);
+        }
+      } else {
+        info(`roycss is not in package.json dependencies`);
+        log(`  ${c.dim}Install:${c.reset} ${c.cyan}npm install roycss@latest${c.reset}`);
+      }
+    } catch {
+      warn(`Could not parse package.json`);
+      warnings++;
+    }
+  } else {
+    info(`No package.json found \u2014 skipping version check`);
+  }
+  if (existsSync("roycss.css")) {
+    try {
+      const css = readFileSync("roycss.css", "utf-8");
+      const hexCount = (css.match(/#[0-9a-fA-F]{3,8}\b/g) || []).length;
+      const rgbaCount = (css.match(/\brgba?\(/g) || []).length;
+      if (hexCount + rgbaCount > 0) {
+        warn(`roycss.css contains ${hexCount} hex + ${rgbaCount} rgba() color literals`);
+        log(`  ${c.dim}RoyCSS v2 uses OKLCH. Migrate:${c.reset} ${c.cyan}bun run scripts/migrate-colors.ts${c.reset}`);
+        warnings++;
+      } else {
+        success(`roycss.css is OKLCH-compliant`);
+      }
+    } catch {}
+  }
+  const srcFiles = scanSourceFiles(["src", "app", "pages", "components"]);
+  let unprefixedFound = 0;
+  const knownEffectIds = new Set(effects.map((e) => e.id));
+  for (const file of srcFiles) {
+    try {
+      const content = readFileSync(file, "utf-8");
+      const classMatches = content.match(/class(?:Name)?=["'`{]([^"'`}]+)/g) || [];
+      for (const match of classMatches) {
+        const tokens = match.replace(/class(?:Name)?=["'`{]/, "").split(/\s+/);
+        for (const tok of tokens) {
+          if (knownEffectIds.has(tok) && !content.includes(`roycss-${tok}`)) {
+            unprefixedFound++;
+          }
+        }
+      }
+    } catch {}
+  }
+  if (unprefixedFound > 0) {
+    warn(`Found ${unprefixedFound} possible unprefixed RoyCSS class${unprefixedFound === 1 ? "" : "es"} in source files`);
+    log(`  ${c.dim}All RoyCSS classes should be prefixed with ${c.reset}${c.cyan}roycss-${c.reset}${c.dim} in v2${c.reset}`);
+    warnings++;
+  } else {
+    success(`No unprefixed RoyCSS classes detected`);
+  }
+  let hasReducedMotion = false;
+  const userCssFiles = ["roycss.css", "src/app/globals.css", "src/index.css", "src/styles.css", "styles.css"];
+  for (const cssFile of userCssFiles) {
+    if (!existsSync(cssFile))
+      continue;
+    try {
+      const content = readFileSync(cssFile, "utf-8");
+      if (content.includes("prefers-reduced-motion")) {
+        hasReducedMotion = true;
+        break;
+      }
+    } catch {}
+  }
+  if (hasReducedMotion) {
+    success(`prefers-reduced-motion media query found`);
+  } else {
+    warn(`No prefers-reduced-motion media query found \u2014 RoyCSS v2 recommends adding one`);
+    log(`  ${c.dim}Add to your CSS:${c.reset}`);
+    log(`  ${c.cyan}@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }${c.reset}`);
+    warnings++;
+  }
+  log(`
+${c.bold}Summary:${c.reset}`);
+  if (issues === 0 && warnings === 0) {
+    success(`Project is up to date with RoyCSS v${VERSION}.`);
+  } else {
+    if (issues > 0)
+      warn(`${issues} issue${issues === 1 ? "" : "s"} to address.`);
+    if (warnings > 0)
+      info(`${warnings} warning${warnings === 1 ? "" : "s"} (non-blocking).`);
+  }
+  log(`
+${c.dim}v1 scope: report-only. Auto-migration will arrive in v2.1.${c.reset}`);
+  log(`${c.dim}Migration scripts: ${c.reset}${c.cyan}scripts/migrate-colors.ts${c.reset}${c.dim}, ${c.reset}${c.cyan}scripts/migrate-logical.ts${c.reset}`);
+}
+function cmdStats(flags) {
+  log(`${c.bold}${c.cyan}RoyCSS Stats${c.reset} ${c.gray}v${VERSION}${c.reset}`);
+  log(`${c.dim}Analyzing project usage...${c.reset}
+`);
+  const srcFiles = scanSourceFiles(["src", "app", "pages", "components", "public"]);
+  const usageMap = new Map;
+  const fileUsage = new Map;
+  for (const file of srcFiles) {
+    try {
+      const content = readFileSync(file, "utf-8");
+      const matches = content.match(/roycss-([a-z0-9-]+)/g);
+      if (matches) {
+        const fileEffects = new Set;
+        for (const m of matches) {
+          usageMap.set(m, (usageMap.get(m) || 0) + 1);
+          fileEffects.add(m);
+        }
+        fileUsage.set(file, fileEffects);
+      }
+    } catch {}
+  }
+  const totalUsages = [...usageMap.values()].reduce((a, b) => a + b, 0);
+  const uniqueUsed = usageMap.size;
+  const categoryUsage = new Map;
+  for (const [cls, count] of usageMap.entries()) {
+    const id = cls.replace("roycss-", "");
+    const effect = effects.find((e) => e.id === id);
+    if (effect) {
+      categoryUsage.set(effect.category, (categoryUsage.get(effect.category) || 0) + count);
+    }
+  }
+  const top10 = [...usageMap.entries()].sort((a, b) => b[1] - a[1]).slice(0, 10);
+  const usedIds = new Set([...usageMap.keys()].map((k) => k.replace("roycss-", "")));
+  const unusedEffects = effects.filter((e) => !usedIds.has(e.id));
+  if (flags.json) {
+    console.log(JSON.stringify({
+      totalUsages,
+      uniqueEffectsUsed: uniqueUsed,
+      totalEffects: effects.length,
+      sourceFilesScanned: srcFiles.length,
+      topEffects: top10.map(([cls, count]) => ({ id: cls.replace("roycss-", ""), class: cls, count })),
+      categoryBreakdown: categoryOrder.filter((cat) => categoryUsage.has(cat)).map((cat) => ({ category: cat, label: categoryMeta[cat].label, count: categoryUsage.get(cat) })),
+      unusedCount: unusedEffects.length,
+      unusedSample: unusedEffects.slice(0, 20).map((e) => e.id)
+    }, null, 2));
+    return;
+  }
+  log(`${c.bold}Total usages:${c.reset} ${totalUsages} across ${uniqueUsed} unique effect${uniqueUsed === 1 ? "" : "s"} in ${srcFiles.length} source file${srcFiles.length === 1 ? "" : "s"}`);
+  log(`${c.bold}Catalog coverage:${c.reset} ${uniqueUsed}/${effects.length} effects (${(uniqueUsed / effects.length * 100).toFixed(1)}%)`);
+  if (top10.length > 0) {
+    log(`
+${c.bold}Top ${top10.length} effect${top10.length === 1 ? "" : "s"}:${c.reset}`);
+    top10.forEach(([cls, count], i) => {
+      const id = cls.replace("roycss-", "");
+      const effect = effects.find((e) => e.id === id);
+      const name = effect ? effect.name : "(unknown)";
+      log(`  ${c.dim}${(i + 1).toString().padStart(2)}. ${c.reset}${c.cyan}${cls}${c.reset} ${c.gray}\xD7${count}${c.reset} ${c.dim}\u2014 ${name}${c.reset}`);
+    });
+  } else {
+    log(`
+${c.yellow}No RoyCSS class usages found in source files.${c.reset}`);
+    log(`  ${c.dim}Start using effects: ${c.reset}${c.cyan}<div class="roycss-pulse-glow">Hello</div>${c.reset}`);
+    return;
+  }
+  if (categoryUsage.size > 0) {
+    log(`
+${c.bold}Category breakdown:${c.reset}`);
+    for (const cat of categoryOrder) {
+      const count = categoryUsage.get(cat);
+      if (count) {
+        const total = effects.filter((e) => e.category === cat).length;
+        log(`  ${c.magenta}${categoryMeta[cat].label.padEnd(22)}${c.reset} ${c.gray}${count} usage${count === 1 ? "" : "s"}${c.reset} ${c.dim}(${count > 0 ? Math.round(count / total * 100) : 0}% of category)${c.reset}`);
+      }
+    }
+  }
+  if (unusedEffects.length > 0) {
+    log(`
+${c.bold}Unused effects:${c.reset} ${c.yellow}${unusedEffects.length}${c.reset} ${c.dim}of ${effects.length} catalog effects are not used in this project${c.reset}`);
+    if (unusedEffects.length <= 5) {
+      unusedEffects.forEach((e) => {
+        log(`  ${c.cyan}roycss-${e.id}${c.reset} ${c.gray}\u2014${c.reset} ${e.name}`);
+      });
+    } else {
+      log(`  ${c.dim}(use ${c.reset}${c.cyan}roycss stats --json${c.reset}${c.dim} for full list)${c.reset}`);
+      unusedEffects.slice(0, 3).forEach((e) => {
+        log(`  ${c.cyan}roycss-${e.id}${c.reset} ${c.gray}\u2014${c.reset} ${e.name}`);
+      });
+      log(`  ${c.dim}...and ${unusedEffects.length - 3} more${c.reset}`);
+    }
+    log(`
+  ${c.dim}Tip: Use ${c.reset}${c.cyan}roycss export <ids...>${c.reset}${c.dim} to ship only the effects you use.${c.reset}`);
+  }
+  log(`
+${c.dim}Run ${c.reset}${c.cyan}roycss stats --json${c.reset}${c.dim} for machine-readable output.${c.reset}`);
+}
+async function cmdBrowse(categoryArg) {
+  let items;
+  let title;
+  if (categoryArg) {
+    const cat = resolveCategory(categoryArg);
+    if (!cat) {
+      error(`Category "${categoryArg}" not found.`);
+      log(`  Available: ${categoryOrder.join(", ")}`);
+      process.exit(1);
+    }
+    items = effects.filter((e) => e.category === cat);
+    title = `${categoryMeta[cat].label} (${items.length})`;
+  } else {
+    items = effects;
+    title = `All RoyCSS Effects (${items.length})`;
+  }
+  if (process.stdin.isTTY !== true) {
+    log(`${c.bold}${c.cyan}RoyCSS Browser${c.reset} ${c.gray}v${VERSION}${c.reset}`);
+    log(`${c.dim}Non-interactive mode (no TTY detected). Listing ${title.toLowerCase()}:${c.reset}
+`);
+    const PAGE = 30;
+    items.slice(0, PAGE).forEach((e, i) => {
+      log(`  ${c.dim}${(i + 1).toString().padStart(3)}. ${c.reset}${c.cyan}roycss-${e.id}${c.reset} ${c.gray}\u2014${c.reset} ${e.name}`);
+    });
+    if (items.length > PAGE) {
+      log(`
+  ${c.dim}...and ${items.length - PAGE} more. Run in a TTY for full interactive mode.${c.reset}`);
+    }
+    log(`
+${c.dim}Interactive: ${c.reset}${c.cyan}roycss browse ${categoryArg || "[category]"}${c.reset}`);
+    log(`${c.dim}View one:    ${c.reset}${c.cyan}roycss info <effect-id>${c.reset}`);
+    return;
+  }
+  let selected = 0;
+  let scrollOffset = 0;
+  let mode = "list";
+  const PAGE_SIZE = Math.min(15, Math.max(5, process.stdout.rows - 8));
+  readline.emitKeypressEvents(process.stdin);
+  process.stdin.setRawMode(true);
+  process.stdin.resume();
+  const cleanup = () => {
+    try {
+      process.stdin.setRawMode(false);
+      process.stdin.pause();
+    } catch {}
+  };
+  process.on("SIGINT", () => {
+    cleanup();
+    console.clear();
+    process.exit(0);
+  });
+  const render = () => {
+    console.clear();
+    if (mode === "list") {
+      log(`${c.bold}${c.cyan}RoyCSS Browser${c.reset} ${c.gray}v${VERSION}${c.reset}`);
+      log(`${c.bold}${title}${c.reset} ${c.dim}\u2014 ${selected + 1}/${items.length}${c.reset}`);
+      log(`${c.dim}\u2191/\u2193 navigate \xB7 Enter view \xB7 c copy \xB7 q quit${c.reset}
+`);
+      const end = Math.min(scrollOffset + PAGE_SIZE, items.length);
+      for (let i = scrollOffset;i < end; i++) {
+        const e = items[i];
+        const isSelected = i === selected;
+        const marker = isSelected ? `${c.cyan}\u276F${c.reset}` : " ";
+        const name = isSelected ? `${c.bold}${c.cyan}roycss-${e.id}${c.reset} \u2014 ${e.name}` : `${c.gray}roycss-${e.id} \u2014 ${e.name}${c.reset}`;
+        log(` ${marker} ${name}`);
+      }
+      if (items.length > PAGE_SIZE) {
+        log(`
+${c.dim}Showing ${scrollOffset + 1}-${end} of ${items.length}${c.reset}`);
+      }
+    } else {
+      const e = items[selected];
+      log(`${c.bold}${c.cyan}${e.name}${c.reset} ${c.dim}(roycss-${e.id})${c.reset}`);
+      log(`
+${c.bold}Category:${c.reset} ${categoryMeta[e.category].label}`);
+      log(`${c.bold}Tags:${c.reset} ${e.tags.join(", ")}`);
+      log(`${c.bold}Preview Type:${c.reset} ${e.previewType}`);
+      if (e.childCount) {
+        log(`${c.bold}Child Elements:${c.reset} ${e.childCount} <span> elements required`);
+      }
+      log(`
+${c.bold}CSS:${c.reset}`);
+      log(`${c.gray}${e.cssCode}${c.reset}`);
+      log(`
+${c.dim}Enter/Esc: back to list \xB7 c: copy CSS \xB7 q: quit${c.reset}`);
+    }
+  };
+  render();
+  process.stdin.on("keypress", async (_str, key) => {
+    if (!key)
+      return;
+    if (key.name === "q" || key.ctrl && key.name === "c") {
+      cleanup();
+      console.clear();
+      process.exit(0);
+    }
+    if (mode === "list") {
+      if (key.name === "down" || key.name === "j") {
+        selected = Math.min(selected + 1, items.length - 1);
+        if (selected >= scrollOffset + PAGE_SIZE)
+          scrollOffset = selected - PAGE_SIZE + 1;
+        render();
+      } else if (key.name === "up" || key.name === "k") {
+        selected = Math.max(selected - 1, 0);
+        if (selected < scrollOffset)
+          scrollOffset = selected;
+        render();
+      } else if (key.name === "return" || key.name === "enter") {
+        mode = "detail";
+        render();
+      } else if (key.name === "c") {
+        const e = items[selected];
+        const copied = await copyToClipboard(e.cssCode);
+        if (copied) {
+          log(`
+${c.green}\u2713${c.reset} Copied ${c.bold}roycss-${e.id}${c.reset} to clipboard`);
+          setTimeout(render, 800);
+        }
+      }
+    } else {
+      if (key.name === "return" || key.name === "enter" || key.name === "escape" || key.name === "backspace") {
+        mode = "list";
+        render();
+      } else if (key.name === "c") {
+        const e = items[selected];
+        const copied = await copyToClipboard(e.cssCode);
+        if (copied) {
+          log(`
+${c.green}\u2713${c.reset} Copied ${c.bold}roycss-${e.id}${c.reset} to clipboard`);
+          setTimeout(render, 800);
+        }
+      }
+    }
+  });
+  return new Promise(() => {});
+}
+function cmdExport(effectIds, flags) {
+  const toExport = [];
+  const seen = new Set;
+  const missing = [];
+  for (const id of effectIds) {
+    const e = effects.find((eff) => eff.id === id);
+    if (!e) {
+      missing.push(id);
+      continue;
+    }
+    if (!seen.has(e.id)) {
+      seen.add(e.id);
+      toExport.push(e);
+    }
+  }
+  if (missing.length > 0) {
+    warn(`Effect${missing.length === 1 ? "" : "s"} not found: ${missing.join(", ")}`);
+  }
+  if (flags.category) {
+    const cat = resolveCategory(flags.category);
+    if (!cat) {
+      error(`Category "${flags.category}" not found.`);
+      log(`  Available: ${categoryOrder.join(", ")}`);
+      process.exit(1);
+    }
+    const catEffects = effects.filter((e) => e.category === cat);
+    for (const e of catEffects) {
+      if (!seen.has(e.id)) {
+        seen.add(e.id);
+        toExport.push(e);
+      }
+    }
+    log(`${c.dim}Including all ${catEffects.length} effects in ${c.reset}${c.magenta}${categoryMeta[cat].label}${c.reset}`);
+  }
+  if (flags.tag) {
+    const tag = flags.tag.toLowerCase();
+    const tagEffects = effects.filter((e) => e.tags.some((t) => t.toLowerCase() === tag));
+    for (const e of tagEffects) {
+      if (!seen.has(e.id)) {
+        seen.add(e.id);
+        toExport.push(e);
+      }
+    }
+    log(`${c.dim}Including all ${tagEffects.length} effects tagged "${tag}"${c.reset}`);
+  }
+  if (toExport.length === 0) {
+    error(`No effects to export. Provide effect IDs, --category <cat>, or --tag <tag>.`);
+    log(`  ${c.dim}Example:${c.reset} ${c.cyan}roycss export pulse-glow bounce-in --out bundle.css${c.reset}`);
+    process.exit(1);
+  }
+  toExport.sort((a, b) => {
+    if (a.category !== b.category)
+      return a.category.localeCompare(b.category);
+    return a.id.localeCompare(b.id);
+  });
+  const outFile = flags.out || "roycss-custom.css";
+  const categories = [...new Set(toExport.map((e) => e.category))].sort();
+  const date = new Date().toISOString();
+  const header = `/* RoyCSS Custom Export
+ * Effects: ${toExport.length}
+ * Categories: ${categories.map((c2) => categoryMeta[c2].label).join(", ")}
+ * Generated by: roycss export (CLI v${VERSION})
+ * Date: ${date}
+ * Learn more: https://github.com/Roy-Wanyoike/roycss
+ */
+
+`;
+  const cssBody = toExport.map((e) => e.cssCode).join(`
+
+`);
+  writeFileSync(outFile, header + cssBody + `
+`);
+  const sizeKB = (statSync(outFile).size / 1024).toFixed(1);
+  success(`Exported ${c.bold}${toExport.length}${c.reset} effect${toExport.length === 1 ? "" : "s"} to ${c.bold}${outFile}${c.reset} (${sizeKB}KB)`);
+  log(`
+${c.dim}Effects:${c.reset}`);
+  for (const e of toExport) {
+    log(`  ${c.cyan}roycss-${e.id}${c.reset} ${c.gray}\u2014${c.reset} ${e.name} ${c.dim}(${categoryMeta[e.category].label})${c.reset}`);
+  }
+  log(`
+${c.dim}Import in your project:${c.reset}`);
+  log(`  ${c.cyan}@import "${outFile}";${c.reset}`);
+  log(`${c.dim}Or in HTML:${c.reset}`);
+  log(`  ${c.cyan}<link rel="stylesheet" href="${outFile}" />${c.reset}`);
+}
+var PLUGINS_DIR = ".roycss/plugins";
+var SAMPLE_PLUGIN_SOURCE = `/* Sample RoyCSS Plugin
+ *
+ * Plugins live in .roycss/plugins/ and export a register() function.
+ * The CLI never auto-executes plugins \u2014 they run only when explicitly invoked.
+ *
+ * Plugin contract:
+ *   module.exports = {
+ *     name: string,
+ *     version: string,
+ *     description: string,
+ *     register(api) {
+ *       api.effects           // CSSEffect[] \u2014 read-only catalog
+ *       api.categoryMeta      // category metadata map
+ *       api.log(msg)          // themed log
+ *       api.success(msg)      // themed success
+ *       api.warn(msg)         // themed warn
+ *       api.error(msg)        // themed error
+ *       api.registerCommand(name, handler)  // register a sub-command
+ *     }
+ *   }
+ *
+ * Sub-commands are invoked as: roycss <plugin-name>:<command>
+ *
+ * Safety:
+ *   - Plugins do NOT auto-load. They run only on explicit invocation.
+ *   - Plugins are project-scoped (.roycss/plugins/ in cwd).
+ *   - Disabled plugins are renamed .disabled.js
+ *   - The sample plugin is a no-op until you customize it.
+ */
+
+module.exports = {
+  name: "sample",
+  version: "1.0.0",
+  description: "Sample RoyCSS plugin \u2014 replace this with your own logic.",
+  register(api) {
+    api.registerCommand("hello", (args) => {
+      api.success("Hello from sample plugin!");
+      api.log("Args received: " + JSON.stringify(args));
+      api.log("RoyCSS catalog has " + api.effects.length + " effects.");
+    });
+
+    api.registerCommand("count-by-category", () => {
+      const counts = {};
+      for (const e of api.effects) {
+        counts[e.category] = (counts[e.category] || 0) + 1;
+      }
+      api.log(JSON.stringify(counts, null, 2));
+    });
+  },
+};
+`;
+function cmdPlugin(positional, flags) {
+  const action = positional[0];
+  const nameFromFlag = flags.name;
+  log(`${c.bold}${c.cyan}RoyCSS Plugins${c.reset} ${c.gray}v${VERSION}${c.reset}`);
+  switch (action) {
+    case undefined:
+    case "list": {
+      log(`${c.dim}Scanning ${PLUGINS_DIR}/...${c.reset}
+`);
+      if (!existsSync(PLUGINS_DIR)) {
+        info(`No plugins directory found at ${c.cyan}${PLUGINS_DIR}${c.reset}`);
+        log(`  ${c.dim}Scaffold a sample plugin:${c.reset} ${c.cyan}roycss plugin init${c.reset}`);
+        return;
+      }
+      let entries = [];
+      try {
+        entries = readdirSync(PLUGINS_DIR).filter((f) => f.endsWith(".js") || f.endsWith(".disabled.js"));
+      } catch {}
+      if (entries.length === 0) {
+        info(`No plugins found in ${c.cyan}${PLUGINS_DIR}${c.reset}`);
+        log(`  ${c.dim}Scaffold a sample plugin:${c.reset} ${c.cyan}roycss plugin init${c.reset}`);
+        return;
+      }
+      log(`${c.bold}Plugins:${c.reset}
+`);
+      for (const f of entries.sort()) {
+        const isDisabled = f.endsWith(".disabled.js");
+        const name = f.replace(/\.disabled\.js$|\.js$/, "");
+        const status = isDisabled ? `${c.yellow}[disabled]${c.reset}` : `${c.green}[enabled]${c.reset}`;
+        log(`  ${status} ${c.cyan}${name}${c.reset} ${c.gray}${f}${c.reset}`);
+      }
+      log(`
+${c.dim}Plugins are NOT auto-executed. They run only when explicitly invoked.${c.reset}`);
+      log(`${c.dim}Enable:${c.reset}  ${c.cyan}roycss plugin enable --name <plugin>${c.reset}`);
+      log(`${c.dim}Disable:${c.reset} ${c.cyan}roycss plugin disable --name <plugin>${c.reset}`);
+      log(`${c.dim}Docs:${c.reset}    ${c.cyan}docs/adr/cli-platform-v2/DESIGN.md${c.reset}`);
+      break;
+    }
+    case "enable": {
+      const name = nameFromFlag || positional[1];
+      if (!name) {
+        error(`Usage: roycss plugin enable --name <plugin-name>`);
+        process.exit(1);
+      }
+      const disabledPath = join(PLUGINS_DIR, `${name}.disabled.js`);
+      const enabledPath = join(PLUGINS_DIR, `${name}.js`);
+      if (!existsSync(disabledPath)) {
+        error(`No disabled plugin found at ${c.cyan}${disabledPath}${c.reset}`);
+        if (existsSync(enabledPath)) {
+          info(`Plugin "${name}" is already enabled.`);
+        }
+        process.exit(1);
+      }
+      try {
+        renameSync(disabledPath, enabledPath);
+        success(`Enabled plugin: ${c.bold}${name}${c.reset}`);
+        log(`  ${c.dim}Renamed: ${name}.disabled.js \u2192 ${name}.js${c.reset}`);
+      } catch (e) {
+        error(`Failed to enable plugin: ${e instanceof Error ? e.message : String(e)}`);
+        process.exit(1);
+      }
+      break;
+    }
+    case "disable": {
+      const name = nameFromFlag || positional[1];
+      if (!name) {
+        error(`Usage: roycss plugin disable --name <plugin-name>`);
+        process.exit(1);
+      }
+      const enabledPath = join(PLUGINS_DIR, `${name}.js`);
+      const disabledPath = join(PLUGINS_DIR, `${name}.disabled.js`);
+      if (!existsSync(enabledPath)) {
+        error(`No enabled plugin found at ${c.cyan}${enabledPath}${c.reset}`);
+        if (existsSync(disabledPath)) {
+          info(`Plugin "${name}" is already disabled.`);
+        }
+        process.exit(1);
+      }
+      try {
+        renameSync(enabledPath, disabledPath);
+        success(`Disabled plugin: ${c.bold}${name}${c.reset}`);
+        log(`  ${c.dim}Renamed: ${name}.js \u2192 ${name}.disabled.js${c.reset}`);
+      } catch (e) {
+        error(`Failed to disable plugin: ${e instanceof Error ? e.message : String(e)}`);
+        process.exit(1);
+      }
+      break;
+    }
+    case "init": {
+      mkdirSync(PLUGINS_DIR, { recursive: true });
+      const samplePath = join(PLUGINS_DIR, "sample.js");
+      if (existsSync(samplePath) && !flags.force) {
+        warn(`${c.bold}sample.js${c.reset} already exists at ${c.cyan}${samplePath}${c.reset}`);
+        log(`  ${c.dim}Use ${c.reset}${c.cyan}--force${c.reset}${c.dim} to overwrite.${c.reset}`);
+        return;
+      }
+      writeFileSync(samplePath, SAMPLE_PLUGIN_SOURCE);
+      success(`Created sample plugin at ${c.bold}${samplePath}${c.reset}`);
+      log(`
+${c.dim}Edit the file to add your custom logic.${c.reset}`);
+      log(`${c.dim}Plugins are NOT auto-executed \u2014 they run only when explicitly invoked.${c.reset}`);
+      log(`
+${c.bold}Next steps:${c.reset}`);
+      log(`  ${c.gray}1. Edit:${c.reset}     ${c.cyan}${samplePath}${c.reset}`);
+      log(`  ${c.gray}2. List:${c.reset}     ${c.cyan}roycss plugin list${c.reset}`);
+      log(`  ${c.gray}3. Disable:${c.reset}  ${c.cyan}roycss plugin disable --name sample${c.reset}`);
+      log(`
+${c.dim}Plugin contract & safety: ${c.reset}${c.cyan}docs/adr/cli-platform-v2/THREAT-MODEL.md${c.reset}`);
+      break;
+    }
+    default:
+      error(`Unknown plugin action: ${c.bold}${action}${c.reset}`);
+      log(`  ${c.dim}Valid actions:${c.reset} ${c.cyan}list${c.reset}, ${c.cyan}enable${c.reset}, ${c.cyan}disable${c.reset}, ${c.cyan}init${c.reset}`);
+      process.exit(1);
+  }
 }
 function cmdHelp() {
   log(`${c.bold}${c.cyan}RoyCSS CLI${c.reset} ${c.gray}v${VERSION}${c.reset}`);
@@ -49727,15 +50910,26 @@ function cmdHelp() {
   log(`  ${c.cyan}categories${c.reset}                List all effect categories`);
   log(`  ${c.cyan}info${c.reset} <effect-id>          Show details about a specific effect`);
   log(`  ${c.cyan}doctor${c.reset}                    Check project health and get recommendations`);
+  log(`  ${c.cyan}create${c.reset} <name>             Scaffold a new project with RoyCSS pre-installed`);
+  log(`  ${c.cyan}upgrade${c.reset}                   Scan for outdated RoyCSS versions and deprecated patterns`);
+  log(`  ${c.cyan}stats${c.reset}                     Report project usage analytics for RoyCSS effects`);
+  log(`  ${c.cyan}browse${c.reset} [category]         Interactive TUI browser for effects`);
+  log(`  ${c.cyan}export${c.reset} <id> [id...]       Export a subset of effects to a CSS file`);
+  log(`  ${c.cyan}plugin${c.reset} <action>           Manage plugins (list/enable/disable/init)`);
   log(`  ${c.cyan}version${c.reset}                   Show CLI version`);
   log(`  ${c.cyan}help${c.reset}                      Show this help message`);
   log(`
 ${c.bold}Flags:${c.reset}`);
   log(`  ${c.cyan}--copy${c.reset}                    Copy CSS to clipboard (use with ${c.dim}add${c.reset})`);
-  log(`  ${c.cyan}--tag${c.reset} <tag>               Filter by tag (use with ${c.dim}search/list${c.reset})`);
+  log(`  ${c.cyan}--tag${c.reset} <tag>               Filter by tag (use with ${c.dim}search/list/export${c.reset})`);
   log(`  ${c.cyan}--framework${c.reset} <name>        Show framework usage (use with ${c.dim}info/init${c.reset})`);
-  log(`  ${c.cyan}--json${c.reset}                    Output as JSON (use with ${c.dim}search/list${c.reset})`);
-  log(`  ${c.cyan}--force${c.reset}                   Overwrite existing files (use with ${c.dim}init${c.reset})`);
+  log(`  ${c.cyan}--json${c.reset}                    Output as JSON (use with ${c.dim}search/list/stats${c.reset})`);
+  log(`  ${c.cyan}--force${c.reset}                   Overwrite existing files (use with ${c.dim}init/create/plugin init${c.reset})`);
+  log(`  ${c.cyan}--template${c.reset} <t>            Project template: react/vue/svelte/vanilla/nextjs/html (use with ${c.dim}create${c.reset})`);
+  log(`  ${c.cyan}--effect${c.reset} <id>             Initial effect to include (use with ${c.dim}create${c.reset})`);
+  log(`  ${c.cyan}--category${c.reset} <cat>          Export all effects in category (use with ${c.dim}export${c.reset})`);
+  log(`  ${c.cyan}--out${c.reset} <file>              Output file path (use with ${c.dim}export${c.reset})`);
+  log(`  ${c.cyan}--name${c.reset} <plugin-name>      Plugin name (use with ${c.dim}plugin enable/disable${c.reset})`);
   log(`
 ${c.bold}Examples:${c.reset}`);
   log(`  ${c.gray}roycss init${c.reset}`);
@@ -49748,59 +50942,104 @@ ${c.bold}Examples:${c.reset}`);
   log(`  ${c.gray}roycss info btn-shine-sweep --framework react${c.reset}`);
   log(`  ${c.gray}roycss doctor${c.reset}`);
   log(`  ${c.gray}roycss list --json${c.reset}`);
+  log(`  ${c.gray}roycss create my-app --template react${c.reset}`);
+  log(`  ${c.gray}roycss create my-app --template nextjs --effect bounce-in${c.reset}`);
+  log(`  ${c.gray}roycss upgrade${c.reset}`);
+  log(`  ${c.gray}roycss stats${c.reset}`);
+  log(`  ${c.gray}roycss stats --json${c.reset}`);
+  log(`  ${c.gray}roycss browse animations${c.reset}`);
+  log(`  ${c.gray}roycss export pulse-glow bounce-in --out bundle.css${c.reset}`);
+  log(`  ${c.gray}roycss export --category animations --out animations.css${c.reset}`);
+  log(`  ${c.gray}roycss export --tag attention --out attention.css${c.reset}`);
+  log(`  ${c.gray}roycss plugin list${c.reset}`);
+  log(`  ${c.gray}roycss plugin init${c.reset}`);
+  log(`  ${c.gray}roycss plugin enable --name my-plugin${c.reset}`);
   log(`
 ${c.dim}Learn more: https://github.com/Roy-Wanyoike/roycss${c.reset}`);
+  log(`${c.dim}Docs: docs/adr/cli-platform-v2/${c.reset}`);
 }
 var [command, ...rawArgs] = process.argv.slice(2);
 var { positional, flags } = parseFlags(rawArgs);
-switch (command) {
-  case "init":
-    cmdInit(flags);
-    break;
-  case "add":
-    if (!positional[0]) {
-      error("Usage: roycss add <effect-id> [--copy]");
+async function main() {
+  switch (command) {
+    case "init":
+      cmdInit(flags);
+      break;
+    case "add":
+      if (!positional[0]) {
+        error("Usage: roycss add <effect-id> [--copy]");
+        process.exit(1);
+      }
+      await cmdAdd(positional[0], flags);
+      break;
+    case "search":
+      if (!positional[0]) {
+        error("Usage: roycss search <query> [--tag <tag>] [--json]");
+        process.exit(1);
+      }
+      cmdSearch(positional.join(" "), flags);
+      break;
+    case "list":
+      cmdList(positional[0], flags);
+      break;
+    case "categories":
+      cmdCategories();
+      break;
+    case "info":
+      if (!positional[0]) {
+        error("Usage: roycss info <effect-id> [--framework <name>]");
+        process.exit(1);
+      }
+      cmdInfo(positional[0], flags);
+      break;
+    case "doctor":
+      cmdDoctor();
+      break;
+    case "create":
+      if (!positional[0]) {
+        error("Usage: roycss create <project-name> [--template <t>] [--effect <id>] [--force]");
+        process.exit(1);
+      }
+      cmdCreate(positional[0], flags);
+      break;
+    case "upgrade":
+      cmdUpgrade();
+      break;
+    case "stats":
+      cmdStats(flags);
+      break;
+    case "browse":
+      await cmdBrowse(positional[0]);
+      break;
+    case "export":
+      if (positional.length === 0 && !flags.category && !flags.tag) {
+        error("Usage: roycss export <effect-id> [effect-id...] [--category <cat>] [--tag <tag>] [--out <file>]");
+        process.exit(1);
+      }
+      cmdExport(positional, flags);
+      break;
+    case "plugin":
+      cmdPlugin(positional, flags);
+      break;
+    case "version":
+    case "--version":
+    case "-v":
+      cmdVersion();
+      break;
+    case "help":
+    case "--help":
+    case "-h":
+    case undefined:
+      cmdHelp();
+      break;
+    default:
+      error(`Unknown command: ${command}`);
+      log("");
+      cmdHelp();
       process.exit(1);
-    }
-    cmdAdd(positional[0], flags);
-    break;
-  case "search":
-    if (!positional[0]) {
-      error("Usage: roycss search <query> [--tag <tag>] [--json]");
-      process.exit(1);
-    }
-    cmdSearch(positional.join(" "), flags);
-    break;
-  case "list":
-    cmdList(positional[0], flags);
-    break;
-  case "categories":
-    cmdCategories();
-    break;
-  case "info":
-    if (!positional[0]) {
-      error("Usage: roycss info <effect-id> [--framework <name>]");
-      process.exit(1);
-    }
-    cmdInfo(positional[0], flags);
-    break;
-  case "doctor":
-    cmdDoctor();
-    break;
-  case "version":
-  case "--version":
-  case "-v":
-    cmdVersion();
-    break;
-  case "help":
-  case "--help":
-  case "-h":
-  case undefined:
-    cmdHelp();
-    break;
-  default:
-    error(`Unknown command: ${command}`);
-    log("");
-    cmdHelp();
-    process.exit(1);
+  }
 }
+main().catch((e) => {
+  error(`Unexpected error: ${e instanceof Error ? e.message : String(e)}`);
+  process.exit(1);
+});

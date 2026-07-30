@@ -25,7 +25,7 @@ export const effectsBatch22: CSSEffect[] = [
 .roycss-ferrum-bg-aurora::before {
   content: '';
   position: absolute;
-  top: -50%; left: -50%;
+  top: -50%; inset-inline-start: -50%;
   width: 200%; height: 200%;
   background:
     radial-gradient(ellipse at center, color-mix(in oklch, oklch(0.627 0.233 303.9) 30%, transparent) 0%, transparent 50%),
@@ -245,13 +245,13 @@ export const effectsBatch22: CSSEffect[] = [
 .roycss-ferrum-bg-smoke::before {
   width: 200px; height: 200px;
   background: radial-gradient(circle, color-mix(in oklch, oklch(0.627 0.233 303.9) 50%, transparent) 0%, transparent 70%);
-  top: -50px; left: -50px;
+  top: -50px; inset-inline-start: -50px;
   animation: roy-ferrum-smoke-drift1 10s ease-in-out infinite;
 }
 .roycss-ferrum-bg-smoke::after {
   width: 250px; height: 250px;
   background: radial-gradient(circle, color-mix(in oklch, oklch(0.652 0.241 354.31) 40%, transparent) 0%, transparent 70%);
-  bottom: -70px; right: -70px;
+  bottom: -70px; inset-inline-end: -70px;
   animation: roy-ferrum-smoke-drift2 12s ease-in-out infinite;
 }
 
@@ -356,13 +356,13 @@ export const effectsBatch22: CSSEffect[] = [
 .roycss-ferrum-bg-lava::before {
   width: 80px; height: 120px;
   background: radial-gradient(ellipse, color-mix(in oklch, oklch(0.652 0.241 354.31) 60%, transparent) 0%, color-mix(in oklch, oklch(0.627 0.233 303.9) 20%, transparent) 60%, transparent 100%);
-  left: 30%; bottom: -20%;
+  inset-inline-start: 30%; bottom: -20%;
   animation: roy-ferrum-lava-rise1 5s ease-in-out infinite;
 }
 .roycss-ferrum-bg-lava::after {
   width: 60px; height: 100px;
   background: radial-gradient(ellipse, color-mix(in oklch, oklch(0.705 0.213 51.16) 50%, transparent) 0%, color-mix(in oklch, oklch(0.652 0.241 354.31) 20%, transparent) 60%, transparent 100%);
-  left: 60%; bottom: -20%;
+  inset-inline-start: 60%; bottom: -20%;
   animation: roy-ferrum-lava-rise2 6s ease-in-out infinite;
   animation-delay: -2s;
 }
@@ -777,13 +777,13 @@ export const effectsBatch22: CSSEffect[] = [
   transition: transform 0.5s ease;
 }
 .roycss-ferrum-img-shutter::before {
-  left: 0;
+  inset-inline-start: 0;
   transform: translateX(-100%);
 }
 .roycss-ferrum-img-shutter::after {
   content: '';
-  right: 0;
-  left: auto;
+  inset-inline-end: 0;
+  inset-inline-start: auto;
   transform: translateX(100%);
 }
 .roycss-ferrum-img-shutter:hover::before {
@@ -1146,8 +1146,8 @@ export const effectsBatch22: CSSEffect[] = [
   border-bottom-color: oklch(0.627 0.233 303.9);
 }
 .roycss-ferrum-loader-ring span:nth-child(2) {
-  border-left-color: oklch(0.652 0.241 354.31);
-  border-right-color: oklch(0.652 0.241 354.31);
+  border-inline-start-color: oklch(0.652 0.241 354.31);
+  border-inline-end-color: oklch(0.652 0.241 354.31);
   animation-direction: reverse;
 }
 
@@ -1213,8 +1213,8 @@ export const effectsBatch22: CSSEffect[] = [
   transform: translate(-50%, -50%);
 }
 .roycss-ferrum-loader-hourglass span:nth-child(1) {
-  border-left: 16px solid transparent;
-  border-right: 16px solid transparent;
+  border-inline-start: 16px solid transparent;
+  border-inline-end: 16px solid transparent;
   border-top: 20px solid oklch(0.627 0.233 303.9);
   transform: translate(-50%, -50%) translateY(4px);
 }
@@ -1354,8 +1354,8 @@ export const effectsBatch22: CSSEffect[] = [
 }
 .roycss-ferrum-loader-pencil span:nth-child(2) {
   width: 0; height: 0;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
+  border-inline-start: 4px solid transparent;
+  border-inline-end: 4px solid transparent;
   border-top: 10px solid oklch(0.627 0.233 303.9);
   bottom: -2px;
 }
@@ -1827,8 +1827,8 @@ background-size: 300% 300%;
 animation: royPrismRefraction 4s ease-in-out infinite;
 box-shadow: 0 0 30px color-mix(in oklch, oklch(1 0 0) 15%, transparent);
 
-border-right: 3px solid currentColor;
-padding-right: 4px;
+border-inline-end: 3px solid currentColor;
+padding-inline-end: 4px;
 animation: royTypingCursor 1s step-end infinite;
 
 .btn-shine {
@@ -2082,8 +2082,8 @@ animation: royTypingCursor 1s step-end infinite;
     left: 0;
     right: 0;
     height: 100%;
-    border-left: 2px solid oklch(0.541 0.247 293.01);
-    border-right: 2px solid oklch(0.541 0.247 293.01);
+    border-inline-start: 2px solid oklch(0.541 0.247 293.01);
+    border-inline-end: 2px solid oklch(0.541 0.247 293.01);
     transform: scaleY(0);
     transition: transform 0.4s ease 0.15s, border-color 0.3s ease 0.15s;
 }
@@ -2161,14 +2161,14 @@ animation: royTypingCursor 1s step-end infinite;
     color: oklch(1 0 0);
     background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
     cursor: pointer;
-    padding-right: 48px;
+    padding-inline-end: 48px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .btn-slide-icon::after {
     content: '\\2192';
     position: absolute;
     top: 50%;
-    right: 12px;
+    inset-inline-end: 12px;
     transform: translateY(-50%) translateX(24px);
     opacity: 0;
     font-size: 16px;

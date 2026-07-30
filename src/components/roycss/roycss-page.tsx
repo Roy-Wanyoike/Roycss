@@ -843,7 +843,7 @@ export default function RoyCSSPage() {
   const [docsOpen, setDocsOpen] = useState(false);
   const [compareOpen, setCompareOpen] = useState(false);
   const [compareEffects, setCompareEffects] = useState<CSSEffect[]>([]);
-  const [platformTool, setPlatformTool] = useState<"ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | null>(null);
+  const [platformTool, setPlatformTool] = useState<"ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | null>(null);
   const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -1539,7 +1539,7 @@ export default function RoyCSSPage() {
 
       {/* ─── Platform Ecosystem (18-product vision) ─────────── */}
       <PlatformEcosystem onLaunchTool={(toolId) => {
-        if (toolId === "ai-playground" || toolId === "css-doctor" || toolId === "utility-explorer" || toolId === "benchmark") {
+        if (toolId === "ai-playground" || toolId === "css-doctor" || toolId === "utility-explorer" || toolId === "benchmark" || toolId === "genome" || toolId === "ai-migration" || toolId === "challenges" || toolId === "design-diff") {
           setPlatformTool(toolId);
         }
       }} />

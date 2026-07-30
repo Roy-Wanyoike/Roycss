@@ -168,31 +168,45 @@
   }
 
   /* ─── Custom Scrollbar (uses tokens + color-mix) ─────────── */
+  /* Main page scrollbar — wider and more visible for usability */
   ::-webkit-scrollbar {
-    inline-size: 10px;
-    block-size: 10px;
+    inline-size: 14px;
+    block-size: 14px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--background);
+    background: color-mix(in oklch, var(--background) 80%, var(--foreground) 5%);
     border-radius: 10px;
   }
   ::-webkit-scrollbar-thumb {
-    background: color-mix(in oklch, var(--primary) 40%, var(--background));
+    background: color-mix(in oklch, var(--primary) 55%, var(--background));
     border-radius: 10px;
-    border: 2px solid var(--background);
-    transition: background 0.2s;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+    transition: background 0.15s;
 
     &:hover {
+      background: color-mix(in oklch, var(--primary) 75%, var(--background));
+      background-clip: padding-box;
+    }
+
+    &:active {
       background: var(--primary);
+      background-clip: padding-box;
     }
   }
   ::-webkit-scrollbar-corner {
     background: var(--background);
   }
 
+  /* Firefox — use 'auto' width (not thin) for better visibility */
   html {
-    scrollbar-width: thin;
-    scrollbar-color: color-mix(in oklch, var(--primary) 40%, var(--background)) var(--background);
+    scrollbar-width: auto;
+    scrollbar-color: color-mix(in oklch, var(--primary) 55%, var(--background)) color-mix(in oklch, var(--background) 80%, var(--foreground) 5%);
+  }
+
+  /* Reserve scrollbar space to prevent layout shift */
+  body {
+    scrollbar-gutter: stable;
   }
 }
 
@@ -260,25 +274,30 @@
   }
 
   /* ─── Scrollbar thin (CSS Nesting + color-mix) ───────────── */
+  /* For inner scrollable areas: code blocks, sheets, dialogs */
   .scrollbar-thin {
-    scrollbar-width: thin;
-    scrollbar-color: color-mix(in oklch, var(--primary) 30%, transparent) transparent;
+    scrollbar-width: auto;
+    scrollbar-color: color-mix(in oklch, var(--primary) 50%, transparent) transparent;
 
     &::-webkit-scrollbar {
-      inline-size: 6px;
-      block-size: 6px;
+      inline-size: 10px;
+      block-size: 10px;
     }
 
     &::-webkit-scrollbar-track {
-      background: transparent;
+      background: color-mix(in oklch, var(--foreground) 3%, transparent);
+      border-radius: 9999px;
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: color-mix(in oklch, var(--primary) 30%, transparent);
+      background-color: color-mix(in oklch, var(--primary) 50%, transparent);
       border-radius: 9999px;
+      border: 2px solid transparent;
+      background-clip: padding-box;
 
       &:hover {
-        background-color: color-mix(in oklch, var(--primary) 50%, transparent);
+        background-color: color-mix(in oklch, var(--primary) 70%, transparent);
+        background-clip: padding-box;
       }
     }
   }

@@ -45,12 +45,40 @@ export const metadata: Metadata = {
     "CSS library",
   ],
   authors: [{ name: "Royford Wanyoike Wamaitha" }],
+  creator: "Royford Wanyoike Wamaitha",
+  publisher: "Royford Wanyoike Wamaitha",
+  metadataBase: new URL("https://roycss.com"),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "RoyCSS — 1569+ Beautiful CSS Effects Library with Live Demos",
     description:
-      "1569+ production-ready CSS effects with live demos, color customization, and framework support.",
+      "1569+ production-ready CSS effects with live demos, color customization, and framework support for React, Vue, Angular, Svelte, and vanilla HTML.",
     type: "website",
+    url: "https://roycss.com",
+    siteName: "RoyCSS",
+    locale: "en_US",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "RoyCSS — 1569+ Beautiful CSS Effects Library",
+    description:
+      "1569+ production-ready CSS effects with live demos, copy-paste code, and framework support.",
+    creator: "@wanyoikeroy",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  category: "technology",
 };
 
 export default function RootLayout({

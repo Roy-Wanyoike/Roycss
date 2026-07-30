@@ -2,11 +2,11 @@
 
 # RoyCSS
 
-### 840+ production-ready CSS effects. Zero JavaScript runtime.
+### 1569+ production-ready CSS effects. Zero JavaScript runtime.
 
 A modern CSS effects library with live demonstrations, copyable code, color customization, framework adapters, and a platform ecosystem vision — built for developers who ship.
 
-[![Effects](https://img.shields.io/badge/effects-840+-10b981?style=flat-square)](#)
+[![Effects](https://img.shields.io/badge/effects-1569+-10b981?style=flat-square)](#)
 [![Categories](https://img.shields.io/badge/categories-20-06b6d4?style=flat-square)](#)
 [![Runtime](https://img.shields.io/badge/runtime-0KB_JS-8b5cf6?style=flat-square)](#)
 [![License](https://img.shields.io/badge/license-MIT-f59e0b?style=flat-square)](#)
@@ -341,7 +341,7 @@ npx roycss search "glass card"
 npx roycss add btn-shine
 npx roycss add text-gradient --copy
 
-# Browse all 840+ effects
+# Browse all 1569+ effects
 npx roycss list
 npx roycss list --category loaders --tag spinner
 ```
@@ -778,7 +778,7 @@ MIT — RoyCSS is free to use in personal and commercial projects.
 
 *Production-ready CSS effects with live demos. Zero JavaScript runtime.*
 
-[![Effects](https://img.shields.io/badge/effects-840+-10b981?style=flat-square)](#)
+[![Effects](https://img.shields.io/badge/effects-1569+-10b981?style=flat-square)](#)
 [![Categories](https://img.shields.io/badge/categories-20-06b6d4?style=flat-square)](#)
 [![Runtime](https://img.shields.io/badge/runtime-0KB_JS-8b5cf6?style=flat-square)](#)
 [![License](https://img.shields.io/badge/license-MIT-f59e0b?style=flat-square)](#)

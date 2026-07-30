@@ -1,7 +1,7 @@
 {
   "name": "roycss-cli",
   "version": "1.0.0",
-  "description": "CLI tool for RoyCSS — search, add, and manage 840+ production-ready CSS effects.",
+  "description": "CLI tool for RoyCSS — search, add, and manage 1569+ production-ready CSS effects.",
   "type": "module",
   "bin": {
     "roycss": "./index.js"

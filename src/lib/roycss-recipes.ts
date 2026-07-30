@@ -81,7 +81,7 @@ export const recipes: Recipe[] = [
 
   <div class="roycss-card-glassmorphism" style="max-width: 400px; margin: 2rem auto;">
     <h3>Get Started</h3>
-    <p>Install RoyCSS and use any of 840+ effects instantly.</p>
+    <p>Install RoyCSS and use any of 1569+ effects instantly.</p>
     <button class="roycss-pulse-glow" style="padding: 0.75rem 2rem; border-radius: 0.5rem; background: oklch(0.6 0.2 162); color: white; border: none; cursor: pointer;">
       npm install roycss
     </button>
@@ -101,7 +101,7 @@ export const recipes: Recipe[] = [
     Ship Delightful Interfaces
   </h1>
   <p style="color: oklch(0.7 0.02 250); margin: 1rem 0 2rem;">
-    840+ CSS effects. Copy, paste, ship.
+    1569+ CSS effects. Copy, paste, ship.
   </p>
   <button class="roycss-btn-shine-sweep" style="padding: 0.75rem 2rem; border-radius: 0.5rem; background: oklch(0.6 0.2 162); color: white; border: none; cursor: pointer; font-weight: 600;">
     Browse Effects

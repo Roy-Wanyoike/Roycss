@@ -12,7 +12,7 @@ When connected to your AI assistant, the RoyCSS MCP Server provides:
 
 | Tool | What it does |
 |---|---|
-| `search_effects` | Search 840+ effects by keyword, category, or tags |
+| `search_effects` | Search 1569+ effects by keyword, category, or tags |
 | `get_effect` | Get full CSS code for any effect by ID |
 | `list_categories` | List all 20 categories with effect counts |
 | `get_install` | Get install commands for npm/pnpm/yarn/bun/deno/CDN |
@@ -250,13 +250,13 @@ bun run build
                                             │
                                     ┌───────┴───────┐
                                     │ effects.json  │
-                                    │ 840 effects   │
+                                    │ 1569 effects   │
                                     │ 20 categories │
                                     └───────────────┘
 ```
 
 1. The AI assistant sends a tool call (e.g., `search_effects("neon")`)
-2. The MCP server queries the local `effects.json` (840 effects)
+2. The MCP server queries the local `effects.json` (1569 effects)
 3. The server returns structured JSON with matching effects
 4. The AI uses the result to generate accurate RoyCSS code
 

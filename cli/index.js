@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 // @bun
 
-// ../src/lib/effects-batch-1.ts
+// src/lib/effects-batch-1.ts
 var effectsBatch1 = [
   {
     id: "pulse-glow",
@@ -1865,7 +1865,7 @@ var effectsBatch1 = [
   }
 ];
 
-// ../src/lib/effects-batch-2.ts
+// src/lib/effects-batch-2.ts
 var effectsBatch2 = [
   {
     id: "bg-animated-gradient",
@@ -3955,7 +3955,7 @@ var effectsBatch2 = [
   }
 ];
 
-// ../src/lib/effects-batch-3.ts
+// src/lib/effects-batch-3.ts
 var effectsBatch3 = [
   {
     id: "btn-shine-sweep",
@@ -5854,7 +5854,7 @@ var effectsBatch3 = [
   }
 ];
 
-// ../src/lib/effects-batch-4.ts
+// src/lib/effects-batch-4.ts
 var effectsBatch4 = [
   {
     id: "filter-vintage",
@@ -7460,7 +7460,7 @@ var effectsBatch4 = [
   }
 ];
 
-// ../src/lib/effects-batch-5.ts
+// src/lib/effects-batch-5.ts
 var effectsBatch5 = [
   {
     id: "fade-in",
@@ -8719,7 +8719,7 @@ var effectsBatch5 = [
   }
 ];
 
-// ../src/lib/effects-batch-6.ts
+// src/lib/effects-batch-6.ts
 var effectsBatch6 = [
   {
     id: "scroll-reveal-up",
@@ -10087,7 +10087,7 @@ var effectsBatch6 = [
   }
 ];
 
-// ../src/lib/effects-batch-7.ts
+// src/lib/effects-batch-7.ts
 var effectsBatch7 = [
   {
     id: "glass-frosted",
@@ -11434,7 +11434,7 @@ var effectsBatch7 = [
   }
 ];
 
-// ../src/lib/effects-batch-8.ts
+// src/lib/effects-batch-8.ts
 var effectsBatch8 = [
   {
     id: "visual-border-beam",
@@ -12761,7 +12761,7 @@ var effectsBatch8 = [
   }
 ];
 
-// ../src/lib/effects-batch-9.ts
+// src/lib/effects-batch-9.ts
 var effectsBatch9 = [
   {
     id: "material-spring-up",
@@ -14019,7 +14019,7 @@ var effectsBatch9 = [
   }
 ];
 
-// ../src/lib/effects-batch-10.ts
+// src/lib/effects-batch-10.ts
 var effectsBatch10 = [
   {
     id: "anchor-tooltip",
@@ -15894,7 +15894,7 @@ var effectsBatch10 = [
   }
 ];
 
-// ../src/lib/effects-batch-11.ts
+// src/lib/effects-batch-11.ts
 var effectsBatch11 = [
   {
     id: "liquid-metal",
@@ -18021,7 +18021,7 @@ var effectsBatch11 = [
   }
 ];
 
-// ../src/lib/effects-batch-12.ts
+// src/lib/effects-batch-12.ts
 var effectsBatch12 = [
   {
     id: "progress-radial-percentage",
@@ -20122,7 +20122,7 @@ var effectsBatch12 = [
   }
 ];
 
-// ../src/lib/effects-batch-13.ts
+// src/lib/effects-batch-13.ts
 var effectsBatch13 = [
   {
     id: "css-painting-sunset",
@@ -22331,7 +22331,7 @@ var effectsBatch13 = [
   }
 ];
 
-// ../src/lib/effects-batch-14.ts
+// src/lib/effects-batch-14.ts
 var effectsBatch14 = [
   {
     id: "seasonal-falling-leaves",
@@ -24384,7 +24384,7 @@ var effectsBatch14 = [
   }
 ];
 
-// ../src/lib/effects-batch-15.ts
+// src/lib/effects-batch-15.ts
 var effectsBatch15 = [
   {
     id: "game-health-bar",
@@ -26192,7 +26192,7 @@ var effectsBatch15 = [
   }
 ];
 
-// ../src/lib/effects-batch-16.ts
+// src/lib/effects-batch-16.ts
 var effectsBatch16 = [
   {
     id: "spatial-depth-card",
@@ -27744,7 +27744,7 @@ var effectsBatch16 = [
   }
 ];
 
-// ../src/lib/effects-batch-17.ts
+// src/lib/effects-batch-17.ts
 var effectsBatch17 = [
   {
     id: "bio-luminescent-glow",
@@ -29226,7 +29226,7 @@ var effectsBatch17 = [
   }
 ];
 
-// ../src/lib/effects-batch-18.ts
+// src/lib/effects-batch-18.ts
 var effectsBatch18 = [
   {
     id: "anim-liquid-metal-b18",
@@ -30403,7 +30403,7 @@ var effectsBatch18 = [
   }
 ];
 
-// ../src/lib/effects-batch-19.ts
+// src/lib/effects-batch-19.ts
 var effectsBatch19 = [
   {
     id: "anim-orbit-system",
@@ -31484,7 +31484,17615 @@ var effectsBatch19 = [
   }
 ];
 
-// ../src/lib/roycss-types.ts
+// src/lib/effects-batch-20.ts
+var effectsBatch20 = [
+  {
+    id: "ferrum-fade-in",
+    name: "Fade In",
+    category: "animations",
+    description: "An animated motion effect (fade in)",
+    tags: ["fade", "transition", "fade-in", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-fade-in { animation: roy-ferrum-fade-in 0.6s ease-out both; }
+
+@keyframes roy-ferrum-fade-in {
+
+  from { opacity: 0; }
+  to   { opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-slide-in-up",
+    name: "Slide In Up",
+    category: "animations",
+    description: "An animated motion effect (slide in up)",
+    tags: ["slide", "transition", "slide-in-up", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-slide-in-up { animation: roy-ferrum-slide-in-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes roy-ferrum-slide-in-up {
+
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-slide-in-down",
+    name: "Slide In Down",
+    category: "animations",
+    description: "An animated motion effect (slide in down)",
+    tags: ["slide", "transition", "slide-in-down", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-slide-in-down { animation: roy-ferrum-slide-in-down 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes roy-ferrum-slide-in-down {
+
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-slide-in-left",
+    name: "Slide In Left",
+    category: "animations",
+    description: "An animated motion effect (slide in left)",
+    tags: ["slide", "transition", "slide-in-left", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-slide-in-left { animation: roy-ferrum-slide-in-left 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes roy-ferrum-slide-in-left {
+
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-slide-in-right",
+    name: "Slide In Right",
+    category: "animations",
+    description: "An animated motion effect (slide in right)",
+    tags: ["slide", "transition", "slide-in-right", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-slide-in-right { animation: roy-ferrum-slide-in-right 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes roy-ferrum-slide-in-right {
+
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);   opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-zoom-in",
+    name: "Zoom In",
+    category: "animations",
+    description: "An animated motion effect (zoom in)",
+    tags: ["zoom", "scale", "zoom-in", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-zoom-in { animation: roy-ferrum-zoom-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes roy-ferrum-zoom-in {
+
+  from { transform: scale(0);   opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-bounce-in",
+    name: "Bounce In",
+    category: "animations",
+    description: "An animated motion effect (bounce in)",
+    tags: ["bounce", "motion", "bounce-in", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-bounce-in { animation: roy-ferrum-bounce-in 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+@keyframes roy-ferrum-bounce-in {
+
+  0%   { transform: scale(0.3); opacity: 0; }
+  50%  { transform: scale(1.05); }
+  70%  { transform: scale(0.95); }
+  100% { transform: scale(1);    opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-flip-in-x",
+    name: "Flip In X",
+    category: "animations",
+    description: "An animated motion effect (flip in x)",
+    tags: ["flip", "transform", "flip-in-x", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-flip-in-x {
+  backface-visibility: hidden;
+  animation: roy-ferrum-flip-in-x 0.6s ease-in both;
+}
+
+@keyframes roy-ferrum-flip-in-x {
+
+  from { transform: perspective(400px) rotateX(90deg); opacity: 0; }
+  40%  { transform: perspective(400px) rotateX(-10deg); }
+  70%  { transform: perspective(400px) rotateX(10deg);  }
+  to   { transform: perspective(400px) rotateX(0deg);   opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-flip-in-y",
+    name: "Flip In Y",
+    category: "animations",
+    description: "An animated motion effect (flip in y)",
+    tags: ["flip", "transform", "flip-in-y", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-flip-in-y {
+  backface-visibility: hidden;
+  animation: roy-ferrum-flip-in-y 0.6s ease-in both;
+}
+
+@keyframes roy-ferrum-flip-in-y {
+
+  from { transform: perspective(400px) rotateY(90deg); opacity: 0; }
+  40%  { transform: perspective(400px) rotateY(-10deg); }
+  70%  { transform: perspective(400px) rotateY(10deg);  }
+  to   { transform: perspective(400px) rotateY(0deg);   opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-fade-in-up",
+    name: "Fade In Up",
+    category: "animations",
+    description: "An animated motion effect (fade in up)",
+    tags: ["fade", "transition", "fade-in-up", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-fade-in-up { animation: roy-ferrum-fade-in-up 0.5s ease-out both; }
+
+@keyframes roy-ferrum-fade-in-up {
+
+  from { transform: translateY(30px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-fade-in-down",
+    name: "Fade In Down",
+    category: "animations",
+    description: "An animated motion effect (fade in down)",
+    tags: ["fade", "transition", "fade-in-down", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-fade-in-down { animation: roy-ferrum-fade-in-down 0.5s ease-out both; }
+
+@keyframes roy-ferrum-fade-in-down {
+
+  from { transform: translateY(-30px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-fade-in-left",
+    name: "Fade In Left",
+    category: "animations",
+    description: "An animated motion effect (fade in left)",
+    tags: ["fade", "transition", "fade-in-left", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-fade-in-left { animation: roy-ferrum-fade-in-left 0.5s ease-out both; }
+
+@keyframes roy-ferrum-fade-in-left {
+
+  from { transform: translateX(-30px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-roll-in",
+    name: "Roll In",
+    category: "animations",
+    description: "An animated motion effect (roll in)",
+    tags: ["roll", "motion", "roll-in", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-roll-in { animation: roy-ferrum-roll-in 0.65s ease-out both; }
+
+@keyframes roy-ferrum-roll-in {
+
+  from { transform: rotateX(90deg) translateZ(-100px); opacity: 0; }
+  to   { transform: rotateX(0deg)   translateZ(0);      opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-light-speed-in",
+    name: "Light Speed In",
+    category: "animations",
+    description: "An animated motion effect (light speed in)",
+    tags: ["light", "motion", "light-speed-in", "speed", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-light-speed-in { animation: roy-ferrum-light-speed-in 0.6s ease-out both; }
+
+@keyframes roy-ferrum-light-speed-in {
+
+  0%   { transform: translateX(100%) skewX(-30deg); opacity: 0; }
+  60%  { transform: skewX(20deg);                    opacity: 1; }
+  80%  { transform: skewX(-5deg); }
+  100% { transform: translateX(0) skewX(0deg);      opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-rotate-in",
+    name: "Rotate In",
+    category: "animations",
+    description: "An animated motion effect (rotate in)",
+    tags: ["rotate", "transform", "rotate-in", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-rotate-in { animation: roy-ferrum-rotate-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes roy-ferrum-rotate-in {
+
+  from { transform: rotate(-200deg) scale(0); opacity: 0; }
+  to   { transform: rotate(0deg)     scale(1); opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-rotate-in-down-left",
+    name: "Rotate In Down Left",
+    category: "animations",
+    description: "An animated motion effect (rotate in down left)",
+    tags: ["rotate", "transform", "rotate-in-down-left", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-rotate-in-down-left {
+  transform-origin: left bottom;
+  animation: roy-ferrum-rotate-in-down-left 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes roy-ferrum-rotate-in-down-left {
+
+  from { transform: rotate(-45deg) translateY(-100%); opacity: 0; }
+  to   { transform: rotate(0deg)   translateY(0);      opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-rotate-in-up-right",
+    name: "Rotate In Up Right",
+    category: "animations",
+    description: "An animated motion effect (rotate in up right)",
+    tags: ["rotate", "transform", "rotate-in-up-right", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-rotate-in-up-right {
+  transform-origin: right bottom;
+  animation: roy-ferrum-rotate-in-up-right 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes roy-ferrum-rotate-in-up-right {
+
+  from { transform: rotate(45deg) translateY(100%); opacity: 0; }
+  to   { transform: rotate(0deg)  translateY(0);     opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-fade-in-scale",
+    name: "Fade In Scale",
+    category: "animations",
+    description: "An animated motion effect (fade in scale)",
+    tags: ["fade", "transition", "fade-in-scale", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-fade-in-scale { animation: roy-ferrum-fade-in-scale 0.6s ease-out both; }
+
+@keyframes roy-ferrum-fade-in-scale {
+
+  from { transform: scale(0.8); filter: blur(4px); opacity: 0; }
+  to   { transform: scale(1);   filter: blur(0);   opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-drop-in",
+    name: "Drop In",
+    category: "animations",
+    description: "An animated motion effect (drop in)",
+    tags: ["drop", "motion", "drop-in", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-drop-in { animation: roy-ferrum-drop-in 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+@keyframes roy-ferrum-drop-in {
+
+  0%   { transform: translateY(-300px); opacity: 0; }
+  60%  { transform: translateY(20px);   opacity: 1; }
+  80%  { transform: translateY(-10px); }
+  100% { transform: translateY(0);     opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-expand-in",
+    name: "Expand In",
+    category: "animations",
+    description: "An animated motion effect (expand in)",
+    tags: ["expand", "scale", "expand-in", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-expand-in { animation: roy-ferrum-expand-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes roy-ferrum-expand-in {
+
+  from { transform: scaleX(0) scaleY(0); opacity: 0; }
+  to   { transform: scaleX(1) scaleY(1); opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-fade-out",
+    name: "Fade Out",
+    category: "animations",
+    description: "An animated motion effect (fade out)",
+    tags: ["fade", "transition", "fade-out", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-fade-out { animation: roy-ferrum-fade-out 0.6s ease-in both; }
+
+@keyframes roy-ferrum-fade-out {
+
+  from { opacity: 1; }
+  to   { opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-slide-out-up",
+    name: "Slide Out Up",
+    category: "animations",
+    description: "An animated motion effect (slide out up)",
+    tags: ["slide", "transition", "slide-out-up", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-slide-out-up { animation: roy-ferrum-slide-out-up 0.5s cubic-bezier(0.55, 0, 1, 0.45) both; }
+
+@keyframes roy-ferrum-slide-out-up {
+
+  from { transform: translateY(0);    opacity: 1; }
+  to   { transform: translateY(-100%); opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-slide-out-down",
+    name: "Slide Out Down",
+    category: "animations",
+    description: "An animated motion effect (slide out down)",
+    tags: ["slide", "transition", "slide-out-down", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-slide-out-down { animation: roy-ferrum-slide-out-down 0.5s cubic-bezier(0.55, 0, 1, 0.45) both; }
+
+@keyframes roy-ferrum-slide-out-down {
+
+  from { transform: translateY(0);    opacity: 1; }
+  to   { transform: translateY(100%); opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-slide-out-left",
+    name: "Slide Out Left",
+    category: "animations",
+    description: "An animated motion effect (slide out left)",
+    tags: ["slide", "transition", "slide-out-left", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-slide-out-left { animation: roy-ferrum-slide-out-left 0.5s cubic-bezier(0.55, 0, 1, 0.45) both; }
+
+@keyframes roy-ferrum-slide-out-left {
+
+  from { transform: translateX(0);    opacity: 1; }
+  to   { transform: translateX(-100%); opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-slide-out-right",
+    name: "Slide Out Right",
+    category: "animations",
+    description: "An animated motion effect (slide out right)",
+    tags: ["slide", "transition", "slide-out-right", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-slide-out-right { animation: roy-ferrum-slide-out-right 0.5s cubic-bezier(0.55, 0, 1, 0.45) both; }
+
+@keyframes roy-ferrum-slide-out-right {
+
+  from { transform: translateX(0);    opacity: 1; }
+  to   { transform: translateX(100%); opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-zoom-out",
+    name: "Zoom Out",
+    category: "animations",
+    description: "An animated motion effect (zoom out)",
+    tags: ["zoom", "scale", "zoom-out", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-zoom-out { animation: roy-ferrum-zoom-out 0.5s cubic-bezier(0.55, 0, 1, 0.45) both; }
+
+@keyframes roy-ferrum-zoom-out {
+
+  from { transform: scale(1);   opacity: 1; }
+  to   { transform: scale(0);   opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-flip-out-x",
+    name: "Flip Out X",
+    category: "animations",
+    description: "An animated motion effect (flip out x)",
+    tags: ["flip", "transform", "flip-out-x", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-flip-out-x {
+  backface-visibility: hidden;
+  animation: roy-ferrum-flip-out-x 0.6s ease-in both;
+}
+
+@keyframes roy-ferrum-flip-out-x {
+
+  from { transform: perspective(400px) rotateX(0deg);   opacity: 1; }
+  to   { transform: perspective(400px) rotateX(90deg);  opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-flip-out-y",
+    name: "Flip Out Y",
+    category: "animations",
+    description: "An animated motion effect (flip out y)",
+    tags: ["flip", "transform", "flip-out-y", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-flip-out-y {
+  backface-visibility: hidden;
+  animation: roy-ferrum-flip-out-y 0.6s ease-in both;
+}
+
+@keyframes roy-ferrum-flip-out-y {
+
+  from { transform: perspective(400px) rotateY(0deg);   opacity: 1; }
+  to   { transform: perspective(400px) rotateY(90deg);  opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-light-speed-out",
+    name: "Light Speed Out",
+    category: "animations",
+    description: "An animated motion effect (light speed out)",
+    tags: ["light", "motion", "light-speed-out", "speed", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-light-speed-out { animation: roy-ferrum-light-speed-out 0.5s ease-in both; }
+
+@keyframes roy-ferrum-light-speed-out {
+
+  0%   { transform: translateX(0) skewX(0deg);   opacity: 1; }
+  100% { transform: translateX(100%) skewX(30deg); opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-roll-out",
+    name: "Roll Out",
+    category: "animations",
+    description: "An animated motion effect (roll out)",
+    tags: ["roll", "motion", "roll-out", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-roll-out { animation: roy-ferrum-roll-out 0.65s ease-in both; }
+
+@keyframes roy-ferrum-roll-out {
+
+  from { transform: rotateX(0deg)   translateZ(0);      opacity: 1; }
+  to   { transform: rotateX(90deg)  translateZ(-100px); opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-rotate-out",
+    name: "Rotate Out",
+    category: "animations",
+    description: "An animated motion effect (rotate out)",
+    tags: ["rotate", "transform", "rotate-out", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-rotate-out { animation: roy-ferrum-rotate-out 0.7s ease-in both; }
+
+@keyframes roy-ferrum-rotate-out {
+
+  from { transform: rotate(0deg)  scale(1); opacity: 1; }
+  to   { transform: rotate(200deg) scale(0); opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-fade-out-scale",
+    name: "Fade Out Scale",
+    category: "animations",
+    description: "An animated motion effect (fade out scale)",
+    tags: ["fade", "transition", "fade-out-scale", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-fade-out-scale { animation: roy-ferrum-fade-out-scale 0.5s ease-in both; }
+
+@keyframes roy-ferrum-fade-out-scale {
+
+  from { transform: scale(1);   filter: blur(0);   opacity: 1; }
+  to   { transform: scale(1.2); filter: blur(4px); opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-shrink-out",
+    name: "Shrink Out",
+    category: "animations",
+    description: "An animated motion effect (shrink out)",
+    tags: ["shrink", "scale", "shrink-out", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-shrink-out { animation: roy-ferrum-shrink-out 0.5s ease-in both; }
+
+@keyframes roy-ferrum-shrink-out {
+
+  from { transform: scale(1); opacity: 1; }
+  to   { transform: scale(0); opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-fold-out",
+    name: "Fold Out",
+    category: "animations",
+    description: "An animated motion effect (fold out)",
+    tags: ["fold", "motion", "fold-out", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-fold-out {
+  transform-origin: left center;
+  animation: roy-ferrum-fold-out 0.55s ease-in both;
+}
+
+@keyframes roy-ferrum-fold-out {
+
+  from { transform: perspective(400px) rotateY(0deg);  opacity: 1; }
+  to   { transform: perspective(400px) rotateY(90deg); opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-fly-out-up",
+    name: "Fly Out Up",
+    category: "animations",
+    description: "An animated motion effect (fly out up)",
+    tags: ["fly", "motion", "fly-out-up", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-fly-out-up { animation: roy-ferrum-fly-out-up 0.4s ease-in both; }
+
+@keyframes roy-ferrum-fly-out-up {
+
+  from { transform: translateY(0);     opacity: 1; }
+  to   { transform: translateY(-200%); opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-bounce",
+    name: "Bounce",
+    category: "animations",
+    description: "An animated motion effect (bounce)",
+    tags: ["bounce", "motion", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-bounce { animation: roy-ferrum-bounce 1s ease infinite; }
+
+@keyframes roy-ferrum-bounce {
+
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40%  { transform: translateY(-20px); }
+  60%  { transform: translateY(-10px); }
+
+}`
+  },
+  {
+    id: "ferrum-pulse",
+    name: "Pulse",
+    category: "animations",
+    description: "An animated motion effect (pulse)",
+    tags: ["pulse", "motion", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-pulse { animation: roy-ferrum-pulse 1.2s ease-in-out infinite; }
+
+@keyframes roy-ferrum-pulse {
+
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.05); }
+  100% { transform: scale(1); }
+
+}`
+  },
+  {
+    id: "ferrum-shake",
+    name: "Shake",
+    category: "animations",
+    description: "An animated motion effect (shake)",
+    tags: ["shake", "motion", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-shake { animation: roy-ferrum-shake 0.6s ease-in-out infinite; }
+
+@keyframes roy-ferrum-shake {
+
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-6px); }
+  20%, 40%, 60%, 80%     { transform: translateX(6px); }
+
+}`
+  },
+  {
+    id: "ferrum-swing",
+    name: "Swing",
+    category: "animations",
+    description: "An animated motion effect (swing)",
+    tags: ["swing", "motion", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-swing {
+  transform-origin: top center;
+  animation: roy-ferrum-swing 1s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-swing {
+
+  20%  { transform: rotate(15deg); }
+  40%  { transform: rotate(-10deg); }
+  60%  { transform: rotate(5deg); }
+  80%  { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+
+}`
+  },
+  {
+    id: "ferrum-tada",
+    name: "Tada",
+    category: "animations",
+    description: "An animated motion effect (tada)",
+    tags: ["tada", "motion", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-tada { animation: roy-ferrum-tada 1s ease-in-out infinite; }
+
+@keyframes roy-ferrum-tada {
+
+  0%   { transform: scale(1) rotate(0deg); }
+  10%, 20% { transform: scale(0.9) rotate(-3deg); }
+  30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); }
+  40%, 60%, 80%     { transform: scale(1.1) rotate(-3deg); }
+  100% { transform: scale(1) rotate(0deg); }
+
+}`
+  },
+  {
+    id: "ferrum-wobble",
+    name: "Wobble",
+    category: "animations",
+    description: "An animated motion effect (wobble)",
+    tags: ["wobble", "motion", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-wobble { animation: roy-ferrum-wobble 0.8s ease-in-out infinite; }
+
+@keyframes roy-ferrum-wobble {
+
+  0%   { transform: translateX(0) rotate(0deg); }
+  15%  { transform: translateX(-15px) rotate(-5deg); }
+  30%  { transform: translateX(12px)  rotate(3deg); }
+  45%  { transform: translateX(-8px)  rotate(-3deg); }
+  60%  { transform: translateX(5px)   rotate(2deg); }
+  75%  { transform: translateX(-3px)  rotate(-1deg); }
+  100% { transform: translateX(0)    rotate(0deg); }
+
+}`
+  },
+  {
+    id: "ferrum-heartbeat",
+    name: "Heartbeat",
+    category: "animations",
+    description: "An animated motion effect (heartbeat)",
+    tags: ["heartbeat", "motion", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-heartbeat { animation: roy-ferrum-heartbeat 1.3s ease-in-out infinite; }
+
+@keyframes roy-ferrum-heartbeat {
+
+  0%   { transform: scale(1); }
+  14%  { transform: scale(1.15); }
+  28%  { transform: scale(1); }
+  42%  { transform: scale(1.15); }
+  70%  { transform: scale(1); }
+
+}`
+  },
+  {
+    id: "ferrum-shake-x",
+    name: "Shake X",
+    category: "animations",
+    description: "An animated motion effect (shake x)",
+    tags: ["shake", "motion", "shake-x", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-shake-x { animation: roy-ferrum-shake-x 0.5s ease-in-out infinite; }
+
+@keyframes roy-ferrum-shake-x {
+
+  0%, 100% { transform: translateX(0); }
+  10%, 50%, 90% { transform: translateX(-8px); }
+  30%, 70%     { transform: translateX(8px); }
+
+}`
+  },
+  {
+    id: "ferrum-shake-y",
+    name: "Shake Y",
+    category: "animations",
+    description: "An animated motion effect (shake y)",
+    tags: ["shake", "motion", "shake-y", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-shake-y { animation: roy-ferrum-shake-y 0.5s ease-in-out infinite; }
+
+@keyframes roy-ferrum-shake-y {
+
+  0%, 100% { transform: translateY(0); }
+  10%, 50%, 90% { transform: translateY(-8px); }
+  30%, 70%     { transform: translateY(8px); }
+
+}`
+  },
+  {
+    id: "ferrum-jelly",
+    name: "Jelly",
+    category: "animations",
+    description: "An animated motion effect (jelly)",
+    tags: ["jelly", "motion", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-jelly { animation: roy-ferrum-jelly 0.9s ease-in-out infinite; }
+
+@keyframes roy-ferrum-jelly {
+
+  0%   { transform: scale(1, 1); }
+  25%  { transform: scale(1.25, 0.75); }
+  50%  { transform: scale(0.9, 1.1); }
+  75%  { transform: scale(1.05, 0.95); }
+  100% { transform: scale(1, 1); }
+
+}`
+  },
+  {
+    id: "ferrum-rubber-band",
+    name: "Rubber Band",
+    category: "animations",
+    description: "An animated motion effect (rubber band)",
+    tags: ["rubber", "motion", "rubber-band", "band", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-rubber-band { animation: roy-ferrum-rubber-band 1s ease-in-out infinite; }
+
+@keyframes roy-ferrum-rubber-band {
+
+  0%   { transform: scaleX(1); }
+  20%  { transform: scaleX(1.25) scaleY(0.75); }
+  40%  { transform: scaleX(0.75) scaleY(1.25); }
+  60%  { transform: scaleX(1.15) scaleY(0.85); }
+  80%  { transform: scaleX(0.95) scaleY(1.05); }
+  100% { transform: scaleX(1)    scaleY(1); }
+
+}`
+  },
+  {
+    id: "ferrum-pulse-glow",
+    name: "Pulse Glow",
+    category: "animations",
+    description: "An animated motion effect (pulse glow)",
+    tags: ["pulse", "motion", "pulse-glow", "glow", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-pulse-glow { animation: roy-ferrum-pulse-glow 1.5s ease-in-out infinite; }
+
+@keyframes roy-ferrum-pulse-glow {
+
+  0%, 100% {
+    box-shadow: 0 0 0 0 color-mix(in oklch, oklch(0.558 0.252 302.32) 50%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 20px 10px color-mix(in oklch, oklch(0.558 0.252 302.32) 20%, transparent);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-wiggle",
+    name: "Wiggle",
+    category: "animations",
+    description: "An animated motion effect (wiggle)",
+    tags: ["wiggle", "motion", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-wiggle { animation: roy-ferrum-wiggle 0.4s ease-in-out infinite; }
+
+@keyframes roy-ferrum-wiggle {
+
+  0%, 100% { transform: rotate(0deg); }
+  25%      { transform: rotate(5deg); }
+  75%      { transform: rotate(-5deg); }
+
+}`
+  },
+  {
+    id: "ferrum-jello",
+    name: "Jello",
+    category: "animations",
+    description: "An animated motion effect (jello)",
+    tags: ["jello", "motion", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-jello { animation: roy-ferrum-jello 1s ease-in-out infinite; }
+
+@keyframes roy-ferrum-jello {
+
+  0%, 100% { transform: skewX(0deg)    skewY(0deg); }
+  15%      { transform: skewX(-12deg)   skewY(-12deg); }
+  30%      { transform: skewX(8deg)     skewY(8deg); }
+  45%      { transform: skewX(-5deg)    skewY(-5deg); }
+  60%      { transform: skewX(3deg)     skewY(3deg); }
+  75%      { transform: skewX(-1deg)    skewY(-1deg); }
+
+}`
+  },
+  {
+    id: "ferrum-sonar",
+    name: "Sonar",
+    category: "animations",
+    description: "An animated motion effect (sonar)",
+    tags: ["sonar", "motion", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-sonar { animation: roy-ferrum-sonar 1.6s ease-out infinite; }
+
+@keyframes roy-ferrum-sonar {
+
+  0%   {
+    transform: scale(1);
+    opacity: 0.8;
+    box-shadow: 0 0 0 0 color-mix(in oklch, oklch(0.593 0.224 277.12) 60%, transparent);
+  }
+  70%  {
+    transform: scale(1.1);
+    opacity: 0;
+    box-shadow: 0 0 0 20px color-mix(in oklch, oklch(0.593 0.224 277.12) 0%, transparent);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+    box-shadow: 0 0 0 0 color-mix(in oklch, oklch(0.593 0.224 277.12) 0%, transparent);
+  }
+
+}`
+  }
+];
+
+// src/lib/effects-batch-21.ts
+var effectsBatch21 = [
+  {
+    id: "ferrum-flash",
+    name: "Flash",
+    category: "animations",
+    description: "An animated motion effect (flash)",
+    tags: ["flash", "motion", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-flash { animation: roy-ferrum-flash 1.2s ease-in-out infinite; }
+
+@keyframes roy-ferrum-flash {
+
+  0%, 100% { opacity: 1; }
+  25%      { opacity: 0; }
+  50%      { opacity: 1; }
+  75%      { opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-strobe",
+    name: "Strobe",
+    category: "animations",
+    description: "An animated motion effect (strobe)",
+    tags: ["strobe", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-strobe { animation: roy-ferrum-strobe 0.6s step-end infinite; }
+
+@keyframes roy-ferrum-strobe {
+
+  0%, 100% { opacity: 1; }
+  25%      { opacity: 0; }
+  50%      { opacity: 1; }
+  75%      { opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-bg-gradient-shift",
+    name: "Gradient Shift",
+    category: "backgrounds",
+    description: "An animated gradient background with shifting color stops",
+    tags: ["background", "gradient", "bg-gradient-shift", "animated"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-gradient-shift {
+  background: linear-gradient(-45deg, oklch(0.627 0.233 303.9), oklch(0.652 0.241 354.31), oklch(0.705 0.213 51.16), oklch(0.685 0.131 226.94));
+  background-size: 400% 400%;
+  animation: roy-ferrum-bg-gradient-shift 8s ease infinite;
+}
+
+@keyframes roy-ferrum-bg-gradient-shift {
+
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+
+}`
+  },
+  {
+    id: "ferrum-bg-mesh",
+    name: "Mesh",
+    category: "backgrounds",
+    description: "A multi-point mesh gradient background with overlapping radial color blobs",
+    tags: ["background", "gradient", "bg-mesh", "mesh", "animated"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-mesh {
+  background:
+    radial-gradient(at 40% 20%, oklch(0.627 0.233 303.9) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, oklch(0.652 0.241 354.31) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, oklch(0.685 0.131 226.94) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, oklch(0.705 0.213 51.16) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, oklch(0.696 0.149 162.48) 0px, transparent 50%),
+    radial-gradient(at 80% 100%, oklch(0.637 0.237 25.77) 0px, transparent 50%);
+  background-color: oklch(0.228 0.038 282.93);
+  background-size: 200% 200%;
+  animation: roy-ferrum-mesh-bg 10s ease infinite;
+}
+
+@keyframes roy-ferrum-mesh-bg {
+
+  0% { background-position: 0% 0%, 100% 0%, 0% 50%, 100% 50%, 0% 100%, 100% 100%; }
+  50% { background-position: 100% 0%, 0% 50%, 100% 50%, 0% 100%, 100% 100%, 0% 0%; }
+  100% { background-position: 0% 0%, 100% 0%, 0% 50%, 100% 50%, 0% 100%, 100% 100%; }
+
+}`
+  },
+  {
+    id: "ferrum-bg-dots",
+    name: "Dots",
+    category: "backgrounds",
+    description: "A dotted background pattern",
+    tags: ["background", "gradient", "bg-dots", "dots"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-dots {
+  background-color: oklch(0.228 0.038 282.93);
+  background-image: radial-gradient(oklch(0.627 0.233 303.9) 1.5px, transparent 1.5px);
+  background-size: 20px 20px;
+}`
+  },
+  {
+    id: "ferrum-bg-striped",
+    name: "Striped",
+    category: "backgrounds",
+    description: "A diagonally-striped background with motion",
+    tags: ["background", "gradient", "bg-striped", "striped", "animated"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-striped {
+  background: repeating-linear-gradient(
+    -45deg,
+    oklch(0.228 0.038 282.93),
+    oklch(0.228 0.038 282.93) 10px,
+    oklch(0.27 0.091 293.53) 10px,
+    oklch(0.27 0.091 293.53) 20px
+  );
+  background-size: 28.28px 28.28px;
+  animation: roy-ferrum-bg-stripes-move 1s linear infinite;
+}
+
+@keyframes roy-ferrum-bg-stripes-move {
+
+  0% { background-position: 0 0; }
+  100% { background-position: 28.28px 0; }
+
+}`
+  },
+  {
+    id: "ferrum-bg-checkerboard",
+    name: "Checkerboard",
+    category: "backgrounds",
+    description: "An animated background effect",
+    tags: ["background", "gradient", "bg-checkerboard", "checkerboard"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-checkerboard {
+  background-color: oklch(0.228 0.038 282.93);
+  background-image:
+    linear-gradient(45deg, oklch(0.27 0.091 293.53) 25%, transparent 25%, transparent 75%, oklch(0.27 0.091 293.53) 75%),
+    linear-gradient(45deg, oklch(0.27 0.091 293.53) 25%, transparent 25%, transparent 75%, oklch(0.27 0.091 293.53) 75%);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
+}`
+  },
+  {
+    id: "ferrum-bg-radial-pulse",
+    name: "Radial Pulse",
+    category: "backgrounds",
+    description: "A radial-pulse background with concentric emanation",
+    tags: ["background", "gradient", "bg-radial-pulse", "radial", "animated"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-radial-pulse {
+  background: radial-gradient(circle at center, oklch(0.627 0.233 303.9) 0%, oklch(0.327 0.096 283.81) 50%, oklch(0.179 0.057 283.68) 100%);
+  background-size: 100% 100%;
+  animation: roy-ferrum-bg-radial-pulse 3s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-bg-radial-pulse {
+
+  0%, 100% { background-size: 100% 100%; }
+  50% { background-size: 150% 150%; }
+
+}`
+  },
+  {
+    id: "ferrum-bg-noise-texture",
+    name: "Noise Texture",
+    category: "backgrounds",
+    description: "A noise-textured background with grainy detail",
+    tags: ["background", "gradient", "bg-noise-texture", "noise"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-noise-texture {
+  background-color: oklch(0.228 0.038 282.93);
+  position: relative;
+}
+.roycss-ferrum-bg-noise-texture::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.08;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  pointer-events: none;
+}`
+  },
+  {
+    id: "ferrum-hover-glow",
+    name: "Glow",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-glow", "glow"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-glow {
+  transition: box-shadow 0.3s ease;
+}
+.roycss-ferrum-hover-glow:hover {
+  box-shadow: 0 0 15px color-mix(in oklch, oklch(0.876 0.228 152.55) 60%, transparent), 0 0 30px color-mix(in oklch, oklch(0.876 0.228 152.55) 30%, transparent), 0 0 45px color-mix(in oklch, oklch(0.876 0.228 152.55) 15%, transparent);
+}`
+  },
+  {
+    id: "ferrum-hover-scale-up",
+    name: "Scale Up",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-scale-up", "scale"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-scale-up {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.roycss-ferrum-hover-scale-up:hover {
+  transform: scale(1.1);
+}`
+  },
+  {
+    id: "ferrum-hover-scale-down",
+    name: "Scale Down",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-scale-down", "scale"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-scale-down {
+  transition: transform 0.3s ease;
+}
+.roycss-ferrum-hover-scale-down:hover {
+  transform: scale(0.9);
+}`
+  },
+  {
+    id: "ferrum-hover-rotate",
+    name: "Rotate",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-rotate", "rotate"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-rotate {
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.roycss-ferrum-hover-rotate:hover {
+  transform: rotate(10deg);
+}`
+  },
+  {
+    id: "ferrum-hover-skew",
+    name: "Skew",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-skew", "skew"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-skew {
+  transition: transform 0.3s ease;
+}
+.roycss-ferrum-hover-skew:hover {
+  transform: skewX(-5deg);
+}`
+  },
+  {
+    id: "ferrum-hover-border-glow",
+    name: "Border Glow",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-border-glow", "border"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-border-glow {
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.roycss-ferrum-hover-border-glow:hover {
+  border-color: oklch(0.905 0.155 194.77);
+  box-shadow: 0 0 12px color-mix(in oklch, oklch(0.905 0.155 194.77) 50%, transparent), inset 0 0 12px color-mix(in oklch, oklch(0.905 0.155 194.77) 10%, transparent);
+}`
+  },
+  {
+    id: "ferrum-hover-shadow-lift",
+    name: "Shadow Lift",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-shadow-lift", "shadow"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-shadow-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.roycss-ferrum-hover-shadow-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
+}`
+  },
+  {
+    id: "ferrum-hover-float",
+    name: "Float",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-float", "float"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-float {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.roycss-ferrum-hover-float:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 14px 28px color-mix(in oklch, oklch(0 0 0) 12%, transparent);
+}`
+  },
+  {
+    id: "ferrum-hover-tilt",
+    name: "Tilt",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-tilt", "tilt", "3d"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-tilt {
+  transition: transform 0.3s ease;
+  transform-style: preserve-3d;
+}
+.roycss-ferrum-hover-tilt:hover {
+  transform: perspective(600px) rotateX(5deg) rotateY(-5deg);
+}`
+  },
+  {
+    id: "ferrum-hover-ripple",
+    name: "Ripple",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-ripple", "ripple"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-ripple {
+  position: relative;
+  overflow: hidden;
+}
+.roycss-ferrum-hover-ripple::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: color-mix(in oklch, oklch(1 0 0) 25%, transparent);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
+  z-index: 1;
+}
+.roycss-ferrum-hover-ripple:hover::before {
+  width: 300%;
+  height: 300%;
+  opacity: 0;
+}`
+  },
+  {
+    id: "ferrum-hover-underline-grow",
+    name: "Underline Grow",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-underline-grow", "underline"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-underline-grow {
+  position: relative;
+}
+.roycss-ferrum-hover-underline-grow::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, oklch(0.627 0.164 271.53), oklch(0.501 0.138 304.73));
+  transition: width 0.35s ease, left 0.35s ease;
+}
+.roycss-ferrum-hover-underline-grow:hover::after {
+  width: 100%;
+  left: 0;
+}`
+  },
+  {
+    id: "ferrum-hover-overlay-slide",
+    name: "Overlay Slide",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-overlay-slide", "overlay"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-overlay-slide {
+  position: relative;
+  overflow: hidden;
+}
+.roycss-ferrum-hover-overlay-slide::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: color-mix(in oklch, oklch(0 0 0) 45%, transparent);
+  transition: left 0.4s ease;
+  z-index: 1;
+}
+.roycss-ferrum-hover-overlay-slide:hover::before {
+  left: 0;
+}`
+  },
+  {
+    id: "ferrum-hover-bg-slide",
+    name: "Bg Slide",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-bg-slide", "bg"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-bg-slide {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+.roycss-ferrum-hover-bg-slide::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(to top, oklch(0.627 0.164 271.53), oklch(0.501 0.138 304.73));
+  transition: height 0.4s ease;
+  z-index: -1;
+}
+.roycss-ferrum-hover-bg-slide:hover::before {
+  height: 100%;
+}`
+  },
+  {
+    id: "ferrum-hover-shrink-border",
+    name: "Shrink Border",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-shrink-border", "shrink"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-shrink-border {
+  box-shadow: 0 0 0 3px oklch(0.627 0.164 271.53);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.roycss-ferrum-hover-shrink-border:hover {
+  box-shadow: 0 0 0 1px oklch(0.627 0.164 271.53);
+  transform: scale(1.02);
+}`
+  },
+  {
+    id: "ferrum-hover-expand",
+    name: "Expand",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-expand", "expand"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-expand {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.roycss-ferrum-hover-expand:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 0 5px color-mix(in oklch, oklch(0.627 0.164 271.53) 25%, transparent);
+}`
+  },
+  {
+    id: "ferrum-hover-neon-pulse",
+    name: "Neon Pulse",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-neon-pulse", "neon"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-neon-pulse {
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, text-shadow 0.3s ease;
+}
+.roycss-ferrum-hover-neon-pulse:hover {
+  border-color: oklch(0.866 0.295 142.5);
+  box-shadow: 0 0 8px oklch(0.866 0.295 142.5), 0 0 20px oklch(0.866 0.295 142.5), 0 0 40px oklch(0.866 0.295 142.5), 0 0 80px color-mix(in oklch, oklch(0.866 0.295 142.5) 40%, transparent);
+  text-shadow: 0 0 8px oklch(0.866 0.295 142.5), 0 0 20px oklch(0.866 0.295 142.5);
+}`
+  },
+  {
+    id: "ferrum-hover-fill",
+    name: "Fill",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-fill", "fill"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-fill {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: color 0.35s ease;
+}
+.roycss-ferrum-hover-fill::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: oklch(0.627 0.164 271.53);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+  z-index: -1;
+}
+.roycss-ferrum-hover-fill:hover::before {
+  transform: scaleX(1);
+}
+.roycss-ferrum-hover-fill:hover {
+  color: oklch(1 0 0);
+}`
+  },
+  {
+    id: "ferrum-hover-swipe",
+    name: "Swipe",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-swipe", "swipe"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-swipe {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: color 0.35s ease;
+}
+.roycss-ferrum-hover-swipe::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -110%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, oklch(0.795 0.172 323.15), oklch(0.673 0.193 16.23));
+  transform: skewX(-15deg);
+  transition: left 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+  z-index: -1;
+}
+.roycss-ferrum-hover-swipe:hover::before {
+  left: 0;
+}
+.roycss-ferrum-hover-swipe:hover {
+  color: oklch(1 0 0);
+}`
+  },
+  {
+    id: "ferrum-hover-shadow",
+    name: "Shadow",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-shadow", "shadow"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-shadow {
+  transition: box-shadow 0.4s ease;
+}
+.roycss-ferrum-hover-shadow:hover {
+  box-shadow:
+    0 1px 2px color-mix(in oklch, oklch(0 0 0) 7%, transparent),
+    0 2px 4px color-mix(in oklch, oklch(0 0 0) 7%, transparent),
+    0 4px 8px color-mix(in oklch, oklch(0 0 0) 7%, transparent),
+    0 8px 16px color-mix(in oklch, oklch(0 0 0) 7%, transparent),
+    0 16px 32px color-mix(in oklch, oklch(0 0 0) 7%, transparent),
+    0 32px 64px color-mix(in oklch, oklch(0 0 0) 7%, transparent);
+}`
+  },
+  {
+    id: "ferrum-hover-blur",
+    name: "Blur",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-blur", "blur"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-blur {
+  transition: filter 0.3s ease;
+}
+.roycss-ferrum-hover-blur:hover {
+  filter: blur(2px) brightness(1.2) contrast(1.1);
+}`
+  },
+  {
+    id: "ferrum-hover-skew-reverse",
+    name: "Skew Reverse",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-skew-reverse", "skew"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-skew-reverse {
+  transform: skewX(10deg);
+  transition: transform 0.35s ease;
+}
+.roycss-ferrum-hover-skew-reverse:hover {
+  transform: skewX(-10deg);
+}`
+  },
+  {
+    id: "ferrum-hover-flip",
+    name: "Flip",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-flip", "flip", "3d"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-flip {
+  perspective: 800px;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transition: transform 0.6s ease;
+}
+.roycss-ferrum-hover-flip:hover {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, oklch(0.627 0.164 271.53), oklch(0.501 0.138 304.73));
+  color: oklch(1 0 0);
+}`
+  },
+  {
+    id: "ferrum-hover-slide-right",
+    name: "Slide Right",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-slide-right", "slide"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-slide-right {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.roycss-ferrum-hover-slide-right:hover {
+  transform: translateX(8px);
+  box-shadow: -4px 2px 12px color-mix(in oklch, oklch(0 0 0) 18%, transparent);
+}`
+  },
+  {
+    id: "ferrum-hover-slide-up",
+    name: "Slide Up",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-slide-up", "slide"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-slide-up {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.roycss-ferrum-hover-slide-up:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 14px color-mix(in oklch, oklch(0 0 0) 18%, transparent);
+}`
+  },
+  {
+    id: "ferrum-hover-morph",
+    name: "Morph",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-morph", "morph", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-morph {
+  border-radius: 8px;
+  transition: border-radius 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.5s ease;
+}
+.roycss-ferrum-hover-morph:hover {
+  border-radius: 50%;
+  transform: scale(0.95);
+}
+
+.roycss-ferrum-hover-shake:hover {
+  animation: roy-ferrum-hover-shake-anim 0.5s ease;
+}
+
+@keyframes roy-ferrum-hover-shake-anim {
+
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+
+}`
+  },
+  {
+    id: "ferrum-hover-glow-text",
+    name: "Glow Text",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-glow-text", "glow"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-glow-text {
+  transition: text-shadow 0.3s ease, color 0.3s ease;
+}
+.roycss-ferrum-hover-glow-text:hover {
+  text-shadow: 0 0 8px oklch(0.905 0.155 194.77), 0 0 16px oklch(0.905 0.155 194.77), 0 0 32px oklch(0.905 0.155 194.77), 0 0 64px color-mix(in oklch, oklch(0.905 0.155 194.77) 40%, transparent);
+  color: oklch(1 0 0);
+}`
+  },
+  {
+    id: "ferrum-hover-3d-lift",
+    name: "3D Lift",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-3d-lift", "3d"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-3d-lift {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  transform-style: preserve-3d;
+}
+.roycss-ferrum-hover-3d-lift:hover {
+  transform: perspective(800px) rotateX(3deg) translateY(-8px);
+  box-shadow:
+    0 20px 40px color-mix(in oklch, oklch(0 0 0) 20%, transparent),
+    0 0 12px color-mix(in oklch, oklch(0.627 0.164 271.53) 15%, transparent);
+}`
+  },
+  {
+    id: "ferrum-text-gradient",
+    name: "Gradient",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (gradient)",
+    tags: ["text", "typography", "text-gradient", "gradient"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-gradient {
+  background: linear-gradient(135deg, oklch(0.627 0.164 271.53), oklch(0.501 0.138 304.73), oklch(0.795 0.172 323.15));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}`
+  },
+  {
+    id: "ferrum-text-shadow-pop",
+    name: "Shadow Pop",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (shadow pop)",
+    tags: ["text", "typography", "text-shadow-pop", "shadow", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-shadow-pop {
+  animation: roy-ferrum-text-shadow-pop-anim 0.5s ease both;
+}
+
+@keyframes roy-ferrum-text-shadow-pop-anim {
+
+  0% {
+    text-shadow: 0 0 0 color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+    transform: scale(1);
+  }
+  50% {
+    text-shadow: 4px 4px 0 color-mix(in oklch, oklch(0.627 0.164 271.53) 40%, transparent);
+    transform: scale(1.06);
+  }
+  100% {
+    text-shadow: 3px 3px 0 color-mix(in oklch, oklch(0 0 0) 20%, transparent);
+    transform: scale(1);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-text-stroke",
+    name: "Stroke",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (stroke)",
+    tags: ["text", "typography", "text-stroke", "stroke"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-stroke {
+  -webkit-text-stroke: 2px oklch(0.627 0.164 271.53);
+  -webkit-text-fill-color: transparent;
+}`
+  },
+  {
+    id: "ferrum-text-glow",
+    name: "Glow",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (glow)",
+    tags: ["text", "typography", "text-glow", "glow", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-glow {
+  animation: roy-ferrum-text-glow-anim 2s ease-in-out infinite alternate;
+}
+
+@keyframes roy-ferrum-text-glow-anim {
+
+  0% { text-shadow: 0 0 5px oklch(0.627 0.164 271.53), 0 0 10px oklch(0.627 0.164 271.53); }
+  100% { text-shadow: 0 0 10px oklch(0.627 0.164 271.53), 0 0 20px oklch(0.627 0.164 271.53), 0 0 40px oklch(0.501 0.138 304.73); }
+
+}`
+  },
+  {
+    id: "ferrum-text-typewriter",
+    name: "Typewriter",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (typewriter)",
+    tags: ["text", "typography", "text-typewriter", "typewriter", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid oklch(0.627 0.164 271.53);
+  width: 0;
+  animation:
+    roy-ferrum-text-typewriter-type 3s steps(24) forwards,
+    roy-ferrum-text-typewriter-cursor 0.75s step-end infinite;
+}
+
+.roycss-ferrum-text-wave span {
+  display: inline-block;
+  animation: roy-ferrum-text-wave-anim 1.4s ease-in-out infinite;
+}
+.roycss-ferrum-text-wave span:nth-child(2)  { animation-delay: 0.1s; }
+.roycss-ferrum-text-wave span:nth-child(3)  { animation-delay: 0.2s; }
+.roycss-ferrum-text-wave span:nth-child(4)  { animation-delay: 0.3s; }
+.roycss-ferrum-text-wave span:nth-child(5)  { animation-delay: 0.4s; }
+.roycss-ferrum-text-wave span:nth-child(6)  { animation-delay: 0.5s; }
+.roycss-ferrum-text-wave span:nth-child(7)  { animation-delay: 0.6s; }
+.roycss-ferrum-text-wave span:nth-child(8)  { animation-delay: 0.7s; }
+.roycss-ferrum-text-wave span:nth-child(9)  { animation-delay: 0.8s; }
+.roycss-ferrum-text-wave span:nth-child(10) { animation-delay: 0.9s; }
+.roycss-ferrum-text-wave span:nth-child(11) { animation-delay: 1.0s; }
+.roycss-ferrum-text-wave span:nth-child(12) { animation-delay: 1.1s; }
+
+@keyframes roy-ferrum-text-wave-anim {
+
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+
+}`
+  },
+  {
+    id: "ferrum-text-blur-in",
+    name: "Blur In",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (blur in)",
+    tags: ["text", "typography", "text-blur-in", "blur", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-blur-in {
+  animation: roy-ferrum-text-blur-in-anim 1.2s ease forwards;
+}
+
+@keyframes roy-ferrum-text-blur-in-anim {
+
+  0% { filter: blur(12px); opacity: 0; }
+  100% { filter: blur(0); opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-text-highlight",
+    name: "Highlight",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (highlight)",
+    tags: ["text", "typography", "text-highlight", "highlight", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-highlight {
+  background: linear-gradient(to right, color-mix(in oklch, oklch(0.627 0.164 271.53) 30%, transparent) 50%, transparent 50%);
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  display: inline;
+  animation: roy-ferrum-text-highlight-anim 1.5s ease forwards;
+}
+
+@keyframes roy-ferrum-text-highlight-anim {
+
+  0% { background-position: 100% 0; }
+  100% { background-position: 0 0; }
+
+}`
+  },
+  {
+    id: "ferrum-text-underline-slide",
+    name: "Underline Slide",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (underline slide)",
+    tags: ["text", "typography", "text-underline-slide", "underline", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-underline-slide {
+  position: relative;
+  display: inline-block;
+}
+.roycss-ferrum-text-underline-slide::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: oklch(0.627 0.164 271.53);
+  transform: scaleX(0);
+  transform-origin: right;
+  animation: roy-ferrum-text-underline-slide-anim 0.8s ease forwards 0.3s;
+}
+
+@keyframes roy-ferrum-text-underline-slide-anim {
+
+  0% { transform: scaleX(0); transform-origin: right; }
+  100% { transform: scaleX(1); transform-origin: left; }
+
+}`
+  },
+  {
+    id: "ferrum-text-blink",
+    name: "Blink",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (blink)",
+    tags: ["text", "typography", "text-blink", "blink", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-blink {
+  animation: roy-ferrum-text-blink-anim 1s step-end infinite;
+}
+
+.roycss-ferrum-text-scramble span {
+  display: inline-block;
+  opacity: 0;
+  animation: roy-ferrum-text-scramble-anim 0.35s ease forwards;
+}
+.roycss-ferrum-text-scramble span:nth-child(1)  { animation-delay: 0.04s; }
+.roycss-ferrum-text-scramble span:nth-child(2)  { animation-delay: 0.08s; }
+.roycss-ferrum-text-scramble span:nth-child(3)  { animation-delay: 0.12s; }
+.roycss-ferrum-text-scramble span:nth-child(4)  { animation-delay: 0.16s; }
+.roycss-ferrum-text-scramble span:nth-child(5)  { animation-delay: 0.20s; }
+.roycss-ferrum-text-scramble span:nth-child(6)  { animation-delay: 0.24s; }
+.roycss-ferrum-text-scramble span:nth-child(7)  { animation-delay: 0.28s; }
+.roycss-ferrum-text-scramble span:nth-child(8)  { animation-delay: 0.32s; }
+.roycss-ferrum-text-scramble span:nth-child(9)  { animation-delay: 0.36s; }
+.roycss-ferrum-text-scramble span:nth-child(10) { animation-delay: 0.40s; }
+.roycss-ferrum-text-scramble span:nth-child(11) { animation-delay: 0.44s; }
+.roycss-ferrum-text-scramble span:nth-child(12) { animation-delay: 0.48s; }
+.roycss-ferrum-text-scramble span:nth-child(13) { animation-delay: 0.52s; }
+.roycss-ferrum-text-scramble span:nth-child(14) { animation-delay: 0.56s; }
+.roycss-ferrum-text-scramble span:nth-child(15) { animation-delay: 0.60s; }
+.roycss-ferrum-text-scramble span:nth-child(16) { animation-delay: 0.64s; }
+
+@keyframes roy-ferrum-text-blink-anim {
+
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+
+}
+
+@keyframes roy-ferrum-text-scramble-anim {
+
+  0%   { opacity: 0; transform: translateY(-8px); }
+  25%  { opacity: 0.6; transform: translateY(2px); }
+  50%  { opacity: 0.2; transform: translateY(-4px); }
+  75%  { opacity: 0.8; transform: translateY(1px); }
+  100% { opacity: 1; transform: translateY(0); }
+
+}`
+  },
+  {
+    id: "ferrum-text-3d",
+    name: "3D",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (3d)",
+    tags: ["text", "typography", "text-3d", "3d"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-3d {
+  color: oklch(0.387 0.0 89.88);
+  text-shadow:
+    1px 1px 0 oklch(0.907 0.0 89.88),
+    2px 2px 0 oklch(0.858 0.0 89.88),
+    3px 3px 0 oklch(0.808 0.0 89.88),
+    4px 4px 0 oklch(0.757 0.0 89.88),
+    5px 5px 0 oklch(0.706 0.0 89.88),
+    6px 6px 0 oklch(0.653 0.0 89.88),
+    7px 7px 5px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
+}`
+  },
+  {
+    id: "ferrum-text-neon-flicker",
+    name: "Neon Flicker",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (neon flicker)",
+    tags: ["text", "typography", "text-neon-flicker", "neon", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-neon-flicker {
+  color: oklch(1 0 0);
+  animation: roy-ferrum-text-neon-flicker-anim 4s infinite alternate;
+}
+
+@keyframes roy-ferrum-text-neon-flicker-anim {
+
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    text-shadow:
+      0 0 4px oklch(0.968 0.211 109.77),
+      0 0 11px oklch(0.968 0.211 109.77),
+      0 0 19px oklch(0.968 0.211 109.77),
+      0 0 40px oklch(0.683 0.303 335.86),
+      0 0 80px oklch(0.683 0.303 335.86);
+  }
+  20%, 24%, 55% {
+    text-shadow: none;
+  }
+
+}`
+  },
+  {
+    id: "ferrum-text-rainbow",
+    name: "Rainbow",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (rainbow)",
+    tags: ["text", "typography", "text-rainbow", "rainbow", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-rainbow {
+  background: linear-gradient(
+    90deg,
+    oklch(0.628 0.258 29.23), oklch(0.744 0.181 56.46), oklch(0.968 0.211 109.77),
+    oklch(0.866 0.295 142.5), oklch(0.632 0.202 254.09), oklch(0.539 0.294 296.54),
+    oklch(0.648 0.263 359.98), oklch(0.628 0.258 29.23)
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: roy-ferrum-text-rainbow-anim 3s linear infinite;
+}
+
+.roycss-ferrum-text-slide-up span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(100%);
+  animation: roy-ferrum-text-slide-up-anim 0.5s ease forwards;
+}
+.roycss-ferrum-text-slide-up span:nth-child(1)  { animation-delay: 0.05s; }
+.roycss-ferrum-text-slide-up span:nth-child(2)  { animation-delay: 0.10s; }
+.roycss-ferrum-text-slide-up span:nth-child(3)  { animation-delay: 0.15s; }
+.roycss-ferrum-text-slide-up span:nth-child(4)  { animation-delay: 0.20s; }
+.roycss-ferrum-text-slide-up span:nth-child(5)  { animation-delay: 0.25s; }
+.roycss-ferrum-text-slide-up span:nth-child(6)  { animation-delay: 0.30s; }
+.roycss-ferrum-text-slide-up span:nth-child(7)  { animation-delay: 0.35s; }
+.roycss-ferrum-text-slide-up span:nth-child(8)  { animation-delay: 0.40s; }
+.roycss-ferrum-text-slide-up span:nth-child(9)  { animation-delay: 0.45s; }
+.roycss-ferrum-text-slide-up span:nth-child(10) { animation-delay: 0.50s; }
+.roycss-ferrum-text-slide-up span:nth-child(11) { animation-delay: 0.55s; }
+.roycss-ferrum-text-slide-up span:nth-child(12) { animation-delay: 0.60s; }
+
+@keyframes roy-ferrum-text-rainbow-anim {
+
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+
+}
+
+@keyframes roy-ferrum-text-slide-up-anim {
+
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-text-glitch",
+    name: "Glitch",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (glitch)",
+    tags: ["text", "typography", "text-glitch", "glitch", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-glitch {
+  position: relative;
+  display: inline-block;
+}
+.roycss-ferrum-text-glitch::before,
+.roycss-ferrum-text-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.roycss-ferrum-text-glitch::before {
+  color: oklch(0.968 0.211 109.77);
+  animation: roy-ferrum-text-glitch-1 2s infinite linear alternate-reverse;
+}
+.roycss-ferrum-text-glitch::after {
+  color: oklch(0.905 0.155 194.77);
+  animation: roy-ferrum-text-glitch-2 2s infinite linear alternate-reverse;
+}
+
+@keyframes roy-ferrum-text-glitch-1 {
+
+  0%   { clip-path: inset(20% 0 60% 0); transform: translate(-3px, 0); }
+  20%  { clip-path: inset(60% 0 10% 0); transform: translate(3px, 0); }
+  40%  { clip-path: inset(40% 0 30% 0); transform: translate(-2px, 0); }
+  60%  { clip-path: inset(70% 0 5% 0);  transform: translate(2px, 0); }
+  80%  { clip-path: inset(10% 0 70% 0); transform: translate(-3px, 0); }
+  100% { clip-path: inset(50% 0 20% 0); transform: translate(3px, 0); }
+
+}
+
+@keyframes roy-ferrum-text-glitch-2 {
+
+  0%   { clip-path: inset(70% 0 10% 0); transform: translate(3px, 0); }
+  20%  { clip-path: inset(10% 0 70% 0); transform: translate(-3px, 0); }
+  40%  { clip-path: inset(50% 0 20% 0); transform: translate(2px, 0); }
+  60%  { clip-path: inset(20% 0 60% 0); transform: translate(-2px, 0); }
+  80%  { clip-path: inset(60% 0 10% 0); transform: translate(3px, 0); }
+  100% { clip-path: inset(30% 0 40% 0); transform: translate(-3px, 0); }
+
+}`
+  },
+  {
+    id: "ferrum-text-reveal",
+    name: "Reveal",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (reveal)",
+    tags: ["text", "typography", "text-reveal", "reveal", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-reveal {
+  overflow: hidden;
+  display: inline-block;
+}
+.roycss-ferrum-text-reveal span {
+  display: inline-block;
+  transform: translateY(110%);
+  animation: roy-ferrum-text-reveal-anim 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.roycss-ferrum-text-reveal span:nth-child(1)  { animation-delay: 0.05s; }
+.roycss-ferrum-text-reveal span:nth-child(2)  { animation-delay: 0.10s; }
+.roycss-ferrum-text-reveal span:nth-child(3)  { animation-delay: 0.15s; }
+.roycss-ferrum-text-reveal span:nth-child(4)  { animation-delay: 0.20s; }
+.roycss-ferrum-text-reveal span:nth-child(5)  { animation-delay: 0.25s; }
+.roycss-ferrum-text-reveal span:nth-child(6)  { animation-delay: 0.30s; }
+.roycss-ferrum-text-reveal span:nth-child(7)  { animation-delay: 0.35s; }
+.roycss-ferrum-text-reveal span:nth-child(8)  { animation-delay: 0.40s; }
+.roycss-ferrum-text-reveal span:nth-child(9)  { animation-delay: 0.45s; }
+.roycss-ferrum-text-reveal span:nth-child(10) { animation-delay: 0.50s; }
+
+.roycss-ferrum-text-bounce span {
+  display: inline-block;
+  animation: roy-ferrum-text-bounce-anim 0.6s ease;
+  animation-fill-mode: both;
+}
+.roycss-ferrum-text-bounce span:nth-child(1)  { animation-delay: 0.00s; }
+.roycss-ferrum-text-bounce span:nth-child(2)  { animation-delay: 0.06s; }
+.roycss-ferrum-text-bounce span:nth-child(3)  { animation-delay: 0.12s; }
+.roycss-ferrum-text-bounce span:nth-child(4)  { animation-delay: 0.18s; }
+.roycss-ferrum-text-bounce span:nth-child(5)  { animation-delay: 0.24s; }
+.roycss-ferrum-text-bounce span:nth-child(6)  { animation-delay: 0.30s; }
+.roycss-ferrum-text-bounce span:nth-child(7)  { animation-delay: 0.36s; }
+.roycss-ferrum-text-bounce span:nth-child(8)  { animation-delay: 0.42s; }
+.roycss-ferrum-text-bounce span:nth-child(9)  { animation-delay: 0.48s; }
+.roycss-ferrum-text-bounce span:nth-child(10) { animation-delay: 0.54s; }
+.roycss-ferrum-text-bounce span:nth-child(11) { animation-delay: 0.60s; }
+.roycss-ferrum-text-bounce span:nth-child(12) { animation-delay: 0.66s; }
+
+@keyframes roy-ferrum-text-bounce-anim {
+
+  0%   { transform: translateY(0); }
+  25%  { transform: translateY(-16px); }
+  50%  { transform: translateY(0); }
+  70%  { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+
+}
+
+@keyframes roy-ferrum-text-reveal-anim {
+
+  0% {
+    transform: translateY(110%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+
+}`
+  }
+];
+
+// src/lib/effects-batch-22.ts
+var effectsBatch22 = [
+  {
+    id: "ferrum-bg-aurora",
+    name: "Aurora",
+    category: "backgrounds",
+    description: "A flowing aurora gradient background with shifting color bands",
+    tags: ["background", "gradient", "bg-aurora", "aurora", "animated"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-aurora {
+  background: linear-gradient(135deg, oklch(0.179 0.057 283.68), oklch(0.327 0.096 283.81), oklch(0.274 0.048 282.79));
+  position: relative;
+  overflow: hidden;
+}
+.roycss-ferrum-bg-aurora::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background:
+    radial-gradient(ellipse at center, color-mix(in oklch, oklch(0.627 0.233 303.9) 30%, transparent) 0%, transparent 50%),
+    radial-gradient(ellipse at 30% 50%, color-mix(in oklch, oklch(0.685 0.131 226.94) 20%, transparent) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 50%, color-mix(in oklch, oklch(0.652 0.241 354.31) 20%, transparent) 0%, transparent 50%);
+  animation: roy-ferrum-aurora-bg 8s ease infinite;
+}
+
+@keyframes roy-ferrum-aurora-bg {
+
+  0% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(30px, -30px) rotate(5deg); }
+  66% { transform: translate(-20px, 20px) rotate(-3deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+
+}`
+  },
+  {
+    id: "ferrum-bg-liquid",
+    name: "Liquid",
+    category: "backgrounds",
+    description: "An animated background effect",
+    tags: ["background", "gradient", "bg-liquid", "liquid", "animated"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-liquid {
+  background: linear-gradient(135deg, oklch(0.627 0.233 303.9), oklch(0.685 0.131 226.94), oklch(0.652 0.241 354.31), oklch(0.627 0.233 303.9));
+  background-size: 200% 200%;
+  animation: roy-ferrum-bg-liquid 6s ease infinite;
+}
+
+@keyframes roy-ferrum-bg-liquid {
+
+  0% { background-position: 0% 0%; }
+  25% { background-position: 100% 0%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+  100% { background-position: 0% 0%; }
+
+}`
+  },
+  {
+    id: "ferrum-bg-waves",
+    name: "Waves",
+    category: "backgrounds",
+    description: "A wave-pattern background with rippling motion",
+    tags: ["background", "gradient", "bg-waves", "waves", "animated"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-waves {
+  background:
+    radial-gradient(ellipse at 50% 80%, color-mix(in oklch, oklch(0.627 0.233 303.9) 15%, transparent) 0%, transparent 60%),
+    radial-gradient(ellipse at 30% 60%, color-mix(in oklch, oklch(0.685 0.131 226.94) 10%, transparent) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 70%, color-mix(in oklch, oklch(0.652 0.241 354.31) 10%, transparent) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 90%, color-mix(in oklch, oklch(0.627 0.233 303.9) 20%, transparent) 0%, transparent 55%),
+    linear-gradient(180deg, oklch(0.179 0.057 283.68) 0%, oklch(0.255 0.093 277.48) 100%);
+  background-size: 100% 200%, 80% 150%, 80% 150%, 100% 200%, 100% 100%;
+  animation: roy-ferrum-bg-waves 5s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-bg-waves {
+
+  0%, 100% { background-position: 50% 0%, 20% 50%, 80% 50%, 50% 0%, center; }
+  50% { background-position: 50% 10%, 30% 40%, 70% 60%, 50% 15%, center; }
+
+}`
+  },
+  {
+    id: "ferrum-bg-plasma",
+    name: "Plasma",
+    category: "backgrounds",
+    description: "A plasma-style background with energetic color flows",
+    tags: ["background", "gradient", "bg-plasma", "plasma", "animated"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-plasma {
+  background:
+    radial-gradient(circle at 20% 50%, oklch(0.627 0.233 303.9) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, oklch(0.652 0.241 354.31) 0%, transparent 50%),
+    radial-gradient(circle at 50% 80%, oklch(0.685 0.131 226.94) 0%, transparent 50%),
+    linear-gradient(135deg, oklch(0.228 0.038 282.93), oklch(0.179 0.057 283.68));
+  background-size: 100% 100%;
+  animation: roy-ferrum-bg-plasma 4s linear infinite;
+  filter: hue-rotate(0deg);
+}
+
+@keyframes roy-ferrum-bg-plasma {
+
+  0% { filter: hue-rotate(0deg); background-position: 0% 0%, 100% 0%, 50% 100%, center; }
+  33% { filter: hue-rotate(120deg); background-position: 100% 100%, 0% 100%, 0% 0%, center; }
+  66% { filter: hue-rotate(240deg); background-position: 100% 0%, 0% 0%, 100% 100%, center; }
+  100% { filter: hue-rotate(360deg); background-position: 0% 0%, 100% 0%, 50% 100%, center; }
+
+}`
+  },
+  {
+    id: "ferrum-bg-matrix",
+    name: "Matrix",
+    category: "backgrounds",
+    description: "An animated background effect",
+    tags: ["background", "gradient", "bg-matrix", "matrix", "animated"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-matrix {
+  background-color: oklch(0.145 0.0 89.88);
+  position: relative;
+  overflow: hidden;
+}
+.roycss-ferrum-bg-matrix::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      color-mix(in oklch, oklch(0.696 0.149 162.48) 3%, transparent) 2px,
+      color-mix(in oklch, oklch(0.696 0.149 162.48) 3%, transparent) 4px
+    );
+  animation: roy-ferrum-matrix-scroll 20s linear infinite;
+}
+.roycss-ferrum-bg-matrix::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 24px,
+      color-mix(in oklch, oklch(0.696 0.149 162.48) 6%, transparent) 24px,
+      color-mix(in oklch, oklch(0.696 0.149 162.48) 6%, transparent) 25px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 24px,
+      color-mix(in oklch, oklch(0.696 0.149 162.48) 6%, transparent) 24px,
+      color-mix(in oklch, oklch(0.696 0.149 162.48) 6%, transparent) 25px
+    );
+}
+
+@keyframes roy-ferrum-matrix-scroll {
+
+  0% { transform: translateY(0); }
+  100% { transform: translateY(4px); }
+
+}`
+  },
+  {
+    id: "ferrum-bg-starfield",
+    name: "Starfield",
+    category: "backgrounds",
+    description: "An animated background effect",
+    tags: ["background", "gradient", "bg-starfield", "starfield", "animated"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-starfield {
+  background: oklch(0.155 0.034 281.74);
+  position: relative;
+  overflow: hidden;
+}
+.roycss-ferrum-bg-starfield::before {
+  content: '';
+  position: absolute;
+  width: 2px; height: 2px;
+  background: transparent;
+  box-shadow:
+    25px 15px 0 0 color-mix(in oklch, oklch(1 0 0) 80%, transparent),
+    80px 40px 0 0 color-mix(in oklch, oklch(1 0 0) 50%, transparent),
+    150px 10px 0 0 color-mix(in oklch, oklch(0.627 0.233 303.9) 70%, transparent),
+    200px 60px 0 0 color-mix(in oklch, oklch(1 0 0) 60%, transparent),
+    50px 90px 0 0 color-mix(in oklch, oklch(0.685 0.131 226.94) 70%, transparent),
+    120px 70px 0 0 color-mix(in oklch, oklch(1 0 0) 40%, transparent),
+    180px 30px 0 0 color-mix(in oklch, oklch(0.652 0.241 354.31) 60%, transparent),
+    30px 50px 0 0 color-mix(in oklch, oklch(1 0 0) 90%, transparent),
+    90px 85px 0 0 color-mix(in oklch, oklch(1 0 0) 50%, transparent),
+    160px 95px 0 0 color-mix(in oklch, oklch(0.627 0.233 303.9) 80%, transparent),
+    70px 25px 0 0 color-mix(in oklch, oklch(1 0 0) 60%, transparent),
+    220px 50px 0 0 color-mix(in oklch, oklch(0.685 0.131 226.94) 50%, transparent),
+    10px 70px 0 0 color-mix(in oklch, oklch(1 0 0) 70%, transparent),
+    140px 45px 0 0 color-mix(in oklch, oklch(0.652 0.241 354.31) 60%, transparent),
+    190px 80px 0 0 color-mix(in oklch, oklch(1 0 0) 40%, transparent),
+    60px 100px 0 0 color-mix(in oklch, oklch(1 0 0) 80%, transparent);
+  animation: roy-ferrum-starfield-move 8s linear infinite;
+}
+
+@keyframes roy-ferrum-starfield-move {
+
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-100px); }
+
+}`
+  },
+  {
+    id: "ferrum-bg-smoke",
+    name: "Smoke",
+    category: "backgrounds",
+    description: "An animated background effect",
+    tags: ["background", "gradient", "bg-smoke", "smoke", "animated"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-smoke {
+  background: linear-gradient(135deg, oklch(0.228 0.038 282.93), oklch(0.179 0.057 283.68));
+  position: relative;
+  overflow: hidden;
+}
+.roycss-ferrum-bg-smoke::before,
+.roycss-ferrum-bg-smoke::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.4;
+}
+.roycss-ferrum-bg-smoke::before {
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, color-mix(in oklch, oklch(0.627 0.233 303.9) 50%, transparent) 0%, transparent 70%);
+  top: -50px; left: -50px;
+  animation: roy-ferrum-smoke-drift1 10s ease-in-out infinite;
+}
+.roycss-ferrum-bg-smoke::after {
+  width: 250px; height: 250px;
+  background: radial-gradient(circle, color-mix(in oklch, oklch(0.652 0.241 354.31) 40%, transparent) 0%, transparent 70%);
+  bottom: -70px; right: -70px;
+  animation: roy-ferrum-smoke-drift2 12s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-smoke-drift1 {
+
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(60px, 30px) scale(1.2); }
+  50% { transform: translate(20px, 60px) scale(1); }
+  75% { transform: translate(80px, 20px) scale(1.1); }
+
+}
+
+@keyframes roy-ferrum-smoke-drift2 {
+
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-50px, -40px) scale(1.15); }
+  66% { transform: translate(-30px, -60px) scale(0.95); }
+
+}`
+  },
+  {
+    id: "ferrum-bg-circuit",
+    name: "Circuit",
+    category: "backgrounds",
+    description: "An animated background effect",
+    tags: ["background", "gradient", "bg-circuit", "circuit", "animated"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-circuit {
+  background-color: oklch(0.169 0.025 265.16);
+  position: relative;
+  overflow: hidden;
+}
+.roycss-ferrum-bg-circuit::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 19px,
+      color-mix(in oklch, oklch(0.685 0.131 226.94) 12%, transparent) 19px,
+      color-mix(in oklch, oklch(0.685 0.131 226.94) 12%, transparent) 20px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 39px,
+      color-mix(in oklch, oklch(0.685 0.131 226.94) 12%, transparent) 39px,
+      color-mix(in oklch, oklch(0.685 0.131 226.94) 12%, transparent) 40px
+    );
+  animation: roy-ferrum-circuit-scan 3s linear infinite;
+}
+.roycss-ferrum-bg-circuit::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 40px 20px, color-mix(in oklch, oklch(0.685 0.131 226.94) 25%, transparent) 3px, transparent 3px),
+    radial-gradient(circle at 120px 60px, color-mix(in oklch, oklch(0.627 0.233 303.9) 25%, transparent) 3px, transparent 3px),
+    radial-gradient(circle at 200px 40px, color-mix(in oklch, oklch(0.685 0.131 226.94) 25%, transparent) 3px, transparent 3px),
+    radial-gradient(circle at 80px 80px, color-mix(in oklch, oklch(0.627 0.233 303.9) 25%, transparent) 3px, transparent 3px),
+    radial-gradient(circle at 160px 100px, color-mix(in oklch, oklch(0.685 0.131 226.94) 25%, transparent) 3px, transparent 3px);
+  animation: roy-ferrum-circuit-nodes 4s ease-in-out infinite alternate;
+}
+
+@keyframes roy-ferrum-circuit-nodes {
+
+  0% { opacity: 0.5; }
+  100% { opacity: 1; }
+
+}
+
+@keyframes roy-ferrum-circuit-scan {
+
+  0% { transform: translateY(0); }
+  100% { transform: translateY(20px); }
+
+}`
+  },
+  {
+    id: "ferrum-bg-lava",
+    name: "Lava",
+    category: "backgrounds",
+    description: "A flowing lava-lamp background with morphing blobs",
+    tags: ["background", "gradient", "bg-lava", "lava", "animated"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-lava {
+  background: linear-gradient(180deg, oklch(0.193 0.069 300.44), oklch(0.179 0.057 283.68));
+  position: relative;
+  overflow: hidden;
+}
+.roycss-ferrum-bg-lava::before,
+.roycss-ferrum-bg-lava::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+}
+.roycss-ferrum-bg-lava::before {
+  width: 80px; height: 120px;
+  background: radial-gradient(ellipse, color-mix(in oklch, oklch(0.652 0.241 354.31) 60%, transparent) 0%, color-mix(in oklch, oklch(0.627 0.233 303.9) 20%, transparent) 60%, transparent 100%);
+  left: 30%; bottom: -20%;
+  animation: roy-ferrum-lava-rise1 5s ease-in-out infinite;
+}
+.roycss-ferrum-bg-lava::after {
+  width: 60px; height: 100px;
+  background: radial-gradient(ellipse, color-mix(in oklch, oklch(0.705 0.213 51.16) 50%, transparent) 0%, color-mix(in oklch, oklch(0.652 0.241 354.31) 20%, transparent) 60%, transparent 100%);
+  left: 60%; bottom: -20%;
+  animation: roy-ferrum-lava-rise2 6s ease-in-out infinite;
+  animation-delay: -2s;
+}
+
+@keyframes roy-ferrum-lava-rise1 {
+
+  0% { transform: translateY(0) scaleX(1) scaleY(1); opacity: 0.8; }
+  25% { transform: translateY(-80px) scaleX(1.3) scaleY(0.8); opacity: 1; }
+  50% { transform: translateY(-160px) scaleX(0.7) scaleY(1.2); opacity: 0.6; }
+  75% { transform: translateY(-120px) scaleX(1.2) scaleY(0.9); opacity: 0.4; }
+  100% { transform: translateY(0) scaleX(1) scaleY(1); opacity: 0.8; }
+
+}
+
+@keyframes roy-ferrum-lava-rise2 {
+
+  0% { transform: translateY(0) scaleX(1) scaleY(1); opacity: 0.7; }
+  30% { transform: translateY(-100px) scaleX(1.4) scaleY(0.7); opacity: 1; }
+  60% { transform: translateY(-180px) scaleX(0.6) scaleY(1.3); opacity: 0.5; }
+  80% { transform: translateY(-80px) scaleX(1.1) scaleY(1); opacity: 0.3; }
+  100% { transform: translateY(0) scaleX(1) scaleY(1); opacity: 0.7; }
+
+}`
+  },
+  {
+    id: "ferrum-img-zoom-in",
+    name: "Img Zoom In",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["img-zoom-in", "zoom", "interactive"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-img-zoom-in {
+  overflow: hidden;
+  position: relative;
+}
+.roycss-ferrum-img-zoom-in img {
+  transition: transform 0.5s ease;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.roycss-ferrum-img-zoom-in:hover img {
+  transform: scale(1.1);
+}`
+  },
+  {
+    id: "ferrum-img-zoom-out",
+    name: "Img Zoom Out",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["img-zoom-out", "zoom", "interactive"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-img-zoom-out {
+  overflow: hidden;
+  position: relative;
+}
+.roycss-ferrum-img-zoom-out img {
+  transition: transform 0.5s ease;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.1);
+}
+.roycss-ferrum-img-zoom-out:hover img {
+  transform: scale(1);
+}`
+  },
+  {
+    id: "ferrum-img-pan-right",
+    name: "Img Pan Right",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["img-pan-right", "pan", "interactive"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-img-pan-right {
+  overflow: hidden;
+  position: relative;
+}
+.roycss-ferrum-img-pan-right img {
+  transition: transform 0.5s ease;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.15) translateX(-5%);
+}
+.roycss-ferrum-img-pan-right:hover img {
+  transform: scale(1.15) translateX(5%);
+}`
+  },
+  {
+    id: "ferrum-img-pan-left",
+    name: "Img Pan Left",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["img-pan-left", "pan", "interactive"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-img-pan-left {
+  overflow: hidden;
+  position: relative;
+}
+.roycss-ferrum-img-pan-left img {
+  transition: transform 0.5s ease;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.15) translateX(5%);
+}
+.roycss-ferrum-img-pan-left:hover img {
+  transform: scale(1.15) translateX(-5%);
+}`
+  },
+  {
+    id: "ferrum-img-blur-reveal",
+    name: "Img Blur Reveal",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["img-blur-reveal", "blur", "interactive"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-img-blur-reveal {
+  overflow: hidden;
+  position: relative;
+}
+.roycss-ferrum-img-blur-reveal img {
+  transition: filter 0.5s ease, transform 0.5s ease;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(5px);
+  transform: scale(1.05);
+}
+.roycss-ferrum-img-blur-reveal:hover img {
+  filter: blur(0);
+  transform: scale(1);
+}`
+  },
+  {
+    id: "ferrum-img-grayscale",
+    name: "Img Grayscale",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["img-grayscale", "grayscale", "interactive"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-img-grayscale {
+  overflow: hidden;
+  position: relative;
+}
+.roycss-ferrum-img-grayscale img {
+  transition: filter 0.5s ease;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%);
+}
+.roycss-ferrum-img-grayscale:hover img {
+  filter: grayscale(0%);
+}`
+  },
+  {
+    id: "ferrum-img-sepia",
+    name: "Img Sepia",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["img-sepia", "sepia", "interactive"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-img-sepia {
+  overflow: hidden;
+  position: relative;
+}
+.roycss-ferrum-img-sepia img {
+  transition: filter 0.5s ease;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(100%);
+}
+.roycss-ferrum-img-sepia:hover img {
+  filter: sepia(0%);
+}`
+  },
+  {
+    id: "ferrum-img-brightness",
+    name: "Img Brightness",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["img-brightness", "brightness", "interactive"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-img-brightness {
+  overflow: hidden;
+  position: relative;
+}
+.roycss-ferrum-img-brightness img {
+  transition: filter 0.4s ease;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.7);
+}
+.roycss-ferrum-img-brightness:hover img {
+  filter: brightness(1.2);
+}`
+  },
+  {
+    id: "ferrum-img-contrast",
+    name: "Img Contrast",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["img-contrast", "contrast", "interactive"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-img-contrast {
+  overflow: hidden;
+  position: relative;
+}
+.roycss-ferrum-img-contrast img {
+  transition: filter 0.4s ease;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(0.7) brightness(0.9);
+}
+.roycss-ferrum-img-contrast:hover img {
+  filter: contrast(1.2) brightness(1);
+}`
+  },
+  {
+    id: "ferrum-img-rotate-zoom",
+    name: "Img Rotate Zoom",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["img-rotate-zoom", "rotate", "interactive"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-img-rotate-zoom {
+  overflow: hidden;
+  position: relative;
+}
+.roycss-ferrum-img-rotate-zoom img {
+  transition: transform 0.5s ease;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.roycss-ferrum-img-rotate-zoom:hover img {
+  transform: scale(1.1) rotate(3deg);
+}`
+  },
+  {
+    id: "ferrum-img-overlay-up",
+    name: "Img Overlay Up",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["img-overlay-up", "overlay", "interactive"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-img-overlay-up {
+  overflow: hidden;
+  position: relative;
+}
+.roycss-ferrum-img-overlay-up img {
+  transition: transform 0.5s ease;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.roycss-ferrum-img-overlay-up:hover img {
+  transform: scale(1.05);
+}
+.roycss-ferrum-img-overlay-up::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, color-mix(in oklch, oklch(0 0 0) 70%, transparent), transparent 60%);
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.roycss-ferrum-img-overlay-up:hover::after {
+  opacity: 1;
+  transform: translateY(0);
+}`
+  },
+  {
+    id: "ferrum-img-overlay-fade",
+    name: "Img Overlay Fade",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["img-overlay-fade", "overlay", "interactive"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-img-overlay-fade {
+  overflow: hidden;
+  position: relative;
+}
+.roycss-ferrum-img-overlay-fade img {
+  transition: filter 0.5s ease;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.roycss-ferrum-img-overlay-fade:hover img {
+  filter: brightness(0.7);
+}
+.roycss-ferrum-img-overlay-fade::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: color-mix(in oklch, oklch(0 0 0) 50%, transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.roycss-ferrum-img-overlay-fade:hover::after {
+  opacity: 1;
+}`
+  },
+  {
+    id: "ferrum-img-split-reveal",
+    name: "Img Split Reveal",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["img-split-reveal", "split", "interactive"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-img-split-reveal {
+  overflow: hidden;
+  position: relative;
+}
+.roycss-ferrum-img-split-reveal img {
+  transition: clip-path 0.5s ease;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  clip-path: inset(0 0 0 0);
+}
+.roycss-ferrum-img-split-reveal:hover img {
+  clip-path: inset(0 50% 0 50%);
+}
+.roycss-ferrum-img-split-reveal::after {
+  content: attr(data-label);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: oklch(1 0 0);
+  font-size: 1.25rem;
+  font-weight: 600;
+  background: color-mix(in oklch, oklch(0 0 0) 60%, transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease 0.15s;
+}
+.roycss-ferrum-img-split-reveal:hover::after {
+  opacity: 1;
+}`
+  },
+  {
+    id: "ferrum-img-shutter",
+    name: "Img Shutter",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["img-shutter", "shutter", "interactive"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-img-shutter {
+  overflow: hidden;
+  position: relative;
+}
+.roycss-ferrum-img-shutter img {
+  transition: clip-path 0.5s ease;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  clip-path: inset(0 0 0 0);
+}
+.roycss-ferrum-img-shutter:hover img {
+  clip-path: inset(48% 48% 48% 48%);
+}
+.roycss-ferrum-img-shutter::before,
+.roycss-ferrum-img-shutter::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: color-mix(in oklch, oklch(0 0 0) 85%, transparent);
+  z-index: 1;
+  transition: transform 0.5s ease;
+}
+.roycss-ferrum-img-shutter::before {
+  left: 0;
+  transform: translateX(-100%);
+}
+.roycss-ferrum-img-shutter::after {
+  content: '';
+  right: 0;
+  left: auto;
+  transform: translateX(100%);
+}
+.roycss-ferrum-img-shutter:hover::before {
+  transform: translateX(0);
+}
+.roycss-ferrum-img-shutter:hover::after {
+  transform: translateX(0);
+}`
+  },
+  {
+    id: "ferrum-img-circle-reveal",
+    name: "Img Circle Reveal",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["img-circle-reveal", "circle", "interactive"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-img-circle-reveal {
+  overflow: hidden;
+  position: relative;
+}
+.roycss-ferrum-img-circle-reveal img {
+  transition: clip-path 0.5s ease;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(1.1);
+  clip-path: circle(0% at 50% 50%);
+}
+.roycss-ferrum-img-circle-reveal:hover img {
+  clip-path: circle(75% at 50% 50%);
+  filter: grayscale(0%) contrast(1);
+}
+.roycss-ferrum-img-circle-reveal::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.roycss-ferrum-img-circle-reveal:hover::after {
+  opacity: 0;
+}`
+  },
+  {
+    id: "ferrum-img-tilt-3d",
+    name: "Img Tilt 3D",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["img-tilt-3d", "tilt", "interactive", "3d"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-img-tilt-3d {
+  overflow: hidden;
+  position: relative;
+  perspective: 800px;
+}
+.roycss-ferrum-img-tilt-3d img {
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: rotateX(0) rotateY(0);
+  box-shadow: 0 4px 12px color-mix(in oklch, oklch(0 0 0) 15%, transparent);
+}
+.roycss-ferrum-img-tilt-3d:hover img {
+  transform: rotateX(-3deg) rotateY(3deg) scale(1.03);
+  box-shadow: 8px 12px 28px color-mix(in oklch, oklch(0 0 0) 35%, transparent);
+}`
+  },
+  {
+    id: "ferrum-loader-spinner",
+    name: "Spinner",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (spinner)",
+    tags: ["loader", "spinner", "loader-spinner", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-spinner {
+  width: 40px; height: 40px;
+  border: 4px solid color-mix(in oklch, oklch(0.627 0.233 303.9) 20%, transparent);
+  border-top-color: oklch(0.627 0.233 303.9);
+  border-radius: 50%;
+  animation: roy-ferrum-spinner 0.8s linear infinite;
+}
+
+@keyframes roy-ferrum-spinner {
+
+  to { transform: rotate(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-loader-dots",
+    name: "Dots",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (dots)",
+    tags: ["loader", "spinner", "loader-dots", "dots", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-dots {
+  display: flex; gap: 6px;
+}
+.roycss-ferrum-loader-dots span {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: oklch(0.627 0.233 303.9);
+  animation: roy-ferrum-dots-bounce 1.2s ease-in-out infinite;
+}
+.roycss-ferrum-loader-dots span:nth-child(2) { animation-delay: 0.15s; }
+.roycss-ferrum-loader-dots span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes roy-ferrum-dots-bounce {
+
+  0%, 80%, 100% { transform: scale(0.4); opacity: 0.3; }
+  40% { transform: scale(1); opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-loader-bars",
+    name: "Bars",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (bars)",
+    tags: ["loader", "spinner", "loader-bars", "bars", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-bars {
+  display: flex; gap: 4px; align-items: end; height: 40px;
+}
+.roycss-ferrum-loader-bars span {
+  width: 6px;
+  background: linear-gradient(to top, oklch(0.627 0.233 303.9), oklch(0.652 0.241 354.31));
+  border-radius: 3px;
+  animation: roy-ferrum-bars 1s ease-in-out infinite;
+}
+.roycss-ferrum-loader-bars span:nth-child(1) { animation-delay: 0s; }
+.roycss-ferrum-loader-bars span:nth-child(2) { animation-delay: 0.1s; }
+.roycss-ferrum-loader-bars span:nth-child(3) { animation-delay: 0.2s; }
+.roycss-ferrum-loader-bars span:nth-child(4) { animation-delay: 0.3s; }
+.roycss-ferrum-loader-bars span:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes roy-ferrum-bars {
+
+  0%, 100% { height: 10px; }
+  50% { height: 35px; }
+
+}`
+  },
+  {
+    id: "ferrum-loader-pulse",
+    name: "Pulse",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (pulse)",
+    tags: ["loader", "spinner", "loader-pulse", "pulse", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-pulse {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: oklch(0.627 0.233 303.9);
+  animation: roy-ferrum-loader-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-loader-pulse {
+
+  0%, 100% { transform: scale(0.8); opacity: 0.5; box-shadow: 0 0 0 0 color-mix(in oklch, oklch(0.627 0.233 303.9) 60%, transparent); }
+  50% { transform: scale(1); opacity: 1; box-shadow: 0 0 20px 10px color-mix(in oklch, oklch(0.627 0.233 303.9) 0%, transparent); }
+
+}`
+  },
+  {
+    id: "ferrum-loader-orbit",
+    name: "Orbit",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (orbit)",
+    tags: ["loader", "spinner", "loader-orbit", "orbit", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-orbit {
+  width: 40px; height: 40px;
+  position: relative;
+  animation: roy-ferrum-orbit-spin 2s linear infinite;
+}
+.roycss-ferrum-loader-orbit::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  width: 10px; height: 10px;
+  margin-left: -5px;
+  border-radius: 50%;
+  background: oklch(0.627 0.233 303.9);
+  box-shadow: 0 0 10px oklch(0.627 0.233 303.9), 0 0 20px color-mix(in oklch, oklch(0.627 0.233 303.9) 50%, transparent);
+}
+.roycss-ferrum-loader-orbit::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 2px dashed color-mix(in oklch, oklch(0.627 0.233 303.9) 30%, transparent);
+  border-radius: 50%;
+}
+
+@keyframes roy-ferrum-orbit-spin {
+
+  to { transform: rotate(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-loader-wave",
+    name: "Wave",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (wave)",
+    tags: ["loader", "spinner", "loader-wave", "wave", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-wave {
+  display: flex; gap: 4px; align-items: center; height: 40px;
+}
+.roycss-ferrum-loader-wave span {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: oklch(0.685 0.131 226.94);
+  animation: roy-ferrum-wave 1.4s ease-in-out infinite;
+}
+.roycss-ferrum-loader-wave span:nth-child(1) { animation-delay: 0s; }
+.roycss-ferrum-loader-wave span:nth-child(2) { animation-delay: 0.1s; }
+.roycss-ferrum-loader-wave span:nth-child(3) { animation-delay: 0.2s; }
+.roycss-ferrum-loader-wave span:nth-child(4) { animation-delay: 0.3s; }
+.roycss-ferrum-loader-wave span:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes roy-ferrum-wave {
+
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-15px); }
+
+}`
+  },
+  {
+    id: "ferrum-loader-dna",
+    name: "Dna",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (dna)",
+    tags: ["loader", "spinner", "loader-dna", "dna", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-dna {
+  display: flex; gap: 2px; align-items: center; height: 50px;
+}
+.roycss-ferrum-loader-dna span {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  animation: roy-ferrum-dna 1.5s ease-in-out infinite;
+}
+.roycss-ferrum-loader-dna span:nth-child(odd) { background: oklch(0.627 0.233 303.9); }
+.roycss-ferrum-loader-dna span:nth-child(even) { background: oklch(0.652 0.241 354.31); }
+.roycss-ferrum-loader-dna span:nth-child(1) { animation-delay: 0s; }
+.roycss-ferrum-loader-dna span:nth-child(2) { animation-delay: 0.1s; }
+.roycss-ferrum-loader-dna span:nth-child(3) { animation-delay: 0.2s; }
+.roycss-ferrum-loader-dna span:nth-child(4) { animation-delay: 0.3s; }
+.roycss-ferrum-loader-dna span:nth-child(5) { animation-delay: 0.4s; }
+.roycss-ferrum-loader-dna span:nth-child(6) { animation-delay: 0.5s; }
+.roycss-ferrum-loader-dna span:nth-child(7) { animation-delay: 0.6s; }
+
+@keyframes roy-ferrum-dna {
+
+  0%, 100% { transform: translateY(0) scale(0.6); opacity: 0.4; }
+  50% { transform: translateY(-15px) scale(1); opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-loader-circle-fade",
+    name: "Circle Fade",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (circle fade)",
+    tags: ["loader", "spinner", "loader-circle-fade", "circle", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-circle-fade {
+  width: 40px; height: 40px;
+  position: relative;
+}
+.roycss-ferrum-loader-circle-fade span {
+  position: absolute;
+  width: 100%; height: 100%;
+  border: 3px solid transparent;
+  border-top-color: oklch(0.627 0.233 303.9);
+  border-radius: 50%;
+  animation: roy-ferrum-circle-fade 1.2s linear infinite;
+}
+.roycss-ferrum-loader-circle-fade span:nth-child(2) {
+  width: 70%; height: 70%;
+  top: 15%; left: 15%;
+  border-top-color: oklch(0.652 0.241 354.31);
+  animation-delay: 0.15s;
+  animation-direction: reverse;
+}
+
+@keyframes roy-ferrum-circle-fade {
+
+  0% { transform: rotate(0deg); opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { transform: rotate(360deg); opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-loader-square-spin",
+    name: "Square Spin",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (square spin)",
+    tags: ["loader", "spinner", "loader-square-spin", "square", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-square-spin {
+  width: 30px; height: 30px;
+  border: 3px solid oklch(0.627 0.233 303.9);
+  animation: roy-ferrum-square-spin 1.5s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-square-spin {
+
+  0% { transform: rotate(0deg); border-radius: 0; }
+  25% { transform: rotate(90deg); border-radius: 50% 0 0 0; }
+  50% { transform: rotate(180deg); border-radius: 50%; }
+  75% { transform: rotate(270deg); border-radius: 0 0 50% 0; }
+  100% { transform: rotate(360deg); border-radius: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-loader-ring",
+    name: "Ring",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (ring)",
+    tags: ["loader", "spinner", "loader-ring", "ring", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-ring {
+  width: 40px; height: 40px;
+  position: relative;
+}
+.roycss-ferrum-loader-ring span {
+  position: absolute;
+  inset: 0;
+  border: 3px solid transparent;
+  border-radius: 50%;
+  animation: roy-ferrum-ring-spin 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+}
+.roycss-ferrum-loader-ring span:nth-child(1) {
+  border-top-color: oklch(0.627 0.233 303.9);
+  border-bottom-color: oklch(0.627 0.233 303.9);
+}
+.roycss-ferrum-loader-ring span:nth-child(2) {
+  border-left-color: oklch(0.652 0.241 354.31);
+  border-right-color: oklch(0.652 0.241 354.31);
+  animation-direction: reverse;
+}
+
+@keyframes roy-ferrum-ring-spin {
+
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-loader-cube",
+    name: "Cube",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (cube)",
+    tags: ["loader", "spinner", "loader-cube", "cube", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-cube {
+  width: 40px; height: 40px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: roy-ferrum-cube-rotate 2s linear infinite;
+}
+.roycss-ferrum-loader-cube span {
+  position: absolute;
+  width: 100%; height: 100%;
+  border: 2px solid color-mix(in oklch, oklch(0.627 0.233 303.9) 60%, transparent);
+  background: color-mix(in oklch, oklch(0.627 0.233 303.9) 10%, transparent);
+  border-radius: 4px;
+}
+.roycss-ferrum-loader-cube span:nth-child(1) { transform: rotateY(0deg) translateZ(20px); }
+.roycss-ferrum-loader-cube span:nth-child(2) { transform: rotateY(90deg) translateZ(20px); }
+.roycss-ferrum-loader-cube span:nth-child(3) { transform: rotateY(180deg) translateZ(20px); }
+.roycss-ferrum-loader-cube span:nth-child(4) { transform: rotateY(270deg) translateZ(20px); }
+.roycss-ferrum-loader-cube span:nth-child(5) { transform: rotateX(90deg) translateZ(20px); }
+.roycss-ferrum-loader-cube span:nth-child(6) { transform: rotateX(-90deg) translateZ(20px); }
+
+@keyframes roy-ferrum-cube-rotate {
+
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-loader-hourglass",
+    name: "Hourglass",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (hourglass)",
+    tags: ["loader", "spinner", "loader-hourglass", "hourglass", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-hourglass {
+  width: 40px; height: 40px;
+  position: relative;
+  animation: roy-ferrum-hourglass-flip 2s ease-in-out infinite;
+}
+.roycss-ferrum-loader-hourglass span {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 0; height: 0;
+  transform: translate(-50%, -50%);
+}
+.roycss-ferrum-loader-hourglass span:nth-child(1) {
+  border-left: 16px solid transparent;
+  border-right: 16px solid transparent;
+  border-top: 20px solid oklch(0.627 0.233 303.9);
+  transform: translate(-50%, -50%) translateY(4px);
+}
+.roycss-ferrum-loader-hourglass span:nth-child(2) {
+  border-left: 16px solid transparent;
+  border-right: 16px solid transparent;
+  border-bottom: 20px solid oklch(0.652 0.241 354.31);
+  transform: translate(-50%, -50%) translateY(-4px);
+}
+
+@keyframes roy-ferrum-hourglass-flip {
+
+  0%, 40% { transform: rotate(0deg) scale(1); }
+  50%, 90% { transform: rotate(180deg) scale(1); }
+  100% { transform: rotate(360deg) scale(1); }
+
+}`
+  },
+  {
+    id: "ferrum-loader-grid",
+    name: "Grid",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (grid)",
+    tags: ["loader", "spinner", "loader-grid", "grid", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 12px);
+  grid-template-rows: repeat(3, 12px);
+  gap: 4px;
+}
+.roycss-ferrum-loader-grid span {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: oklch(0.627 0.233 303.9);
+  animation: roy-ferrum-grid-pop 1.4s ease-in-out infinite;
+}
+.roycss-ferrum-loader-grid span:nth-child(1) { animation-delay: 0s; }
+.roycss-ferrum-loader-grid span:nth-child(2) { animation-delay: 0.1s; }
+.roycss-ferrum-loader-grid span:nth-child(3) { animation-delay: 0.2s; }
+.roycss-ferrum-loader-grid span:nth-child(4) { animation-delay: 0.3s; }
+.roycss-ferrum-loader-grid span:nth-child(5) { animation-delay: 0.4s; }
+.roycss-ferrum-loader-grid span:nth-child(6) { animation-delay: 0.5s; }
+.roycss-ferrum-loader-grid span:nth-child(7) { animation-delay: 0.6s; }
+.roycss-ferrum-loader-grid span:nth-child(8) { animation-delay: 0.7s; }
+.roycss-ferrum-loader-grid span:nth-child(9) { animation-delay: 0.8s; }
+
+@keyframes roy-ferrum-grid-pop {
+
+  0%, 70%, 100% { transform: scale(0.3); opacity: 0.2; }
+  35% { transform: scale(1); opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-loader-ripple",
+    name: "Ripple",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (ripple)",
+    tags: ["loader", "spinner", "loader-ripple", "ripple", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-ripple {
+  width: 40px; height: 40px;
+  position: relative;
+}
+.roycss-ferrum-loader-ripple span {
+  position: absolute;
+  inset: 0;
+  border: 2px solid oklch(0.627 0.233 303.9);
+  border-radius: 50%;
+  animation: roy-ferrum-ripple-expand 1.5s ease-out infinite;
+}
+.roycss-ferrum-loader-ripple span:nth-child(2) { animation-delay: 0.5s; }
+.roycss-ferrum-loader-ripple span:nth-child(3) { animation-delay: 1s; }
+
+@keyframes roy-ferrum-ripple-expand {
+
+  0% { transform: scale(0.2); opacity: 1; }
+  100% { transform: scale(1.5); opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-loader-typing",
+    name: "Typing",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (typing)",
+    tags: ["loader", "spinner", "loader-typing", "typing", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-typing {
+  display: flex; gap: 4px; align-items: center; height: 30px;
+}
+.roycss-ferrum-loader-typing span {
+  width: 6px;
+  border-radius: 3px;
+  background: oklch(0.627 0.233 303.9);
+  animation: roy-ferrum-typing-bounce 1.2s ease-in-out infinite;
+}
+.roycss-ferrum-loader-typing span:nth-child(1) { height: 10px; animation-delay: 0s; }
+.roycss-ferrum-loader-typing span:nth-child(2) { height: 20px; animation-delay: 0.15s; }
+.roycss-ferrum-loader-typing span:nth-child(3) { height: 14px; animation-delay: 0.3s; }
+
+@keyframes roy-ferrum-typing-bounce {
+
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-8px); }
+
+}`
+  },
+  {
+    id: "ferrum-loader-pencil",
+    name: "Pencil",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (pencil)",
+    tags: ["loader", "spinner", "loader-pencil", "pencil", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-pencil {
+  width: 8px; height: 40px;
+  position: relative;
+  animation: roy-ferrum-pencil-rotate 1.2s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+.roycss-ferrum-loader-pencil span {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.roycss-ferrum-loader-pencil span:nth-child(1) {
+  width: 8px; height: 28px;
+  background: linear-gradient(to top, oklch(0.769 0.188 70.08), oklch(0.837 0.164 84.43));
+  border-radius: 2px 2px 0 0;
+}
+.roycss-ferrum-loader-pencil span:nth-child(2) {
+  width: 0; height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 10px solid oklch(0.627 0.233 303.9);
+  bottom: -2px;
+}
+
+@keyframes roy-ferrum-pencil-rotate {
+
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(30deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-30deg); }
+
+}`
+  },
+  {
+    id: "ferrum-loader-atom",
+    name: "Atom",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (atom)",
+    tags: ["loader", "spinner", "loader-atom", "atom", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-atom {
+  width: 60px; height: 60px;
+  position: relative;
+}
+.roycss-ferrum-loader-atom span {
+  position: absolute;
+  width: 100%; height: 100%;
+  border: 1.5px solid color-mix(in oklch, oklch(0.627 0.233 303.9) 40%, transparent);
+  border-radius: 50%;
+}
+.roycss-ferrum-loader-atom span::after {
+  content: '';
+  position: absolute;
+  top: -4px; left: 50%;
+  margin-left: -4px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: oklch(0.627 0.233 303.9);
+}
+.roycss-ferrum-loader-atom span:nth-child(1) {
+  animation: roy-ferrum-atom-orbit-1 1.5s linear infinite;
+}
+.roycss-ferrum-loader-atom span:nth-child(2) {
+  animation: roy-ferrum-atom-orbit-2 1.5s linear infinite;
+}
+.roycss-ferrum-loader-atom span:nth-child(3) {
+  animation: roy-ferrum-atom-orbit-3 1.5s linear infinite;
+}
+.roycss-ferrum-loader-atom::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 10px; height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  background: oklch(0.652 0.241 354.31);
+}
+
+@keyframes roy-ferrum-atom-orbit-1 {
+
+  0% { transform: rotateX(60deg) rotateY(0deg); }
+  100% { transform: rotateX(60deg) rotateY(360deg); }
+
+}
+
+@keyframes roy-ferrum-atom-orbit-2 {
+
+  0% { transform: rotateX(60deg) rotateY(120deg); }
+  100% { transform: rotateX(60deg) rotateY(480deg); }
+
+}
+
+@keyframes roy-ferrum-atom-orbit-3 {
+
+  0% { transform: rotateX(60deg) rotateY(240deg); }
+  100% { transform: rotateX(60deg) rotateY(600deg); }
+
+}`
+  },
+  {
+    id: "ferrum-loader-bar-progress",
+    name: "Bar Progress",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (bar progress)",
+    tags: ["loader", "spinner", "loader-bar-progress", "bar", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-bar-progress {
+  width: 80px; height: 6px;
+  background: color-mix(in oklch, oklch(0.627 0.233 303.9) 15%, transparent);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+.roycss-ferrum-loader-bar-progress span {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, oklch(0.627 0.233 303.9), oklch(0.652 0.241 354.31), oklch(0.627 0.233 303.9));
+  background-size: 200% 100%;
+  border-radius: 3px;
+  animation: roy-ferrum-bar-progress 1.5s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-bar-progress {
+
+  0% { transform: translateX(-100%); background-position: 0% 0; }
+  50% { background-position: 100% 0; }
+  100% { transform: translateX(100%); background-position: 0% 0; }
+
+}`
+  },
+  {
+    id: "ferrum-loader-clock",
+    name: "Clock",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (clock)",
+    tags: ["loader", "spinner", "loader-clock", "clock", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-clock {
+  width: 40px; height: 40px;
+  border: 3px solid color-mix(in oklch, oklch(0.627 0.233 303.9) 30%, transparent);
+  border-radius: 50%;
+  position: relative;
+}
+.roycss-ferrum-loader-clock span {
+  position: absolute;
+  bottom: 50%; left: 50%;
+  width: 2px; height: 14px;
+  margin-left: -1px;
+  background: oklch(0.627 0.233 303.9);
+  border-radius: 1px;
+  transform-origin: bottom center;
+  animation: roy-ferrum-clock-tick 1.5s steps(12, end) infinite;
+}
+.roycss-ferrum-loader-clock::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 6px; height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: oklch(0.652 0.241 354.31);
+}
+
+@keyframes roy-ferrum-clock-tick {
+
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-loader-bounce",
+    name: "Bounce",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (bounce)",
+    tags: ["loader", "spinner", "loader-bounce", "bounce", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-bounce {
+  width: 24px; height: 40px;
+  position: relative;
+}
+.roycss-ferrum-loader-bounce span {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 24px; height: 24px;
+  margin-left: -12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, oklch(0.627 0.233 303.9), oklch(0.652 0.241 354.31));
+  animation: roy-ferrum-bounce-squash 0.6s ease-in-out infinite alternate;
+  box-shadow: 0 4px 15px color-mix(in oklch, oklch(0.627 0.233 303.9) 40%, transparent);
+}
+
+@keyframes roy-ferrum-bounce-squash {
+
+  0% { transform: translateY(0) scaleX(1) scaleY(1); }
+  30% { transform: translateY(-30px) scaleX(0.95) scaleY(1.05); }
+  50% { transform: translateY(-32px) scaleX(1) scaleY(1); }
+  80% { transform: translateY(0) scaleX(1.15) scaleY(0.85); }
+  100% { transform: translateY(0) scaleX(1.1) scaleY(0.9); }
+
+}`
+  },
+  {
+    id: "ferrum-loader-moon",
+    name: "Moon",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (moon)",
+    tags: ["loader", "spinner", "loader-moon", "moon", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-moon {
+  width: 30px; height: 30px;
+  position: relative;
+  animation: roy-ferrum-moon-rotate 2s ease-in-out infinite;
+}
+.roycss-ferrum-loader-moon span {
+  position: absolute;
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  background: oklch(0.627 0.233 303.9);
+}
+.roycss-ferrum-loader-moon span:nth-child(2) {
+  background: oklch(0.179 0.057 283.68);
+  animation: roy-ferrum-moon-shadow 2s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-moon-rotate {
+
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
+
+}
+
+@keyframes roy-ferrum-moon-shadow {
+
+  0%, 100% { transform: translateX(-40%); }
+  50% { transform: translateX(40%); }
+
+}`
+  },
+  {
+    id: "ferrum-loader-heartbeat",
+    name: "Heartbeat",
+    category: "loaders",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["loader", "spinner", "loader-heartbeat", "heartbeat", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-heartbeat {
+  width: 30px; height: 30px;
+  position: relative;
+  animation: roy-ferrum-heartbeat-pulse 1.2s ease-in-out infinite;
+}
+.roycss-ferrum-loader-heartbeat span {
+  position: absolute;
+  width: 30px; height: 30px;
+  transform: rotate(45deg);
+}
+.roycss-ferrum-loader-heartbeat span::before,
+.roycss-ferrum-loader-heartbeat span::after {
+  content: '';
+  position: absolute;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: oklch(0.652 0.241 354.31);
+}
+.roycss-ferrum-loader-heartbeat span::before {
+  top: -15px; left: 0;
+}
+.roycss-ferrum-loader-heartbeat span::after {
+  left: -15px; top: 0;
+}
+
+perspective: 800px;
+animation: royFlip 1.2s ease-in-out infinite;
+
+perspective: 600px;
+animation: royCube 2.4s ease-in-out infinite;
+
+perspective: 700px;
+animation: royPrism 3s linear infinite;
+
+perspective: 1000px;
+animation: royCarousel 4s ease-in-out infinite;
+
+perspective: 600px;
+animation: royCardTilt 2s ease-in-out infinite;
+
+perspective: 500px;
+animation: royPerspective 2.5s ease-in-out infinite;
+
+perspective: 600px;
+animation: royDepthFloat 3s ease-in-out infinite;
+
+perspective: 800px;
+animation: royRotate3D 3s linear infinite;
+
+perspective: 800px;
+transform-style: preserve-3d;
+animation: royBookOpen 3s ease-in-out infinite;
+
+perspective: 600px;
+transform-origin: left center;
+animation: royDoorOpen 2.8s ease-in-out infinite;
+
+perspective: 600px;
+animation: royCoinFlip 2s ease-in-out infinite;
+
+perspective: 500px;
+transform-origin: top center;
+animation: roySwing 2s ease-in-out infinite;
+
+perspective: 800px;
+animation: royHelix 3s linear infinite;
+
+perspective: 700px;
+animation: royMorphingCube 4s ease-in-out infinite;
+
+perspective: 600px;
+animation: royOrbit 3s linear infinite;
+
+perspective: 700px;
+animation: royTumble 2.5s ease-in-out infinite;
+
+animation: royMorphCircle 2s ease-in-out infinite;
+
+animation: royMorphDiamond 2.5s ease-in-out infinite;
+
+animation: royRotate90 2s ease-in-out infinite;
+
+animation: royRotate180 2s ease-in-out infinite;
+
+animation: royRotate360 2s linear infinite;
+
+animation: roySkewX 2s ease-in-out infinite;
+
+animation: roySkewY 2s ease-in-out infinite;
+
+animation: royScaleRotate 2s ease-in-out infinite;
+
+animation: royAccordion 2.5s ease-in-out infinite;
+
+transform-origin: bottom center;
+animation: royFan 2.5s ease-in-out infinite;
+
+animation: royStretch 2s ease-in-out infinite;
+
+animation: royCompress 2s ease-in-out infinite;
+
+animation: royWobble 1.5s ease-in-out infinite;
+
+animation: royTwist 2s ease-in-out infinite;
+
+perspective: 500px;
+transform-origin: top center;
+animation: royFold 3s ease-in-out infinite;
+
+perspective: 500px;
+transform-origin: top center;
+animation: royUnfold 3s ease-in-out infinite;
+
+background: linear-gradient(to top, oklch(0.8 0.146 220.71) 0%, oklch(0.8 0.146 220.71) var(--fill, 50%), transparent var(--fill, 50%));
+animation: royLiquidFill 3s ease-in-out infinite;
+
+animation: roySmoke 3s ease-out infinite;
+filter: blur(2px);
+
+animation: royElectric 0.15s linear infinite;
+box-shadow:
+  0 0 5px  oklch(0.844 0.146 209.29),
+  0 0 10px oklch(0.844 0.146 209.29),
+  0 0 20px oklch(0.719 0.126 213.68),
+  0 0 40px oklch(0.719 0.126 213.68);
+
+background: linear-gradient(
+  135deg,
+  oklch(0.645 0.26 2.47) 0%, oklch(0.751 0.179 58.28) 16%, oklch(0.822 0.131 185.09) 33%,
+  oklch(0.604 0.194 285.5) 50%, oklch(0.645 0.26 2.47) 66%, oklch(0.751 0.179 58.28) 83%,
+  oklch(0.822 0.131 185.09) 100%
+);
+background-size: 400% 400%;
+animation: royHolographic 4s ease-in-out infinite;
+
+animation: royBreathing 4s ease-in-out infinite;
+
+perspective: 600px;
+transform-origin: top left;
+animation: royPaperUnfold 3s ease-in-out infinite;
+
+animation: royRippleSpread 2s ease-out infinite;
+
+animation: royConfettiBurst 1.5s ease-out infinite;
+
+animation: royMagneticPull 2.5s ease-in-out infinite;
+filter: drop-shadow(0 0 8px color-mix(in oklch, oklch(0.593 0.224 277.12) 60%, transparent));
+
+animation: royGlassShatter 2s ease-in-out infinite;
+
+animation: royNeonOutline 1.5s ease-in-out infinite alternate;
+
+border: 3px solid transparent;
+background-image: linear-gradient(oklch(0.228 0.038 282.93), oklch(0.228 0.038 282.93)),
+  linear-gradient(135deg, oklch(0.795 0.172 323.15), oklch(0.673 0.193 16.23), oklch(0.724 0.149 248.09), oklch(0.874 0.149 201.21));
+background-origin: border-box;
+background-clip: padding-box, border-box;
+background-size: 100% 100%, 300% 300%;
+animation: royGradBorderSpin 3s linear infinite;
+
+background: linear-gradient(
+  90deg,
+  oklch(0.779 0.149 226.02), oklch(0.909 0.165 146.32), oklch(0.962 0.213 112.08), oklch(0.712 0.181 22.84), oklch(0.694 0.199 311.3), oklch(0.779 0.149 226.02)
+);
+background-size: 400% 100%;
+-webkit-background-clip: text;
+background-clip: text;
+-webkit-text-fill-color: transparent;
+animation: royAuroraText 5s linear infinite;
+
+background: linear-gradient(
+  to top,
+  oklch(0.66 0.229 35.4) 0%, oklch(0.701 0.201 44.77) 25%, oklch(0.793 0.171 70.67) 50%, oklch(0.899 0.186 97.86) 75%, transparent 100%
+);
+background-size: 100% 250%;
+animation: royFire 1.5s ease-in-out infinite;
+filter: blur(1px) brightness(1.1);
+box-shadow: 0 0 20px 5px color-mix(in oklch, oklch(0.66 0.229 35.4) 40%, transparent), 0 0 60px 10px color-mix(in oklch, oklch(0.701 0.201 44.77) 20%, transparent);
+
+background: linear-gradient(
+  135deg,
+  color-mix(in oklch, oklch(0.856 0.057 237.85) 40%, transparent) 0%,
+  color-mix(in oklch, oklch(0.96 0.024 206.2) 30%, transparent) 30%,
+  color-mix(in oklch, oklch(0.895 0.06 227.77) 50%, transparent) 60%,
+  color-mix(in oklch, oklch(0.91 0.043 238.51) 30%, transparent) 100%
+);
+backdrop-filter: blur(8px) saturate(1.8);
+-webkit-backdrop-filter: blur(8px) saturate(1.8);
+border: 1px solid color-mix(in oklch, oklch(1 0 0) 35%, transparent);
+box-shadow:
+  0 0 15px color-mix(in oklch, oklch(0.856 0.057 237.85) 30%, transparent),
+  inset 0 0 30px color-mix(in oklch, oklch(1 0 0) 15%, transparent);
+animation: royIce 3s ease-in-out infinite;
+
+background: oklch(0.756 0.095 74.0);
+border-radius: 4px;
+animation: roySand 2.5s ease-out infinite;
+
+border-radius: 50%;
+animation: royWaterDrop 2s ease-out infinite;
+
+animation: royGlitchMorph 3s step-end infinite;
+position: relative;
+
+background-color: oklch(0.228 0.038 282.93);
+animation: royPixelate 3s steps(8) infinite;
+image-rendering: pixelated;
+
+background-color: oklch(0.155 0.034 281.74);
+background-image:
+  linear-gradient(color-mix(in oklch, oklch(0.905 0.155 194.77) 12%, transparent) 1px, transparent 1px),
+  linear-gradient(90deg, color-mix(in oklch, oklch(0.905 0.155 194.77) 12%, transparent) 1px, transparent 1px),
+  linear-gradient(color-mix(in oklch, oklch(0.702 0.322 328.36) 6%, transparent) 1px, transparent 1px),
+  linear-gradient(90deg, color-mix(in oklch, oklch(0.702 0.322 328.36) 6%, transparent) 1px, transparent 1px);
+background-size: 40px 40px, 40px 40px, 10px 10px, 10px 10px;
+animation: royCyberGrid 4s linear infinite;
+
+animation: royMorphingBlob 8s ease-in-out infinite;
+
+color: oklch(1 0 0);
+animation: royTextShadowStack 3s ease-in-out infinite;
+
+background: linear-gradient(
+  120deg,
+  color-mix(in oklch, oklch(0.628 0.258 29.23) 60%, transparent) 0%,
+  color-mix(in oklch, oklch(0.73 0.186 52.57) 60%, transparent) 17%,
+  color-mix(in oklch, oklch(0.968 0.211 109.77) 60%, transparent) 33%,
+  color-mix(in oklch, oklch(0.866 0.295 142.5) 60%, transparent) 50%,
+  color-mix(in oklch, oklch(0.452 0.313 264.05) 60%, transparent) 67%,
+  color-mix(in oklch, oklch(0.339 0.179 301.68) 60%, transparent) 83%,
+  color-mix(in oklch, oklch(0.515 0.261 309.81) 60%, transparent) 100%
+);
+background-size: 300% 300%;
+animation: royPrismRefraction 4s ease-in-out infinite;
+box-shadow: 0 0 30px color-mix(in oklch, oklch(1 0 0) 15%, transparent);
+
+border-right: 3px solid currentColor;
+padding-right: 4px;
+animation: royTypingCursor 1s step-end infinite;
+
+.btn-shine {
+    position: relative;
+    overflow: hidden;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: oklch(1 0 0);
+    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-shine::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        color-mix(in oklch, oklch(1 0 0) 35%, transparent),
+        transparent
+    );
+    transform: skewX(-20deg);
+    transition: none;
+}
+.btn-shine:hover::before {
+    animation: btn-shine-sweep 0.6s ease forwards;
+}
+.btn-shine:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px color-mix(in oklch, oklch(0.551 0.211 277.76) 40%, transparent);
+}
+
+.btn-ripple {
+    position: relative;
+    overflow: hidden;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: oklch(1 0 0);
+    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn-ripple::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: color-mix(in oklch, oklch(1 0 0) 35%, transparent);
+    transform: translate(-50%, -50%);
+    transition: width 0.5s ease, height 0.5s ease, opacity 0.5s ease;
+    opacity: 0;
+}
+.btn-ripple:active::after {
+    width: 300px;
+    height: 300px;
+    opacity: 1;
+    transition: width 0s, height 0s, opacity 0s;
+}
+.btn-ripple:hover {
+    box-shadow: 0 4px 16px color-mix(in oklch, oklch(0.551 0.211 277.76) 40%, transparent);
+    transform: translateY(-1px);
+}
+
+.btn-fill-left {
+    position: relative;
+    overflow: hidden;
+    padding: 10px 24px;
+    border: 2px solid oklch(0.541 0.247 293.01);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: oklch(0.541 0.247 293.01);
+    background: transparent;
+    cursor: pointer;
+    z-index: 1;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+.btn-fill-left::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
+    transform: translateX(-101%);
+    transition: transform 0.3s ease;
+    z-index: -1;
+}
+.btn-fill-left:hover::before {
+    transform: translateX(0);
+}
+.btn-fill-left:hover {
+    color: oklch(1 0 0);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px color-mix(in oklch, oklch(0.551 0.211 277.76) 40%, transparent);
+}
+
+.btn-fill-right {
+    position: relative;
+    overflow: hidden;
+    padding: 10px 24px;
+    border: 2px solid oklch(0.541 0.247 293.01);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: oklch(0.541 0.247 293.01);
+    background: transparent;
+    cursor: pointer;
+    z-index: 1;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+.btn-fill-right::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, oklch(0.551 0.211 277.76), oklch(0.541 0.247 293.01));
+    transform: translateX(101%);
+    transition: transform 0.3s ease;
+    z-index: -1;
+}
+.btn-fill-right:hover::before {
+    transform: translateX(0);
+}
+.btn-fill-right:hover {
+    color: oklch(1 0 0);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px color-mix(in oklch, oklch(0.551 0.211 277.76) 40%, transparent);
+}
+
+.btn-fill-top {
+    position: relative;
+    overflow: hidden;
+    padding: 10px 24px;
+    border: 2px solid oklch(0.541 0.247 293.01);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: oklch(0.541 0.247 293.01);
+    background: transparent;
+    cursor: pointer;
+    z-index: 1;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+.btn-fill-top::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
+    transform: translateY(-101%);
+    transition: transform 0.3s ease;
+    z-index: -1;
+}
+.btn-fill-top:hover::before {
+    transform: translateY(0);
+}
+.btn-fill-top:hover {
+    color: oklch(1 0 0);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px color-mix(in oklch, oklch(0.551 0.211 277.76) 40%, transparent);
+}
+
+.btn-fill-bottom {
+    position: relative;
+    overflow: hidden;
+    padding: 10px 24px;
+    border: 2px solid oklch(0.541 0.247 293.01);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: oklch(0.541 0.247 293.01);
+    background: transparent;
+    cursor: pointer;
+    z-index: 1;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+.btn-fill-bottom::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, oklch(0.551 0.211 277.76), oklch(0.541 0.247 293.01));
+    transform: translateY(101%);
+    transition: transform 0.3s ease;
+    z-index: -1;
+}
+.btn-fill-bottom:hover::before {
+    transform: translateY(0);
+}
+.btn-fill-bottom:hover {
+    color: oklch(1 0 0);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px color-mix(in oklch, oklch(0.551 0.211 277.76) 40%, transparent);
+}
+
+.btn-outline-draw {
+    position: relative;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: oklch(0.541 0.247 293.01);
+    background: transparent;
+    cursor: pointer;
+    z-index: 1;
+    transition: color 0.4s ease;
+}
+.btn-outline-draw::before,
+.btn-outline-draw::after {
+    content: '';
+    position: absolute;
+    border-radius: 8px;
+    transition: transform 0.4s ease;
+}
+/* top + bottom lines */
+.btn-outline-draw::before {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    border-top: 2px solid oklch(0.541 0.247 293.01);
+    border-bottom: 2px solid oklch(0.541 0.247 293.01);
+    transform: scaleX(0);
+    transition: transform 0.4s ease, border-color 0.3s ease;
+}
+/* left + right lines */
+.btn-outline-draw::after {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    border-left: 2px solid oklch(0.541 0.247 293.01);
+    border-right: 2px solid oklch(0.541 0.247 293.01);
+    transform: scaleY(0);
+    transition: transform 0.4s ease 0.15s, border-color 0.3s ease 0.15s;
+}
+.btn-outline-draw:hover::before {
+    transform: scaleX(1);
+    border-color: oklch(0.551 0.211 277.76);
+}
+.btn-outline-draw:hover::after {
+    transform: scaleY(1);
+    border-color: oklch(0.551 0.211 277.76);
+}
+.btn-outline-draw:hover {
+    color: oklch(0.551 0.211 277.76);
+}
+
+.btn-glow-pulse {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: oklch(1 0 0);
+    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
+    cursor: pointer;
+    box-shadow: 0 0 0 color-mix(in oklch, oklch(0.541 0.247 293.01) 0%, transparent);
+    transition: transform 0.2s ease;
+}
+.btn-glow-pulse:hover {
+    animation: btn-glow-pulse-anim 1.2s ease-in-out infinite;
+}
+
+.btn-skew-fill {
+    position: relative;
+    overflow: hidden;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: oklch(0.541 0.247 293.01);
+    background: transparent;
+    cursor: pointer;
+    z-index: 1;
+    transition: color 0.35s ease, transform 0.2s ease;
+}
+.btn-skew-fill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150%;
+    height: 100%;
+    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
+    transform: translateX(-110%) skewX(-15deg);
+    transition: transform 0.45s ease;
+    z-index: -1;
+}
+.btn-skew-fill:hover::before {
+    transform: translateX(-20%) skewX(-15deg);
+}
+.btn-skew-fill:hover {
+    color: oklch(1 0 0);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px color-mix(in oklch, oklch(0.551 0.211 277.76) 40%, transparent);
+}
+
+.btn-slide-icon {
+    position: relative;
+    overflow: hidden;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: oklch(1 0 0);
+    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
+    cursor: pointer;
+    padding-right: 48px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-slide-icon::after {
+    content: '\\2192';
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%) translateX(24px);
+    opacity: 0;
+    font-size: 16px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    color: oklch(1 0 0);
+}
+.btn-slide-icon:hover::after {
+    transform: translateY(-50%) translateX(0);
+    opacity: 1;
+}
+.btn-slide-icon:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px color-mix(in oklch, oklch(0.551 0.211 277.76) 40%, transparent);
+}
+
+.btn-bounce {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: oklch(1 0 0);
+    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
+    cursor: pointer;
+    transition: box-shadow 0.2s ease;
+}
+.btn-bounce:hover {
+    animation: btn-bounce-key 0.5s ease;
+    box-shadow: 0 6px 20px color-mix(in oklch, oklch(0.551 0.211 277.76) 50%, transparent);
+}
+
+.btn-press {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: oklch(1 0 0);
+    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
+    cursor: pointer;
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.15s ease;
+    box-shadow: 0 2px 8px color-mix(in oklch, oklch(0.551 0.211 277.76) 30%, transparent);
+}
+.btn-press:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px color-mix(in oklch, oklch(0.551 0.211 277.76) 45%, transparent);
+}
+.btn-press:active {
+    transform: scale(0.95) translateY(0);
+    box-shadow: 0 1px 4px color-mix(in oklch, oklch(0.551 0.211 277.76) 20%, transparent);
+}
+
+.btn-border-sweep {
+    position: relative;
+    padding: 10px 24px;
+    border: 2px solid oklch(0.811 0.101 293.57);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: oklch(0.541 0.247 293.01);
+    background: transparent;
+    cursor: pointer;
+    overflow: hidden;
+    z-index: 1;
+    transition: color 0.4s ease;
+}
+.btn-border-sweep::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -100%;
+    width: 100%;
+    height: calc(100% + 4px);
+    background: linear-gradient(90deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76), oklch(0.68 0.158 276.93));
+    z-index: -2;
+    transition: left 0.5s ease;
+}
+.btn-border-sweep::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    background: transparent;
+    border-radius: 6px;
+    z-index: -1;
+    transition: background 0.4s ease;
+}
+.btn-border-sweep:hover::before {
+    left: 0;
+}
+.btn-border-sweep:hover::after {
+    background: oklch(1 0 0);
+}
+.btn-border-sweep:hover {
+    color: oklch(0.541 0.247 293.01);
+}
+
+.btn-neon-border {
+    padding: 10px 24px;
+    border: 2px solid oklch(0.541 0.247 293.01);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: oklch(0.541 0.247 293.01);
+    background: transparent;
+    cursor: pointer;
+    transition: color 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease,
+                background 0.3s ease;
+}
+.btn-neon-border:hover {
+    color: oklch(1 0 0);
+    border-color: oklch(0.709 0.159 293.54);
+    background: color-mix(in oklch, oklch(0.541 0.247 293.01) 10%, transparent);
+    box-shadow:
+        0 0 5px color-mix(in oklch, oklch(0.541 0.247 293.01) 50%, transparent),
+        0 0 15px color-mix(in oklch, oklch(0.541 0.247 293.01) 30%, transparent),
+        0 0 30px color-mix(in oklch, oklch(0.551 0.211 277.76) 20%, transparent),
+        inset 0 0 10px color-mix(in oklch, oklch(0.541 0.247 293.01) 15%, transparent);
+}
+
+.btn-gradient-shift {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: oklch(1 0 0);
+    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76), oklch(0.566 0.245 278.69));
+    background-size: 200% 200%;
+    background-position: 0% 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-gradient-shift:hover {
+    background-position: 100% 50%;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px color-mix(in oklch, oklch(0.551 0.211 277.76) 50%, transparent);
+}
+
+.btn-underline-center {
+    position: relative;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: oklch(0.541 0.247 293.01);
+    background: color-mix(in oklch, oklch(0.541 0.247 293.01) 6%, transparent);
+    cursor: pointer;
+    transition: color 0.3s ease, background 0.3s ease;
+}
+.btn-underline-center::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
+    border-radius: 2px;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+.btn-underline-center:hover::after {
+    width: 70%;
+}
+.btn-underline-center:hover {
+    color: oklch(0.551 0.211 277.76);
+    background: color-mix(in oklch, oklch(0.541 0.247 293.01) 10%, transparent);
+}
+
+.btn-shadow-lift {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: oklch(1 0 0);
+    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
+    cursor: pointer;
+    box-shadow: 0 2px 4px color-mix(in oklch, oklch(0.551 0.211 277.76) 20%, transparent);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.btn-shadow-lift:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 4px 8px color-mix(in oklch, oklch(0.551 0.211 277.76) 25%, transparent),
+        0 8px 24px color-mix(in oklch, oklch(0.541 0.247 293.01) 25%, transparent),
+        0 16px 40px color-mix(in oklch, oklch(0.551 0.211 277.76) 15%, transparent);
+}
+
+.btn-ghost-fill {
+    padding: 10px 24px;
+    border: 2px solid oklch(0.541 0.247 293.01);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: oklch(0.541 0.247 293.01);
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease,
+                border-color 0.3s ease, transform 0.2s ease,
+                box-shadow 0.3s ease;
+}
+.btn-ghost-fill:hover {
+    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
+    color: oklch(1 0 0);
+    border-color: transparent;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px color-mix(in oklch, oklch(0.551 0.211 277.76) 40%, transparent);
+}
+
+.card-lift {
+    background: oklch(1 0 0);
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid oklch(0.928 0.006 264.53);
+    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-lift:hover {
+    transform: translateY(-8px);
+    box-shadow:
+        0 12px 24px color-mix(in oklch, oklch(0 0 0) 10%, transparent),
+        0 4px 8px color-mix(in oklch, oklch(0 0 0) 6%, transparent);
+}
+
+.card-tilt-3d {
+    background: oklch(1 0 0);
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid oklch(0.928 0.006 264.53);
+    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    transform-style: preserve-3d;
+    perspective: 800px;
+}
+.card-tilt-3d:hover {
+    transform: perspective(800px) rotateX(2deg) rotateY(-3deg) translateY(-4px);
+    box-shadow: 0 16px 32px color-mix(in oklch, oklch(0 0 0) 12%, transparent);
+}
+
+.card-flip {
+    perspective: 1000px;
+    background: transparent;
+    border-radius: 12px;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    min-height: 200px;
+}
+.card-flip .card-flip-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    transition: transform 0.6s ease;
+    transform-style: preserve-3d;
+}
+.card-flip:hover .card-flip-inner {
+    transform: rotateY(180deg);
+}
+.card-flip .card-flip-front,
+.card-flip .card-flip-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    padding: 24px;
+    box-sizing: border-box;
+    border: 1px solid oklch(0.928 0.006 264.53);
+    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
+}
+.card-flip .card-flip-front {
+    background: oklch(1 0 0);
+}
+.card-flip .card-flip-back {
+    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
+    color: oklch(1 0 0);
+    transform: rotateY(180deg);
+}
+
+.card-spotlight {
+    position: relative;
+    background: oklch(1 0 0);
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid oklch(0.928 0.006 264.53);
+    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.card-spotlight::before {
+    content: '';
+    position: absolute;
+    top: var(--spot-y, 50%);
+    left: var(--spot-x, 50%);
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, color-mix(in oklch, oklch(0.541 0.247 293.01) 15%, transparent) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+.card-spotlight:hover::before {
+    opacity: 1;
+}
+.card-spotlight:hover {
+    border-color: oklch(0.811 0.101 293.57);
+    box-shadow: 0 8px 24px color-mix(in oklch, oklch(0.541 0.247 293.01) 10%, transparent);
+}
+.card-spotlight > * {
+    position: relative;
+    z-index: 2;
+}
+
+.card-reveal {
+    position: relative;
+    background: oklch(1 0 0);
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid oklch(0.928 0.006 264.53);
+    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+}
+.card-reveal .card-reveal-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, color-mix(in oklch, oklch(0.541 0.247 293.01) 95%, transparent) 0%, color-mix(in oklch, oklch(0.551 0.211 277.76) 85%, transparent) 100%);
+    color: oklch(1 0 0);
+    padding: 24px;
+    box-sizing: border-box;
+    transform: translateY(101%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.card-reveal:hover .card-reveal-overlay {
+    transform: translateY(0);
+}
+.card-reveal:hover {
+    box-shadow: 0 8px 24px color-mix(in oklch, oklch(0.541 0.247 293.01) 15%, transparent);
+}
+
+.card-border-glow {
+    position: relative;
+    background: oklch(1 0 0);
+    border-radius: 12px;
+    padding: 24px;
+    border: 2px solid oklch(0.928 0.006 264.53);
+    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
+    transition: box-shadow 0.3s ease;
+    background-clip: padding-box;
+}
+.card-border-glow::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76), oklch(0.68 0.158 276.93), oklch(0.709 0.159 293.54), oklch(0.541 0.247 293.01));
+    background-size: 300% 300%;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    animation: card-border-glow-rotate 3s linear infinite;
+}
+.card-border-glow:hover::before {
+    opacity: 1;
+}
+.card-border-glow:hover {
+    border-color: transparent;
+    box-shadow: 0 8px 24px color-mix(in oklch, oklch(0.541 0.247 293.01) 15%, transparent);
+}
+
+.card-split {
+    position: relative;
+    background: transparent;
+    border-radius: 12px;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    min-height: 200px;
+}
+.card-split .card-split-top,
+.card-split .card-split-bottom {
+    position: relative;
+    width: 100%;
+    background: oklch(1 0 0);
+    border: 1px solid oklch(0.928 0.006 264.53);
+    box-sizing: border-box;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+.card-split .card-split-top {
+    border-radius: 12px 12px 0 0;
+    padding: 24px 24px 12px;
+    z-index: 2;
+}
+.card-split .card-split-bottom {
+    border-radius: 0 0 12px 12px;
+    padding: 12px 24px 24px;
+    z-index: 2;
+}
+.card-split .card-split-hidden {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
+    border-radius: 12px;
+    color: oklch(1 0 0);
+    padding: 24px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+.card-split:hover .card-split-top {
+    transform: translateY(-20px) rotateX(8deg);
+    transform-origin: bottom center;
+}
+.card-split:hover .card-split-bottom {
+    transform: translateY(20px) rotateX(-8deg);
+    transform-origin: top center;
+}
+
+.card-fold-corner {
+    position: relative;
+    background: oklch(1 0 0);
+    border-radius: 12px;
+    padding: 24px;
+    padding-top: 40px;
+    border: 1px solid oklch(0.928 0.006 264.53);
+    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
+    transition: box-shadow 0.3s ease;
+}
+.card-fold-corner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 40px 40px 0;
+    border-color: transparent oklch(0.928 0.006 264.53) transparent transparent;
+    border-top-right-radius: 12px;
+    transition: border-width 0.4s ease, border-color 0.4s ease;
+}
+.card-fold-corner::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 40px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 40px 40px 0 0;
+    border-color: oklch(0.962 0.02 295.19) transparent transparent transparent;
+    transition: right 0.4s ease, border-width 0.4s ease;
+    z-index: 1;
+}
+.card-fold-corner:hover::before {
+    border-width: 0 60px 60px 0;
+    border-color: transparent oklch(0.811 0.101 293.57) transparent transparent;
+}
+.card-fold-corner:hover::after {
+    right: 60px;
+    border-width: 60px 60px 0 0;
+}
+.card-fold-corner:hover {
+    box-shadow: 0 8px 24px color-mix(in oklch, oklch(0.541 0.247 293.01) 12%, transparent);
+}
+
+.card-slide-up {
+    position: relative;
+    background: oklch(1 0 0);
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid oklch(0.928 0.006 264.53);
+    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+}
+.card-slide-up .card-slide-up-content {
+    transform: translateY(30px);
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+.card-slide-up:hover .card-slide-up-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+.card-slide-up:hover {
+    box-shadow: 0 8px 24px color-mix(in oklch, oklch(0 0 0) 10%, transparent);
+}
+
+.card-glass {
+    position: relative;
+    background: oklch(1 0 0);
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid oklch(0.928 0.006 264.53);
+    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
+    transition: background 0.4s ease, border-color 0.4s ease,
+                box-shadow 0.4s ease, backdrop-filter 0.4s ease;
+}
+.card-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background: linear-gradient(135deg, color-mix(in oklch, oklch(1 0 0) 60%, transparent), color-mix(in oklch, oklch(1 0 0) 20%, transparent));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 0;
+}
+.card-glass:hover {
+    background: color-mix(in oklch, oklch(1 0 0) 15%, transparent);
+    border-color: color-mix(in oklch, oklch(1 0 0) 30%, transparent);
+    box-shadow: 0 8px 32px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+.card-glass:hover::before {
+    opacity: 1;
+}
+.card-glass > * {
+    position: relative;
+    z-index: 1;
+}
+
+.card-expand {
+    background: oklch(1 0 0);
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid oklch(0.928 0.006 264.53);
+    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.card-expand .card-expand-extra {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease;
+    margin-top: 0;
+}
+.card-expand:hover .card-expand-extra {
+    max-height: 200px;
+    opacity: 1;
+    margin-top: 16px;
+}
+.card-expand:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 28px color-mix(in oklch, oklch(0 0 0) 10%, transparent);
+}
+
+.card-skew-reveal {
+    position: relative;
+    background: oklch(1 0 0);
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid oklch(0.928 0.006 264.53);
+    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+}
+.card-skew-reveal .card-skew-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, color-mix(in oklch, oklch(0.541 0.247 293.01) 92%, transparent), color-mix(in oklch, oklch(0.551 0.211 277.76) 88%, transparent));
+    color: oklch(1 0 0);
+    padding: 24px;
+    box-sizing: border-box;
+    transform: translateX(-110%) skewX(-12deg);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 12px;
+}
+.card-skew-reveal:hover .card-skew-overlay {
+    transform: translateX(0) skewX(0);
+}
+.card-skew-reveal:hover {
+    box-shadow: 0 8px 24px color-mix(in oklch, oklch(0.541 0.247 293.01) 15%, transparent);
+}
+
+.card-holographic {
+    position: relative;
+    background: oklch(1 0 0);
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid oklch(0.928 0.006 264.53);
+    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.card-holographic::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        125deg,
+        color-mix(in oklch, oklch(0.645 0.26 2.47) 20%, transparent),
+        color-mix(in oklch, oklch(0.793 0.171 70.67) 20%, transparent),
+        color-mix(in oklch, oklch(0.968 0.211 109.77) 20%, transparent),
+        color-mix(in oklch, oklch(0.727 0.208 148.34) 20%, transparent),
+        color-mix(in oklch, oklch(0.721 0.163 239.29) 20%, transparent),
+        color-mix(in oklch, oklch(0.541 0.247 293.01) 20%, transparent),
+        color-mix(in oklch, oklch(0.645 0.26 2.47) 20%, transparent)
+    );
+    background-size: 400% 400%;
+    border-radius: 12px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    animation: card-holo-shift 4s ease infinite;
+    pointer-events: none;
+    z-index: 0;
+    mix-blend-mode: overlay;
+}
+.card-holographic:hover::before {
+    opacity: 1;
+}
+.card-holographic:hover {
+    box-shadow: 0 8px 28px color-mix(in oklch, oklch(0.541 0.247 293.01) 18%, transparent);
+    transform: translateY(-4px);
+}
+.card-holographic > * {
+    position: relative;
+    z-index: 1;
+}
+
+.card-pulse-border {
+    background: oklch(1 0 0);
+    border-radius: 12px;
+    padding: 24px;
+    border: 2px solid oklch(0.928 0.006 264.53);
+    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
+    transition: border-color 0.3s ease;
+}
+.card-pulse-border:hover {
+    animation: card-pulse-border-anim 1.5s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-heartbeat-pulse {
+
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.2); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.2); }
+  56% { transform: scale(1); }
+
+}`
+  },
+  {
+    id: "ferrum-circle-reveal-in",
+    name: "Circle Reveal In",
+    category: "page-transitions",
+    description: "An animated motion effect (circle reveal in)",
+    tags: ["circle-reveal-in", "reveal", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-circle-reveal-in {
+    animation: roy-ferrum-circle-reveal-in 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes roy-ferrum-circle-reveal-in {
+
+    0%   { clip-path: circle(0% at 50% 50%); }
+    100% { clip-path: circle(75% at 50% 50%); }
+
+}`
+  },
+  {
+    id: "ferrum-circle-reveal-out",
+    name: "Circle Reveal Out",
+    category: "page-transitions",
+    description: "An animated motion effect (circle reveal out)",
+    tags: ["circle-reveal-out", "reveal", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-circle-reveal-out {
+    animation: roy-ferrum-circle-reveal-out 0.8s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+}
+
+@keyframes roy-ferrum-circle-reveal-out {
+
+    0%   { clip-path: circle(75% at 50% 50%); }
+    100% { clip-path: circle(0% at 50% 50%); }
+
+}`
+  },
+  {
+    id: "ferrum-diamond-reveal",
+    name: "Diamond Reveal",
+    category: "page-transitions",
+    description: "An animated motion effect (diamond reveal)",
+    tags: ["diamond-reveal", "reveal", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-diamond-reveal {
+    animation: roy-ferrum-diamond-reveal 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes roy-ferrum-diamond-reveal {
+
+    0%   { clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%); }
+    40%  { clip-path: polygon(50% 10%, 90% 50%, 50% 90%, 10% 50%); }
+    100% { clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
+
+}`
+  }
+];
+
+// src/lib/effects-batch-23.ts
+var effectsBatch23 = [
+  {
+    id: "ferrum-blur-in",
+    name: "Blur In",
+    category: "animations",
+    description: "An animated motion effect (blur in)",
+    tags: ["blur", "filter", "blur-in", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-blur-in {
+  animation: roy-ferrum-blur-in 0.8s ease-out both;
+}
+
+@keyframes roy-ferrum-blur-in {
+
+  0% { filter: blur(12px); }
+  100% { filter: blur(0px); }
+
+}`
+  },
+  {
+    id: "ferrum-blur-out",
+    name: "Blur Out",
+    category: "animations",
+    description: "An animated motion effect (blur out)",
+    tags: ["blur", "filter", "blur-out", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-blur-out {
+  animation: roy-ferrum-blur-out 0.8s ease-in both;
+}
+
+@keyframes roy-ferrum-blur-out {
+
+  0% { filter: blur(0px); }
+  100% { filter: blur(14px); }
+
+}`
+  },
+  {
+    id: "ferrum-skeleton-pulse",
+    name: "Pulse",
+    category: "forms",
+    description: "A skeleton loading placeholder with shimmer or pulse motion",
+    tags: ["skeleton", "loading", "skeleton-pulse", "pulse", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-skeleton-pulse {
+    background-color: oklch(0.907 0.0 89.88);
+    animation: roy-ferrum-skeleton-pulse 1.5s ease-in-out infinite;
+    border-radius: 4px;
+}
+
+@keyframes roy-ferrum-skeleton-pulse {
+
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.4; }
+
+}`
+  },
+  {
+    id: "ferrum-skeleton-shimmer",
+    name: "Shimmer",
+    category: "forms",
+    description: "A skeleton loading placeholder with shimmer or pulse motion",
+    tags: ["skeleton", "loading", "skeleton-shimmer", "shimmer", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-skeleton-shimmer {
+    background-color: oklch(0.907 0.0 89.88);
+    background-image: linear-gradient(
+        90deg,
+        oklch(0.907 0.0 89.88) 0%,
+        oklch(0.955 0.0 89.88) 20%,
+        oklch(0.979 0.0 89.88) 50%,
+        oklch(0.955 0.0 89.88) 80%,
+        oklch(0.907 0.0 89.88) 100%
+    );
+    background-size: 200% 100%;
+    animation: roy-ferrum-skeleton-shimmer 1.8s ease-in-out infinite;
+    border-radius: 4px;
+}
+
+@keyframes roy-ferrum-skeleton-shimmer {
+
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+
+}`
+  },
+  {
+    id: "ferrum-skeleton-wave",
+    name: "Wave",
+    category: "forms",
+    description: "A skeleton loading placeholder with shimmer or pulse motion",
+    tags: ["skeleton", "loading", "skeleton-wave", "wave", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-skeleton-wave {
+    background-color: oklch(0.907 0.0 89.88);
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+}
+.roycss-ferrum-skeleton-wave::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        color-mix(in oklch, oklch(1 0 0) 30%, transparent) 25%,
+        color-mix(in oklch, oklch(1 0 0) 60%, transparent) 50%,
+        color-mix(in oklch, oklch(1 0 0) 30%, transparent) 75%,
+        transparent 100%
+    );
+    animation: roy-ferrum-skeleton-wave 2s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-skeleton-wave {
+
+    0%   { left: -100%; }
+    100% { left: 100%; }
+
+}`
+  },
+  {
+    id: "ferrum-skeleton-text",
+    name: "Text",
+    category: "forms",
+    description: "A skeleton loading placeholder with shimmer or pulse motion",
+    tags: ["skeleton", "loading", "skeleton-text", "text", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-skeleton-text {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.roycss-ferrum-skeleton-text::before,
+.roycss-ferrum-skeleton-text::after {
+    content: '';
+    display: block;
+    background-color: oklch(0.907 0.0 89.88);
+    border-radius: 4px;
+    height: 14px;
+    background-image: linear-gradient(
+        90deg,
+        oklch(0.907 0.0 89.88) 0%,
+        oklch(0.97 0.0 89.88) 50%,
+        oklch(0.907 0.0 89.88) 100%
+    );
+    background-size: 200% 100%;
+    animation: roy-ferrum-skeleton-text 1.6s ease-in-out infinite;
+}
+.roycss-ferrum-skeleton-text::before { width: 100%; }
+.roycss-ferrum-skeleton-text::after  { width: 65%; animation-delay: 0.15s; }
+.roycss-ferrum-skeleton-text > * {
+    background-color: oklch(0.907 0.0 89.88);
+    border-radius: 4px;
+    height: 14px;
+    background-image: linear-gradient(
+        90deg,
+        oklch(0.907 0.0 89.88) 0%,
+        oklch(0.97 0.0 89.88) 50%,
+        oklch(0.907 0.0 89.88) 100%
+    );
+    background-size: 200% 100%;
+    animation: roy-ferrum-skeleton-text 1.6s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-skeleton-text {
+
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+
+}`
+  },
+  {
+    id: "ferrum-skeleton-card",
+    name: "Card",
+    category: "forms",
+    description: "A skeleton loading placeholder with shimmer or pulse motion",
+    tags: ["skeleton", "loading", "skeleton-card", "card"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-skeleton-card {
+    background-color: oklch(0.97 0.0 89.88);
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border: 1px solid oklch(0.931 0.0 89.88);`
+  },
+  {
+    id: "ferrum-skeleton-card-header",
+    name: "Card Header",
+    category: "forms",
+    description: "A skeleton loading placeholder with shimmer or pulse motion",
+    tags: ["skeleton", "loading", "skeleton-card-header", "card"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-skeleton-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;`
+  },
+  {
+    id: "ferrum-skeleton-card-avatar",
+    name: "Card Avatar",
+    category: "forms",
+    description: "A skeleton loading placeholder with shimmer or pulse motion",
+    tags: ["skeleton", "loading", "skeleton-card-avatar", "card", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-skeleton-card-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: oklch(0.907 0.0 89.88);
+    background-image: linear-gradient(
+        90deg, oklch(0.907 0.0 89.88) 0%, oklch(0.97 0.0 89.88) 50%, oklch(0.907 0.0 89.88) 100%
+    );
+    background-size: 200% 100%;
+    animation: roy-ferrum-skeleton-card 1.6s ease-in-out infinite;
+    flex-shrink: 0;
+
+@keyframes roy-ferrum-skeleton-card {
+
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+
+}`
+  },
+  {
+    id: "ferrum-skeleton-card-lines",
+    name: "Card Lines",
+    category: "forms",
+    description: "A skeleton loading placeholder with shimmer or pulse motion",
+    tags: ["skeleton", "loading", "skeleton-card-lines", "card"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-skeleton-card-lines {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;`
+  },
+  {
+    id: "ferrum-skeleton-card-line",
+    name: "Card Line",
+    category: "forms",
+    description: "A skeleton loading placeholder with shimmer or pulse motion",
+    tags: ["skeleton", "loading", "skeleton-card-line", "card", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-skeleton-card-line {
+    height: 12px;
+    border-radius: 4px;
+    background-color: oklch(0.907 0.0 89.88);
+    background-image: linear-gradient(
+        90deg, oklch(0.907 0.0 89.88) 0%, oklch(0.97 0.0 89.88) 50%, oklch(0.907 0.0 89.88) 100%
+    );
+    background-size: 200% 100%;
+    animation: roy-ferrum-skeleton-card 1.6s ease-in-out infinite;
+
+@keyframes roy-ferrum-skeleton-card {
+
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+
+}`
+  },
+  {
+    id: "ferrum-skeleton-card-body",
+    name: "Card Body",
+    category: "forms",
+    description: "A skeleton loading placeholder with shimmer or pulse motion",
+    tags: ["skeleton", "loading", "skeleton-card-body", "card", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-skeleton-card-body {
+    height: 80px;
+    border-radius: 4px;
+    background-color: oklch(0.907 0.0 89.88);
+    background-image: linear-gradient(
+        90deg, oklch(0.907 0.0 89.88) 0%, oklch(0.97 0.0 89.88) 50%, oklch(0.907 0.0 89.88) 100%
+    );
+    background-size: 200% 100%;
+    animation: roy-ferrum-skeleton-card 1.6s ease-in-out infinite;
+    animation-delay: 0.1s;
+}
+
+@keyframes roy-ferrum-skeleton-card {
+
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+
+}`
+  },
+  {
+    id: "ferrum-skeleton-circle",
+    name: "Circle",
+    category: "forms",
+    description: "A skeleton loading placeholder with shimmer or pulse motion",
+    tags: ["skeleton", "loading", "skeleton-circle", "circle", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-skeleton-circle {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: oklch(0.907 0.0 89.88);
+    position: relative;
+    overflow: hidden;
+}
+.roycss-ferrum-skeleton-circle::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        color-mix(in oklch, oklch(1 0 0) 40%, transparent) 50%,
+        transparent 100%
+    );
+    animation: roy-ferrum-skeleton-circle 1.5s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-skeleton-circle {
+
+    0%   { left: -100%; }
+    100% { left: 100%; }
+
+}`
+  },
+  {
+    id: "ferrum-skeleton-grid",
+    name: "Grid",
+    category: "forms",
+    description: "A skeleton loading placeholder with shimmer or pulse motion",
+    tags: ["skeleton", "loading", "skeleton-grid", "grid"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-skeleton-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;`
+  },
+  {
+    id: "ferrum-skeleton-grid-item",
+    name: "Grid Item",
+    category: "forms",
+    description: "A skeleton loading placeholder with shimmer or pulse motion",
+    tags: ["skeleton", "loading", "skeleton-grid-item", "grid"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-skeleton-grid-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;`
+  },
+  {
+    id: "ferrum-skeleton-grid-img",
+    name: "Grid Img",
+    category: "forms",
+    description: "A skeleton loading placeholder with shimmer or pulse motion",
+    tags: ["skeleton", "loading", "skeleton-grid-img", "grid", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-skeleton-grid-img {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 6px;
+    background-color: oklch(0.907 0.0 89.88);
+    background-image: linear-gradient(
+        90deg, oklch(0.907 0.0 89.88) 0%, oklch(0.955 0.0 89.88) 40%, oklch(0.979 0.0 89.88) 50%, oklch(0.955 0.0 89.88) 60%, oklch(0.907 0.0 89.88) 100%
+    );
+    background-size: 200% 100%;
+    animation: roy-ferrum-skeleton-grid 1.8s ease-in-out infinite;
+
+@keyframes roy-ferrum-skeleton-grid {
+
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+
+}`
+  },
+  {
+    id: "ferrum-skeleton-grid-line",
+    name: "Grid Line",
+    category: "forms",
+    description: "A skeleton loading placeholder with shimmer or pulse motion",
+    tags: ["skeleton", "loading", "skeleton-grid-line", "grid", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-skeleton-grid-line {
+    height: 12px;
+    border-radius: 4px;
+    background-color: oklch(0.907 0.0 89.88);
+    background-image: linear-gradient(
+        90deg, oklch(0.907 0.0 89.88) 0%, oklch(0.955 0.0 89.88) 40%, oklch(0.979 0.0 89.88) 50%, oklch(0.955 0.0 89.88) 60%, oklch(0.907 0.0 89.88) 100%
+    );
+    background-size: 200% 100%;
+    animation: roy-ferrum-skeleton-grid 1.8s ease-in-out infinite;
+}
+.roycss-ferrum-skeleton-grid-item:nth-child(2) .roycss-ferrum-skeleton-grid-img,
+.roycss-ferrum-skeleton-grid-item:nth-child(2) .roycss-ferrum-skeleton-grid-line { animation-delay: 0.15s; }
+.roycss-ferrum-skeleton-grid-item:nth-child(3) .roycss-ferrum-skeleton-grid-img,
+.roycss-ferrum-skeleton-grid-item:nth-child(3) .roycss-ferrum-skeleton-grid-line { animation-delay: 0.3s; }
+.roycss-ferrum-skeleton-grid-item:nth-child(4) .roycss-ferrum-skeleton-grid-img,
+.roycss-ferrum-skeleton-grid-item:nth-child(4) .roycss-ferrum-skeleton-grid-line { animation-delay: 0.1s; }
+.roycss-ferrum-skeleton-grid-item:nth-child(5) .roycss-ferrum-skeleton-grid-img,
+.roycss-ferrum-skeleton-grid-item:nth-child(5) .roycss-ferrum-skeleton-grid-line { animation-delay: 0.25s; }
+.roycss-ferrum-skeleton-grid-item:nth-child(6) .roycss-ferrum-skeleton-grid-img,
+.roycss-ferrum-skeleton-grid-item:nth-child(6) .roycss-ferrum-skeleton-grid-line { animation-delay: 0.4s; }
+
+@keyframes roy-ferrum-skeleton-grid {
+
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+
+}`
+  },
+  {
+    id: "ferrum-skeleton-gradient",
+    name: "Gradient",
+    category: "forms",
+    description: "A skeleton loading placeholder with shimmer or pulse motion",
+    tags: ["skeleton", "loading", "skeleton-gradient", "gradient", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-skeleton-gradient {
+    background: linear-gradient(135deg, oklch(0.858 0.0 89.88) 0%, oklch(0.931 0.0 89.88) 50%, oklch(0.858 0.0 89.88) 100%);
+    background-size: 200% 200%;
+    animation: roy-ferrum-skeleton-gradient 2s ease-in-out infinite;
+    border-radius: 4px;
+}
+
+@keyframes roy-ferrum-skeleton-gradient {
+
+    0%, 100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
+
+}`
+  },
+  {
+    id: "ferrum-skeleton-blink",
+    name: "Blink",
+    category: "forms",
+    description: "A skeleton loading placeholder with shimmer or pulse motion",
+    tags: ["skeleton", "loading", "skeleton-blink", "blink", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-skeleton-blink {
+    background-color: oklch(0.907 0.0 89.88);
+    animation: roy-ferrum-skeleton-blink 1s step-end infinite;
+    border-radius: 4px;
+}
+
+@keyframes roy-ferrum-skeleton-blink {
+
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.2; }
+
+}`
+  },
+  {
+    id: "ferrum-skeleton-fade",
+    name: "Fade",
+    category: "forms",
+    description: "A skeleton loading placeholder with shimmer or pulse motion",
+    tags: ["skeleton", "loading", "skeleton-fade", "fade", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-skeleton-fade {
+    background-color: oklch(0.907 0.0 89.88);
+    animation: roy-ferrum-skeleton-fade 2s ease-in-out infinite;
+    border-radius: 4px;
+}
+
+@keyframes roy-ferrum-skeleton-fade {
+
+    0%, 100% { opacity: 1; background-color: oklch(0.907 0.0 89.88); }
+    50%      { opacity: 0.3; background-color: oklch(0.858 0.0 89.88); }
+
+}`
+  },
+  {
+    id: "ferrum-toggle-switch",
+    name: "Switch",
+    category: "forms",
+    description: "A microinteraction that animates a small UI element (switch)",
+    tags: ["toggle", "interactive", "toggle-switch", "switch"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-toggle-switch {
+    position: relative;
+    width: 52px;
+    height: 28px;
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: oklch(0.845 0.0 89.88);
+    border-radius: 28px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    outline: none;
+    border: none;
+}
+.roycss-ferrum-toggle-switch::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    background-color: oklch(1 0 0);
+    border-radius: 50%;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s ease;
+    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
+}
+.roycss-ferrum-toggle-switch:checked {
+    background-color: oklch(0.673 0.162 144.21);
+}
+.roycss-ferrum-toggle-switch:checked::before {
+    transform: translateX(24px);
+    box-shadow: 0 1px 5px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
+}
+.roycss-ferrum-toggle-switch:focus-visible {
+    box-shadow: 0 0 0 3px color-mix(in oklch, oklch(0.673 0.162 144.21) 30%, transparent);
+}`
+  },
+  {
+    id: "ferrum-checkbox-anim",
+    name: "Anim",
+    category: "forms",
+    description: "A microinteraction that animates a small UI element (anim)",
+    tags: ["checkbox-anim", "anim", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-checkbox-anim {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: oklch(1 0 0);
+    border: 2px solid oklch(0.792 0.0 89.88);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    outline: none;
+}
+.roycss-ferrum-checkbox-anim:checked {
+    background-color: oklch(0.658 0.169 248.81);
+    border-color: oklch(0.658 0.169 248.81);
+    animation: roy-ferrum-checkbox-pop 0.3s ease;
+}
+.roycss-ferrum-checkbox-anim::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 6px;
+    width: 6px;
+    height: 10px;
+    border: solid oklch(1 0 0);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) scale(0);
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+}
+.roycss-ferrum-checkbox-anim:checked::before {
+    transform: rotate(45deg) scale(1);
+}
+.roycss-ferrum-checkbox-anim:focus-visible {
+    box-shadow: 0 0 0 3px color-mix(in oklch, oklch(0.658 0.169 248.81) 30%, transparent);
+}
+
+@keyframes roy-ferrum-checkbox-pop {
+
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.15); }
+    100% { transform: scale(1); }
+
+}`
+  },
+  {
+    id: "ferrum-radio-pulse",
+    name: "Pulse",
+    category: "forms",
+    description: "A microinteraction that animates a small UI element (pulse)",
+    tags: ["radio-pulse", "pulse", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-radio-pulse {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: oklch(1 0 0);
+    border: 2px solid oklch(0.792 0.0 89.88);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+    outline: none;
+}
+.roycss-ferrum-radio-pulse::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background-color: oklch(0.658 0.169 248.81);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.roycss-ferrum-radio-pulse:checked {
+    border-color: oklch(0.658 0.169 248.81);
+    animation: roy-ferrum-radio-pulse-ring 0.4s ease;
+}
+.roycss-ferrum-radio-pulse:checked::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+.roycss-ferrum-radio-pulse:focus-visible {
+    box-shadow: 0 0 0 3px color-mix(in oklch, oklch(0.658 0.169 248.81) 30%, transparent);
+}
+
+@keyframes roy-ferrum-radio-pulse-ring {
+
+    0%   { box-shadow: 0 0 0 0 color-mix(in oklch, oklch(0.658 0.169 248.81) 40%, transparent); }
+    70%  { box-shadow: 0 0 0 8px color-mix(in oklch, oklch(0.658 0.169 248.81) 0%, transparent); }
+    100% { box-shadow: 0 0 0 0 color-mix(in oklch, oklch(0.658 0.169 248.81) 0%, transparent); }
+
+}`
+  },
+  {
+    id: "ferrum-input-focus-glow",
+    name: "Focus Glow",
+    category: "forms",
+    description: "A form input effect with focus or validation feedback",
+    tags: ["input", "form", "input-focus-glow", "focus"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-input-focus-glow {
+    padding: 10px 14px;
+    border: 2px solid oklch(0.898 0.0 89.88);
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: oklch(1 0 0);
+}
+.roycss-ferrum-input-focus-glow:focus {
+    border-color: oklch(0.579 0.247 288.24);
+    box-shadow: 0 0 0 3px color-mix(in oklch, oklch(0.579 0.247 288.24) 20%, transparent),
+                0 0 12px color-mix(in oklch, oklch(0.579 0.247 288.24) 15%, transparent);
+}
+.roycss-ferrum-input-focus-glow::placeholder {
+    color: oklch(0.738 0.0 89.88);
+    transition: color 0.3s ease;
+}
+.roycss-ferrum-input-focus-glow:focus::placeholder {
+    color: oklch(0.845 0.0 89.88);
+}`
+  },
+  {
+    id: "ferrum-input-float-label-wrapper",
+    name: "Float Label Wrapper",
+    category: "forms",
+    description: "A form input effect with focus or validation feedback",
+    tags: ["input", "form", "input-float-label-wrapper", "float"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-input-float-label-wrapper {
+    position: relative;`
+  },
+  {
+    id: "ferrum-input-float-label",
+    name: "Float Label",
+    category: "forms",
+    description: "A form input effect with focus or validation feedback",
+    tags: ["input", "form", "input-float-label", "float"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-input-float-label {
+    padding: 18px 14px 6px 14px;
+    border: 2px solid oklch(0.898 0.0 89.88);
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: transparent;
+    width: 100%;
+    box-sizing: border-box;
+}
+.roycss-ferrum-input-float-label::placeholder {
+    color: transparent;`
+  },
+  {
+    id: "ferrum-input-float-label-label",
+    name: "Float Label Label",
+    category: "forms",
+    description: "A form input effect with focus or validation feedback",
+    tags: ["input", "form", "input-float-label-label", "float"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-input-float-label-label {
+    position: absolute;
+    top: 50%;
+    left: 14px;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: oklch(0.683 0.0 89.88);
+    pointer-events: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: oklch(1 0 0);
+    padding: 0 4px;
+}
+.roycss-ferrum-input-float-label:focus ~ .roycss-ferrum-input-float-label-label,
+.roycss-ferrum-input-float-label:not(:placeholder-shown) ~ .roycss-ferrum-input-float-label-label {
+    top: 0;
+    font-size: 11px;
+    color: oklch(0.579 0.247 288.24);
+    transform: translateY(-50%);
+}
+.roycss-ferrum-input-float-label:focus {
+    border-color: oklch(0.579 0.247 288.24);
+    box-shadow: 0 0 0 3px color-mix(in oklch, oklch(0.579 0.247 288.24) 15%, transparent);
+}`
+  },
+  {
+    id: "ferrum-tooltip-fade-wrapper",
+    name: "Fade Wrapper",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (fade wrapper)",
+    tags: ["tooltip", "microinteraction", "tooltip-fade-wrapper", "fade"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-tooltip-fade-wrapper {
+    position: relative;
+    display: inline-block;`
+  },
+  {
+    id: "ferrum-tooltip-fade",
+    name: "Fade",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (fade)",
+    tags: ["tooltip", "microinteraction", "tooltip-fade", "fade", "interactive"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-tooltip-fade {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background-color: oklch(0.321 0.0 89.88);
+    color: oklch(1 0 0);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+    pointer-events: none;
+    z-index: 10;
+}
+.roycss-ferrum-tooltip-fade::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: oklch(0.321 0.0 89.88);
+}
+.roycss-ferrum-tooltip-fade-wrapper:hover .roycss-ferrum-tooltip-fade {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}`
+  },
+  {
+    id: "ferrum-notification-slide-in",
+    name: "Slide In",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (slide in)",
+    tags: ["notification", "toast", "notification-slide-in", "slide", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-notification-slide-in {
+    position: relative;
+    padding: 14px 20px;
+    background-color: oklch(1 0 0);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px color-mix(in oklch, oklch(0 0 0) 12%, transparent);
+    border-left: 4px solid oklch(0.673 0.162 144.21);
+    animation: roy-ferrum-notification-slide-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    max-width: 360px;
+}
+.roycss-ferrum-notification-slide-in.roycss-ferrum-exit {
+    animation: roy-ferrum-notification-slide-out 0.4s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+}
+
+@keyframes roy-ferrum-notification-slide-in {
+
+    0% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+}
+
+@keyframes roy-ferrum-notification-slide-out {
+
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+}`
+  },
+  {
+    id: "ferrum-progress-bar-fill-track",
+    name: "Bar Fill Track",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (bar fill track)",
+    tags: ["progress", "bar", "progress-bar-fill-track"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-progress-bar-fill-track {
+    width: 100%;
+    height: 10px;
+    background-color: oklch(0.931 0.0 89.88);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;`
+  },
+  {
+    id: "ferrum-progress-bar-fill",
+    name: "Bar Fill",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (bar fill)",
+    tags: ["progress", "bar", "progress-bar-fill", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, oklch(0.673 0.162 144.21), oklch(0.718 0.142 144.89));
+    border-radius: 10px;
+    width: 0%;
+    transition: width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+}
+.roycss-ferrum-progress-bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        color-mix(in oklch, oklch(1 0 0) 30%, transparent) 50%,
+        transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: roy-ferrum-progress-stripe 1s linear infinite;
+}
+.roycss-ferrum-progress-bar-fill.roycss-ferrum-animated {
+    width: 75%;
+}
+
+@keyframes roy-ferrum-progress-stripe {
+
+    0%   { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+
+}`
+  },
+  {
+    id: "ferrum-ripple-click",
+    name: "Ripple Click",
+    category: "microinteractions",
+    description: "A ripple click effect",
+    tags: ["ripple-click", "click"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-ripple-click {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+.roycss-ferrum-ripple-click::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background-color: color-mix(in oklch, oklch(1 0 0) 35%, transparent);
+    transform: translate(-50%, -50%) scale(0);
+    transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+.roycss-ferrum-ripple-click:active::after {
+    width: 300px;
+    height: 300px;
+    opacity: 1;
+    transition: width 0s, height 0s, opacity 0s;
+}
+.roycss-ferrum-ripple-click:not(:active)::after {
+    transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
+}`
+  },
+  {
+    id: "ferrum-accordion-slide",
+    name: "Slide",
+    category: "navigation",
+    description: "A navigation component with motion or interaction feedback",
+    tags: ["accordion", "navigation", "accordion-slide", "slide"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-accordion-slide {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.3s ease,
+                padding 0.3s ease;
+    padding: 0 16px;
+}
+.roycss-ferrum-accordion-trigger:checked ~ .roycss-ferrum-accordion-slide,
+.roycss-ferrum-accordion-slide.roycss-ferrum-open {
+    max-height: 500px;
+    opacity: 1;
+    padding: 16px;`
+  },
+  {
+    id: "ferrum-accordion-trigger",
+    name: "Trigger",
+    category: "navigation",
+    description: "A navigation component with motion or interaction feedback",
+    tags: ["accordion", "navigation", "accordion-trigger", "trigger"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-accordion-trigger {
+    display: none;`
+  },
+  {
+    id: "ferrum-accordion-trigger-label",
+    name: "Trigger Label",
+    category: "navigation",
+    description: "A navigation component with motion or interaction feedback",
+    tags: ["accordion", "navigation", "accordion-trigger-label", "trigger", "interactive"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-accordion-trigger-label {
+    display: block;
+    padding: 14px 16px;
+    cursor: pointer;
+    font-weight: 600;
+    background-color: oklch(0.97 0.0 89.88);
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    user-select: none;
+}
+.roycss-ferrum-accordion-trigger-label:hover {
+    background-color: oklch(0.949 0.0 89.88);
+}
+.roycss-ferrum-accordion-trigger:checked ~ .roycss-ferrum-accordion-trigger-label {
+    border-radius: 8px 8px 0 0;
+    background-color: oklch(0.931 0.0 89.88);
+}
+.roycss-ferrum-accordion-trigger-label::after {
+    content: '+';
+    float: right;
+    font-size: 18px;
+    line-height: 1;
+    transition: transform 0.3s ease;
+}
+.roycss-ferrum-accordion-trigger:checked ~ .roycss-ferrum-accordion-trigger-label::after {
+    content: '\\2212';
+    transform: rotate(180deg);
+}`
+  },
+  {
+    id: "ferrum-tab-underline-group",
+    name: "Underline Group",
+    category: "navigation",
+    description: "A navigation component with motion or interaction feedback",
+    tags: ["tabs", "navigation", "tab-underline-group", "underline"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-tab-underline-group {
+    position: relative;
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid oklch(0.907 0.0 89.88);`
+  },
+  {
+    id: "ferrum-tab-underline",
+    name: "Underline",
+    category: "navigation",
+    description: "A navigation component with motion or interaction feedback",
+    tags: ["tabs", "navigation", "tab-underline", "underline", "interactive"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-tab-underline {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: oklch(0.569 0.0 89.88);
+    background: none;
+    border: none;
+    outline: none;
+    position: relative;
+    transition: color 0.3s ease;
+}
+.roycss-ferrum-tab-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: oklch(0.658 0.169 248.81);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.roycss-ferrum-tab-underline:hover {
+    color: oklch(0.321 0.0 89.88);
+}
+.roycss-ferrum-tab-underline:hover::after {
+    width: 100%;
+    left: 0;
+}
+.roycss-ferrum-tab-underline.roycss-ferrum-active,
+.roycss-ferrum-tab-underline:active {
+    color: oklch(0.658 0.169 248.81);
+}
+.roycss-ferrum-tab-underline.roycss-ferrum-active::after,
+.roycss-ferrum-tab-underline:active::after {
+    width: 100%;
+    left: 0;
+}`
+  },
+  {
+    id: "ferrum-dropdown-slide-wrapper",
+    name: "Dropdown Slide Wrapper",
+    category: "navigation",
+    description: "A navigation component with motion or interaction feedback",
+    tags: ["dropdown-slide-wrapper", "slide"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-dropdown-slide-wrapper {
+    position: relative;
+    display: inline-block;`
+  },
+  {
+    id: "ferrum-dropdown-slide",
+    name: "Dropdown Slide",
+    category: "navigation",
+    description: "A navigation component with motion or interaction feedback",
+    tags: ["dropdown-slide", "slide", "interactive"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-dropdown-slide {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    min-width: 180px;
+    background-color: oklch(1 0 0);
+    border: 1px solid oklch(0.907 0.0 89.88);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px color-mix(in oklch, oklch(0 0 0) 10%, transparent);
+    padding: 6px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.25s ease,
+                transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 0.25s;
+    z-index: 20;
+}
+.roycss-ferrum-dropdown-slide-wrapper:focus-within .roycss-ferrum-dropdown-slide,
+.roycss-ferrum-dropdown-slide-wrapper:hover .roycss-ferrum-dropdown-slide {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);`
+  },
+  {
+    id: "ferrum-dropdown-slide-item",
+    name: "Dropdown Slide Item",
+    category: "navigation",
+    description: "A navigation component with motion or interaction feedback",
+    tags: ["dropdown-slide-item", "slide", "interactive"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-dropdown-slide-item {
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    border: none;
+    background: none;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+    color: oklch(0.321 0.0 89.88);
+    transition: background-color 0.15s ease;
+}
+.roycss-ferrum-dropdown-slide-item:hover {
+    background-color: oklch(0.967 0.015 269.99);
+}
+.roycss-ferrum-dropdown-slide-item:first-child {
+    border-radius: 8px 8px 0 0;
+}
+.roycss-ferrum-dropdown-slide-item:last-child {
+    border-radius: 0 0 8px 8px;
+}`
+  },
+  {
+    id: "ferrum-triangle-reveal",
+    name: "Triangle Reveal",
+    category: "page-transitions",
+    description: "An animated motion effect (triangle reveal)",
+    tags: ["triangle-reveal", "reveal", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-triangle-reveal {
+    animation: roy-ferrum-triangle-reveal 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes roy-ferrum-triangle-reveal {
+
+    0%   { clip-path: polygon(50% 50%, 50% 50%, 50% 50%); }
+    50%  { clip-path: polygon(50% 15%, 85% 85%, 15% 85%); }
+    100% { clip-path: polygon(50% 0%, 100% 100%, 0% 100%); }
+
+}`
+  },
+  {
+    id: "ferrum-cross-reveal",
+    name: "Cross Reveal",
+    category: "page-transitions",
+    description: "An animated motion effect (cross reveal)",
+    tags: ["cross-reveal", "reveal", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-cross-reveal {
+    animation: roy-ferrum-cross-reveal 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes roy-ferrum-cross-reveal {
+
+    0%   { clip-path: polygon(
+        40% 0%, 60% 0%, 60% 40%, 100% 40%, 100% 60%,
+        60% 60%, 60% 100%, 40% 100%, 40% 60%, 0% 60%,
+        0% 40%, 40% 40%
+    ); opacity: 0; }
+    50%  { clip-path: polygon(
+        35% 0%, 65% 0%, 65% 35%, 100% 35%, 100% 65%,
+        65% 65%, 65% 100%, 35% 100%, 35% 65%, 0% 65%,
+        0% 35%, 35% 35%
+    ); opacity: 1; }
+    100% { clip-path: polygon(
+        0% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%,
+        100% 100%, 0% 100%, 0% 100%, 0% 100%, 0% 100%,
+        0% 0%, 0% 0%
+    ); opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-hexagon-reveal",
+    name: "Hexagon Reveal",
+    category: "page-transitions",
+    description: "An animated motion effect (hexagon reveal)",
+    tags: ["hexagon-reveal", "reveal", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hexagon-reveal {
+    animation: roy-ferrum-hexagon-reveal 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes roy-ferrum-hexagon-reveal {
+
+    0%   { clip-path: polygon(50% 50%, 50% 50%, 50% 50%,
+                              50% 50%, 50% 50%, 50% 50%); }
+    60%  { clip-path: polygon(50% 15%, 93% 35%, 93% 65%,
+                              50% 85%, 7% 65%, 7% 35%); }
+    100% { clip-path: polygon(50% 0%, 100% 25%, 100% 75%,
+                              50% 100%, 0% 75%, 0% 25%); }
+
+}`
+  },
+  {
+    id: "ferrum-star-reveal",
+    name: "Star Reveal",
+    category: "page-transitions",
+    description: "An animated motion effect (star reveal)",
+    tags: ["star-reveal", "reveal", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-star-reveal {
+    animation: roy-ferrum-star-reveal 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes roy-ferrum-star-reveal {
+
+    0%   { clip-path: polygon(50% 50%, 50% 50%, 50% 50%,
+                              50% 50%, 50% 50%, 50% 50%,
+                              50% 50%, 50% 50%, 50% 50%); }
+    50%  { clip-path: polygon(50% 20%, 61% 40%, 80% 40%, 65% 55%,
+                              75% 75%, 55% 65%, 50% 85%, 45% 65%,
+                              25% 75%, 35% 55%, 20% 40%, 39% 40%); }
+    100% { clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%,
+                              79% 91%, 50% 70%, 21% 91%, 32% 57%,
+                              2% 35%, 39% 35%); }
+
+}`
+  },
+  {
+    id: "ferrum-slide-left-reveal",
+    name: "Slide Left Reveal",
+    category: "page-transitions",
+    description: "An animated motion effect (slide left reveal)",
+    tags: ["slide", "transition", "slide-left-reveal", "left", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-slide-left-reveal {
+    animation: roy-ferrum-slide-left-reveal 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes roy-ferrum-slide-left-reveal {
+
+    0%   { clip-path: inset(0 100% 0 0); }
+    100% { clip-path: inset(0 0% 0 0); }
+
+}`
+  },
+  {
+    id: "ferrum-slide-down-reveal",
+    name: "Slide Down Reveal",
+    category: "page-transitions",
+    description: "An animated motion effect (slide down reveal)",
+    tags: ["slide", "transition", "slide-down-reveal", "down", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-slide-down-reveal {
+    animation: roy-ferrum-slide-down-reveal 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes roy-ferrum-slide-down-reveal {
+
+    0%   { clip-path: inset(100% 0 0 0); }
+    100% { clip-path: inset(0% 0 0 0); }
+
+}`
+  },
+  {
+    id: "ferrum-wipe-reveal",
+    name: "Wipe Reveal",
+    category: "page-transitions",
+    description: "An animated motion effect (wipe reveal)",
+    tags: ["wipe-reveal", "reveal", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-wipe-reveal {
+    animation: roy-ferrum-wipe-reveal 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes roy-ferrum-wipe-reveal {
+
+    0%   { clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%); }
+    50%  { clip-path: polygon(0% 0%, 60% 0%, 40% 100%, 0% 100%); }
+    100% { clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); }
+
+}`
+  },
+  {
+    id: "ferrum-grayscale-in",
+    name: "Grayscale In",
+    category: "visual",
+    description: "An animated motion effect (grayscale in)",
+    tags: ["grayscale-in", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-grayscale-in {
+  animation: roy-ferrum-grayscale-in 1s ease-out both;
+}
+
+@keyframes roy-ferrum-grayscale-in {
+
+  0% { filter: grayscale(1); }
+  100% { filter: grayscale(0); }
+
+}`
+  },
+  {
+    id: "ferrum-grayscale-out",
+    name: "Grayscale Out",
+    category: "visual",
+    description: "An animated motion effect (grayscale out)",
+    tags: ["grayscale-out", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-grayscale-out {
+  animation: roy-ferrum-grayscale-out 1s ease-in both;
+}
+
+@keyframes roy-ferrum-grayscale-out {
+
+  0% { filter: grayscale(0); }
+  100% { filter: grayscale(1); }
+
+}`
+  }
+];
+
+// src/lib/effects-batch-24.ts
+var effectsBatch24 = [
+  {
+    id: "ferrum-ease-linear",
+    name: "Ease Linear",
+    category: "animations",
+    description: "An easing-curve motion preset (ease linear)",
+    tags: ["ease-linear", "linear", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-ease-linear {
+  animation: roy-ferrum-ease-linear-move 1s linear both;
+}
+
+@keyframes roy-ferrum-ease-linear-move {
+
+  from { opacity: 0; transform: translateX(0); }
+  to { opacity: 1; transform: translateX(60px); }
+
+}`
+  },
+  {
+    id: "ferrum-ease-in-quad",
+    name: "Ease In Quad",
+    category: "animations",
+    description: "An easing-curve motion preset (ease in quad)",
+    tags: ["ease-in-quad", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-ease-in-quad {
+  animation: roy-ferrum-ease-in-quad-move 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+}
+
+@keyframes roy-ferrum-ease-in-quad-move {
+
+  from { opacity: 0; transform: translateX(0); }
+  to { opacity: 1; transform: translateX(60px); }
+
+}`
+  },
+  {
+    id: "ferrum-ease-out-quad",
+    name: "Ease Out Quad",
+    category: "animations",
+    description: "An easing-curve motion preset (ease out quad)",
+    tags: ["ease-out-quad", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-ease-out-quad {
+  animation: roy-ferrum-ease-out-quad-move 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes roy-ferrum-ease-out-quad-move {
+
+  from { opacity: 0; transform: translateX(0); }
+  to { opacity: 1; transform: translateX(60px); }
+
+}`
+  },
+  {
+    id: "ferrum-ease-in-out-quad",
+    name: "Ease In Out Quad",
+    category: "animations",
+    description: "An easing-curve motion preset (ease in out quad)",
+    tags: ["ease-in-out-quad", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-ease-in-out-quad {
+  animation: roy-ferrum-ease-in-out-quad-move 1s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+}
+
+@keyframes roy-ferrum-ease-in-out-quad-move {
+
+  from { opacity: 0; transform: translateX(0); }
+  to { opacity: 1; transform: translateX(60px); }
+
+}`
+  },
+  {
+    id: "ferrum-ease-in-cubic",
+    name: "Ease In Cubic",
+    category: "animations",
+    description: "An easing-curve motion preset (ease in cubic)",
+    tags: ["ease-in-cubic", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-ease-in-cubic {
+  animation: roy-ferrum-ease-in-cubic-move 1s cubic-bezier(0.55, 0.055, 0.675, 0.19) both;
+}
+
+@keyframes roy-ferrum-ease-in-cubic-move {
+
+  from { opacity: 0; transform: translateX(0); }
+  to { opacity: 1; transform: translateX(60px); }
+
+}`
+  },
+  {
+    id: "ferrum-ease-out-cubic",
+    name: "Ease Out Cubic",
+    category: "animations",
+    description: "An easing-curve motion preset (ease out cubic)",
+    tags: ["ease-out-cubic", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-ease-out-cubic {
+  animation: roy-ferrum-ease-out-cubic-move 1s cubic-bezier(0.215, 0.61, 0.355, 1) both;
+}
+
+@keyframes roy-ferrum-ease-out-cubic-move {
+
+  from { opacity: 0; transform: translateX(0); }
+  to { opacity: 1; transform: translateX(60px); }
+
+}`
+  },
+  {
+    id: "ferrum-ease-in-out-cubic",
+    name: "Ease In Out Cubic",
+    category: "animations",
+    description: "An easing-curve motion preset (ease in out cubic)",
+    tags: ["ease-in-out-cubic", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-ease-in-out-cubic {
+  animation: roy-ferrum-ease-in-out-cubic-move 1s cubic-bezier(0.645, 0.045, 0.355, 1) both;
+}
+
+@keyframes roy-ferrum-ease-in-out-cubic-move {
+
+  from { opacity: 0; transform: translateX(0); }
+  to { opacity: 1; transform: translateX(60px); }
+
+}`
+  },
+  {
+    id: "ferrum-ease-in-back",
+    name: "Ease In Back",
+    category: "animations",
+    description: "An easing-curve motion preset (ease in back)",
+    tags: ["ease-in-back", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-ease-in-back {
+  animation: roy-ferrum-ease-in-back-move 1s cubic-bezier(0.6, -0.28, 0.735, 0.045) both;
+}
+
+@keyframes roy-ferrum-ease-in-back-move {
+
+  from { opacity: 0; transform: translateX(0); }
+  to { opacity: 1; transform: translateX(60px); }
+
+}`
+  },
+  {
+    id: "ferrum-ease-out-back",
+    name: "Ease Out Back",
+    category: "animations",
+    description: "An easing-curve motion preset (ease out back)",
+    tags: ["ease-out-back", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-ease-out-back {
+  animation: roy-ferrum-ease-out-back-move 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes roy-ferrum-ease-out-back-move {
+
+  from { opacity: 0; transform: translateX(0); }
+  to { opacity: 1; transform: translateX(60px); }
+
+}`
+  },
+  {
+    id: "ferrum-ease-in-out-back",
+    name: "Ease In Out Back",
+    category: "animations",
+    description: "An easing-curve motion preset (ease in out back)",
+    tags: ["ease-in-out-back", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-ease-in-out-back {
+  animation: roy-ferrum-ease-in-out-back-move 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) both;
+}
+
+@keyframes roy-ferrum-ease-in-out-back-move {
+
+  from { opacity: 0; transform: translateX(0); }
+  to { opacity: 1; transform: translateX(60px); }
+
+}`
+  },
+  {
+    id: "ferrum-ease-elastic-out",
+    name: "Ease Elastic Out",
+    category: "animations",
+    description: "An easing-curve motion preset (ease elastic out)",
+    tags: ["ease-elastic-out", "elastic", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-ease-elastic-out {
+  animation: roy-ferrum-ease-elastic-out-move 1s ease-out both;
+}
+
+@keyframes roy-ferrum-ease-elastic-out-move {
+
+  0% {
+    opacity: 0;
+    transform: translateX(0) scaleX(1);
+  }
+  40% {
+    opacity: 1;
+    transform: translateX(60px) scaleX(1.1);
+  }
+  55% {
+    transform: translateX(60px) scaleX(0.95);
+  }
+  70% {
+    transform: translateX(60px) scaleX(1.02);
+  }
+  85% {
+    transform: translateX(60px) scaleX(0.99);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(60px) scaleX(1);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-ease-bounce-out",
+    name: "Ease Bounce Out",
+    category: "animations",
+    description: "An easing-curve motion preset (ease bounce out)",
+    tags: ["ease-bounce-out", "bounce", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-ease-bounce-out {
+  animation: roy-ferrum-ease-bounce-out-move 1s ease-out both;
+}
+
+@keyframes roy-ferrum-ease-bounce-out-move {
+
+  0% {
+    opacity: 0;
+    transform: translateX(0) translateY(0);
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(60px) translateY(0);
+  }
+  40% {
+    transform: translateX(60px) translateY(-20px);
+  }
+  55% {
+    transform: translateX(60px) translateY(0);
+  }
+  68% {
+    transform: translateX(60px) translateY(-10px);
+  }
+  78% {
+    transform: translateX(60px) translateY(0);
+  }
+  88% {
+    transform: translateX(60px) translateY(-4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(60px) translateY(0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-status-pulse-green",
+    name: "Status Pulse Green",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (status pulse green)",
+    tags: ["status-pulse-green", "pulse", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-status-pulse-green {
+  position: relative;
+  width: 14px;
+  height: 14px;
+}
+.roycss-ferrum-status-pulse-green::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: oklch(0.723 0.191 149.06);
+  border-radius: 50%;
+  z-index: 1;
+}
+.roycss-ferrum-status-pulse-green::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: oklch(0.723 0.191 149.06);
+  border-radius: 50%;
+  animation: roy-ferrum-pulse-ring-green 1.5s ease-out infinite;
+}
+
+@keyframes roy-ferrum-pulse-ring-green {
+
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2.5); opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-status-pulse-red",
+    name: "Status Pulse Red",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (status pulse red)",
+    tags: ["status-pulse-red", "pulse", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-status-pulse-red {
+  position: relative;
+  width: 14px;
+  height: 14px;
+}
+.roycss-ferrum-status-pulse-red::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: oklch(0.637 0.237 25.77);
+  border-radius: 50%;
+  z-index: 1;
+}
+.roycss-ferrum-status-pulse-red::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: oklch(0.637 0.237 25.77);
+  border-radius: 50%;
+  animation: roy-ferrum-pulse-ring-red 1.5s ease-out infinite;
+}
+
+@keyframes roy-ferrum-pulse-ring-red {
+
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2.5); opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-status-pulse-yellow",
+    name: "Status Pulse Yellow",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (status pulse yellow)",
+    tags: ["status-pulse-yellow", "pulse", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-status-pulse-yellow {
+  position: relative;
+  width: 14px;
+  height: 14px;
+}
+.roycss-ferrum-status-pulse-yellow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: oklch(0.795 0.184 86.05);
+  border-radius: 50%;
+  z-index: 1;
+}
+.roycss-ferrum-status-pulse-yellow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: oklch(0.795 0.184 86.05);
+  border-radius: 50%;
+  animation: roy-ferrum-pulse-ring-yellow 1.5s ease-out infinite;
+}
+
+@keyframes roy-ferrum-pulse-ring-yellow {
+
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2.5); opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-status-breathing-blue",
+    name: "Status Breathing Blue",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (status breathing blue)",
+    tags: ["status-breathing-blue", "breathing", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-status-breathing-blue {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: oklch(0.623 0.188 259.81);
+  animation: roy-ferrum-breathe-blue 3s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-breathe-blue {
+
+  0%, 100% {
+    box-shadow: 0 0 4px 1px color-mix(in oklch, oklch(0.623 0.188 259.81) 30%, transparent);
+    background: oklch(0.623 0.188 259.81);
+  }
+  50% {
+    box-shadow: 0 0 16px 6px color-mix(in oklch, oklch(0.623 0.188 259.81) 50%, transparent), 0 0 32px 12px color-mix(in oklch, oklch(0.623 0.188 259.81) 15%, transparent);
+    background: oklch(0.714 0.143 254.62);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-status-progress-ring",
+    name: "Status Progress Ring",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (status progress ring)",
+    tags: ["status-progress-ring", "progress", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-status-progress-ring {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: conic-gradient(
+    oklch(0.623 0.188 259.81) 0deg,
+    oklch(0.623 0.188 259.81) 270deg,
+    color-mix(in oklch, oklch(0.623 0.188 259.81) 15%, transparent) 270deg,
+    color-mix(in oklch, oklch(0.623 0.188 259.81) 15%, transparent) 360deg
+  );
+  animation: roy-ferrum-progress-spin 2s linear infinite;
+}
+.roycss-ferrum-status-progress-ring::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: oklch(0.27 0.04 260.03);
+}
+
+@keyframes roy-ferrum-progress-spin {
+
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-status-loading-bar",
+    name: "Status Loading Bar",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (status loading bar)",
+    tags: ["status-loading-bar", "loading", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-status-loading-bar {
+  position: relative;
+  width: 120px;
+  height: 4px;
+  background: color-mix(in oklch, oklch(0.623 0.188 259.81) 20%, transparent);
+  border-radius: 4px;
+  overflow: hidden;
+  animation: roy-ferrum-loading-bg-pulse 2s ease-in-out infinite;
+}
+.roycss-ferrum-status-loading-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, oklch(0.623 0.188 259.81), transparent);
+  border-radius: 4px;
+  animation: roy-ferrum-loading-slide 1.5s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-loading-bg-pulse {
+
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.5; }
+
+}
+
+@keyframes roy-ferrum-loading-slide {
+
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(0%); }
+  100% { transform: translateX(100%); }
+
+}`
+  },
+  {
+    id: "ferrum-status-notification-badge",
+    name: "Status Notification Badge",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (status notification badge)",
+    tags: ["status-notification-badge", "notification", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-status-notification-badge {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  background: oklch(0.637 0.237 25.77);
+  border-radius: 50%;
+  animation: roy-ferrum-badge-bounce 1.5s ease-in-out infinite;
+}
+.roycss-ferrum-status-notification-badge::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid oklch(0.637 0.237 25.77);
+  border-radius: 50%;
+  animation: roy-ferrum-badge-ring 1.5s ease-out infinite;
+}
+
+@keyframes roy-ferrum-badge-bounce {
+
+  0%, 100% { transform: scale(1); }
+  30% { transform: scale(1.25); }
+  50% { transform: scale(0.95); }
+  70% { transform: scale(1.1); }
+
+}
+
+@keyframes roy-ferrum-badge-ring {
+
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2); opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-status-dot-bounce",
+    name: "Status Dot Bounce",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (status dot bounce)",
+    tags: ["status-dot-bounce", "dot", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-status-dot-bounce {
+  position: relative;
+  width: 40px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.roycss-ferrum-status-dot-bounce::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: oklch(0.623 0.188 259.81);
+  border-radius: 50%;
+  box-shadow:
+    14px 0 0 0 oklch(0.623 0.188 259.81),
+    28px 0 0 0 oklch(0.623 0.188 259.81);
+  animation: roy-ferrum-dot-bounce 1.4s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-dot-bounce {
+
+  0%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+
+}`
+  },
+  {
+    id: "ferrum-status-signal-wave",
+    name: "Status Signal Wave",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (status signal wave)",
+    tags: ["status-signal-wave", "signal", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-status-signal-wave {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+.roycss-ferrum-status-signal-wave::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  background: oklch(0.723 0.191 149.06);
+  border-radius: 50%;
+  z-index: 1;
+}
+.roycss-ferrum-status-signal-wave::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  border: 2px solid oklch(0.723 0.191 149.06);
+  border-radius: 50%;
+  animation: roy-ferrum-signal-expand 2s ease-out infinite;
+}
+
+@keyframes roy-ferrum-signal-expand {
+
+  0% { transform: scale(0.5); opacity: 1; }
+  100% { transform: scale(2.5); opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-status-heartbeat",
+    name: "Status Heartbeat",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (status heartbeat)",
+    tags: ["status-heartbeat", "heartbeat", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-status-heartbeat {
+  position: relative;
+  width: 20px;
+  height: 18px;
+}
+.roycss-ferrum-status-heartbeat::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 10px;
+  height: 16px;
+  background: oklch(0.637 0.237 25.77);
+  border-radius: 10px 10px 0 0;
+  transform: translateX(-50%) rotate(-45deg);
+  transform-origin: 0 100%;
+  animation: roy-ferrum-heart-beat 1.5s ease-in-out infinite;
+}
+.roycss-ferrum-status-heartbeat::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 50%;
+  width: 10px;
+  height: 16px;
+  background: oklch(0.637 0.237 25.77);
+  border-radius: 10px 10px 0 0;
+  transform: translateX(50%) rotate(45deg);
+  transform-origin: 100% 100%;
+  animation: roy-ferrum-heart-beat 1.5s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-heart-beat {
+
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.3); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.2); }
+  56% { transform: scale(1); }
+
+}`
+  },
+  {
+    id: "ferrum-rain",
+    name: "Rain",
+    category: "particles",
+    description: "An animated motion effect (rain)",
+    tags: ["rain", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-rain {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(to bottom, oklch(0.228 0.038 282.93) 0%, oklch(0.254 0.057 266.71) 50%, oklch(0.325 0.088 255.11) 100%);
+}
+.roycss-ferrum-rain::before,
+.roycss-ferrum-rain::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  width: 2px;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, color-mix(in oklch, oklch(0.809 0.048 258.37) 50%, transparent), transparent);
+  border-radius: 0 0 2px 2px;
+}
+.roycss-ferrum-rain::before {
+  left: 15%;
+  box-shadow:
+    80px 0 color-mix(in oklch, oklch(0.809 0.048 258.37) 40%, transparent),
+    160px 0 color-mix(in oklch, oklch(0.809 0.048 258.37) 30%, transparent),
+    240px 0 color-mix(in oklch, oklch(0.809 0.048 258.37) 50%, transparent),
+    320px 0 color-mix(in oklch, oklch(0.809 0.048 258.37) 20%, transparent),
+    400px 0 color-mix(in oklch, oklch(0.809 0.048 258.37) 40%, transparent),
+    480px 0 color-mix(in oklch, oklch(0.809 0.048 258.37) 30%, transparent),
+    560px 0 color-mix(in oklch, oklch(0.809 0.048 258.37) 50%, transparent),
+    640px 0 color-mix(in oklch, oklch(0.809 0.048 258.37) 20%, transparent),
+    720px 0 color-mix(in oklch, oklch(0.809 0.048 258.37) 40%, transparent),
+    800px 0 color-mix(in oklch, oklch(0.809 0.048 258.37) 30%, transparent);
+  animation: roy-ferrum-rain-fall 0.7s linear infinite;
+}
+.roycss-ferrum-rain::after {
+  left: 45%;
+  box-shadow:
+    60px 0 color-mix(in oklch, oklch(0.809 0.048 258.37) 30%, transparent),
+    140px 0 color-mix(in oklch, oklch(0.809 0.048 258.37) 50%, transparent),
+    220px 0 color-mix(in oklch, oklch(0.809 0.048 258.37) 20%, transparent),
+    300px 0 color-mix(in oklch, oklch(0.809 0.048 258.37) 40%, transparent),
+    380px 0 color-mix(in oklch, oklch(0.809 0.048 258.37) 30%, transparent),
+    460px 0 color-mix(in oklch, oklch(0.809 0.048 258.37) 50%, transparent),
+    540px 0 color-mix(in oklch, oklch(0.809 0.048 258.37) 20%, transparent),
+    620px 0 color-mix(in oklch, oklch(0.809 0.048 258.37) 40%, transparent),
+    700px 0 color-mix(in oklch, oklch(0.809 0.048 258.37) 30%, transparent),
+    780px 0 color-mix(in oklch, oklch(0.809 0.048 258.37) 50%, transparent);
+  animation: roy-ferrum-rain-fall 0.9s linear infinite;
+  animation-delay: -0.3s;
+}
+
+@keyframes roy-ferrum-rain-fall {
+
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+
+}`
+  },
+  {
+    id: "ferrum-snow",
+    name: "Snow",
+    category: "particles",
+    description: "An animated motion effect (snow)",
+    tags: ["snow", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-snow {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(to bottom, oklch(0.372 0.081 266.12) 0%, oklch(0.536 0.09 256.23) 40%, oklch(0.628 0.064 249.62) 100%);
+}
+.roycss-ferrum-snow::before,
+.roycss-ferrum-snow::after {
+  content: '';
+  position: absolute;
+  top: -5%;
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.9;
+  box-shadow:
+    30px 15px 0 1px color-mix(in oklch, oklch(1 0 0) 70%, transparent),
+    70px 40px 0 2px color-mix(in oklch, oklch(1 0 0) 50%, transparent),
+    120px 10px 0 0px color-mix(in oklch, oklch(1 0 0) 80%, transparent),
+    180px 60px 0 1px color-mix(in oklch, oklch(1 0 0) 40%, transparent),
+    240px 25px 0 2px color-mix(in oklch, oklch(1 0 0) 60%, transparent),
+    300px 50px 0 0px color-mix(in oklch, oklch(1 0 0) 70%, transparent),
+    370px 5px 0 1px color-mix(in oklch, oklch(1 0 0) 50%, transparent),
+    440px 35px 0 2px color-mix(in oklch, oklch(1 0 0) 30%, transparent),
+    520px 55px 0 0px color-mix(in oklch, oklch(1 0 0) 60%, transparent),
+    600px 20px 0 1px color-mix(in oklch, oklch(1 0 0) 80%, transparent);
+}
+.roycss-ferrum-snow::before {
+  left: 10%;
+  animation: roy-ferrum-snow-fall 4s linear infinite;
+}
+.roycss-ferrum-snow::after {
+  left: 55%;
+  box-shadow:
+    40px 30px 0 1px color-mix(in oklch, oklch(1 0 0) 60%, transparent),
+    90px 10px 0 2px color-mix(in oklch, oklch(1 0 0) 40%, transparent),
+    150px 45px 0 0px color-mix(in oklch, oklch(1 0 0) 70%, transparent),
+    210px 20px 0 1px color-mix(in oklch, oklch(1 0 0) 50%, transparent),
+    280px 55px 0 2px color-mix(in oklch, oklch(1 0 0) 30%, transparent),
+    350px 15px 0 0px color-mix(in oklch, oklch(1 0 0) 80%, transparent),
+    420px 40px 0 1px color-mix(in oklch, oklch(1 0 0) 60%, transparent),
+    500px 8px 0 2px color-mix(in oklch, oklch(1 0 0) 40%, transparent),
+    570px 50px 0 0px color-mix(in oklch, oklch(1 0 0) 70%, transparent),
+    650px 28px 0 1px color-mix(in oklch, oklch(1 0 0) 50%, transparent);
+  animation: roy-ferrum-snow-fall 5s linear infinite;
+  animation-delay: -2s;
+}
+
+@keyframes roy-ferrum-snow-fall {
+
+  0% { transform: translateY(-10%) translateX(0); opacity: 1; }
+  50% { transform: translateY(50vh) translateX(20px); opacity: 0.8; }
+  100% { transform: translateY(100vh) translateX(-10px); opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-lightning",
+    name: "Lightning",
+    category: "particles",
+    description: "An animated motion effect (lightning)",
+    tags: ["lightning", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-lightning {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(to bottom, oklch(0.228 0.038 282.93) 0%, oklch(0.308 0.041 283.72) 100%);
+}
+.roycss-ferrum-lightning::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, color-mix(in oklch, oklch(1 0 0) 90%, transparent) 0%, color-mix(in oklch, oklch(0.851 0.076 284.67) 40%, transparent) 30%, transparent 70%);
+  opacity: 0;
+  animation: roy-ferrum-lightning-flash 6s ease-in-out infinite;
+}
+.roycss-ferrum-lightning::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 48%;
+  width: 4%;
+  height: 100%;
+  background: linear-gradient(to bottom,
+    transparent 5%,
+    color-mix(in oklch, oklch(0.798 0.106 283.75) 90%, transparent) 10%,
+    transparent 12%,
+    color-mix(in oklch, oklch(0.851 0.076 284.67) 70%, transparent) 20%,
+    transparent 22%,
+    color-mix(in oklch, oklch(0.798 0.106 283.75) 80%, transparent) 35%,
+    transparent 37%,
+    color-mix(in oklch, oklch(0.851 0.076 284.67) 60%, transparent) 50%,
+    transparent 52%,
+    color-mix(in oklch, oklch(0.798 0.106 283.75) 70%, transparent) 65%,
+    transparent 67%,
+    color-mix(in oklch, oklch(0.851 0.076 284.67) 50%, transparent) 80%,
+    transparent 82%
+  );
+  opacity: 0;
+  animation: roy-ferrum-lightning-flash 6s ease-in-out infinite;
+  animation-delay: 0.05s;
+}
+
+@keyframes roy-ferrum-lightning-flash {
+
+  0%, 88%, 92%, 96%, 100% { opacity: 0; }
+  89% { opacity: 0.8; }
+  91% { opacity: 0.1; }
+  93% { opacity: 0.6; }
+  95% { opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-clouds",
+    name: "Clouds",
+    category: "particles",
+    description: "An animated motion effect (clouds)",
+    tags: ["clouds", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-clouds {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(to bottom, oklch(0.815 0.082 225.75) 0%, oklch(0.85 0.047 232.38) 60%, oklch(0.919 0.024 223.69) 100%);
+}
+.roycss-ferrum-clouds::before {
+  content: '';
+  position: absolute;
+  top: 15%;
+  left: -150px;
+  width: 180px;
+  height: 60px;
+  background: color-mix(in oklch, oklch(1 0 0) 90%, transparent);
+  border-radius: 50px;
+  box-shadow:
+    -25px -20px 0 10px color-mix(in oklch, oklch(1 0 0) 90%, transparent),
+    30px -15px 0 15px color-mix(in oklch, oklch(1 0 0) 85%, transparent),
+    70px -10px 0 5px color-mix(in oklch, oklch(1 0 0) 90%, transparent),
+    -60px -5px 0 8px color-mix(in oklch, oklch(1 0 0) 80%, transparent);
+  animation: roy-ferrum-cloud-drift-1 20s linear infinite;
+}
+.roycss-ferrum-clouds::after {
+  content: '';
+  position: absolute;
+  top: 35%;
+  left: -120px;
+  width: 140px;
+  height: 45px;
+  background: color-mix(in oklch, oklch(1 0 0) 75%, transparent);
+  border-radius: 40px;
+  box-shadow:
+    -20px -18px 0 8px color-mix(in oklch, oklch(1 0 0) 75%, transparent),
+    25px -12px 0 12px color-mix(in oklch, oklch(1 0 0) 70%, transparent),
+    60px -8px 0 4px color-mix(in oklch, oklch(1 0 0) 75%, transparent);
+  animation: roy-ferrum-cloud-drift-2 25s linear infinite;
+}
+
+@keyframes roy-ferrum-cloud-drift-1 {
+
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(calc(100vw + 50%)); }
+
+}
+
+@keyframes roy-ferrum-cloud-drift-2 {
+
+  0% { transform: translateX(calc(100vw + 30%)); }
+  100% { transform: translateX(-150%); }
+
+}`
+  },
+  {
+    id: "ferrum-fireflies",
+    name: "Fireflies",
+    category: "particles",
+    description: "An animated motion effect (fireflies)",
+    tags: ["fireflies", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-fireflies {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(to bottom, oklch(0.205 0.032 145.94) 0%, oklch(0.281 0.046 144.21) 50%, oklch(0.205 0.032 145.94) 100%);
+}
+.roycss-ferrum-fireflies::before,
+.roycss-ferrum-fireflies::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: oklch(0.955 0.173 117.22);
+  border-radius: 50%;
+  box-shadow:
+    0 0 6px 2px color-mix(in oklch, oklch(0.955 0.173 117.22) 60%, transparent),
+    0 0 12px 4px color-mix(in oklch, oklch(0.955 0.173 117.22) 30%, transparent);
+}
+.roycss-ferrum-fireflies::before {
+  top: 30%;
+  left: 20%;
+  box-shadow:
+    0 0 6px 2px color-mix(in oklch, oklch(0.955 0.173 117.22) 60%, transparent),
+    0 0 12px 4px color-mix(in oklch, oklch(0.955 0.173 117.22) 30%, transparent),
+    120px 40px 0 1px color-mix(in oklch, oklch(0.955 0.173 117.22) 80%, transparent),
+    120px 40px 6px 3px color-mix(in oklch, oklch(0.955 0.173 117.22) 40%, transparent),
+    250px -30px 0 0px color-mix(in oklch, oklch(0.955 0.173 117.22) 60%, transparent),
+    250px -30px 6px 2px color-mix(in oklch, oklch(0.955 0.173 117.22) 30%, transparent),
+    400px 60px 0 1px color-mix(in oklch, oklch(0.955 0.173 117.22) 70%, transparent),
+    400px 60px 6px 3px color-mix(in oklch, oklch(0.955 0.173 117.22) 35%, transparent),
+    550px -10px 0 0px color-mix(in oklch, oklch(0.955 0.173 117.22) 50%, transparent),
+    550px -10px 6px 2px color-mix(in oklch, oklch(0.955 0.173 117.22) 25%, transparent);
+  animation: roy-ferrum-firefly-1 6s ease-in-out infinite;
+}
+.roycss-ferrum-fireflies::after {
+  top: 55%;
+  left: 40%;
+  box-shadow:
+    0 0 6px 2px color-mix(in oklch, oklch(0.955 0.173 117.22) 50%, transparent),
+    0 0 12px 4px color-mix(in oklch, oklch(0.955 0.173 117.22) 25%, transparent),
+    100px -50px 0 1px color-mix(in oklch, oklch(0.955 0.173 117.22) 70%, transparent),
+    100px -50px 6px 3px color-mix(in oklch, oklch(0.955 0.173 117.22) 35%, transparent),
+    220px 30px 0 0px color-mix(in oklch, oklch(0.955 0.173 117.22) 60%, transparent),
+    220px 30px 6px 2px color-mix(in oklch, oklch(0.955 0.173 117.22) 30%, transparent),
+    380px -40px 0 1px color-mix(in oklch, oklch(0.955 0.173 117.22) 80%, transparent),
+    380px -40px 6px 3px color-mix(in oklch, oklch(0.955 0.173 117.22) 40%, transparent),
+    500px 50px 0 0px color-mix(in oklch, oklch(0.955 0.173 117.22) 50%, transparent),
+    500px 50px 6px 2px color-mix(in oklch, oklch(0.955 0.173 117.22) 25%, transparent);
+  animation: roy-ferrum-firefly-2 8s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-firefly-1 {
+
+  0%, 100% { transform: translate(0, 0); opacity: 0.2; }
+  20% { transform: translate(30px, -40px); opacity: 1; }
+  40% { transform: translate(-20px, -60px); opacity: 0.3; }
+  60% { transform: translate(40px, -20px); opacity: 0.9; }
+  80% { transform: translate(-10px, -50px); opacity: 0.4; }
+
+}
+
+@keyframes roy-ferrum-firefly-2 {
+
+  0%, 100% { transform: translate(0, 0); opacity: 0.5; }
+  25% { transform: translate(-35px, -25px); opacity: 0.2; }
+  50% { transform: translate(20px, -55px); opacity: 1; }
+  75% { transform: translate(-15px, -35px); opacity: 0.3; }
+
+}`
+  },
+  {
+    id: "ferrum-ocean-waves",
+    name: "Ocean Waves",
+    category: "particles",
+    description: "An animated motion effect (ocean waves)",
+    tags: ["ocean-waves", "waves", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-ocean-waves {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(to bottom, oklch(0.342 0.071 251.85) 0%, oklch(0.489 0.101 247.65) 40%, oklch(0.63 0.132 246.61) 100%);
+}
+.roycss-ferrum-ocean-waves::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -50%;
+  width: 200%;
+  height: 50%;
+  background: radial-gradient(ellipse at 25% 100%, color-mix(in oklch, oklch(0.63 0.132 246.61) 60%, transparent) 0%, transparent 50%),
+              radial-gradient(ellipse at 75% 100%, color-mix(in oklch, oklch(0.63 0.132 246.61) 40%, transparent) 0%, transparent 50%);
+  border-radius: 40% 40% 0 0 / 30% 30% 0 0;
+  animation: roy-ferrum-wave-1 5s ease-in-out infinite;
+}
+.roycss-ferrum-ocean-waves::after {
+  content: '';
+  position: absolute;
+  bottom: -5%;
+  left: -50%;
+  width: 200%;
+  height: 45%;
+  background: radial-gradient(ellipse at 30% 100%, color-mix(in oklch, oklch(0.489 0.101 247.65) 70%, transparent) 0%, transparent 50%),
+              radial-gradient(ellipse at 70% 100%, color-mix(in oklch, oklch(0.489 0.101 247.65) 50%, transparent) 0%, transparent 50%);
+  border-radius: 45% 45% 0 0 / 25% 25% 0 0;
+  animation: roy-ferrum-wave-2 6s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-wave-1 {
+
+  0%, 100% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(-25%) translateY(5px); }
+
+}
+
+@keyframes roy-ferrum-wave-2 {
+
+  0%, 100% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(25%) translateY(-5px); }
+
+}`
+  },
+  {
+    id: "ferrum-sunset",
+    name: "Sunset",
+    category: "particles",
+    description: "An animated motion effect (sunset)",
+    tags: ["sunset", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-sunset {
+  position: relative;
+  overflow: hidden;
+  animation: roy-ferrum-sunset-glow 8s ease-in-out infinite;
+  background: linear-gradient(to bottom,
+    oklch(0.189 0.085 299.1) 0%, oklch(0.306 0.093 334.48) 20%, oklch(0.583 0.161 23.52) 45%,
+    oklch(0.752 0.16 67.74) 65%, oklch(0.674 0.216 33.01) 80%, oklch(0.593 0.221 1.13) 100%);
+}
+.roycss-ferrum-sunset::before {
+  content: '';
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, oklch(0.961 0.107 103.06) 0%, oklch(0.8 0.162 78.77) 40%, color-mix(in oklch, oklch(0.8 0.162 78.77) 0%, transparent) 70%);
+  border-radius: 50%;
+  box-shadow: 0 0 60px 30px color-mix(in oklch, oklch(0.8 0.162 78.77) 30%, transparent), 0 0 120px 60px color-mix(in oklch, oklch(0.674 0.216 33.01) 15%, transparent);
+}
+.roycss-ferrum-sunset::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20%;
+  background: linear-gradient(to bottom, color-mix(in oklch, oklch(0.142 0.066 295.8) 0%, transparent) 0%, color-mix(in oklch, oklch(0.142 0.066 295.8) 70%, transparent) 100%);
+}
+
+@keyframes roy-ferrum-sunset-glow {
+
+  0%, 100% {
+    background: linear-gradient(to bottom,
+      oklch(0.189 0.085 299.1) 0%, oklch(0.306 0.093 334.48) 20%, oklch(0.583 0.161 23.52) 45%,
+      oklch(0.752 0.16 67.74) 65%, oklch(0.674 0.216 33.01) 80%, oklch(0.593 0.221 1.13) 100%);
+  }
+  50% {
+    background: linear-gradient(to bottom,
+      oklch(0.142 0.066 295.8) 0%, oklch(0.236 0.106 304.47) 20%, oklch(0.468 0.154 296.01) 35%,
+      oklch(0.662 0.173 12.65) 55%, oklch(0.8 0.162 78.77) 75%, oklch(0.615 0.235 30.43) 100%);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-northern-lights",
+    name: "Northern Lights",
+    category: "particles",
+    description: "An animated motion effect (northern lights)",
+    tags: ["northern-lights", "lights", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-northern-lights {
+  position: relative;
+  overflow: hidden;
+  animation: roy-ferrum-aurora-shift 10s ease-in-out infinite;
+  background: oklch(0.187 0.05 247.94);
+}
+.roycss-ferrum-northern-lights::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 120% 40% at 30% 30%, color-mix(in oklch, oklch(0.739 0.152 166.94) 15%, transparent) 0%, transparent 100%),
+    radial-gradient(ellipse 100% 30% at 70% 25%, color-mix(in oklch, oklch(0.443 0.244 294.36) 10%, transparent) 0%, transparent 100%),
+    radial-gradient(ellipse 80% 35% at 50% 40%, color-mix(in oklch, oklch(0.631 0.127 231.01) 12%, transparent) 0%, transparent 100%);
+  animation: roy-ferrum-aurora-shift 10s ease-in-out infinite;
+  animation-delay: -3s;
+}
+
+@keyframes roy-ferrum-aurora-shift {
+
+  0%, 100% {
+    background: linear-gradient(135deg,
+      oklch(0.187 0.05 247.94) 0%,
+      color-mix(in oklch, oklch(0.449 0.086 172.77) 40%, transparent) 20%,
+      color-mix(in oklch, oklch(0.739 0.152 166.94) 30%, transparent) 35%,
+      color-mix(in oklch, oklch(0.443 0.244 294.36) 20%, transparent) 50%,
+      color-mix(in oklch, oklch(0.594 0.132 160.96) 30%, transparent) 65%,
+      oklch(0.187 0.05 247.94) 100%);
+  }
+  33% {
+    background: linear-gradient(120deg,
+      oklch(0.187 0.05 247.94) 0%,
+      color-mix(in oklch, oklch(0.332 0.199 281.82) 30%, transparent) 25%,
+      color-mix(in oklch, oklch(0.798 0.153 173.25) 40%, transparent) 40%,
+      color-mix(in oklch, oklch(0.515 0.174 255.79) 30%, transparent) 55%,
+      color-mix(in oklch, oklch(0.399 0.226 290.1) 20%, transparent) 70%,
+      oklch(0.187 0.05 247.94) 100%);
+  }
+  66% {
+    background: linear-gradient(150deg,
+      oklch(0.187 0.05 247.94) 0%,
+      color-mix(in oklch, oklch(0.68 0.152 160.63) 30%, transparent) 15%,
+      color-mix(in oklch, oklch(0.487 0.263 297.84) 30%, transparent) 30%,
+      color-mix(in oklch, oklch(0.742 0.144 171.55) 40%, transparent) 50%,
+      color-mix(in oklch, oklch(0.455 0.173 258.54) 30%, transparent) 70%,
+      oklch(0.187 0.05 247.94) 100%);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-fog",
+    name: "Fog",
+    category: "particles",
+    description: "An animated motion effect (fog)",
+    tags: ["fog", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-fog {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(to bottom, oklch(0.691 0.026 242.51) 0%, oklch(0.819 0.021 238.73) 50%, oklch(0.773 0.023 235.1) 100%);
+}
+.roycss-ferrum-fog::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -10%;
+  width: 120%;
+  height: 60%;
+  background: radial-gradient(ellipse at 20% 50%, color-mix(in oklch, oklch(1 0 0) 50%, transparent) 0%, transparent 60%),
+              radial-gradient(ellipse at 60% 60%, color-mix(in oklch, oklch(1 0 0) 40%, transparent) 0%, transparent 50%),
+              radial-gradient(ellipse at 90% 40%, color-mix(in oklch, oklch(1 0 0) 35%, transparent) 0%, transparent 55%);
+  animation: roy-ferrum-fog-drift-1 8s ease-in-out infinite;
+}
+.roycss-ferrum-fog::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -10%;
+  width: 120%;
+  height: 55%;
+  background: radial-gradient(ellipse at 30% 50%, color-mix(in oklch, oklch(1 0 0) 45%, transparent) 0%, transparent 55%),
+              radial-gradient(ellipse at 70% 40%, color-mix(in oklch, oklch(1 0 0) 50%, transparent) 0%, transparent 60%),
+              radial-gradient(ellipse at 50% 70%, color-mix(in oklch, oklch(1 0 0) 30%, transparent) 0%, transparent 50%);
+  animation: roy-ferrum-fog-drift-2 10s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-fog-drift-1 {
+
+  0%, 100% { transform: translateX(-5%); opacity: 0.5; }
+  50% { transform: translateX(5%); opacity: 0.8; }
+
+}
+
+@keyframes roy-ferrum-fog-drift-2 {
+
+  0%, 100% { transform: translateX(5%); opacity: 0.4; }
+  50% { transform: translateX(-8%); opacity: 0.7; }
+
+}`
+  },
+  {
+    id: "ferrum-stars-twinkle",
+    name: "Stars Twinkle",
+    category: "particles",
+    description: "An animated motion effect (stars twinkle)",
+    tags: ["stars-twinkle", "twinkle", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-stars-twinkle {
+  position: relative;
+  overflow: hidden;
+  background: oklch(0.155 0.034 281.74);
+}
+.roycss-ferrum-stars-twinkle::before,
+.roycss-ferrum-stars-twinkle::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  box-shadow:
+    40px 20px 0 0 color-mix(in oklch, oklch(1 0 0) 80%, transparent),
+    100px 60px 0 1px color-mix(in oklch, oklch(1 0 0) 60%, transparent),
+    170px 15px 0 0 color-mix(in oklch, oklch(1 0 0) 90%, transparent),
+    230px 80px 0 0px color-mix(in oklch, oklch(1 0 0) 50%, transparent),
+    300px 30px 0 1px color-mix(in oklch, oklch(1 0 0) 70%, transparent),
+    380px 70px 0 0px color-mix(in oklch, oklch(1 0 0) 80%, transparent),
+    450px 10px 0 0px color-mix(in oklch, oklch(1 0 0) 60%, transparent),
+    520px 55px 0 1px color-mix(in oklch, oklch(1 0 0) 90%, transparent),
+    590px 40px 0 0px color-mix(in oklch, oklch(1 0 0) 50%, transparent),
+    670px 25px 0 1px color-mix(in oklch, oklch(1 0 0) 70%, transparent),
+    740px 65px 0 0px color-mix(in oklch, oklch(1 0 0) 80%, transparent),
+    810px 45px 0 0px color-mix(in oklch, oklch(1 0 0) 60%, transparent),
+    880px 5px 0 1px color-mix(in oklch, oklch(1 0 0) 90%, transparent),
+    950px 75px 0 0px color-mix(in oklch, oklch(1 0 0) 50%, transparent),
+    1020px 35px 0 0px color-mix(in oklch, oklch(1 0 0) 70%, transparent);
+}
+.roycss-ferrum-stars-twinkle::before {
+  top: 10%;
+  left: 5%;
+  animation: roy-ferrum-twinkle-1 3s ease-in-out infinite;
+}
+.roycss-ferrum-stars-twinkle::after {
+  top: 40%;
+  left: 8%;
+  box-shadow:
+    50px 40px 0 1px color-mix(in oklch, oklch(1 0 0) 70%, transparent),
+    120px 10px 0 0px color-mix(in oklch, oklch(1 0 0) 90%, transparent),
+    190px 55px 0 0px color-mix(in oklch, oklch(1 0 0) 50%, transparent),
+    260px 25px 0 1px color-mix(in oklch, oklch(1 0 0) 80%, transparent),
+    330px 65px 0 0px color-mix(in oklch, oklch(1 0 0) 60%, transparent),
+    410px 5px 0 0px color-mix(in oklch, oklch(1 0 0) 90%, transparent),
+    480px 50px 0 1px color-mix(in oklch, oklch(1 0 0) 70%, transparent),
+    560px 20px 0 0px color-mix(in oklch, oklch(1 0 0) 80%, transparent),
+    630px 70px 0 0px color-mix(in oklch, oklch(1 0 0) 50%, transparent),
+    700px 35px 0 1px color-mix(in oklch, oklch(1 0 0) 90%, transparent),
+    780px 15px 0 0px color-mix(in oklch, oklch(1 0 0) 60%, transparent),
+    850px 60px 0 0px color-mix(in oklch, oklch(1 0 0) 80%, transparent),
+    930px 30px 0 1px color-mix(in oklch, oklch(1 0 0) 70%, transparent),
+    1000px 50px 0 0px color-mix(in oklch, oklch(1 0 0) 50%, transparent),
+    1070px 10px 0 0px color-mix(in oklch, oklch(1 0 0) 90%, transparent);
+  animation: roy-ferrum-twinkle-2 4s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-twinkle-1 {
+
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+
+}
+
+@keyframes roy-ferrum-twinkle-2 {
+
+  0%, 100% { opacity: 0.6; }
+  30% { opacity: 0.2; }
+  70% { opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-fade-up",
+    name: "Fade Up",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-fade-up", "fade", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-fade-up {
+  animation: roy-ferrum-scroll-fade-up 0.7s ease-out both;
+}
+
+@keyframes roy-ferrum-scroll-fade-up {
+
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-fade-left",
+    name: "Fade Left",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-fade-left", "fade", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-fade-left {
+  animation: roy-ferrum-scroll-fade-left 0.7s ease-out both;
+}
+
+@keyframes roy-ferrum-scroll-fade-left {
+
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-fade-right",
+    name: "Fade Right",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-fade-right", "fade", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-fade-right {
+  animation: roy-ferrum-scroll-fade-right 0.7s ease-out both;
+}
+
+@keyframes roy-ferrum-scroll-fade-right {
+
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-zoom-in",
+    name: "Zoom In",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-zoom-in", "zoom", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-zoom-in {
+  animation: roy-ferrum-scroll-zoom-in 0.6s ease-out both;
+}
+
+@keyframes roy-ferrum-scroll-zoom-in {
+
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-slide-stagger",
+    name: "Slide Stagger",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-slide-stagger", "slide", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-slide-stagger {
+  animation: roy-ferrum-scroll-slide-stagger 0.8s ease-out both;
+  animation-delay: 0.1s;
+}
+
+@keyframes roy-ferrum-scroll-slide-stagger {
+
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  60% {
+    opacity: 0.8;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-flip-in",
+    name: "Flip In",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-flip-in", "flip", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-flip-in {
+  animation: roy-ferrum-scroll-flip-in 0.7s ease-out both;
+  backface-visibility: visible;
+}
+
+@keyframes roy-ferrum-scroll-flip-in {
+
+  from {
+    opacity: 0;
+    transform: perspective(400px) rotateY(90deg);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(400px) rotateY(0deg);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-rotate-in",
+    name: "Rotate In",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-rotate-in", "rotate", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-rotate-in {
+  animation: roy-ferrum-scroll-rotate-in 0.8s ease-out both;
+}
+
+@keyframes roy-ferrum-scroll-rotate-in {
+
+  from {
+    opacity: 0;
+    transform: rotate(-200deg) scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-scale-bounce",
+    name: "Scale Bounce",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-scale-bounce", "scale", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-scale-bounce {
+  animation: roy-ferrum-scroll-scale-bounce 0.8s ease-out both;
+}
+
+@keyframes roy-ferrum-scroll-scale-bounce {
+
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-blur-clear",
+    name: "Blur Clear",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-blur-clear", "blur", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-blur-clear {
+  animation: roy-ferrum-scroll-blur-clear 0.7s ease-out both;
+}
+
+@keyframes roy-ferrum-scroll-blur-clear {
+
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: scale(1.05);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0px);
+    transform: scale(1);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-clip-reveal",
+    name: "Clip Reveal",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-clip-reveal", "clip", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-clip-reveal {
+  animation: roy-ferrum-scroll-clip-reveal 0.7s ease-out both;
+}
+
+@keyframes roy-ferrum-scroll-clip-reveal {
+
+  from {
+    opacity: 0;
+    clip-path: circle(0% at 50% 50%);
+  }
+  to {
+    opacity: 1;
+    clip-path: circle(75% at 50% 50%);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-sepia-in",
+    name: "Sepia In",
+    category: "visual",
+    description: "An animated motion effect (sepia in)",
+    tags: ["sepia-in", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-sepia-in {
+  animation: roy-ferrum-sepia-in 1.2s ease-out both;
+}
+
+@keyframes roy-ferrum-sepia-in {
+
+  0% { filter: sepia(1); }
+  100% { filter: sepia(0); }
+
+}`
+  },
+  {
+    id: "ferrum-sepia-out",
+    name: "Sepia Out",
+    category: "visual",
+    description: "An animated motion effect (sepia out)",
+    tags: ["sepia-out", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-sepia-out {
+  animation: roy-ferrum-sepia-out 1.2s ease-in both;
+}
+
+@keyframes roy-ferrum-sepia-out {
+
+  0% { filter: sepia(0); }
+  100% { filter: sepia(1); }
+
+}`
+  },
+  {
+    id: "ferrum-saturate-pulse",
+    name: "Saturate Pulse",
+    category: "visual",
+    description: "An animated motion effect (saturate pulse)",
+    tags: ["saturate-pulse", "pulse", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-saturate-pulse {
+  animation: roy-ferrum-saturate-pulse 2s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-saturate-pulse {
+
+  0%, 100% { filter: saturate(1); }
+  50% { filter: saturate(2.5); }
+
+}`
+  },
+  {
+    id: "ferrum-hue-rotate",
+    name: "Hue Rotate",
+    category: "visual",
+    description: "An animated motion effect (hue rotate)",
+    tags: ["hue-rotate", "rotate", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hue-rotate {
+  animation: roy-ferrum-hue-rotate 4s linear infinite;
+}
+
+@keyframes roy-ferrum-hue-rotate {
+
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-invert-flash",
+    name: "Invert Flash",
+    category: "visual",
+    description: "An animated motion effect (invert flash)",
+    tags: ["invert-flash", "flash", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-invert-flash {
+  animation: roy-ferrum-invert-flash 2s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-invert-flash {
+
+  0%, 40%, 60%, 100% { filter: invert(0); }
+  45%, 55% { filter: invert(1); }
+
+}`
+  },
+  {
+    id: "ferrum-brightness-pulse",
+    name: "Brightness Pulse",
+    category: "visual",
+    description: "An animated motion effect (brightness pulse)",
+    tags: ["brightness-pulse", "pulse", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-brightness-pulse {
+  animation: roy-ferrum-brightness-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-brightness-pulse {
+
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.4); }
+
+}`
+  },
+  {
+    id: "ferrum-contrast-switch",
+    name: "Contrast Switch",
+    category: "visual",
+    description: "An animated motion effect (contrast switch)",
+    tags: ["contrast-switch", "switch", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-contrast-switch {
+  animation: roy-ferrum-contrast-switch 3s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-contrast-switch {
+
+  0%, 45%, 55%, 100% { filter: contrast(1); }
+  50% { filter: contrast(1.8); }
+
+}`
+  },
+  {
+    id: "ferrum-vintage",
+    name: "Vintage",
+    category: "visual",
+    description: "An animated motion effect (vintage)",
+    tags: ["vintage", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-vintage {
+  animation: roy-ferrum-vintage 4s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-vintage {
+
+  0%, 100% {
+    filter: sepia(0.5) contrast(1.1) brightness(0.95);
+  }
+  50% {
+    filter: sepia(0.7) contrast(1.15) brightness(0.85);
+  }
+
+}`
+  }
+];
+
+// src/lib/effects-batch-25.ts
+var effectsBatch25 = [
+  {
+    id: "ferrum-3d-book",
+    name: "3D Book",
+    category: "3d-transforms",
+    description: "A 3D transform effect with perspective and depth",
+    tags: ["3d", "transform", "3d-book", "book"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-3d-book {
+  perspective: 800px;
+  width: 60px;
+  height: 80px;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateY(-25deg);
+  transition: transform 0.6s ease;
+}`
+  },
+  {
+    id: "ferrum-3d-gallery",
+    name: "3D Gallery",
+    category: "3d-transforms",
+    description: "A 3D transform effect with perspective and depth",
+    tags: ["3d", "transform", "3d-gallery", "gallery", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-3d-gallery {
+  perspective: 1000px;
+  width: 80px;
+  height: 60px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: roy-3d-gallery-rotate 8s linear infinite;
+}
+
+@keyframes roy-3d-gallery-rotate {
+
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-3d-poster",
+    name: "3D Poster",
+    category: "3d-transforms",
+    description: "A 3D transform effect with perspective and depth",
+    tags: ["3d", "transform", "3d-poster", "poster"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-3d-poster {
+  perspective: 1000px;
+  width: 80px;
+  height: 100px;
+  background:
+    linear-gradient(135deg, color-mix(in oklch, oklch(1 0 0) 10%, transparent), transparent),
+    linear-gradient(135deg, oklch(0.566 0.245 278.69), oklch(0.652 0.241 354.31));
+  border-radius: 6px;
+  box-shadow:
+    0 10px 30px color-mix(in oklch, oklch(0.566 0.245 278.69) 40%, transparent),
+    0 0 0 1px color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  transform: perspective(1000px) rotateY(-15deg) rotateX(5deg);
+  transition: transform 0.5s ease;
+}`
+  },
+  {
+    id: "ferrum-fade-through",
+    name: "Fade Through",
+    category: "animations",
+    description: "An animated motion effect (fade through)",
+    tags: ["fade", "transition", "fade-through", "through", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-fade-through {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: oklch(1 0 0);
+  animation: roy-ferrum-fade-through 0.6s ease-in-out;
+  pointer-events: all;
+}
+
+@keyframes roy-ferrum-fade-through {
+
+  0% { opacity: 0; }
+  40% { opacity: 1; }
+  60% { opacity: 1; }
+  100% { opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-zoom-fade",
+    name: "Zoom Fade",
+    category: "animations",
+    description: "An animated motion effect (zoom fade)",
+    tags: ["zoom", "scale", "zoom-fade", "fade", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-zoom-fade {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: oklch(1 0 0);
+  opacity: 0;
+  transform: scale(0.92);
+  animation: roy-ferrum-zoom-fade 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: all;
+}
+
+@keyframes roy-ferrum-zoom-fade {
+
+  0% { opacity: 0; transform: scale(0.92); }
+  100% { opacity: 1; transform: scale(1); }
+
+}`
+  },
+  {
+    id: "ferrum-flip-transition",
+    name: "Flip Transition",
+    category: "animations",
+    description: "An animated motion effect (flip transition)",
+    tags: ["flip", "transform", "flip-transition", "transition", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-flip-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: oklch(1 0 0);
+  transform: perspective(1200px) rotateY(-90deg);
+  transform-origin: left center;
+  animation: roy-ferrum-flip-transition 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: all;
+  backface-visibility: hidden;
+}
+
+@keyframes roy-ferrum-flip-transition {
+
+  0% { transform: perspective(1200px) rotateY(-90deg); }
+  100% { transform: perspective(1200px) rotateY(0deg); }
+
+}`
+  },
+  {
+    id: "ferrum-apple-bounce-settle",
+    name: "Apple Bounce Settle",
+    category: "glass-ui",
+    description: "An Apple-inspired motion or surface effect (apple bounce settle)",
+    tags: ["apple", "glassmorphism", "apple-bounce-settle", "bounce", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-apple-bounce-settle {
+  animation: roy-apple-bounce-settle 1.2s cubic-bezier(0.28, 0.84, 0.42, 1) both;
+}
+
+@keyframes roy-apple-bounce-settle {
+
+  0% { transform: translateY(-120%); opacity: 0; }
+  15% { transform: translateY(0); opacity: 1; }
+  30% { transform: translateY(-22%); }
+  45% { transform: translateY(0); }
+  60% { transform: translateY(-8%); }
+  75% { transform: translateY(0); }
+  88% { transform: translateY(-2%); }
+  100% { transform: translateY(0); }
+
+}`
+  },
+  {
+    id: "ferrum-apple-elastic-scale",
+    name: "Apple Elastic Scale",
+    category: "glass-ui",
+    description: "An Apple-inspired motion or surface effect (apple elastic scale)",
+    tags: ["apple", "glassmorphism", "apple-elastic-scale", "elastic", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-apple-elastic-scale {
+  animation: roy-apple-elastic 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) both;
+}
+
+@keyframes roy-apple-elastic {
+
+  0% { transform: scale(0); opacity: 0; }
+  35% { transform: scale(1.25); opacity: 1; }
+  55% { transform: scale(0.88); }
+  75% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+
+}`
+  },
+  {
+    id: "ferrum-apple-flip-spring",
+    name: "Apple Flip Spring",
+    category: "glass-ui",
+    description: "An Apple-inspired motion or surface effect (apple flip spring)",
+    tags: ["apple", "glassmorphism", "apple-flip-spring", "flip", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-apple-flip-spring {
+  perspective: 1000px;
+  animation: roy-apple-flip-spring 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  transform-style: preserve-3d;
+}
+
+@keyframes roy-apple-flip-spring {
+
+  0% { opacity: 0; transform: rotateY(-90deg) scale(0.85); }
+  60% { opacity: 1; transform: rotateY(12deg) scale(1.04); }
+  100% { transform: rotateY(0) scale(1); }
+
+}`
+  },
+  {
+    id: "ferrum-apple-frosted-vibrancy",
+    name: "Apple Frosted Vibrancy",
+    category: "glass-ui",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["apple", "glassmorphism", "apple-frosted-vibrancy", "frosted"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-apple-frosted-vibrancy {
+  background: color-mix(in oklch, oklch(1 0 0) 55%, transparent);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 40%, transparent);
+  border-radius: 14px;
+  box-shadow:
+    0 1px 0 color-mix(in oklch, oklch(1 0 0) 60%, transparent) inset,
+    0 10px 30px color-mix(in oklch, oklch(0 0 0) 15%, transparent);
+  color: oklch(0.232 0.004 286.1);
+}`
+  },
+  {
+    id: "ferrum-apple-material-thick",
+    name: "Apple Material Thick",
+    category: "glass-ui",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["apple", "glassmorphism", "apple-material-thick", "material"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-apple-material-thick {
+  background: color-mix(in oklch, oklch(0.971 0.003 286.35) 75%, transparent);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 30%, transparent);
+  border-radius: 16px;
+  box-shadow:
+    0 1px 0 color-mix(in oklch, oklch(1 0 0) 50%, transparent) inset,
+    0 20px 50px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
+  color: oklch(0.232 0.004 286.1);
+}`
+  },
+  {
+    id: "ferrum-apple-material-thin",
+    name: "Apple Material Thin",
+    category: "glass-ui",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["apple", "glassmorphism", "apple-material-thin", "material"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-apple-material-thin {
+  background: color-mix(in oklch, oklch(0.986 0.003 286.35) 50%, transparent);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 50%, transparent);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
+  color: oklch(0.232 0.004 286.1);
+}`
+  },
+  {
+    id: "ferrum-apple-sidebar-material",
+    name: "Apple Sidebar Material",
+    category: "glass-ui",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["apple", "glassmorphism", "apple-sidebar-material", "sidebar"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-apple-sidebar-material {
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklch, oklch(0.971 0.003 286.35) 70%, transparent) 0%,
+    color-mix(in oklch, oklch(0.941 0.007 286.27) 60%, transparent) 100%
+  );
+  backdrop-filter: blur(40px) saturate(150%);
+  -webkit-backdrop-filter: blur(40px) saturate(150%);
+  border: 1px solid color-mix(in oklch, oklch(0 0 0) 6%, transparent);
+  border-radius: 12px;
+  box-shadow:
+    inset 1px 0 0 color-mix(in oklch, oklch(1 0 0) 50%, transparent),
+    0 6px 20px color-mix(in oklch, oklch(0 0 0) 10%, transparent);
+  color: oklch(0.232 0.004 286.1);
+}`
+  },
+  {
+    id: "ferrum-icon-spin",
+    name: "Spin",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (spin)",
+    tags: ["icon", "animation", "icon-spin", "spin", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-icon-spin {
+  animation: roy-ferrum-icon-spin 1s linear infinite;
+}
+
+@keyframes roy-ferrum-icon-spin {
+
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-icon-bounce",
+    name: "Bounce",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (bounce)",
+    tags: ["icon", "animation", "icon-bounce", "bounce", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-icon-bounce {
+  animation: roy-ferrum-icon-bounce 0.8s ease infinite;
+}
+
+@keyframes roy-ferrum-icon-bounce {
+
+  0%, 100% { transform: translateY(0); }
+  20% { transform: translateY(-30%); }
+  40% { transform: translateY(0); }
+  55% { transform: translateY(-15%); }
+  70% { transform: translateY(0); }
+  82% { transform: translateY(-6%); }
+
+}`
+  },
+  {
+    id: "ferrum-icon-pulse",
+    name: "Pulse",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (pulse)",
+    tags: ["icon", "animation", "icon-pulse", "pulse", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-icon-pulse {
+  animation: roy-ferrum-icon-pulse 1s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-icon-pulse {
+
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+
+}`
+  },
+  {
+    id: "ferrum-icon-shake",
+    name: "Shake",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (shake)",
+    tags: ["icon", "animation", "icon-shake", "shake", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-icon-shake {
+  animation: roy-ferrum-icon-shake 0.6s ease-in-out;
+}
+
+@keyframes roy-ferrum-icon-shake {
+
+  0%, 100% { transform: translateX(0); }
+  15% { transform: translateX(-25%); }
+  30% { transform: translateX(20%); }
+  45% { transform: translateX(-15%); }
+  60% { transform: translateX(10%); }
+  75% { transform: translateX(-5%); }
+
+}`
+  },
+  {
+    id: "ferrum-icon-flip",
+    name: "Flip",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (flip)",
+    tags: ["icon", "animation", "icon-flip", "flip", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-icon-flip {
+  animation: roy-ferrum-icon-flip 0.6s ease-in-out;
+  backface-visibility: hidden;
+}
+
+@keyframes roy-ferrum-icon-flip {
+
+  0% { transform: perspective(400px) rotateY(0); }
+  100% { transform: perspective(400px) rotateY(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-icon-swing",
+    name: "Swing",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (swing)",
+    tags: ["icon", "animation", "icon-swing", "swing", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-icon-swing {
+  animation: roy-ferrum-icon-swing 0.8s ease-in-out;
+  transform-origin: top center;
+}
+
+@keyframes roy-ferrum-icon-swing {
+
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(15deg); }
+  40% { transform: rotate(-10deg); }
+  60% { transform: rotate(5deg); }
+  80% { transform: rotate(-2deg); }
+  100% { transform: rotate(0deg); }
+
+}`
+  },
+  {
+    id: "ferrum-icon-tada",
+    name: "Tada",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (tada)",
+    tags: ["icon", "animation", "icon-tada", "tada", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-icon-tada {
+  animation: roy-ferrum-icon-tada 1s ease;
+}
+
+@keyframes roy-ferrum-icon-tada {
+
+  0% { transform: scale(1) rotate(0deg); }
+  10%, 20% { transform: scale(0.9) rotate(-3deg); }
+  30%, 50%, 70%, 90% { transform: scale(1.15) rotate(3deg); }
+  40%, 60%, 80% { transform: scale(1.15) rotate(-3deg); }
+  100% { transform: scale(1) rotate(0deg); }
+
+}`
+  },
+  {
+    id: "ferrum-icon-wobble",
+    name: "Wobble",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (wobble)",
+    tags: ["icon", "animation", "icon-wobble", "wobble", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-icon-wobble {
+  animation: roy-ferrum-icon-wobble 0.8s ease;
+}
+
+@keyframes roy-ferrum-icon-wobble {
+
+  0% { transform: translateX(0) rotate(0deg); }
+  15% { transform: translateX(-25%) rotate(-5deg); }
+  30% { transform: translateX(20%) rotate(3deg); }
+  45% { transform: translateX(-15%) rotate(-3deg); }
+  60% { transform: translateX(10%) rotate(2deg); }
+  75% { transform: translateX(-5%) rotate(-1deg); }
+  100% { transform: translateX(0) rotate(0deg); }
+
+}`
+  },
+  {
+    id: "ferrum-icon-fade-in",
+    name: "Fade In",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (fade in)",
+    tags: ["icon", "animation", "icon-fade-in", "fade", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-icon-fade-in {
+  animation: roy-ferrum-icon-fade-in 0.5s ease forwards;
+}
+
+@keyframes roy-ferrum-icon-fade-in {
+
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-icon-drop-in",
+    name: "Drop In",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (drop in)",
+    tags: ["icon", "animation", "icon-drop-in", "drop", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-icon-drop-in {
+  animation: roy-ferrum-icon-drop-in 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes roy-ferrum-icon-drop-in {
+
+  0% { opacity: 0; transform: translateY(-40px); }
+  60% { opacity: 1; transform: translateY(5px); }
+  80% { transform: translateY(-3px); }
+  100% { opacity: 1; transform: translateY(0); }
+
+}`
+  },
+  {
+    id: "ferrum-icon-rubber-band",
+    name: "Rubber Band",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (rubber band)",
+    tags: ["icon", "animation", "icon-rubber-band", "rubber", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-icon-rubber-band {
+  animation: roy-ferrum-icon-rubber-band 0.8s ease;
+}
+
+@keyframes roy-ferrum-icon-rubber-band {
+
+  0% { transform: scaleX(1) scaleY(1); }
+  30% { transform: scaleX(1.25) scaleY(0.75); }
+  40% { transform: scaleX(0.75) scaleY(1.25); }
+  50% { transform: scaleX(1.15) scaleY(0.85); }
+  65% { transform: scaleX(0.95) scaleY(1.05); }
+  75% { transform: scaleX(1.05) scaleY(0.95); }
+  100% { transform: scaleX(1) scaleY(1); }
+
+}`
+  },
+  {
+    id: "ferrum-icon-beat",
+    name: "Beat",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (beat)",
+    tags: ["icon", "animation", "icon-beat", "beat", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-icon-beat {
+  animation: roy-ferrum-icon-beat 1s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-icon-beat {
+
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.2); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.2); }
+  70% { transform: scale(1); }
+
+}`
+  },
+  {
+    id: "ferrum-skip-link",
+    name: "Skip Link",
+    category: "misc",
+    description: "A skip link effect",
+    tags: ["skip-link", "link"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: 99999;
+  background: oklch(0.488 0.217 264.38);
+  color: oklch(1 0 0);
+  padding: 8px 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0 0 8px 0;
+  text-decoration: none;
+  transition: none;
+}
+
+.roycss-ferrum-skip-link:focus {
+  left: 0;
+  top: 0;
+  width: auto;
+  height: auto;
+  overflow: auto;
+  padding: 12px 24px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-skip-link {
+    transition: none;
+  }
+}`
+  },
+  {
+    id: "ferrum-reduced-motion-fade",
+    name: "Reduced Motion Fade",
+    category: "misc",
+    description: "An animated motion effect (reduced motion fade)",
+    tags: ["reduced-motion-fade", "motion", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-reduced-motion-fade {
+  opacity: 0;
+  animation: roy-ferrum-rm-fade 0.5s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-reduced-motion-fade {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+@keyframes roy-ferrum-rm-fade {
+
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-reduced-motion-slide",
+    name: "Reduced Motion Slide",
+    category: "misc",
+    description: "An animated motion effect (reduced motion slide)",
+    tags: ["reduced-motion-slide", "motion", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-reduced-motion-slide {
+  transform: translateY(20px);
+  opacity: 0;
+  animation: roy-ferrum-rm-slide 0.5s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-reduced-motion-slide {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes roy-ferrum-rm-slide {
+
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-high-contrast-border",
+    name: "High Contrast Border",
+    category: "misc",
+    description: "A high contrast border effect",
+    tags: ["high-contrast-border", "contrast"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-high-contrast-border {
+  border: 3px solid oklch(0 0 0);
+  min-height: 1px;
+  min-width: 1px;
+}
+
+@media (prefers-contrast: high) {
+  .roycss-ferrum-high-contrast-border {
+    border-width: 4px;
+    border-color: oklch(1 0 0);
+    outline: 3px solid oklch(0 0 0);
+    outline-offset: -1px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-high-contrast-border {
+    transition: none;
+  }
+}`
+  },
+  {
+    id: "ferrum-sr-only",
+    name: "Sr Only",
+    category: "misc",
+    description: "A sr only effect",
+    tags: ["sr-only", "only"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.roycss-ferrum-sr-only.focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}`
+  },
+  {
+    id: "ferrum-motion-safe-bounce",
+    name: "Motion Safe Bounce",
+    category: "misc",
+    description: "An animated motion effect (motion safe bounce)",
+    tags: ["motion-safe-bounce", "safe", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-motion-safe-bounce {
+  animation: roy-ferrum-ms-bounce 0.6s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-motion-safe-bounce {
+    animation: none;
+    transform: none;
+  }
+}
+
+@keyframes roy-ferrum-ms-bounce {
+
+  0%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-15px); }
+  50% { transform: translateY(-8px); }
+  70% { transform: translateY(-3px); }
+
+}`
+  },
+  {
+    id: "ferrum-motion-safe-pulse",
+    name: "Motion Safe Pulse",
+    category: "misc",
+    description: "An animated motion effect (motion safe pulse)",
+    tags: ["motion-safe-pulse", "safe", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-motion-safe-pulse {
+  animation: roy-ferrum-ms-pulse 1s ease-in-out 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-motion-safe-pulse {
+    animation: none;
+    transform: none;
+}
+}
+
+@keyframes roy-ferrum-ms-pulse {
+
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+
+}`
+  },
+  {
+    id: "ferrum-accordion-3d",
+    name: "3D",
+    category: "navigation",
+    description: "A navigation component with motion or interaction feedback",
+    tags: ["accordion", "navigation", "accordion-3d", "3d"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-accordion-3d {
+  perspective: 800px;
+  width: 80px;
+  height: 60px;
+  position: relative;
+  transform-style: preserve-3d;
+}`
+  },
+  {
+    id: "ferrum-slide-over-left",
+    name: "Slide Over Left",
+    category: "page-transitions",
+    description: "An animated motion effect (slide over left)",
+    tags: ["slide", "transition", "slide-over-left", "over", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-slide-over-left {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: oklch(1 0 0);
+  transform: translateX(100%);
+  animation: roy-ferrum-slide-over-left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: all;
+}
+
+@keyframes roy-ferrum-slide-over-left {
+
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(0); }
+
+}`
+  },
+  {
+    id: "ferrum-slide-over-right",
+    name: "Slide Over Right",
+    category: "page-transitions",
+    description: "An animated motion effect (slide over right)",
+    tags: ["slide", "transition", "slide-over-right", "over", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-slide-over-right {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: oklch(1 0 0);
+  transform: translateX(-100%);
+  animation: roy-ferrum-slide-over-right 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: all;
+}
+
+@keyframes roy-ferrum-slide-over-right {
+
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0); }
+
+}`
+  },
+  {
+    id: "ferrum-slide-over-up",
+    name: "Slide Over Up",
+    category: "page-transitions",
+    description: "An animated motion effect (slide over up)",
+    tags: ["slide", "transition", "slide-over-up", "over", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-slide-over-up {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: oklch(1 0 0);
+  transform: translateY(100%);
+  animation: roy-ferrum-slide-over-up 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: all;
+}
+
+@keyframes roy-ferrum-slide-over-up {
+
+  0% { transform: translateY(100%); }
+  100% { transform: translateY(0); }
+
+}`
+  },
+  {
+    id: "ferrum-dissolve",
+    name: "Dissolve",
+    category: "page-transitions",
+    description: "An animated motion effect (dissolve)",
+    tags: ["dissolve", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-dissolve {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: oklch(1 0 0);
+  opacity: 0;
+  filter: blur(20px);
+  animation: roy-ferrum-dissolve 0.65s ease-out forwards;
+  pointer-events: all;
+}
+
+@keyframes roy-ferrum-dissolve {
+
+  0% { opacity: 0; filter: blur(20px); }
+  100% { opacity: 1; filter: blur(0px); }
+
+}`
+  },
+  {
+    id: "ferrum-curtain-in",
+    name: "Curtain In",
+    category: "page-transitions",
+    description: "An animated motion effect (curtain in)",
+    tags: ["curtain-in", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-curtain-in {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: oklch(1 0 0);
+  pointer-events: all;
+}
+
+.roycss-ferrum-curtain-in::before,
+.roycss-ferrum-curtain-in::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background: oklch(1 0 0);
+  animation: roy-ferrum-curtain-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.roycss-ferrum-curtain-in::before {
+  left: 0;
+  clip-path: inset(0 50% 0 0);
+  animation-name: roy-ferrum-curtain-left;
+}
+
+.roycss-ferrum-curtain-in::after {
+  right: 0;
+  clip-path: inset(0 0 0 50%);
+  animation-name: roy-ferrum-curtain-right;
+}
+
+.roycss-ferrum-focus-visible-ring:focus-visible {
+  outline: 3px solid oklch(0.546 0.215 262.88);
+  outline-offset: 2px;
+  border-radius: 4px;
+  transition: outline-color 0.15s ease;
+}
+
+.roycss-ferrum-focus-visible-ring:focus:not(:focus-visible) {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-focus-visible-ring:focus-visible {
+    transition: none;
+  }
+}
+
+@keyframes roy-ferrum-curtain-left {
+
+  0% { clip-path: inset(0 0 0 0); }
+  100% { clip-path: inset(0 50% 0 0); }
+
+}
+
+@keyframes roy-ferrum-curtain-right {
+
+  0% { clip-path: inset(0 0 0 0); }
+  100% { clip-path: inset(0 0 0 50%); }
+
+}`
+  },
+  {
+    id: "ferrum-preset-glassmorphism",
+    name: "Preset Glassmorphism",
+    category: "visual",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["preset-glassmorphism", "glassmorphism"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-preset-glassmorphism {
+  background: color-mix(in oklch, oklch(1 0 0) 15%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 25%, transparent);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
+}`
+  },
+  {
+    id: "ferrum-preset-neumorphism",
+    name: "Preset Neumorphism",
+    category: "visual",
+    description: "A preset design-system style (preset neumorphism)",
+    tags: ["preset-neumorphism", "neumorphism"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-preset-neumorphism {
+  background: oklch(0.92 0.011 256.7);
+  border-radius: 16px;
+  border: none;
+  box-shadow:
+    8px 8px 16px oklch(0.756 0.034 258.37),
+    -8px -8px 16px oklch(1 0 0);
+}`
+  },
+  {
+    id: "ferrum-preset-claymorphism",
+    name: "Preset Claymorphism",
+    category: "visual",
+    description: "A preset design-system style (preset claymorphism)",
+    tags: ["preset-claymorphism", "claymorphism"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-preset-claymorphism {
+  background: oklch(0.725 0.138 21.03);
+  border-radius: 32px;
+  border: none;
+  box-shadow:
+    inset -6px -6px 12px color-mix(in oklch, oklch(0 0 0) 15%, transparent),
+    inset 6px 6px 12px color-mix(in oklch, oklch(1 0 0) 35%, transparent),
+    8px 8px 20px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
+}`
+  },
+  {
+    id: "ferrum-preset-brutalism",
+    name: "Preset Brutalism",
+    category: "visual",
+    description: "A preset design-system style (preset brutalism)",
+    tags: ["preset-brutalism", "brutalism"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-preset-brutalism {
+  background: oklch(0.968 0.211 109.77);
+  border: 4px solid oklch(0 0 0);
+  border-radius: 0;
+  box-shadow: 8px 8px 0 oklch(0 0 0);
+  font-weight: 900;
+  text-transform: uppercase;
+}`
+  },
+  {
+    id: "ferrum-preset-retro-pixel",
+    name: "Preset Retro Pixel",
+    category: "visual",
+    description: "A preset design-system style (preset retro pixel)",
+    tags: ["preset-retro-pixel", "retro"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-preset-retro-pixel {
+  background: oklch(0.315 0.07 281.57);
+  border: none;
+  border-radius: 0;
+  color: oklch(0.902 0.152 94.64);
+  font-family: 'Courier New', Courier, monospace;
+  box-shadow:
+    4px 0 0 0 oklch(0.315 0.07 281.57), -4px 0 0 0 oklch(0.315 0.07 281.57),
+    0 4px 0 0 oklch(0.315 0.07 281.57), 0 -4px 0 0 oklch(0.315 0.07 281.57),
+    4px 4px 0 0 oklch(0.315 0.07 281.57), -4px 4px 0 0 oklch(0.315 0.07 281.57),
+    4px -4px 0 0 oklch(0.315 0.07 281.57), -4px -4px 0 0 oklch(0.315 0.07 281.57);
+  outline: 4px solid oklch(0.902 0.152 94.64);
+}`
+  },
+  {
+    id: "ferrum-preset-cyberpunk",
+    name: "Preset Cyberpunk",
+    category: "visual",
+    description: "A preset design-system style (preset cyberpunk)",
+    tags: ["preset-cyberpunk", "cyberpunk"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-preset-cyberpunk {
+  background: oklch(0.149 0.017 284.13);
+  border: 2px solid oklch(0.87 0.148 202.88);
+  border-radius: 4px;
+  box-shadow:
+    0 0 8px color-mix(in oklch, oklch(0.87 0.148 202.88) 40%, transparent),
+    0 0 20px color-mix(in oklch, oklch(0.87 0.148 202.88) 15%, transparent),
+    inset 0 0 12px color-mix(in oklch, oklch(0.87 0.148 202.88) 5%, transparent);
+  color: oklch(0.87 0.148 202.88);
+}`
+  },
+  {
+    id: "ferrum-preset-minimalism",
+    name: "Preset Minimalism",
+    category: "visual",
+    description: "A preset design-system style (preset minimalism)",
+    tags: ["preset-minimalism", "minimalism"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-preset-minimalism {
+  background: oklch(1 0 0);
+  border: 1px solid oklch(0.928 0.006 264.53);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 4%, transparent);
+  color: oklch(0.39 0.04 257.29);
+}`
+  },
+  {
+    id: "ferrum-preset-elevation",
+    name: "Preset Elevation",
+    category: "visual",
+    description: "A preset design-system style (preset elevation)",
+    tags: ["preset-elevation", "elevation"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-preset-elevation {
+  background: oklch(1 0 0);
+  border: none;
+  border-radius: 12px;
+  box-shadow:
+    0 1px 2px color-mix(in oklch, oklch(0 0 0) 7%, transparent),
+    0 4px 8px color-mix(in oklch, oklch(0 0 0) 5%, transparent),
+    0 12px 24px color-mix(in oklch, oklch(0 0 0) 4%, transparent),
+    0 20px 40px color-mix(in oklch, oklch(0 0 0) 3%, transparent);
+}`
+  },
+  {
+    id: "ferrum-preset-gradient-border",
+    name: "Preset Gradient Border",
+    category: "visual",
+    description: "A preset design-system style (preset gradient border)",
+    tags: ["preset-gradient-border", "gradient"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-preset-gradient-border {
+  position: relative;
+  background: oklch(1 0 0);
+  border-radius: 12px;
+  border: none;
+}
+.roycss-ferrum-preset-gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, oklch(0.627 0.164 271.53) 0%, oklch(0.501 0.138 304.73) 50%, oklch(0.795 0.172 323.15) 100%);
+  z-index: -1;
+}`
+  },
+  {
+    id: "ferrum-preset-dark-glass",
+    name: "Preset Dark Glass",
+    category: "visual",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["preset-dark-glass", "dark", "glassmorphism"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-preset-dark-glass {
+  background: color-mix(in oklch, oklch(0 0 0) 35%, transparent);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+  color: oklch(0.967 0.003 264.54);
+}`
+  },
+  {
+    id: "ferrum-preset-soft-ui",
+    name: "Preset Soft UI",
+    category: "visual",
+    description: "A preset design-system style (preset soft ui)",
+    tags: ["preset-soft-ui", "soft"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-preset-soft-ui {
+  --soft-bg: oklch(0.941 0.008 253.85);
+  --soft-shadow-dark: oklch(0.844 0.009 258.34);
+  --soft-shadow-light: oklch(1 0 0);
+  background: var(--soft-bg);
+  border: none;
+  border-radius: 20px;
+  box-shadow:
+    6px 6px 14px var(--soft-shadow-dark),
+    -6px -6px 14px var(--soft-shadow-light),
+    inset 2px 2px 4px color-mix(in oklch, oklch(1 0 0) 60%, transparent),
+    inset -2px -2px 4px color-mix(in oklch, oklch(0 0 0) 4%, transparent);
+}`
+  },
+  {
+    id: "ferrum-preset-neobrutalism",
+    name: "Preset Neobrutalism",
+    category: "visual",
+    description: "A preset design-system style (preset neobrutalism)",
+    tags: ["preset-neobrutalism", "neobrutalism"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-preset-neobrutalism {
+  background: oklch(0.962 0.058 95.62);
+  border: 3px solid oklch(0.27 0.04 260.03);
+  border-radius: 8px;
+  box-shadow: 6px 6px 0 oklch(0.27 0.04 260.03);
+  color: oklch(0.27 0.04 260.03);
+  font-weight: 700;
+}`
+  }
+];
+
+// src/lib/effects-batch-26.ts
+var effectsBatch26 = [
+  {
+    id: "ferrum-blink",
+    name: "Blink",
+    category: "animations",
+    description: "An animated motion effect (blink)",
+    tags: ["blink", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-blink {
+  animation: roy-blink 1.4s steps(2, start) infinite;
+}
+
+@keyframes roy-blink {
+
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.15; }
+
+}`
+  },
+  {
+    id: "ferrum-blur-in-up",
+    name: "Blur In Up",
+    category: "animations",
+    description: "An animated motion effect (blur in up)",
+    tags: ["blur", "filter", "blur-in-up", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-blur-in-up {
+  animation: roy-blur-in-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes roy-blur-in-up {
+
+  from {
+    opacity: 0;
+    filter: blur(18px);
+    transform: translate3d(0, 40px, 0);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translate3d(0, 0, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-blur-out-down",
+    name: "Blur Out Down",
+    category: "animations",
+    description: "An animated motion effect (blur out down)",
+    tags: ["blur", "filter", "blur-out-down", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-blur-out-down {
+  animation: roy-blur-out-down 0.85s cubic-bezier(0.55, 0, 0.68, 0.53) both;
+}
+
+@keyframes roy-blur-out-down {
+
+  from {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 0;
+    filter: blur(18px);
+    transform: translate3d(0, 40px, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-book-open",
+    name: "Book Open",
+    category: "animations",
+    description: "A 3D transform effect with perspective depth",
+    tags: ["book-open", "open", "3d"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-book-open {
+  perspective: 1000px;
+  width: 80px;
+  height: 60px;
+  position: relative;
+  transform-style: preserve-3d;
+  background: transparent;
+}`
+  },
+  {
+    id: "ferrum-bounce-in-down",
+    name: "Bounce In Down",
+    category: "animations",
+    description: "An animated motion effect (bounce in down)",
+    tags: ["bounce", "motion", "bounce-in-down", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-bounce-in-down {
+  animation: roy-bounce-in-down 1s cubic-bezier(0.215, 0.61, 0.355, 1) both;
+}
+
+@keyframes roy-bounce-in-down {
+
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -3000px, 0);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(0, 24px, 0);
+  }
+  75% {
+    transform: translate3d(0, -12px, 0);
+  }
+  90% {
+    transform: translate3d(0, 6px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-bounce-in-left",
+    name: "Bounce In Left",
+    category: "animations",
+    description: "An animated motion effect (bounce in left)",
+    tags: ["bounce", "motion", "bounce-in-left", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-bounce-in-left {
+  animation: roy-bounce-in-left 1s cubic-bezier(0.215, 0.61, 0.355, 1) both;
+}
+
+@keyframes roy-bounce-in-left {
+
+  0% {
+    opacity: 0;
+    transform: translate3d(-3000px, 0, 0);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(25px, 0, 0);
+  }
+  75% {
+    transform: translate3d(-12px, 0, 0);
+  }
+  90% {
+    transform: translate3d(6px, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-bounce-in-right",
+    name: "Bounce In Right",
+    category: "animations",
+    description: "An animated motion effect (bounce in right)",
+    tags: ["bounce", "motion", "bounce-in-right", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-bounce-in-right {
+  animation: roy-bounce-in-right 1s cubic-bezier(0.215, 0.61, 0.355, 1) both;
+}
+
+@keyframes roy-bounce-in-right {
+
+  0% {
+    opacity: 0;
+    transform: translate3d(3000px, 0, 0);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(-25px, 0, 0);
+  }
+  75% {
+    transform: translate3d(12px, 0, 0);
+  }
+  90% {
+    transform: translate3d(-6px, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-bounce-in-up",
+    name: "Bounce In Up",
+    category: "animations",
+    description: "An animated motion effect (bounce in up)",
+    tags: ["bounce", "motion", "bounce-in-up", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-bounce-in-up {
+  animation: roy-bounce-in-up 1s cubic-bezier(0.215, 0.61, 0.355, 1) both;
+}
+
+@keyframes roy-bounce-in-up {
+
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 3000px, 0);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(0, -24px, 0);
+  }
+  75% {
+    transform: translate3d(0, 12px, 0);
+  }
+  90% {
+    transform: translate3d(0, -6px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-bounce-out",
+    name: "Bounce Out",
+    category: "animations",
+    description: "An animated motion effect (bounce out)",
+    tags: ["bounce", "motion", "bounce-out", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-bounce-out {
+  animation: roy-bounce-out 1s ease-in both;
+}
+
+@keyframes roy-bounce-out {
+
+  0% { transform: scale(1); opacity: 1; }
+  20% { transform: scale(0.9); }
+  40%, 55% { transform: scale(1.1); opacity: 1; }
+  80%, 100% { transform: scale(0.3); opacity: 0; }
+
+}`
+  },
+  {
+    id: "ferrum-bg-animated-gradient",
+    name: "Animated Gradient",
+    category: "backgrounds",
+    description: "An animated gradient background with shifting color stops",
+    tags: ["background", "gradient", "bg-animated-gradient", "animated"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-animated-gradient {
+  background: linear-gradient(-45deg, oklch(0.432 0.086 166.91), oklch(0.696 0.149 162.48), oklch(0.685 0.131 226.94), oklch(0.566 0.245 278.69));
+  background-size: 400% 400%;
+  animation: roy-gradient-shift 8s ease infinite;
+}
+
+@keyframes roy-gradient-shift {
+
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+
+}`
+  },
+  {
+    id: "ferrum-bg-concentric",
+    name: "Concentric",
+    category: "backgrounds",
+    description: "An animated background effect",
+    tags: ["background", "gradient", "bg-concentric", "concentric"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-concentric {
+  background: repeating-radial-gradient(
+    circle at center,
+    oklch(0.696 0.149 162.48) 0,
+    oklch(0.696 0.149 162.48) 8px,
+    oklch(0.21 0.034 264.67) 8px,
+    oklch(0.21 0.034 264.67) 16px
+  );
+}`
+  },
+  {
+    id: "ferrum-bg-conic-gradient",
+    name: "Conic Gradient",
+    category: "backgrounds",
+    description: "An animated gradient background with shifting color stops",
+    tags: ["background", "gradient", "bg-conic-gradient", "conic", "animated"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-conic-gradient {
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    oklch(0.696 0.149 162.48),
+    oklch(0.685 0.131 226.94),
+    oklch(0.566 0.245 278.69),
+    oklch(0.652 0.241 354.31),
+    oklch(0.769 0.188 70.08),
+    oklch(0.696 0.149 162.48)
+  );
+  animation: roy-conic-hue 6s linear infinite;
+}
+
+@keyframes roy-conic-hue {
+
+  to { filter: hue-rotate(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-bg-diagonal-stripes",
+    name: "Diagonal Stripes",
+    category: "backgrounds",
+    description: "A diagonally-striped background with motion",
+    tags: ["background", "gradient", "bg-diagonal-stripes", "diagonal", "animated"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-diagonal-stripes {
+  background-color: oklch(0.21 0.034 264.67);
+  background-image: repeating-linear-gradient(
+    -60deg,
+    oklch(0.685 0.131 226.94) 0,
+    oklch(0.685 0.131 226.94) 12px,
+    oklch(0.52 0.094 223.13) 12px,
+    oklch(0.52 0.094 223.13) 24px
+  );
+  background-size: 200% 200%;
+  animation: roy-diagonal-shift 6s linear infinite;
+}
+
+@keyframes roy-diagonal-shift {
+
+  from { background-position: 0 0; }
+  to { background-position: 48px 0; }
+
+}`
+  },
+  {
+    id: "ferrum-bg-dot-pattern",
+    name: "Dot Pattern",
+    category: "backgrounds",
+    description: "A dotted background pattern",
+    tags: ["background", "gradient", "bg-dot-pattern", "dot"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-dot-pattern {
+  background-color: oklch(0.21 0.034 264.67);
+  background-image: radial-gradient(circle, oklch(0.696 0.149 162.48) 1px, transparent 1px);
+  background-size: 24px 24px;
+}`
+  },
+  {
+    id: "ferrum-bg-gradient-pulse",
+    name: "Gradient Pulse",
+    category: "backgrounds",
+    description: "An animated gradient background with shifting color stops",
+    tags: ["background", "gradient", "bg-gradient-pulse", "animated"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-gradient-pulse {
+  background-color: oklch(0.21 0.034 264.67);
+  background-image:
+    radial-gradient(circle at 50% 50%, oklch(0.696 0.149 162.48) 0%, color-mix(in oklch, oklch(0.696 0.149 162.48) 0%, transparent) 40%),
+    radial-gradient(circle at 30% 70%, oklch(0.685 0.131 226.94) 0%, color-mix(in oklch, oklch(0.685 0.131 226.94) 0%, transparent) 40%),
+    radial-gradient(circle at 70% 30%, oklch(0.566 0.245 278.69) 0%, color-mix(in oklch, oklch(0.566 0.245 278.69) 0%, transparent) 40%);
+  animation: roy-gradient-pulse 4s ease-in-out infinite;
+}
+
+@keyframes roy-gradient-pulse {
+
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-bg-gradient-sweep",
+    name: "Gradient Sweep",
+    category: "backgrounds",
+    description: "An animated gradient background with shifting color stops",
+    tags: ["background", "gradient", "bg-gradient-sweep", "animated"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-gradient-sweep {
+  background: linear-gradient(
+    90deg,
+    oklch(0.21 0.034 264.67) 0%,
+    oklch(0.696 0.149 162.48) 25%,
+    oklch(0.685 0.131 226.94) 50%,
+    oklch(0.696 0.149 162.48) 75%,
+    oklch(0.21 0.034 264.67) 100%
+  );
+  background-size: 200% 100%;
+  animation: roy-gradient-sweep 4s linear infinite;
+}
+
+@keyframes roy-gradient-sweep {
+
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+
+}`
+  },
+  {
+    id: "ferrum-bg-grid-lines",
+    name: "Grid Lines",
+    category: "backgrounds",
+    description: "A grid-patterned background with structural line motifs",
+    tags: ["background", "gradient", "bg-grid-lines", "grid"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-grid-lines {
+  background-color: oklch(0.21 0.034 264.67);
+  background-image:
+    linear-gradient(color-mix(in oklch, oklch(0.696 0.149 162.48) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklch, oklch(0.696 0.149 162.48) 6%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+}`
+  },
+  {
+    id: "ferrum-bg-hexagon",
+    name: "Hexagon",
+    category: "backgrounds",
+    description: "An animated background effect",
+    tags: ["background", "gradient", "bg-hexagon", "hexagon"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-hexagon {
+  background-color: oklch(0.21 0.034 264.67);
+  background-image: url("data:image/svg+xml,%3Csvg width='56' height='100' viewBox='0 0 56 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M28 0L56 16.18V50.5L28 66.68L0 50.5V16.18L28 0z' fill='none' stroke='%2310b981' stroke-width='1' opacity='0.5'/%3E%3Cpath d='M28 33.32L56 49.5V83.82L28 100L0 83.82V49.5L28 33.32z' fill='none' stroke='%2310b981' stroke-width='1' opacity='0.5'/%3E%3C/svg%3E");
+  background-size: 56px 100px;
+}`
+  },
+  {
+    id: "ferrum-bg-lava-lamp",
+    name: "Lava Lamp",
+    category: "backgrounds",
+    description: "A flowing lava-lamp background with morphing blobs",
+    tags: ["background", "gradient", "bg-lava-lamp", "lava"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-lava-lamp {
+  background-color: oklch(0.195 0.067 299.87);
+  position: relative;
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-bg-mesh-gradient",
+    name: "Mesh Gradient",
+    category: "backgrounds",
+    description: "A multi-point mesh gradient background with overlapping radial color blobs",
+    tags: ["background", "gradient", "bg-mesh-gradient", "mesh"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-mesh-gradient {
+  background-color: oklch(0.21 0.034 264.67);
+  position: relative;
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-bg-noise",
+    name: "Noise",
+    category: "backgrounds",
+    description: "A noise-textured background with grainy detail",
+    tags: ["background", "gradient", "bg-noise", "noise"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-noise {
+  position: relative;
+  background-color: oklch(0.21 0.034 264.67);
+}`
+  },
+  {
+    id: "ferrum-bg-plaid",
+    name: "Plaid",
+    category: "backgrounds",
+    description: "An animated background effect",
+    tags: ["background", "gradient", "bg-plaid", "plaid"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-plaid {
+  background-color: oklch(0.21 0.034 264.67);
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 18px, color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent) 18px, color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent) 20px),
+    repeating-linear-gradient(90deg, transparent, transparent 18px, color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent) 18px, color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent) 20px),
+    repeating-linear-gradient(45deg, transparent, transparent 24px, color-mix(in oklch, oklch(0.685 0.131 226.94) 30%, transparent) 24px, color-mix(in oklch, oklch(0.685 0.131 226.94) 30%, transparent) 26px),
+    repeating-linear-gradient(-45deg, transparent, transparent 24px, color-mix(in oklch, oklch(0.685 0.131 226.94) 30%, transparent) 24px, color-mix(in oklch, oklch(0.685 0.131 226.94) 30%, transparent) 26px);
+}`
+  },
+  {
+    id: "ferrum-bg-radial-rays",
+    name: "Radial Rays",
+    category: "backgrounds",
+    description: "A radial-pulse background with concentric emanation",
+    tags: ["background", "gradient", "bg-radial-rays", "radial"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-radial-rays {
+  background-color: oklch(0.21 0.034 264.67);
+  background-image: repeating-conic-gradient(
+    from 0deg at 50% 50%,
+    oklch(0.696 0.149 162.48) 0deg 4deg,
+    transparent 4deg 12deg
+  );
+}`
+  },
+  {
+    id: "ferrum-bg-stripes",
+    name: "Stripes",
+    category: "backgrounds",
+    description: "A diagonally-striped background with motion",
+    tags: ["background", "gradient", "bg-stripes", "stripes"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-stripes {
+  background: repeating-linear-gradient(
+    45deg,
+    oklch(0.696 0.149 162.48),
+    oklch(0.696 0.149 162.48) 10px,
+    oklch(0.21 0.034 264.67) 10px,
+    oklch(0.21 0.034 264.67) 20px
+  );
+}`
+  },
+  {
+    id: "ferrum-bg-sunburst",
+    name: "Sunburst",
+    category: "backgrounds",
+    description: "An animated background effect",
+    tags: ["background", "gradient", "bg-sunburst", "sunburst"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-sunburst {
+  background-color: oklch(0.189 0.028 79.8);
+  position: relative;
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-bg-sunset",
+    name: "Sunset",
+    category: "backgrounds",
+    description: "An animated background effect",
+    tags: ["background", "gradient", "bg-sunset", "sunset", "animated"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-sunset {
+  background: linear-gradient(
+    180deg,
+    oklch(0.228 0.039 247.3) 0%,
+    oklch(0.387 0.119 314.64) 25%,
+    oklch(0.531 0.202 5.62) 50%,
+    oklch(0.769 0.188 70.08) 75%,
+    oklch(0.924 0.115 95.75) 100%
+  );
+  background-size: 100% 200%;
+  animation: roy-sunset-shift 8s ease-in-out infinite;
+}
+
+@keyframes roy-sunset-shift {
+
+  0%, 100% { background-position: 0% 0%; }
+  50% { background-position: 0% 50%; }
+
+}`
+  },
+  {
+    id: "ferrum-bg-triangles",
+    name: "Triangles",
+    category: "backgrounds",
+    description: "An animated background effect",
+    tags: ["background", "gradient", "bg-triangles", "triangles"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-triangles {
+  background-color: oklch(0.21 0.034 264.67);
+  background-image:
+    linear-gradient(45deg, oklch(0.696 0.149 162.48) 25%, transparent 25%),
+    linear-gradient(-45deg, oklch(0.685 0.131 226.94) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, oklch(0.685 0.131 226.94) 75%),
+    linear-gradient(-45deg, transparent 75%, oklch(0.696 0.149 162.48) 75%);
+  background-size: 40px 40px;
+  background-position: 0 0, 0 20px, 20px -20px, -20px 0;
+}`
+  },
+  {
+    id: "ferrum-bg-zigzag",
+    name: "Zigzag",
+    category: "backgrounds",
+    description: "An animated background effect",
+    tags: ["background", "gradient", "bg-zigzag", "zigzag"],
+    previewType: "background",
+    cssCode: `.roycss-ferrum-bg-zigzag {
+  background-color: oklch(0.21 0.034 264.67);
+  background-image:
+    linear-gradient(135deg, oklch(0.696 0.149 162.48) 25%, transparent 25%) -10px 0,
+    linear-gradient(225deg, oklch(0.696 0.149 162.48) 25%, transparent 25%) -10px 0,
+    linear-gradient(315deg, oklch(0.696 0.149 162.48) 25%, transparent 25%),
+    linear-gradient(45deg, oklch(0.696 0.149 162.48) 25%, transparent 25%);
+  background-size: 20px 20px;
+}`
+  },
+  {
+    id: "ferrum-border-animated-dash",
+    name: "Animated Dash",
+    category: "borders",
+    description: "An animated or decorative border treatment",
+    tags: ["border", "outline", "border-animated-dash", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-border-animated-dash {
+  width: 140px;
+  height: 80px;
+  background: oklch(0.21 0.034 264.67);
+  border: 3px dashed oklch(0.696 0.149 162.48);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: oklch(0.95 0.051 163.05);
+  font-size: 12px;
+  font-weight: 600;
+  animation: roy-border-dash-glow 1.6s ease-in-out infinite;
+}
+
+@keyframes roy-border-dash-glow {
+
+  0%, 100% {
+    border-color: oklch(0.696 0.149 162.48);
+    box-shadow: 0 0 5px color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent);
+  }
+  50% {
+    border-color: oklch(0.769 0.154 162.48);
+    box-shadow: 0 0 18px color-mix(in oklch, oklch(0.696 0.149 162.48) 65%, transparent);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-border-banner",
+    name: "Banner",
+    category: "borders",
+    description: "An animated or decorative border treatment",
+    tags: ["border", "outline", "border-banner", "banner"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-border-banner {
+  width: 140px;
+  height: 80px;
+  background: linear-gradient(135deg, oklch(0.769 0.188 70.08), oklch(0.637 0.237 25.77));
+  clip-path: polygon(0 0, 100% 0, calc(100% - 16px) 50%, 100% 100%, 0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: oklch(1 0 0);
+  font-size: 12px;
+  font-weight: 700;
+  padding-right: 16px;
+  box-sizing: border-box;
+}`
+  },
+  {
+    id: "ferrum-border-clip-path",
+    name: "Clip Path",
+    category: "borders",
+    description: "An animated or decorative border treatment",
+    tags: ["border", "outline", "border-clip-path", "clip"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-border-clip-path {
+  position: relative;
+  width: 140px;
+  height: 80px;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.685 0.131 226.94));
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: oklch(1 0 0);
+  font-size: 12px;
+  font-weight: 600;
+}`
+  },
+  {
+    id: "ferrum-border-corner-brackets",
+    name: "Corner Brackets",
+    category: "borders",
+    description: "An animated or decorative border treatment",
+    tags: ["border", "outline", "border-corner-brackets", "corner"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-border-corner-brackets {
+  position: relative;
+  width: 140px;
+  height: 80px;
+  background: oklch(0.21 0.034 264.67);
+  background-image:
+    linear-gradient(oklch(0.685 0.131 226.94), oklch(0.685 0.131 226.94)),
+    linear-gradient(oklch(0.685 0.131 226.94), oklch(0.685 0.131 226.94)),
+    linear-gradient(oklch(0.685 0.131 226.94), oklch(0.685 0.131 226.94)),
+    linear-gradient(oklch(0.685 0.131 226.94), oklch(0.685 0.131 226.94)),
+    linear-gradient(oklch(0.685 0.131 226.94), oklch(0.685 0.131 226.94)),
+    linear-gradient(oklch(0.685 0.131 226.94), oklch(0.685 0.131 226.94)),
+    linear-gradient(oklch(0.685 0.131 226.94), oklch(0.685 0.131 226.94)),
+    linear-gradient(oklch(0.685 0.131 226.94), oklch(0.685 0.131 226.94));
+  background-position:
+    top left, top left,
+    top right, top right,
+    bottom left, bottom left,
+    bottom right, bottom right;
+  background-size:
+    22px 3px, 3px 22px,
+    22px 3px, 3px 22px,
+    22px 3px, 3px 22px,
+    22px 3px, 3px 22px;
+  background-repeat: no-repeat;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: oklch(0.865 0.115 207.08);
+  font-size: 12px;
+  font-weight: 600;
+}`
+  },
+  {
+    id: "ferrum-border-dashed-draw",
+    name: "Dashed Draw",
+    category: "borders",
+    description: "An animated or decorative border treatment",
+    tags: ["border", "outline", "border-dashed-draw", "dashed"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-border-dashed-draw {
+  position: relative;
+  width: 140px;
+  height: 80px;
+  background: oklch(0.21 0.034 264.67);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: oklch(0.709 0.159 293.54);
+  font-size: 12px;
+  font-weight: 600;
+}`
+  },
+  {
+    id: "ferrum-border-double-glow",
+    name: "Double Glow",
+    category: "borders",
+    description: "An animated or decorative border treatment",
+    tags: ["border", "outline", "border-double-glow", "double"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-border-double-glow {
+  position: relative;
+  width: 140px;
+  height: 80px;
+  background: oklch(0.21 0.034 264.67);
+  border: 1px solid oklch(0.696 0.149 162.48);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: oklch(0.826 0.124 162.48);
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 0 12px color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent), 0 0 24px color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent), inset 0 0 12px color-mix(in oklch, oklch(0.696 0.149 162.48) 20%, transparent);
+}`
+  },
+  {
+    id: "ferrum-border-frame",
+    name: "Frame",
+    category: "borders",
+    description: "An animated or decorative border treatment",
+    tags: ["border", "outline", "border-frame", "frame"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-border-frame {
+  position: relative;
+  width: 140px;
+  height: 80px;
+  background: oklch(0.27 0.04 260.03);
+  border: 3px double oklch(0.769 0.188 70.08);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: oklch(0.924 0.115 95.75);
+  font-size: 12px;
+  font-weight: 600;
+  outline: 1px solid oklch(0.769 0.188 70.08);
+  outline-offset: 4px;
+}`
+  },
+  {
+    id: "ferrum-border-gradient-animated",
+    name: "Gradient Animated",
+    category: "borders",
+    description: "An animated or decorative border treatment",
+    tags: ["border", "outline", "border-gradient-animated", "gradient"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-border-gradient-animated {
+  position: relative;
+  width: 140px;
+  height: 80px;
+  background: oklch(0.21 0.034 264.67);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: oklch(0.929 0.013 255.51);
+  font-size: 12px;
+  font-weight: 600;
+}`
+  },
+  {
+    id: "ferrum-border-inset-glow",
+    name: "Inset Glow",
+    category: "borders",
+    description: "An animated or decorative border treatment",
+    tags: ["border", "outline", "border-inset-glow", "inset"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-border-inset-glow {
+  width: 140px;
+  height: 80px;
+  background: oklch(0.145 0.0 89.88);
+  border: 1px solid color-mix(in oklch, oklch(0.685 0.131 226.94) 50%, transparent);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: oklch(0.865 0.115 207.08);
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow:
+    inset 0 0 22px color-mix(in oklch, oklch(0.685 0.131 226.94) 40%, transparent),
+    inset 0 0 4px color-mix(in oklch, oklch(0.685 0.131 226.94) 70%, transparent);
+}`
+  },
+  {
+    id: "ferrum-border-marching-ants",
+    name: "Marching Ants",
+    category: "borders",
+    description: "An animated or decorative border treatment",
+    tags: ["border", "outline", "border-marching-ants", "marching", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-border-marching-ants {
+  width: 140px;
+  height: 80px;
+  background-color: oklch(0.21 0.034 264.67);
+  background-image:
+    repeating-linear-gradient(90deg, oklch(0.769 0.188 70.08) 0 6px, transparent 6px 12px),
+    repeating-linear-gradient(90deg, oklch(0.769 0.188 70.08) 0 6px, transparent 6px 12px),
+    repeating-linear-gradient(0deg, oklch(0.769 0.188 70.08) 0 6px, transparent 6px 12px),
+    repeating-linear-gradient(0deg, oklch(0.769 0.188 70.08) 0 6px, transparent 6px 12px);
+  background-position: 0 0, 0 100%, 0 0, 100% 0;
+  background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  background-size: 12px 2px, 12px 2px, 2px 12px, 2px 12px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: oklch(0.924 0.115 95.75);
+  font-size: 12px;
+  font-weight: 600;
+  animation: roy-border-march 0.7s linear infinite;
+}
+
+@keyframes roy-border-march {
+
+  to {
+    background-position: 12px 0, -12px 100%, 0 -12px, 100% 12px;
+  }
+
+}`
+  },
+  {
+    id: "ferrum-border-neon-pulse",
+    name: "Neon Pulse",
+    category: "borders",
+    description: "An animated or decorative border treatment",
+    tags: ["border", "outline", "border-neon-pulse", "neon", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-border-neon-pulse {
+  width: 140px;
+  height: 80px;
+  background: oklch(0.145 0.0 89.88);
+  border: 2px solid oklch(0.652 0.241 354.31);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: oklch(0.823 0.11 346.02);
+  font-size: 12px;
+  font-weight: 600;
+  animation: roy-border-neon 1.5s ease-in-out infinite;
+}
+
+@keyframes roy-border-neon {
+
+  0%, 100% {
+    border-color: oklch(0.652 0.241 354.31);
+    box-shadow: 0 0 5px oklch(0.652 0.241 354.31), inset 0 0 5px oklch(0.652 0.241 354.31);
+  }
+  50% {
+    border-color: oklch(0.725 0.175 349.76);
+    box-shadow: 0 0 22px oklch(0.652 0.241 354.31), 0 0 44px oklch(0.652 0.241 354.31), inset 0 0 16px oklch(0.652 0.241 354.31);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-border-polaroid",
+    name: "Polaroid",
+    category: "borders",
+    description: "An animated or decorative border treatment",
+    tags: ["border", "outline", "border-polaroid", "polaroid"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-border-polaroid {
+  width: 140px;
+  height: 110px;
+  background: oklch(1 0 0);
+  padding: 8px 8px 30px;
+  box-sizing: border-box;
+  box-shadow: 0 6px 16px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-4deg);
+}`
+  },
+  {
+    id: "ferrum-border-ribbon",
+    name: "Ribbon",
+    category: "borders",
+    description: "An animated or decorative border treatment",
+    tags: ["border", "outline", "border-ribbon", "ribbon"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-border-ribbon {
+  width: 140px;
+  height: 90px;
+  background: oklch(0.637 0.237 25.77);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 52% 78%, 0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: oklch(1 0 0);
+  font-size: 12px;
+  font-weight: 700;
+  padding-bottom: 14px;
+  box-sizing: border-box;
+}`
+  },
+  {
+    id: "ferrum-border-sticker",
+    name: "Sticker",
+    category: "borders",
+    description: "An animated or decorative border treatment",
+    tags: ["border", "outline", "border-sticker", "sticker"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-border-sticker {
+  width: 140px;
+  height: 80px;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.685 0.131 226.94));
+  border: 6px solid oklch(1 0 0);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: oklch(1 0 0);
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 5px 14px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+  transform: rotate(-3deg);
+}`
+  },
+  {
+    id: "ferrum-border-torn-paper",
+    name: "Torn Paper",
+    category: "borders",
+    description: "An animated or decorative border treatment",
+    tags: ["border", "outline", "border-torn-paper", "torn"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-border-torn-paper {
+  width: 140px;
+  height: 80px;
+  background: oklch(0.984 0.003 247.86);
+  color: oklch(0.27 0.04 260.03);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  clip-path: polygon(
+    0% 6%, 5% 0%, 12% 6%, 20% 1%, 28% 5%, 35% 0%, 42% 4%, 50% 1%, 58% 5%, 65% 0%, 72% 4%, 80% 1%, 88% 5%, 95% 0%, 100% 6%,
+    100% 94%, 95% 100%, 88% 94%, 80% 99%, 72% 95%, 65% 100%, 58% 96%, 50% 99%, 42% 95%, 35% 100%, 28% 96%, 20% 99%, 12% 95%, 5% 100%, 0% 94%
+  );
+  filter: drop-shadow(2px 2px 4px color-mix(in oklch, oklch(0 0 0) 25%, transparent));
+}`
+  },
+  {
+    id: "ferrum-apple-squish-in",
+    name: "Apple Squish In",
+    category: "glass-ui",
+    description: "An Apple-inspired motion or surface effect (apple squish in)",
+    tags: ["apple", "glassmorphism", "apple-squish-in", "squish", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-apple-squish-in {
+  animation: roy-apple-squish-in 0.7s cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+
+@keyframes roy-apple-squish-in {
+
+  0% { opacity: 0; transform: translateY(60px) scale(0.8, 0.85); }
+  55% { opacity: 1; transform: translateY(0) scale(1.06, 0.94); }
+  78% { transform: scale(0.98, 1.02); }
+  100% { transform: scale(1); }
+
+}`
+  },
+  {
+    id: "ferrum-apple-squish-out",
+    name: "Apple Squish Out",
+    category: "glass-ui",
+    description: "An Apple-inspired motion or surface effect (apple squish out)",
+    tags: ["apple", "glassmorphism", "apple-squish-out", "squish", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-apple-squish-out {
+  animation: roy-apple-squish-out 0.55s cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+
+@keyframes roy-apple-squish-out {
+
+  0% { opacity: 1; transform: scale(1); }
+  40% { opacity: 1; transform: scale(0.94, 1.05) translateY(8px); }
+  100% { opacity: 0; transform: scale(0.85) translateY(60px); }
+
+}`
+  },
+  {
+    id: "ferrum-apple-ultra-thin",
+    name: "Apple Ultra Thin",
+    category: "glass-ui",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["apple", "glassmorphism", "apple-ultra-thin", "ultra"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-apple-ultra-thin {
+  background: color-mix(in oklch, oklch(1 0 0) 40%, transparent);
+  backdrop-filter: blur(8px) saturate(110%);
+  -webkit-backdrop-filter: blur(8px) saturate(110%);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 60%, transparent);
+  border-radius: 10px;
+  box-shadow:
+    0 1px 0 color-mix(in oklch, oklch(1 0 0) 50%, transparent) inset,
+    0 2px 8px color-mix(in oklch, oklch(0 0 0) 6%, transparent);
+  color: oklch(0.232 0.004 286.1);
+}`
+  },
+  {
+    id: "ferrum-apple-vibrancy-dark",
+    name: "Apple Vibrancy Dark",
+    category: "glass-ui",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["apple", "glassmorphism", "apple-vibrancy-dark", "vibrancy"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-apple-vibrancy-dark {
+  background: color-mix(in oklch, oklch(0.236 0.004 286.11) 55%, transparent);
+  backdrop-filter: blur(24px) saturate(180%) brightness(0.95);
+  -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(0.95);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  border-radius: 14px;
+  box-shadow:
+    0 1px 0 color-mix(in oklch, oklch(1 0 0) 8%, transparent) inset,
+    0 10px 30px color-mix(in oklch, oklch(0 0 0) 40%, transparent);
+  color: oklch(0.971 0.003 286.35);
+}`
+  },
+  {
+    id: "ferrum-apple-vibrancy-light",
+    name: "Apple Vibrancy Light",
+    category: "glass-ui",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["apple", "glassmorphism", "apple-vibrancy-light", "vibrancy"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-apple-vibrancy-light {
+  background: color-mix(in oklch, oklch(1 0 0) 60%, transparent);
+  backdrop-filter: blur(20px) saturate(180%) brightness(1.05);
+  -webkit-backdrop-filter: blur(20px) saturate(180%) brightness(1.05);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 50%, transparent);
+  border-radius: 14px;
+  box-shadow:
+    0 1px 0 color-mix(in oklch, oklch(1 0 0) 70%, transparent) inset,
+    0 10px 30px color-mix(in oklch, oklch(0 0 0) 10%, transparent);
+  color: oklch(0.232 0.004 286.1);
+}`
+  },
+  {
+    id: "ferrum-ascii-rain",
+    name: "Ascii Rain",
+    category: "visual",
+    description: "A ascii rain effect",
+    tags: ["ascii-rain", "rain"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-ascii-rain {
+  width: 100%;
+  min-height: 240px;
+  background:
+    radial-gradient(ellipse at 50% 0%, oklch(0.191 0.047 154.77) 0%, oklch(0.09 0.017 224.61) 100%);
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-blueprint",
+    name: "Blueprint",
+    category: "visual",
+    description: "A blueprint effect",
+    tags: ["blueprint"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-blueprint {
+  width: 100%;
+  min-height: 240px;
+  background:
+    linear-gradient(0deg,
+      transparent 0 calc(100% - 1px), color-mix(in oklch, oklch(0.878 0.064 245.03) 40%, transparent) calc(100% - 1px) 100%),
+    linear-gradient(90deg,
+      transparent 0 calc(100% - 1px), color-mix(in oklch, oklch(0.878 0.064 245.03) 40%, transparent) calc(100% - 1px) 100%),
+    repeating-linear-gradient(0deg, transparent 0 19px, color-mix(in oklch, oklch(0.878 0.064 245.03) 18%, transparent) 19px 20px),
+    repeating-linear-gradient(90deg, transparent 0 19px, color-mix(in oklch, oklch(0.878 0.064 245.03) 18%, transparent) 19px 20px),
+    repeating-linear-gradient(0deg, transparent 0 99px, color-mix(in oklch, oklch(0.878 0.064 245.03) 35%, transparent) 99px 100px),
+    repeating-linear-gradient(90deg, transparent 0 99px, color-mix(in oklch, oklch(0.878 0.064 245.03) 35%, transparent) 99px 100px),
+    oklch(0.366 0.116 256.33);
+  background-size: 20px 20px, 20px 20px, 20px 20px, 20px 20px, 100px 100px, 100px 100px, 100% 100%;
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  color: oklch(0.92 0.041 246.02);
+}`
+  }
+];
+
+// src/lib/effects-batch-27.ts
+var effectsBatch27 = [
+  {
+    id: "ferrum-bounce-rotate",
+    name: "Bounce Rotate",
+    category: "animations",
+    description: "An animated motion effect (bounce rotate)",
+    tags: ["bounce", "motion", "bounce-rotate", "rotate", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-bounce-rotate {
+  animation: roy-bounce-rotate 1.1s cubic-bezier(0.28, 1.42, 0.55, 1) both;
+}
+
+@keyframes roy-bounce-rotate {
+
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotate(-180deg);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.15) rotate(20deg);
+  }
+  60% {
+    transform: scale(0.92) rotate(-10deg);
+  }
+  80% {
+    transform: scale(1.04) rotate(4deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-breathe",
+    name: "Breathe",
+    category: "animations",
+    description: "An animated motion effect (breathe)",
+    tags: ["breathe", "motion", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-breathe {
+  animation: roy-breathe 4s ease-in-out infinite;
+}
+
+@keyframes roy-breathe {
+
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.08); opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-btn-3d-push",
+    name: "3D Push",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-3d-push", "3d"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-3d-push {
+  position: relative;
+  background: oklch(0.768 0.178 130.36);
+  color: oklch(0.274 0.069 132.11);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 5px 0 oklch(0.648 0.175 131.68), 0 7px 14px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}`
+  },
+  {
+    id: "ferrum-btn-arrow-slide",
+    name: "Arrow Slide",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-arrow-slide", "arrow"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-arrow-slide {
+  background: oklch(0.705 0.213 51.16);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: gap 0.3s ease, background 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-btn-border-draw",
+    name: "Border Draw",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-border-draw", "border"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-border-draw {
+  position: relative;
+  background: transparent;
+  color: oklch(0.696 0.149 162.48);
+  border: 2px solid transparent;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  z-index: 1;
+}`
+  },
+  {
+    id: "ferrum-btn-border-glow",
+    name: "Border Glow",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-border-glow", "border"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-border-glow {
+  background: oklch(0.27 0.04 260.03);
+  color: oklch(0.699 0.118 184.7);
+  border: 2px solid color-mix(in oklch, oklch(0.699 0.118 184.7) 35%, transparent);
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-btn-bounce",
+    name: "Bounce",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-bounce", "bounce"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-bounce {
+  background: oklch(0.769 0.188 70.08);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+}`
+  },
+  {
+    id: "ferrum-btn-expand",
+    name: "Expand",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-expand", "expand"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-expand {
+  background: oklch(0.696 0.149 162.48);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0;
+  transition: all 0.4s ease;
+}`
+  },
+  {
+    id: "ferrum-btn-fill-slide",
+    name: "Fill Slide",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-fill-slide", "fill"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-fill-slide {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  background: transparent;
+  color: oklch(0.696 0.149 162.48);
+  border: 2px solid oklch(0.696 0.149 162.48);
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: color 0.4s ease;
+}`
+  },
+  {
+    id: "ferrum-btn-flip",
+    name: "Flip",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-flip", "flip", "3d"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-flip {
+  background: oklch(0.652 0.241 354.31);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease, background 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-btn-glow",
+    name: "Glow",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-glow", "glow"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-glow {
+  background: oklch(0.696 0.149 162.48);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-btn-gradient",
+    name: "Gradient",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-gradient", "gradient", "animated"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-gradient {
+  background: linear-gradient(45deg, oklch(0.696 0.149 162.48), oklch(0.685 0.131 226.94), oklch(0.566 0.245 278.69), oklch(0.652 0.241 354.31), oklch(0.696 0.149 162.48));
+  background-size: 300% 300%;
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  animation: roy-btn-gradient 5s ease infinite;
+  transition: transform 0.3s ease;
+}
+
+@keyframes roy-btn-gradient {
+
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+
+}`
+  },
+  {
+    id: "ferrum-btn-icon-slide",
+    name: "Icon Slide",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-icon-slide", "icon"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-icon-slide {
+  background: oklch(0.66 0.235 323.04);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  transition: padding 0.3s ease, gap 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-btn-lift",
+    name: "Lift",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-lift", "lift"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-lift {
+  background: oklch(0.699 0.118 184.7);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 4px 10px color-mix(in oklch, oklch(0.699 0.118 184.7) 25%, transparent);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-btn-liquid",
+    name: "Liquid",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-liquid", "liquid"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-liquid {
+  background: oklch(0.685 0.131 226.94);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: border-radius 0.4s ease, background 0.4s ease;
+}`
+  },
+  {
+    id: "ferrum-btn-morph",
+    name: "Morph",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-morph", "morph"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-morph {
+  background: oklch(0.566 0.245 278.69);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}`
+  },
+  {
+    id: "ferrum-btn-neon",
+    name: "Neon",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-neon", "neon"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-neon {
+  background: oklch(0.145 0.0 89.88);
+  color: oklch(0.685 0.131 226.94);
+  border: 2px solid oklch(0.685 0.131 226.94);
+  padding: 10px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow: 0 0 5px oklch(0.685 0.131 226.94), inset 0 0 5px color-mix(in oklch, oklch(0.685 0.131 226.94) 40%, transparent);
+  text-shadow: 0 0 5px oklch(0.685 0.131 226.94);
+  transition: all 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-btn-outline-fill",
+    name: "Outline Fill",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-outline-fill", "outline"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-outline-fill {
+  position: relative;
+  background: transparent;
+  color: oklch(0.645 0.246 16.44);
+  border: 2px solid oklch(0.645 0.246 16.44);
+  padding: 10px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  overflow: hidden;
+  z-index: 1;
+  transition: color 0.4s ease;
+}`
+  },
+  {
+    id: "ferrum-btn-press",
+    name: "Press",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-press", "press"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-press {
+  background: oklch(0.566 0.245 278.69);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 6px 0 oklch(0.491 0.241 292.58), 0 8px 14px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}`
+  },
+  {
+    id: "ferrum-btn-pulse",
+    name: "Pulse",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-pulse", "pulse"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-pulse {
+  background: oklch(0.637 0.237 25.77);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-btn-ripple",
+    name: "Ripple",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-ripple", "ripple"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-ripple {
+  position: relative;
+  overflow: hidden;
+  background: oklch(0.696 0.149 162.48);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+}`
+  },
+  {
+    id: "ferrum-btn-rotate",
+    name: "Rotate",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-rotate", "rotate"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-rotate {
+  background: oklch(0.769 0.188 70.08);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: transform 0.3s ease, background 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-btn-shadow-push",
+    name: "Shadow Push",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-shadow-push", "shadow"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-shadow-push {
+  background: oklch(0.637 0.237 25.77);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 5px 5px 0 oklch(0.396 0.133 25.72);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}`
+  },
+  {
+    id: "ferrum-btn-shine-sweep",
+    name: "Shine Sweep",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-shine-sweep", "shine"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-shine-sweep {
+  position: relative;
+  overflow: hidden;
+  background: oklch(0.696 0.149 162.48);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+}`
+  },
+  {
+    id: "ferrum-btn-skew",
+    name: "Skew",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-skew", "skew"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-skew {
+  background: oklch(0.652 0.241 354.31);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: transform 0.3s ease, background 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-btn-slide-bg",
+    name: "Slide Bg",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-slide-bg", "slide"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-slide-bg {
+  position: relative;
+  overflow: hidden;
+  background: oklch(0.21 0.034 264.67);
+  color: oklch(0.769 0.188 70.08);
+  border: 2px solid oklch(0.769 0.188 70.08);
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  z-index: 1;
+  transition: color 0.4s ease;
+}`
+  },
+  {
+    id: "ferrum-btn-sparkle",
+    name: "Sparkle",
+    category: "buttons",
+    description: "A button effect with interactive feedback on hover or click",
+    tags: ["button", "interactive", "btn-sparkle", "sparkle"],
+    previewType: "button",
+    cssCode: `.roycss-ferrum-btn-sparkle {
+  position: relative;
+  background: oklch(0.27 0.04 260.03);
+  color: oklch(0.924 0.115 95.75);
+  border: 1px solid oklch(0.769 0.188 70.08);
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: color 0.3s ease, box-shadow 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-card-flip",
+    name: "Flip",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-flip", "flip", "3d"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-flip {
+  perspective: 1000px;
+  width: 200px;
+  height: 120px;
+}`
+  },
+  {
+    id: "ferrum-card-flip-back",
+    name: "Flip Back",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-flip-back", "flip"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-flip-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}`
+  },
+  {
+    id: "ferrum-card-flip-inner",
+    name: "Flip Inner",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-flip-inner", "flip", "3d"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}`
+  },
+  {
+    id: "ferrum-card-glassmorphism",
+    name: "Glassmorphism",
+    category: "cards",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["card", "container", "card-glassmorphism", "glassmorphism"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-glassmorphism {
+  background: color-mix(in oklch, oklch(1 0 0) 8%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 15%, transparent);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 32px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
+  color: oklch(0.968 0.007 247.9);
+}`
+  },
+  {
+    id: "ferrum-card-gradient-border",
+    name: "Gradient Border",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-gradient-border", "gradient"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-gradient-border {
+  position: relative;
+  background: oklch(0.21 0.034 264.67);
+  border-radius: 16px;
+  padding: 24px;
+  color: oklch(0.929 0.013 255.51);
+}`
+  },
+  {
+    id: "ferrum-card-hover-border",
+    name: "Hover Border",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-hover-border", "hover"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-hover-border {
+  position: relative;
+  background: oklch(0.27 0.04 260.03);
+  border-radius: 16px;
+  padding: 24px;
+  color: oklch(0.929 0.013 255.51);
+}`
+  },
+  {
+    id: "ferrum-card-hover-color",
+    name: "Hover Color",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-hover-color", "hover"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-hover-color {
+  background: oklch(0.27 0.04 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  border-radius: 16px;
+  padding: 24px;
+  color: oklch(0.929 0.013 255.51);
+  transition: background 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+}`
+  },
+  {
+    id: "ferrum-card-hover-fade",
+    name: "Hover Fade",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-hover-fade", "hover"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-hover-fade {
+  position: relative;
+  background: oklch(0.27 0.04 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  border-radius: 16px;
+  padding: 24px;
+  color: oklch(0.929 0.013 255.51);
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-card-hover-flip",
+    name: "Hover Flip",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-hover-flip", "hover", "3d"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-hover-flip {
+  background: oklch(0.27 0.04 260.03);
+  border: 1px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent);
+  border-radius: 16px;
+  padding: 24px;
+  color: oklch(0.929 0.013 255.51);
+  transform-style: preserve-3d;
+  transition: transform 0.7s ease, background 0.4s ease, color 0.4s ease;
+}`
+  },
+  {
+    id: "ferrum-card-hover-glow",
+    name: "Hover Glow",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-hover-glow", "hover"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-hover-glow {
+  background: oklch(0.21 0.034 264.67);
+  border: 1px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 20%, transparent);
+  border-radius: 16px;
+  padding: 24px;
+  color: oklch(0.929 0.013 255.51);
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
+}`
+  },
+  {
+    id: "ferrum-card-hover-lift",
+    name: "Hover Lift",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-hover-lift", "hover"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-hover-lift {
+  background: oklch(0.27 0.04 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  border-radius: 16px;
+  padding: 24px;
+  color: oklch(0.929 0.013 255.51);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}`
+  },
+  {
+    id: "ferrum-card-hover-press",
+    name: "Hover Press",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-hover-press", "hover"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-hover-press {
+  background: oklch(0.27 0.04 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  border-radius: 16px;
+  padding: 24px;
+  color: oklch(0.929 0.013 255.51);
+  box-shadow: 0 12px 22px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+}`
+  },
+  {
+    id: "ferrum-card-hover-push",
+    name: "Hover Push",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-hover-push", "hover", "3d"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-hover-push {
+  position: relative;
+  background: oklch(0.27 0.04 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  border-radius: 16px;
+  padding: 24px;
+  color: oklch(0.929 0.013 255.51);
+  transform-style: preserve-3d;
+  transition: transform 0.35s ease;
+}`
+  },
+  {
+    id: "ferrum-card-hover-reveal",
+    name: "Hover Reveal",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-hover-reveal", "hover"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-hover-reveal {
+  position: relative;
+  background: oklch(0.27 0.04 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  border-radius: 16px;
+  padding: 24px;
+  color: oklch(0.929 0.013 255.51);
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-card-hover-rotate",
+    name: "Hover Rotate",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-hover-rotate", "hover", "3d"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-hover-rotate {
+  background: oklch(0.27 0.04 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  border-radius: 16px;
+  padding: 24px;
+  color: oklch(0.929 0.013 255.51);
+  perspective: 800px;
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}`
+  },
+  {
+    id: "ferrum-card-hover-skew",
+    name: "Hover Skew",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-hover-skew", "hover"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-hover-skew {
+  background: oklch(0.27 0.04 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  border-radius: 16px;
+  padding: 24px;
+  color: oklch(0.929 0.013 255.51);
+  transition: transform 0.35s ease, background 0.35s ease, color 0.35s ease;
+}`
+  },
+  {
+    id: "ferrum-card-hover-slide",
+    name: "Hover Slide",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-hover-slide", "hover"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-hover-slide {
+  background: oklch(0.27 0.04 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  border-radius: 16px;
+  padding: 24px;
+  color: oklch(0.929 0.013 255.51);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}`
+  },
+  {
+    id: "ferrum-card-hover-swing",
+    name: "Hover Swing",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-hover-swing", "hover"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-hover-swing {
+  background: oklch(0.27 0.04 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  border-radius: 16px;
+  padding: 24px;
+  color: oklch(0.929 0.013 255.51);
+  transform-origin: top center;
+  transition: transform 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-card-hover-tada",
+    name: "Hover Tada",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-hover-tada", "hover"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-hover-tada {
+  background: oklch(0.27 0.04 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  border-radius: 16px;
+  padding: 24px;
+  color: oklch(0.929 0.013 255.51);
+  transition: transform 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-card-hover-wobble",
+    name: "Hover Wobble",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-hover-wobble", "hover"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-hover-wobble {
+  background: oklch(0.27 0.04 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  border-radius: 16px;
+  padding: 24px;
+  color: oklch(0.929 0.013 255.51);
+  transition: transform 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-card-hover-zoom",
+    name: "Hover Zoom",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-hover-zoom", "hover"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-hover-zoom {
+  background: linear-gradient(135deg, oklch(0.386 0.059 188.42), oklch(0.27 0.04 260.03));
+  border: 1px solid color-mix(in oklch, oklch(0.699 0.118 184.7) 25%, transparent);
+  border-radius: 16px;
+  padding: 24px;
+  color: oklch(0.953 0.05 180.8);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}`
+  },
+  {
+    id: "ferrum-card-neon",
+    name: "Neon",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-neon", "neon", "animated"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-neon {
+  background: oklch(0.21 0.034 264.67);
+  border: 1px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent);
+  border-radius: 16px;
+  padding: 24px;
+  color: oklch(0.95 0.051 163.05);
+  animation: roy-card-neon 2s ease-in-out infinite alternate;
+}
+
+@keyframes roy-card-neon {
+
+  from {
+    box-shadow: 0 0 5px color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent), inset 0 0 5px color-mix(in oklch, oklch(0.696 0.149 162.48) 5%, transparent);
+  }
+  to {
+    box-shadow: 0 0 22px color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent), 0 0 44px color-mix(in oklch, oklch(0.696 0.149 162.48) 20%, transparent), inset 0 0 22px color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-card-shuffle",
+    name: "Shuffle",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-shuffle", "shuffle", "3d"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-shuffle {
+  position: relative;
+  width: 200px;
+  height: 220px;
+  perspective: 1000px;
+}`
+  }
+];
+
+// src/lib/effects-batch-28.ts
+var effectsBatch28 = [
+  {
+    id: "ferrum-cube-face",
+    name: "Cube Face",
+    category: "3d-transforms",
+    description: "A cube face effect",
+    tags: ["cube-face", "face"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-cube-face {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border: 2px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent);
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 8%, transparent);
+  border-radius: 4px;
+}`
+  },
+  {
+    id: "ferrum-cube-rotate",
+    name: "Cube Rotate",
+    category: "3d-transforms",
+    description: "An animated motion effect (cube rotate)",
+    tags: ["cube-rotate", "rotate", "animated", "3d"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-cube-rotate {
+  width: 60px;
+  height: 60px;
+  transform-style: preserve-3d;
+  animation: roy-cube-rotate 6s linear infinite;
+}
+
+@keyframes roy-cube-rotate {
+
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-door-open",
+    name: "Door Open",
+    category: "animations",
+    description: "A 3D transform effect with perspective depth",
+    tags: ["door-open", "open", "3d"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-door-open {
+  perspective: 800px;
+  width: 60px;
+  height: 80px;
+  position: relative;
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent);
+  border: 2px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent);
+  border-radius: 4px;
+}`
+  },
+  {
+    id: "ferrum-fade-in-bl",
+    name: "Fade In Bl",
+    category: "animations",
+    description: "An animated motion effect (fade in bl)",
+    tags: ["fade", "transition", "fade-in-bl", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-fade-in-bl {
+  animation: roy-fade-in-bl 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes roy-fade-in-bl {
+
+  from {
+    opacity: 0;
+    transform: translate3d(-28px, 28px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-fade-in-br",
+    name: "Fade In Br",
+    category: "animations",
+    description: "An animated motion effect (fade in br)",
+    tags: ["fade", "transition", "fade-in-br", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-fade-in-br {
+  animation: roy-fade-in-br 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes roy-fade-in-br {
+
+  from {
+    opacity: 0;
+    transform: translate3d(28px, 28px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-fade-in-right",
+    name: "Fade In Right",
+    category: "animations",
+    description: "An animated motion effect (fade in right)",
+    tags: ["fade", "transition", "fade-in-right", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-fade-in-right {
+  animation: roy-fade-in-right 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes roy-fade-in-right {
+
+  from {
+    opacity: 0;
+    transform: translate3d(32px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-fade-out-down",
+    name: "Fade Out Down",
+    category: "animations",
+    description: "An animated motion effect (fade out down)",
+    tags: ["fade", "transition", "fade-out-down", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-fade-out-down {
+  animation: roy-fade-out-down 0.7s ease-in both;
+}
+
+@keyframes roy-fade-out-down {
+
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-fade-out-left",
+    name: "Fade Out Left",
+    category: "animations",
+    description: "An animated motion effect (fade out left)",
+    tags: ["fade", "transition", "fade-out-left", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-fade-out-left {
+  animation: roy-fade-out-left 0.7s cubic-bezier(0.55, 0, 0.68, 0.53) both;
+}
+
+@keyframes roy-fade-out-left {
+
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(-32px, 0, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-fade-out-right",
+    name: "Fade Out Right",
+    category: "animations",
+    description: "An animated motion effect (fade out right)",
+    tags: ["fade", "transition", "fade-out-right", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-fade-out-right {
+  animation: roy-fade-out-right 0.7s cubic-bezier(0.55, 0, 0.68, 0.53) both;
+}
+
+@keyframes roy-fade-out-right {
+
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(32px, 0, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-fade-out-up",
+    name: "Fade Out Up",
+    category: "animations",
+    description: "An animated motion effect (fade out up)",
+    tags: ["fade", "transition", "fade-out-up", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-fade-out-up {
+  animation: roy-fade-out-up 0.7s cubic-bezier(0.55, 0, 0.68, 0.53) both;
+}
+
+@keyframes roy-fade-out-up {
+
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, -28px, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-flip-x",
+    name: "Flip X",
+    category: "animations",
+    description: "A 3D transform effect with perspective depth",
+    tags: ["flip", "transform", "flip-x"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-flip-x {
+  perspective: 800px;
+  transition: transform 0.6s ease;
+  transform-style: preserve-3d;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.685 0.131 226.94));
+  border-radius: 12px;
+}`
+  },
+  {
+    id: "ferrum-flip-y",
+    name: "Flip Y",
+    category: "animations",
+    description: "A 3D transform effect with perspective depth",
+    tags: ["flip", "transform", "flip-y"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-flip-y {
+  perspective: 800px;
+  transition: transform 0.6s ease;
+  transform-style: preserve-3d;
+  background: linear-gradient(135deg, oklch(0.685 0.131 226.94), oklch(0.566 0.245 278.69));
+  border-radius: 12px;
+}`
+  },
+  {
+    id: "ferrum-float",
+    name: "Float",
+    category: "animations",
+    description: "An animated motion effect (float)",
+    tags: ["float", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-float {
+  animation: roy-float 3s ease-in-out infinite;
+}
+
+@keyframes roy-float {
+
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-fold",
+    name: "Fold",
+    category: "animations",
+    description: "A 3D transform effect with perspective depth",
+    tags: ["fold", "motion", "3d"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-fold {
+  perspective: 800px;
+  width: 80px;
+  height: 60px;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.685 0.131 226.94));
+  border-radius: 6px;
+  transition: transform 0.8s ease;
+  transform-origin: top center;
+}`
+  },
+  {
+    id: "ferrum-card-spotlight",
+    name: "Spotlight",
+    category: "cards",
+    description: "A card-style container with interactive or animated surface treatment",
+    tags: ["card", "container", "card-spotlight", "spotlight"],
+    previewType: "card",
+    cssCode: `.roycss-ferrum-card-spotlight {
+  position: relative;
+  overflow: hidden;
+  background: oklch(0.27 0.04 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 8%, transparent);
+  border-radius: 16px;
+  padding: 24px;
+  color: oklch(0.929 0.013 255.51);
+}`
+  },
+  {
+    id: "ferrum-cursor-arrow-bounce",
+    name: "Arrow Bounce",
+    category: "cursor",
+    description: "A custom cursor or cursor-following visual effect",
+    tags: ["cursor", "pointer", "cursor-arrow-bounce", "arrow"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-cursor-arrow-bounce {
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, oklch(0.234 0.039 67.22), oklch(0.177 0.034 269.56));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-cursor-blob",
+    name: "Blob",
+    category: "cursor",
+    description: "A custom cursor or cursor-following visual effect",
+    tags: ["cursor", "pointer", "cursor-blob", "blob"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-cursor-blob {
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, oklch(0.21 0.034 264.67), oklch(0.177 0.034 269.56));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-cursor-crosshair",
+    name: "Crosshair",
+    category: "cursor",
+    description: "A custom cursor or cursor-following visual effect",
+    tags: ["cursor", "pointer", "cursor-crosshair", "crosshair"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-cursor-crosshair {
+  position: relative;
+  background:
+    linear-gradient(0deg, transparent 49.5%, color-mix(in oklch, oklch(0.711 0.035 256.79) 8%, transparent) 49.5% 50.5%, transparent 50.5%),
+    linear-gradient(90deg, transparent 49.5%, color-mix(in oklch, oklch(0.711 0.035 256.79) 8%, transparent) 49.5% 50.5%, transparent 50.5%),
+    radial-gradient(circle at 50% 50%, oklch(0.192 0.035 314.78), oklch(0.177 0.034 269.56));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-cursor-firefly",
+    name: "Firefly",
+    category: "cursor",
+    description: "A custom cursor or cursor-following visual effect",
+    tags: ["cursor", "pointer", "cursor-firefly", "firefly"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-cursor-firefly {
+  position: relative;
+  background: linear-gradient(135deg, oklch(0.173 0.034 269.46), oklch(0.203 0.06 297.11));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-cursor-glow-dot",
+    name: "Glow Dot",
+    category: "cursor",
+    description: "A custom cursor or cursor-following visual effect",
+    tags: ["cursor", "pointer", "cursor-glow-dot", "glow"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-cursor-glow-dot {
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, oklch(0.21 0.034 264.67), oklch(0.177 0.034 269.56));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-cursor-gradient-trail",
+    name: "Gradient Trail",
+    category: "cursor",
+    description: "A custom cursor or cursor-following visual effect",
+    tags: ["cursor", "pointer", "cursor-gradient-trail", "gradient"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-cursor-gradient-trail {
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, oklch(0.203 0.06 297.11), oklch(0.177 0.034 269.56));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-cursor-magnetic",
+    name: "Magnetic",
+    category: "cursor",
+    description: "A custom cursor or cursor-following visual effect",
+    tags: ["cursor", "pointer", "cursor-magnetic", "magnetic"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-cursor-magnetic {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, oklch(0.177 0.034 269.56), oklch(0.21 0.034 264.67));
+  border: 1px solid color-mix(in oklch, oklch(0.711 0.035 256.79) 25%, transparent);
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-cursor-pulse-ring",
+    name: "Pulse Ring",
+    category: "cursor",
+    description: "A custom cursor or cursor-following visual effect",
+    tags: ["cursor", "pointer", "cursor-pulse-ring", "pulse"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-cursor-pulse-ring {
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, oklch(0.209 0.061 305.58), oklch(0.177 0.034 269.56));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-cursor-ring",
+    name: "Ring",
+    category: "cursor",
+    description: "A custom cursor or cursor-following visual effect",
+    tags: ["cursor", "pointer", "cursor-ring", "ring"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-cursor-ring {
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, oklch(0.194 0.039 264.9), oklch(0.177 0.034 269.56));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-cursor-ripple",
+    name: "Ripple",
+    category: "cursor",
+    description: "A custom cursor or cursor-following visual effect",
+    tags: ["cursor", "pointer", "cursor-ripple", "ripple"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-cursor-ripple {
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, oklch(0.258 0.042 166.13), oklch(0.177 0.034 269.56));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-cursor-spotlight",
+    name: "Spotlight",
+    category: "cursor",
+    description: "A custom cursor or cursor-following visual effect",
+    tags: ["cursor", "pointer", "cursor-spotlight", "spotlight"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-cursor-spotlight {
+  position: relative;
+  background: linear-gradient(135deg, oklch(0.21 0.034 264.67), oklch(0.257 0.086 281.29));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-cursor-trail",
+    name: "Trail",
+    category: "cursor",
+    description: "A custom cursor or cursor-following visual effect",
+    tags: ["cursor", "pointer", "cursor-trail", "trail"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-cursor-trail {
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, oklch(0.203 0.06 297.11), oklch(0.177 0.034 269.56));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-form-checkbox-custom",
+    name: "Checkbox Custom",
+    category: "forms",
+    description: "A form input effect with focus or validation feedback",
+    tags: ["form", "input", "form-checkbox-custom", "checkbox"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-form-checkbox-custom {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: 2px solid oklch(0.696 0.149 162.48);
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}`
+  },
+  {
+    id: "ferrum-form-error-shake",
+    name: "Error Shake",
+    category: "forms",
+    description: "A form input effect with focus or validation feedback",
+    tags: ["form", "input", "form-error-shake", "error", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-form-error-shake {
+  position: relative;
+  width: 160px;
+  height: 40px;
+  padding: 0 14px;
+  background: color-mix(in oklch, oklch(0.637 0.237 25.77) 8%, transparent);
+  border: 1px solid oklch(0.637 0.237 25.77);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  font: 12px/1 system-ui, sans-serif;
+  color: oklch(0.808 0.103 19.57);
+  animation: roy-form-error-shake 0.5s ease-in-out infinite;
+}
+
+@keyframes roy-form-error-shake {
+
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-5px); }
+  40%      { transform: translateX(5px); }
+  60%      { transform: translateX(-3px); }
+  80%      { transform: translateX(3px); }
+
+}`
+  },
+  {
+    id: "ferrum-form-focus-glow",
+    name: "Focus Glow",
+    category: "forms",
+    description: "A form input effect with focus or validation feedback",
+    tags: ["form", "input", "form-focus-glow", "focus"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-form-focus-glow {
+  position: relative;
+  width: 170px;
+  height: 40px;
+  padding: 0 14px;
+  background: color-mix(in oklch, oklch(1 0 0) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 18%, transparent);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  font: 12px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 0) 55%, transparent);
+  transition: all 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-drawer-slide",
+    name: "Drawer Slide",
+    category: "navigation",
+    description: "A navigation component with motion or interaction feedback",
+    tags: ["drawer-slide", "slide", "3d"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-drawer-slide {
+  perspective: 800px;
+  width: 80px;
+  height: 60px;
+  position: relative;
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 8%, transparent);
+  border: 2px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 25%, transparent);
+  border-radius: 6px;
+}`
+  },
+  {
+    id: "ferrum-clip-path-hexagon",
+    name: "Clip Path Hexagon",
+    category: "visual",
+    description: "An animated motion effect (clip path hexagon)",
+    tags: ["clip-path-hexagon", "path", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-clip-path-hexagon {
+  width: 160px;
+  height: 160px;
+  background:
+    conic-gradient(from 30deg, oklch(0.769 0.188 70.08), oklch(0.637 0.237 25.77), oklch(0.652 0.241 354.31), oklch(0.566 0.245 278.69), oklch(0.769 0.188 70.08));
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: grid;
+  place-items: center;
+  animation: roy-b10-cph-spin 6s linear infinite;
+}
+
+@keyframes roy-b10-cph-spin {
+
+  to { transform: rotate(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-clip-path-star",
+    name: "Clip Path Star",
+    category: "visual",
+    description: "An animated motion effect (clip path star)",
+    tags: ["clip-path-star", "path", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-clip-path-star {
+  width: 170px;
+  height: 170px;
+  background: linear-gradient(135deg, oklch(0.837 0.164 84.43), oklch(0.769 0.188 70.08) 40%, oklch(0.555 0.146 49.0));
+  clip-path: polygon(
+    50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%,
+    50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%
+  );
+  display: grid;
+  place-items: center;
+  animation: roy-b10-cps-twinkle 1.8s ease-in-out infinite;
+}
+
+@keyframes roy-b10-cps-twinkle {
+
+  0%, 100% { filter: drop-shadow(0 0 6px color-mix(in oklch, oklch(0.837 0.164 84.43) 50%, transparent)); transform: scale(1); }
+  50%      { filter: drop-shadow(0 0 18px color-mix(in oklch, oklch(0.837 0.164 84.43) 95%, transparent)); transform: scale(1.06); }
+
+}`
+  },
+  {
+    id: "ferrum-deep-sea",
+    name: "Deep Sea",
+    category: "visual",
+    description: "A deep sea effect",
+    tags: ["deep-sea", "sea"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-deep-sea {
+  position: relative;
+  width: 220px;
+  height: 180px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: linear-gradient(180deg, oklch(0.456 0.079 228.92) 0%, oklch(0.347 0.065 233.52) 40%, oklch(0.228 0.042 238.55) 80%, oklch(0.165 0.031 237.9) 100%);
+}`
+  },
+  {
+    id: "ferrum-depth-shadow",
+    name: "Depth Shadow",
+    category: "visual",
+    description: "A depth shadow effect",
+    tags: ["depth-shadow", "shadow"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-depth-shadow {
+  box-shadow:
+    1px 1px 0 oklch(0.432 0.086 166.91),
+    2px 2px 0 oklch(0.596 0.127 163.23),
+    3px 3px 0 oklch(0.508 0.105 165.61),
+    4px 4px 0 oklch(0.696 0.149 162.48),
+    5px 5px 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 60%, transparent),
+    6px 6px 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent),
+    7px 7px 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 20%, transparent),
+    8px 8px 20px color-mix(in oklch, oklch(0 0 0) 15%, transparent);
+  transition: all 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-filter-blur-focus",
+    name: "Filter Blur Focus",
+    category: "visual",
+    description: "A CSS filter effect (filter blur focus)",
+    tags: ["filter-blur-focus", "blur", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-filter-blur-focus {
+  background: linear-gradient(135deg, oklch(0.723 0.155 19.75) 0%, oklch(0.892 0.108 86.3) 50%, oklch(0.952 0.074 158.47) 100%);
+  filter: blur(8px) saturate(1.2);
+  animation: roy-filter-blur-focus 3s ease-in-out infinite;
+}
+
+@keyframes roy-filter-blur-focus {
+
+  0%, 100% { filter: blur(8px) saturate(1.2); }
+  50%      { filter: blur(0px) saturate(1.4); }
+
+}`
+  },
+  {
+    id: "ferrum-filter-cinematic",
+    name: "Filter Cinematic",
+    category: "visual",
+    description: "A CSS filter effect (filter cinematic)",
+    tags: ["filter-cinematic", "cinematic"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-filter-cinematic {
+  background: linear-gradient(135deg, oklch(0.615 0.235 30.43) 0%, oklch(0.8 0.162 78.77) 40%, oklch(0.616 0.104 219.93) 80%, oklch(0.82 0.102 214.8) 100%);
+  filter: contrast(1.25) saturate(1.3) brightness(0.92) hue-rotate(-8deg) sepia(0.18);
+}`
+  },
+  {
+    id: "ferrum-filter-contrast",
+    name: "Filter Contrast",
+    category: "visual",
+    description: "A CSS filter effect (filter contrast)",
+    tags: ["filter-contrast", "contrast"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-filter-contrast {
+  background: linear-gradient(135deg, oklch(0.814 0.009 236.59) 0%, oklch(0.356 0.039 248.97) 50%, oklch(0.814 0.009 236.59) 100%);
+  filter: contrast(2.4) brightness(1.05);
+}`
+  },
+  {
+    id: "ferrum-filter-dramatic",
+    name: "Filter Dramatic",
+    category: "visual",
+    description: "A CSS filter effect (filter dramatic)",
+    tags: ["filter-dramatic", "dramatic"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-filter-dramatic {
+  background: linear-gradient(135deg, oklch(0.777 0.099 10.85) 0%, oklch(0.927 0.038 9.81) 30%, oklch(0.732 0.169 11.89) 60%, oklch(0.736 0.164 34.71) 100%);
+  filter: contrast(1.6) saturate(1.5) brightness(0.82);
+}`
+  },
+  {
+    id: "ferrum-filter-dreamy",
+    name: "Filter Dreamy",
+    category: "visual",
+    description: "A CSS filter effect (filter dreamy)",
+    tags: ["filter-dreamy", "dreamy"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-filter-dreamy {
+  background: linear-gradient(135deg, oklch(0.694 0.199 311.3) 0%, oklch(0.74 0.195 341.99) 40%, oklch(0.913 0.102 200.91) 100%);
+  filter: blur(1.2px) brightness(1.18) saturate(1.4) contrast(0.92);
+}`
+  },
+  {
+    id: "ferrum-filter-duotone",
+    name: "Filter Duotone",
+    category: "visual",
+    description: "A CSS filter effect (filter duotone)",
+    tags: ["filter-duotone", "duotone"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-filter-duotone {
+  background: linear-gradient(135deg, oklch(0.975 0.005 258.32) 0%, oklch(0.851 0.03 259.59) 50%, oklch(0.877 0.084 336.72) 100%);
+  filter: grayscale(1) sepia(1) hue-rotate(180deg) saturate(3) contrast(1.3);
+}`
+  },
+  {
+    id: "ferrum-filter-emboss",
+    name: "Filter Emboss",
+    category: "visual",
+    description: "A CSS filter effect (filter emboss)",
+    tags: ["filter-emboss", "emboss"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-filter-emboss {
+  background: linear-gradient(135deg, oklch(0.396 0.087 119.89) 0%, oklch(0.555 0.117 114.38) 50%, oklch(0.891 0.172 115.45) 100%);
+  filter: grayscale(1) brightness(1.1) contrast(1.4)
+    drop-shadow(2px 2px 1px color-mix(in oklch, oklch(1 0 0) 50%, transparent))
+    drop-shadow(-2px -2px 1px color-mix(in oklch, oklch(0 0 0) 60%, transparent));
+}`
+  },
+  {
+    id: "ferrum-filter-glitch",
+    name: "Filter Glitch",
+    category: "visual",
+    description: "A CSS filter effect (filter glitch)",
+    tags: ["filter-glitch", "glitch", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-filter-glitch {
+  background: linear-gradient(135deg, oklch(0.838 0.245 147.59) 0%, oklch(0.574 0.192 255.75) 50%, oklch(0.759 0.164 64.36) 100%);
+  animation: roy-filter-glitch 1.2s steps(2, end) infinite;
+}
+
+@keyframes roy-filter-glitch {
+
+  0%   { filter: hue-rotate(0deg) saturate(1.5); }
+  20%  { filter: hue-rotate(60deg) saturate(2) contrast(1.3); }
+  40%  { filter: hue-rotate(180deg) saturate(1.8) invert(0.15); }
+  60%  { filter: hue-rotate(270deg) saturate(2.5) contrast(1.1); }
+  80%  { filter: hue-rotate(120deg) saturate(1.6); }
+  100% { filter: hue-rotate(360deg) saturate(1.5); }
+
+}`
+  },
+  {
+    id: "ferrum-filter-grayscale-hover",
+    name: "Filter Grayscale Hover",
+    category: "visual",
+    description: "A CSS filter effect (filter grayscale hover)",
+    tags: ["filter-grayscale-hover", "grayscale"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-filter-grayscale-hover {
+  background: linear-gradient(135deg, oklch(0.667 0.217 13.9) 0%, oklch(0.56 0.235 268.65) 50%, oklch(0.667 0.217 13.9) 100%);
+  filter: grayscale(1) brightness(0.85);
+  transition: filter 0.5s ease;
+}`
+  },
+  {
+    id: "ferrum-filter-halftone",
+    name: "Filter Halftone",
+    category: "visual",
+    description: "A CSS filter effect (filter halftone)",
+    tags: ["filter-halftone", "halftone"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-filter-halftone {
+  background:
+    radial-gradient(circle, color-mix(in oklch, oklch(0 0 0) 85%, transparent) 1px, transparent 1.6px) 0 0 / 5px 5px,
+    linear-gradient(135deg, oklch(0.712 0.181 22.84) 0%, oklch(0.776 0.112 188.54) 50%, oklch(0.922 0.143 97.78) 100%);
+  filter: contrast(1.4) saturate(1.3);
+}`
+  },
+  {
+    id: "ferrum-filter-hue-rotate",
+    name: "Filter Hue Rotate",
+    category: "visual",
+    description: "A CSS filter effect (filter hue rotate)",
+    tags: ["filter-hue-rotate", "hue", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-filter-hue-rotate {
+  background: linear-gradient(135deg, oklch(0.641 0.257 8.07) 0%, oklch(0.546 0.248 295.88) 50%, oklch(0.637 0.195 259.51) 100%);
+  animation: roy-filter-hue-rotate 4s linear infinite;
+}
+
+@keyframes roy-filter-hue-rotate {
+
+  0%   { filter: hue-rotate(0deg) saturate(1.5); }
+  100% { filter: hue-rotate(360deg) saturate(1.5); }
+
+}`
+  },
+  {
+    id: "ferrum-filter-invert",
+    name: "Filter Invert",
+    category: "visual",
+    description: "A CSS filter effect (filter invert)",
+    tags: ["filter-invert", "invert"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-filter-invert {
+  background: linear-gradient(135deg, oklch(0.701 0.201 44.77) 0%, oklch(0.615 0.246 2.02) 50%, oklch(0.701 0.201 44.77) 100%);
+  filter: invert(1) hue-rotate(180deg);
+}`
+  },
+  {
+    id: "ferrum-filter-saturate",
+    name: "Filter Saturate",
+    category: "visual",
+    description: "A CSS filter effect (filter saturate)",
+    tags: ["filter-saturate", "saturate"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-filter-saturate {
+  background: linear-gradient(135deg, oklch(0.583 0.161 23.52) 0%, oklch(0.308 0.116 325.06) 50%, oklch(0.583 0.161 23.52) 100%);
+  filter: saturate(3.2) contrast(1.1);
+}`
+  },
+  {
+    id: "ferrum-filter-sepia",
+    name: "Filter Sepia",
+    category: "visual",
+    description: "A CSS filter effect (filter sepia)",
+    tags: ["filter-sepia", "sepia"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-filter-sepia {
+  background: linear-gradient(135deg, oklch(0.779 0.149 226.02) 0%, oklch(0.909 0.165 146.32) 50%, oklch(0.977 0.044 100.28) 100%);
+  filter: sepia(0.85) contrast(1.1) brightness(1.05);
+}`
+  },
+  {
+    id: "ferrum-filter-vintage",
+    name: "Filter Vintage",
+    category: "visual",
+    description: "A CSS filter effect (filter vintage)",
+    tags: ["filter-vintage", "vintage"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-filter-vintage {
+  background: linear-gradient(135deg, oklch(0.712 0.181 22.84) 0%, oklch(0.864 0.143 84.36) 40%, oklch(0.826 0.154 331.46) 80%, oklch(0.827 0.128 215.58) 100%);
+  filter: sepia(0.55) saturate(0.8) contrast(0.9) brightness(0.95) hue-rotate(-10deg);
+}`
+  }
+];
+
+// src/lib/effects-batch-29.ts
+var effectsBatch29 = [
+  {
+    id: "ferrum-fortune-teller",
+    name: "Fortune Teller",
+    category: "animations",
+    description: "A fortune teller effect",
+    tags: ["fortune-teller", "teller"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-fortune-teller {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  background: transparent;
+}`
+  },
+  {
+    id: "ferrum-head-shake",
+    name: "Head Shake",
+    category: "animations",
+    description: "An animated motion effect (head shake)",
+    tags: ["head-shake", "shake", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-head-shake {
+  animation: roy-head-shake 1s ease-in-out;
+}
+
+@keyframes roy-head-shake {
+
+  0%, 100% { transform: translateX(0); }
+  6.5% { transform: translateX(-6px) rotateY(-9deg); }
+  18.5% { transform: translateX(5px) rotateY(7deg); }
+  31.5% { transform: translateX(-3px) rotateY(-5deg); }
+  43.5% { transform: translateX(2px) rotateY(3deg); }
+  50% { transform: translateX(0); }
+
+}`
+  },
+  {
+    id: "ferrum-jack-in-box",
+    name: "Jack In Box",
+    category: "animations",
+    description: "An animated motion effect (jack in box)",
+    tags: ["jack-in-box", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-jack-in-box {
+  animation: roy-jack-in-box 1s ease both;
+}
+
+@keyframes roy-jack-in-box {
+
+  from {
+    opacity: 0;
+    transform: scale(0.1) rotate(30deg);
+    transform-origin: center bottom;
+  }
+  50% {
+    transform: rotate(-10deg);
+  }
+  70% {
+    transform: rotate(3deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-jiggle",
+    name: "Jiggle",
+    category: "animations",
+    description: "An animated motion effect (jiggle)",
+    tags: ["jiggle", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-jiggle {
+  animation: roy-jiggle 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+  transform-origin: center;
+}
+
+@keyframes roy-jiggle {
+
+  0%, 100% { transform: rotate(0deg); }
+  20%      { transform: rotate(-7deg); }
+  40%      { transform: rotate(6deg); }
+  60%      { transform: rotate(-4deg); }
+  80%      { transform: rotate(3deg); }
+
+}`
+  },
+  {
+    id: "ferrum-form-label-float",
+    name: "Label Float",
+    category: "forms",
+    description: "A form input effect with focus or validation feedback",
+    tags: ["form", "input", "form-label-float", "label"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-form-label-float {
+  position: relative;
+  width: 170px;
+  height: 48px;
+  background: color-mix(in oklch, oklch(1 0 0) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 18%, transparent);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-form-placeholder-shimmer",
+    name: "Placeholder Shimmer",
+    category: "forms",
+    description: "A form input effect with focus or validation feedback",
+    tags: ["form", "input", "form-placeholder-shimmer", "placeholder"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-form-placeholder-shimmer {
+  position: relative;
+  width: 180px;
+  height: 40px;
+  padding: 0 14px;
+  background: color-mix(in oklch, oklch(1 0 0) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 18%, transparent);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  font: 12px/1 system-ui, sans-serif;
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-form-radio-custom",
+    name: "Radio Custom",
+    category: "forms",
+    description: "A form input effect with focus or validation feedback",
+    tags: ["form", "input", "form-radio-custom", "radio"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-form-radio-custom {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: 2px solid oklch(0.696 0.149 162.48);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}`
+  },
+  {
+    id: "ferrum-form-search-expand",
+    name: "Search Expand",
+    category: "forms",
+    description: "A form input effect with focus or validation feedback",
+    tags: ["form", "input", "form-search-expand", "search"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-form-search-expand {
+  position: relative;
+  width: 56px;
+  height: 40px;
+  background: color-mix(in oklch, oklch(1 0 0) 5%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 18%, transparent);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  font: 12px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 0) 60%, transparent);
+  overflow: hidden;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.4s ease;
+}`
+  },
+  {
+    id: "ferrum-form-success-check",
+    name: "Success Check",
+    category: "forms",
+    description: "A form input effect with focus or validation feedback",
+    tags: ["form", "input", "form-success-check", "success"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-form-success-check {
+  position: relative;
+  width: 160px;
+  height: 40px;
+  padding: 0 14px 0 38px;
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent);
+  border: 1px solid oklch(0.696 0.149 162.48);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  font: 12px/1 system-ui, sans-serif;
+  color: oklch(0.826 0.124 162.48);
+}`
+  },
+  {
+    id: "ferrum-form-toggle-switch",
+    name: "Toggle Switch",
+    category: "forms",
+    description: "A form input effect with focus or validation feedback",
+    tags: ["form", "input", "form-toggle-switch", "toggle"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-form-toggle-switch {
+  position: relative;
+  width: 54px;
+  height: 28px;
+  background: color-mix(in oklch, oklch(1 0 0) 8%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 20%, transparent);
+  border-radius: 14px;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-form-underline-draw",
+    name: "Underline Draw",
+    category: "forms",
+    description: "A form input effect with focus or validation feedback",
+    tags: ["form", "input", "form-underline-draw", "underline"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-form-underline-draw {
+  position: relative;
+  width: 180px;
+  height: 40px;
+  padding: 0 4px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid color-mix(in oklch, oklch(1 0 0) 18%, transparent);
+  display: flex;
+  align-items: center;
+  font: 13px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 0) 70%, transparent);
+}`
+  },
+  {
+    id: "ferrum-glass-acrylic",
+    name: "Acrylic",
+    category: "glass-ui",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["glass", "glassmorphism", "glass-acrylic", "acrylic"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-glass-acrylic {
+  background: color-mix(in oklch, oklch(0.975 0.005 258.32) 65%, transparent);
+  backdrop-filter: blur(30px) saturate(140%);
+  -webkit-backdrop-filter: blur(30px) saturate(140%);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 50%, transparent);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px color-mix(in oklch, oklch(0 0 0) 8%, transparent), inset 0 0 0 1px color-mix(in oklch, oklch(1 0 0) 20%, transparent);
+}`
+  },
+  {
+    id: "ferrum-glass-border-glow",
+    name: "Border Glow",
+    category: "glass-ui",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["glass", "glassmorphism", "glass-border-glow", "border", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-glass-border-glow {
+  position: relative;
+  background: color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 20%, transparent);
+  border-radius: 16px;
+  animation: roy-glass-border-pulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes roy-glass-border-pulse {
+
+  0%   { box-shadow: 0 0 0 1px color-mix(in oklch, oklch(0.889 0.177 169.75) 40%, transparent), 0 0 16px color-mix(in oklch, oklch(0.889 0.177 169.75) 35%, transparent), 0 8px 32px color-mix(in oklch, oklch(0 0 0) 12%, transparent); }
+  100% { box-shadow: 0 0 0 1px color-mix(in oklch, oklch(0.73 0.16 237.36) 60%, transparent), 0 0 30px color-mix(in oklch, oklch(0.73 0.16 237.36) 60%, transparent), 0 8px 32px color-mix(in oklch, oklch(0 0 0) 12%, transparent); }
+
+}`
+  },
+  {
+    id: "ferrum-glass-claymorphism",
+    name: "Claymorphism",
+    category: "glass-ui",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["glass", "glassmorphism", "glass-claymorphism", "claymorphism"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-glass-claymorphism {
+  background: linear-gradient(145deg, oklch(0.974 0.013 347.94), oklch(0.899 0.059 343.23));
+  border-radius: 28px;
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 60%, transparent);
+  box-shadow:
+    8px 8px 16px color-mix(in oklch, oklch(0.525 0.199 3.96) 18%, transparent),
+    -4px -4px 12px color-mix(in oklch, oklch(1 0 0) 90%, transparent),
+    inset 2px 2px 4px color-mix(in oklch, oklch(1 0 0) 70%, transparent),
+    inset -2px -2px 6px color-mix(in oklch, oklch(0.525 0.199 3.96) 12%, transparent);
+}`
+  },
+  {
+    id: "ferrum-glass-depth-layer",
+    name: "Depth Layer",
+    category: "glass-ui",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["glass", "glassmorphism", "glass-depth-layer", "depth"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-glass-depth-layer {
+  position: relative;
+  background: color-mix(in oklch, oklch(1 0 0) 18%, transparent);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 30%, transparent);
+  border-radius: 18px;
+  box-shadow:
+    0 1px 0 color-mix(in oklch, oklch(1 0 0) 50%, transparent) inset,
+    0 -1px 0 color-mix(in oklch, oklch(0 0 0) 5%, transparent) inset,
+    0 2px 4px color-mix(in oklch, oklch(0 0 0) 8%, transparent),
+    0 8px 16px color-mix(in oklch, oklch(0 0 0) 12%, transparent),
+    0 20px 40px color-mix(in oklch, oklch(0 0 0) 15%, transparent);
+  color: oklch(0.232 0.004 286.1);
+}`
+  },
+  {
+    id: "ferrum-glass-frosted",
+    name: "Frosted",
+    category: "glass-ui",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["glass", "glassmorphism", "glass-frosted", "frosted"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-glass-frosted {
+  background: color-mix(in oklch, oklch(1 0 0) 12%, transparent);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 20%, transparent);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px color-mix(in oklch, oklch(0 0 0) 12%, transparent), inset 0 1px 0 color-mix(in oklch, oklch(1 0 0) 30%, transparent);
+}`
+  },
+  {
+    id: "ferrum-glass-frosted-dark",
+    name: "Frosted Dark",
+    category: "glass-ui",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["glass", "glassmorphism", "glass-frosted-dark", "frosted"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-glass-frosted-dark {
+  background: color-mix(in oklch, oklch(0.199 0.03 283.36) 55%, transparent);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 8%, transparent);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px color-mix(in oklch, oklch(0 0 0) 40%, transparent), inset 0 1px 0 color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+}`
+  },
+  {
+    id: "ferrum-glass-liquid",
+    name: "Liquid",
+    category: "glass-ui",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["glass", "glassmorphism", "glass-liquid", "liquid", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-glass-liquid {
+  background: color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  backdrop-filter: blur(8px) brightness(1.1) contrast(1.05) hue-rotate(15deg);
+  -webkit-backdrop-filter: blur(8px) brightness(1.1) contrast(1.05) hue-rotate(15deg);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 30%, transparent);
+  border-radius: 24px;
+  box-shadow: inset 0 2px 6px color-mix(in oklch, oklch(1 0 0) 40%, transparent),
+              inset 0 -2px 6px color-mix(in oklch, oklch(0 0 0) 10%, transparent),
+              0 10px 30px color-mix(in oklch, oklch(0 0 0) 15%, transparent);
+  animation: roy-glass-liquid-refract 6s ease-in-out infinite alternate;
+}
+
+@keyframes roy-glass-liquid-refract {
+
+  0%   { backdrop-filter: blur(8px) brightness(1.1) contrast(1.05) hue-rotate(0deg); }
+  100% { backdrop-filter: blur(14px) brightness(1.15) contrast(1.1) hue-rotate(25deg); }
+
+}`
+  },
+  {
+    id: "ferrum-glass-neumorphism",
+    name: "Neumorphism",
+    category: "glass-ui",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["glass", "glassmorphism", "glass-neumorphism", "neumorphism"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-glass-neumorphism {
+  background: oklch(0.92 0.011 256.7);
+  border-radius: 16px;
+  box-shadow: 8px 8px 16px oklch(0.794 0.01 258.34), -8px -8px 16px oklch(1 0 0);
+}`
+  },
+  {
+    id: "ferrum-glass-neumorphism-inset",
+    name: "Neumorphism Inset",
+    category: "glass-ui",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["glass", "glassmorphism", "glass-neumorphism-inset", "neumorphism"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-glass-neumorphism-inset {
+  background: oklch(0.92 0.011 256.7);
+  border-radius: 16px;
+  box-shadow: inset 6px 6px 12px oklch(0.794 0.01 258.34), inset -6px -6px 12px oklch(1 0 0);
+}`
+  },
+  {
+    id: "ferrum-glass-noise-overlay",
+    name: "Noise Overlay",
+    category: "glass-ui",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["glass", "glassmorphism", "glass-noise-overlay", "noise"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-glass-noise-overlay {
+  position: relative;
+  background: color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 15%, transparent);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px color-mix(in oklch, oklch(0 0 0) 12%, transparent);
+}`
+  },
+  {
+    id: "ferrum-glass-prism",
+    name: "Prism",
+    category: "glass-ui",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["glass", "glassmorphism", "glass-prism", "prism"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-glass-prism {
+  position: relative;
+  background: color-mix(in oklch, oklch(1 0 0) 15%, transparent);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-radius: 16px;
+  color: oklch(1 0 0);
+}`
+  },
+  {
+    id: "ferrum-glass-reflection",
+    name: "Reflection",
+    category: "glass-ui",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["glass", "glassmorphism", "glass-reflection", "reflection"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-glass-reflection {
+  position: relative;
+  overflow: hidden;
+  background: color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 20%, transparent);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px color-mix(in oklch, oklch(0 0 0) 12%, transparent), inset 0 1px 0 color-mix(in oklch, oklch(1 0 0) 30%, transparent);
+}`
+  },
+  {
+    id: "ferrum-glass-transparent-blur",
+    name: "Transparent Blur",
+    category: "glass-ui",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["glass", "glassmorphism", "glass-transparent-blur", "transparent"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-glass-transparent-blur {
+  background: color-mix(in oklch, oklch(1 0 0) 5%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  border-radius: 10px;
+  box-shadow: 0 4px 16px color-mix(in oklch, oklch(0 0 0) 6%, transparent);
+}`
+  },
+  {
+    id: "ferrum-glass-vibrant",
+    name: "Vibrant",
+    category: "glass-ui",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["glass", "glassmorphism", "glass-vibrant", "vibrant"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-glass-vibrant {
+  background: linear-gradient(135deg, color-mix(in oklch, oklch(0.627 0.233 303.9) 28%, transparent), color-mix(in oklch, oklch(0.652 0.241 354.31) 28%, transparent));
+  backdrop-filter: blur(16px) saturate(220%) brightness(1.1);
+  -webkit-backdrop-filter: blur(16px) saturate(220%) brightness(1.1);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 25%, transparent);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px color-mix(in oklch, oklch(0.627 0.233 303.9) 30%, transparent), inset 0 1px 0 color-mix(in oklch, oklch(1 0 0) 35%, transparent);
+}`
+  },
+  {
+    id: "ferrum-hover-border-draw",
+    name: "Border Draw",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-border-draw", "border"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-border-draw {
+  position: relative;
+  box-sizing: border-box;
+}`
+  },
+  {
+    id: "ferrum-hover-color-shift",
+    name: "Color Shift",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-color-shift", "color"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-color-shift {
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.596 0.127 163.23));
+  transition: all 0.4s ease;
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+}`
+  },
+  {
+    id: "ferrum-hover-depth",
+    name: "Depth",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-depth", "depth"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-depth {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.4s ease;
+  box-shadow: 0 1px 2px color-mix(in oklch, oklch(0 0 0) 8%, transparent),
+              0 2px 4px color-mix(in oklch, oklch(0 0 0) 6%, transparent);
+}`
+  },
+  {
+    id: "ferrum-hover-drop-shadow",
+    name: "Drop Shadow",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-drop-shadow", "drop"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-drop-shadow {
+  transition: filter 0.35s ease, transform 0.35s ease;
+}`
+  },
+  {
+    id: "ferrum-hover-fade-overlay",
+    name: "Fade Overlay",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-fade-overlay", "fade"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-fade-overlay {
+  position: relative;
+  isolation: isolate;
+}`
+  },
+  {
+    id: "ferrum-hover-glow-border",
+    name: "Glow Border",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-glow-border", "glow"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-glow-border {
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+  transition: all 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-hover-grayscale-to-color",
+    name: "Grayscale To Color",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-grayscale-to-color", "grayscale"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-grayscale-to-color {
+  filter: grayscale(100%);
+  transition: filter 0.5s ease;
+}`
+  },
+  {
+    id: "ferrum-hover-hue-rotate",
+    name: "Hue Rotate",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-hue-rotate", "hue"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-hue-rotate {
+  transition: filter 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-hover-neon-flicker",
+    name: "Neon Flicker",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-neon-flicker", "neon"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-neon-flicker {
+  transition: box-shadow 0.2s ease;
+}`
+  },
+  {
+    id: "ferrum-hover-opacity",
+    name: "Opacity",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-opacity", "opacity"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-opacity {
+  transition: opacity 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-hover-overlay-reveal",
+    name: "Overlay Reveal",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-overlay-reveal", "overlay"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-overlay-reveal {
+  position: relative;
+  overflow: hidden;
+  transition: color 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-hover-press",
+    name: "Press",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-press", "press"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-press {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 6px 0 oklch(0.508 0.105 165.61), 0 8px 14px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+}`
+  },
+  {
+    id: "ferrum-hover-push-up",
+    name: "Push Up",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-push-up", "push"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-push-up {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-hover-scale",
+    name: "Scale",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-scale", "scale"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-scale {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-hover-shadow-grow",
+    name: "Shadow Grow",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-shadow-grow", "shadow"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-shadow-grow {
+  transition: transform 0.3s ease,
+              box-shadow 0.3s ease;
+  box-shadow: 0 2px 4px color-mix(in oklch, oklch(0 0 0) 6%, transparent);
+}`
+  },
+  {
+    id: "ferrum-hover-slide-overlay",
+    name: "Slide Overlay",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-slide-overlay", "slide"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-slide-overlay {
+  position: relative;
+  overflow: hidden;
+  transition: color 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-hover-tilt-rotate",
+    name: "Tilt Rotate",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-tilt-rotate", "tilt", "3d"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-tilt-rotate {
+  transition: transform 0.3s ease;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}`
+  },
+  {
+    id: "ferrum-hover-underline-slide",
+    name: "Underline Slide",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-underline-slide", "underline"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-underline-slide {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}`
+  },
+  {
+    id: "ferrum-hover-zoom-blur",
+    name: "Zoom Blur",
+    category: "hover",
+    description: "A hover-triggered effect that responds to pointer interaction",
+    tags: ["hover", "interactive", "hover-zoom-blur", "zoom"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-hover-zoom-blur {
+  transition: transform 0.4s ease, filter 0.4s ease;
+}`
+  },
+  {
+    id: "ferrum-frozen-ice",
+    name: "Frozen Ice",
+    category: "visual",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["frozen-ice", "ice", "glassmorphism"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-frozen-ice {
+  position: relative;
+  width: 200px;
+  height: 160px;
+  border-radius: 14px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 50% 40% at 25% 20%, color-mix(in oklch, oklch(1 0 0) 70%, transparent), transparent 60%),
+    radial-gradient(ellipse 40% 30% at 75% 75%, color-mix(in oklch, oklch(0.839 0.088 241.5) 50%, transparent), transparent 60%),
+    linear-gradient(135deg, oklch(0.927 0.029 230.3) 0%, oklch(0.847 0.057 232.14) 35%, oklch(0.704 0.076 233.95) 70%, oklch(0.917 0.032 230.27) 100%);
+  box-shadow:
+    inset 8px 12px 25px color-mix(in oklch, oklch(1 0 0) 60%, transparent),
+    inset -8px -12px 25px color-mix(in oklch, oklch(0.458 0.098 250.82) 40%, transparent),
+    0 10px 30px color-mix(in oklch, oklch(0.616 0.087 239.49) 40%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 70%, transparent);
+  backdrop-filter: blur(2px);
+}`
+  },
+  {
+    id: "ferrum-gold-leaf",
+    name: "Gold Leaf",
+    category: "visual",
+    description: "An animated motion effect (gold leaf)",
+    tags: ["gold-leaf", "leaf", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-gold-leaf {
+  position: relative;
+  width: 200px;
+  height: 160px;
+  border-radius: 8px;
+  background:
+    radial-gradient(ellipse 30% 25% at 20% 25%, oklch(0.973 0.051 97.64), transparent 55%),
+    radial-gradient(ellipse 25% 20% at 75% 70%, oklch(0.7 0.137 82.62), transparent 60%),
+    radial-gradient(ellipse 20% 18% at 65% 30%, oklch(0.932 0.118 96.68), transparent 55%),
+    radial-gradient(ellipse 28% 22% at 30% 75%, oklch(0.645 0.127 77.49), transparent 60%),
+    linear-gradient(115deg,
+      oklch(0.645 0.127 77.49) 0%,
+      oklch(0.958 0.086 99.2) 12%,
+      oklch(0.735 0.146 84.27) 28%,
+      oklch(0.932 0.118 96.68) 42%,
+      oklch(0.602 0.12 77.51) 58%,
+      oklch(0.958 0.086 99.2) 72%,
+      oklch(0.7 0.137 82.62) 88%,
+      oklch(0.51 0.104 70.73) 100%);
+  background-size: 220% 220%, 200% 200%, 200% 200%, 200% 200%, 200% 200%;
+  box-shadow:
+    inset 0 0 20px color-mix(in oklch, oklch(0 0 0) 25%, transparent),
+    inset 6px 8px 14px color-mix(in oklch, oklch(0.967 0.059 96.92) 40%, transparent),
+    0 8px 22px color-mix(in oklch, oklch(0.345 0.074 72.83) 40%, transparent);
+  filter: contrast(1.1) saturate(1.2);
+  animation: roy-b11-gold-leaf-shimmer 6s ease-in-out infinite;
+}
+
+@keyframes roy-b11-gold-leaf-shimmer {
+
+  0%, 100% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
+  50%      { background-position: 100% 100%, 50% 50%, 80% 30%, 30% 70%, 50% 50%; }
+
+}`
+  },
+  {
+    id: "ferrum-heat-haze",
+    name: "Heat Haze",
+    category: "visual",
+    description: "A heat haze effect",
+    tags: ["heat-haze", "haze"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-heat-haze {
+  position: relative;
+  width: 220px;
+  height: 180px;
+  border-radius: 8px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, oklch(0.815 0.082 225.75) 0%, oklch(0.901 0.089 78.42) 60%, oklch(0.705 0.193 39.23) 100%);
+}`
+  },
+  {
+    id: "ferrum-kaleidoscope",
+    name: "Kaleidoscope",
+    category: "visual",
+    description: "A kaleidoscope effect",
+    tags: ["kaleidoscope"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-kaleidoscope {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: oklch(0 0 0);
+  box-shadow: 0 0 0 6px oklch(0.541 0.104 84.45), 0 12px 30px color-mix(in oklch, oklch(0 0 0) 50%, transparent);
+}`
+  },
+  {
+    id: "ferrum-linear-aurora-glow",
+    name: "Linear Aurora Glow",
+    category: "visual",
+    description: "A Linear-inspired design-system effect (linear aurora glow)",
+    tags: ["linear-aurora-glow", "aurora"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-linear-aurora-glow {
+  position: relative;
+  background: oklch(0.145 0.002 286.13);
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-linear-card-lift",
+    name: "Linear Card Lift",
+    category: "visual",
+    description: "A Linear-inspired design-system effect (linear card lift)",
+    tags: ["linear-card-lift", "card"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-linear-card-lift {
+  background: oklch(0.21 0.006 285.89);
+  color: oklch(0.985 0.0 89.88);
+  border: 1px solid oklch(0.274 0.005 286.03);
+  border-radius: 14px;
+  box-shadow: 0 0 0 0 color-mix(in oklch, oklch(0.567 0.159 275.21) 0%, transparent);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.35s ease;
+}`
+  }
+];
+
+// src/lib/effects-batch-30.ts
+var effectsBatch30 = [
+  {
+    id: "ferrum-loader-bouncing-grid",
+    name: "Bouncing Grid",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (bouncing grid)",
+    tags: ["loader", "spinner", "loader-bouncing-grid", "bouncing"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-bouncing-grid {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 3px;
+}`
+  },
+  {
+    id: "ferrum-loader-chasing-dots",
+    name: "Chasing Dots",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (chasing dots)",
+    tags: ["loader", "spinner", "loader-chasing-dots", "chasing", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-chasing-dots {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  animation: roy-chasing-rotate 2s infinite linear;
+}
+
+@keyframes roy-chasing-rotate {
+
+  100% { transform: rotate(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-loader-circle-notch",
+    name: "Circle Notch",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (circle notch)",
+    tags: ["loader", "spinner", "loader-circle-notch", "circle", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-circle-notch {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 4px solid oklch(0.696 0.149 162.48);
+  border-top-color: transparent;
+  border-left-color: transparent;
+  animation: roy-circle-notch 0.9s linear infinite;
+}
+
+@keyframes roy-circle-notch {
+
+  0% { transform: rotate(0deg); }
+  60% { transform: rotate(280deg); }
+  100% { transform: rotate(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-loader-dual-ring",
+    name: "Dual Ring",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (dual ring)",
+    tags: ["loader", "spinner", "loader-dual-ring", "dual", "animated"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-dual-ring {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 4px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 15%, transparent);
+  border-top-color: oklch(0.696 0.149 162.48);
+  border-bottom-color: oklch(0.685 0.131 226.94);
+  animation: roy-dual-ring-spin 1.2s linear infinite;
+}
+
+@keyframes roy-dual-ring-spin {
+
+  to { transform: rotate(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-loader-fading-dots",
+    name: "Fading Dots",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (fading dots)",
+    tags: ["loader", "spinner", "loader-fading-dots", "fading"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-fading-dots {
+  width: 80px;
+  text-align: center;
+}`
+  },
+  {
+    id: "ferrum-loader-folding-cube",
+    name: "Folding Cube",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (folding cube)",
+    tags: ["loader", "spinner", "loader-folding-cube", "folding"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-folding-cube {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  transform: rotateZ(45deg);
+}`
+  },
+  {
+    id: "ferrum-loader-indeterminate",
+    name: "Indeterminate",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (indeterminate)",
+    tags: ["loader", "spinner", "loader-indeterminate", "indeterminate"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-indeterminate {
+  width: 200px;
+  height: 4px;
+  background-color: color-mix(in oklch, oklch(0.696 0.149 162.48) 15%, transparent);
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-loader-line-scale",
+    name: "Line Scale",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (line scale)",
+    tags: ["loader", "spinner", "loader-line-scale", "line"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-line-scale {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  height: 40px;
+}`
+  },
+  {
+    id: "ferrum-loader-pacman",
+    name: "Pacman",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (pacman)",
+    tags: ["loader", "spinner", "loader-pacman", "pacman"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-pacman {
+  position: relative;
+  width: 60px;
+  height: 40px;
+}`
+  },
+  {
+    id: "ferrum-loader-progress-bar",
+    name: "Progress Bar",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (progress bar)",
+    tags: ["loader", "spinner", "loader-progress-bar", "progress"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-progress-bar {
+  width: 200px;
+  height: 8px;
+  background-color: color-mix(in oklch, oklch(0.696 0.149 162.48) 15%, transparent);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-loader-pulse-ring",
+    name: "Pulse Ring",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (pulse ring)",
+    tags: ["loader", "spinner", "loader-pulse-ring", "pulse"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-pulse-ring {
+  width: 40px;
+  height: 40px;
+  position: relative;
+}`
+  },
+  {
+    id: "ferrum-loader-skeleton",
+    name: "Skeleton",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (skeleton)",
+    tags: ["loader", "spinner", "loader-skeleton", "skeleton"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-skeleton {
+  width: 200px;
+  height: 12px;
+  background-color: color-mix(in oklch, oklch(1 0 0) 6%, transparent);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-loader-three-bounce",
+    name: "Three Bounce",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (three bounce)",
+    tags: ["loader", "spinner", "loader-three-bounce", "three"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-three-bounce {
+  width: 80px;
+  text-align: center;
+}`
+  },
+  {
+    id: "ferrum-loader-whale",
+    name: "Whale",
+    category: "loaders",
+    description: "A loading indicator with cyclical motion (whale)",
+    tags: ["loader", "spinner", "loader-whale", "whale"],
+    previewType: "loader",
+    cssCode: `.roycss-ferrum-loader-whale {
+  width: 50px;
+  height: 40px;
+  position: relative;
+}`
+  },
+  {
+    id: "ferrum-micro-accordion-expand",
+    name: "Micro Accordion Expand",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (micro accordion expand)",
+    tags: ["micro-accordion-expand", "accordion"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-micro-accordion-expand {
+  position: relative;
+  width: 140px;
+  height: 90px;
+  background: oklch(1 0 0);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px color-mix(in oklch, oklch(0 0 0) 10%, transparent);
+}`
+  },
+  {
+    id: "ferrum-micro-badge-bounce",
+    name: "Micro Badge Bounce",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (micro badge bounce)",
+    tags: ["micro-badge-bounce", "badge"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-micro-badge-bounce {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  background: oklch(0.968 0.007 247.9);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
+}`
+  },
+  {
+    id: "ferrum-micro-checkbox-check",
+    name: "Micro Checkbox Check",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (micro checkbox check)",
+    tags: ["micro-checkbox-check", "checkbox"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-micro-checkbox-check {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  background: oklch(1 0 0);
+  border: 2px solid oklch(0.696 0.149 162.48);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px color-mix(in oklch, oklch(0.696 0.149 162.48) 15%, transparent);
+}`
+  },
+  {
+    id: "ferrum-micro-dropdown-reveal",
+    name: "Micro Dropdown Reveal",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (micro dropdown reveal)",
+    tags: ["micro-dropdown-reveal", "dropdown"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-micro-dropdown-reveal {
+  position: relative;
+  width: 120px;
+  height: 90px;
+}`
+  },
+  {
+    id: "ferrum-micro-fab-expand",
+    name: "Micro Fab Expand",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (micro fab expand)",
+    tags: ["micro-fab-expand", "fab"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-micro-fab-expand {
+  position: relative;
+  width: 150px;
+  height: 90px;
+}`
+  },
+  {
+    id: "ferrum-micro-modal-scale",
+    name: "Micro Modal Scale",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (micro modal scale)",
+    tags: ["micro-modal-scale", "modal"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-micro-modal-scale {
+  position: relative;
+  width: 150px;
+  height: 90px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: oklch(0.968 0.007 247.9);
+}`
+  },
+  {
+    id: "ferrum-micro-progress-fill",
+    name: "Micro Progress Fill",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (micro progress fill)",
+    tags: ["micro-progress-fill", "progress"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-micro-progress-fill {
+  position: relative;
+  width: 140px;
+  height: 14px;
+  background: oklch(0.929 0.013 255.51);
+  border-radius: 7px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px color-mix(in oklch, oklch(0 0 0) 10%, transparent);
+}`
+  },
+  {
+    id: "ferrum-micro-radio-select",
+    name: "Micro Radio Select",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (micro radio select)",
+    tags: ["micro-radio-select", "radio"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-micro-radio-select {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  background: oklch(1 0 0);
+  border: 2px solid oklch(0.696 0.149 162.48);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px color-mix(in oklch, oklch(0.696 0.149 162.48) 15%, transparent);
+}`
+  },
+  {
+    id: "ferrum-micro-tab-indicator",
+    name: "Micro Tab Indicator",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (micro tab indicator)",
+    tags: ["micro-tab-indicator", "tab"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-micro-tab-indicator {
+  position: relative;
+  width: 150px;
+  height: 50px;
+}`
+  },
+  {
+    id: "ferrum-micro-toast-slide",
+    name: "Micro Toast Slide",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (micro toast slide)",
+    tags: ["micro-toast-slide", "toast"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-micro-toast-slide {
+  position: relative;
+  width: 150px;
+  height: 80px;
+  overflow: hidden;
+  border-radius: 8px;
+}`
+  },
+  {
+    id: "ferrum-micro-toggle-switch",
+    name: "Micro Toggle Switch",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (micro toggle switch)",
+    tags: ["micro-toggle-switch", "toggle", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-micro-toggle-switch {
+  position: relative;
+  width: 56px;
+  height: 30px;
+  background: oklch(0.869 0.02 252.89);
+  border-radius: 15px;
+  box-shadow: inset 0 2px 4px color-mix(in oklch, oklch(0 0 0) 15%, transparent);
+  animation: roy-micro-toggle-bg 3s ease-in-out infinite;
+}
+
+@keyframes roy-micro-toggle-bg {
+
+  0%, 45%   { background: oklch(0.869 0.02 252.89); }
+  55%, 100% { background: oklch(0.696 0.149 162.48); }
+
+}`
+  },
+  {
+    id: "ferrum-linear-dark-surface",
+    name: "Linear Dark Surface",
+    category: "visual",
+    description: "A Linear-inspired design-system effect (linear dark surface)",
+    tags: ["linear-dark-surface", "dark"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-linear-dark-surface {
+  background: linear-gradient(180deg, oklch(0.21 0.006 285.89) 0%, oklch(0.169 0.002 286.18) 100%);
+  color: oklch(0.92 0.004 286.32);
+  border: 1px solid oklch(0.274 0.005 286.03);
+  border-radius: 12px;
+  box-shadow:
+    0 1px 0 color-mix(in oklch, oklch(1 0 0) 4%, transparent) inset,
+    0 4px 16px color-mix(in oklch, oklch(0 0 0) 50%, transparent);
+}`
+  },
+  {
+    id: "ferrum-linear-depth-shadow",
+    name: "Linear Depth Shadow",
+    category: "visual",
+    description: "A Linear-inspired design-system effect (linear depth shadow)",
+    tags: ["linear-depth-shadow", "depth"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-linear-depth-shadow {
+  background: oklch(0.21 0.006 285.89);
+  color: oklch(0.985 0.0 89.88);
+  border: 1px solid oklch(0.274 0.005 286.03);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px color-mix(in oklch, oklch(0 0 0) 40%, transparent);
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
+}`
+  },
+  {
+    id: "ferrum-linear-glow-border",
+    name: "Linear Glow Border",
+    category: "visual",
+    description: "A Linear-inspired design-system effect (linear glow border)",
+    tags: ["linear-glow-border", "glow"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-linear-glow-border {
+  position: relative;
+  background: oklch(0.179 0.004 285.98);
+  color: oklch(0.985 0.0 89.88);
+  border-radius: 12px;
+  z-index: 0;
+}`
+  },
+  {
+    id: "ferrum-linear-gradient-mesh-bg",
+    name: "Linear Gradient Mesh Bg",
+    category: "visual",
+    description: "A Linear-inspired design-system effect (linear gradient mesh bg)",
+    tags: ["linear-gradient-mesh-bg", "gradient", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-linear-gradient-mesh-bg {
+  background-color: oklch(0.145 0.002 286.13);
+  background-image:
+    radial-gradient(at 20% 20%, color-mix(in oklch, oklch(0.567 0.159 275.21) 35%, transparent) 0px, transparent 50%),
+    radial-gradient(at 80% 10%, color-mix(in oklch, oklch(0.566 0.245 278.69) 30%, transparent) 0px, transparent 50%),
+    radial-gradient(at 70% 80%, color-mix(in oklch, oklch(0.652 0.241 354.31) 25%, transparent) 0px, transparent 50%),
+    radial-gradient(at 10% 90%, color-mix(in oklch, oklch(0.623 0.188 259.81) 25%, transparent) 0px, transparent 50%);
+  background-size: 200% 200%;
+  animation: roy-mesh-drift 18s ease-in-out infinite;
+}
+
+@keyframes roy-mesh-drift {
+
+  0%, 100% { background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%; }
+  50% { background-position: 30% 30%, 70% 20%, 60% 70%, 20% 80%; }
+
+}`
+  },
+  {
+    id: "ferrum-linear-gradient-sweep",
+    name: "Linear Gradient Sweep",
+    category: "visual",
+    description: "A Linear-inspired design-system effect (linear gradient sweep)",
+    tags: ["linear-gradient-sweep", "gradient"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-linear-gradient-sweep {
+  position: relative;
+  background: oklch(0.21 0.006 285.89);
+  color: oklch(0.985 0.0 89.88);
+  border: 1px solid oklch(0.274 0.005 286.03);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 0;
+}`
+  },
+  {
+    id: "ferrum-linear-icon-bounce",
+    name: "Linear Icon Bounce",
+    category: "visual",
+    description: "A Linear-inspired design-system effect (linear icon bounce)",
+    tags: ["linear-icon-bounce", "icon"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-linear-icon-bounce {
+  background: oklch(0.21 0.006 285.89);
+  color: oklch(0.985 0.0 89.88);
+  border: 1px solid oklch(0.274 0.005 286.03);
+  border-radius: 8px;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}`
+  },
+  {
+    id: "ferrum-linear-magnetic-pull",
+    name: "Linear Magnetic Pull",
+    category: "visual",
+    description: "A Linear-inspired design-system effect (linear magnetic pull)",
+    tags: ["linear-magnetic-pull", "magnetic"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-linear-magnetic-pull {
+  background: oklch(0.567 0.159 275.21);
+  color: oklch(1 0 0);
+  border-radius: 8px;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
+}`
+  },
+  {
+    id: "ferrum-linear-noise-overlay",
+    name: "Linear Noise Overlay",
+    category: "visual",
+    description: "A Linear-inspired design-system effect (linear noise overlay)",
+    tags: ["linear-noise-overlay", "noise"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-linear-noise-overlay {
+  position: relative;
+  background: oklch(0.145 0.002 286.13);
+  color: oklch(0.92 0.004 286.32);
+  border: 1px solid oklch(0.219 0.006 285.91);
+  border-radius: 10px;
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-linear-shimmer-hover",
+    name: "Linear Shimmer Hover",
+    category: "visual",
+    description: "A Linear-inspired design-system effect (linear shimmer hover)",
+    tags: ["linear-shimmer-hover", "shimmer"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-linear-shimmer-hover {
+  position: relative;
+  background: oklch(0.169 0.002 286.18);
+  color: oklch(0.92 0.004 286.32);
+  overflow: hidden;
+  border: 1px solid oklch(0.274 0.005 286.03);
+}`
+  },
+  {
+    id: "ferrum-linear-spotlight",
+    name: "Linear Spotlight",
+    category: "visual",
+    description: "A Linear-inspired design-system effect (linear spotlight)",
+    tags: ["linear-spotlight", "spotlight"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-linear-spotlight {
+  position: relative;
+  background: oklch(0.16 0.004 285.92);
+  color: oklch(0.92 0.004 286.32);
+  border: 1px solid oklch(0.241 0.008 285.82);
+  border-radius: 12px;
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-linear-text-glow",
+    name: "Linear Text Glow",
+    category: "visual",
+    description: "A Linear-inspired design-system effect (linear text glow)",
+    tags: ["linear-text-glow", "text"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-linear-text-glow {
+  color: oklch(0.712 0.013 286.07);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-liquid-drop",
+    name: "Liquid Drop",
+    category: "visual",
+    description: "A liquid drop effect",
+    tags: ["liquid-drop", "drop"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-liquid-drop {
+  position: relative;
+  width: 180px;
+  height: 200px;
+  background: linear-gradient(180deg, oklch(0.495 0.09 232.27) 0%, oklch(0.347 0.065 233.52) 100%);
+  overflow: hidden;
+  border-radius: 8px;
+}`
+  },
+  {
+    id: "ferrum-liquid-metal",
+    name: "Liquid Metal",
+    category: "visual",
+    description: "An animated motion effect (liquid metal)",
+    tags: ["liquid-metal", "metal", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-liquid-metal {
+  position: relative;
+  width: 200px;
+  height: 160px;
+  border-radius: 50% 50% 45% 55% / 60% 55% 45% 40%;
+  background:
+    radial-gradient(ellipse 60% 40% at 30% 25%, color-mix(in oklch, oklch(1 0 0) 95%, transparent), transparent 60%),
+    radial-gradient(ellipse 50% 35% at 70% 70%, color-mix(in oklch, oklch(0.603 0.026 258.37) 60%, transparent), transparent 65%),
+    linear-gradient(125deg,
+      oklch(0.89 0.011 256.7) 0%,
+      oklch(0.972 0.005 258.32) 12%,
+      oklch(0.652 0.016 260.72) 26%,
+      oklch(0.944 0.008 253.85) 40%,
+      oklch(0.505 0.021 261.29) 52%,
+      oklch(0.85 0.012 259.82) 66%,
+      oklch(0.382 0.017 262.29) 78%,
+      oklch(0.756 0.016 260.73) 90%,
+      oklch(0.55 0.029 264.67) 100%);
+  background-size: 200% 200%;
+  box-shadow:
+    inset -8px -10px 20px color-mix(in oklch, oklch(0 0 0) 45%, transparent),
+    inset 8px 10px 18px color-mix(in oklch, oklch(1 0 0) 55%, transparent),
+    0 14px 30px color-mix(in oklch, oklch(0 0 0) 35%, transparent);
+  filter: contrast(1.15) saturate(0.85);
+  animation: roy-b11-liquid-metal-flow 7s ease-in-out infinite;
+}
+
+@keyframes roy-b11-liquid-metal-flow {
+
+  0%, 100% { background-position: 0% 0%; border-radius: 50% 50% 45% 55% / 60% 55% 45% 40%; }
+  33%      { background-position: 100% 50%; border-radius: 55% 45% 50% 50% / 45% 55% 50% 50%; }
+  66%      { background-position: 50% 100%; border-radius: 45% 55% 60% 40% / 55% 45% 60% 40%; }
+
+}`
+  },
+  {
+    id: "ferrum-material-container-transform",
+    name: "Material Container Transform",
+    category: "visual",
+    description: "A Material Design motion or surface effect (material container transform)",
+    tags: ["material-container-transform", "container", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-material-container-transform {
+  animation: roy-mat-container 0.6s cubic-bezier(0.2, 0, 0, 1) both;
+  transform-origin: center;
+}
+
+@keyframes roy-mat-container {
+
+  0% { opacity: 0; transform: scaleX(0.2) scaleY(0.1); border-radius: 32px; }
+  40% { opacity: 1; transform: scaleX(1.05) scaleY(0.7); border-radius: 18px; }
+  100% { opacity: 1; transform: scale(1); border-radius: 8px; }
+
+}`
+  },
+  {
+    id: "ferrum-material-elevation-1",
+    name: "Material Elevation 1",
+    category: "visual",
+    description: "A Material Design motion or surface effect (material elevation 1)",
+    tags: ["material-elevation-1", "elevation"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-material-elevation-1 {
+  background: oklch(0.992 0.006 333.98);
+  color: oklch(0.225 0.008 297.21);
+  border-radius: 12px;
+  box-shadow:
+    0px 1px 2px color-mix(in oklch, oklch(0 0 0) 30%, transparent),
+    0px 1px 3px 1px color-mix(in oklch, oklch(0 0 0) 15%, transparent);
+}`
+  },
+  {
+    id: "ferrum-material-elevation-3",
+    name: "Material Elevation 3",
+    category: "visual",
+    description: "A Material Design motion or surface effect (material elevation 3)",
+    tags: ["material-elevation-3", "elevation"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-material-elevation-3 {
+  background: oklch(0.992 0.006 333.98);
+  color: oklch(0.225 0.008 297.21);
+  border-radius: 16px;
+  box-shadow:
+    0px 1px 3px color-mix(in oklch, oklch(0 0 0) 30%, transparent),
+    0px 4px 8px 3px color-mix(in oklch, oklch(0 0 0) 15%, transparent);
+}`
+  },
+  {
+    id: "ferrum-material-elevation-5",
+    name: "Material Elevation 5",
+    category: "visual",
+    description: "A Material Design motion or surface effect (material elevation 5)",
+    tags: ["material-elevation-5", "elevation"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-material-elevation-5 {
+  background: oklch(0.992 0.006 333.98);
+  color: oklch(0.225 0.008 297.21);
+  border-radius: 28px;
+  box-shadow:
+    0px 1px 3px color-mix(in oklch, oklch(0 0 0) 30%, transparent),
+    0px 14px 28px 5px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
+}`
+  },
+  {
+    id: "ferrum-material-emphasized",
+    name: "Material Emphasized",
+    category: "visual",
+    description: "A Material Design motion or surface effect (material emphasized)",
+    tags: ["material-emphasized", "emphasized", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-material-emphasized {
+  animation: roy-mat-emphasized 0.5s cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+@keyframes roy-mat-emphasized {
+
+  0% { opacity: 0; transform: scale(0.85); }
+  100% { opacity: 1; transform: scale(1); }
+
+}`
+  },
+  {
+    id: "ferrum-material-emphasized-decel",
+    name: "Material Emphasized Decel",
+    category: "visual",
+    description: "A Material Design motion or surface effect (material emphasized decel)",
+    tags: ["material-emphasized-decel", "emphasized", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-material-emphasized-decel {
+  animation: roy-mat-emph-decel 0.45s cubic-bezier(0.05, 0.7, 0.1, 1) both;
+}
+
+@keyframes roy-mat-emph-decel {
+
+  0% { opacity: 0; transform: translateY(24px) scale(0.92); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+
+}`
+  },
+  {
+    id: "ferrum-material-fab-scale",
+    name: "Material Fab Scale",
+    category: "visual",
+    description: "A Material Design motion or surface effect (material fab scale)",
+    tags: ["material-fab-scale", "fab", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-material-fab-scale {
+  animation: roy-mat-fab-scale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  border-radius: 16px;
+  background: oklch(0.496 0.13 293.71);
+  color: oklch(1 0 0);
+}
+
+@keyframes roy-mat-fab-scale {
+
+  0% { opacity: 0; transform: scale(0) rotate(-45deg); }
+  60% { opacity: 1; transform: scale(1.1) rotate(5deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0); }
+
+}`
+  },
+  {
+    id: "ferrum-material-spring-down",
+    name: "Material Spring Down",
+    category: "visual",
+    description: "A Material Design motion or surface effect (material spring down)",
+    tags: ["material-spring-down", "spring", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-material-spring-down {
+  animation: roy-mat-spring-down 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes roy-mat-spring-down {
+
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  40% { opacity: 1; transform: translateY(12px) scale(1.04, 0.96); }
+  100% { opacity: 0; transform: translateY(80px) scale(0.7); }
+
+}`
+  },
+  {
+    id: "ferrum-material-spring-up",
+    name: "Material Spring Up",
+    category: "visual",
+    description: "A Material Design motion or surface effect (material spring up)",
+    tags: ["material-spring-up", "spring", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-material-spring-up {
+  animation: roy-mat-spring-up 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes roy-mat-spring-up {
+
+  0% { opacity: 0; transform: translateY(40px) scale(0.8); }
+  60% { opacity: 1; transform: translateY(-8px) scale(1.05); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+
+}`
+  },
+  {
+    id: "ferrum-material-state-layer",
+    name: "Material State Layer",
+    category: "visual",
+    description: "A Material Design motion or surface effect (material state layer)",
+    tags: ["material-state-layer", "state"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-material-state-layer {
+  position: relative;
+  background: oklch(0.496 0.13 293.71);
+  color: oklch(1 0 0);
+}`
+  },
+  {
+    id: "ferrum-material-state-layer-surface",
+    name: "Material State Layer Surface",
+    category: "visual",
+    description: "A Material Design motion or surface effect (material state layer surface)",
+    tags: ["material-state-layer-surface", "state"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-material-state-layer-surface {
+  position: relative;
+  background: oklch(0.225 0.008 297.21);
+  color: oklch(0.915 0.008 332.13);
+  border-radius: 12px;
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-material-surface-tint",
+    name: "Material Surface Tint",
+    category: "visual",
+    description: "A glassmorphic surface effect with backdrop blur and translucency",
+    tags: ["material-surface-tint", "surface", "glassmorphism"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-material-surface-tint {
+  position: relative;
+  background: color-mix(in oklch, oklch(0.496 0.13 293.71) 8%, transparent);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid color-mix(in oklch, oklch(0.496 0.13 293.71) 15%, transparent);
+  border-radius: 16px;
+  color: oklch(0.225 0.008 297.21);
+  box-shadow:
+    0 1px 2px color-mix(in oklch, oklch(0 0 0) 10%, transparent),
+    0 4px 12px color-mix(in oklch, oklch(0.496 0.13 293.71) 8%, transparent);
+}`
+  }
+];
+
+// src/lib/effects-batch-31.ts
+var effectsBatch31 = [
+  {
+    id: "ferrum-natural-drop",
+    name: "Natural Drop",
+    category: "animations",
+    description: "An animated motion effect (natural drop)",
+    tags: ["natural-drop", "drop", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-natural-drop {
+  animation: roy-natural-drop 1s cubic-bezier(0.45, 0, 0.55, 1) both;
+}
+
+@keyframes roy-natural-drop {
+
+  0% { transform: translateY(-200%) scaleY(0.9); opacity: 0; }
+  45% { transform: translateY(0) scaleY(1.1); opacity: 1; }
+  55% { transform: translateY(0) scaleY(0.85); }
+  65% { transform: translateY(-30%) scaleY(1.05); }
+  80% { transform: translateY(0) scaleY(0.95); }
+  90% { transform: translateY(-8%) scaleY(1.02); }
+  100% { transform: translateY(0) scaleY(1); }
+
+}`
+  },
+  {
+    id: "ferrum-origami-fold",
+    name: "Origami Fold",
+    category: "animations",
+    description: "A origami fold effect",
+    tags: ["origami-fold", "fold"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-origami-fold {
+  position: relative;
+  width: 200px;
+  height: 180px;
+  background: oklch(0.985 0.0 89.88);
+  clip-path: polygon(
+    50% 0%, 100% 35%, 75% 100%, 25% 100%, 0% 35%);
+}`
+  },
+  {
+    id: "ferrum-paper-flip",
+    name: "Paper Flip",
+    category: "animations",
+    description: "A 3D transform effect with perspective depth",
+    tags: ["paper-flip", "flip", "3d"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-paper-flip {
+  position: relative;
+  width: 180px;
+  height: 220px;
+  perspective: 1200px;
+  background: transparent;
+}`
+  },
+  {
+    id: "ferrum-micro-tooltip-appear",
+    name: "Micro Tooltip Appear",
+    category: "microinteractions",
+    description: "A microinteraction that animates a small UI element (micro tooltip appear)",
+    tags: ["micro-tooltip-appear", "tooltip"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-micro-tooltip-appear {
+  position: relative;
+  width: 130px;
+  height: 70px;
+}`
+  },
+  {
+    id: "ferrum-misc-hologram",
+    name: "Misc Hologram",
+    category: "misc",
+    description: "A decorative visual effect (misc hologram)",
+    tags: ["misc-hologram", "hologram", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-misc-hologram {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(115deg,
+    oklch(0.641 0.257 8.07) 0%, oklch(0.546 0.248 295.88) 25%, oklch(0.637 0.195 259.51) 50%, oklch(0.882 0.203 158.76) 75%, oklch(0.839 0.171 83.34) 100%);
+  background-size: 400% 100%;
+  border-radius: 16px;
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 30%, transparent);
+  box-shadow: 0 0 22px color-mix(in oklch, oklch(0.546 0.248 295.88) 45%, transparent);
+  animation: roy-misc-hologram 4s linear infinite;
+}
+
+@keyframes roy-misc-hologram {
+
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 400% 0%; }
+
+}`
+  },
+  {
+    id: "ferrum-misc-pulse-ring-expand",
+    name: "Misc Pulse Ring Expand",
+    category: "misc",
+    description: "A decorative visual effect (misc pulse ring expand)",
+    tags: ["misc-pulse-ring-expand", "pulse"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-misc-pulse-ring-expand {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}`
+  },
+  {
+    id: "ferrum-misc-ripple-click",
+    name: "Misc Ripple Click",
+    category: "misc",
+    description: "A decorative visual effect (misc ripple click)",
+    tags: ["misc-ripple-click", "ripple"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-misc-ripple-click {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent);
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+}`
+  },
+  {
+    id: "ferrum-misc-scan-line",
+    name: "Misc Scan Line",
+    category: "misc",
+    description: "A decorative visual effect (misc scan line)",
+    tags: ["misc-scan-line", "scan"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-misc-scan-line {
+  position: relative;
+  background:
+    repeating-linear-gradient(0deg, color-mix(in oklch, oklch(0.696 0.149 162.48) 6%, transparent) 0 2px, transparent 2px 4px),
+    linear-gradient(180deg, oklch(0.201 0.025 167.64), oklch(0.258 0.029 172.78));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-misc-shimmer-overlay",
+    name: "Misc Shimmer Overlay",
+    category: "misc",
+    description: "A decorative visual effect (misc shimmer overlay)",
+    tags: ["misc-shimmer-overlay", "shimmer"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-misc-shimmer-overlay {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.769 0.154 162.48));
+  border-radius: 16px;
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-misc-typewriter",
+    name: "Misc Typewriter",
+    category: "misc",
+    description: "A decorative visual effect (misc typewriter)",
+    tags: ["misc-typewriter", "typewriter", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-misc-typewriter {
+  display: inline-block;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  color: oklch(0.696 0.149 162.48);
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid oklch(0.696 0.149 162.48);
+  width: 0;
+  animation:
+    roy-misc-typewriter-type 2.5s steps(6) infinite,
+    roy-misc-typewriter-cursor 0.6s step-end infinite;
+}`
+  },
+  {
+    id: "ferrum-misc-vhs-effect",
+    name: "Misc Vhs Effect",
+    category: "misc",
+    description: "A decorative visual effect (misc vhs effect)",
+    tags: ["misc-vhs-effect", "vhs"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-misc-vhs-effect {
+  position: relative;
+  background:
+    repeating-linear-gradient(0deg, color-mix(in oklch, oklch(0 0 0) 18%, transparent) 0 2px, transparent 2px 4px),
+    linear-gradient(135deg, oklch(0.236 0.106 304.47), oklch(0.468 0.154 296.01));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-nav-accordion",
+    name: "Accordion",
+    category: "navigation",
+    description: "A navigation component with motion or interaction feedback",
+    tags: ["navigation", "menu", "nav-accordion", "accordion"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-nav-accordion {
+  position: relative;
+  width: 180px;
+  height: 34px;
+  background: color-mix(in oklch, oklch(1 0 0) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 12%, transparent);
+  border-radius: 8px;
+  font: 11px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 0) 80%, transparent);
+  overflow: hidden;
+  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-nav-breadcrumb",
+    name: "Breadcrumb",
+    category: "navigation",
+    description: "A navigation component with motion or interaction feedback",
+    tags: ["navigation", "menu", "nav-breadcrumb", "breadcrumb"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-nav-breadcrumb {
+  position: relative;
+  width: 240px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 11px/1 system-ui, sans-serif;
+  letter-spacing: 0.05em;
+}`
+  },
+  {
+    id: "ferrum-nav-dropdown",
+    name: "Dropdown",
+    category: "navigation",
+    description: "A navigation component with motion or interaction feedback",
+    tags: ["navigation", "menu", "nav-dropdown", "dropdown"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-nav-dropdown {
+  position: relative;
+  width: 180px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  background: color-mix(in oklch, oklch(1 0 0) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 12%, transparent);
+  border-radius: 8px;
+  font: 11px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 0) 80%, transparent);
+  overflow: hidden;
+  transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s ease;
+}`
+  },
+  {
+    id: "ferrum-nav-menu-fade",
+    name: "Menu Fade",
+    category: "navigation",
+    description: "A navigation component with motion or interaction feedback",
+    tags: ["navigation", "menu", "nav-menu-fade"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-nav-menu-fade {
+  position: relative;
+  width: 220px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in oklch, oklch(1 0 0) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  border-radius: 10px;
+  font: 11px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 0) 70%, transparent);
+  overflow: hidden;
+  letter-spacing: 0.15em;
+}`
+  },
+  {
+    id: "ferrum-nav-menu-scale",
+    name: "Menu Scale",
+    category: "navigation",
+    description: "A navigation component with motion or interaction feedback",
+    tags: ["navigation", "menu", "nav-menu-scale"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-nav-menu-scale {
+  position: relative;
+  width: 220px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in oklch, oklch(1 0 0) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  border-radius: 10px;
+  font: 11px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 0) 70%, transparent);
+  letter-spacing: 0.15em;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}`
+  },
+  {
+    id: "ferrum-nav-menu-slide",
+    name: "Menu Slide",
+    category: "navigation",
+    description: "A navigation component with motion or interaction feedback",
+    tags: ["navigation", "menu", "nav-menu-slide"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-nav-menu-slide {
+  position: relative;
+  width: 220px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in oklch, oklch(1 0 0) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  border-radius: 10px;
+  font: 11px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 0) 70%, transparent);
+  overflow: hidden;
+  letter-spacing: 0.15em;
+}`
+  },
+  {
+    id: "ferrum-nav-pagination",
+    name: "Pagination",
+    category: "navigation",
+    description: "A navigation component with motion or interaction feedback",
+    tags: ["navigation", "menu", "nav-pagination", "pagination"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-nav-pagination {
+  position: relative;
+  width: 200px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 11px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 0) 60%, transparent);
+  letter-spacing: 0.3em;
+}`
+  },
+  {
+    id: "ferrum-nav-progress-indicator",
+    name: "Progress Indicator",
+    category: "navigation",
+    description: "A navigation component with motion or interaction feedback",
+    tags: ["navigation", "menu", "nav-progress-indicator", "progress"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-nav-progress-indicator {
+  position: relative;
+  width: 120px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}`
+  },
+  {
+    id: "ferrum-nav-stepper",
+    name: "Stepper",
+    category: "navigation",
+    description: "A navigation component with motion or interaction feedback",
+    tags: ["navigation", "menu", "nav-stepper", "stepper"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-nav-stepper {
+  position: relative;
+  width: 220px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}`
+  },
+  {
+    id: "ferrum-nav-tabs-underline",
+    name: "Tabs Underline",
+    category: "navigation",
+    description: "A navigation component with motion or interaction feedback",
+    tags: ["navigation", "menu", "nav-tabs-underline", "tabs"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-nav-tabs-underline {
+  position: relative;
+  width: 200px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 11px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 0) 60%, transparent);
+  letter-spacing: 0.12em;
+}`
+  },
+  {
+    id: "ferrum-page-circle-reveal",
+    name: "Circle Reveal",
+    category: "page-transitions",
+    description: "A full-page or view transition animation",
+    tags: ["page", "transition", "page-circle-reveal", "circle"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-page-circle-reveal {
+  position: relative;
+  background: linear-gradient(135deg, oklch(0.21 0.034 264.67), oklch(0.27 0.04 260.03));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-page-cube",
+    name: "Cube",
+    category: "page-transitions",
+    description: "A full-page or view transition animation",
+    tags: ["page", "transition", "page-cube", "cube", "3d"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-page-cube {
+  position: relative;
+  background: linear-gradient(135deg, oklch(0.21 0.034 264.67), oklch(0.27 0.04 260.03));
+  overflow: hidden;
+  perspective: 700px;
+}`
+  },
+  {
+    id: "ferrum-page-curtain",
+    name: "Curtain",
+    category: "page-transitions",
+    description: "A full-page or view transition animation",
+    tags: ["page", "transition", "page-curtain", "curtain"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-page-curtain {
+  position: relative;
+  background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.592 0.218 0.58));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-page-dissolve",
+    name: "Dissolve",
+    category: "page-transitions",
+    description: "A full-page or view transition animation",
+    tags: ["page", "transition", "page-dissolve", "dissolve"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-page-dissolve {
+  position: relative;
+  background: linear-gradient(135deg, oklch(0.21 0.034 264.67), oklch(0.27 0.04 260.03));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-page-fade",
+    name: "Fade",
+    category: "page-transitions",
+    description: "A full-page or view transition animation",
+    tags: ["page", "transition", "page-fade", "fade"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-page-fade {
+  position: relative;
+  background: linear-gradient(135deg, oklch(0.21 0.034 264.67), oklch(0.27 0.04 260.03));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-page-flip",
+    name: "Flip",
+    category: "page-transitions",
+    description: "A full-page or view transition animation",
+    tags: ["page", "transition", "page-flip", "flip", "3d"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-page-flip {
+  position: relative;
+  background: linear-gradient(135deg, oklch(0.21 0.034 264.67), oklch(0.27 0.04 260.03));
+  overflow: hidden;
+  perspective: 800px;
+}`
+  },
+  {
+    id: "ferrum-page-liquid",
+    name: "Liquid",
+    category: "page-transitions",
+    description: "A full-page or view transition animation",
+    tags: ["page", "transition", "page-liquid", "liquid"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-page-liquid {
+  position: relative;
+  background: linear-gradient(135deg, oklch(0.21 0.034 264.67), oklch(0.27 0.04 260.03));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-page-mask-reveal",
+    name: "Mask Reveal",
+    category: "page-transitions",
+    description: "A full-page or view transition animation",
+    tags: ["page", "transition", "page-mask-reveal", "mask"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-page-mask-reveal {
+  position: relative;
+  background: linear-gradient(135deg, oklch(0.21 0.034 264.67), oklch(0.27 0.04 260.03));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-page-shutter",
+    name: "Shutter",
+    category: "page-transitions",
+    description: "A full-page or view transition animation",
+    tags: ["page", "transition", "page-shutter", "shutter"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-page-shutter {
+  position: relative;
+  background: linear-gradient(135deg, oklch(0.769 0.188 70.08), oklch(0.637 0.237 25.77));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-page-slide-left",
+    name: "Slide Left",
+    category: "page-transitions",
+    description: "A full-page or view transition animation",
+    tags: ["page", "transition", "page-slide-left", "slide"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-page-slide-left {
+  position: relative;
+  background: linear-gradient(135deg, oklch(0.21 0.034 264.67), oklch(0.27 0.04 260.03));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-page-slide-up",
+    name: "Slide Up",
+    category: "page-transitions",
+    description: "A full-page or view transition animation",
+    tags: ["page", "transition", "page-slide-up", "slide"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-page-slide-up {
+  position: relative;
+  background: linear-gradient(135deg, oklch(0.21 0.034 264.67), oklch(0.27 0.04 260.03));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-page-zoom",
+    name: "Zoom",
+    category: "page-transitions",
+    description: "A full-page or view transition animation",
+    tags: ["page", "transition", "page-zoom", "zoom"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-page-zoom {
+  position: relative;
+  background: linear-gradient(135deg, oklch(0.21 0.034 264.67), oklch(0.27 0.04 260.03));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-misc-bubbles",
+    name: "Misc Bubbles",
+    category: "particles",
+    description: "A decorative visual effect (misc bubbles)",
+    tags: ["misc-bubbles", "bubbles", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-misc-bubbles {
+  background:
+    radial-gradient(circle at 20% 100%, color-mix(in oklch, oklch(1 0 0) 70%, transparent) 0 4px, transparent 5px) 0 0 / 60px 60px,
+    radial-gradient(circle at 50% 100%, color-mix(in oklch, oklch(1 0 0) 50%, transparent) 0 6px, transparent 7px) 0 0 / 80px 80px,
+    radial-gradient(circle at 80% 100%, color-mix(in oklch, oklch(1 0 0) 60%, transparent) 0 3px, transparent 4px) 0 0 / 50px 50px,
+    linear-gradient(180deg, oklch(0.616 0.104 219.93), oklch(0.82 0.102 214.8));
+  background-repeat: repeat;
+  animation: roy-misc-bubbles 4s linear infinite;
+}
+
+@keyframes roy-misc-bubbles {
+
+  from { background-position: 0 0, 0 0, 0 0, 0 0; }
+  to   { background-position: 0 -60px, 0 -80px, 0 -50px, 0 0; }
+
+}`
+  },
+  {
+    id: "ferrum-misc-confetti",
+    name: "Misc Confetti",
+    category: "particles",
+    description: "A decorative visual effect (misc confetti)",
+    tags: ["misc-confetti", "confetti", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-misc-confetti {
+  background:
+    radial-gradient(circle at 15% 0%, oklch(0.712 0.181 22.84) 0 3px, transparent 4px) 0 0 / 40px 40px,
+    radial-gradient(circle at 45% 0%, oklch(0.864 0.143 84.36) 0 3px, transparent 4px) 0 0 / 55px 55px,
+    radial-gradient(circle at 75% 0%, oklch(0.827 0.128 215.58) 0 3px, transparent 4px) 0 0 / 45px 45px,
+    radial-gradient(circle at 30% 0%, oklch(0.767 0.15 168.19) 0 3px, transparent 4px) 0 0 / 60px 60px,
+    radial-gradient(circle at 90% 0%, oklch(0.826 0.154 331.46) 0 3px, transparent 4px) 0 0 / 50px 50px,
+    linear-gradient(135deg, oklch(0.228 0.038 282.93), oklch(0.254 0.057 266.71));
+  background-repeat: repeat;
+  animation: roy-misc-confetti 2.5s linear infinite;
+}
+
+@keyframes roy-misc-confetti {
+
+  from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; }
+  to   { background-position: 0 40px, 0 55px, 0 45px, 0 60px, 0 50px, 0 0; }
+
+}`
+  },
+  {
+    id: "ferrum-misc-fireflies",
+    name: "Misc Fireflies",
+    category: "particles",
+    description: "A decorative visual effect (misc fireflies)",
+    tags: ["misc-fireflies", "fireflies", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-misc-fireflies {
+  background:
+    radial-gradient(circle at 20% 30%, color-mix(in oklch, oklch(0.943 0.162 124.78) 90%, transparent) 0 2px, transparent 5px) 0 0 / 100px 100px,
+    radial-gradient(circle at 70% 60%, color-mix(in oklch, oklch(0.943 0.162 124.78) 70%, transparent) 0 2.5px, transparent 6px) 0 0 / 130px 130px,
+    radial-gradient(circle at 40% 80%, color-mix(in oklch, oklch(0.943 0.162 124.78) 80%, transparent) 0 1.5px, transparent 4px) 0 0 / 90px 90px,
+    linear-gradient(180deg, oklch(0.179 0.057 283.68), oklch(0.327 0.096 283.81), oklch(0.274 0.048 282.79));
+  background-repeat: repeat;
+  animation: roy-misc-fireflies 5s ease-in-out infinite alternate;
+}
+
+@keyframes roy-misc-fireflies {
+
+  0%   { background-position: 0 0, 0 0, 0 0, 0 0; filter: brightness(0.6); }
+  50%  { filter: brightness(1.5); }
+  100% { background-position: 20px -15px, -25px 10px, 15px 20px, 0 0; filter: brightness(0.85); }
+
+}`
+  },
+  {
+    id: "ferrum-misc-fireworks",
+    name: "Misc Fireworks",
+    category: "particles",
+    description: "A decorative visual effect (misc fireworks)",
+    tags: ["misc-fireworks", "fireworks"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-misc-fireworks {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.163 0.051 279.14), oklch(0.255 0.093 277.48));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-misc-rain",
+    name: "Misc Rain",
+    category: "particles",
+    description: "A decorative visual effect (misc rain)",
+    tags: ["misc-rain", "rain", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-misc-rain {
+  background:
+    linear-gradient(105deg, transparent 0 48%, color-mix(in oklch, oklch(0.809 0.048 258.37) 60%, transparent) 48% 50%, transparent 50% 100%) 0 0 / 15px 30px,
+    linear-gradient(105deg, transparent 0 49%, color-mix(in oklch, oklch(0.809 0.048 258.37) 35%, transparent) 49% 50%, transparent 50% 100%) 0 0 / 25px 40px,
+    linear-gradient(180deg, oklch(0.279 0.037 249.26), oklch(0.356 0.039 248.97));
+  background-repeat: repeat;
+  animation: roy-misc-rain 0.6s linear infinite;
+}
+
+@keyframes roy-misc-rain {
+
+  from { background-position: 0 0, 0 0, 0 0; }
+  to   { background-position: 5px 30px, 7px 40px, 0 0; }
+
+}`
+  },
+  {
+    id: "ferrum-misc-snow",
+    name: "Misc Snow",
+    category: "particles",
+    description: "A decorative visual effect (misc snow)",
+    tags: ["misc-snow", "snow", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-misc-snow {
+  background:
+    radial-gradient(circle at 10% 0%, oklch(1 0 0) 0 2px, transparent 3px) 0 0 / 30px 30px,
+    radial-gradient(circle at 60% 0%, oklch(1 0 0) 0 1.5px, transparent 2px) 0 0 / 45px 45px,
+    radial-gradient(circle at 80% 0%, oklch(1 0 0) 0 2.5px, transparent 3px) 0 0 / 35px 35px,
+    radial-gradient(circle at 30% 0%, color-mix(in oklch, oklch(1 0 0) 70%, transparent) 0 1px, transparent 2px) 0 0 / 25px 25px,
+    linear-gradient(180deg, oklch(0.232 0.026 226.41), oklch(0.332 0.036 222.19), oklch(0.421 0.052 228.22));
+  background-repeat: repeat;
+  animation: roy-misc-snow 3s linear infinite;
+}
+
+@keyframes roy-misc-snow {
+
+  from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+  to   { background-position: 5px 30px, -3px 45px, 2px 35px, -2px 25px, 0 0; }
+
+}`
+  },
+  {
+    id: "ferrum-misc-sparkles",
+    name: "Misc Sparkles",
+    category: "particles",
+    description: "A decorative visual effect (misc sparkles)",
+    tags: ["misc-sparkles", "sparkles", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-misc-sparkles {
+  background:
+    radial-gradient(circle at 15% 25%, oklch(1 0 0) 0 1px, transparent 2px) 0 0 / 50px 50px,
+    radial-gradient(circle at 65% 75%, oklch(1 0 0) 0 1.5px, transparent 2.5px) 0 0 / 70px 70px,
+    radial-gradient(circle at 85% 15%, oklch(1 0 0) 0 1px, transparent 2px) 0 0 / 40px 40px,
+    radial-gradient(circle at 35% 85%, oklch(1 0 0) 0 2px, transparent 3px) 0 0 / 60px 60px,
+    linear-gradient(135deg, oklch(0.163 0.051 279.14), oklch(0.255 0.093 277.48));
+  background-repeat: repeat;
+  animation: roy-misc-sparkles 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes roy-misc-sparkles {
+
+  0%   { opacity: 0.4; filter: brightness(0.8); }
+  100% { opacity: 1; filter: brightness(1.6); }
+
+}`
+  },
+  {
+    id: "ferrum-misc-wave",
+    name: "Misc Wave",
+    category: "particles",
+    description: "A decorative visual effect (misc wave)",
+    tags: ["misc-wave", "wave", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-misc-wave {
+  background:
+    linear-gradient(90deg, transparent 0%, color-mix(in oklch, oklch(0.696 0.149 162.48) 60%, transparent) 50%, transparent 100%) 0 30% / 40px 4px repeat-x,
+    linear-gradient(90deg, transparent 0%, color-mix(in oklch, oklch(0.699 0.118 184.7) 50%, transparent) 50%, transparent 100%) 0 50% / 30px 3px repeat-x,
+    linear-gradient(90deg, transparent 0%, color-mix(in oklch, oklch(0.769 0.154 162.48) 50%, transparent) 50%, transparent 100%) 0 70% / 50px 4px repeat-x,
+    linear-gradient(180deg, oklch(0.265 0.051 233.41), oklch(0.332 0.065 233.43));
+  animation: roy-misc-wave 1.5s linear infinite;
+}
+
+@keyframes roy-misc-wave {
+
+  from { background-position: 0 30%, 0 50%, 0 70%, 0 0; }
+  to   { background-position: 40px 30%, -30px 50%, 50px 70%, 0 0; }
+
+}`
+  },
+  {
+    id: "ferrum-particles-bubbles",
+    name: "Particles Bubbles",
+    category: "particles",
+    description: "A particles bubbles effect",
+    tags: ["particles-bubbles", "bubbles"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-particles-bubbles {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  padding: 0;
+  background: linear-gradient(180deg, oklch(0.52 0.094 223.13) 0%, oklch(0.685 0.131 226.94) 50%, oklch(0.609 0.111 221.72) 100%);
+}`
+  },
+  {
+    id: "ferrum-particles-confetti-burst",
+    name: "Particles Confetti Burst",
+    category: "particles",
+    description: "A particles confetti burst effect",
+    tags: ["particles-confetti-burst", "confetti"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-particles-confetti-burst {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  padding: 0;
+  background: radial-gradient(circle at center, oklch(0.24 0.067 280.09) 0%, oklch(0.177 0.031 282.81) 100%);
+}`
+  },
+  {
+    id: "ferrum-particles-dust",
+    name: "Particles Dust",
+    category: "particles",
+    description: "A particles dust effect",
+    tags: ["particles-dust", "dust"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-particles-dust {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  padding: 0;
+  background: linear-gradient(135deg, oklch(0.347 0.045 65.44) 0%, oklch(0.447 0.061 67.94) 40%, oklch(0.549 0.078 76.6) 70%, oklch(0.392 0.055 64.02) 100%);
+}`
+  },
+  {
+    id: "ferrum-particles-fire",
+    name: "Particles Fire",
+    category: "particles",
+    description: "A particles fire effect",
+    tags: ["particles-fire", "fire"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-particles-fire {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  padding: 0;
+  background: linear-gradient(180deg, oklch(0.204 0.062 41.56) 0%, oklch(0.28 0.086 40.87) 40%, oklch(0.153 0.044 45.08) 100%);
+}`
+  },
+  {
+    id: "ferrum-particles-fireflies",
+    name: "Particles Fireflies",
+    category: "particles",
+    description: "A particles fireflies effect",
+    tags: ["particles-fireflies", "fireflies"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-particles-fireflies {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  padding: 0;
+  background: linear-gradient(180deg, oklch(0.215 0.048 143.69) 0%, oklch(0.255 0.037 152.63) 50%, oklch(0.217 0.037 154.55) 100%);
+}`
+  },
+  {
+    id: "ferrum-molten-lava",
+    name: "Molten Lava",
+    category: "visual",
+    description: "A molten lava effect",
+    tags: ["molten-lava", "lava"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-molten-lava {
+  position: relative;
+  width: 220px;
+  height: 160px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: oklch(0.163 0.033 33.34);
+  box-shadow: 0 0 30px color-mix(in oklch, oklch(0.671 0.221 37.64) 45%, transparent), inset 0 0 40px color-mix(in oklch, oklch(0 0 0) 50%, transparent);
+}`
+  },
+  {
+    id: "ferrum-morph-blob",
+    name: "Morph Blob",
+    category: "visual",
+    description: "An animated motion effect (morph blob)",
+    tags: ["morph-blob", "blob", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-morph-blob {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  background:
+    radial-gradient(circle at 30% 30%, oklch(0.74 0.198 346.4), oklch(0.626 0.189 281.17) 70%);
+  box-shadow: 0 12px 40px color-mix(in oklch, oklch(0.579 0.244 286.54) 50%, transparent);
+  animation: roy-b11-morph-blob 8s ease-in-out infinite;
+}
+
+@keyframes roy-b11-morph-blob {
+
+  0%, 100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    transform: rotate(0deg) scale(1);
+    background: radial-gradient(circle at 30% 30%, oklch(0.74 0.198 346.4), oklch(0.626 0.189 281.17) 70%);
+  }
+  25% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+    transform: rotate(90deg) scale(1.05);
+    background: radial-gradient(circle at 70% 30%, oklch(0.626 0.189 281.17), oklch(0.8 0.182 151.71) 70%);
+  }
+  50% {
+    border-radius: 50% 50% 20% 80% / 25% 80% 20% 75%;
+    transform: rotate(180deg) scale(0.95);
+    background: radial-gradient(circle at 50% 70%, oklch(0.8 0.182 151.71), oklch(0.837 0.164 84.43) 70%);
+  }
+  75% {
+    border-radius: 70% 30% 50% 50% / 30% 50% 50% 70%;
+    transform: rotate(270deg) scale(1.05);
+    background: radial-gradient(circle at 30% 70%, oklch(0.837 0.164 84.43), oklch(0.74 0.198 346.4) 70%);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-neon-sign",
+    name: "Neon Sign",
+    category: "visual",
+    description: "A neon sign effect",
+    tags: ["neon-sign", "sign"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-neon-sign {
+  position: relative;
+  width: 200px;
+  height: 160px;
+  border-radius: 12px;
+  background: radial-gradient(ellipse at 50% 50%, oklch(0.194 0.08 297.65) 0%, oklch(0.096 0.051 300.12) 100%);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-oil-slick",
+    name: "Oil Slick",
+    category: "visual",
+    description: "A oil slick effect",
+    tags: ["oil-slick", "slick"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-oil-slick {
+  position: relative;
+  width: 220px;
+  height: 160px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 60%, oklch(0.158 0.012 260.62) 0%, oklch(0.107 0.019 262.03) 100%);
+}`
+  }
+];
+
+// src/lib/effects-batch-32.ts
+var effectsBatch32 = [
+  {
+    id: "ferrum-perspective-tilt",
+    name: "Perspective Tilt",
+    category: "3d-transforms",
+    description: "A 3D transform effect with perspective depth",
+    tags: ["perspective-tilt", "tilt", "3d"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-perspective-tilt {
+  transform-style: preserve-3d;
+  transform: perspective(800px) rotateX(5deg) rotateY(-5deg);
+  transition: transform 0.4s ease;
+  box-shadow: 8px 8px 20px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
+}`
+  },
+  {
+    id: "ferrum-scale-3d",
+    name: "Scale 3D",
+    category: "3d-transforms",
+    description: "A 3D transform effect with perspective depth",
+    tags: ["scale-3d", "3d"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scale-3d {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.432 0.086 166.91));
+  border-radius: 8px;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+  box-shadow: 0 4px 10px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+}`
+  },
+  {
+    id: "ferrum-scale-compress",
+    name: "Scale Compress",
+    category: "3d-transforms",
+    description: "An animated motion effect (scale compress)",
+    tags: ["scale-compress", "compress", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scale-compress {
+  animation: roy-scale-compress 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  transform-origin: center;
+}
+
+@keyframes roy-scale-compress {
+
+  0% {
+    opacity: 0;
+    transform: scaleY(0.2) scaleX(1.4);
+  }
+  60% {
+    opacity: 1;
+    transform: scaleY(1.15) scaleX(0.9);
+  }
+  100% {
+    transform: scaleY(1) scaleX(1);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-scale-expand",
+    name: "Scale Expand",
+    category: "3d-transforms",
+    description: "An animated motion effect (scale expand)",
+    tags: ["scale-expand", "expand", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scale-expand {
+  animation: roy-scale-expand 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: center;
+}
+
+@keyframes roy-scale-expand {
+
+  0% {
+    opacity: 0;
+    transform: scaleX(0.2) scaleY(0.6);
+  }
+  55% {
+    opacity: 1;
+    transform: scaleX(1.1) scaleY(0.85);
+  }
+  100% {
+    transform: scaleX(1) scaleY(1);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-skew-3d",
+    name: "Skew 3D",
+    category: "3d-transforms",
+    description: "A 3D transform effect with perspective depth",
+    tags: ["skew-3d", "3d"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-skew-3d {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, oklch(0.685 0.131 226.94), oklch(0.566 0.245 278.69));
+  border-radius: 8px;
+  transform: perspective(800px) skew(-15deg, 5deg);
+  transition: transform 0.5s ease;
+  box-shadow: 6px 6px 12px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+}`
+  },
+  {
+    id: "ferrum-pendulum",
+    name: "Pendulum",
+    category: "animations",
+    description: "An animated motion effect (pendulum)",
+    tags: ["pendulum", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-pendulum {
+  animation: roy-pendulum 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  transform-origin: top center;
+}
+
+@keyframes roy-pendulum {
+
+  0%   { transform: rotate(28deg); }
+  50%  { transform: rotate(-28deg); }
+  100% { transform: rotate(28deg); }
+
+}`
+  },
+  {
+    id: "ferrum-pendulum-swing-spring",
+    name: "Pendulum Swing Spring",
+    category: "animations",
+    description: "An animated motion effect (pendulum swing spring)",
+    tags: ["pendulum-swing-spring", "swing", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-pendulum-swing-spring {
+  transform-origin: top center;
+  animation: roy-pendulum-spring 1.6s cubic-bezier(0.4, 0, 0.6, 1) both;
+}
+
+@keyframes roy-pendulum-spring {
+
+  0% { transform: rotate(0deg); }
+  15% { transform: rotate(45deg); }
+  30% { transform: rotate(-32deg); }
+  45% { transform: rotate(22deg); }
+  60% { transform: rotate(-14deg); }
+  75% { transform: rotate(8deg); }
+  88% { transform: rotate(-3deg); }
+  100% { transform: rotate(0deg); }
+
+}`
+  },
+  {
+    id: "ferrum-pop-in",
+    name: "Pop In",
+    category: "animations",
+    description: "An animated motion effect (pop in)",
+    tags: ["pop-in", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-pop-in {
+  animation: roy-pop-in 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28) both;
+}
+
+@keyframes roy-pop-in {
+
+  0% {
+    opacity: 0;
+    transform: scale3d(0, 0, 0);
+  }
+  60% {
+    opacity: 1;
+    transform: scale3d(1.2, 1.2, 1.2);
+  }
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-pop-out",
+    name: "Pop Out",
+    category: "animations",
+    description: "An animated motion effect (pop out)",
+    tags: ["pop-out", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-pop-out {
+  animation: roy-pop-out 0.5s cubic-bezier(0.32, -0.28, 0.82, 0.11) both;
+}
+
+@keyframes roy-pop-out {
+
+  0% {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale3d(1.2, 1.2, 1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: scale3d(0, 0, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-pulse-soft",
+    name: "Pulse Soft",
+    category: "animations",
+    description: "An animated motion effect (pulse soft)",
+    tags: ["pulse", "motion", "pulse-soft", "soft", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-pulse-soft {
+  animation: roy-pulse-soft 2.5s ease-in-out infinite;
+}
+
+@keyframes roy-pulse-soft {
+
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+
+}`
+  },
+  {
+    id: "ferrum-rotate-3d",
+    name: "Rotate 3D",
+    category: "animations",
+    description: "An animated motion effect (rotate 3d)",
+    tags: ["rotate", "transform", "rotate-3d", "3d", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-rotate-3d {
+  transform-style: preserve-3d;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.566 0.245 278.69));
+  border-radius: 12px;
+  animation: roy-rotate-3d 4s linear infinite;
+}
+
+@keyframes roy-rotate-3d {
+
+  0% { transform: perspective(800px) rotate3d(1, 1, 1, 0deg); }
+  100% { transform: perspective(800px) rotate3d(1, 1, 1, 360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-rotate-spin",
+    name: "Rotate Spin",
+    category: "animations",
+    description: "An animated motion effect (rotate spin)",
+    tags: ["rotate", "transform", "rotate-spin", "spin", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-rotate-spin {
+  animation: roy-rotate-spin 2s linear infinite;
+}
+
+@keyframes roy-rotate-spin {
+
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-rotate-x",
+    name: "Rotate X",
+    category: "animations",
+    description: "An animated motion effect (rotate x)",
+    tags: ["rotate", "transform", "rotate-x", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-rotate-x {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.685 0.131 226.94));
+  border-radius: 8px;
+  transform-style: preserve-3d;
+  animation: roy-rotate-x 3s linear infinite;
+}
+
+@keyframes roy-rotate-x {
+
+  0% { transform: perspective(800px) rotateX(0deg); }
+  100% { transform: perspective(800px) rotateX(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-rotate-y",
+    name: "Rotate Y",
+    category: "animations",
+    description: "An animated motion effect (rotate y)",
+    tags: ["rotate", "transform", "rotate-y", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-rotate-y {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, oklch(0.652 0.241 354.31), oklch(0.566 0.245 278.69));
+  border-radius: 8px;
+  transform-style: preserve-3d;
+  animation: roy-rotate-y 3s linear infinite;
+}
+
+@keyframes roy-rotate-y {
+
+  0% { transform: perspective(800px) rotateY(0deg); }
+  100% { transform: perspective(800px) rotateY(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-roulette-spin",
+    name: "Roulette Spin",
+    category: "animations",
+    description: "An animated motion effect (roulette spin)",
+    tags: ["roulette-spin", "spin", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-roulette-spin {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(from 0deg,
+      oklch(0.53 0.207 22.32) 0deg 15deg,
+      oklch(0.218 0.0 89.88) 15deg 30deg,
+      oklch(0.53 0.207 22.32) 30deg 45deg,
+      oklch(0.218 0.0 89.88) 45deg 60deg,
+      oklch(0.53 0.207 22.32) 60deg 75deg,
+      oklch(0.218 0.0 89.88) 75deg 90deg,
+      oklch(0.53 0.207 22.32) 90deg 105deg,
+      oklch(0.218 0.0 89.88) 105deg 120deg,
+      oklch(0.53 0.207 22.32) 120deg 135deg,
+      oklch(0.218 0.0 89.88) 135deg 150deg,
+      oklch(0.53 0.207 22.32) 150deg 165deg,
+      oklch(0.218 0.0 89.88) 165deg 180deg,
+      oklch(0.53 0.207 22.32) 180deg 195deg,
+      oklch(0.218 0.0 89.88) 195deg 210deg,
+      oklch(0.53 0.207 22.32) 210deg 225deg,
+      oklch(0.218 0.0 89.88) 225deg 240deg,
+      oklch(0.53 0.207 22.32) 240deg 255deg,
+      oklch(0.218 0.0 89.88) 255deg 270deg,
+      oklch(0.53 0.207 22.32) 270deg 285deg,
+      oklch(0.218 0.0 89.88) 285deg 300deg,
+      oklch(0.53 0.207 22.32) 300deg 315deg,
+      oklch(0.218 0.0 89.88) 315deg 330deg,
+      oklch(0.53 0.207 22.32) 330deg 345deg,
+      oklch(0.218 0.0 89.88) 345deg 360deg);
+  border: 8px solid oklch(0.541 0.104 84.45);
+  box-shadow: 0 0 0 4px oklch(0.864 0.159 94.47), 0 12px 30px color-mix(in oklch, oklch(0 0 0) 50%, transparent);
+  animation: roy-b11-roulette-spin 4s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+}
+
+@keyframes roy-b11-roulette-spin {
+
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(720deg); }
+
+}`
+  },
+  {
+    id: "ferrum-rubber-snap-back",
+    name: "Rubber Snap Back",
+    category: "animations",
+    description: "An animated motion effect (rubber snap back)",
+    tags: ["rubber", "motion", "rubber-snap-back", "snap", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-rubber-snap-back {
+  animation: roy-rubber-snap 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes roy-rubber-snap {
+
+  0% { transform: scaleX(1); }
+  25% { transform: scaleX(1.4) scaleY(0.7); }
+  45% { transform: scaleX(0.85) scaleY(1.15); }
+  65% { transform: scaleX(1.08) scaleY(0.95); }
+  85% { transform: scaleX(0.98) scaleY(1.01); }
+  100% { transform: scaleX(1) scaleY(1); }
+
+}`
+  },
+  {
+    id: "ferrum-scale-grow",
+    name: "Scale Grow",
+    category: "animations",
+    description: "An animated motion effect (scale grow)",
+    tags: ["scale-grow", "grow", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scale-grow {
+  animation: roy-scale-grow 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes roy-scale-grow {
+
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-scale-shrink",
+    name: "Scale Shrink",
+    category: "animations",
+    description: "An animated motion effect (scale shrink)",
+    tags: ["scale-shrink", "shrink", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scale-shrink {
+  animation: roy-scale-shrink 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes roy-scale-shrink {
+
+  0% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(0.92);
+  }
+  100% {
+    transform: scale(1);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-slide-diagonal",
+    name: "Slide Diagonal",
+    category: "animations",
+    description: "An animated motion effect (slide diagonal)",
+    tags: ["slide", "transition", "slide-diagonal", "diagonal", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-slide-diagonal {
+  animation: roy-slide-diagonal 3s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+}
+
+@keyframes roy-slide-diagonal {
+
+  0% {
+    transform: translate3d(-30px, 30px, 0) rotate(-3deg);
+  }
+  100% {
+    transform: translate3d(30px, -30px, 0) rotate(3deg);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-slide-in-bottom",
+    name: "Slide In Bottom",
+    category: "animations",
+    description: "An animated motion effect (slide in bottom)",
+    tags: ["slide", "transition", "slide-in-bottom", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-slide-in-bottom {
+  animation: roy-slide-in-bottom 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes roy-slide-in-bottom {
+
+  from {
+    transform: translate3d(0, 100%, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-slide-in-top",
+    name: "Slide In Top",
+    category: "animations",
+    description: "An animated motion effect (slide in top)",
+    tags: ["slide", "transition", "slide-in-top", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-slide-in-top {
+  animation: roy-slide-in-top 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes roy-slide-in-top {
+
+  from {
+    transform: translate3d(0, -100%, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-particles-floating-dots",
+    name: "Particles Floating Dots",
+    category: "particles",
+    description: "A particles floating dots effect",
+    tags: ["particles-floating-dots", "floating"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-particles-floating-dots {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  padding: 0;
+  background: linear-gradient(135deg, oklch(0.21 0.034 264.67) 0%, oklch(0.27 0.04 260.03) 50%, oklch(0.21 0.034 264.67) 100%);
+}`
+  },
+  {
+    id: "ferrum-particles-orbiting",
+    name: "Particles Orbiting",
+    category: "particles",
+    description: "A particles orbiting effect",
+    tags: ["particles-orbiting", "orbiting"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-particles-orbiting {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  padding: 0;
+  background: radial-gradient(circle at center, oklch(0.257 0.086 281.29) 0%, oklch(0.179 0.069 283.28) 60%, oklch(0.118 0.042 286.2) 100%);
+}`
+  },
+  {
+    id: "ferrum-particles-rain",
+    name: "Particles Rain",
+    category: "particles",
+    description: "A particles rain effect",
+    tags: ["particles-rain", "rain"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-particles-rain {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  padding: 0;
+  background: linear-gradient(180deg, oklch(0.261 0.031 254.76) 0%, oklch(0.32 0.04 253.23) 50%, oklch(0.233 0.026 258.32) 100%);
+}`
+  },
+  {
+    id: "ferrum-particles-smoke",
+    name: "Particles Smoke",
+    category: "particles",
+    description: "A particles smoke effect",
+    tags: ["particles-smoke", "smoke"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-particles-smoke {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  padding: 0;
+  background: linear-gradient(180deg, oklch(0.218 0.0 89.88) 0%, oklch(0.297 0.0 89.88) 50%, oklch(0.168 0.0 89.88) 100%);
+}`
+  },
+  {
+    id: "ferrum-particles-snow-fall",
+    name: "Particles Snow Fall",
+    category: "particles",
+    description: "A particles snow fall effect",
+    tags: ["particles-snow-fall", "snow"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-particles-snow-fall {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  padding: 0;
+  background: linear-gradient(180deg, oklch(0.292 0.061 267.08) 0%, oklch(0.372 0.081 266.12) 50%, oklch(0.269 0.053 266.15) 100%);
+}`
+  },
+  {
+    id: "ferrum-particles-sparks",
+    name: "Particles Sparks",
+    category: "particles",
+    description: "A particles sparks effect",
+    tags: ["particles-sparks", "sparks"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-particles-sparks {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  padding: 0;
+  background: linear-gradient(180deg, oklch(0.166 0.038 61.83) 0%, oklch(0.217 0.055 52.73) 50%, oklch(0.166 0.038 61.83) 100%);
+}`
+  },
+  {
+    id: "ferrum-particles-stars-twinkle",
+    name: "Particles Stars Twinkle",
+    category: "particles",
+    description: "A particles stars twinkle effect",
+    tags: ["particles-stars-twinkle", "stars"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-particles-stars-twinkle {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  padding: 0;
+  background: radial-gradient(ellipse at top, oklch(0.255 0.093 277.48) 0%, oklch(0.163 0.051 279.14) 60%, oklch(0.124 0.029 281.33) 100%);
+}`
+  },
+  {
+    id: "ferrum-scroll-driven-blur",
+    name: "Driven Blur",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-driven-blur", "driven", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-driven-blur {
+  animation: roy-scroll-blur linear both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 50%;
+}
+
+@keyframes roy-scroll-blur {
+
+  0% { filter: blur(12px); opacity: 0; transform: scale(1.05); }
+  100% { filter: blur(0); opacity: 1; transform: scale(1); }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-driven-color",
+    name: "Driven Color",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-driven-color", "driven", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-driven-color {
+  animation: roy-scroll-color linear both;
+  animation-timeline: view();
+  animation-range: entry 0% exit 100%;
+}
+
+@keyframes roy-scroll-color {
+
+  0% { background: oklch(0.567 0.159 275.21); color: oklch(1 0 0); }
+  50% { background: oklch(0.566 0.245 278.69); color: oklch(1 0 0); }
+  100% { background: oklch(0.652 0.241 354.31); color: oklch(1 0 0); }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-driven-fade",
+    name: "Driven Fade",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-driven-fade", "driven", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-driven-fade {
+  animation: roy-scroll-fade linear both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 40%;
+}
+
+@keyframes roy-scroll-fade {
+
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-driven-progress-ring",
+    name: "Driven Progress Ring",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-driven-progress-ring", "driven", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-driven-progress-ring {
+  position: relative;
+  border-radius: 50%;
+  background:
+    conic-gradient(oklch(0.567 0.159 275.21) 0deg, oklch(0.567 0.159 275.21) 0deg, oklch(0.274 0.005 286.03) 0deg, oklch(0.274 0.005 286.03) 360deg);
+  animation: roy-scroll-ring linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0 100%;
+}
+
+@keyframes roy-scroll-ring {
+
+  0% {
+    background:
+      conic-gradient(oklch(0.567 0.159 275.21) 0deg, oklch(0.567 0.159 275.21) 0deg, oklch(0.274 0.005 286.03) 0deg, oklch(0.274 0.005 286.03) 360deg);
+  }
+  100% {
+    background:
+      conic-gradient(oklch(0.567 0.159 275.21) 0deg, oklch(0.567 0.159 275.21) 360deg, oklch(0.274 0.005 286.03) 360deg, oklch(0.274 0.005 286.03) 360deg);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-driven-rotate",
+    name: "Driven Rotate",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-driven-rotate", "driven", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-driven-rotate {
+  animation: roy-scroll-rotate linear both;
+  animation-timeline: view();
+  animation-range: entry 0% exit 100%;
+}
+
+@keyframes roy-scroll-rotate {
+
+  0% { transform: rotate(-45deg); }
+  100% { transform: rotate(45deg); }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-driven-scale",
+    name: "Driven Scale",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-driven-scale", "driven", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-driven-scale {
+  animation: roy-scroll-scale linear both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 50%;
+}
+
+@keyframes roy-scroll-scale {
+
+  0% { transform: scale(0.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-driven-sticky",
+    name: "Driven Sticky",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-driven-sticky", "driven", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-driven-sticky {
+  position: sticky;
+  top: 0;
+  background: oklch(0.21 0.006 285.89);
+  color: oklch(0.985 0.0 89.88);
+  border: 1px solid oklch(0.274 0.005 286.03);
+  border-radius: 8px;
+  animation: roy-scroll-sticky linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0 100px;
+}
+
+@keyframes roy-scroll-sticky {
+
+  0% { box-shadow: 0 0 0 color-mix(in oklch, oklch(0 0 0) 0%, transparent); }
+  100% { box-shadow: 0 8px 24px color-mix(in oklch, oklch(0 0 0) 40%, transparent); border-color: oklch(0.37 0.012 285.81); }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-driven-translate",
+    name: "Driven Translate",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-driven-translate", "driven", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-driven-translate {
+  animation: roy-scroll-translate linear both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 60%;
+}
+
+@keyframes roy-scroll-translate {
+
+  0% { transform: translateX(-80px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-fade-out",
+    name: "Fade Out",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-fade-out", "fade", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-fade-out {
+  animation: roy-scroll-fade-out 2.6s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+@keyframes roy-scroll-fade-out {
+
+  0%, 25% { opacity: 1; transform: translateY(0); }
+  75%, 100% { opacity: 0; transform: translateY(-32px); }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-horizontal",
+    name: "Horizontal",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-horizontal", "horizontal"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-horizontal {
+  position: relative;
+  width: 100%;
+  height: 6px;
+  background: color-mix(in oklch, oklch(0.711 0.035 256.79) 25%, transparent);
+  border-radius: 999px;
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-scroll-indicator",
+    name: "Indicator",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-indicator", "indicator"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-indicator {
+  position: relative;
+  width: 28px;
+  height: 46px;
+  border: 2px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 65%, transparent);
+  border-radius: 14px;
+  background: transparent;
+}`
+  },
+  {
+    id: "ferrum-scroll-parallax-slow",
+    name: "Parallax Slow",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-parallax-slow", "parallax"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-parallax-slow {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, oklch(0.21 0.034 264.67), oklch(0.27 0.04 260.03));
+}`
+  },
+  {
+    id: "ferrum-scroll-progress-bar",
+    name: "Progress Bar",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-progress-bar", "progress"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-progress-bar {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  background: color-mix(in oklch, oklch(0.711 0.035 256.79) 25%, transparent);
+  border-radius: 999px;
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-scroll-reveal-left",
+    name: "Reveal Left",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-reveal-left", "reveal", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-reveal-left {
+  animation: roy-scroll-reveal-left 2.6s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+@keyframes roy-scroll-reveal-left {
+
+  0% { opacity: 0; transform: translateX(-60px); }
+  25%, 70% { opacity: 1; transform: translateX(0); }
+  100% { opacity: 0; transform: translateX(-60px); }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-reveal-right",
+    name: "Reveal Right",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-reveal-right", "reveal", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-reveal-right {
+  animation: roy-scroll-reveal-right 2.6s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+@keyframes roy-scroll-reveal-right {
+
+  0% { opacity: 0; transform: translateX(60px); }
+  25%, 70% { opacity: 1; transform: translateX(0); }
+  100% { opacity: 0; transform: translateX(60px); }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-reveal-rotate",
+    name: "Reveal Rotate",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-reveal-rotate", "reveal", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-reveal-rotate {
+  animation: roy-scroll-reveal-rotate 2.6s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+@keyframes roy-scroll-reveal-rotate {
+
+  0% { opacity: 0; transform: rotate(-15deg) scale(0.85); }
+  25%, 70% { opacity: 1; transform: rotate(0deg) scale(1); }
+  100% { opacity: 0; transform: rotate(-15deg) scale(0.85); }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-reveal-scale",
+    name: "Reveal Scale",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-reveal-scale", "reveal", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-reveal-scale {
+  animation: roy-scroll-reveal-scale 2.6s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+@keyframes roy-scroll-reveal-scale {
+
+  0% { opacity: 0; transform: scale(0.6); }
+  25%, 70% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.6); }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-reveal-up",
+    name: "Reveal Up",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-reveal-up", "reveal"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-reveal-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  will-change: opacity, transform;
+}`
+  },
+  {
+    id: "ferrum-scroll-sticky-header",
+    name: "Sticky Header",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-sticky-header", "sticky", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-sticky-header {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  padding: 0 22px;
+  background: linear-gradient(90deg, oklch(0.21 0.034 264.67), oklch(0.27 0.04 260.03));
+  border: 1px solid color-mix(in oklch, oklch(0.711 0.035 256.79) 30%, transparent);
+  border-radius: 10px;
+  color: oklch(0.929 0.013 255.51);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: 0 6px 20px color-mix(in oklch, oklch(0.129 0.041 264.7) 40%, transparent);
+  animation: roy-scroll-sticky-shrink 3.2s ease-in-out infinite;
+}
+
+@keyframes roy-scroll-sticky-shrink {
+
+  0%, 35% {
+    height: 64px;
+    font-size: 18px;
+    padding: 0 22px;
+    background: linear-gradient(90deg, oklch(0.21 0.034 264.67), oklch(0.27 0.04 260.03));
+    box-shadow: 0 6px 20px color-mix(in oklch, oklch(0.129 0.041 264.7) 40%, transparent);
+  }
+  50%, 85% {
+    height: 36px;
+    font-size: 13px;
+    padding: 0 14px;
+    background: linear-gradient(90deg, oklch(0.129 0.041 264.7), oklch(0.21 0.034 264.67));
+    box-shadow: 0 10px 26px color-mix(in oklch, oklch(0.129 0.041 264.7) 70%, transparent);
+    letter-spacing: 0.04em;
+  }
+  100% {
+    height: 64px;
+    font-size: 18px;
+    padding: 0 22px;
+  }
+
+}`
+  },
+  {
+    id: "ferrum-scroll-timeline-spin",
+    name: "Timeline Spin",
+    category: "scroll",
+    description: "A scroll-triggered or scroll-linked visual effect",
+    tags: ["scroll", "scrolling", "scroll-timeline-spin", "timeline", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-scroll-timeline-spin {
+  width: 140px;
+  height: 140px;
+  border-radius: 24px;
+  background:
+    conic-gradient(from 0deg, oklch(0.652 0.241 354.31), oklch(0.566 0.245 278.69), oklch(0.685 0.131 226.94), oklch(0.696 0.149 162.48), oklch(0.652 0.241 354.31));
+  display: grid;
+  place-items: center;
+  color: oklch(1 0 0);
+  font: 700 12px/1.2 system-ui, sans-serif;
+  letter-spacing: 0.15em;
+  text-align: center;
+  animation: roy-b10-sts-spin 1s linear;
+  animation-timeline: scroll(root block);
+  /* When scroll-timeline unsupported, fall back to infinite auto-spin */
+}
+
+@keyframes roy-b10-sts-spin {
+
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-pixel-art",
+    name: "Pixel Art",
+    category: "visual",
+    description: "A pixel art effect",
+    tags: ["pixel-art", "art"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-pixel-art {
+  width: 100%;
+  min-height: 240px;
+  background:
+    conic-gradient(from 0deg at 50% 50%,
+      oklch(0.634 0.254 17.63) 0deg 45deg,
+      oklch(0.789 0.171 69.64) 45deg 90deg,
+      oklch(0.93 0.189 103.28) 90deg 135deg,
+      oklch(0.798 0.257 144.26) 135deg 180deg,
+      oklch(0.718 0.16 242.66) 180deg 225deg,
+      oklch(0.592 0.059 300.27) 225deg 270deg,
+      oklch(0.742 0.172 359.48) 270deg 315deg,
+      oklch(0.634 0.254 17.63) 315deg 360deg);
+  background-size: 32px 32px;
+  image-rendering: pixelated;
+  position: relative;
+  border-radius: 0;
+  filter: contrast(1.1) saturate(1.3);
+}`
+  },
+  {
+    id: "ferrum-prism-rainbow",
+    name: "Prism Rainbow",
+    category: "visual",
+    description: "A prism rainbow effect",
+    tags: ["prism-rainbow", "rainbow"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-prism-rainbow {
+  position: relative;
+  width: 220px;
+  height: 160px;
+  background: oklch(0.15 0.021 283.53);
+  overflow: hidden;
+  border-radius: 8px;
+}`
+  }
+];
+
+// src/lib/effects-batch-33.ts
+var effectsBatch33 = [
+  {
+    id: "ferrum-transform-origin-spin",
+    name: "Transform Origin Spin",
+    category: "3d-transforms",
+    description: "An animated motion effect (transform origin spin)",
+    tags: ["transform-origin-spin", "origin", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-transform-origin-spin {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.685 0.131 226.94));
+  border-radius: 8px;
+  transform-origin: 0% 0%;
+  animation: roy-origin-spin 2s linear infinite;
+}
+
+@keyframes roy-origin-spin {
+
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-slide-out-bottom",
+    name: "Slide Out Bottom",
+    category: "animations",
+    description: "An animated motion effect (slide out bottom)",
+    tags: ["slide", "transition", "slide-out-bottom", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-slide-out-bottom {
+  animation: roy-slide-out-bottom 0.6s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+}
+
+@keyframes roy-slide-out-bottom {
+
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    visibility: hidden;
+    transform: translate3d(0, 100%, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-slide-out-top",
+    name: "Slide Out Top",
+    category: "animations",
+    description: "An animated motion effect (slide out top)",
+    tags: ["slide", "transition", "slide-out-top", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-slide-out-top {
+  animation: roy-slide-out-top 0.6s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+}
+
+@keyframes roy-slide-out-top {
+
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    visibility: hidden;
+    transform: translate3d(0, -100%, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-slide-rotate-in",
+    name: "Slide Rotate In",
+    category: "animations",
+    description: "An animated motion effect (slide rotate in)",
+    tags: ["slide", "transition", "slide-rotate-in", "rotate", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-slide-rotate-in {
+  animation: roy-slide-rotate-in 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes roy-slide-rotate-in {
+
+  0% {
+    opacity: 0;
+    transform: translate3d(60px, 0, 0) rotate(180deg);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(-8px, 0, 0) rotate(-12deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-slot-machine",
+    name: "Slot Machine",
+    category: "animations",
+    description: "A slot machine effect",
+    tags: ["slot-machine", "machine"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-slot-machine {
+  position: relative;
+  width: 200px;
+  height: 160px;
+  background: linear-gradient(180deg, oklch(0.652 0.132 81.57) 0%, oklch(0.541 0.104 84.45) 50%, oklch(0.384 0.075 75.85) 100%);
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow: 0 10px 25px color-mix(in oklch, oklch(0 0 0) 40%, transparent), inset 0 2px 6px color-mix(in oklch, oklch(0.902 0.143 93.06) 40%, transparent);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}`
+  },
+  {
+    id: "ferrum-snap-in",
+    name: "Snap In",
+    category: "animations",
+    description: "An animated motion effect (snap in)",
+    tags: ["snap-in", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-snap-in {
+  animation: roy-snap-in 0.55s cubic-bezier(0.16, 1.32, 0.5, 1) both;
+  transform-origin: center;
+}
+
+@keyframes roy-snap-in {
+
+  0% {
+    opacity: 0;
+    transform: scale(1.6) translate3d(40px, -20px, 0);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(0.85) translate3d(-4px, 2px, 0);
+  }
+  75% {
+    transform: scale(1.06) translate3d(2px, -1px, 0);
+  }
+  100% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-spring-in",
+    name: "Spring In",
+    category: "animations",
+    description: "An animated motion effect (spring in)",
+    tags: ["spring-in", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-spring-in {
+  animation: roy-spring-in 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+  transform-origin: center bottom;
+}
+
+@keyframes roy-spring-in {
+
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 200px, 0) scale(0.5);
+  }
+  35% {
+    opacity: 1;
+    transform: translate3d(0, -30px, 0) scale(1.1);
+  }
+  55% {
+    transform: translate3d(0, 10px, 0) scale(0.95);
+  }
+  75% {
+    transform: translate3d(0, -4px, 0) scale(1.02);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-stretch",
+    name: "Stretch",
+    category: "animations",
+    description: "An animated motion effect (stretch)",
+    tags: ["stretch", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-stretch {
+  animation: roy-stretch 1.6s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+  transform-origin: center;
+}
+
+@keyframes roy-stretch {
+
+  0%, 100% { transform: scaleY(1) scaleX(1); }
+  40%      { transform: scaleY(1.4) scaleX(0.75); }
+  70%      { transform: scaleY(0.85) scaleX(1.12); }
+
+}`
+  },
+  {
+    id: "ferrum-sway",
+    name: "Sway",
+    category: "animations",
+    description: "An animated motion effect (sway)",
+    tags: ["sway", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-sway {
+  animation: roy-sway 4s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+@keyframes roy-sway {
+
+  0%, 100% { transform: rotate(-4deg); }
+  50%      { transform: rotate(4deg); }
+
+}`
+  },
+  {
+    id: "ferrum-swing-in",
+    name: "Swing In",
+    category: "animations",
+    description: "An animated motion effect (swing in)",
+    tags: ["swing", "motion", "swing-in", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-swing-in {
+  animation: roy-swing-in 1s cubic-bezier(0.215, 0.61, 0.355, 1) both;
+  transform-origin: top center;
+}
+
+@keyframes roy-swing-in {
+
+  0% {
+    opacity: 0;
+    transform: rotate3d(0, 0, 1, -90deg);
+  }
+  40% {
+    opacity: 1;
+    transform: rotate3d(0, 0, 1, 25deg);
+  }
+  60% {
+    transform: rotate3d(0, 0, 1, -15deg);
+  }
+  80% {
+    transform: rotate3d(0, 0, 1, 8deg);
+  }
+  100% {
+    transform: rotate3d(0, 0, 1, 0deg);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-vibrate",
+    name: "Vibrate",
+    category: "animations",
+    description: "An animated motion effect (vibrate)",
+    tags: ["vibrate", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-vibrate {
+  animation: roy-vibrate 0.32s linear infinite;
+}
+
+@keyframes roy-vibrate {
+
+  0%   { transform: translate3d(0, 0, 0); }
+  10%  { transform: translate3d(-2px, 1px, 0); }
+  20%  { transform: translate3d(2px, -1px, 0); }
+  30%  { transform: translate3d(-2px, -1px, 0); }
+  40%  { transform: translate3d(2px, 1px, 0); }
+  50%  { transform: translate3d(-1px, 2px, 0); }
+  60%  { transform: translate3d(1px, -2px, 0); }
+  70%  { transform: translate3d(-2px, 1px, 0); }
+  80%  { transform: translate3d(2px, -1px, 0); }
+  90%  { transform: translate3d(-1px, 1px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+
+}`
+  },
+  {
+    id: "ferrum-text-3d-cinema",
+    name: "3D Cinema",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (3d cinema)",
+    tags: ["text", "typography", "text-3d-cinema", "3d", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-3d-cinema {
+  display: inline-block;
+  position: relative;
+  font: 900 72px/1 'Arial Black', sans-serif;
+  letter-spacing: 0.06em;
+  color: oklch(0.973 0.051 97.64);
+  padding: 30px 40px;
+  background: linear-gradient(180deg, oklch(0.179 0.037 79.02) 0%, oklch(0 0 0) 100%);
+  border-radius: 10px;
+  text-shadow:
+    1px 1px 0 oklch(0.541 0.104 84.45),
+    2px 2px 0 oklch(0.541 0.104 84.45),
+    3px 3px 0 oklch(0.48 0.092 85.67),
+    4px 4px 0 oklch(0.48 0.092 85.67),
+    5px 5px 0 oklch(0.412 0.078 85.41),
+    6px 6px 0 oklch(0.412 0.078 85.41),
+    7px 7px 0 oklch(0.343 0.064 86.93),
+    8px 8px 0 oklch(0.343 0.064 86.93),
+    9px 9px 0 oklch(0.266 0.047 88.38),
+    10px 10px 0 oklch(0.266 0.047 88.38),
+    11px 11px 8px color-mix(in oklch, oklch(0 0 0) 60%, transparent),
+    14px 14px 20px color-mix(in oklch, oklch(0 0 0) 80%, transparent);
+  background-clip: border-box;
+  filter: drop-shadow(0 0 12px color-mix(in oklch, oklch(0.861 0.147 83.67) 40%, transparent));
+  animation: roy-b11-text-3d-cinema-light 4s ease-in-out infinite;
+}
+
+@keyframes roy-b11-text-3d-cinema-light {
+
+  0%, 100% { filter: drop-shadow(0 0 12px color-mix(in oklch, oklch(0.861 0.147 83.67) 40%, transparent)) brightness(1); }
+  50%      { filter: drop-shadow(0 0 24px color-mix(in oklch, oklch(0.861 0.147 83.67) 70%, transparent)) brightness(1.15); }
+
+}`
+  },
+  {
+    id: "ferrum-text-3d-shadow",
+    name: "3D Shadow",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (3d shadow)",
+    tags: ["text", "typography", "text-3d-shadow", "3d"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-3d-shadow {
+  color: oklch(0.982 0.018 155.83);
+  text-shadow:
+    1px 1px 0 oklch(0.432 0.086 166.91),
+    2px 2px 0 oklch(0.508 0.105 165.61),
+    3px 3px 0 oklch(0.596 0.127 163.23),
+    4px 4px 0 oklch(0.696 0.149 162.48),
+    5px 5px 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent),
+    6px 6px 10px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+  font-weight: 700;
+}`
+  },
+  {
+    id: "ferrum-text-blur-reveal",
+    name: "Blur Reveal",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (blur reveal)",
+    tags: ["text", "typography", "text-blur-reveal", "blur", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-blur-reveal {
+  color: oklch(0.696 0.149 162.48);
+  font-weight: 700;
+  animation: roy-blur-reveal 4s ease-in-out infinite;
+}
+
+@keyframes roy-blur-reveal {
+
+  0%, 100% { filter: blur(8px); opacity: 0.4; }
+  50% { filter: blur(0); opacity: 1; }
+
+}`
+  },
+  {
+    id: "ferrum-text-bounce-letters",
+    name: "Bounce Letters",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (bounce letters)",
+    tags: ["text", "typography", "text-bounce-letters", "bounce"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-bounce-letters {
+  display: inline-flex;
+  font-weight: 700;
+  color: oklch(0.685 0.131 226.94);
+}`
+  },
+  {
+    id: "ferrum-text-chrome",
+    name: "Chrome",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (chrome)",
+    tags: ["text", "typography", "text-chrome", "chrome"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-chrome {
+  background: linear-gradient(
+    180deg,
+    oklch(0.962 0.058 95.62) 0%,
+    oklch(0.984 0.003 247.86) 25%,
+    oklch(0.711 0.035 256.79) 50%,
+    oklch(0.984 0.003 247.86) 75%,
+    oklch(0.869 0.02 252.89) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 800;
+  letter-spacing: 1px;
+  filter: drop-shadow(0 2px 2px color-mix(in oklch, oklch(0 0 0) 40%, transparent));
+}`
+  },
+  {
+    id: "ferrum-text-emboss",
+    name: "Emboss",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (emboss)",
+    tags: ["text", "typography", "text-emboss", "emboss"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-emboss {
+  display: inline-block;
+  font: 900 64px/1 'Georgia', serif;
+  letter-spacing: 0.05em;
+  color: oklch(0.482 0.042 69.22);
+  padding: 24px 36px;
+  background:
+    radial-gradient(ellipse 60% 40% at 30% 30%, color-mix(in oklch, oklch(0.959 0.042 84.58) 30%, transparent), transparent 60%),
+    linear-gradient(135deg, oklch(0.73 0.048 79.93) 0%, oklch(0.587 0.045 81.46) 50%, oklch(0.674 0.06 84.3) 100%);
+  border-radius: 8px;
+  box-shadow:
+    inset 4px 4px 8px color-mix(in oklch, oklch(0.984 0.027 95.33) 40%, transparent),
+    inset -4px -4px 8px color-mix(in oklch, oklch(0.243 0.03 76.73) 40%, transparent),
+    0 6px 20px color-mix(in oklch, oklch(0.243 0.03 76.73) 40%, transparent);
+  text-shadow:
+    1px 1px 1px color-mix(in oklch, oklch(0.971 0.034 88.77) 70%, transparent),
+    -1px -1px 1px color-mix(in oklch, oklch(0.201 0.025 65.66) 80%, transparent),
+    0 4px 6px color-mix(in oklch, oklch(0.201 0.025 65.66) 40%, transparent);
+  background-clip: border-box;
+}`
+  },
+  {
+    id: "ferrum-text-fire",
+    name: "Fire",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (fire)",
+    tags: ["text", "typography", "text-fire", "fire", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-fire {
+  font-weight: 800;
+  color: oklch(0.905 0.166 98.11);
+  text-shadow:
+    0 -2px 4px oklch(0.945 0.124 101.54),
+    0 -3px 6px oklch(0.905 0.166 98.11),
+    0 -6px 10px oklch(0.861 0.173 91.94),
+    0 -10px 16px oklch(0.769 0.188 70.08),
+    0 -16px 24px oklch(0.646 0.194 41.12),
+    0 -22px 32px oklch(0.577 0.215 27.33);
+  animation: roy-fire-flicker 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes roy-fire-flicker {
+
+  from { filter: brightness(1) hue-rotate(0deg); }
+  to { filter: brightness(1.15) hue-rotate(-8deg); }
+
+}`
+  },
+  {
+    id: "ferrum-text-fire-flame",
+    name: "Fire Flame",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (fire flame)",
+    tags: ["text", "typography", "text-fire-flame", "fire", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-fire-flame {
+  display: inline-block;
+  position: relative;
+  font: 900 80px/1 'Arial Black', sans-serif;
+  letter-spacing: 0.05em;
+  color: oklch(1 0 0);
+  padding: 30px 36px;
+  background: oklch(0.121 0.025 82.32);
+  border-radius: 8px;
+  text-shadow:
+    0 -2px 4px oklch(1 0 0),
+    0 -4px 8px oklch(0.908 0.157 96.48),
+    0 -8px 14px oklch(0.751 0.179 58.28),
+    0 -14px 22px oklch(0.644 0.243 32.25),
+    0 -22px 32px oklch(0.527 0.211 30.14),
+    0 2px 4px color-mix(in oklch, oklch(0.527 0.211 30.14) 80%, transparent);
+  animation: roy-b11-text-fire-flame 0.6s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 12px color-mix(in oklch, oklch(0.671 0.221 37.64) 70%, transparent));
+}
+
+@keyframes roy-b11-text-fire-flame {
+
+  0%   { text-shadow: 0 -2px 4px oklch(1 0 0), 0 -4px 8px oklch(0.908 0.157 96.48), 0 -8px 14px oklch(0.751 0.179 58.28), 0 -14px 22px oklch(0.644 0.243 32.25), 0 -22px 32px oklch(0.527 0.211 30.14), 0 2px 4px color-mix(in oklch, oklch(0.527 0.211 30.14) 80%, transparent); transform: translateY(0); }
+  100% { text-shadow: 0 -2px 6px oklch(1 0 0), 0 -6px 10px oklch(0.908 0.157 96.48), 0 -12px 18px oklch(0.751 0.179 58.28), 0 -20px 28px oklch(0.644 0.243 32.25), 0 -30px 42px oklch(0.527 0.211 30.14), 0 2px 6px color-mix(in oklch, oklch(0.527 0.211 30.14) 90%, transparent); transform: translateY(-2px); }
+
+}`
+  },
+  {
+    id: "ferrum-text-flip",
+    name: "Flip",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (flip)",
+    tags: ["text", "typography", "text-flip", "flip", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-flip {
+  display: inline-block;
+  font-weight: 700;
+  color: oklch(0.566 0.245 278.69);
+  transform-style: preserve-3d;
+  perspective: 400px;
+  animation: roy-text-flip 3s ease-in-out infinite;
+}
+
+@keyframes roy-text-flip {
+
+  0%, 100% { transform: rotateX(0); }
+  50% { transform: rotateX(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-text-gradient-shift",
+    name: "Gradient Shift",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (gradient shift)",
+    tags: ["text", "typography", "text-gradient-shift", "gradient", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-gradient-shift {
+  background: linear-gradient(45deg, oklch(0.696 0.149 162.48), oklch(0.685 0.131 226.94), oklch(0.566 0.245 278.69), oklch(0.652 0.241 354.31), oklch(0.696 0.149 162.48));
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 700;
+  animation: roy-text-grad-shift 6s ease infinite;
+}
+
+@keyframes roy-text-grad-shift {
+
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+
+}`
+  },
+  {
+    id: "ferrum-text-highlight-marker",
+    name: "Highlight Marker",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (highlight marker)",
+    tags: ["text", "typography", "text-highlight-marker", "highlight"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-highlight-marker {
+  font-weight: 700;
+  color: oklch(0.21 0.034 264.67);
+  background: linear-gradient(180deg, transparent 50%, oklch(0.905 0.166 98.11) 50%);
+  padding: 0 4px;
+}`
+  },
+  {
+    id: "ferrum-text-holographic",
+    name: "Holographic",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (holographic)",
+    tags: ["text", "typography", "text-holographic", "holographic", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-holographic {
+  background: conic-gradient(
+    from 0deg,
+    oklch(0.741 0.2 345.28), oklch(0.893 0.167 94.55), oklch(0.774 0.148 148.57), oklch(0.776 0.112 188.54), oklch(0.709 0.159 293.54), oklch(0.741 0.2 345.28)
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 700;
+  filter: drop-shadow(0 0 6px color-mix(in oklch, oklch(0.741 0.2 345.28) 50%, transparent));
+  animation: roy-holo-shift 5s linear infinite;
+}
+
+@keyframes roy-holo-shift {
+
+  from { background-position: 0% 0%; }
+  to { background-position: 200% 200%; }
+
+}`
+  },
+  {
+    id: "ferrum-text-mirror",
+    name: "Mirror",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (mirror)",
+    tags: ["text", "typography", "text-mirror", "mirror"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-mirror {
+  display: inline-flex;
+  font-weight: 700;
+  color: oklch(0.566 0.245 278.69);
+}`
+  },
+  {
+    id: "ferrum-text-neon-glow",
+    name: "Neon Glow",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (neon glow)",
+    tags: ["text", "typography", "text-neon-glow", "neon"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-neon-glow {
+  color: oklch(0.696 0.149 162.48);
+  text-shadow:
+    0 0 7px color-mix(in oklch, oklch(0.696 0.149 162.48) 80%, transparent),
+    0 0 10px color-mix(in oklch, oklch(0.696 0.149 162.48) 60%, transparent),
+    0 0 21px color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent),
+    0 0 42px color-mix(in oklch, oklch(0.696 0.149 162.48) 20%, transparent),
+    0 0 82px color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent);
+}`
+  },
+  {
+    id: "ferrum-text-neon-sign",
+    name: "Neon Sign",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (neon sign)",
+    tags: ["text", "typography", "text-neon-sign", "neon", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-neon-sign {
+  display: inline-block;
+  font: 900 72px/1 'Arial Black', sans-serif;
+  letter-spacing: 0.08em;
+  color: oklch(1 0 0);
+  text-shadow:
+    0 0 4px oklch(1 0 0),
+    0 0 10px oklch(0.683 0.303 335.86),
+    0 0 22px oklch(0.683 0.303 335.86),
+    0 0 40px oklch(0.683 0.303 335.86),
+    0 0 70px oklch(0.683 0.303 335.86),
+    0 0 100px oklch(0.683 0.303 335.86);
+  padding: 20px 30px;
+  background: radial-gradient(ellipse at 50% 50%, oklch(0.194 0.08 297.65) 0%, oklch(0.096 0.051 300.12) 100%);
+  border-radius: 12px;
+  animation: roy-b11-text-neon-flicker 4s linear infinite;
+}
+
+@keyframes roy-b11-text-neon-flicker {
+
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    opacity: 1;
+    text-shadow:
+      0 0 4px oklch(1 0 0),
+      0 0 10px oklch(0.683 0.303 335.86),
+      0 0 22px oklch(0.683 0.303 335.86),
+      0 0 40px oklch(0.683 0.303 335.86),
+      0 0 70px oklch(0.683 0.303 335.86),
+      0 0 100px oklch(0.683 0.303 335.86);
+  }
+  20%, 24%, 55% {
+    opacity: 0.6;
+    text-shadow: 0 0 2px oklch(1 0 0), 0 0 4px oklch(0.683 0.303 335.86);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-text-outline-offset",
+    name: "Outline Offset",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (outline offset)",
+    tags: ["text", "typography", "text-outline-offset", "outline"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-outline-offset {
+  font-weight: 700;
+  color: oklch(0.696 0.149 162.48);
+  -webkit-text-stroke: 2px color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent);
+  text-shadow:
+    4px 4px 0 color-mix(in oklch, oklch(0.685 0.131 226.94) 50%, transparent),
+    8px 8px 0 color-mix(in oklch, oklch(0.566 0.245 278.69) 40%, transparent);
+}`
+  },
+  {
+    id: "ferrum-text-reflection",
+    name: "Reflection",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (reflection)",
+    tags: ["text", "typography", "text-reflection", "reflection"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-reflection {
+  position: relative;
+  display: inline-block;
+  font-weight: 700;
+  color: oklch(0.685 0.131 226.94);
+}`
+  },
+  {
+    id: "ferrum-text-shadow-long",
+    name: "Shadow Long",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (shadow long)",
+    tags: ["text", "typography", "text-shadow-long", "shadow"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-shadow-long {
+  color: oklch(0.982 0.018 155.83);
+  font-weight: 700;
+  text-shadow:
+    1px 1px 0 oklch(0.696 0.149 162.48),
+    2px 2px 0 oklch(0.596 0.127 162.48),
+    3px 3px 0 oklch(0.596 0.127 163.23),
+    4px 4px 0 oklch(0.508 0.105 165.61),
+    5px 5px 0 oklch(0.432 0.086 166.91),
+    6px 6px 0 oklch(0.378 0.073 168.94),
+    7px 7px 0 oklch(0.316 0.057 174.79),
+    8px 8px 0 oklch(0.273 0.05 171.23),
+    9px 9px 0 oklch(0.234 0.041 173.33),
+    10px 10px 12px color-mix(in oklch, oklch(0 0 0) 40%, transparent);
+}`
+  },
+  {
+    id: "ferrum-text-shadow-soft",
+    name: "Shadow Soft",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (shadow soft)",
+    tags: ["text", "typography", "text-shadow-soft", "shadow"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-shadow-soft {
+  color: oklch(0.984 0.003 247.86);
+  font-weight: 600;
+  text-shadow:
+    0 1px 2px color-mix(in oklch, oklch(0 0 0) 18%, transparent),
+    0 4px 12px color-mix(in oklch, oklch(0.696 0.149 162.48) 25%, transparent),
+    0 8px 24px color-mix(in oklch, oklch(0.696 0.149 162.48) 15%, transparent);
+}`
+  },
+  {
+    id: "ferrum-text-shimmer",
+    name: "Shimmer",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (shimmer)",
+    tags: ["text", "typography", "text-shimmer", "shimmer", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-shimmer {
+  background: linear-gradient(
+    110deg,
+    oklch(0.446 0.037 257.28) 0%,
+    oklch(0.446 0.037 257.28) 35%,
+    oklch(0.968 0.007 247.9) 50%,
+    oklch(0.446 0.037 257.28) 65%,
+    oklch(0.446 0.037 257.28) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 700;
+  animation: roy-shimmer-sweep 3s linear infinite;
+}
+
+@keyframes roy-shimmer-sweep {
+
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+
+}`
+  },
+  {
+    id: "ferrum-text-skew",
+    name: "Skew",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (skew)",
+    tags: ["text", "typography", "text-skew", "skew"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-skew {
+  display: inline-block;
+  font-weight: 800;
+  font-style: italic;
+  color: oklch(0.984 0.003 247.86);
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.685 0.131 226.94));
+  padding: 4px 14px;
+  transform: skew(-10deg);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  box-shadow: 4px 4px 0 color-mix(in oklch, oklch(0 0 0) 25%, transparent);
+}`
+  },
+  {
+    id: "ferrum-text-stretch",
+    name: "Stretch",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (stretch)",
+    tags: ["text", "typography", "text-stretch", "stretch", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-stretch {
+  font-weight: 700;
+  color: oklch(0.769 0.188 70.08);
+  animation: roy-text-stretch 3s ease-in-out infinite;
+}
+
+@keyframes roy-text-stretch {
+
+  0%, 100% { letter-spacing: 0px; }
+  50% { letter-spacing: 12px; }
+
+}`
+  },
+  {
+    id: "ferrum-text-typing-cursor",
+    name: "Typing Cursor",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (typing cursor)",
+    tags: ["text", "typography", "text-typing-cursor", "typing", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-typing-cursor {
+  border-right: 3px solid oklch(0.696 0.149 162.48);
+  animation: roy-text-blink-cursor 1s step-end infinite;
+  padding-right: 4px;
+}
+
+@keyframes roy-text-blink-cursor {
+
+  0%, 100% { border-color: oklch(0.696 0.149 162.48); }
+  50% { border-color: transparent; }
+
+}`
+  },
+  {
+    id: "ferrum-text-underline-draw",
+    name: "Underline Draw",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (underline draw)",
+    tags: ["text", "typography", "text-underline-draw", "underline"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-underline-draw {
+  position: relative;
+  display: inline-block;
+  font-weight: 700;
+  color: oklch(0.696 0.149 162.48);
+}`
+  },
+  {
+    id: "ferrum-text-water",
+    name: "Water",
+    category: "text",
+    description: "A text effect that styles and animates letterforms (water)",
+    tags: ["text", "typography", "text-water", "water", "animated"],
+    previewType: "text",
+    cssCode: `.roycss-ferrum-text-water {
+  display: inline-block;
+  position: relative;
+  font: 900 72px/1 'Arial Black', sans-serif;
+  letter-spacing: 0.08em;
+  color: transparent;
+  background:
+    linear-gradient(180deg,
+      color-mix(in oklch, oklch(1 0 0) 90%, transparent) 0%,
+      color-mix(in oklch, oklch(0.898 0.062 229.91) 70%, transparent) 30%,
+      color-mix(in oklch, oklch(0.731 0.117 233.39) 60%, transparent) 55%,
+      color-mix(in oklch, oklch(0.505 0.144 254.88) 80%, transparent) 80%,
+      color-mix(in oklch, oklch(0.289 0.097 260.21) 90%, transparent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  padding: 18px 30px;
+  text-shadow:
+    0 1px 0 color-mix(in oklch, oklch(1 0 0) 50%, transparent),
+    0 -1px 0 color-mix(in oklch, oklch(0.233 0.068 251.16) 60%, transparent);
+  filter: drop-shadow(0 4px 6px color-mix(in oklch, oklch(0.424 0.119 249.77) 50%, transparent));
+  animation: roy-b11-text-water-ripple 3s ease-in-out infinite;
+}
+
+@keyframes roy-b11-text-water-ripple {
+
+  0%, 100% { filter: drop-shadow(0 4px 6px color-mix(in oklch, oklch(0.424 0.119 249.77) 50%, transparent)) hue-rotate(0deg); }
+  50%      { filter: drop-shadow(0 4px 8px color-mix(in oklch, oklch(0.424 0.119 249.77) 70%, transparent)) hue-rotate(15deg); }
+
+}`
+  },
+  {
+    id: "ferrum-soap-bubble",
+    name: "Soap Bubble",
+    category: "visual",
+    description: "An animated motion effect (soap bubble)",
+    tags: ["soap-bubble", "bubble", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-soap-bubble {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 28%, color-mix(in oklch, oklch(1 0 0) 95%, transparent), color-mix(in oklch, oklch(1 0 0) 5%, transparent) 18%, transparent 32%),
+    radial-gradient(circle at 70% 65%, color-mix(in oklch, oklch(0.673 0.29 341.41) 35%, transparent), transparent 40%),
+    radial-gradient(circle at 30% 75%, color-mix(in oklch, oklch(0.889 0.177 169.75) 35%, transparent), transparent 40%),
+    radial-gradient(circle at 75% 25%, color-mix(in oklch, oklch(0.897 0.185 97.44) 30%, transparent), transparent 40%),
+    conic-gradient(from 30deg,
+      color-mix(in oklch, oklch(0.702 0.229 349.48) 35%, transparent),
+      color-mix(in oklch, oklch(0.788 0.131 231.8) 35%, transparent),
+      color-mix(in oklch, oklch(0.923 0.183 133.01) 35%, transparent),
+      color-mix(in oklch, oklch(0.861 0.147 83.67) 35%, transparent),
+      color-mix(in oklch, oklch(0.64 0.249 306.76) 35%, transparent),
+      color-mix(in oklch, oklch(0.702 0.229 349.48) 35%, transparent));
+  box-shadow:
+    inset 0 0 40px color-mix(in oklch, oklch(1 0 0) 25%, transparent),
+    inset -20px -25px 50px color-mix(in oklch, oklch(0.336 0.172 308.39) 25%, transparent),
+    inset 15px 20px 40px color-mix(in oklch, oklch(0.73 0.16 237.36) 25%, transparent),
+    0 8px 30px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 40%, transparent);
+  filter: saturate(1.2);
+  animation: roy-b11-soap-bubble-float 6s ease-in-out infinite;
+}
+
+@keyframes roy-b11-soap-bubble-float {
+
+  0%, 100% { transform: translateY(0) rotate(0deg); filter: saturate(1.2) hue-rotate(0deg); }
+  50%      { transform: translateY(-12px) rotate(8deg); filter: saturate(1.4) hue-rotate(40deg); }
+
+}`
+  },
+  {
+    id: "ferrum-spiral-galaxy",
+    name: "Spiral Galaxy",
+    category: "visual",
+    description: "A spiral galaxy effect",
+    tags: ["spiral-galaxy", "galaxy"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-spiral-galaxy {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 50%, oklch(0.179 0.095 301.47) 0%, oklch(0.096 0.051 300.12) 70%, oklch(0 0 0) 100%);
+  box-shadow: 0 0 40px color-mix(in oklch, oklch(0.579 0.244 286.54) 40%, transparent);
+}`
+  },
+  {
+    id: "ferrum-stained-glass",
+    name: "Stained Glass",
+    category: "visual",
+    description: "A stained glass effect",
+    tags: ["stained-glass", "glass"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-stained-glass {
+  position: relative;
+  width: 200px;
+  height: 180px;
+  border-radius: 8px;
+  overflow: hidden;
+  background:
+    linear-gradient(115deg, oklch(0.218 0.0 89.88) 0 8%, transparent 8% 9%, oklch(0.218 0.0 89.88) 9% 17%, transparent 17% 18%, oklch(0.218 0.0 89.88) 18% 26%, transparent 26% 27%, oklch(0.218 0.0 89.88) 27% 35%, transparent 35% 36%, oklch(0.218 0.0 89.88) 36% 44%, transparent 44% 45%, oklch(0.218 0.0 89.88) 45% 53%, transparent 53% 54%, oklch(0.218 0.0 89.88) 54% 62%, transparent 62% 63%, oklch(0.218 0.0 89.88) 63% 71%, transparent 71% 72%, oklch(0.218 0.0 89.88) 72% 80%, transparent 80% 81%, oklch(0.218 0.0 89.88) 81% 89%, transparent 89% 90%, oklch(0.218 0.0 89.88) 90% 100%),
+    linear-gradient(25deg, oklch(0.218 0.0 89.88) 0 9%, transparent 9% 10%, oklch(0.218 0.0 89.88) 10% 19%, transparent 19% 20%, oklch(0.218 0.0 89.88) 20% 29%, transparent 29% 30%, oklch(0.218 0.0 89.88) 30% 39%, transparent 39% 40%, oklch(0.218 0.0 89.88) 40% 49%, transparent 49% 50%, oklch(0.218 0.0 89.88) 50% 59%, transparent 59% 60%, oklch(0.218 0.0 89.88) 60% 69%, transparent 69% 70%, oklch(0.218 0.0 89.88) 70% 79%, transparent 79% 80%, oklch(0.218 0.0 89.88) 80% 89%, transparent 89% 90%, oklch(0.218 0.0 89.88) 90% 100%),
+    radial-gradient(circle at 20% 25%, oklch(0.53 0.207 22.32) 0 22%, transparent 22%),
+    radial-gradient(circle at 75% 20%, oklch(0.887 0.182 95.33) 0 18%, transparent 18%),
+    radial-gradient(circle at 30% 70%, oklch(0.652 0.19 253.21) 0 24%, transparent 24%),
+    radial-gradient(circle at 80% 75%, oklch(0.515 0.261 309.81) 0 20%, transparent 20%),
+    radial-gradient(circle at 55% 45%, oklch(0.751 0.179 58.28) 0 18%, transparent 18%),
+    radial-gradient(circle at 50% 90%, oklch(0.746 0.181 152.33) 0 16%, transparent 16%),
+    linear-gradient(45deg, oklch(0.324 0.148 309.24), oklch(0.422 0.148 10.46), oklch(0.414 0.12 257.24), oklch(0.591 0.139 124.95));
+  background-blend-mode: normal, normal, screen, screen, screen, screen, screen, screen, normal;
+  filter: saturate(1.3) brightness(1.05);
+  box-shadow: 0 0 25px color-mix(in oklch, oklch(0.863 0.133 80.39) 30%, transparent), inset 0 0 0 2px oklch(0.218 0.0 89.88);
+}`
+  },
+  {
+    id: "ferrum-topographic",
+    name: "Topographic",
+    category: "visual",
+    description: "A topographic effect",
+    tags: ["topographic"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-topographic {
+  width: 100%;
+  min-height: 240px;
+  background:
+    repeating-radial-gradient(circle at 30% 40%,
+      transparent 0,
+      transparent 14px,
+      color-mix(in oklch, oklch(0.466 0.084 68.78) 50%, transparent) 14px,
+      color-mix(in oklch, oklch(0.466 0.084 68.78) 50%, transparent) 15px),
+    repeating-radial-gradient(circle at 70% 60%,
+      transparent 0,
+      transparent 18px,
+      color-mix(in oklch, oklch(0.396 0.077 61.8) 45%, transparent) 18px,
+      color-mix(in oklch, oklch(0.396 0.077 61.8) 45%, transparent) 19px),
+    repeating-radial-gradient(circle at 50% 80%,
+      transparent 0,
+      transparent 12px,
+      color-mix(in oklch, oklch(0.325 0.072 53.1) 40%, transparent) 12px,
+      color-mix(in oklch, oklch(0.325 0.072 53.1) 40%, transparent) 13px),
+    radial-gradient(ellipse at 30% 40%, oklch(0.923 0.049 86.35) 0%, oklch(0.795 0.071 80.81) 50%, oklch(0.549 0.078 76.6) 100%);
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-velvet-fabric",
+    name: "Velvet Fabric",
+    category: "visual",
+    description: "A velvet fabric effect",
+    tags: ["velvet-fabric", "fabric"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-velvet-fabric {
+  position: relative;
+  width: 200px;
+  height: 160px;
+  border-radius: 12px;
+  background:
+    radial-gradient(ellipse 70% 50% at 30% 30%, color-mix(in oklch, oklch(0.516 0.178 4.95) 70%, transparent), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 75% 70%, color-mix(in oklch, oklch(0.232 0.095 356.89) 85%, transparent), transparent 65%),
+    linear-gradient(135deg, oklch(0.381 0.142 3.86) 0%, oklch(0.269 0.1 4.42) 50%, oklch(0.345 0.127 5.2) 100%);
+  box-shadow:
+    inset 0 0 30px color-mix(in oklch, oklch(0 0 0) 60%, transparent),
+    inset 8px 10px 18px color-mix(in oklch, oklch(0.744 0.171 358.78) 25%, transparent),
+    inset -8px -10px 18px color-mix(in oklch, oklch(0 0 0) 50%, transparent),
+    0 10px 25px color-mix(in oklch, oklch(0.179 0.072 1.69) 50%, transparent);
+}`
+  },
+  {
+    id: "ferrum-vhs-glitch",
+    name: "Vhs Glitch",
+    category: "visual",
+    description: "A vhs glitch effect",
+    tags: ["vhs-glitch", "glitch"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-vhs-glitch {
+  width: 100%;
+  min-height: 240px;
+  background:
+    linear-gradient(180deg, oklch(0.179 0.095 301.47) 0%, oklch(0.336 0.177 301.82) 50%, oklch(0.235 0.096 259.91) 100%);
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  filter: contrast(1.2) saturate(1.3);
+}`
+  },
+  {
+    id: "ferrum-vintage-tv",
+    name: "Vintage Tv",
+    category: "visual",
+    description: "A vintage tv effect",
+    tags: ["vintage-tv", "tv"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-vintage-tv {
+  width: 100%;
+  min-height: 240px;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 50%, oklch(0.342 0.071 251.85) 0%, oklch(0.214 0.042 252.78) 70%, oklch(0 0 0) 100%);
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow:
+    inset 0 0 60px color-mix(in oklch, oklch(0 0 0) 80%, transparent),
+    inset 0 0 120px color-mix(in oklch, oklch(0.626 0.111 250.01) 30%, transparent);
+}`
+  },
+  {
+    id: "ferrum-visual-aurora-border",
+    name: "Aurora Border",
+    category: "visual",
+    description: "A visual filter or surface effect (aurora border)",
+    tags: ["visual", "effect", "visual-aurora-border", "aurora"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-aurora-border {
+  position: relative;
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  background: oklch(0.182 0.046 271.58);
+  border: none;
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-visual-backdrop-blur-heavy",
+    name: "Backdrop Blur Heavy",
+    category: "visual",
+    description: "A visual filter or surface effect (backdrop blur heavy)",
+    tags: ["visual", "effect", "visual-backdrop-blur-heavy", "backdrop"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-backdrop-blur-heavy {
+  position: relative;
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  border: none;
+  background:
+    radial-gradient(circle at 20% 30%, oklch(0.652 0.241 354.31) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, oklch(0.685 0.131 226.94) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, oklch(0.769 0.188 70.08) 0%, transparent 50%),
+    linear-gradient(135deg, oklch(0.566 0.245 278.69), oklch(0.696 0.149 162.48));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-visual-blend-mode-overlay",
+    name: "Blend Mode Overlay",
+    category: "visual",
+    description: "A visual filter or surface effect (blend mode overlay)",
+    tags: ["visual", "effect", "visual-blend-mode-overlay", "blend"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-blend-mode-overlay {
+  position: relative;
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, oklch(0.27 0.04 260.03), oklch(0.21 0.034 264.67));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-visual-border-beam",
+    name: "Border Beam",
+    category: "visual",
+    description: "A visual filter or surface effect (border beam)",
+    tags: ["visual", "effect", "visual-border-beam", "border"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-border-beam {
+  position: relative;
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  background: oklch(0.21 0.034 264.67);
+  border: none;
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-visual-chrome",
+    name: "Chrome",
+    category: "visual",
+    description: "A visual filter or surface effect (chrome)",
+    tags: ["visual", "effect", "visual-chrome", "chrome"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-chrome {
+  position: relative;
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(
+    180deg,
+    oklch(0.997 0.0 89.88) 0%,
+    oklch(0.835 0.011 286.16) 10%,
+    oklch(0.629 0.012 286.05) 20%,
+    oklch(0.885 0.011 286.18) 30%,
+    oklch(0.98 0.005 286.3) 45%,
+    oklch(0.708 0.012 286.1) 55%,
+    oklch(0.52 0.012 285.96) 65%,
+    oklch(0.86 0.011 286.17) 75%,
+    oklch(0.957 0.007 286.27) 85%,
+    oklch(0.76 0.011 286.13) 95%,
+    oklch(0.602 0.012 286.03) 100%
+  );
+  overflow: hidden;
+  box-shadow:
+    inset 0 2px 4px color-mix(in oklch, oklch(1 0 0) 70%, transparent),
+    inset 0 -2px 4px color-mix(in oklch, oklch(0 0 0) 35%, transparent);
+}`
+  },
+  {
+    id: "ferrum-visual-color-shift",
+    name: "Color Shift",
+    category: "visual",
+    description: "A visual filter or surface effect (color shift)",
+    tags: ["visual", "effect", "visual-color-shift", "color", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-color-shift {
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, oklch(0.652 0.241 354.31), oklch(0.566 0.245 278.69));
+  animation: roy-visual-color-shift 6s linear infinite;
+}
+
+@keyframes roy-visual-color-shift {
+
+  from { filter: hue-rotate(0deg); }
+  to   { filter: hue-rotate(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-visual-foil",
+    name: "Foil",
+    category: "visual",
+    description: "A visual filter or surface effect (foil)",
+    tags: ["visual", "effect", "visual-foil", "foil", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-foil {
+  position: relative;
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  border: none;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      color-mix(in oklch, oklch(1 0 0) 12%, transparent) 0px,
+      color-mix(in oklch, oklch(1 0 0) 12%, transparent) 2px,
+      transparent 2px,
+      transparent 5px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      color-mix(in oklch, oklch(0 0 0) 12%, transparent) 0px,
+      color-mix(in oklch, oklch(0 0 0) 12%, transparent) 2px,
+      transparent 2px,
+      transparent 5px
+    ),
+    linear-gradient(
+      135deg,
+      oklch(0.957 0.007 286.27) 0%,
+      oklch(0.813 0.022 285.89) 25%,
+      oklch(0.981 0.009 286.23) 50%,
+      oklch(0.762 0.023 285.85) 75%,
+      oklch(0.933 0.011 286.19) 100%
+    );
+  background-size: 8px 8px, 8px 8px, 100% 100%;
+  overflow: hidden;
+  animation: roy-visual-foil-hue 6s ease-in-out infinite;
+  box-shadow:
+    inset 0 2px 6px color-mix(in oklch, oklch(1 0 0) 70%, transparent),
+    inset 0 -2px 6px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
+}
+
+@keyframes roy-visual-foil-hue {
+
+  0%, 100% { filter: hue-rotate(0deg); }
+  50%      { filter: hue-rotate(70deg); }
+
+}`
+  }
+];
+
+// src/lib/effects-batch-34.ts
+var effectsBatch34 = [
+  {
+    id: "ferrum-zoom-in-down",
+    name: "Zoom In Down",
+    category: "animations",
+    description: "An animated motion effect (zoom in down)",
+    tags: ["zoom", "scale", "zoom-in-down", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-zoom-in-down {
+  animation: roy-zoom-in-down 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: center top;
+}
+
+@keyframes roy-zoom-in-down {
+
+  from {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -1000px, 0);
+  }
+  60% {
+    opacity: 1;
+    transform: scale3d(0.6, 0.6, 0.6) translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-zoom-in-left",
+    name: "Zoom In Left",
+    category: "animations",
+    description: "An animated motion effect (zoom in left)",
+    tags: ["zoom", "scale", "zoom-in-left", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-zoom-in-left {
+  animation: roy-zoom-in-left 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: left center;
+}
+
+@keyframes roy-zoom-in-left {
+
+  from {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(-1000px, 0, 0);
+  }
+  60% {
+    opacity: 1;
+    transform: scale3d(0.6, 0.6, 0.6) translate3d(20px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-zoom-in-right",
+    name: "Zoom In Right",
+    category: "animations",
+    description: "An animated motion effect (zoom in right)",
+    tags: ["zoom", "scale", "zoom-in-right", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-zoom-in-right {
+  animation: roy-zoom-in-right 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: right center;
+}
+
+@keyframes roy-zoom-in-right {
+
+  from {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0);
+  }
+  60% {
+    opacity: 1;
+    transform: scale3d(0.6, 0.6, 0.6) translate3d(-20px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-zoom-in-up",
+    name: "Zoom In Up",
+    category: "animations",
+    description: "An animated motion effect (zoom in up)",
+    tags: ["zoom", "scale", "zoom-in-up", "in", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-zoom-in-up {
+  animation: roy-zoom-in-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: center bottom;
+}
+
+@keyframes roy-zoom-in-up {
+
+  from {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 1000px, 0);
+  }
+  60% {
+    opacity: 1;
+    transform: scale3d(0.6, 0.6, 0.6) translate3d(0, -20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-zoom-out-left",
+    name: "Zoom Out Left",
+    category: "animations",
+    description: "An animated motion effect (zoom out left)",
+    tags: ["zoom", "scale", "zoom-out-left", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-zoom-out-left {
+  animation: roy-zoom-out-left 0.65s cubic-bezier(0.55, 0, 0.68, 0.53) both;
+  transform-origin: left center;
+}
+
+@keyframes roy-zoom-out-left {
+
+  40% {
+    opacity: 1;
+    transform: scale3d(0.7, 0.7, 0.7) translate3d(20px, 0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(-1000px, 0, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-zoom-out-up",
+    name: "Zoom Out Up",
+    category: "animations",
+    description: "An animated motion effect (zoom out up)",
+    tags: ["zoom", "scale", "zoom-out-up", "out", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-zoom-out-up {
+  animation: roy-zoom-out-up 0.65s cubic-bezier(0.55, 0, 0.68, 0.53) both;
+  transform-origin: center bottom;
+}
+
+@keyframes roy-zoom-out-up {
+
+  40% {
+    opacity: 1;
+    transform: scale3d(0.7, 0.7, 0.7) translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -1000px, 0);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-visual-frost-blur",
+    name: "Frost Blur",
+    category: "visual",
+    description: "A visual filter or surface effect (frost blur)",
+    tags: ["visual", "effect", "visual-frost-blur", "frost"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-frost-blur {
+  position: relative;
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  border: none;
+  background:
+    radial-gradient(circle at 30% 30%, oklch(0.685 0.131 226.94) 0%, transparent 50%),
+    radial-gradient(circle at 70% 70%, oklch(0.652 0.241 354.31) 0%, transparent 50%),
+    linear-gradient(135deg, oklch(0.566 0.245 278.69), oklch(0.769 0.188 70.08));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-visual-glass-reflection",
+    name: "Glass Reflection",
+    category: "visual",
+    description: "A visual filter or surface effect (glass reflection)",
+    tags: ["visual", "effect", "visual-glass-reflection", "glass"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-glass-reflection {
+  position: relative;
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  border: none;
+  background:
+    radial-gradient(circle at 30% 30%, oklch(0.652 0.241 354.31) 0%, transparent 50%),
+    radial-gradient(circle at 70% 70%, oklch(0.685 0.131 226.94) 0%, transparent 50%),
+    linear-gradient(135deg, oklch(0.566 0.245 278.69), oklch(0.769 0.188 70.08));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-visual-glitch-distort",
+    name: "Glitch Distort",
+    category: "visual",
+    description: "A visual filter or surface effect (glitch distort)",
+    tags: ["visual", "effect", "visual-glitch-distort", "glitch"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-glitch-distort {
+  position: relative;
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, oklch(0.652 0.241 354.31), oklch(0.566 0.245 278.69), oklch(0.685 0.131 226.94));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-visual-gradient-mesh",
+    name: "Gradient Mesh",
+    category: "visual",
+    description: "A visual filter or surface effect (gradient mesh)",
+    tags: ["visual", "effect", "visual-gradient-mesh", "gradient", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-gradient-mesh {
+  background:
+    radial-gradient(at 20% 20%, oklch(0.652 0.241 354.31) 0px, transparent 50%),
+    radial-gradient(at 80% 0%,  oklch(0.769 0.188 70.08) 0px, transparent 50%),
+    radial-gradient(at 0% 50%,  oklch(0.566 0.245 278.69) 0px, transparent 50%),
+    radial-gradient(at 80% 80%, oklch(0.685 0.131 226.94) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, oklch(0.723 0.191 149.06) 0px, transparent 50%),
+    oklch(0.21 0.034 264.67);
+  background-size: 200% 200%;
+  animation: roy-visual-gradient-mesh 10s ease-in-out infinite;
+}
+
+@keyframes roy-visual-gradient-mesh {
+
+  0%, 100% { background-position: 0% 0%; }
+  25%      { background-position: 100% 50%; }
+  50%      { background-position: 50% 100%; }
+  75%      { background-position: 0% 50%; }
+
+}`
+  },
+  {
+    id: "ferrum-visual-gradient-text-animated",
+    name: "Gradient Text Animated",
+    category: "visual",
+    description: "A text effect that styles and animates letterforms (gradient text animated)",
+    tags: ["visual", "effect", "visual-gradient-text-animated", "gradient", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-gradient-text-animated {
+  background: linear-gradient(
+    90deg,
+    oklch(0.637 0.237 25.77),
+    oklch(0.769 0.188 70.08),
+    oklch(0.795 0.184 86.05),
+    oklch(0.723 0.191 149.06),
+    oklch(0.685 0.131 226.94),
+    oklch(0.623 0.188 259.81),
+    oklch(0.566 0.245 278.69),
+    oklch(0.652 0.241 354.31),
+    oklch(0.637 0.237 25.77)
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: roy-visual-gradient-text-animated 4s linear infinite;
+}
+
+@keyframes roy-visual-gradient-text-animated {
+
+  to { background-position: 200% center; }
+
+}`
+  },
+  {
+    id: "ferrum-visual-holographic",
+    name: "Holographic",
+    category: "visual",
+    description: "A visual filter or surface effect (holographic)",
+    tags: ["visual", "effect", "visual-holographic", "holographic", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-holographic {
+  position: relative;
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(
+    115deg,
+    oklch(0.645 0.26 2.47) 0%,
+    oklch(0.747 0.18 57.36) 14%,
+    oklch(0.917 0.192 101.41) 28%,
+    oklch(0.879 0.216 155.3) 42%,
+    oklch(0.804 0.146 219.52) 56%,
+    oklch(0.513 0.293 288.34) 70%,
+    oklch(0.678 0.297 338.33) 84%,
+    oklch(0.645 0.26 2.47) 100%
+  );
+  background-size: 300% 300%;
+  overflow: hidden;
+  animation: roy-visual-holographic-shift 6s ease infinite;
+}
+
+@keyframes roy-visual-holographic-shift {
+
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+
+}`
+  },
+  {
+    id: "ferrum-visual-hue-rotate-loop",
+    name: "Hue Rotate Loop",
+    category: "visual",
+    description: "A visual filter or surface effect (hue rotate loop)",
+    tags: ["visual", "effect", "visual-hue-rotate-loop", "hue", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-hue-rotate-loop {
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  border: none;
+  background: conic-gradient(
+    from 0deg,
+    oklch(0.637 0.237 25.77),
+    oklch(0.769 0.188 70.08),
+    oklch(0.795 0.184 86.05),
+    oklch(0.723 0.191 149.06),
+    oklch(0.685 0.131 226.94),
+    oklch(0.623 0.188 259.81),
+    oklch(0.566 0.245 278.69),
+    oklch(0.652 0.241 354.31),
+    oklch(0.637 0.237 25.77)
+  );
+  animation: roy-visual-hue-rotate-loop 4s linear infinite;
+}
+
+@keyframes roy-visual-hue-rotate-loop {
+
+  from { filter: hue-rotate(0deg); }
+  to   { filter: hue-rotate(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-visual-image-distortion",
+    name: "Image Distortion",
+    category: "visual",
+    description: "A visual filter or surface effect (image distortion)",
+    tags: ["visual", "effect", "visual-image-distortion", "image", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-image-distortion {
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, oklch(0.769 0.188 70.08), oklch(0.652 0.241 354.31), oklch(0.566 0.245 278.69), oklch(0.685 0.131 226.94));
+  animation: roy-visual-image-distortion 2.4s ease-in-out infinite;
+}
+
+@keyframes roy-visual-image-distortion {
+
+  0%, 100% {
+    filter: blur(0px);
+    transform: skew(0deg, 0deg) scale(1);
+  }
+  20% {
+    filter: blur(0.5px);
+    transform: skew(2deg, 1deg) scale(1.01);
+  }
+  40% {
+    filter: blur(1px);
+    transform: skew(-2deg, -1deg) scale(0.99);
+  }
+  60% {
+    filter: blur(0.5px);
+    transform: skew(1deg, 2deg) scale(1.01);
+  }
+  80% {
+    filter: blur(0px);
+    transform: skew(-1deg, -2deg) scale(1);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-visual-inner-glow",
+    name: "Inner Glow",
+    category: "visual",
+    description: "A visual filter or surface effect (inner glow)",
+    tags: ["visual", "effect", "visual-inner-glow", "inner", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-inner-glow {
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  background: oklch(0.21 0.034 264.67);
+  border: none;
+  animation: roy-visual-inner-glow 2.6s ease-in-out infinite;
+}
+
+@keyframes roy-visual-inner-glow {
+
+  0%, 100% {
+    box-shadow:
+      inset 0 0 20px color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent),
+      inset 0 0 40px color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent);
+  }
+  50% {
+    box-shadow:
+      inset 0 0 50px color-mix(in oklch, oklch(0.696 0.149 162.48) 70%, transparent),
+      inset 0 0 100px color-mix(in oklch, oklch(0.696 0.149 162.48) 35%, transparent);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-visual-iridescent",
+    name: "Iridescent",
+    category: "visual",
+    description: "A visual filter or surface effect (iridescent)",
+    tags: ["visual", "effect", "visual-iridescent", "iridescent", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-iridescent {
+  position: relative;
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  border: none;
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    oklch(0.645 0.26 2.47),
+    oklch(0.747 0.18 57.36),
+    oklch(0.917 0.192 101.41),
+    oklch(0.879 0.216 155.3),
+    oklch(0.804 0.146 219.52),
+    oklch(0.513 0.293 288.34),
+    oklch(0.678 0.297 338.33),
+    oklch(0.645 0.26 2.47)
+  );
+  animation: roy-visual-iridescent 8s linear infinite;
+  overflow: hidden;
+}
+
+@keyframes roy-visual-iridescent {
+
+  from { filter: hue-rotate(0deg); }
+  to   { filter: hue-rotate(360deg); }
+
+}`
+  },
+  {
+    id: "ferrum-visual-liquid-fill",
+    name: "Liquid Fill",
+    category: "visual",
+    description: "A visual filter or surface effect (liquid fill)",
+    tags: ["visual", "effect", "visual-liquid-fill", "liquid"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-liquid-fill {
+  position: relative;
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  background: oklch(0.21 0.034 264.67);
+  border: none;
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-visual-mask-fade",
+    name: "Mask Fade",
+    category: "visual",
+    description: "A visual filter or surface effect (mask fade)",
+    tags: ["visual", "effect", "visual-mask-fade", "mask", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-mask-fade {
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, oklch(0.652 0.241 354.31), oklch(0.566 0.245 278.69), oklch(0.685 0.131 226.94));
+  -webkit-mask: linear-gradient(180deg, transparent 0%, oklch(0 0 0) 50%, transparent 100%) no-repeat;
+  mask: linear-gradient(180deg, transparent 0%, oklch(0 0 0) 50%, transparent 100%) no-repeat;
+  -webkit-mask-size: 100% 200%;
+  mask-size: 100% 200%;
+  animation: roy-visual-mask-fade 3s ease-in-out infinite alternate;
+}
+
+@keyframes roy-visual-mask-fade {
+
+  from {
+    -webkit-mask-position: 0% 0%;
+    mask-position: 0% 0%;
+  }
+  to {
+    -webkit-mask-position: 0% 100%;
+    mask-position: 0% 100%;
+  }
+
+}`
+  },
+  {
+    id: "ferrum-visual-metallic",
+    name: "Metallic",
+    category: "visual",
+    description: "A visual filter or surface effect (metallic)",
+    tags: ["visual", "effect", "visual-metallic", "metallic"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-metallic {
+  position: relative;
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  border: none;
+  background:
+    linear-gradient(
+      180deg,
+      oklch(0.97 0.0 89.88) 0%,
+      oklch(0.86 0.011 286.17) 14%,
+      oklch(0.708 0.012 286.1) 28%,
+      oklch(0.602 0.012 286.03) 42%,
+      oklch(0.81 0.011 286.15) 58%,
+      oklch(0.957 0.007 286.27) 74%,
+      oklch(0.76 0.011 286.13) 88%,
+      oklch(0.86 0.011 286.17) 100%
+    );
+  overflow: hidden;
+  box-shadow:
+    inset 0 2px 4px color-mix(in oklch, oklch(1 0 0) 70%, transparent),
+    inset 0 -2px 4px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
+}`
+  },
+  {
+    id: "ferrum-visual-neon-pulse",
+    name: "Neon Pulse",
+    category: "visual",
+    description: "A visual filter or surface effect (neon pulse)",
+    tags: ["visual", "effect", "visual-neon-pulse", "neon", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-neon-pulse {
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  background: oklch(0.147 0.011 285.01);
+  border: 2px solid oklch(0.652 0.241 354.31);
+  animation: roy-visual-neon-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes roy-visual-neon-pulse {
+
+  0%, 100% {
+    box-shadow:
+      0 0 6px oklch(0.652 0.241 354.31),
+      0 0 12px oklch(0.652 0.241 354.31),
+      0 0 24px oklch(0.652 0.241 354.31),
+      inset 0 0 8px oklch(0.652 0.241 354.31),
+      inset 0 0 16px color-mix(in oklch, oklch(0.652 0.241 354.31) 50%, transparent);
+    border-color: oklch(0.652 0.241 354.31);
+  }
+  50% {
+    box-shadow:
+      0 0 16px oklch(0.652 0.241 354.31),
+      0 0 36px oklch(0.652 0.241 354.31),
+      0 0 60px oklch(0.652 0.241 354.31),
+      inset 0 0 18px oklch(0.652 0.241 354.31),
+      inset 0 0 36px color-mix(in oklch, oklch(0.652 0.241 354.31) 75%, transparent);
+    border-color: oklch(0.725 0.175 349.76);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-visual-noise-overlay",
+    name: "Noise Overlay",
+    category: "visual",
+    description: "A visual filter or surface effect (noise overlay)",
+    tags: ["visual", "effect", "visual-noise-overlay", "noise"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-noise-overlay {
+  position: relative;
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, oklch(0.27 0.04 260.03), oklch(0.21 0.034 264.67));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-visual-pixelate",
+    name: "Pixelate",
+    category: "visual",
+    description: "A visual filter or surface effect (pixelate)",
+    tags: ["visual", "effect", "visual-pixelate", "pixelate"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-pixelate {
+  position: relative;
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, oklch(0.769 0.188 70.08), oklch(0.652 0.241 354.31), oklch(0.566 0.245 278.69), oklch(0.685 0.131 226.94));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-visual-prism",
+    name: "Prism",
+    category: "visual",
+    description: "A visual filter or surface effect (prism)",
+    tags: ["visual", "effect", "visual-prism", "prism"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-prism {
+  position: relative;
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  border: none;
+  background: radial-gradient(circle at 50% 50%, oklch(0.228 0.038 282.93) 0%, oklch(0.147 0.011 285.01) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-visual-saturation-pulse",
+    name: "Saturation Pulse",
+    category: "visual",
+    description: "A visual filter or surface effect (saturation pulse)",
+    tags: ["visual", "effect", "visual-saturation-pulse", "saturation", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-saturation-pulse {
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, oklch(0.652 0.241 354.31), oklch(0.769 0.188 70.08), oklch(0.685 0.131 226.94));
+  animation: roy-visual-saturation-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes roy-visual-saturation-pulse {
+
+  0%, 100% { filter: saturate(0); }
+  50%      { filter: saturate(2.6); }
+
+}`
+  },
+  {
+    id: "ferrum-visual-shadow-pulse",
+    name: "Shadow Pulse",
+    category: "visual",
+    description: "A visual filter or surface effect (shadow pulse)",
+    tags: ["visual", "effect", "visual-shadow-pulse", "shadow", "animated"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-shadow-pulse {
+  width: 140px;
+  height: 100px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, oklch(0.566 0.245 278.69), oklch(0.652 0.241 354.31));
+  border: none;
+  animation: roy-visual-shadow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes roy-visual-shadow-pulse {
+
+  0%, 100% {
+    box-shadow: 0 4px 12px color-mix(in oklch, oklch(0.566 0.245 278.69) 30%, transparent);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 14px 38px color-mix(in oklch, oklch(0.652 0.241 354.31) 60%, transparent);
+    transform: scale(1.04);
+  }
+
+}`
+  },
+  {
+    id: "ferrum-visual-shimmer-sweep",
+    name: "Shimmer Sweep",
+    category: "visual",
+    description: "A visual filter or surface effect (shimmer sweep)",
+    tags: ["visual", "effect", "visual-shimmer-sweep", "shimmer"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-shimmer-sweep {
+  position: relative;
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, oklch(0.27 0.04 260.03), oklch(0.39 0.04 257.29));
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-visual-spotlight-follow",
+    name: "Spotlight Follow",
+    category: "visual",
+    description: "A visual filter or surface effect (spotlight follow)",
+    tags: ["visual", "effect", "visual-spotlight-follow", "spotlight"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-visual-spotlight-follow {
+  position: relative;
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  background: oklch(0.147 0.011 285.01);
+  border: none;
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-water-ripple",
+    name: "Water Ripple",
+    category: "visual",
+    description: "A water ripple effect",
+    tags: ["water-ripple", "ripple"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-water-ripple {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(0.723 0.107 226.27) 0%, oklch(0.495 0.09 232.27) 70%, oklch(0.347 0.065 233.52) 100%);
+  overflow: hidden;
+}`
+  },
+  {
+    id: "ferrum-watercolor",
+    name: "Watercolor",
+    category: "visual",
+    description: "A watercolor effect",
+    tags: ["watercolor"],
+    previewType: "box",
+    cssCode: `.roycss-ferrum-watercolor {
+  width: 100%;
+  min-height: 240px;
+  background:
+    radial-gradient(ellipse 50% 40% at 25% 35%, color-mix(in oklch, oklch(0.791 0.13 2.1) 70%, transparent), transparent 60%),
+    radial-gradient(ellipse 45% 35% at 70% 30%, color-mix(in oklch, oklch(0.818 0.094 251.36) 65%, transparent), transparent 65%),
+    radial-gradient(ellipse 55% 40% at 60% 75%, color-mix(in oklch, oklch(0.904 0.126 90.5) 60%, transparent), transparent 60%),
+    radial-gradient(ellipse 35% 30% at 30% 80%, color-mix(in oklch, oklch(0.932 0.125 144.49) 55%, transparent), transparent 65%),
+    radial-gradient(ellipse 30% 25% at 85% 65%, color-mix(in oklch, oklch(0.78 0.161 313.74) 55%, transparent), transparent 65%),
+    linear-gradient(135deg, oklch(0.974 0.011 84.58) 0%, oklch(0.933 0.023 84.59) 100%);
+  background-blend-mode: multiply, multiply, multiply, multiply, multiply, normal;
+  filter: blur(0.5px) contrast(0.95);
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+}`
+  }
+];
+
+// src/lib/roycss-types.ts
 var categoryMeta = {
   animations: {
     label: "Animations",
@@ -31630,7 +49238,7 @@ var categoryOrder = [
   "misc"
 ];
 
-// ../src/lib/roycss-effects.ts
+// src/lib/roycss-effects.ts
 var effects = [
   ...effectsBatch1,
   ...effectsBatch2,
@@ -31650,13 +49258,28 @@ var effects = [
   ...effectsBatch16,
   ...effectsBatch17,
   ...effectsBatch18,
-  ...effectsBatch19
+  ...effectsBatch19,
+  ...effectsBatch20,
+  ...effectsBatch21,
+  ...effectsBatch22,
+  ...effectsBatch23,
+  ...effectsBatch24,
+  ...effectsBatch25,
+  ...effectsBatch26,
+  ...effectsBatch27,
+  ...effectsBatch28,
+  ...effectsBatch29,
+  ...effectsBatch30,
+  ...effectsBatch31,
+  ...effectsBatch32,
+  ...effectsBatch33,
+  ...effectsBatch34
 ];
 var allEffectCSS = effects.map((e) => e.cssCode).join(`
 
 `);
 
-// ../src/cli/index.ts
+// src/cli/index.ts
 import { writeFileSync, readFileSync, existsSync, readdirSync } from "fs";
 import { join } from "path";
 var c = {

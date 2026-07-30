@@ -267,7 +267,7 @@ const PRODUCTS: PlatformProduct[] = [
     tier: "free",
     priority: 5,
     revenue: "Free / OSS",
-    features: ["Search 840+ effects", "Get CSS code by ID", "Framework examples", "Design tokens", "Recipes", "Claude + Cursor + Windsurf"],
+    features: ["Search 1569+ effects", "Get CSS code by ID", "Framework examples", "Design tokens", "Recipes", "Claude + Cursor + Windsurf"],
   },
 ];
 
@@ -682,7 +682,7 @@ function CompetitiveMoat() {
               <p className="text-xs text-muted-foreground mt-1">Unique differentiators</p>
             </div>
             <div className="text-center">
-              <AnimatedCounter value={840} className="font-display text-3xl font-bold text-primary" />
+              <AnimatedCounter value={1569} className="font-display text-3xl font-bold text-primary" />
               <p className="text-xs text-muted-foreground mt-1">Free CSS effects</p>
             </div>
             <div className="text-center">

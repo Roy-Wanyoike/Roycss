@@ -291,7 +291,7 @@ export function RecipesSection() {
         {/* CTA */}
         <ScrollReveal delay={0.2} className="mt-12 text-center">
           <p className="text-sm text-muted-foreground mb-3">
-            Want to build your own recipe? Combine any of the 840+ effects.
+            Want to build your own recipe? Combine any of the 1569+ effects.
           </p>
           <button
             onClick={() => document.querySelector("#effects")?.scrollIntoView({ behavior: "smooth" })}

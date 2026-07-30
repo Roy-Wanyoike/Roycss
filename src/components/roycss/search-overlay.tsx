@@ -54,7 +54,7 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
     return [
       { id: "why-roycss", label: "Why RoyCSS", desc: "Value propositions" },
       { id: "get-started", label: "Get Started", desc: "Installation guide" },
-      { id: "effects", label: "Effects", desc: "Browse all 840+ effects" },
+      { id: "effects", label: "Effects", desc: "Browse all 1569+ effects" },
       { id: "recipes", label: "Recipes", desc: "Curated UI patterns" },
       { id: "patterns", label: "Patterns", desc: "UI state patterns" },
       { id: "platform", label: "Platform", desc: "18+ products ecosystem" },

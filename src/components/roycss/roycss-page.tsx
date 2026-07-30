@@ -77,6 +77,7 @@ import { ContactForm } from "@/components/roycss/contact-form";
 import { FeaturedCompanies } from "@/components/roycss/featured-companies";
 import { RecipesSection } from "@/components/roycss/recipes-section";
 import { PatternsSection } from "@/components/roycss/patterns-section";
+import { CollectionsSection } from "@/components/roycss/collections-section";
 import { PlaygroundPanel } from "@/components/roycss/playground-panel";
 import { SearchOverlay } from "@/components/roycss/search-overlay";
 import { DocsViewer } from "@/components/roycss/docs-viewer";
@@ -982,6 +983,12 @@ export default function RoyCSSPage() {
                   Patterns
                 </button>
                 <button
+                  onClick={() => scrollToSection("#collections")}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === "collections" ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
+                >
+                  Collections
+                </button>
+                <button
                   onClick={() => scrollToSection("#platform")}
                   className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === "platform" ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
                 >
@@ -1075,6 +1082,8 @@ export default function RoyCSSPage() {
                     { label: "Get Started", id: "#get-started" },
                     { label: "Effects", id: "#effects" },
                     { label: "Recipes", id: "#recipes" },
+                    { label: "Patterns", id: "#patterns" },
+                    { label: "Collections", id: "#collections" },
                     { label: "Platform", id: "#platform" },
                     { label: "FAQ", id: "#faq" },
                   ].map((item) => (
@@ -1494,6 +1503,11 @@ export default function RoyCSSPage() {
 
       {/* ─── Patterns Section (UI state patterns) ─────────────── */}
       <PatternsSection />
+
+      <Separator className="opacity-50" />
+
+      {/* ─── Collections Section (curated themed bundles) ────── */}
+      <CollectionsSection onSelectEffect={(effect) => { setSelectedEffect(effect); setDialogOpen(true); }} />
 
       <Separator className="opacity-50" />
 

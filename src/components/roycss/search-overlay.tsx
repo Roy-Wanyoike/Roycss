@@ -6,6 +6,7 @@ import { Search, X, ArrowRight } from "lucide-react";
 import { effects, categoryMeta } from "@/lib/roycss-effects";
 import { recipes } from "@/lib/roycss-recipes";
 import { patterns } from "@/lib/roycss-patterns";
+import { collections } from "@/lib/roycss-collections";
 import type { CSSEffect } from "@/lib/roycss-types";
 
 interface SearchOverlayProps {
@@ -48,6 +49,12 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
     return patterns.filter(p => p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q) || p.tags.some(t => t.toLowerCase().includes(q))).slice(0, 3);
   }, [query]);
 
+  const collectionResults = useMemo(() => {
+    if (!query.trim()) return [];
+    const q = query.toLowerCase();
+    return collections.filter(c => c.name.toLowerCase().includes(q) || c.description.toLowerCase().includes(q) || c.tagline.toLowerCase().includes(q) || c.tags.some(t => t.toLowerCase().includes(q))).slice(0, 3);
+  }, [query]);
+
   const sectionResults = useMemo(() => {
     if (!query.trim()) return [];
     const q = query.toLowerCase();
@@ -57,13 +64,14 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
       { id: "effects", label: "Effects", desc: "Browse all 1569+ effects" },
       { id: "recipes", label: "Recipes", desc: "Curated UI patterns" },
       { id: "patterns", label: "Patterns", desc: "UI state patterns" },
+      { id: "collections", label: "Collections", desc: "Curated themed effect bundles" },
       { id: "platform", label: "Platform", desc: "18+ products ecosystem" },
       { id: "docs", label: "Docs", desc: "Documentation & guides" },
       { id: "faq", label: "FAQ", desc: "Frequently asked questions" },
     ].filter(s => s.label.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q));
   }, [query]);
 
-  const totalResults = sectionResults.length + effectResults.length + recipeResults.length + patternResults.length;
+  const totalResults = sectionResults.length + effectResults.length + recipeResults.length + patternResults.length + collectionResults.length;
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === "ArrowDown") { e.preventDefault(); setSelectedIndex(i => Math.min(i + 1, totalResults - 1)); }
@@ -78,8 +86,10 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
       if (idx < recipeResults.length && recipeResults[idx]) { onJumpToSection("#recipes"); onOpenChange(false); return; }
       idx -= recipeResults.length;
       if (idx < patternResults.length && patternResults[idx]) { onJumpToSection("#patterns"); onOpenChange(false); return; }
+      idx -= patternResults.length;
+      if (idx < collectionResults.length && collectionResults[idx]) { onJumpToSection("#collections"); onOpenChange(false); return; }
     }
-  }, [selectedIndex, totalResults, sectionResults, effectResults, recipeResults, patternResults, onJumpToSection, onSelectEffect, onOpenChange]);
+  }, [selectedIndex, totalResults, sectionResults, effectResults, recipeResults, patternResults, collectionResults, onJumpToSection, onSelectEffect, onOpenChange]);
 
   return (
     <AnimatePresence>
@@ -167,6 +177,18 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
                         className={`w-full flex items-center gap-3 p-2.5 rounded-lg transition-all cursor-pointer text-left ${selectedIndex === index ? "bg-primary/10" : "hover:bg-muted/50"}`}>
                         <div className="flex items-center justify-center size-8 rounded-lg bg-violet-500/10 text-violet-500 shrink-0 text-xs font-bold">P</div>
                         <div className="min-w-0"><p className="text-sm font-medium text-foreground truncate">{p.name}</p><p className="text-xs text-muted-foreground truncate">Pattern · {p.tags.slice(0, 2).join(", ")}</p></div>
+                      </button>
+                    );
+                  })}
+                  {collectionResults.length > 0 && (sectionResults.length > 0 || effectResults.length > 0 || recipeResults.length > 0 || patternResults.length > 0) && <div className="h-px bg-border/50 my-1" />}
+                  {collectionResults.map((c, i) => {
+                    const index = i + sectionResults.length + effectResults.length + recipeResults.length + patternResults.length;
+                    return (
+                      <button key={c.id} onClick={() => { onJumpToSection("#collections"); onOpenChange(false); }}
+                        onMouseEnter={() => setSelectedIndex(index)}
+                        className={`w-full flex items-center gap-3 p-2.5 rounded-lg transition-all cursor-pointer text-left ${selectedIndex === index ? "bg-primary/10" : "hover:bg-muted/50"}`}>
+                        <div className="flex items-center justify-center size-8 rounded-lg bg-teal-500/10 text-teal-500 shrink-0 text-base">{c.icon}</div>
+                        <div className="min-w-0"><p className="text-sm font-medium text-foreground truncate">{c.name}</p><p className="text-xs text-muted-foreground truncate">Collection · {c.effectIds.length} effects · {c.tags.slice(0, 2).join(", ")}</p></div>
                       </button>
                     );
                   })}

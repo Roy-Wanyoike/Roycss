@@ -76,6 +76,9 @@ import { PlatformEcosystem } from "@/components/roycss/platform-ecosystem";
 import { ContactForm } from "@/components/roycss/contact-form";
 import { FeaturedCompanies } from "@/components/roycss/featured-companies";
 import { RecipesSection } from "@/components/roycss/recipes-section";
+import { PatternsSection } from "@/components/roycss/patterns-section";
+import { PlaygroundPanel } from "@/components/roycss/playground-panel";
+import { SearchOverlay } from "@/components/roycss/search-overlay";
 import { useFavorites } from "@/hooks/use-favorites";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
@@ -109,38 +112,7 @@ import {
 function scrollToSection(id: string) {
   const target = document.querySelector(id) as HTMLElement | null;
   if (!target) return;
-
-  const effectsEl = document.querySelector("#effects");
-  const isBelowGrid =
-    effectsEl &&
-    target.compareDocumentPosition(effectsEl) &
-      Node.DOCUMENT_POSITION_PRECEDING;
-
-  if (isBelowGrid) {
-    // Sections below the effects grid need all cards loaded first,
-    // because lazy-loading shifts the document height. We:
-    // 1. Dispatch "load all cards" to the VirtualScrollGrid
-    // 2. Wait 1.5s for React to render 840+ cards
-    // 3. Instant-scroll to the target, then keep re-correcting every
-    //    400ms until the target is within 50px of the viewport top.
-    //    This handles the ongoing layout shift from DynamicEffectCSS
-    //    injecting styles (page height grows for ~2s after load-all).
-    window.dispatchEvent(new CustomEvent("roycss-load-all-cards"));
-    setTimeout(() => {
-      let attempts = 0;
-      const doScroll = () => {
-        target.scrollIntoView({ behavior: "auto", block: "start" });
-        attempts++;
-        const rect = target.getBoundingClientRect();
-        if (Math.abs(rect.top) > 50 && attempts < 8) {
-          setTimeout(doScroll, 400);
-        }
-      };
-      doScroll();
-    }, 1500);
-  } else {
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
+  target.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 /* ─── Icon map for categories ───────────────────────────────── */
@@ -865,24 +837,43 @@ export default function RoyCSSPage() {
   const [favoritesOpen, setFavoritesOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
+  const [playgroundOpen, setPlaygroundOpen] = useState(false);
+  const [searchOverlayOpen, setSearchOverlayOpen] = useState(false);
   const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  // ⌘K / Ctrl+K to focus search
+  // ⌘K / Ctrl+K to open search overlay
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
-        searchInputRef.current?.focus();
-        searchInputRef.current?.select();
+        setSearchOverlayOpen(true);
       }
-      if (e.key === "Escape" && document.activeElement === searchInputRef.current) {
-        setSearch("");
-        searchInputRef.current?.blur();
+      if (e.key === "Escape") {
+        setSearchOverlayOpen(false);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  // Active section highlighting via IntersectionObserver
+  const [activeSection, setActiveSection] = useState("");
+  useEffect(() => {
+    const sectionIds = ["get-started", "effects", "recipes", "patterns", "platform", "docs", "faq"];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      },
+      { rootMargin: "-30% 0px -60% 0px" },
+    );
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
   }, []);
 
   const favoriteEffects = effects.filter((e) => isFavorite(e.id));
@@ -964,37 +955,43 @@ export default function RoyCSSPage() {
               <div className="hidden md:flex items-center gap-1 mr-2">
                 <button
                   onClick={() => scrollToSection("#get-started")}
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer"
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === "get-started" ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
                 >
                   Get Started
                 </button>
                 <button
                   onClick={() => scrollToSection("#docs")}
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer"
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === "docs" ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
                 >
                   Docs
                 </button>
                 <button
                   onClick={() => scrollToSection("#effects")}
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer"
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === "effects" ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
                 >
                   Effects
                 </button>
                 <button
                   onClick={() => scrollToSection("#recipes")}
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer"
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === "recipes" ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
                 >
                   Recipes
                 </button>
                 <button
+                  onClick={() => scrollToSection("#patterns")}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === "patterns" ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
+                >
+                  Patterns
+                </button>
+                <button
                   onClick={() => scrollToSection("#platform")}
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer"
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === "platform" ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
                 >
                   Platform
                 </button>
                 <button
                   onClick={() => scrollToSection("#faq")}
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer"
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === "faq" ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
                 >
                   FAQ
                 </button>
@@ -1007,6 +1004,14 @@ export default function RoyCSSPage() {
                 aria-expanded={mobileMenuOpen}
               >
                 {mobileMenuOpen ? <X className="size-4" /> : <Menu className="size-4" />}
+              </button>
+              {/* Search button (⌘K) */}
+              <button
+                onClick={() => setSearchOverlayOpen(true)}
+                className="flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-foreground transition-all cursor-pointer"
+                aria-label="Search (⌘K)"
+              >
+                <Search className="size-4" />
               </button>
               <ThemeToggle />
               <button
@@ -1459,7 +1464,12 @@ export default function RoyCSSPage() {
 
       <Separator className="opacity-50" />
 
-      {/* ─── Platform Ecosystem (15-product vision) ─────────── */}
+      {/* ─── Patterns Section (UI state patterns) ─────────────── */}
+      <PatternsSection />
+
+      <Separator className="opacity-50" />
+
+      {/* ─── Platform Ecosystem (18-product vision) ─────────── */}
       <PlatformEcosystem />
 
       <Separator className="opacity-50" />
@@ -1654,6 +1664,17 @@ export default function RoyCSSPage() {
 
       {/* Contact / Suggestion Form */}
       <ContactForm open={contactOpen} onOpenChange={setContactOpen} />
+
+      {/* Animation Playground */}
+      <PlaygroundPanel open={playgroundOpen} onOpenChange={setPlaygroundOpen} />
+
+      {/* Search Overlay (⌘K) */}
+      <SearchOverlay
+        open={searchOverlayOpen}
+        onOpenChange={setSearchOverlayOpen}
+        onSelectEffect={(e) => { setSelectedEffect(e); setDialogOpen(true); }}
+        onJumpToSection={(id) => scrollToSection(id)}
+      />
 
       {/* Section Scrollbar (desktop only) */}
       <SectionScrollbar

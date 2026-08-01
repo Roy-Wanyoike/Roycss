@@ -35,6 +35,7 @@ import {
   Contrast,
   Palette,
   Wrench,
+  Move3d,
   Type,
   Loader2,
   Box,
@@ -126,6 +127,9 @@ import { CSSUnitConverter } from "@/components/roycss/css-unit-converter";
 import { ContrastChecker } from "@/components/roycss/contrast-checker";
 import { CSSGradientGenerator } from "@/components/roycss/gradient-generator";
 import { BorderRadiusVisualizer } from "@/components/roycss/border-radius-visualizer";
+import { BoxShadowGenerator } from "@/components/roycss/box-shadow-generator";
+import { ColorPaletteGenerator } from "@/components/roycss/palette-generator";
+import { TransformStudio } from "@/components/roycss/transform-studio";
 import { useFavorites } from "@/hooks/use-favorites";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
@@ -913,6 +917,9 @@ export default function RoyCSSPage() {
   const [contrastCheckerOpen, setContrastCheckerOpen] = useState(false);
   const [gradientGenOpen, setGradientGenOpen] = useState(false);
   const [borderRadiusOpen, setBorderRadiusOpen] = useState(false);
+  const [shadowGenOpen, setShadowGenOpen] = useState(false);
+  const [paletteGenOpen, setPaletteGenOpen] = useState(false);
+  const [transformStudioOpen, setTransformStudioOpen] = useState(false);
   const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -1165,6 +1172,15 @@ export default function RoyCSSPage() {
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setBorderRadiusOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <Square className="size-4 text-muted-foreground" /> Border Radius Visualizer
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setShadowGenOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Box className="size-4 text-muted-foreground" /> Box Shadow Generator
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setPaletteGenOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Palette className="size-4 text-muted-foreground" /> Color Palette Generator
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setTransformStudioOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Move3d className="size-4 text-muted-foreground" /> Transform Studio
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setShortcutsOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <Keyboard className="size-4 text-muted-foreground" /> Keyboard Shortcuts
@@ -2038,6 +2054,48 @@ export default function RoyCSSPage() {
             <SheetDescription>Drag sliders to adjust corners. Copy CSS instantly.</SheetDescription>
           </SheetHeader>
           <div className="p-5"><BorderRadiusVisualizer /></div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Box Shadow Generator Sheet */}
+      <Sheet open={shadowGenOpen} onOpenChange={setShadowGenOpen}>
+        <SheetContent side="right" className="w-full sm:max-w-md overflow-y-auto p-0">
+          <SheetHeader className="p-5 pb-3 text-left border-b border-border/50">
+            <SheetTitle className="flex items-center gap-2 font-display text-lg">
+              <Box className="size-5 text-primary" />
+              Box Shadow Generator
+            </SheetTitle>
+            <SheetDescription>Multi-layer shadows with OKLCH colors. Presets + custom.</SheetDescription>
+          </SheetHeader>
+          <div className="p-5"><BoxShadowGenerator /></div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Color Palette Generator Sheet */}
+      <Sheet open={paletteGenOpen} onOpenChange={setPaletteGenOpen}>
+        <SheetContent side="right" className="w-full sm:max-w-md overflow-y-auto p-0">
+          <SheetHeader className="p-5 pb-3 text-left border-b border-border/50">
+            <SheetTitle className="flex items-center gap-2 font-display text-lg">
+              <Palette className="size-5 text-primary" />
+              Color Palette Generator
+            </SheetTitle>
+            <SheetDescription>Generate OKLCH palettes with 6 harmony types.</SheetDescription>
+          </SheetHeader>
+          <div className="p-5"><ColorPaletteGenerator /></div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Transform Studio Sheet */}
+      <Sheet open={transformStudioOpen} onOpenChange={setTransformStudioOpen}>
+        <SheetContent side="right" className="w-full sm:max-w-md overflow-y-auto p-0">
+          <SheetHeader className="p-5 pb-3 text-left border-b border-border/50">
+            <SheetTitle className="flex items-center gap-2 font-display text-lg">
+              <Move3d className="size-5 text-primary" />
+              Transform Studio
+            </SheetTitle>
+            <SheetDescription>Interactive CSS transform visualizer — rotate, scale, skew, translate.</SheetDescription>
+          </SheetHeader>
+          <div className="p-5"><TransformStudio /></div>
         </SheetContent>
       </Sheet>
 

@@ -256,7 +256,7 @@ function SponsorModal({ open, onOpenChange }: SponsorModalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md p-0 gap-0 overflow-hidden">
+      <DialogContent className="max-w-lg p-0 gap-0 overflow-hidden">
         <DialogHeader className="p-5 pb-3 text-left">
           <DialogTitle className="flex items-center gap-2 font-display text-lg">
             <Heart className="size-5 text-primary" />
@@ -387,13 +387,42 @@ function SponsorModal({ open, onOpenChange }: SponsorModalProps) {
             </div>
           </div>
 
+          {/* GitHub Sponsor embedded card */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <Github className="size-4 text-foreground" />
+              <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                Sponsor via GitHub
+              </Label>
+            </div>
+            <div className="rounded-xl overflow-hidden border border-border/50 bg-background flex justify-center">
+              <iframe
+                src="https://github.com/sponsors/Roy-Wanyoike/card"
+                title="Sponsor Roy-Wanyoike"
+                height={225}
+                width={600}
+                style={{ border: 0, maxWidth: "100%" }}
+                loading="lazy"
+              />
+            </div>
+            <a
+              href="https://github.com/sponsors/Roy-Wanyoike"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-foreground text-background hover:bg-foreground/90 transition-all font-medium text-sm cursor-pointer"
+            >
+              <Github className="size-4" />
+              Go to GitHub Sponsors Page →
+            </a>
+          </div>
+
           {/* Info note */}
           <div className="flex items-start gap-2 p-3 rounded-lg bg-muted/50 border border-border/50">
             <Info className="size-3.5 text-muted-foreground shrink-0 mt-0.5" />
             <p className="text-[11px] text-muted-foreground leading-relaxed">
               Tier amounts are suggestions — not requirements. You&apos;ll be recognized at the
               tier matching your contribution. All sponsors get listed in the carousel and on the
-              homepage.
+              homepage. You can also sponsor directly on GitHub using the card above.
             </p>
           </div>
         </div>

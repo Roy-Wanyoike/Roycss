@@ -96,7 +96,7 @@ import { GetStarted } from "@/components/roycss/get-started";
 import { RoyMotionShowcase } from "@/components/roycss/roymotion-showcase";
 import { PlatformEcosystem } from "@/components/roycss/platform-ecosystem";
 import { ContactForm } from "@/components/roycss/contact-form";
-import { FeaturedCompanies } from "@/components/roycss/featured-companies";
+import { FeaturedCompanies, SponsorModal } from "@/components/roycss/featured-companies";
 import { RecipesSection } from "@/components/roycss/recipes-section";
 import { PatternsSection } from "@/components/roycss/patterns-section";
 import { CollectionsSection } from "@/components/roycss/collections-section";
@@ -1204,17 +1204,15 @@ export default function RoyCSSPage() {
                   </motion.span>
                 )}
               </button>
-              {/* Sponsor button */}
-              <a
-                href="https://github.com/sponsors/Roy-Wanyoike"
-                target="_blank"
-                rel="noopener noreferrer"
+              {/* Sponsor button — opens modal with GitHub Sponsor card + payment methods */}
+              <button
+                onClick={() => setSponsorModalOpen(true)}
                 className="hidden sm:inline-flex items-center gap-1.5 h-11 px-4 rounded-xl bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-all font-medium text-xs cursor-pointer"
-                aria-label="Sponsor RoyCSS on GitHub"
+                aria-label="Sponsor RoyCSS"
               >
                 <Heart className="size-3.5" />
                 Sponsor
-              </a>
+              </button>
               <a
                 href="https://github.com/Roy-Wanyoike/roycss"
                 target="_blank"
@@ -1300,16 +1298,13 @@ export default function RoyCSSPage() {
                     Contact
                     <Mail className="size-3.5" />
                   </button>
-                  <a
-                    href="https://github.com/sponsors/Roy-Wanyoike"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setMobileMenuOpen(false)}
+                  <button
+                    onClick={() => { setSponsorModalOpen(true); setMobileMenuOpen(false); }}
                     className="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium text-primary hover:bg-primary/5 transition-all cursor-pointer min-h-[44px]"
                   >
                     Sponsor
                     <Heart className="size-3.5" />
-                  </a>
+                  </button>
                 </div>
               </motion.div>
             )}
@@ -1880,15 +1875,13 @@ export default function RoyCSSPage() {
               >
                 Contact
               </button>
-              <a
-                href="https://github.com/sponsors/Roy-Wanyoike"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:text-primary/80 transition-colors"
+              <button
+                onClick={() => setSponsorModalOpen(true)}
+                className="text-primary hover:text-primary/80 transition-colors cursor-pointer"
                 aria-label="Sponsor RoyCSS"
               >
                 <Heart className="size-4" />
-              </a>
+              </button>
               <a
                 href="https://github.com/Roy-Wanyoike/roycss"
                 target="_blank"
@@ -2101,6 +2094,9 @@ export default function RoyCSSPage() {
 
       {/* Contact / Suggestion Form */}
       <ContactForm open={contactOpen} onOpenChange={setContactOpen} />
+
+      {/* Sponsor Modal — GitHub Sponsor card + M-Pesa + PayPal + Crypto */}
+      <SponsorModal open={sponsorModalOpen} onOpenChange={setSponsorModalOpen} />
 
       {/* Animation Playground */}
       <PlaygroundPanel open={playgroundOpen} onOpenChange={setPlaygroundOpen} />

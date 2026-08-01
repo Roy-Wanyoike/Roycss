@@ -26,6 +26,7 @@ import {
   Play,
   Clock,
   Keyboard,
+  Clipboard,
   Type,
   Loader2,
   Box,
@@ -91,6 +92,8 @@ import { FloatingSponsorButton } from "@/components/roycss/floating-sponsor-butt
 import { RecentEffectsSheet, pushRecentEffect } from "@/components/roycss/recent-effects-sheet";
 import { KeyboardShortcutsOverlay } from "@/components/roycss/keyboard-shortcuts-overlay";
 import { EffectOfTheDay } from "@/components/roycss/effect-of-the-day";
+import { CategoryExplorer } from "@/components/roycss/category-explorer";
+import { CopyHistorySheet, pushToCopyHistory } from "@/components/roycss/copy-history-sheet";
 import { useFavorites } from "@/hooks/use-favorites";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
@@ -854,6 +857,7 @@ export default function RoyCSSPage() {
   const [recentOpen, setRecentOpen] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const [sponsorModalOpen, setSponsorModalOpen] = useState(false);
+  const [copyHistoryOpen, setCopyHistoryOpen] = useState(false);
   const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -1077,6 +1081,15 @@ export default function RoyCSSPage() {
                 title="Recently Used"
               >
                 <Clock className="size-4" />
+              </button>
+              {/* Copy History button */}
+              <button
+                onClick={() => setCopyHistoryOpen(true)}
+                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
+                aria-label="Copy history"
+                title="Copy History"
+              >
+                <Clipboard className="size-4" />
               </button>
               {/* Keyboard shortcuts button */}
               <button
@@ -1327,6 +1340,15 @@ export default function RoyCSSPage() {
           {/* Effect of the Day */}
           <div className="mb-8">
             <EffectOfTheDay onSelectEffect={(e) => { pushRecentEffect(e.id); setSelectedEffect(e); setDialogOpen(true); }} />
+          </div>
+
+          {/* Category Explorer */}
+          <div className="mb-8">
+            <CategoryExplorer onCategorySelect={(cat) => {
+              setActiveCategory(cat);
+              const grid = document.querySelector("#effects [class*=\"grid\"]");
+              if (grid) grid.scrollIntoView({ behavior: "smooth", block: "start" });
+            }} />
           </div>
 
           {/* Section heading */}
@@ -1794,6 +1816,13 @@ export default function RoyCSSPage() {
 
       {/* Keyboard Shortcuts Overlay — press ? to toggle */}
       <KeyboardShortcutsOverlay open={shortcutsOpen} onOpenChange={setShortcutsOpen} />
+
+      {/* Copy History Sheet — tracks copied CSS */}
+      <CopyHistorySheet
+        open={copyHistoryOpen}
+        onOpenChange={setCopyHistoryOpen}
+        onSelectEffect={(e) => { setSelectedEffect(e); setDialogOpen(true); }}
+      />
 
       {/* Contact / Suggestion Form */}
       <ContactForm open={contactOpen} onOpenChange={setContactOpen} />

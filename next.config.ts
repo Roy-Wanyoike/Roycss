@@ -23,7 +23,7 @@ const securityHeaders = [
   },
   {
     key: "Content-Security-Policy",
-    value: "frame-ancestors 'self' *;",
+    value: "frame-ancestors 'self' *; frame-src https://github.com https://*.github.com;",
   },
 ];
 

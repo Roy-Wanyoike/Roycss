@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
   Sparkles,
+  Minimize2,
   Stethoscope,
   Microscope,
   Gauge,
@@ -29,13 +30,14 @@ import {
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { LivePreview } from "@/components/roycss/effect-card";
+import { CSSMinifier } from "@/components/roycss/css-minifier";
 import type { CSSEffect } from "@/lib/roycss-types";
 
 /* ═══════════════════════════════════════════════════════════════
    Shared types
    ═══════════════════════════════════════════════════════════════ */
 
-type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff";
+type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier";
 
 interface PlatformToolsProps {
   tool: ToolType | null;
@@ -1392,6 +1394,7 @@ const TOOL_META: Record<ToolType, { title: string; icon: React.ComponentType<{ c
   "ai-migration": { title: "AI Migration", icon: ArrowLeftRight, description: "Convert Bootstrap, Tailwind, Material, Bulma, or Foundation CSS to RoyCSS (OKLCH + logical properties)." },
   "challenges": { title: "Community Challenges", icon: Trophy, description: "Complete CSS challenges, earn XP, and climb the leaderboard." },
   "design-diff": { title: "Design Diff", icon: GitCompare, description: "Compare two CSS blocks — see exactly what properties were added, changed, or removed." },
+  "css-minifier": { title: "CSS Minifier", icon: Minimize2, description: "Paste CSS → get minified output with size savings and gzip estimate." },
 };
 
 export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformToolsProps) {
@@ -1419,6 +1422,7 @@ export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformTo
               {tool === "ai-migration" && <AIMigration />}
               {tool === "challenges" && <CommunityChallenges />}
               {tool === "design-diff" && <DesignDiff />}
+              {tool === "css-minifier" && <CSSMinifier />}
             </div>
           </>
         )}

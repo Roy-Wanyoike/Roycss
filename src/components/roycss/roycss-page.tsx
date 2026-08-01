@@ -1644,7 +1644,7 @@ export default function RoyCSSPage() {
 
       {/* ─── Platform Ecosystem (18-product vision) ─────────── */}
       <PlatformEcosystem onLaunchTool={(toolId) => {
-        if (toolId === "ai-playground" || toolId === "css-doctor" || toolId === "utility-explorer" || toolId === "benchmark" || toolId === "genome" || toolId === "ai-migration" || toolId === "challenges" || toolId === "design-diff") {
+        if (toolId === "ai-playground" || toolId === "css-doctor" || toolId === "utility-explorer" || toolId === "benchmark" || toolId === "genome" || toolId === "ai-migration" || toolId === "challenges" || toolId === "design-diff" || toolId === "css-minifier") {
           setPlatformTool(toolId);
         }
       }} />

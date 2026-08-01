@@ -28,6 +28,7 @@ import {
   Keyboard,
   Clipboard,
   Calculator,
+  BarChart3,
   Type,
   Loader2,
   Box,
@@ -98,6 +99,8 @@ import { CopyHistorySheet, pushToCopyHistory } from "@/components/roycss/copy-hi
 import { RandomEffectPicker } from "@/components/roycss/random-effect-picker";
 import { TagsCloud } from "@/components/roycss/tags-cloud";
 import { BundleCalculator } from "@/components/roycss/bundle-calculator";
+import { UserAnalyticsDashboard } from "@/components/roycss/analytics-dashboard";
+import { PWAInstallPrompt } from "@/components/roycss/pwa-install-prompt";
 import { useFavorites } from "@/hooks/use-favorites";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
@@ -863,6 +866,7 @@ export default function RoyCSSPage() {
   const [sponsorModalOpen, setSponsorModalOpen] = useState(false);
   const [copyHistoryOpen, setCopyHistoryOpen] = useState(false);
   const [bundleCalcOpen, setBundleCalcOpen] = useState(false);
+  const [analyticsOpen, setAnalyticsOpen] = useState(false);
   const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -1124,6 +1128,15 @@ export default function RoyCSSPage() {
                 title="Bundle Calculator"
               >
                 <Calculator className="size-4" />
+              </button>
+              {/* Analytics Dashboard button */}
+              <button
+                onClick={() => setAnalyticsOpen(true)}
+                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
+                aria-label="Your activity dashboard"
+                title="Your Activity"
+              >
+                <BarChart3 className="size-4" />
               </button>
               {/* Keyboard shortcuts button */}
               <button
@@ -1875,6 +1888,17 @@ export default function RoyCSSPage() {
 
       {/* Bundle Calculator — select effects, see total size */}
       <BundleCalculator open={bundleCalcOpen} onOpenChange={setBundleCalcOpen} />
+
+      {/* User Analytics Dashboard — personal stats */}
+      <UserAnalyticsDashboard
+        open={analyticsOpen}
+        onOpenChange={setAnalyticsOpen}
+        favoritesCount={count}
+        onSelectEffect={(e) => { setSelectedEffect(e); setDialogOpen(true); }}
+      />
+
+      {/* PWA Install Prompt — smart install banner */}
+      <PWAInstallPrompt />
 
       {/* Contact / Suggestion Form */}
       <ContactForm open={contactOpen} onOpenChange={setContactOpen} />

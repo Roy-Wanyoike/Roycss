@@ -19,6 +19,7 @@ import {
   Share2,
 } from "lucide-react";
 import type { CSSEffect } from "@/lib/roycss-types";
+import { StarRating } from "@/components/roycss/star-rating";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -508,6 +509,8 @@ export function EffectDetailDialog({
                   </Badge>
                 );
               })()}
+              {/* Star rating */}
+              <StarRating effectId={effect.id} />
               {onCompare && (
                 <button
                   onClick={() => { onCompare(effect); onOpenChange(false); }}

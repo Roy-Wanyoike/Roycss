@@ -745,6 +745,7 @@ const INTERACTIVE_TOOLS: Record<string, string> = {
   "ai-migration": "ai-migration",
   "challenges": "challenges",
   "design-diff": "design-diff",
+  "css-minifier": "css-minifier",
   "mcp-server": "mcp-server",
   "inspector": "inspector",
 };

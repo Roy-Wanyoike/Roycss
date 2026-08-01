@@ -16,6 +16,7 @@ import {
   Tag,
   Sparkles,
   GitCompare,
+  Share2,
 } from "lucide-react";
 import type { CSSEffect } from "@/lib/roycss-types";
 import { Badge } from "@/components/ui/badge";
@@ -361,6 +362,60 @@ function RelatedEffects({
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   Share Button — copies shareable URL with #effect=<id> hash
+   ═══════════════════════════════════════════════════════════════ */
+
+function ShareButton({ effectId }: { effectId: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = useCallback(async () => {
+    const url = `${window.location.origin}${window.location.pathname}#effect=${effectId}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      window.history.replaceState(null, "", `#effect=${effectId}`);
+      setTimeout(() => setCopied(false), 2000);
+    } catch { /* noop */ }
+  }, [effectId]);
+
+  return (
+    <button
+      onClick={handleShare}
+      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+        copied ? "bg-emerald-500/15 text-emerald-500" : "bg-muted text-foreground hover:bg-primary hover:text-primary-foreground"
+      }`}
+      aria-label="Copy shareable link"
+      title="Copy shareable link"
+    >
+      {copied ? <Check className="size-3.5" /> : <Share2 className="size-3.5" />}
+      <span className="hidden sm:inline">{copied ? "Copied!" : "Share"}</span>
+    </button>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Complexity Score — rates effect CSS as Simple/Moderate/Complex
+   ═══════════════════════════════════════════════════════════════ */
+
+function getComplexity(css: string): { level: "Simple" | "Moderate" | "Complex"; score: number; color: string } {
+  let score = 0;
+  if (/@keyframes/.test(css)) score += 2;
+  if (/::before|::after/.test(css)) score += 1;
+  if (/@property/.test(css)) score += 2;
+  if (/backdrop-filter/.test(css)) score += 1;
+  if (/transform.*perspective|preserve-3d/.test(css)) score += 2;
+  if (/color-mix/.test(css)) score += 1;
+  if (css.split("\n").length > 25) score += 2;
+  if (css.split("\n").length > 40) score += 1;
+  if (/@media/.test(css)) score += 1;
+  if (/animation.*infinite/.test(css)) score += 1;
+
+  if (score <= 3) return { level: "Simple", score, color: "text-emerald-500 bg-emerald-500/10" };
+  if (score <= 6) return { level: "Moderate", score, color: "text-amber-500 bg-amber-500/10" };
+  return { level: "Complex", score, color: "text-rose-500 bg-rose-500/10" };
+}
+
+/* ═══════════════════════════════════════════════════════════════
    MAIN DIALOG COMPONENT
    ═══════════════════════════════════════════════════════════════ */
 
@@ -444,6 +499,15 @@ export function EffectDetailDialog({
               <Badge variant="secondary" className="text-xs bg-primary/10 text-primary border-primary/20">
                 {meta.label}
               </Badge>
+              {/* Complexity badge */}
+              {(() => {
+                const cx = getComplexity(effect.cssCode);
+                return (
+                  <Badge variant="secondary" className={`text-xs ${cx.color}`} title={`Complexity score: ${cx.score}/10`}>
+                    {cx.level}
+                  </Badge>
+                );
+              })()}
               {onCompare && (
                 <button
                   onClick={() => { onCompare(effect); onOpenChange(false); }}
@@ -455,6 +519,8 @@ export function EffectDetailDialog({
                   <span className="hidden sm:inline">Compare</span>
                 </button>
               )}
+              {/* Share button — copies shareable URL */}
+              <ShareButton effectId={effect.id} />
             </div>
           </div>
 

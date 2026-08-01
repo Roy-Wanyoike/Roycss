@@ -866,6 +866,26 @@ export default function RoyCSSPage() {
   const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
+  // Check URL hash for shared effect links (#effect=pulse-glow)
+  useEffect(() => {
+    const hash = window.location.hash;
+    const match = hash.match(/^#effect=([a-z0-9-]+)$/);
+    if (match) {
+      const effectId = match[1];
+      const effect = effects.find(e => e.id === effectId);
+      if (effect) {
+        // Use queueMicrotask to avoid synchronous setState in effect
+        queueMicrotask(() => {
+          setSelectedEffect(effect);
+          setDialogOpen(true);
+          setTimeout(() => {
+            document.querySelector("#effects")?.scrollIntoView({ behavior: "smooth" });
+          }, 100);
+        });
+      }
+    }
+  }, []);
+
   // ⌘K / Ctrl+K to open search overlay
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

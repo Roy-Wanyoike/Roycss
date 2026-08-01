@@ -3,19 +3,15 @@ import type { NextConfig } from "next";
 const securityHeaders = [
   {
     key: "Cross-Origin-Opener-Policy",
-    value: "same-origin",
+    value: "same-origin-allow-popups",
   },
   {
     key: "Cross-Origin-Resource-Policy",
-    value: "same-origin",
+    value: "cross-origin",
   },
   {
     key: "X-Content-Type-Options",
     value: "nosniff",
-  },
-  {
-    key: "X-Frame-Options",
-    value: "DENY",
   },
   {
     key: "Referrer-Policy",
@@ -24,6 +20,10 @@ const securityHeaders = [
   {
     key: "Permissions-Policy",
     value: "camera=(), microphone=(), geolocation=()",
+  },
+  {
+    key: "Content-Security-Policy",
+    value: "frame-ancestors 'self' *;",
   },
 ];
 

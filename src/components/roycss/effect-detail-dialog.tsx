@@ -20,6 +20,8 @@ import {
 } from "lucide-react";
 import type { CSSEffect } from "@/lib/roycss-types";
 import { StarRating } from "@/components/roycss/star-rating";
+import { ExportToCodePen } from "@/components/roycss/export-to-codepen";
+import { A11yScore } from "@/components/roycss/a11y-score";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -511,6 +513,10 @@ export function EffectDetailDialog({
               })()}
               {/* Star rating */}
               <StarRating effectId={effect.id} />
+              {/* A11y score */}
+              <A11yScore effect={effect} />
+              {/* Export to CodePen */}
+              <ExportToCodePen effect={effect} />
               {onCompare && (
                 <button
                   onClick={() => { onCompare(effect); onOpenChange(false); }}

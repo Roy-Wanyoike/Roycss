@@ -107,6 +107,9 @@ import { PWAInstallPrompt } from "@/components/roycss/pwa-install-prompt";
 import { CSSBeautifier } from "@/components/roycss/css-beautifier";
 import { CustomCollectionsSheet } from "@/components/roycss/custom-collections";
 import { EffectRecommendationEngine } from "@/components/roycss/recommendation-engine";
+import { PropertySearch } from "@/components/roycss/property-search";
+import { ExportToCodePen } from "@/components/roycss/export-to-codepen";
+import { A11yScore } from "@/components/roycss/a11y-score";
 import { useFavorites } from "@/hooks/use-favorites";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
@@ -1442,6 +1445,19 @@ export default function RoyCSSPage() {
           {/* Recommendation Engine */}
           <div className="mb-8">
             <EffectRecommendationEngine onSelectEffect={(e) => { pushRecentEffect(e.id); setSelectedEffect(e); setDialogOpen(true); }} />
+          </div>
+
+          {/* Property Search */}
+          <div className="mb-8">
+            <PropertySearch onResults={(ids) => {
+              if (ids.length === 0) {
+                setSearch("");
+              } else {
+                // Set search to the first effect name to trigger filtering
+                const firstMatch = effects.find(e => e.id === ids[0]);
+                if (firstMatch) setSearch(firstMatch.category);
+              }
+            }} />
           </div>
 
           {/* Section heading */}

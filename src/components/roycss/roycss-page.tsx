@@ -24,6 +24,8 @@ import {
   Rocket,
   Layers,
   Play,
+  Clock,
+  Keyboard,
   Type,
   Loader2,
   Box,
@@ -84,6 +86,11 @@ import { PlatformTools } from "@/components/roycss/platform-tools";
 import { PlaygroundPanel } from "@/components/roycss/playground-panel";
 import { SearchOverlay } from "@/components/roycss/search-overlay";
 import { DocsViewer } from "@/components/roycss/docs-viewer";
+import { StickyMiniNav } from "@/components/roycss/sticky-mini-nav";
+import { FloatingSponsorButton } from "@/components/roycss/floating-sponsor-button";
+import { RecentEffectsSheet, pushRecentEffect } from "@/components/roycss/recent-effects-sheet";
+import { KeyboardShortcutsOverlay } from "@/components/roycss/keyboard-shortcuts-overlay";
+import { EffectOfTheDay } from "@/components/roycss/effect-of-the-day";
 import { useFavorites } from "@/hooks/use-favorites";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
@@ -844,6 +851,9 @@ export default function RoyCSSPage() {
   const [compareOpen, setCompareOpen] = useState(false);
   const [compareEffects, setCompareEffects] = useState<CSSEffect[]>([]);
   const [platformTool, setPlatformTool] = useState<"ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | null>(null);
+  const [recentOpen, setRecentOpen] = useState(false);
+  const [shortcutsOpen, setShortcutsOpen] = useState(false);
+  const [sponsorModalOpen, setSponsorModalOpen] = useState(false);
   const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -1058,6 +1068,24 @@ export default function RoyCSSPage() {
                     {count}
                   </motion.span>
                 )}
+              </button>
+              {/* Recently Used button */}
+              <button
+                onClick={() => setRecentOpen(true)}
+                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
+                aria-label="Recently used effects"
+                title="Recently Used"
+              >
+                <Clock className="size-4" />
+              </button>
+              {/* Keyboard shortcuts button */}
+              <button
+                onClick={() => setShortcutsOpen(true)}
+                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
+                aria-label="Keyboard shortcuts"
+                title="Shortcuts (?)"
+              >
+                <Keyboard className="size-4" />
               </button>
               {/* Sponsor button */}
               <a
@@ -1296,6 +1324,11 @@ export default function RoyCSSPage() {
       {/* ─── Effects Section ────────────────────────────────── */}
       <main id="effects" tabIndex={-1} className="flex-1 py-10 sm:py-14 scroll-mt-20 focus:outline-none">
         <div className="container mx-auto px-4 sm:px-6">
+          {/* Effect of the Day */}
+          <div className="mb-8">
+            <EffectOfTheDay onSelectEffect={(e) => { pushRecentEffect(e.id); setSelectedEffect(e); setDialogOpen(true); }} />
+          </div>
+
           {/* Section heading */}
           <SectionHeading
             eyebrow="Browse the collection"
@@ -1397,6 +1430,7 @@ export default function RoyCSSPage() {
               isFavorite={isFavorite}
               onToggleFavorite={toggleFavorite}
               onCardClick={(e) => {
+                pushRecentEffect(e.id);
                 setSelectedEffect(e);
                 setDialogOpen(true);
               }}
@@ -1737,6 +1771,29 @@ export default function RoyCSSPage() {
 
       {/* Scroll to Top Button */}
       <ScrollToTop />
+
+      {/* Sticky Mini Nav — glassmorphism floating nav */}
+      <StickyMiniNav
+        activeSection={activeSection}
+        onScrollToSection={scrollToSection}
+        onOpenSearch={() => setSearchOverlayOpen(true)}
+        onOpenFavorites={() => setFavoritesOpen(true)}
+        onOpenPlayground={() => setPlaygroundOpen(true)}
+        onOpenCompare={() => { setCompareEffects([]); setCompareOpen(true); }}
+      />
+
+      {/* Floating Sponsor Button — chat-assistant style */}
+      <FloatingSponsorButton onClick={() => setSponsorModalOpen(true)} />
+
+      {/* Recently Used Effects Sheet */}
+      <RecentEffectsSheet
+        open={recentOpen}
+        onOpenChange={setRecentOpen}
+        onSelectEffect={(e) => { setSelectedEffect(e); setDialogOpen(true); }}
+      />
+
+      {/* Keyboard Shortcuts Overlay — press ? to toggle */}
+      <KeyboardShortcutsOverlay open={shortcutsOpen} onOpenChange={setShortcutsOpen} />
 
       {/* Contact / Suggestion Form */}
       <ContactForm open={contactOpen} onOpenChange={setContactOpen} />

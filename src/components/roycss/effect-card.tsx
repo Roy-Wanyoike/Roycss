@@ -147,13 +147,14 @@ function ButtonPreview({
 
   return (
     <div className="flex items-center justify-center h-full">
-      <button
-        ref={btnRef}
+      <div
+        ref={btnRef as React.RefObject<HTMLDivElement>}
         onClick={handleClick}
         className={className}
+        role="presentation"
       >
         {text}
-      </button>
+      </div>
     </div>
   );
 }

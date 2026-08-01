@@ -63,12 +63,13 @@ export function VirtualScrollGrid({
   // but since we can't control that here, we use a lazy reset via the sentinel observer
   // which naturally handles the case when new effects are loaded.
 
-  // Scroll grid to top when effects change
+  // Scroll grid to top when the RESULT SET changes (search/filter/category change)
+  // Using effects.length as the dep signal to avoid firing on every parent re-render.
   useEffect(() => {
     if (gridRef.current) {
       gridRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-  }, [effects]);
+  }, [effects.length]);
 
   const visibleEffects = effects.slice(0, visibleCount);
 

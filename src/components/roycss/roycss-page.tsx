@@ -147,7 +147,22 @@ import {
 function scrollToSection(id: string) {
   const target = document.querySelector(id) as HTMLElement | null;
   if (!target) return;
-  target.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  // If scrolling to a section below the effects grid, dispatch load-all-cards
+  // to stabilize the document height before scrolling.
+  const effectsEl = document.querySelector("#effects");
+  if (effectsEl && target.offsetTop > effectsEl.offsetTop) {
+    window.dispatchEvent(new CustomEvent("roycss-load-all-cards"));
+  }
+
+  // Use requestAnimationFrame to ensure DOM is updated after any card loading
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      const rect = target.getBoundingClientRect();
+      const offset = window.scrollY + rect.top - 72; // 72px for navbar height
+      window.scrollTo({ top: Math.max(0, offset), behavior: "smooth" });
+    });
+  });
 }
 
 /* ─── Icon map for categories ───────────────────────────────── */

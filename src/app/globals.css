@@ -123,11 +123,15 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
   html {
     scroll-behavior: smooth;
-    overflow-x: hidden;
+  }
+
+  /* ─── Scroll margin for all anchored sections ───────────── */
+  section[id], main[id] {
+    scroll-margin-top: 5rem;
   }
 
   /* ─── Focus Visible (uses token, not hardcoded) ──────────── */
@@ -204,10 +208,8 @@
     scrollbar-color: color-mix(in oklch, var(--primary) 55%, var(--background)) color-mix(in oklch, var(--background) 80%, var(--foreground) 5%);
   }
 
-  /* Reserve scrollbar space to prevent layout shift */
-  body {
-    scrollbar-gutter: stable;
-  }
+  /* scrollbar-gutter removed — causes layout shift with overflow-x: clip.
+     The scrollbar appears naturally when content overflows. */
 }
 
 @layer utilities {

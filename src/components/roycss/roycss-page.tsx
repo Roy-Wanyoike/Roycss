@@ -34,6 +34,7 @@ import {
   Ruler,
   Contrast,
   Palette,
+  Wrench,
   Type,
   Loader2,
   Box,
@@ -66,6 +67,14 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 import {
   effects,
   categoryMeta,
@@ -1104,24 +1113,64 @@ export default function RoyCSSPage() {
               >
                 <Search className="size-4" />
               </button>
-              {/* Animation Playground button */}
-              <button
-                onClick={() => setPlaygroundOpen(true)}
-                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
-                aria-label="Open animation playground"
-                title="Animation Playground"
-              >
-                <SlidersHorizontal className="size-4" />
-              </button>
-              {/* Compare button */}
-              <button
-                onClick={() => { setCompareEffects([]); setCompareOpen(true); }}
-                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
-                aria-label="Open effect comparison"
-                title="Compare Effects"
-              >
-                <GitCompare className="size-4" />
-              </button>
+              {/* Tools Dropdown — consolidates 13 tool buttons into one menu */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
+                    aria-label="Developer tools"
+                    title="Tools"
+                  >
+                    <Wrench className="size-4" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Developer Tools</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => setPlaygroundOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <SlidersHorizontal className="size-4 text-muted-foreground" /> Playground
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => { setCompareEffects([]); setCompareOpen(true); }} className="cursor-pointer gap-2 text-sm">
+                    <GitCompare className="size-4 text-muted-foreground" /> Compare Effects
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setRecentOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Clock className="size-4 text-muted-foreground" /> Recently Used
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setCopyHistoryOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Clipboard className="size-4 text-muted-foreground" /> Copy History
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setCollectionsOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <FolderPlus className="size-4 text-muted-foreground" /> My Collections
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setAnalyticsOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <BarChart3 className="size-4 text-muted-foreground" /> Activity Dashboard
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">CSS Utilities</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => setBundleCalcOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Calculator className="size-4 text-muted-foreground" /> Bundle Calculator
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setBeautifierOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Braces className="size-4 text-muted-foreground" /> CSS Beautifier
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setUnitConverterOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Ruler className="size-4 text-muted-foreground" /> Unit Converter
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setContrastCheckerOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Contrast className="size-4 text-muted-foreground" /> Contrast Checker
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setGradientGenOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Palette className="size-4 text-muted-foreground" /> Gradient Generator
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setBorderRadiusOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Square className="size-4 text-muted-foreground" /> Border Radius Visualizer
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setShortcutsOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Keyboard className="size-4 text-muted-foreground" /> Keyboard Shortcuts
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
               <ThemeToggle />
               <button
                 onClick={() => setFavoritesOpen(true)}
@@ -1138,105 +1187,6 @@ export default function RoyCSSPage() {
                     {count}
                   </motion.span>
                 )}
-              </button>
-              {/* Recently Used button */}
-              <button
-                onClick={() => setRecentOpen(true)}
-                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
-                aria-label="Recently used effects"
-                title="Recently Used"
-              >
-                <Clock className="size-4" />
-              </button>
-              {/* Copy History button */}
-              <button
-                onClick={() => setCopyHistoryOpen(true)}
-                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
-                aria-label="Copy history"
-                title="Copy History"
-              >
-                <Clipboard className="size-4" />
-              </button>
-              {/* Bundle Calculator button */}
-              <button
-                onClick={() => setBundleCalcOpen(true)}
-                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
-                aria-label="Bundle calculator"
-                title="Bundle Calculator"
-              >
-                <Calculator className="size-4" />
-              </button>
-              {/* Analytics Dashboard button */}
-              <button
-                onClick={() => setAnalyticsOpen(true)}
-                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
-                aria-label="Your activity dashboard"
-                title="Your Activity"
-              >
-                <BarChart3 className="size-4" />
-              </button>
-              {/* Custom Collections button */}
-              <button
-                onClick={() => setCollectionsOpen(true)}
-                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
-                aria-label="My collections"
-                title="My Collections"
-              >
-                <FolderPlus className="size-4" />
-              </button>
-              {/* CSS Beautifier button */}
-              <button
-                onClick={() => setBeautifierOpen(true)}
-                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
-                aria-label="CSS beautifier"
-                title="CSS Beautifier"
-              >
-                <Braces className="size-4" />
-              </button>
-              {/* Unit Converter button */}
-              <button
-                onClick={() => setUnitConverterOpen(true)}
-                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
-                aria-label="CSS unit converter"
-                title="Unit Converter"
-              >
-                <Ruler className="size-4" />
-              </button>
-              {/* Contrast Checker button */}
-              <button
-                onClick={() => setContrastCheckerOpen(true)}
-                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
-                aria-label="Contrast checker"
-                title="Contrast Checker"
-              >
-                <Contrast className="size-4" />
-              </button>
-              {/* Gradient Generator button */}
-              <button
-                onClick={() => setGradientGenOpen(true)}
-                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
-                aria-label="Gradient generator"
-                title="Gradient Generator"
-              >
-                <Palette className="size-4" />
-              </button>
-              {/* Border Radius Visualizer button */}
-              <button
-                onClick={() => setBorderRadiusOpen(true)}
-                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
-                aria-label="Border radius visualizer"
-                title="Border Radius Visualizer"
-              >
-                <Square className="size-4" />
-              </button>
-              {/* Keyboard shortcuts button */}
-              <button
-                onClick={() => setShortcutsOpen(true)}
-                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
-                aria-label="Keyboard shortcuts"
-                title="Shortcuts (?)"
-              >
-                <Keyboard className="size-4" />
               </button>
               {/* Sponsor button */}
               <a

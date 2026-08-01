@@ -31,6 +31,8 @@ import {
   BarChart3,
   FolderPlus,
   Braces,
+  Ruler,
+  Contrast,
   Type,
   Loader2,
   Box,
@@ -110,6 +112,8 @@ import { EffectRecommendationEngine } from "@/components/roycss/recommendation-e
 import { PropertySearch } from "@/components/roycss/property-search";
 import { ExportToCodePen } from "@/components/roycss/export-to-codepen";
 import { A11yScore } from "@/components/roycss/a11y-score";
+import { CSSUnitConverter } from "@/components/roycss/css-unit-converter";
+import { ContrastChecker } from "@/components/roycss/contrast-checker";
 import { useFavorites } from "@/hooks/use-favorites";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
@@ -878,6 +882,8 @@ export default function RoyCSSPage() {
   const [analyticsOpen, setAnalyticsOpen] = useState(false);
   const [collectionsOpen, setCollectionsOpen] = useState(false);
   const [beautifierOpen, setBeautifierOpen] = useState(false);
+  const [unitConverterOpen, setUnitConverterOpen] = useState(false);
+  const [contrastCheckerOpen, setContrastCheckerOpen] = useState(false);
   const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -1166,6 +1172,24 @@ export default function RoyCSSPage() {
                 title="CSS Beautifier"
               >
                 <Braces className="size-4" />
+              </button>
+              {/* Unit Converter button */}
+              <button
+                onClick={() => setUnitConverterOpen(true)}
+                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
+                aria-label="CSS unit converter"
+                title="Unit Converter"
+              >
+                <Ruler className="size-4" />
+              </button>
+              {/* Contrast Checker button */}
+              <button
+                onClick={() => setContrastCheckerOpen(true)}
+                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
+                aria-label="Contrast checker"
+                title="Contrast Checker"
+              >
+                <Contrast className="size-4" />
               </button>
               {/* Keyboard shortcuts button */}
               <button
@@ -1964,9 +1988,35 @@ export default function RoyCSSPage() {
             </SheetTitle>
             <SheetDescription>Format messy CSS into readable, indented output.</SheetDescription>
           </SheetHeader>
-          <div className="p-5">
-            <CSSBeautifier />
-          </div>
+          <div className="p-5"><CSSBeautifier /></div>
+        </SheetContent>
+      </Sheet>
+
+      {/* CSS Unit Converter Sheet */}
+      <Sheet open={unitConverterOpen} onOpenChange={setUnitConverterOpen}>
+        <SheetContent side="right" className="w-full sm:max-w-md overflow-y-auto p-0">
+          <SheetHeader className="p-5 pb-3 text-left border-b border-border/50">
+            <SheetTitle className="flex items-center gap-2 font-display text-lg">
+              <Ruler className="size-5 text-primary" />
+              Unit Converter
+            </SheetTitle>
+            <SheetDescription>Convert between px, rem, em, pt, vw, vh, %.</SheetDescription>
+          </SheetHeader>
+          <div className="p-5"><CSSUnitConverter /></div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Contrast Checker Sheet */}
+      <Sheet open={contrastCheckerOpen} onOpenChange={setContrastCheckerOpen}>
+        <SheetContent side="right" className="w-full sm:max-w-md overflow-y-auto p-0">
+          <SheetHeader className="p-5 pb-3 text-left border-b border-border/50">
+            <SheetTitle className="flex items-center gap-2 font-display text-lg">
+              <Contrast className="size-5 text-primary" />
+              Contrast Checker
+            </SheetTitle>
+            <SheetDescription>WCAG color contrast — AA/AAA pass/fail with live preview.</SheetDescription>
+          </SheetHeader>
+          <div className="p-5"><ContrastChecker /></div>
         </SheetContent>
       </Sheet>
 

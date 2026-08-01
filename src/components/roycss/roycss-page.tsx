@@ -29,6 +29,8 @@ import {
   Clipboard,
   Calculator,
   BarChart3,
+  FolderPlus,
+  Braces,
   Type,
   Loader2,
   Box,
@@ -60,6 +62,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import {
   effects,
   categoryMeta,
@@ -101,6 +104,9 @@ import { TagsCloud } from "@/components/roycss/tags-cloud";
 import { BundleCalculator } from "@/components/roycss/bundle-calculator";
 import { UserAnalyticsDashboard } from "@/components/roycss/analytics-dashboard";
 import { PWAInstallPrompt } from "@/components/roycss/pwa-install-prompt";
+import { CSSBeautifier } from "@/components/roycss/css-beautifier";
+import { CustomCollectionsSheet } from "@/components/roycss/custom-collections";
+import { EffectRecommendationEngine } from "@/components/roycss/recommendation-engine";
 import { useFavorites } from "@/hooks/use-favorites";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
@@ -867,6 +873,8 @@ export default function RoyCSSPage() {
   const [copyHistoryOpen, setCopyHistoryOpen] = useState(false);
   const [bundleCalcOpen, setBundleCalcOpen] = useState(false);
   const [analyticsOpen, setAnalyticsOpen] = useState(false);
+  const [collectionsOpen, setCollectionsOpen] = useState(false);
+  const [beautifierOpen, setBeautifierOpen] = useState(false);
   const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -1138,6 +1146,24 @@ export default function RoyCSSPage() {
               >
                 <BarChart3 className="size-4" />
               </button>
+              {/* Custom Collections button */}
+              <button
+                onClick={() => setCollectionsOpen(true)}
+                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
+                aria-label="My collections"
+                title="My Collections"
+              >
+                <FolderPlus className="size-4" />
+              </button>
+              {/* CSS Beautifier button */}
+              <button
+                onClick={() => setBeautifierOpen(true)}
+                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
+                aria-label="CSS beautifier"
+                title="CSS Beautifier"
+              >
+                <Braces className="size-4" />
+              </button>
               {/* Keyboard shortcuts button */}
               <button
                 onClick={() => setShortcutsOpen(true)}
@@ -1398,7 +1424,7 @@ export default function RoyCSSPage() {
             }} />
           </div>
 
-          {/* Surprise Me + Tags Cloud */}
+          {/* Surprise Me + Tags Cloud + Recommendations */}
           <div className="mb-8 grid sm:grid-cols-2 gap-6 items-start">
             <div>
               <h3 className="font-display text-base font-semibold text-foreground mb-3">Can&apos;t decide?</h3>
@@ -1411,6 +1437,11 @@ export default function RoyCSSPage() {
                 if (grid) grid.scrollIntoView({ behavior: "smooth", block: "start" });
               }} />
             </div>
+          </div>
+
+          {/* Recommendation Engine */}
+          <div className="mb-8">
+            <EffectRecommendationEngine onSelectEffect={(e) => { pushRecentEffect(e.id); setSelectedEffect(e); setDialogOpen(true); }} />
           </div>
 
           {/* Section heading */}
@@ -1899,6 +1930,29 @@ export default function RoyCSSPage() {
 
       {/* PWA Install Prompt — smart install banner */}
       <PWAInstallPrompt />
+
+      {/* Custom Collections Sheet */}
+      <CustomCollectionsSheet
+        open={collectionsOpen}
+        onOpenChange={setCollectionsOpen}
+        onSelectEffect={(e) => { setSelectedEffect(e); setDialogOpen(true); }}
+      />
+
+      {/* CSS Beautifier Sheet */}
+      <Sheet open={beautifierOpen} onOpenChange={setBeautifierOpen}>
+        <SheetContent side="right" className="w-full sm:max-w-2xl overflow-y-auto p-0">
+          <SheetHeader className="p-5 pb-3 text-left border-b border-border/50">
+            <SheetTitle className="flex items-center gap-2 font-display text-lg">
+              <Braces className="size-5 text-primary" />
+              CSS Beautifier
+            </SheetTitle>
+            <SheetDescription>Format messy CSS into readable, indented output.</SheetDescription>
+          </SheetHeader>
+          <div className="p-5">
+            <CSSBeautifier />
+          </div>
+        </SheetContent>
+      </Sheet>
 
       {/* Contact / Suggestion Form */}
       <ContactForm open={contactOpen} onOpenChange={setContactOpen} />

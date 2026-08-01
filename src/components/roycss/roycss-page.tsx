@@ -33,6 +33,7 @@ import {
   Braces,
   Ruler,
   Contrast,
+  Palette,
   Type,
   Loader2,
   Box,
@@ -114,6 +115,8 @@ import { ExportToCodePen } from "@/components/roycss/export-to-codepen";
 import { A11yScore } from "@/components/roycss/a11y-score";
 import { CSSUnitConverter } from "@/components/roycss/css-unit-converter";
 import { ContrastChecker } from "@/components/roycss/contrast-checker";
+import { CSSGradientGenerator } from "@/components/roycss/gradient-generator";
+import { BorderRadiusVisualizer } from "@/components/roycss/border-radius-visualizer";
 import { useFavorites } from "@/hooks/use-favorites";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
@@ -899,6 +902,8 @@ export default function RoyCSSPage() {
   const [beautifierOpen, setBeautifierOpen] = useState(false);
   const [unitConverterOpen, setUnitConverterOpen] = useState(false);
   const [contrastCheckerOpen, setContrastCheckerOpen] = useState(false);
+  const [gradientGenOpen, setGradientGenOpen] = useState(false);
+  const [borderRadiusOpen, setBorderRadiusOpen] = useState(false);
   const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -1205,6 +1210,24 @@ export default function RoyCSSPage() {
                 title="Contrast Checker"
               >
                 <Contrast className="size-4" />
+              </button>
+              {/* Gradient Generator button */}
+              <button
+                onClick={() => setGradientGenOpen(true)}
+                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
+                aria-label="Gradient generator"
+                title="Gradient Generator"
+              >
+                <Palette className="size-4" />
+              </button>
+              {/* Border Radius Visualizer button */}
+              <button
+                onClick={() => setBorderRadiusOpen(true)}
+                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
+                aria-label="Border radius visualizer"
+                title="Border Radius Visualizer"
+              >
+                <Square className="size-4" />
               </button>
               {/* Keyboard shortcuts button */}
               <button
@@ -2032,6 +2055,34 @@ export default function RoyCSSPage() {
             <SheetDescription>WCAG color contrast — AA/AAA pass/fail with live preview.</SheetDescription>
           </SheetHeader>
           <div className="p-5"><ContrastChecker /></div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Gradient Generator Sheet */}
+      <Sheet open={gradientGenOpen} onOpenChange={setGradientGenOpen}>
+        <SheetContent side="right" className="w-full sm:max-w-md overflow-y-auto p-0">
+          <SheetHeader className="p-5 pb-3 text-left border-b border-border/50">
+            <SheetTitle className="flex items-center gap-2 font-display text-lg">
+              <Palette className="size-5 text-primary" />
+              Gradient Generator
+            </SheetTitle>
+            <SheetDescription>Visual OKLCH gradient builder — linear, radial, conic.</SheetDescription>
+          </SheetHeader>
+          <div className="p-5"><CSSGradientGenerator /></div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Border Radius Visualizer Sheet */}
+      <Sheet open={borderRadiusOpen} onOpenChange={setBorderRadiusOpen}>
+        <SheetContent side="right" className="w-full sm:max-w-md overflow-y-auto p-0">
+          <SheetHeader className="p-5 pb-3 text-left border-b border-border/50">
+            <SheetTitle className="flex items-center gap-2 font-display text-lg">
+              <Square className="size-5 text-primary" />
+              Border Radius Visualizer
+            </SheetTitle>
+            <SheetDescription>Drag sliders to adjust corners. Copy CSS instantly.</SheetDescription>
+          </SheetHeader>
+          <div className="p-5"><BorderRadiusVisualizer /></div>
         </SheetContent>
       </Sheet>
 

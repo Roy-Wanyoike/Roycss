@@ -27,6 +27,7 @@ import {
   Clock,
   Keyboard,
   Clipboard,
+  Calculator,
   Type,
   Loader2,
   Box,
@@ -94,6 +95,9 @@ import { KeyboardShortcutsOverlay } from "@/components/roycss/keyboard-shortcuts
 import { EffectOfTheDay } from "@/components/roycss/effect-of-the-day";
 import { CategoryExplorer } from "@/components/roycss/category-explorer";
 import { CopyHistorySheet, pushToCopyHistory } from "@/components/roycss/copy-history-sheet";
+import { RandomEffectPicker } from "@/components/roycss/random-effect-picker";
+import { TagsCloud } from "@/components/roycss/tags-cloud";
+import { BundleCalculator } from "@/components/roycss/bundle-calculator";
 import { useFavorites } from "@/hooks/use-favorites";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
@@ -858,6 +862,7 @@ export default function RoyCSSPage() {
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const [sponsorModalOpen, setSponsorModalOpen] = useState(false);
   const [copyHistoryOpen, setCopyHistoryOpen] = useState(false);
+  const [bundleCalcOpen, setBundleCalcOpen] = useState(false);
   const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -1090,6 +1095,15 @@ export default function RoyCSSPage() {
                 title="Copy History"
               >
                 <Clipboard className="size-4" />
+              </button>
+              {/* Bundle Calculator button */}
+              <button
+                onClick={() => setBundleCalcOpen(true)}
+                className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
+                aria-label="Bundle calculator"
+                title="Bundle Calculator"
+              >
+                <Calculator className="size-4" />
               </button>
               {/* Keyboard shortcuts button */}
               <button
@@ -1349,6 +1363,21 @@ export default function RoyCSSPage() {
               const grid = document.querySelector("#effects [class*=\"grid\"]");
               if (grid) grid.scrollIntoView({ behavior: "smooth", block: "start" });
             }} />
+          </div>
+
+          {/* Surprise Me + Tags Cloud */}
+          <div className="mb-8 grid sm:grid-cols-2 gap-6 items-start">
+            <div>
+              <h3 className="font-display text-base font-semibold text-foreground mb-3">Can&apos;t decide?</h3>
+              <RandomEffectPicker onSelectEffect={(e) => { pushRecentEffect(e.id); setSelectedEffect(e); setDialogOpen(true); }} />
+            </div>
+            <div>
+              <TagsCloud onTagSelect={(tag) => {
+                setSearch(tag);
+                const grid = document.querySelector("#effects [class*=\"grid\"]");
+                if (grid) grid.scrollIntoView({ behavior: "smooth", block: "start" });
+              }} />
+            </div>
           </div>
 
           {/* Section heading */}
@@ -1823,6 +1852,9 @@ export default function RoyCSSPage() {
         onOpenChange={setCopyHistoryOpen}
         onSelectEffect={(e) => { setSelectedEffect(e); setDialogOpen(true); }}
       />
+
+      {/* Bundle Calculator — select effects, see total size */}
+      <BundleCalculator open={bundleCalcOpen} onOpenChange={setBundleCalcOpen} />
 
       {/* Contact / Suggestion Form */}
       <ContactForm open={contactOpen} onOpenChange={setContactOpen} />

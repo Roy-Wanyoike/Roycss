@@ -137,6 +137,9 @@ const PRODUCTS: PlatformProduct[] = [
     priority: 4,
     revenue: "Pro upgrade",
     features: ["roy create dashboard", "roy generate auth", "roy convert bootstrap", "roy convert tailwind", "roy optimize", "roy audit", "roy doctor"],
+    status: "Complete",
+    setup: "Install globally:\n  npm install -g roycss-cli\n  Or use without installing:\n  npx roycss-cli <command>\n\nKey commands:\n  roycss init --framework react  # Initialize in a React project\n  roycss search 'neon glow'       # Search effects\n  roycss add pulse-glow           # Add an effect CSS file\n  roycss export pulse-glow bounce-in --out subset.css  # Tree-shake\n  roycss analyze                  # Full project health report\n  roycss upgrade --migrate        # Auto-migrate legacy CSS",
+    docsSlug: "cli-reference",
   },
   {
     id: "inspector",
@@ -149,6 +152,9 @@ const PRODUCTS: PlatformProduct[] = [
     priority: 4,
     revenue: "Premium export",
     features: ["Inspect spacing", "Typography analysis", "Radius detection", "Grid mapping", "RoyCSS equivalent", "Page export (premium)"],
+    status: "Complete",
+    setup: "Load the extension in Chrome:\n1. Open chrome://extensions\n2. Toggle 'Developer mode' (top right)\n3. Click 'Load unpacked'\n4. Select the /inspector directory from the RoyCSS project\n5. Open DevTools → RoyCSS tab appears\n\nThe Inspector scans any page for .roycss-* classes, shows categorized results with effect counts, and lets you click effects to highlight matching elements.",
+    docsSlug: "platform-tools",
   },
   {
     id: "themes",
@@ -269,6 +275,9 @@ const PRODUCTS: PlatformProduct[] = [
     priority: 5,
     revenue: "Free / OSS",
     features: ["Search 1569+ effects", "Get CSS code by ID", "Framework examples", "Design tokens", "Recipes", "Claude + Cursor + Windsurf"],
+    status: "Complete",
+    setup: "Claude Desktop:\n1. Edit ~/Library/Application Support/Claude/claude_desktop_config.json\n2. Add: { \"mcpServers\": { \"roycss\": { \"command\": \"npx\", \"args\": [\"-y\", \"@roycss/mcp-server\"] } } }\n3. Restart Claude\n\nCursor: Settings → MCP → Add Server → npx -y @roycss/mcp-server\nWindsurf: Edit ~/.codeium/windsurf/mcp_config.json with same config\n\n15 tools available: search_effects, get_effect, get_collections, get_recipes, get_patterns, validate_class_name, suggest_for_intent, and more.",
+    docsSlug: "mcp-reference",
   },
 ];
 
@@ -746,8 +755,9 @@ const INTERACTIVE_TOOLS: Record<string, string> = {
   "challenges": "challenges",
   "design-diff": "design-diff",
   "css-minifier": "css-minifier",
-  "mcp-server": "mcp-server",
-  "inspector": "inspector",
+  // Note: mcp-server and inspector are external tools (CLI/Chrome extension),
+  // NOT in-browser tools. They should expand to show setup instructions,
+  // NOT try to open a panel. So they are intentionally NOT in this map.
 };
 
 export function PlatformEcosystem({ onLaunchTool }: { onLaunchTool?: (toolId: string) => void } = {}) {

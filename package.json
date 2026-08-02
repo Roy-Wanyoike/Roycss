@@ -1,13 +1,61 @@
 {
   "name": "roycss",
-  "version": "1.0.0",
-  "private": true,
-  "description": "RoyCSS — 1569+ production-ready CSS effects. Zero JavaScript runtime. Showcases the RoyCSS library, CLI, MCP server, and platform ecosystem.",
+  "version": "2.0.0",
+  "description": "RoyCSS — 1569+ production-ready CSS effects. Zero JavaScript runtime. OKLCH colors, logical properties, container queries, scroll-driven animations.",
+  "keywords": [
+    "css",
+    "css-framework",
+    "css-effects",
+    "animations",
+    "transitions",
+    "oklch",
+    "frontend",
+    "design-system",
+    "utility-first",
+    "roycss"
+  ],
+  "homepage": "https://github.com/Roy-Wanyoike/roycss",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Roy-Wanyoike/roycss.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Roy-Wanyoike/roycss/issues"
+  },
+  "author": "Royford Wanyoike Wamaitha <roywanyoike328@gmail.com>",
+  "license": "MIT",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/Roy-Wanyoike"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "dist/effects.js",
+  "module": "dist/effects.js",
+  "types": "dist/effects.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/effects.js",
+      "require": "./dist/effects.cjs",
+      "types": "./dist/effects.d.ts"
+    },
+    "./css": "./dist/roycss.css",
+    "./css/min": "./dist/roycss.min.css",
+    "./effects.json": "./dist/effects.json",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
   "scripts": {
     "dev": "next dev -p 3000 2>&1 | tee dev.log",
     "build": "next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
     "build:package": "bun run scripts/build-package.ts",
     "build:cli": "bun build src/cli/index.ts --outdir cli --target node --outfile index.js",
+    "prepublishOnly": "bun run build:package && bun run build:cli",
     "start": "NODE_ENV=production bun .next/standalone/server.js 2>&1 | tee server.log",
     "lint": "eslint .",
     "db:push": "prisma db push",
@@ -15,13 +63,16 @@
     "db:migrate": "prisma migrate dev",
     "db:reset": "prisma migrate reset"
   },
-  "dependencies": {
+  "dependencies": {},
+  "peerDependencies": {},
+  "devDependencies": {
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@hookform/resolvers": "^5.1.1",
     "@mdxeditor/editor": "^3.39.1",
     "@modelcontextprotocol/sdk": "^1.30.0",
+    "@playwright/test": "^1.62",
     "@prisma/client": "^6.11.1",
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-alert-dialog": "^1.1.14",
@@ -51,13 +102,20 @@
     "@radix-ui/react-toggle-group": "^1.1.10",
     "@radix-ui/react-tooltip": "^1.2.7",
     "@reactuses/core": "^6.0.5",
+    "@tailwindcss/postcss": "^4",
     "@tanstack/react-query": "^5.82.0",
     "@tanstack/react-table": "^8.21.3",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitest/coverage-v8": "^4",
+    "bun-types": "^1.3.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.6.0",
+    "eslint": "^9",
+    "eslint-config-next": "^16.1.1",
     "framer-motion": "^12.23.2",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.525.0",
@@ -77,25 +135,15 @@
     "sharp": "^0.34.3",
     "sonner": "^2.0.6",
     "tailwind-merge": "^3.3.1",
+    "tailwindcss": "^4",
     "tailwindcss-animate": "^1.0.7",
+    "tw-animate-css": "^1.3.5",
+    "typescript": "^5",
     "uuid": "^11.1.0",
     "vaul": "^1.1.2",
+    "vitest": "^4",
     "z-ai-web-dev-sdk": "^0.0.18",
     "zod": "^4.0.2",
     "zustand": "^5.0.6"
-  },
-  "devDependencies": {
-    "@playwright/test": "^1.62",
-    "@tailwindcss/postcss": "^4",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "@vitest/coverage-v8": "^4",
-    "bun-types": "^1.3.4",
-    "eslint": "^9",
-    "eslint-config-next": "^16.1.1",
-    "tailwindcss": "^4",
-    "tw-animate-css": "^1.3.5",
-    "typescript": "^5",
-    "vitest": "^4"
   }
 }

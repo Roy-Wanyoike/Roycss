@@ -1,4 +1,5 @@
 #!/usr/bin/env bun
+/// <reference types="bun-types" />
 /**
  * RoyCSS CLI v2 — Command-line tool for managing CSS effects
  *
@@ -108,8 +109,8 @@ async function copyToClipboard(text: string): Promise<boolean> {
   try {
     const proc = Bun.spawn(["xclip", "-selection", "clipboard"], {
       stdin: "pipe",
-      stdout: "null",
-      stderr: "null",
+      stdout: "ignore",
+      stderr: "ignore",
     });
     proc.stdin.write(text);
     proc.stdin.end();
@@ -119,8 +120,8 @@ async function copyToClipboard(text: string): Promise<boolean> {
     try {
       const proc = Bun.spawn(["pbcopy"], {
         stdin: "pipe",
-        stdout: "null",
-        stderr: "null",
+        stdout: "ignore",
+        stderr: "ignore",
       });
       proc.stdin.write(text);
       proc.stdin.end();

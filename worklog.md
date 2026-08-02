@@ -3790,3 +3790,263 @@ Stage Summary:
 - Runtime: 0 page errors, 0 console errors. App fully functional.
 - RoyCSS.zip: rebuilt to 8.2MB / 652 files, now includes all 21 platform tools (was 9 in the old zip). Available at public/RoyCSS.zip and /home/z/RoyCSS.zip.
 - Dev server: HTTP 200, compiles clean.
+
+---
+Task ID: 8-a
+Agent: Grid Template Areas Builder (general-purpose)
+Task: Build a self-contained CSS Grid Template Areas Builder tool component for the RoyCSS platform.
+
+Work Log:
+- Read worklog.md (last ~120 lines) to absorb project context: Next.js 16 + TypeScript strict + Tailwind v4 + shadcn/ui (New York) + framer-motion + Lucide. Confirmed semantic theme tokens only (bg-card, text-muted-foreground, border-border, text-primary, bg-primary, bg-muted) — NO indigo/blue. Verified the 12 prior tool files in src/components/roycss/tools/ for naming + structure conventions ("use client", named export, cn() helper, shadcn primitives).
+- Inspected the existing src/components/roycss/grid-generator.tsx (parent folder) — it handles grid columns/gap/rows numeric template, NOT grid-template-areas. Confirmed no overlap with my deliverable; the areas-builder is a distinct tool focused on the named-area string syntax.
+- Confirmed available shadcn primitives: button, input, label, slider, badge, select, sheet, scroll-area, tabs, separator, alert. Confirmed Slider expects value:number[] and Select exports SelectTrigger/Content/Item/Value.
+- Designed the interaction model: the spec lists both "click to edit" and "click to paint with brush" which conflict. Resolved as: single-click = paint with current brush, double-click = inline rename (Enter/blur commits, Escape cancels, empty → `.`), drag-select = paint rectangular range. Documented the convention in a hint above the grid map.
+- Implemented pure helpers (no React): isValidAreaName (`^[A-Za-z][A-Za-z0-9_-]*$`), resizeGrid (preserves existing cells, pads with `.`), emptyGrid, getUniqueNames (order-preserving), cellsForName, isRectangular (computes bbox, checks bbox-area == cell-count AND every cell in bbox belongs to the name — the correct CSS spec check), areasBlock, generateCss, resolveColValue/resolveRowValue, previewTemplateAreas, prettyLabel, nextAutoName.
+- State design: `grid: string[][]`, `rows`/`cols` (1–12, default 3×3), `brush` (string, `.` for eraser), `colSizing`/`rowSizing` (1fr | minmax | auto | custom) + `customCol`/`customRow` text, `editing: {r,c}|null` + `editValue`, drag state (`isDragging`, `dragStart`, `dragEnd`), `copied` boolean.
+- Drag-select implementation: onMouseDown (with preventDefault to kill text-selection) records dragStart=dragEnd=cell and sets isDragging; onMouseEnter updates dragEnd while dragging; a window "mouseup" useEffect (re-subscribed on each dragEnd/brush change) commits the rectangular paint by mapping over `grid` and setting every cell in the [minR..maxR]×[minC..maxC] range to `brush`. onMouseLeave on the editor container cancels an in-flight drag as a tidy-up.
+- Inline edit: double-click sets `editing` and seeds `editValue` (empty if cell was `.`). A dedicated useEffect focuses + selects the input on mount. Enter/blur commits (empty → `.`), Escape cancels. The input replaces the cell button with `size-14` matching the button footprint and `border-primary ring-2 ring-primary/40` for visibility.
+- Tint system: 8-entry AREA_TINTS array (emerald/amber/rose/cyan/violet/fuchsia/orange/teal) with literal class strings for cell bg (/15), cell border (/40), legend swatch (solid), preview panel bg+border, and text color. Indexed by the name's position in the unique-names list (stable). All class strings appear verbatim in source so Tailwind v4 JIT picks them up.
+- Palette/legend (right rail, w-48): Eraser brush at top (always available, sets brush=`.`), then a "New" button (auto-names area-1, area-2, … skipping taken names and selects it as the brush), then the list of unique names. Each entry is a selectable brush row with swatch + name + a Trash2 delete button (sets all matching cells to `.`). Invalid-name and non-rectangular entries get inline amber badges. Footer shows current brush.
+- Validation summary banner (amber): surfaces "Invalid name: X" (with regex hint) and "Non-rectangular: X" (with CSS-rule hint) at the top of the CSS/preview row when issues exist. Each name in the palette also gets its own amber badge so the user can locate the offending area.
+- Generated CSS block: read-only `<pre><code>` with `bg-muted rounded-lg p-3 font-mono text-xs overflow-auto max-h-72`. Includes `.layout { display: grid; grid-template-columns: …; grid-template-rows: …; grid-template-areas: "…" "…" …; }` with each area row on its own indented line. Copy button uses navigator.clipboard.writeText with a 1.6s Check/Copied confirmation; clipboard-unavailable failures are caught silently.
+- Sizing selectors: two shadcn Select dropdowns above the CSS block — Columns (1fr | minmax(200px,1fr) | auto | Custom…) and Rows (auto | 1fr | minmax(100px,auto) | Custom…). "Custom…" reveals a text Input for free-form templates (e.g. "200px 1fr 200px"). Both feed resolveColValue/resolveRowValue which wrap repeat() around the chosen unit (except custom, which is used verbatim).
+- Live preview: renders the actual grid using inline `display:grid` + `gridTemplateColumns`/`gridTemplateRows`/`gridTemplateAreas` from the same values feeding the CSS block. Each unique area is a child div with `gridArea: name`, the area's tint (bg /15 + border /40 + tinted text), centered `prettyLabel(name)` (capitalized first letter). Container uses `bg-muted/30 rounded-lg p-4` and `minHeight: 12rem`. A "Reset" button reloads the Holy Grail preset. Non-rectangular areas will visibly break in the preview (browser drops the invalid area) — useful live feedback.
+- Presets: Holy grail (3×3: header/sidebar/main/aside/footer), App shell (2×2: nav/main), Magazine (4×4: mast/lead/pic/col1/col2/foot), Dashboard (4×3: header/sidebar/main/stats1/stats2/footer). Plus a "Clear" ghost button that fills the current dims with `.`. Each preset loads its grid, sets rows/cols to match, and resets the brush to the eraser.
+- Dimensions: two DimensionControl sub-components (rows, cols), each pairing a number Input (1–12, clamped) with a Slider. setDims() resizes the grid via resizeGrid (preserves overlapping cells, pads new cells with `.`).
+- Accessibility: every grid cell is a `<button>` with `aria-label` "Row R, Column C: <name|empty>" and a `title`. The grid container has `role="grid"` + `aria-label="Grid map, R rows by C columns"`. The edit input has `aria-label="Edit area name at row R, column C"`. The CSS `<pre>` has `aria-label="Generated CSS code block"`. Copy button has `aria-label`. Brush buttons use `aria-pressed`. Select triggers have `aria-label`. Palette `<aside>` has `aria-label="Area palette"`.
+- Layout: `mx-auto max-w-2xl space-y-5` root (matches the spec's "max-w-2xl Sheet"). Header (icon + title + description), Presets row, Dimensions card, Editor+Palette row (flex-col on mobile, flex-row on sm+), Validation banner (conditional), CSS+Preview grid (1 col mobile, 2 col md). The grid map editor uses `overflow-auto` so a 12×12 grid scrolls horizontally without breaking the layout. Cells are fixed `size-14` (3.5rem) to keep the grid map readable at any dimension.
+- Verified: `bunx tsc --noEmit --skipLibCheck` → 0 errors in grid-areas-builder.tsx (the 2 remaining src/components errors are in contrast-matrix.tsx, a sibling-agent file I did not touch). `bun run lint` → 0 errors, 0 warnings. No console.log statements. No `any` types. All Lucide imports used: LayoutGrid, Copy, Check, Trash2, Plus, Eraser, RefreshCw, AlertTriangle, Sparkles, Paintbrush.
+
+Stage Summary:
+- File created: src/components/roycss/tools/grid-areas-builder.tsx
+- Export: GridAreasBuilder (named, no props)
+- Key features:
+  • 2D grid map editor (1–12 rows × 1–12 cols), fixed `size-14` cells with `overflow-auto` for large grids
+  • Paint-on-click with current brush, double-click to inline-rename (Enter/blur/Escape), drag-select to fill a rectangular range
+  • 8-color muted tint palette (emerald/amber/rose/cyan/violet/fuchsia/orange/teal at /15 opacity) cycling by area name
+  • `.` empty cells rendered muted with a middle-dot glyph
+  • Dimension controls (number input + slider, 1–12, with grid-resize that preserves existing cells)
+  • Area palette/legend sidebar (w-48): eraser brush, "New area" auto-namer, per-name brush selection, per-name delete, inline amber badges for invalid/non-rectangular
+  • Generated CSS block with column/row sizing Selects (1fr | minmax | auto | custom) + Copy button with Check confirmation
+  • Live preview that renders the actual grid using the generated `grid-template-areas`/columns/rows, each area labeled with its prettified name
+  • 4 presets (Holy grail, App shell, Magazine, Dashboard) + Clear button
+  • Validation: invalid-identifier detection + non-rectangular-region detection (bounding-box area == cell-count AND every bbox cell belongs to the name), surfaced as a summary amber banner AND inline palette badges
+  • Fully accessible (button cells with aria-labels, role=grid, aria-labels on inputs/pre/selects/aside, aria-pressed on brush buttons)
+  • Semantic theme tokens only (no indigo/blue, no hardcoded brand colors); area tints are data-viz palette per spec allowance
+- TypeScript: 0 errors in the new file. Lint: 0 errors, 0 warnings.
+- Not wired into the app (per task instructions — orchestrator will do that). No other files modified.
+
+---
+Task ID: 8-d
+Agent: Color Contrast Matrix (general-purpose)
+Task: Build a self-contained Color Contrast Matrix (WCAG compliance for a full palette) tool component for the RoyCSS platform.
+
+Work Log:
+- Read worklog tail (Task IDs 7-x / 8) and inspected sibling tool `dark-mode-converter.tsx` + the existing single-pair `contrast-checker.tsx` to confirm conventions: `"use client"`, named export, no props, plain `<table>` with `<caption class="sr-only">` + `sticky` headers + `<th scope="col|row">` (matches `browser-support.tsx` pattern), semantic Tailwind tokens (bg-card, border-border, text-muted-foreground, text-primary, bg-primary/10), data-viz tints (emerald/amber/rose) reserved for status, no indigo/blue.
+- Verified lucide-react ships `Grid2x2`, `Plus`, `Trash2`, `Copy`, `Check`, `RefreshCw`, `AlertTriangle`, `CheckCircle2`, `Info`, `Sparkles` in `node_modules/lucide-react/dist/esm/icons/`.
+- Verified shadcn primitives available: `Select`, `Tooltip`, `Input`, `Button`, `Badge`, `Label`, all in `src/components/ui/`. Chose plain `<table>` over shadcn `Table` (shadcn Table wraps in its own overflow-x-auto div that conflicts with the required `max-h-[500px] overflow-auto` container and the custom `w-16 h-16` cell sizing).
+- Created `src/components/roycss/tools/contrast-matrix.tsx` (~1087 lines, single self-contained file, zero network calls).
+- **WCAG color math module** (clearly commented ~80 lines, pure functions, no library):
+  * `parseHexToRgb01` — accepts `#rgb`, `#rgba`, `#rrggbb`, `#rrggbbaa`; expands short forms; drops alpha; returns `[r,g,b]` in [0,1] or null.
+  * `normalizeHex` — normalises any supported form to lowercase `#rrggbb` (used to feed `<input type="color">` which requires 7-char values).
+  * `srgbToLinear` — `c ≤ 0.03928 ? c/12.92 : ((c+0.055)/1.055)^2.4` (per WCAG spec; uses 0.03928 threshold exactly as the task spec dictates).
+  * `relativeLuminance` — `0.2126·R' + 0.7152·G' + 0.0722·B'`.
+  * `contrastRatio` — `(max(L1,L2)+0.05) / (min(L1,L2)+0.05)` — symmetric, returns [1, 21].
+  * Verified by bun script: `#ffffff↔#000000` → 21.00:1 ✓; `#000000↔#ffffff` → 21.00:1 ✓ (symmetric); `#777777 on #ffffff` → 4.4781 ✓ (just under AA — classic example); `#000000↔#000000` → 1.00:1 ✓. Spot-checked the 6 default palette colors: Text #0f172a on bg #ffffff = 17.85 (AAA); Muted #64748b on #ffffff = 4.76 (just passes AA); Primary #0d9488 on #ffffff = 3.74 (AA Large only) — surfaces an actionable finding on the default palette, demonstrating the tool's value.
+- **Pure helpers** (no React, no side effects):
+  * `ratioToBand(ratio)` → `"AAA" | "AA" | "AALarge" | "Fail"` (absolute WCAG tier, used as the cell badge label so the user always sees the actual accessibility level).
+  * `ratioToTint(ratio, target, isDiagonal)` → `"pass" | "warn" | "fail" | "diagonal"` — drives the cell background color based on the chosen target threshold. `pass` if `ratio ≥ target`, `warn` (amber) if `3 ≤ ratio < target` (close-but-not-enough), `fail` (rose) if `ratio < 3`. This is what makes "a 4.5 ratio passes AA but fails AAA" render as amber-warn under AAA target (matching the spec example).
+  * `formatBreakdown(bgLabel, bgHex, fgLabel, fgHex, ratio, band)` — full human-readable breakdown string for `aria-label` / Tooltip / `title`.
+  * Lookup tables `TINT_CELL_CLASS`, `BAND_BADGE_CLASS`, `BAND_BADGE_LABEL`, `DIAGONAL_HATCH` (CSS `repeating-linear-gradient` 45° stripe pattern).
+- **Subcomponents**:
+  * `ColorRowInput` — palette row: `<input type="color">` swatch (overlaid opacity-0 on a colored div) + hex `<Input>` (font-mono, rose border on invalid) + label `<Input>` + delete `<Button>`. All inputs have `aria-label`s referencing the 1-based index and label.
+  * `MatrixCellView` — single matrix `<td>`. Early-returns a muted "—" cell if either color is invalid. Otherwise renders a `<button>` (focusable, keyboard-accessible) wrapped in a Radix `Tooltip` showing the full breakdown (bg hex + label, fg hex + label, ratio:1, band). Inside the button: bold ratio number, mini "Aa" preview using inline `style={{background: bg.normalized, color: fg.normalized}}` so the user SEES the actual contrast, and a tiny uppercase band badge (AAA/AA/AA Lg/Fail). Diagonal cells get `bg-muted/50` + the `DIAGONAL_HATCH` background-image via inline style. Also includes a `<span class="sr-only">` fallback for SR users.
+  * `LegendItem` — tiny swatch + label, used in the legend row.
+- **Main component `ContrastMatrix`**:
+  * State: `colors` (6 defaults: Background #ffffff, Text #0f172a, Muted #64748b, Primary #0d9488, Surface #f1f5f9, Danger #dc2626), `target` ("AA" | "AAA" | "AALarge"), `copiedAll` bool, `copiedPairKey` string|null.
+  * `useMemo` #1 `computed`: normalises every palette color once per palette change.
+  * `useMemo` #2 `matrix`: builds the full N×N matrix of `MatrixCell`s (ratio + band + tint + isDiagonal). Keyed on `[computed, target]` so the matrix recomputes when palette OR target changes.
+  * `useMemo` #3 `{ summary, failingPairs }`: walks the matrix (skipping the diagonal), counts pass/fail against the target threshold, computes compliance %, and collects failing pairs sorted worst-first. Keyed on `[matrix, target, colors.length]`.
+  * Summary bar: `N colors · N pairs · X pass · Y fail · Z% compliance` with CheckCircle2 (emerald) / AlertTriangle (rose) icons, and the compliance % tinted emerald/amber/rose based on ≥80/≥50/<50.
+  * Failing-pairs list: rose-tinted panel (`bg-rose-500/5 border border-rose-500/20`), each item is a button showing swatch-pair (bg + "Aa" on bg with fg color) + "fg on bg: ratio:1" + "Fail" badge + Copy icon. Click copies the pair text; per-item Check confirmation on copy. "Copy all" button copies a formatted multi-line report (`Color Contrast Matrix — failing pairs (target: …)` header + count + list of `fg (hex) on bg (hex): ratio:1 (Fail)` lines). Falls back to a green "All N pairs meet the target" notice when there are no failures.
+  * Presets row: 4 chips (Tailwind default, Monochrome, Brand palette, Dark theme) — each shows up to 4 mini color dots + the name.
+  * WCAG target `<Select>` (AA/AAA/AA Large) + 4-item legend (Pass / Close / Fail / Same color) on the same row.
+  * Matrix table wrapped in `overflow-auto max-h-[500px] rounded-lg border border-border`. Sticky first row (`top-0 z-20`) + sticky first column (`left-0 z-20`) + sticky corner (`top-0 left-0 z-30`), all with `bg-card`. Each header cell shows a 5×5 swatch + label (or fallback `C{n}`) + hex. `<caption class="sr-only">` describes the matrix + current pass/fail counts.
+  * Min 2 / max 12 colors enforced (Add button disabled at 12, delete disabled at 2). Add button uses a dashed-border outline style; invalid hex inputs get a rose border.
+- TypeScript strict, no `any`. Fixed one TS error during development: `style={{background: bg.normalized, color: fg.normalized}}` rejected because `normalized` is `string | null` — changed to `?? undefined` (the early-return guarantees non-null at that point, but TS can't narrow through the MatrixCell interface).
+- No `console.log`. No external API calls. All clipboard writes wrapped in try/catch (silently ignore if `navigator.clipboard` unavailable).
+
+Stage Summary:
+- File created: src/components/roycss/tools/contrast-matrix.tsx (~1087 lines)
+- Export: ContrastMatrix (named, no props)
+- Key features:
+  • N×N WCAG contrast matrix (2–12 colors), every pair computed client-side from scratch (no library).
+  • Cell coloring recomputes against the chosen WCAG target (AA 4.5 / AAA 7 / AA Large 3) — passes show emerald, "close" (≥3 below target) shows amber, fails show rose, diagonal shows muted hatch.
+  • Each cell shows: bold ratio number, mini "Aa" preview with ACTUAL bg/fg colors via inline style, and a WCAG band badge (AAA/AA/AA Lg/Fail).
+  • Hover/focus Tooltip with full breakdown (bg hex+label, fg hex+label, ratio:1, band) + sr-only fallback.
+  • Sticky header row + first column (z-20/z-30 corner), `<caption class="sr-only">`, `<th scope="col|row">`, `aria-label`s on every interactive element.
+  • Summary stats bar (N colors · N pairs · X pass · Y fail · Z% compliance).
+  • Failing-pairs priority list (worst-first) — click any pair to copy it, or "Copy all" for a formatted report.
+  • 4 presets (Tailwind default / Monochrome / Brand palette / Dark theme) with mini swatch previews.
+  • Min 2 / max 12 colors enforced, invalid hex inputs flagged with rose border.
+  • Semantic Tailwind tokens for chrome (bg-card, border-border, text-muted-foreground, text-primary, bg-primary/10, bg-background, bg-muted); only emerald/amber/rose as data-viz status tints (no indigo/blue).
+- Math verified: white↔black=21.00, #777 on #fff=4.48 (under AA), #000↔#000=1.00, symmetric, all sanity checks pass.
+- tsc: 0 errors in `src/components/` (only pre-existing errors in scripts/security/skills/src/cli/tests/vitest.config remain — out of scope).
+- lint: 0 errors, 0 warnings (`bun run lint` → exit 0).
+- Dev server: HTTP 200 (file not yet wired into the app — orchestrator handles that).
+
+---
+Task ID: 8-b
+Agent: Container Query Builder (general-purpose)
+Task: Build a self-contained CSS Container Query Builder tool component for the RoyCSS platform.
+
+Work Log:
+- Read worklog.md (last ~95 lines, Task 8 + 8-a) to understand the RoyCSS platform: Next.js 16 + TypeScript strict + Tailwind v4 + shadcn/ui (New York) + Lucide + framer-motion. 12 prior developer tools already live in `src/components/roycss/tools/` (specificity-calculator, easing-visualizer, stacking-inspector, similarity-finder, perf-analyzer, browser-support, print-simulator, selector-tester, dark-mode-converter, variable-graph, fluid-typography, scroll-animation-builder). The new component must follow the same conventions: `"use client"`, named export, no props, self-contained, semantic Tailwind theme colors only (no indigo/blue), max-w-2xl sheet-friendly layout.
+- Audited two sibling tools for conventions: `scroll-animation-builder.tsx` (matching feature set: live `<style>` injection via ref + useEffect, ResizeObserver/rAF throttling, copy-with-check confirmation, reset-to-defaults, browser-support badge, max-w-2xl single-column layout) and `fluid-typography.tsx` (SliderInput sub-component pattern, math helpers, accessibility hints). Adopted the same structural patterns.
+- Verified available shadcn/ui components in `src/components/ui/`: slider, input, label, textarea, select, button, card, badge, separator, tabs, etc. Used slider, input, label, textarea, select. Confirmed Select supports `size="sm"` prop.
+- Created `/home/z/my-project/src/components/roycss/tools/container-query-builder.tsx` (1066 lines).
+- **Types**: `ContainerType` (`inline-size` | `size` | `normal`), `Operator` (`min-width` | `max-width` | `range`), `BreakpointRule` (id, operator, minValue, maxValue, label, declarations), `ContainerConfig` (type, name). No `any`.
+- **Constants**: MIN_CONTAINER_WIDTH=200, MAX_CONTAINER_WIDTH=800, DEFAULT_CONTAINER_WIDTH=480, MAX_RULES=6, MIN_RULES=1, KEYBOARD_STEP=10, KEYBOARD_STEP_LARGE=50, SLIDER_STEP=5. Two default rules seeded: `(min-width: 400px)` → "card horizontal" + `flex-direction: row; font-size: 16px;`, and `(min-width: 600px)` → "card featured" + `font-size: 18px; padding: 24px;`. Default config: `container-type: inline-size`, name empty.
+- **Helpers**: `clampNum`, `sanitizeContainerName` (CSS custom-ident-safe — strips invalid chars, prefixes leading digits with `c-`, avoids reserved keywords `initial/inherit/none/unset/revert`), `ruleCondition` (builds `(min-width: Npx)` / `(max-width: Npx)` / `(min-width: Apx) and (max-width: Bpx)`), `ruleMatches` (evaluates a rule against a width), `formatDeclarations` (splits raw declarations on `;`, trims, re-indents), `buildCSS` (composes the full generated CSS: container setup + base card style + all `@container` rules; uses `@container <name>` prefix when a name is set, otherwise bare `@container`), `collectBreakpointValues` (unique sorted px values across all rules for ruler ticks).
+- **State**: `config` (ContainerConfig), `rules` (BreakpointRule[]), `containerWidth` (number, default 480), `copied` (bool), `isDragging` (bool). Refs: `styleRef` (HTMLStyleElement for injected CSS), `containerRef` (the resizable `.cqb-container` div observed by ResizeObserver), `rafRef` (rAF handle for throttling), `idCounter` (sequential rule ID generator).
+- **Generated CSS injection**: `useMemo` recomputes `generatedCSS` on every `config`/`rules` change; a `useEffect` writes it to `styleRef.current.textContent`. Same string is shown in the read-only code block AND drives the live preview (true WYSIWYG).
+- **ResizeObserver**: observes `containerRef`, rAF-throttled, only updates `containerWidth` state when rendered width differs from state by ≥1px (handles parent-constraint clamping via `maxWidth: 100%` and prevents feedback loops). Cleanup disconnects the observer and cancels any pending rAF.
+- **Custom drag handle**: 16px-wide div on the right edge of the container with `cursor-col-resize`. Uses pointer capture (`setPointerCapture`/`releasePointerCapture` with try/catch fallback). `onPointerMove` computes `newWidth = e.clientX - container.getBoundingClientRect().left` and clamps to [200, 800]. Visual feedback: handle bg shifts to `bg-primary/15` and icon to `text-primary` while dragging.
+- **Keyboard accessibility on drag handle**: `role="slider"`, `aria-label`, `aria-valuenow/min/max/valuetext`, `tabIndex={0}`. ArrowLeft/Right = ±10px, Shift+Arrow = ±50px, PageUp/Down = ±50px, Home/End = min/max. All `e.preventDefault()`'d except default-ignored keys.
+- **Active query detection**: `matchingRules = rules.filter(r => ruleMatches(r, containerWidth))` (memoized). `activeRule` = last matching rule (CSS cascade winner for same-selector `@container` queries). Shown live with a pulsing emerald dot + the full `@container <name> (condition)` string.
+- **Width markers (ruler)**: a row below the container with absolutely-positioned tick marks at each unique breakpoint px value, scaled to the [200, 800] slider range. Ticks below the current width render in `bg-primary`/`text-primary`; ticks above render in `bg-border`/`text-muted-foreground`. A rotated diamond marker (`rotate-45` + `border-b border-r`) indicates the current width position.
+- **Slider**: shadcn Slider, value=[containerWidth], min=200, max=800, step=5, `onValueChange` calls `setContainerWidth(v[0])`. Synced bidirectionally with the drag handle (both read/write `containerWidth`).
+- **Generated CSS code block**: `<pre>` with `max-h-48 overflow-x-auto overflow-y-auto rounded-lg bg-muted p-3 font-mono text-xs leading-relaxed text-foreground/80`. Copy button shows Check icon + "Copied!" for 2s on success.
+- **Rule cards**: each in `bg-card border rounded-lg p-3`. Border color reflects status: emerald for cascade winner, primary/40 for matching, border for non-matching. Row 1: label input + operator Select + 1-2 number inputs (max shown for `range`/`max-width`, min shown for `range`/`min-width`) + delete button. Row 2: declarations Textarea (min-h-[44px], font-mono). Row 3: live preview of the generated `@container` line + match-status badge. Range-mode min>max shows a destructive "min > max — rule never matches" hint.
+- **Browser support badge**: `flex flex-wrap items-center gap-2 rounded-lg border border-border bg-card p-2.5` with emerald "Container queries" label + `Sparkles` icon, the exact spec text "Chrome 105+ · Firefox 110+ · Safari 16+ · Edge 105+ (Baseline 2023)", and "See: Browser Support Matrix" as text (not a link, per spec).
+- **Demo card content**: `.cqb-card` contains a 40×40 `.cqb-avatar` (bg-primary, rounded-lg, shrink-0) + `.cqb-text` wrapper (min-w-0) holding a `.cqb-heading` (font-semibold, inherits font-size from card so container-query font-size changes are visible) and a `.cqb-body` (mt-1, text-muted-foreground). Inner elements intentionally omit Tailwind text-size classes so they inherit the card's font-size from the container query.
+- **Layout**: single column, `mx-auto max-w-2xl space-y-4`. Sections stacked top-to-bottom: header (SquareStack icon + title + Reset button) → browser support badge → container setup (grid 2-col: container-type Select + container-name Input) → rules list (header with count + Add rule button, then rule cards) → generated CSS (with Copy) → live preview (width badge + active query indicator + resizable container + drag handle + ruler + slider + matching rules summary + keyboard hint).
+- **Icons used (all from lucide-react)**: SquareStack (title), Copy, Check (copy button), RotateCcw (reset), Plus (add rule), Trash2 (delete rule), MoveHorizontal (drag handle + keyboard hint), Sparkles (browser support badge), Maximize2 (width badge).
+- **Quality verification**: `bunx tsc --noEmit --skipLibCheck` → 0 errors in the new file (other pre-existing errors in `src/cli/index.ts`, `tests/`, `vitest.config.ts` are out of scope per Task 8-a notes). `bun run lint` → 0 errors, 0 warnings. Dev server still returns HTTP 200 on `/`.
+- Did NOT modify any other files. Did NOT wire the component into any page/route (per task instructions — orchestrator will handle integration).
+
+Stage Summary:
+- File created: src/components/roycss/tools/container-query-builder.tsx (1066 lines)
+- Export: ContainerQueryBuilder (named, no props)
+- Key features:
+  - Container setup: `container-type` Select (inline-size default / size / normal) + optional `container-name` text input (sanitized to valid CSS custom-ident; queries auto-prefixed with `@container <name>` when named)
+  - Breakpoint rule editor (1–6 rules): operator Select (min-width / max-width / range) + px value input(s) + label + declarations Textarea + delete button. Two default rules seeded.
+  - Generated CSS code block (read-only, `max-h-48`, scrollable) with Copy button + 2s Check confirmation
+  - Live preview with REAL container queries: generated CSS injected into a `<style>` tag (ref + useEffect) and applied to a `.cqb-container` element the user can resize
+  - Custom 16px drag handle on the right edge (pointer capture, `cursor-col-resize`, role="slider", full keyboard support: Arrow ±10, Shift+Arrow ±50, PageUp/Down ±50, Home/End = min/max)
+  - Width badge ("Container width: Npx") + live active-query indicator (pulsing emerald dot + `@container <name> (condition)`)
+  - ResizeObserver (rAF-throttled, ≥1px diff guard) keeps state synced with actual rendered width (handles parent-constraint clamping)
+  - Width markers ruler below container: ticks at each breakpoint value, colored by whether the current width has crossed them; current-width diamond pointer
+  - shadcn Slider (200–800px, step 5) as alternative precise width control, bidirectionally synced with drag handle
+  - Matching-rules summary showing all currently-matching queries with the cascade winner highlighted in emerald
+  - Reset to defaults button
+  - Browser support badge: "Container queries — Chrome 105+ · Firefox 110+ · Safari 16+ · Edge 105+ (Baseline 2023)" + "See: Browser Support Matrix" text reference
+  - Fully accessible (role="slider", aria-valuenow/min/max/valuetext, aria-labels, Label-for associations, keyboard operability)
+  - Semantic Tailwind theme colors only (bg-card, bg-muted, bg-background, bg-primary, text-foreground, text-muted-foreground, border-border, text-primary, text-emerald-500 for "active" status). No indigo/blue.
+  - TypeScript strict, no `any`, no console.log, ResizeObserver + pointer capture cleaned up on unmount
+
+---
+Task ID: 8-c
+Agent: CSS Nesting Converter (general-purpose)
+Task: Build a self-contained CSS Nesting Converter (flat ↔ nested) tool component for the RoyCSS platform.
+
+Work Log:
+- Read worklog.md (Task 8 context) to understand the RoyCSS platform conventions — Next.js 16 + TS + Tailwind 4 + shadcn/ui (New York). Previous batches added 12 developer tools in `src/components/roycss/tools/`. Followed the same conventions: `"use client"` directive, single named export, no props, self-contained, semantic theme colors only (no indigo/blue), Lucide icons, defensive try/catch.
+- Studied existing tool components (`dark-mode-converter.tsx`, `selector-tester.tsx`) and shadcn/ui primitives (`tabs`, `select`, `switch`, `textarea`, `button`, `label`, `alert`) to match the established UI patterns and API usage.
+- Implemented a **custom brace-matching CSS tokenizer** (`parseCss` / `parseItems` / `parseDecl` / `flushDeclBuffer`, ~110 lines) — no external CSS parser dependency. Walks the string char by char tracking: brace depth `{}`, parens `()`, brackets `[]`, strings `"..."`/`'...'` (with `\` escapes), and `/* ... */` comments. Produces a discriminated-union `CssNode` tree: `comment | decl | raw | rule | atRule(leaf?)`. Handles `@media`/`@supports`/`@container`/`@layer` (wrapper at-rules — recurse), `@keyframes`/`@font-face`/`@page`/etc. (serialize verbatim — no selector resolution), and leaf at-rules (`@import`/`@charset` ending with `;`).
+- Implemented **selector utilities**:
+  - `splitCommaList` — splits `.a, .b, :is(.c, .d)` by top-level commas (respects `()`, `[]`, strings).
+  - `splitSelector` — splits a single selector into compound parts by combinators (space/`>`/`+`/`~`), respecting `()`, `[]`, strings. Then expands each compound via `splitCompound`.
+  - `splitCompound` — splits a compound into `[base, ...pseudos]` at the first top-level `:`. E.g. `.card:hover:focus` → `[".card", ":hover", ":focus"]`, `.card::before` → `[".card", "::before"]`, `.card:not(.active)` → `[".card", ":not(.active)"]`. Handles `::` (pseudo-element) correctly via `splitPseudos` (doesn't split between the two colons). Skips splitting when base is empty (e.g. `::placeholder` stays whole).
+  - `resolveSelector` — resolves `&` against a (possibly comma-listed) parent selector. Handles `& .title` → `.card .title`, `&:hover` → `.card:hover`, `& > .title` → `.card > .title`, and the no-`&` case (default descendant). Top-level `&` is stripped defensively.
+- Implemented **flatten algorithm** (`flattenCss` / `flattenWalk`, ~80 lines): walks the parsed tree with a `parentSel` stack, resolves each nested rule's selector against its parent, and emits fully-qualified flat rules. Comma-list parents are preserved (`.a, .b { & .title { } }` → `.a .title, .b .title { }`) by recursing with the joined parent string. `@media`/`@supports`/`@container`/`@layer` recurse with empty parent context; `@keyframes`/`@font-face`/etc. are serialized verbatim via `serializeRawBody`. Comments preserved per the `preserveComments` option.
+- Implemented **nest algorithm** (`nestCss` / `flattenToNodes` / `insertIntoTree` / `serializeNest*`, ~250 lines):
+  1. **Pre-flatten** the input via `flattenToNodes` (idempotent on flat CSS, gracefully handles already-nested input by resolving all `&` first).
+  2. **Build a tree** (`insertIntoTree`): for each flat rule, split its selector (commas first, then combinators, then pseudos), walk from the root finding-or-creating child nodes keyed by `(compound, combinator)`, and attach decls at the leaf. Comma-list selectors are split into separate chains (each part gets its own chain). `mergeDuplicates` (default on) overrides same-prop decls at a node; off appends. `@media`/`@supports`/etc. become at-rule wrapper nodes whose children are top-level rules. Leaf at-rules deduplicated by prelude.
+  3. **Serialize** (`serializeNestSelector` / `serializeNestAtRule`): top-level selectors emit `compound { ... }`; nested emit `& compound { ... }` (descendant), `& > compound { ... }` (child), `&+compound`/`&~compound` (siblings), or `&compound { ... }` (pseudo extension — no space, e.g. `&:hover`, `&::before`). Children are serialized INSIDE the parent block before the closing `}`. A rule with only nested children (no direct decls) still emits a block — valid CSS nesting.
+- Built the **React component** (`NestingConverter`, ~280 lines of JSX + state):
+  - **Direction toggle**: shadcn `Tabs` with two triggers ("Nest" flat→nested default, "Flatten" nested→flat). Controlled via `value`/`onValueChange`, no `TabsContent` needed (just a toggle).
+  - **Options bar**: `Select` for indent (2 spaces / 4 spaces / tab, default 2), `Switch` for "Merge duplicates" (default on), `Switch` for "Preserve comments" (default on). Inline stats (`GitCompare` icon + "Input: N rules → Output: M rules · depth: D") right-aligned via `ml-auto`.
+  - **Action buttons**: Load Example (fills a realistic flat CSS demo with `.card` rules, `:hover`, `:focus-within`, `::before`, `> .close`, `@media`, `@keyframes`), Clear, Swap (moves output → input AND flips direction, enabling round-tripping), Copy output (with `Check` confirmation for 2s). All `size="sm" h-8`.
+  - **Two panels**: `md:grid-cols-[1fr_auto_1fr]` grid (input | arrow | output). Input panel has `Code2` icon label + editable `Textarea` (`font-mono text-xs min-h-[360px]`, spellcheck off, placeholder varies by direction). Output panel has `ArrowRight` icon label + read-only `Textarea` (`bg-muted/30`). Between them, an `ArrowRight` icon rotates 90° on mobile (panels stack) and stays horizontal on desktop. Labels update with direction ("Input (flat CSS)" / "Input (nested CSS)" etc.).
+  - **Stats**: computed in the same `useMemo` as the conversion — input rule count (recursive `countRules`), output rule count (re-parse the output), and max nesting depth (`computeMaxDepth`).
+  - **Error handling**: the entire conversion is wrapped in try/catch. On error, `result.error` is set and a red `Alert variant="destructive"` renders below the output with the error message in a `<code>` block. The UI stays responsive (no crash).
+  - **Accessibility**: all textareas have `aria-label`; tab triggers have `aria-label`; switches have associated `<Label htmlFor>`; the Swap button has an `aria-label`; the direction arrow is `aria-hidden`. Direction toggle is a proper `role="tablist"`.
+  - **Theme**: only semantic Tailwind variables (`bg-card/30`, `border-border`, `text-muted-foreground`, `text-foreground`, `bg-muted/30`, `text-emerald-500` for the copy-success check, `text-primary` via shadcn defaults). NO indigo/blue. The example CSS uses neutral grays + emerald/amber/teal accents.
+- **Tested** the converter logic with a 53-assertion test suite (temporarily exported internals via `__test`, ran, then removed the export):
+  - `splitCommaList` / `splitCompound` / `splitSelector` / `resolveSelector` unit tests (compound splitting for `:hover`, `::before`, `:not(.a)`, attribute selectors, combinators `>`/`+`/`~`, comma lists).
+  - Nest: basic descendant/child/pseudo nesting, `@media` wrappers, `@keyframes` preservation, merge-duplicates, comment preservation, indent styles (2/4/tab), `:not()`/`:is()`/`:where()`, attribute selectors, strings containing braces (`content: "}"`), leaf `@import`, idempotency on already-nested input.
+  - Flatten: basic, child combinator, `@media` with nested rules, comma-list preservation (`.a, .b { & .title { } }` → `.a .title, .b .title { }`), idempotency on flat input.
+  - **Round-trip**: flat → nested → flat produces semantically-equivalent CSS (same rule count, same selectors). Verified on the full example (11 rules round-trip cleanly).
+  - All 53 assertions pass (one strict string-equality "failure" was just a formatting difference — single-line input vs multi-line output — which is expected and semantically equivalent).
+- **Fixed a serialization bug** found during testing: the closing `}` was emitted BEFORE nested children, causing children to appear outside the parent block. Fixed `serializeNestSelector` to emit children inside the block (before `}`) and to emit a block when there are children even without direct decls.
+- **Verified**: `bunx tsc --noEmit --skipLibCheck` → 0 errors in `nesting-converter.tsx`. `bun run lint` → 0 errors, 0 warnings. Dev server (`/`) → 200. Component renders to valid HTML via `renderToStaticMarkup` (16,994-char HTML output containing all expected labels/buttons).
+- Cleaned up: removed the temporary `__test` export and the test script.
+
+Stage Summary:
+- File created: src/components/roycss/tools/nesting-converter.tsx (1,474 lines)
+- Export: `NestingConverter` (named, no props) — the only export.
+- Key features:
+  - Bidirectional conversion: **Nest** (flat → nested, default) and **Flatten** (nested → flat) via a `Tabs` direction toggle.
+  - Custom brace-matching CSS tokenizer (~110 lines) — no external parser dependency. Handles strings, comments, parens, brackets, at-rules (`@media`/`@supports`/`@container`/`@layer` recurse; `@keyframes`/`@font-face`/`@page` verbatim; `@import`/`@charset` as leaf).
+  - Selector splitting by combinators (`>`/`+`/`~`/descendant) AND pseudo-class/element extraction (`.card:hover` → nest as `&:hover`, `.card::before` → `&::before`). Respects `()`, `[]`, strings. Handles `:not()`, `:is()`, `:where()`, attribute selectors, `:nth-child(n)`.
+  - Multiple-selector (`.a, .b`) handling: split for tree-building in nest mode (each part gets its own chain — enables prefix sharing); preserved as comma-lists in flatten mode (`.a .title, .b .title`).
+  - Round-trip safe: flat → nested → flat yields equivalent CSS (modulo formatting/merge).
+  - Options: indent (2/4/tab, default 2), merge duplicate selectors (default on — overrides same-prop decls), preserve comments (default on).
+  - Copy output (2s `Check` confirmation), Swap (output → input + flip direction for round-tripping), Load Example (realistic `.card`/`:hover`/`@media`/`@keyframes` flat CSS), Clear.
+  - Stats: "Input: N rules → Output: M rules · depth: D" (computed by re-parsing the output).
+  - Defensive try/catch around the converter; red `Alert` on error.
+  - Responsive: `md:grid-cols-[1fr_auto_1fr]` (side-by-side on desktop, stacked on mobile with a rotated arrow between panels). Fits in a `max-w-2xl` Sheet.
+  - Accessible: textareas have `aria-label`, tablist is a proper `role="tablist"`, switches have `<Label htmlFor>`, icon-only buttons have `aria-label`.
+  - Semantic theme colors only (no indigo/blue). Lucide icons: `ArrowLeft`, `ArrowLeftRight`, `ArrowRight`, `Check`, `Code2`, `Copy`, `GitCompare`, `IndentIncrease`, `Sparkles`, `Trash2`, `AlertCircle`.
+
+---
+Task ID: 8 (batch 8)
+Agent: main (orchestrator)
+Task: Build and wire 4 new developer tools (Grid Template Areas Builder, Container Query Builder, CSS Nesting Converter, Color Contrast Matrix), verify end-to-end, rebuild RoyCSS.zip.
+
+Work Log:
+- Confirmed subagents 8-a/8-b/8-c/8-d all completed their self-contained tool components in src/components/roycss/tools/.
+- Verified exports: GridAreasBuilder, ContainerQueryBuilder, NestingConverter, ContrastMatrix (all named, no props, "use client").
+- Wired into src/components/roycss/platform-tools.tsx:
+  - Added 3 new lucide icon imports (LayoutGrid, SquareStack, Grid2x2; GitCompare already existed).
+  - Added 4 component imports from ./tools/*.
+  - Extended ToolType union with "grid-areas" | "container-query" | "nesting" | "contrast-matrix".
+  - Added 4 TOOL_META entries (title, icon, description).
+  - Added 4 render branches in the Sheet switch.
+  - FIXED duplicate GitCompare import (was already imported for design-diff tool) — removed the duplicate.
+- Wired into src/components/roycss/platform-ecosystem.tsx:
+  - Added LayoutGrid, SquareStack, Grid2x2 icon imports (GitCompare already existed).
+  - Added 4 entries to INTERACTIVE_TOOLS map.
+  - Added 4 new Differentiator cards with descriptions.
+  - FIXED duplicate GitCompare import — removed the duplicate.
+- Wired into src/components/roycss/roycss-page.tsx:
+  - Extended platformTool state type union with the 4 new tool IDs.
+  - Extended the onLaunchTool guard condition to accept the 4 new IDs.
+- Lint: `bun run lint` → 0 errors, 0 warnings.
+- TypeScript: `bunx tsc --noEmit --skipLibCheck` → 0 errors in src/components/ (fixed the 2 duplicate-identifier errors from the GitCompare overlap).
+- Dev server: compiled cleanly, GET / 200.
+
+- Agent Browser E2E verification (all 4 tools):
+  1. Grid Template Areas Builder: opened via Platform card → 10 default grid cells rendered, all 5 presets visible (Holy grail/App shell/Magazine/Dashboard/Clear). Loaded "Holy grail" preset → 3×3 grid filled with header/header/header, sidebar/main/aside, footer/footer/footer. Generated CSS correct: `grid-template-areas: "header header header" "sidebar main aside" "footer footer footer"`. Live preview showed labeled areas (Header, Sidebar, Main, Aside, Footer).
+  2. Container Query Builder: opened → injected <style> tag with `.cqb-container { container-type: inline-size; }` + base card styles + two @container queries: `@container (min-width: 400px)` and `@container (min-width: 600px)`. Resize handle (role=slider) present. At container width 199px, card was in base state (flex-direction: column, font-size: 16px, padding: 16px) — correct, no query matches yet. Width markers, slider, browser-support badge all present.
+  3. CSS Nesting Converter: opened → 2 textareas (input/output) + Nest/Flatten tabs. Clicked "Example" → input filled with flat CSS (.card {}, .card .title {}, .card .body {}). Output automatically converted to nested CSS: `.card { ...; & .title { ... }; & .body { ... } }` — correct flat→nested conversion with `&` syntax. hasNesting=true confirmed.
+  4. Color Contrast Matrix: opened → 6×6 matrix table rendered (36 cells). Summary: "6 colors against the AA (4.5:1) target. 10 of 30 off-diagonal pairs pass". Verified cell accuracy: white-bg vs #0f172a-text = 17.85 (AAA), white-bg vs #64748b-muted = 4.76 (AA), white-bg vs #0d9488-primary = 3.74 (AA Large), diagonal = 1.00 (Fail). WCAG levels and color-coding correct.
+
+- Cross-cutting checks: 0 page errors, 0 console errors. All 4 new differentiator cards present in Platform section. Screenshots saved.
+
+- REBUILT RoyCSS.zip:
+  - Old zip (from task 8): 8.2MB, 652 files, 12 tool components.
+  - New zip: 8.3MB, 656 files, 16 tool components (added grid-areas-builder, container-query-builder, nesting-converter, contrast-matrix).
+  - Copied to both public/RoyCSS.zip and /home/z/RoyCSS.zip.
+
+Stage Summary:
+- 4 new developer platform tools shipped and wired end-to-end:
+  • Grid Template Areas Builder (visual grid-map editor with drag-select painting, 4 presets, rectangularity validation, live layout preview)
+  • Container Query Builder (live resizable container with real @container CSS injection, ResizeObserver width tracking, breakpoint markers)
+  • CSS Nesting Converter (custom brace-matching CSS tokenizer, flat↔nested both directions, round-trip safe, handles @media/combinators/pseudo-classes)
+  • Color Contrast Matrix (N×N WCAG contrast matrix, hand-rolled sRGB→luminance math, AAA/AA/AA-Large/Fail coloring, failing-pairs report)
+- Platform tool count: 21 → 25.
+- Fixed duplicate GitCompare import in platform-tools.tsx and platform-ecosystem.tsx (0 TS errors restored).
+- RoyCSS.zip rebuilt: 8.3MB, 656 files, 16 tool components.
+- Lint clean, tsc clean (0 errors in src/components), dev server 200, 0 runtime errors.

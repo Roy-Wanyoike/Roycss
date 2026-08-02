@@ -49,6 +49,9 @@ import {
   Network,
   Type,
   ArrowDownUp,
+  LayoutGrid,
+  SquareStack,
+  Grid2x2,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -441,6 +444,30 @@ const DIFFERENTIATORS: Differentiator[] = [
     name: "Scroll-Driven Animation Builder",
     description: "Build modern animation-timeline: scroll() and view() CSS with a live scrollable preview that actually drives the animation. Feature-detects browser support and falls back gracefully.",
     icon: ArrowDownUp,
+  },
+  {
+    id: "grid-areas",
+    name: "Grid Template Areas Builder",
+    description: "Visually design grid-template-areas maps — paint named regions on a grid, drag-select ranges, validate rectangularity, and get copy-ready CSS with a live layout preview.",
+    icon: LayoutGrid,
+  },
+  {
+    id: "container-query",
+    name: "Container Query Builder",
+    description: "Build @container queries with a live resizable container you can drag — the content responds to the container's width, not the viewport. The modern responsive primitive.",
+    icon: SquareStack,
+  },
+  {
+    id: "nesting",
+    name: "CSS Nesting Converter",
+    description: "Convert flat CSS to native nesting (with &) and back — round-trip safe. Handles @media, combinators, pseudo-classes, and @supports. Modernize old stylesheets in one click.",
+    icon: GitCompare,
+  },
+  {
+    id: "contrast-matrix",
+    name: "Color Contrast Matrix",
+    description: "Check WCAG contrast for every color pair in your palette at once. N×N matrix with AAA/AA/AA-Large/Fail coloring, mini previews, and a failing-pairs report. Ship accessible palettes.",
+    icon: Grid2x2,
   },
 ];
 
@@ -856,6 +883,10 @@ const INTERACTIVE_TOOLS: Record<string, string> = {
   "variable-graph": "variable-graph",
   "fluid-type": "fluid-type",
   "scroll-animation": "scroll-animation",
+  "grid-areas": "grid-areas",
+  "container-query": "container-query",
+  "nesting": "nesting",
+  "contrast-matrix": "contrast-matrix",
   // Note: mcp-server and inspector are external tools (CLI/Chrome extension),
   // NOT in-browser tools. They should expand to show setup instructions,
   // NOT try to open a panel. So they are intentionally NOT in this map.

@@ -38,6 +38,9 @@ import {
   Network,
   Type,
   ArrowDownUp,
+  LayoutGrid,
+  SquareStack,
+  Grid2x2,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
@@ -55,13 +58,17 @@ import { DarkModeConverter } from "@/components/roycss/tools/dark-mode-converter
 import { VariableDependencyGraph } from "@/components/roycss/tools/variable-graph";
 import { FluidTypographyCalculator } from "@/components/roycss/tools/fluid-typography";
 import { ScrollAnimationBuilder } from "@/components/roycss/tools/scroll-animation-builder";
+import { GridAreasBuilder } from "@/components/roycss/tools/grid-areas-builder";
+import { ContainerQueryBuilder } from "@/components/roycss/tools/container-query-builder";
+import { NestingConverter } from "@/components/roycss/tools/nesting-converter";
+import { ContrastMatrix } from "@/components/roycss/tools/contrast-matrix";
 import type { CSSEffect } from "@/lib/roycss-types";
 
 /* ═══════════════════════════════════════════════════════════════
    Shared types
    ═══════════════════════════════════════════════════════════════ */
 
-type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation";
+type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix";
 
 interface PlatformToolsProps {
   tool: ToolType | null;
@@ -1431,6 +1438,10 @@ const TOOL_META: Record<ToolType, { title: string; icon: React.ComponentType<{ c
   "variable-graph": { title: "Variable Dependency Graph", icon: Network, description: "Paste CSS with var() → visualize the dependency graph, detect cycles, undefined refs, and unused tokens." },
   "fluid-type": { title: "Fluid Typography Calculator", icon: Type, description: "Generate clamp() fluid type scales with a live multi-viewport preview at 320–1440px." },
   "scroll-animation": { title: "Scroll-Driven Animation Builder", icon: ArrowDownUp, description: "Build animation-timeline: scroll() / view() CSS with a live scrollable preview that actually scrolls." },
+  "grid-areas": { title: "Grid Template Areas Builder", icon: LayoutGrid, description: "Visually design grid-template-areas maps — paint named regions, get copy-ready CSS with a live layout preview." },
+  "container-query": { title: "Container Query Builder", icon: SquareStack, description: "Build @container queries with a live resizable container preview that responds to its own width, not the viewport." },
+  "nesting": { title: "CSS Nesting Converter", icon: GitCompare, description: "Convert flat CSS to native nesting (with &) and back. Round-trip safe, handles @media, combinators, pseudo-classes." },
+  "contrast-matrix": { title: "Color Contrast Matrix", icon: Grid2x2, description: "Check WCAG contrast for every color pair in your palette at once. AAA/AA/AA-Large/Fail matrix with failing-pair report." },
 };
 
 export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformToolsProps) {
@@ -1471,6 +1482,10 @@ export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformTo
               {tool === "variable-graph" && <VariableDependencyGraph />}
               {tool === "fluid-type" && <FluidTypographyCalculator />}
               {tool === "scroll-animation" && <ScrollAnimationBuilder />}
+              {tool === "grid-areas" && <GridAreasBuilder />}
+              {tool === "container-query" && <ContainerQueryBuilder />}
+              {tool === "nesting" && <NestingConverter />}
+              {tool === "contrast-matrix" && <ContrastMatrix />}
             </div>
           </>
         )}

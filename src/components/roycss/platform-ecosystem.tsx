@@ -52,6 +52,10 @@ import {
   LayoutGrid,
   SquareStack,
   Grid2x2,
+  Ruler,
+  Box,
+  Rows3,
+  Timer,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -468,6 +472,30 @@ const DIFFERENTIATORS: Differentiator[] = [
     name: "Color Contrast Matrix",
     description: "Check WCAG contrast for every color pair in your palette at once. N×N matrix with AAA/AA/AA-Large/Fail coloring, mini previews, and a failing-pairs report. Ship accessible palettes.",
     icon: Grid2x2,
+  },
+  {
+    id: "unit-converter",
+    name: "Unit Converter Pro",
+    description: "Convert between all 16 CSS length units (px, rem, em, %, vw, vh, vmin, vmax, pt, pc, cm, mm, in, ex, ch, Q) with a root font-size simulator, viewport simulator, and batch CSS conversion.",
+    icon: Ruler,
+  },
+  {
+    id: "box-model",
+    name: "Box Model Visualizer",
+    description: "Interactive box model diagram — tweak margin/border/padding/content with live sliders, toggle box-sizing (content-box vs border-box), see computed dimensions, and copy generated CSS.",
+    icon: Box,
+  },
+  {
+    id: "flex-playground",
+    name: "Flexbox Playground",
+    description: "Full interactive flexbox playground — container controls (direction, wrap, justify, align, gap) + per-item flex/order/align-self. Add/remove items, live layout preview, generated CSS.",
+    icon: Rows3,
+  },
+  {
+    id: "transition-studio",
+    name: "Transition Studio",
+    description: "Build multi-property CSS transitions with per-property duration/easing/delay. Live hover/click trigger preview, configurable 'to' state, and generated transition shorthand CSS.",
+    icon: Timer,
   },
 ];
 
@@ -887,6 +915,10 @@ const INTERACTIVE_TOOLS: Record<string, string> = {
   "container-query": "container-query",
   "nesting": "nesting",
   "contrast-matrix": "contrast-matrix",
+  "unit-converter": "unit-converter",
+  "box-model": "box-model",
+  "flex-playground": "flex-playground",
+  "transition-studio": "transition-studio",
   // Note: mcp-server and inspector are external tools (CLI/Chrome extension),
   // NOT in-browser tools. They should expand to show setup instructions,
   // NOT try to open a panel. So they are intentionally NOT in this map.

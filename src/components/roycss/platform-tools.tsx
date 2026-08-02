@@ -41,6 +41,10 @@ import {
   LayoutGrid,
   SquareStack,
   Grid2x2,
+  Ruler,
+  Box,
+  Rows3,
+  Timer,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
@@ -62,13 +66,17 @@ import { GridAreasBuilder } from "@/components/roycss/tools/grid-areas-builder";
 import { ContainerQueryBuilder } from "@/components/roycss/tools/container-query-builder";
 import { NestingConverter } from "@/components/roycss/tools/nesting-converter";
 import { ContrastMatrix } from "@/components/roycss/tools/contrast-matrix";
+import { UnitConverterPro } from "@/components/roycss/tools/unit-converter";
+import { BoxModelVisualizer } from "@/components/roycss/tools/box-model";
+import { FlexPlayground } from "@/components/roycss/tools/flex-playground";
+import { TransitionStudio } from "@/components/roycss/tools/transition-studio";
 import type { CSSEffect } from "@/lib/roycss-types";
 
 /* ═══════════════════════════════════════════════════════════════
    Shared types
    ═══════════════════════════════════════════════════════════════ */
 
-type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix";
+type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio";
 
 interface PlatformToolsProps {
   tool: ToolType | null;
@@ -1442,6 +1450,10 @@ const TOOL_META: Record<ToolType, { title: string; icon: React.ComponentType<{ c
   "container-query": { title: "Container Query Builder", icon: SquareStack, description: "Build @container queries with a live resizable container preview that responds to its own width, not the viewport." },
   "nesting": { title: "CSS Nesting Converter", icon: GitCompare, description: "Convert flat CSS to native nesting (with &) and back. Round-trip safe, handles @media, combinators, pseudo-classes." },
   "contrast-matrix": { title: "Color Contrast Matrix", icon: Grid2x2, description: "Check WCAG contrast for every color pair in your palette at once. AAA/AA/AA-Large/Fail matrix with failing-pair report." },
+  "unit-converter": { title: "Unit Converter Pro", icon: Ruler, description: "Convert between all 16 CSS length units (px, rem, em, vw, vh, pt, cm, Q…) with a root font-size + viewport simulator and batch CSS conversion." },
+  "box-model": { title: "Box Model Visualizer", icon: Box, description: "Interactive box model diagram — tweak margin/border/padding/content with live sliders, toggle box-sizing, get computed dimensions + generated CSS." },
+  "flex-playground": { title: "Flexbox Playground", icon: Rows3, description: "Full flexbox playground — container + per-item controls, live layout preview, add/remove items, generated CSS with flex shorthand." },
+  "transition-studio": { title: "Transition Studio", icon: Timer, description: "Build multi-property CSS transitions with per-property timing/delay/easing, live hover/click trigger, and generated shorthand CSS." },
 };
 
 export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformToolsProps) {
@@ -1486,6 +1498,10 @@ export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformTo
               {tool === "container-query" && <ContainerQueryBuilder />}
               {tool === "nesting" && <NestingConverter />}
               {tool === "contrast-matrix" && <ContrastMatrix />}
+              {tool === "unit-converter" && <UnitConverterPro />}
+              {tool === "box-model" && <BoxModelVisualizer />}
+              {tool === "flex-playground" && <FlexPlayground />}
+              {tool === "transition-studio" && <TransitionStudio />}
             </div>
           </>
         )}

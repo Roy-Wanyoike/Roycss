@@ -4299,3 +4299,151 @@ Stage Summary:
 - Hydration mismatch fixed: EffectOfTheDay now uses a mounted gate + skeleton placeholder pattern.
 - 0 hydration errors, 0 console errors, 0 lint errors, 0 TS errors.
 - RoyCSS.zip rebuilt with the fix.
+
+---
+Task ID: 9-c
+Agent: Flexbox Playground (general-purpose)
+Task: Build an interactive Flexbox Playground tool component.
+
+Work Log:
+- Read worklog + parent `flexbox-visualizer.tsx` (simple counter version) + sibling tools (`grid-areas-builder.tsx`, `easing-visualizer.tsx`) to match patterns: shadcn New York + semantic theme tokens + Lucide + module-level constants + typed state + memoized CSS + clipboard copy with Check feedback.
+- Confirmed shadcn primitives available (Select, Popover, Separator, Input, Label, Button) and the parent Sheet uses `sm:max-w-2xl` — so the component renders bare content (no Sheet wrapper) sized to fit ~672px.
+- Created `/home/z/my-project/src/components/roycss/tools/flex-playground.tsx` (~620 lines):
+  - `"use client";` + `export function FlexPlayground()` (no props).
+  - Container controls (sidebar, `md:w-[18rem]`): flex-direction, flex-wrap, justify-content, align-items, align-content, gap (px 0–48) — all via a typed generic `LabeledSelect<T>` helper; gap via number Input.
+  - Per-item editor: clicking an item card opens a Popover (controlled by `openItemId`) with order, flex-grow, flex-shrink, flex-basis (text — accepts `auto`/`200px`/`50%`), align-self, width (px, optional), height (px, optional), and a Delete button.
+  - Items: start with 3 (item 2 has `flex-grow: 1` to demo growth). "Add item" button (max 8). Distinct sizes cycle from a fixed `[w, h]` table. Distinct tints cycle through emerald/amber/rose/cyan/violet/fuchsia at /15 opacity — NO blue. Min size 60×60 enforced via inline `minWidth`/`minHeight`.
+  - Live preview: outer `bg-muted/30 border-2 border-dashed border-border rounded-lg p-4 min-h-[280px] overflow-auto`; inner flex container uses real inline CSS (`display: flex` + chosen props) so the layout responds instantly. Each item is a `<button>` (PopoverTrigger asChild) showing its number + `flex: grow shrink basis` shorthand, plus `order: N` when non-zero.
+  - Direction indicator: `ArrowRight` for row variants, `ArrowDown` for column variants, with a "Main axis: horizontal/vertical" label.
+  - Generated CSS (memoized via `useMemo`): block for `.container` (display, flex-direction, flex-wrap, justify-content, align-items, align-content, gap) + one line per `.item-N` using the `flex: grow shrink basis` shorthand + order + align-self. Copy button with Check feedback (1.6s timeout, try/catch, no console output).
+  - Presets: Navbar, Centered card, Card grid, Holy grail row (reorders first 3 items via order 2/1/3), Stack. Reset button restores defaults + resets the item ID counter.
+  - Icons: Rows3, Plus, Trash2, Copy, Check, RotateCcw, ArrowRight, ArrowDown, Sparkles, Settings2 — all from lucide-react.
+  - A11y: every Select/Input has a `<Label htmlFor>`; item buttons have descriptive `aria-label`s (including their order/flex/align-self); copy/delete/add/reset buttons all have `aria-label`s or visible text.
+  - All chrome uses semantic tokens (`bg-card/40`, `bg-muted/30`, `text-foreground`, `text-muted-foreground`, `border-border`, `text-primary`, `bg-primary/10`). Tint class strings are written as full literals so Tailwind v4 JIT detects them.
+  - TS strict: every option array + state is fully typed (FlexDirection, FlexWrap, JustifyContent, AlignItems, AlignContent, AlignSelf, FlexItem, ContainerState, Tint, Preset). No `any`. Generics on `LabeledSelect<T extends string>` for type-safe selects.
+  - Memoized: `css`, `containerStyle` via `useMemo`; all handlers via `useCallback`.
+  - Module-level `itemIdCounter` (starts at 3, defaults use item-1..item-3) for unique IDs on added items; reset() rewinds it to 3.
+- Verified: `bunx tsc --noEmit --skipLibCheck` → 0 errors (entire project). `bunx eslint` on the file → 0 errors, 0 warnings.
+
+Stage Summary:
+- File: `src/components/roycss/tools/flex-playground.tsx` (~620 lines).
+- Export: `FlexPlayground` (named, no props, `"use client"`).
+- Features: container controls (6 props) + per-item Popover editor (7 props + delete) + add/remove items (max 8) + live preview + memoized generated CSS with copy + 5 presets + reset + direction indicator + accessible labels + six-color tint palette (no blue) + dark/light via semantic tokens.
+- Not wired into the app (per instructions) — ready to be imported by `platform-tools.tsx` or a route when desired.
+- 0 TS errors, 0 lint errors.
+
+---
+Task ID: 9-d
+Agent: CSS Transition Studio (general-purpose)
+Task: Build a CSS Transition Studio tool component.
+
+Work Log:
+- Read context: worklog tail, easing-visualizer.tsx (sibling tool — confirmed scope distinction), grid-areas-builder.tsx and scroll-animation-builder.tsx (pattern reference), globals.css (confirmed Tailwind v4 + oklch() CSS vars, no hsl() wrapper needed).
+- Created `/home/z/my-project/src/components/roycss/tools/transition-studio.tsx` (~1310 lines, self-contained, `"use client"`, `export function TransitionStudio()`).
+- Architecture:
+  - Types: `TimingType` (9 variants incl. steps + cubic-bezier), `StepsPosition`, `TriggerMode`, `TransformPreset`, `ShadowPreset`, `BezierVals`, `TransitionRule`, `HoverState`.
+  - Constants: 12 common properties + `__custom__` sentinel, 9 timing-function types, 4 steps positions, 5 transform presets, 3 shadow presets with concrete `box-shadow` values, named-easing → bezier lookup table (so every rule's curve can render as a thumbnail), 14-row animatable-property reference table.
+  - Helpers: `ruleProperty`, `timingFunctionValue`, `ruleBezier`, `ruleSteps`, `ruleTotalMs`, `bezierPath` (32-sample polyline), `stepsPath` (staircase with correct jump-start/jump-end/jump-none/jump-both semantics per CSS spec).
+  - Sub-components: `TimingCurve` (40×24 SVG thumbnail — bezier or steps, with frame + diagonal reference), `RuleCard` (compact per-rule editor: property Select + custom input + duration input/slider + timing-function Select + conditional cubic-bezier (4 inputs) / steps (count + position) controls + delay input/slider + remove button).
+  - Main `TransitionStudio`: rules list + add/remove, hover-state config (transform Select + color picker + hex input + border-radius slider + box-shadow Select), live preview with Tabs (Hover | Click) + Play/Pause auto-loop + Trigger button (click mode), stats badges, generated CSS with Copy + 2s Check, collapsible property reference table.
+- Live preview: the 80×80 element runs the ACTUAL `transition: prop dur timing delay, ...` inline style; hover mode uses the whole preview area as the hover target (onMouseEnter/Leave), click mode uses a Trigger button (aria-pressed), Play mode auto-loops forward → reverse using `max(longestTotalMs + 400, 600)ms` as the cycle. Initial `setClicked(true)` in the play effect is deferred via `requestAnimationFrame` to satisfy the `react-hooks/set-state-in-effect` lint rule (same pattern as easing-visualizer). Pause/mode-switch resets are handled in the toggle handlers (not effects) to avoid cascading renders.
+- Cleanup: `playTimeoutRef` and `copyTimeoutRef` cleared on unmount; rAF kickoff cancelled on re-render/unmount.
+- Generated CSS is `useMemo`'d from `[rules, hoverState, triggerMode]` — emits the multi-property `transition:` shorthand (comma-separated, indented) plus the `:hover` (hover mode) or `.is-active` (click mode) block with the configured transform / background-color / border-radius / box-shadow declarations.
+- Stats: rule count badge + "total: Xms" badge (longest = max(duration + delay)).
+- Accessibility: all controls labeled (`Label`/`aria-label`), preview element has `role="img"` + descriptive `aria-label` of current state, Trigger button uses `aria-pressed`, preview area is `role="region"`, Collapsible trigger uses `aria-expanded`, all Selects have accessible labels.
+- Styling: semantic theme tokens only (`bg-card`, `bg-muted/30`, `border-border`, `text-foreground`, `text-muted-foreground`, `text-primary`, `bg-primary/10`, etc.). No indigo/blue. The preview element's base state uses a fixed neutral `#71717a` (zinc-500) so the transition is visible in both light/dark; the "to" state defaults to `#0d9488` (teal-600, matching the spec example). Layout: `mx-auto max-w-2xl`, header → preview → 2-col rules + to-state config → stats → generated CSS → collapsible reference.
+- Verification: `npx tsc --noEmit --skipLibCheck` → 0 errors (entire project). `npx eslint src/components/roycss/tools/transition-studio.tsx` → 0 errors, 0 warnings. Initial lint error (`react-hooks/set-state-in-effect` on the play-loop's `setClicked(true)`) fixed by deferring to `requestAnimationFrame`; a second occurrence (pause-snap-back effect) fixed by moving that logic into the `handlePlayToggle` / `handleTriggerModeChange` callbacks.
+
+Stage Summary:
+- File: `/home/z/my-project/src/components/roycss/tools/transition-studio.tsx` (~1310 lines).
+- Export: `TransitionStudio` (named, no props, self-contained, `"use client"`).
+- Features: multi-rule transition builder (property/duration/timing/delay per rule with cubic-bezier + steps support), inline 40×24 timing-curve thumbnails, live preview with hover/click/play triggers, configurable "to" state (transform/bg/border-radius/shadow), generated multi-property `transition:` CSS with copy, stats, collapsible animatable-property reference.
+- Distinct from `easing-visualizer.tsx`: that tool is a single-curve bezier designer; this tool is the transition-shorthand layer (multiple per-property rules + live trigger + "to"-state config).
+- Not wired into the app (per task spec). TS + lint clean.
+
+---
+Task ID: 9-a
+Agent: CSS Unit Converter Pro (general-purpose)
+Task: Build a self-contained CSS Unit Converter Pro tool component.
+
+Work Log:
+- Reviewed project context: RoyCSS is a Next.js 16 + TS + Tailwind 4 + shadcn/ui (New York) single-page app with 25+ developer tools in `src/components/roycss/tools/`. Studied sibling tools (`dark-mode-converter`, `fluid-typography`, `css-unit-converter`) for layout + shadcn component patterns and the established card-style outer wrapper (`rounded-2xl border bg-card/50 p-4 sm:p-5` with icon header).
+- Confirmed there is a basic `src/components/roycss/css-unit-converter.tsx` (px→rem only, 9 units, fixed 1920×1080 viewport, no simulator). The Pro version is a superset: 16 units, root-font-size slider, viewport simulator, batch converter, live preview, reference table.
+- Created `/home/z/my-project/src/components/roycss/tools/unit-converter.tsx` (~740 lines).
+- Math foundation: implemented `toPx(value, unit, ctx)` and `fromPx(px, unit, ctx)` as exhaustive `switch` statements over the `UnitId` union — TS strict mode enforces every case is handled (no `default`, fall-through narrows to `never`). Conversion basis per CSS spec: 1in = 96px; pt = 96/72, pc = 96/6 (=16), cm = 96/2.54, mm = cm/10, Q = cm/40; rem/em × rootFontSize; vw/vh/vmin/vmax × viewport/100; % treated as % of vw (context-dependent caveat in UI); ex/ch ≈ 0.5em.
+- `formatValue`: 4-decimal fixed with trailing-zero trim, falls back to exponential for sub-0.0001 magnitudes (avoids showing "0" for tiny non-zero values).
+- Batch parser: regex `(-?\d*\.?\d+)(vmin|vmax|rem|px|em|vw|vh|pt|pc|cm|mm|in|ex|ch|q|%)(?![a-z0-9])` with `gi` flags — case-insensitive (CSS allows `1REM`), negative-lookahead boundary prevents matching units inside longer identifiers (e.g. `16quick` won't match `16q`), intentionally excludes `s/ms/deg/fr/hz` etc. `convertCss` walks matches, converts each via toPx→fromPx, preserves original text when already in target unit, returns converted CSS + count.
+- All conversions memoized via `useMemo` (`ctx`, `pxValue`, `rows`, `preview`, `batchResult`, `viewportPreview`). Copy handlers via `useCallback`.
+- UI sections (top→bottom): (1) header with Ruler icon; (2) controls grid — root-font-size Slider (8–32, default 16) with prominent `{n}px` display + `1rem = Npx` note, and viewport simulator with two number inputs (1440×900 default) + aspect-ratio preview box + `1vw/1vh = Npx` note; (3) quick chips (16px, 1rem, 100vw, 12pt, 1in) that load into the single converter; (4) single conversion panel — value Input + unit Select (all 16 units), live preview (sample "Aa" rendered at clamped px size + width bar relative to 480px reference), scrollable results table (`max-h-[360px] overflow-y-auto`, rows `hover:bg-muted/50 cursor-pointer rounded-md`, each row = button with unit/value/relative-bar/copy-icon, click copies `value+unit` with inline Check confirmation, `%` row shows "context-dependent" muted), caveat note (em/%/ex/ch approximations); (5) batch converter — two-column on `md:` (Textarea input | `<pre><code>` output with copy button), target-unit Select (default rem), converted-count label; (6) collapsible unit reference — 16 unit cards in a 2-col grid with label/name/category-badge/description.
+- Accessibility: all inputs have `<Label htmlFor>`; table container has `aria-describedby` pointing to an sr-only description (caption-equivalent); each result row is a `<button>` with `aria-label="Copy {value}{unit}"` (native keyboard support); viewport preview box has `role="img"` + aria-label; icon-only affordances marked `aria-hidden`.
+- Styling: `max-w-2xl mx-auto` outer container; semantic theme tokens only (`bg-card`, `bg-background`, `text-foreground`, `text-muted-foreground`, `border-border`, `bg-primary`, `text-primary`, `bg-muted`) — no indigo/blue. `font-display` + `font-mono` per project convention. Responsive (md: grid breakpoints, stacked on mobile).
+- Verified: `npx tsc --noEmit --skipLibCheck` → 0 errors (entire project). `npx eslint` on the file → 0 errors, 0 warnings. No `console.log`, no `any`.
+- Not wired into the app (per task spec).
+
+Stage Summary:
+- File: `/home/z/my-project/src/components/roycss/tools/unit-converter.tsx` (~740 lines).
+- Export: `UnitConverterPro` (named, no props, self-contained, `"use client"`).
+- Features: 16-unit converter (px/rem/em/%/vw/vh/vmin/vmax/pt/pc/cm/mm/in/ex/ch/Q) with root-font-size slider (8–32) + viewport simulator (1440×900) + live preview + scrollable click-to-copy results table (4-decimal, relative bars) + batch CSS converter (regex parse → target unit, default rem) + collapsible unit reference. Exhaustive `toPx`/`fromPx` math (1in=96px basis). Memoized, accessible, semantic theme tokens, responsive max-w-2xl.
+- Distinct from `css-unit-converter.tsx`: that tool is a basic 9-unit px↔rem/em/pt/vw/vh/vmin/vmax/% grid with fixed 1920×1080 viewport; this Pro version adds 7 more units (pc/cm/mm/in/ex/ch/Q), root-font-size + viewport simulators, live preview, batch CSS conversion, quick chips, and a reference table.
+- TS + lint clean. Not wired into the app (per task spec).
+
+---
+Task ID: 9-b
+Agent: Box Model Visualizer (general-purpose)
+Task: Build a self-contained Box Model Visualizer tool component.
+
+Work Log:
+- Reviewed worklog and existing tool patterns (easing-visualizer, specificity-calculator, scroll-animation-builder) for conventions: `"use client"`, max-w-2xl container, semantic theme colors, framer-motion entrance, lucide icons, shadcn/ui (Select/Switch/Checkbox/Input/Label), memoized derived state, copy-with-check pattern.
+- Created `src/components/roycss/tools/box-model.tsx` (1213 lines, TS strict, no `any`, no console.log).
+- File structure:
+  - Type defs: `BoxSizing`, `BorderSide`, `Sides`, `BorderState`, `ContentState`, `Dims`, `BoxDims`, `Preset`.
+  - Constants: defaults (margin 16, border 2px solid #0d9488, padding 12, content 200×100, content-box), `BORDER_STYLES` (solid/dashed/dotted/double/groove/ridge/none), `PRESETS` (Zero reset / Symmetric 16 / Card / Hero), layer tint constants (AMBER_BG / CYAN_BG / CONTENT_BG).
+  - Helpers: `clampNonNegInt`, `parseSideInput`, `sidesToShorthand` (1/2/3/4-value collapsing), `sidesToWidthShorthand`.
+  - Sub-components: `LayerTag` (absolutely-positioned per-side value badge with translate positioning), `LegendDot`, `SideControlsSection` (T/R/B/L inputs + link-sides checkbox + accent color + optional extra slot), `DimRow`.
+  - Main `BoxModelVisualizer()` export.
+- Features implemented (matching spec):
+  1. Nested diagram: margin (amber/12) → border (solid `border.color`, primary/teal) → padding (cyan/14) → content (primary/22). Each layer has 4 LayerTag badges (one per side, top badge shows initial+value, others show value), color-coded. Diagram is `role="img"` with a detailed `aria-label` enumerating every side value, style, color, box-sizing, and total margin-box size.
+  2. Auto-scaling: ResizeObserver measures container width; `scale = min(1, (containerW - 2*DIAGRAM_PADDING) / naturalW)`. Diagram renders at natural pixel size inside an absolutely-positioned wrapper with `transform: scale()`, `transform-origin: top left`. Wrapper has explicit `width/height = naturalW*scale / naturalH*scale` so layout reserves the correct space. Scale % shown in the panel header.
+  3. Controls: 4 sections (Margin/Border/Padding/Content). Margin/Padding/Border each have T/R/B/L number inputs in a 2×2 (mobile) / 4×1 (sm+) grid + a "link all sides" Checkbox that toggles a Link2/Unlink icon. When linked, editing one side propagates to all 4.
+  4. Border extras: style Select (7 options) + color picker (`<input type="color">` + hex text input side-by-side).
+  5. Content: width + height number inputs with px suffix + an "auto" checkbox each that disables the input.
+  6. box-sizing Switch with content-box / border-box labels on either side; descriptive subtitle changes per mode.
+  7. Computed dimensions panel: 4 DimRows (content/padding/border/margin box W×H), border-box highlighted. Total occupied space (margin box) shown in a separate highlighted row. Calculations correctly differ between modes: in border-box the content/padding boxes shrink (subtract border, then padding, from the fixed width); in content-box they grow outward from the content.
+  8. Generated CSS: `.box { box-sizing; width; height; margin; border[-width/style/color]; padding; }`. Smart shorthand collapses to 1/2/3/4-value forms. Border uses the single `border:` shorthand when all 4 sides equal, otherwise expands to `border-width` (shorthand-collapsed) + `border-style` + `border-color`. Copy button with Check icon confirmation (1.5s timeout).
+  9. Live preview: real `<div>` with inline `previewStyle` (memoized) matching the generated CSS exactly, on a checkerboard background (color-mix muted + 45° linear-gradient pattern) so margins are visible. Inner content label shows the actual content-area dimensions.
+  10. Presets: 4 chips (Zero reset, Symmetric 16, Card [border-box], Hero [border-box]) that bulk-apply margin/border/padding/content/boxSizing.
+  11. Diagram correctly visualizes the box-sizing difference: in content-box mode the border layer has `width: auto` and wraps the content+padding (outermost diagram size grows); in border-box mode the border layer has `width: displayW; boxSizing: border-box` and the content div has `width: auto` so it shrinks to fill the remaining space (outermost diagram size = displayW + margin).
+  12. Memoization: `dims`, `cssString`, `previewStyle`, `naturalW/naturalH/scale`, `diagramAria` all wrapped in `useMemo` with explicit dep arrays. `updateSide`, `handleReset`, `applyPreset`, `handleCopy` wrapped in `useCallback`.
+  13. Icons used: `Box` (header), `Move` (box-sizing), `Sparkles` (presets), `Link2`/`Unlink` (link toggle), `RefreshCw` (reset), `Copy`/`Check` (copy button).
+- Verification: `npx tsc --noEmit --skipLibCheck` → 0 errors; `npx eslint src/components/roycss/tools/box-model.tsx` → 0 errors 0 warnings (after fixing one React-Compiler memoization dep — added `padding` to `cssString` deps since `sidesToShorthand("padding", padding)` reads it).
+- NOT wired into the app per task instructions — file + worklog only.
+
+Stage Summary:
+- File: `/home/z/my-project/src/components/roycss/tools/box-model.tsx` (1213 lines).
+- Export: `export function BoxModelVisualizer()` — no props, self-contained, `"use client"`.
+- Features: nested 4-layer diagram with per-side tags + auto-scale; 4 control sections with link-sides toggle; border style/color; content w/h with auto; box-sizing Switch (content-box ↔ border-box) with visible diagram difference; computed dimensions panel (content/padding/border/margin boxes + total); generated CSS with smart shorthand + Copy button; live preview div with checkerboard background; 4 presets (Zero reset / Symmetric 16 / Card / Hero); full a11y (labeled inputs, role="img" diagram with detailed aria-label).
+- Tech: Tailwind 4 semantic colors (`bg-card`, `text-foreground`, `text-muted-foreground`, `border-border`, `text-primary`, `bg-primary`) + layer tints (amber/cyan/primary). No indigo/blue. shadcn/ui (Input, Label, Switch, Checkbox, Select). framer-motion. Lucide icons. TS strict, no `any`, no console.log. Memoized derived state.
+- Quality: tsc 0 errors, eslint 0 errors. Production-ready.
+
+---
+Task ID: 13 (batch 9)
+Agent: main (orchestrator)
+Task: Build and wire 4 new developer tools (Unit Converter Pro, Box Model Visualizer, Flexbox Playground, Transition Studio), verify, rebuild RoyCSS.zip.
+
+Work Log:
+- 4 subagents built self-contained tool components in src/components/roycss/tools/:
+  • unit-converter.tsx → UnitConverterPro (16 CSS length units, root font-size + viewport simulators, batch CSS conversion)
+  • box-model.tsx → BoxModelVisualizer (nested margin/border/padding/content diagram, box-sizing toggle, computed dimensions)
+  • flex-playground.tsx → FlexPlayground (container + per-item controls, live layout preview, add/remove items)
+  • transition-studio.tsx → TransitionStudio (multi-property transition rules, live hover/click trigger, generated shorthand CSS)
+- Wired into platform-tools.tsx: 4 icon imports (Ruler, Box, Rows3, Timer), 4 component imports, ToolType union extended with 4 IDs, 4 TOOL_META entries, 4 render branches.
+- Wired into platform-ecosystem.tsx: 4 icon imports, 4 INTERACTIVE_TOOLS entries, 4 Differentiator cards.
+- Wired into roycss-page.tsx: platformTool state type extended, onLaunchTool guard extended.
+- Verification: lint 0 errors, tsc 0 errors, dev server HTTP 200, Agent Browser 0 errors. All 4 tools open correctly from their Platform cards.
+- Rebuilt: dist artifacts, CLI bundle, synced effects.json (cli + mcp-server), RoyCSS.zip (8.3MB).
+
+Stage Summary:
+- Platform tool count: 25 → 29.
+- All 4 tools verified interactive via Agent Browser.
+- RoyCSS.zip rebuilt with 20 tool components.
+- Lint clean, tsc clean, 0 runtime errors.

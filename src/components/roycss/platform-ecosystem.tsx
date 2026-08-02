@@ -45,6 +45,10 @@ import {
   Globe,
   Printer,
   Crosshair,
+  MoonStar,
+  Network,
+  Type,
+  ArrowDownUp,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -407,6 +411,30 @@ const DIFFERENTIATORS: Differentiator[] = [
     name: "Selector Tester",
     description: "Type any CSS selector — :has(), :is(), :where(), attribute operators, nth-child, combinators — and instantly see matching elements highlighted in a live HTML sample.",
     icon: Crosshair,
+  },
+  {
+    id: "dark-mode",
+    name: "Dark Mode Converter",
+    description: "Paste a light-mode color palette (or raw CSS) → auto-generate a perceptually-tuned dark palette using OKLCH lightness inversion, with a live UI preview and CSS-variable export.",
+    icon: MoonStar,
+  },
+  {
+    id: "variable-graph",
+    name: "Variable Dependency Graph",
+    description: "Paste CSS using var() → get a layered visual dependency graph. Detects circular references, undefined var() calls, and unused custom properties — with one-click resolved-value export.",
+    icon: Network,
+  },
+  {
+    id: "fluid-type",
+    name: "Fluid Typography Calculator",
+    description: "Generate mathematically-correct clamp() type scales. Live multi-viewport preview (320–1440px via real iframes), font-size curve chart, and rem/px output with 6 type-scale presets.",
+    icon: Type,
+  },
+  {
+    id: "scroll-animation",
+    name: "Scroll-Driven Animation Builder",
+    description: "Build modern animation-timeline: scroll() and view() CSS with a live scrollable preview that actually drives the animation. Feature-detects browser support and falls back gracefully.",
+    icon: ArrowDownUp,
   },
 ];
 
@@ -818,6 +846,10 @@ const INTERACTIVE_TOOLS: Record<string, string> = {
   "browser-support": "browser-support",
   "print": "print",
   "selector-tester": "selector-tester",
+  "dark-mode": "dark-mode",
+  "variable-graph": "variable-graph",
+  "fluid-type": "fluid-type",
+  "scroll-animation": "scroll-animation",
   // Note: mcp-server and inspector are external tools (CLI/Chrome extension),
   // NOT in-browser tools. They should expand to show setup instructions,
   // NOT try to open a panel. So they are intentionally NOT in this map.

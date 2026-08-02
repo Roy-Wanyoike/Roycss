@@ -42,6 +42,8 @@ import {
   Rows3,
   Scissors,
   Paintbrush,
+  Variable,
+  Smartphone,
   Loader2,
   Box,
   MousePointer,
@@ -142,6 +144,9 @@ import { FlexboxVisualizer } from "@/components/roycss/flexbox-visualizer";
 import { ClipPathGenerator } from "@/components/roycss/clip-path-generator";
 import { FilterStudio } from "@/components/roycss/filter-studio";
 import { ColorShadeGenerator } from "@/components/roycss/color-shade-generator";
+import { SpacingScaleGenerator } from "@/components/roycss/spacing-scale-generator";
+import { CSSVariableManager } from "@/components/roycss/variable-manager";
+import { ResponsivePreview } from "@/components/roycss/responsive-preview";
 import { useFavorites } from "@/hooks/use-favorites";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
@@ -939,6 +944,9 @@ export default function RoyCSSPage() {
   const [clipPathOpen, setClipPathOpen] = useState(false);
   const [filterStudioOpen, setFilterStudioOpen] = useState(false);
   const [shadeGenOpen, setShadeGenOpen] = useState(false);
+  const [spacingScaleOpen, setSpacingScaleOpen] = useState(false);
+  const [varManagerOpen, setVarManagerOpen] = useState(false);
+  const [responsivePreviewOpen, setResponsivePreviewOpen] = useState(false);
   const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -1221,6 +1229,15 @@ export default function RoyCSSPage() {
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setShadeGenOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <Paintbrush className="size-4 text-muted-foreground" /> Color Shade Generator
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setSpacingScaleOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Ruler className="size-4 text-muted-foreground" /> Spacing Scale Generator
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setVarManagerOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Variable className="size-4 text-muted-foreground" /> CSS Variable Manager
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setResponsivePreviewOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Smartphone className="size-4 text-muted-foreground" /> Responsive Preview
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setShortcutsOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <Keyboard className="size-4 text-muted-foreground" /> Keyboard Shortcuts
@@ -2227,6 +2244,48 @@ export default function RoyCSSPage() {
             <SheetDescription>Generate 10 shades/tints from any base color. Hex or OKLCH output.</SheetDescription>
           </SheetHeader>
           <div className="p-5"><ColorShadeGenerator /></div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Spacing Scale Generator Sheet */}
+      <Sheet open={spacingScaleOpen} onOpenChange={setSpacingScaleOpen}>
+        <SheetContent side="right" className="w-full sm:max-w-md overflow-y-auto p-0">
+          <SheetHeader className="p-5 pb-3 text-left border-b border-border/50">
+            <SheetTitle className="flex items-center gap-2 font-display text-lg">
+              <Ruler className="size-5 text-primary" />
+              Spacing Scale Generator
+            </SheetTitle>
+            <SheetDescription>Generate spacing scales — linear, geometric, golden ratio, Tailwind.</SheetDescription>
+          </SheetHeader>
+          <div className="p-5"><SpacingScaleGenerator /></div>
+        </SheetContent>
+      </Sheet>
+
+      {/* CSS Variable Manager Sheet */}
+      <Sheet open={varManagerOpen} onOpenChange={setVarManagerOpen}>
+        <SheetContent side="right" className="w-full sm:max-w-lg overflow-y-auto p-0">
+          <SheetHeader className="p-5 pb-3 text-left border-b border-border/50">
+            <SheetTitle className="flex items-center gap-2 font-display text-lg">
+              <Variable className="size-5 text-primary" />
+              CSS Variable Manager
+            </SheetTitle>
+            <SheetDescription>Manage design tokens — colors, spacing, fonts, radius, shadows.</SheetDescription>
+          </SheetHeader>
+          <div className="p-5"><CSSVariableManager /></div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Responsive Preview Sheet */}
+      <Sheet open={responsivePreviewOpen} onOpenChange={setResponsivePreviewOpen}>
+        <SheetContent side="right" className="w-full sm:max-w-lg overflow-y-auto p-0">
+          <SheetHeader className="p-5 pb-3 text-left border-b border-border/50">
+            <SheetTitle className="flex items-center gap-2 font-display text-lg">
+              <Smartphone className="size-5 text-primary" />
+              Responsive Preview
+            </SheetTitle>
+            <SheetDescription>Preview any URL at 6 device breakpoints.</SheetDescription>
+          </SheetHeader>
+          <div className="p-5"><ResponsivePreview /></div>
         </SheetContent>
       </Sheet>
 

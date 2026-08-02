@@ -13,7 +13,12 @@
  * cold start. Target: <200ms cold start (see docs/benchmarks).
  */
 
-/// <reference types="chrome" />
+// `@types/chrome` is not installed at the project root (only in the
+// inspector/legacy-sidepanel/package.json devDependencies, which has no
+// node_modules of its own). Declare `chrome` as `any` so type-checking
+// passes under the root tsconfig.json; runtime behavior is unchanged
+// because Chrome injects the real `chrome.*` globals into the popup.
+declare const chrome: any;
 
 import { effectsData } from "./effects-data";
 import type {

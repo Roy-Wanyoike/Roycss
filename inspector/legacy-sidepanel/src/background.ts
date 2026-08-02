@@ -17,7 +17,13 @@
  * of inactivity; the content script is the source of truth for scan state.
  */
 
-/// <reference types="chrome" />
+// `@types/chrome` is not installed at the project root (only in the
+// inspector/legacy-sidepanel/package.json devDependencies, which has no
+// node_modules of its own). Declare `chrome` as `any` so type-checking
+// passes under the root tsconfig.json; runtime behavior is unchanged
+// because Chrome injects the real `chrome.*` globals into the extension
+// service worker.
+declare const chrome: any;
 
 import type { InspectorMessage } from "./messages";
 

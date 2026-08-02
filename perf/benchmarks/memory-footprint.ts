@@ -75,7 +75,6 @@ export function runMemoryFootprintBenchmark(projectRoot: string): BenchmarkResul
   // to capture the full picture. (This was verified empirically: a fresh
   // JSON.parse of effects.json shows delta_external ≈ 340 KB and
   // delta_heapUsed = 0.)
-  // @ts-expect-error - Bun.gc is a Bun-specific global.
   if (typeof Bun !== "undefined" && typeof Bun.gc === "function") Bun.gc(true);
   const before = process.memoryUsage();
   const effects: EffectMeta[] = JSON.parse(raw);
@@ -87,7 +86,6 @@ export function runMemoryFootprintBenchmark(projectRoot: string): BenchmarkResul
   }
   // Force another GC so new-space garbage (transient parse structures)
   // is reclaimed, leaving only the reachable `effects` graph.
-  // @ts-expect-error - Bun.gc is a Bun-specific global.
   if (typeof Bun !== "undefined" && typeof Bun.gc === "function") Bun.gc(true);
   const after = process.memoryUsage();
   const totalBefore = before.heapUsed + before.external + before.arrayBuffers;

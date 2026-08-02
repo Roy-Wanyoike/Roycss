@@ -18,7 +18,13 @@
  * attribute, no innerText, no outerHTML. See docs/threat-models §3.4 I1.
  */
 
-/// <reference types="chrome" />
+// `@types/chrome` is not installed at the project root (only in the
+// inspector/legacy-sidepanel/package.json devDependencies, which has no
+// node_modules of its own). Declare `chrome` as `any` so type-checking
+// passes under the root tsconfig.json; runtime behavior is unchanged
+// because Chrome injects the real `chrome.*` globals into the content
+// script's isolated world.
+declare const chrome: any;
 
 import { injectOverlay, attachBadge, clearBadges } from "./inspector-overlay";
 import type {

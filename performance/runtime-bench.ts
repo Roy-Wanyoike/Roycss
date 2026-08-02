@@ -41,12 +41,12 @@ const URL = getArg("url", "http://localhost:3000/");
 const RUNS = parseInt(getArg("runs", "3"), 10);
 
 // Python interpreter — try /home/z/.venv/bin/python first, fall back to python3
-function findPython(): string {
+async function findPython(): Promise<string> {
   const candidates = ["/home/z/.venv/bin/python", "python3", "python"];
   for (const c of candidates) {
     try {
       const proc = spawn({ cmd: [c, "--version"], stdout: "pipe", stderr: "pipe" });
-      const exit = proc.exited;
+      const exit = await proc.exited;
       if (exit === 0) return c;
     } catch {
       // try next
@@ -103,7 +103,7 @@ async function main(): Promise<number> {
   console.log("╚══════════════════════════════════════════════════════════════════════════╝\n");
   console.log(`  URL:    ${URL}`);
   console.log(`  Runs:   ${RUNS}`);
-  const python = findPython();
+  const python = await findPython();
   console.log(`  Python: ${python}`);
   console.log(`  Helper: ${join(__dirname, "_playwright_bench.py")}\n`);
 

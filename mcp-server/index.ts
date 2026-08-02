@@ -1194,7 +1194,9 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
 // ═══════════════════════════════════════════════════════════════
 
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  const { name, arguments: args } = request.params;
+  const { name, arguments: rawArgs } = request.params;
+  // MCP tool arguments are dynamic JSON validated by JSON Schema, not TypeScript types.
+  const args = (rawArgs ?? {}) as Record<string, any>;
 
   try {
     switch (name) {

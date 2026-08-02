@@ -38,12 +38,12 @@ function getArg(name: string, fallback: string): string {
 const URL = getArg("url", "http://localhost:3000/");
 const COUNTS = getArg("counts", "10,50,100,500,1000").split(",").map((s) => parseInt(s, 10));
 
-function findPython(): string {
+async function findPython(): Promise<string> {
   const candidates = ["/home/z/.venv/bin/python", "python3", "python"];
   for (const c of candidates) {
     try {
       const proc = spawn({ cmd: [c, "--version"], stdout: "pipe", stderr: "pipe" });
-      const exit = proc.exited;
+      const exit = await proc.exited;
       if (exit === 0) return c;
     } catch {
       // try next
@@ -124,7 +124,7 @@ async function main(): Promise<number> {
   console.log("╚══════════════════════════════════════════════════════════════════════════╝\n");
   console.log(`  URL:    ${URL}`);
   console.log(`  Counts: ${COUNTS.join(", ")}`);
-  const python = findPython();
+  const python = await findPython();
   console.log(`  Python: ${python}\n`);
 
   const helperPath = join(__dirname, "_playwright_bench.py");

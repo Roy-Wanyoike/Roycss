@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+// @ts-expect-error — socket.io-client is a dev dependency for this example only
 import { io } from 'socket.io-client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

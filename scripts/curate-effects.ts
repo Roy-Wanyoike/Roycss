@@ -21,10 +21,10 @@ import { writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { effects } from "../src/lib/roycss-effects.ts";
-import type { CSSEffect, EffectCategory } from "../src/lib/roycss-types.ts";
-import { recipes } from "../src/lib/roycss-recipes.ts";
-import { patterns } from "../src/lib/roycss-patterns.ts";
+import { effects } from "../src/lib/roycss-effects";
+import type { CSSEffect, EffectCategory } from "../src/lib/roycss-types";
+import { recipes } from "../src/lib/roycss-recipes";
+import { patterns } from "../src/lib/roycss-patterns";
 import {
   CATEGORY_DEFINITIONS,
   type DimensionScore,
@@ -37,7 +37,7 @@ import {
   TAG_SYNONYMS,
   TAG_VOCABULARY,
   tierForScore,
-} from "../src/lib/effect-taxonomy.ts";
+} from "../src/lib/effect-taxonomy";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

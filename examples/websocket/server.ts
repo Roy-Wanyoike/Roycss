@@ -1,4 +1,5 @@
 import { createServer } from 'http'
+// @ts-expect-error — socket.io is a dev dependency for this example only
 import { Server } from 'socket.io'
 
 const httpServer = createServer()

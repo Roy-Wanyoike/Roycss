@@ -262,7 +262,7 @@ function runAxeViaBrowser(): AxeResult {
     try {
       parsed = JSON.parse(parsed);
     } catch {
-      console.error(`✗ axe output was a string but not valid JSON. First 500 chars:\n${parsed.slice(0, 500)}`);
+      console.error(`✗ axe output was a string but not valid JSON. First 500 chars:\n${String(parsed).slice(0, 500)}`);
       teardownServer();
       process.exit(1);
     }

@@ -38,6 +38,8 @@ import {
   Move3d,
   Type,
   Film,
+  LayoutGrid,
+  Rows3,
   Loader2,
   Box,
   MousePointer,
@@ -133,6 +135,8 @@ import { ColorPaletteGenerator } from "@/components/roycss/palette-generator";
 import { TransformStudio } from "@/components/roycss/transform-studio";
 import { AnimationTimeline } from "@/components/roycss/animation-timeline";
 import { FontPreviewTool } from "@/components/roycss/font-preview-tool";
+import { CSSGridGenerator } from "@/components/roycss/grid-generator";
+import { FlexboxVisualizer } from "@/components/roycss/flexbox-visualizer";
 import { useFavorites } from "@/hooks/use-favorites";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
@@ -925,6 +929,8 @@ export default function RoyCSSPage() {
   const [transformStudioOpen, setTransformStudioOpen] = useState(false);
   const [animTimelineOpen, setAnimTimelineOpen] = useState(false);
   const [fontPreviewOpen, setFontPreviewOpen] = useState(false);
+  const [gridGenOpen, setGridGenOpen] = useState(false);
+  const [flexboxOpen, setFlexboxOpen] = useState(false);
   const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -1192,6 +1198,12 @@ export default function RoyCSSPage() {
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setFontPreviewOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <Type className="size-4 text-muted-foreground" /> Font Preview Tool
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setGridGenOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <LayoutGrid className="size-4 text-muted-foreground" /> CSS Grid Generator
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setFlexboxOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Rows3 className="size-4 text-muted-foreground" /> Flexbox Visualizer
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setShortcutsOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <Keyboard className="size-4 text-muted-foreground" /> Keyboard Shortcuts
@@ -2128,6 +2140,34 @@ export default function RoyCSSPage() {
             <SheetDescription>Preview text with different font properties. Copy CSS instantly.</SheetDescription>
           </SheetHeader>
           <div className="p-5"><FontPreviewTool /></div>
+        </SheetContent>
+      </Sheet>
+
+      {/* CSS Grid Generator Sheet */}
+      <Sheet open={gridGenOpen} onOpenChange={setGridGenOpen}>
+        <SheetContent side="right" className="w-full sm:max-w-md overflow-y-auto p-0">
+          <SheetHeader className="p-5 pb-3 text-left border-b border-border/50">
+            <SheetTitle className="flex items-center gap-2 font-display text-lg">
+              <LayoutGrid className="size-5 text-primary" />
+              CSS Grid Generator
+            </SheetTitle>
+            <SheetDescription>Visual grid builder — columns, rows, gaps, item placement.</SheetDescription>
+          </SheetHeader>
+          <div className="p-5"><CSSGridGenerator /></div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Flexbox Visualizer Sheet */}
+      <Sheet open={flexboxOpen} onOpenChange={setFlexboxOpen}>
+        <SheetContent side="right" className="w-full sm:max-w-md overflow-y-auto p-0">
+          <SheetHeader className="p-5 pb-3 text-left border-b border-border/50">
+            <SheetTitle className="flex items-center gap-2 font-display text-lg">
+              <Rows3 className="size-5 text-primary" />
+              Flexbox Visualizer
+            </SheetTitle>
+            <SheetDescription>Interactive flexbox tester — direction, justify, align, wrap.</SheetDescription>
+          </SheetHeader>
+          <div className="p-5"><FlexboxVisualizer /></div>
         </SheetContent>
       </Sheet>
 

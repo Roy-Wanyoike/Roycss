@@ -30,6 +30,10 @@ import {
   Spline,
   Layers,
   Radar,
+  Zap,
+  Globe,
+  Printer,
+  Crosshair,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
@@ -39,13 +43,17 @@ import { SpecificityCalculator } from "@/components/roycss/tools/specificity-cal
 import { EasingVisualizer } from "@/components/roycss/tools/easing-visualizer";
 import { StackingInspector } from "@/components/roycss/tools/stacking-inspector";
 import { SimilarityFinder } from "@/components/roycss/tools/similarity-finder";
+import { PerfAnalyzer } from "@/components/roycss/tools/perf-analyzer";
+import { BrowserSupportMatrix } from "@/components/roycss/tools/browser-support";
+import { PrintSimulator } from "@/components/roycss/tools/print-simulator";
+import { SelectorTester } from "@/components/roycss/tools/selector-tester";
 import type { CSSEffect } from "@/lib/roycss-types";
 
 /* ═══════════════════════════════════════════════════════════════
    Shared types
    ═══════════════════════════════════════════════════════════════ */
 
-type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity";
+type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester";
 
 interface PlatformToolsProps {
   tool: ToolType | null;
@@ -1407,6 +1415,10 @@ const TOOL_META: Record<ToolType, { title: string; icon: React.ComponentType<{ c
   "easing": { title: "Easing Visualizer", icon: Spline, description: "Design cubic-bezier curves visually — drag control points, compare presets, copy CSS." },
   "stacking": { title: "Stacking Context Inspector", icon: Layers, description: "Paste HTML → see the stacking-context tree, or sandbox z-index live." },
   "similarity": { title: "Effect Similarity Finder", icon: Radar, description: "Pick any effect → instantly find the most similar effects in the 1,569-effect library." },
+  "perf": { title: "CSS Performance Analyzer", icon: Zap, description: "Paste CSS → get a 0–100 performance score with categorized findings and fixes." },
+  "browser-support": { title: "Browser Support Matrix", icon: Globe, description: "Look up caniuse-style support for 27 modern CSS features across 5 major browsers." },
+  "print": { title: "Print Stylesheet Simulator", icon: Printer, description: "Preview @media print CSS in a live iframe — see exactly what prints, without the print dialog." },
+  "selector-tester": { title: "Selector Tester", icon: Crosshair, description: "Type any CSS selector → instantly see matching elements highlighted in a live HTML sample." },
 };
 
 export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformToolsProps) {
@@ -1439,6 +1451,10 @@ export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformTo
               {tool === "easing" && <EasingVisualizer />}
               {tool === "stacking" && <StackingInspector />}
               {tool === "similarity" && <SimilarityFinder />}
+              {tool === "perf" && <PerfAnalyzer />}
+              {tool === "browser-support" && <BrowserSupportMatrix />}
+              {tool === "print" && <PrintSimulator />}
+              {tool === "selector-tester" && <SelectorTester />}
             </div>
           </>
         )}

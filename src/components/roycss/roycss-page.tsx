@@ -921,7 +921,7 @@ export default function RoyCSSPage() {
   const [docsOpen, setDocsOpen] = useState(false);
   const [compareOpen, setCompareOpen] = useState(false);
   const [compareEffects, setCompareEffects] = useState<CSSEffect[]>([]);
-  const [platformTool, setPlatformTool] = useState<"ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | null>(null);
+  const [platformTool, setPlatformTool] = useState<"ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | null>(null);
   const [recentOpen, setRecentOpen] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const [sponsorModalOpen, setSponsorModalOpen] = useState(false);
@@ -1785,7 +1785,7 @@ export default function RoyCSSPage() {
       {/* ─── Platform Ecosystem (18-product vision) ─────────── */}
       <PlatformEcosystem
         onLaunchTool={(toolId) => {
-          if (toolId === "ai-playground" || toolId === "css-doctor" || toolId === "utility-explorer" || toolId === "benchmark" || toolId === "genome" || toolId === "ai-migration" || toolId === "challenges" || toolId === "design-diff" || toolId === "css-minifier" || toolId === "specificity" || toolId === "easing" || toolId === "stacking" || toolId === "similarity") {
+          if (toolId === "ai-playground" || toolId === "css-doctor" || toolId === "utility-explorer" || toolId === "benchmark" || toolId === "genome" || toolId === "ai-migration" || toolId === "challenges" || toolId === "design-diff" || toolId === "css-minifier" || toolId === "specificity" || toolId === "easing" || toolId === "stacking" || toolId === "similarity" || toolId === "perf" || toolId === "browser-support" || toolId === "print" || toolId === "selector-tester") {
             setPlatformTool(toolId);
           }
         }}

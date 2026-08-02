@@ -41,6 +41,10 @@ import {
   Calculator,
   Spline,
   Radar,
+  Zap,
+  Globe,
+  Printer,
+  Crosshair,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -379,6 +383,30 @@ const DIFFERENTIATORS: Differentiator[] = [
     name: "Effect Similarity Finder",
     description: "Pick any of 1,569 effects → instantly surface the most similar ones by tag, category, and CSS-property overlap. Explore the library by feel.",
     icon: Radar,
+  },
+  {
+    id: "perf",
+    name: "CSS Performance Analyzer",
+    description: "Paste CSS → get a Lighthouse-style 0–100 score with categorized findings: @import, universal selectors, expensive @keyframes, big box-shadows, will-change overuse, and more.",
+    icon: Zap,
+  },
+  {
+    id: "browser-support",
+    name: "Browser Support Matrix",
+    description: "caniuse-style lookup for 27 modern CSS features (:has, oklch, nesting, container queries, view-transitions, subgrid…) across Chrome, Firefox, Safari, Edge, Samsung — with Baseline status.",
+    icon: Globe,
+  },
+  {
+    id: "print",
+    name: "Print Stylesheet Simulator",
+    description: "Preview @media print CSS in a live iframe — see exactly what prints (hidden nav, expanded links, page-breaks) without opening the print dialog. Pick A4/Letter, margins, toggle page breaks.",
+    icon: Printer,
+  },
+  {
+    id: "selector-tester",
+    name: "Selector Tester",
+    description: "Type any CSS selector — :has(), :is(), :where(), attribute operators, nth-child, combinators — and instantly see matching elements highlighted in a live HTML sample.",
+    icon: Crosshair,
   },
 ];
 
@@ -786,6 +814,10 @@ const INTERACTIVE_TOOLS: Record<string, string> = {
   "easing": "easing",
   "stacking": "stacking",
   "similarity": "similarity",
+  "perf": "perf",
+  "browser-support": "browser-support",
+  "print": "print",
+  "selector-tester": "selector-tester",
   // Note: mcp-server and inspector are external tools (CLI/Chrome extension),
   // NOT in-browser tools. They should expand to show setup instructions,
   // NOT try to open a panel. So they are intentionally NOT in this map.

@@ -1,0 +1,1449 @@
+     1→"use client";
+     2→
+     3→import { useState, useCallback, useMemo } from "react";
+     4→import { motion, AnimatePresence } from "framer-motion";
+     5→import {
+     6→  X,
+     7→  Sparkles,
+     8→  Minimize2,
+     9→  Stethoscope,
+    10→  Microscope,
+    11→  Gauge,
+    12→  Loader2,
+    13→  Copy,
+    14→  Check,
+    15→  AlertTriangle,
+    16→  Info,
+    17→  AlertCircle,
+    18→  RefreshCw,
+    19→  Play,
+    20→  Dna,
+    21→  ArrowLeftRight,
+    22→  Trophy,
+    23→  GitCompare,
+    24→  ArrowRight,
+    25→  Clock,
+    26→  Award,
+    27→  Flame,
+    28→  Star,
+    29→  Calculator,
+    30→  Spline,
+    31→  Layers,
+    32→  Radar,
+    33→} from "lucide-react";
+    34→import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+    35→import { Badge } from "@/components/ui/badge";
+    36→import { LivePreview } from "@/components/roycss/effect-card";
+    37→import { CSSMinifier } from "@/components/roycss/css-minifier";
+    38→import { SpecificityCalculator } from "@/components/roycss/tools/specificity-calculator";
+    39→import { EasingVisualizer } from "@/components/roycss/tools/easing-visualizer";
+    40→import { StackingInspector } from "@/components/roycss/tools/stacking-inspector";
+    41→import { SimilarityFinder } from "@/components/roycss/tools/similarity-finder";
+    42→import type { CSSEffect } from "@/lib/roycss-types";
+    43→
+    44→/* ═══════════════════════════════════════════════════════════════
+    45→   Shared types
+    46→   ═══════════════════════════════════════════════════════════════ */
+    47→
+    48→type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity";
+    49→
+    50→interface PlatformToolsProps {
+    51→  tool: ToolType | null;
+    52→  onOpenChange: (tool: ToolType | null) => void;
+    53→  onSelectEffect?: (effect: CSSEffect) => void;
+    54→}
+    55→
+    56→/* ═══════════════════════════════════════════════════════════════
+    57→   1. AI Playground — prompt to CSS
+    58→   ═══════════════════════════════════════════════════════════════ */
+    59→
+    60→const PLAYGROUND_EXAMPLES = [
+    61→  "A glassmorphism card that glows on hover",
+    62→  "A neon text effect with flicker animation",
+    63→  "A loader with 3 bouncing dots",
+    64→  "A button with a shine sweep on hover",
+    65→  "An aurora gradient background",
+    66→];
+    67→
+    68→function AIPlayground() {
+    69→  const [prompt, setPrompt] = useState("");
+    70→  const [css, setCss] = useState("");
+    71→  const [loading, setLoading] = useState(false);
+    72→  const [error, setError] = useState("");
+    73→  const [copied, setCopied] = useState(false);
+    74→  const [replayKey, setReplayKey] = useState(0);
+    75→
+    76→  const handleGenerate = useCallback(async () => {
+    77→    if (!prompt.trim() || loading) return;
+    78→    setLoading(true);
+    79→    setError("");
+    80→    setCss("");
+    81→    try {
+    82→      const res = await fetch("/api/ai-playground", {
+    83→        method: "POST",
+    84→        headers: { "Content-Type": "application/json" },
+    85→        body: JSON.stringify({ prompt }),
+    86→      });
+    87→      const data = await res.json();
+    88→      if (!res.ok) throw new Error(data.error || "Request failed");
+    89→      setCss(data.css);
+    90→      setReplayKey((k) => k + 1);
+    91→    } catch (e) {
+    92→      setError(e instanceof Error ? e.message : "Failed to generate");
+    93→    } finally {
+    94→      setLoading(false);
+    95→    }
+    96→  }, [prompt, loading]);
+    97→
+    98→  const handleCopy = useCallback(async () => {
+    99→    try {
+   100→      await navigator.clipboard.writeText(css);
+   101→      setCopied(true);
+   102→      setTimeout(() => setCopied(false), 2000);
+   103→    } catch { /* noop */ }
+   104→  }, [css]);
+   105→
+   106→  // Extract the first class name for preview
+   107→  const previewClass = useMemo(() => {
+   108→    const match = css.match(/\.roycss-([a-z0-9-]+)/);
+   109→    return match ? `roycss-${match[1]}` : null;
+   110→  }, [css]);
+   111→
+   112→  return (
+   113→    <div className="space-y-4">
+   114→      <div>
+   115→        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">
+   116→          Describe the effect you want
+   117→        </label>
+   118→        <div className="flex gap-2">
+   119→          <input
+   120→            type="text"
+   121→            value={prompt}
+   122→            onChange={(e) => setPrompt(e.target.value)}
+   123→            onKeyDown={(e) => e.key === "Enter" && handleGenerate()}
+   124→            placeholder="e.g., A pulsing neon border for a card"
+   125→            className="flex-1 h-11 px-4 rounded-xl bg-background border border-border/50 focus:border-primary/50 text-sm text-foreground focus:outline-none transition-all"
+   126→            disabled={loading}
+   127→          />
+   128→          <button
+   129→            onClick={handleGenerate}
+   130→            disabled={loading || !prompt.trim()}
+   131→            className="flex items-center gap-1.5 px-5 h-11 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer shrink-0"
+   132→          >
+   133→            {loading ? <Loader2 className="size-4 animate-spin" /> : <Sparkles className="size-4" />}
+   134→            {loading ? "Generating..." : "Generate"}
+   135→          </button>
+   136→        </div>
+   137→      </div>
+   138→
+   139→      {/* Example prompts */}
+   140→      <div className="flex items-center gap-1.5 flex-wrap">
+   141→        <span className="text-xs text-muted-foreground mr-1">Try:</span>
+   142→        {PLAYGROUND_EXAMPLES.slice(0, 3).map((ex) => (
+   143→          <button
+   144→            key={ex}
+   145→            onClick={() => setPrompt(ex)}
+   146→            disabled={loading}
+   147→            className="px-2.5 py-1 rounded-lg text-xs bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground transition-all cursor-pointer disabled:opacity-50"
+   148→          >
+   149→            {ex.length > 35 ? ex.substring(0, 33) + "…" : ex}
+   150→          </button>
+   151→        ))}
+   152→      </div>
+   153→
+   154→      {error && (
+   155→        <div className="flex items-center gap-2 p-3 rounded-xl bg-rose-500/10 text-rose-500 text-sm">
+   156→          <AlertCircle className="size-4 shrink-0" />
+   157→          {error}
+   158→        </div>
+   159→      )}
+   160→
+   161→      <AnimatePresence>
+   162→        {css && (
+   163→          <motion.div
+   164→            initial={{ opacity: 0, y: 10 }}
+   165→            animate={{ opacity: 1, y: 0 }}
+   166→            className="space-y-3"
+   167→          >
+   168→            {/* Live preview */}
+   169→            <div className="rounded-xl border border-border/60 overflow-hidden">
+   170→              <div className="flex items-center justify-between px-3 py-2 border-b border-border/40 bg-muted/20">
+   171→                <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Live Preview</span>
+   172→                <button
+   173→                  onClick={() => setReplayKey((k) => k + 1)}
+   174→                  className="flex items-center gap-1 text-xs text-primary hover:text-primary/80 cursor-pointer"
+   175→                >
+   176→                  <RefreshCw className="size-3" /> Replay
+   177→                </button>
+   178→              </div>
+   179→              <div
+   180→                key={replayKey}
+   181→                className="h-40 flex items-center justify-center"
+   182→                style={{ background: "oklch(0.15 0.02 250)" }}
+   183→              >
+   184→                {previewClass && (
+   185→                  <style dangerouslySetInnerHTML={{ __html: css }} />
+   186→                )}
+   187→                {previewClass && (
+   188→                  <div className={previewClass} style={{ width: "60px", height: "60px" }} />
+   189→                )}
+   190→              </div>
+   191→            </div>
+   192→
+   193→            {/* Generated CSS */}
+   194→            <div className="rounded-xl border border-border/60 overflow-hidden">
+   195→              <div className="flex items-center justify-between px-3 py-2 border-b border-border/40 bg-muted/20">
+   196→                <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Generated CSS</span>
+   197→                <button
+   198→                  onClick={handleCopy}
+   199→                  className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+   200→                    copied ? "bg-emerald-500/15 text-emerald-500" : "bg-primary/10 text-primary hover:bg-primary/20"
+   201→                  }`}
+   202→                >
+   203→                  {copied ? <Check className="size-3" /> : <Copy className="size-3" />}
+   204→                  {copied ? "Copied!" : "Copy CSS"}
+   205→                </button>
+   206→              </div>
+   207→              <pre className="p-3 overflow-x-auto scrollbar-thin max-h-64 overflow-y-auto text-xs leading-relaxed font-mono text-foreground/80">
+   208→                <code>{css}</code>
+   209→              </pre>
+   210→            </div>
+   211→          </motion.div>
+   212→        )}
+   213→      </AnimatePresence>
+   214→    </div>
+   215→  );
+   216→}
+   217→
+   218→/* ═══════════════════════════════════════════════════════════════
+   219→   2. CSS Doctor — paste CSS, get diagnostics
+   220→   ═══════════════════════════════════════════════════════════════ */
+   221→
+   222→interface CSSIssue {
+   223→  severity: "critical" | "warning" | "info";
+   224→  category: string;
+   225→  line: number;
+   226→  message: string;
+   227→  fix: string;
+   228→}
+   229→
+   230→function CSSDoctor() {
+   231→  const [css, setCss] = useState("");
+   232→  const [result, setResult] = useState<{ score: number; issues: CSSIssue[]; summary: string } | null>(null);
+   233→  const [loading, setLoading] = useState(false);
+   234→  const [error, setError] = useState("");
+   235→
+   236→  const handleAnalyze = useCallback(async () => {
+   237→    if (!css.trim() || loading) return;
+   238→    setLoading(true);
+   239→    setError("");
+   240→    setResult(null);
+   241→    try {
+   242→      const res = await fetch("/api/css-doctor", {
+   243→        method: "POST",
+   244→        headers: { "Content-Type": "application/json" },
+   245→        body: JSON.stringify({ css }),
+   246→      });
+   247→      const data = await res.json();
+   248→      if (!res.ok) throw new Error(data.error || "Analysis failed");
+   249→      setResult(data);
+   250→    } catch (e) {
+   251→      setError(e instanceof Error ? e.message : "Failed to analyze");
+   252→    } finally {
+   253→      setLoading(false);
+   254→    }
+   255→  }, [css, loading]);
+   256→
+   257→  const scoreColor = result
+   258→    ? result.score >= 80 ? "text-emerald-500" : result.score >= 50 ? "text-amber-500" : "text-rose-500"
+   259→    : "";
+   260→
+   261→  return (
+   262→    <div className="space-y-4">
+   263→      <div>
+   264→        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">
+   265→          Paste your CSS to diagnose
+   266→        </label>
+   267→        <textarea
+   268→          value={css}
+   269→          onChange={(e) => setCss(e.target.value)}
+   270→          placeholder=".my-element {\n  background: #10b981;\n  margin-left: 10px;\n  animation: pulse 2s infinite;\n}"
+   271→          className="w-full h-40 p-3 rounded-xl bg-background border border-border/50 focus:border-primary/50 text-xs font-mono text-foreground focus:outline-none transition-all resize-none scrollbar-thin"
+   272→          disabled={loading}
+   273→        />
+   274→      </div>
+   275→
+   276→      <button
+   277→        onClick={handleAnalyze}
+   278→        disabled={loading || !css.trim()}
+   279→        className="flex items-center gap-1.5 px-5 h-11 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer"
+   280→      >
+   281→        {loading ? <Loader2 className="size-4 animate-spin" /> : <Stethoscope className="size-4" />}
+   282→        {loading ? "Analyzing..." : "Run Diagnosis"}
+   283→      </button>
+   284→
+   285→      {error && (
+   286→        <div className="flex items-center gap-2 p-3 rounded-xl bg-rose-500/10 text-rose-500 text-sm">
+   287→          <AlertCircle className="size-4 shrink-0" />
+   288→          {error}
+   289→        </div>
+   290→      )}
+   291→
+   292→      <AnimatePresence>
+   293→        {result && (
+   294→          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-3">
+   295→            {/* Score */}
+   296→            <div className="flex items-center justify-between p-4 rounded-xl bg-muted/30 border border-border/50">
+   297→              <div>
+   298→                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Health Score</p>
+   299→                <p className={`font-display text-3xl font-bold ${scoreColor}`}>{result.score}/100</p>
+   300→              </div>
+   301→              <p className="text-sm text-muted-foreground max-w-xs text-right">{result.summary}</p>
+   302→            </div>
+   303→
+   304→            {/* Issues */}
+   305→            <div className="space-y-2">
+   306→              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+   307→                {result.issues.length} {result.issues.length === 1 ? "issue" : "issues"} found
+   308→              </p>
+   309→              {result.issues.map((issue, i) => {
+   310→                const Icon = issue.severity === "critical" ? AlertCircle : issue.severity === "warning" ? AlertTriangle : Info;
+   311→                const color = issue.severity === "critical" ? "text-rose-500" : issue.severity === "warning" ? "text-amber-500" : "text-sky-500";
+   312→                const bg = issue.severity === "critical" ? "bg-rose-500/5" : issue.severity === "warning" ? "bg-amber-500/5" : "bg-sky-500/5";
+   313→                return (
+   314→                  <div key={i} className={`p-3 rounded-xl ${bg} border border-border/50`}>
+   315→                    <div className="flex items-start gap-2 mb-1.5">
+   316→                      <Icon className={`size-4 ${color} shrink-0 mt-0.5`} />
+   317→                      <div className="min-w-0 flex-1">
+   318→                        <div className="flex items-center gap-2 mb-0.5">
+   319→                          <Badge variant="secondary" className="text-xs px-1.5 py-0 capitalize">{issue.category}</Badge>
+   320→                          {issue.line > 0 && <span className="text-xs text-muted-foreground">Line {issue.line}</span>}
+   321→                        </div>
+   322→                        <p className="text-sm text-foreground">{issue.message}</p>
+   323→                      </div>
+   324→                    </div>
+   325→                    {issue.fix && (
+   326→                      <pre className="mt-2 p-2 rounded-lg bg-background/60 text-xs font-mono text-emerald-600 dark:text-emerald-400 overflow-x-auto scrollbar-thin">
+   327→                        <code>{issue.fix}</code>
+   328→                      </pre>
+   329→                    )}
+   330→                  </div>
+   331→                );
+   332→              })}
+   333→            </div>
+   334→          </motion.div>
+   335→        )}
+   336→      </AnimatePresence>
+   337→    </div>
+   338→  );
+   339→}
+   340→
+   341→/* ═══════════════════════════════════════════════════════════════
+   342→   3. Utility Explorer — hover any class, see its CSS + perf
+   343→   ═══════════════════════════════════════════════════════════════ */
+   344→
+   345→import { effects } from "@/lib/roycss-effects";
+   346→
+   347→function UtilityExplorer() {
+   348→  const [search, setSearch] = useState("");
+   349→  const [selected, setSelected] = useState<CSSEffect | null>(effects[0]);
+   350→
+   351→  const filtered = useMemo(() => {
+   352→    const q = search.toLowerCase().trim();
+   353→    if (!q) return effects.slice(0, 50);
+   354→    return effects.filter(e => e.name.toLowerCase().includes(q) || e.id.includes(q) || e.tags.some(t => t.includes(q))).slice(0, 50);
+   355→  }, [search]);
+   356→
+   357→  // Compute "performance metrics" from the CSS
+   358→  const metrics = useMemo(() => {
+   359→    if (!selected) return null;
+   360→    const css = selected.cssCode;
+   361→    const lines = css.split("\n").length;
+   362→    const size = new Blob([css]).size;
+   363→    const hasKeyframes = /@keyframes/.test(css);
+   364→    const hasPseudoElements = /::before|::after/.test(css);
+   365→    const hasCustomProps = /@property/.test(css);
+   366→    const animDuration = css.match(/animation:[^;]*?(\d+(?:\.\d+)?)s/)?.[1];
+   367→    const usesColorMix = /color-mix/.test(css);
+   368→    const usesOKLCH = /oklch/.test(css);
+   369→    const usesLogicalProps = /inline-start|inline-end|block-start|block-end|inset-inline/.test(css);
+   370→
+   371→    return {
+   372→      lines,
+   373→      size,
+   374→      hasKeyframes,
+   375→      hasPseudoElements,
+   376→      hasCustomProps,
+   377→      animDuration: animDuration ? `${animDuration}s` : "none",
+   378→      usesColorMix,
+   379→      usesOKLCH,
+   380→      usesLogicalProps,
+   381→      score: [
+   382→        usesOKLCH, usesColorMix, usesLogicalProps, hasKeyframes, lines < 30
+   383→      ].filter(Boolean).length * 20,
+   384→    };
+   385→  }, [selected]);
+   386→
+   387→  return (
+   388→    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 h-[60vh]">
+   389→      {/* Effect list */}
+   390→      <div className="flex flex-col rounded-xl border border-border/60 overflow-hidden">
+   391→        <div className="p-2 border-b border-border/40 bg-muted/20">
+   392→          <input
+   393→            type="search"
+   394→            placeholder="Search effects..."
+   395→            value={search}
+   396→            onChange={(e) => setSearch(e.target.value)}
+   397→            className="w-full h-9 px-3 rounded-lg bg-background border border-border/50 focus:border-primary/50 text-sm focus:outline-none"
+   398→          />
+   399→        </div>
+   400→        <div className="flex-1 overflow-y-auto scrollbar-thin p-1.5">
+   401→          {filtered.map((e) => (
+   402→            <button
+   403→              key={e.id}
+   404→              onClick={() => setSelected(e)}
+   405→              onMouseEnter={() => setSelected(e)}
+   406→              className={`w-full flex items-center gap-2 p-2 rounded-lg transition-all cursor-pointer text-left ${
+   407→                selected?.id === e.id ? "bg-primary/10" : "hover:bg-muted/50"
+   408→              }`}
+   409→            >
+   410→              <div className="flex items-center justify-center size-9 rounded-lg bg-muted/40 border border-border/50 overflow-hidden shrink-0">
+   411→                <div className="scale-[0.4] origin-center">
+   412→                  <LivePreview effect={e} />
+   413→                </div>
+   414→              </div>
+   415→              <div className="min-w-0 flex-1">
+   416→                <p className="text-sm font-medium text-foreground truncate">{e.name}</p>
+   417→                <p className="text-xs text-muted-foreground truncate font-mono">.roycss-{e.id}</p>
+   418→              </div>
+   419→            </button>
+   420→          ))}
+   421→        </div>
+   422→      </div>
+   423→
+   424→      {/* Detail panel */}
+   425→      <div className="flex flex-col rounded-xl border border-border/60 overflow-hidden">
+   426→        {selected && metrics ? (
+   427→          <>
+   428→            <div className="p-3 border-b border-border/40 bg-muted/20">
+   429→              <p className="text-sm font-semibold text-foreground">{selected.name}</p>
+   430→              <p className="text-xs text-muted-foreground font-mono">.roycss-{selected.id}</p>
+   431→            </div>
+   432→            <div className="flex-1 overflow-y-auto scrollbar-thin p-3 space-y-3">
+   433→              {/* Preview */}
+   434→              <div className="h-24 rounded-lg flex items-center justify-center" style={{ background: "oklch(0.15 0.02 250)" }}>
+   435→                <LivePreview effect={selected} />
+   436→              </div>
+   437→
+   438→              {/* Score */}
+   439→              <div className="flex items-center justify-between p-2.5 rounded-lg bg-muted/30">
+   440→                <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Quality Score</span>
+   441→                <span className={`font-display text-xl font-bold ${metrics.score >= 80 ? "text-emerald-500" : metrics.score >= 60 ? "text-amber-500" : "text-rose-500"}`}>
+   442→                  {metrics.score}/100
+   443→                </span>
+   444→              </div>
+   445→
+   446→              {/* Metrics grid */}
+   447→              <div className="grid grid-cols-2 gap-2">
+   448→                <Metric label="Lines" value={String(metrics.lines)} />
+   449→                <Metric label="Size" value={`${metrics.size}B`} />
+   450→                <Metric label="Duration" value={metrics.animDuration} />
+   451→                <Metric label="Keyframes" value={metrics.hasKeyframes ? "Yes" : "No"} />
+   452→              </div>
+   453→
+   454→              {/* Compliance */}
+   455→              <div className="space-y-1.5">
+   456→                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Standards Compliance</p>
+   457→                <ComplianceRow label="OKLCH colors" passed={metrics.usesOKLCH} />
+   458→                <ComplianceRow label="color-mix()" passed={metrics.usesColorMix} />
+   459→                <ComplianceRow label="Logical properties" passed={metrics.usesLogicalProps} />
+   460→                <ComplianceRow label="@keyframes defined" passed={metrics.hasKeyframes} />
+   461→                <ComplianceRow label="@property registered" passed={metrics.hasCustomProps} />
+   462→                <ComplianceRow label="Pseudo-elements" passed={metrics.hasPseudoElements} />
+   463→              </div>
+   464→            </div>
+   465→          </>
+   466→        ) : (
+   467→          <div className="flex-1 flex items-center justify-center text-sm text-muted-foreground">
+   468→            Hover an effect to explore
+   469→          </div>
+   470→        )}
+   471→      </div>
+   472→    </div>
+   473→  );
+   474→}
+   475→
+   476→function Metric({ label, value }: { label: string; value: string }) {
+   477→  return (
+   478→    <div className="p-2 rounded-lg bg-muted/30">
+   479→      <p className="text-xs text-muted-foreground">{label}</p>
+   480→      <p className="text-sm font-mono font-medium text-foreground">{value}</p>
+   481→    </div>
+   482→  );
+   483→}
+   484→
+   485→function ComplianceRow({ label, passed }: { label: string; passed: boolean }) {
+   486→  return (
+   487→    <div className="flex items-center justify-between text-xs">
+   488→      <span className="text-muted-foreground">{label}</span>
+   489→      {passed ? (
+   490→        <Check className="size-3.5 text-emerald-500" />
+   491→      ) : (
+   492→        <X className="size-3.5 text-muted-foreground/40" />
+   493→      )}
+   494→    </div>
+   495→  );
+   496→}
+   497→
+   498→/* ═══════════════════════════════════════════════════════════════
+   499→   4. Benchmark — live performance test of any effect
+   500→   ═══════════════════════════════════════════════════════════════ */
+   501→
+   502→function Benchmark() {
+   503→  const [search, setSearch] = useState("");
+   504→  const [selected, setSelected] = useState<CSSEffect | null>(effects[0]);
+   505→  const [results, setResults] = useState<{ fps: number; renderMs: number; domNodes: number; layoutShifts: number } | null>(null);
+   506→  const [running, setRunning] = useState(false);
+   507→
+   508→  const filtered = useMemo(() => {
+   509→    const q = search.toLowerCase().trim();
+   510→    if (!q) return effects.slice(0, 30);
+   511→    return effects.filter(e => e.name.toLowerCase().includes(q) || e.id.includes(q)).slice(0, 30);
+   512→  }, [search]);
+   513→
+   514→  const runBenchmark = useCallback(async () => {
+   515→    if (!selected || running) return;
+   516→    setRunning(true);
+   517→    setResults(null);
+   518→
+   519→    // Create a test container with 100 instances of the effect
+   520→    const container = document.createElement("div");
+   521→    container.style.cssText = "position:fixed;top:-9999px;left:-9999px;width:800px;visibility:hidden;";
+   522→    container.id = "roycss-bench-container";
+   523→
+   524→    // Inject the CSS
+   525→    const style = document.createElement("style");
+   526→    style.textContent = selected.cssCode;
+   527→    container.appendChild(style);
+   528→
+   529→    // Create 100 elements
+   530→    for (let i = 0; i < 100; i++) {
+   531→      const el = document.createElement("div");
+   532→      el.className = `roycss-${selected.id}`;
+   533→      el.style.cssText = "width:40px;height:40px;margin:4px;display:inline-block;";
+   534→      container.appendChild(el);
+   535→    }
+   536→
+   537→    document.body.appendChild(container);
+   538→
+   539→    // Wait a frame for layout
+   540→    await new Promise(r => requestAnimationFrame(r));
+   541→
+   542→    // Measure render time
+   543→    const startRender = performance.now();
+   544→    for (let i = 0; i < 10; i++) {
+   545→      container.style.display = "none";
+   546→      void container.offsetHeight; // force reflow
+   547→      container.style.display = "";
+   548→      void container.offsetHeight; // force reflow
+   549→    }
+   550→    const renderMs = (performance.now() - startRender) / 10;
+   551→
+   552→    // Measure FPS over 1 second
+   553→    const domNodes = container.querySelectorAll("*").length;
+   554→    let frames = 0;
+   555→    const start = performance.now();
+   556→    return new Promise<void>((resolve) => {
+   557→      const measure = () => {
+   558→        frames++;
+   559→        if (performance.now() - start < 1000) {
+   560→          requestAnimationFrame(measure);
+   561→        } else {
+   562→          const fps = Math.round(frames);
+   563→          // Layout shifts (approximate — check if elements moved)
+   564→          const firstEl = container.children[1] as HTMLElement;
+   565→          const rect1 = firstEl.getBoundingClientRect();
+   566→          container.style.width = "600px";
+   567→          const rect2 = firstEl.getBoundingClientRect();
+   568→          const layoutShifts = rect1.left !== rect2.left ? 1 : 0;
+   569→          container.style.width = "800px";
+   570→
+   571→          setResults({ fps, renderMs: Math.round(renderMs * 100) / 100, domNodes, layoutShifts });
+   572→          document.body.removeChild(container);
+   573→          setRunning(false);
+   574→          resolve();
+   575→        }
+   576→      };
+   577→      requestAnimationFrame(measure);
+   578→    });
+   579→  }, [selected, running]);
+   580→
+   581→  return (
+   582→    <div className="space-y-4">
+   583→      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+   584→        {/* Effect selector */}
+   585→        <div>
+   586→          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">
+   587→            Select effect to benchmark
+   588→          </label>
+   589→          <input
+   590→            type="search"
+   591→            placeholder="Search effects..."
+   592→            value={search}
+   593→            onChange={(e) => setSearch(e.target.value)}
+   594→            className="w-full h-9 px-3 mb-2 rounded-lg bg-background border border-border/50 focus:border-primary/50 text-sm focus:outline-none"
+   595→          />
+   596→          <div className="max-h-48 overflow-y-auto scrollbar-thin space-y-0.5">
+   597→            {filtered.map((e) => (
+   598→              <button
+   599→                key={e.id}
+   600→                onClick={() => setSelected(e)}
+   601→                className={`w-full flex items-center gap-2 p-1.5 rounded-lg transition-all cursor-pointer text-left ${
+   602→                  selected?.id === e.id ? "bg-primary/10" : "hover:bg-muted/50"
+   603→                }`}
+   604→              >
+   605→                <div className="flex items-center justify-center size-7 rounded bg-muted/40 border border-border/50 overflow-hidden shrink-0">
+   606→                  <div className="scale-[0.35] origin-center">
+   607→                    <LivePreview effect={e} />
+   608→                  </div>
+   609→                </div>
+   610→                <span className="text-xs font-medium text-foreground truncate">{e.name}</span>
+   611→              </button>
+   612→            ))}
+   613→          </div>
+   614→        </div>
+   615→
+   616→        {/* Results */}
+   617→        <div className="space-y-3">
+   618→          <button
+   619→            onClick={runBenchmark}
+   620→            disabled={running || !selected}
+   621→            className="w-full flex items-center justify-center gap-1.5 px-5 h-11 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer"
+   622→          >
+   623→            {running ? <Loader2 className="size-4 animate-spin" /> : <Play className="size-4" />}
+   624→            {running ? "Benchmarking (100 elements, 1s)..." : "Run Benchmark"}
+   625→          </button>
+   626→
+   627→          <AnimatePresence>
+   628→            {results && (
+   629→              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-2">
+   630→                <BenchmarkMetric
+   631→                  label="Frames per second"
+   632→                  value={String(results.fps)}
+   633→                  unit="fps"
+   634→                  good={results.fps >= 55}
+   635→                  ok={results.fps >= 30}
+   636→                />
+   637→                <BenchmarkMetric
+   638→                  label="Render time (100 elements)"
+   639→                  value={String(results.renderMs)}
+   640→                  unit="ms"
+   641→                  good={results.renderMs < 5}
+   642→                  ok={results.renderMs < 20}
+   643→                />
+   644→                <BenchmarkMetric
+   645→                  label="DOM nodes created"
+   646→                  value={String(results.domNodes)}
+   647→                  unit="nodes"
+   648→                  good={results.domNodes < 105}
+   649→                  ok={results.domNodes < 200}
+   650→                />
+   651→                <BenchmarkMetric
+   652→                  label="Layout shifts"
+   653→                  value={String(results.layoutShifts)}
+   654→                  unit="shifts"
+   655→                  good={results.layoutShifts === 0}
+   656→                  ok={results.layoutShifts <= 1}
+   657→                />
+   658→                <p className="text-xs text-muted-foreground pt-1">
+   659→                  Benchmark runs 100 instances of the effect for 1 second. Results vary by hardware and browser.
+   660→                </p>
+   661→              </motion.div>
+   662→            )}
+   663→          </AnimatePresence>
+   664→        </div>
+   665→      </div>
+   666→    </div>
+   667→  );
+   668→}
+   669→
+   670→function BenchmarkMetric({ label, value, unit, good, ok }: { label: string; value: string; unit: string; good: boolean; ok: boolean }) {
+   671→  const color = good ? "text-emerald-500" : ok ? "text-amber-500" : "text-rose-500";
+   672→  return (
+   673→    <div className="flex items-center justify-between p-2.5 rounded-lg bg-muted/30">
+   674→      <span className="text-xs text-muted-foreground">{label}</span>
+   675→      <span className={`font-mono font-bold ${color}`}>
+   676→        {value} <span className="text-xs text-muted-foreground font-normal">{unit}</span>
+   677→      </span>
+   678→    </div>
+   679→  );
+   680→}
+   681→
+   682→/* ═══════════════════════════════════════════════════════════════
+   683→   5. Component Genome — effect metadata viewer
+   684→   ═══════════════════════════════════════════════════════════════ */
+   685→
+   686→function ComponentGenome() {
+   687→  const [search, setSearch] = useState("");
+   688→  const [selected, setSelected] = useState<CSSEffect | null>(effects[0]);
+   689→
+   690→  const filtered = useMemo(() => {
+   691→    const q = search.toLowerCase().trim();
+   692→    if (!q) return effects.slice(0, 50);
+   693→    return effects.filter(e => e.name.toLowerCase().includes(q) || e.id.includes(q) || e.tags.some(t => t.includes(q))).slice(0, 50);
+   694→  }, [search]);
+   695→
+   696→  const genome = useMemo(() => {
+   697→    if (!selected) return null;
+   698→    const css = selected.cssCode;
+   699→    const properties = new Set<string>();
+   700→    const keyframes: string[] = [];
+   701→    const pseudoElements: string[] = [];
+   702→
+   703→    // Extract properties
+   704→    const propMatches = css.matchAll(/^\s*([a-z-]+)\s*:/gm);
+   705→    for (const m of propMatches) properties.add(m[1]);
+   706→
+   707→    // Extract keyframe names
+   708→    const kfMatches = css.matchAll(/@keyframes\s+([a-zA-Z0-9_-]+)/g);
+   709→    for (const m of kfMatches) keyframes.push(m[1]);
+   710→
+   711→    // Extract pseudo-elements
+   712→    const peMatches = css.matchAll(/::(before|after|first-letter|first-line|placeholder|selection)/g);
+   713→    for (const m of peMatches) if (!pseudoElements.includes(m[1])) pseudoElements.push(m[1]);
+   714→
+   715→    // Extract selectors
+   716→    const selectorMatches = css.matchAll(/^(\.[a-zA-Z0-9_-]+(?:[^{]*)?)\s*\{/gm);
+   717→    const selectors = Array.from(new Set(Array.from(selectorMatches).map(m => m[1].trim())));
+   718→
+   719→    // Color analysis
+   720→    const hasOKLCH = /oklch\(/.test(css);
+   721→    const hasColorMix = /color-mix\(/.test(css);
+   722→    const hasHex = /#[0-9a-fA-F]{3,8}\b/.test(css);
+   723→    const hasRGBA = /rgba?\(/.test(css);
+   724→    const hasHSL = /hsla?\(/.test(css);
+   725→
+   726→    // Animation analysis
+   727→    const animMatch = css.match(/animation:\s*([^;]+)/);
+   728→    const animation = animMatch ? animMatch[1].trim() : null;
+   729→    const hasReducedMotion = /prefers-reduced-motion/.test(css);
+   730→
+   731→    // Feature detection
+   732→    const hasProperty = /@property/.test(css);
+   733→    const hasContainerQuery = /@container/.test(css);
+   734→    const hasHasSelector = /:has\(/.test(css);
+   735→    const hasNesting = /&/.test(css);
+   736→
+   737→    // Size
+   738→    const sizeBytes = new Blob([css]).size;
+   739→    const lineCount = css.split("\n").length;
+   740→
+   741→    // Tags as "dependencies"
+   742→    const dependencies = selected.tags;
+   743→
+   744→    // A11y assessment
+   745→    const a11yIssues: string[] = [];
+   746→    if (animation && !hasReducedMotion) a11yIssues.push("Missing prefers-reduced-motion guard");
+   747→    if (hasHex || hasRGBA || hasHSL) a11yIssues.push("Non-OKLCH color (may have contrast issues)");
+   748→    if (animation && /infinite/.test(animation) && /spin|rotate|pulse/.test(animation)) a11yIssues.push("Infinite animation may cause vestibular issues");
+   749→
+   750→    return {
+   751→      properties: Array.from(properties).sort(),
+   752→      keyframes,
+   753→      pseudoElements,
+   754→      selectors,
+   755→      colors: { hasOKLCH, hasColorMix, hasHex, hasRGBA, hasHSL },
+   756→      animation,
+   757→      hasReducedMotion,
+   758→      features: { hasProperty, hasContainerQuery, hasHasSelector, hasNesting },
+   759→      sizeBytes,
+   760→      lineCount,
+   761→      dependencies,
+   762→      a11yIssues,
+   763→      genomeScore: [
+   764→        hasOKLCH, hasColorMix, !hasHex, !hasRGBA, !hasHSL,
+   765→        hasReducedMotion || !animation,
+   766→        hasProperty, lineCount < 30,
+   767→      ].filter(Boolean).length * 100 / 8,
+   768→    };
+   769→  }, [selected]);
+   770→
+   771→  return (
+   772→    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 h-[60vh]">
+   773→      {/* Effect list */}
+   774→      <div className="flex flex-col rounded-xl border border-border/60 overflow-hidden">
+   775→        <div className="p-2 border-b border-border/40 bg-muted/20">
+   776→          <input
+   777→            type="search"
+   778→            placeholder="Search effects..."
+   779→            value={search}
+   780→            onChange={(e) => setSearch(e.target.value)}
+   781→            className="w-full h-9 px-3 rounded-lg bg-background border border-border/50 focus:border-primary/50 text-sm focus:outline-none"
+   782→          />
+   783→        </div>
+   784→        <div className="flex-1 overflow-y-auto scrollbar-thin p-1.5">
+   785→          {filtered.map((e) => (
+   786→            <button
+   787→              key={e.id}
+   788→              onClick={() => setSelected(e)}
+   789→              className={`w-full flex items-center gap-2 p-2 rounded-lg transition-all cursor-pointer text-left ${selected?.id === e.id ? "bg-primary/10" : "hover:bg-muted/50"}`}
+   790→            >
+   791→              <div className="flex items-center justify-center size-9 rounded-lg bg-muted/40 border border-border/50 overflow-hidden shrink-0">
+   792→                <div className="scale-[0.4] origin-center"><LivePreview effect={e} /></div>
+   793→              </div>
+   794→              <div className="min-w-0 flex-1">
+   795→                <p className="text-sm font-medium text-foreground truncate">{e.name}</p>
+   796→                <p className="text-xs text-muted-foreground truncate font-mono">{e.id}</p>
+   797→              </div>
+   798→            </button>
+   799→          ))}
+   800→        </div>
+   801→      </div>
+   802→
+   803→      {/* Genome detail */}
+   804→      <div className="flex flex-col rounded-xl border border-border/60 overflow-hidden">
+   805→        {selected && genome ? (
+   806→          <>
+   807→            <div className="p-3 border-b border-border/40 bg-muted/20">
+   808→              <div className="flex items-center justify-between">
+   809→                <div>
+   810→                  <p className="text-sm font-semibold text-foreground">{selected.name}</p>
+   811→                  <p className="text-xs text-muted-foreground font-mono">{selected.id}</p>
+   812→                </div>
+   813→                <div className="text-right">
+   814→                  <p className="text-xs text-muted-foreground">Genome Score</p>
+   815→                  <p className={`font-display text-xl font-bold ${genome.genomeScore >= 80 ? "text-emerald-500" : genome.genomeScore >= 60 ? "text-amber-500" : "text-rose-500"}`}>
+   816→                    {Math.round(genome.genomeScore)}
+   817→                  </p>
+   818→                </div>
+   819→              </div>
+   820→            </div>
+   821→            <div className="flex-1 overflow-y-auto scrollbar-thin p-3 space-y-3">
+   822→              {/* Basic metrics */}
+   823→              <div className="grid grid-cols-2 gap-2">
+   824→                <div className="p-2 rounded-lg bg-muted/30"><p className="text-xs text-muted-foreground">Lines</p><p className="text-sm font-mono font-medium">{genome.lineCount}</p></div>
+   825→                <div className="p-2 rounded-lg bg-muted/30"><p className="text-xs text-muted-foreground">Size</p><p className="text-sm font-mono font-medium">{genome.sizeBytes}B</p></div>
+   826→              </div>
+   827→
+   828→              {/* Selectors */}
+   829→              <GenomeSection title="Selectors" items={genome.selectors} mono />
+   830→
+   831→              {/* Keyframes */}
+   832→              {genome.keyframes.length > 0 && <GenomeSection title="Keyframes" items={genome.keyframes} mono />}
+   833→
+   834→              {/* Pseudo-elements */}
+   835→              {genome.pseudoElements.length > 0 && <GenomeSection title="Pseudo-elements" items={genome.pseudoElements} mono />}
+   836→
+   837→              {/* Properties */}
+   838→              <GenomeSection title={`CSS Properties (${genome.properties.length})`} items={genome.properties} mono />
+   839→
+   840→              {/* Color system */}
+   841→              <div className="space-y-1.5">
+   842→                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Color System</p>
+   843→                <ComplianceRow label="OKLCH" passed={genome.colors.hasOKLCH} />
+   844→                <ComplianceRow label="color-mix()" passed={genome.colors.hasColorMix} />
+   845→                <ComplianceRow label="No hex colors" passed={!genome.colors.hasHex} />
+   846→                <ComplianceRow label="No rgba/hsl" passed={!genome.colors.hasRGBA && !genome.colors.hasHSL} />
+   847→              </div>
+   848→
+   849→              {/* Modern features */}
+   850→              <div className="space-y-1.5">
+   851→                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Modern CSS Features</p>
+   852→                <ComplianceRow label="@property" passed={genome.features.hasProperty} />
+   853→                <ComplianceRow label="Container queries" passed={genome.features.hasContainerQuery} />
+   854→                <ComplianceRow label=":has() selector" passed={genome.features.hasHasSelector} />
+   855→                <ComplianceRow label="CSS nesting" passed={genome.features.hasNesting} />
+   856→                <ComplianceRow label="prefers-reduced-motion" passed={genome.hasReducedMotion} />
+   857→              </div>
+   858→
+   859→              {/* Dependencies (tags) */}
+   860→              <GenomeSection title="Dependencies (tags)" items={genome.dependencies} />
+   861→
+   862→              {/* A11y */}
+   863→              {genome.a11yIssues.length > 0 && (
+   864→                <div className="space-y-1.5">
+   865→                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Accessibility Notes</p>
+   866→                  {genome.a11yIssues.map((issue, i) => (
+   867→                    <div key={i} className="flex items-start gap-2 text-xs text-amber-600 dark:text-amber-400">
+   868→                      <AlertTriangle className="size-3.5 shrink-0 mt-0.5" /> {issue}
+   869→                    </div>
+   870→                  ))}
+   871→                </div>
+   872→              )}
+   873→            </div>
+   874→          </>
+   875→        ) : (
+   876→          <div className="flex-1 flex items-center justify-center text-sm text-muted-foreground">Select an effect to view its genome</div>
+   877→        )}
+   878→      </div>
+   879→    </div>
+   880→  );
+   881→}
+   882→
+   883→function GenomeSection({ title, items, mono }: { title: string; items: string[]; mono?: boolean }) {
+   884→  if (items.length === 0) return null;
+   885→  return (
+   886→    <div>
+   887→      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">{title}</p>
+   888→      <div className="flex flex-wrap gap-1">
+   889→        {items.map((item, i) => (
+   890→          <code key={i} className={`text-xs px-1.5 py-0.5 rounded bg-muted/60 text-foreground/80 ${mono ? "font-mono" : ""}`}>{item}</code>
+   891→        ))}
+   892→      </div>
+   893→    </div>
+   894→  );
+   895→}
+   896→
+   897→/* ═══════════════════════════════════════════════════════════════
+   898→   6. AI Migration — convert Bootstrap/Tailwind → RoyCSS
+   899→   ═══════════════════════════════════════════════════════════════ */
+   900→
+   901→const FRAMEWORKS = [
+   902→  { id: "bootstrap", name: "Bootstrap" },
+   903→  { id: "tailwind", name: "Tailwind CSS" },
+   904→  { id: "material", name: "Material UI" },
+   905→  { id: "bulma", name: "Bulma" },
+   906→  { id: "foundation", name: "Foundation" },
+   907→  { id: "plain", name: "Plain CSS" },
+   908→];
+   909→
+   910→const MIGRATION_EXAMPLES: Record<string, string> = {
+   911→  bootstrap: `.btn-primary {\n  background-color: #0d6efd;\n  border-color: #0d6efd;\n  color: #fff;\n  padding: 0.375rem 0.75rem;\n  border-radius: 0.25rem;\n  transition: all 0.15s;\n}`,
+   912→  tailwind: `.card {\n  background-color: #ffffff;\n  border: 1px solid #e5e7eb;\n  border-radius: 0.5rem;\n  padding: 1.5rem;\n  box-shadow: 0 1px 3px rgba(0,0,0,0.1);\n}`,
+   913→  material: `.mdc-button {\n  background: #6200ee;\n  color: white;\n  padding: 8px 16px;\n  border-radius: 4px;\n  text-transform: uppercase;\n  animation: ripple 0.3s;\n}`,
+   914→  bulma: `.button.is-primary {\n  background-color: #00d1b2;\n  border-color: transparent;\n  color: #fff;\n  padding: 0.5em 1em;\n}`,
+   915→  foundation: `.button {\n  background-color: #1779ba;\n  color: #fefefe;\n  padding: 0.85em 1em;\n  margin-bottom: 0;\n}`,
+   916→  plain: `.my-element {\n  background: #10b981;\n  margin-left: 10px;\n  padding-right: 20px;\n  border-left: 2px solid #ccc;\n  animation: spin 2s linear infinite;\n}`,
+   917→};
+   918→
+   919→function AIMigration() {
+   920→  const [framework, setFramework] = useState("bootstrap");
+   921→  const [inputCSS, setInputCSS] = useState(MIGRATION_EXAMPLES.bootstrap);
+   922→  const [outputCSS, setOutputCSS] = useState("");
+   923→  const [loading, setLoading] = useState(false);
+   924→  const [error, setError] = useState("");
+   925→  const [copied, setCopied] = useState(false);
+   926→
+   927→  const handleFrameworkChange = (fw: string) => {
+   928→    setFramework(fw);
+   929→    setInputCSS(MIGRATION_EXAMPLES[fw] || "");
+   930→    setOutputCSS("");
+   931→    setError("");
+   932→  };
+   933→
+   934→  const handleMigrate = useCallback(async () => {
+   935→    if (!inputCSS.trim() || loading) return;
+   936→    setLoading(true);
+   937→    setError("");
+   938→    setOutputCSS("");
+   939→    try {
+   940→      const res = await fetch("/api/ai-migration", {
+   941→        method: "POST",
+   942→        headers: { "Content-Type": "application/json" },
+   943→        body: JSON.stringify({ css: inputCSS, framework }),
+   944→      });
+   945→      const data = await res.json();
+   946→      if (!res.ok) throw new Error(data.error || "Migration failed");
+   947→      setOutputCSS(data.css);
+   948→    } catch (e) {
+   949→      setError(e instanceof Error ? e.message : "Failed to migrate");
+   950→    } finally {
+   951→      setLoading(false);
+   952→    }
+   953→  }, [inputCSS, framework, loading]);
+   954→
+   955→  const handleCopy = useCallback(async () => {
+   956→    try { await navigator.clipboard.writeText(outputCSS); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch { /* noop */ }
+   957→  }, [outputCSS]);
+   958→
+   959→  return (
+   960→    <div className="space-y-4">
+   961→      {/* Framework selector */}
+   962→      <div>
+   963→        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">Source Framework</label>
+   964→        <div className="flex items-center gap-1.5 flex-wrap">
+   965→          {FRAMEWORKS.map(fw => (
+   966→            <button
+   967→              key={fw.id}
+   968→              onClick={() => handleFrameworkChange(fw.id)}
+   969→              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+   970→                framework === fw.id ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:bg-muted/80"
+   971→              }`}
+   972→            >
+   973→              {fw.name}
+   974→            </button>
+   975→          ))}
+   976→        </div>
+   977→      </div>
+   978→
+   979→      {/* Input CSS */}
+   980→      <div>
+   981→        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">Paste {FRAMEWORKS.find(f => f.id === framework)?.name} CSS</label>
+   982→        <textarea
+   983→          value={inputCSS}
+   984→          onChange={(e) => setInputCSS(e.target.value)}
+   985→          placeholder="Paste your CSS here..."
+   986→          className="w-full h-32 p-3 rounded-xl bg-background border border-border/50 focus:border-primary/50 text-xs font-mono text-foreground focus:outline-none transition-all resize-none scrollbar-thin"
+   987→          disabled={loading}
+   988→        />
+   989→      </div>
+   990→
+   991→      <button
+   992→        onClick={handleMigrate}
+   993→        disabled={loading || !inputCSS.trim()}
+   994→        className="flex items-center gap-1.5 px-5 h-11 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer"
+   995→      >
+   996→        {loading ? <Loader2 className="size-4 animate-spin" /> : <ArrowLeftRight className="size-4" />}
+   997→        {loading ? "Migrating..." : "Migrate to RoyCSS"}
+   998→      </button>
+   999→
+  1000→      {error && (
+  1001→        <div className="flex items-center gap-2 p-3 rounded-xl bg-rose-500/10 text-rose-500 text-sm">
+  1002→          <AlertCircle className="size-4 shrink-0" /> {error}
+  1003→        </div>
+  1004→      )}
+  1005→
+  1006→      <AnimatePresence>
+  1007→        {outputCSS && (
+  1008→          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-2">
+  1009→            <div className="flex items-center justify-between">
+  1010→              <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">RoyCSS Output (OKLCH + Logical Properties)</label>
+  1011→              <button
+  1012→                onClick={handleCopy}
+  1013→                className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+  1014→                  copied ? "bg-emerald-500/15 text-emerald-500" : "bg-primary/10 text-primary hover:bg-primary/20"
+  1015→                }`}
+  1016→              >
+  1017→                {copied ? <Check className="size-3" /> : <Copy className="size-3" />}
+  1018→                {copied ? "Copied!" : "Copy CSS"}
+  1019→              </button>
+  1020→            </div>
+  1021→            <pre className="p-3 rounded-xl bg-muted/50 border border-border/50 text-xs leading-relaxed font-mono text-foreground/80 overflow-x-auto scrollbar-thin max-h-64 overflow-y-auto">
+  1022→              <code>{outputCSS}</code>
+  1023→            </pre>
+  1024→          </motion.div>
+  1025→        )}
+  1026→      </AnimatePresence>
+  1027→    </div>
+  1028→  );
+  1029→}
+  1030→
+  1031→/* ═══════════════════════════════════════════════════════════════
+  1032→   7. Community Challenges — coding challenges + leaderboard
+  1033→   ═══════════════════════════════════════════════════════════════ */
+  1034→
+  1035→interface Challenge {
+  1036→  id: string;
+  1037→  title: string;
+  1038→  difficulty: "Easy" | "Medium" | "Hard";
+  1039→  description: string;
+  1040→  prompt: string;
+  1041→  hint: string;
+  1042→  xp: number;
+  1043→  completed: boolean;
+  1044→}
+  1045→
+  1046→const CHALLENGES: Challenge[] = [
+  1047→  {
+  1048→    id: "ch-1",
+  1049→    title: "Glassmorphism Card",
+  1050→    difficulty: "Easy",
+  1051→    description: "Create a frosted glass card with backdrop-blur, semi-transparent background, and subtle border.",
+  1052→    prompt: "Create a glassmorphism card that floats above a colorful background",
+  1053→    hint: "Use backdrop-filter: blur(), a semi-transparent background, and a 1px border with low opacity.",
+  1054→    xp: 50,
+  1055→    completed: false,
+  1056→  },
+  1057→  {
+  1058→    id: "ch-2",
+  1059→    title: "Neon Glow Text",
+  1060→    difficulty: "Easy",
+  1061→    description: "Make text glow with a neon effect using text-shadow layers.",
+  1062→    prompt: "Create neon glow text in cyan",
+  1063→    hint: "Stack multiple text-shadow values with increasing blur radius and decreasing opacity.",
+  1064→    xp: 50,
+  1065→    completed: false,
+  1066→  },
+  1067→  {
+  1068→    id: "ch-3",
+  1069→    title: "Animated Loader",
+  1070→    difficulty: "Medium",
+  1071→    description: "Build a spinner that rotates smoothly using @keyframes and transform.",
+  1072→    prompt: "Create a circular spinner loader",
+  1073→    hint: "Use @keyframes with transform: rotate(360deg) and animation: linear infinite.",
+  1074→    xp: 100,
+  1075→    completed: false,
+  1076→  },
+  1077→  {
+  1078→    id: "ch-4",
+  1079→    title: "Hover Shine Sweep",
+  1080→    difficulty: "Medium",
+  1081→    description: "Add a diagonal shine that sweeps across a button on hover.",
+  1082→    prompt: "Create a button with a shine sweep on hover",
+  1083→    hint: "Use ::before with a gradient and transform: translateX, triggered on :hover.",
+  1084→    xp: 100,
+  1085→    completed: false,
+  1086→  },
+  1087→  {
+  1088→    id: "ch-5",
+  1089→    title: "3D Card Flip",
+  1090→    difficulty: "Hard",
+  1091→    description: "Create a card that flips in 3D on hover, revealing back content.",
+  1092→    prompt: "Create a 3D card flip on hover",
+  1093→    hint: "Use perspective, transform-style: preserve-3d, backface-visibility: hidden, and rotateY(180deg).",
+  1094→    xp: 200,
+  1095→    completed: false,
+  1096→  },
+  1097→  {
+  1098→    id: "ch-6",
+  1099→    title: "Aurora Gradient",
+  1100→    difficulty: "Hard",
+  1101→    description: "Animate a multi-color aurora gradient background.",
+  1102→    prompt: "Create an animated aurora gradient background",
+  1103→    hint: "Use @keyframes with background-position shifts on a linear-gradient with multiple color stops.",
+  1104→    xp: 200,
+  1105→    completed: false,
+  1106→  },
+  1107→];
+  1108→
+  1109→const LEADERBOARD = [
+  1110→  { rank: 1, name: "CSS_Ninja", xp: 850, challenges: 6, badge: "gold" },
+  1111→  { rank: 2, name: "GlassMaster", xp: 700, challenges: 5, badge: "silver" },
+  1112→  { rank: 3, name: "NeonDream", xp: 650, challenges: 5, badge: "bronze" },
+  1113→  { rank: 4, name: "RoyWanyoike", xp: 500, challenges: 4, badge: null },
+  1114→  { rank: 5, name: "SpinnerKing", xp: 450, challenges: 4, badge: null },
+  1115→  { rank: 6, name: "HoverHero", xp: 300, challenges: 3, badge: null },
+  1116→  { rank: 7, name: "FlipWizard", xp: 200, challenges: 2, badge: null },
+  1117→  { rank: 8, name: "AuroraAce", xp: 200, challenges: 2, badge: null },
+  1118→];
+  1119→
+  1120→function CommunityChallenges() {
+  1121→  const [challenges, setChallenges] = useState(CHALLENGES);
+  1122→  const [expandedId, setExpandedId] = useState<string | null>(null);
+  1123→  const [showHint, setShowHint] = useState(false);
+  1124→
+  1125→  const totalXP = challenges.filter(c => c.completed).reduce((sum, c) => sum + c.xp, 0);
+  1126→  const completedCount = challenges.filter(c => c.completed).length;
+  1127→
+  1128→  const handleComplete = (id: string) => {
+  1129→    setChallenges(prev => prev.map(c => c.id === id ? { ...c, completed: !c.completed } : c));
+  1130→  };
+  1131→
+  1132→  return (
+  1133→    <div className="space-y-4">
+  1134→      {/* Stats */}
+  1135→      <div className="grid grid-cols-3 gap-3">
+  1136→        <div className="p-3 rounded-xl bg-muted/30 text-center">
+  1137→          <p className="text-xs text-muted-foreground">Completed</p>
+  1138→          <p className="font-display text-2xl font-bold text-foreground">{completedCount}/{challenges.length}</p>
+  1139→        </div>
+  1140→        <div className="p-3 rounded-xl bg-muted/30 text-center">
+  1141→          <p className="text-xs text-muted-foreground">XP Earned</p>
+  1142→          <p className="font-display text-2xl font-bold text-primary">{totalXP}</p>
+  1143→        </div>
+  1144→        <div className="p-3 rounded-xl bg-muted/30 text-center">
+  1145→          <p className="text-xs text-muted-foreground">Rank</p>
+  1146→          <p className="font-display text-2xl font-bold text-amber-500">#4</p>
+  1147→        </div>
+  1148→      </div>
+  1149→
+  1150→      {/* Challenges */}
+  1151→      <div className="space-y-2">
+  1152→        {challenges.map((ch) => {
+  1153→          const isExpanded = expandedId === ch.id;
+  1154→          const diffColor = ch.difficulty === "Easy" ? "text-emerald-500 bg-emerald-500/10" : ch.difficulty === "Medium" ? "text-amber-500 bg-amber-500/10" : "text-rose-500 bg-rose-500/10";
+  1155→          return (
+  1156→            <div key={ch.id} className={`rounded-xl border overflow-hidden transition-all ${ch.completed ? "border-emerald-500/40 bg-emerald-500/5" : "border-border/60 bg-card"}`}>
+  1157→              <button
+  1158→                onClick={() => { setExpandedId(isExpanded ? null : ch.id); setShowHint(false); }}
+  1159→                className="w-full flex items-center justify-between gap-3 p-3 cursor-pointer text-left"
+  1160→              >
+  1161→                <div className="flex items-center gap-3 min-w-0">
+  1162→                  <div className={`flex items-center justify-center size-9 rounded-lg shrink-0 ${ch.completed ? "bg-emerald-500/20 text-emerald-500" : "bg-muted/60 text-muted-foreground"}`}>
+  1163→                    {ch.completed ? <Check className="size-4" /> : <span className="text-xs font-bold">{ch.xp}</span>}
+  1164→                  </div>
+  1165→                  <div className="min-w-0">
+  1166→                    <p className={`text-sm font-medium truncate ${ch.completed ? "text-muted-foreground line-through" : "text-foreground"}`}>{ch.title}</p>
+  1167→                    <p className="text-xs text-muted-foreground truncate">{ch.description}</p>
+  1168→                  </div>
+  1169→                </div>
+  1170→                <div className="flex items-center gap-2 shrink-0">
+  1171→                  <Badge variant="secondary" className={`text-xs ${diffColor}`}>{ch.difficulty}</Badge>
+  1172→                  <Badge variant="secondary" className="text-xs bg-amber-500/10 text-amber-500 gap-0.5">
+  1173→                    <Star className="size-2.5" /> {ch.xp} XP
+  1174→                  </Badge>
+  1175→                </div>
+  1176→              </button>
+  1177→              <AnimatePresence>
+  1178→                {isExpanded && (
+  1179→                  <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+  1180→                    <div className="p-3 pt-0 space-y-2 border-t border-border/40">
+  1181→                      <div className="pt-2">
+  1182→                        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">Prompt</p>
+  1183→                        <p className="text-sm text-foreground">{ch.prompt}</p>
+  1184→                      </div>
+  1185→                      {showHint && (
+  1186→                        <div className="p-2.5 rounded-lg bg-amber-500/10 text-xs text-amber-700 dark:text-amber-400">
+  1187→                          <strong>Hint:</strong> {ch.hint}
+  1188→                        </div>
+  1189→                      )}
+  1190→                      <div className="flex items-center gap-2 pt-1">
+  1191→                        <button
+  1192→                          onClick={() => setShowHint(s => !s)}
+  1193→                          className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-muted text-muted-foreground hover:bg-muted/80 transition-all cursor-pointer"
+  1194→                        >
+  1195→                          <Info className="size-3" /> {showHint ? "Hide hint" : "Show hint"}
+  1196→                        </button>
+  1197→                        <button
+  1198→                          onClick={() => handleComplete(ch.id)}
+  1199→                          className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+  1200→                            ch.completed ? "bg-muted text-muted-foreground hover:bg-muted/80" : "bg-primary text-primary-foreground hover:bg-primary/90"
+  1201→                          }`}
+  1202→                        >
+  1203→                          {ch.completed ? "Mark incomplete" : "Mark complete"}
+  1204→                        </button>
+  1205→                      </div>
+  1206→                    </div>
+  1207→                  </motion.div>
+  1208→                )}
+  1209→              </AnimatePresence>
+  1210→            </div>
+  1211→          );
+  1212→        })}
+  1213→      </div>
+  1214→
+  1215→      {/* Leaderboard */}
+  1216→      <div className="rounded-xl border border-border/60 overflow-hidden">
+  1217→        <div className="p-3 border-b border-border/40 bg-muted/20 flex items-center gap-2">
+  1218→          <Trophy className="size-4 text-amber-500" />
+  1219→          <p className="text-xs font-semibold text-foreground uppercase tracking-wider">Leaderboard</p>
+  1220→        </div>
+  1221→        <div className="divide-y divide-border/30">
+  1222→          {LEADERBOARD.map((user) => (
+  1223→            <div key={user.rank} className={`flex items-center justify-between p-2.5 ${user.name === "RoyWanyoike" ? "bg-primary/5" : ""}`}>
+  1224→              <div className="flex items-center gap-3 min-w-0">
+  1225→                <div className={`flex items-center justify-center size-7 rounded-lg shrink-0 font-bold text-xs ${
+  1226→                  user.badge === "gold" ? "bg-amber-500/20 text-amber-500" :
+  1227→                  user.badge === "silver" ? "bg-zinc-400/20 text-zinc-400" :
+  1228→                  user.badge === "bronze" ? "bg-orange-700/20 text-orange-700" :
+  1229→                  "bg-muted text-muted-foreground"
+  1230→                }`}>
+  1231→                  {user.rank}
+  1232→                </div>
+  1233→                <div className="min-w-0">
+  1234→                  <p className="text-sm font-medium text-foreground truncate">{user.name}{user.name === "RoyWanyoike" && <span className="text-xs text-primary ml-1">(you)</span>}</p>
+  1235→                  <p className="text-xs text-muted-foreground">{user.challenges} challenges completed</p>
+  1236→                </div>
+  1237→              </div>
+  1238→              <div className="flex items-center gap-1 text-sm font-mono font-bold text-amber-500 shrink-0">
+  1239→                <Flame className="size-3.5" /> {user.xp}
+  1240→              </div>
+  1241→            </div>
+  1242→          ))}
+  1243→        </div>
+  1244→      </div>
+  1245→    </div>
+  1246→  );
+  1247→}
+  1248→
+  1249→/* ═══════════════════════════════════════════════════════════════
+  1250→   8. Design Diff — before/after CSS comparison
+  1251→   ═══════════════════════════════════════════════════════════════ */
+  1252→
+  1253→function DesignDiff() {
+  1254→  const [beforeCSS, setBeforeCSS] = useState("");
+  1255→  const [afterCSS, setAfterCSS] = useState("");
+  1256→  const [diff, setDiff] = useState<{ added: string[]; removed: string[]; changed: { prop: string; before: string; after: string }[] } | null>(null);
+  1257→
+  1258→  const computeDiff = useCallback(() => {
+  1259→    const parseProps = (css: string): Record<string, string> => {
+  1260→      const props: Record<string, string> = {};
+  1261→      const match = css.match(/\{([^}]+)\}/);
+  1262→      if (!match) return props;
+  1263→      for (const decl of match[1].split(";").map(d => d.trim()).filter(Boolean)) {
+  1264→        const idx = decl.indexOf(":");
+  1265→        if (idx > 0) props[decl.substring(0, idx).trim()] = decl.substring(idx + 1).trim();
+  1266→      }
+  1267→      return props;
+  1268→    };
+  1269→
+  1270→    const before = parseProps(beforeCSS);
+  1271→    const after = parseProps(afterCSS);
+  1272→    const allProps = new Set([...Object.keys(before), ...Object.keys(after)]);
+  1273→    const added: string[] = [];
+  1274→    const removed: string[] = [];
+  1275→    const changed: { prop: string; before: string; after: string }[] = [];
+  1276→
+  1277→    for (const prop of allProps) {
+  1278→      if (!before[prop] && after[prop]) added.push(prop);
+  1279→      else if (before[prop] && !after[prop]) removed.push(prop);
+  1280→      else if (before[prop] !== after[prop]) changed.push({ prop, before: before[prop], after: after[prop] });
+  1281→    }
+  1282→
+  1283→    setDiff({ added: added.sort(), removed: removed.sort(), changed: changed.sort((a, b) => a.prop.localeCompare(b.prop)) });
+  1284→  }, [beforeCSS, afterCSS]);
+  1285→
+  1286→  return (
+  1287→    <div className="space-y-4">
+  1288→      <p className="text-sm text-muted-foreground">Paste two CSS blocks to see exactly what changed — properties added, removed, and modified.</p>
+  1289→
+  1290→      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+  1291→        {/* Before */}
+  1292→        <div>
+  1293→          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">Before (original CSS)</label>
+  1294→          <textarea
+  1295→            value={beforeCSS}
+  1296→            onChange={(e) => setBeforeCSS(e.target.value)}
+  1297→            placeholder=".card {\n  background: #fff;\n  border-radius: 4px;\n  padding: 16px;\n}"
+  1298→            className="w-full h-32 p-3 rounded-xl bg-background border border-rose-500/30 focus:border-rose-500/50 text-xs font-mono text-foreground focus:outline-none transition-all resize-none scrollbar-thin"
+  1299→          />
+  1300→        </div>
+  1301→        {/* After */}
+  1302→        <div>
+  1303→          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">After (updated CSS)</label>
+  1304→          <textarea
+  1305→            value={afterCSS}
+  1306→            onChange={(e) => setAfterCSS(e.target.value)}
+  1307→            placeholder=".card {\n  background: oklch(1 0 0);\n  border-radius: 0.5rem;\n  padding: 1rem;\n  box-shadow: 0 1px 3px oklch(0 0 0 / 0.1);\n}"
+  1308→            className="w-full h-32 p-3 rounded-xl bg-background border border-emerald-500/30 focus:border-emerald-500/50 text-xs font-mono text-foreground focus:outline-none transition-all resize-none scrollbar-thin"
+  1309→          />
+  1310→        </div>
+  1311→      </div>
+  1312→
+  1313→      <button
+  1314→        onClick={computeDiff}
+  1315→        disabled={!beforeCSS.trim() || !afterCSS.trim()}
+  1316→        className="flex items-center gap-1.5 px-5 h-11 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer"
+  1317→      >
+  1318→        <GitCompare className="size-4" /> Compare CSS
+  1319→      </button>
+  1320→
+  1321→      <AnimatePresence>
+  1322→        {diff && (
+  1323→          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-3">
+  1324→            {/* Summary */}
+  1325→            <div className="grid grid-cols-3 gap-2">
+  1326→              <div className="p-2.5 rounded-lg bg-emerald-500/10 text-center">
+  1327→                <p className="text-xs text-emerald-600 dark:text-emerald-400">Added</p>
+  1328→                <p className="font-display text-xl font-bold text-emerald-500">{diff.added.length}</p>
+  1329→              </div>
+  1330→              <div className="p-2.5 rounded-lg bg-amber-500/10 text-center">
+  1331→                <p className="text-xs text-amber-600 dark:text-amber-400">Changed</p>
+  1332→                <p className="font-display text-xl font-bold text-amber-500">{diff.changed.length}</p>
+  1333→              </div>
+  1334→              <div className="p-2.5 rounded-lg bg-rose-500/10 text-center">
+  1335→                <p className="text-xs text-rose-600 dark:text-rose-400">Removed</p>
+  1336→                <p className="font-display text-xl font-bold text-rose-500">{diff.removed.length}</p>
+  1337→              </div>
+  1338→            </div>
+  1339→
+  1340→            {/* Changed properties */}
+  1341→            {diff.changed.length > 0 && (
+  1342→              <div className="rounded-xl border border-border/60 overflow-hidden">
+  1343→                <div className="px-3 py-2 border-b border-border/40 bg-amber-500/5">
+  1344→                  <p className="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Changed Properties</p>
+  1345→                </div>
+  1346→                <div className="divide-y divide-border/30">
+  1347→                  {diff.changed.map((c, i) => (
+  1348→                    <div key={i} className="p-2.5 grid grid-cols-3 gap-2 text-xs">
+  1349→                      <code className="font-mono text-muted-foreground">{c.prop}</code>
+  1350→                      <code className="font-mono text-rose-500 line-through">{c.before}</code>
+  1351→                      <code className="font-mono text-emerald-500">{c.after}</code>
+  1352→                    </div>
+  1353→                  ))}
+  1354→                </div>
+  1355→              </div>
+  1356→            )}
+  1357→
+  1358→            {/* Added properties */}
+  1359→            {diff.added.length > 0 && (
+  1360→              <div className="rounded-xl border border-border/60 overflow-hidden">
+  1361→                <div className="px-3 py-2 border-b border-border/40 bg-emerald-500/5">
+  1362→                  <p className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Added Properties</p>
+  1363→                </div>
+  1364→                <div className="p-2.5 flex flex-wrap gap-1">
+  1365→                  {diff.added.map((p, i) => <code key={i} className="text-xs px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono">{p}</code>)}
+  1366→                </div>
+  1367→              </div>
+  1368→            )}
+  1369→
+  1370→            {/* Removed properties */}
+  1371→            {diff.removed.length > 0 && (
+  1372→              <div className="rounded-xl border border-border/60 overflow-hidden">
+  1373→                <div className="px-3 py-2 border-b border-border/40 bg-rose-500/5">
+  1374→                  <p className="text-xs font-semibold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Removed Properties</p>
+  1375→                </div>
+  1376→                <div className="p-2.5 flex flex-wrap gap-1">
+  1377→                  {diff.removed.map((p, i) => <code key={i} className="text-xs px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-600 dark:text-rose-400 font-mono line-through">{p}</code>)}
+  1378→                </div>
+  1379→              </div>
+  1380→            )}
+  1381→
+  1382→            {diff.added.length === 0 && diff.removed.length === 0 && diff.changed.length === 0 && (
+  1383→              <div className="text-center py-8 text-sm text-muted-foreground">No differences found — the CSS is identical.</div>
+  1384→            )}
+  1385→          </motion.div>
+  1386→        )}
+  1387→      </AnimatePresence>
+  1388→    </div>
+  1389→  );
+  1390→}
+  1391→
+  1392→/* ═══════════════════════════════════════════════════════════════
+  1393→   Main component — routes to the active tool
+  1394→   ═══════════════════════════════════════════════════════════════ */
+  1395→
+  1396→const TOOL_META: Record<ToolType, { title: string; icon: React.ComponentType<{ className?: string }>; description: string }> = {
+  1397→  "ai-playground": { title: "AI Playground", icon: Sparkles, description: "Describe an effect in plain English — AI generates production-ready RoyCSS." },
+  1398→  "css-doctor": { title: "CSS Doctor", icon: Stethoscope, description: "Paste your CSS — get a health score, diagnostics, and auto-fixes." },
+  1399→  "utility-explorer": { title: "Utility Explorer", icon: Microscope, description: "Hover any effect to see its CSS properties, size, and compliance score." },
+  1400→  "benchmark": { title: "Benchmark Tool", icon: Gauge, description: "Live-performance test any effect with 100 simultaneous instances." },
+  1401→  "genome": { title: "Component Genome", icon: Dna, description: "Inspect any effect's DNA — selectors, keyframes, properties, color system, modern features, and accessibility notes." },
+  1402→  "ai-migration": { title: "AI Migration", icon: ArrowLeftRight, description: "Convert Bootstrap, Tailwind, Material, Bulma, or Foundation CSS to RoyCSS (OKLCH + logical properties)." },
+  1403→  "challenges": { title: "Community Challenges", icon: Trophy, description: "Complete CSS challenges, earn XP, and climb the leaderboard." },
+  1404→  "design-diff": { title: "Design Diff", icon: GitCompare, description: "Compare two CSS blocks — see exactly what properties were added, changed, or removed." },
+  1405→  "css-minifier": { title: "CSS Minifier", icon: Minimize2, description: "Paste CSS → get minified output with size savings and gzip estimate." },
+  1406→  "specificity": { title: "Specificity Calculator", icon: Calculator, description: "Paste CSS selectors → see each one's (a, b, c) specificity score, ranked." },
+  1407→  "easing": { title: "Easing Visualizer", icon: Spline, description: "Design cubic-bezier curves visually — drag control points, compare presets, copy CSS." },
+  1408→  "stacking": { title: "Stacking Context Inspector", icon: Layers, description: "Paste HTML → see the stacking-context tree, or sandbox z-index live." },
+  1409→  "similarity": { title: "Effect Similarity Finder", icon: Radar, description: "Pick any effect → instantly find the most similar effects in the 1,569-effect library." },
+  1410→};
+  1411→
+  1412→export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformToolsProps) {
+  1413→  const meta = tool ? TOOL_META[tool] : null;
+  1414→  const Icon = meta?.icon;
+  1415→
+  1416→  return (
+  1417→    <Sheet open={tool !== null} onOpenChange={(open) => { if (!open) onOpenChange(null); }}>
+  1418→      <SheetContent side="right" className="w-full sm:max-w-2xl overflow-y-auto p-0">
+  1419→        {meta && Icon && (
+  1420→          <>
+  1421→            <SheetHeader className="p-5 pb-3 text-left border-b border-border/50">
+  1422→              <SheetTitle className="flex items-center gap-2 font-display text-lg">
+  1423→                <Icon className="size-5 text-primary" />
+  1424→                {meta.title}
+  1425→              </SheetTitle>
+  1426→              <SheetDescription>{meta.description}</SheetDescription>
+  1427→            </SheetHeader>
+  1428→            <div className="p-5">
+  1429→              {tool === "ai-playground" && <AIPlayground />}
+  1430→              {tool === "css-doctor" && <CSSDoctor />}
+  1431→              {tool === "utility-explorer" && <UtilityExplorer />}
+  1432→              {tool === "benchmark" && <Benchmark />}
+  1433→              {tool === "genome" && <ComponentGenome />}
+  1434→              {tool === "ai-migration" && <AIMigration />}
+  1435→              {tool === "challenges" && <CommunityChallenges />}
+  1436→              {tool === "design-diff" && <DesignDiff />}
+  1437→              {tool === "css-minifier" && <CSSMinifier />}
+  1438→              {tool === "specificity" && <SpecificityCalculator />}
+  1439→              {tool === "easing" && <EasingVisualizer />}
+  1440→              {tool === "stacking" && <StackingInspector />}
+  1441→              {tool === "similarity" && <SimilarityFinder />}
+  1442→            </div>
+  1443→          </>
+  1444→        )}
+  1445→      </SheetContent>
+  1446→    </Sheet>
+  1447→  );
+  1448→}
+  1449→

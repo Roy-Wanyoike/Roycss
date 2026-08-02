@@ -123,10 +123,10 @@ function ButtonPreview({
   className: string;
   text: string;
 }) {
-  const btnRef = useRef<HTMLButtonElement>(null);
+  const btnRef = useRef<HTMLDivElement>(null);
 
   const handleClick = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
+    (e: React.MouseEvent<HTMLDivElement>) => {
       if (effect.id !== "btn-ripple") return;
       const btn = btnRef.current;
       if (!btn) return;
@@ -148,7 +148,7 @@ function ButtonPreview({
   return (
     <div className="flex items-center justify-center h-full">
       <div
-        ref={btnRef as React.RefObject<HTMLDivElement>}
+        ref={btnRef}
         onClick={handleClick}
         className={className}
         role="presentation"

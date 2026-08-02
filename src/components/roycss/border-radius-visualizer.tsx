@@ -67,7 +67,7 @@ export function BorderRadiusVisualizer() {
       <div className="flex items-center justify-center h-32 rounded-xl bg-muted/30 border border-border/50">
         <div
           className="size-24 bg-primary shadow-lg transition-all duration-200"
-          style={{ borderRadius: cssValue.includes("%") ? cssValue : undefined, borderRadius: radius.tl >= 999 ? "9999px" : `${radius.tl}px ${radius.tr}px ${radius.br}px ${radius.bl}px` }}
+          style={{ borderRadius: radius.tl >= 999 ? "9999px" : `${radius.tl}px ${radius.tr}px ${radius.br}px ${radius.bl}px` }}
         />
       </div>
 

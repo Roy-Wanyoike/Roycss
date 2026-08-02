@@ -76,7 +76,7 @@ export function FlexboxVisualizer() {
     <div className="space-y-4">
       {/* Preview */}
       <div className="rounded-xl border border-border/50 bg-muted/20 p-4 min-h-[140px] flex items-center"
-        style={{ display: "flex", flexDirection: direction, justifyContent: justify, alignItems: align, flexWrap: wrap, gap: `${gap}px` }}>
+        style={{ display: "flex", flexDirection: direction, justifyContent: justify, alignItems: align, flexWrap: wrap, gap: `${gap}px` } as React.CSSProperties}>
         {Array.from({ length: itemCount }).map((_, i) => (
           <div key={i} className="flex items-center justify-center rounded-lg bg-primary/20 text-primary text-xs font-bold px-4 py-3 min-w-[40px] min-h-[40px]">
             {i + 1}

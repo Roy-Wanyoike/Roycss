@@ -29,7 +29,7 @@ export function SpacingScaleGenerator() {
         rem: v / 16,
       }));
     }
-    const result = [];
+    const result: { step: number; value: number; px: number; rem: number }[] = [];
     for (let i = 0; i < steps; i++) {
       const px = Math.round(scale.base * Math.pow(scale.ratio, i));
       result.push({ step: i, value: px, px, rem: px / 16 });

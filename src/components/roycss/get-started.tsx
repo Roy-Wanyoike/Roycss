@@ -28,7 +28,7 @@ function AccordionItem({
 }: {
   isOpen: boolean;
   onToggle: () => void;
-  children: ReactNode;
+  children: (isOpen: boolean, onToggle: () => void) => ReactNode;
 }) {
   return <div className="border-b border-border/40 last:border-b-0">{children(isOpen, onToggle)}</div>;
 }

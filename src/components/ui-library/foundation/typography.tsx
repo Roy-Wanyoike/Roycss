@@ -8,6 +8,8 @@ type Size = "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" |
 type Weight = "normal" | "medium" | "semibold" | "bold";
 
 interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
+  /** Polymorphic element tag (defaults to <span>). */
+  as?: React.ElementType;
   scale?: Scale;
   size?: Size;
   weight?: Weight;
@@ -28,6 +30,7 @@ const sizeMap: Record<Size, string> = tokens.typography.fontSize;
 const weightMap: Record<Weight, string> = tokens.typography.fontWeight;
 
 export function Typography({
+  as,
   scale = "body",
   size = "base",
   weight = "normal",
@@ -38,8 +41,9 @@ export function Typography({
   children,
   ...props
 }: TypographyProps) {
+  const Component = as || "span";
   return (
-    <span
+    <Component
       className={cn(gradient && "roycss-animated-gradient-text", balance && "text-balance", className)}
       style={{
         fontFamily: scaleFontFamily[scale],
@@ -51,7 +55,7 @@ export function Typography({
       {...props}
     >
       {children}
-    </span>
+    </Component>
   );
 }
 
@@ -63,7 +67,7 @@ export function Heading({
   className,
   children,
   ...props
-}: Omit<TypographyProps, "scale"> & { level?: 1 | 2 | 3 | 4 | 5 | 6 }) {
+}: TypographyProps & { level?: 1 | 2 | 3 | 4 | 5 | 6 }) {
   const defaultSize: Record<number, Size> = { 1: "4xl", 2: "3xl", 3: "2xl", 4: "xl", 5: "lg", 6: "base" };
   const Tag = `h${level}` as const;
   return (

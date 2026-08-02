@@ -86,6 +86,12 @@ interface PlatformProduct {
   priority: Priority;
   revenue: string;
   features: string[];
+  /** Optional lifecycle label (e.g. "Complete", "Planned"). Vestigial in UI. */
+  status?: string;
+  /** Optional setup instructions string shown in the docs deep-link. */
+  setup?: string;
+  /** Optional slug linking this product to a docs entry. */
+  docsSlug?: string;
 }
 
 const PRODUCTS: PlatformProduct[] = [
@@ -855,7 +861,7 @@ const INTERACTIVE_TOOLS: Record<string, string> = {
   // NOT try to open a panel. So they are intentionally NOT in this map.
 };
 
-export function PlatformEcosystem({ onLaunchTool }: { onLaunchTool?: (toolId: string) => void } = {}) {
+export function PlatformEcosystem({ onLaunchTool }: { onLaunchTool?: (toolId: string) => void; onLearnMore?: (slug: string) => void } = {}) {
   const [activeTier, setActiveTier] = useState<Tier | "all">("all");
   const [sponsorOpen, setSponsorOpen] = useState(false);
 

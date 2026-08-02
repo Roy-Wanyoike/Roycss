@@ -183,7 +183,7 @@ function scrollToSection(id: string) {
 
   // If scrolling to a section below the effects grid, dispatch load-all-cards
   // to stabilize the document height before scrolling.
-  const effectsEl = document.querySelector("#effects");
+  const effectsEl = document.querySelector("#effects") as HTMLElement | null;
   if (effectsEl && target.offsetTop > effectsEl.offsetTop) {
     window.dispatchEvent(new CustomEvent("roycss-load-all-cards"));
   }

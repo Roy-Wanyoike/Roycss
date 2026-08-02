@@ -6,7 +6,7 @@ import { Check, ChevronDown, X } from "lucide-react";
 
 // ─── Input ───────────────────────────────────────────────────
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
   variant?: "outline" | "filled" | "underline";
   size?: "sm" | "md" | "lg";
   error?: boolean;
@@ -45,7 +45,7 @@ Input.displayName = "Input";
 
 // ─── Select ──────────────────────────────────────────────────
 
-interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "size"> {
   variant?: "outline" | "filled";
   size?: "sm" | "md" | "lg";
   options: { value: string; label: string }[];

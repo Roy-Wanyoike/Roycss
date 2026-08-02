@@ -60,7 +60,7 @@ export function CSSGridGenerator() {
 
   const itemCss = useMemo(() => {
     if (!selectedItem) return "";
-    const parts = [];
+    const parts: string[] = [];
     if (selectedItem.column !== "auto") parts.push(`grid-column: ${selectedItem.column};`);
     if (selectedItem.row !== "auto") parts.push(`grid-row: ${selectedItem.row};`);
     return parts.join("\n  ");

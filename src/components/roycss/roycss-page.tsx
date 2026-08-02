@@ -40,6 +40,8 @@ import {
   Film,
   LayoutGrid,
   Rows3,
+  Scissors,
+  Paintbrush,
   Loader2,
   Box,
   MousePointer,
@@ -137,6 +139,9 @@ import { AnimationTimeline } from "@/components/roycss/animation-timeline";
 import { FontPreviewTool } from "@/components/roycss/font-preview-tool";
 import { CSSGridGenerator } from "@/components/roycss/grid-generator";
 import { FlexboxVisualizer } from "@/components/roycss/flexbox-visualizer";
+import { ClipPathGenerator } from "@/components/roycss/clip-path-generator";
+import { FilterStudio } from "@/components/roycss/filter-studio";
+import { ColorShadeGenerator } from "@/components/roycss/color-shade-generator";
 import { useFavorites } from "@/hooks/use-favorites";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
@@ -931,6 +936,9 @@ export default function RoyCSSPage() {
   const [fontPreviewOpen, setFontPreviewOpen] = useState(false);
   const [gridGenOpen, setGridGenOpen] = useState(false);
   const [flexboxOpen, setFlexboxOpen] = useState(false);
+  const [clipPathOpen, setClipPathOpen] = useState(false);
+  const [filterStudioOpen, setFilterStudioOpen] = useState(false);
+  const [shadeGenOpen, setShadeGenOpen] = useState(false);
   const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -1204,6 +1212,15 @@ export default function RoyCSSPage() {
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setFlexboxOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <Rows3 className="size-4 text-muted-foreground" /> Flexbox Visualizer
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setClipPathOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Scissors className="size-4 text-muted-foreground" /> Clip Path Generator
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setFilterStudioOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <SlidersHorizontal className="size-4 text-muted-foreground" /> CSS Filter Studio
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setShadeGenOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Paintbrush className="size-4 text-muted-foreground" /> Color Shade Generator
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setShortcutsOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <Keyboard className="size-4 text-muted-foreground" /> Keyboard Shortcuts
@@ -2168,6 +2185,48 @@ export default function RoyCSSPage() {
             <SheetDescription>Interactive flexbox tester — direction, justify, align, wrap.</SheetDescription>
           </SheetHeader>
           <div className="p-5"><FlexboxVisualizer /></div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Clip Path Generator Sheet */}
+      <Sheet open={clipPathOpen} onOpenChange={setClipPathOpen}>
+        <SheetContent side="right" className="w-full sm:max-w-md overflow-y-auto p-0">
+          <SheetHeader className="p-5 pb-3 text-left border-b border-border/50">
+            <SheetTitle className="flex items-center gap-2 font-display text-lg">
+              <Scissors className="size-5 text-primary" />
+              Clip Path Generator
+            </SheetTitle>
+            <SheetDescription>Visual clip-path editor with 10 shape presets.</SheetDescription>
+          </SheetHeader>
+          <div className="p-5"><ClipPathGenerator /></div>
+        </SheetContent>
+      </Sheet>
+
+      {/* CSS Filter Studio Sheet */}
+      <Sheet open={filterStudioOpen} onOpenChange={setFilterStudioOpen}>
+        <SheetContent side="right" className="w-full sm:max-w-md overflow-y-auto p-0">
+          <SheetHeader className="p-5 pb-3 text-left border-b border-border/50">
+            <SheetTitle className="flex items-center gap-2 font-display text-lg">
+              <SlidersHorizontal className="size-5 text-primary" />
+              CSS Filter Studio
+            </SheetTitle>
+            <SheetDescription>8 CSS filters with live preview and presets.</SheetDescription>
+          </SheetHeader>
+          <div className="p-5"><FilterStudio /></div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Color Shade Generator Sheet */}
+      <Sheet open={shadeGenOpen} onOpenChange={setShadeGenOpen}>
+        <SheetContent side="right" className="w-full sm:max-w-md overflow-y-auto p-0">
+          <SheetHeader className="p-5 pb-3 text-left border-b border-border/50">
+            <SheetTitle className="flex items-center gap-2 font-display text-lg">
+              <Paintbrush className="size-5 text-primary" />
+              Color Shade Generator
+            </SheetTitle>
+            <SheetDescription>Generate 10 shades/tints from any base color. Hex or OKLCH output.</SheetDescription>
+          </SheetHeader>
+          <div className="p-5"><ColorShadeGenerator /></div>
         </SheetContent>
       </Sheet>
 

@@ -440,7 +440,7 @@ export function Parallax({
   offset = 80,
   className = "",
 }: {
-  children: ReactNode;
+  children?: ReactNode;
   offset?: number;
   className?: string;
 }) {

@@ -16,7 +16,14 @@ interface ColorStop {
   position: number; // 0-100
 }
 
-const PRESETS = [
+type GradientPreset = {
+  name: string;
+  stops: { c: string; p: number }[];
+  angle: number;
+  type?: "linear" | "radial" | "conic";
+};
+
+const PRESETS: GradientPreset[] = [
   { name: "Aurora", stops: [{ c: "oklch(0.7 0.2 200)", p: 0 }, { c: "oklch(0.6 0.25 280)", p: 50 }, { c: "oklch(0.65 0.2 330)", p: 100 }], angle: 135 },
   { name: "Sunset", stops: [{ c: "oklch(0.75 0.2 40)", p: 0 }, { c: "oklch(0.65 0.25 20)", p: 50 }, { c: "oklch(0.5 0.2 350)", p: 100 }], angle: 135 },
   { name: "Ocean", stops: [{ c: "oklch(0.6 0.15 220)", p: 0 }, { c: "oklch(0.5 0.2 250)", p: 100 }], angle: 180 },

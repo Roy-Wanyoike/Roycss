@@ -496,7 +496,7 @@ export function DocsViewer({ open, onOpenChange }: DocsViewerProps) {
 
   /* TOC click — scroll content to heading. */
   const handleTocClick = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>, id: string) => {
+    (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
       e.preventDefault();
       const container = contentScrollRef.current;
       if (!container) return;

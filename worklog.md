@@ -4269,3 +4269,33 @@ Stage Summary:
 - Entire project now passes tsc with 0 errors, lint with 0 errors.
 - All RoyCSS artifacts rebuilt and synced.
 - RoyCSS.zip updated.
+
+---
+Task ID: 12
+Agent: main (orchestrator)
+Task: Fix hydration mismatch error in EffectOfTheDay component and update RoyCSS.
+
+Work Log:
+- Root cause: EffectOfTheDay component used `new Date()` during render to (1) hash-select the "effect of the day" and (2) format the date label. The server (UTC) and client (Africa/Nairobi, UTC+3) are in different timezones, so at midnight Nairobi time it's still the previous day in UTC — producing different dates, different hash → different effect, and different formatted date string. This caused the hydration mismatch:
+  - Server: "Sunday, August 2" + form-toggle-switch effect
+  - Client: "Monday, August 3" + form-success-check effect
+- Fix: Made the component hydration-safe by:
+  1. Added a `mounted` state (starts `false`).
+  2. In `useEffect`, set `mounted=true` via `requestAnimationFrame` (defers to next frame to satisfy the `react-hooks/set-state-in-effect` lint rule — same pattern used by easing-visualizer, perf-analyzer, etc.).
+  3. `effect` and `todayLabel` are computed via `mounted ? getEffectOfTheDay() : null` — so during SSR and the first client render, they're null/empty (identical on both sides → no mismatch).
+  4. When `effect` is null, the component renders a skeleton placeholder (pulse-animated divs) instead of the real content.
+  5. After mount (rAF), the real effect + date render.
+- Audited all other components using `new Date()` / `Math.random()`:
+  - random-effect-picker.tsx: `Math.random()` only in event handlers (button clicks) — safe.
+  - pwa-install-prompt.tsx: `new Date()` only in localStorage.setItem (event handler) — safe.
+  - custom-collections.tsx, copy-history-sheet.tsx: no `new Date()` in render — safe.
+  - tools/ (dark-mode-converter, contrast-matrix, palette-generator, gradient-generator, color-shade-generator): Date/random only in event handlers or useMemo with stable deps — safe.
+  - Only effect-of-the-day.tsx had the render-time Date issue.
+- Verified: lint 0 errors, tsc 0 errors, dev server HTTP 200.
+- Agent Browser: 0 hydration errors, 0 console errors. Effect of the Day renders correctly ("Sunday, August 2" + "Toggle Switch" effect).
+- Rebuilt RoyCSS.zip: 8.3MB (includes the fix).
+
+Stage Summary:
+- Hydration mismatch fixed: EffectOfTheDay now uses a mounted gate + skeleton placeholder pattern.
+- 0 hydration errors, 0 console errors, 0 lint errors, 0 TS errors.
+- RoyCSS.zip rebuilt with the fix.

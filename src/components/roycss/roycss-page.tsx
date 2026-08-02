@@ -37,6 +37,7 @@ import {
   Wrench,
   Move3d,
   Type,
+  Film,
   Loader2,
   Box,
   MousePointer,
@@ -130,6 +131,8 @@ import { BorderRadiusVisualizer } from "@/components/roycss/border-radius-visual
 import { BoxShadowGenerator } from "@/components/roycss/box-shadow-generator";
 import { ColorPaletteGenerator } from "@/components/roycss/palette-generator";
 import { TransformStudio } from "@/components/roycss/transform-studio";
+import { AnimationTimeline } from "@/components/roycss/animation-timeline";
+import { FontPreviewTool } from "@/components/roycss/font-preview-tool";
 import { useFavorites } from "@/hooks/use-favorites";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
@@ -920,6 +923,8 @@ export default function RoyCSSPage() {
   const [shadowGenOpen, setShadowGenOpen] = useState(false);
   const [paletteGenOpen, setPaletteGenOpen] = useState(false);
   const [transformStudioOpen, setTransformStudioOpen] = useState(false);
+  const [animTimelineOpen, setAnimTimelineOpen] = useState(false);
+  const [fontPreviewOpen, setFontPreviewOpen] = useState(false);
   const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -1181,6 +1186,12 @@ export default function RoyCSSPage() {
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setTransformStudioOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <Move3d className="size-4 text-muted-foreground" /> Transform Studio
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setAnimTimelineOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Film className="size-4 text-muted-foreground" /> Animation Timeline
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setFontPreviewOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Type className="size-4 text-muted-foreground" /> Font Preview Tool
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setShortcutsOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <Keyboard className="size-4 text-muted-foreground" /> Keyboard Shortcuts
@@ -2089,6 +2100,34 @@ export default function RoyCSSPage() {
             <SheetDescription>Interactive CSS transform visualizer — rotate, scale, skew, translate.</SheetDescription>
           </SheetHeader>
           <div className="p-5"><TransformStudio /></div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Animation Timeline Sheet */}
+      <Sheet open={animTimelineOpen} onOpenChange={setAnimTimelineOpen}>
+        <SheetContent side="right" className="w-full sm:max-w-md overflow-y-auto p-0">
+          <SheetHeader className="p-5 pb-3 text-left border-b border-border/50">
+            <SheetTitle className="flex items-center gap-2 font-display text-lg">
+              <Film className="size-5 text-primary" />
+              Animation Timeline
+            </SheetTitle>
+            <SheetDescription>Visual keyframe editor — build custom animations.</SheetDescription>
+          </SheetHeader>
+          <div className="p-5"><AnimationTimeline /></div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Font Preview Tool Sheet */}
+      <Sheet open={fontPreviewOpen} onOpenChange={setFontPreviewOpen}>
+        <SheetContent side="right" className="w-full sm:max-w-md overflow-y-auto p-0">
+          <SheetHeader className="p-5 pb-3 text-left border-b border-border/50">
+            <SheetTitle className="flex items-center gap-2 font-display text-lg">
+              <Type className="size-5 text-primary" />
+              Font Preview Tool
+            </SheetTitle>
+            <SheetDescription>Preview text with different font properties. Copy CSS instantly.</SheetDescription>
+          </SheetHeader>
+          <div className="p-5"><FontPreviewTool /></div>
         </SheetContent>
       </Sheet>
 

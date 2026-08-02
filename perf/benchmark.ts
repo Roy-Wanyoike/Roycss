@@ -39,8 +39,11 @@ export interface BenchmarkResult {
   target?: number;
   /** How to compare value to target. Defaults to "lt". */
   comparator?: "lt" | "lte" | "gt" | "gte" | "eq";
-  /** Computed status: pass/fail if target present, otherwise info. */
-  status: Status;
+  /** Computed status: pass/fail if target present, otherwise info.
+   *  Optional at construction time — the `evaluate` function below fills
+   *  this in based on `target` and `comparator`. Individual benchmark
+   *  modules therefore do not need to set `status` themselves. */
+  status?: Status;
   /** Free-form details string. */
   details?: string;
 }

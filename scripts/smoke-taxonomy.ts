@@ -8,7 +8,7 @@
  * public surface works end-to-end.
  */
 
-import { effects } from "../src/lib/roycss-effects.ts";
+import { effects } from "../src/lib/roycss-effects";
 import {
   CANONICAL_TAGS,
   CATEGORY_DEFINITIONS,
@@ -25,7 +25,7 @@ import {
   normalizeTags,
   scoreEffect,
   tierForScore,
-} from "../src/lib/effect-taxonomy.ts";
+} from "../src/lib/effect-taxonomy";
 
 let pass = 0;
 let fail = 0;

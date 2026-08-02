@@ -10,7 +10,7 @@
  *
  * Size budget: <50KB for the resulting .ts module (JSON-stringified).
  */
-import { effects } from "../../src/lib/roycss-effects";
+import { effects } from "../../../src/lib/roycss-effects";
 import { writeFileSync } from "fs";
 import { join } from "path";
 

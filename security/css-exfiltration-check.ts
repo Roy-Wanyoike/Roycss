@@ -48,7 +48,7 @@ interface Report {
 const EXTERNAL_URL_RE = /url\(\s*['"]?(?:https?:|\/\/)[^)]*\)/gi;
 const ANY_URL_RE = /url\(\s*['"]?([^)'"]+)['"]?\s*\)/gi;
 const IMPORT_RE = /@import\s+(?:url\()?\s*['"]?([^)'"\s;]+)['"]?\s*\)?\s*[^;]*;?/gi;
-const FONT_FACE_RE = /@font-face\s*\{[^}]*?\}/gis;
+const FONT_FACE_RE = /@font-face\s*\{[^}]*?\}/gi;
 const FONT_FACE_SRC_EXTERNAL_RE = /src\s*:[^;}]*url\(\s*['"]?(?:https?:|\/\/)[^)]*\)/gi;
 const ATTR_SELECTOR_RE = /\[\s*[a-zA-Z_-][a-zA-Z0-9_-]*\s*(?:\^=|\$=|\*=|=)[^\]]*\]/g;
 // A "rule" is roughly: selector(s) { declarations }

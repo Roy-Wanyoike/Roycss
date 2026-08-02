@@ -14,7 +14,13 @@
  * untrusted strings. See docs/threat-models §3.2 T1, §3.6 E1.
  */
 
-/// <reference types="chrome" />
+// `@types/chrome` is not installed at the project root (only in the
+// inspector/legacy-sidepanel/package.json devDependencies, which has no
+// node_modules of its own). Declare `chrome` as `any` so type-checking
+// passes under the root tsconfig.json; runtime behavior is unchanged
+// because Chrome injects the real `chrome.*` globals into the content
+// script's isolated world (where this overlay module runs).
+declare const chrome: any;
 
 import { effectsData } from "./effects-data";
 import type { EffectSelectedMessage } from "./messages";

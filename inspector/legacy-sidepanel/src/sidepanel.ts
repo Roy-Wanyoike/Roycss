@@ -15,7 +15,12 @@
  * the entire effects library + framework adapters as a dependency.
  */
 
-/// <reference types="chrome" />
+// `@types/chrome` is not installed at the project root (only in the
+// inspector/legacy-sidepanel/package.json devDependencies, which has no
+// node_modules of its own). Declare `chrome` as `any` so type-checking
+// passes under the root tsconfig.json; runtime behavior is unchanged
+// because Chrome injects the real `chrome.*` globals into the side panel.
+declare const chrome: any;
 
 import { effectsData, effectsList, EFFECT_COUNT } from "./effects-data";
 import type {

@@ -74,7 +74,7 @@ describe("patterns corpus", () => {
   });
 
   it("covers every patternCategoryOrder category with at least one pattern", () => {
-    const covered = new Set(patterns.map((p) => p.category));
+    const covered = new Set<string>(patterns.map((p) => p.category));
     const empty = patternCategoryOrder.filter((c) => !covered.has(c));
     expect(empty, `empty pattern categories: ${empty.join(", ")}`).toEqual([]);
   });

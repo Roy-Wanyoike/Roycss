@@ -44,7 +44,7 @@ function gzipSize(buf: Buffer): number {
 }
 
 function brotliSize(buf: Buffer): number {
-  return brotliCompressSync(buf, { quality: 11 }).length;
+  return brotliCompressSync(buf, { quality: 11 } as any).length;
 }
 
 function check(actual: number, target: number, comparator: string): "PASS" | "FAIL" {

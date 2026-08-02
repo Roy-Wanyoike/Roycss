@@ -4447,3 +4447,25 @@ Stage Summary:
 - All 4 tools verified interactive via Agent Browser.
 - RoyCSS.zip rebuilt with 20 tool components.
 - Lint clean, tsc clean, 0 runtime errors.
+
+---
+Task ID: 14
+Agent: main (orchestrator)
+Task: Update RoyCSS.zip for npm publish + site hosting.
+
+Work Log:
+- Rebuilt dist/ artifacts from source (roycss.css 1.18MB, roycss.min.css 990KB, effects.json 1569 effects, effects.js/cjs/d.ts).
+- Rebuilt CLI bundle (cli/index.js 1.70MB, 37 modules).
+- Synced effects.json to cli/ and mcp-server/.
+- Removed dist/coverage/ (test coverage HTML, not for publish).
+- Verified npm pack: roycss@2.0.0 (577.5KB, 12 files, zero runtime deps), roycss-cli@2.0.0 (329.7KB, 4 files).
+- Rebuilt RoyCSS.zip: 8.4MB, 660 files, 20 tool components included.
+- Copied to public/RoyCSS.zip (downloadable from site) and /home/z/RoyCSS.zip.
+- Browser verification: HTTP 200, 0 page errors, 0 console errors. Tool launches verified.
+
+Stage Summary:
+- All artifacts current and production-ready.
+- roycss@2.0.0 npm package: 577.5KB, 12 files, zero runtime deps.
+- roycss-cli@2.0.0 npm package: 329.7KB, 4 files.
+- RoyCSS.zip: 8.4MB, 660 files (full source for hosting).
+- App: 0 lint errors, 0 TS errors, 0 runtime errors.

@@ -1,0 +1,847 @@
+     1→     1→"use client";
+     2→     2→
+     3→     3→import { useState, useEffect, useRef, useMemo, useCallback } from "react";
+     4→     4→import {
+     5→     5→  Activity,
+     6→     6→  Play,
+     7→     7→  Pause,
+     8→     8→  Copy,
+     9→     9→  Check,
+    10→    10→  RotateCcw,
+    11→    11→  Gauge,
+    12→    12→} from "lucide-react";
+    13→    13→import { Slider } from "@/components/ui/slider";
+    14→    14→import { Input } from "@/components/ui/input";
+    15→    15→import { cn } from "@/lib/utils";
+    16→    16→
+    17→    17→/**
+    18→    18→ * EasingVisualizer — an interactive cubic-bezier easing curve designer.
+    19→    19→ *
+    20→    20→ * Features:
+    21→    21→ *  - SVG curve editor with two draggable control points (pointer + keyboard).
+    22→    22→ *  - Live moving dot driven by a `requestAnimationFrame` loop.
+    23→    23→ *  - Bidirectionally synced numeric inputs + sliders (x1, y1, x2, y2).
+    24→    24→ *  - Preset gallery (linear / ease / quad / cubic / back / bounce-ish) with
+    25→    25→ *    mini curve thumbnails; active preset is highlighted.
+    26→    26→ *  - Real-world live preview: a 48px circle traversing a track using the
+    27→    27→ *    actual `cubic-bezier(...)` CSS transition.
+    28→    28→ *  - Generated `transition-timing-function` CSS with copy-to-clipboard.
+    29→    29→ *  - Configurable preview duration (100–5000ms).
+    30→    30→ *
+    31→    31→ * Math:
+    32→    32→ *  - The cubic-bezier parametric form with P0=(0,0), P1=(x1,y1),
+    33→    33→ *    P2=(x2,y2), P3=(1,1):
+    34→    34→ *      B(t) = 3(1-t)^2 t P1 + 3(1-t) t^2 P2 + t^3 P3   (P0 term is 0)
+    35→    35→ *  - For the moving dot we need y given x (time). Because x1,x2 ∈ [0,1],
+    36→    36→ *    Bx(t) is monotonically increasing in t, so a 40-iteration binary
+    37→    37→ *    search on t converges to sub-pixel precision.
+    38→    38→ */
+    39→    39→
+    40→    40→interface BezierVals {
+    41→    41→  x1: number;
+    42→    42→  y1: number;
+    43→    43→  x2: number;
+    44→    44→  y2: number;
+    45→    45→}
+    46→    46→
+    47→    47→interface Preset extends BezierVals {
+    48→    48→  name: string;
+    49→    49→  /** Flag for approximate / non-standard easings (e.g. "bounce-ish"). */
+    50→    50→  approx?: boolean;
+    51→    51→}
+    52→    52→
+    53→    53→const PRESETS: Preset[] = [
+    54→    54→  { name: "linear", x1: 0, y1: 0, x2: 1, y2: 1 },
+    55→    55→  { name: "ease", x1: 0.25, y1: 0.1, x2: 0.25, y2: 1 },
+    56→    56→  { name: "ease-in", x1: 0.42, y1: 0, x2: 1, y2: 1 },
+    57→    57→  { name: "ease-out", x1: 0, y1: 0, x2: 0.58, y2: 1 },
+    58→    58→  { name: "ease-in-out", x1: 0.42, y1: 0, x2: 0.58, y2: 1 },
+    59→    59→  { name: "ease-in-quad", x1: 0.55, y1: 0.085, x2: 0.68, y2: 0.53 },
+    60→    60→  { name: "ease-out-quad", x1: 0.25, y1: 0.46, x2: 0.45, y2: 0.94 },
+    61→    61→  { name: "ease-in-cubic", x1: 0.55, y1: 0.055, x2: 0.675, y2: 0.19 },
+    62→    62→  { name: "ease-out-cubic", x1: 0.215, y1: 0.61, x2: 0.355, y2: 1 },
+    63→    63→  { name: "ease-in-out-cubic", x1: 0.645, y1: 0.045, x2: 0.355, y2: 1 },
+    64→    64→  { name: "ease-in-back", x1: 0.6, y1: -0.28, x2: 0.735, y2: 0.045 },
+    65→    65→  { name: "ease-out-back", x1: 0.175, y1: 0.885, x2: 0.32, y2: 1.275 },
+    66→    66→  { name: "ease-in-out-back", x1: 0.68, y1: -0.55, x2: 0.265, y2: 1.55 },
+    67→    67→  { name: "bounce-ish", x1: 0.68, y1: -0.6, x2: 0.32, y2: 1.6, approx: true },
+    68→    68→];
+    69→    69→
+    70→    70→/** Default curve = `ease-in-out` — matches the "Reset" affordance. */
+    71→    71→const DEFAULT_VALS: BezierVals = { x1: 0.42, y1: 0, x2: 0.58, y2: 1 };
+    72→    72→
+    73→    73→/** SVG viewBox dimension for the graph square (in SVG user units). */
+    74→    74→const VB = 280;
+    75→    75→/** Y-axis clamp range (allows overshoot / back / bounce-style easings). */
+    76→    76→const Y_MIN = -0.5;
+    77→    77→const Y_MAX = 1.5;
+    78→    78→
+    79→    79→function clamp(n: number, lo: number, hi: number): number {
+    80→    80→  return Math.min(hi, Math.max(lo, n));
+    81→    81→}
+    82→    82→
+    83→    83→/** Trim trailing zeros so 0.5 stays "0.5" and 0.42 stays "0.42". */
+    84→    84→function fmt(n: number): string {
+    85→    85→  return Number(n.toFixed(3)).toString();
+    86→    86→}
+    87→    87→
+    88→    88→/**
+    89→    89→ * Solve `y = By(t)` for a given `x = Bx(t)` using binary search.
+    90→    90→ * Requires x1, x2 ∈ [0,1] (guaranteed by clamping) so Bx is monotonic.
+    91→    91→ */
+    92→    92→function bezierYForX(
+    93→    93→  x: number,
+    94→    94→  x1: number,
+    95→    95→  y1: number,
+    96→    96→  x2: number,
+    97→    97→  y2: number,
+    98→    98→): number {
+    99→    99→  let lo = 0;
+   100→   100→  let hi = 1;
+   101→   101→  for (let i = 0; i < 40; i++) {
+   102→   102→    const t = (lo + hi) / 2;
+   103→   103→    const mt = 1 - t;
+   104→   104→    const bx = 3 * mt * mt * t * x1 + 3 * mt * t * t * x2 + t * t * t;
+   105→   105→    if (bx < x) lo = t;
+   106→   106→    else hi = t;
+   107→   107→  }
+   108→   108→  const t = (lo + hi) / 2;
+   109→   109→  const mt = 1 - t;
+   110→   110→  return 3 * mt * mt * t * y1 + 3 * mt * t * t * y2 + t * t * t;
+   111→   111→}
+   112→   112→
+   113→   113→/** Sample the bezier into a polyline SVG path (robust, no curve command needed). */
+   114→   114→function sampleCurvePath(
+   115→   115→  x1: number,
+   116→   116→  y1: number,
+   117→   117→  x2: number,
+   118→   118→  y2: number,
+   119→   119→  samples: number,
+   120→   120→  scale: number,
+   121→   121→): string {
+   122→   122→  const pts: string[] = [];
+   123→   123→  for (let i = 0; i <= samples; i++) {
+   124→   124→    const t = i / samples;
+   125→   125→    const mt = 1 - t;
+   126→   126→    const x = 3 * mt * mt * t * x1 + 3 * mt * t * t * x2 + t * t * t;
+   127→   127→    const y = 3 * mt * mt * t * y1 + 3 * mt * t * t * y2 + t * t * t;
+   128→   128→    pts.push(`${(x * scale).toFixed(2)},${((1 - y) * scale).toFixed(2)}`);
+   129→   129→  }
+   130→   130→  return `M ${pts.join(" L ")}`;
+   131→   131→}
+   132→   132→
+   133→   133→/** Compact inline curve thumbnail used in the preset gallery (28×16). */
+   134→   134→function MiniCurve({ x1, y1, x2, y2 }: BezierVals) {
+   135→   135→  const d = useMemo(
+   136→   136→    () => sampleCurvePath(x1, y1, x2, y2, 20, 24),
+   137→   137→    [x1, y1, x2, y2],
+   138→   138→  );
+   139→   139→  return (
+   140→   140→    <svg
+   141→   141→      width="28"
+   142→   142→      height="16"
+   143→   143→      viewBox="0 0 24 16"
+   144→   144→      className="overflow-visible text-current"
+   145→   145→      aria-hidden="true"
+   146→   146→    >
+   147→   147→      <path
+   148→   148→        d={d}
+   149→   149→        fill="none"
+   150→   150→        stroke="currentColor"
+   151→   151→        strokeWidth="1.5"
+   152→   152→        strokeLinecap="round"
+   153→   153→        strokeLinejoin="round"
+   154→   154→      />
+   155→   155→    </svg>
+   156→   156→  );
+   157→   157→}
+   158→   158→
+   159→   159→type DragTarget = "p1" | "p2";
+   160→   160→
+   161→   161→interface ControlPointProps {
+   162→   162→  cx: number;
+   163→   163→  cy: number;
+   164→   164→  label: string;
+   165→   165→  valX: number;
+   166→   166→  valY: number;
+   167→   167→  onPointerDown: (e: React.PointerEvent<SVGGElement>) => void;
+   168→   168→  onPointerMove: (e: React.PointerEvent<SVGGElement>) => void;
+   169→   169→  onPointerUp: (e: React.PointerEvent<SVGGElement>) => void;
+   170→   170→  onKeyDown: (e: React.KeyboardEvent<SVGGElement>) => void;
+   171→   171→}
+   172→   172→
+   173→   173→/** Draggable / keyboard-navigable control point with role="slider". */
+   174→   174→function ControlPoint({
+   175→   175→  cx,
+   176→   176→  cy,
+   177→   177→  label,
+   178→   178→  valX,
+   179→   179→  valY,
+   180→   180→  onPointerDown,
+   181→   181→  onPointerMove,
+   182→   182→  onPointerUp,
+   183→   183→  onKeyDown,
+   184→   184→}: ControlPointProps) {
+   185→   185→  return (
+   186→   186→    <g
+   187→   187→      tabIndex={0}
+   188→   188→      role="slider"
+   189→   189→      aria-label={`${label} control point`}
+   190→   190→      aria-valuenow={Number(valX.toFixed(2))}
+   191→   191→      aria-valuemin={0}
+   192→   192→      aria-valuemax={1}
+   193→   193→      aria-valuetext={`${label}: x=${valX.toFixed(2)}, y=${valY.toFixed(2)}`}
+   194→   194→      onKeyDown={onKeyDown}
+   195→   195→      onPointerDown={onPointerDown}
+   196→   196→      onPointerMove={onPointerMove}
+   197→   197→      onPointerUp={onPointerUp}
+   198→   198→      onPointerCancel={onPointerUp}
+   199→   199→      className="cursor-grab touch-none focus-visible:outline-none active:cursor-grabbing"
+   200→   200→    >
+   201→   201→      {/* Generous invisible hit area for easy grabbing */}
+   202→   202→      <circle cx={cx} cy={cy} r={16} fill="transparent" />
+   203→   203→      <circle
+   204→   204→        cx={cx}
+   205→   205→        cy={cy}
+   206→   206→        r={7}
+   207→   207→        className="fill-background stroke-primary"
+   208→   208→        strokeWidth={2.5}
+   209→   209→      />
+   210→   210→      <text
+   211→   211→        x={cx}
+   212→   212→        y={cy - 13}
+   213→   213→        textAnchor="middle"
+   214→   214→        className="fill-primary"
+   215→   215→        fontSize="10"
+   216→   216→        fontWeight="600"
+   217→   217→        style={{ pointerEvents: "none" }}
+   218→   218→      >
+   219→   219→        {label}
+   220→   220→      </text>
+   221→   221→    </g>
+   222→   222→  );
+   223→   223→}
+   224→   224→
+   225→   225→export function EasingVisualizer() {
+   226→   226→  const [vals, setVals] = useState<BezierVals>(DEFAULT_VALS);
+   227→   227→  const [duration, setDuration] = useState(1500);
+   228→   228→  const [playing, setPlaying] = useState(true);
+   229→   229→  const [progress, setProgress] = useState(0);
+   230→   230→  const [previewPos, setPreviewPos] = useState<0 | 1>(0);
+   231→   231→  const [copied, setCopied] = useState(false);
+   232→   232→  const [dragging, setDragging] = useState<DragTarget | null>(null);
+   233→   233→
+   234→   234→  const svgRef = useRef<SVGSVGElement | null>(null);
+   235→   235→  const trackRef = useRef<HTMLDivElement | null>(null);
+   236→   236→  const [trackWidth, setTrackWidth] = useState(0);
+   237→   237→
+   238→   238→  const rafRef = useRef<number | null>(null);
+   239→   239→  const lastTimeRef = useRef(0);
+   240→   240→
+   241→   241→  const { x1, y1, x2, y2 } = vals;
+   242→   242→
+   243→   243→  /* ── Track width (for live preview translate distance) ─────────────── */
+   244→   244→  useEffect(() => {
+   245→   245→    const el = trackRef.current;
+   246→   246→    if (!el) return;
+   247→   247→    const update = () => setTrackWidth(el.offsetWidth);
+   248→   248→    update();
+   249→   249→    const ro = new ResizeObserver(update);
+   250→   250→    ro.observe(el);
+   251→   251→    return () => ro.disconnect();
+   252→   252→  }, []);
+   253→   253→
+   254→   254→  /* ── Moving dot: requestAnimationFrame loop, cleaned up on unmount ── */
+   255→   255→  useEffect(() => {
+   256→   256→    if (!playing) {
+   257→   257→      lastTimeRef.current = 0;
+   258→   258→      return;
+   259→   259→    }
+   260→   260→    const tick = (now: number) => {
+   261→   261→      if (lastTimeRef.current === 0) lastTimeRef.current = now;
+   262→   262→      const dt = now - lastTimeRef.current;
+   263→   263→      lastTimeRef.current = now;
+   264→   264→      setProgress((p) => {
+   265→   265→        const next = p + dt / duration;
+   266→   266→        // Loop seamlessly, preserving sub-frame precision.
+   267→   267→        return next >= 1 ? next - Math.floor(next) : next;
+   268→   268→      });
+   269→   269→      rafRef.current = requestAnimationFrame(tick);
+   270→   270→    };
+   271→   271→    rafRef.current = requestAnimationFrame(tick);
+   272→   272→    return () => {
+   273→   273→      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+   274→   274→      lastTimeRef.current = 0;
+   275→   275→    };
+   276→   276→  }, [playing, duration]);
+   277→   277→
+   278→   278→  /* ── Live preview box: CSS transition toggled on an interval ──────── */
+   279→   279→  useEffect(() => {
+   280→   280→    if (!playing) return;
+   281→   281→    // Kick off the back-and-forth cycle on the next animation frame so we
+   282→   282→    // don't trigger a synchronous re-render inside this effect body.
+   283→   283→    const kickoff = requestAnimationFrame(() => setPreviewPos(1));
+   284→   284→    const interval = window.setInterval(
+   285→   285→      () => setPreviewPos((p) => (p === 1 ? 0 : 1)),
+   286→   286→      duration + 120,
+   287→   287→    );
+   288→   288→    return () => {
+   289→   289→      cancelAnimationFrame(kickoff);
+   290→   290→      window.clearInterval(interval);
+   291→   291→    };
+   292→   292→  }, [playing, duration]);
+   293→   293→
+   294→   294→  const curvePath = useMemo(
+   295→   295→    () => sampleCurvePath(x1, y1, x2, y2, 60, VB),
+   296→   296→    [x1, y1, x2, y2],
+   297→   297→  );
+   298→   298→
+   299→   299→  const easedY = useMemo(
+   300→   300→    () => bezierYForX(progress, x1, y1, x2, y2),
+   301→   301→    [progress, x1, y1, x2, y2],
+   302→   302→  );
+   303→   303→
+   304→   304→  const cssString = `transition-timing-function: cubic-bezier(${fmt(x1)}, ${fmt(y1)}, ${fmt(x2)}, ${fmt(y2)});`;
+   305→   305→  const cubicBezierString = `cubic-bezier(${fmt(x1)}, ${fmt(y1)}, ${fmt(x2)}, ${fmt(y2)})`;
+   306→   306→
+   307→   307→  const handleCopy = useCallback(async () => {
+   308→   308→    try {
+   309→   309→      await navigator.clipboard.writeText(cssString);
+   310→   310→      setCopied(true);
+   311→   311→      window.setTimeout(() => setCopied(false), 2000);
+   312→   312→    } catch {
+   313→   313→      /* clipboard unavailable — silently ignore */
+   314→   314→    }
+   315→   315→  }, [cssString]);
+   316→   316→
+   317→   317→  const setVal = useCallback(
+   318→   318→    (key: keyof BezierVals, v: number) => {
+   319→   319→      setVals((prev) => ({ ...prev, [key]: v }));
+   320→   320→    },
+   321→   321→    [],
+   322→   322→  );
+   323→   323→
+   324→   324→  const handleReset = useCallback(() => {
+   325→   325→    setVals(DEFAULT_VALS);
+   326→   326→    setProgress(0);
+   327→   327→  }, []);
+   328→   328→
+   329→   329→  /* ── Pointer → normalized (x, y) conversion using the SVG CTM ─────── */
+   330→   330→  const getNormalized = useCallback(
+   331→   331→    (e: React.PointerEvent): { x: number; y: number } | null => {
+   332→   332→      const svg = svgRef.current;
+   333→   333→      if (!svg) return null;
+   334→   334→      const ctm = svg.getScreenCTM();
+   335→   335→      if (!ctm) return null;
+   336→   336→      const pt = new DOMPoint(e.clientX, e.clientY);
+   337→   337→      const svgP = pt.matrixTransform(ctm.inverse());
+   338→   338→      return {
+   339→   339→        x: clamp(svgP.x / VB, 0, 1),
+   340→   340→        y: clamp(1 - svgP.y / VB, Y_MIN, Y_MAX),
+   341→   341→      };
+   342→   342→    },
+   343→   343→    [],
+   344→   344→  );
+   345→   345→
+   346→   346→  const onPointerDownControl = useCallback(
+   347→   347→    (e: React.PointerEvent<SVGGElement>, target: DragTarget) => {
+   348→   348→      e.preventDefault();
+   349→   349→      e.stopPropagation();
+   350→   350→      (e.currentTarget as Element).setPointerCapture(e.pointerId);
+   351→   351→      setDragging(target);
+   352→   352→      const n = getNormalized(e);
+   353→   353→      if (!n) return;
+   354→   354→      if (target === "p1") {
+   355→   355→        setVals((prev) => ({ ...prev, x1: n.x, y1: n.y }));
+   356→   356→      } else {
+   357→   357→        setVals((prev) => ({ ...prev, x2: n.x, y2: n.y }));
+   358→   358→      }
+   359→   359→    },
+   360→   360→    [getNormalized],
+   361→   361→  );
+   362→   362→
+   363→   363→  const onPointerMoveControl = useCallback(
+   364→   364→    (e: React.PointerEvent<SVGGElement>) => {
+   365→   365→      if (!dragging) return;
+   366→   366→      const n = getNormalized(e);
+   367→   367→      if (!n) return;
+   368→   368→      if (dragging === "p1") {
+   369→   369→        setVals((prev) => ({ ...prev, x1: n.x, y1: n.y }));
+   370→   370→      } else {
+   371→   371→        setVals((prev) => ({ ...prev, x2: n.x, y2: n.y }));
+   372→   372→      }
+   373→   373→    },
+   374→   374→    [dragging, getNormalized],
+   375→   375→  );
+   376→   376→
+   377→   377→  const onPointerUpControl = useCallback(
+   378→   378→    (e: React.PointerEvent<SVGGElement>) => {
+   379→   379→      if (!dragging) return;
+   380→   380→      try {
+   381→   381→        (e.currentTarget as Element).releasePointerCapture(e.pointerId);
+   382→   382→      } catch {
+   383→   383→        /* pointer already released */
+   384→   384→      }
+   385→   385→      setDragging(null);
+   386→   386→    },
+   387→   387→    [dragging],
+   388→   388→  );
+   389→   389→
+   390→   390→  const onKeyDownControl = useCallback(
+   391→   391→    (e: React.KeyboardEvent<SVGGElement>, target: DragTarget) => {
+   392→   392→      const step = e.shiftKey ? 0.1 : 0.01;
+   393→   393→      let handled = true;
+   394→   394→      if (target === "p1") {
+   395→   395→        if (e.key === "ArrowLeft")
+   396→   396→          setVals((p) => ({ ...p, x1: clamp(p.x1 - step, 0, 1) }));
+   397→   397→        else if (e.key === "ArrowRight")
+   398→   398→          setVals((p) => ({ ...p, x1: clamp(p.x1 + step, 0, 1) }));
+   399→   399→        else if (e.key === "ArrowUp")
+   400→   400→          setVals((p) => ({ ...p, y1: clamp(p.y1 + step, Y_MIN, Y_MAX) }));
+   401→   401→        else if (e.key === "ArrowDown")
+   402→   402→          setVals((p) => ({ ...p, y1: clamp(p.y1 - step, Y_MIN, Y_MAX) }));
+   403→   403→        else handled = false;
+   404→   404→      } else {
+   405→   405→        if (e.key === "ArrowLeft")
+   406→   406→          setVals((p) => ({ ...p, x2: clamp(p.x2 - step, 0, 1) }));
+   407→   407→        else if (e.key === "ArrowRight")
+   408→   408→          setVals((p) => ({ ...p, x2: clamp(p.x2 + step, 0, 1) }));
+   409→   409→        else if (e.key === "ArrowUp")
+   410→   410→          setVals((p) => ({ ...p, y2: clamp(p.y2 + step, Y_MIN, Y_MAX) }));
+   411→   411→        else if (e.key === "ArrowDown")
+   412→   412→          setVals((p) => ({ ...p, y2: clamp(p.y2 - step, Y_MIN, Y_MAX) }));
+   413→   413→        else handled = false;
+   414→   414→      }
+   415→   415→      if (handled) e.preventDefault();
+   416→   416→    },
+   417→   417→    [],
+   418→   418→  );
+   419→   419→
+   420→   420→  const isPresetActive = useCallback(
+   421→   421→    (p: Preset): boolean =>
+   422→   422→      Math.abs(p.x1 - x1) < 0.005 &&
+   423→   423→      Math.abs(p.y1 - y1) < 0.005 &&
+   424→   424→      Math.abs(p.x2 - x2) < 0.005 &&
+   425→   425→      Math.abs(p.y2 - y2) < 0.005,
+   426→   426→    [x1, y1, x2, y2],
+   427→   427→  );
+   428→   428→
+   429→   429→  /* ── Pre-computed SVG coordinates ─────────────────────────────────── */
+   430→   430→  const p0 = { x: 0, y: VB };
+   431→   431→  const p1Svg = { x: x1 * VB, y: (1 - y1) * VB };
+   432→   432→  const p2Svg = { x: x2 * VB, y: (1 - y2) * VB };
+   433→   433→  const p3 = { x: VB, y: 0 };
+   434→   434→  const dotX = progress * VB;
+   435→   435→  const dotY = (1 - easedY) * VB;
+   436→   436→  const circleTranslate = previewPos === 1 ? Math.max(0, trackWidth - 48) : 0;
+   437→   437→
+   438→   438→  const INPUTS: {
+   439→   439→    key: keyof BezierVals;
+   440→   440→    label: string;
+   441→   441→    min: number;
+   442→   442→    max: number;
+   443→   443→  }[] = [
+   444→   444→    { key: "x1", label: "x1", min: 0, max: 1 },
+   445→   445→    { key: "y1", label: "y1", min: Y_MIN, max: Y_MAX },
+   446→   446→    { key: "x2", label: "x2", min: 0, max: 1 },
+   447→   447→    { key: "y2", label: "y2", min: Y_MIN, max: Y_MAX },
+   448→   448→  ];
+   449→   449→
+   450→   450→  return (
+   451→   451→    <div className="mx-auto max-w-2xl space-y-4">
+   452→   452→      {/* ── Header ──────────────────────────────────────────────────── */}
+   453→   453→      <div className="flex items-center justify-between gap-2">
+   454→   454→        <div className="flex items-center gap-2">
+   455→   455→          <Activity className="size-5 text-primary" />
+   456→   456→          <div>
+   457→   457→            <h3 className="font-semibold leading-tight">Easing Visualizer</h3>
+   458→   458→            <p className="text-xs text-muted-foreground">
+   459→   459→              Design and compare cubic-bezier easing curves
+   460→   460→            </p>
+   461→   461→          </div>
+   462→   462→        </div>
+   463→   463→        <button
+   464→   464→          type="button"
+   465→   465→          onClick={handleReset}
+   466→   466→          className="flex cursor-pointer items-center gap-1 rounded-lg bg-muted px-2.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground"
+   467→   467→          title="Reset to ease-in-out"
+   468→   468→        >
+   469→   469→          <RotateCcw className="size-3.5" />
+   470→   470→          Reset
+   471→   471→        </button>
+   472→   472→      </div>
+   473→   473→
+   474→   474→      <div className="grid gap-4 md:grid-cols-2">
+   475→   475→        {/* ═══ LEFT: SVG editor + numeric controls + live preview ═══ */}
+   476→   476→        <div className="space-y-4">
+   477→   477→          {/* SVG curve editor */}
+   478→   478→          <div className="rounded-xl border border-border bg-card p-4">
+   479→   479→            <div className="mb-2 flex items-center justify-between">
+   480→   480→              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+   481→   481→                Curve
+   482→   482→              </span>
+   483→   483→              <button
+   484→   484→                type="button"
+   485→   485→                onClick={() => setPlaying((p) => !p)}
+   486→   486→                className="flex cursor-pointer items-center gap-1 rounded-lg bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary transition-colors hover:bg-primary/20"
+   487→   487→                title={playing ? "Pause animation" : "Play animation"}
+   488→   488→              >
+   489→   489→                {playing ? (
+   490→   490→                  <Pause className="size-3.5" />
+   491→   491→                ) : (
+   492→   492→                  <Play className="size-3.5" />
+   493→   493→                )}
+   494→   494→                {playing ? "Pause" : "Play"}
+   495→   495→              </button>
+   496→   496→            </div>
+   497→   497→
+   498→   498→            <div className="relative py-4">
+   499→   499→              <svg
+   500→   500→                ref={svgRef}
+   501→   501→                viewBox={`0 0 ${VB} ${VB}`}
+   502→   502→                className="mx-auto h-auto w-full max-w-[300px] touch-none select-none overflow-visible"
+   503→   503→                role="img"
+   504→   504→                aria-label="Cubic bezier curve editor"
+   505→   505→              >
+   506→   506→                {/* Grid lines at 0.25 intervals */}
+   507→   507→                {[0, 0.25, 0.5, 0.75, 1].map((v) => (
+   508→   508→                  <g key={v}>
+   509→   509→                    <line
+   510→   510→                      x1={v * VB}
+   511→   511→                      y1={0}
+   512→   512→                      x2={v * VB}
+   513→   513→                      y2={VB}
+   514→   514→                      className="stroke-border"
+   515→   515→                      strokeWidth={1}
+   516→   516→                      strokeDasharray="2 4"
+   517→   517→                    />
+   518→   518→                    <line
+   519→   519→                      x1={0}
+   520→   520→                      y1={v * VB}
+   521→   521→                      x2={VB}
+   522→   522→                      y2={v * VB}
+   523→   523→                      className="stroke-border"
+   524→   524→                      strokeWidth={1}
+   525→   525→                      strokeDasharray="2 4"
+   526→   526→                    />
+   527→   527→                  </g>
+   528→   528→                ))}
+   529→   529→
+   530→   530→                {/* Outer frame */}
+   531→   531→                <rect
+   532→   532→                  x={0}
+   533→   533→                  y={0}
+   534→   534→                  width={VB}
+   535→   535→                  height={VB}
+   536→   536→                  fill="none"
+   537→   537→                  className="stroke-border"
+   538→   538→                  strokeWidth={1.5}
+   539→   539→                />
+   540→   540→
+   541→   541→                {/* Linear reference (faint diagonal) */}
+   542→   542→                <line
+   543→   543→                  x1={0}
+   544→   544→                  y1={VB}
+   545→   545→                  x2={VB}
+   546→   546→                  y2={0}
+   547→   547→                  className="stroke-muted-foreground/30"
+   548→   548→                  strokeWidth={1}
+   549→   549→                  strokeDasharray="3 3"
+   550→   550→                />
+   551→   551→
+   552→   552→                {/* Control-point handles (dashed) */}
+   553→   553→                <line
+   554→   554→                  x1={p0.x}
+   555→   555→                  y1={p0.y}
+   556→   556→                  x2={p1Svg.x}
+   557→   557→                  y2={p1Svg.y}
+   558→   558→                  className="stroke-muted-foreground/50"
+   559→   559→                  strokeWidth={1.5}
+   560→   560→                  strokeDasharray="4 3"
+   561→   561→                />
+   562→   562→                <line
+   563→   563→                  x1={p3.x}
+   564→   564→                  y1={p3.y}
+   565→   565→                  x2={p2Svg.x}
+   566→   566→                  y2={p2Svg.y}
+   567→   567→                  className="stroke-muted-foreground/50"
+   568→   568→                  strokeWidth={1.5}
+   569→   569→                  strokeDasharray="4 3"
+   570→   570→                />
+   571→   571→
+   572→   572→                {/* The actual easing curve */}
+   573→   573→                <path
+   574→   574→                  d={curvePath}
+   575→   575→                  fill="none"
+   576→   576→                  className="stroke-primary"
+   577→   577→                  strokeWidth={2.5}
+   578→   578→                  strokeLinecap="round"
+   579→   579→                  strokeLinejoin="round"
+   580→   580→                />
+   581→   581→
+   582→   582→                {/* Endpoints (P0 and P3) */}
+   583→   583→                <circle cx={0} cy={VB} r={4} className="fill-muted-foreground" />
+   584→   584→                <circle
+   585→   585→                  cx={VB}
+   586→   586→                  cy={0}
+   587→   587→                  r={4}
+   588→   588→                  className="fill-muted-foreground"
+   589→   589→                />
+   590→   590→
+   591→   591→                {/* Moving dot animating along the curve */}
+   592→   592→                <circle
+   593→   593→                  cx={dotX}
+   594→   594→                  cy={dotY}
+   595→   595→                  r={5.5}
+   596→   596→                  className="fill-primary"
+   597→   597→                  opacity={playing ? 1 : 0.4}
+   598→   598→                >
+   599→   599→                  <title>Current eased position</title>
+   600→   600→                </circle>
+   601→   601→
+   602→   602→                {/* Draggable control points */}
+   603→   603→                <ControlPoint
+   604→   604→                  cx={p1Svg.x}
+   605→   605→                  cy={p1Svg.y}
+   606→   606→                  label="P1"
+   607→   607→                  valX={x1}
+   608→   608→                  valY={y1}
+   609→   609→                  onPointerDown={(e) => onPointerDownControl(e, "p1")}
+   610→   610→                  onPointerMove={onPointerMoveControl}
+   611→   611→                  onPointerUp={onPointerUpControl}
+   612→   612→                  onKeyDown={(e) => onKeyDownControl(e, "p1")}
+   613→   613→                />
+   614→   614→                <ControlPoint
+   615→   615→                  cx={p2Svg.x}
+   616→   616→                  cy={p2Svg.y}
+   617→   617→                  label="P2"
+   618→   618→                  valX={x2}
+   619→   619→                  valY={y2}
+   620→   620→                  onPointerDown={(e) => onPointerDownControl(e, "p2")}
+   621→   621→                  onPointerMove={onPointerMoveControl}
+   622→   622→                  onPointerUp={onPointerUpControl}
+   623→   623→                  onKeyDown={(e) => onKeyDownControl(e, "p2")}
+   624→   624→                />
+   625→   625→
+   626→   626→                {/* Axis labels */}
+   627→   627→                <text
+   628→   628→                  x={VB / 2}
+   629→   629→                  y={VB + 20}
+   630→   630→                  textAnchor="middle"
+   631→   631→                  className="fill-muted-foreground"
+   632→   632→                  fontSize="10"
+   633→   633→                >
+   634→   634→                  time →
+   635→   635→                </text>
+   636→   636→                <text
+   637→   637→                  x={-16}
+   638→   638→                  y={VB / 2}
+   639→   639→                  textAnchor="middle"
+   640→   640→                  className="fill-muted-foreground"
+   641→   641→                  fontSize="10"
+   642→   642→                  transform={`rotate(-90 -16 ${VB / 2})`}
+   643→   643→                >
+   644→   644→                  progress →
+   645→   645→                </text>
+   646→   646→              </svg>
+   647→   647→            </div>
+   648→   648→
+   649→   649→            <p className="mt-1 text-center text-[10px] text-muted-foreground">
+   650→   650→              Drag P1/P2 · focus a point & use arrow keys (Shift = 0.1)
+   651→   651→            </p>
+   652→   652→          </div>
+   653→   653→
+   654→   654→          {/* Numeric inputs + sliders */}
+   655→   655→          <div className="space-y-3 rounded-xl border border-border bg-card p-4">
+   656→   656→            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+   657→   657→              Control Points
+   658→   658→            </span>
+   659→   659→            <div className="grid grid-cols-2 gap-3">
+   660→   660→              {INPUTS.map(({ key, label, min, max }) => {
+   661→   661→                const value = vals[key];
+   662→   662→                return (
+   663→   663→                  <div key={key} className="space-y-1.5">
+   664→   664→                    <div className="flex items-center justify-between gap-2">
+   665→   665→                      <label
+   666→   666→                        htmlFor={`bezier-${key}`}
+   667→   667→                        className="font-mono text-xs text-muted-foreground"
+   668→   668→                      >
+   669→   669→                        {label}
+   670→   670→                      </label>
+   671→   671→                      <Input
+   672→   672→                        id={`bezier-${key}`}
+   673→   673→                        type="number"
+   674→   674→                        step={0.01}
+   675→   675→                        min={min}
+   676→   676→                        max={max}
+   677→   677→                        defaultValue={value.toFixed(2)}
+   678→   678→                        key={`${key}-${value.toFixed(3)}`}
+   679→   679→                        onBlur={(e) => {
+   680→   680→                          const num = parseFloat(e.target.value);
+   681→   681→                          const clamped = Number.isNaN(num)
+   682→   682→                            ? 0
+   683→   683→                            : clamp(num, min, max);
+   684→   684→                          setVal(key, clamped);
+   685→   685→                        }}
+   686→   686→                        className="h-7 w-20 text-right font-mono text-xs"
+   687→   687→                      />
+   688→   688→                    </div>
+   689→   689→                    <Slider
+   690→   690→                      value={[value]}
+   691→   691→                      min={min}
+   692→   692→                      max={max}
+   693→   693→                      step={0.01}
+   694→   694→                      onValueChange={(v) => setVal(key, v[0])}
+   695→   695→                      aria-label={`${label} value`}
+   696→   696→                    />
+   697→   697→                  </div>
+   698→   698→                );
+   699→   699→              })}
+   700→   700→            </div>
+   701→   701→          </div>
+   702→   702→
+   703→   703→          {/* Live preview */}
+   704→   704→          <div className="space-y-2 rounded-xl border border-border bg-card p-4">
+   705→   705→            <div className="flex items-center justify-between">
+   706→   706→              <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+   707→   707→                <Gauge className="size-3.5" />
+   708→   708→                Live Preview
+   709→   709→              </span>
+   710→   710→              <span className="font-mono text-xs text-primary">
+   711→   711→                {duration}ms
+   712→   712→              </span>
+   713→   713→            </div>
+   714→   714→            <div
+   715→   715→              ref={trackRef}
+   716→   716→              className="relative h-12 w-full overflow-hidden rounded-full bg-muted/40"
+   717→   717→            >
+   718→   718→              <div
+   719→   719→                className="absolute left-0 top-0 size-12 rounded-full bg-primary shadow-lg"
+   720→   720→                style={{
+   721→   721→                  transform: `translateX(${circleTranslate}px)`,
+   722→   722→                  transition: `transform ${duration}ms ${cubicBezierString}`,
+   723→   723→                }}
+   724→   724→              />
+   725→   725→            </div>
+   726→   726→            <div className="flex items-center gap-2">
+   727→   727→              <label
+   728→   728→                htmlFor="bezier-duration"
+   729→   729→                className="shrink-0 text-xs text-muted-foreground"
+   730→   730→              >
+   731→   731→                Duration
+   732→   732→              </label>
+   733→   733→              <input
+   734→   734→                id="bezier-duration"
+   735→   735→                type="range"
+   736→   736→                min={100}
+   737→   737→                max={5000}
+   738→   738→                step={100}
+   739→   739→                value={duration}
+   740→   740→                onChange={(e) =>
+   741→   741→                  setDuration(parseInt(e.target.value, 10))
+   742→   742→                }
+   743→   743→                className="flex-1 cursor-pointer accent-primary"
+   744→   744→              />
+   745→   745→              <Input
+   746→   746→                type="number"
+   747→   747→                min={100}
+   748→   748→                max={5000}
+   749→   749→                step={100}
+   750→   750→                value={duration}
+   751→   751→                onChange={(e) => {
+   752→   752→                  const n = parseInt(e.target.value, 10);
+   753→   753→                  if (!Number.isNaN(n)) setDuration(clamp(n, 100, 5000));
+   754→   754→                }}
+   755→   755→                className="h-7 w-20 text-right font-mono text-xs"
+   756→   756→              />
+   757→   757→            </div>
+   758→   758→          </div>
+   759→   759→        </div>
+   760→   760→
+   761→   761→        {/* ═══ RIGHT: preset gallery + CSS output ═══ */}
+   762→   762→        <div className="space-y-4">
+   763→   763→          {/* Preset gallery */}
+   764→   764→          <div className="rounded-xl border border-border bg-card p-4">
+   765→   765→            <div className="mb-2 flex items-center justify-between">
+   766→   766→              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+   767→   767→                Presets
+   768→   768→              </span>
+   769→   769→              <span className="text-[10px] text-muted-foreground">
+   770→   770→                {PRESETS.length} easings
+   771→   771→              </span>
+   772→   772→            </div>
+   773→   773→            <div className="max-h-72 grid grid-cols-2 gap-2 overflow-y-auto pr-1 sm:grid-cols-3">
+   774→   774→              {PRESETS.map((p) => {
+   775→   775→                const active = isPresetActive(p);
+   776→   776→                return (
+   777→   777→                  <button
+   778→   778→                    key={p.name}
+   779→   779→                    type="button"
+   780→   780→                    onClick={() =>
+   781→   781→                      setVals({ x1: p.x1, y1: p.y1, x2: p.x2, y2: p.y2 })
+   782→   782→                    }
+   783→   783→                    title={
+   784→   784→                      p.approx
+   785→   785→                        ? `${p.name} (approximate) — cubic-bezier(${fmt(p.x1)}, ${fmt(p.y1)}, ${fmt(p.x2)}, ${fmt(p.y2)})`
+   786→   786→                        : `${p.name} — cubic-bezier(${fmt(p.x1)}, ${fmt(p.y1)}, ${fmt(p.x2)}, ${fmt(p.y2)})`
+   787→   787→                    }
+   788→   788→                    className={cn(
+   789→   789→                      "flex cursor-pointer flex-col items-center gap-1 rounded-lg border p-2 text-xs transition-all",
+   790→   790→                      active
+   791→   791→                        ? "border-primary bg-primary/10 text-primary"
+   792→   792→                        : "border-border/50 text-muted-foreground hover:border-primary/40 hover:bg-muted/40",
+   793→   793→                    )}
+   794→   794→                  >
+   795→   795→                    <MiniCurve x1={p.x1} y1={p.y1} x2={p.x2} y2={p.y2} />
+   796→   796→                    <span className="text-center font-medium leading-tight">
+   797→   797→                      {p.name}
+   798→   798→                    </span>
+   799→   799→                    {p.approx ? (
+   800→   800→                      <span className="text-[9px] opacity-70">approx</span>
+   801→   801→                    ) : null}
+   802→   802→                  </button>
+   803→   803→                );
+   804→   804→              })}
+   805→   805→            </div>
+   806→   806→          </div>
+   807→   807→
+   808→   808→          {/* Generated CSS output */}
+   809→   809→          <div className="space-y-2 rounded-xl border border-border bg-card p-4">
+   810→   810→            <div className="flex items-center justify-between">
+   811→   811→              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+   812→   812→                Generated CSS
+   813→   813→              </span>
+   814→   814→              <button
+   815→   815→                type="button"
+   816→   816→                onClick={handleCopy}
+   817→   817→                className={cn(
+   818→   818→                  "flex cursor-pointer items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-medium transition-all",
+   819→   819→                  copied
+   820→   820→                    ? "bg-emerald-500/15 text-emerald-500"
+   821→   821→                    : "bg-primary/10 text-primary hover:bg-primary/20",
+   822→   822→                )}
+   823→   823→              >
+   824→   824→                {copied ? (
+   825→   825→                  <Check className="size-3.5" />
+   826→   826→                ) : (
+   827→   827→                  <Copy className="size-3.5" />
+   828→   828→                )}
+   829→   829→                {copied ? "Copied!" : "Copy"}
+   830→   830→              </button>
+   831→   831→            </div>
+   832→   832→            <pre className="overflow-x-auto rounded-lg border border-border/40 bg-muted/30 p-3 font-mono text-xs text-foreground/80">
+   833→   833→              <code>{cssString}</code>
+   834→   834→            </pre>
+   835→   835→            <p className="text-[10px] text-muted-foreground">
+   836→   836→              Use inline:{" "}
+   837→   837→              <code className="font-mono text-foreground/70">
+   838→   838→                {cubicBezierString}
+   839→   839→              </code>
+   840→   840→            </p>
+   841→   841→          </div>
+   842→   842→        </div>
+   843→   843→      </div>
+   844→   844→    </div>
+   845→   845→  );
+   846→   846→}
+   847→   847→

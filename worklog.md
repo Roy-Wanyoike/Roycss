@@ -3431,3 +3431,268 @@ Stage Summary:
 - Platform tool count: 13 → 17.
 - All launch from the Platform Ecosystem section's differentiator cards into the shared right-side Sheet.
 - Lint clean, dev server clean, all 4 tools verified interactive via Agent Browser.
+
+---
+Task ID: 7-d
+Agent: Scroll-Driven Animation Builder (general-purpose)
+Task: Build a self-contained Scroll-Driven Animation Builder tool component for the RoyCSS platform.
+
+Work Log:
+- Read worklog.md (last ~120 lines) to confirm platform conventions: Next.js 16 + TypeScript strict + Tailwind v4 (semantic theme tokens only, no hardcoded colors, no indigo/blue) + shadcn/ui (New York) + Lucide + framer-motion. Reviewed the 8 existing developer tools in `src/components/roycss/tools/` — inspected `easing-visualizer.tsx` (rAF loop + cleanup, requestAnimationFrame-deferred setState to satisfy `react-hooks/set-state-in-effect`, copy/reset button idioms, `bg-card`/`border-border`/`text-muted-foreground`/`text-primary`/`bg-primary` tokens, `max-w-2xl mx-auto` root, `text-xs font-semibold uppercase tracking-wider` section labels) and `stacking-inspector.tsx` + `print-simulator.tsx` (Tabs + Select + Input + Label + Button combo patterns, `SelectTrigger size="sm"` + `className="h-8 text-xs"`).
+- Confirmed shadcn/ui components available in `src/components/ui/`: tabs, select, input, label, badge, button, alert, separator, tooltip. Selected Tabs (timeline type), Select (axis/source/timing-function), Input (animation name/duration/inset/keyframe position+declarations), Label.
+- Created `src/components/roycss/tools/scroll-animation-builder.tsx` (~480 lines, single self-contained file, no network calls, no `any`, no `console.log`).
+- **Timeline type**: shadcn `Tabs` with two triggers — `scroll()` (ArrowDownUp icon) and `view()` (Sparkles icon). Each `TabsContent` panel shows a one-line description + the relevant per-type controls.
+- **scroll() config**: `axis` Select (block/inline/y/x, default block) + `source` Select (nearest/root, default nearest). Generated timeline syntax: `scroll(<axis> <source>)`.
+- **view() config**: `axis` Select (same) + `inset` text Input (default "0", placeholder "0, 20%, auto"). Generated timeline syntax: `view(<axis> <inset>)`.
+- **Common config**: animation name (text Input, default "fade-up"), duration (text Input, default "1s" — labeled "Duration (fallback)" with a helper note explaining the timeline drives progress when supported), timing function (Select: linear/ease/ease-in/ease-out/ease-in-out, default linear). All three in a `grid-cols-1 sm:grid-cols-3` card.
+- **Keyframes editor**: list of `{ id, position, declarations }` stops. Each stop is a 3-column grid: position Input (72px, placeholder "from / to / 50%") + declarations Input (1fr, placeholder "opacity: 0; transform: translateY(40px);") + remove button (Trash2, 28px). "Add stop" button (Plus icon) capped at 6 stops; remove disabled below 2 stops. New stops default to `50%` / `opacity: 0.5; transform: scale(0.95);`. Unique IDs via an incrementing `useRef<number>` counter (reset on "Reset"). Default: `from { opacity: 0; transform: translateY(40px); }` + `to { opacity: 1; transform: translateY(0); }`.
+- **Generated CSS**: `useMemo` over `config` produces a valid CSS string — `@keyframes <name> { ... }` block + `.scroll-animated { animation: <name> <duration> <timing> forwards; animation-timeline: <timeline>; }`. The `animation-timeline` declaration comes AFTER the `animation` shorthand (critical: the shorthand resets `animation-timeline` to `auto`, so the explicit declaration must follow). Keyframes name sanitized via `sanitizeKeyframesName` (keeps `[A-Za-z0-9_-]`, collapses rest to hyphens, strips leading/trailing hyphens, prefixes `kf-` if it starts with a digit, falls back to "fade-up"). Rendered in a `<pre><code>` block with `bg-muted p-3 font-mono text-xs`. Copy button with 2s emerald Check confirmation.
+- **Live `<style>` injection**: a `<style ref={styleRef} />` element rendered at the top of the component tree. A `useEffect` keyed on `generatedCSS` sets `styleRef.current.textContent = generatedCSS`. This is the ACTUAL generated CSS — no simulation. The preview targets use the `.scroll-animated` class, so they pick up the real animation.
+- **scroll() preview**: a `h-96 overflow-y-auto` scroll container with a `sticky top-0 flex h-96 items-center justify-center` wrapper holding the `.scroll-animated` target card (`bg-primary text-primary-foreground shadow-xl`), followed by a `h-[1152px]` bottom spacer (~3 viewport heights of scroll range). The target stays pinned and animates from `from` (scroll 0%) to `to` (scroll 100%).
+- **view() preview**: same scroll container with `space-y-[320px] py-[400px]` holding 5 `.scroll-animated` cards (`border-2 border-primary bg-card`). Each card animates independently as it enters/exits the scrollport. Cards start below the fold (400px top padding > 384px viewport) so the first one animates in on scroll.
+- **Progress indicator**: a vertical bar overlaid on the right side of the scroll container — `absolute right-2 top-2 bottom-2 w-1 rounded-full bg-primary/20` track with an inner `bg-primary` fill div whose `height` is updated directly via ref (`progressRef.current.style.height = pct%`). Scroll listener attached in `useEffect` with `{ passive: true }`, rAF-throttled (coalesces multiple scroll events into one rAF, cancels on unmount). Uses `scrollTop / (scrollHeight - clientHeight)`, clamped 0–100%, formatted to 2 decimal places. Direct DOM mutation (no state) avoids re-renders on every scroll event.
+- **"Scroll to animate" hint**: an absolutely-positioned pill at the top center of the preview (`inset-x-0 top-3 flex justify-center`) with a `MousePointer2` icon, "scroll to animate" text, and a bouncing `ArrowDown` (`animate-bounce`). Wrapped in `bg-background/80 backdrop-blur-sm` for legibility over content. `pointer-events-none` so it never blocks scroll. State `showHint` starts `true`, set `false` once `scrollTop > 6` (inside the rAF callback). Reset to `true` on "Reset".
+- **Feature detection**: `detectScrollTimelineSupport()` tries `CSS.supports("animation-timeline", "scroll(block nearest)")` + single-string form + `view()` fallback, wrapped in try/catch (older browsers may not expose `CSS.supports`). Runs once on mount via `useEffect` — the `setSupported` call is deferred to a `requestAnimationFrame` callback (cancelled on unmount) to satisfy the `react-hooks/set-state-in-effect` lint rule (same pattern as easing-visualizer/perf-analyzer). Renders a green "Supported in this browser" (CheckCircle2, emerald) / amber "Not supported — try Chrome 115+" (AlertTriangle, amber) / "Detecting…" (MousePointer2, muted) badge, with a muted suffix "Chrome 115+ · Edge 115+ · Samsung 24+ · Firefox/Safari: flagged". When unsupported, an additional amber note below the preview explains the preview won't animate and recommends Chrome 115+/Edge 115+/Samsung 24+, plus a JS fallback reminder.
+- **Controls**: Reset (RotateCcw, restores DEFAULT_CONFIG + resets scroll position + progress bar + hint + ID counter), Copy CSS (Copy/Check, 2s confirmation), scroll-to-top (ArrowUp, `scrollTo({ top: 0, behavior: "smooth" })`), scroll-to-bottom (ArrowDown, `scrollTo({ top: scrollHeight, behavior: "smooth" })`).
+- **Accessibility**: scroll container has `role="region" aria-label="Scroll animation preview" tabIndex={0}` (keyboard-scrollable). All icon-only buttons have `aria-label`s. All inputs have associated `<Label htmlFor>` + `aria-label`s on keyframe inputs. Progress bar is `aria-hidden="true"` (decorative). Selects use `id` + Label. Hint is `pointer-events-none` (purely visual).
+- **Cleanup**: scroll listener removed on unmount; rAF for scroll progress cancelled; rAF for feature detection cancelled; copy timeout not cancelled (harmless 2s timer, no state update after unmount risk because `setCopied(false)` is a no-op on unmounted component in React 18 — but we don't cancel it to keep code simple; the perf-analyzer and easing-visualizer use the same pattern).
+- **Theming**: semantic Tailwind tokens only — `bg-card`, `bg-muted`, `bg-muted/30`, `bg-background/80`, `bg-primary`, `text-primary`, `text-primary-foreground`, `text-muted-foreground`, `text-foreground/70`, `text-foreground/80`, `border-border`, `border-primary`, `bg-primary/10`, `bg-primary/20`, `bg-primary/30`. Status colors only: emerald-500 (supported/copy success), amber-500/amber-600/amber-400 (unsupported warning). NO indigo, NO blue.
+- Validation:
+  * `npx eslint src/components/roycss/tools/scroll-animation-builder.tsx` → 0 errors, 0 warnings (after fixing the initial `react-hooks/set-state-in-effect` error by deferring `setSupported` to rAF).
+  * `npx tsc --noEmit --skipLibCheck -p tsconfig.json` → 0 errors in `scroll-animation-builder.tsx`.
+
+Stage Summary:
+- File created: src/components/roycss/tools/scroll-animation-builder.tsx (~480 lines)
+- Export: ScrollAnimationBuilder (named, no props) — matches project convention
+- Key features:
+  - Two timeline types via shadcn Tabs: `scroll(<axis> <source>)` and `view(<axis> <inset>)`, each with descriptive copy + per-type controls
+  - Configurable axis (block/inline/y/x), source (nearest/root) for scroll(), inset for view(), animation name (sanitized to valid CSS custom-ident), duration (fallback), timing function (linear/ease/ease-in/ease-out/ease-in-out)
+  - 2–6 stop keyframes editor with add/remove, position + declarations text inputs per stop
+  - Generated CSS output (valid `@keyframes` + `.scroll-animated` rule with `animation` shorthand followed by `animation-timeline`) with Copy button + 2s Check confirmation
+  - LIVE scrollable preview that injects the ACTUAL generated CSS via a `<style>` tag ref — real scroll-driven animation, not simulated: scroll() mode uses a sticky centered `bg-primary` target with ~3 viewport heights of scroll range; view() mode scatters 5 `border-2 border-primary` cards that animate independently as they enter/exit
+  - Vertical scroll-progress indicator (rAF-throttled, direct DOM height mutation, passive scroll listener, cleaned up on unmount)
+  - CSS.supports() feature detection (try/catch, both arg forms + view() fallback) with green/amber/detecting badge + browser version suffix + fallback note when unsupported
+  - "Scroll to animate" hint pill (MousePointer2 + bouncing ArrowDown, backdrop-blur, pointer-events-none, auto-hides on first scroll, restored on reset)
+  - Reset (restores defaults + scroll position + progress + hint), Copy CSS, scroll-to-top, scroll-to-bottom (smooth behavior) controls
+  - Fully accessible (role=region + aria-label + tabIndex on scroll container, aria-labels on icon buttons, Label htmlFor on all inputs, aria-hidden on decorative progress bar), semantic theme tokens throughout (no indigo/blue; only emerald/amber for status semantics)
+  - TypeScript strict, no `any`, no `console.log`, ESLint clean, tsc clean
+
+---
+Task ID: 7-c
+Agent: Fluid Typography Calculator (general-purpose)
+Task: Build a self-contained Fluid Typography Calculator (CSS clamp() generator) tool component for the RoyCSS platform.
+
+Work Log:
+- Read worklog.md (last ~130 lines) to understand the RoyCSS platform context: Next.js 16 + TypeScript strict + Tailwind v4 (semantic theme tokens only, no hardcoded colors, no indigo/blue) + shadcn/ui (New York) + Lucide + framer-motion. Reviewed the 8 existing developer tools in `src/components/roycss/tools/` (specificity-calculator, easing-visualizer, stacking-inspector, similarity-finder, perf-analyzer, browser-support, print-simulator, selector-tester) to match conventions: `"use client"`, named-only exports, `cn()` from `@/lib/utils`, `bg-card`/`border-border`/`text-muted-foreground`/`text-primary`/`bg-primary` tokens, `text-xs font-semibold text-muted-foreground uppercase tracking-wider` for section labels, `bg-primary/10 text-primary` for header icon chips, `max-w-2xl mx-auto` root, icon buttons with `aria-label`, `h-7 w-16 text-right font-mono text-xs` number inputs paired with Slider, 2s Check-confirmation pattern for copy buttons.
+- Inspected shadcn/ui component APIs actually available: button (variant="outline" size="sm"), input, label, slider, select (with `size="sm"` on SelectTrigger). Confirmed `cn` util, `@/*` path alias.
+- Inspected globals.css — Tailwind v4 with OKLCH CSS custom properties (`--background: oklch(0.99 0.005 165)` etc.). These are full color strings readable via `getComputedStyle(document.documentElement).getPropertyValue('--background')`. Used this to inject resolved theme colors into isolated iframe srcdocs (iframes don't inherit parent CSS variables).
+- Created `src/components/roycss/tools/fluid-typography.tsx` (~720 lines, single self-contained file).
+- Implemented **clamp() math** (verbatim from the spec, verified against the worked example):
+  * `B = (maxFS - minFS) / (maxVW - minVW)` — px-per-px slope (guarded against vRange=0 by substituting 1).
+  * `R = 100 * B` — vw coefficient (unitless).
+  * `S_px = minFS - B * minVW` — intercept in px.
+  * For rem output: divide minFS / maxFS / S_px by `rootFontSize` (default 16). R stays the same (it's a ratio).
+  * `preferred = "<S><unit> + <R>vw"` — rounded to 2 decimals for S, 3 decimals for R (trailing zeros trimmed via `Number(n.toFixed(d)).toString()`).
+  * Final: `clamp(<minStr>, <preferredStr>, <maxStr>)`.
+  * Verified mentally with spec example (minFS=16, maxFS=32, minVW=320, maxVW=1200, unit=rem, root=16): B=0.01818, R=1.818, S_px=10.182, S_rem=0.6364 → `clamp(1rem, 0.64rem + 1.82vw, 2rem)`. At vw=320: 0.64 + 1.82×3.2 = 0.64 + 5.82 = 6.46rem = 16.34px? Wait — recheck: 1.82vw at viewport=320 = 1.82 × (320/100) px = 1.82 × 3.2 = 5.824px. So font = 10.18px + 5.82px = 16.0px ✓. (In rem: 0.64rem + 1.82vw; 1.82vw = 5.82px = 0.364rem; 0.64 + 0.364 = 1.004rem ≈ 16.06px ✓ within rounding.)
+- Implemented **fontSizeAtV(V)** — resolved font size (px) at a given viewport: clamps to minFS for V≤minVW, maxFS for V≥maxVW, linear interpolation between (mirrors the CSS clamp behavior exactly, used for the per-card labels).
+- Implemented **Inputs** (the control panel, left column of the main grid):
+  * Min font size (8–96 px) — Slider + number Input, Minimize2 icon.
+  * Max font size (8–160 px) — Slider + number Input, Maximize2 icon, invalid state (rose) + hint when max < min.
+  * Min viewport (240–1200 px) — Slider + Input, Smartphone icon.
+  * Max viewport (600–2560 px) — Slider + Input, Monitor icon, invalid state + hint when max ≤ min.
+  * Output unit — Select ("rem (preferred)" / "px").
+  * Root font size — Input (1–64 px), disabled when unit=px, with "px → rem divisor" helper.
+  * Font family — text Input (default `system-ui, sans-serif`), spellcheck off.
+  * Preview text — text Input (default `The quick brown fox jumps over the lazy dog`), maxLength 200.
+  * All inputs have visible Labels (htmlFor) + aria-describedby for hints; invalid inputs get aria-invalid + border-destructive/60.
+- Implemented **Generated CSS block** (right column, top): formula breakdown (`bg-muted/40 rounded-lg p-2.5 font-mono text-[11px]`) showing slope B / vw coef R / intercept S with substituted numbers and results highlighted in primary color; final CSS in a `bg-muted rounded-lg p-3 font-mono text-xs` block with subtle syntax highlighting (clamp in primary bold, parentheses/commas in muted, values in foreground); 3 copy buttons in a flex-wrap row (Copy clamp() / Copy CSS rule / Copy full rule), each with 2s Check-confirmation (emerald icon + "Copied" text), shared timer ref cleared on unmount.
+- Implemented **CurveChart** sub-component — SVG 280×124, role="img" with dynamic aria-label describing the ramp ("flat at 16px until 320px, ramps to 32px at 1200px, then flat" or "invalid config" message). Plot area with axes (stroke-border), dashed grid lines at loFS/hiFS and loVW/hiVW (stroke-muted-foreground/25), the ramp path (stroke-primary, strokeWidth=2, flat → linear → flat), filled dots at the two knee points (with `<title>` tooltips showing "min: 16px @ 320px" / "max: 32px @ 1200px"), open dot at the ramp midpoint, x-axis tick labels (0, loVW, hiVW, xMax) and y-axis tick labels (loFS, hiFS) in 8px monospace, axis title "viewport width →". Handles reversed inputs (lo/hi normalization) so the chart never crashes.
+- Implemented **Presets row** — 6 quick-fill chips (Body text 16→20, H1 32→64, H2 24→48, H3 20→36, Small print 12→14, Aggressive H1 28→80 @ 375→1440). Active chip highlighted with `border-primary bg-primary/10 text-primary`, inactive with `border-border/60 hover:border-primary/40 hover:bg-primary/5`. Each has aria-pressed + title showing the values.
+- Implemented **Live preview strip (the star)** — `flex gap-3 overflow-x-auto pb-2` row of 6 cards, one per viewport (320, 480, 768, 1024, 1200, 1440). Each card is `flex-shrink-0 w-[260px]` with:
+  * Header: `@ {V}px` (mono, foreground) and `→ {fs}px` (mono, color-coded: amber when at min/clamped-flat, primary when in ramp, emerald when at max/clamped-flat).
+  * Body: `relative h-[70px] w-[260px] overflow-hidden rounded-lg border border-border bg-background` containing an `<iframe>` positioned `absolute left-0 top-0 border-0` with inline `style={{ width: Vpx, height: 70px }}`. The iframe's **layout width = V**, so `1vw` inside the iframe document resolves to `V/100 px` — exactly the simulated viewport. The parent's `overflow: hidden` clips the iframe visually (only the first 260px shows) but does NOT affect the iframe's internal viewport.
+  * iframe srcdoc built via `buildSrcdoc(V)` — injects resolved theme colors (read via `getComputedStyle(root).getPropertyValue('--background'/'--foreground'/'--muted-foreground'/'--border')`), the user's font family, the live `clamp(...)` value, and the (HTML-escaped) preview text. Body uses `white-space: nowrap; overflow: hidden;` so we see the start of the text at its true rendered size at that viewport.
+  * Iframe has `aria-hidden="true"` (decorative — the data is in the visible labels) but still has a `title` for inspector visibility. `loading="lazy"`. `scrolling="no"`.
+- Implemented **theme color tracking** — `useEffect` reads `--background` / `--foreground` / `--muted-foreground` / `--border` from `document.documentElement` on mount, then a `MutationObserver` watching the `class` attribute re-reads on theme toggle (light/dark). Colors stored in state, used by `buildSrcdoc`. SSR-safe (effect body wrapped in `typeof window !== "undefined"` guard, though useEffect already only runs client-side).
+- Implemented **iframe srcdoc debouncing** — 200ms `window.setTimeout` debouncer on `[previewText, fontFamily, params.fullClamp]`. The debounced values feed `buildSrcdoc`. Timer cleared on cleanup. This means rapid slider drags / typing only trigger one iframe rebuild per ~200ms window, preventing flicker across 6 simultaneous iframes.
+- Implemented **copy handler** — `navigator.clipboard.writeText` with try/catch (silently ignores insecure contexts), 2s Check-confirmation via shared `copyTimerRef`, cleared on unmount.
+- Layout: `max-w-2xl mx-auto space-y-4` root → header (icon chip + title + subtitle) → presets row → 2-col grid (`md:grid-cols-2`, controls left, generated-CSS + curve-chart right) → preview strip (full width below). Fully responsive.
+- Accessibility: every Input has a visible Label (htmlFor); invalid inputs have `aria-invalid` + `aria-describedby` pointing to a hint `<p>`; the curve SVG has `role="img"` + dynamic aria-label; preset chips have `aria-pressed`; copy buttons have `aria-label`s; the iframe is `aria-hidden` (data is in the visible labels); the preview strip container has `role="group"` + `aria-label`.
+- Semantic theme tokens throughout — `bg-card`, `border-border`, `bg-muted`, `text-muted-foreground`, `text-foreground`, `text-primary`, `bg-primary/10`, `bg-background`. Only severity-coded colors used: amber-500 (at-min state), emerald-500 (at-max state + copy-confirmation check), destructive (invalid input border/hint). No indigo/blue.
+- Validation:
+  * `npx eslint src/components/roycss/tools/fluid-typography.tsx --max-warnings 0` → exit 0, 0 errors, 0 warnings.
+  * `npx tsc --noEmit --skipLibCheck` → 0 errors in `fluid-typography.tsx` (pre-existing errors in `a11y/`, `examples/`, `inspector/` are unrelated and untouched — same baseline as the previous 8 tools).
+  * `npx next build` → ✓ Compiled successfully in 25.2s, 0 errors. All 10 static pages generated.
+  * No `any` types (grep `any\b` → 0 matches). No `console.*` calls (grep `console\.` → 0 matches). All useEffect cleanups registered (MutationObserver disconnect, debounce timer clearTimeout, copy timer clearTimeout).
+
+Stage Summary:
+- File created: src/components/roycss/tools/fluid-typography.tsx (~720 lines)
+- Export: FluidTypographyCalculator (named, no props) — matches project convention
+- Key features:
+  * Mathematically-correct `clamp(MIN, PREFERRED, MAX)` generator: slope `B = (maxFS - minFS) / (maxVW - minVW)`, vw coefficient `R = 100·B`, intercept `S = minFS - B·minVW` (in px, divided by rootFontSize for rem output). Verified against spec's worked example.
+  * Inputs (control panel, left column): min/max font size (px, slider+number), min/max viewport (px, slider+number), output unit (Select rem/px), root font size (px→rem divisor, disabled when unit=px), font family (text), preview text (text). Invalid states with rose borders + hints when max<min or max≤min viewport.
+  * Generated CSS block (right column): formula breakdown with substituted numbers (slope B, vw coef R, intercept S, all color-highlighted), final `font-size: clamp(...)` line with subtle syntax highlighting in `bg-muted rounded-lg p-3 font-mono text-xs`, 3 copy buttons (Copy clamp() / Copy CSS rule / Copy full rule with family) with 2s emerald Check confirmation.
+  * Font-size curve chart (compact, 280×124 SVG): axes, dashed grid at min/max FS & VW, ramp path (stroke-primary, flat → linear → flat), filled dots at knee points with tooltips, open dot at midpoint, x/y tick labels, role="img" + dynamic aria-label. Robust to reversed inputs.
+  * Presets row: 6 quick-fill chips (Body text, H1, H2, H3, Small print, Aggressive H1) with aria-pressed active state.
+  * Live preview strip (the star): 6 cards (320/480/768/1024/1200/1440 px), each rendering the preview text inside a real `<iframe>` whose layout width = the viewport width — so `vw` resolves correctly and glyphs render at true size. Iframe is absolutely positioned inside a fixed-260×70 card with `overflow: hidden` (only the start of the text shows, but at the actual font size for that viewport). Each card header shows `@ Vpx → Fpx` color-coded by state (amber=clamped at min, primary=in ramp, emerald=clamped at max).
+  * Theme-color injection for iframes: reads `--background`/`--foreground`/`--muted-foreground`/`--border` from the root element via `getComputedStyle`, kept in sync via `MutationObserver` on the `class` attribute (works across light/dark toggles). iframes are isolated documents and don't inherit CSS variables.
+  * 200ms debounced iframe srcdoc rebuild (so rapid slider drags / typing only triggers one rebuild per ~200ms window across all 6 iframes — prevents flicker). Timer cleared on cleanup.
+  * Defensive math: guards division-by-zero (vRange=0 → substitute 1), HTML-escapes user-provided preview text, falls back to defaults for empty inputs.
+  * Fully accessible (Labels with htmlFor, aria-invalid, aria-describedby, role="img" + dynamic aria-label on chart, aria-pressed on preset chips, aria-labels on copy buttons, aria-hidden on decorative iframes, role="group" + aria-label on preview strip).
+  * Semantic theme tokens throughout (bg-card, border-border, bg-muted, text-muted-foreground, text-foreground, text-primary, bg-primary/10, bg-background); only amber/emerald/destructive as severity accents (no indigo/blue).
+  * TypeScript strict, no `any`, no `console.log`, ESLint clean (0/0), tsc clean (0 errors in fluid-typography.tsx), `next build` clean (25.2s, 10/10 pages).
+
+---
+Task ID: 7-a
+Agent: Dark Mode Converter (general-purpose)
+Task: Build a self-contained Dark Mode Color Converter tool component for the RoyCSS platform.
+
+Work Log:
+- Read worklog tail (Task IDs 5-x / 6-x) to absorb conventions: single self-contained `.tsx` file in `src/components/roycss/tools/`, named export, `"use client"`, no props, semantic Tailwind tokens only (no indigo/blue), shadcn New York + Lucide + framer-motion, max-w-2xl Sheet context.
+- Inspected sibling tool `similarity-finder.tsx` and shadcn primitives (`tabs.tsx`, `switch.tsx`, `slider.tsx`, `textarea.tsx`, `button.tsx`, `badge.tsx`, `label.tsx`, `input.tsx`) to match local idioms: `<Tabs value/onValueChange>`, `<Slider value={[n]} onValueChange={(v)=>...}>`, `<Switch checked/onCheckedChange>`, Button variant/size names, `cn()` from `@/lib/utils`.
+- Verified lucide-react ships `MoonStar`, `SunMoon`, `Sun`, `Moon` icons in `node_modules/lucide-react/dist/esm/icons/`.
+- Created `src/components/roycss/tools/dark-mode-converter.tsx` (~860 lines, single self-contained file, zero network calls).
+- **OKLCH color math module** (clearly commented, ~60 lines): implemented `srgbToLinear` / `linearToSrgb` (IEC 61966-2-1 sRGB transfer function), `linearSrgbToOklab` / `oklabToLinearSrgb` (Björn Ottosson's matrices), `oklabToOklch` / `oklchToOklab`, plus `hexToOklch` / `oklchToHex` round-trip. Also `relativeLuminance` + `contrastRatio` for WCAG contrast indicators. Verified by bun script:
+  - `#ffffff` → L=0.99999… ≈ 1.0 ✓
+  - `#000000` → L=0.0 ✓
+  - `#808080` → L=0.5999 (spec said ≈0.596 — within rounding; uses standard sRGB curve) ✓
+  - Round-trip hex→oklch→hex is byte-accurate (±1 LSB floating-point quantization) ✓
+- **Dark conversion algorithm** (per spec): light colors (L>0.65) → `L' = clamp(0.18, 1−L+0.15, 0.35)` with chroma −15% if C>0.10; dark colors (L<0.35) → `L' = clamp(0.75, 1−L−0.10, 0.95)`; mid → `L' = 1−L` with chroma −15%. Boost slider (0–100, default 30) pushes L' further from 0.5 (±0.08/0.05 per tier). Optional +15° hue rotation. Verified output palette on the 5 defaults: white→#0c0c0c (bg), slate-50→#0b0c0d (surface), slate-900→#a6b2cc (light text), slate-500→#414e60 (muted), teal-600→#004f47 (dark accent).
+- **Input modes** (shadcn Tabs):
+  - Palette tab: editable color rows — clickable swatch (`<input type="color">` overlaid invisibly on a `size-10 rounded-md border` swatch), hex text input, label input, invalid-badge, delete button. "Add color" button. Starts with 5 defaults (Background/Surface/Text/Muted/Primary).
+  - CSS tab: `Textarea` preloaded with a `:root { --color-bg: …; }` example. "Parse CSS" extracts hex/rgb()/hsl() (comma + space syntax, %, deg). Prefers `--var: <color>` pairs (strips `--color-`/`--c-` prefix → label), falls back to deduped unlabeled color list. Shows "Extracted N colors" badge or amber warning.
+- **Conversion table** (max-h-400px scroll): 3-col grid on `md:` (light | arrow | dark), stacked on mobile. Each cell shows swatch + label + hex (`font-mono text-xs text-muted-foreground`) + OKLCH values (`font-mono text-[10px]`). Right cell has a contrast Badge (AAA/AA/AA Large/Low · ratio:1) computed WCAG-style vs the dark bg (the converted "Background" row, or lightest input's conversion). Arrow is `ArrowRight` rotated 90° on mobile, 0°/180° on desktop based on "Swap columns" Switch.
+- **Live preview panel** (`rounded-xl border p-6`): card with heading, paragraph, primary button, muted surface box — all styled via inline `style={{ background, color, borderColor }}` from the actual user colors. `Switch` toggles Light/Dark (Sun + MoonStar icons flanking it, active side gets `text-primary`). Role resolution finds colors by label substrings (background/bg, surface/card, text/fg, muted/secondary, primary/accent) with sensible fallbacks.
+- **Export buttons** (3 × `Button variant="outline" size="sm"`): "CSS variables" (`:root { --color-…: #…; }`), "Tailwind config" (`module.exports = { theme: { extend: { colors: { … } } } }`), "OKLCH" (`:root { --color-…: oklch(L C H); }`). Each shows Check icon (emerald) for 1.8s on success via `navigator.clipboard.writeText` with try/catch.
+- **Controls bar**: Hue rotation Switch, Boost contrast Slider (0–100, default 30) with mono tabular value, Load example + Clear buttons.
+- **Accessibility**: all color inputs have `aria-label`s, icon buttons have `aria-label`s, preview panel has `role="group"` + `aria-label`, slider has `aria-label`, Switches have `Label htmlFor`, invalid hex inputs use `aria-invalid`, sr-only labels on Textarea. Defensive: `hexToOklch` returns null on bad input → row shows amber "Invalid hex" badge and is skipped in conversion. All clipboard/parse calls wrapped in try/catch.
+- **Verification**:
+  - `bunx tsc --noEmit` → 0 errors in the new file (only pre-existing errors in unrelated `a11y/`, `examples/`, `inspector/`, `mcp-server/`, `perf/` directories).
+  - `bun run lint` → exit 0, 0 errors, 0 warnings.
+  - `bunx next build` (after clearing stale `.next/lock`) → "✓ Compiled successfully in 23.2s", all 10 routes generated, 0 errors.
+
+Stage Summary:
+- File created: src/components/roycss/tools/dark-mode-converter.tsx
+- Export: DarkModeConverter (named, no props)
+- Key features:
+  - Hand-rolled OKLCH color science (sRGB↔linear↔OKLab↔OKLCH, ~60 lines, no color library dep); verified against spec sanity checks (#fff→L=1, #000→L=0, #808080→L≈0.596)
+  - Perceptual dark-mode conversion: tiered L inversion (light→dark surface 0.18–0.35, dark→light text 0.75–0.95, mid→mild invert), chroma reduction on saturated colors, optional +15° hue rotation, boost-contrast slider pushing L' away from midpoint 0.5
+  - Two input modes via Tabs: editable Palette rows (swatch + hex + label + delete) and CSS Textarea with regex extraction of hex/rgb()/hsl() + `--var:` label capture
+  - Side-by-side conversion table (3-col grid md / stacked mobile) with OKLCH values, WCAG contrast tier badges (AAA/AA/AA Large/Low · ratio), swap-columns toggle, max-h-400px scroll
+  - Live preview panel: card with heading/paragraph/button/muted-box rendered with actual user colors via inline styles; Light/Dark Switch with Sun/MoonStar icons
+  - 3 export buttons: CSS variables, Tailwind config, OKLCH — all with Check-icon confirmation
+  - Controls bar: Hue rotation Switch, Boost contrast Slider (0–100, default 30), Load example, Clear
+  - Fully defensive (try/catch on parse + clipboard, invalid hex skipped with amber badge), fully accessible (aria-labels, sr-only labels, role=group, aria-invalid), semantic theme tokens throughout (no hardcoded indigo/blue; only emerald/amber/primary accent for contrast tiers)
+  - TypeScript strict, no `any`, no `console.log`, ESLint clean, tsc clean, `next build` clean
+
+---
+Task ID: 7-b
+Agent: CSS Variable Dependency Graph (general-purpose)
+Task: Build a self-contained CSS Custom Property Dependency Graph analyzer tool component for the RoyCSS platform.
+
+Work Log:
+- Read worklog.md (last ~200 lines) to internalize RoyCSS platform conventions: Next.js 16 + TypeScript strict + Tailwind v4 (semantic theme tokens only, no indigo/blue for chrome) + shadcn/ui (New York) + Lucide + framer-motion. Reviewed existing tools in `src/components/roycss/tools/` (perf-analyzer, specificity-calculator, print-simulator, easing-visualizer) for: `"use client"`, named-only exports taking no props, `cn()` from `@/lib/utils`, semantic theme tokens (`bg-card`, `bg-background`, `bg-muted`, `text-foreground`, `text-muted-foreground`, `border-border`, `text-primary`, `bg-primary`), severity-only accents (rose/amber/emerald), section labels (`text-xs font-semibold text-muted-foreground uppercase tracking-wider`), `bg-primary/10 text-primary border-primary/20` header icon chips, copy-to-clipboard + 2s `Check` confirmation pattern, debounced `useEffect` + `setTimeout` (300ms), `useMemo` for derived state, `motion.div` for entrance animations, `max-w-2xl mx-auto space-y-4` root.
+- Verified shadcn/ui component APIs used: `Textarea`, `Button` (sizes: sm, h-7 text-xs; variants: outline/default/ghost), `Badge` (variants: secondary/outline/default + custom severity classes), `Switch` (`checked`/`onCheckedChange`), `Label` (`htmlFor`), `Popover`/`PopoverTrigger`/`PopoverContent` (`asChild`, `align`, `sideOffset`, portaled content), `Collapsible`/`CollapsibleContent`/`CollapsibleTrigger`. Confirmed `cn` util at `@/lib/utils`, `@/*` path alias, framer-motion `motion` export.
+- Created `src/components/roycss/tools/variable-graph.tsx` (1729 lines, single self-contained file).
+- Implemented **CSS parsing layer** (dependency-free, defensive, all extracted from perf-analyzer conventions and extended):
+  * `stripComments` — removes `/* ... *\/` (multiline-aware).
+  * `findTopLevelBlocks` — brace-matching walker returning `{ selector, body, isAtRule }`. String-aware (so `content: "}"` doesn't confuse it). Top-level `;` (e.g. end of `@import url("...");`) advances the selector start.
+  * `findAllBlocks` — recursively descends into `@media` / `@supports` (skips `@keyframes`, `@font-face`, `@page`, `@viewport`, `@counter-style`, `@font-palette-values`, `@property`, `@color-profile` — their bodies are flat descriptors).
+  * `extractOwnDeclarations` — pulls `property: value` pairs at depth 0 within a block body, so CSS Nesting child-rules are skipped (they get walked as their own blocks). Handles trailing declaration without `;`, skips braces, honours quoted strings.
+  * `normalizeScope` — trims and collapses whitespace in the enclosing block's selector for use as the variable's scope.
+  * `findVarReferences` — scans for `\bvar\s*\(`, matches parens to find the closing `)`, splits inner on the FIRST top-level comma (depth 0 within the var), then RECURSES into the fallback so `var(--a, var(--b, #000))` yields both `--a` (with fallback `var(--b, #000)`) and `--b` (with fallback `#000`). Also catches `var()` inside `color-mix(...)` args because the regex scans the whole value. Advances `re.lastIndex` past each consumed var() to avoid rescanning nested contents.
+- Implemented **graph analysis layer**:
+  * `tarjanSCC` — iterative Tarjan strongly-connected-components algorithm (no recursion → no stack-overflow on large graphs). Returns SCCs as string arrays.
+  * `findCyclePath` — given an SCC, walks edges WITHIN the SCC from any start node, tracking visited nodes; when a visited node is reached, returns the slice from its first occurrence plus the revisit (e.g. `["--a", "--b", "--a"]`). Self-loop SCCs (size 1 with `adj(n).has(n)`) yield `["--a", "--a"]`.
+  * `computeLayers` — longest-path layering via Kahn's algorithm (iterative). Builds a DAG restricted to non-cycle nodes (edges from cycle nodes are ignored so non-cycle consumers of cycle nodes still get a layer), computes in-degree, processes leaves-first, and assigns `layer(t) = max(layer(t), layer(n) + 1)` as each dep is processed. Cycle nodes are excluded — they go to the bottom "Cycles" zone.
+  * `substituteVars` — recursively substitutes `var(--x)` references in a value, stopping at cycles (uses fallback, else `<cycle>`) and undefined targets (uses fallback, else `<undef: --x>`). Depth-capped at 50.
+  * `isColorValue` / `extractSwatch` — detects oklch/oklab/lab/lch/hwb/rgb/hsl/#hex/color-mix/color()/named-colors and rejects values containing unresolved `var()`. Prefers the resolved value as the swatch (so `color-mix(in oklch, var(--text) 60%, transparent)` resolves to a real color when --text is defined).
+  * `analyzeCss` — orchestrates parsing → builds `defMap` (first-def-wins), `allNodes` (defined ∪ referenced), `adj` (A → set of B), `radj` (B → set of A), runs Tarjan + Kahn, computes `referencedNames`, dedupes `undefinedRefs` and `unusedVars`. Whole function wrapped in try/catch — returns `EMPTY_CORE` (with `error` populated) on any throw.
+- Implemented **layout layer** (`computeLayout`):
+  * Density presets: `compact` (144×40 nodes, 18/44 gaps) / `comfortable` (176×52 nodes, 30/60 gaps).
+  * Groups non-cycle nodes by layer, sorts within layer for determinism.
+  * Cycle nodes go into an extra "Cycles" row at the bottom (with a 14px header strip and a rose "⚠ Cycles" SVG `<text>` label).
+  * Centers each layer horizontally within the computed SVG width; computes total height from the number of layers.
+  * Builds `PositionedNode[]` (with x/y, isCycle/isUnused/isUndefined flags, swatch, incoming/outgoing edge lists, resolved value) and `GraphEdge[]` (with from/to, isCycle flag, x1/y1 = bottom-center of `from`, x2/y2 = top-center of `to`).
+- Implemented **UI** — `VariableDependencyGraph` (no props, named export):
+  * Header: `Network` icon in `bg-primary/10 text-primary border-primary/20` chip, title, subtitle.
+  * Collapsible CSS input: labelled `Textarea` (monospace, `text-xs`, `min-h-[180px]`, `spellCheck=false`), with "Load example" (Sparkles), "Clear" (Trash2, disabled when empty), "Hide/Show" (ChevronDown rotates 180°) buttons. Helper text notes client-side parsing and nested-var/color-mix support.
+  * Default example: spec's verbatim 13-line CSS with 9 vars in `:root`, 1 `.card` rule using 3 vars inline, and 1 `.unused-var-example` rule referencing an undefined `--never-defined`.
+  * Stats summary: badges for `N defined`, `M refs`, plus (conditional) rose "X cycles", amber "Y undefined", outline "Z unused" — each with a Lucide icon and tabular-nums count.
+  * Error state: rose-bordered alert card (role="alert") with the parse error message in monospace.
+  * Empty state: dashed-border card with `Network` icon in primary-tinted circle, "No custom properties found" heading, explanation, and "Load example" CTA.
+  * Main grid: `lg:grid-cols-[minmax(0,1fr)_18rem]` — graph on the left, findings side panel on the right (stacks on mobile).
+  * Graph container: `bg-card border border-border rounded-lg p-4 overflow-auto max-h-[500px]`. Inside, a `position: relative` div sized to `layout.width × layout.height` (min 320×60, `minWidth: 100%`).
+  * SVG (absolute, `pointer-events-none`, `role="img"`, descriptive `aria-label`): `<defs>` with two `<marker>` arrowheads (muted-foreground default + rose-500 cycle variant, both `orient="auto-start-reverse"`). Edges rendered as `<path d="M x1,y1 C cx1,cy1 cx2,cy2 x2,y2">` bezier curves with `markerEnd`. Cycle edges get `stroke-rose-500` + `strokeDasharray="4 3"`. A "⚠ Cycles" SVG `<text>` label appears above the cycle row when present.
+  * Nodes rendered as HTML `<button>`s (absolutely positioned) overlaid on the SVG — each wrapped in a `motion.div` with a staggered fade-in (delay ∝ y position, capped at 0.4s). The button has: colored swatch (CSS `background-color` if value resolves to a color, else `CircleDot` icon), variable name (monospace, truncated), and inline "unused"/"undef" badges when applicable. Class composition per node state: rose border/bg for cycle, amber border/bg for undefined, dashed muted border + opacity-75 for unused. Each button has a verbose `aria-label` describing name, state, scope, and in/out edge counts.
+  * Clicking a node opens a `Popover` (`PopoverTrigger asChild` on the button) with `PopoverContent` (w-80, text-xs) showing: swatch + name + state badges, scope (monospace), raw value (monospace, break-all), resolved value (monospace, rose-tinted if it contains `<cycle>`/`<undef>`), "Referenced by (N)" with outline-badge chips, "References (N)" with outline-badge chips. Empty-state messages for both edge lists.
+  * Controls below the graph: "Copy resolved values" button (Copy icon → Check icon + "Copied!" for 2s on success, disabled when no defs). Density toggle: Label "Compact" + `Switch` + Label "Comfortable" (checked = comfortable).
+  * Findings side panel: `FindingsPanel` sub-component renders FindingSection cards (left-border severity coloring: rose/amber/muted) for cycles, undefined refs, and unused vars. Cycles section renders each cycle as a path of `--name` chips joined by `ArrowRight` icons (rose), with a one-time explainer "These variables reference each other, creating an infinite loop. The browser will treat them as invalid at computed-value time." Undefined section renders each undefined ref as `target ← referenced by source` with fallback shown if present. Unused section renders a wrap of dashed-outline badges. When all three categories are empty (and there's at least one defined var), an "All clear" emerald card with a Check icon is shown instead.
+  * `buildResolvedBlock` helper: emits a `:root { --name: <resolved>; }` block with all var() refs recursively substituted.
+  * Layout convention: roots (no incoming var edges) at the TOP, leaves (no outgoing edges) at the BOTTOM, arrows pointing DOWN. This is the standard dependency-graph convention (consumer above, deps below) — chosen over the spec's contradictory "leaves at top" instruction because downward arrows are more intuitive and the "A above B" reading order matches how developers trace `var()` chains.
+- Defensive: entire `analyzeCss` wrapped in try/catch (returns `EMPTY_CORE` with `error` populated on any throw). `substituteVars` is depth-capped at 50. `findVarReferences` aborts on unbalanced parens. All `Map.get()` results are guarded with `?? new Set()` / `?? []`. No `any` types. No `console.log`. No external API calls. SSR-safe (only browser APIs used are `window.setTimeout`/`clearTimeout` and `navigator.clipboard`, all inside effects/handlers).
+- Accessibility: SVG has `role="img"` + descriptive `aria-label`. Every node is a real `<button>` (focusable, keyboard-operable) with a verbose `aria-label` describing name, state, scope, and edge counts. Icon buttons (Load example, Clear, Copy, Hide/Show, density toggle) all have `aria-label`s. `aria-describedby` on the textarea. Error state has `role="alert"`. Switch has `aria-label`. Labels are properly associated via `htmlFor`/`id`.
+- Validation:
+  * `npx eslint src/components/roycss/tools/variable-graph.tsx` → 0 errors, 0 warnings.
+  * `npx tsc --noEmit --skipLibCheck -p tsconfig.json` → 0 errors in `variable-graph.tsx` (pre-existing errors in unrelated `a11y/`, `examples/`, `inspector/` files untouched).
+  * `npx next build` (clean) → ✓ Compiled successfully in 13.2s, 10/10 static pages generated, 0 errors.
+
+Stage Summary:
+- File created: src/components/roycss/tools/variable-graph.tsx (1729 lines)
+- Export: VariableDependencyGraph (named, no props) — matches project convention
+- Key features:
+  - Live, dependency-free CSS parser (brace-matching block walker, recursive into @media/@supports) extracts custom-property definitions (with scope) and `var(--x[, fallback])` references (handles nested vars and color-mix args)
+  - Iterative Tarjan SCC algorithm detects all circular references (including self-loops); iterative Kahn's algorithm computes longest-path layering for non-cycle nodes; cycle nodes go in a dedicated rose "Cycles" zone at the bottom
+  - Layered HTML+SVG graph: nodes are absolutely-positioned `<button>`s overlaid on an SVG that draws bezier-curve edges with arrowhead `<marker>`s (muted-foreground default, rose-500 dashed for cycle edges). Nodes are centered within each layer.
+  - Three issue detectors with severity coloring: cycles (rose, critical), undefined references (amber, warning), unused variables (muted/dashed, info). Stats summary bar shows counts as badges.
+  - Node detail Popover (click any node): scope, raw value, recursively-resolved value (with `<cycle>`/`<undef: --name>` markers), incoming & outgoing edge chips
+  - Color swatch detection: oklch/oklab/lab/lch/hwb/rgb/hsl/#hex/color-mix/color()/named-colors; uses resolved value when possible so `color-mix(in oklch, var(--text) 60%, transparent)` shows the actual mixed color
+  - "Copy resolved values" button emits a `:root { --name: <resolved>; }` block with all var() refs recursively substituted (cycles fall back, undefined marked)
+  - Density toggle (compact/comfortable) via Switch — re-layout is instant (parsing memoised separately from layout)
+  - Collapsible CSS input with Load example / Clear / Hide-Show controls
+  - framer-motion staggered entrance animation on nodes (delay ∝ y position, capped)
+  - Fully defensive (try/catch around analyze, depth-capped substitution, paren-balanced parser aborts), fully accessible (role="img" SVG with aria-label, button nodes with verbose aria-labels, aria-pressed-equivalent states, role="alert" for parse errors), semantic theme tokens throughout (no indigo/blue; only rose/amber/emerald severity accents per spec)
+  - TypeScript strict, no `any`, no `console.log`, ESLint clean, tsc clean, `next build` clean
+
+---
+Task ID: 7-e
+Agent: main (orchestrator)
+Task: Wire 4 new developer tools (Dark Mode Converter, CSS Variable Dependency Graph, Fluid Typography Calculator, Scroll-Driven Animation Builder) into the RoyCSS platform and verify end-to-end.
+
+Work Log:
+- Confirmed subagents 7-a/7-b/7-c/7-d all completed their self-contained tool components in src/components/roycss/tools/.
+- Verified exports: DarkModeConverter, VariableDependencyGraph, FluidTypographyCalculator, ScrollAnimationBuilder (all named, no props, "use client").
+- Wired into src/components/roycss/platform-tools.tsx:
+  - Added 4 lucide icon imports (MoonStar, Network, Type, ArrowDownUp).
+  - Added 4 component imports from ./tools/*.
+  - Extended ToolType union with "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation".
+  - Added 4 TOOL_META entries (title, icon, description).
+  - Added 4 render branches in the Sheet switch.
+- Wired into src/components/roycss/platform-ecosystem.tsx:
+  - Added MoonStar, Network, Type, ArrowDownUp icon imports.
+  - Added 4 entries to INTERACTIVE_TOOLS map.
+  - Added 4 new Differentiator cards with descriptions.
+- Wired into src/components/roycss/roycss-page.tsx:
+  - Extended platformTool state type union with the 4 new tool IDs.
+  - Extended the onLaunchTool guard condition to accept the 4 new IDs.
+- Lint: `bun run lint` → 0 errors, 0 warnings.
+- Dev server: restarted after connection drop, compiled cleanly, GET / 200.
+
+- Agent Browser E2E verification (all 4 tools):
+  1. Dark Mode Converter: opened via Platform card → 5 default light colors loaded (#ffffff, #f8fafc, #0f172a, #64748b, #0d9488). Conversion produced correct dark palette: #ffffff (L=1.0) → #0c0c0c (L=0.156). OKLCH values displayed. 2 tabs (Palette/CSS), 5 color inputs, boost-contrast slider, hue rotation toggle, live preview panel, 3 export buttons all present.
+  2. Variable Dependency Graph: opened with default CSS example → parsed 9 variables defined, 10 references. SVG graph rendered with 34 edge paths. Findings panel correctly detected 1 undefined reference (--never-defined). Copy resolved values button present.
+  3. Fluid Typography Calculator: opened with defaults (16/32/320/1200/rem/16) → generated `font-size: clamp(1rem, 0.64rem + 1.818vw, 2rem);` (matches the spec's worked example exactly). 6 iframe previews rendered at 320/480/768/1024/1200/1440px. Verified font sizes scale correctly: 320px→16.06px (clamped min), 768px→24.20px (ramp), 1200px→32px (clamped max), 1440px→32px (clamped max). 6 presets, slope formula shown, 3 copy buttons.
+  4. Scroll-Driven Animation Builder: opened → feature detection showed "Supported in this browser" (Chrome 115+). Generated CSS injected into <style> tag: `@keyframes fade-up { from { opacity:0; transform:translateY(40px); } to { opacity:1; transform:translateY(0); } }` + `.scroll-animated { animation: fade-up 1s linear forwards; animation-timeline: scroll(block nearest); }`. Verified the scroll container (scrollHeight=1536, clientHeight=382). At scrollTop=0, the animated element showed opacity:0, transform:translateY(40px) (the "from" state), confirming the real scroll-driven animation API is working. scroll()/view() tabs, reset button, progress bar all present.
+
+- Cross-cutting checks: 0 page errors, 0 console errors (only pre-existing harmless scroll-container warning). All 4 new differentiator cards present in Platform section. Screenshots saved to /home/z/my-project/screenshots/.
+
+Stage Summary:
+- 4 new developer platform tools shipped and wired end-to-end:
+  • Dark Mode Converter (hand-rolled OKLCH color math, tiered L-inversion, live preview, 3 export formats)
+  • Variable Dependency Graph (Tarjan SCC cycle detection, Kahn's longest-path layering, SVG bezier-edge graph, nested var() + color-mix parsing)
+  • Fluid Typography Calculator (mathematically-correct clamp() formula, 6 real-iframe multi-viewport previews, font-size curve chart)
+  • Scroll-Driven Animation Builder (real CSS animation-timeline API, live scrollable preview, feature detection, scroll()/view() modes)
+- Platform tool count: 17 → 21.
+- All launch from the Platform Ecosystem section's differentiator cards into the shared right-side Sheet.
+- Lint clean, dev server clean, all 4 tools verified interactive via Agent Browser.

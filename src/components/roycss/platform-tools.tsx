@@ -34,6 +34,10 @@ import {
   Globe,
   Printer,
   Crosshair,
+  MoonStar,
+  Network,
+  Type,
+  ArrowDownUp,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
@@ -47,13 +51,17 @@ import { PerfAnalyzer } from "@/components/roycss/tools/perf-analyzer";
 import { BrowserSupportMatrix } from "@/components/roycss/tools/browser-support";
 import { PrintSimulator } from "@/components/roycss/tools/print-simulator";
 import { SelectorTester } from "@/components/roycss/tools/selector-tester";
+import { DarkModeConverter } from "@/components/roycss/tools/dark-mode-converter";
+import { VariableDependencyGraph } from "@/components/roycss/tools/variable-graph";
+import { FluidTypographyCalculator } from "@/components/roycss/tools/fluid-typography";
+import { ScrollAnimationBuilder } from "@/components/roycss/tools/scroll-animation-builder";
 import type { CSSEffect } from "@/lib/roycss-types";
 
 /* ═══════════════════════════════════════════════════════════════
    Shared types
    ═══════════════════════════════════════════════════════════════ */
 
-type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester";
+type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation";
 
 interface PlatformToolsProps {
   tool: ToolType | null;
@@ -1419,6 +1427,10 @@ const TOOL_META: Record<ToolType, { title: string; icon: React.ComponentType<{ c
   "browser-support": { title: "Browser Support Matrix", icon: Globe, description: "Look up caniuse-style support for 27 modern CSS features across 5 major browsers." },
   "print": { title: "Print Stylesheet Simulator", icon: Printer, description: "Preview @media print CSS in a live iframe — see exactly what prints, without the print dialog." },
   "selector-tester": { title: "Selector Tester", icon: Crosshair, description: "Type any CSS selector → instantly see matching elements highlighted in a live HTML sample." },
+  "dark-mode": { title: "Dark Mode Converter", icon: MoonStar, description: "Paste light-mode colors → auto-generate a perceptually-tuned dark palette via OKLCH lightness inversion." },
+  "variable-graph": { title: "Variable Dependency Graph", icon: Network, description: "Paste CSS with var() → visualize the dependency graph, detect cycles, undefined refs, and unused tokens." },
+  "fluid-type": { title: "Fluid Typography Calculator", icon: Type, description: "Generate clamp() fluid type scales with a live multi-viewport preview at 320–1440px." },
+  "scroll-animation": { title: "Scroll-Driven Animation Builder", icon: ArrowDownUp, description: "Build animation-timeline: scroll() / view() CSS with a live scrollable preview that actually scrolls." },
 };
 
 export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformToolsProps) {
@@ -1455,6 +1467,10 @@ export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformTo
               {tool === "browser-support" && <BrowserSupportMatrix />}
               {tool === "print" && <PrintSimulator />}
               {tool === "selector-tester" && <SelectorTester />}
+              {tool === "dark-mode" && <DarkModeConverter />}
+              {tool === "variable-graph" && <VariableDependencyGraph />}
+              {tool === "fluid-type" && <FluidTypographyCalculator />}
+              {tool === "scroll-animation" && <ScrollAnimationBuilder />}
             </div>
           </>
         )}

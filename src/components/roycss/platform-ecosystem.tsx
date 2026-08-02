@@ -38,6 +38,9 @@ import {
   Shield,
   Award,
   Play,
+  Calculator,
+  Spline,
+  Radar,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -352,6 +355,30 @@ const DIFFERENTIATORS: Differentiator[] = [
     name: "Community Challenges",
     description: "Monthly challenges. Developers submit landing pages, dashboards, components, and animations. Win prizes, grow the ecosystem.",
     icon: Trophy,
+  },
+  {
+    id: "specificity",
+    name: "Specificity Calculator",
+    description: "Paste any CSS selectors → instantly see each one's (a, b, c) specificity score, ranked visually. Never lose a cascade battle again.",
+    icon: Calculator,
+  },
+  {
+    id: "easing",
+    name: "Easing Visualizer",
+    description: "Design cubic-bezier curves visually — drag control points, compare 14 presets, watch a live preview, copy production CSS.",
+    icon: Spline,
+  },
+  {
+    id: "stacking",
+    name: "Stacking Context Inspector",
+    description: "Paste HTML → see the stacking-context tree with effective z-index. Or sandbox z-index live and finally understand why your modal hides behind the navbar.",
+    icon: Layers,
+  },
+  {
+    id: "similarity",
+    name: "Effect Similarity Finder",
+    description: "Pick any of 1,569 effects → instantly surface the most similar ones by tag, category, and CSS-property overlap. Explore the library by feel.",
+    icon: Radar,
   },
 ];
 
@@ -755,6 +782,10 @@ const INTERACTIVE_TOOLS: Record<string, string> = {
   "challenges": "challenges",
   "design-diff": "design-diff",
   "css-minifier": "css-minifier",
+  "specificity": "specificity",
+  "easing": "easing",
+  "stacking": "stacking",
+  "similarity": "similarity",
   // Note: mcp-server and inspector are external tools (CLI/Chrome extension),
   // NOT in-browser tools. They should expand to show setup instructions,
   // NOT try to open a panel. So they are intentionally NOT in this map.

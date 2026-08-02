@@ -26,18 +26,26 @@ import {
   Award,
   Flame,
   Star,
+  Calculator,
+  Spline,
+  Layers,
+  Radar,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { LivePreview } from "@/components/roycss/effect-card";
 import { CSSMinifier } from "@/components/roycss/css-minifier";
+import { SpecificityCalculator } from "@/components/roycss/tools/specificity-calculator";
+import { EasingVisualizer } from "@/components/roycss/tools/easing-visualizer";
+import { StackingInspector } from "@/components/roycss/tools/stacking-inspector";
+import { SimilarityFinder } from "@/components/roycss/tools/similarity-finder";
 import type { CSSEffect } from "@/lib/roycss-types";
 
 /* ═══════════════════════════════════════════════════════════════
    Shared types
    ═══════════════════════════════════════════════════════════════ */
 
-type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier";
+type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity";
 
 interface PlatformToolsProps {
   tool: ToolType | null;
@@ -1395,6 +1403,10 @@ const TOOL_META: Record<ToolType, { title: string; icon: React.ComponentType<{ c
   "challenges": { title: "Community Challenges", icon: Trophy, description: "Complete CSS challenges, earn XP, and climb the leaderboard." },
   "design-diff": { title: "Design Diff", icon: GitCompare, description: "Compare two CSS blocks — see exactly what properties were added, changed, or removed." },
   "css-minifier": { title: "CSS Minifier", icon: Minimize2, description: "Paste CSS → get minified output with size savings and gzip estimate." },
+  "specificity": { title: "Specificity Calculator", icon: Calculator, description: "Paste CSS selectors → see each one's (a, b, c) specificity score, ranked." },
+  "easing": { title: "Easing Visualizer", icon: Spline, description: "Design cubic-bezier curves visually — drag control points, compare presets, copy CSS." },
+  "stacking": { title: "Stacking Context Inspector", icon: Layers, description: "Paste HTML → see the stacking-context tree, or sandbox z-index live." },
+  "similarity": { title: "Effect Similarity Finder", icon: Radar, description: "Pick any effect → instantly find the most similar effects in the 1,569-effect library." },
 };
 
 export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformToolsProps) {
@@ -1423,6 +1435,10 @@ export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformTo
               {tool === "challenges" && <CommunityChallenges />}
               {tool === "design-diff" && <DesignDiff />}
               {tool === "css-minifier" && <CSSMinifier />}
+              {tool === "specificity" && <SpecificityCalculator />}
+              {tool === "easing" && <EasingVisualizer />}
+              {tool === "stacking" && <StackingInspector />}
+              {tool === "similarity" && <SimilarityFinder />}
             </div>
           </>
         )}

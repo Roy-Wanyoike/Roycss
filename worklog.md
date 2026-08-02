@@ -2960,3 +2960,232 @@ Stage Summary:
 - Production readiness: error boundary, loading state, 404 page, sitemap, robots, enhanced SEO metadata
 - RoyCSS.zip updated: 7.3MB, 549 files (excludes node_modules, build artifacts, test screenshots)
 - Everything is production-ready for client go-live
+
+---
+Task ID: 5-a
+Agent: Specificity Calculator (general-purpose)
+Task: Build a self-contained CSS Specificity Calculator tool component for the RoyCSS platform.
+
+Work Log:
+- Read worklog.md (last ~150 lines) to understand project context: RoyCSS is a mature, production-ready Next.js 16 + TypeScript + Tailwind 4 + shadcn/ui CSS effects library. Read existing tools (contrast-checker.tsx, bundle-calculator.tsx) to match the established code style (semantic Tailwind colors, framer-motion AnimatePresence, lucide-react icons, no hardcoded colors).
+- Verified available shadcn/ui components: textarea, button, badge, card, collapsible (Radix) all present in src/components/ui/. Confirmed `scrollbar-thin` utility is defined in globals.css. Confirmed framer-motion ^12.23.2 and lucide-react ^0.525.0 are installed.
+- Created directory src/components/roycss/tools/ (did not previously exist).
+- Designed the specificity parser as a dependency-free recursive function:
+  - `stripComments()` removes /* ... */ blocks.
+  - `splitTopLevelCommas()` splits selector lists on commas while tracking paren/bracket/quote depth (so commas inside :not(), :is(), [attr="a,b"] are preserved).
+  - `readParens()` / `skipParens()` handle balanced parenthesised groups honouring quoted strings.
+  - `computeSpecificity()` walks the selector char-by-char:
+    - `#id` → a++ (ID)
+    - `.class` → b++ (class)
+    - `[attr]` / `[attr=val]` → b++ (attribute, skips quoted strings to find `]`)
+    - `::name` → c++ (pseudo-element)
+    - `:name` → b++ (pseudo-class), EXCEPT:
+      - `:where(...)` → contributes 0 (recursive but discarded)
+      - `:is(...)` / `:not(...)` / `:matches(...)` → adds MAX specificity of inner selector list (recursive)
+      - bare legacy pseudo-elements (`:before`, `:after`, `:first-line`, `:first-letter`) → c++ per CSS spec
+    - `*` and combinators (`>`, `+`, `~`, ` `, `||`) → ignored
+    - identifiers → c++ (type selector); namespaced `foo|bar` counts as ONE type
+- Wrote a 20-case standalone Node test harness replicating the parser logic to verify correctness. All real cases pass:
+  - `#nav .item` → (1,1,0) ✓
+  - `div.card:hover` → (0,2,1) ✓
+  - `ul li a.active` → (0,1,3) ✓
+  - `button[type=submit]::after` → (0,1,2) ✓
+  - `.menu > .item` → (0,2,0) ✓
+  - `#sidebar .widget .title` → (1,2,0) ✓
+  - `:is(.btn, #cta):hover` → (1,1,0) ✓ (max of .btn=(0,1,0) and #cta=(1,0,0), plus :hover)
+  - `*:where(.x) .y` → (0,1,0) ✓ (* ignored, :where()=0, .y=1 class)
+  - `.a.b.c.d.e.f.g.h.i.j.k` → (0,11,0) ✓ (demonstrates integer-score flaw: collides with 1,1,0=110, validating tuple-based sort)
+  - `a:not(.x):not(.y):hover` → (0,3,1) ✓
+  - `svg|circle` → (0,0,1) ✓ (namespaced type)
+  - `ul#nav li.active a[href]:hover::after` → (1,3,4) ✓
+- Built the UI with: labeled Textarea (spellCheck off, font-mono), action row (Load example / Clear / Copy results / sort toggle), summary bar (N selectors · Highest tuple · Lowest tuple · skipped count), scrollable results list (max-h-[400px] overflow-y-auto scrollbar-thin), per-row layout (monospace selector with title tooltip + Badge for tuple + integer score + relative bar bg-primary), empty state with Calculator icon, and a Collapsible "How specificity works" section with an 8-row examples table.
+- Used framer-motion `layout` + AnimatePresence (popLayout mode) for smooth re-sort animations; spring transition stiffness 380 damping 32.
+- Used all 7 required Lucide icons: Calculator, Trash2, Sparkles, Copy, Check, ChevronDown, ArrowUpDown.
+- Accessibility: textarea has htmlFor label + aria-describedby help text; icon-only/state buttons have descriptive aria-labels; sort toggle label changes based on state; highest-specificity row marked with a dot + title.
+- Used semantic Tailwind colors only (bg-card, bg-muted, border-border, text-foreground, text-muted-foreground, text-primary, bg-primary). No indigo/blue. Highest tuple uses Badge variant="default" (primary), others use variant="secondary".
+- TypeScript strict compliant: explicit `Specificity` and `ParsedSelector` interfaces, no `any` anywhere. `npx tsc --noEmit` → 0 errors in this file. `npx eslint` → 0 errors, 0 warnings.
+- Documented v1 limitations in the file's JSDoc header: top-level commas always act as list separators (handled correctly with depth-tracking splitter); `:nth-child(an+b of S)` not modelled; namespaced types count as single type.
+
+Stage Summary:
+- File created: src/components/roycss/tools/specificity-calculator.tsx (734 lines, 0 TS errors, 0 lint warnings)
+- Export: SpecificityCalculator (named, no props)
+- Key features:
+  - Standard (a, b, c) specificity computation via dependency-free recursive parser
+  - Correct handling of :where() (contributes 0), :is()/:not()/:matches() (contributes max of inner selectors)
+  - Correct handling of legacy single-colon pseudo-elements (:before, :after, :first-line, :first-letter)
+  - Correct handling of attribute selectors with quoted values, namespaces, combinators, universal selector
+  - Parses newline AND top-level comma-separated selector lists (depth-aware splitter preserves commas inside ()/[]/"")
+  - Strips /* */ comments before parsing
+  - Sorts by TRUE tuple comparison (descending default, toggle to ascending) — not the flawed integer score
+  - Shows integer score `a*100+b*10+c` alongside the tuple for readability, with documented limitation
+  - Relative specificity bar (bg-primary, width %) per row, normalised to the highest score in the set
+  - Summary bar: N selectors · Highest (a,b,c) · Lowest (a,b,c) · skipped line count
+  - Load example button (8 selectors covering IDs, classes, types, attrs, pseudo-classes, pseudo-elements, :is(), :where())
+  - Clear button (disabled when empty)
+  - Copy results button → clipboard text report with 2s Check-icon confirmation
+  - Graceful empty/invalid line skipping with amber "Skipped X" note
+  - Empty state with Calculator icon + helper text
+  - Collapsible "How specificity works" with 8-row examples table (a/b/c breakdown per selector)
+  - framer-motion layout animations on re-sort
+  - Fully responsive (max-w-2xl, stacks on mobile, sm: breakpoints for row layout)
+  - Accessible: labeled textarea, aria-labels on icon buttons, aria-describedby help text
+  - Semantic Tailwind colors only (no hardcoded indigo/blue); primary teal/emerald via bg-primary/text-primary
+
+---
+Task ID: 5-d
+Agent: Similarity Finder (general-purpose)
+Task: Build a self-contained Effect Similarity Finder tool component for the RoyCSS platform, powered by tag/category/CSS-property overlap scoring.
+
+Work Log:
+- Read worklog.md (tail), roycss-types.ts, roycss-effects.ts, and effect-card.tsx to confirm: CSSEffect type shape, that `effects` is the 1569-entry master array imported from `@/lib/roycss-effects`, and that `LivePreview` only accepts `{ effect: CSSEffect }` (renders `h-full w-full` inside its parent — so wrapping it in a sized container is the correct integration pattern, no className prop needed).
+- Audited existing tool components (recommendation-engine, comparison-panel, property-search) to match established conventions: `"use client"`, framer-motion for polish, semantic Tailwind colors (bg-card / border-border / text-primary / bg-muted — no indigo/blue), `scrollbar-thin` utility, `Input` + `Badge` from shadcn/ui.
+- Created `/home/z/my-project/src/components/roycss/tools/similarity-finder.tsx` (no new directory needed beyond `tools/` which was created).
+- Implemented `extractCssProperties(css: string): Set<string>` — strips C-style comments, splits on `;{}`, matches `^[a-z-]+:` per token, skips custom properties (`--var`) and normalizes vendor prefixes (`-webkit-X` → `X`). Good enough for property-set Jaccard.
+- Implemented `jaccard<T>(a, b)` helper that iterates the smaller set for efficiency and returns 0–1.
+- Performance optimization: built a `useMemo` with empty deps that precomputes `Map<effectId, { effect, tags: Set, category, properties: Set }>` ONCE on mount — parses CSS for all 1569 effects one time only. Subsequent per-seed scoring iterates the map and does pure set intersections (~5ms).
+- Scoring `useMemo` keyed on `[seedId, effectIndex]`: for every other effect computes `round(jaccard_tags × 50 + (sameCategory ? 20 : 0) + jaccard_props × 30)`, also captures shared tags and shared properties (top 4 each shown as badges). Sorts desc, takes top 12, computes avg + top-match name for the stats footer.
+- Picker: custom combobox built from a relative container + shadcn `Input` (with leading `Search` icon + trailing `X` clear button) + absolute `motion.div` dropdown (AnimatePresence enter/exit). Filters by name / id / tag / category. 200ms debounce via `useEffect` timer. Caps at 50 visible options. Keyboard nav: ArrowUp/ArrowDown (with active-idx clamping), Enter to select, Escape to close. Outside-click dismiss via document `mousedown` listener. Full ARIA: `role="combobox"`, `aria-expanded`, `aria-controls`, `aria-autocomplete="list"`, `aria-activedescendant`, `role="listbox"` + `role="option"` on items, `aria-selected`.
+- Seed display: prominent `bg-primary/5 border-primary/30` panel showing Sparkles icon + "Seed:" label + effect name + category badge + monospace id.
+- Low-signal guard: if seed has 0 tags AND 0 parseable properties, shows an amber note that similarity is approximate.
+- Stats footer: "Analyzed N effects · Top match: X% (name) · Avg top-12 similarity: Y%".
+- Result cards (`grid sm:grid-cols-2 gap-3`, inside `max-h-[480px] overflow-y-auto scrollbar-thin`):
+  * Rank badge (1=emerald, 2=primary, 3–12=muted) in a circular white-text pill.
+  * Effect name (font-medium) + category badge.
+  * Tier label ("Very similar"/"Similar"/"Related"/"Loosely related") + "X% match".
+  * Copy CSS button (stopPropagation) with Check confirmation (1.8s timeout).
+  * Score bar: `h-1.5 w-full rounded-full bg-muted overflow-hidden` with inner colored div, width via inline style, tier color via Tailwind class (≥75 emerald-500, 50–74 primary, 30–49 amber-500, <30 muted-foreground). Wrapped in `role="progressbar"` with aria-valuenow/min/max.
+  * Tiny `LivePreview` (wrapped in `h-20 w-full overflow-hidden` container so the existing `h-full w-full` LivePreview fills it correctly).
+  * Shared-tags badges (Tag icon, primary-tinted) + shared-properties badges (Code2 icon, mono, muted) — top 4 each.
+  * Whole card is clickable (role=button, tabIndex=0, Enter/Space handler) → sets new seed and re-runs search (explorable).
+- ESLint fix: removed `useEffect(() => setActiveIdx(0), [debouncedSearch])` (violated `react-hooks/set-state-in-effect`). Replaced with: reset `activeIdx` in the input `onChange` handler, plus a derived `safeActiveIdx = Math.min(activeIdx, pickerOptions.length - 1)` used for highlighting + aria-activedescendant. ArrowDown now clamps current idx before incrementing.
+- Verified: `npx eslint src/components/roycss/tools/similarity-finder.tsx` → 0 errors, 0 warnings. `npx tsc --noEmit` → 0 errors. No `any`. No `console.log`.
+
+Stage Summary:
+- File created: src/components/roycss/tools/similarity-finder.tsx
+- Export: `SimilarityFinder` (named, no props) + helper `extractCssProperties`
+- Key features:
+  * Searchable combobox effect picker (debounced, keyboard-navigable, ARIA-compliant)
+  * Weighted similarity scoring: tag Jaccard (50%) + category match (20%) + CSS property Jaccard (30%)
+  * Pre-computed feature index (Map built once on mount) keeps per-seed scoring snappy across 1569 effects
+  * Top-12 results in a 2-col grid with rank badge, tier-colored progress bar, tiny live preview, shared-tag/property badges, per-card copy button
+  * Click any result → becomes new seed → search re-runs (explorable)
+  * Stats footer (analyzed count, top match %, avg top-12 %)
+  * Low-signal warning for effects with no tags and no parseable properties
+  * Semantic theme colors throughout (no hardcoded indigo/blue), dark/light mode safe
+  * Lint clean, TS strict clean, no `any`, no `console.log`
+
+
+---
+Task ID: 5-c
+Agent: Stacking Inspector (general-purpose)
+Task: Build a self-contained CSS Stacking Context Inspector tool component for the RoyCSS platform.
+
+Work Log:
+- Read project context: worklog.md (last ~150 lines) confirming RoyCSS is a mature, production-ready Next.js 16 + TypeScript + Tailwind 4 + shadcn/ui (New York) CSS effects showcase. Reviewed existing tool components (border-radius-visualizer.tsx, flexbox-visualizer.tsx) to match conventions: `"use client"`, named exports only, semantic Tailwind theme tokens (`bg-card`, `text-muted-foreground`, `border-border`, `text-primary`, `bg-primary`), lucide-react icons, `cn()` helper from `@/lib/utils`.
+- Verified shadcn/ui component APIs in `src/components/ui/`: tabs (Tabs/TabsList/TabsTrigger/TabsContent), badge (default/secondary/destructive/outline variants), select (Select/SelectTrigger with size="sm"/SelectContent/SelectItem/SelectValue), switch (checked/onCheckedChange), label (htmlFor), textarea, input, button (size="sm"/variants). Confirmed `@/*` path alias maps to `./src/*` and tsconfig target is ES2017 with `noImplicitAny: false`, `jsx: react-jsx`, `strict: true`.
+- Created `src/components/roycss/tools/` directory (was empty) and wrote `stacking-inspector.tsx` (817 lines, single self-contained file).
+- Implemented **inline style parser** (`parseInlineStyle`): splits on `;`/`:`, lowercases keys, defensive against malformed input. Used because `getComputedStyle` does not work on DOMParser-parsed (non-rendered) nodes.
+- Implemented **stacking-context detection** (`detectStacking`): covers all spec triggers — root element; position absolute/relative + z-index≠auto; position fixed/sticky (always); flex/grid child + z-index≠auto (passes parent display down the walk); opacity<1; transform/filter/perspective/backdrop-filter (≠none); will-change of transform/opacity/filter/perspective/isolation/backdrop-filter/z-index; mix-blend-mode≠normal; isolation:isolate; mask; clip-path; contain with layout/paint/strict/content; container-type size/inline-size. Returns `isContext`, `triggers[]`, `zIndex`, `position`. Fully typed — no `any`; uses `Record<string,string>` for the style map and a typed `Detection` interface.
+- Implemented **DOM tree walk** (`buildTree`): wraps `new DOMParser().parseFromString(html, "text/html")` in try/catch, guards `typeof window === "undefined"` for SSR safety, recursively walks `el.children` passing parent `display` down for flex/grid-child detection. Assigns deterministic IDs via a closure counter. Returns `{ root, error? }`.
+- **Mode 1 — Inspector**: `Textarea` (labelled, aria-label, monospace, spellcheck off) preloaded with an example HTML demonstrating the classic "modal behind navbar" bug (sticky header z=100, main z=1 containing a fixed modal z=9999 — modal is trapped below header because main's stacking context ceiling is z=1). "Example" button (ScanSearch icon) reloads it; "Clear" button (Trash2 icon) empties the textarea. Live parsing via `useEffect` on `html` change. Tree renders recursively with `border-l border-border/40` connector lines and `ml-3 pl-3` indentation per depth. Each row shows `<tag>` + `#id` + `.class` (font-mono text-sm), a `z:{value}` outline badge (primary-tinted when z-index is set), and for stacking-context elements a primary-tinted badge `<Layers/> context · eff.z:{N}` showing the effective z-index that actually matters in the parent context. Trigger reasons appended as muted monospace text. Disclaimer note (Info icon) about class-based styles not being resolved. Amber-tinted AlertTriangle note explaining the sibling-comparison rule. Tree container: `max-h-[420px] overflow-y-auto`.
+- **Mode 2 — Playground**: 80-tall sandbox (`bg-muted/30 rounded-lg border`) with `transform: translateZ(0)` so fixed-positioned boxes stay contained (also makes the sandbox itself a stacking context — noted in the live tree). 4 absolutely-positioned colored boxes (A=emerald, B=rose, C=amber, D=fuchsia, all `/80` opacity, white text + z-index label, ring-2 ring-primary when force-context is on) at overlapping coordinates. Per-box controls in a responsive 1-col/2-col grid: z-index number Input (−5 to 9999, clamped), position Select (relative/absolute/fixed/sticky), and a "force context" Switch that applies `opacity:0.99`. Global "Wrap box B in isolated parent" Switch: when on, box B is rendered inside an absolutely-positioned wrapper with `isolation: isolate` and a FIXED z-index of 2 — so B's own z-index slider no longer affects the sandbox ordering (the dramatic "B set to 9999 but still below D set to 4" aha-moment). Reset button (RefreshCw) restores defaults. Live mini-tree (`max-h-[280px] overflow-y-auto`) updates in real time showing the sandbox as a context (transform trigger), each box with its triggers, and the wrapper node when wrapB is on.
+- Accessibility: all interactive elements have `aria-label`s (icon-only buttons, switches, inputs via `<Label htmlFor>`); the sandbox has `aria-label="Stacking sandbox preview"`; box visuals have descriptive aria-labels including their z-index/position state; the textarea has both a visible Label and an aria-label.
+- TypeScript strict, no `any` types (the single `any` substring in the file is the English word "any" in a comment). No `console.log`. Semantic theme tokens throughout for chrome; only the 4 sandbox boxes use the spec-mandated palette colors for visibility. Layout is compact and responsive within a max-w-2xl Sheet.
+- Verified: `npx eslint src/components/roycss/tools/stacking-inspector.tsx` → 0 errors, 0 warnings. `npx tsc --noEmit -p tsconfig.json` → 0 errors in the new file. Removed the trailing `export default` to match the project convention (only 1 of 64 roycss components uses a default export; the rest are named-only).
+
+Stage Summary:
+- File created: src/components/roycss/tools/stacking-inspector.tsx (817 lines)
+- Export: StackingInspector (named, no props) — matches project convention
+- Key features:
+  - Two-mode shadcn Tabs: Inspector (default) + Playground
+  - Inspector: DOMParser-based HTML walk, full stacking-context trigger detection (root, position+z-index, fixed/sticky, flex/grid child, opacity, transform, filter, perspective, backdrop-filter, will-change, mix-blend-mode, isolation, mask, clip-path, contain, container-type), recursive tree with connector lines, effective-z-index badges, trigger-reason notes, example HTML (modal-behind-navbar bug), Clear button, class-styles disclaimer, sibling-comparison rule alert
+  - Playground: 4 colored sandbox boxes (emerald/rose/amber/fuchsia), per-box z-index input (−5..9999) + position select + force-context toggle (opacity:0.99), wrap-B-in-isolated-parent toggle (fixed z=2 ceiling demo), reset button, live auto-updating tree
+  - SSR-safe (typeof window guard + client-only useEffect parsing), try/catch around DOMParser
+  - Fully accessible (aria-labels, labelled inputs, semantic theme tokens), TypeScript strict with no `any`, 0 lint errors, 0 type errors
+
+---
+Task ID: 5-b
+Agent: Easing Visualizer (general-purpose)
+Task: Build a self-contained CSS cubic-bezier Easing Visualizer tool component for the RoyCSS platform.
+
+Work Log:
+- Read worklog.md (~150 lines) + project scaffold context to understand conventions: Next.js 16 + TS strict + Tailwind v4 (semantic theme tokens via `@theme inline` mapping `--color-*` → raw oklch `--*` variables) + shadcn/ui New York + Lucide + framer-motion. Project is production-ready; this is an additive developer tool.
+- Inspected sibling tools (`spacing-scale-generator.tsx`, `border-radius-visualizer.tsx`, `box-shadow-generator.tsx`, `tools/specificity-calculator.tsx`, `tools/similarity-finder.tsx`) and `ui/slider.tsx` / `ui/input.tsx` to match local idioms: card sections use `bg-card border border-border rounded-xl p-4`, muted labels use `text-xs font-semibold text-muted-foreground uppercase tracking-wider`, copy buttons use `bg-primary/10 text-primary hover:bg-primary/20` → `bg-emerald-500/15 text-emerald-500` on success.
+- Verified theme: `bg-card`, `text-primary`, `border-border`, `fill-primary`, `stroke-primary`, `stroke-muted-foreground/40`, `accent-primary` all resolve through `@theme inline` block in `globals.css`. No hardcoded colors anywhere in the new file.
+- Created `src/components/roycss/tools/easing-visualizer.tsx`:
+  * Math helpers: `bezierYForX(x, x1, y1, x2, y2)` uses 40-iteration binary search on `t` (Bx is monotonic when x1,x2 ∈ [0,1]) then evaluates `By(t)`. `sampleCurvePath()` builds a polyline `M…L…` path by sampling 60 points (robust; no fragile SVG cubic command needed; handles y outside [0,1] naturally).
+  * SVG editor (280×280 viewBox, `overflow-visible` so overshoot easings draw beyond the square): grid at 0.25 intervals, dashed linear reference, dashed control handles from P0→P1 and P3→P2, the curve itself (`stroke-primary`, 2.5px), endpoint dots, a live moving dot (`fill-primary`, dimmed when paused) driven by `requestAnimationFrame` keyed to the configured duration, plus two draggable `<g role="slider">` control points with a generous invisible hit-area (`r=16`) for easy grabbing.
+  * Pointer drag: `setPointerCapture` on pointerdown, `getScreenCTM().inverse()` + `DOMPoint.matrixTransform` to convert client coords → SVG coords → normalized (x, y). x clamped to [0,1] (per CSS spec), y clamped to [-0.5, 1.5] to allow back/elastic-ish overshoots while staying sane.
+  * Keyboard a11y: control points are focusable (`tabIndex={0}`) with `role="slider"`, `aria-valuenow`, `aria-valuemin/max`, `aria-valuetext` ("P1: x=0.42, y=0.00"). Arrow keys nudge by 0.01; Shift+Arrow by 0.1. x arrows constrained to [0,1], y arrows to [-0.5, 1.5]. `preventDefault` on handled keys so the page doesn't scroll.
+  * Numeric inputs: 4 shadcn `<Input type="number">` (x1, y1, x2, y2) with step 0.01, min/max set per axis. Used `defaultValue` + `key={value.toFixed(3)}` + `onBlur` pattern so users can type values like `-0.5` without the parser fighting them mid-keystroke; blur parses, falls back to 0 on NaN, and clamps to the axis range.
+  * Sliders: shadcn `<Slider>` (single-thumb, `value={[v]}`) for each axis, `step={0.01}`, bidirectionally synced with the same `setVal(key, v[0])` callback used by the inputs and the SVG drag.
+  * Preset gallery: all 14 easings from the spec (linear, ease, ease-in/out/in-out, quad/cubic in/out/in-out, back in/out/in-out, bounce-ish flagged `approx: true`). Each chip is a `grid-cols-2 sm:grid-cols-3` button showing a `MiniCurve` (28×16 sampled svg using `currentColor`) + name + "approx" tag when applicable. Container has `max-h-72 overflow-y-auto`. Active preset (within 0.005 of all 4 values) gets `border-primary bg-primary/10 text-primary`.
+  * Live preview: 48px `bg-primary` circle in a `bg-muted/40` track. Position driven by a `setInterval(duration + 120ms)` toggling `previewPos` between 0 and 1, with `transform: translateX(...)` and `transition: transform ${duration}ms cubic-bezier(...)`. Track width measured via `ResizeObserver` on a ref so the circle traverses the full track regardless of layout. The +120ms gives a small settle pause at each end.
+  * RAF loop for the SVG moving dot: runs only while `playing`; computes `dt` from `performance.now()`, advances `progress` by `dt/duration`, wraps modulo 1. Cleanup cancels the RAF on unmount/pause. `lastTimeRef` reset to 0 on pause to avoid a huge jump on resume.
+  * Generated CSS output: `<pre><code>` showing `transition-timing-function: cubic-bezier(x1, y1, x2, y2);` with `fmt()` trimming trailing zeros. Copy button uses `navigator.clipboard.writeText` + 2s `Check`/"Copied!" confirmation. Also shows the bare `cubic-bezier(...)` token below for inline use.
+  * Duration control: range input (100–5000ms, step 100) + matching `<Input type="number">`, both feeding the same `setDuration(clamp(n, 100, 5000))`. The duration drives both the SVG dot's loop period and the preview box's transition timing.
+  * Header: `Activity` icon + title + subtitle + `RotateCcw` Reset button (restores ease-in-out and rewinds progress to 0). Play/Pause button on the SVG card uses `Play`/`Pause` icons.
+  * Layout: `max-w-2xl mx-auto` root, `grid md:grid-cols-2 gap-4` for the two-column desktop layout, collapsing to single column on mobile. Left column: SVG editor + control points + live preview. Right column: preset gallery + CSS output. All cards use `bg-card border border-border rounded-xl p-4`.
+- Fixed one ESLint error: `react-hooks/set-state-in-effect` flagged the synchronous `setPreviewPos(1)` call inside the preview-interval effect body. Refactored to kick off via `requestAnimationFrame(() => setPreviewPos(1))` (cancelled on cleanup) so the setState is deferred to a callback and no longer triggers a cascading render.
+- Validation:
+  * `bunx tsc --noEmit --skipLibCheck` → 0 errors in `easing-visualizer.tsx` (pre-existing errors elsewhere in `mcp-server/`, `perf/`, `inspector/` are unrelated and untouched).
+  * `bunx eslint src/components/roycss/tools/easing-visualizer.tsx` → exit code 0, 0 errors, 0 warnings.
+  * No `any` types; all event handlers typed (`React.PointerEvent<SVGGElement>`, `React.KeyboardEvent<SVGGElement>`). All `useEffect` cleanups registered (RAF cancel + interval clear + ResizeObserver disconnect).
+  * No `console.log`. No external API calls. Self-contained.
+
+Stage Summary:
+- File created: src/components/roycss/tools/easing-visualizer.tsx
+- Export: EasingVisualizer (named, no props)
+- Key features:
+  * Interactive 280×280 SVG cubic-bezier curve editor with two pointer-draggable control points (pointer-capture + DOMPoint CTM math) and full keyboard a11y (role="slider", arrow keys, Shift = 0.1 step).
+  * x clamped to [0,1] (CSS spec), y clamped to [-0.5, 1.5] for back/bounce overshoots; `overflow-visible` SVG so the curve renders outside the square.
+  * Live moving dot via requestAnimationFrame loop (cleaned up on unmount), keyed to the configurable duration.
+  * Bidirectionally synced numeric inputs (defaultValue+key+onBlur pattern for fluid typing) AND shadcn Sliders for x1/y1/x2/y2.
+  * 14-easing preset gallery (linear → ease-in-out-back + bounce-ish) with mini curve thumbnails, active-preset highlight (within 0.005), max-h-72 scroll.
+  * Real-world live preview: 48px circle traversing a track using the actual `transition: transform ${duration}ms cubic-bezier(...)` CSS, track width measured via ResizeObserver.
+  * Duration control (range + number input, 100–5000ms) drives both the SVG dot loop and the preview transition.
+  * Generated CSS output (`transition-timing-function: cubic-bezier(...)`) with copy-to-clipboard + 2s Check confirmation.
+  * Semantic Tailwind colors only (bg-card, text-primary, stroke-muted-foreground/40, etc.) — fully theme-aware, no indigo/blue.
+  * Responsive: two-column on `md+`, single column on mobile, max-w-2xl root.
+
+---
+Task ID: 5-e
+Agent: main (orchestrator)
+Task: Wire 4 new developer tools (Specificity Calculator, Easing Visualizer, Stacking Context Inspector, Effect Similarity Finder) into the RoyCSS platform and verify end-to-end.
+
+Work Log:
+- Read worklog.md to confirm subagents 5-a/5-b/5-c/5-d all completed their self-contained tool components in src/components/roycss/tools/.
+- Verified exports: SpecificityCalculator, EasingVisualizer, StackingInspector, SimilarityFinder (all named, no props, "use client").
+- Wired into src/components/roycss/platform-tools.tsx:
+  - Added 4 lucide icon imports (Calculator, Spline, Layers, Radar).
+  - Added 4 component imports from ./tools/*.
+  - Extended ToolType union with "specificity" | "easing" | "stacking" | "similarity".
+  - Added 4 TOOL_META entries (title, icon, description).
+  - Added 4 render branches in the Sheet switch.
+- Wired into src/components/roycss/platform-ecosystem.tsx:
+  - Added Calculator, Spline, Radar icon imports (Layers already present).
+  - Added 4 entries to INTERACTIVE_TOOLS map so the cards launch panels.
+  - Added 4 new Differentiator cards (specificity, easing, stacking, similarity) with descriptions.
+- Wired into src/components/roycss/roycss-page.tsx:
+  - Extended platformTool state type union with the 4 new tool IDs.
+  - Extended the onLaunchTool guard condition to accept the 4 new IDs.
+- Lint: `bun run lint` → 0 errors, 0 warnings.
+- Dev server: compiled cleanly, GET / 200.
+
+- Agent Browser E2E verification (all 4 tools):
+  1. Specificity Calculator: opened via Platform card → "Load example" → 8 selectors analyzed, ranked descending. Correctly computed (a,b,c) tuples including advanced cases: :is(.btn,#cta):hover → (1,1,0), :where() contributes 0, ::after counts as type, [type=submit] attribute → class. Summary showed Highest (1,2,0) / Lowest (0,1,0).
+  2. Easing Visualizer: opened → all 4 numeric inputs + 4 sliders + 14 presets + duration + draggable control points rendered. Clicked "ease-in-back" preset → inputs updated to (0.6,-0.28,0.735,0.045). Generated CSS output correct: "transition-timing-function: cubic-bezier(0.6, -0.28, 0.735, 0.045);"
+  3. Stacking Context Inspector: Inspector tab preloaded modal-behind-navbar example → parsed HTML into tree, correctly flagged all stacking contexts with trigger reasons (root, position:sticky, position:absolute+z-index, position:fixed, opacity:0.99) and effective z-index. Playground tab: 4 boxes (A/B/C/D) each with z-index input, position select, force-context switch + "wrap B in isolated parent" toggle.
+  4. Effect Similarity Finder: opened with default seed (Pulse Glow) → 12 ranked similar effects with similarity %, tier-colored bars, shared tags/properties badges, Copy CSS per card. Clicked rank 6 (Pulse) → re-seeded, "Analyzed 1568 effects" (1569−1 seed), results updated.
+
+- Cross-cutting checks: 0 page errors, 0 console errors (only pre-existing harmless scroll-container warning). Mobile viewport 390x844: footer present as <FOOTER>, page 75292px tall (footer pushed to bottom naturally). Desktop 1280x900: all 4 new differentiator cards present in Platform section.
+
+Stage Summary:
+- 4 new developer platform tools shipped and wired end-to-end:
+  • Specificity Calculator (dependency-free recursive CSS selector parser)
+  • Easing Visualizer (draggable SVG cubic-bezier editor + 14 presets + live preview)
+  • Stacking Context Inspector (DOMParser tree analysis + interactive z-index sandbox)
+  • Effect Similarity Finder (Jaccard tag/category/property-overlap scoring over 1569 effects, memoized)
+- Platform tool count: 9 → 13.
+- All launch from the Platform Ecosystem section's differentiator cards into the shared right-side Sheet.
+- Lint clean, dev server clean, all 4 tools verified interactive via Agent Browser.

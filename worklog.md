@@ -4050,3 +4050,72 @@ Stage Summary:
 - Fixed duplicate GitCompare import in platform-tools.tsx and platform-ecosystem.tsx (0 TS errors restored).
 - RoyCSS.zip rebuilt: 8.3MB, 656 files, 16 tool components.
 - Lint clean, tsc clean (0 errors in src/components), dev server 200, 0 runtime errors.
+
+---
+Task ID: 9
+Agent: main (orchestrator)
+Task: Update the package and fix any errors that would prevent publishing to npm.
+
+Work Log:
+
+## Publish Blockers Found
+1. Root package.json had `"private": true` — npm publish blocked entirely.
+2. Root package.json had no `"files"` field — `npm pack` included 713 files / 52.8MB (worklog, screenshots, tests, .next, vscode-extension, everything).
+3. Root package.json listed 60+ app dependencies (react, next, prisma, radix, etc.) under `"dependencies"` — consumers of the CSS library would install ALL of them unnecessarily. The published artifact (dist/effects.js + CSS) has ZERO runtime deps.
+4. Root package.json had no `"exports"`, `"main"`, `"module"`, `"types"`, `"bin"`, `"prepublishOnly"`, `"keywords"`, `"repository"`, `"bugs"`, `"author"`, `"license"`, `"funding"` — missing all npm publish metadata.
+5. CLI (src/cli/index.ts) had 2 TypeScript errors: `Cannot find name 'Bun'` (lines 109, 120) — bun-types not referenced.
+6. cli/effects.json was MISSING — the CLI bundle couldn't run search/list/info commands without the effects data.
+7. dist/coverage/ (test coverage HTML) was being included in the published package.
+
+## Fixes Applied
+
+### Root package.json (src of truth for the `roycss` CSS library package)
+- Removed `"private": true`.
+- Bumped version: 1.0.0 → 2.0.0 (major: the package is now publishable + deps restructured).
+- Added `"files": ["dist", "README.md", "LICENSE"]` — npm pack now includes ONLY these.
+- Added `"main": "dist/effects.js"`, `"module": "dist/effects.js"`, `"types": "dist/effects.d.ts"`.
+- Added `"exports"` map: `.` (import/require/types), `./css`, `./css/min`, `./effects.json`, `./package.json`.
+- Added `"sideEffects": ["*.css"]` — bundlers can tree-shake the JS but not the CSS.
+- Added `"prepublishOnly": "bun run build:package && bun run build:cli"` — auto-rebuilds dist + CLI before every publish.
+- Added `"keywords"`, `"homepage"`, `"repository"`, `"bugs"`, `"author"`, `"license": "MIT"`, `"funding"` (GitHub Sponsors).
+- Moved ALL 60+ app dependencies from `"dependencies"` → `"devDependencies"` (they're for developing the showcase app, NOT needed by CSS library consumers). Set `"dependencies": {}` and `"peerDependencies": {}` — the published package has ZERO runtime deps (verified: dist/effects.cjs has 0 require() calls, dist/effects.js is a pure data export).
+
+### CLI (cli/package.json + src/cli/index.ts)
+- Bumped CLI version: 1.0.0 → 2.0.0.
+- Fixed src/cli/index.ts TS errors:
+  - Added `/// <reference types="bun-types" />` triple-slash directive at top → resolved `Cannot find name 'Bun'`.
+  - Fixed `Bun.spawn` stdout/stderr: `"null"` → `"ignore"` (4 errors: "null" not assignable to Readable) — `"ignore"` is the correct Bun API value for discarding output.
+- Synced cli/effects.json from dist/effects.json (was missing — CLI search/list/info commands need it).
+
+### Dist artifacts rebuilt
+- `bun run build:package` → dist/roycss.css (1.18MB), dist/roycss.min.css (990KB), dist/effects.json (1569 effects), dist/effects.js, dist/effects.cjs, dist/effects.d.ts.
+- `bun run build:cli` → cli/index.js (1.70MB, 37 modules bundled).
+- Removed dist/coverage/ (test coverage HTML, shouldn't be published).
+- Synced mcp-server/effects.json from dist/effects.json.
+
+## Verification (all green)
+- package.json: valid JSON ✓
+- cli/package.json: valid JSON ✓
+- ESLint: 0 errors, 0 warnings ✓
+- TypeScript src/components: 0 errors ✓
+- TypeScript src/cli: 0 errors (was 6) ✓
+- Dev server: HTTP 200 ✓
+- Agent Browser: 0 page errors, 0 console errors ✓
+- npm pack (root `roycss@2.0.0`): 577.5 KB, 12 files (was 25.9MB, 713 files) ✓
+- npm pack (`roycss-cli@2.0.0`): 329.7 KB, 4 files ✓
+- RoyCSS.zip rebuilt: 8.3MB, 657 files (includes updated package.json + CLI) ✓
+
+## Publish readiness
+The `roycss` package is now ready to publish:
+- `npm publish` will run `prepublishOnly` (rebuilds dist + CLI), then publish only dist/ + README + LICENSE.
+- Consumers who `npm install roycss` get a 577KB package with zero runtime dependencies.
+- They can `import { effects } from "roycss"`, `import "roycss/css"`, or link `roycss/css/min`.
+- The CLI is a separate package (`roycss-cli`) publishable from the cli/ directory.
+
+Stage Summary:
+- 7 publish blockers fixed (private flag, missing files field, bloated deps, missing exports/metadata, CLI TS errors, missing cli/effects.json, coverage in pack).
+- Package size: 25.9MB → 577.5 KB (97.8% reduction).
+- File count: 713 → 12.
+- Runtime dependencies for consumers: 60+ → 0.
+- TypeScript errors in src/cli: 6 → 0.
+- Both `roycss@2.0.0` (CSS library) and `roycss-cli@2.0.0` (CLI) are publish-ready.

@@ -1,9 +1,10 @@
-import { type Metadata } from "next";
+import { type Metadata, type Viewport } from "next";
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import "./roycss.css";
 import "./roymotion.css";
 import { Toaster } from "@/components/ui/toaster";
+import { ServiceWorkerRegistration } from "@/components/roycss/sw-register";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,6 +30,7 @@ export const metadata: Metadata = {
     icon: "/favicon.png",
     apple: "/apple-icon.png",
   },
+  manifest: "/manifest.json",
   keywords: [
     "RoyCSS",
     "CSS effects library",
@@ -81,6 +83,13 @@ export const metadata: Metadata = {
   category: "technology",
 };
 
+export const viewport: Viewport = {
+  themeColor: "#10b981",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -93,6 +102,7 @@ export default function RootLayout({
       >
         {children}
         <Toaster />
+        <ServiceWorkerRegistration />
       </body>
     </html>
   );

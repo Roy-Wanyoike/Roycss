@@ -61,6 +61,8 @@ import {
   Disc,
   Move,
   ScrollText,
+  Languages,
+  Image,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -526,6 +528,30 @@ const DIFFERENTIATORS: Differentiator[] = [
     description: "Design custom CSS scrollbars — width, colors, radius, hover, border. Cross-browser (WebKit + Firefox). Live scrollable preview with 6 presets (Minimal, Rounded, Neon, MacOS).",
     icon: ScrollText,
   },
+  {
+    id: "gap-spacing",
+    name: "Gap & Spacing Calculator",
+    description: "Calculate CSS gap, margin, padding with 5 spacing systems (8px grid, 4px grid, modular scale, Tailwind defaults, custom). Smart shorthand collapsing + visual box-model diagram.",
+    icon: Ruler,
+  },
+  {
+    id: "writing-mode",
+    name: "Writing Mode Playground",
+    description: "Explore CSS writing-mode, direction, text-orientation for vertical text, RTL, and CJK layouts. Logical-to-physical properties mapping + RTL flip comparison demo.",
+    icon: Languages,
+  },
+  {
+    id: "object-fit",
+    name: "Object Fit Visualizer",
+    description: "Compare object-fit values (fill, contain, cover, none, scale-down) with live preview on 6 aspect ratios. Side-by-side thumbnails + object-position 3×3 grid.",
+    icon: Image,
+  },
+  {
+    id: "positioning",
+    name: "Positioning Playground",
+    description: "Interactive CSS position playground — static/relative/absolute/fixed/sticky. Draggable target element, inset controls, z-index, sticky scroll demo, 5 presets.",
+    icon: Move,
+  },
 ];
 
 /* ═══════════════════════════════════════════════════════════════
@@ -952,6 +978,10 @@ const INTERACTIVE_TOOLS: Record<string, string> = {
   "transform-studio": "transform-studio",
   "cursor-gallery": "cursor-gallery",
   "scrollbar-styler": "scrollbar-styler",
+  "gap-spacing": "gap-spacing",
+  "writing-mode": "writing-mode",
+  "object-fit": "object-fit",
+  "positioning": "positioning",
   // Note: mcp-server and inspector are external tools (CLI/Chrome extension),
   // NOT in-browser tools. They should expand to show setup instructions,
   // NOT try to open a panel. So they are intentionally NOT in this map.

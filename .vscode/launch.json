@@ -1,0 +1,37 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Dev Server (port 3000)",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "bun run dev",
+      "cwd": "${workspaceFolder}",
+      "serverReadyAction": {
+        "pattern": "Ready in|started server on|Local:",
+        "uriFormat": "http://localhost:3000"
+      }
+    },
+    {
+      "name": "Lint",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "bun run lint",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Build CSS Library",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "bun run build:package",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Build CLI",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "bun run build:cli",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}

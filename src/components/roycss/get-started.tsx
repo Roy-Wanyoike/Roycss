@@ -233,6 +233,19 @@ export function GetStarted() {
                       code={`<link rel="stylesheet"
       href="https://unpkg.com/roycss/dist/roycss.min.css" />`}
                     />
+                    <a
+                      href="/roycss.zip"
+                      download
+                      className="mt-2 flex items-center gap-3 rounded-lg border border-primary/40 bg-primary/5 p-3 transition-all hover:border-primary hover:bg-primary/10 group"
+                    >
+                      <div className="flex items-center justify-center size-9 rounded-md bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
+                        <Download className="size-4" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="text-sm font-semibold text-foreground">Download source code (.zip)</div>
+                        <div className="text-xs text-muted-foreground">Full project — app, CLI, MCP server, 1,569 effects, 29 platform tools</div>
+                      </div>
+                    </a>
                   </AccordionContent>
                 </>
               )}

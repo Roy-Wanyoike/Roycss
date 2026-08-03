@@ -54,6 +54,9 @@ import {
   Move,
   MousePointer2,
   ScrollText,
+  Languages,
+  Image,
+  AlignVerticalJustifyCenter,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
@@ -83,13 +86,17 @@ import { BackgroundPatternGenerator } from "@/components/roycss/tools/pattern-ge
 import { TransformStudio } from "@/components/roycss/tools/transform-studio";
 import { CursorPreviewGallery } from "@/components/roycss/tools/cursor-gallery";
 import { ScrollbarStyler } from "@/components/roycss/tools/scrollbar-styler";
+import { GapSpacingCalculator } from "@/components/roycss/tools/gap-spacing";
+import { WritingModePlayground } from "@/components/roycss/tools/writing-mode";
+import { ObjectFitVisualizer } from "@/components/roycss/tools/object-fit";
+import { PositioningPlayground } from "@/components/roycss/tools/positioning";
 import type { CSSEffect } from "@/lib/roycss-types";
 
 /* ═══════════════════════════════════════════════════════════════
    Shared types
    ═══════════════════════════════════════════════════════════════ */
 
-type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler";
+type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | "gap-spacing" | "writing-mode" | "object-fit" | "positioning";
 
 interface PlatformToolsProps {
   tool: ToolType | null;
@@ -1471,6 +1478,10 @@ const TOOL_META: Record<ToolType, { title: string; icon: React.ComponentType<{ c
   "transform-studio": { title: "Transform Studio", icon: Move, description: "Visual builder for CSS transform — combine translate/rotate/scale/skew/3D with live preview, transform-origin picker, and layer reordering." },
   "cursor-gallery": { title: "Cursor Preview Gallery", icon: MousePointer2, description: "Hover-preview every CSS cursor value (pointer, grab, text, resize…), search by category, and build custom cursors with hotspot." },
   "scrollbar-styler": { title: "Scrollbar Styler", icon: ScrollText, description: "Design custom CSS scrollbars — width, colors, radius, hover, border. Cross-browser (WebKit + Firefox). Live preview with 6 presets." },
+  "gap-spacing": { title: "Gap & Spacing Calculator", icon: Ruler, description: "Calculate CSS gap, margin, padding with 5 spacing systems (8px grid, 4px grid, modular scale, Tailwind, custom). Smart shorthand output." },
+  "writing-mode": { title: "Writing Mode Playground", icon: Languages, description: "Explore CSS writing-mode, direction, text-orientation for vertical text, RTL, and CJK layouts. Logical properties mapping + RTL flip demo." },
+  "object-fit": { title: "Object Fit Visualizer", icon: Image, description: "Compare object-fit values (fill, contain, cover, none, scale-down) with live preview on different aspect ratios. Side-by-side comparison." },
+  "positioning": { title: "Positioning Playground", icon: Move, description: "Interactive CSS position playground — static/relative/absolute/fixed/sticky. Draggable target, inset controls, z-index, sticky scroll demo." },
 };
 
 export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformToolsProps) {
@@ -1523,6 +1534,10 @@ export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformTo
               {tool === "transform-studio" && <TransformStudio />}
               {tool === "cursor-gallery" && <CursorPreviewGallery />}
               {tool === "scrollbar-styler" && <ScrollbarStyler />}
+              {tool === "gap-spacing" && <GapSpacingCalculator />}
+              {tool === "writing-mode" && <WritingModePlayground />}
+              {tool === "object-fit" && <ObjectFitVisualizer />}
+              {tool === "positioning" && <PositioningPlayground />}
             </div>
           </>
         )}

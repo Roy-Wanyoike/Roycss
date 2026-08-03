@@ -106,6 +106,8 @@ worklog.md
 # ─── Bundled zip & tarball artifacts ───────────────────────────
 # RoyCSS.zip is rebuilt from source — don't commit the binary
 *.zip
+# ...but DO track the downloadable zip in public/
+!public/roycss.zip
 *.tgz
 
 # ─── Miscellaneous ─────────────────────────────────────────────

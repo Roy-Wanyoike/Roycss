@@ -45,6 +45,15 @@ import {
   Box,
   Rows3,
   Timer,
+  Search,
+  Film,
+  Images,
+  Filter,
+  Disc,
+  Shapes,
+  Move,
+  MousePointer2,
+  ScrollText,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
@@ -70,13 +79,17 @@ import { UnitConverterPro } from "@/components/roycss/tools/unit-converter";
 import { BoxModelVisualizer } from "@/components/roycss/tools/box-model";
 import { FlexPlayground } from "@/components/roycss/tools/flex-playground";
 import { TransitionStudio } from "@/components/roycss/tools/transition-studio";
+import { BackgroundPatternGenerator } from "@/components/roycss/tools/pattern-generator";
+import { TransformStudio } from "@/components/roycss/tools/transform-studio";
+import { CursorPreviewGallery } from "@/components/roycss/tools/cursor-gallery";
+import { ScrollbarStyler } from "@/components/roycss/tools/scrollbar-styler";
 import type { CSSEffect } from "@/lib/roycss-types";
 
 /* ═══════════════════════════════════════════════════════════════
    Shared types
    ═══════════════════════════════════════════════════════════════ */
 
-type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio";
+type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler";
 
 interface PlatformToolsProps {
   tool: ToolType | null;
@@ -1454,6 +1467,10 @@ const TOOL_META: Record<ToolType, { title: string; icon: React.ComponentType<{ c
   "box-model": { title: "Box Model Visualizer", icon: Box, description: "Interactive box model diagram — tweak margin/border/padding/content with live sliders, toggle box-sizing, get computed dimensions + generated CSS." },
   "flex-playground": { title: "Flexbox Playground", icon: Rows3, description: "Full flexbox playground — container + per-item controls, live layout preview, add/remove items, generated CSS with flex shorthand." },
   "transition-studio": { title: "Transition Studio", icon: Timer, description: "Build multi-property CSS transitions with per-property timing/delay/easing, live hover/click trigger, and generated shorthand CSS." },
+  "pattern-generator": { title: "Background Pattern Generator", icon: Shapes, description: "Generate pure-CSS background patterns (stripes, grid, dots, checker, triangles, zigzag) with color + size controls and copy-ready CSS." },
+  "transform-studio": { title: "Transform Studio", icon: Move, description: "Visual builder for CSS transform — combine translate/rotate/scale/skew/3D with live preview, transform-origin picker, and layer reordering." },
+  "cursor-gallery": { title: "Cursor Preview Gallery", icon: MousePointer2, description: "Hover-preview every CSS cursor value (pointer, grab, text, resize…), search by category, and build custom cursors with hotspot." },
+  "scrollbar-styler": { title: "Scrollbar Styler", icon: ScrollText, description: "Design custom CSS scrollbars — width, colors, radius, hover, border. Cross-browser (WebKit + Firefox). Live preview with 6 presets." },
 };
 
 export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformToolsProps) {
@@ -1502,6 +1519,10 @@ export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformTo
               {tool === "box-model" && <BoxModelVisualizer />}
               {tool === "flex-playground" && <FlexPlayground />}
               {tool === "transition-studio" && <TransitionStudio />}
+              {tool === "pattern-generator" && <BackgroundPatternGenerator />}
+              {tool === "transform-studio" && <TransformStudio />}
+              {tool === "cursor-gallery" && <CursorPreviewGallery />}
+              {tool === "scrollbar-styler" && <ScrollbarStyler />}
             </div>
           </>
         )}

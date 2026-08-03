@@ -1386,7 +1386,7 @@ export default function RoyCSSPage() {
                   className="size-1.5 rounded-full bg-primary"
                 />
                 <Package className="size-3.5" />
-                700+ CSS effects · React · Vue · Angular · Svelte
+                1569+ CSS effects · React · Vue · Angular · Svelte
               </div>
             </ScrollReveal>
 

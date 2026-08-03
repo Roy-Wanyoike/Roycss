@@ -1,13 +1,15 @@
 {
   "name": "RoyCSS — CSS Effects Library",
   "short_name": "RoyCSS",
-  "description": "1569+ production-ready CSS effects with live demos",
+  "description": "1569+ production-ready CSS effects with live demos, 29 developer tools, CLI, and MCP server.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a0a0a",
   "theme_color": "#10b981",
+  "orientation": "any",
+  "categories": ["developer", "productivity", "design"],
   "icons": [
-    { "src": "/favicon.png", "sizes": "32x32", "type": "image/png" },
-    { "src": "/apple-icon.png", "sizes": "180x180", "type": "image/png" }
+    { "src": "/favicon.png", "sizes": "1024x1024", "type": "image/png", "purpose": "any" },
+    { "src": "/apple-icon.png", "sizes": "1024x1024", "type": "image/png", "purpose": "maskable" }
   ]
 }

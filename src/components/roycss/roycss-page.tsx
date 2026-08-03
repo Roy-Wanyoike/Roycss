@@ -243,11 +243,29 @@ function ThemeToggle() {
   const [dark, setDark] = useState(true);
 
   useEffect(() => {
+    // Load saved preference on mount (deferred to satisfy set-state-in-effect rule)
+    const id = requestAnimationFrame(() => {
+      const saved = localStorage.getItem("roycss-theme");
+      if (saved === "light") {
+        setDark(false);
+        return;
+      }
+      // Respect prefers-color-scheme if no saved preference
+      if (!saved && window.matchMedia("(prefers-color-scheme: light)").matches) {
+        setDark(false);
+      }
+    });
+    return () => cancelAnimationFrame(id);
+  }, []);
+
+  useEffect(() => {
     const root = document.documentElement;
     if (dark) {
       root.classList.add("dark");
+      localStorage.setItem("roycss-theme", "dark");
     } else {
       root.classList.remove("dark");
+      localStorage.setItem("roycss-theme", "light");
     }
   }, [dark]);
 
@@ -921,7 +939,7 @@ export default function RoyCSSPage() {
   const [docsOpen, setDocsOpen] = useState(false);
   const [compareOpen, setCompareOpen] = useState(false);
   const [compareEffects, setCompareEffects] = useState<CSSEffect[]>([]);
-  const [platformTool, setPlatformTool] = useState<"ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | null>(null);
+  const [platformTool, setPlatformTool] = useState<"ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | null>(null);
   const [recentOpen, setRecentOpen] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const [sponsorModalOpen, setSponsorModalOpen] = useState(false);
@@ -1785,7 +1803,7 @@ export default function RoyCSSPage() {
       {/* ─── Platform Ecosystem (18-product vision) ─────────── */}
       <PlatformEcosystem
         onLaunchTool={(toolId) => {
-          if (toolId === "ai-playground" || toolId === "css-doctor" || toolId === "utility-explorer" || toolId === "benchmark" || toolId === "genome" || toolId === "ai-migration" || toolId === "challenges" || toolId === "design-diff" || toolId === "css-minifier" || toolId === "specificity" || toolId === "easing" || toolId === "stacking" || toolId === "similarity" || toolId === "perf" || toolId === "browser-support" || toolId === "print" || toolId === "selector-tester" || toolId === "dark-mode" || toolId === "variable-graph" || toolId === "fluid-type" || toolId === "scroll-animation" || toolId === "grid-areas" || toolId === "container-query" || toolId === "nesting" || toolId === "contrast-matrix" || toolId === "unit-converter" || toolId === "box-model" || toolId === "flex-playground" || toolId === "transition-studio") {
+          if (toolId === "ai-playground" || toolId === "css-doctor" || toolId === "utility-explorer" || toolId === "benchmark" || toolId === "genome" || toolId === "ai-migration" || toolId === "challenges" || toolId === "design-diff" || toolId === "css-minifier" || toolId === "specificity" || toolId === "easing" || toolId === "stacking" || toolId === "similarity" || toolId === "perf" || toolId === "browser-support" || toolId === "print" || toolId === "selector-tester" || toolId === "dark-mode" || toolId === "variable-graph" || toolId === "fluid-type" || toolId === "scroll-animation" || toolId === "grid-areas" || toolId === "container-query" || toolId === "nesting" || toolId === "contrast-matrix" || toolId === "unit-converter" || toolId === "box-model" || toolId === "flex-playground" || toolId === "transition-studio" || toolId === "pattern-generator" || toolId === "transform-studio" || toolId === "cursor-gallery" || toolId === "scrollbar-styler") {
             setPlatformTool(toolId);
           }
         }}

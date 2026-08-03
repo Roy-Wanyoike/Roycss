@@ -46,9 +46,13 @@ export async function POST(req: Request) {
           message: message.slice(0, 5000),
         },
       });
-    } catch {
-      // DB write is best-effort; we still respond OK so the UX is smooth.
-      console.error("[contact] Failed to persist message to DB");
+    } catch (dbErr) {
+      // DB write failed — return 503 so the user knows to retry
+      console.error("[contact] Failed to persist message to DB:", dbErr);
+      return NextResponse.json(
+        { ok: false, error: "We couldn't save your message right now. Please try again later." },
+        { status: 503 }
+      );
     }
 
     return NextResponse.json({

@@ -56,6 +56,11 @@ import {
   Box,
   Rows3,
   Timer,
+  Images,
+  Filter,
+  Disc,
+  Move,
+  ScrollText,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -497,6 +502,30 @@ const DIFFERENTIATORS: Differentiator[] = [
     description: "Build multi-property CSS transitions with per-property duration/easing/delay. Live hover/click trigger preview, configurable 'to' state, and generated transition shorthand CSS.",
     icon: Timer,
   },
+  {
+    id: "pattern-generator",
+    name: "Background Pattern Generator",
+    description: "Generate pure-CSS background patterns — stripes, grid, dots, checkerboard, triangles, zigzag, crosshatch, polka dots, waves, gingham. 8 color presets.",
+    icon: Shapes,
+  },
+  {
+    id: "transform-studio",
+    name: "Transform Studio",
+    description: "Visual builder for CSS transform — combine translate/rotate/scale/skew/3D transforms as layers. Live 3D preview with ghost outline, transform-origin picker, 6 presets.",
+    icon: Move,
+  },
+  {
+    id: "cursor-gallery",
+    name: "Cursor Preview Gallery",
+    description: "Hover-preview every CSS cursor value (pointer, grab, text, resize…), search by category, and build custom cursors with image upload + hotspot positioning.",
+    icon: MousePointer2,
+  },
+  {
+    id: "scrollbar-styler",
+    name: "Scrollbar Styler",
+    description: "Design custom CSS scrollbars — width, colors, radius, hover, border. Cross-browser (WebKit + Firefox). Live scrollable preview with 6 presets (Minimal, Rounded, Neon, MacOS).",
+    icon: ScrollText,
+  },
 ];
 
 /* ═══════════════════════════════════════════════════════════════
@@ -919,6 +948,10 @@ const INTERACTIVE_TOOLS: Record<string, string> = {
   "box-model": "box-model",
   "flex-playground": "flex-playground",
   "transition-studio": "transition-studio",
+  "pattern-generator": "pattern-generator",
+  "transform-studio": "transform-studio",
+  "cursor-gallery": "cursor-gallery",
+  "scrollbar-styler": "scrollbar-styler",
   // Note: mcp-server and inspector are external tools (CLI/Chrome extension),
   // NOT in-browser tools. They should expand to show setup instructions,
   // NOT try to open a panel. So they are intentionally NOT in this map.

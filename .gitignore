@@ -56,9 +56,11 @@ Thumbs.db
 *.pem
 
 # ─── IDE & editor ──────────────────────────────────────────────
-.vscode/
+.vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
 .idea/
 *.swp
 *.swo

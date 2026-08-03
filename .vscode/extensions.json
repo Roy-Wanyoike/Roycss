@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "ms-vscode.vscode-typescript-next",
+    "prisma.prisma",
+    "antfu.bun-vscode",
+    "unifiedjs.vscode-mdx",
+    "mikestead.dotenv"
+  ]
+}

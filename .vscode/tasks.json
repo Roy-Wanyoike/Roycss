@@ -1,0 +1,53 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Dev Server",
+      "type": "shell",
+      "command": "bun run dev",
+      "group": { "kind": "build", "isDefault": true },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Lint",
+      "type": "shell",
+      "command": "bun run lint",
+      "group": "build",
+      "problemMatcher": ["$eslint-stylish"]
+    },
+    {
+      "label": "Build CSS Library (dist/)",
+      "type": "shell",
+      "command": "bun run build:package",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Build CLI (cli/index.js)",
+      "type": "shell",
+      "command": "bun run build:cli",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "TypeScript Check",
+      "type": "shell",
+      "command": "bunx tsc --noEmit --skipLibCheck",
+      "group": "build",
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Database: Push Schema",
+      "type": "shell",
+      "command": "bun run db:push",
+      "group": "build",
+      "problemMatcher": []
+    }
+  ]
+}

@@ -552,6 +552,54 @@ const DIFFERENTIATORS: Differentiator[] = [
     description: "Interactive CSS position playground — static/relative/absolute/fixed/sticky. Draggable target element, inset controls, z-index, sticky scroll demo, 5 presets.",
     icon: Move,
   },
+  {
+    id: "property-inspector",
+    name: "Custom Property Inspector",
+    description: "Paste CSS → extract every --custom-property with resolved values, type detection (color/length/number), usage counts, and inheritance chains. Copy as :root block.",
+    icon: Search,
+  },
+  {
+    id: "animation-timeline",
+    name: "Animation Timeline Visualizer",
+    description: "Visualize multiple CSS animations on a Gantt-style timeline. See overlaps, play with a scrubber, adjust speed, and generate animation shorthand CSS.",
+    icon: Film,
+  },
+  {
+    id: "sprite-sheet",
+    name: "Sprite Sheet Generator",
+    description: "Combine images into a CSS sprite sheet — horizontal/vertical/grid layout, download PNG, generate background-position CSS + steps() animation.",
+    icon: Images,
+  },
+  {
+    id: "text-shadow",
+    name: "Text Shadow Studio",
+    description: "Design multi-layer text-shadows with live preview and 9 curated presets (neon glow, 3D extrude, fire, retro, letterpress). Copy production-ready CSS.",
+    icon: Type,
+  },
+  {
+    id: "filter-studio",
+    name: "Filter Studio Pro",
+    description: "Chain multiple CSS filters (blur, brightness, contrast, hue-rotate, drop-shadow) with live preview on image/box/text, before/after comparison, and SVG filter export.",
+    icon: Filter,
+  },
+  {
+    id: "conic-gradient",
+    name: "Conic Gradient Generator",
+    description: "Build conic-gradient() and repeating-conic-gradient() with a draggable angle dial, color stops on a strip, center-point pad, and 6 presets (rainbow, pie, sunburst).",
+    icon: Disc,
+  },
+  {
+    id: "motion-path",
+    name: "Motion Path Animator",
+    description: "Draw a path on an SVG canvas and animate an element along it using CSS offset-path. 5 path types (line/curve/circle/ellipse/custom), 8 presets (wave, figure-8, heart, star).",
+    icon: Spline,
+  },
+  {
+    id: "view-transition",
+    name: "View Transition Builder",
+    description: "Build View Transitions API demos with 6 transition types (morph, fade, slide, zoom, flip, custom). Live startViewTransition() trigger with feature detection and fallback.",
+    icon: SquareStack,
+  },
 ];
 
 /* ═══════════════════════════════════════════════════════════════
@@ -982,6 +1030,14 @@ const INTERACTIVE_TOOLS: Record<string, string> = {
   "writing-mode": "writing-mode",
   "object-fit": "object-fit",
   "positioning": "positioning",
+  "property-inspector": "property-inspector",
+  "animation-timeline": "animation-timeline",
+  "sprite-sheet": "sprite-sheet",
+  "text-shadow": "text-shadow",
+  "filter-studio": "filter-studio",
+  "conic-gradient": "conic-gradient",
+  "motion-path": "motion-path",
+  "view-transition": "view-transition",
   // Note: mcp-server and inspector are external tools (CLI/Chrome extension),
   // NOT in-browser tools. They should expand to show setup instructions,
   // NOT try to open a panel. So they are intentionally NOT in this map.

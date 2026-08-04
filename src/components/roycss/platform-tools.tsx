@@ -90,13 +90,21 @@ import { GapSpacingCalculator } from "@/components/roycss/tools/gap-spacing";
 import { WritingModePlayground } from "@/components/roycss/tools/writing-mode";
 import { ObjectFitVisualizer } from "@/components/roycss/tools/object-fit";
 import { PositioningPlayground } from "@/components/roycss/tools/positioning";
+import { CustomPropertyInspector } from "@/components/roycss/tools/property-inspector";
+import { AnimationTimelineVisualizer } from "@/components/roycss/tools/animation-timeline";
+import { SpriteSheetGenerator } from "@/components/roycss/tools/sprite-sheet-generator";
+import { TextShadowStudio } from "@/components/roycss/tools/text-shadow-studio";
+import { FilterStudioPro } from "@/components/roycss/tools/filter-studio-pro";
+import { ConicGradientGenerator } from "@/components/roycss/tools/conic-gradient";
+import { MotionPathAnimator } from "@/components/roycss/tools/motion-path";
+import { ViewTransitionBuilder } from "@/components/roycss/tools/view-transition";
 import type { CSSEffect } from "@/lib/roycss-types";
 
 /* ═══════════════════════════════════════════════════════════════
    Shared types
    ═══════════════════════════════════════════════════════════════ */
 
-type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | "gap-spacing" | "writing-mode" | "object-fit" | "positioning";
+type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | "gap-spacing" | "writing-mode" | "object-fit" | "positioning" | "property-inspector" | "animation-timeline" | "sprite-sheet" | "text-shadow" | "filter-studio" | "conic-gradient" | "motion-path" | "view-transition";
 
 interface PlatformToolsProps {
   tool: ToolType | null;
@@ -1482,6 +1490,14 @@ const TOOL_META: Record<ToolType, { title: string; icon: React.ComponentType<{ c
   "writing-mode": { title: "Writing Mode Playground", icon: Languages, description: "Explore CSS writing-mode, direction, text-orientation for vertical text, RTL, and CJK layouts. Logical properties mapping + RTL flip demo." },
   "object-fit": { title: "Object Fit Visualizer", icon: Image, description: "Compare object-fit values (fill, contain, cover, none, scale-down) with live preview on different aspect ratios. Side-by-side comparison." },
   "positioning": { title: "Positioning Playground", icon: Move, description: "Interactive CSS position playground — static/relative/absolute/fixed/sticky. Draggable target, inset controls, z-index, sticky scroll demo." },
+  "property-inspector": { title: "Custom Property Inspector", icon: Search, description: "Extract every --custom-property from your CSS with resolved values, type detection, usage counts, and inheritance chains." },
+  "animation-timeline": { title: "Animation Timeline", icon: Film, description: "Visualize multiple CSS animations on a Gantt-style timeline. See overlaps, play with a scrubber, generate shorthand CSS." },
+  "sprite-sheet": { title: "Sprite Sheet Generator", icon: Images, description: "Combine images into a sprite sheet and generate background-position CSS + steps() animation. Download PNG, copy CSS." },
+  "text-shadow": { title: "Text Shadow Studio", icon: Type, description: "Design multi-layer text-shadows with live preview, 9 curated presets (neon, 3D, fire, retro), and generated CSS." },
+  "filter-studio": { title: "Filter Studio Pro", icon: Filter, description: "Chain multiple CSS filters (blur, brightness, hue-rotate, drop-shadow…) with live preview, before/after comparison, and SVG filter export." },
+  "conic-gradient": { title: "Conic Gradient Generator", icon: Disc, description: "Build conic-gradient() and repeating-conic-gradient() with a draggable angle dial, color stops, center-point pad, and 6 presets." },
+  "motion-path": { title: "Motion Path Animator", icon: Spline, description: "Draw a path and animate an element along it using CSS offset-path. 5 path types, 8 presets, live preview with real offset-path animation." },
+  "view-transition": { title: "View Transition Builder", icon: SquareStack, description: "Build View Transitions API demos — 6 transition types (morph, fade, slide, zoom, flip, custom) with a live startViewTransition() trigger." },
 };
 
 export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformToolsProps) {
@@ -1538,6 +1554,14 @@ export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformTo
               {tool === "writing-mode" && <WritingModePlayground />}
               {tool === "object-fit" && <ObjectFitVisualizer />}
               {tool === "positioning" && <PositioningPlayground />}
+              {tool === "property-inspector" && <CustomPropertyInspector />}
+              {tool === "animation-timeline" && <AnimationTimelineVisualizer />}
+              {tool === "sprite-sheet" && <SpriteSheetGenerator />}
+              {tool === "text-shadow" && <TextShadowStudio />}
+              {tool === "filter-studio" && <FilterStudioPro />}
+              {tool === "conic-gradient" && <ConicGradientGenerator />}
+              {tool === "motion-path" && <MotionPathAnimator />}
+              {tool === "view-transition" && <ViewTransitionBuilder />}
             </div>
           </>
         )}

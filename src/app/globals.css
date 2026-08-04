@@ -713,3 +713,45 @@
   font-display: swap;
   src: local('Geist');
 }
+
+/* ─── Floating Navbar Neon Glow ────────────────────────────── */
+@keyframes roycss-nav-glow-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 1px color-mix(in oklch, var(--primary) 20%, transparent),
+      0 4px 24px oklch(0 0 0 / 0.12),
+      0 0 20px color-mix(in oklch, var(--primary) 25%, transparent),
+      0 0 40px color-mix(in oklch, var(--primary) 12%, transparent),
+      inset 0 1px 0 oklch(1 0 0 / 0.08);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px color-mix(in oklch, var(--primary) 35%, transparent),
+      0 4px 28px oklch(0 0 0 / 0.15),
+      0 0 28px color-mix(in oklch, var(--primary) 40%, transparent),
+      0 0 56px color-mix(in oklch, var(--primary) 20%, transparent),
+      inset 0 1px 0 oklch(1 0 0 / 0.08);
+  }
+}
+
+.roycss-nav-neon {
+  animation: roycss-nav-glow-pulse 4s ease-in-out infinite;
+}
+
+/* Active nav item gets an inner neon glow */
+.roycss-nav-neon .bg-primary {
+  box-shadow:
+    0 0 12px color-mix(in oklch, var(--primary) 50%, transparent),
+    0 0 24px color-mix(in oklch, var(--primary) 25%, transparent);
+}
+
+/* Hover on any nav button boosts the container glow */
+.roycss-nav-neon:hover {
+  animation-duration: 2s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-neon {
+    animation: none;
+  }
+}

@@ -38,8 +38,8 @@ export function StickyMiniNav({ activeSection, onScrollToSection, onOpenSearch, 
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.2 }}
-          className="fixed top-16 left-1/2 -translate-x-1/2 z-40 hidden lg:flex items-center gap-1 px-3 py-1.5 rounded-full border border-primary/20 shadow-lg"
-          style={{ background: "color-mix(in oklch, var(--background) 55%, transparent)", backdropFilter: "blur(16px) saturate(180%)", WebkitBackdropFilter: "blur(16px) saturate(180%)", boxShadow: "0 4px 24px oklch(0 0 0 / 0.12), inset 0 1px 0 oklch(1 0 0 / 0.08)" }}
+          className="fixed top-16 left-1/2 -translate-x-1/2 z-40 hidden lg:flex items-center gap-1 px-3 py-1.5 rounded-full border border-primary/30 shadow-lg roycss-nav-neon"
+          style={{ background: "color-mix(in oklch, var(--background) 55%, transparent)", backdropFilter: "blur(16px) saturate(180%)", WebkitBackdropFilter: "blur(16px) saturate(180%)", boxShadow: "0 0 0 1px color-mix(in oklch, var(--primary) 20%, transparent), 0 4px 24px oklch(0 0 0 / 0.12), 0 0 20px color-mix(in oklch, var(--primary) 25%, transparent), 0 0 40px color-mix(in oklch, var(--primary) 12%, transparent), inset 0 1px 0 oklch(1 0 0 / 0.08)" }}
           role="navigation"
           aria-label="Quick navigation"
         >

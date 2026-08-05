@@ -63,6 +63,10 @@ import {
   ScrollText,
   Languages,
   Image,
+  Brush,
+  Blend,
+  TableProperties,
+  Proportions,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -600,6 +604,30 @@ const DIFFERENTIATORS: Differentiator[] = [
     description: "Build View Transitions API demos with 6 transition types (morph, fade, slide, zoom, flip, custom). Live startViewTransition() trigger with feature detection and fallback.",
     icon: SquareStack,
   },
+  {
+    id: "mask-studio",
+    name: "Mask Studio",
+    description: "Visual CSS mask builder — gradient masks, image masks (8 SVG presets), text masks. Live preview with -webkit- prefixes for Safari. 7 presets.",
+    icon: Brush,
+  },
+  {
+    id: "gradient-mesh",
+    name: "Gradient Mesh Generator",
+    description: "Create mesh-gradient backgrounds with overlapping radial-gradients. Drag stops on preview, blend modes, 8 presets (Aurora, Sunset, Ocean, Neon), randomize.",
+    icon: Blend,
+  },
+  {
+    id: "table-styler",
+    name: "Table Styler",
+    description: "Style HTML tables — borders, headers, striped rows, hover effects, sticky header, responsive. Live preview with mock data. 6 presets (Minimal, Striped, Dark mode).",
+    icon: TableProperties,
+  },
+  {
+    id: "aspect-ratio",
+    name: "Aspect Ratio Calculator",
+    description: "Compute dimensions from aspect ratios, visualize responsive behavior at mobile/tablet/desktop, generate modern + padding-top fallback CSS. 8 common ratios.",
+    icon: Proportions,
+  },
 ];
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1038,6 +1066,10 @@ const INTERACTIVE_TOOLS: Record<string, string> = {
   "conic-gradient": "conic-gradient",
   "motion-path": "motion-path",
   "view-transition": "view-transition",
+  "mask-studio": "mask-studio",
+  "gradient-mesh": "gradient-mesh",
+  "table-styler": "table-styler",
+  "aspect-ratio": "aspect-ratio",
   // Note: mcp-server and inspector are external tools (CLI/Chrome extension),
   // NOT in-browser tools. They should expand to show setup instructions,
   // NOT try to open a panel. So they are intentionally NOT in this map.

@@ -57,6 +57,10 @@ import {
   Languages,
   Image,
   AlignVerticalJustifyCenter,
+  Brush,
+  Blend,
+  TableProperties,
+  Proportions,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
@@ -98,13 +102,17 @@ import { FilterStudioPro } from "@/components/roycss/tools/filter-studio-pro";
 import { ConicGradientGenerator } from "@/components/roycss/tools/conic-gradient";
 import { MotionPathAnimator } from "@/components/roycss/tools/motion-path";
 import { ViewTransitionBuilder } from "@/components/roycss/tools/view-transition";
+import { MaskStudio } from "@/components/roycss/tools/mask-studio";
+import { GradientMeshGenerator } from "@/components/roycss/tools/gradient-mesh";
+import { TableStyler } from "@/components/roycss/tools/table-styler";
+import { AspectRatioCalculator } from "@/components/roycss/tools/aspect-ratio";
 import type { CSSEffect } from "@/lib/roycss-types";
 
 /* ═══════════════════════════════════════════════════════════════
    Shared types
    ═══════════════════════════════════════════════════════════════ */
 
-type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | "gap-spacing" | "writing-mode" | "object-fit" | "positioning" | "property-inspector" | "animation-timeline" | "sprite-sheet" | "text-shadow" | "filter-studio" | "conic-gradient" | "motion-path" | "view-transition";
+type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | "gap-spacing" | "writing-mode" | "object-fit" | "positioning" | "property-inspector" | "animation-timeline" | "sprite-sheet" | "text-shadow" | "filter-studio" | "conic-gradient" | "motion-path" | "view-transition" | "mask-studio" | "gradient-mesh" | "table-styler" | "aspect-ratio";
 
 interface PlatformToolsProps {
   tool: ToolType | null;
@@ -1498,6 +1506,10 @@ const TOOL_META: Record<ToolType, { title: string; icon: React.ComponentType<{ c
   "conic-gradient": { title: "Conic Gradient Generator", icon: Disc, description: "Build conic-gradient() and repeating-conic-gradient() with a draggable angle dial, color stops, center-point pad, and 6 presets." },
   "motion-path": { title: "Motion Path Animator", icon: Spline, description: "Draw a path and animate an element along it using CSS offset-path. 5 path types, 8 presets, live preview with real offset-path animation." },
   "view-transition": { title: "View Transition Builder", icon: SquareStack, description: "Build View Transitions API demos — 6 transition types (morph, fade, slide, zoom, flip, custom) with a live startViewTransition() trigger." },
+  "mask-studio": { title: "Mask Studio", icon: Brush, description: "Visual CSS mask builder — gradient masks, image masks (8 SVG presets), text masks. Live preview with -webkit- prefixes. Copy production CSS." },
+  "gradient-mesh": { title: "Gradient Mesh Generator", icon: Blend, description: "Create mesh-gradient backgrounds with multiple overlapping radial-gradients. Drag stops on preview, blend modes, 8 presets, randomize." },
+  "table-styler": { title: "Table Styler", icon: TableProperties, description: "Style HTML tables — borders, headers, striped rows, hover, sticky header, responsive. Live preview with mock data. 6 presets." },
+  "aspect-ratio": { title: "Aspect Ratio Calculator", icon: Proportions, description: "Compute dimensions from aspect ratios, visualize responsive behavior, generate modern + fallback CSS. Reference table of 8 common ratios." },
 };
 
 export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformToolsProps) {
@@ -1562,6 +1574,10 @@ export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformTo
               {tool === "conic-gradient" && <ConicGradientGenerator />}
               {tool === "motion-path" && <MotionPathAnimator />}
               {tool === "view-transition" && <ViewTransitionBuilder />}
+              {tool === "mask-studio" && <MaskStudio />}
+              {tool === "gradient-mesh" && <GradientMeshGenerator />}
+              {tool === "table-styler" && <TableStyler />}
+              {tool === "aspect-ratio" && <AspectRatioCalculator />}
             </div>
           </>
         )}

@@ -94,6 +94,9 @@ import { EffectCard, LivePreview } from "@/components/roycss/effect-card";
 import { EffectDetailDialog } from "@/components/roycss/effect-detail-dialog";
 import { FavoritesSheet } from "@/components/roycss/favorites-sheet";
 import { ScrollToTop } from "@/components/roycss/scroll-to-top";
+import { EffectShowcaseGrid } from "@/components/roycss/effect-showcase-grid";
+import { CommunitySpotlight } from "@/components/roycss/community-spotlight";
+import { InteractiveTutorial } from "@/components/roycss/interactive-tutorial";
 import { SectionScrollbar } from "@/components/roycss/section-scrollbar";
 import { DynamicEffectCSS } from "@/components/roycss/dynamic-effect-css";
 import { VirtualScrollGrid } from "@/components/roycss/virtual-scroll-grid";
@@ -939,7 +942,7 @@ export default function RoyCSSPage() {
   const [docsOpen, setDocsOpen] = useState(false);
   const [compareOpen, setCompareOpen] = useState(false);
   const [compareEffects, setCompareEffects] = useState<CSSEffect[]>([]);
-  const [platformTool, setPlatformTool] = useState<"ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | "gap-spacing" | "writing-mode" | "object-fit" | "positioning" | "property-inspector" | "animation-timeline" | "sprite-sheet" | "text-shadow" | "filter-studio" | "conic-gradient" | "motion-path" | "view-transition" | null>(null);
+  const [platformTool, setPlatformTool] = useState<"ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | "gap-spacing" | "writing-mode" | "object-fit" | "positioning" | "property-inspector" | "animation-timeline" | "sprite-sheet" | "text-shadow" | "filter-studio" | "conic-gradient" | "motion-path" | "view-transition" | "mask-studio" | "gradient-mesh" | "table-styler" | "aspect-ratio" | null>(null);
   const [recentOpen, setRecentOpen] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const [sponsorModalOpen, setSponsorModalOpen] = useState(false);
@@ -1785,6 +1788,9 @@ export default function RoyCSSPage() {
       </section>
       </main>
 
+      {/* ─── Effect Showcase Grid (trending/new/community) ──── */}
+      <EffectShowcaseGrid />
+
       {/* ─── RoyMotion Showcase ─────────────────────────────── */}
       <RoyMotionShowcase />
 
@@ -1798,12 +1804,15 @@ export default function RoyCSSPage() {
       {/* ─── Collections Section (curated themed bundles) ────── */}
       <CollectionsSection onSelectEffect={(effect) => { setSelectedEffect(effect); setDialogOpen(true); }} />
 
+      {/* ─── Community Spotlight ────────────────────────────── */}
+      <CommunitySpotlight />
+
       <Separator className="opacity-50" />
 
       {/* ─── Platform Ecosystem (18-product vision) ─────────── */}
       <PlatformEcosystem
         onLaunchTool={(toolId) => {
-          if (toolId === "ai-playground" || toolId === "css-doctor" || toolId === "utility-explorer" || toolId === "benchmark" || toolId === "genome" || toolId === "ai-migration" || toolId === "challenges" || toolId === "design-diff" || toolId === "css-minifier" || toolId === "specificity" || toolId === "easing" || toolId === "stacking" || toolId === "similarity" || toolId === "perf" || toolId === "browser-support" || toolId === "print" || toolId === "selector-tester" || toolId === "dark-mode" || toolId === "variable-graph" || toolId === "fluid-type" || toolId === "scroll-animation" || toolId === "grid-areas" || toolId === "container-query" || toolId === "nesting" || toolId === "contrast-matrix" || toolId === "unit-converter" || toolId === "box-model" || toolId === "flex-playground" || toolId === "transition-studio" || toolId === "pattern-generator" || toolId === "transform-studio" || toolId === "cursor-gallery" || toolId === "scrollbar-styler" || toolId === "gap-spacing" || toolId === "writing-mode" || toolId === "object-fit" || toolId === "positioning" || toolId === "property-inspector" || toolId === "animation-timeline" || toolId === "sprite-sheet" || toolId === "text-shadow" || toolId === "filter-studio" || toolId === "conic-gradient" || toolId === "motion-path" || toolId === "view-transition") {
+          if (toolId === "ai-playground" || toolId === "css-doctor" || toolId === "utility-explorer" || toolId === "benchmark" || toolId === "genome" || toolId === "ai-migration" || toolId === "challenges" || toolId === "design-diff" || toolId === "css-minifier" || toolId === "specificity" || toolId === "easing" || toolId === "stacking" || toolId === "similarity" || toolId === "perf" || toolId === "browser-support" || toolId === "print" || toolId === "selector-tester" || toolId === "dark-mode" || toolId === "variable-graph" || toolId === "fluid-type" || toolId === "scroll-animation" || toolId === "grid-areas" || toolId === "container-query" || toolId === "nesting" || toolId === "contrast-matrix" || toolId === "unit-converter" || toolId === "box-model" || toolId === "flex-playground" || toolId === "transition-studio" || toolId === "pattern-generator" || toolId === "transform-studio" || toolId === "cursor-gallery" || toolId === "scrollbar-styler" || toolId === "gap-spacing" || toolId === "writing-mode" || toolId === "object-fit" || toolId === "positioning" || toolId === "property-inspector" || toolId === "animation-timeline" || toolId === "sprite-sheet" || toolId === "text-shadow" || toolId === "filter-studio" || toolId === "conic-gradient" || toolId === "motion-path" || toolId === "view-transition" || toolId === "mask-studio" || toolId === "gradient-mesh" || toolId === "table-styler" || toolId === "aspect-ratio") {
             setPlatformTool(toolId);
           }
         }}
@@ -2350,6 +2359,9 @@ export default function RoyCSSPage() {
 
       {/* Documentation Viewer Sheet (opens from navbar "Docs" button) */}
       <DocsViewer open={docsOpen} onOpenChange={setDocsOpen} />
+
+      {/* Interactive Tutorial Overlay (first-time user onboarding) */}
+      <InteractiveTutorial />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUp, Search, Heart, SlidersHorizontal, GitCompare } from "lucide-react";
 
@@ -24,12 +24,31 @@ const NAV_ITEMS = [
 
 export function StickyMiniNav({ activeSection, onScrollToSection, onOpenSearch, onOpenFavorites, onOpenPlayground, onOpenCompare }: MiniNavProps) {
   const [visible, setVisible] = useState(false);
+  const rafRef = useRef<number | null>(null);
+  const visibleRef = useRef(false);
+
   useEffect(() => {
-    const handleScroll = () => setVisible(window.scrollY > 400);
+    // rAF-throttled scroll handler — only flips state when the boolean
+    // actually changes (no spurious re-renders, no flicker).
+    const handleScroll = () => {
+      if (rafRef.current !== null) return;
+      rafRef.current = requestAnimationFrame(() => {
+        rafRef.current = null;
+        const shouldBeVisible = window.scrollY > 200;
+        if (shouldBeVisible !== visibleRef.current) {
+          visibleRef.current = shouldBeVisible;
+          setVisible(shouldBeVisible);
+        }
+      });
+    };
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    };
   }, []);
+
   return (
     <AnimatePresence>
       {visible && (
@@ -39,7 +58,14 @@ export function StickyMiniNav({ activeSection, onScrollToSection, onOpenSearch, 
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.2 }}
           className="fixed top-16 left-1/2 -translate-x-1/2 z-40 hidden lg:flex items-center gap-1 px-3 py-1.5 rounded-full border border-primary/30 shadow-lg roycss-nav-neon"
-          style={{ background: "color-mix(in oklch, var(--background) 55%, transparent)", backdropFilter: "blur(16px) saturate(180%)", WebkitBackdropFilter: "blur(16px) saturate(180%)", boxShadow: "0 0 0 1px color-mix(in oklch, var(--primary) 20%, transparent), 0 4px 24px oklch(0 0 0 / 0.12), 0 0 20px color-mix(in oklch, var(--primary) 25%, transparent), 0 0 40px color-mix(in oklch, var(--primary) 12%, transparent), inset 0 1px 0 oklch(1 0 0 / 0.08)" }}
+          style={{
+            background: "color-mix(in oklch, var(--background) 55%, transparent)",
+            backdropFilter: "blur(16px) saturate(180%)",
+            WebkitBackdropFilter: "blur(16px) saturate(180%)",
+            boxShadow: "0 0 0 1px color-mix(in oklch, var(--primary) 20%, transparent), 0 4px 24px oklch(0 0 0 / 0.12), 0 0 20px color-mix(in oklch, var(--primary) 25%, transparent), 0 0 40px color-mix(in oklch, var(--primary) 12%, transparent), inset 0 1px 0 oklch(1 0 0 / 0.08)",
+            contain: "layout style paint",
+            willChange: "transform, opacity",
+          }}
           role="navigation"
           aria-label="Quick navigation"
         >

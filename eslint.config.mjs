@@ -61,6 +61,7 @@ const eslintConfig = [...nextCoreWebVitals, ...nextTypescript, {
     "inspector/**",
     "vscode-extension/**",
     "mcp-server/**",
+    "backend/**",
     "dist/**",
     "tests/coverage/**",
     "tests/a11y/results/**",

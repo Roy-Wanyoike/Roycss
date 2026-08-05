@@ -1,0 +1,72 @@
+// RoyCSS Backend — Prisma schema
+//
+// Extended from the parent project's prisma/schema.prisma to add:
+//   - User (auth + ownership)
+//   - EffectFavorite (per-user favorites, unique on (userId, effectId))
+//   - Collection (user-curated effect groupings)
+//   - ContactMessage (already existed in the parent schema)
+//
+// Provider: sqlite (zero-config dev). To switch to Postgres, change
+// `provider = "sqlite"` → `provider = "postgresql"` and update the
+// DATABASE_URL in .env. The schema is Postgres-ready (no SQLite-only
+// types are used).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String           @id @default(cuid())
+  email        String           @unique
+  passwordHash String
+  name         String?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  favorites    EffectFavorite[]
+  collections  Collection[]
+
+  @@index([email])
+}
+
+model EffectFavorite {
+  id        String   @id @default(cuid())
+  userId    String
+  effectId  String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, effectId])
+  @@index([userId])
+  @@index([effectId])
+}
+
+model Collection {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String
+  description String?
+  effectIds   String   // JSON-encoded array of effect IDs
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([email])
+  @@index([createdAt])
+}

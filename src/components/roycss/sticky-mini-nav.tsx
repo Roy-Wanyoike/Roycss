@@ -19,6 +19,7 @@ const NAV_ITEMS = [
   { id: "patterns", label: "Patterns" },
   { id: "collections", label: "Collections" },
   { id: "platform", label: "Platform" },
+  { id: "products", label: "Products" },
   { id: "faq", label: "FAQ" },
 ];
 

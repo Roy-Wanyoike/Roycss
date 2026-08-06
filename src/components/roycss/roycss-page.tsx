@@ -97,6 +97,7 @@ import { ScrollToTop } from "@/components/roycss/scroll-to-top";
 import { EffectShowcaseGrid } from "@/components/roycss/effect-showcase-grid";
 import { CommunitySpotlight } from "@/components/roycss/community-spotlight";
 import { InteractiveTutorial } from "@/components/roycss/interactive-tutorial";
+import { PlatformProductsShowcase } from "@/components/roycss/pro/platform-products-showcase";
 import { SectionScrollbar } from "@/components/roycss/section-scrollbar";
 import { DynamicEffectCSS } from "@/components/roycss/dynamic-effect-css";
 import { VirtualScrollGrid } from "@/components/roycss/virtual-scroll-grid";
@@ -1036,6 +1037,18 @@ export default function RoyCSSPage() {
   const { isFavorite, toggleFavorite, clearAll, count } = useFavorites();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
+  // Ensure the page always loads at the top (Hero section) on initial visit.
+  // Prevents browser scroll restoration from jumping to #effects or a previous position.
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+    // Only scroll to top if there's no #effect= hash (deep link to a specific effect)
+    if (!window.location.hash.startsWith("#effect=")) {
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
   // Check URL hash for shared effect links (#effect=pulse-glow)
   useEffect(() => {
     const hash = window.location.hash;
@@ -1074,7 +1087,7 @@ export default function RoyCSSPage() {
   // Active section highlighting via IntersectionObserver
   const [activeSection, setActiveSection] = useState("");
   useEffect(() => {
-    const sectionIds = ["get-started", "effects", "recipes", "patterns", "platform", "docs", "faq"];
+    const sectionIds = ["get-started", "effects", "recipes", "patterns", "platform", "products", "docs", "faq"];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -1577,7 +1590,7 @@ export default function RoyCSSPage() {
       <Separator className="opacity-50" />
 
       {/* ─── Effects Section ────────────────────────────────── */}
-      <main id="effects" tabIndex={-1} className="flex-1 py-10 sm:py-14 scroll-mt-20 focus:outline-none">
+      <main id="effects" className="flex-1 py-10 sm:py-14 scroll-mt-20">
         <div className="container mx-auto px-4 sm:px-6">
           {/* Effect of the Day */}
           <div className="mb-8">
@@ -1885,6 +1898,11 @@ export default function RoyCSSPage() {
           setDocsOpen(true);
         }}
       />
+
+      <Separator className="opacity-50" />
+
+      {/* ─── Platform Products Showcase (24 live products) ─── */}
+      <PlatformProductsShowcase />
 
       <Separator className="opacity-50" />
 

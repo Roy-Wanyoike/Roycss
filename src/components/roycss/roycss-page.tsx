@@ -647,22 +647,157 @@ function FAQSection() {
 }
 
 /* ─── Animate.css → RoyCSS Migration Table ──────────────────── */
-const animateMigrationRows: Array<{ from: string; to: string }> = [
-  { from: "animate__bounce", to: "roycss-anim-bounce-in" },
-  { from: "animate__flash", to: "roycss-anim-flash" },
-  { from: "animate__pulse", to: "roycss-anim-pulse-glow" },
-  { from: "animate__rubberBand", to: "roycss-anim-rubber-band" },
-  { from: "animate__shake", to: "roycss-anim-shake" },
-  { from: "animate__swing", to: "roycss-anim-swing" },
-  { from: "animate__tada", to: "roycss-anim-tada" },
-  { from: "animate__wobble", to: "roycss-anim-wobble" },
-  { from: "animate__fadeIn", to: "roycss-anim-fade-in" },
-  { from: "animate__fadeInUp", to: "roycss-anim-fade-in-up" },
-  { from: "animate__slideInLeft", to: "roycss-anim-slide-in-left" },
-  { from: "animate__zoomIn", to: "roycss-anim-zoom-in" },
+const animateMigrationRows: Array<{ from: string; to: string; category: string }> = [
+  // Bouncing entrances
+  { from: "animate__bounce", to: "roycss-anim-bounce-in", category: "Entrance" },
+  { from: "animate__bounceIn", to: "roycss-anim-bounce-in", category: "Entrance" },
+  { from: "animate__bounceInDown", to: "roycss-anim-bounce-in-down", category: "Entrance" },
+  { from: "animate__bounceInLeft", to: "roycss-anim-bounce-in-left", category: "Entrance" },
+  { from: "animate__bounceInRight", to: "roycss-anim-bounce-in-right", category: "Entrance" },
+  { from: "animate__bounceInUp", to: "roycss-anim-bounce-in-up", category: "Entrance" },
+
+  // Fading entrances
+  { from: "animate__fadeIn", to: "roycss-anim-fade-in", category: "Entrance" },
+  { from: "animate__fadeInDown", to: "roycss-anim-fade-in-down", category: "Entrance" },
+  { from: "animate__fadeInDownBig", to: "roycss-anim-fade-in-down-big", category: "Entrance" },
+  { from: "animate__fadeInLeft", to: "roycss-anim-fade-in-left", category: "Entrance" },
+  { from: "animate__fadeInLeftBig", to: "roycss-anim-fade-in-left-big", category: "Entrance" },
+  { from: "animate__fadeInRight", to: "roycss-anim-fade-in-right", category: "Entrance" },
+  { from: "animate__fadeInRightBig", to: "roycss-anim-fade-in-right-big", category: "Entrance" },
+  { from: "animate__fadeInUp", to: "roycss-anim-fade-in-up", category: "Entrance" },
+  { from: "animate__fadeInUpBig", to: "roycss-anim-fade-in-up-big", category: "Entrance" },
+  { from: "animate__fadeInTopLeft", to: "roycss-anim-fade-in-top-left", category: "Entrance" },
+  { from: "animate__fadeInTopRight", to: "roycss-anim-fade-in-top-right", category: "Entrance" },
+  { from: "animate__fadeInBottomLeft", to: "roycss-anim-fade-in-bottom-left", category: "Entrance" },
+  { from: "animate__fadeInBottomRight", to: "roycss-anim-fade-in-bottom-right", category: "Entrance" },
+
+  // Sliding entrances
+  { from: "animate__slideInDown", to: "roycss-anim-slide-in-down", category: "Entrance" },
+  { from: "animate__slideInLeft", to: "roycss-anim-slide-in-left", category: "Entrance" },
+  { from: "animate__slideInRight", to: "roycss-anim-slide-in-right", category: "Entrance" },
+  { from: "animate__slideInUp", to: "roycss-anim-slide-in-up", category: "Entrance" },
+
+  // Zooming entrances
+  { from: "animate__zoomIn", to: "roycss-anim-zoom-in", category: "Entrance" },
+  { from: "animate__zoomInDown", to: "roycss-anim-zoom-in-down", category: "Entrance" },
+  { from: "animate__zoomInLeft", to: "roycss-anim-zoom-in-left", category: "Entrance" },
+  { from: "animate__zoomInRight", to: "roycss-anim-zoom-in-right", category: "Entrance" },
+  { from: "animate__zoomInUp", to: "roycss-anim-zoom-in-up", category: "Entrance" },
+
+  // Flipping entrances
+  { from: "animate__flipInX", to: "roycss-anim-flip-in-x", category: "Entrance" },
+  { from: "animate__flipInY", to: "roycss-anim-flip-in-y", category: "Entrance" },
+
+  // Lightspeed entrances
+  { from: "animate__lightSpeedInLeft", to: "roycss-anim-light-speed-in-left", category: "Entrance" },
+  { from: "animate__lightSpeedInRight", to: "roycss-anim-light-speed-in-right", category: "Entrance" },
+
+  // Rotating entrances
+  { from: "animate__rotateIn", to: "roycss-anim-rotate-in", category: "Entrance" },
+  { from: "animate__rotateInDownLeft", to: "roycss-anim-rotate-in-down-left", category: "Entrance" },
+  { from: "animate__rotateInDownRight", to: "roycss-anim-rotate-in-down-right", category: "Entrance" },
+  { from: "animate__rotateInUpLeft", to: "roycss-anim-rotate-in-up-left", category: "Entrance" },
+  { from: "animate__rotateInUpRight", to: "roycss-anim-rotate-in-up-right", category: "Entrance" },
+
+  // Rolling entrance
+  { from: "animate__rollIn", to: "roycss-anim-roll-in", category: "Entrance" },
+
+  // Back entrances
+  { from: "animate__backInDown", to: "roycss-anim-back-in-down", category: "Entrance" },
+  { from: "animate__backInLeft", to: "roycss-anim-back-in-left", category: "Entrance" },
+  { from: "animate__backInRight", to: "roycss-anim-back-in-right", category: "Entrance" },
+  { from: "animate__backInUp", to: "roycss-anim-back-in-up", category: "Entrance" },
+
+  // Fading exits
+  { from: "animate__fadeOut", to: "roycss-anim-fade-out", category: "Exit" },
+  { from: "animate__fadeOutDown", to: "roycss-anim-fade-out-down", category: "Exit" },
+  { from: "animate__fadeOutDownBig", to: "roycss-anim-fade-out-down-big", category: "Exit" },
+  { from: "animate__fadeOutLeft", to: "roycss-anim-fade-out-left", category: "Exit" },
+  { from: "animate__fadeOutLeftBig", to: "roycss-anim-fade-out-left-big", category: "Exit" },
+  { from: "animate__fadeOutRight", to: "roycss-anim-fade-out-right", category: "Exit" },
+  { from: "animate__fadeOutRightBig", to: "roycss-anim-fade-out-right-big", category: "Exit" },
+  { from: "animate__fadeOutUp", to: "roycss-anim-fade-out-up", category: "Exit" },
+  { from: "animate__fadeOutUpBig", to: "roycss-anim-fade-out-up-big", category: "Exit" },
+  { from: "animate__fadeOutTopLeft", to: "roycss-anim-fade-out-top-left", category: "Exit" },
+  { from: "animate__fadeOutTopRight", to: "roycss-anim-fade-out-top-right", category: "Exit" },
+  { from: "animate__fadeOutBottomRight", to: "roycss-anim-fade-out-bottom-right", category: "Exit" },
+  { from: "animate__fadeOutBottomLeft", to: "roycss-anim-fade-out-bottom-left", category: "Exit" },
+
+  // Sliding exits
+  { from: "animate__slideOutDown", to: "roycss-anim-slide-out-down", category: "Exit" },
+  { from: "animate__slideOutLeft", to: "roycss-anim-slide-out-left", category: "Exit" },
+  { from: "animate__slideOutRight", to: "roycss-anim-slide-out-right", category: "Exit" },
+  { from: "animate__slideOutUp", to: "roycss-anim-slide-out-up", category: "Exit" },
+
+  // Zooming exits
+  { from: "animate__zoomOut", to: "roycss-anim-zoom-out", category: "Exit" },
+  { from: "animate__zoomOutDown", to: "roycss-anim-zoom-out-down", category: "Exit" },
+  { from: "animate__zoomOutLeft", to: "roycss-anim-zoom-out-left", category: "Exit" },
+  { from: "animate__zoomOutRight", to: "roycss-anim-zoom-out-right", category: "Exit" },
+  { from: "animate__zoomOutUp", to: "roycss-anim-zoom-out-up", category: "Exit" },
+
+  // Bouncing exits
+  { from: "animate__bounceOut", to: "roycss-anim-bounce-out", category: "Exit" },
+  { from: "animate__bounceOutDown", to: "roycss-anim-bounce-out-down", category: "Exit" },
+  { from: "animate__bounceOutLeft", to: "roycss-anim-bounce-out-left", category: "Exit" },
+  { from: "animate__bounceOutRight", to: "roycss-anim-bounce-out-right", category: "Exit" },
+  { from: "animate__bounceOutUp", to: "roycss-anim-bounce-out-up", category: "Exit" },
+
+  // Flipping exits
+  { from: "animate__flipOutX", to: "roycss-anim-flip-out-x", category: "Exit" },
+  { from: "animate__flipOutY", to: "roycss-anim-flip-out-y", category: "Exit" },
+
+  // Lightspeed exits
+  { from: "animate__lightSpeedOutLeft", to: "roycss-anim-light-speed-out-left", category: "Exit" },
+  { from: "animate__lightSpeedOutRight", to: "roycss-anim-light-speed-out-right", category: "Exit" },
+
+  // Rotating exits
+  { from: "animate__rotateOut", to: "roycss-anim-rotate-out", category: "Exit" },
+  { from: "animate__rotateOutDownLeft", to: "roycss-anim-rotate-out-down-left", category: "Exit" },
+  { from: "animate__rotateOutDownRight", to: "roycss-anim-rotate-out-down-right", category: "Exit" },
+  { from: "animate__rotateOutUpLeft", to: "roycss-anim-rotate-out-up-left", category: "Exit" },
+  { from: "animate__rotateOutUpRight", to: "roycss-anim-rotate-out-up-right", category: "Exit" },
+
+  // Rolling exit
+  { from: "animate__rollOut", to: "roycss-anim-roll-out", category: "Exit" },
+
+  // Back exits
+  { from: "animate__backOutDown", to: "roycss-anim-back-out-down", category: "Exit" },
+  { from: "animate__backOutLeft", to: "roycss-anim-back-out-left", category: "Exit" },
+  { from: "animate__backOutRight", to: "roycss-anim-back-out-right", category: "Exit" },
+  { from: "animate__backOutUp", to: "roycss-anim-back-out-up", category: "Exit" },
+
+  // Attention seekers
+  { from: "animate__bounce", to: "roycss-anim-bounce", category: "Attention" },
+  { from: "animate__flash", to: "roycss-anim-flash", category: "Attention" },
+  { from: "animate__pulse", to: "roycss-anim-pulse", category: "Attention" },
+  { from: "animate__rubberBand", to: "roycss-anim-rubber-band", category: "Attention" },
+  { from: "animate__shakeX", to: "roycss-anim-shake-x", category: "Attention" },
+  { from: "animate__shakeY", to: "roycss-anim-shake-y", category: "Attention" },
+  { from: "animate__headShake", to: "roycss-anim-head-shake", category: "Attention" },
+  { from: "animate__swing", to: "roycss-anim-swing", category: "Attention" },
+  { from: "animate__tada", to: "roycss-anim-tada", category: "Attention" },
+  { from: "animate__wobble", to: "roycss-anim-wobble", category: "Attention" },
+  { from: "animate__jello", to: "roycss-anim-jello", category: "Attention" },
+  { from: "animate__heartBeat", to: "roycss-anim-heartbeat", category: "Attention" },
+
+  // Special
+  { from: "animate__animate__infinite", to: "roycss-loop-infinite", category: "Utility" },
+  { from: "animate__delay-2s", to: "roycss-delay-2s", category: "Utility" },
+  { from: "animate__delay-3s", to: "roycss-delay-3s", category: "Utility" },
+  { from: "animate__delay-4s", to: "roycss-delay-4s", category: "Utility" },
+  { from: "animate__delay-5s", to: "roycss-delay-5s", category: "Utility" },
+  { from: "animate__slow", to: "roycss-duration-slow", category: "Utility" },
+  { from: "animate__slower", to: "roycss-duration-slower", category: "Utility" },
+  { from: "animate__fast", to: "roycss-duration-fast", category: "Utility" },
+  { from: "animate__faster", to: "roycss-duration-faster", category: "Utility" },
 ];
 
 function MigrationTable() {
+  const [activeCategory, setActiveCategory] = useState<string>("All");
+  const categories = ["All", "Entrance", "Exit", "Attention", "Utility"];
+  const filtered = activeCategory === "All" ? animateMigrationRows : animateMigrationRows.filter((r) => r.category === activeCategory);
+
   return (
     <ScrollReveal className="mt-8 max-w-3xl mx-auto">
       <div className="rounded-2xl border border-border bg-card p-5 sm:p-6">
@@ -675,31 +810,62 @@ function MigrationTable() {
               Animate.css → RoyCSS Migration
             </h3>
             <p className="text-xs text-muted-foreground mt-0.5">
-              Drop-in replacements for common Animate.css classes. Same behavior,
+              Drop-in replacements for {animateMigrationRows.length} Animate.css classes. Same behavior,
               smaller bundle, no JS runtime.
             </p>
           </div>
         </div>
-        <div className="overflow-x-auto scrollbar-thin -mx-2">
+
+        {/* Category filter */}
+        <div className="flex flex-wrap gap-1.5 mb-4">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${
+                activeCategory === cat
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-muted/60 text-muted-foreground hover:text-foreground hover:bg-muted"
+              }`}
+              aria-pressed={activeCategory === cat}
+            >
+              {cat} {cat === "All" ? `(${animateMigrationRows.length})` : `(${animateMigrationRows.filter((r) => r.category === cat).length})`}
+            </button>
+          ))}
+        </div>
+
+        <div className="overflow-x-auto scrollbar-thin -mx-2 max-h-[360px] overflow-y-auto">
           <table className="roycss-migration-table">
-            <thead>
+            <thead className="sticky top-0 bg-card z-10">
               <tr>
                 <th scope="col">Animate.css</th>
                 <th scope="col" className="roycss-arrow" aria-label="maps to">→</th>
                 <th scope="col">RoyCSS</th>
+                <th scope="col">Type</th>
               </tr>
             </thead>
             <tbody>
-              {animateMigrationRows.map((row) => (
+              {filtered.map((row) => (
                 <tr key={row.from}>
                   <td><code>{row.from}</code></td>
                   <td className="roycss-arrow" aria-hidden="true">→</td>
-                  <td><code>{row.to}</code></td>
+                  <td><code className="text-primary">{row.to}</code></td>
+                  <td>
+                    <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${
+                      row.category === "Entrance" ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" :
+                      row.category === "Exit" ? "bg-rose-500/10 text-rose-600 dark:text-rose-400" :
+                      row.category === "Attention" ? "bg-amber-500/10 text-amber-600 dark:text-amber-400" :
+                      "bg-muted text-muted-foreground"
+                    }`}>{row.category}</span>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        <p className="text-xs text-muted-foreground mt-3 text-center">
+          Replace <code className="text-foreground">animate__</code> prefix with <code className="text-primary">roycss-anim-</code> — same animations, zero JavaScript, OKLCH colors, reduced-motion support built in.
+        </p>
       </div>
     </ScrollReveal>
   );

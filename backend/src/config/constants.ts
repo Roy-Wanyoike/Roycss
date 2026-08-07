@@ -46,6 +46,15 @@ export const CACHE_TTL = {
   recipeDetail: 10 * 60 * 1000,
   patternsList: 5 * 60 * 1000,
   patternDetail: 10 * 60 * 1000,
+  themesList: 10 * 60 * 1000, // 10 min
+  themeDetail: 10 * 60 * 1000,
+  iconsList: 10 * 60 * 1000,
+  iconDetail: 10 * 60 * 1000,
+  pathsList: 5 * 60 * 1000,
+  pathDetail: 5 * 60 * 1000,
+  templatesList: 5 * 60 * 1000,
+  templateDetail: 5 * 60 * 1000,
+  analytics: 5 * 60 * 1000,
 } as const;
 
 /** LRU cache size ceiling. */

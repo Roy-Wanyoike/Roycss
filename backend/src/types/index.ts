@@ -95,3 +95,135 @@ export interface AuthResponse {
   refreshToken: string;
   expiresIn: number;
 }
+
+// ─── Themes ──────────────────────────────────────────────────────────────
+
+/** Theme — color palette + design tokens for a RoyCSS deployment. */
+export interface Theme {
+  id: string;
+  name: string;
+  primary: string;
+  secondary: string;
+  accent: string;
+  background: string;
+  foreground: string;
+  /** Free-form token overrides (e.g. radius, spacing, typography). */
+  tokens: Record<string, unknown>;
+  createdAt: string; // ISO timestamp
+}
+
+// ─── Icons ───────────────────────────────────────────────────────────────
+
+/** Icon category union. */
+export type IconCategory =
+  | "navigation"
+  | "action"
+  | "communication"
+  | "media"
+  | "files"
+  | "user"
+  | "status";
+
+/** Icon — metadata only (SVG path lives in the front-end pack). */
+export interface Icon {
+  name: string;
+  category: IconCategory;
+  tags: string[];
+  svgPath: string;
+  strokeWidth: number;
+  sizes: number[];
+}
+
+// ─── Academy ─────────────────────────────────────────────────────────────
+
+/** Lesson — a single unit inside a learning path. */
+export interface Lesson {
+  id: string;
+  title: string;
+  type: "video" | "reading" | "lab" | "quiz";
+  duration: number; // minutes
+  completed: boolean;
+}
+
+/** LearningPath — ordered sequence of lessons toward a certification. */
+export interface LearningPath {
+  id: string;
+  name: string;
+  level: "Associate" | "Professional" | "Expert" | "Architect";
+  lessons: Lesson[];
+  duration: number; // total minutes
+  price: number;
+  certificationId: string;
+}
+
+// ─── Marketplace ─────────────────────────────────────────────────────────
+
+/** Template — a publishable starter built on RoyCSS. */
+export interface Template {
+  id: string;
+  name: string;
+  category: string;
+  price: number;
+  author: string;
+  downloads: number;
+  rating: number;
+  description: string;
+  features: string[];
+  thumbnail: string;
+  createdAt: string; // ISO timestamp
+}
+
+/** Review — a buyer review attached to a template. */
+export interface TemplateReview {
+  id: string;
+  templateId: string;
+  author: string;
+  rating: number;
+  comment: string;
+  createdAt: string; // ISO timestamp
+}
+
+// ─── Analytics ───────────────────────────────────────────────────────────
+
+/** Analytics overview — top-line KPIs. */
+export interface AnalyticsOverview {
+  totalUsers: number;
+  activeEffects: number;
+  apiCalls: number;
+  avgResponseTime: number; // ms
+  totalUsersChange: number; // % vs previous window
+  activeEffectsChange: number;
+  apiCallsChange: number;
+  avgResponseTimeChange: number;
+}
+
+/** TrafficDataPoint — single day of traffic. */
+export interface TrafficDataPoint {
+  date: string; // ISO date (yyyy-mm-dd)
+  visitors: number;
+  pageViews: number;
+}
+
+/** TopEffect — an effect with its usage stats. */
+export interface TopEffect {
+  id: string;
+  name: string;
+  category: string;
+  uses: number;
+  trend: number; // % change
+}
+
+/** DeviceBreakdown — share of traffic by device class. */
+export interface DeviceBreakdown {
+  desktop: number;
+  mobile: number;
+  tablet: number;
+}
+
+/** GeoData — share of traffic by country (top N). */
+export interface GeoData {
+  country: string;
+  code: string;
+  visitors: number;
+  share: number; // 0..1
+}

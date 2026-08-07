@@ -8,12 +8,17 @@ import express, { type Express } from "express";
 import helmet from "helmet";
 
 import { API_PREFIX } from "../config/constants.js";
+import { academyRouter } from "../modules/academy/routes.js";
+import { analyticsRouter } from "../modules/analytics/routes.js";
 import { authRouter } from "../modules/auth/routes.js";
 import { contactRouter } from "../modules/contact/routes.js";
 import { effectsRouter } from "../modules/effects/routes.js";
 import { healthRouter } from "../modules/health/routes.js";
+import { iconsRouter } from "../modules/icons/routes.js";
+import { marketplaceRouter } from "../modules/marketplace/routes.js";
 import { patternsRouter } from "../modules/patterns/routes.js";
 import { recipesRouter } from "../modules/recipes/routes.js";
+import { themesRouter } from "../modules/themes/routes.js";
 import { createLogger } from "../lib/logger.js";
 import { corsMiddleware } from "./middleware/cors.js";
 import { asyncHandler, errorHandler, notFoundHandler } from "./middleware/error.js";
@@ -53,6 +58,11 @@ export function createApp(): Express {
   app.use(`${API_PREFIX}/patterns`, patternsRouter);
   app.use(`${API_PREFIX}/contact`, contactRouter);
   app.use(`${API_PREFIX}/auth`, authRouter);
+  app.use(`${API_PREFIX}/themes`, themesRouter);
+  app.use(`${API_PREFIX}/icons`, iconsRouter);
+  app.use(`${API_PREFIX}/academy`, academyRouter);
+  app.use(`${API_PREFIX}/marketplace`, marketplaceRouter);
+  app.use(`${API_PREFIX}/analytics`, analyticsRouter);
 
   // ─── Root info endpoint ────────────────────────────────────────────────
   app.get(
@@ -75,6 +85,26 @@ export function createApp(): Express {
           "POST   /api/v1/auth/login",
           "POST   /api/v1/auth/refresh",
           "GET    /api/v1/auth/me",
+          "GET    /api/v1/themes",
+          "GET    /api/v1/themes/:id",
+          "POST   /api/v1/themes",
+          "PUT    /api/v1/themes/:id",
+          "DELETE /api/v1/themes/:id",
+          "GET    /api/v1/icons",
+          "GET    /api/v1/icons/categories",
+          "GET    /api/v1/icons/:name",
+          "GET    /api/v1/academy/paths",
+          "GET    /api/v1/academy/paths/:id",
+          "GET    /api/v1/academy/paths/:id/lessons",
+          "POST   /api/v1/academy/paths/:id/progress",
+          "GET    /api/v1/marketplace/templates",
+          "GET    /api/v1/marketplace/templates/:id",
+          "POST   /api/v1/marketplace/templates",
+          "GET    /api/v1/marketplace/templates/:id/reviews",
+          "GET    /api/v1/analytics/overview",
+          "GET    /api/v1/analytics/effects",
+          "GET    /api/v1/analytics/traffic",
+          "GET    /api/v1/analytics/devices",
         ],
       });
     }),

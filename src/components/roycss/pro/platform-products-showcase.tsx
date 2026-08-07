@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import {
   Grid3x3, KanbanSquare, Calendar, BarChart3, Palette, Shapes,
   Sparkles, Accessibility, Bot, LayoutGrid, Store, GraduationCap,
   LineChart, Code2, Users, Package, Blocks, Building2, Plug,
   BookOpen, FormInput, Search, Trophy, Layers, Wrench,
-  ChevronRight, X, Shield, Award,
+  ChevronRight, X, Shield, Award, Loader2,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -19,68 +19,70 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { ProDataGrid } from "@/components/roycss/pro/data-grid";
-import { ProKanbanBoard } from "@/components/roycss/pro/kanban-board";
-import { ProScheduler } from "@/components/roycss/pro/scheduler";
-import { ProCharts } from "@/components/roycss/pro/charts";
-import { ThemeSystem } from "@/components/roycss/pro/theme-system";
-import { IconPack } from "@/components/roycss/pro/icon-pack";
-import { MotionLibrary } from "@/components/roycss/pro/motion-library";
-import { AccessibilitySuite } from "@/components/roycss/pro/accessibility-suite";
-import { RoyAI } from "@/components/roycss/pro/roy-ai";
-import { VisualStudio } from "@/components/roycss/pro/visual-studio";
-import { Marketplace } from "@/components/roycss/pro/marketplace";
-import { Academy } from "@/components/roycss/pro/academy";
-import { AnalyticsDashboard } from "@/components/roycss/pro/analytics-dashboard";
-import { TemplateLibrary } from "@/components/roycss/pro/template-library";
-import { CommunityHub } from "@/components/roycss/pro/community-hub";
-import { PatternLibrary } from "@/components/roycss/pro/pattern-library";
-import { RoyBlocks } from "@/components/roycss/pro/roy-blocks";
-import { RoyBlueprints } from "@/components/roycss/pro/roy-blueprints";
-import { PluginHub } from "@/components/roycss/pro/plugin-hub";
-import { RoyAgents } from "@/components/roycss/pro/roy-agents";
-import { RoyStorybook } from "@/components/roycss/pro/roy-storybook";
-import { RoyForms } from "@/components/roycss/pro/roy-forms";
-import { RoySearch } from "@/components/roycss/pro/roy-search";
-import { RoyShowcase } from "@/components/roycss/pro/roy-showcase";
-import { RoyArchitect } from "@/components/roycss/pro/roy-architect";
-import { RoyReview } from "@/components/roycss/pro/roy-review";
-import { RoyRefactor } from "@/components/roycss/pro/roy-refactor";
-import { RoyPair } from "@/components/roycss/pro/roy-pair";
-import { RoyDesigner } from "@/components/roycss/pro/roy-designer";
-import { RoyScaffold } from "@/components/roycss/pro/roy-scaffold";
-import { RoyGenerator } from "@/components/roycss/pro/roy-generator";
-import { RoySync } from "@/components/roycss/pro/roy-sync";
-import { RoyVersion } from "@/components/roycss/pro/roy-version";
-import { RoyRegistry } from "@/components/roycss/pro/roy-registry";
-import { RoyMotionStudio } from "@/components/roycss/pro/roy-motion-studio";
-import { RoyGradientStudio } from "@/components/roycss/pro/roy-gradient-studio";
-import { RoyTypography } from "@/components/roycss/pro/roy-typography";
-import { RoyColorStudio } from "@/components/roycss/pro/roy-color-studio";
-import { RoyLayoutStudio } from "@/components/roycss/pro/roy-layout-studio";
-import { RoyGovernance } from "@/components/roycss/pro/roy-governance";
-import { RoyCompliance } from "@/components/roycss/pro/roy-compliance";
-import { RoyAuditCenter } from "@/components/roycss/pro/roy-audit-center";
-import { RoySandbox } from "@/components/roycss/pro/roy-sandbox";
-import { RoyMentor } from "@/components/roycss/pro/roy-mentor";
-import { RoyChallenges } from "@/components/roycss/pro/roy-challenges";
-import { RoyProfiler } from "@/components/roycss/pro/roy-profiler";
-import { RoyBundle } from "@/components/roycss/pro/roy-bundle";
-import { RoyObservatory } from "@/components/roycss/pro/roy-observatory";
-import { RoyOS } from "@/components/roycss/pro/roy-os";
-import { RoyFleet } from "@/components/roycss/pro/roy-fleet";
-import { RoyWorkspace } from "@/components/roycss/pro/roy-workspace";
-import { RoyDeploy } from "@/components/roycss/pro/roy-deploy";
-import { RoyPreview } from "@/components/roycss/pro/roy-preview";
-import { RoyCDN } from "@/components/roycss/pro/roy-cdn";
-import { RoyStorage } from "@/components/roycss/pro/roy-storage";
-import { RoyEdge } from "@/components/roycss/pro/roy-edge";
-import { RoyCertifications } from "@/components/roycss/pro/roy-certifications";
-import { RoyOpen } from "@/components/roycss/pro/roy-open";
-import { RoySpotlight } from "@/components/roycss/pro/roy-spotlight";
-import { RoyDigitalTwin } from "@/components/roycss/pro/roy-digital-twin";
-import { RoyLive } from "@/components/roycss/pro/roy-live";
-import { RoyBenchmark } from "@/components/roycss/pro/roy-benchmark";
+// Lazy-load all product components — they only load when a user clicks a product card.
+// This prevents 62 heavy components from loading on initial page render.
+const ProDataGrid = lazy(() => import("@/components/roycss/pro/data-grid").then(m => ({ default: m.ProDataGrid })));
+const ProKanbanBoard = lazy(() => import("@/components/roycss/pro/kanban-board").then(m => ({ default: m.ProKanbanBoard })));
+const ProScheduler = lazy(() => import("@/components/roycss/pro/scheduler").then(m => ({ default: m.ProScheduler })));
+const ProCharts = lazy(() => import("@/components/roycss/pro/charts").then(m => ({ default: m.ProCharts })));
+const ThemeSystem = lazy(() => import("@/components/roycss/pro/theme-system").then(m => ({ default: m.ThemeSystem })));
+const IconPack = lazy(() => import("@/components/roycss/pro/icon-pack").then(m => ({ default: m.IconPack })));
+const MotionLibrary = lazy(() => import("@/components/roycss/pro/motion-library").then(m => ({ default: m.MotionLibrary })));
+const AccessibilitySuite = lazy(() => import("@/components/roycss/pro/accessibility-suite").then(m => ({ default: m.AccessibilitySuite })));
+const RoyAI = lazy(() => import("@/components/roycss/pro/roy-ai").then(m => ({ default: m.RoyAI })));
+const VisualStudio = lazy(() => import("@/components/roycss/pro/visual-studio").then(m => ({ default: m.VisualStudio })));
+const Marketplace = lazy(() => import("@/components/roycss/pro/marketplace").then(m => ({ default: m.Marketplace })));
+const Academy = lazy(() => import("@/components/roycss/pro/academy").then(m => ({ default: m.Academy })));
+const AnalyticsDashboard = lazy(() => import("@/components/roycss/pro/analytics-dashboard").then(m => ({ default: m.AnalyticsDashboard })));
+const TemplateLibrary = lazy(() => import("@/components/roycss/pro/template-library").then(m => ({ default: m.TemplateLibrary })));
+const CommunityHub = lazy(() => import("@/components/roycss/pro/community-hub").then(m => ({ default: m.CommunityHub })));
+const PatternLibrary = lazy(() => import("@/components/roycss/pro/pattern-library").then(m => ({ default: m.PatternLibrary })));
+const RoyBlocks = lazy(() => import("@/components/roycss/pro/roy-blocks").then(m => ({ default: m.RoyBlocks })));
+const RoyBlueprints = lazy(() => import("@/components/roycss/pro/roy-blueprints").then(m => ({ default: m.RoyBlueprints })));
+const PluginHub = lazy(() => import("@/components/roycss/pro/plugin-hub").then(m => ({ default: m.PluginHub })));
+const RoyAgents = lazy(() => import("@/components/roycss/pro/roy-agents").then(m => ({ default: m.RoyAgents })));
+const RoyStorybook = lazy(() => import("@/components/roycss/pro/roy-storybook").then(m => ({ default: m.RoyStorybook })));
+const RoyForms = lazy(() => import("@/components/roycss/pro/roy-forms").then(m => ({ default: m.RoyForms })));
+const RoySearch = lazy(() => import("@/components/roycss/pro/roy-search").then(m => ({ default: m.RoySearch })));
+const RoyShowcase = lazy(() => import("@/components/roycss/pro/roy-showcase").then(m => ({ default: m.RoyShowcase })));
+const RoyArchitect = lazy(() => import("@/components/roycss/pro/roy-architect").then(m => ({ default: m.RoyArchitect })));
+const RoyReview = lazy(() => import("@/components/roycss/pro/roy-review").then(m => ({ default: m.RoyReview })));
+const RoyRefactor = lazy(() => import("@/components/roycss/pro/roy-refactor").then(m => ({ default: m.RoyRefactor })));
+const RoyPair = lazy(() => import("@/components/roycss/pro/roy-pair").then(m => ({ default: m.RoyPair })));
+const RoyDesigner = lazy(() => import("@/components/roycss/pro/roy-designer").then(m => ({ default: m.RoyDesigner })));
+const RoyScaffold = lazy(() => import("@/components/roycss/pro/roy-scaffold").then(m => ({ default: m.RoyScaffold })));
+const RoyGenerator = lazy(() => import("@/components/roycss/pro/roy-generator").then(m => ({ default: m.RoyGenerator })));
+const RoySync = lazy(() => import("@/components/roycss/pro/roy-sync").then(m => ({ default: m.RoySync })));
+const RoyVersion = lazy(() => import("@/components/roycss/pro/roy-version").then(m => ({ default: m.RoyVersion })));
+const RoyRegistry = lazy(() => import("@/components/roycss/pro/roy-registry").then(m => ({ default: m.RoyRegistry })));
+const RoyMotionStudio = lazy(() => import("@/components/roycss/pro/roy-motion-studio").then(m => ({ default: m.RoyMotionStudio })));
+const RoyGradientStudio = lazy(() => import("@/components/roycss/pro/roy-gradient-studio").then(m => ({ default: m.RoyGradientStudio })));
+const RoyTypography = lazy(() => import("@/components/roycss/pro/roy-typography").then(m => ({ default: m.RoyTypography })));
+const RoyColorStudio = lazy(() => import("@/components/roycss/pro/roy-color-studio").then(m => ({ default: m.RoyColorStudio })));
+const RoyLayoutStudio = lazy(() => import("@/components/roycss/pro/roy-layout-studio").then(m => ({ default: m.RoyLayoutStudio })));
+const RoyGovernance = lazy(() => import("@/components/roycss/pro/roy-governance").then(m => ({ default: m.RoyGovernance })));
+const RoyCompliance = lazy(() => import("@/components/roycss/pro/roy-compliance").then(m => ({ default: m.RoyCompliance })));
+const RoyAuditCenter = lazy(() => import("@/components/roycss/pro/roy-audit-center").then(m => ({ default: m.RoyAuditCenter })));
+const RoySandbox = lazy(() => import("@/components/roycss/pro/roy-sandbox").then(m => ({ default: m.RoySandbox })));
+const RoyMentor = lazy(() => import("@/components/roycss/pro/roy-mentor").then(m => ({ default: m.RoyMentor })));
+const RoyChallenges = lazy(() => import("@/components/roycss/pro/roy-challenges").then(m => ({ default: m.RoyChallenges })));
+const RoyProfiler = lazy(() => import("@/components/roycss/pro/roy-profiler").then(m => ({ default: m.RoyProfiler })));
+const RoyBundle = lazy(() => import("@/components/roycss/pro/roy-bundle").then(m => ({ default: m.RoyBundle })));
+const RoyObservatory = lazy(() => import("@/components/roycss/pro/roy-observatory").then(m => ({ default: m.RoyObservatory })));
+const RoyOS = lazy(() => import("@/components/roycss/pro/roy-os").then(m => ({ default: m.RoyOS })));
+const RoyFleet = lazy(() => import("@/components/roycss/pro/roy-fleet").then(m => ({ default: m.RoyFleet })));
+const RoyWorkspace = lazy(() => import("@/components/roycss/pro/roy-workspace").then(m => ({ default: m.RoyWorkspace })));
+const RoyDeploy = lazy(() => import("@/components/roycss/pro/roy-deploy").then(m => ({ default: m.RoyDeploy })));
+const RoyPreview = lazy(() => import("@/components/roycss/pro/roy-preview").then(m => ({ default: m.RoyPreview })));
+const RoyCDN = lazy(() => import("@/components/roycss/pro/roy-cdn").then(m => ({ default: m.RoyCDN })));
+const RoyStorage = lazy(() => import("@/components/roycss/pro/roy-storage").then(m => ({ default: m.RoyStorage })));
+const RoyEdge = lazy(() => import("@/components/roycss/pro/roy-edge").then(m => ({ default: m.RoyEdge })));
+const RoyCertifications = lazy(() => import("@/components/roycss/pro/roy-certifications").then(m => ({ default: m.RoyCertifications })));
+const RoyOpen = lazy(() => import("@/components/roycss/pro/roy-open").then(m => ({ default: m.RoyOpen })));
+const RoySpotlight = lazy(() => import("@/components/roycss/pro/roy-spotlight").then(m => ({ default: m.RoySpotlight })));
+const RoyDigitalTwin = lazy(() => import("@/components/roycss/pro/roy-digital-twin").then(m => ({ default: m.RoyDigitalTwin })));
+const RoyLive = lazy(() => import("@/components/roycss/pro/roy-live").then(m => ({ default: m.RoyLive })));
+const RoyBenchmark = lazy(() => import("@/components/roycss/pro/roy-benchmark").then(m => ({ default: m.RoyBenchmark })));
 
 type ProductCategory = "Components" | "Design" | "AI" | "Content" | "Marketplace" | "Community" | "Tools";
 
@@ -321,10 +323,14 @@ export function PlatformProductsShowcase() {
               <DialogDescription>{selectedProduct?.description}</DialogDescription>
             </DialogHeader>
             <div className="p-5">
-              {selectedProduct && (() => {
-                const ProductComponent = selectedProduct.Component;
-                return <ProductComponent />;
-              })()}
+              {selectedProduct && (
+                <Suspense fallback={<div className="flex items-center justify-center py-20"><Loader2 className="size-8 animate-spin text-primary" /></div>}>
+                  {(() => {
+                    const ProductComponent = selectedProduct.Component;
+                    return <ProductComponent />;
+                  })()}
+                </Suspense>
+              )}
             </div>
           </DialogContent>
         </Dialog>

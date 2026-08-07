@@ -118,7 +118,7 @@ const PRODUCTS: PlatformProduct[] = [
     name: "RoyCSS Marketplace",
     tagline: "One-click templates & components",
     description:
-      "Developers install Healthcare Dashboards, Admin Panels, CRMs, POS systems, Banking themes, and more — like the VS Code Marketplace meets npm meets Figma Community.",
+      "Developers install Healthcare Dashboards, Admin Panels, CRMs, POS systems, Banking themes, and more — a curated marketplace of production-ready blocks and templates.",
     icon: Store,
     tier: "pro",
     priority: 5,
@@ -130,7 +130,7 @@ const PRODUCTS: PlatformProduct[] = [
     name: "Roy Studio",
     tagline: "Visual builder → RoyCSS code",
     description:
-      "Figma meets Webflow. Drag a card, get RoyCSS code. Designers prototype visually; developers continue coding from the generated output.",
+      "Visual drag-and-drop builder that outputs clean RoyCSS code. Designers prototype visually; developers continue coding from the generated output.",
     icon: PenTool,
     tier: "pro",
     priority: 5,
@@ -142,7 +142,7 @@ const PRODUCTS: PlatformProduct[] = [
     name: "RoyCSS Pro Components",
     tagline: "Enterprise-grade building blocks",
     description:
-      "Not just buttons. Scheduler, Kanban, Data Grid, Charts, Calendar, Timeline, Tree View, Org Chart, Rich Text Editor, Pivot Table — exactly how Tailwind sells Tailwind UI.",
+      "Enterprise-grade building blocks: Scheduler, Kanban, Data Grid, Charts, Calendar, Timeline, Tree View, Org Chart, Rich Text Editor, Pivot Table.",
     icon: Blocks,
     tier: "pro",
     priority: 5,
@@ -317,7 +317,7 @@ const PRODUCTS: PlatformProduct[] = [
 ];
 
 /* ═══════════════════════════════════════════════════════════════
-   DATA: 10 unique differentiators (features competitors don't have)
+   DATA: 10 unique differentiators (features that set RoyCSS apart)
    ═══════════════════════════════════════════════════════════════ */
 
 interface Differentiator {
@@ -379,7 +379,7 @@ const DIFFERENTIATORS: Differentiator[] = [
   {
     id: "benchmark",
     name: "CSS Benchmark",
-    description: "Benchmark RoyCSS against competitors — live, always. Bundle size, render time, feature parity.",
+    description: "Benchmark RoyCSS performance — live, always. Bundle size, render time, feature coverage.",
     icon: Gauge,
   },
   {
@@ -761,7 +761,7 @@ function VisionDiagram() {
         </div>
 
         <p className="mt-6 text-center text-xs text-muted-foreground italic leading-relaxed">
-          &ldquo;A competitor can recreate utility classes in months. What is much harder to reproduce is a mature
+          &ldquo;A framework can recreate utility classes in months. What is much harder to reproduce is a mature
           ecosystem — marketplace, docs, tools, plugins, enterprise support, and an active community.&rdquo;
         </p>
       </div>
@@ -1100,7 +1100,7 @@ export function PlatformEcosystem({ onLaunchTool }: { onLaunchTool?: (toolId: st
         <SectionHeading
           eyebrow="Not just a framework — a platform"
           title="The RoyCSS Ecosystem"
-          subtitle="The framework remains free and open source. Everything around it — marketplace, studio, AI, cloud, enterprise — becomes the business. This is how Tailwind, Vercel, and Prisma won."
+          subtitle="The framework remains free and open source. Everything around it — marketplace, studio, AI, cloud, enterprise — becomes the business. This is how great developer platforms win."
         />
 
         {/* ─── Vision Diagram ─── */}
@@ -1155,25 +1155,23 @@ export function PlatformEcosystem({ onLaunchTool }: { onLaunchTool?: (toolId: st
             </div>
           </ScrollReveal>
 
-          {/* Product grid */}
-          <StaggerGroup
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-            key={activeTier} // remount on filter change for re-stagger
-          >
-            <AnimatePresence mode="popLayout">
-              {filteredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} onLaunchTool={onLaunchTool} />
-              ))}
-            </AnimatePresence>
-          </StaggerGroup>
+          {/* Product grid — removed; products now live in the unified Platform Products Showcase section */}
+          <ScrollReveal delay={0.15}>
+            <div className="text-center py-8 rounded-xl border border-dashed border-border/60 bg-muted/20">
+              <p className="text-sm text-muted-foreground">
+                All 60+ platform products are available in the interactive{" "}
+                <span className="text-primary font-medium">Platform Products</span> section below.
+              </p>
+            </div>
+          </ScrollReveal>
         </div>
 
-        {/* ─── Differentiators ─── */}
+        {/* ─── Unique Features ─── */}
         <div className="mt-20">
           <ScrollReveal>
             <div className="flex items-center gap-2 mb-2">
               <Sparkles className="size-4 text-primary" />
-              <h3 className="font-display text-xl font-bold text-foreground">Features Competitors Don&apos;t Have</h3>
+              <h3 className="font-display text-xl font-bold text-foreground">Unique Features</h3>
             </div>
             <p className="text-sm text-muted-foreground mb-6">
               Ten differentiators that make RoyCSS more than a CSS library.

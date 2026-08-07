@@ -1223,6 +1223,12 @@ export default function RoyCSSPage() {
                   Platform
                 </button>
                 <button
+                  onClick={() => scrollToSection("#products")}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === "products" ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
+                >
+                  Products
+                </button>
+                <button
                   onClick={() => scrollToSection("#faq")}
                   className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === "faq" ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
                 >
@@ -1399,6 +1405,7 @@ export default function RoyCSSPage() {
                     { label: "Patterns", id: "#patterns" },
                     { label: "Collections", id: "#collections" },
                     { label: "Platform", id: "#platform" },
+                    { label: "Products", id: "#products" },
                     { label: "FAQ", id: "#faq" },
                   ].map((item) => (
                     <button

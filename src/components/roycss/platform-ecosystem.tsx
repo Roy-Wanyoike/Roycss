@@ -773,7 +773,7 @@ function VisionDiagram() {
    PRODUCT CARD
    ═══════════════════════════════════════════════════════════════ */
 
-function ProductCard({ product, onLaunchTool }: { product: PlatformProduct; onLaunchTool?: (toolId: string) => void }) {
+function ProductCard({ product, onLaunchTool, onLearnMore }: { product: PlatformProduct; onLaunchTool?: (toolId: string) => void; onLearnMore?: (slug: string) => void }) {
   const [expanded, setExpanded] = useState(false);
   const Icon = product.icon;
   const tierMeta = TIER_META[product.tier];
@@ -1075,7 +1075,7 @@ const INTERACTIVE_TOOLS: Record<string, string> = {
   // NOT try to open a panel. So they are intentionally NOT in this map.
 };
 
-export function PlatformEcosystem({ onLaunchTool }: { onLaunchTool?: (toolId: string) => void; onLearnMore?: (slug: string) => void } = {}) {
+export function PlatformEcosystem({ onLaunchTool, onLearnMore }: { onLaunchTool?: (toolId: string) => void; onLearnMore?: (slug: string) => void } = {}) {
   const [activeTier, setActiveTier] = useState<Tier | "all">("all");
   const [sponsorOpen, setSponsorOpen] = useState(false);
 
@@ -1155,15 +1155,17 @@ export function PlatformEcosystem({ onLaunchTool }: { onLaunchTool?: (toolId: st
             </div>
           </ScrollReveal>
 
-          {/* Product grid — removed; products now live in the unified Platform Products Showcase section */}
-          <ScrollReveal delay={0.15}>
-            <div className="text-center py-8 rounded-xl border border-dashed border-border/60 bg-muted/20">
-              <p className="text-sm text-muted-foreground">
-                All 60+ platform products are available in the interactive{" "}
-                <span className="text-primary font-medium">Platform Products</span> section below.
-              </p>
-            </div>
-          </ScrollReveal>
+          {/* Product grid — restored with tier filtering */}
+          <StaggerGroup
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+            key={activeTier}
+          >
+            <AnimatePresence mode="popLayout">
+              {filteredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} onLaunchTool={onLaunchTool} onLearnMore={onLearnMore} />
+              ))}
+            </AnimatePresence>
+          </StaggerGroup>
         </div>
 
         {/* ─── Unique Features ─── */}

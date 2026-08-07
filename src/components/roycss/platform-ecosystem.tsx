@@ -1113,7 +1113,7 @@ export function PlatformEcosystem({ onLaunchTool }: { onLaunchTool?: (toolId: st
           <ScrollReveal>
             <div className="flex items-center gap-2 mb-2">
               <Rocket className="size-4 text-primary" />
-              <h3 className="font-display text-xl font-bold text-foreground">16+ Platform Products</h3>
+              <h3 className="font-display text-xl font-bold text-foreground">Platform Ecosystem</h3>
             </div>
             <p className="text-sm text-muted-foreground mb-6">
               Filter by tier. Click any card to see what&apos;s included.

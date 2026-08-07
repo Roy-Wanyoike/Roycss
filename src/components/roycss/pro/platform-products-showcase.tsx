@@ -85,12 +85,14 @@ const RoyLive = lazy(() => import("@/components/roycss/pro/roy-live").then(m => 
 const RoyBenchmark = lazy(() => import("@/components/roycss/pro/roy-benchmark").then(m => ({ default: m.RoyBenchmark })));
 
 type ProductCategory = "Components" | "Design" | "AI" | "Content" | "Marketplace" | "Community" | "Tools";
+type ProductTier = "free" | "pro" | "enterprise" | "cloud";
 
 interface ProductEntry {
   id: string;
   name: string;
   description: string;
   category: ProductCategory;
+  tier: ProductTier;
   icon: React.ComponentType<{ className?: string }>;
   status: "ready" | "beta" | "roadmap";
   Component: React.ComponentType;
@@ -98,98 +100,98 @@ interface ProductEntry {
 
 const PRODUCTS: ProductEntry[] = [
   // Components
-  { id: "data-grid", name: "Pro Data Grid", description: "Sortable, filterable, paginated data table with 50 rows, row selection, and column visibility.", category: "Components", icon: Grid3x3, status: "ready", Component: ProDataGrid },
-  { id: "kanban", name: "Kanban Board", description: "Drag-and-drop board with 4 columns, 14 cards, priority badges, and inline editing.", category: "Components", icon: KanbanSquare, status: "ready", Component: ProKanbanBoard },
-  { id: "scheduler", name: "Calendar Scheduler", description: "Month + week views with 11 events, overlap-aware layout, and live 'now' indicator.", category: "Components", icon: Calendar, status: "ready", Component: ProScheduler },
-  { id: "charts", name: "Pro Charts", description: "Line, bar, donut, and area charts using recharts with OKLCH colors.", category: "Components", icon: BarChart3, status: "ready", Component: ProCharts },
+  { id: "data-grid", name: "Pro Data Grid", description: "Sortable, filterable, paginated data table with 50 rows, row selection, and column visibility.", category: "Components", icon: Grid3x3, status: "ready", Component: ProDataGrid, tier: "pro" },
+  { id: "kanban", name: "Kanban Board", description: "Drag-and-drop board with 4 columns, 14 cards, priority badges, and inline editing.", category: "Components", icon: KanbanSquare, status: "ready", Component: ProKanbanBoard, tier: "pro" },
+  { id: "scheduler", name: "Calendar Scheduler", description: "Month + week views with 11 events, overlap-aware layout, and live 'now' indicator.", category: "Components", icon: Calendar, status: "ready", Component: ProScheduler, tier: "pro" },
+  { id: "charts", name: "Pro Charts", description: "Line, bar, donut, and area charts using recharts with OKLCH colors.", category: "Components", icon: BarChart3, status: "ready", Component: ProCharts, tier: "pro" },
 
   // Design
-  { id: "theme-system", name: "Theme System", description: "10 production-ready OKLCH theme presets with live preview and CSS variable export.", category: "Design", icon: Palette, status: "ready", Component: ThemeSystem },
-  { id: "icon-pack", name: "Icon Pack", description: "158 icons across 7 categories with search, size selector, and click-to-copy imports.", category: "Design", icon: Shapes, status: "ready", Component: IconPack },
-  { id: "motion-library", name: "Motion Library", description: "12 framer-motion animation primitives with speed control and code snippets.", category: "Design", icon: Sparkles, status: "ready", Component: MotionLibrary },
-  { id: "accessibility", name: "Accessibility Suite", description: "Live DOM audit (10 WCAG checks), a11y score, contrast checker, tab order visualizer.", category: "Design", icon: Accessibility, status: "ready", Component: AccessibilitySuite },
+  { id: "theme-system", name: "Theme System", description: "10 production-ready OKLCH theme presets with live preview and CSS variable export.", category: "Design", icon: Palette, status: "ready", Component: ThemeSystem, tier: "pro" },
+  { id: "icon-pack", name: "Icon Pack", description: "158 icons across 7 categories with search, size selector, and click-to-copy imports.", category: "Design", icon: Shapes, status: "ready", Component: IconPack, tier: "pro" },
+  { id: "motion-library", name: "Motion Library", description: "12 framer-motion animation primitives with speed control and code snippets.", category: "Design", icon: Sparkles, status: "ready", Component: MotionLibrary, tier: "pro" },
+  { id: "accessibility", name: "Accessibility Suite", description: "Live DOM audit (10 WCAG checks), a11y score, contrast checker, tab order visualizer.", category: "Design", icon: Accessibility, status: "ready", Component: AccessibilitySuite, tier: "pro" },
 
   // AI
-  { id: "roy-ai", name: "RoyAI Assistant", description: "Chat assistant that generates CSS, answers questions, and helps with RoyCSS usage.", category: "AI", icon: Bot, status: "ready", Component: RoyAI },
-  { id: "roy-agents", name: "Roy Agents", description: "8 specialized AI agents for accessibility, performance, docs, refactoring, security.", category: "AI", icon: Wrench, status: "ready", Component: RoyAgents },
+  { id: "roy-ai", name: "RoyAI Assistant", description: "Chat assistant that generates CSS, answers questions, and helps with RoyCSS usage.", category: "AI", icon: Bot, status: "ready", Component: RoyAI, tier: "pro" },
+  { id: "roy-agents", name: "Roy Agents", description: "8 specialized AI agents for accessibility, performance, docs, refactoring, security.", category: "AI", icon: Wrench, status: "ready", Component: RoyAgents, tier: "pro" },
 
   // Content
-  { id: "storybook", name: "Roy Storybook", description: "Component documentation with 10 components, variants, states, props, a11y notes.", category: "Content", icon: BookOpen, status: "ready", Component: RoyStorybook },
-  { id: "academy", name: "Roy Academy", description: "4 learning paths, 60 lessons, 4 certifications, progress tracking.", category: "Content", icon: GraduationCap, status: "ready", Component: Academy },
-  { id: "template-library", name: "Template Library", description: "8 live template previews (Hero, FeatureGrid, Pricing, Testimonial, etc.).", category: "Content", icon: LayoutGrid, status: "ready", Component: TemplateLibrary },
-  { id: "blueprints", name: "Roy Blueprints", description: "8 complete app architectures (Hospital, POS, ERP, HR, Banking) with folder trees.", category: "Content", icon: Building2, status: "ready", Component: RoyBlueprints },
+  { id: "storybook", name: "Roy Storybook", description: "Component documentation with 10 components, variants, states, props, a11y notes.", category: "Content", icon: BookOpen, status: "ready", Component: RoyStorybook, tier: "pro" },
+  { id: "academy", name: "Roy Academy", description: "4 learning paths, 60 lessons, 4 certifications, progress tracking.", category: "Content", icon: GraduationCap, status: "ready", Component: Academy, tier: "pro" },
+  { id: "template-library", name: "Template Library", description: "8 live template previews (Hero, FeatureGrid, Pricing, Testimonial, etc.).", category: "Content", icon: LayoutGrid, status: "ready", Component: TemplateLibrary, tier: "pro" },
+  { id: "blueprints", name: "Roy Blueprints", description: "8 complete app architectures (Hospital, POS, ERP, HR, Banking) with folder trees.", category: "Content", icon: Building2, status: "ready", Component: RoyBlueprints, tier: "pro" },
 
   // Marketplace
-  { id: "marketplace", name: "Marketplace", description: "12 templates with search, filter, sort, detail dialogs, and install toasts.", category: "Marketplace", icon: Store, status: "ready", Component: Marketplace },
-  { id: "blocks", name: "Roy Blocks", description: "10 application blocks (Auth, Billing, CRM, Healthcare, Analytics) with live previews.", category: "Marketplace", icon: Blocks, status: "ready", Component: RoyBlocks },
-  { id: "plugin-hub", name: "Plugin Hub", description: "12 plugins (Stripe, Clerk, Supabase, Firebase) with install commands and changelogs.", category: "Marketplace", icon: Plug, status: "ready", Component: PluginHub },
-  { id: "showcase", name: "Roy Showcase", description: "12 curated projects with performance/a11y scores, industry filters, submit form.", category: "Marketplace", icon: Trophy, status: "ready", Component: RoyShowcase },
+  { id: "marketplace", name: "Marketplace", description: "12 templates with search, filter, sort, detail dialogs, and install toasts.", category: "Marketplace", icon: Store, status: "ready", Component: Marketplace, tier: "pro" },
+  { id: "blocks", name: "Roy Blocks", description: "10 application blocks (Auth, Billing, CRM, Healthcare, Analytics) with live previews.", category: "Marketplace", icon: Blocks, status: "ready", Component: RoyBlocks, tier: "pro" },
+  { id: "plugin-hub", name: "Plugin Hub", description: "12 plugins (Stripe, Clerk, Supabase, Firebase) with install commands and changelogs.", category: "Marketplace", icon: Plug, status: "ready", Component: PluginHub, tier: "pro" },
+  { id: "showcase", name: "Roy Showcase", description: "12 curated projects with performance/a11y scores, industry filters, submit form.", category: "Marketplace", icon: Trophy, status: "ready", Component: RoyShowcase, tier: "pro" },
 
   // Community
-  { id: "community", name: "Community Hub", description: "Stats, 6 contributors, activity feed, leaderboard, discussions, 3 tabs.", category: "Community", icon: Users, status: "ready", Component: CommunityHub },
+  { id: "community", name: "Community Hub", description: "Stats, 6 contributors, activity feed, leaderboard, discussions, 3 tabs.", category: "Community", icon: Users, status: "ready", Component: CommunityHub, tier: "pro" },
 
   // Tools
-  { id: "visual-studio", name: "Visual Studio", description: "Drag-and-drop page builder with 8 component types, properties panel, export HTML.", category: "Tools", icon: Layers, status: "ready", Component: VisualStudio },
-  { id: "forms", name: "Roy Forms", description: "Visual form builder with 10 field types, multi-step, conditional logic, code export.", category: "Tools", icon: FormInput, status: "ready", Component: RoyForms },
-  { id: "search", name: "Roy Search", description: "Universal search across 54 items in 8 content types with keyboard nav and highlighting.", category: "Tools", icon: Search, status: "ready", Component: RoySearch },
-  { id: "analytics", name: "Analytics Dashboard", description: "KPI cards, traffic chart, top effects, geo distribution, device donut, time ranges.", category: "Tools", icon: LineChart, status: "ready", Component: AnalyticsDashboard },
-  { id: "patterns", name: "Pattern Library", description: "12 interactive UI patterns (Accordion, Toast, CommandMenu, FileUpload, etc.).", category: "Tools", icon: Package, status: "ready", Component: PatternLibrary },
+  { id: "visual-studio", name: "Visual Studio", description: "Drag-and-drop page builder with 8 component types, properties panel, export HTML.", category: "Tools", icon: Layers, status: "ready", Component: VisualStudio, tier: "pro" },
+  { id: "forms", name: "Roy Forms", description: "Visual form builder with 10 field types, multi-step, conditional logic, code export.", category: "Tools", icon: FormInput, status: "ready", Component: RoyForms, tier: "pro" },
+  { id: "search", name: "Roy Search", description: "Universal search across 54 items in 8 content types with keyboard nav and highlighting.", category: "Tools", icon: Search, status: "ready", Component: RoySearch, tier: "pro" },
+  { id: "analytics", name: "Analytics Dashboard", description: "KPI cards, traffic chart, top effects, geo distribution, device donut, time ranges.", category: "Tools", icon: LineChart, status: "ready", Component: AnalyticsDashboard, tier: "pro" },
+  { id: "patterns", name: "Pattern Library", description: "12 interactive UI patterns (Accordion, Toast, CommandMenu, FileUpload, etc.).", category: "Tools", icon: Package, status: "ready", Component: PatternLibrary, tier: "pro" },
 
   // AI & Engineering (next-gen)
-  { id: "architect", name: "Roy Architect", description: "AI application architect — generates folder structure, tech stack, APIs, and deployment plans from requirements.", category: "AI", icon: Building2, status: "ready", Component: RoyArchitect },
-  { id: "review", name: "Roy Review", description: "AI code reviewer — paste code, get score, findings by severity, and fix recommendations.", category: "AI", icon: Wrench, status: "ready", Component: RoyReview },
-  { id: "refactor", name: "Roy Refactor", description: "Code modernizer — Bootstrap/Tailwind/Material → RoyCSS with OKLCH, logical properties, diff view.", category: "AI", icon: Wrench, status: "ready", Component: RoyRefactor },
-  { id: "pair", name: "Roy Pair", description: "AI pair programmer chat — specialized for RoyCSS, code highlighting, suggestion chips.", category: "AI", icon: Bot, status: "ready", Component: RoyPair },
-  { id: "designer", name: "Roy Designer", description: "AI UI designer — prompt → mockup preview, color palette, typography, component list.", category: "AI", icon: Bot, status: "ready", Component: RoyDesigner },
+  { id: "architect", name: "Roy Architect", description: "AI application architect — generates folder structure, tech stack, APIs, and deployment plans from requirements.", category: "AI", icon: Building2, status: "ready", Component: RoyArchitect, tier: "enterprise" },
+  { id: "review", name: "Roy Review", description: "AI code reviewer — paste code, get score, findings by severity, and fix recommendations.", category: "AI", icon: Wrench, status: "ready", Component: RoyReview, tier: "enterprise" },
+  { id: "refactor", name: "Roy Refactor", description: "Code modernizer — Bootstrap/Tailwind/Material → RoyCSS with OKLCH, logical properties, diff view.", category: "AI", icon: Wrench, status: "ready", Component: RoyRefactor, tier: "pro" },
+  { id: "pair", name: "Roy Pair", description: "AI pair programmer chat — specialized for RoyCSS, code highlighting, suggestion chips.", category: "AI", icon: Bot, status: "ready", Component: RoyPair, tier: "pro" },
+  { id: "designer", name: "Roy Designer", description: "AI UI designer — prompt → mockup preview, color palette, typography, component list.", category: "AI", icon: Bot, status: "ready", Component: RoyDesigner, tier: "enterprise" },
 
   // Engineering Platform (next-gen)
-  { id: "scaffold", name: "Roy Scaffold", description: "Project scaffolding — 8 project types, framework/db/auth selectors, folder tree generation.", category: "Tools", icon: Layers, status: "ready", Component: RoyScaffold },
-  { id: "generator", name: "Roy Generator", description: "Code generator — Component/Form/CRUD/Table/Dashboard/API with configurable options.", category: "Tools", icon: Code2, status: "ready", Component: RoyGenerator },
-  { id: "sync", name: "Roy Sync", description: "Sync hub — Figma, GitHub, Tokens, Theme with status, sync log, sync all.", category: "Tools", icon: Layers, status: "ready", Component: RoySync },
-  { id: "version", name: "Roy Version", description: "Version management — current/latest, dependency graph, breaking changes, upgrade simulator.", category: "Tools", icon: Layers, status: "ready", Component: RoyVersion },
-  { id: "registry", name: "Roy Registry", description: "Package registry — 10 packages, public/private/internal, publish, detail dialog.", category: "Tools", icon: Package, status: "ready", Component: RoyRegistry },
+  { id: "scaffold", name: "Roy Scaffold", description: "Project scaffolding — 8 project types, framework/db/auth selectors, folder tree generation.", category: "Tools", icon: Layers, status: "ready", Component: RoyScaffold, tier: "pro" },
+  { id: "generator", name: "Roy Generator", description: "Code generator — Component/Form/CRUD/Table/Dashboard/API with configurable options.", category: "Tools", icon: Code2, status: "ready", Component: RoyGenerator, tier: "pro" },
+  { id: "sync", name: "Roy Sync", description: "Sync hub — Figma, GitHub, Tokens, Theme with status, sync log, sync all.", category: "Tools", icon: Layers, status: "ready", Component: RoySync, tier: "enterprise" },
+  { id: "version", name: "Roy Version", description: "Version management — current/latest, dependency graph, breaking changes, upgrade simulator.", category: "Tools", icon: Layers, status: "ready", Component: RoyVersion, tier: "pro" },
+  { id: "registry", name: "Roy Registry", description: "Package registry — 10 packages, public/private/internal, publish, detail dialog.", category: "Tools", icon: Package, status: "ready", Component: RoyRegistry, tier: "enterprise" },
 
   // Design Platform (next-gen)
-  { id: "motion-studio", name: "Motion Studio", description: "Visual animation builder — 5-track timeline, draggable keyframes, easing, live preview, export.", category: "Design", icon: Sparkles, status: "ready", Component: RoyMotionStudio },
-  { id: "gradient-studio", name: "Gradient Studio", description: "Advanced gradients — Linear/Radial/Conic/Mesh, noise texture, animated, aurora, 6 presets.", category: "Design", icon: Palette, status: "ready", Component: RoyGradientStudio },
-  { id: "typography", name: "Roy Typography", description: "Type scale generator — fluid clamp, modular ratios, variable font config, reading tips.", category: "Design", icon: Palette, status: "ready", Component: RoyTypography },
-  { id: "color-studio", name: "Color Studio", description: "Enterprise color management — 11-step OKLCH scale, WCAG validation, brand generation.", category: "Design", icon: Palette, status: "ready", Component: RoyColorStudio },
-  { id: "layout-studio", name: "Layout Studio", description: "Visual grid builder — CSS Grid template-areas, Flexbox, Masonry, Container Queries.", category: "Design", icon: LayoutGrid, status: "ready", Component: RoyLayoutStudio },
+  { id: "motion-studio", name: "Motion Studio", description: "Visual animation builder — 5-track timeline, draggable keyframes, easing, live preview, export.", category: "Design", icon: Sparkles, status: "ready", Component: RoyMotionStudio, tier: "pro" },
+  { id: "gradient-studio", name: "Gradient Studio", description: "Advanced gradients — Linear/Radial/Conic/Mesh, noise texture, animated, aurora, 6 presets.", category: "Design", icon: Palette, status: "ready", Component: RoyGradientStudio, tier: "pro" },
+  { id: "typography", name: "Roy Typography", description: "Type scale generator — fluid clamp, modular ratios, variable font config, reading tips.", category: "Design", icon: Palette, status: "ready", Component: RoyTypography, tier: "pro" },
+  { id: "color-studio", name: "Color Studio", description: "Enterprise color management — 11-step OKLCH scale, WCAG validation, brand generation.", category: "Design", icon: Palette, status: "ready", Component: RoyColorStudio, tier: "pro" },
+  { id: "layout-studio", name: "Layout Studio", description: "Visual grid builder — CSS Grid template-areas, Flexbox, Masonry, Container Queries.", category: "Design", icon: LayoutGrid, status: "ready", Component: RoyLayoutStudio, tier: "pro" },
 
   // Enterprise (next-gen)
-  { id: "governance", name: "Roy Governance", description: "Design system governance — approval queue, team, policies, audit log.", category: "Tools", icon: Shield, status: "ready", Component: RoyGovernance },
-  { id: "compliance", name: "Roy Compliance", description: "Compliance reporting — WCAG/ADA/Section 508, scan, findings, report download.", category: "Tools", icon: Shield, status: "ready", Component: RoyCompliance },
-  { id: "audit-center", name: "Audit Center", description: "Enterprise audit dashboard — 5 projects, a11y/perf/security scores, trend, issues.", category: "Tools", icon: Shield, status: "ready", Component: RoyAuditCenter },
-  { id: "fleet", name: "Roy Fleet", description: "Manage hundreds of RoyCSS projects — status, version, health score, scan all.", category: "Tools", icon: Layers, status: "ready", Component: RoyFleet },
-  { id: "workspace", name: "Roy Workspace", description: "Company workspace — shared templates, tokens, components, projects, team members.", category: "Community", icon: Users, status: "ready", Component: RoyWorkspace },
+  { id: "governance", name: "Roy Governance", description: "Design system governance — approval queue, team, policies, audit log.", category: "Tools", icon: Shield, status: "ready", Component: RoyGovernance, tier: "enterprise" },
+  { id: "compliance", name: "Roy Compliance", description: "Compliance reporting — WCAG/ADA/Section 508, scan, findings, report download.", category: "Tools", icon: Shield, status: "ready", Component: RoyCompliance, tier: "enterprise" },
+  { id: "audit-center", name: "Audit Center", description: "Enterprise audit dashboard — 5 projects, a11y/perf/security scores, trend, issues.", category: "Tools", icon: Shield, status: "ready", Component: RoyAuditCenter, tier: "enterprise" },
+  { id: "fleet", name: "Roy Fleet", description: "Manage hundreds of RoyCSS projects — status, version, health score, scan all.", category: "Tools", icon: Layers, status: "ready", Component: RoyFleet, tier: "enterprise" },
+  { id: "workspace", name: "Roy Workspace", description: "Company workspace — shared templates, tokens, components, projects, team members.", category: "Community", icon: Users, status: "ready", Component: RoyWorkspace, tier: "enterprise" },
 
   // Cloud (next-gen)
-  { id: "sandbox", name: "Roy Sandbox", description: "Online dev environment — HTML/CSS/JS editors, live iframe preview, templates, share.", category: "Tools", icon: Code2, status: "ready", Component: RoySandbox },
-  { id: "preview", name: "Roy Preview", description: "Shareable preview environments for branches and pull requests.", category: "Tools", icon: Layers, status: "ready", Component: RoyPreview },
-  { id: "cdn", name: "Roy CDN", description: "CDN dashboard — requests, bandwidth, cache hit rate, edge locations, purge cache.", category: "Tools", icon: Layers, status: "ready", Component: RoyCDN },
-  { id: "storage", name: "Roy Storage", description: "Cloud storage — file browser, upload, usage bar, breadcrumb, search.", category: "Tools", icon: Package, status: "ready", Component: RoyStorage },
-  { id: "edge", name: "Roy Edge", description: "Edge deployment — 6 regions, latency, TTL, cache strategy, edge-vs-origin comparison.", category: "Tools", icon: Layers, status: "ready", Component: RoyEdge },
-  { id: "deploy", name: "Roy Deploy", description: "One-click deployment — Vercel/Netlify/Cloudflare/AWS/Azure/GCP, history, env vars.", category: "Tools", icon: Layers, status: "ready", Component: RoyDeploy },
+  { id: "sandbox", name: "Roy Sandbox", description: "Online dev environment — HTML/CSS/JS editors, live iframe preview, templates, share.", category: "Tools", icon: Code2, status: "ready", Component: RoySandbox, tier: "cloud" },
+  { id: "preview", name: "Roy Preview", description: "Shareable preview environments for branches and pull requests.", category: "Tools", icon: Layers, status: "ready", Component: RoyPreview, tier: "cloud" },
+  { id: "cdn", name: "Roy CDN", description: "CDN dashboard — requests, bandwidth, cache hit rate, edge locations, purge cache.", category: "Tools", icon: Layers, status: "ready", Component: RoyCDN, tier: "cloud" },
+  { id: "storage", name: "Roy Storage", description: "Cloud storage — file browser, upload, usage bar, breadcrumb, search.", category: "Tools", icon: Package, status: "ready", Component: RoyStorage, tier: "cloud" },
+  { id: "edge", name: "Roy Edge", description: "Edge deployment — 6 regions, latency, TTL, cache strategy, edge-vs-origin comparison.", category: "Tools", icon: Layers, status: "ready", Component: RoyEdge, tier: "cloud" },
+  { id: "deploy", name: "Roy Deploy", description: "One-click deployment — Vercel/Netlify/Cloudflare/AWS/Azure/GCP, history, env vars.", category: "Tools", icon: Layers, status: "ready", Component: RoyDeploy, tier: "cloud" },
 
   // Learning (next-gen)
-  { id: "mentor", name: "Roy Mentor", description: "AI tutor chat — skill levels, topic chips, code examples, XP tracker.", category: "Content", icon: GraduationCap, status: "ready", Component: RoyMentor },
-  { id: "challenges", name: "Roy Challenges", description: "Coding challenges — 8 challenges, difficulty, validator, leaderboard, XP.", category: "Content", icon: Trophy, status: "ready", Component: RoyChallenges },
-  { id: "certifications", name: "Roy Certifications", description: "Certification platform — 4 levels, exam scheduling, verification, earned certs.", category: "Content", icon: Award, status: "ready", Component: RoyCertifications },
+  { id: "mentor", name: "Roy Mentor", description: "AI tutor chat — skill levels, topic chips, code examples, XP tracker.", category: "Content", icon: GraduationCap, status: "ready", Component: RoyMentor, tier: "free" },
+  { id: "challenges", name: "Roy Challenges", description: "Coding challenges — 8 challenges, difficulty, validator, leaderboard, XP.", category: "Content", icon: Trophy, status: "ready", Component: RoyChallenges, tier: "free" },
+  { id: "certifications", name: "Roy Certifications", description: "Certification platform — 4 levels, exam scheduling, verification, earned certs.", category: "Content", icon: Award, status: "ready", Component: RoyCertifications, tier: "pro" },
 
   // Community (next-gen)
-  { id: "open", name: "Roy Open", description: "Open-source hub — good first issues, RFCs, roadmap, contributor stats.", category: "Community", icon: Users, status: "ready", Component: RoyOpen },
-  { id: "spotlight", name: "Roy Spotlight", description: "Featured developer showcase — templates, components, plugins, projects, submit.", category: "Community", icon: Trophy, status: "ready", Component: RoySpotlight },
+  { id: "open", name: "Roy Open", description: "Open-source hub — good first issues, RFCs, roadmap, contributor stats.", category: "Community", icon: Users, status: "ready", Component: RoyOpen, tier: "free" },
+  { id: "spotlight", name: "Roy Spotlight", description: "Featured developer showcase — templates, components, plugins, projects, submit.", category: "Community", icon: Trophy, status: "ready", Component: RoySpotlight, tier: "free" },
 
   // Analysis (next-gen)
-  { id: "profiler", name: "Roy Profiler", description: "Frontend profiler — render phases, CLS, memory, FPS, recommendations.", category: "Tools", icon: LineChart, status: "ready", Component: RoyProfiler },
-  { id: "bundle", name: "Roy Bundle", description: "Bundle optimizer — size breakdown, duplicates, dead CSS, oversized, before/after.", category: "Tools", icon: Package, status: "ready", Component: RoyBundle },
-  { id: "observatory", name: "Roy Observatory", description: "Production monitoring — CWV, error rate, uptime, alerts, 7-day trend.", category: "Tools", icon: LineChart, status: "ready", Component: RoyObservatory },
+  { id: "profiler", name: "Roy Profiler", description: "Frontend profiler — render phases, CLS, memory, FPS, recommendations.", category: "Tools", icon: LineChart, status: "ready", Component: RoyProfiler, tier: "pro" },
+  { id: "bundle", name: "Roy Bundle", description: "Bundle optimizer — size breakdown, duplicates, dead CSS, oversized, before/after.", category: "Tools", icon: Package, status: "ready", Component: RoyBundle, tier: "pro" },
+  { id: "observatory", name: "Roy Observatory", description: "Production monitoring — CWV, error rate, uptime, alerts, 7-day trend.", category: "Tools", icon: LineChart, status: "ready", Component: RoyObservatory, tier: "cloud" },
 
   // Moonshots
-  { id: "os", name: "Roy OS", description: "Unified workspace dashboard — 12 product tiles, quick actions, activity feed, global search.", category: "Tools", icon: Layers, status: "beta", Component: RoyOS },
-  { id: "digital-twin", name: "Roy Digital Twin", description: "Digital twin simulator — performance, accessibility, user journeys, device compatibility.", category: "Tools", icon: Layers, status: "beta", Component: RoyDigitalTwin },
-  { id: "live", name: "Roy Live", description: "Real-time collaboration — multiplayer editing, presence cursors, comments, share.", category: "Community", icon: Users, status: "beta", Component: RoyLive },
-  { id: "benchmark", name: "Roy Benchmark", description: "Benchmarking platform — compare against industry averages and best-in-class.", category: "Tools", icon: LineChart, status: "beta", Component: RoyBenchmark },
+  { id: "os", name: "Roy OS", description: "Unified workspace dashboard — 12 product tiles, quick actions, activity feed, global search.", category: "Tools", icon: Layers, status: "beta", Component: RoyOS, tier: "enterprise" },
+  { id: "digital-twin", name: "Roy Digital Twin", description: "Digital twin simulator — performance, accessibility, user journeys, device compatibility.", category: "Tools", icon: Layers, status: "beta", Component: RoyDigitalTwin, tier: "enterprise" },
+  { id: "live", name: "Roy Live", description: "Real-time collaboration — multiplayer editing, presence cursors, comments, share.", category: "Community", icon: Users, status: "beta", Component: RoyLive, tier: "cloud" },
+  { id: "benchmark", name: "Roy Benchmark", description: "Benchmarking platform — compare against industry averages and best-in-class.", category: "Tools", icon: LineChart, status: "beta", Component: RoyBenchmark, tier: "pro" },
 ];
 
 const CATEGORIES: (ProductCategory | "All")[] = ["All", "Components", "Design", "AI", "Content", "Marketplace", "Community", "Tools"];
@@ -200,20 +202,32 @@ const STATUS_META: Record<string, { label: string; className: string }> = {
   roadmap: { label: "Coming Soon", className: "bg-muted text-muted-foreground" },
 };
 
+const TIERS: (ProductTier | "all")[] = ["all", "free", "pro", "enterprise", "cloud"];
+
+const TIER_LABELS: Record<ProductTier | "all", { label: string; icon: React.ComponentType<{ className?: string }> }> = {
+  all: { label: "All Products", icon: Layers },
+  free: { label: "Free / OSS", icon: Sparkles },
+  pro: { label: "Pro", icon: Wrench },
+  enterprise: { label: "Enterprise", icon: Shield },
+  cloud: { label: "Cloud", icon: Building2 },
+};
+
 export function PlatformProductsShowcase() {
   const [activeCategory, setActiveCategory] = useState<ProductCategory | "All">("All");
+  const [activeTier, setActiveTier] = useState<ProductTier | "all">("all");
   const [search, setSearch] = useState("");
   const [selectedProduct, setSelectedProduct] = useState<ProductEntry | null>(null);
 
   const filtered = useMemo(() => {
     return PRODUCTS.filter((p) => {
       const matchesCategory = activeCategory === "All" || p.category === activeCategory;
+      const matchesTier = activeTier === "all" || p.tier === activeTier;
       const matchesSearch = !search ||
         p.name.toLowerCase().includes(search.toLowerCase()) ||
         p.description.toLowerCase().includes(search.toLowerCase());
-      return matchesCategory && matchesSearch;
+      return matchesCategory && matchesTier && matchesSearch;
     });
-  }, [activeCategory, search]);
+  }, [activeCategory, activeTier, search]);
 
   return (
     <section id="products" aria-label="Platform Products" className="py-16 sm:py-20 scroll-mt-20">
@@ -260,6 +274,32 @@ export function PlatformProductsShowcase() {
                 {cat}
               </button>
             ))}
+          </div>
+          {/* Tier filter — mirrors the Platform Ecosystem tier system */}
+          <div className="flex flex-wrap justify-center gap-2 mt-2">
+            {TIERS.map((tier) => {
+              const meta = TIER_LABELS[tier];
+              const TierIcon = meta.icon;
+              const count = tier === "all" ? PRODUCTS.length : PRODUCTS.filter((p) => p.tier === tier).length;
+              return (
+                <button
+                  key={tier}
+                  onClick={() => setActiveTier(tier)}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
+                    activeTier === tier
+                      ? "bg-primary text-primary-foreground shadow-sm"
+                      : "bg-muted/80 text-muted-foreground hover:text-foreground hover:bg-muted"
+                  }`}
+                  aria-pressed={activeTier === tier}
+                >
+                  <TierIcon className="size-3" />
+                  {meta.label}
+                  <span className={`text-[10px] tabular-nums ${activeTier === tier ? "text-primary-foreground/70" : "text-muted-foreground/60"}`}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
 

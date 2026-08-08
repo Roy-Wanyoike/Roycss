@@ -649,7 +649,6 @@ function FAQSection() {
 /* ─── Animate.css → RoyCSS Migration Table ──────────────────── */
 const animateMigrationRows: Array<{ from: string; to: string; category: string }> = [
   // Bouncing entrances
-  { from: "animate__bounce", to: "roycss-anim-bounce-in", category: "Entrance" },
   { from: "animate__bounceIn", to: "roycss-anim-bounce-in", category: "Entrance" },
   { from: "animate__bounceInDown", to: "roycss-anim-bounce-in-down", category: "Entrance" },
   { from: "animate__bounceInLeft", to: "roycss-anim-bounce-in-left", category: "Entrance" },

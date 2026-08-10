@@ -69,6 +69,13 @@ import {
   Layers3,
   Keyboard,
   Scale,
+  Palette,
+  Boxes,
+  Target,
+  Grid3x3,
+  ShieldQuestion,
+  CaseSensitive,
+  AlignLeft,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
@@ -122,13 +129,21 @@ import { HasSelectorTester } from "@/components/roycss/tools/has-selector-tester
 import { CSSLayersVisualizer } from "@/components/roycss/tools/css-layers";
 import { InputModeExplorer } from "@/components/roycss/tools/input-mode-explorer";
 import { CascadeSpecificityExplorer } from "@/components/roycss/tools/cascade-specificity";
+import { ColorSpaceExplorer } from "@/components/roycss/tools/color-space-explorer";
+import { StyleQueryBuilder } from "@/components/roycss/tools/style-query-builder";
+import { ScopeRuleTester } from "@/components/roycss/tools/scope-rule-tester";
+import { SubgridBuilder } from "@/components/roycss/tools/subgrid-builder";
+import { FallbackAnalyzer } from "@/components/roycss/tools/fallback-analyzer";
+import { LogicalPropertiesMapper } from "@/components/roycss/tools/logical-properties-mapper";
+import { InitialLetterStudio } from "@/components/roycss/tools/initial-letter-studio";
+import { TextWrapStudio } from "@/components/roycss/tools/text-wrap-studio";
 import type { CSSEffect } from "@/lib/roycss-types";
 
 /* ═══════════════════════════════════════════════════════════════
    Shared types
    ═══════════════════════════════════════════════════════════════ */
 
-type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | "gap-spacing" | "writing-mode" | "object-fit" | "positioning" | "property-inspector" | "animation-timeline" | "sprite-sheet" | "text-shadow" | "filter-studio" | "conic-gradient" | "motion-path" | "view-transition" | "mask-studio" | "gradient-mesh" | "table-styler" | "aspect-ratio" | "shape-generator" | "scroll-snap" | "keyframes-studio" | "theming-engine" | "has-selector-tester" | "css-layers" | "input-mode" | "cascade-specificity";
+type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | "gap-spacing" | "writing-mode" | "object-fit" | "positioning" | "property-inspector" | "animation-timeline" | "sprite-sheet" | "text-shadow" | "filter-studio" | "conic-gradient" | "motion-path" | "view-transition" | "mask-studio" | "gradient-mesh" | "table-styler" | "aspect-ratio" | "shape-generator" | "scroll-snap" | "keyframes-studio" | "theming-engine" | "has-selector-tester" | "css-layers" | "input-mode" | "cascade-specificity" | "color-space" | "style-query" | "scope" | "subgrid" | "fallback" | "logical-properties" | "initial-letter" | "text-wrap";
 
 interface PlatformToolsProps {
   tool: ToolType | null;
@@ -1534,6 +1549,14 @@ const TOOL_META: Record<ToolType, { title: string; icon: React.ComponentType<{ c
   "css-layers": { title: "CSS Layers Visualizer", icon: Layers3, description: "@layer cascade visualizer with add/reorder layers, live preview via scoped style injection, priority diagram." },
   "input-mode": { title: "Input Mode Explorer", icon: Keyboard, description: "inputmode + enterkeyhint + autocomplete explorer with stylized keyboard mockups and reference tables." },
   "cascade-specificity": { title: "Cascade Specificity Explorer", icon: Scale, description: "CSS parser + specificity computer with :where() stripping, cascade resolution visualization, 3 presets." },
+  "color-space": { title: "Color Space Explorer", icon: Palette, description: "Convert colors between sRGB, HSL, OKLCH, OKLab, Display-P3. Gamut visualization, 2D chroma-lightness plane, copy-ready CSS with sRGB fallback." },
+  "style-query": { title: "Container Style Query Builder", icon: Boxes, description: "Build @container style(--foo: value) queries (Baseline 2023) with live container custom-property switching and 3 presets." },
+  "scope": { title: "@scope Rule Tester", icon: Target, description: "Playground for CSS @scope (Baseline 2024) with DOM tree builder, scope-root + scope-limit selectors, donut-scope visualization." },
+  "subgrid": { title: "Subgrid Builder", icon: Grid3x3, description: "Visual builder for grid-template-columns: subgrid (Baseline 2023). Parent track definitions inherited by nested grids with aligned track lines." },
+  "fallback": { title: "Property Fallback Analyzer", icon: ShieldQuestion, description: "Generate progressive-enhancement CSS with @supports feature queries for 20 modern properties. Old syntax → @supports → modern syntax chain." },
+  "logical-properties": { title: "Logical Properties Mapper", icon: ArrowLeftRight, description: "Map physical → logical CSS properties (margin-left → margin-inline-start). RTL/vertical writing-mode demo, paste-physical-get-logical converter." },
+  "initial-letter": { title: "Initial Letter Studio", icon: CaseSensitive, description: "Design CSS initial-letter drop caps (Baseline 2024). Size/sink sliders, raised vs sunken caps, 3-way comparison with legacy float hack, 6 presets." },
+  "text-wrap": { title: "Text Wrap Balance Studio", icon: AlignLeft, description: "Explore text-wrap: balance/pretty, line-break, word-break, hyphens, hanging-punctuation. Before/after comparison with balance score, 6 presets." },
 };
 
 export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformToolsProps) {
@@ -1610,6 +1633,14 @@ export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformTo
               {tool === "css-layers" && <CSSLayersVisualizer />}
               {tool === "input-mode" && <InputModeExplorer />}
               {tool === "cascade-specificity" && <CascadeSpecificityExplorer />}
+              {tool === "color-space" && <ColorSpaceExplorer />}
+              {tool === "style-query" && <StyleQueryBuilder />}
+              {tool === "scope" && <ScopeRuleTester />}
+              {tool === "subgrid" && <SubgridBuilder />}
+              {tool === "fallback" && <FallbackAnalyzer />}
+              {tool === "logical-properties" && <LogicalPropertiesMapper />}
+              {tool === "initial-letter" && <InitialLetterStudio />}
+              {tool === "text-wrap" && <TextWrapStudio />}
             </div>
           </>
         )}

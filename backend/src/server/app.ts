@@ -22,6 +22,7 @@ import { cdnRouter } from "../modules/cdn/routes.js";
 import { certificationsRouter } from "../modules/certifications/routes.js";
 import { challengesRouter } from "../modules/challenges/routes.js";
 import { cloudRouter } from "../modules/cloud/routes.js";
+import { colorSpaceRouter } from "../modules/color-space/routes.js";
 import { complianceRouter } from "../modules/compliance/routes.js";
 import { contactRouter } from "../modules/contact/routes.js";
 import { deployRouter } from "../modules/deploy/routes.js";
@@ -31,13 +32,16 @@ import { digitalTwinRouter } from "../modules/digital-twin/routes.js";
 import { edgeRouter } from "../modules/edge/routes.js";
 import { effectsRouter } from "../modules/effects/routes.js";
 import { enterpriseRouter } from "../modules/enterprise/routes.js";
+import { fallbackRouter } from "../modules/fallback/routes.js";
 import { fleetRouter } from "../modules/fleet/routes.js";
 import { generatorRouter } from "../modules/generator/routes.js";
 import { governanceRouter } from "../modules/governance/routes.js";
 import { healthRouter } from "../modules/health/routes.js";
 import { iconsRouter } from "../modules/icons/routes.js";
+import { initialLetterRouter } from "../modules/initial-letter/routes.js";
 import { inspectorRouter } from "../modules/inspector/routes.js";
 import { liveRouter } from "../modules/live/routes.js";
+import { logicalPropertiesRouter } from "../modules/logical-properties/routes.js";
 import { marketplaceRouter } from "../modules/marketplace/routes.js";
 import { mcpRouter } from "../modules/mcp/routes.js";
 import { mentorRouter } from "../modules/mentor/routes.js";
@@ -56,11 +60,15 @@ import { refactorRouter } from "../modules/refactor/routes.js";
 import { registryRouter } from "../modules/registry/routes.js";
 import { reviewRouter } from "../modules/review/routes.js";
 import { scaffoldRouter } from "../modules/scaffold/routes.js";
+import { scopeRouter } from "../modules/scope/routes.js";
 import { searchRouter } from "../modules/search/routes.js";
 import { spotlightRouter } from "../modules/spotlight/routes.js";
 import { storageRouter } from "../modules/storage/routes.js";
 import { studioRouter } from "../modules/studio/routes.js";
+import { styleQueryRouter } from "../modules/style-query/routes.js";
+import { subgridRouter } from "../modules/subgrid/routes.js";
 import { syncRouter } from "../modules/sync/routes.js";
+import { textWrapRouter } from "../modules/text-wrap/routes.js";
 import { themesRouter } from "../modules/themes/routes.js";
 import { versionRouter } from "../modules/version/routes.js";
 import { workspaceRouter } from "../modules/workspace/routes.js";
@@ -157,6 +165,15 @@ export function createApp(): Express {
   app.use(`${API_PREFIX}/blueprints`, blueprintsRouter);
   app.use(`${API_PREFIX}/plugins`, pluginHubRouter);
   app.use(`${API_PREFIX}/search`, searchRouter);
+  // ── 8 modern-CSS developer-tool modules (Task 1-f) ──────────────────
+  app.use(`${API_PREFIX}/color-space`, colorSpaceRouter);
+  app.use(`${API_PREFIX}/style-query`, styleQueryRouter);
+  app.use(`${API_PREFIX}/scope`, scopeRouter);
+  app.use(`${API_PREFIX}/subgrid`, subgridRouter);
+  app.use(`${API_PREFIX}/fallback`, fallbackRouter);
+  app.use(`${API_PREFIX}/logical-properties`, logicalPropertiesRouter);
+  app.use(`${API_PREFIX}/initial-letter`, initialLetterRouter);
+  app.use(`${API_PREFIX}/text-wrap`, textWrapRouter);
 
   // ─── Root info endpoint ────────────────────────────────────────────────
   app.get(
@@ -434,6 +451,33 @@ export function createApp(): Express {
           "POST   /api/v1/search",
           "GET    /api/v1/search/recent",
           "GET    /api/v1/search/suggestions",
+          // ── Color Space ──────────────────────────────────────────────
+          "POST   /api/v1/color-space/convert",
+          "GET    /api/v1/color-space/gamut/:hex",
+          "GET    /api/v1/color-space/presets",
+          // ── Style Query ──────────────────────────────────────────────
+          "POST   /api/v1/style-query/generate",
+          "GET    /api/v1/style-query/presets",
+          // ── Scope ────────────────────────────────────────────────────
+          "POST   /api/v1/scope/analyze",
+          "GET    /api/v1/scope/presets",
+          // ── Subgrid ──────────────────────────────────────────────────
+          "POST   /api/v1/subgrid/generate",
+          "GET    /api/v1/subgrid/presets",
+          // ── Fallback ─────────────────────────────────────────────────
+          "GET    /api/v1/fallback/properties",
+          "GET    /api/v1/fallback/properties/:id",
+          "GET    /api/v1/fallback/presets",
+          // ── Logical Properties ───────────────────────────────────────
+          "GET    /api/v1/logical-properties/mapping",
+          "POST   /api/v1/logical-properties/convert",
+          "GET    /api/v1/logical-properties/presets",
+          // ── Initial Letter ───────────────────────────────────────────
+          "POST   /api/v1/initial-letter/generate",
+          "GET    /api/v1/initial-letter/presets",
+          // ── Text Wrap ────────────────────────────────────────────────
+          "POST   /api/v1/text-wrap/analyze",
+          "GET    /api/v1/text-wrap/presets",
         ],
       });
     }),

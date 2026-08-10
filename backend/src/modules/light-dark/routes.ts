@@ -1,8 +1,8 @@
 /**
- * Style-query routes — /api/v1/style-query
+ * Light-dark routes — /api/v1/light-dark
  *
- *   POST  /generate   build a @container style() query CSS block
- *   GET   /presets    3 style-query presets
+ *   POST  /generate   generate light-dark() CSS from color-scheme + 5 tokens
+ *   GET   /presets    4 light-dark presets
  *
  * Order matters: static collection routes are declared before /:id.
  */
@@ -11,12 +11,12 @@ import type { z } from "zod";
 
 import { asyncHandler } from "../../server/middleware/error.js";
 import { validateBody } from "../../server/middleware/validate.js";
-import { generateStyleQuery, listPresets } from "./service.js";
-import { StyleQueryGenerateSchema } from "./schema.js";
+import { generateLightDark, listPresets } from "./service.js";
+import { LightDarkGenerateSchema } from "./schema.js";
 
-export const styleQueryRouter = Router();
+export const lightDarkRouter = Router();
 
-styleQueryRouter.get(
+lightDarkRouter.get(
   "/presets",
   asyncHandler(async (_req, res) => {
     const items = await listPresets();
@@ -24,14 +24,14 @@ styleQueryRouter.get(
   }),
 );
 
-styleQueryRouter.post(
+lightDarkRouter.post(
   "/generate",
-  validateBody(StyleQueryGenerateSchema),
+  validateBody(LightDarkGenerateSchema),
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<
-      typeof StyleQueryGenerateSchema
+      typeof LightDarkGenerateSchema
     >;
-    const result = await generateStyleQuery(input);
+    const result = await generateLightDark(input);
     res.status(201).json({ data: result });
   }),
 );

@@ -40,6 +40,7 @@ import { healthRouter } from "../modules/health/routes.js";
 import { iconsRouter } from "../modules/icons/routes.js";
 import { initialLetterRouter } from "../modules/initial-letter/routes.js";
 import { inspectorRouter } from "../modules/inspector/routes.js";
+import { lightDarkRouter } from "../modules/light-dark/routes.js";
 import { liveRouter } from "../modules/live/routes.js";
 import { logicalPropertiesRouter } from "../modules/logical-properties/routes.js";
 import { marketplaceRouter } from "../modules/marketplace/routes.js";
@@ -55,14 +56,17 @@ import { pluginHubRouter } from "../modules/plugin-hub/routes.js";
 import { previewRouter } from "../modules/preview/routes.js";
 import { proComponentsRouter } from "../modules/pro-components/routes.js";
 import { profilerRouter } from "../modules/profiler/routes.js";
+import { propertyRegistrarRouter } from "../modules/property-registrar/routes.js";
 import { recipesRouter } from "../modules/recipes/routes.js";
 import { refactorRouter } from "../modules/refactor/routes.js";
 import { registryRouter } from "../modules/registry/routes.js";
+import { relativeColorRouter } from "../modules/relative-color/routes.js";
 import { reviewRouter } from "../modules/review/routes.js";
 import { scaffoldRouter } from "../modules/scaffold/routes.js";
 import { scopeRouter } from "../modules/scope/routes.js";
 import { searchRouter } from "../modules/search/routes.js";
 import { spotlightRouter } from "../modules/spotlight/routes.js";
+import { startingStyleRouter } from "../modules/starting-style/routes.js";
 import { storageRouter } from "../modules/storage/routes.js";
 import { studioRouter } from "../modules/studio/routes.js";
 import { styleQueryRouter } from "../modules/style-query/routes.js";
@@ -174,6 +178,11 @@ export function createApp(): Express {
   app.use(`${API_PREFIX}/logical-properties`, logicalPropertiesRouter);
   app.use(`${API_PREFIX}/initial-letter`, initialLetterRouter);
   app.use(`${API_PREFIX}/text-wrap`, textWrapRouter);
+  // ── 4 new modern-CSS developer-tool modules (Task 3-f) ───────────────
+  app.use(`${API_PREFIX}/property-registrar`, propertyRegistrarRouter);
+  app.use(`${API_PREFIX}/relative-color`, relativeColorRouter);
+  app.use(`${API_PREFIX}/starting-style`, startingStyleRouter);
+  app.use(`${API_PREFIX}/light-dark`, lightDarkRouter);
 
   // ─── Root info endpoint ────────────────────────────────────────────────
   app.get(
@@ -478,6 +487,20 @@ export function createApp(): Express {
           // ── Text Wrap ────────────────────────────────────────────────
           "POST   /api/v1/text-wrap/analyze",
           "GET    /api/v1/text-wrap/presets",
+          // ── Property Registrar ──────────────────────────────────────
+          "POST   /api/v1/property-registrar/generate",
+          "GET    /api/v1/property-registrar/syntaxes",
+          "GET    /api/v1/property-registrar/presets",
+          // ── Relative Color ──────────────────────────────────────────
+          "POST   /api/v1/relative-color/derive",
+          "GET    /api/v1/relative-color/channels",
+          "GET    /api/v1/relative-color/presets",
+          // ── Starting Style ──────────────────────────────────────────
+          "POST   /api/v1/starting-style/generate",
+          "GET    /api/v1/starting-style/presets",
+          // ── Light Dark ──────────────────────────────────────────────
+          "POST   /api/v1/light-dark/generate",
+          "GET    /api/v1/light-dark/presets",
         ],
       });
     }),

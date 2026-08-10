@@ -226,6 +226,17 @@ export const CACHE_TTL = {
   initialLetterGenerate: 5 * 60 * 1000,
   textWrapPresets: 30 * 60 * 1000,
   textWrapAnalyze: 5 * 60 * 1000,
+  // ── 4 modern-CSS developer-tool modules (Task 3-f) ─────────────────────
+  propertyRegistrarSyntaxes: 30 * 60 * 1000,
+  propertyRegistrarPresets: 30 * 60 * 1000,
+  propertyRegistrarGenerate: 5 * 60 * 1000,
+  relativeColorChannels: 30 * 60 * 1000,
+  relativeColorPresets: 30 * 60 * 1000,
+  relativeColorDerive: 5 * 60 * 1000,
+  startingStylePresets: 30 * 60 * 1000,
+  startingStyleGenerate: 5 * 60 * 1000,
+  lightDarkPresets: 30 * 60 * 1000,
+  lightDarkGenerate: 5 * 60 * 1000,
 } as const;
 
 /** LRU cache size ceiling. */

@@ -76,6 +76,10 @@ import {
   ShieldQuestion,
   CaseSensitive,
   AlignLeft,
+  FileBox,
+  Split,
+  DoorOpen,
+  SunMoon,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
@@ -137,13 +141,17 @@ import { FallbackAnalyzer } from "@/components/roycss/tools/fallback-analyzer";
 import { LogicalPropertiesMapper } from "@/components/roycss/tools/logical-properties-mapper";
 import { InitialLetterStudio } from "@/components/roycss/tools/initial-letter-studio";
 import { TextWrapStudio } from "@/components/roycss/tools/text-wrap-studio";
+import { PropertyRegistrar } from "@/components/roycss/tools/property-registrar";
+import { RelativeColorBuilder } from "@/components/roycss/tools/relative-color-builder";
+import { StartingStyleStudio } from "@/components/roycss/tools/starting-style-studio";
+import { LightDarkExplorer } from "@/components/roycss/tools/light-dark-explorer";
 import type { CSSEffect } from "@/lib/roycss-types";
 
 /* ═══════════════════════════════════════════════════════════════
    Shared types
    ═══════════════════════════════════════════════════════════════ */
 
-type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | "gap-spacing" | "writing-mode" | "object-fit" | "positioning" | "property-inspector" | "animation-timeline" | "sprite-sheet" | "text-shadow" | "filter-studio" | "conic-gradient" | "motion-path" | "view-transition" | "mask-studio" | "gradient-mesh" | "table-styler" | "aspect-ratio" | "shape-generator" | "scroll-snap" | "keyframes-studio" | "theming-engine" | "has-selector-tester" | "css-layers" | "input-mode" | "cascade-specificity" | "color-space" | "style-query" | "scope" | "subgrid" | "fallback" | "logical-properties" | "initial-letter" | "text-wrap";
+type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | "gap-spacing" | "writing-mode" | "object-fit" | "positioning" | "property-inspector" | "animation-timeline" | "sprite-sheet" | "text-shadow" | "filter-studio" | "conic-gradient" | "motion-path" | "view-transition" | "mask-studio" | "gradient-mesh" | "table-styler" | "aspect-ratio" | "shape-generator" | "scroll-snap" | "keyframes-studio" | "theming-engine" | "has-selector-tester" | "css-layers" | "input-mode" | "cascade-specificity" | "color-space" | "style-query" | "scope" | "subgrid" | "fallback" | "logical-properties" | "initial-letter" | "text-wrap" | "property-registrar" | "relative-color" | "starting-style" | "light-dark";
 
 interface PlatformToolsProps {
   tool: ToolType | null;
@@ -1557,6 +1565,10 @@ const TOOL_META: Record<ToolType, { title: string; icon: React.ComponentType<{ c
   "logical-properties": { title: "Logical Properties Mapper", icon: ArrowLeftRight, description: "Map physical → logical CSS properties (margin-left → margin-inline-start). RTL/vertical writing-mode demo, paste-physical-get-logical converter." },
   "initial-letter": { title: "Initial Letter Studio", icon: CaseSensitive, description: "Design CSS initial-letter drop caps (Baseline 2024). Size/sink sliders, raised vs sunken caps, 3-way comparison with legacy float hack, 6 presets." },
   "text-wrap": { title: "Text Wrap Balance Studio", icon: AlignLeft, description: "Explore text-wrap: balance/pretty, line-break, word-break, hyphens, hanging-punctuation. Before/after comparison with balance score, 6 presets." },
+  "property-registrar": { title: "@property Registrar", icon: FileBox, description: "Register typed CSS custom properties with @property (Houdini). Syntax picker, inheritance toggle, animated transition demo vs untyped var." },
+  "relative-color": { title: "Relative Color Builder", icon: Split, description: "CSS Relative Color Syntax (Baseline 2024) — rgb(from red calc(r + 20) g b). Channel math editors, source→derived preview, 6 presets." },
+  "starting-style": { title: "@starting-style Studio", icon: DoorOpen, description: "Animate elements entering the DOM with @starting-style (Baseline 2024). transition-behavior: allow-discrete for display animations, side-by-side comparison." },
+  "light-dark": { title: "Light-Dark() Explorer", icon: SunMoon, description: "CSS light-dark() function (Baseline 2024) — auto-switch colors by color-scheme. Palette builder, side-by-side vs @media boilerplate, 4 presets." },
 };
 
 export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformToolsProps) {
@@ -1641,6 +1653,10 @@ export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformTo
               {tool === "logical-properties" && <LogicalPropertiesMapper />}
               {tool === "initial-letter" && <InitialLetterStudio />}
               {tool === "text-wrap" && <TextWrapStudio />}
+              {tool === "property-registrar" && <PropertyRegistrar />}
+              {tool === "relative-color" && <RelativeColorBuilder />}
+              {tool === "starting-style" && <StartingStyleStudio />}
+              {tool === "light-dark" && <LightDarkExplorer />}
             </div>
           </>
         )}

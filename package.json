@@ -63,7 +63,9 @@
     "db:migrate": "prisma migrate dev",
     "db:reset": "prisma migrate reset"
   },
-  "dependencies": {},
+  "dependencies": {
+    "socket.io-client": "^4.8.3"
+  },
   "peerDependencies": {},
   "devDependencies": {
     "@dnd-kit/core": "^6.3.1",

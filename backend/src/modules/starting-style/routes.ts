@@ -1,8 +1,8 @@
 /**
- * Style-query routes — /api/v1/style-query
+ * Starting-style routes — /api/v1/starting-style
  *
- *   POST  /generate   build a @container style() query CSS block
- *   GET   /presets    3 style-query presets
+ *   POST  /generate   generate @starting-style CSS (base + hidden + @starting-style)
+ *   GET   /presets    4 starting-style presets
  *
  * Order matters: static collection routes are declared before /:id.
  */
@@ -11,12 +11,12 @@ import type { z } from "zod";
 
 import { asyncHandler } from "../../server/middleware/error.js";
 import { validateBody } from "../../server/middleware/validate.js";
-import { generateStyleQuery, listPresets } from "./service.js";
-import { StyleQueryGenerateSchema } from "./schema.js";
+import { generateStartingStyle, listPresets } from "./service.js";
+import { StartingStyleGenerateSchema } from "./schema.js";
 
-export const styleQueryRouter = Router();
+export const startingStyleRouter = Router();
 
-styleQueryRouter.get(
+startingStyleRouter.get(
   "/presets",
   asyncHandler(async (_req, res) => {
     const items = await listPresets();
@@ -24,14 +24,14 @@ styleQueryRouter.get(
   }),
 );
 
-styleQueryRouter.post(
+startingStyleRouter.post(
   "/generate",
-  validateBody(StyleQueryGenerateSchema),
+  validateBody(StartingStyleGenerateSchema),
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<
-      typeof StyleQueryGenerateSchema
+      typeof StartingStyleGenerateSchema
     >;
-    const result = await generateStyleQuery(input);
+    const result = await generateStartingStyle(input);
     res.status(201).json({ data: result });
   }),
 );

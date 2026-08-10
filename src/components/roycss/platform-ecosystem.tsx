@@ -81,6 +81,10 @@ import {
   ShieldQuestion,
   CaseSensitive,
   AlignLeft,
+  FileBox,
+  Split,
+  DoorOpen,
+  SunMoon,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -738,6 +742,30 @@ const DIFFERENTIATORS: Differentiator[] = [
     description: "Explore text-wrap: balance/pretty, line-break, word-break, hyphens, hanging-punctuation. Before/after comparison with balance score, 6 presets.",
     icon: AlignLeft,
   },
+  {
+    id: "property-registrar",
+    name: "@property Registrar",
+    description: "Register typed CSS custom properties with @property (Houdini). Syntax picker, inheritance toggle, animated transition demo vs untyped var. Baseline 2022.",
+    icon: FileBox,
+  },
+  {
+    id: "relative-color",
+    name: "Relative Color Builder",
+    description: "CSS Relative Color Syntax (Baseline 2024) — rgb(from red calc(r + 20) g b). Channel math editors, source→derived preview, 6 presets.",
+    icon: Split,
+  },
+  {
+    id: "starting-style",
+    name: "@starting-style Studio",
+    description: "Animate elements entering the DOM with @starting-style (Baseline 2024). transition-behavior: allow-discrete for display animations, side-by-side comparison.",
+    icon: DoorOpen,
+  },
+  {
+    id: "light-dark",
+    name: "Light-Dark() Explorer",
+    description: "CSS light-dark() function (Baseline 2024) — auto-switch colors by color-scheme. Palette builder, side-by-side vs @media boilerplate, 4 presets.",
+    icon: SunMoon,
+  },
 ];
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1196,6 +1224,10 @@ const INTERACTIVE_TOOLS: Record<string, string> = {
   "logical-properties": "logical-properties",
   "initial-letter": "initial-letter",
   "text-wrap": "text-wrap",
+  "property-registrar": "property-registrar",
+  "relative-color": "relative-color",
+  "starting-style": "starting-style",
+  "light-dark": "light-dark",
   // Note: mcp-server and inspector are external tools (CLI/Chrome extension),
   // NOT in-browser tools. They should expand to show setup instructions,
   // NOT try to open a panel. So they are intentionally NOT in this map.

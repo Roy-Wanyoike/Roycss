@@ -206,6 +206,26 @@ export const CACHE_TTL = {
   searchQuery: 1 * 60 * 1000,
   searchSuggestions: 5 * 60 * 1000,
   searchRecent: 1 * 60 * 1000,
+  // ── 8 modern-CSS developer-tool modules (Task 1-f) ─────────────────────
+  colorSpacePresets: 30 * 60 * 1000,
+  colorSpaceConvert: 5 * 60 * 1000,
+  colorSpaceGamut: 5 * 60 * 1000,
+  styleQueryPresets: 30 * 60 * 1000,
+  styleQueryGenerate: 5 * 60 * 1000,
+  scopePresets: 30 * 60 * 1000,
+  scopeAnalyze: 5 * 60 * 1000,
+  subgridPresets: 30 * 60 * 1000,
+  subgridGenerate: 5 * 60 * 1000,
+  fallbackProperties: 30 * 60 * 1000,
+  fallbackPropertyDetail: 30 * 60 * 1000,
+  fallbackPresets: 30 * 60 * 1000,
+  logicalMapping: 30 * 60 * 1000,
+  logicalConvert: 5 * 60 * 1000,
+  logicalPresets: 30 * 60 * 1000,
+  initialLetterPresets: 30 * 60 * 1000,
+  initialLetterGenerate: 5 * 60 * 1000,
+  textWrapPresets: 30 * 60 * 1000,
+  textWrapAnalyze: 5 * 60 * 1000,
 } as const;
 
 /** LRU cache size ceiling. */

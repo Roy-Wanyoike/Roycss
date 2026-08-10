@@ -227,3 +227,180 @@ export interface GeoData {
   visitors: number;
   share: number; // 0..1
 }
+
+// ─── Cloud ───────────────────────────────────────────────────────────────
+
+/** Cloud project — a deployed RoyCSS site hosted on Roy Cloud. */
+export interface CloudProject {
+  id: string;
+  name: string;
+  status: "building" | "live" | "error" | "idle";
+  url: string;
+  lastDeployed: string; // ISO timestamp
+  environment: "production" | "preview" | "staging";
+  size: number; // bytes
+}
+
+/** Deployment — a single deploy run for a CloudProject. */
+export interface Deployment {
+  id: string;
+  projectId: string;
+  commit: string;
+  branch: string;
+  status: "queued" | "building" | "success" | "failed" | "canceled";
+  duration: number; // ms
+  timestamp: string; // ISO timestamp
+}
+
+// ─── DevTools ────────────────────────────────────────────────────────────
+
+/** DevTools inspection result for a URL. */
+export interface DevToolsResult {
+  url: string;
+  inspectedAt: string; // ISO timestamp
+  classes: { name: string; count: number; source: string }[];
+  tokens: { name: string; value: string }[];
+  issues: { severity: "warn" | "error"; message: string; selector?: string }[];
+}
+
+// ─── Motion ──────────────────────────────────────────────────────────────
+
+/** MotionEffect — a single animation in the Roy Motion library. */
+export interface MotionEffect {
+  id: string;
+  name: string;
+  category: "entrance" | "exit" | "loop" | "scroll" | "hover" | "gesture";
+  duration: number; // ms
+  easing: string;
+  keyframes: string;
+  cssCode: string;
+}
+
+// ─── Enterprise ──────────────────────────────────────────────────────────
+
+/** Organization — a top-level enterprise customer. */
+export interface Organization {
+  id: string;
+  name: string;
+  plan: "team" | "business" | "enterprise";
+  seats: number;
+  seatsUsed: number;
+  ownerId: string;
+  createdAt: string; // ISO timestamp
+}
+
+/** Team — a sub-grouping inside an Organization. */
+export interface Team {
+  id: string;
+  orgId: string;
+  name: string;
+  memberCount: number;
+  createdAt: string; // ISO timestamp
+}
+
+/** License — a RoyCSS enterprise license seat. */
+export interface License {
+  id: string;
+  orgId: string;
+  type: "annual" | "perpetual" | "evaluation";
+  status: "active" | "expired" | "revoked";
+  seats: number;
+  expiresAt: string; // ISO timestamp
+}
+
+/** AuditLogEntry — one enterprise audit event. */
+export interface AuditLogEntry {
+  id: string;
+  orgId: string;
+  actor: string;
+  action: string;
+  resource: string;
+  ip: string;
+  timestamp: string; // ISO timestamp
+}
+
+// ─── Inspector ───────────────────────────────────────────────────────────
+
+/** InspectorClass — one roycss-* class with metadata. */
+export interface InspectorClass {
+  name: string;
+  category: string;
+  description: string;
+  cssSnippet: string;
+}
+
+/** ScanResult — what the inspector found on a scanned page. */
+export interface ScanResult {
+  url: string;
+  scannedAt: string; // ISO timestamp
+  totalClasses: number;
+  matched: { name: string; category: string; occurrences: number }[];
+  unknown: string[];
+}
+
+// ─── Studio ──────────────────────────────────────────────────────────────
+
+/** StudioProject — a visual builder project. */
+export interface StudioProject {
+  id: string;
+  name: string;
+  description: string;
+  components: StudioComponent[];
+  updatedAt: string; // ISO timestamp
+  createdAt: string; // ISO timestamp
+}
+
+/** StudioComponent — one node in a Studio project tree. */
+export interface StudioComponent {
+  id: string;
+  type: string;
+  props: Record<string, unknown>;
+  children?: StudioComponent[];
+}
+
+/** StudioTemplate — a starter template for Studio. */
+export interface StudioTemplate {
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  thumbnail: string;
+  componentCount: number;
+}
+
+// ─── Pro Components ──────────────────────────────────────────────────────
+
+/** ProComponent — a RoyCSS Pro component (DataGrid, Kanban, etc.). */
+export interface ProComponent {
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  props: { name: string; type: string; required: boolean; description: string }[];
+  codeSnippet: string;
+}
+
+// ─── MCP ─────────────────────────────────────────────────────────────────
+
+/** MCPTool — one tool exposed by the RoyCSS MCP hub. */
+export interface MCPTool {
+  name: string;
+  description: string;
+  inputSchema: Record<string, unknown>;
+  category: string;
+}
+
+/** MCPResource — a resource exposed by the MCP hub. */
+export interface MCPResource {
+  uri: string;
+  name: string;
+  description: string;
+  mimeType: string;
+}
+
+/** MCPPrompt — a prompt template exposed by the MCP hub. */
+export interface MCPPrompt {
+  name: string;
+  description: string;
+  arguments: { name: string; description: string; required: boolean }[];
+}

@@ -8,25 +8,62 @@ import express, { type Express } from "express";
 import helmet from "helmet";
 
 import { API_PREFIX } from "../config/constants.js";
+import { accessibilityRouter } from "../modules/accessibility/routes.js";
 import { academyRouter } from "../modules/academy/routes.js";
 import { analyticsRouter } from "../modules/analytics/routes.js";
+import { architectRouter } from "../modules/architect/routes.js";
+import { auditCenterRouter } from "../modules/audit-center/routes.js";
 import { authRouter } from "../modules/auth/routes.js";
+import { benchmarkRouter } from "../modules/benchmark/routes.js";
+import { blocksRouter } from "../modules/blocks/routes.js";
+import { blueprintsRouter } from "../modules/blueprints/routes.js";
+import { bundleRouter } from "../modules/bundle/routes.js";
+import { cdnRouter } from "../modules/cdn/routes.js";
+import { certificationsRouter } from "../modules/certifications/routes.js";
+import { challengesRouter } from "../modules/challenges/routes.js";
 import { cloudRouter } from "../modules/cloud/routes.js";
+import { complianceRouter } from "../modules/compliance/routes.js";
 import { contactRouter } from "../modules/contact/routes.js";
+import { deployRouter } from "../modules/deploy/routes.js";
+import { designerRouter } from "../modules/designer/routes.js";
 import { devtoolsRouter } from "../modules/devtools/routes.js";
+import { digitalTwinRouter } from "../modules/digital-twin/routes.js";
+import { edgeRouter } from "../modules/edge/routes.js";
 import { effectsRouter } from "../modules/effects/routes.js";
 import { enterpriseRouter } from "../modules/enterprise/routes.js";
+import { fleetRouter } from "../modules/fleet/routes.js";
+import { generatorRouter } from "../modules/generator/routes.js";
+import { governanceRouter } from "../modules/governance/routes.js";
 import { healthRouter } from "../modules/health/routes.js";
 import { iconsRouter } from "../modules/icons/routes.js";
 import { inspectorRouter } from "../modules/inspector/routes.js";
+import { liveRouter } from "../modules/live/routes.js";
 import { marketplaceRouter } from "../modules/marketplace/routes.js";
 import { mcpRouter } from "../modules/mcp/routes.js";
+import { mentorRouter } from "../modules/mentor/routes.js";
 import { motionRouter } from "../modules/motion/routes.js";
+import { observatoryRouter } from "../modules/observatory/routes.js";
+import { openRouter } from "../modules/open/routes.js";
+import { osRouter } from "../modules/os/routes.js";
+import { pairRouter } from "../modules/pair/routes.js";
 import { patternsRouter } from "../modules/patterns/routes.js";
+import { pluginHubRouter } from "../modules/plugin-hub/routes.js";
+import { previewRouter } from "../modules/preview/routes.js";
 import { proComponentsRouter } from "../modules/pro-components/routes.js";
+import { profilerRouter } from "../modules/profiler/routes.js";
 import { recipesRouter } from "../modules/recipes/routes.js";
+import { refactorRouter } from "../modules/refactor/routes.js";
+import { registryRouter } from "../modules/registry/routes.js";
+import { reviewRouter } from "../modules/review/routes.js";
+import { scaffoldRouter } from "../modules/scaffold/routes.js";
+import { searchRouter } from "../modules/search/routes.js";
+import { spotlightRouter } from "../modules/spotlight/routes.js";
+import { storageRouter } from "../modules/storage/routes.js";
 import { studioRouter } from "../modules/studio/routes.js";
+import { syncRouter } from "../modules/sync/routes.js";
 import { themesRouter } from "../modules/themes/routes.js";
+import { versionRouter } from "../modules/version/routes.js";
+import { workspaceRouter } from "../modules/workspace/routes.js";
 import { createLogger } from "../lib/logger.js";
 import { corsMiddleware } from "./middleware/cors.js";
 import { asyncHandler, errorHandler, notFoundHandler } from "./middleware/error.js";
@@ -80,6 +117,46 @@ export function createApp(): Express {
   app.use(`${API_PREFIX}/studio`, studioRouter);
   app.use(`${API_PREFIX}/pro-components`, proComponentsRouter);
   app.use(`${API_PREFIX}/mcp`, mcpRouter);
+  // ── 12 batch-2 modules (platform completion) ─────────────────────────
+  app.use(`${API_PREFIX}/compliance`, complianceRouter);
+  app.use(`${API_PREFIX}/audit-center`, auditCenterRouter);
+  app.use(`${API_PREFIX}/fleet`, fleetRouter);
+  app.use(`${API_PREFIX}/workspace`, workspaceRouter);
+  app.use(`${API_PREFIX}/deploy`, deployRouter);
+  app.use(`${API_PREFIX}/preview`, previewRouter);
+  app.use(`${API_PREFIX}/cdn`, cdnRouter);
+  app.use(`${API_PREFIX}/storage`, storageRouter);
+  app.use(`${API_PREFIX}/edge`, edgeRouter);
+  app.use(`${API_PREFIX}/mentor`, mentorRouter);
+  app.use(`${API_PREFIX}/challenges`, challengesRouter);
+  app.use(`${API_PREFIX}/certifications`, certificationsRouter);
+  // ── 12 batch-1 modules (platform modules) ────────────────────────────
+  app.use(`${API_PREFIX}/accessibility`, accessibilityRouter);
+  app.use(`${API_PREFIX}/architect`, architectRouter);
+  app.use(`${API_PREFIX}/review`, reviewRouter);
+  app.use(`${API_PREFIX}/refactor`, refactorRouter);
+  app.use(`${API_PREFIX}/pair`, pairRouter);
+  app.use(`${API_PREFIX}/designer`, designerRouter);
+  app.use(`${API_PREFIX}/scaffold`, scaffoldRouter);
+  app.use(`${API_PREFIX}/generator`, generatorRouter);
+  app.use(`${API_PREFIX}/sync`, syncRouter);
+  app.use(`${API_PREFIX}/version`, versionRouter);
+  app.use(`${API_PREFIX}/registry`, registryRouter);
+  app.use(`${API_PREFIX}/governance`, governanceRouter);
+  // ── 13 batch-3 modules (final platform surface) ─────────────────────
+  app.use(`${API_PREFIX}/open`, openRouter);
+  app.use(`${API_PREFIX}/spotlight`, spotlightRouter);
+  app.use(`${API_PREFIX}/profiler`, profilerRouter);
+  app.use(`${API_PREFIX}/bundle`, bundleRouter);
+  app.use(`${API_PREFIX}/observatory`, observatoryRouter);
+  app.use(`${API_PREFIX}/os`, osRouter);
+  app.use(`${API_PREFIX}/digital-twin`, digitalTwinRouter);
+  app.use(`${API_PREFIX}/live`, liveRouter);
+  app.use(`${API_PREFIX}/benchmark`, benchmarkRouter);
+  app.use(`${API_PREFIX}/blocks`, blocksRouter);
+  app.use(`${API_PREFIX}/blueprints`, blueprintsRouter);
+  app.use(`${API_PREFIX}/plugins`, pluginHubRouter);
+  app.use(`${API_PREFIX}/search`, searchRouter);
 
   // ─── Root info endpoint ────────────────────────────────────────────────
   app.get(
@@ -170,6 +247,193 @@ export function createApp(): Express {
           "POST   /api/v1/mcp/execute",
           "GET    /api/v1/mcp/resources",
           "GET    /api/v1/mcp/prompts",
+          // ── Compliance ────────────────────────────────────────────────
+          "POST   /api/v1/compliance/scan",
+          "GET    /api/v1/compliance/standards",
+          "GET    /api/v1/compliance/results/:id",
+          "GET    /api/v1/compliance/reports",
+          // ── Audit Center ──────────────────────────────────────────────
+          "GET    /api/v1/audit-center/projects",
+          "GET    /api/v1/audit-center/projects/:id",
+          "GET    /api/v1/audit-center/issues",
+          "GET    /api/v1/audit-center/trends",
+          // ── Fleet ─────────────────────────────────────────────────────
+          "GET    /api/v1/fleet/projects",
+          "GET    /api/v1/fleet/projects/:id",
+          "POST   /api/v1/fleet/scan",
+          "GET    /api/v1/fleet/health",
+          // ── Workspace ─────────────────────────────────────────────────
+          "GET    /api/v1/workspace/resources",
+          "GET    /api/v1/workspace/resources/:type",
+          "GET    /api/v1/workspace/team",
+          "POST   /api/v1/workspace/invite",
+          // ── Deploy ────────────────────────────────────────────────────
+          "POST   /api/v1/deploy/create",
+          "GET    /api/v1/deploy/history",
+          "GET    /api/v1/deploy/history/:id",
+          "GET    /api/v1/deploy/platforms",
+          "GET    /api/v1/deploy/environments",
+          // ── Preview ───────────────────────────────────────────────────
+          "POST   /api/v1/preview/create",
+          "GET    /api/v1/preview/list",
+          "GET    /api/v1/preview/:id",
+          "DELETE /api/v1/preview/:id",
+          // ── CDN ───────────────────────────────────────────────────────
+          "GET    /api/v1/cdn/stats",
+          "GET    /api/v1/cdn/resources",
+          "GET    /api/v1/cdn/edges",
+          "POST   /api/v1/cdn/purge",
+          // ── Storage ───────────────────────────────────────────────────
+          "GET    /api/v1/storage/files",
+          "GET    /api/v1/storage/files/:id",
+          "POST   /api/v1/storage/upload",
+          "DELETE /api/v1/storage/files/:id",
+          "GET    /api/v1/storage/usage",
+          // ── Edge ──────────────────────────────────────────────────────
+          "GET    /api/v1/edge/regions",
+          "GET    /api/v1/edge/config",
+          "POST   /api/v1/edge/deploy",
+          "GET    /api/v1/edge/performance",
+          // ── Mentor ────────────────────────────────────────────────────
+          "POST   /api/v1/mentor/chat",
+          "GET    /api/v1/mentor/topics",
+          "GET    /api/v1/mentor/progress",
+          "GET    /api/v1/mentor/levels",
+          // ── Challenges ────────────────────────────────────────────────
+          "GET    /api/v1/challenges",
+          "GET    /api/v1/challenges/:id",
+          "POST   /api/v1/challenges/:id/submit",
+          "GET    /api/v1/challenges/leaderboard",
+          // ── Certifications ────────────────────────────────────────────
+          "GET    /api/v1/certifications",
+          "GET    /api/v1/certifications/:id",
+          "POST   /api/v1/certifications/:id/exam",
+          "GET    /api/v1/certifications/verify/:id",
+          // ── Accessibility ─────────────────────────────────────────────
+          "GET    /api/v1/accessibility/audit/:url",
+          "GET    /api/v1/accessibility/rules",
+          "GET    /api/v1/accessibility/contrast/:fg/:bg",
+          "POST   /api/v1/accessibility/scan",
+          // ── Architect ─────────────────────────────────────────────────
+          "POST   /api/v1/architect/generate",
+          "GET    /api/v1/architect/templates",
+          "GET    /api/v1/architect/templates/:id",
+          "GET    /api/v1/architect/results/:id",
+          // ── Review ────────────────────────────────────────────────────
+          "POST   /api/v1/review/code",
+          "GET    /api/v1/review/results/:id",
+          "GET    /api/v1/review/rules",
+          "GET    /api/v1/review/history",
+          // ── Refactor ──────────────────────────────────────────────────
+          "POST   /api/v1/refactor/transform",
+          "GET    /api/v1/refactor/frameworks",
+          "GET    /api/v1/refactor/results/:id",
+          // ── Pair ──────────────────────────────────────────────────────
+          "POST   /api/v1/pair/chat",
+          "GET    /api/v1/pair/history",
+          "GET    /api/v1/pair/suggestions",
+          // ── Designer ──────────────────────────────────────────────────
+          "POST   /api/v1/designer/generate",
+          "GET    /api/v1/designer/results/:id",
+          "GET    /api/v1/designer/presets",
+          // ── Scaffold ──────────────────────────────────────────────────
+          "POST   /api/v1/scaffold/generate",
+          "GET    /api/v1/scaffold/types",
+          "GET    /api/v1/scaffold/types/:id",
+          "GET    /api/v1/scaffold/frameworks",
+          // ── Generator ─────────────────────────────────────────────────
+          "POST   /api/v1/generator/generate",
+          "GET    /api/v1/generator/types",
+          "GET    /api/v1/generator/templates/:type",
+          // ── Sync ──────────────────────────────────────────────────────
+          "GET    /api/v1/sync/status",
+          "POST   /api/v1/sync/figma",
+          "POST   /api/v1/sync/github",
+          "POST   /api/v1/sync/tokens",
+          "GET    /api/v1/sync/history",
+          // ── Version ───────────────────────────────────────────────────
+          "GET    /api/v1/version/current",
+          "GET    /api/v1/version/latest",
+          "GET    /api/v1/version/changelog",
+          "GET    /api/v1/version/breaking-changes",
+          "POST   /api/v1/version/check-upgrade",
+          // ── Registry ──────────────────────────────────────────────────
+          "GET    /api/v1/registry/packages",
+          "GET    /api/v1/registry/packages/:id",
+          "POST   /api/v1/registry/packages",
+          "GET    /api/v1/registry/packages/:id/versions",
+          // ── Governance ────────────────────────────────────────────────
+          "GET    /api/v1/governance/approvals",
+          "POST   /api/v1/governance/approvals/:id/approve",
+          "POST   /api/v1/governance/approvals/:id/reject",
+          "GET    /api/v1/governance/policies",
+          "GET    /api/v1/governance/audit-log",
+          // ── Open ──────────────────────────────────────────────────────
+          "GET    /api/v1/open/issues",
+          "GET    /api/v1/open/issues/:id",
+          "GET    /api/v1/open/rfcs",
+          "GET    /api/v1/open/rfcs/:id",
+          "POST   /api/v1/open/rfcs/:id/vote",
+          "GET    /api/v1/open/roadmap",
+          "GET    /api/v1/open/contributors",
+          // ── Spotlight ────────────────────────────────────────────────
+          "GET    /api/v1/spotlight/featured",
+          "GET    /api/v1/spotlight/items",
+          "GET    /api/v1/spotlight/items/:id",
+          "POST   /api/v1/spotlight/submit",
+          "GET    /api/v1/spotlight/weekly",
+          // ── Profiler ─────────────────────────────────────────────────
+          "POST   /api/v1/profiler/start",
+          "GET    /api/v1/profiler/results/:id",
+          "GET    /api/v1/profiler/metrics",
+          // ── Bundle ───────────────────────────────────────────────────
+          "POST   /api/v1/bundle/analyze",
+          "GET    /api/v1/bundle/results/:id",
+          "GET    /api/v1/bundle/duplicates",
+          "GET    /api/v1/bundle/dead-css",
+          // ── Observatory ──────────────────────────────────────────────
+          "GET    /api/v1/observatory/sites",
+          "GET    /api/v1/observatory/sites/:id",
+          "GET    /api/v1/observatory/alerts",
+          "GET    /api/v1/observatory/trends/:id",
+          // ── OS ───────────────────────────────────────────────────────
+          "GET    /api/v1/os/dashboard",
+          "GET    /api/v1/os/products",
+          "GET    /api/v1/os/activity",
+          "GET    /api/v1/os/quick-actions",
+          // ── Digital Twin ─────────────────────────────────────────────
+          "POST   /api/v1/digital-twin/create",
+          "GET    /api/v1/digital-twin/results/:id",
+          "GET    /api/v1/digital-twin/simulations",
+          // ── Live ─────────────────────────────────────────────────────
+          "POST   /api/v1/live/sessions",
+          "GET    /api/v1/live/sessions/:id",
+          "GET    /api/v1/live/sessions/:id/users",
+          "POST   /api/v1/live/sessions/:id/message",
+          // ── Benchmark ────────────────────────────────────────────────
+          "POST   /api/v1/benchmark/run",
+          "GET    /api/v1/benchmark/results/:id",
+          "GET    /api/v1/benchmark/comparisons",
+          // ── Blocks ───────────────────────────────────────────────────
+          "GET    /api/v1/blocks",
+          "GET    /api/v1/blocks/:id",
+          "GET    /api/v1/blocks/categories",
+          "POST   /api/v1/blocks",
+          // ── Blueprints ───────────────────────────────────────────────
+          "GET    /api/v1/blueprints",
+          "GET    /api/v1/blueprints/:id",
+          "GET    /api/v1/blueprints/:id/architecture",
+          "GET    /api/v1/blueprints/industries",
+          // ── Plugins ──────────────────────────────────────────────────
+          "GET    /api/v1/plugins",
+          "GET    /api/v1/plugins/:id",
+          "POST   /api/v1/plugins",
+          "GET    /api/v1/plugins/:id/changelog",
+          "GET    /api/v1/plugins/categories",
+          // ── Search ───────────────────────────────────────────────────
+          "POST   /api/v1/search",
+          "GET    /api/v1/search/recent",
+          "GET    /api/v1/search/suggestions",
         ],
       });
     }),

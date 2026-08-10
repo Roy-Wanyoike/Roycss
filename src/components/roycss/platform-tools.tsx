@@ -61,6 +61,14 @@ import {
   Blend,
   TableProperties,
   Proportions,
+  Frame,
+  MoveVertical,
+  Clapperboard,
+  Droplet,
+  ScanSearch,
+  Layers3,
+  Keyboard,
+  Scale,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
@@ -106,13 +114,21 @@ import { MaskStudio } from "@/components/roycss/tools/mask-studio";
 import { GradientMeshGenerator } from "@/components/roycss/tools/gradient-mesh";
 import { TableStyler } from "@/components/roycss/tools/table-styler";
 import { AspectRatioCalculator } from "@/components/roycss/tools/aspect-ratio";
+import { ShapeGenerator } from "@/components/roycss/tools/shape-generator";
+import { ScrollSnapBuilder } from "@/components/roycss/tools/scroll-snap-builder";
+import { KeyframesStudio } from "@/components/roycss/tools/keyframes-studio";
+import { ThemingEngine } from "@/components/roycss/tools/theming-engine";
+import { HasSelectorTester } from "@/components/roycss/tools/has-selector-tester";
+import { CSSLayersVisualizer } from "@/components/roycss/tools/css-layers";
+import { InputModeExplorer } from "@/components/roycss/tools/input-mode-explorer";
+import { CascadeSpecificityExplorer } from "@/components/roycss/tools/cascade-specificity";
 import type { CSSEffect } from "@/lib/roycss-types";
 
 /* ═══════════════════════════════════════════════════════════════
    Shared types
    ═══════════════════════════════════════════════════════════════ */
 
-type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | "gap-spacing" | "writing-mode" | "object-fit" | "positioning" | "property-inspector" | "animation-timeline" | "sprite-sheet" | "text-shadow" | "filter-studio" | "conic-gradient" | "motion-path" | "view-transition" | "mask-studio" | "gradient-mesh" | "table-styler" | "aspect-ratio";
+type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | "gap-spacing" | "writing-mode" | "object-fit" | "positioning" | "property-inspector" | "animation-timeline" | "sprite-sheet" | "text-shadow" | "filter-studio" | "conic-gradient" | "motion-path" | "view-transition" | "mask-studio" | "gradient-mesh" | "table-styler" | "aspect-ratio" | "shape-generator" | "scroll-snap" | "keyframes-studio" | "theming-engine" | "has-selector-tester" | "css-layers" | "input-mode" | "cascade-specificity";
 
 interface PlatformToolsProps {
   tool: ToolType | null;
@@ -1510,6 +1526,14 @@ const TOOL_META: Record<ToolType, { title: string; icon: React.ComponentType<{ c
   "gradient-mesh": { title: "Gradient Mesh Generator", icon: Blend, description: "Create mesh-gradient backgrounds with multiple overlapping radial-gradients. Drag stops on preview, blend modes, 8 presets, randomize." },
   "table-styler": { title: "Table Styler", icon: TableProperties, description: "Style HTML tables — borders, headers, striped rows, hover, sticky header, responsive. Live preview with mock data. 6 presets." },
   "aspect-ratio": { title: "Aspect Ratio Calculator", icon: Proportions, description: "Compute dimensions from aspect ratios, visualize responsive behavior, generate modern + fallback CSS. Reference table of 8 common ratios." },
+  "shape-generator": { title: "Shape Generator", icon: Frame, description: "14 CSS shapes (circle, star, heart, hexagon) with visual clip-path polygon editor and border-radius sliders." },
+  "scroll-snap": { title: "Scroll Snap Builder", icon: MoveVertical, description: "Interactive scroll-snap-type/align builder with live scrollable preview and 4 presets." },
+  "keyframes-studio": { title: "Keyframes Studio", icon: Clapperboard, description: "Visual @keyframes editor with timeline stops, per-stop transform/color controls, live preview, 6 presets." },
+  "theming-engine": { title: "Theming Engine", icon: Droplet, description: "Design token generator from a single primary color — 12 OKLCH tokens, 3 export formats, WCAG contrast checks." },
+  "has-selector-tester": { title: ":has() Selector Tester", icon: ScanSearch, description: "Live DOM tree builder with real querySelectorAll matching, 6 preset scenarios, highlight matching elements." },
+  "css-layers": { title: "CSS Layers Visualizer", icon: Layers3, description: "@layer cascade visualizer with add/reorder layers, live preview via scoped style injection, priority diagram." },
+  "input-mode": { title: "Input Mode Explorer", icon: Keyboard, description: "inputmode + enterkeyhint + autocomplete explorer with stylized keyboard mockups and reference tables." },
+  "cascade-specificity": { title: "Cascade Specificity Explorer", icon: Scale, description: "CSS parser + specificity computer with :where() stripping, cascade resolution visualization, 3 presets." },
 };
 
 export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformToolsProps) {
@@ -1578,6 +1602,14 @@ export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformTo
               {tool === "gradient-mesh" && <GradientMeshGenerator />}
               {tool === "table-styler" && <TableStyler />}
               {tool === "aspect-ratio" && <AspectRatioCalculator />}
+              {tool === "shape-generator" && <ShapeGenerator />}
+              {tool === "scroll-snap" && <ScrollSnapBuilder />}
+              {tool === "keyframes-studio" && <KeyframesStudio />}
+              {tool === "theming-engine" && <ThemingEngine />}
+              {tool === "has-selector-tester" && <HasSelectorTester />}
+              {tool === "css-layers" && <CSSLayersVisualizer />}
+              {tool === "input-mode" && <InputModeExplorer />}
+              {tool === "cascade-specificity" && <CascadeSpecificityExplorer />}
             </div>
           </>
         )}

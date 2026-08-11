@@ -152,7 +152,7 @@ import { SpacingScaleGenerator } from "@/components/roycss/spacing-scale-generat
 import { CSSVariableManager } from "@/components/roycss/variable-manager";
 import { ResponsivePreview } from "@/components/roycss/responsive-preview";
 import { useFavorites } from "@/hooks/use-favorites";
-import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useSpring, AnimatePresence, MotionConfig } from "framer-motion";
 import {
   ScrollReveal,
   StaggerGroup,
@@ -587,7 +587,7 @@ const faqEntries: Array<{ question: string; answer: string }> = [
   {
     question: "What are Roy Recipes and how are they different from documentation?",
     answer:
-      "Roy Recipes are problem-based solutions, not utility documentation. Instead of reading 'grid utilities', developers search 'SaaS Pricing Page' or 'CRM Dashboard' and get a complete implementation with UX rationale, components used, accessibility notes, performance tips, and best practices. The platform includes 18 recipes (12 original + 6 new: SaaS Hero, Dashboard Sidebar, Pricing Cards, Auth Form, Toast, Data Table) and the Recipe format is open for community contributions.",
+      "Roy Recipes are problem-based solutions, not utility documentation. Instead of reading 'grid utilities', developers search 'SaaS Pricing Page' or 'CRM Dashboard' and get a complete implementation with UX rationale, components used, accessibility notes, performance tips, and best practices. The platform includes 12 recipes covering hero sections, loading states, feature cards, glass UI, navigation, login forms, notifications, empty states, and CTAs. The Recipe format is open for community contributions.",
   },
   {
     question: "Does RoyCSS work with design tools like Figma?",
@@ -781,7 +781,7 @@ const animateMigrationRows: Array<{ from: string; to: string; category: string }
   { from: "animate__heartBeat", to: "roycss-anim-heartbeat", category: "Attention" },
 
   // Special
-  { from: "animate__animate__infinite", to: "roycss-loop-infinite", category: "Utility" },
+  { from: "animate__infinite", to: "roycss-loop-infinite", category: "Utility" },
   { from: "animate__delay-2s", to: "roycss-delay-2s", category: "Utility" },
   { from: "animate__delay-3s", to: "roycss-delay-3s", category: "Utility" },
   { from: "animate__delay-4s", to: "roycss-delay-4s", category: "Utility" },
@@ -983,8 +983,12 @@ function FeaturedCarousel({ onSelectEffect }: { onSelectEffect: (effect: CSSEffe
 
       {/* Scoped CSS for the effects currently on stage (and neighbours) */}
       <style dangerouslySetInnerHTML={{ __html: cssToInject }} />
-      {/* Keyframes for the progress bar (doubles as the auto-advance timer) */}
-      <style>{`@keyframes roy-featured-progress { from { width: 0% } to { width: 100% } }`}</style>
+      {/* Keyframes for the progress bar (doubles as the auto-advance timer).
+          Uses `transform: scaleX()` instead of `width: 0%→100%` so the
+          animation runs on the compositor (GPU) instead of triggering
+          layout on every frame. `transform-origin: left` keeps the bar
+          anchored to the left edge as it grows. */}
+      <style>{`@keyframes roy-featured-progress { from { transform: scaleX(0) } to { transform: scaleX(1) } }`}</style>
 
       <div className="container mx-auto px-4 sm:px-6">
         <SectionHeading
@@ -999,12 +1003,12 @@ function FeaturedCarousel({ onSelectEffect }: { onSelectEffect: (effect: CSSEffe
           role="toolbar"
           aria-label="Featured carousel controls"
         >
-          {/* Prev / counter / Next */}
+          {/* Prev / counter / Next — size-11 (44px) to meet WCAG 2.5.5 touch target on mobile */}
           <div className="flex items-center gap-2">
             <button
               onClick={goToPrev}
               aria-label="Previous batch of effects"
-              className="flex items-center justify-center size-9 rounded-lg bg-muted/80 border border-border/50 text-muted-foreground hover:text-foreground hover:bg-muted transition-all cursor-pointer"
+              className="flex items-center justify-center size-11 rounded-lg bg-muted/80 border border-border/50 text-muted-foreground hover:text-foreground hover:bg-muted transition-all cursor-pointer"
             >
               <ChevronLeft className="size-4" />
             </button>
@@ -1014,7 +1018,7 @@ function FeaturedCarousel({ onSelectEffect }: { onSelectEffect: (effect: CSSEffe
             <button
               onClick={goToNext}
               aria-label="Next batch of effects"
-              className="flex items-center justify-center size-9 rounded-lg bg-muted/80 border border-border/50 text-muted-foreground hover:text-foreground hover:bg-muted transition-all cursor-pointer"
+              className="flex items-center justify-center size-11 rounded-lg bg-muted/80 border border-border/50 text-muted-foreground hover:text-foreground hover:bg-muted transition-all cursor-pointer"
             >
               <ChevronRight className="size-4" />
             </button>
@@ -1033,6 +1037,7 @@ function FeaturedCarousel({ onSelectEffect }: { onSelectEffect: (effect: CSSEffe
               style={{
                 animation: `roy-featured-progress ${FEATURED_INTERVAL_MS}ms linear forwards`,
                 animationPlayState: progressPaused ? "paused" : "running",
+                transformOrigin: "left center",
               }}
               onAnimationEnd={() => {
                 if (!progressPaused) goToNext();
@@ -1252,7 +1257,7 @@ export default function RoyCSSPage() {
   // Active section highlighting via IntersectionObserver
   const [activeSection, setActiveSection] = useState("");
   useEffect(() => {
-    const sectionIds = ["get-started", "effects", "recipes", "patterns", "platform", "products", "docs", "faq"];
+    const sectionIds = ["get-started", "effects", "recipes", "patterns", "collections", "platform", "products", "docs", "faq"];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -1268,24 +1273,49 @@ export default function RoyCSSPage() {
     return () => observer.disconnect();
   }, []);
 
-  const favoriteEffects = effects.filter((e) => isFavorite(e.id));
+  // Memoize the favorites-filtered list. `favorites` (from useFavorites)
+  // is a Set whose identity is stable across renders thanks to the
+  // useSyncExternalStore cache, so this only re-runs when the user
+  // actually toggles a favorite — not on every keystroke in the search
+  // box or every dialog open/close.
+  const favoriteEffects = useMemo(
+    () => effects.filter((e) => isFavorite(e.id)),
+    [isFavorite],
+  );
 
-  const filteredEffects = effects.filter((e) => {
-    const matchesSearch =
-      search === "" ||
-      e.name.toLowerCase().includes(search.toLowerCase()) ||
-      e.description.toLowerCase().includes(search.toLowerCase()) ||
-      e.tags.some((t) => t.toLowerCase().includes(search.toLowerCase()));
+  // Memoize the search/category-filtered list. Without this, the filter
+  // runs across all 1569 effects on every parent re-render (any of the
+  // ~40 useState hooks flipping causes it) — including ones unrelated
+  // to search/category. `search` and `activeCategory` are the only
+  // relevant deps; the `effects` import is module-constant.
+  const filteredEffects = useMemo(() => {
+    if (search === "" && activeCategory === "all") return effects;
+    const q = search.toLowerCase();
+    return effects.filter((e) => {
+      const matchesSearch =
+        search === "" ||
+        e.name.toLowerCase().includes(q) ||
+        e.description.toLowerCase().includes(q) ||
+        e.tags.some((t) => t.toLowerCase().includes(q));
+      const matchesCategory = activeCategory === "all" || e.category === activeCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [search, activeCategory]);
 
-    const matchesCategory = activeCategory === "all" || e.category === activeCategory;
-
-    return matchesSearch && matchesCategory;
-  });
-
-  const getCategoryCount = (cat: EffectCategory) =>
-    effects.filter((e) => e.category === cat).length;
+  // Pre-compute per-category counts ONCE. Without this, every category
+  // pill calls `getCategoryCount(cat)` on each render, each filtering
+  // the entire 1569-effect array — ~22 × 1569 = ~34k scans per render.
+  const categoryCounts = useMemo(() => {
+    const counts = new Map<EffectCategory, number>();
+    for (const e of effects) {
+      counts.set(e.category, (counts.get(e.category) ?? 0) + 1);
+    }
+    return counts;
+  }, []);
+  const getCategoryCount = (cat: EffectCategory) => categoryCounts.get(cat) ?? 0;
 
   return (
+    <MotionConfig reducedMotion="user">
     <div className="min-h-screen flex flex-col bg-background text-foreground relative">
       {/* Skip to main content — keyboard accessibility */}
       <a
@@ -1409,10 +1439,10 @@ export default function RoyCSSPage() {
               >
                 {mobileMenuOpen ? <X className="size-4" /> : <Menu className="size-4" />}
               </button>
-              {/* Search button (⌘K) */}
+              {/* Search button (⌘K) — size-11 (44px) to meet WCAG 2.5.5 touch target on mobile */}
               <button
                 onClick={() => setSearchOverlayOpen(true)}
-                className="flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-foreground transition-all cursor-pointer"
+                className="flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-foreground transition-all cursor-pointer"
                 aria-label="Search (⌘K)"
               >
                 <Search className="size-4" />
@@ -1421,7 +1451,7 @@ export default function RoyCSSPage() {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button
-                    className="hidden sm:flex items-center justify-center size-9 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
+                    className="hidden sm:flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
                     aria-label="Developer tools"
                     title="Tools"
                   >
@@ -2122,7 +2152,7 @@ export default function RoyCSSPage() {
               description="Switch from Animate.css, Tailwind, or Bootstrap with our migration guides and codemods."
               items={["Animate.css → RoyCSS map", "Tailwind integration", "Bootstrap conversion", "Automatic codemods"]}
               details={[
-                { label: "Animate.css", content: "Use the migration table above to map animate__fadeIn → roycss-fade-in, animate__bounce → roycss-bounce-in, etc. Run scripts/migrate-colors.ts to convert hex/rgba to OKLCH." },
+                { label: "Animate.css", content: "Use the migration table above to map animate__fadeIn → roycss-anim-fade-in, animate__bounce → roycss-anim-bounce, etc. Run scripts/migrate-colors.ts to convert hex/rgba to OKLCH." },
                 { label: "Tailwind CSS", content: "RoyCSS is complementary to Tailwind — they coexist without conflicts. All RoyCSS classes are prefixed with .roycss- to avoid collisions. Use Tailwind for layout, RoyCSS for effects." },
               ]}
             />
@@ -2606,9 +2636,14 @@ export default function RoyCSSPage() {
       {/* Section Scrollbar (desktop only) */}
       <SectionScrollbar
         activeCategory={activeCategory}
-        onCategoryClick={(cat) => {
+        onCategoryClick={(cat, sectionId) => {
           setActiveCategory(cat);
-          scrollToSection("#effects");
+          // "hero" = Home dot → scroll to top of page (not #effects)
+          if (sectionId === "hero") {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          } else {
+            scrollToSection("#effects");
+          }
         }}
       />
 
@@ -2618,5 +2653,6 @@ export default function RoyCSSPage() {
       {/* Interactive Tutorial Overlay (first-time user onboarding) */}
       <InteractiveTutorial />
     </div>
+    </MotionConfig>
   );
 }

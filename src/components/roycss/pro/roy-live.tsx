@@ -938,6 +938,7 @@ export function RoyLive() {
                   variant="outline"
                   onClick={handleCopyRoom}
                   title="Copy room ID"
+                  aria-label={copiedRoom ? "Room ID copied" : "Copy room ID"}
                   className="size-8 shrink-0"
                 >
                   {copiedRoom ? <Check className="size-3.5 text-emerald-500" /> : <Copy className="size-3.5" />}

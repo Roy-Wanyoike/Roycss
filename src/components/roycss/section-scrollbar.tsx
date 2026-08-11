@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { categoryMeta, categoryOrder, type EffectCategory } from "@/lib/roycss-types";
 import { effects } from "@/lib/roycss-effects";
@@ -17,7 +17,7 @@ export function SectionScrollbar({
   onCategoryClick,
 }: {
   activeCategory: EffectCategory | "all";
-  onCategoryClick: (cat: EffectCategory | "all") => void;
+  onCategoryClick: (cat: EffectCategory | "all", sectionId: string) => void;
 }) {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [visible, setVisible] = useState(false);
@@ -34,16 +34,33 @@ export function SectionScrollbar({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Build sections list
-  const sections: { id: string; label: string; cat: EffectCategory | "all" }[] = [
-    { id: "hero", label: "Home", cat: "all" },
-    { id: "effects", label: "All Effects", cat: "all" },
-    ...categoryOrder.map((cat) => ({
-      id: cat,
-      label: categoryMeta[cat].label,
-      cat,
-    })),
-  ];
+  // Build sections list (memoized — `effects.length` is constant after
+  // first load, but the memo avoids rebuilding the array on every scroll
+  // event that updates `scrollProgress` state).
+  const sections: { id: string; label: string; cat: EffectCategory | "all" }[] = useMemo(
+    () => [
+      { id: "hero", label: "Home", cat: "all" },
+      { id: "effects", label: "All Effects", cat: "all" },
+      ...categoryOrder.map((cat) => ({
+        id: cat,
+        label: categoryMeta[cat].label,
+        cat,
+      })),
+    ],
+    [],
+  );
+
+  // Pre-compute per-category effect counts ONCE. Without this, every
+  // scroll event (which flips `scrollProgress` state and re-renders the
+  // component) would re-filter the entire 1569-effect array once per
+  // section dot — ~22 × 1569 = ~34k array scans per scroll frame.
+  const categoryCounts = useMemo(() => {
+    const counts = new Map<EffectCategory, number>();
+    for (const e of effects) {
+      counts.set(e.category, (counts.get(e.category) ?? 0) + 1);
+    }
+    return counts;
+  }, []);
 
   return (
     <AnimatePresence>
@@ -70,12 +87,12 @@ export function SectionScrollbar({
               const catCount =
                 section.cat === "all"
                   ? effects.length
-                  : effects.filter((e) => e.category === section.cat).length;
+                  : categoryCounts.get(section.cat) ?? 0;
 
               return (
                 <button
                   key={section.id}
-                  onClick={() => onCategoryClick(section.cat)}
+                  onClick={() => onCategoryClick(section.cat, section.id)}
                   className="group relative flex items-center justify-end gap-2 cursor-pointer"
                   aria-label={`Go to ${section.label}`}
                 >

@@ -12,7 +12,7 @@
  * blue. TS strict, zero `any`. Self-contained: all data is local.
  */
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Activity,
   BarChart3,
@@ -127,6 +127,16 @@ export function RoyOS() {
   const { toast } = useToast();
   const [search, setSearch] = useState("");
   const [openId, setOpenId] = useState<string | null>(null);
+  // Synced-at timestamp is computed on the client only to avoid a hydration
+  // mismatch — new Date().toLocaleTimeString() returns a different string on
+  // the server (UTC) vs. the client (user's locale) on every render.
+  const [syncedAt, setSyncedAt] = useState<string>("");
+  useEffect(() => {
+    // Defer to next frame to satisfy react-hooks/set-state-in-effect rule
+    // (same pattern used by effect-of-the-day, roycss-page, interactive-tutorial).
+    const id = requestAnimationFrame(() => setSyncedAt(new Date().toLocaleTimeString()));
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -326,7 +336,7 @@ export function RoyOS() {
             </div>
             <div className="flex items-center gap-2 text-xs">
               <Calendar className="text-muted-foreground size-3.5" />
-              <span className="text-muted-foreground">Synced {new Date().toLocaleTimeString()}</span>
+              <span className="text-muted-foreground">Synced {syncedAt || "—"}</span>
               <GitFork className="text-muted-foreground ml-2 size-3.5" />
               <span className="text-muted-foreground">main · a1b2c3d</span>
             </div>

@@ -21,9 +21,6 @@ import {
   ArrowLeftRight,
   Trophy,
   GitCompare,
-  ArrowRight,
-  Clock,
-  Award,
   Flame,
   Star,
   Calculator,
@@ -56,7 +53,6 @@ import {
   ScrollText,
   Languages,
   Image,
-  AlignVerticalJustifyCenter,
   Brush,
   Blend,
   TableProperties,
@@ -84,6 +80,7 @@ import {
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { LivePreview } from "@/components/roycss/effect-card";
+import { effects } from "@/lib/roycss-effects";
 import { CSSMinifier } from "@/components/roycss/css-minifier";
 import { SpecificityCalculator } from "@/components/roycss/tools/specificity-calculator";
 import { EasingVisualizer } from "@/components/roycss/tools/easing-visualizer";
@@ -448,8 +445,6 @@ function CSSDoctor() {
    3. Utility Explorer — hover any class, see its CSS + perf
    ═══════════════════════════════════════════════════════════════ */
 
-import { effects } from "@/lib/roycss-effects";
-
 function UtilityExplorer() {
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState<CSSEffect | null>(effects[0]);
@@ -593,9 +588,15 @@ function ComplianceRow({ label, passed }: { label: string; passed: boolean }) {
     <div className="flex items-center justify-between text-xs">
       <span className="text-muted-foreground">{label}</span>
       {passed ? (
-        <Check className="size-3.5 text-emerald-500" />
+        <span className="flex items-center gap-1 text-emerald-500">
+          <Check className="size-3.5" aria-hidden="true" />
+          <span className="sr-only">Passed</span>
+        </span>
       ) : (
-        <X className="size-3.5 text-muted-foreground/40" />
+        <span className="flex items-center gap-1 text-muted-foreground/60">
+          <X className="size-3.5" aria-hidden="true" />
+          <span className="sr-only">Not met</span>
+        </span>
       )}
     </div>
   );

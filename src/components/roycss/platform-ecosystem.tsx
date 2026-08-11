@@ -335,7 +335,7 @@ const PRODUCTS: PlatformProduct[] = [
 ];
 
 /* ═══════════════════════════════════════════════════════════════
-   DATA: 10 unique differentiators (features that set RoyCSS apart)
+   DATA: 70 unique differentiators (features that set RoyCSS apart)
    ═══════════════════════════════════════════════════════════════ */
 
 interface Differentiator {
@@ -1135,7 +1135,7 @@ function CompetitiveMoat() {
               <p className="text-xs text-muted-foreground mt-1">Platform products</p>
             </div>
             <div className="text-center">
-              <AnimatedCounter value={10} className="font-display text-3xl font-bold text-primary" />
+              <AnimatedCounter value={DIFFERENTIATORS.length} className="font-display text-3xl font-bold text-primary" />
               <p className="text-xs text-muted-foreground mt-1">Unique differentiators</p>
             </div>
             <div className="text-center">
@@ -1143,7 +1143,7 @@ function CompetitiveMoat() {
               <p className="text-xs text-muted-foreground mt-1">Free CSS effects</p>
             </div>
             <div className="text-center">
-              <AnimatedCounter value={4} className="font-display text-3xl font-bold text-primary" />
+              <AnimatedCounter value={SPONSOR_TIERS.length} className="font-display text-3xl font-bold text-primary" />
               <p className="text-xs text-muted-foreground mt-1">Sponsor tiers</p>
             </div>
           </div>
@@ -1334,7 +1334,7 @@ export function PlatformEcosystem({ onLaunchTool, onLearnMore }: { onLaunchTool?
               <h3 className="font-display text-xl font-bold text-foreground">Unique Features</h3>
             </div>
             <p className="text-sm text-muted-foreground mb-6">
-              Ten differentiators that make RoyCSS more than a CSS library.
+              {DIFFERENTIATORS.length} differentiators that make RoyCSS more than a CSS library.
             </p>
           </ScrollReveal>
 
@@ -1371,7 +1371,7 @@ export function PlatformEcosystem({ onLaunchTool, onLearnMore }: { onLaunchTool?
             </div>
           </ScrollReveal>
 
-          <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
             {SPONSOR_TIERS.map((tier) => (
               <SponsorCard key={tier.id} tier={tier} />
             ))}

@@ -37,6 +37,18 @@ export function CategoryExplorer({ onCategorySelect }: { onCategorySelect: (cat:
     return map;
   }, []);
 
+  // Pre-compute per-category counts ONCE. Without this, every hover
+  // (which flips `hoveredCategory` state and re-renders the component)
+  // would re-filter the entire 1569-effect array once per category —
+  // ~20 × 1569 = ~31k scans per hover.
+  const categoryCounts = useMemo(() => {
+    const counts = new Map<EffectCategory, number>();
+    for (const e of effects) {
+      counts.set(e.category, (counts.get(e.category) ?? 0) + 1);
+    }
+    return counts;
+  }, []);
+
   return (
     <ScrollReveal>
       <div className="mb-8">
@@ -51,7 +63,7 @@ export function CategoryExplorer({ onCategorySelect }: { onCategorySelect: (cat:
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
           {categoryOrder.map((cat) => {
             const meta = categoryMeta[cat];
-            const count = effects.filter(e => e.category === cat).length;
+            const count = categoryCounts.get(cat) ?? 0;
             const preview = categoryPreviews[cat];
             const isHovered = hoveredCategory === cat;
 

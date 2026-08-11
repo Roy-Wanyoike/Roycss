@@ -180,7 +180,7 @@ export function CSSGridGenerator() {
           {items.map(item => (
             <div key={item.id} className="flex items-center gap-1">
               <button onClick={() => setSelectedId(item.id)} className={`px-2 py-0.5 rounded text-xs font-medium cursor-pointer transition-all ${selectedId === item.id ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}>{item.label}</button>
-              <button onClick={() => removeItem(item.id)} className="text-muted-foreground hover:text-rose-500 cursor-pointer"><Minus className="size-3" /></button>
+              <button onClick={() => removeItem(item.id)} aria-label={`Remove item ${item.label}`} className="text-muted-foreground hover:text-rose-500 cursor-pointer"><Minus className="size-3" /></button>
             </div>
           ))}
         </div>

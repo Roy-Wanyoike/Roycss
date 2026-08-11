@@ -111,6 +111,12 @@ export function RoySpotlight() {
       description: "Your item will be reviewed within 48 hours (mock).",
     });
 
+  const view = (item: SpotlightItem) =>
+    toast({
+      title: item.title,
+      description: `Opening "${item.title}" by ${item.author} (mock).`,
+    });
+
   return (
     <div className="flex flex-col gap-6">
       {/* Header */}
@@ -188,7 +194,7 @@ export function RoySpotlight() {
                 <Star className="text-amber-500 size-4 fill-amber-500" />
                 {weekly.stars.toLocaleString()}
               </span>
-              <Button size="sm" className="gap-1.5">
+              <Button size="sm" className="gap-1.5" onClick={() => view(weekly)}>
                 <ExternalLink className="size-3.5" /> View
               </Button>
             </div>
@@ -240,7 +246,7 @@ export function RoySpotlight() {
                     <Star className="text-amber-500 size-3.5 fill-amber-500" />
                     {item.stars.toLocaleString()}
                   </span>
-                  <Button size="sm" variant="outline" className="gap-1.5">
+                  <Button size="sm" variant="outline" className="gap-1.5" onClick={() => view(item)}>
                     <ExternalLink className="size-3.5" /> View
                   </Button>
                 </div>

@@ -752,7 +752,7 @@ export function ThemingEngine() {
               </button>
               <button
                 type="button"
-                className="rounded-md bg-destructive px-3 py-1.5 text-sm font-medium text-white shadow-sm"
+                className="rounded-md bg-destructive px-3 py-1.5 text-sm font-medium text-destructive-foreground shadow-sm"
               >
                 Destructive
               </button>

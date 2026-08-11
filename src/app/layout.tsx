@@ -6,6 +6,23 @@ import "./roymotion.css";
 import { Toaster } from "@/components/ui/toaster";
 import { ServiceWorkerRegistration } from "@/components/roycss/sw-register";
 
+/**
+ * Pre-hydration theme script.
+ *
+ * Runs synchronously in <head> BEFORE React hydrates so the correct `dark`
+ * class is on <html> for the very first paint — eliminating the
+ * flash-of-unstyled-content (FOUC) that would otherwise occur when a
+ * user with a saved `roycss-theme=light` preference loads the page
+ * (the hardcoded `className="dark"` on <html> would briefly paint dark
+ * before ThemeToggle's useEffect runs and flips to light).
+ *
+ * Mirrors the localStorage key (`roycss-theme`) and prefers-color-scheme
+ * fallback used by the ThemeToggle component in roycss-page.tsx. Wrapped
+ * in a try/catch so the page still renders if localStorage is blocked
+ * (private mode, cookies disabled, etc.).
+ */
+const themeInitScript = `(function(){try{var k='roycss-theme';var s=localStorage.getItem(k);var d=s==='dark'||((!s||s==='system')&&window.matchMedia('(prefers-color-scheme: dark)').matches);var r=document.documentElement;r.classList.toggle('dark',d);r.style.colorScheme=d?'dark':'light';}catch(e){}})();`;
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -97,6 +114,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="dark">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{ __html: themeInitScript }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} antialiased bg-background text-foreground`}
       >

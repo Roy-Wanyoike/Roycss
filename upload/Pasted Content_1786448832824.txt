@@ -1,0 +1,2432 @@
+# MANDATORY PHASE 0 — ROYCSS DISCOVERY & FEATURE RECONCILIATION
+
+DO NOT MODIFY THE CODE YET.
+
+Before changing any file, perform a complete reconnaissance of the RoyCSS project.
+
+The purpose of this phase is to establish an authoritative inventory of everything RoyCSS currently contains and everything that has previously been planned or implemented.
+
+This phase is mandatory.
+
+---
+
+## STEP 1 — PROJECT INVENTORY
+
+Scan the entire repository.
+
+Identify:
+
+- All routes
+- All pages
+- All components
+- All effects
+- All animations
+- All patterns
+- All collections
+- All templates
+- All recipes
+- All platform products
+- All developer tools
+- All AI features
+- All documentation
+- All interactive demos
+- All playgrounds
+- All search functionality
+- All navigation systems
+- All footer links
+- All theme systems
+- All design-token systems
+- All live previews
+- All code generators
+- All copy-to-clipboard functionality
+- All filters
+- All categories
+- All APIs exposed to the frontend
+
+Do not rely only on the visible homepage.
+
+Search the complete source tree.
+
+---
+
+# STEP 2 — DISCOVERABILITY AUDIT
+
+For every feature ask:
+
+1. Does it exist?
+2. Is it implemented?
+3. Is it visible?
+4. Is it reachable?
+5. Is it linked?
+6. Is it searchable?
+7. Is it documented?
+8. Is it functional?
+9. Is it responsive?
+10. Can a first-time developer reasonably discover it?
+
+Create this table:
+
+| Feature | Exists | Implemented | Visible | Reachable | Searchable | Documented | Functional | Responsive | Discoverable |
+|---|---|---|---|---|---|---|---|---|---|
+
+Any feature marked:
+
+EXISTS = YES
+but
+VISIBLE = NO
+
+must be investigated.
+
+---
+
+# STEP 3 — PRODUCT INVENTORY
+
+Create ONE authoritative inventory of all RoyCSS products.
+
+Do not rely on product counts written in marketing copy.
+
+Find the actual products from:
+
+- Source code
+- Routes
+- Components
+- Documentation
+- Configuration
+- Previous product definitions
+- Current UI
+
+Create:
+
+| Product | Exists | Implemented | Route | Navigation | Homepage Visibility | Documentation | Status |
+|---|---|---|---|---|---|---|---|
+
+Classify each as:
+
+- Available
+- Beta
+- Experimental
+- Coming Soon
+- Planned
+- Deprecated
+
+Do NOT represent Planned or Coming Soon products as fully production-ready.
+
+---
+
+# STEP 4 — EFFECT INVENTORY
+
+Enumerate EVERY effect.
+
+Do not use the number displayed on the homepage as the source of truth.
+
+Create:
+
+| Effect | Category | Route | Preview | Interaction | Customization | Code | Copy | Documentation | Accessibility | Status |
+|---|---|---|---|---|---|---|---|---|---|---|
+
+Check whether the claimed effect count actually matches the implementation.
+
+If the homepage says:
+
+"1,569+ Effects"
+
+but only 1,200 are actually available, flag this as a product-trust issue.
+
+Never inflate numbers.
+
+---
+
+# STEP 5 — COMPONENT INVENTORY
+
+Create a complete component inventory.
+
+For each component record:
+
+- Name
+- Category
+- Route
+- Preview
+- Source
+- API
+- Variants
+- States
+- Accessibility
+- Responsive behavior
+- Documentation
+
+---
+
+# STEP 6 — PATTERN INVENTORY
+
+Create the same inventory for:
+
+- Patterns
+- Collections
+- Templates
+- Recipes
+- Layouts
+
+Determine whether each item is:
+
+VISIBLE
+HIDDEN
+ORPHANED
+BROKEN
+DUPLICATED
+UNDOCUMENTED
+
+---
+
+# STEP 7 — ROUTE RECONCILIATION
+
+Build a route map.
+
+Example:
+
+/
+├── /docs
+├── /effects
+├── /effects/[slug]
+├── /components
+├── /patterns
+├── /collections
+├── /recipes
+├── /platform
+├── /platform/[product]
+└── ...
+
+Then identify:
+
+- Dead routes
+- Duplicate routes
+- Missing routes
+- Routes with no navigation path
+- Routes with incorrect redirects
+- Routes that unexpectedly scroll to sections
+- Routes that produce errors
+
+---
+
+# STEP 8 — NAVIGATION GRAPH
+
+Map how users can reach every major feature.
+
+For each feature determine:
+
+Homepage
+↓
+Navigation
+↓
+Category
+↓
+Feature
+↓
+Documentation
+↓
+Code
+
+If a feature requires an obscure URL to discover it, mark it as a discoverability problem.
+
+---
+
+# STEP 9 — GIT FEATURE RECOVERY
+
+Inspect Git history sufficiently to identify potentially lost functionality.
+
+Look for:
+
+- Deleted pages
+- Deleted components
+- Deleted effects
+- Deleted products
+- Removed navigation
+- Removed floating navbar
+- Removed documentation
+- Removed platform cards
+- Removed interactive previews
+- Removed search
+- Removed product sections
+- Removed previously approved functionality
+
+Do NOT automatically restore old files.
+
+Compare old and current versions.
+
+Determine whether the old functionality was:
+
+- Intentionally removed
+- Accidentally removed
+- Replaced
+- Superseded
+- Still required
+
+Create:
+
+| Feature | Historical Evidence | Current State | Should Exist? | Action |
+|---|---|---|---|---|
+
+---
+
+# STEP 10 — USER JOURNEY DISCOVERY TEST
+
+Simulate a brand-new developer.
+
+Do not assume prior knowledge.
+
+Test these questions:
+
+### "What is RoyCSS?"
+
+Can the homepage answer this within 5 seconds?
+
+### "How do I install it?"
+
+Can I find installation instructions immediately?
+
+### "Where are the effects?"
+
+Can I find them without scrolling through the entire homepage?
+
+### "Where are the components?"
+
+Can I find them?
+
+### "What is the difference between effects, patterns, components and collections?"
+
+Is that obvious?
+
+### "What other products does RoyCSS offer?"
+
+Can I discover the complete platform?
+
+### "How do I use this effect?"
+
+Can I get working code quickly?
+
+### "Can I customize it?"
+
+Can I interact with the preview?
+
+### "Can I use RoyCSS with my existing framework?"
+
+Is compatibility obvious?
+
+### "Can AI work with RoyCSS?"
+
+Can I discover RoyAI/MCP?
+
+---
+
+# STEP 11 — INFORMATION ARCHITECTURE SCORE
+
+Score every major section:
+
+| Section | Clarity | Discoverability | Hierarchy | UX | Developer Value |
+|---|---:|---:|---:|---:|---:|
+
+Use a 1–10 scale.
+
+Anything below 7 requires investigation.
+
+---
+
+# STEP 12 — DO NOT START IMPLEMENTATION UNTIL THIS REPORT EXISTS
+
+First produce:
+
+## ROYCSS CURRENT STATE REPORT
+
+Containing:
+
+1. Complete product inventory
+2. Complete effect inventory
+3. Complete component inventory
+4. Complete pattern inventory
+5. Complete collection inventory
+6. Complete template inventory
+7. Route map
+8. Navigation map
+9. Discoverability matrix
+10. Git recovery matrix
+11. Missing feature report
+12. Duplicate feature report
+13. Broken feature report
+14. Documentation gaps
+15. UX/HCD findings
+16. Priority recommendations
+
+Only after this report has been generated should implementation begin.
+
+---
+
+# PRIORITY SYSTEM
+
+Classify findings as:
+
+### P0 — Critical
+
+Feature inaccessible, broken, data loss, major navigation failure.
+
+### P1 — High
+
+Major product functionality hidden or confusing.
+
+### P2 — Medium
+
+UX, visual, accessibility or documentation issue.
+
+### P3 — Polish
+
+Minor visual or copy improvements.
+
+Fix P0 and P1 first.
+
+---
+
+# MOST IMPORTANT RULE
+
+DO NOT OPTIMIZE FOR THE NUMBER OF FEATURES.
+
+Optimize for:
+
+DISCOVERABILITY
+CLARITY
+USEFULNESS
+QUALITY
+PERFORMANCE
+ACCESSIBILITY
+TRUST
+
+A platform with 500 excellent, discoverable features is better than a platform claiming 5,000 features that users cannot find or use.
+
+---
+
+# AFTER THE RECONNAISSANCE
+
+Once the audit is complete:
+
+1. Present the findings.
+2. Reconcile the product catalog.
+3. Reconcile the feature catalog.
+4. Identify missing functionality.
+5. Identify hidden functionality.
+6. Identify broken functionality.
+7. Identify accidental losses.
+8. Propose the new information architecture.
+9. Then begin implementation. 
+Do not destroy working functionality while improving discoverability.
+
+RoyCSS should emerge from this process as a coherent frontend engineering platform rather than a collection of disconnected demos.
+
+# ROYCSS — MASTER PRODUCT VISIBILITY, DISCOVERABILITY & PRODUCTION READINESS AUDIT
+
+## ROLE
+
+Act as the RoyCSS Principal Product Engineer and Distinguished UX/HCD Architect working with:
+
+- Principal Frontend Engineers
+- Principal QA Engineers
+- Staff UX/UI Designers
+- Accessibility Engineers
+- Developer Experience Engineers
+- Performance Engineers
+- Product Managers
+- Technical Documentation Engineers
+
+Your mission is to audit and improve the existing RoyCSS platform so that:
+
+1. Users immediately understand what RoyCSS is.
+2. Developers immediately understand how to use it.
+3. Every major feature is discoverable.
+4. Every approved product is visible.
+5. Every effect/component/pattern actually works.
+6. Navigation is intuitive.
+7. Documentation is technically professional.
+8. The platform feels cohesive rather than like a collection of disconnected features.
+9. Nothing previously implemented is accidentally lost.
+10. The final experience is production-ready.
+
+IMPORTANT:
+
+RoyCSS is its own framework and product ecosystem.
+
+Do NOT mix RoyCSS with Ferrum.
+
+Ferrum may only be treated as design/inspiration where previously discussed, but RoyCSS must retain its own identity, architecture, naming, positioning, and product strategy.
+
+Do not blindly rewrite working code.
+
+Do not remove existing functionality simply because you would architect it differently.
+
+First understand the existing system, then improve it.
+
+---
+
+# 1. FIRST: AUDIT THE ENTIRE EXISTING PROJECT
+
+Before modifying anything, inspect the complete project.
+
+Audit:
+
+- Pages
+- Routes
+- Components
+- Effects
+- Patterns
+- Collections
+- Templates
+- Platform products
+- Documentation
+- Navigation
+- Footer
+- Search
+- Playground
+- Live previews
+- Code examples
+- Theme system
+- Color controls
+- Animations
+- Interactive elements
+- Forms
+- Buttons
+- CTAs
+- Cards
+- Modals
+- Dropdowns
+- Filters
+- Tabs
+- Mobile navigation
+- Responsive layouts
+- Assets
+- Configuration
+- Package structure
+- Git history where relevant
+
+Create an inventory before making major changes.
+
+Identify:
+
+- What exists
+- What is visible
+- What is hidden
+- What is partially implemented
+- What is broken
+- What is duplicated
+- What is unreachable
+- What was previously implemented but disappeared
+- What is referenced in documentation but missing from the UI
+- What is present in code but impossible for users to discover
+
+---
+
+# 2. USE OUR ROYCSS PRODUCT HISTORY AS THE REQUIREMENTS BASELINE
+
+Review the existing project against the previously established RoyCSS direction.
+
+Do not assume the current UI represents the complete product.
+
+The platform has evolved beyond being only an effects library.
+
+RoyCSS should communicate itself as:
+
+A modern frontend framework + component system + effects library + design system + developer platform + AI-assisted frontend ecosystem.
+
+The visual effects are an important strength, but they should not obscure the broader platform.
+
+---
+
+# 3. FIX THE FIRST-IMPRESSION EXPERIENCE
+
+When someone opens:
+
+/
+
+they MUST land at the top of the homepage Hero.
+
+They must NOT automatically land in:
+
+- Effects
+- Patterns
+- Collections
+- Platform
+- Any anchor section
+
+unless they intentionally navigate to a deep link.
+
+Audit and fix:
+
+- Hash navigation
+- Scroll restoration
+- Browser restoration
+- Route transitions
+- Anchor behavior
+- Focus management
+- JavaScript initialization
+- SPA routing
+- Deep links
+
+Test this from:
+
+- Fresh browser
+- Refresh
+- New tab
+- Direct URL
+- Back/forward navigation
+- Mobile browser
+
+---
+
+# 4. REDESIGN THE INFORMATION HIERARCHY — NOT THE BRAND
+
+Do not destroy the existing RoyCSS visual identity.
+
+Improve hierarchy.
+
+The current site risks communicating:
+
+"RoyCSS = a huge CSS effects library"
+
+when the actual vision is:
+
+"RoyCSS = a complete frontend engineering platform."
+
+The homepage should guide visitors through this understanding:
+
+WOW
+↓
+What is RoyCSS?
+↓
+How does it help me?
+↓
+What can I build?
+↓
+What tools are available?
+↓
+What products exist?
+↓
+How do I start?
+↓
+Why should I trust it?
+↓
+How do I adopt it?
+
+---
+
+# 5. HERO SECTION
+
+The Hero should immediately answer:
+
+### What is RoyCSS?
+
+### Who is it for?
+
+### Why should I care?
+
+### What can I do with it?
+
+Avoid vague marketing language.
+
+The Hero should communicate that RoyCSS provides:
+
+- Modern CSS
+- Components
+- Effects
+- Patterns
+- Templates
+- Design systems
+- Developer tooling
+- AI-assisted development
+- Accessibility
+- Performance
+- Enterprise capabilities
+
+Keep the hero visually impressive.
+
+However, visual effects should support the message rather than overpower it.
+
+---
+
+# 6. HERO INTERACTIVE DEMONSTRATION
+
+Give visitors an immediate opportunity to experience RoyCSS.
+
+Consider a carefully selected interactive example showing:
+
+- Component
+- Effect
+- Customization
+- Generated CSS
+- Copy action
+
+The visitor should understand:
+
+BUILD
+→ CUSTOMIZE
+→ COPY
+→ SHIP
+
+without needing to read extensive documentation.
+
+---
+
+# 7. FIX THE EFFECTS DISCOVERABILITY PROBLEM
+
+The homepage should NOT force users to scroll through hundreds of effects.
+
+The homepage should showcase a curated selection.
+
+For example:
+
+8–12 exceptional effects.
+
+Then:
+
+"Explore 1,500+ Effects →"
+
+The complete library belongs in the dedicated Effects Gallery.
+
+The Effects Gallery should provide:
+
+- Categories
+- Search
+- Filters
+- Tags
+- Framework compatibility
+- Difficulty
+- Performance characteristics
+- Accessibility information
+- Live preview
+- Code
+- Copy
+- Customize
+- Playground
+
+---
+
+# 8. EFFECTS MUST ACTUALLY WORK
+
+Audit EVERY effect individually.
+
+For every effect verify:
+
+- Rendering
+- Animation
+- Timing
+- Hover
+- Focus
+- Active state
+- Interaction
+- Touch
+- Responsive behavior
+- Color customization
+- Preview
+- Code generation
+- Copy functionality
+- Reduced motion
+- Browser compatibility
+- Performance
+
+If an effect claims to do something, it must actually do that.
+
+Do not accept:
+
+- Fake controls
+- Broken previews
+- Static effects presented as interactive
+- Incorrect names
+- Incorrect documentation
+- Color controls that don't change the preview
+- Code that doesn't reproduce the preview
+
+---
+
+# 9. LIVE PREVIEW VALIDATION
+
+Every live preview must be functional.
+
+Test:
+
+- Color
+- Background
+- Border
+- Gradient
+- Text
+- Shadow
+- Radius
+- Opacities
+- Animation speed
+- Direction
+- Intensity
+- Size
+- Spacing
+- Typography
+- Theme
+
+When a developer changes a value, the preview MUST respond immediately.
+
+The generated/copyable code must match the preview.
+
+---
+
+# 10. COMPONENTS
+
+Audit every component.
+
+Each component should have appropriate states where relevant:
+
+- Default
+- Hover
+- Focus
+- Active
+- Disabled
+- Loading
+- Error
+- Success
+- Empty
+
+Verify keyboard interaction, accessibility and responsive behavior.
+
+---
+
+# 11. PATTERNS
+
+Patterns must represent actual usable solutions rather than decorative examples.
+
+Examples:
+
+- Authentication
+- Dashboard
+- Navigation
+- Forms
+- Pricing
+- Settings
+- Admin
+- Healthcare
+- Banking
+- SaaS
+- Commerce
+- Marketing
+- Documentation
+
+Every pattern should provide:
+
+- Preview
+- Source
+- Code
+- Responsive behavior
+- Accessibility considerations
+- Customization
+- Related components
+
+---
+
+# 12. COMPONENTS, PATTERNS, EFFECTS & COLLECTIONS NEED CLEAR RELATIONSHIPS
+
+Users should understand the difference.
+
+For example:
+
+COMPONENTS
+Reusable UI building blocks.
+
+PATTERNS
+Common UI/UX solutions.
+
+EFFECTS
+Visual interaction and motion.
+
+COLLECTIONS
+Curated groups of related assets.
+
+TEMPLATES
+Complete page/application starting points.
+
+Do not make users guess what each section means.
+
+---
+
+# 13. COMBINE THE PRODUCT SECTIONS
+
+Do NOT present confusing separate sections such as:
+
+"24 Production-Ready Products"
+
+and
+
+"16+ Platform Products"
+
+if they represent overlapping product ecosystems.
+
+Create ONE authoritative:
+
+# RoyCSS Platform
+
+Subtitle:
+
+"Everything you need to design, build, ship and scale modern interfaces."
+
+Then organize products into clear categories.
+
+For example:
+
+## Build
+
+- Components
+- Blocks
+- Patterns
+- Templates
+- Marketplace
+
+## Design
+
+- Roy Studio
+- Themes
+- Tokens
+- Motion
+- Icons
+
+## AI
+
+- RoyAI
+- Roy Architect
+- Roy Pair
+- Roy Review
+- Roy MCP
+
+## Developer Tools
+
+- RoyCLI
+- Inspector
+- DevTools
+- Sandbox
+- Profiler
+- Analytics
+
+## Enterprise
+
+- Cloud
+- Governance
+- Compliance
+- Accessibility
+- Enterprise
+- Registry
+
+## Learning & Community
+
+- Academy
+- Challenges
+- Certifications
+- Community
+- Showcase
+
+The exact product inventory must be reconciled against the current codebase and previous approved roadmap.
+
+DO NOT invent duplicate products simply to increase the count.
+
+There should be ONE source of truth for the product catalog.
+
+---
+
+# 14. EVERY APPROVED PRODUCT MUST BE VISIBLE
+
+Audit the product catalog against the complete RoyCSS roadmap.
+
+Identify:
+
+- Missing products
+- Products with no page
+- Products with no navigation
+- Products with placeholder pages
+- Products only mentioned in code
+- Products only mentioned in documentation
+- Products that are impossible to discover
+
+Every approved product needs an appropriate discoverability path.
+
+At minimum:
+
+- Product name
+- Description
+- Category
+- Value proposition
+- Features
+- Status/tier
+- CTA
+- Related products
+
+Do not create fake functionality.
+
+If a product is planned but not implemented, clearly distinguish:
+
+AVAILABLE
+BETA
+COMING SOON
+
+Do not make users believe an unfinished product is production-ready.
+
+---
+
+# 15. NAVIGATION
+
+Create a clear information architecture.
+
+Recommended primary navigation:
+
+Get Started
+Docs
+Explore
+Platform
+
+Then use dropdowns/mega menus where appropriate.
+
+### Explore
+
+- Effects
+- Components
+- Patterns
+- Collections
+- Templates
+- Recipes
+
+### Platform
+
+- AI
+- Studio
+- Developer Tools
+- Design Systems
+- Cloud
+- Enterprise
+- Marketplace
+
+Avoid a navbar containing dozens of individual products.
+
+---
+
+# 16. FLOATING / STICKY NAVIGATION
+
+Implement a refined floating/sticky navbar.
+
+At the top:
+
+Clean transparent navigation.
+
+On scroll:
+
+- Slightly condensed
+- Translucent
+- Backdrop blur
+- Clear border
+- Strong contrast
+- Minimal animation
+
+It should remain available while exploring long pages.
+
+Do not make it visually distracting.
+
+---
+
+# 17. UNIVERSAL SEARCH
+
+Make search a first-class feature.
+
+Users should be able to search:
+
+- Effects
+- Components
+- Patterns
+- Templates
+- Documentation
+- Products
+- Utilities
+- Recipes
+- APIs
+
+Results should clearly indicate the type.
+
+Example:
+
+Effect
+Component
+Pattern
+Documentation
+Product
+
+---
+
+# 18. DOCUMENTATION
+
+Documentation must be technical, professional and developer-first.
+
+It should cover:
+
+- Installation
+- Quick Start
+- Configuration
+- Utilities
+- Components
+- Effects
+- Patterns
+- Layout
+- Motion
+- Themes
+- Tokens
+- APIs
+- Accessibility
+- Performance
+- Browser compatibility
+- Migration
+- Best practices
+- Troubleshooting
+- CLI
+- AI/MCP integration
+
+Every feature demonstrated on the website should have a path to technical documentation.
+
+Developers should not have to hunt for implementation details.
+
+---
+
+# 19. DEVELOPER EXPERIENCE
+
+Every important feature should make this journey obvious:
+
+DISCOVER
+↓
+UNDERSTAND
+↓
+TRY
+↓
+CUSTOMIZE
+↓
+COPY
+↓
+INSTALL
+↓
+BUILD
+
+Avoid pages where users can only look at a visual demo without knowing how to implement it.
+
+---
+
+# 20. ACCESSIBILITY
+
+Audit the complete site against modern accessibility expectations.
+
+Check:
+
+- Contrast
+- Keyboard navigation
+- Focus states
+- Semantic HTML
+- ARIA
+- Screen readers
+- Reduced motion
+- Touch targets
+- Form labels
+- Error messages
+
+Pay particular attention to the dark UI.
+
+Do not sacrifice accessibility for aesthetics.
+
+---
+
+# 21. RESPONSIVE DESIGN
+
+Test every major page and feature on:
+
+- Desktop
+- Laptop
+- Tablet
+- Mobile
+
+Check:
+
+- Navbar
+- Menus
+- Product cards
+- Effects
+- Previews
+- Code blocks
+- Filters
+- Search
+- Tables
+- Documentation
+- Interactive demos
+
+No horizontal overflow.
+
+No clipped content.
+
+No inaccessible controls.
+
+---
+
+# 22. VISUAL DESIGN AUDIT
+
+Review:
+
+- Typography
+- Spacing
+- Color hierarchy
+- Contrast
+- Borders
+- Shadows
+- Gradients
+- Glow effects
+- Card hierarchy
+- Button hierarchy
+- Icon consistency
+- Animation consistency
+
+The visual language should feel intentional.
+
+Avoid adding effects simply because they look impressive.
+
+Every visual effect should support:
+
+- hierarchy
+- feedback
+- identity
+- comprehension
+- delight
+
+---
+
+# 23. HCD / HUMAN-CENTERED DESIGN REVIEW
+
+For every major page ask:
+
+### First-time visitor
+
+Can I understand this in 5 seconds?
+
+### Developer
+
+Can I find implementation instructions in 30 seconds?
+
+### Experienced developer
+
+Can I quickly find the API/source?
+
+### Designer
+
+Can I understand the design system?
+
+### Enterprise buyer
+
+Can I understand the platform value?
+
+### AI-assisted developer
+
+Can AI tools correctly discover and use RoyCSS?
+
+If the answer is no, improve the information architecture.
+
+---
+
+# 24. AI-NATIVE EXPERIENCE
+
+Ensure the platform makes sense in the AI era.
+
+Review integration of:
+
+- RoyAI
+- Roy MCP
+- AI documentation access
+- AI-readable examples
+- Code generation
+- Accessibility suggestions
+- Refactoring
+- Optimization
+- Architecture assistance
+
+Documentation should be structured so AI coding tools can reliably consume it.
+
+Avoid marketing claims such as "no hallucinations" unless technically defensible.
+
+---
+
+# 25. PERFORMANCE
+
+The platform should feel extremely fast.
+
+Audit:
+
+- JavaScript
+- CSS
+- Images
+- Fonts
+- Bundle size
+- Lazy loading
+- Code splitting
+- Hydration
+- Animations
+- Rendering
+- Memory usage
+
+Avoid shipping unnecessary JavaScript for effects that can be implemented using CSS.
+
+Prefer native browser capabilities when appropriate.
+
+Do not sacrifice maintainability for micro-optimizations.
+
+---
+
+# 26. GIT / FEATURE RECOVERY
+
+Audit Git history where necessary.
+
+Determine whether anything previously implemented was lost through:
+
+- Git reset
+- Merge
+- Rebase
+- Branch changes
+- File replacement
+- Refactoring
+
+Check especially for:
+
+- Navigation
+- Products
+- Effects
+- Components
+- Documentation
+- Platform pages
+- Interactive previews
+- Search
+- Floating navbar
+- Product cards
+- New platform capabilities
+
+DO NOT blindly restore old code.
+
+Compare old and current implementations and preserve the best working version.
+
+---
+
+# 27. NO FEATURE SHOULD EXIST ONLY IN CODE
+
+This is one of the most important requirements.
+
+If a feature is intended for users, there must be a discoverable UI path.
+
+Audit for:
+
+CODE EXISTS
+but
+USER CANNOT FIND IT
+
+Examples:
+
+- Hidden products
+- Hidden tools
+- Unlinked pages
+- Unreachable components
+- Unlisted effects
+- Undocumented APIs
+- Features accessible only through obscure URLs
+
+Fix these discoverability gaps.
+
+---
+
+# 28. DON'T OVERLOAD THE HOMEPAGE
+
+The homepage should not become a giant catalog.
+
+Use the homepage to communicate the platform.
+
+Use dedicated pages for depth.
+
+Homepage:
+
+- Hero
+- Interactive demo
+- Value proposition
+- Platform overview
+- Featured components
+- Featured effects
+- AI
+- Design systems
+- Developer experience
+- Enterprise
+- Community
+- CTA
+
+Dedicated pages:
+
+- Effects Gallery
+- Components
+- Patterns
+- Collections
+- Templates
+- Documentation
+- Platform Products
+
+---
+
+# 29. TRUST & CREDIBILITY
+
+Audit claims throughout the website.
+
+Do not make unsupported claims about:
+
+- Number of users
+- Companies
+- Performance
+- Adoption
+- Enterprise usage
+- Browser support
+- AI capabilities
+
+If something is not real yet:
+
+Use:
+
+"Coming Soon"
+"Beta"
+"Experimental"
+
+rather than presenting it as production-ready.
+
+---
+
+# 30. QA EVERY INTERACTION
+
+Test every:
+
+- Button
+- Link
+- Card
+- Dropdown
+- Modal
+- Tab
+- Filter
+- Search result
+- CTA
+- Copy button
+- Theme toggle
+- Color picker
+- Preview control
+- Navigation item
+- Form
+- Route
+
+No dead interactions.
+
+No fake buttons.
+
+No broken routes.
+
+No console errors that can reasonably be eliminated.
+
+---
+
+# 31. CREATE A DISCOVERABILITY MATRIX
+
+Create a report like:
+
+| Feature | Exists | Visible | Discoverable | Documented | Functional | Mobile | Status |
+|---|---|---|---|---|---|---|---|
+
+Every important RoyCSS feature must pass this matrix.
+
+---
+
+# 32. CREATE A PRODUCT INVENTORY
+
+Create:
+
+| Product | Exists | Page | Navigation | Description | CTA | Documentation | Status |
+|---|---|---|---|---|---|---|---|
+
+This becomes the source of truth for the RoyCSS platform.
+
+---
+
+# 33. CREATE AN EFFECT INVENTORY
+
+Create:
+
+| Effect | Preview | Interaction | Colors | Code | Copy | Docs | Accessibility | Status |
+|---|---|---|---|---|---|---|---|---|
+
+Test every effect.
+
+---
+
+# 34. FINAL USER JOURNEY TEST
+
+Pretend you have never seen RoyCSS.
+
+Perform these journeys:
+
+### Journey 1
+"I want to understand RoyCSS."
+
+### Journey 2
+"I want to install RoyCSS."
+
+### Journey 3
+"I want a button effect."
+
+### Journey 4
+"I want a dashboard."
+
+### Journey 5
+"I want to customize an effect."
+
+### Journey 6
+"I want the source code."
+
+### Journey 7
+"I want documentation."
+
+### Journey 8
+"I want AI assistance."
+
+### Journey 9
+"I want enterprise capabilities."
+
+### Journey 10
+"I want to understand every RoyCSS product."
+
+For each journey record:
+
+- Where you start
+- What you click
+- Where you expect to go
+- Where you actually go
+- What is confusing
+- What is missing
+- What should change
+
+---
+
+# 35. FINAL QUALITY GATE
+
+Do NOT declare completion simply because:
+
+- The build passes.
+- The page loads.
+- TypeScript compiles.
+- No obvious errors appear.
+
+The platform is complete only when:
+
+✓ Users understand RoyCSS immediately.
+
+✓ Developers can quickly adopt RoyCSS.
+
+✓ The homepage starts at the Hero.
+
+✓ Navigation is intuitive.
+
+✓ Floating navigation works.
+
+✓ Effects are discoverable without overwhelming the homepage.
+
+✓ The full Effects Gallery is accessible.
+
+✓ Components are discoverable.
+
+✓ Patterns are discoverable.
+
+✓ Collections are discoverable.
+
+✓ Templates are discoverable.
+
+✓ Platform products are discoverable.
+
+✓ The product catalog has one clear source of truth.
+
+✓ Documentation is technical and professional.
+
+✓ Live previews work.
+
+✓ Color controls work.
+
+✓ Generated code matches previews.
+
+✓ Copy buttons work.
+
+✓ Every important route works.
+
+✓ Mobile navigation works.
+
+✓ Keyboard navigation works.
+
+✓ Accessibility is respected.
+
+✓ Dark-mode contrast is acceptable.
+
+✓ No approved functionality was accidentally lost.
+
+✓ No major feature exists only inside the source code.
+
+✓ No important feature is buried so deeply that users are unlikely to find it.
+
+✓ The site communicates RoyCSS as a frontend engineering platform, not merely an effects gallery.
+
+✓ No fake or unsupported claims are presented as facts.
+
+✓ Performance remains excellent.
+
+---
+
+# IMPORTANT IMPLEMENTATION RULE
+
+Do NOT begin by rewriting the application.
+
+First:
+
+AUDIT
+→ INVENTORY
+→ MAP
+→ IDENTIFY GAPS
+→ PRIORITIZE
+→ IMPLEMENT
+→ TEST
+→ REGRESSION TEST
+→ REVIEW
+→ FINAL AUDIT
+
+Preserve working functionality.
+
+Preserve RoyCSS's identity.
+
+Preserve useful existing architecture.
+
+Do not remove features to make the project appear cleaner.
+
+Do not create duplicate features.
+
+Do not create placeholder functionality just to satisfy a checklist.
+
+Do not declare something complete until it has been tested.
+
+---
+
+# FINAL OUTPUT
+
+At the end provide:
+
+1. Executive Product Audit
+2. UX/HCD Audit
+3. Navigation Audit
+4. Information Architecture Audit
+5. Product Visibility Audit
+6. Effects Audit
+7. Components Audit
+8. Patterns Audit
+9. Documentation Audit
+10. Accessibility Audit
+11. Responsive Audit
+12. Performance Audit
+13. Git/Feature Recovery Audit
+14. Discoverability Matrix
+15. Product Inventory
+16. Effect Inventory
+17. Critical Issues
+18. Fixed Issues
+19. Remaining Issues
+20. Recommended Next Steps
+
+Most importantly:
+
+Tell me what a first-time developer would still fail to discover after your changes.
+
+That is the final test.
+
+The goal is not simply to make RoyCSS look impressive.
+
+The goal is to make RoyCSS:
+
+EASY TO UNDERSTAND
+EASY TO EXPLORE
+EASY TO LEARN
+EASY TO BUILD WITH
+EASY TO CUSTOMIZE
+EASY TO INTEGRATE
+EASY TO SCALE
+
+while ensuring the depth of the platform is visible without overwhelming the user.
+
+
+Yes. Looking strictly at this screenshot as a **UI/UX + Human-Centered Design review**, RoyCSS already has a strong visual identity, but I would **not ship this homepage in its current information architecture**. The biggest issue isn't that it looks bad—it looks good. The issue is that it currently feels like a **beautiful effects showcase rather than the home of a complete frontend platform**.
+
+## My overall assessment
+
+**Visual design:** 8/10
+**Brand identity:** 8.5/10
+**Visual polish:** 7.5/10
+**Information hierarchy:** 6/10
+**Product discoverability:** 5/10
+**HCD / first-time-user clarity:** 6/10
+**Conversion potential:** 6.5/10
+
+The foundation is strong. The next step should be **clarity, hierarchy and product discovery**, not adding more visual effects.
+
+---
+
+# 1. The Hero is visually attractive — but doesn't explain RoyCSS enough
+
+The current:
+
+> **Beautiful CSS**
+
+is clean, but too generic.
+
+A developer landing on this page doesn't immediately understand why RoyCSS deserves their attention.
+
+You currently communicate:
+
+> "We have beautiful CSS effects."
+
+But based on everything we've planned, RoyCSS actually wants to communicate:
+
+> **"We are a complete frontend engineering platform."**
+
+That's a huge difference.
+
+### I'd change the positioning to something closer to:
+
+**Build interfaces that feel alive.**
+
+Then:
+
+> RoyCSS is a modern frontend framework and engineering platform for building fast, accessible, production-ready interfaces—with components, effects, design systems, AI tooling and developer workflows built in.
+
+Then immediately:
+
+**[ Start Building ] [ Explore RoyCSS ]**
+
+And underneath:
+
+`Framework · Components · Effects · AI · Design Systems · Developer Tools`
+
+That tells the visitor what RoyCSS actually is.
+
+---
+
+# 2. The giant gradient underneath "Beautiful CSS" looks like a broken element
+
+This is probably my biggest visual criticism.
+
+You have:
+
+> Beautiful CSS
+
+and directly underneath is what appears to be a large rectangular gradient.
+
+Unless that rectangle is deliberately an interactive effect demo, it visually reads like:
+
+**"Something didn't load."**
+
+It interrupts the typography.
+
+I'd either:
+
+### Option A — Make it an actual hero effect
+
+Turn the gradient into an animated living surface:
+
+```text
+╭────────────────────────────────────╮
+│                                    │
+│       animated RoyCSS effect       │
+│                                    │
+╰────────────────────────────────────╯
+```
+
+with subtle movement.
+
+Or:
+
+### Option B — Remove it
+
+Let the headline breathe.
+
+I'd personally choose **A**, because RoyCSS is about visual effects.
+
+---
+
+# 3. The logo/icon above the hero is taking too much vertical space
+
+You currently have:
+
+Logo
+
+↓
+
+Badge
+
+↓
+
+Headline
+
+↓
+
+Gradient
+
+↓
+
+Description
+
+↓
+
+CTA
+
+↓
+
+Trust indicators
+
+↓
+
+Statistics
+
+This creates a fairly tall hero.
+
+The user has to travel a long distance before reaching meaningful product information.
+
+I'd reduce the vertical spacing and use the freed space for **product discovery**.
+
+---
+
+# 4. The statistics are good — but they're not the right three metrics
+
+You have:
+
+> 1569 Effects
+> 20 Categories
+> ~22000+ Lines of CSS
+
+The first two are useful.
+
+The third isn't.
+
+**"Lines of CSS" is not a compelling developer metric.**
+
+More CSS isn't better.
+
+I'd replace it with something like:
+
+**0 JS required**
+
+or
+
+**100% framework agnostic**
+
+or
+
+**WCAG-ready**
+
+or
+
+**X components**
+
+or
+
+**X integrations**
+
+For example:
+
+### 1,569+
+
+Effects
+
+### 20+
+
+Categories
+
+### 0
+
+Runtime JS
+
+That communicates value much better.
+
+---
+
+# 5. The category strip is clever—but currently competing with the homepage
+
+This is interesting:
+
+> Button Effects
+> Card Effects
+> Borders
+> Filters
+> Forms & Inputs
+> Navigation
+> Scroll Effects
+> Cursor Effects
+> Page Transitions
+> Glass & Modern UI
+> Particles
+> Microinteractions
+> Visual Effects
+
+I actually **like this interaction**.
+
+But I'd change its role.
+
+Right now it feels like the site is telling me:
+
+> "Here are 1,569 effects. Start scrolling."
+
+That reinforces the exact problem you've been concerned about.
+
+Instead, make this a **compact interactive Effects Explorer**.
+
+For example:
+
+**Explore the library**
+
+`Buttons` `Cards` `Forms` `Navigation` `Motion` `Scroll` `Particles` `Glass` `Microinteractions`
+
+Clicking one opens the dedicated gallery/filter.
+
+Don't force users to traverse everything horizontally.
+
+---
+
+# 6. Your biggest missing element: "What can I build?"
+
+This should appear **very high on the homepage**.
+
+Someone visiting RoyCSS should quickly understand:
+
+```text
+RoyCSS
+│
+├── Build
+│   ├── Components
+│   ├── Effects
+│   ├── Patterns
+│   └── Templates
+│
+├── Design
+│   ├── Tokens
+│   ├── Themes
+│   └── Studio
+│
+├── Develop
+│   ├── CLI
+│   ├── AI
+│   ├── Inspector
+│   └── DevTools
+│
+└── Scale
+    ├── Cloud
+    ├── Analytics
+    ├── Enterprise
+    └── Marketplace
+```
+
+That is much closer to the product you have been designing.
+
+---
+
+# 7. The platform products need to become a first-class homepage section
+
+This is where I strongly agree with your earlier instinct.
+
+Don't have:
+
+> **24 Production-Ready Products**
+
+and then later:
+
+> **16+ Platform Products**
+
+Those are confusing.
+
+A user shouldn't have to figure out why there are two product counts.
+
+Combine them.
+
+## Use one section:
+
+# The RoyCSS Platform
+
+**Everything you need to design, build, ship and scale modern interfaces.**
+
+Then categories:
+
+### Build
+
+Components · Blocks · Patterns · Templates
+
+### Design
+
+Studio · Themes · Tokens · Motion
+
+### AI
+
+RoyAI · Architect · Pair · Review · MCP
+
+### Developer Tools
+
+CLI · Inspector · DevTools · Sandbox · Profiler
+
+### Enterprise
+
+Cloud · Governance · Analytics · Compliance
+
+### Ecosystem
+
+Marketplace · Plugins · Academy · Community
+
+Then:
+
+**[ Explore all products → ]**
+
+This is substantially easier to understand.
+
+---
+
+# 8. The navigation is too small
+
+Looking at the screenshot, your navbar is visually tiny relative to the enormous amount of empty space.
+
+The menu:
+
+> Get Started Docs Effects Recipes Patterns Collections Platform FAQ
+
+is useful, but it's doing too much in a very small footprint.
+
+I'd change the navigation hierarchy.
+
+### Primary
+
+**Get Started | Docs | Explore | Platform**
+
+### Explore dropdown
+
+* Effects
+* Components
+* Patterns
+* Collections
+* Templates
+
+### Platform dropdown
+
+* RoyAI
+* Roy Studio
+* Marketplace
+* Cloud
+* DevTools
+* Enterprise
+* etc.
+
+This gives you room to grow without turning the navbar into a 20-item menu.
+
+---
+
+# 9. The navbar should become sticky
+
+For RoyCSS specifically, I'd absolutely make it a **floating/sticky navigation system**.
+
+When the user scrolls:
+
+```text
+╭──────────────────────────────────────────────────╮
+│ RoyCSS   Docs   Explore   Platform    Sponsor    │
+╰──────────────────────────────────────────────────╯
+```
+
+It should subtly compress.
+
+Not a huge animation.
+
+Just:
+
+* slightly smaller
+* blurred/translucent background
+* thin border
+* subtle shadow
+* maintains visibility
+
+That would also solve some of the discoverability issues you've been concerned about.
+
+---
+
+# 10. Sponsor placement is good, but the section feels unfinished
+
+The:
+
+> TRUSTED BY TEAMS BUILDING WITH ROYCSS
+
+section is a good idea.
+
+But:
+
+> Youngshark Technologies
+
+followed by:
+
+> Your company here
+
+makes the site feel like an early-stage project.
+
+That's fine during development, but before launch I'd either:
+
+### Option A
+
+Have several genuine adopters.
+
+or
+
+### Option B
+
+Change it to:
+
+> **Built in the open. Supported by the community.**
+
+Then:
+
+**Become a sponsor →**
+
+Don't create the impression that companies are using RoyCSS if they aren't.
+
+That's important for trust.
+
+---
+
+# 11. The hero needs a "developer moment"
+
+A CSS framework homepage should allow the developer to immediately **touch the product**.
+
+I'd add something like:
+
+```text
+Try RoyCSS
+
+┌─────────────────────────────────────────┐
+│                                         │
+│       ✦ Interactive Component           │
+│                                         │
+│       Hover me                          │
+│                                         │
+└─────────────────────────────────────────┘
+
+.button {
+   ...
+}
+
+[ Copy ]
+```
+
+Even better:
+
+### "Build this"
+
+Show an interactive component.
+
+Then:
+
+**Copy → Paste → Customize**
+
+This is much more convincing than simply saying "1,569 effects."
+
+---
+
+# 12. Reduce the "darkness"
+
+The dark aesthetic works.
+
+But the screenshot is **very dark**.
+
+There are large areas where:
+
+* background
+* cards
+* borders
+* text
+
+are all relatively close in luminance.
+
+That gives it a premium developer-tool aesthetic, but it hurts hierarchy.
+
+I'd create three visual layers:
+
+### Background
+
+Almost black.
+
+### Content surfaces
+
+Slightly lighter.
+
+### Interactive surfaces
+
+Clearly distinguishable.
+
+Something like:
+
+```text
+BACKGROUND
+████████████████████
+
+SURFACE
+░░░░░░░░░░░░░░░░░░░
+
+INTERACTIVE
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+```
+
+The user should immediately know:
+
+> "I can click this."
+
+---
+
+# 13. Typography needs a stronger hierarchy
+
+The headline is good.
+
+But the smaller text becomes difficult to read at this scale.
+
+I'd establish:
+
+**Hero**
+48–72px
+
+**Section heading**
+36–48px
+
+**Subheading**
+18–20px
+
+**Body**
+15–17px
+
+**Metadata**
+12–14px
+
+And avoid making important information too close to the metadata size.
+
+---
+
+# 14. Don't let the effects become RoyCSS's identity
+
+This is strategically important.
+
+The screenshot screams:
+
+> **CSS effects library**
+
+But your roadmap screams:
+
+> **Frontend engineering platform**
+
+Those two aren't aligned yet.
+
+I'd position effects as the **visual hook**, not the entire product identity.
+
+Think:
+
+```text
+          ROYCSS
+             │
+       Beautiful UI
+             │
+      ┌──────┼──────┐
+      │      │      │
+   Build   Design   AI
+      │      │      │
+   Tools   Systems  Agents
+      │      │      │
+      └──────┼──────┘
+             │
+          Platform
+```
+
+Effects bring people in.
+
+The platform keeps them.
+
+---
+
+# 15. I'd redesign the homepage flow
+
+This is the structure I'd recommend:
+
+### 01 — Hero
+
+**Build interfaces that feel alive.**
+
+CTA:
+
+**Start Building**
+**Explore Effects**
+
+---
+
+### 02 — Interactive Demo
+
+Let people immediately play with RoyCSS.
+
+---
+
+### 03 — Why RoyCSS
+
+Three or four strong benefits:
+
+**Fast**
+
+Minimal runtime overhead.
+
+**Accessible**
+
+Built with accessibility in mind.
+
+**Framework agnostic**
+
+Use it wherever you build.
+
+**AI-ready**
+
+Designed for modern AI-assisted development.
+
+---
+
+### 04 — Build with RoyCSS
+
+Components → Patterns → Effects → Templates
+
+---
+
+### 05 — The RoyCSS Platform
+
+Your unified product ecosystem.
+
+This should replace the two separate product sections.
+
+---
+
+### 06 — Effects Showcase
+
+Only the **best 8–12 effects**.
+
+Then:
+
+**Explore 1,569+ effects →**
+
+---
+
+### 07 — Developer Experience
+
+Show:
+
+```text
+npm install roycss
+```
+
+Then:
+
+```text
+Create → Customize → Ship
+```
+
+---
+
+### 08 — AI
+
+Introduce:
+
+RoyAI
+Roy MCP
+Roy Architect
+Roy Review
+Roy Pair
+
+---
+
+### 09 — Design Systems
+
+Tokens
+Themes
+Studio
+Cloud
+
+---
+
+### 10 — Enterprise
+
+Governance
+Analytics
+Accessibility
+Security
+LTS
+
+---
+
+### 11 — Community / Showcase
+
+Real projects.
+
+---
+
+### 12 — Sponsor / Ecosystem
+
+Sponsors, contributors, partners.
+
+---
+
+### 13 — Final CTA
+
+# Build your next interface with RoyCSS.
+
+**Get Started →**
+
+---
+
+# One thing I'd change immediately
+
+If you only give your engineer **one task from this review**, make it this:
+
+> **Stop treating the Effects section as the homepage's primary destination.**
+
+Your screenshot demonstrates that RoyCSS has a lot of visual capability.
+
+Now the homepage needs to demonstrate that **RoyCSS is much bigger than the effects library.**
+
+The ideal first-time visitor journey should become:
+
+**"Wow, this looks good."**
+
+↓
+
+**"Oh, it's a framework."**
+
+↓
+
+**"It has components and patterns."**
+
+↓
+
+**"It has AI tools."**
+
+↓
+
+**"It has a design system."**
+
+↓
+
+**"It has developer tooling."**
+
+↓
+
+**"It has enterprise/cloud products."**
+
+↓
+
+**"I can actually build my application with this."**
+
+↓
+
+**"Let's install it."**
+
+That's the HCD journey I'd optimize for.

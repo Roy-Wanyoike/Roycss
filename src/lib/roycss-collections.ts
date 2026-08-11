@@ -36,7 +36,7 @@ export const collections: Collection[] = [
     description:
       "Recreate the premium feel of macOS, iOS, and visionOS. Frosted glass surfaces, elastic spring animations, and subtle depth — the hallmarks of Apple's design language since Big Sur.",
     accent: "oklch(0.7 0.08 250)",
-    icon: "",
+    icon: "🍎",
     difficulty: "Intermediate",
     effectIds: [
       "bounce-in",
@@ -63,7 +63,7 @@ export const collections: Collection[] = [
     description:
       "Channel Blade Runner, Cyberpunk 2077, and Neo-Tokyo aesthetics. Neon glow effects, glitch distortions, VHS scanlines, and electric borders — built for dark interfaces that demand attention.",
     accent: "oklch(0.7 0.25 330)",
-    icon: "",
+    icon: "🌃",
     difficulty: "Intermediate",
     effectIds: [
       "pulse-glow",
@@ -90,7 +90,7 @@ export const collections: Collection[] = [
     description:
       "The glassmorphism trend done right. Frosted glass cards, acrylic surfaces, liquid blur, and transparent overlays — with proper contrast and accessibility baked in.",
     accent: "oklch(0.75 0.1 200)",
-    icon: "",
+    icon: "🪟",
     difficulty: "Beginner",
     effectIds: [
       "card-glassmorphism",
@@ -117,7 +117,7 @@ export const collections: Collection[] = [
     description:
       "Sometimes less is more. These effects are barely noticeable individually but create a cohesive, professional feel together. Perfect for corporate sites, portfolios, and content-heavy platforms.",
     accent: "oklch(0.6 0.05 160)",
-    icon: "",
+    icon: "✨",
     difficulty: "Beginner",
     effectIds: [
       "fade-in-up",
@@ -144,7 +144,7 @@ export const collections: Collection[] = [
     description:
       "Bring joy to your interface. Bouncy entrances, wobbly hovers, elastic springs, and celebratory confetti — for products that don't take themselves too seriously.",
     accent: "oklch(0.75 0.2 40)",
-    icon: "",
+    icon: "🎉",
     difficulty: "Beginner",
     effectIds: [
       "bounce-in",
@@ -171,7 +171,7 @@ export const collections: Collection[] = [
     description:
       "The holographic trend from 2025. Iridescent surfaces, prism light refraction, chrome reflections, and liquid metal — effects that catch the eye and refuse to let go.",
     accent: "oklch(0.75 0.2 300)",
-    icon: "",
+    icon: "🌈",
     difficulty: "Advanced",
     effectIds: [
       "visual-holographic",
@@ -198,7 +198,7 @@ export const collections: Collection[] = [
     description:
       "Every loading scenario covered. Spinners for short waits, skeletons for content, progress bars for uploads, and creative loaders that entertain while they wait.",
     accent: "oklch(0.65 0.15 180)",
-    icon: "",
+    icon: "⏳",
     difficulty: "Beginner",
     effectIds: [
       "loader-spinner",
@@ -225,7 +225,7 @@ export const collections: Collection[] = [
     description:
       "The complete button effects toolkit. Shine sweeps, fill slides, ripples, glows, 3D pushes, neon outlines, and gradient glows — every click should feel satisfying.",
     accent: "oklch(0.6 0.2 160)",
-    icon: "",
+    icon: "🔘",
     difficulty: "Beginner",
     effectIds: [
       "btn-shine-sweep",
@@ -252,7 +252,7 @@ export const collections: Collection[] = [
     description:
       "Typography that commands attention. Gradients, neon glows, glitch effects, 3D shadows, shimmer sweeps, and typewriter cursors — for headlines that stop the scroll.",
     accent: "oklch(0.7 0.18 20)",
-    icon: "",
+    icon: "🔤",
     difficulty: "Intermediate",
     effectIds: [
       "text-gradient",
@@ -279,7 +279,7 @@ export const collections: Collection[] = [
     description:
       "Scroll-triggered animations that guide users through your content. Reveal-up, parallax, progress bars, and staggered entrances — for storytelling that unfolds naturally.",
     accent: "oklch(0.65 0.12 260)",
-    icon: "",
+    icon: "📜",
     difficulty: "Intermediate",
     effectIds: [
       "scroll-reveal-up",
@@ -306,7 +306,7 @@ export const collections: Collection[] = [
     description:
       "Borders that are anything but basic. Animated dashes, marching ants, corner brackets, gradient outlines, neon pulses, and torn paper — for elements that stand out from the edges.",
     accent: "oklch(0.7 0.15 140)",
-    icon: "",
+    icon: "🖼️",
     difficulty: "Intermediate",
     effectIds: [
       "visual-border-beam",
@@ -333,7 +333,7 @@ export const collections: Collection[] = [
     description:
       "Particles that float, fall, and sparkle. Snow, rain, confetti, fireflies, bubbles, sparks, and fireworks — for backgrounds and celebration moments that fill the screen with life.",
     accent: "oklch(0.75 0.18 100)",
-    icon: "",
+    icon: "✨",
     difficulty: "Advanced",
     effectIds: [
       "particles-floating-dots",
@@ -359,7 +359,7 @@ export const collections: Collection[] = [
     tagline: "Depth, perspective, and three-dimensional transforms",
     description: "Create depth with 3D transforms, perspective, card flips, and spatial effects. Perfect for immersive product showcases and interactive galleries.",
     accent: "oklch(0.7 0.18 50)",
-    icon: "",
+    icon: "🎲",
     difficulty: "Advanced",
     effectIds: ["flip-in-x", "flip-in-y", "hover-tilt-rotate", "hover-flip", "hover-depth", "text-3d-shadow", "card-flip", "hover-shadow-grow", "loader-cube", "text-shadow-long", "text-mirror", "hover-zoom-blur"],
     tags: ["3d", "spatial", "perspective", "depth", "transform", "flip", "cube", "immersive"],
@@ -371,7 +371,7 @@ export const collections: Collection[] = [
     tagline: "Glowing effects optimized for dark backgrounds",
     description: "Effects that shine in dark mode — glows, neon shadows, spotlights, and dramatic highlights. Every effect is designed for dark backgrounds where light elements pop.",
     accent: "oklch(0.65 0.2 280)",
-    icon: "",
+    icon: "🌙",
     difficulty: "Intermediate",
     effectIds: ["pulse-glow", "text-neon-glow", "hover-neon-flicker", "hover-glow-border", "hover-shadow-grow", "hover-drop-shadow", "text-3d-shadow", "text-shadow-long", "text-shadow-soft", "pulse-soft", "hover-depth", "hover-push-up"],
     tags: ["dark", "mode", "glow", "neon", "shadow", "dramatic", "spotlight", "night"],
@@ -383,7 +383,7 @@ export const collections: Collection[] = [
     tagline: "Microinteractions for delightful form experiences",
     description: "Focus glows, floating labels, validation feedback, toggle switches, and custom checkboxes. Turn boring forms into delightful microinteraction showcases.",
     accent: "oklch(0.7 0.15 160)",
-    icon: "",
+    icon: "📝",
     difficulty: "Beginner",
     effectIds: ["form-focus-glow", "form-label-float", "form-error-shake", "form-success-check", "form-toggle-switch", "form-checkbox-custom", "form-radio-custom", "form-placeholder-shimmer", "micro-checkbox-check", "micro-toggle-switch", "micro-tooltip-appear", "micro-radio-select"],
     tags: ["form", "input", "label", "focus", "validation", "toggle", "checkbox", "radio", "microinteraction"],
@@ -395,7 +395,7 @@ export const collections: Collection[] = [
     tagline: "High-energy effects for games and esports",
     description: "Flashy, energetic effects inspired by arcade games and esports platforms. Fire, sparks, retro scanlines, and explosive celebrations — built for high-adrenaline interfaces.",
     accent: "oklch(0.7 0.25 30)",
-    icon: "",
+    icon: "🎮",
     difficulty: "Advanced",
     effectIds: ["flash", "text-fire", "loader-pacman", "btn-shadow-push", "btn-sparkle", "misc-fireworks", "misc-sparkles", "misc-vhs-effect", "blink", "particles-sparks", "misc-confetti", "vibrate"],
     tags: ["gaming", "arcade", "retro", "flash", "fire", "spark", "explosion", "esports", "energy"],
@@ -407,7 +407,7 @@ export const collections: Collection[] = [
     tagline: "Effects that drive conversions and trust",
     description: "Shine sweeps on CTAs, marching ants on sale items, shimmer placeholders for product images, progress bars for checkout. Every effect an online store needs.",
     accent: "oklch(0.7 0.2 160)",
-    icon: "",
+    icon: "🛒",
     difficulty: "Beginner",
     effectIds: ["btn-shine-sweep", "border-marching-ants", "border-ribbon", "text-shimmer", "loader-progress-bar", "loader-skeleton", "form-placeholder-shimmer", "bg-gradient-sweep", "misc-shimmer-overlay", "cursor-trail", "btn-fill-slide", "btn-glow"],
     tags: ["ecommerce", "shop", "store", "cta", "sale", "checkout", "conversion", "trust", "cart"],
@@ -419,7 +419,7 @@ export const collections: Collection[] = [
     tagline: "Pulses, badges, and attention-grabbing alerts",
     description: "Heartbeat pulses, notification badges, dot indicators, and chasing dots. Everything you need for social media feeds, notification centers, and real-time activity.",
     accent: "oklch(0.7 0.2 350)",
-    icon: "",
+    icon: "🔔",
     difficulty: "Beginner",
     effectIds: ["pulse-glow", "heartbeat", "shake", "pulse-soft", "notification-badge", "bg-gradient-pulse", "loader-dots", "loader-pulse-ring", "loader-chasing-dots", "loader-fading-dots", "micro-bell-shake-b18", "micro-toast-slide"],
     tags: ["social", "notification", "badge", "pulse", "alert", "activity", "feed", "real-time"],
@@ -431,7 +431,7 @@ export const collections: Collection[] = [
     tagline: "Clear feedback for every outcome",
     description: "Shake on error, checkmark on success, confetti on achievement. These effects give users immediate, satisfying feedback for every action outcome.",
     accent: "oklch(0.65 0.2 140)",
-    icon: "",
+    icon: "⚠️",
     difficulty: "Beginner",
     effectIds: ["shake", "head-shake", "form-error-shake", "form-success-check", "misc-confetti", "particles-confetti-burst", "micro-checkbox-check", "micro-toast-slide", "card-hover-wobble", "vibrate", "flash", "pulse-glow"],
     tags: ["error", "success", "feedback", "validation", "shake", "checkmark", "confetti", "celebration", "outcome"],
@@ -443,7 +443,7 @@ export const collections: Collection[] = [
     tagline: "Subtle textures and gradients for depth",
     description: "Grid lines, dot patterns, mesh gradients, noise textures, and animated backgrounds. Add depth and visual interest without overwhelming content.",
     accent: "oklch(0.7 0.15 200)",
-    icon: "",
+    icon: "🎨",
     difficulty: "Intermediate",
     effectIds: ["bg-animated-gradient", "bg-dot-pattern", "bg-mesh-gradient", "bg-grid-lines", "bg-noise", "bg-gradient-sweep", "bg-gradient-pulse", "bg-concentric", "bg-lava-lamp", "bg-plasma", "bg-aurora", "bg-diagonal-stripes"],
     tags: ["background", "pattern", "grid", "dots", "gradient", "noise", "texture", "mesh", "texture"],
@@ -455,7 +455,7 @@ export const collections: Collection[] = [
     tagline: "Menu, tab, and navigation animations",
     description: "Sliding menus, underline tabs, breadcrumb trails, step indicators, dropdowns, and accordions. Complete navigation patterns for any app structure.",
     accent: "oklch(0.7 0.18 260)",
-    icon: "",
+    icon: "🧭",
     difficulty: "Intermediate",
     effectIds: ["nav-menu-slide", "nav-menu-fade", "nav-menu-scale", "nav-tabs-underline", "nav-breadcrumb", "nav-pagination", "nav-stepper", "nav-progress-indicator", "nav-dropdown", "nav-accordion", "micro-accordion-expand", "accordion-3d"],
     tags: ["navigation", "menu", "tab", "accordion", "breadcrumb", "pagination", "dropdown", "stepper", "nav"],
@@ -467,7 +467,7 @@ export const collections: Collection[] = [
     tagline: "110 hover effects for every interaction",
     description: "The complete hover effect toolkit — scale, lift, glow, tilt, zoom, color shift, overlay reveal, and more. Every way to respond to user hover.",
     accent: "oklch(0.7 0.2 180)",
-    icon: "",
+    icon: "🖱️",
     difficulty: "Beginner",
     effectIds: ["hover-scale", "hover-underline-slide", "hover-glow-border", "hover-shadow-grow", "hover-color-shift", "hover-tilt-rotate", "hover-zoom-blur", "hover-overlay-reveal", "hover-push-up", "hover-flip", "hover-rotate", "hover-bounce"],
     tags: ["hover", "interaction", "scale", "lift", "glow", "tilt", "zoom", "color", "overlay", "mouse"],

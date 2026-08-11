@@ -25,6 +25,7 @@
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
@@ -45,6 +46,9 @@
 }
 
 :root {
+  /* Declare both schemes so UA chrome (form controls, scrollbars) follows
+     the active theme. `.dark` below overrides to `dark` only. */
+  color-scheme: light dark;
   --radius: 0.75rem;
   --background: oklch(0.99 0.005 165);
   --foreground: oklch(0.18 0.02 170);
@@ -60,7 +64,13 @@
   --muted-foreground: oklch(0.5 0.02 170);
   --accent: oklch(0.93 0.04 165);
   --accent-foreground: oklch(0.25 0.04 170);
-  --destructive: oklch(0.577 0.245 27.325);
+  /* Destructive darkened from L=0.577 → L=0.50 so white-on-destructive
+     (the standard shadcn `bg-destructive text-destructive-foreground`
+     pattern) clears WCAG AA at 5.72:1, and destructive-as-text on the
+     light background clears AA at 5.56:1. The previous L=0.577 value
+     gave only 4.04:1 / 4.16:1 — both failing AA. */
+  --destructive: oklch(0.50 0.22 27);
+  --destructive-foreground: oklch(0.99 0 0);
   --border: oklch(0.9 0.01 165);
   --input: oklch(0.92 0.01 165);
   --ring: oklch(0.55 0.13 165);
@@ -80,6 +90,9 @@
 }
 
 .dark {
+  /* Override the :root declaration: when `.dark` is active, UA chrome
+     (form controls, scrollbars, default canvas color) must render dark. */
+  color-scheme: dark;
   --background: oklch(0.14 0.015 175);
   --foreground: oklch(0.96 0.005 165);
   --card: oklch(0.18 0.02 175);
@@ -94,7 +107,17 @@
   --muted-foreground: oklch(0.68 0.02 170);
   --accent: oklch(0.3 0.05 170);
   --accent-foreground: oklch(0.96 0.01 165);
-  --destructive: oklch(0.704 0.191 22.216);
+  /* Destructive darkened from L=0.704 → L=0.55 so white-on-destructive
+     (the standard shadcn `bg-destructive text-destructive-foreground`
+     pattern) clears WCAG AA at 4.66:1. The previous L=0.704 value gave
+     only 2.58:1 — failing AA badly for button backgrounds.
+     Note: destructive-as-text on the dark background drops from 7.14:1
+     (AAA) to 3.96:1 (passes AA Large only). This is an accepted
+     trade-off — the button-bg use case is far more common, and there is
+     no single OKLCH value that satisfies both uses against a near-black
+     background. */
+  --destructive: oklch(0.55 0.22 22);
+  --destructive-foreground: oklch(0.99 0 0);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 12%);
   --ring: oklch(0.7 0.14 165);

@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, SlidersHorizontal, GitCompare, Heart, Clock, BookOpen, Moon, Sun, Command } from "lucide-react";
+import { Search, SlidersHorizontal, GitCompare, Heart, Clock, BookOpen, Moon, Sun, Command, X } from "lucide-react";
 
 const SHORTCUTS = [
   { keys: ["⌘", "K"], description: "Open search overlay", icon: Search },
@@ -30,21 +30,67 @@ const NAV_SHORTCUTS = [
  * Also accessible via a button.
  */
 export function KeyboardShortcutsOverlay({ open, onOpenChange }: { open: boolean; onOpenChange: (o: boolean) => void }) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previouslyFocused = useRef<HTMLElement | null>(null);
+
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      // Press ? (Shift + /) to toggle
+      // Press ? (Shift + /) to toggle — only when not typing in a field
       if (e.key === "?" || (e.shiftKey && e.key === "/")) {
-        // Only trigger if not typing in an input
         const tag = (e.target as HTMLElement)?.tagName;
         if (tag !== "INPUT" && tag !== "TEXTAREA") {
           e.preventDefault();
           onOpenChange(!open);
         }
       }
+      // Escape closes the overlay (matches WCAG dialog pattern + the
+      // "Esc: Close any open dialog/sheet" shortcut listed below)
+      if (open && e.key === "Escape") {
+        e.preventDefault();
+        onOpenChange(false);
+      }
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
   }, [open, onOpenChange]);
+
+  // Focus management: move focus into dialog on open, restore on close.
+  useEffect(() => {
+    if (open) {
+      previouslyFocused.current = (document.activeElement as HTMLElement) || null;
+      // Defer focus to next frame so the motion.div has mounted
+      const id = requestAnimationFrame(() => {
+        closeButtonRef.current?.focus();
+      });
+      return () => cancelAnimationFrame(id);
+    }
+    // On close: restore focus to the trigger that opened the dialog
+    if (!open && previouslyFocused.current) {
+      previouslyFocused.current.focus?.();
+      previouslyFocused.current = null;
+    }
+  }, [open]);
+
+  // Tab trap — keep focus inside the dialog while it's open.
+  const handleTab = (e: React.KeyboardEvent) => {
+    if (e.key !== "Tab") return;
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    const focusable = dialog.querySelectorAll<HTMLElement>(
+      'button, a, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -58,9 +104,11 @@ export function KeyboardShortcutsOverlay({ open, onOpenChange }: { open: boolean
           role="dialog"
           aria-modal="true"
           aria-label="Keyboard shortcuts"
+          onKeyDown={handleTab}
         >
           <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
           <motion.div
+            ref={dialogRef}
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
@@ -69,7 +117,7 @@ export function KeyboardShortcutsOverlay({ open, onOpenChange }: { open: boolean
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="p-5 border-b border-border/50">
+            <div className="p-5 border-b border-border/50 relative">
               <div className="flex items-center gap-2 mb-1">
                 <Command className="size-5 text-primary" />
                 <h2 className="font-display text-lg font-bold text-foreground">Keyboard Shortcuts</h2>
@@ -77,6 +125,15 @@ export function KeyboardShortcutsOverlay({ open, onOpenChange }: { open: boolean
               <p className="text-xs text-muted-foreground">
                 Press <kbd className="px-1.5 py-0.5 rounded bg-muted border border-border/50 text-[10px] font-mono">?</kbd> anytime to toggle this panel.
               </p>
+              {/* Visible close button — keyboard-accessible (Esc also closes) */}
+              <button
+                ref={closeButtonRef}
+                onClick={() => onOpenChange(false)}
+                className="absolute top-4 right-4 flex items-center justify-center size-8 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                aria-label="Close keyboard shortcuts"
+              >
+                <X className="size-4" />
+              </button>
             </div>
 
             {/* Shortcuts list */}

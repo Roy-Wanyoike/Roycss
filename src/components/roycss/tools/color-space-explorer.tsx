@@ -676,11 +676,11 @@ export function ColorSpaceExplorer() {
 
   // Generated CSS output
   const generatedCss = useMemo(() => {
-    const oklchLine = `color: ${formatOklch(oklch)};`;
-    const fallback = `@media (color-gamut: srgb) {\n  color: ${formatRgb(
+    const oklchLine = `  color: ${formatOklch(oklch)};`;
+    const fallback = `@media (color-gamut: srgb) {\n  .element {\n    color: ${formatRgb(
       srgbClamped,
-    )};\n}`;
-    return `${oklchLine}\n${fallback}`;
+    )};\n  }\n}`;
+    return `.element {\n${oklchLine}\n}\n\n${fallback}`;
   }, [oklch, srgbClamped]);
 
   // Handlers — keep hex input + oklch in sync without precision loss.

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Shuffle, Copy, Check, ArrowRight, X, Sparkles } from "lucide-react";
 import { effects } from "@/lib/roycss-effects";
@@ -17,17 +17,36 @@ export function RandomEffectPicker({ onSelectEffect }: { onSelectEffect: (effect
   const [randomEffect, setRandomEffect] = useState<CSSEffect | null>(null);
   const [copied, setCopied] = useState(false);
   const [spinning, setSpinning] = useState(false);
+  // Track the spin interval so we can clear it on unmount (avoids setState
+  // on an unmounted component if the user navigates away mid-spin).
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, []);
 
   const pickRandom = useCallback(() => {
     setSpinning(true);
     setCopied(false);
-    // Rapid cycle through effects for visual effect
+    // Clear any in-flight spin before starting a new one.
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
     let count = 0;
-    const interval = setInterval(() => {
+    intervalRef.current = setInterval(() => {
       setRandomEffect(effects[Math.floor(Math.random() * effects.length)]);
       count++;
       if (count >= 12) {
-        clearInterval(interval);
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+        }
         setSpinning(false);
         setRandomEffect(effects[Math.floor(Math.random() * effects.length)]);
       }

@@ -172,7 +172,7 @@ function CompanyCard({ company }: { company: Company }) {
       href={company.href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`group relative flex items-center gap-3 rounded-xl border bg-card/50 px-5 py-3 transition-all hover:bg-card ${meta.glowBorder}`}
+      className={`group relative flex min-w-0 max-w-full items-center gap-3 rounded-xl border bg-card/50 px-5 py-3 transition-all hover:bg-card ${meta.glowBorder}`}
       style={{ boxShadow: meta.glowShadow }}
       aria-label={`${company.name} — ${company.tagline} — ${meta.label}`}
     >

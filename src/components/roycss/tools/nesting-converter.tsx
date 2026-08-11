@@ -27,7 +27,7 @@
  * failure a red `Alert` shows the error message and the UI stays responsive.
  */
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowLeft,
   ArrowLeftRight,
@@ -1205,15 +1205,14 @@ export function NestingConverter() {
   }, [input, direction, indent, mergeDuplicates, preserveComments]);
 
   // --- Cleanup copy timer on unmount ------------------------------
-  const cleanupCopyTimer = useCallback(() => {
-    if (copyTimerRef.current !== null) {
-      window.clearTimeout(copyTimerRef.current);
-      copyTimerRef.current = null;
-    }
+  useEffect(() => {
+    return () => {
+      if (copyTimerRef.current !== null) {
+        window.clearTimeout(copyTimerRef.current);
+        copyTimerRef.current = null;
+      }
+    };
   }, []);
-  // Use a ref-stored effect cleanup pattern (no useEffect import needed
-  // for this single-timer case; the timer is cleared on each new copy).
-  void cleanupCopyTimer;
 
   const handleCopy = useCallback(async () => {
     if (!result.output) return;

@@ -10,17 +10,39 @@ import { Braces, Copy, Check, Trash2, TrendingUp } from "lucide-react";
  */
 
 function beautifyCSS(css: string): string {
-  let formatted = css
-    // Remove existing formatting
-    .replace(/\s*([{}:;,>~+])\s*/g, "$1")
+  // Step 1: Normalize whitespace around structural characters so we can
+  // reformat cleanly without inheriting the input's existing indentation.
+  const normalized = css.replace(/\s*([{}:;,>~+])\s*/g, "$1");
+
+  // Step 2: Add a space after `:` ONLY inside declaration blocks (brace
+  // depth > 0), never inside selectors (depth 0). The previous global
+  // regex `:/  ?!\s/` corrupted pseudo-class selectors (`a:hover` →
+  // `a: hover`) and URLs (`url(https://…)` → `url(https: //…)`). We also
+  // guard `::` (pseudo-elements) and `://` (URL schemes) explicitly.
+  const tokens = normalized.split(/([{}])/);
+  let depth = 0;
+  for (let i = 0; i < tokens.length; i++) {
+    const tok = tokens[i];
+    if (tok === "{") {
+      depth++;
+    } else if (tok === "}") {
+      depth = Math.max(0, depth - 1);
+    } else if (depth > 0 && tok) {
+      // Skip chunks immediately followed by `{` — they're nested selectors
+      // (e.g. `.child:hover` inside `.parent { .child:hover { … } }`),
+      // not declaration lists.
+      if (tokens[i + 1] === "{") continue;
+      tokens[i] = tok.replace(/(?<!:):(?!\/)(?!\s)/g, ": ");
+    }
+  }
+  let formatted = tokens
+    .join("")
     // Add newlines after {
     .replace(/\{/g, " {\n  ")
     // Add newlines before }
     .replace(/\}/g, "\n}\n")
     // Add newlines after ;
     .replace(/;/g, ";\n  ")
-    // Add space after :
-    .replace(/:(?!\s)/g, ": ")
     // Remove trailing spaces
     .replace(/ +$/gm, "")
     // Remove empty lines

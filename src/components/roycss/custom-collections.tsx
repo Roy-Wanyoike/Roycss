@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FolderPlus, Folder, X, Trash2, Copy, Check, Plus, Search, Download } from "lucide-react";
+import { FolderPlus, Folder, X, Trash2, Copy, Check, Plus, Search } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";

@@ -41,7 +41,7 @@ export function BundleCalculator({ open, onOpenChange }: { open: boolean; onOpen
   }, []);
 
   const handleExport = useCallback(() => {
-    const css = selectedEffects.map(e => e.cssCode).join("\n\n/* ═══════════════════════════════ */ */\n\n");
+    const css = selectedEffects.map(e => e.cssCode).join("\n\n/* ═══════════════════════════════ */\n\n");
     const blob = new Blob([css], { type: "text/css" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");

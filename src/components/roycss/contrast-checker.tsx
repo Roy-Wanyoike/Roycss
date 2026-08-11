@@ -70,11 +70,11 @@ export function ContrastChecker() {
   const handleCopy = useCallback(async () => {
     if (!result) return;
     try {
-      await navigator.clipboard.writeText(`contrast: ${result.ratio}:1`);
+      await navigator.clipboard.writeText(`/* WCAG contrast ratio: ${result.ratio}:1 (fg: ${fg}, bg: ${bg}) — AA ${result.aaNormal ? "pass" : "fail"} normal, AAA ${result.aaaNormal ? "pass" : "fail"} normal */`);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch { /* noop */ }
-  }, [result]);
+  }, [result, fg, bg]);
 
   return (
     <div className="space-y-4">

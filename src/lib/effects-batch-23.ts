@@ -208,7 +208,8 @@ export const effectsBatch23: CSSEffect[] = [
     display: flex;
     flex-direction: column;
     gap: 12px;
-    border: 1px solid oklch(0.931 0.0 89.88);`,
+    border: 1px solid oklch(0.931 0.0 89.88);
+}`,
 },
 
 {
@@ -221,7 +222,8 @@ export const effectsBatch23: CSSEffect[] = [
   cssCode: `.roycss-ferrum-skeleton-card-header {
     display: flex;
     align-items: center;
-    gap: 12px;`,
+    gap: 12px;
+}`,
 },
 
 {
@@ -242,6 +244,7 @@ export const effectsBatch23: CSSEffect[] = [
     background-size: 200% 100%;
     animation: roy-ferrum-skeleton-card 1.6s ease-in-out infinite;
     flex-shrink: 0;
+}
 
 @keyframes roy-ferrum-skeleton-card {
 
@@ -262,7 +265,8 @@ export const effectsBatch23: CSSEffect[] = [
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 8px;`,
+    gap: 8px;
+}`,
 },
 
 {
@@ -281,6 +285,7 @@ export const effectsBatch23: CSSEffect[] = [
     );
     background-size: 200% 100%;
     animation: roy-ferrum-skeleton-card 1.6s ease-in-out infinite;
+}
 
 @keyframes roy-ferrum-skeleton-card {
 
@@ -366,7 +371,8 @@ export const effectsBatch23: CSSEffect[] = [
   cssCode: `.roycss-ferrum-skeleton-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;`,
+    gap: 16px;
+}`,
 },
 
 {
@@ -379,7 +385,8 @@ export const effectsBatch23: CSSEffect[] = [
   cssCode: `.roycss-ferrum-skeleton-grid-item {
     display: flex;
     flex-direction: column;
-    gap: 10px;`,
+    gap: 10px;
+}`,
 },
 
 {
@@ -399,6 +406,7 @@ export const effectsBatch23: CSSEffect[] = [
     );
     background-size: 200% 100%;
     animation: roy-ferrum-skeleton-grid 1.8s ease-in-out infinite;
+}
 
 @keyframes roy-ferrum-skeleton-grid {
 
@@ -696,7 +704,8 @@ export const effectsBatch23: CSSEffect[] = [
   tags: ["input", "form", "input-float-label-wrapper", "float"],
   previewType: "box",
   cssCode: `.roycss-ferrum-input-float-label-wrapper {
-    position: relative;`,
+    position: relative;
+}`,
 },
 
 {
@@ -718,7 +727,8 @@ export const effectsBatch23: CSSEffect[] = [
     box-sizing: border-box;
 }
 .roycss-ferrum-input-float-label::placeholder {
-    color: transparent;`,
+    color: transparent;
+}`,
 },
 
 {
@@ -766,7 +776,8 @@ export const effectsBatch23: CSSEffect[] = [
   previewType: "box",
   cssCode: `.roycss-ferrum-tooltip-fade-wrapper {
     position: relative;
-    display: inline-block;`,
+    display: inline-block;
+}`,
 },
 
 {
@@ -870,7 +881,8 @@ export const effectsBatch23: CSSEffect[] = [
     background-color: oklch(0.931 0.0 89.88);
     border-radius: 10px;
     overflow: hidden;
-    position: relative;`,
+    position: relative;
+}`,
 },
 
 {
@@ -979,7 +991,8 @@ export const effectsBatch23: CSSEffect[] = [
 .roycss-ferrum-accordion-slide.roycss-ferrum-open {
     max-height: 500px;
     opacity: 1;
-    padding: 16px;`,
+    padding: 16px;
+}`,
 },
 
 {
@@ -990,7 +1003,8 @@ export const effectsBatch23: CSSEffect[] = [
   tags: ["accordion", "navigation", "accordion-trigger", "trigger"],
   previewType: "box",
   cssCode: `.roycss-ferrum-accordion-trigger {
-    display: none;`,
+    display: none;
+}`,
 },
 
 {
@@ -1041,7 +1055,8 @@ export const effectsBatch23: CSSEffect[] = [
     position: relative;
     display: flex;
     gap: 0;
-    border-bottom: 2px solid oklch(0.907 0.0 89.88);`,
+    border-bottom: 2px solid oklch(0.907 0.0 89.88);
+}`,
 },
 
 {
@@ -1100,7 +1115,8 @@ export const effectsBatch23: CSSEffect[] = [
   previewType: "box",
   cssCode: `.roycss-ferrum-dropdown-slide-wrapper {
     position: relative;
-    display: inline-block;`,
+    display: inline-block;
+}`,
 },
 
 {
@@ -1132,7 +1148,8 @@ export const effectsBatch23: CSSEffect[] = [
 .roycss-ferrum-dropdown-slide-wrapper:hover .roycss-ferrum-dropdown-slide {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);`,
+    transform: translateY(0);
+}`,
 },
 
 {

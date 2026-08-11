@@ -308,6 +308,7 @@ export const EffectCard = memo(function EffectCard({
       role="button"
       tabIndex={0}
       aria-label={`${effect.name} — ${effect.description}. Press Enter to view details.`}
+      data-effect-id={effect.id}
       className="group rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 cursor-pointer perf-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
     >
       {/* Preview Area */}

@@ -59,13 +59,13 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
     if (!query.trim()) return [];
     const q = query.toLowerCase();
     return [
-      { id: "why-roycss", label: "Why RoyCSS", desc: "Value propositions" },
+      { id: "what-is-roycss", label: "What is RoyCSS?", desc: "Platform overview — what RoyCSS is and who it's for" },
       { id: "get-started", label: "Get Started", desc: "Installation guide" },
       { id: "effects", label: "Effects", desc: "Browse all 1569+ effects" },
       { id: "recipes", label: "Recipes", desc: "Curated UI patterns" },
       { id: "patterns", label: "Patterns", desc: "UI state patterns" },
       { id: "collections", label: "Collections", desc: "Curated themed effect bundles" },
-      { id: "platform", label: "Platform", desc: "18+ products ecosystem" },
+      { id: "platform", label: "Platform", desc: "62 products — Build, Design, AI, DevTools, Enterprise, Learning" },
       { id: "docs", label: "Docs", desc: "Documentation & guides" },
       { id: "faq", label: "FAQ", desc: "Frequently asked questions" },
     ].filter(s => s.label.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q));

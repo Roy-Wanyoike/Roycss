@@ -97,7 +97,7 @@ import { ScrollToTop } from "@/components/roycss/scroll-to-top";
 import { EffectShowcaseGrid } from "@/components/roycss/effect-showcase-grid";
 import { CommunitySpotlight } from "@/components/roycss/community-spotlight";
 import { InteractiveTutorial } from "@/components/roycss/interactive-tutorial";
-import { PlatformProductsShowcase } from "@/components/roycss/pro/platform-products-showcase";
+import { PlatformSectionUnified } from "@/components/roycss/platform-section-unified";
 import { SectionScrollbar } from "@/components/roycss/section-scrollbar";
 import { DynamicEffectCSS } from "@/components/roycss/dynamic-effect-css";
 import { VirtualScrollGrid } from "@/components/roycss/virtual-scroll-grid";
@@ -105,7 +105,7 @@ import { AnimationPauser } from "@/components/roycss/animation-pauser";
 import { RoyCSSLogo, RoyCSSHeroLogo } from "@/components/roycss/roycss-logo";
 import { GetStarted } from "@/components/roycss/get-started";
 import { RoyMotionShowcase } from "@/components/roycss/roymotion-showcase";
-import { PlatformEcosystem } from "@/components/roycss/platform-ecosystem";
+import { WhatIsRoyCSS } from "@/components/roycss/what-is-roycss";
 import { ContactForm } from "@/components/roycss/contact-form";
 import { FeaturedCompanies, SponsorModal } from "@/components/roycss/featured-companies";
 import { RecipesSection } from "@/components/roycss/recipes-section";
@@ -1257,7 +1257,7 @@ export default function RoyCSSPage() {
   // Active section highlighting via IntersectionObserver
   const [activeSection, setActiveSection] = useState("");
   useEffect(() => {
-    const sectionIds = ["get-started", "effects", "recipes", "patterns", "collections", "platform", "products", "docs", "faq"];
+    const sectionIds = ["what-is-roycss", "get-started", "effects", "recipes", "patterns", "collections", "platform", "docs", "faq"];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -1355,17 +1355,19 @@ export default function RoyCSSPage() {
         <div className="container mx-auto px-4 sm:px-6">
           {/* Nav bar */}
           <nav aria-label="Primary navigation" className="flex items-center justify-between mb-8 sm:mb-12">
-            <motion.div
+            <motion.button
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className="flex items-center gap-2.5"
+              className="flex items-center gap-2.5 cursor-pointer hover:opacity-80 transition-opacity"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              aria-label="RoyCSS — scroll to top"
             >
               <RoyCSSLogo size="md" animated={true} />
               <Badge variant="secondary" className="text-xs px-1.5 py-0 bg-primary/10 text-primary border-primary/20 font-semibold">
                 v1.0
               </Badge>
-            </motion.div>
+            </motion.button>
 
             <motion.div
               initial={{ opacity: 0, x: 20 }}
@@ -1416,12 +1418,6 @@ export default function RoyCSSPage() {
                   className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === "platform" ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
                 >
                   Platform
-                </button>
-                <button
-                  onClick={() => scrollToSection("#products")}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === "products" ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
-                >
-                  Products
                 </button>
                 <button
                   onClick={() => scrollToSection("#faq")}
@@ -1600,7 +1596,6 @@ export default function RoyCSSPage() {
                     { label: "Patterns", id: "#patterns" },
                     { label: "Collections", id: "#collections" },
                     { label: "Platform", id: "#platform" },
-                    { label: "Products", id: "#products" },
                     { label: "FAQ", id: "#faq" },
                   ].map((item) => (
                     <button
@@ -1687,25 +1682,25 @@ export default function RoyCSSPage() {
                   className="size-1.5 rounded-full bg-primary"
                 />
                 <Package className="size-3.5" />
-                1569+ CSS effects · React · Vue · Angular · Svelte
+                AI-Native Frontend Engineering Platform
               </div>
             </ScrollReveal>
 
             <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.05]">
               <span className="block text-foreground">
-                <TextReveal text="Beautiful CSS" />
+                <TextReveal text="Build Beautiful" />
               </span>
               <span className="block mt-1">
                 <AnimatedGradientText className="font-display font-bold">
-                  <TextReveal text="Effects Library" delay={0.3} />
+                  <TextReveal text="Frontend Interfaces" delay={0.3} />
                 </AnimatedGradientText>
               </span>
             </h1>
 
             <ScrollReveal delay={0.3}>
-              <p className="mt-2 max-w-lg mx-auto text-base sm:text-lg text-muted-foreground leading-relaxed">
-                Production-ready CSS effects with live demos, color customization, and
-                copy-paste code. Works in any framework — no JavaScript required.
+              <p className="mt-2 max-w-xl mx-auto text-base sm:text-lg text-muted-foreground leading-relaxed">
+                1,569 CSS effects, 62 platform products, 64 developer tools, and AI assistance —
+                design, build, customize, and ship modern interfaces in one cohesive ecosystem.
               </p>
             </ScrollReveal>
 
@@ -1716,11 +1711,11 @@ export default function RoyCSSPage() {
                   <Button
                     size="lg"
                     onClick={() =>
-                      scrollToSection("#effects")
+                      scrollToSection("#what-is-roycss")
                     }
                     className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20 h-11 px-6"
                   >
-                    Browse 1569+ Effects
+                    Explore the Platform
                     <ChevronDown className="size-4 ml-1" />
                   </Button>
                 </MagneticButton>
@@ -1756,6 +1751,9 @@ export default function RoyCSSPage() {
           </div>
         </div>
       </header>
+
+      {/* ─── What is RoyCSS? (platform overview) ─────────────── */}
+      <WhatIsRoyCSS />
 
       {/* ─── Featured highlights (landmark-wrapped for WCAG 2.4.1) ── */}
       <section aria-label="Featured highlights" className="border-b border-border/40">
@@ -2089,22 +2087,14 @@ export default function RoyCSSPage() {
 
       <Separator className="opacity-50" />
 
-      {/* ─── Platform Ecosystem (18-product vision) ─────────── */}
-      <PlatformEcosystem
+      {/* ─── RoyCSS Platform (unified — 62 products, 6 categories) ─── */}
+      <PlatformSectionUnified
         onLaunchTool={(toolId) => {
           if (toolId === "ai-playground" || toolId === "css-doctor" || toolId === "utility-explorer" || toolId === "benchmark" || toolId === "genome" || toolId === "ai-migration" || toolId === "challenges" || toolId === "design-diff" || toolId === "css-minifier" || toolId === "specificity" || toolId === "easing" || toolId === "stacking" || toolId === "similarity" || toolId === "perf" || toolId === "browser-support" || toolId === "print" || toolId === "selector-tester" || toolId === "dark-mode" || toolId === "variable-graph" || toolId === "fluid-type" || toolId === "scroll-animation" || toolId === "grid-areas" || toolId === "container-query" || toolId === "nesting" || toolId === "contrast-matrix" || toolId === "unit-converter" || toolId === "box-model" || toolId === "flex-playground" || toolId === "transition-studio" || toolId === "pattern-generator" || toolId === "transform-studio" || toolId === "cursor-gallery" || toolId === "scrollbar-styler" || toolId === "gap-spacing" || toolId === "writing-mode" || toolId === "object-fit" || toolId === "positioning" || toolId === "property-inspector" || toolId === "animation-timeline" || toolId === "sprite-sheet" || toolId === "text-shadow" || toolId === "filter-studio" || toolId === "conic-gradient" || toolId === "motion-path" || toolId === "view-transition" || toolId === "mask-studio" || toolId === "gradient-mesh" || toolId === "table-styler" || toolId === "aspect-ratio" || toolId === "shape-generator" || toolId === "scroll-snap" || toolId === "keyframes-studio" || toolId === "theming-engine" || toolId === "has-selector-tester" || toolId === "css-layers" || toolId === "input-mode" || toolId === "cascade-specificity" || toolId === "color-space" || toolId === "style-query" || toolId === "scope" || toolId === "subgrid" || toolId === "fallback" || toolId === "logical-properties" || toolId === "initial-letter" || toolId === "text-wrap" || toolId === "property-registrar" || toolId === "relative-color" || toolId === "starting-style" || toolId === "light-dark") {
             setPlatformTool(toolId);
           }
         }}
-        onLearnMore={(_slug) => {
-          setDocsOpen(true);
-        }}
       />
-
-      <Separator className="opacity-50" />
-
-      {/* ─── Platform Products Showcase (24 live products) ─── */}
-      <PlatformProductsShowcase />
 
       <Separator className="opacity-50" />
 

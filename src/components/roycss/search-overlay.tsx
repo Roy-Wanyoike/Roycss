@@ -2,11 +2,13 @@
 
 import { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, X, ArrowRight } from "lucide-react";
+import { Search, X, ArrowRight, Boxes } from "lucide-react";
 import { effects, categoryMeta } from "@/lib/roycss-effects";
 import { recipes } from "@/lib/roycss-recipes";
 import { patterns } from "@/lib/roycss-patterns";
 import { collections } from "@/lib/roycss-collections";
+import { PRODUCTS_CATALOG, PRODUCT_TIER_META, type ProductMeta } from "@/lib/products-catalog";
+import { Badge } from "@/components/ui/badge";
 import type { CSSEffect } from "@/lib/roycss-types";
 
 interface SearchOverlayProps {
@@ -55,6 +57,14 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
     return collections.filter(c => c.name.toLowerCase().includes(q) || c.description.toLowerCase().includes(q) || c.tagline.toLowerCase().includes(q) || c.tags.some(t => t.toLowerCase().includes(q))).slice(0, 3);
   }, [query]);
 
+  const productResults = useMemo<ProductMeta[]>(() => {
+    if (!query.trim()) return [];
+    const q = query.toLowerCase();
+    return PRODUCTS_CATALOG
+      .filter(p => p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q) || p.category.toLowerCase().includes(q) || p.id.toLowerCase().includes(q))
+      .slice(0, 6);
+  }, [query]);
+
   const sectionResults = useMemo(() => {
     if (!query.trim()) return [];
     const q = query.toLowerCase();
@@ -71,7 +81,7 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
     ].filter(s => s.label.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q));
   }, [query]);
 
-  const totalResults = sectionResults.length + effectResults.length + recipeResults.length + patternResults.length + collectionResults.length;
+  const totalResults = sectionResults.length + effectResults.length + recipeResults.length + patternResults.length + collectionResults.length + productResults.length;
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === "ArrowDown") { e.preventDefault(); setSelectedIndex(i => Math.min(i + 1, totalResults - 1)); }
@@ -88,8 +98,10 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
       if (idx < patternResults.length && patternResults[idx]) { onJumpToSection("#patterns"); onOpenChange(false); return; }
       idx -= patternResults.length;
       if (idx < collectionResults.length && collectionResults[idx]) { onJumpToSection("#collections"); onOpenChange(false); return; }
+      idx -= collectionResults.length;
+      if (idx < productResults.length && productResults[idx]) { onJumpToSection("#platform"); onOpenChange(false); return; }
     }
-  }, [selectedIndex, totalResults, sectionResults, effectResults, recipeResults, patternResults, collectionResults, onJumpToSection, onSelectEffect, onOpenChange]);
+  }, [selectedIndex, totalResults, sectionResults, effectResults, recipeResults, patternResults, collectionResults, productResults, onJumpToSection, onSelectEffect, onOpenChange]);
 
   return (
     <AnimatePresence>
@@ -119,7 +131,7 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
             <div className="flex items-center gap-3 p-4 border-b border-border/50">
               <Search className="size-5 text-muted-foreground shrink-0" />
               <input ref={inputRef} type="search" value={query} onChange={(e) => { setQuery(e.target.value); setSelectedIndex(0); }}
-                onKeyDown={handleKeyDown} placeholder="Search effects, recipes, patterns, sections... (⌘K)"
+                onKeyDown={handleKeyDown} placeholder="Search effects, recipes, patterns, products, sections... (⌘K)"
                 className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none" autoComplete="off" spellCheck={false} />
               <button onClick={() => onOpenChange(false)} className="flex items-center justify-center size-7 rounded-md bg-muted text-muted-foreground hover:text-foreground transition-colors cursor-pointer shrink-0" aria-label="Close search">
                 <X className="size-3.5" />
@@ -127,8 +139,8 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
             </div>
             <div className="max-h-[50vh] overflow-y-auto scrollbar-thin">
               {query.trim() === "" ? (
-                <div className="p-8 text-center"><p className="text-sm text-muted-foreground">Search for effects, recipes, patterns, or sections.</p>
-                <p className="text-xs text-muted-foreground/60 mt-2">Try: "glass", "loader", "neon", "hero", "loading"</p></div>
+                <div className="p-8 text-center"><p className="text-sm text-muted-foreground">Search effects, recipes, patterns, products, or sections.</p>
+                <p className="text-xs text-muted-foreground/60 mt-2">Try: "glass", "loader", "neon", "kanban", "hero", "loading"</p></div>
               ) : totalResults === 0 ? (
                 <div className="p-8 text-center"><p className="text-sm text-muted-foreground">No results for "{query}"</p></div>
               ) : (
@@ -192,6 +204,34 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
                       </button>
                     );
                   })}
+                  {productResults.length > 0 && (
+                    <>
+                      {(sectionResults.length > 0 || effectResults.length > 0 || recipeResults.length > 0 || patternResults.length > 0 || collectionResults.length > 0) && <div className="h-px bg-border/50 my-1" />}
+                      <div className="px-2 pt-1.5 pb-1 flex items-center gap-2">
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Products</span>
+                        <Badge variant="secondary" className="h-4 px-1.5 text-[9px] font-medium tabular-nums">{productResults.length}</Badge>
+                      </div>
+                      {productResults.map((p, i) => {
+                        const index = i + sectionResults.length + effectResults.length + recipeResults.length + patternResults.length + collectionResults.length;
+                        const tier = PRODUCT_TIER_META[p.tier];
+                        return (
+                          <button key={p.id} onClick={() => { onJumpToSection("#platform"); onOpenChange(false); }}
+                            onMouseEnter={() => setSelectedIndex(index)}
+                            className={`w-full flex items-center gap-3 p-2.5 rounded-lg transition-all cursor-pointer text-left ${selectedIndex === index ? "bg-primary/10" : "hover:bg-muted/50"}`}>
+                            <div className="flex items-center justify-center size-8 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shrink-0"><Boxes className="size-4" /></div>
+                            <div className="min-w-0 flex-1">
+                              <div className="flex items-center gap-2">
+                                <p className="text-sm font-medium text-foreground truncate">{p.name}</p>
+                                <Badge variant="outline" className="h-4 px-1.5 text-[9px] font-medium shrink-0">{p.category}</Badge>
+                                <Badge className={`h-4 px-1.5 text-[9px] font-medium shrink-0 ${tier.className}`}>{tier.label}</Badge>
+                              </div>
+                              <p className="text-xs text-muted-foreground truncate">{p.description}</p>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </>
+                  )}
                 </div>
               )}
             </div>

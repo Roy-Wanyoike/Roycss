@@ -13,13 +13,13 @@ interface MiniNavProps {
 }
 
 const NAV_ITEMS = [
+  { id: "what-is-roycss", label: "Overview" },
   { id: "get-started", label: "Start" },
   { id: "effects", label: "Effects" },
   { id: "recipes", label: "Recipes" },
   { id: "patterns", label: "Patterns" },
   { id: "collections", label: "Collections" },
   { id: "platform", label: "Platform" },
-  { id: "products", label: "Products" },
   { id: "faq", label: "FAQ" },
 ];
 

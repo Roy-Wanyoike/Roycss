@@ -115,6 +115,7 @@ import { RoyMotionShowcase } from "@/components/roycss/roymotion-showcase";
 import { WhatIsRoyCSS } from "@/components/roycss/what-is-roycss";
 import { FeaturedEffects } from "@/components/roycss/featured-effects";
 import { ContentTaxonomy } from "@/components/roycss/content-taxonomy";
+import { WebGLShowcase } from "@/components/roycss/effects/webgl-showcase";
 import { ContactForm } from "@/components/roycss/contact-form";
 import { FeaturedCompanies, SponsorModal } from "@/components/roycss/featured-companies";
 import { RecipesSection } from "@/components/roycss/recipes-section";
@@ -1664,6 +1665,7 @@ export default function RoyCSSPage() {
                 onClick={() => setSearchOverlayOpen(true)}
                 className="flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-foreground transition-all cursor-pointer"
                 aria-label="Search (⌘K)"
+                title="Search effects, products, recipes & more (⌘K)"
               >
                 <Search className="size-4" />
               </button>
@@ -1672,6 +1674,7 @@ export default function RoyCSSPage() {
                 onClick={() => setShortcutsOpen(true)}
                 className="hidden sm:flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
                 aria-label="Keyboard shortcuts (?)"
+                title="Keyboard shortcuts (?)"
               >
                 <Keyboard className="size-4" />
               </button>
@@ -1686,8 +1689,8 @@ export default function RoyCSSPage() {
                     <Wrench className="size-4" />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Developer Tools</DropdownMenuLabel>
+                <DropdownMenuContent align="end" className="w-72 max-h-[70vh] overflow-y-auto">
+                  <DropdownMenuLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Workspace</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => setPlaygroundOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <SlidersHorizontal className="size-4 text-muted-foreground" /> Playground
@@ -1707,21 +1710,10 @@ export default function RoyCSSPage() {
                   <DropdownMenuItem onClick={() => setAnalyticsOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <BarChart3 className="size-4 text-muted-foreground" /> Activity Dashboard
                   </DropdownMenuItem>
+
                   <DropdownMenuSeparator />
-                  <DropdownMenuLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">CSS Utilities</DropdownMenuLabel>
+                  <DropdownMenuLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">CSS Generators</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => setBundleCalcOpen(true)} className="cursor-pointer gap-2 text-sm">
-                    <Calculator className="size-4 text-muted-foreground" /> Bundle Calculator
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setBeautifierOpen(true)} className="cursor-pointer gap-2 text-sm">
-                    <Braces className="size-4 text-muted-foreground" /> CSS Beautifier
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setUnitConverterOpen(true)} className="cursor-pointer gap-2 text-sm">
-                    <Ruler className="size-4 text-muted-foreground" /> Unit Converter
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setContrastCheckerOpen(true)} className="cursor-pointer gap-2 text-sm">
-                    <Contrast className="size-4 text-muted-foreground" /> Contrast Checker
-                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setGradientGenOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <Palette className="size-4 text-muted-foreground" /> Gradient Generator
                   </DropdownMenuItem>
@@ -1731,17 +1723,8 @@ export default function RoyCSSPage() {
                   <DropdownMenuItem onClick={() => setShadowGenOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <Box className="size-4 text-muted-foreground" /> Box Shadow Generator
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setPaletteGenOpen(true)} className="cursor-pointer gap-2 text-sm">
-                    <Palette className="size-4 text-muted-foreground" /> Color Palette Generator
-                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setTransformStudioOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <Move3d className="size-4 text-muted-foreground" /> Transform Studio
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setAnimTimelineOpen(true)} className="cursor-pointer gap-2 text-sm">
-                    <Film className="size-4 text-muted-foreground" /> Animation Timeline
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setFontPreviewOpen(true)} className="cursor-pointer gap-2 text-sm">
-                    <Type className="size-4 text-muted-foreground" /> Font Preview Tool
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setGridGenOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <LayoutGrid className="size-4 text-muted-foreground" /> CSS Grid Generator
@@ -1755,23 +1738,60 @@ export default function RoyCSSPage() {
                   <DropdownMenuItem onClick={() => setFilterStudioOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <SlidersHorizontal className="size-4 text-muted-foreground" /> CSS Filter Studio
                   </DropdownMenuItem>
+
+                  <DropdownMenuSeparator />
+                  <DropdownMenuLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Color & Typography</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => setContrastCheckerOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Contrast className="size-4 text-muted-foreground" /> Contrast Checker
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setPaletteGenOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Palette className="size-4 text-muted-foreground" /> Color Palette Generator
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setShadeGenOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <Paintbrush className="size-4 text-muted-foreground" /> Color Shade Generator
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setFontPreviewOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Type className="size-4 text-muted-foreground" /> Font Preview Tool
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setSpacingScaleOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <Ruler className="size-4 text-muted-foreground" /> Spacing Scale Generator
                   </DropdownMenuItem>
+
+                  <DropdownMenuSeparator />
+                  <DropdownMenuLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Code Tools</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => setBundleCalcOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Calculator className="size-4 text-muted-foreground" /> Bundle Calculator
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setBeautifierOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Braces className="size-4 text-muted-foreground" /> CSS Beautifier
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setUnitConverterOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Ruler className="size-4 text-muted-foreground" /> Unit Converter
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setVarManagerOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <Variable className="size-4 text-muted-foreground" /> CSS Variable Manager
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setAnimTimelineOpen(true)} className="cursor-pointer gap-2 text-sm">
+                    <Film className="size-4 text-muted-foreground" /> Animation Timeline
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setResponsivePreviewOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <Smartphone className="size-4 text-muted-foreground" /> Responsive Preview
                   </DropdownMenuItem>
+
+                  <DropdownMenuSeparator />
+                  <DropdownMenuLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Help</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => setShortcutsOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <Keyboard className="size-4 text-muted-foreground" /> Keyboard Shortcuts
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => restartRoyCssTutorial()} className="cursor-pointer gap-2 text-sm">
                     <GraduationCap className="size-4 text-muted-foreground" /> Take Tour
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => scrollToSection("#platform")} className="cursor-pointer gap-2 text-sm font-medium text-primary">
+                    <Wrench className="size-4" /> Browse All 64 Dev Tools →
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -1780,6 +1800,7 @@ export default function RoyCSSPage() {
                 onClick={() => setFavoritesOpen(true)}
                 className="relative flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-rose-500 transition-all hover:-translate-y-0.5 cursor-pointer"
                 aria-label="Open favorites"
+                title="Your favorited effects"
               >
                 <Heart className={`size-4 ${count > 0 ? "fill-rose-500/20 text-rose-500" : ""}`} />
                 {count > 0 && (
@@ -1995,6 +2016,9 @@ export default function RoyCSSPage() {
         onSelectEffect={(e) => { pushRecentEffect(e.id); setSelectedEffect(e); setDialogOpen(true); }}
         onExploreAll={() => scrollToSection("#effects")}
       />
+
+      {/* ─── WebGL & Canvas Effects Showcase ────────────────── */}
+      <WebGLShowcase />
 
       {/* ─── Featured highlights (landmark-wrapped for WCAG 2.4.1) ── */}
       <section aria-label="Featured highlights" className="border-b border-border/40">

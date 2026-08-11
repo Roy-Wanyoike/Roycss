@@ -387,10 +387,10 @@ export function PlatformSectionUnified({
           className="mb-8"
         >
           <div className="flex justify-center">
-            <TabsList className="h-auto flex-wrap gap-1 p-1 bg-muted/60 backdrop-blur">
+            <TabsList className="h-auto flex-wrap gap-1 p-1.5 bg-muted/60 backdrop-blur rounded-xl">
               <TabsTrigger
                 value="All"
-                className="flex-1 sm:flex-none rounded-md px-3 py-1.5 text-xs sm:text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                className="flex-1 sm:flex-none rounded-lg px-3 py-2 text-xs sm:text-sm transition-all duration-200 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md data-[state=active]:scale-105 data-[state=active]:shadow-primary/30"
               >
                 <Layers className="size-3.5" />
                 All
@@ -402,7 +402,7 @@ export function PlatformSectionUnified({
                   <TabsTrigger
                     key={cat.id}
                     value={cat.id}
-                    className="flex-1 sm:flex-none rounded-md px-3 py-1.5 text-xs sm:text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                    className="flex-1 sm:flex-none rounded-lg px-3 py-2 text-xs sm:text-sm transition-all duration-200 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md data-[state=active]:scale-105 data-[state=active]:shadow-primary/30"
                   >
                     <Icon className="size-3.5" />
                     <span className="hidden sm:inline">{cat.label}</span>

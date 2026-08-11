@@ -28,6 +28,7 @@ import {
   Building2,
   ArrowRight,
   ArrowDown,
+  Radio,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -582,6 +583,15 @@ export function WhatIsRoyCSS() {
               className="h-11 px-6 w-full sm:w-auto"
             >
               Browse 1,569 effects
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={() => scrollToSection("#platform")}
+              className="h-11 px-6 w-full sm:w-auto border-primary/40 text-primary hover:bg-primary/10"
+            >
+              <Radio className="size-4 mr-1 animate-pulse" />
+              Try Roy Live
             </Button>
           </div>
         </ScrollReveal>

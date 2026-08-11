@@ -69,7 +69,14 @@ import {
   Pause,
   ChevronLeft,
   Repeat,
+  Store,
+  Cloud,
+  Building2,
+  GraduationCap,
+  Users,
+  Award,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -96,7 +103,7 @@ import { FavoritesSheet } from "@/components/roycss/favorites-sheet";
 import { ScrollToTop } from "@/components/roycss/scroll-to-top";
 import { EffectShowcaseGrid } from "@/components/roycss/effect-showcase-grid";
 import { CommunitySpotlight } from "@/components/roycss/community-spotlight";
-import { InteractiveTutorial } from "@/components/roycss/interactive-tutorial";
+import { InteractiveTutorial, restartRoyCssTutorial } from "@/components/roycss/interactive-tutorial";
 import { PlatformSectionUnified } from "@/components/roycss/platform-section-unified";
 import { SectionScrollbar } from "@/components/roycss/section-scrollbar";
 import { DynamicEffectCSS } from "@/components/roycss/dynamic-effect-css";
@@ -106,6 +113,8 @@ import { RoyCSSLogo, RoyCSSHeroLogo } from "@/components/roycss/roycss-logo";
 import { GetStarted } from "@/components/roycss/get-started";
 import { RoyMotionShowcase } from "@/components/roycss/roymotion-showcase";
 import { WhatIsRoyCSS } from "@/components/roycss/what-is-roycss";
+import { FeaturedEffects } from "@/components/roycss/featured-effects";
+import { ContentTaxonomy } from "@/components/roycss/content-taxonomy";
 import { ContactForm } from "@/components/roycss/contact-form";
 import { FeaturedCompanies, SponsorModal } from "@/components/roycss/featured-companies";
 import { RecipesSection } from "@/components/roycss/recipes-section";
@@ -225,6 +234,186 @@ const catIcons: Record<EffectCategory, React.ComponentType<{ className?: string 
   visual: Wand2,
   misc: Sparkle,
 };
+
+/* ─── Mega-menu nav dropdowns (Explore + Platform) ─────────────
+   Desktop-only (mobile uses the existing hamburger menu).
+   Hover-opens after a 100ms delay to prevent flicker when the
+   user moves between the trigger and the portal-rendered content.
+   Radix DropdownMenu handles all keyboard interactions natively:
+   Tab → focus trigger, Enter/Space → toggle, Arrow keys → move
+   between items, Escape → close. */
+
+type MegaMenuItem = {
+  label: string;
+  description: string;
+  icon: React.ComponentType<{ className?: string }>;
+  href: string;
+};
+
+type MegaMenuGroup = {
+  name: string;
+  items: MegaMenuItem[];
+};
+
+const EXPLORE_ITEMS: MegaMenuItem[] = [
+  { label: "Effects", description: "Browse 1,569 CSS effects", icon: Zap, href: "#effects" },
+  { label: "Recipes", description: "Pre-built effect combinations", icon: BookOpen, href: "#recipes" },
+  { label: "Patterns", description: "Layout & component patterns", icon: LayoutGrid, href: "#patterns" },
+  { label: "Collections", description: "Curated effect bundles", icon: Layers, href: "#collections" },
+];
+
+const PLATFORM_GROUPS: MegaMenuGroup[] = [
+  {
+    name: "Build",
+    items: [
+      { label: "Components", description: "Production-ready UI blocks", icon: Package, href: "#platform" },
+      { label: "Templates", description: "Starter layouts & scaffolds", icon: Frame, href: "#platform" },
+      { label: "Marketplace", description: "Community templates & packs", icon: Store, href: "#platform" },
+    ],
+  },
+  {
+    name: "Design",
+    items: [
+      { label: "Roy Studio", description: "Visual design editor", icon: Palette, href: "#platform" },
+      { label: "Themes", description: "Themeable color systems", icon: Contrast, href: "#platform" },
+      { label: "Icons", description: "Open icon library", icon: Sparkles, href: "#platform" },
+    ],
+  },
+  {
+    name: "AI",
+    items: [
+      { label: "RoyAI", description: "Generate effects from prompts", icon: Wand2, href: "#platform" },
+      { label: "Roy MCP", description: "MCP server for AI agents", icon: Braces, href: "#platform" },
+      { label: "AI Tools", description: "Assisted refactor & lint", icon: Sparkle, href: "#platform" },
+    ],
+  },
+  {
+    name: "Developer Tools",
+    items: [
+      { label: "DevTools", description: "Inspector, debugger & logs", icon: Wrench, href: "#platform" },
+      { label: "Inspector", description: "Live DOM + CSS explorer", icon: MousePointer, href: "#platform" },
+      { label: "Playground", description: "Live effect editor", icon: SlidersHorizontal, href: "#platform" },
+    ],
+  },
+  {
+    name: "Enterprise",
+    items: [
+      { label: "Cloud", description: "Hosted themes & assets", icon: Cloud, href: "#platform" },
+      { label: "Governance", description: "Audit, SSO & RBAC", icon: CheckCircle2, href: "#platform" },
+      { label: "Enterprise", description: "Org-wide policies & SLAs", icon: Building2, href: "#platform" },
+    ],
+  },
+  {
+    name: "Learning",
+    items: [
+      { label: "Academy", description: "Courses & tutorials", icon: GraduationCap, href: "#platform" },
+      { label: "Community", description: "Forums & showcases", icon: Users, href: "#platform" },
+      { label: "Certifications", description: "RoyCSS professional certs", icon: Award, href: "#platform" },
+    ],
+  },
+];
+
+function NavMegaMenu({
+  label,
+  active,
+  align = "start",
+  contentClassName,
+  children,
+}: {
+  label: string;
+  active?: boolean;
+  align?: "start" | "center" | "end";
+  contentClassName?: string;
+  children: React.ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const openMenu = useCallback(() => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => setOpen(true), 100);
+  }, []);
+
+  const closeMenu = useCallback(() => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => setOpen(false), 100);
+  }, []);
+
+  useEffect(
+    () => () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    },
+    [],
+  );
+
+  return (
+    <div className="inline-block" onMouseEnter={openMenu} onMouseLeave={closeMenu}>
+      <DropdownMenu open={open} onOpenChange={setOpen}>
+        <DropdownMenuTrigger asChild>
+          <button
+            className={cn(
+              "flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer",
+              active
+                ? "text-primary bg-primary/10"
+                : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
+            )}
+            aria-haspopup="menu"
+            aria-expanded={open}
+          >
+            {label}
+            <ChevronDown
+              className={cn("size-3 transition-transform duration-200", open && "rotate-180")}
+            />
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+          align={align}
+          sideOffset={8}
+          onMouseEnter={openMenu}
+          onMouseLeave={closeMenu}
+          className={cn(
+            "backdrop-blur-xl bg-popover/85 border border-border/60 shadow-2xl rounded-xl",
+            "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
+            "data-[state=open]:slide-in-from-top-3",
+            contentClassName,
+          )}
+        >
+          {children}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  );
+}
+
+/* Mega-menu item — icon tile + label + description. Reused by both
+   Explore (single column) and Platform (2-column) dropdowns. */
+function MegaMenuRow({
+  item,
+  onSelect,
+}: {
+  item: MegaMenuItem;
+  onSelect: (href: string) => void;
+}) {
+  const Icon = item.icon;
+  return (
+    <DropdownMenuItem
+      onClick={() => onSelect(item.href)}
+      className="cursor-pointer gap-3 rounded-lg p-2 focus:bg-primary/5"
+    >
+      <span className="flex items-center justify-center size-8 rounded-md bg-primary/10 text-primary shrink-0">
+        <Icon className="size-4" />
+      </span>
+      <span className="flex flex-col min-w-0">
+        <span className="text-sm font-medium leading-tight text-foreground">
+          {item.label}
+        </span>
+        <span className="text-xs text-muted-foreground leading-tight mt-0.5 truncate">
+          {item.description}
+        </span>
+      </span>
+    </DropdownMenuItem>
+  );
+}
 
 /* ─── Scroll Progress Bar ───────────────────────────────────── */
 function ScrollProgress() {
@@ -1375,53 +1564,88 @@ export default function RoyCSSPage() {
               transition={{ duration: 0.5 }}
               className="flex items-center gap-2"
             >
-              {/* Docs nav links */}
+              {/* Primary nav — desktop (≥md). Mobile uses hamburger below.
+                  4 primary items: Get Started · Explore ▾ · Platform ▾ · Docs · FAQ.
+                  Explore & Platform are hover-open mega-menu dropdowns. */}
               <div className="hidden md:flex items-center gap-1 mr-2">
                 <button
                   onClick={() => scrollToSection("#get-started")}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === "get-started" ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
+                  className={cn(
+                    "px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer",
+                    activeSection === "get-started"
+                      ? "text-primary bg-primary/10"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
+                  )}
                 >
                   Get Started
                 </button>
+
+                {/* Explore ▾ — single-column mega-menu (Effects · Recipes · Patterns · Collections) */}
+                <NavMegaMenu
+                  label="Explore"
+                  align="start"
+                  active={
+                    activeSection === "effects" ||
+                    activeSection === "recipes" ||
+                    activeSection === "patterns" ||
+                    activeSection === "collections"
+                  }
+                  contentClassName="w-72 p-2"
+                >
+                  <DropdownMenuLabel className="px-2 pb-2 pt-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    Explore
+                  </DropdownMenuLabel>
+                  <div className="space-y-0.5">
+                    {EXPLORE_ITEMS.map((item) => (
+                      <MegaMenuRow key={item.label} item={item} onSelect={scrollToSection} />
+                    ))}
+                  </div>
+                </NavMegaMenu>
+
+                {/* Platform ▾ — 2-column mega-menu (Build · Design · AI · DevTools · Enterprise · Learning) */}
+                <NavMegaMenu
+                  label="Platform"
+                  align="start"
+                  active={activeSection === "platform"}
+                  contentClassName="w-[680px] p-4"
+                >
+                  <div className="mb-3 px-1">
+                    <span className="text-sm font-semibold text-foreground">RoyCSS Platform</span>
+                    <span className="ml-2 text-xs text-muted-foreground">62 products · 6 pillars</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+                    {PLATFORM_GROUPS.map((group) => (
+                      <div key={group.name} className="space-y-0.5">
+                        <DropdownMenuLabel className="px-2 pb-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                          {group.name}
+                        </DropdownMenuLabel>
+                        {group.items.map((item) => (
+                          <MegaMenuRow key={item.label} item={item} onSelect={scrollToSection} />
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                </NavMegaMenu>
+
                 <button
                   onClick={() => setDocsOpen(true)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${docsOpen ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
+                  className={cn(
+                    "px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer",
+                    docsOpen
+                      ? "text-primary bg-primary/10"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
+                  )}
                 >
                   Docs
                 </button>
                 <button
-                  onClick={() => scrollToSection("#effects")}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === "effects" ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
-                >
-                  Effects
-                </button>
-                <button
-                  onClick={() => scrollToSection("#recipes")}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === "recipes" ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
-                >
-                  Recipes
-                </button>
-                <button
-                  onClick={() => scrollToSection("#patterns")}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === "patterns" ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
-                >
-                  Patterns
-                </button>
-                <button
-                  onClick={() => scrollToSection("#collections")}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === "collections" ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
-                >
-                  Collections
-                </button>
-                <button
-                  onClick={() => scrollToSection("#platform")}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === "platform" ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
-                >
-                  Platform
-                </button>
-                <button
                   onClick={() => scrollToSection("#faq")}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === "faq" ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
+                  className={cn(
+                    "px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer",
+                    activeSection === "faq"
+                      ? "text-primary bg-primary/10"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
+                  )}
                 >
                   FAQ
                 </button>
@@ -1442,6 +1666,14 @@ export default function RoyCSSPage() {
                 aria-label="Search (⌘K)"
               >
                 <Search className="size-4" />
+              </button>
+              {/* Keyboard shortcuts hint — visible "?" button */}
+              <button
+                onClick={() => setShortcutsOpen(true)}
+                className="hidden sm:flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
+                aria-label="Keyboard shortcuts (?)"
+              >
+                <Keyboard className="size-4" />
               </button>
               {/* Tools Dropdown — consolidates 13 tool buttons into one menu */}
               <DropdownMenu>
@@ -1537,6 +1769,9 @@ export default function RoyCSSPage() {
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setShortcutsOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <Keyboard className="size-4 text-muted-foreground" /> Keyboard Shortcuts
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => restartRoyCssTutorial()} className="cursor-pointer gap-2 text-sm">
+                    <GraduationCap className="size-4 text-muted-foreground" /> Take Tour
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -1754,6 +1989,12 @@ export default function RoyCSSPage() {
 
       {/* ─── What is RoyCSS? (platform overview) ─────────────── */}
       <WhatIsRoyCSS />
+
+      {/* ─── Featured Effects (curated 10, before full gallery) ─── */}
+      <FeaturedEffects
+        onSelectEffect={(e) => { pushRecentEffect(e.id); setSelectedEffect(e); setDialogOpen(true); }}
+        onExploreAll={() => scrollToSection("#effects")}
+      />
 
       {/* ─── Featured highlights (landmark-wrapped for WCAG 2.4.1) ── */}
       <section aria-label="Featured highlights" className="border-b border-border/40">
@@ -2071,6 +2312,9 @@ export default function RoyCSSPage() {
 
       {/* ─── RoyMotion Showcase ─────────────────────────────── */}
       <RoyMotionShowcase />
+
+      {/* ─── Content Taxonomy (explains Components vs Effects vs Patterns etc.) ─── */}
+      <ContentTaxonomy />
 
       <Separator className="opacity-50" />
 

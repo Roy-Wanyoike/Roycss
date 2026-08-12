@@ -86,6 +86,7 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === "ArrowDown") { e.preventDefault(); setSelectedIndex(i => Math.min(i + 1, totalResults - 1)); }
     else if (e.key === "ArrowUp") { e.preventDefault(); setSelectedIndex(i => Math.max(i - 1, 0)); }
+    else if (e.key === "Escape") { e.preventDefault(); onOpenChange(false); }
     else if (e.key === "Enter") {
       e.preventDefault();
       let idx = selectedIndex;
@@ -131,7 +132,9 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
             <div className="flex items-center gap-3 p-4 border-b border-border/50">
               <Search className="size-5 text-muted-foreground shrink-0" />
               <input ref={inputRef} type="search" value={query} onChange={(e) => { setQuery(e.target.value); setSelectedIndex(0); }}
-                onKeyDown={handleKeyDown} placeholder="Search effects, recipes, patterns, products, sections... (⌘K)"
+                onKeyDown={handleKeyDown}
+                aria-label="Search effects, recipes, patterns, products, and sections"
+                placeholder="Search effects, recipes, patterns, products, sections... (⌘K)"
                 className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none" autoComplete="off" spellCheck={false} />
               <button onClick={() => onOpenChange(false)} className="flex items-center justify-center size-7 rounded-md bg-muted text-muted-foreground hover:text-foreground transition-colors cursor-pointer shrink-0" aria-label="Close search">
                 <X className="size-3.5" />

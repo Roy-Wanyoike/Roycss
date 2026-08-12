@@ -1241,6 +1241,22 @@ export default function RoyCSSPage() {
   const [compareOpen, setCompareOpen] = useState(false);
   const [compareEffects, setCompareEffects] = useState<CSSEffect[]>([]);
   const [platformTool, setPlatformTool] = useState<"ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | "gap-spacing" | "writing-mode" | "object-fit" | "positioning" | "property-inspector" | "animation-timeline" | "sprite-sheet" | "text-shadow" | "filter-studio" | "conic-gradient" | "motion-path" | "view-transition" | "mask-studio" | "gradient-mesh" | "table-styler" | "aspect-ratio" | "shape-generator" | "scroll-snap" | "keyframes-studio" | "theming-engine" | "has-selector-tester" | "css-layers" | "input-mode" | "cascade-specificity" | "color-space" | "style-query" | "scope" | "subgrid" | "fallback" | "logical-properties" | "initial-letter" | "text-wrap" | "property-registrar" | "relative-color" | "starting-style" | "light-dark" | null>(null);
+  // ─── Lazy-mount gate for PlatformTools ───────────────────────
+  // `next/dynamic` only defers the JS chunk if the component is NOT
+  // rendered. <PlatformTools> was previously rendered unconditionally,
+  // which forced the ~390KB tools chunk to load on initial page load
+  // (defeating QA-FIX-2). We now mount it only after the user opens a
+  // tool for the first time; subsequent open/close cycles reuse the
+  // already-mounted component so Radix Sheet's enter/exit animations
+  // still play correctly.
+  const [hasOpenedTool, setHasOpenedTool] = useState(false);
+  useEffect(() => {
+    if (platformTool !== null) {
+      // Defer setState to next frame to satisfy react-hooks/set-state-in-effect
+      const raf = requestAnimationFrame(() => setHasOpenedTool(true));
+      return () => cancelAnimationFrame(raf);
+    }
+  }, [platformTool]);
   const [recentOpen, setRecentOpen] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const [sponsorModalOpen, setSponsorModalOpen] = useState(false);
@@ -1286,8 +1302,11 @@ export default function RoyCSSPage() {
     const hash = window.location.hash;
     const match = hash.match(/^#effect=([a-z0-9-]+)$/);
     if (match) {
-      const effectId = match[1];
-      const effect = effects.find(e => e.id === effectId);
+      const effectId = hash.match(/^#effect=([a-z0-9-]+)$/)?.[1];
+      // Prefer the explicitly captured match[1] for safety on older engines.
+      const id = match[1] ?? effectId;
+      if (!id) return;
+      const effect = effects.find(e => e.id === id);
       if (effect) {
         // Use queueMicrotask to avoid synchronous setState in effect
         queueMicrotask(() => {
@@ -1299,6 +1318,33 @@ export default function RoyCSSPage() {
         });
       }
     }
+  }, []);
+
+  // Deep-link to a developer tool via #tool=<id> hash (or ?tool=<id> query
+  // param — kept for backward compatibility).
+  // Surfaces the 64 dev tools (color-space, gradient-mesh, box-model, ...)
+  // hosted by <PlatformTools/>. Previously these were unreachable from the
+  // UI: PlatformSectionUnified's onLaunchTool only forwards toolIds that
+  // match this list, but its 62 PRO product cards use a disjoint set of
+  // ids (data-grid, kanban, ...). The hash deep-link restores reachability
+  // for QA and shareable URLs.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const ALLOWED = new Set([
+      "ai-playground","css-doctor","utility-explorer","benchmark","genome","ai-migration","challenges","design-diff","css-minifier","specificity","easing","stacking","similarity","perf","browser-support","print","selector-tester","dark-mode","variable-graph","fluid-type","scroll-animation","grid-areas","container-query","nesting","contrast-matrix","unit-converter","box-model","flex-playground","transition-studio","pattern-generator","transform-studio","cursor-gallery","scrollbar-styler","gap-spacing","writing-mode","object-fit","positioning","property-inspector","animation-timeline","sprite-sheet","text-shadow","filter-studio","conic-gradient","motion-path","view-transition","mask-studio","gradient-mesh","table-styler","aspect-ratio","shape-generator","scroll-snap","keyframes-studio","theming-engine","has-selector-tester","css-layers","input-mode","cascade-specificity","color-space","style-query","scope","subgrid","fallback","logical-properties","initial-letter","text-wrap","property-registrar","relative-color","starting-style","light-dark",
+    ]);
+    const openFromUrl = () => {
+      const hash = window.location.hash;
+      const hashMatch = hash.match(/^#tool=([a-z0-9-]+)$/);
+      const qParam = new URLSearchParams(window.location.search).get("tool");
+      const toolId = hashMatch?.[1] ?? qParam;
+      if (toolId && ALLOWED.has(toolId)) {
+        queueMicrotask(() => setPlatformTool(toolId as typeof platformTool));
+      }
+    };
+    openFromUrl();
+    window.addEventListener("hashchange", openFromUrl);
+    return () => window.removeEventListener("hashchange", openFromUrl);
   }, []);
 
   // ⌘K / Ctrl+K to open search overlay
@@ -1421,12 +1467,13 @@ export default function RoyCSSPage() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className="flex items-center gap-2.5 cursor-pointer hover:opacity-80 transition-opacity"
+              className="flex items-center gap-2.5 cursor-pointer hover:opacity-80 transition-opacity min-w-0 min-h-11 px-1 -mx-1 rounded-lg"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               aria-label="RoyCSS — scroll to top"
             >
-              <RoyCSSLogo size="md" animated={true} />
-              <Badge variant="secondary" className="text-xs px-1.5 py-0 bg-primary/10 text-primary border-primary/20 font-semibold">
+              {/* hideTextOnMobile keeps the logo icon on-screen at 320px; wordmark reappears at ≥sm */}
+              <RoyCSSLogo size="md" animated={true} hideTextOnMobile />
+              <Badge variant="secondary" className="hidden sm:inline-flex text-xs px-1.5 py-0 bg-primary/10 text-primary border-primary/20 font-semibold">
                 v1.0
               </Badge>
             </motion.button>
@@ -1437,10 +1484,13 @@ export default function RoyCSSPage() {
               transition={{ duration: 0.5 }}
               className="flex items-center gap-2"
             >
-              {/* Primary nav — desktop (≥md). Mobile uses hamburger below.
+              {/* Primary nav — desktop (≥lg). Mobile uses hamburger below.
                   4 primary items: Get Started · Explore ▾ · Platform ▾ · Docs · FAQ.
-                  Explore & Platform are hover-open mega-menu dropdowns. */}
-              <div className="hidden md:flex items-center gap-1 mr-2">
+                  Explore & Platform are hover-open mega-menu dropdowns.
+                  Note: appears at lg (≥1024px) rather than md so the mega-menu panels
+                  (especially Platform ▾ at w-[680px]) have room to render at 768–1023px
+                  the user gets the hamburger menu instead. */}
+              <div className="hidden lg:flex items-center gap-1 mr-2">
                 <button
                   onClick={() => scrollToSection("#get-started")}
                   className={cn(
@@ -1523,10 +1573,11 @@ export default function RoyCSSPage() {
                   FAQ
                 </button>
               </div>
-              {/* Mobile hamburger menu */}
+              {/* Mobile hamburger menu — visible until lg (≥1024px) so the
+                  full desktop nav + mega-menus only render when there's room. */}
               <button
                 onClick={() => setMobileMenuOpen((o) => !o)}
-                className="md:hidden flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-foreground transition-all cursor-pointer"
+                className="lg:hidden flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-foreground transition-all cursor-pointer"
                 aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={mobileMenuOpen}
               >
@@ -1541,20 +1592,23 @@ export default function RoyCSSPage() {
               >
                 <Search className="size-4" />
               </button>
-              {/* Keyboard shortcuts hint — visible "?" button */}
+              {/* Keyboard shortcuts hint — visible "?" button.
+                  Hidden below xl (≥1280px) to keep the navbar cluster compact on tablets & small desktops. */}
               <button
                 onClick={() => setShortcutsOpen(true)}
-                className="hidden sm:flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
+                className="hidden xl:flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
                 aria-label="Keyboard shortcuts (?)"
                 title="Keyboard shortcuts (?)"
               >
                 <Keyboard className="size-4" />
               </button>
-              {/* Tools Dropdown — consolidates 13 tool buttons into one menu */}
+              {/* Tools Dropdown — consolidates 13 tool buttons into one menu.
+                  Hidden below xl (≥1280px); the same tools are reachable via the
+                  hamburger menu's "Tools" section on smaller viewports. */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button
-                    className="hidden sm:flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
+                    className="hidden xl:flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
                     aria-label="Developer tools"
                     title="Tools"
                   >
@@ -1685,20 +1739,23 @@ export default function RoyCSSPage() {
                   </motion.span>
                 )}
               </button>
-              {/* Sponsor button — opens modal with GitHub Sponsor card + payment methods */}
+              {/* Sponsor button — hidden below xl so the cluster never overflows at md/lg.
+                  Reachable from the hamburger menu's "Sponsor" item on smaller viewports. */}
               <button
                 onClick={() => setSponsorModalOpen(true)}
-                className="hidden sm:inline-flex items-center gap-1.5 h-11 px-4 rounded-xl bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-all font-medium text-xs cursor-pointer"
+                className="hidden xl:inline-flex items-center gap-1.5 h-11 px-4 rounded-xl bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-all font-medium text-xs cursor-pointer"
                 aria-label="Sponsor RoyCSS"
               >
                 <Heart className="size-3.5" />
                 Sponsor
               </button>
+              {/* GitHub icon link — hidden below lg (footer has a duplicate GitHub link
+                  that's always reachable). */}
               <a
                 href="https://github.com/Roy-Wanyoike/roycss"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-foreground transition-all hover:-translate-y-0.5"
+                className="hidden lg:flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-foreground transition-all hover:-translate-y-0.5"
                 aria-label="GitHub repository"
               >
                 <Github className="size-4" />
@@ -1714,7 +1771,7 @@ export default function RoyCSSPage() {
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.2 }}
-                className="md:hidden overflow-hidden"
+                className="lg:hidden overflow-hidden"
               >
                 <div className="flex flex-col gap-1 py-2">
                   {[
@@ -1927,7 +1984,7 @@ export default function RoyCSSPage() {
       <Separator className="opacity-50" />
 
       {/* ─── Effects Section ────────────────────────────────── */}
-      <main id="effects" aria-label="RoyCSS effects gallery and platform content" className="flex-1 py-10 sm:py-14 scroll-mt-20">
+      <main id="effects" aria-label="RoyCSS effects gallery and platform content" tabIndex={-1} className="flex-1 py-10 sm:py-14 scroll-mt-20 focus:outline-none">
         <div className="container mx-auto px-4 sm:px-6">
           {/* Effect of the Day */}
           <div className="mb-8">
@@ -2749,11 +2806,14 @@ export default function RoyCSSPage() {
       />
 
       {/* Platform Tools (AI Playground, CSS Doctor, Utility Explorer, Benchmark) */}
-      <PlatformTools
-        tool={platformTool}
-        onOpenChange={setPlatformTool}
-        onSelectEffect={(e) => { setSelectedEffect(e); setDialogOpen(true); }}
-      />
+      {/* Only mount after first open — see `hasOpenedTool` gate above. */}
+      {hasOpenedTool && (
+        <PlatformTools
+          tool={platformTool}
+          onOpenChange={setPlatformTool}
+          onSelectEffect={(e) => { setSelectedEffect(e); setDialogOpen(true); }}
+        />
+      )}
 
       {/* Search Overlay (⌘K) */}
       <SearchOverlay

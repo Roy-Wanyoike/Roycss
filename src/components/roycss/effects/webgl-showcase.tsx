@@ -8,7 +8,7 @@
  * experiences when CSS alone isn't enough.
  */
 
-import { useState, lazy, Suspense } from "react";
+import { useState, lazy, Suspense, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Box, Loader2, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -85,9 +85,40 @@ const EffectFallback = () => (
 
 export function WebGLShowcase() {
   const [active, setActive] = useState<EffectId>("tubes");
+  // ─── Defer mounting the (heavy, Three.js-backed) active effect until the
+  // showcase scrolls into view. Without this, `lazy()` still fires on
+  // initial mount because the default `active === "tubes"` renders
+  // <ThreeTubesCursor/> immediately — pulling in 422KB of three.js on
+  // initial page load even though the showcase is below the fold.
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    // If the browser lacks IntersectionObserver (rare — SSR already
+    // returned false so this branch only fires on truly ancient
+    // browsers), mount eagerly. Deferred via queueMicrotask to avoid
+    // the react-hooks/set-state-in-effect rule.
+    if (typeof IntersectionObserver === "undefined") {
+      queueMicrotask(() => setVisible(true));
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "200px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   return (
     <section
+      ref={sectionRef}
       id="webgl-effects"
       aria-label="WebGL and canvas effects showcase"
       className="py-16 sm:py-20 scroll-mt-20"
@@ -160,10 +191,11 @@ export function WebGLShowcase() {
             className="relative rounded-2xl overflow-hidden border border-border shadow-2xl"
           >
             <Suspense fallback={<EffectFallback />}>
-              {active === "tubes" && <ThreeTubesCursor height={420} />}
-              {active === "particles" && <ParticleNetwork height={420} />}
-              {active === "wave" && <ThreeWaveGrid height={420} />}
-              {active === "aurora" && <AuroraBorealis height={420} />}
+              {isVisible && active === "tubes" && <ThreeTubesCursor height={420} />}
+              {isVisible && active === "particles" && <ParticleNetwork height={420} />}
+              {isVisible && active === "wave" && <ThreeWaveGrid height={420} />}
+              {isVisible && active === "aurora" && <AuroraBorealis height={420} />}
+              {!isVisible && <EffectFallback />}
             </Suspense>
           </motion.div>
         </ScrollReveal>

@@ -381,13 +381,13 @@ export const EffectCard = memo(function EffectCard({
           ))}
         </div>
 
-        {/* Code Toggle */}
+        {/* Code Toggle — min-h-7 + py-1.5 ensures ≥ 28px tap target (WCAG 2.5.8 AA ≥ 24px) */}
         <button
           onClick={(e) => {
             e.stopPropagation();
             setShowCode(!showCode);
           }}
-          className="mt-3 flex items-center gap-1.5 text-xs text-primary hover:text-primary/80 transition-colors font-medium cursor-pointer"
+          className="mt-3 inline-flex items-center gap-1.5 px-1.5 py-1.5 min-h-7 -mx-1.5 rounded-md text-xs text-primary hover:text-primary/80 hover:bg-primary/5 transition-colors font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
         >
           {showCode ? (
             <>

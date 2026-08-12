@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search,
@@ -154,6 +154,52 @@ function CollectionDetailDialog({
     [collection],
   );
 
+  // ─── Focus trap + Escape handler (WCAG 2.1.2 No Keyboard Trap) ───
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (!collection) return;
+    // Remember the trigger so we can restore focus on close
+    previousFocusRef.current = document.activeElement as HTMLElement;
+    // Move focus into the dialog
+    const dialog = dialogRef.current;
+    if (dialog) {
+      const focusable = dialog.querySelector<HTMLElement>(
+        'button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      (focusable ?? dialog).focus();
+    }
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+        return;
+      }
+      if (e.key === "Tab" && dialogRef.current) {
+        const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+          'button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    document.addEventListener("keydown", handleKey);
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      // Restore focus to the trigger button
+      previousFocusRef.current?.focus?.();
+    };
+  }, [collection, onClose]);
+
   const handleCopy = useCallback(
     async (text: string, id: string) => {
       try {
@@ -182,11 +228,13 @@ function CollectionDetailDialog({
         >
           <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
           <motion.div
+            ref={dialogRef}
+            tabIndex={-1}
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="relative w-full max-w-3xl max-h-[85vh] rounded-2xl border border-border bg-card shadow-2xl overflow-hidden flex flex-col"
+            className="relative w-full max-w-3xl max-h-[85vh] rounded-2xl border border-border bg-card shadow-2xl overflow-hidden flex flex-col focus:outline-none"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header with accent */}
@@ -334,7 +382,7 @@ export function CollectionsSection({
   );
 
   return (
-    <section id="collections" className="py-16 sm:py-20 scroll-mt-20">
+    <section id="collections" aria-label="Curated effect collections" className="py-16 sm:py-20 scroll-mt-20">
       <div className="container mx-auto px-4 sm:px-6">
         <ScrollReveal>
           <div className="text-center max-w-2xl mx-auto mb-8">

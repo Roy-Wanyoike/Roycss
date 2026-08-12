@@ -59,7 +59,7 @@ export function FeaturedEffects({
   return (
     <section
       id="featured-effects"
-      aria-labelledby="featured-effects-heading"
+      aria-label="Featured effects"
       className="relative py-16 sm:py-20 lg:py-24 scroll-mt-20"
     >
       {/* Soft ambient background — emerald/teal glow, no indigo/blue */}

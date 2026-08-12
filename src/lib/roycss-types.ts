@@ -21,7 +21,13 @@ export type EffectCategory =
   | "misc"
   | "physics"
   | "liquid"
-  | "morphing";
+  | "morphing"
+  | "status-state"
+  | "audio"
+  | "retro"
+  | "data-viz"
+  | "immersive"
+  | "advanced-text";
 
 export type PreviewType =
   | "box"
@@ -187,6 +193,42 @@ export const categoryMeta: Record<
     color: "fuchsia",
     description: "Shape-shifting effects: clip-path, border-radius, and form transitions",
   },
+  "status-state": {
+    label: "Status & State",
+    icon: "Activity",
+    color: "emerald",
+    description: "Status indicators and state transitions: skeletons, success, error, loading, toggles",
+  },
+  audio: {
+    label: "Audio-Reactive",
+    icon: "Music",
+    color: "violet",
+    description: "Pure-CSS simulations of audio visuals: equalizers, waveforms, vinyl, ripples, VU meters",
+  },
+  retro: {
+    label: "Retro & Nostalgic",
+    icon: "Tv",
+    color: "amber",
+    description: "Retro effects: CRT, VHS, arcade neon, synthwave, cassette, and 8-bit aesthetics",
+  },
+  "data-viz": {
+    label: "Data Visualization",
+    icon: "BarChart3",
+    color: "teal",
+    description: "Data viz: rings, gauges, sparklines, bars, counters, and shimmer skeletons",
+  },
+  immersive: {
+    label: "Immersive Backgrounds",
+    icon: "Cloud",
+    color: "cyan",
+    description: "Ambient scene backgrounds: starfields, weather, fire, water, and particle fields",
+  },
+  "advanced-text": {
+    label: "Advanced Text",
+    icon: "Type",
+    color: "amber",
+    description: "Cinematic text treatments: typewriters, glitches, neon, kinetic motion, and gradient fills",
+  },
 };
 
 export const categoryOrder: EffectCategory[] = [
@@ -213,4 +255,10 @@ export const categoryOrder: EffectCategory[] = [
   "physics",
   "liquid",
   "morphing",
+  "status-state",
+  "audio",
+  "retro",
+  "data-viz",
+  "immersive",
+  "advanced-text",
 ];

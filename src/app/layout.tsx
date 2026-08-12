@@ -4,6 +4,7 @@ import "./globals.css";
 import "./roycss.css";
 import "./roymotion.css";
 import { Toaster } from "@/components/ui/toaster";
+import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 import { ServiceWorkerRegistration } from "@/components/roycss/sw-register";
 
 /**
@@ -178,6 +179,7 @@ export default function RootLayout({
       >
         {children}
         <Toaster />
+        <SonnerToaster position="bottom-right" richColors closeButton />
         <ServiceWorkerRegistration />
       </body>
     </html>

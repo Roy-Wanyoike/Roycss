@@ -3,7 +3,7 @@
  *
  * This module is the single source of truth for:
  *   - The controlled tag vocabulary (`TAG_VOCABULARY` + `TAG_SYNONYMS`)
- *   - The 20 category definitions (`CATEGORY_DEFINITIONS`)
+ *   - The 24 category definitions (`CATEGORY_DEFINITIONS`)
  *   - The 5 quality dimensions and their scoring heuristics (`QUALITY_DIMENSIONS`)
  *   - The `scoreEffect`, `normalizeTags`, `findDuplicates` entry points
  *   - The submission guide for new effects (`SUBMISSION_GUIDE`)
@@ -286,7 +286,7 @@ export const TAG_SYNONYMS: Record<string, string> = {
 };
 
 // ═══════════════════════════════════════════════════════════════════
-// CATEGORY_DEFINITIONS — boundary rules for all 20 categories
+// CATEGORY_DEFINITIONS — boundary rules for all 24 categories
 // ═══════════════════════════════════════════════════════════════════
 
 export const CATEGORY_DEFINITIONS: Record<EffectCategory, CategoryDefinition> =
@@ -592,6 +592,244 @@ export const CATEGORY_DEFINITIONS: Record<EffectCategory, CategoryDefinition> =
         "Confused with 'animations' — morphing effects specifically change the element's shape/structure, not just its position.",
       previewType: "box",
       keywords: ["morph", "shape", "transform", "clip-path", "border-radius", "transition", "cycle"],
+    },
+    "status-state": {
+      category: "status-state",
+      label: "Status & State",
+      definition:
+        "Effects that communicate component status or transition between UI states: loading skeletons, success/error feedback, online/offline indicators, sync, toggles, toasts.",
+      boundary:
+        "If the effect is a decorative spinner without status semantics, it belongs in 'loaders' instead. If it's a generic keyframe animation, it belongs in 'animations'.",
+      examples: [
+        "state-skeleton-shimmer-gradient",
+        "state-success-checkmark",
+        "state-error-shake",
+        "state-online-pulse",
+        "state-toggle-switch",
+      ],
+      commonConfusion:
+        "Confused with 'loaders' — status-state effects carry semantic state (success, error, online, offline), not just motion.",
+      previewType: "box",
+      keywords: [
+        "state",
+        "status",
+        "skeleton",
+        "success",
+        "error",
+        "online",
+        "offline",
+        "loading",
+        "sync",
+        "toggle",
+        "toast",
+        "checkbox",
+        "radio",
+        "indicator",
+      ],
+    },
+    audio: {
+      category: "audio",
+      label: "Audio-Reactive",
+      definition:
+        "Pure-CSS simulations of audio-reactive visuals: equalizers, waveforms, vinyl, ripples, VU meters, spectrum analyzers, and beat pulses. No real audio is involved — every motion is a CSS keyframe illusion.",
+      boundary:
+        "If the effect is a generic bar/spinner animation without audio metaphor, it belongs in 'loaders' or 'animations' instead.",
+      examples: [
+        "audio-equalizer-bars",
+        "audio-vinyl-spin",
+        "audio-wave-pulse",
+        "audio-frequency-bars",
+        "audio-vu-meter",
+      ],
+      commonConfusion:
+        "Confused with 'loaders' — audio effects specifically evoke sound/music metaphors (frequency bars, vinyl, waveforms, beat pulses).",
+      previewType: "box",
+      keywords: [
+        "audio",
+        "music",
+        "sound",
+        "equalizer",
+        "waveform",
+        "vinyl",
+        "spectrum",
+        "frequency",
+        "beat",
+        "bass",
+        "ripple",
+        "vu-meter",
+        "speaker",
+        "microphone",
+        "volume",
+      ],
+    },
+    retro: {
+      category: "retro",
+      label: "Retro & Nostalgic",
+      definition:
+        "Effects that evoke pre-2000s technology aesthetics: CRT monitors, VHS tracking, arcade neon, synthwave grids, cassette reels, floppy disks, dial-up modems, film grain, and 8-bit pixel art.",
+      boundary:
+        "If the effect is a generic neon glow without a vintage reference, use 'visual' or 'text'. If it's a modern loader without retro metaphor, use 'loaders'.",
+      examples: [
+        "retro-crt-scanlines",
+        "retro-vhs-tracking",
+        "retro-arcade-glow",
+        "retro-synthwave-grid",
+        "retro-cassette-reel",
+      ],
+      commonConfusion:
+        "Confused with 'visual' — retro effects specifically evoke dated technology (CRT, VHS, cassette, arcade) and vintage color palettes (DMG green, neon pink/cyan).",
+      previewType: "box",
+      keywords: [
+        "retro",
+        "vintage",
+        "nostalgic",
+        "crt",
+        "vhs",
+        "arcade",
+        "synthwave",
+        "retrowave",
+        "8bit",
+        "pixel",
+        "cassette",
+        "floppy",
+        "dial-up",
+        "gameboy",
+        "film",
+        "grain",
+        "neon",
+        "80s",
+        "90s",
+      ],
+    },
+    "data-viz": {
+      category: "data-viz",
+      label: "Data Visualization",
+      definition:
+        "Effects that visualize data or progress: rings, gauges, bars, sparklines, pie/donut reveals, counters, timelines, heatmaps, area charts, and shimmer skeletons.",
+      boundary:
+        "If the effect is a generic spinner without data semantics, use 'loaders'. If it's a progress bar tied to form completion, use 'forms'.",
+      examples: [
+        "dataviz-counter-roll",
+        "dataviz-progress-ring",
+        "dataviz-bar-grow",
+        "dataviz-gauge-needle",
+        "dataviz-loading-skeleton",
+      ],
+      commonConfusion:
+        "Confused with 'loaders' — data-viz effects communicate measurable data (percentages, counts, comparisons, trends), not just 'something is loading'.",
+      previewType: "box",
+      keywords: [
+        "data-viz",
+        "chart",
+        "graph",
+        "bar",
+        "line",
+        "pie",
+        "donut",
+        "gauge",
+        "ring",
+        "counter",
+        "sparkline",
+        "heatmap",
+        "timeline",
+        "skeleton",
+        "stat",
+        "progress",
+        "percentage",
+        "metric",
+        "indicator",
+      ],
+    },
+    immersive: {
+      category: "immersive",
+      label: "Immersive Backgrounds",
+      definition:
+        "Full-surface ambient scene backgrounds that transform a container into an environment: starfields, weather (rain, snow, fog), fire, smoke, water caustics, particle fields, auroras, nebulae, and confetti. Built from layered gradients, box-shadow stamping, and pseudo-element overlays.",
+      boundary:
+        "If the effect is a static gradient or pattern without scene/environment motion, use 'backgrounds' instead. If it's a small particle cluster inside a card, use 'particles'.",
+      examples: [
+        "immersive-starfield",
+        "immersive-rain",
+        "immersive-fire-flame",
+        "immersive-aurora-bg",
+        "immersive-nebula",
+      ],
+      commonConfusion:
+        "Confused with 'backgrounds' — immersive effects paint a full scene with ambient motion (weather, fire, cosmos), not just a decorative surface pattern.",
+      previewType: "background",
+      keywords: [
+        "immersive",
+        "scene",
+        "ambient",
+        "starfield",
+        "rain",
+        "snow",
+        "fire",
+        "smoke",
+        "fog",
+        "ocean",
+        "waves",
+        "matrix",
+        "aurora",
+        "nebula",
+        "underwater",
+        "fireflies",
+        "clouds",
+        "lightning",
+        "dust",
+        "confetti",
+        "bubbles",
+      ],
+    },
+    "advanced-text": {
+      category: "advanced-text",
+      label: "Advanced Text",
+      definition:
+        "Cinematic text treatments that go beyond simple styling: typewriters, character scrambles, path-following text, kinetic fly-ins, RGB / scanline / VHS glitches, neon signs, split-flap boards, mask wipes, image-clipped fills, and layered long-shadows.",
+      boundary:
+        "If the effect is a basic color/weight/style change without motion or technique, use 'text' instead. If it's a hover-driven text color swap, use 'hover'.",
+      examples: [
+        "advtext-typewriter-cursor",
+        "advtext-scramble-decrypt",
+        "advtext-glitch-rgb",
+        "advtext-neon-sign",
+        "advtext-clip-image",
+      ],
+      commonConfusion:
+        "Confused with 'text' — advanced-text effects use cinematic techniques (typewriters, glitches, decode, neon, kinetic motion, mask wipes) rather than basic decoration.",
+      previewType: "text",
+      keywords: [
+        "advanced-text",
+        "typewriter",
+        "cursor",
+        "scramble",
+        "decrypt",
+        "offset-path",
+        "kinetic",
+        "fly",
+        "gradient",
+        "3d",
+        "extruded",
+        "glitch",
+        "rgb",
+        "scanline",
+        "vhs",
+        "split-flap",
+        "marquee",
+        "outline",
+        "draw",
+        "neon",
+        "flicker",
+        "shadow",
+        "layered",
+        "mask",
+        "reveal",
+        "stretch",
+        "bounce",
+        "wave",
+        "clip",
+        "image",
+      ],
     },
   };
 
@@ -1306,6 +1544,8 @@ export function findMiscategorized(
     { prefix: "anim-", category: "animations" },
     { prefix: "3d-", category: "3d-transforms" },
     { prefix: "misc-", category: "misc" },
+    { prefix: "immersive-", category: "immersive" },
+    { prefix: "advtext-", category: "advanced-text" },
   ];
 
   const findings: MiscategorizationFinding[] = [];

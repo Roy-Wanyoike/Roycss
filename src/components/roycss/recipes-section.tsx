@@ -59,6 +59,8 @@ function RecipeCard({ recipe }: { recipe: Recipe }) {
         onClick={() => setExpanded((e) => !e)}
         role="button"
         tabIndex={0}
+        aria-expanded={expanded}
+        aria-label={`${expanded ? "Hide" : "View"} HTML for ${recipe.name} recipe — ${recipe.effectIds.length} effects, ${recipe.difficulty} difficulty`}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();

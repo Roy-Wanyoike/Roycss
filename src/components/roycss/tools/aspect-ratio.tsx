@@ -785,6 +785,7 @@ export function AspectRatioCalculator() {
                     }}
                     role="button"
                     tabIndex={0}
+                    aria-label={`Copy aspect-ratio ${row.label} (${row.w} / ${row.h}) to clipboard`}
                     className={cn(
                       "cursor-pointer border-t border-border/40 outline-none transition-colors focus-visible:bg-muted/40",
                       isCopied ? "bg-emerald-500/10" : "hover:bg-muted/40",

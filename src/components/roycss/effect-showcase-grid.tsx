@@ -290,7 +290,7 @@ export function EffectShowcaseGrid() {
         {/* Tabs + masonry */}
         <Tabs value={tab} onValueChange={(v) => setTab(v as ShowcaseCategory)} className="mt-10">
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
-            <TabsList className="bg-muted/60">
+            <TabsList aria-label="Effect showcase categories" className="bg-muted/60">
               {(Object.keys(TAB_CONTENT) as ShowcaseCategory[]).map((key) => {
                 const meta = TAB_META[key];
                 const Icon = meta.icon;

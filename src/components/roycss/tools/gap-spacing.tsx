@@ -942,6 +942,7 @@ export function GapSpacingCalculator() {
                     }}
                     role="button"
                     tabIndex={0}
+                    aria-label={`Copy ${copyKind} spacing ${row.label} (${row.px}px) to clipboard`}
                     className={cn(
                       "cursor-pointer border-t border-border/40 outline-none transition-colors focus-visible:bg-muted/40",
                       isCopied

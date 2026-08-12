@@ -167,8 +167,9 @@ export function InteractiveTutorial() {
     const raf = requestAnimationFrame(() => setMounted(true));
     const done = getStoredCompletion();
     if (!done) {
-      // Defer so the page has time to render target elements.
-      const id = window.setTimeout(() => setActive(true), 1200);
+      // Defer so the page has time to render target elements and the user
+      // can see the hero before the tutorial overlay appears.
+      const id = window.setTimeout(() => setActive(true), 2500);
       return () => {
         cancelAnimationFrame(raf);
         window.clearTimeout(id);

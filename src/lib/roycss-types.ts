@@ -18,7 +18,10 @@ export type EffectCategory =
   | "particles"
   | "microinteractions"
   | "visual"
-  | "misc";
+  | "misc"
+  | "physics"
+  | "liquid"
+  | "morphing";
 
 export type PreviewType =
   | "box"
@@ -166,6 +169,24 @@ export const categoryMeta: Record<
     color: "yellow",
     description: "Unique effects that defy categorization",
   },
+  physics: {
+    label: "Physics Motion",
+    icon: "Atom",
+    color: "emerald",
+    description: "Physics-based motion: springs, elasticity, gravity, and inertia",
+  },
+  liquid: {
+    label: "Liquid & Fluid",
+    icon: "Droplets",
+    color: "sky",
+    description: "Liquid and fluid effects: waves, blobs, drips, and flowing fills",
+  },
+  morphing: {
+    label: "Shape Morphing",
+    icon: "Shapes",
+    color: "fuchsia",
+    description: "Shape-shifting effects: clip-path, border-radius, and form transitions",
+  },
 };
 
 export const categoryOrder: EffectCategory[] = [
@@ -189,4 +210,7 @@ export const categoryOrder: EffectCategory[] = [
   "microinteractions",
   "visual",
   "misc",
+  "physics",
+  "liquid",
+  "morphing",
 ];

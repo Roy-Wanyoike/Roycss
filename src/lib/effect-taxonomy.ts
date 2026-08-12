@@ -554,6 +554,45 @@ export const CATEGORY_DEFINITIONS: Record<EffectCategory, CategoryDefinition> =
       previewType: "box",
       keywords: ["misc"],
     },
+    physics: {
+      category: "physics",
+      label: "Physics Motion",
+      definition:
+        "Effects that simulate real-world physics: springs, elasticity, gravity, friction, momentum, and inertia.",
+      boundary:
+        "If the effect is a simple keyframe animation without physics-based easing, it belongs in 'animations' instead.",
+      examples: ["physics-spring-bounce", "physics-gravity-drop", "physics-magnetic-pull"],
+      commonConfusion:
+        "Confused with 'animations' — physics effects use cubic-bezier easing that mimics real-world forces (spring, elastic, gravity).",
+      previewType: "box",
+      keywords: ["physics", "spring", "elastic", "gravity", "bounce", "magnetic", "friction", "momentum"],
+    },
+    liquid: {
+      category: "liquid",
+      label: "Liquid & Fluid",
+      definition:
+        "Effects that simulate liquid behavior: flowing, filling, rippling, and morphing like fluids.",
+      boundary:
+        "If the effect uses border-radius morphing without a liquid aesthetic, it belongs in 'morphing' instead.",
+      examples: ["liquid-button-fill", "liquid-blob-morph", "liquid-wave-loader"],
+      commonConfusion:
+        "Confused with 'morphing' — liquid effects specifically evoke fluid behavior (pouring, rippling, surface tension).",
+      previewType: "box",
+      keywords: ["liquid", "fluid", "wave", "ripple", "splash", "pour", "water", "droplet"],
+    },
+    morphing: {
+      category: "morphing",
+      label: "Shape Morphing",
+      definition:
+        "Effects where elements transition between different shapes, states, or configurations.",
+      boundary:
+        "If the effect is a simple scale/rotate transform, it belongs in 'animations' or '3d-transforms' instead.",
+      examples: ["morph-shape-cycle", "morph-icon-transform", "morph-card-expand"],
+      commonConfusion:
+        "Confused with 'animations' — morphing effects specifically change the element's shape/structure, not just its position.",
+      previewType: "box",
+      keywords: ["morph", "shape", "transform", "clip-path", "border-radius", "transition", "cycle"],
+    },
   };
 
 // ═══════════════════════════════════════════════════════════════════

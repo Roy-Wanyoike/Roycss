@@ -59,6 +59,9 @@ import {
   GitCompare,
   Navigation,
   Sparkle,
+  Atom,
+  Droplets,
+  Shapes,
   FormInput,
   ScrollText,
   MousePointer2,
@@ -279,6 +282,9 @@ const catIcons: Record<EffectCategory, React.ComponentType<{ className?: string 
   microinteractions: ToggleRight,
   visual: Wand2,
   misc: Sparkle,
+  physics: Atom,
+  liquid: Droplets,
+  morphing: Shapes,
 };
 
 /* ─── Mega-menu nav dropdowns (Explore + Platform) ─────────────
@@ -1241,22 +1247,6 @@ export default function RoyCSSPage() {
   const [compareOpen, setCompareOpen] = useState(false);
   const [compareEffects, setCompareEffects] = useState<CSSEffect[]>([]);
   const [platformTool, setPlatformTool] = useState<"ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | "gap-spacing" | "writing-mode" | "object-fit" | "positioning" | "property-inspector" | "animation-timeline" | "sprite-sheet" | "text-shadow" | "filter-studio" | "conic-gradient" | "motion-path" | "view-transition" | "mask-studio" | "gradient-mesh" | "table-styler" | "aspect-ratio" | "shape-generator" | "scroll-snap" | "keyframes-studio" | "theming-engine" | "has-selector-tester" | "css-layers" | "input-mode" | "cascade-specificity" | "color-space" | "style-query" | "scope" | "subgrid" | "fallback" | "logical-properties" | "initial-letter" | "text-wrap" | "property-registrar" | "relative-color" | "starting-style" | "light-dark" | null>(null);
-  // ─── Lazy-mount gate for PlatformTools ───────────────────────
-  // `next/dynamic` only defers the JS chunk if the component is NOT
-  // rendered. <PlatformTools> was previously rendered unconditionally,
-  // which forced the ~390KB tools chunk to load on initial page load
-  // (defeating QA-FIX-2). We now mount it only after the user opens a
-  // tool for the first time; subsequent open/close cycles reuse the
-  // already-mounted component so Radix Sheet's enter/exit animations
-  // still play correctly.
-  const [hasOpenedTool, setHasOpenedTool] = useState(false);
-  useEffect(() => {
-    if (platformTool !== null) {
-      // Defer setState to next frame to satisfy react-hooks/set-state-in-effect
-      const raf = requestAnimationFrame(() => setHasOpenedTool(true));
-      return () => cancelAnimationFrame(raf);
-    }
-  }, [platformTool]);
   const [recentOpen, setRecentOpen] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const [sponsorModalOpen, setSponsorModalOpen] = useState(false);
@@ -2806,14 +2796,14 @@ export default function RoyCSSPage() {
       />
 
       {/* Platform Tools (AI Playground, CSS Doctor, Utility Explorer, Benchmark) */}
-      {/* Only mount after first open — see `hasOpenedTool` gate above. */}
-      {hasOpenedTool && (
-        <PlatformTools
-          tool={platformTool}
-          onOpenChange={setPlatformTool}
-          onSelectEffect={(e) => { setSelectedEffect(e); setDialogOpen(true); }}
-        />
-      )}
+      {/* PlatformTools is lazy-loaded via next/dynamic — the 60-tool chunk
+          only fetches when first opened. Always mounted so the Sheet opens
+          instantly on first click. */}
+      <PlatformTools
+        tool={platformTool}
+        onOpenChange={setPlatformTool}
+        onSelectEffect={(e) => { setSelectedEffect(e); setDialogOpen(true); }}
+      />
 
       {/* Search Overlay (⌘K) */}
       <SearchOverlay

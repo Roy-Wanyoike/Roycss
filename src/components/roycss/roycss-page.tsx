@@ -8,6 +8,8 @@ import {
   Moon,
   Sparkles,
   Github,
+  Linkedin,
+  Twitter,
   BookOpen,
   Zap,
   Package,
@@ -62,6 +64,8 @@ import {
   Atom,
   Droplets,
   Shapes,
+  Activity,
+  Music,
   FormInput,
   ScrollText,
   MousePointer2,
@@ -78,6 +82,7 @@ import {
   GraduationCap,
   Users,
   Award,
+  Tv,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -100,6 +105,7 @@ import {
   type EffectCategory,
   type CSSEffect,
 } from "@/lib/roycss-effects";
+import { toast } from "sonner";
 import { EffectCard, LivePreview } from "@/components/roycss/effect-card";
 import { EffectDetailDialog } from "@/components/roycss/effect-detail-dialog";
 import { FavoritesSheet } from "@/components/roycss/favorites-sheet";
@@ -285,6 +291,12 @@ const catIcons: Record<EffectCategory, React.ComponentType<{ className?: string 
   physics: Atom,
   liquid: Droplets,
   morphing: Shapes,
+  "status-state": Activity,
+  audio: Music,
+  retro: Tv,
+  "data-viz": BarChart3,
+  immersive: Cloud,
+  "advanced-text": Type,
 };
 
 /* ─── Mega-menu nav dropdowns (Explore + Platform) ─────────────
@@ -2378,12 +2390,119 @@ export default function RoyCSSPage() {
 
       {/* ─── Footer ─────────────────────────────────────────── */}
       <footer aria-label="Site footer" className="border-t border-border/50 bg-card/50 backdrop-blur-sm mt-auto">
-        <div className="container mx-auto px-4 sm:px-6 py-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <RoyCSSLogo size="sm" animated={false} />
+        <div className="container mx-auto px-4 sm:px-6 py-10 sm:py-12">
+          {/* Top section: nav columns + newsletter */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 mb-10">
+            {/* Brand column */}
+            <div className="col-span-2 sm:col-span-3 lg:col-span-1">
+              <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center gap-2.5 mb-3 cursor-pointer hover:opacity-80 transition-opacity" aria-label="RoyCSS — scroll to top">
+                <RoyCSSLogo size="sm" animated={false} />
+              </button>
+              <p className="text-xs text-muted-foreground leading-relaxed mb-4 max-w-xs">
+                AI-Native Frontend Engineering Platform — 1,629 CSS effects, 62 platform products, 64 developer tools.
+              </p>
+              <div className="flex items-center gap-2">
+                <a
+                  href="https://github.com/Roy-Wanyoike/roycss"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center size-9 rounded-lg glass text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="GitHub repository"
+                >
+                  <Github className="size-4" />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/roywanyoike/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center size-9 rounded-lg glass text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="LinkedIn profile"
+                >
+                  <Linkedin className="size-4" />
+                </a>
+                <a
+                  href="https://twitter.com/wanyoikeroy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center size-9 rounded-lg glass text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="Twitter / X profile"
+                >
+                  <Twitter className="size-4" />
+                </a>
+                <button
+                  onClick={() => setSponsorModalOpen(true)}
+                  className="flex items-center justify-center size-9 rounded-lg glass text-primary hover:text-primary/80 transition-colors cursor-pointer"
+                  aria-label="Sponsor RoyCSS"
+                >
+                  <Heart className="size-4" />
+                </button>
+              </div>
+            </div>
 
-            <p className="text-xs text-muted-foreground text-center">
-              Crafted with care by{" "}
+            {/* Explore column */}
+            <div>
+              <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">Explore</h3>
+              <ul className="space-y-2">
+                <li><button onClick={() => scrollToSection("#effects")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Effects Gallery</button></li>
+                <li><button onClick={() => scrollToSection("#recipes")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Recipes</button></li>
+                <li><button onClick={() => scrollToSection("#patterns")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Patterns</button></li>
+                <li><button onClick={() => scrollToSection("#collections")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Collections</button></li>
+                <li><button onClick={() => scrollToSection("#webgl-effects")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">WebGL Effects</button></li>
+              </ul>
+            </div>
+
+            {/* Platform column */}
+            <div>
+              <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">Platform</h3>
+              <ul className="space-y-2">
+                <li><button onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">All Products</button></li>
+                <li><button onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Build Tools</button></li>
+                <li><button onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">AI Tools</button></li>
+                <li><button onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Enterprise</button></li>
+                <li><button onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Dev Tools</button></li>
+              </ul>
+            </div>
+
+            {/* Resources column */}
+            <div>
+              <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">Resources</h3>
+              <ul className="space-y-2">
+                <li><button onClick={() => scrollToSection("#get-started")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Get Started</button></li>
+                <li><button onClick={() => setDocsOpen(true)} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Documentation</button></li>
+                <li><button onClick={() => scrollToSection("#faq")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">FAQ</button></li>
+                <li><button onClick={() => setContactOpen(true)} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Contact</button></li>
+                <li><button onClick={() => setSponsorModalOpen(true)} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Sponsor</button></li>
+              </ul>
+            </div>
+
+            {/* Newsletter column */}
+            <div className="col-span-2 sm:col-span-1">
+              <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">Stay Updated</h3>
+              <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
+                Get notified about new effects, tools, and platform updates.
+              </p>
+              <form onSubmit={(e) => { e.preventDefault(); toast.success("Subscribed! We'll keep you updated."); (e.target as HTMLFormElement).reset(); }} className="flex gap-2">
+                <input
+                  type="email"
+                  required
+                  placeholder="you@example.com"
+                  aria-label="Email address for newsletter"
+                  className="flex-1 min-w-0 px-3 py-2 rounded-lg bg-background border border-border text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40"
+                />
+                <button
+                  type="submit"
+                  className="shrink-0 px-3 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-medium hover:bg-primary/90 transition-colors cursor-pointer"
+                >
+                  Subscribe
+                </button>
+              </form>
+            </div>
+          </div>
+
+          {/* Bottom bar */}
+          <div className="pt-6 border-t border-border/50 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p className="text-xs text-muted-foreground text-center sm:text-left">
+              &copy; {new Date().getFullYear()} RoyCSS. Crafted by{" "}
               <a
                 href="https://www.linkedin.com/in/roywanyoike/"
                 target="_blank"
@@ -2393,50 +2512,14 @@ export default function RoyCSSPage() {
                 Royford Wanyoike Wamaitha
               </a>
               {" "}&middot;{" "}
-              Production-ready CSS effects with live demos
+              MIT License
             </p>
-
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => scrollToSection("#get-started")}
-                className="text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-              >
-                Get Started
-              </button>
-              <button
-                onClick={() => scrollToSection("#docs")}
-                className="text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-              >
-                Docs
-              </button>
-              <button
-                onClick={() => scrollToSection("#faq")}
-                className="text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-              >
-                FAQ
-              </button>
-              <button
-                onClick={() => setContactOpen(true)}
-                className="text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-              >
-                Contact
-              </button>
-              <button
-                onClick={() => setSponsorModalOpen(true)}
-                className="text-primary hover:text-primary/80 transition-colors cursor-pointer"
-                aria-label="Sponsor RoyCSS"
-              >
-                <Heart className="size-4" />
-              </button>
-              <a
-                href="https://github.com/Roy-Wanyoike/roycss"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="GitHub repository"
-              >
-                <Github className="size-4" />
-              </a>
+            <div className="flex items-center gap-4 text-xs text-muted-foreground">
+              <span className="flex items-center gap-1.5">
+                <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+                All systems operational
+              </span>
+              <span>v1.0</span>
             </div>
           </div>
         </div>

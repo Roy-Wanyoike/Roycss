@@ -16,7 +16,8 @@ function PatternCard({ pattern }: { pattern: typeof patterns[0] }) {
     <motion.div layout className="group rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/40 hover:shadow-lg transition-all">
       <div className="p-4 cursor-pointer" onClick={() => setExpanded(e => !e)} role="button" tabIndex={0}
         onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setExpanded(x => !x); } }}
-        aria-expanded={expanded}>
+        aria-expanded={expanded}
+        aria-label={`${expanded ? "Hide" : "View"} HTML for ${pattern.name} pattern — ${pattern.effectIds.length} effects, ${pattern.category} category`}>
         <div className="flex items-start justify-between gap-2 mb-2">
           <div className="min-w-0"><h3 className="font-display font-semibold text-sm text-foreground leading-tight">{pattern.name}</h3>
           <p className="text-xs text-muted-foreground mt-1 line-clamp-2 leading-relaxed">{pattern.description}</p></div>

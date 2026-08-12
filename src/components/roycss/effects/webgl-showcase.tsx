@@ -109,8 +109,10 @@ export function WebGLShowcase() {
             {EFFECTS.map((effect) => (
               <button
                 key={effect.id}
+                id={`webgl-tab-${effect.id}`}
                 role="tab"
                 aria-selected={active === effect.id}
+                aria-controls="webgl-effect-panel"
                 onClick={() => setActive(effect.id)}
                 className={`flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-200 cursor-pointer ${
                   active === effect.id
@@ -149,6 +151,9 @@ export function WebGLShowcase() {
         <ScrollReveal>
           <motion.div
             key={active}
+            id="webgl-effect-panel"
+            role="tabpanel"
+            aria-labelledby={`webgl-tab-${active}`}
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3 }}

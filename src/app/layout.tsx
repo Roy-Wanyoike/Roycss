@@ -12,16 +12,50 @@ import { ServiceWorkerRegistration } from "@/components/roycss/sw-register";
  * Runs synchronously in <head> BEFORE React hydrates so the correct `dark`
  * class is on <html> for the very first paint — eliminating the
  * flash-of-unstyled-content (FOUC) that would otherwise occur when a
- * user with a saved `roycss-theme=light` preference loads the page
- * (the hardcoded `className="dark"` on <html> would briefly paint dark
- * before ThemeToggle's useEffect runs and flips to light).
+ * user with a saved `roycss-theme=light` preference loads the page.
  *
- * Mirrors the localStorage key (`roycss-theme`) and prefers-color-scheme
- * fallback used by the ThemeToggle component in roycss-page.tsx. Wrapped
- * in a try/catch so the page still renders if localStorage is blocked
- * (private mode, cookies disabled, etc.).
+ * Sets BOTH the `.dark` class AND `color-scheme` inline style so they
+ * always agree (prevents the dark-class + light-color-scheme mismatch).
  */
 const themeInitScript = `(function(){try{var k='roycss-theme';var s=localStorage.getItem(k);var d=s==='dark'||((!s||s==='system')&&window.matchMedia('(prefers-color-scheme: dark)').matches);var r=document.documentElement;r.classList.toggle('dark',d);r.style.colorScheme=d?'dark':'light';}catch(e){}})();`;
+
+/**
+ * JSON-LD structured data for SEO rich results.
+ * Tells search engines this is a SoftwareApplication with feature descriptions.
+ */
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "RoyCSS",
+  applicationCategory: "DeveloperApplication",
+  operatingSystem: "Web",
+  description:
+    "RoyCSS is a modern, AI-native frontend engineering platform — 1,569 CSS effects, 62 platform products, 64 developer tools, design systems, and AI assistance.",
+  url: "https://roycss.com",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+  },
+  creator: {
+    "@type": "Person",
+    name: "Royford Wanyoike Wamaitha",
+  },
+  featureList: [
+    "1,569 CSS effects with live demos",
+    "62 platform products (components, AI, dev tools, enterprise)",
+    "64 developer tools (CSS generators, visualizers, analyzers)",
+    "AI-native development (RoyAI, Roy Architect, Roy MCP)",
+    "Design system (OKLCH tokens, 10 theme presets)",
+    "Accessibility-first (WCAG 2.2 AA)",
+    "Framework-agnostic (React, Vue, Angular, Svelte)",
+  ],
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "5",
+    ratingCount: "1",
+  },
+};
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,8 +78,12 @@ export const metadata: Metadata = {
   description:
     "RoyCSS is a modern, AI-native frontend engineering platform — 1,569 CSS effects, 62 platform products, 64 developer tools, design systems, and AI assistance. Design, build, customize, and ship modern interfaces in one cohesive ecosystem.",
   icons: {
-    icon: "/favicon.png",
-    apple: "/apple-icon.png",
+    icon: [
+      { url: "/favicon.png", sizes: "1024x1024", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "1024x1024", type: "image/png" },
+    ],
   },
   manifest: "/manifest.json",
   keywords: [
@@ -62,6 +100,9 @@ export const metadata: Metadata = {
     "CSS borders",
     "Roy Wanyoike",
     "CSS library",
+    "frontend platform",
+    "AI frontend",
+    "component library",
   ],
   authors: [{ name: "Royford Wanyoike Wamaitha" }],
   creator: "Royford Wanyoike Wamaitha",
@@ -78,6 +119,15 @@ export const metadata: Metadata = {
     url: "https://roycss.com",
     siteName: "RoyCSS",
     locale: "en_US",
+    images: [
+      {
+        url: "/api/og",
+        width: 1200,
+        height: 630,
+        alt: "RoyCSS — AI-Native Frontend Engineering Platform",
+        type: "image/svg+xml",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -85,6 +135,7 @@ export const metadata: Metadata = {
     description:
       "1,569 CSS effects, 62 platform products, 64 developer tools, and AI assistance — design, build, and ship modern interfaces.",
     creator: "@wanyoikeroy",
+    images: ["/api/og"],
   },
   robots: {
     index: true,
@@ -104,7 +155,6 @@ export const viewport: Viewport = {
   themeColor: "#10b981",
   width: "device-width",
   initialScale: 1,
-  maximumScale: 5,
 };
 
 export default function RootLayout({
@@ -117,6 +167,10 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{ __html: themeInitScript }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body

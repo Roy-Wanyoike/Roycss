@@ -1075,6 +1075,7 @@ function FileUploadDemo() {
       <div
         role="button"
         tabIndex={0}
+        aria-label="Browse and upload pattern files — drop files here or activate to choose"
         onClick={handleBrowse}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {

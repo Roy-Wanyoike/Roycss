@@ -219,7 +219,10 @@ export function ContactForm({ open, onOpenChange }: ContactFormProps) {
 
                 {/* Subject */}
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-medium">
+                  <Label
+                    htmlFor="contact-subject"
+                    className="text-xs font-medium"
+                  >
                     <Tag className="size-3 inline mr-1" />
                     Subject
                   </Label>
@@ -228,7 +231,7 @@ export function ContactForm({ open, onOpenChange }: ContactFormProps) {
                     onValueChange={setSubject}
                     disabled={isSubmitting}
                   >
-                    <SelectTrigger className="h-11 w-full cursor-pointer">
+                    <SelectTrigger id="contact-subject" className="h-11 w-full cursor-pointer">
                       <SelectValue placeholder="Select a topic" />
                     </SelectTrigger>
                     <SelectContent>

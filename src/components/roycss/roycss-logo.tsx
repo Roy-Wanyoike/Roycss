@@ -18,6 +18,10 @@ interface RoyCSSLogoProps {
   showText?: boolean;
   animated?: boolean;
   className?: string;
+  /** When true, hides the wordmark below the `sm` breakpoint (mobile).
+   *  Used in space-constrained surfaces like the top navbar so the logo
+   *  icon never gets squeezed off-screen on 320px viewports. */
+  hideTextOnMobile?: boolean;
 }
 
 const sizeMap: Record<LogoSize, { box: string; text: string; spark: string }> = {
@@ -32,6 +36,7 @@ export function RoyCSSLogo({
   showText = true,
   animated = true,
   className = "",
+  hideTextOnMobile = false,
 }: RoyCSSLogoProps) {
   const s = sizeMap[size];
 
@@ -150,7 +155,9 @@ export function RoyCSSLogo({
 
       {/* Wordmark */}
       {showText && (
-        <span className={`font-display font-bold ${s.text} text-foreground tracking-tight`}>
+        <span
+          className={`${hideTextOnMobile ? "hidden sm:inline" : ""} font-display font-bold ${s.text} text-foreground tracking-tight`}
+        >
           Roy
           <span className="roycss-logo-text">CSS</span>
         </span>

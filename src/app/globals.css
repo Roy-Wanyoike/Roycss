@@ -56,7 +56,13 @@
   --card-foreground: oklch(0.18 0.02 170);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.18 0.02 170);
-  --primary: oklch(0.55 0.13 165);
+  /* Primary darkened from L=0.55 → L=0.50 so primary-as-text on the
+     light background AND primary-foreground (white) on primary both
+     clear WCAG AA at ~5.6:1. The previous L=0.55 value gave only
+     4.37:1 — failing AA for every primary button and primary link.
+     Matches the same darkening pattern already applied to --destructive
+     below (L=0.577 → L=0.50). */
+  --primary: oklch(0.50 0.13 165);
   --primary-foreground: oklch(0.99 0.005 165);
   --secondary: oklch(0.96 0.01 165);
   --secondary-foreground: oklch(0.25 0.02 170);

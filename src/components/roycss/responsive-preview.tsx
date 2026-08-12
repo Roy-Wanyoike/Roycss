@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Monitor, Smartphone, Tablet, RefreshCw } from "lucide-react";
+import { Monitor, Smartphone, Tablet } from "lucide-react";
 
 const BREAKPOINTS = [
   { name: "iPhone SE", width: 375, height: 667, icon: Smartphone },

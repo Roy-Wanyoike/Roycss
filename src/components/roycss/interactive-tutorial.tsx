@@ -53,7 +53,7 @@ const STEPS: TourStep[] = [
   {
     title: "Welcome to RoyCSS",
     description:
-      "1,569+ production-ready CSS effects — copy, paste, ship. Let's take a 60-second tour of the platform.",
+      "1,749+ production-ready CSS effects — copy, paste, ship. Let's take a 60-second tour of the platform.",
     selector: "[data-roycss-tour='hero'], h1",
     placement: "bottom",
     icon: Sparkles,

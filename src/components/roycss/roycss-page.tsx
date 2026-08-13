@@ -320,7 +320,7 @@ type MegaMenuGroup = {
 };
 
 const EXPLORE_ITEMS: MegaMenuItem[] = [
-  { label: "Effects", description: "Browse 1,569 CSS effects", icon: Zap, href: "#effects" },
+  { label: "Effects", description: "Browse 1,749 CSS effects", icon: Zap, href: "#effects" },
   { label: "Recipes", description: "Pre-built effect combinations", icon: BookOpen, href: "#recipes" },
   { label: "Patterns", description: "Layout & component patterns", icon: LayoutGrid, href: "#patterns" },
   { label: "Collections", description: "Curated effect bundles", icon: Layers, href: "#collections" },
@@ -1886,7 +1886,7 @@ export default function RoyCSSPage() {
 
             <ScrollReveal delay={0.3}>
               <p className="mt-2 max-w-xl mx-auto text-base sm:text-lg text-muted-foreground leading-relaxed">
-                1,569 CSS effects, 62 platform products, 64 developer tools, and AI assistance —
+                1,749 CSS effects, 62 platform products, 64 developer tools, and AI assistance —
                 design, build, customize, and ship modern interfaces in one cohesive ecosystem.
               </p>
             </ScrollReveal>
@@ -2051,7 +2051,7 @@ export default function RoyCSSPage() {
                 ref={searchInputRef}
                 type="search"
                 aria-label="Search CSS effects by name, tag, or category"
-                placeholder="Search 1569+ effects... (⌘K)"
+                placeholder="Search 1749+ effects... (⌘K)"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="pl-10 pr-14 h-11 rounded-xl glass bg-background/80 border-border/50 focus:border-primary/50"
@@ -2359,9 +2359,9 @@ export default function RoyCSSPage() {
               icon={History}
               title="Changelog"
               description="Track every release — new effects, breaking changes, deprecations, and bug fixes."
-              items={["v1.0 — 1569+ effects launch", "20+ categories", "OKLCH color system", "RoyMotion animation system"]}
+              items={["v1.0 — 1749+ effects launch", "28+ categories", "OKLCH color system", "RoyMotion animation system"]}
               details={[
-                { label: "v1.0.0", content: "1569+ CSS effects across 20 categories. OKLCH color space with color-mix() throughout. CSS logical properties for RTL/I18n. @property, container queries, :has(), light-dark(). MCP Server for AI assistants. 5-tier sponsorship system." },
+                { label: "v1.0.0", content: "1749+ CSS effects across 28 categories. OKLCH color space with color-mix() throughout. CSS logical properties for RTL/I18n. @property, container queries, :has(), light-dark(). MCP Server for AI assistants. 5-tier sponsorship system." },
               ]}
             />
             <DocCard

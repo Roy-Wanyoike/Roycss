@@ -103,8 +103,8 @@ const PILLARS: Pillar[] = [
     icon: Sparkles,
     title: "CSS-First",
     description:
-      "1,569 production-ready effects, animations, and interactions. Copy-paste CSS, zero dependencies.",
-    stat: "1,569 effects",
+      "1,749 production-ready effects, animations, and interactions. Copy-paste CSS, zero dependencies.",
+    stat: "1,749 effects",
     accent: "emerald",
   },
   {
@@ -146,7 +146,7 @@ const STEPS: Step[] = [
     icon: Search,
     index: "01",
     title: "Discover",
-    description: "Browse 1,569 effects + 62 products",
+    description: "Browse 1,749 effects + 62 products",
     accent: "emerald",
   },
   {
@@ -222,7 +222,7 @@ const AUDIENCES: Audience[] = [
 
 /* ─── Local formatted counter ──────────────────────────────────────
    Mirrors AnimatedCounter from motion-primitives but adds optional
-   toLocaleString() formatting so "22,000+" and "1,569" render with
+   toLocaleString() formatting so "22,000+" and "1,749" render with
    thousands separators exactly as the brief specifies. Kept local so
    we don't widen the shared component's API for a single use-case.
    ─────────────────────────────────────────────────────────────────── */
@@ -582,7 +582,7 @@ export function WhatIsRoyCSS() {
               onClick={() => scrollToSection("#effects")}
               className="h-11 px-6 w-full sm:w-auto"
             >
-              Browse 1,569 effects
+              Browse 1,749 effects
             </Button>
             <Button
               size="lg"

@@ -4,7 +4,6 @@ import { useState, useRef, useCallback, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
-  Copy,
   Check,
   RotateCcw,
   Maximize2,
@@ -35,6 +34,7 @@ import {
 import { effects, categoryMeta } from "@/lib/roycss-effects";
 import { ColorCustomizer } from "@/components/roycss/color-customizer";
 import { FrameworkUsage } from "@/components/roycss/framework-usage";
+import { CopyAsDropdown } from "@/components/roycss/copy-as-dropdown";
 
 /* ═══════════════════════════════════════════════════════════════
    LIVE PREVIEW (reused from effect-card, adapted for large size)
@@ -438,7 +438,6 @@ export function EffectDetailDialog({
   onCompare,
 }: EffectDetailDialogProps) {
   const [editedCSS, setEditedCSS] = useState(effect?.cssCode ?? "");
-  const [copied, setCopied] = useState(false);
   const [bgType, setBgType] = useState<"dark" | "light" | "gradient">("dark");
   const [isEditing, setIsEditing] = useState(false);
   // Track the previous effect ID so we can reset editable state when the
@@ -452,16 +451,6 @@ export function EffectDetailDialog({
     setIsEditing(false);
     setBgType("dark");
   }
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(editedCSS);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      /* noop */
-    }
-  };
 
   const handleReset = () => {
     if (effect) setEditedCSS(effect.cssCode);
@@ -641,22 +630,11 @@ export function EffectDetailDialog({
                     <RotateCcw className="size-2.5" />
                     Reset
                   </button>
-                  <button
-                    onClick={handleCopy}
-                    className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-all cursor-pointer"
-                  >
-                    {copied ? (
-                      <>
-                        <Check className="size-2.5" />
-                        Copied!
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="size-2.5" />
-                        Copy
-                      </>
-                    )}
-                  </button>
+                  <CopyAsDropdown
+                    css={editedCSS}
+                    effectId={effect.id}
+                    variant="primary"
+                  />
                 </div>
               </div>
 

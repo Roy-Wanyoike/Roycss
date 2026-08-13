@@ -306,7 +306,7 @@ export function GetStarted() {
                     <CodeBlock title="add — copy an effect's CSS to a file or clipboard" icon={Plus} code={`npx roycss add btn-shine-sweep\nnpx roycss add text-gradient --copy`} />
                     <CodeBlock title="info — show details with framework usage" icon={FileCode2} code={`npx roycss info pulse-glow\nnpx roycss info btn-shine-sweep --framework react`} />
                     <CodeBlock title="doctor — check project health" icon={Lightbulb} code={`npx roycss doctor`} />
-                    <CodeBlock title="list — browse all 1569+ effects" icon={ListPlus} code={`npx roycss list\nnpx roycss list animations\nnpx roycss list --json`} />
+                    <CodeBlock title="list — browse all 1749+ effects" icon={ListPlus} code={`npx roycss list\nnpx roycss list animations\nnpx roycss list --json`} />
                   </AccordionContent>
                 </>
               )}
@@ -321,7 +321,7 @@ export function GetStarted() {
                       index={5}
                       title="Install the VS Code snippets"
                       icon={FileCode2}
-                      hint="Type roycss- + Tab to insert any of the 1569+ effects instantly."
+                      hint="Type roycss- + Tab to insert any of the 1749+ effects instantly."
                     />
                   </AccordionTrigger>
                   <AccordionContent isOpen={isOpen}>
@@ -350,7 +350,7 @@ export function GetStarted() {
                       index={6}
                       title="Connect AI assistants (MCP Server)"
                       icon={BrainCircuit}
-                      hint="Give Claude, Cursor, and Windsurf access to all 1569+ effects — no hallucination."
+                      hint="Give Claude, Cursor, and Windsurf access to all 1749+ effects — no hallucination."
                     />
                   </AccordionTrigger>
                   <AccordionContent isOpen={isOpen}>

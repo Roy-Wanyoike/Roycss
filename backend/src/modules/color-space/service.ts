@@ -80,7 +80,8 @@ function toHex(r: number, g: number, b: number): string {
 
 /** Parse "h(°) s% l%" or "h, s%, l%" or "h s% l%" into [h, s, l]. */
 function parseHsl(input: string): [number, number, number] {
-  const cleaned = input.replace(/°/g, "").replace(/,/g, " ").trim();
+  // Strip unit suffixes (° for hue, % for s/l) and treat commas as spaces.
+  const cleaned = input.replace(/°/g, "").replace(/%/g, "").replace(/,/g, " ").trim();
   const parts = cleaned.split(/\s+/).map(Number);
   if (parts.length !== 3 || parts.some((n) => Number.isNaN(n))) {
     throw AppError.badRequest(

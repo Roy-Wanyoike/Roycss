@@ -3,7 +3,7 @@
 /* ═══════════════════════════════════════════════════════════════
    FeaturedEffects — curated "best of" showcase
    ─────────────────────────────────────────────────────────────────
-   Showing all 1,569 effects on first scroll is overwhelming. This
+   Showing all 1,749 effects on first scroll is overwhelming. This
    section surfaces 10 hand-picked effects across 10 categories, with
    a prominent CTA that scrolls to the full #effects gallery.
    ═══════════════════════════════════════════════════════════════ */
@@ -74,9 +74,9 @@ export function FeaturedEffects({
       <div className="mx-auto px-4 sm:px-6 max-w-7xl">
         {/* Heading */}
         <SectionHeading
-          eyebrow="Curated · 10 of 1,569"
+          eyebrow="Curated · 10 of 1,749"
           title="Featured Effects"
-          subtitle="A taste of what RoyCSS can do — 10 of our strongest effects, hand-picked from 1,569."
+          subtitle="A taste of what RoyCSS can do — 10 of our strongest effects, hand-picked from 1,749."
         />
 
         {/* Responsive grid: 1 / 2 / 3 / 4 columns */}

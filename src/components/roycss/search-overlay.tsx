@@ -71,7 +71,7 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
     return [
       { id: "what-is-roycss", label: "What is RoyCSS?", desc: "Platform overview — what RoyCSS is and who it's for" },
       { id: "get-started", label: "Get Started", desc: "Installation guide" },
-      { id: "effects", label: "Effects", desc: "Browse all 1569+ effects" },
+      { id: "effects", label: "Effects", desc: "Browse all 1749+ effects" },
       { id: "recipes", label: "Recipes", desc: "Curated UI patterns" },
       { id: "patterns", label: "Patterns", desc: "UI state patterns" },
       { id: "collections", label: "Collections", desc: "Curated themed effect bundles" },

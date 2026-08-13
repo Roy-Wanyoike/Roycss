@@ -31,7 +31,7 @@ const jsonLd = {
   applicationCategory: "DeveloperApplication",
   operatingSystem: "Web",
   description:
-    "RoyCSS is a modern, AI-native frontend engineering platform — 1,569 CSS effects, 62 platform products, 64 developer tools, design systems, and AI assistance.",
+    "RoyCSS is a modern, AI-native frontend engineering platform — 1,749 CSS effects, 62 platform products, 64 developer tools, design systems, and AI assistance.",
   url: "https://roycss.com",
   offers: {
     "@type": "Offer",
@@ -43,7 +43,7 @@ const jsonLd = {
     name: "Royford Wanyoike Wamaitha",
   },
   featureList: [
-    "1,569 CSS effects with live demos",
+    "1,749 CSS effects with live demos",
     "62 platform products (components, AI, dev tools, enterprise)",
     "64 developer tools (CSS generators, visualizers, analyzers)",
     "AI-native development (RoyAI, Roy Architect, Roy MCP)",
@@ -77,7 +77,7 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "RoyCSS — AI-Native Frontend Engineering Platform",
   description:
-    "RoyCSS is a modern, AI-native frontend engineering platform — 1,569 CSS effects, 62 platform products, 64 developer tools, design systems, and AI assistance. Design, build, customize, and ship modern interfaces in one cohesive ecosystem.",
+    "RoyCSS is a modern, AI-native frontend engineering platform — 1,749 CSS effects, 62 platform products, 64 developer tools, design systems, and AI assistance. Design, build, customize, and ship modern interfaces in one cohesive ecosystem.",
   icons: {
     icon: [
       { url: "/favicon.png", sizes: "1024x1024", type: "image/png" },
@@ -115,7 +115,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "RoyCSS — AI-Native Frontend Engineering Platform",
     description:
-      "1,569 CSS effects, 62 platform products, 64 developer tools, and AI assistance — design, build, customize, and ship modern interfaces in one cohesive ecosystem.",
+      "1,749 CSS effects, 62 platform products, 64 developer tools, and AI assistance — design, build, customize, and ship modern interfaces in one cohesive ecosystem.",
     type: "website",
     url: "https://roycss.com",
     siteName: "RoyCSS",
@@ -134,7 +134,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "RoyCSS — AI-Native Frontend Engineering Platform",
     description:
-      "1,569 CSS effects, 62 platform products, 64 developer tools, and AI assistance — design, build, and ship modern interfaces.",
+      "1,749 CSS effects, 62 platform products, 64 developer tools, and AI assistance — design, build, and ship modern interfaces.",
     creator: "@wanyoikeroy",
     images: ["/api/og"],
   },

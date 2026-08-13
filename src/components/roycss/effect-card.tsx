@@ -2,9 +2,10 @@
 
 import { useState, useRef, useCallback, memo } from "react";
 import { motion, useInView } from "framer-motion";
-import { Copy, Check, ChevronDown, ChevronUp, Code2, Eye, Heart } from "lucide-react";
+import { ChevronDown, ChevronUp, Code2, Eye, Heart } from "lucide-react";
 import type { CSSEffect } from "@/lib/roycss-types";
 import { Badge } from "@/components/ui/badge";
+import { CopyAsDropdown } from "@/components/roycss/copy-as-dropdown";
 
 /* ═══════════════════════════════════════════════════════════════
    LIVE PREVIEW RENDERER
@@ -277,19 +278,8 @@ export const EffectCard = memo(function EffectCard({
   onToggleFavorite?: (id: string) => void;
 }) {
   const [showCode, setShowCode] = useState(false);
-  const [copied, setCopied] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-40px" });
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(effect.cssCode);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      /* fallback */
-    }
-  };
 
   return (
     <motion.div
@@ -412,26 +402,16 @@ export const EffectCard = memo(function EffectCard({
             className="relative mt-2"
           >
             <div className="relative rounded-xl bg-muted/80 border border-border/50 overflow-hidden">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleCopy();
-                }}
-                className="absolute top-2 right-2 flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-background/90 border border-border/50 text-muted-foreground hover:text-foreground hover:bg-background transition-all z-10 cursor-pointer"
-                aria-label="Copy CSS code"
+              <div
+                className="absolute top-2 right-2 z-10"
+                onClick={(e) => e.stopPropagation()}
               >
-                {copied ? (
-                  <>
-                    <Check className="size-3 text-emerald-500" />
-                    <span className="text-emerald-500">Copied!</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="size-3" />
-                    Copy
-                  </>
-                )}
-              </button>
+                <CopyAsDropdown
+                  css={effect.cssCode}
+                  effectId={effect.id}
+                  variant="compact"
+                />
+              </div>
               <pre className="p-3 pt-2 overflow-x-auto text-xs leading-relaxed scrollbar-thin max-h-52 overflow-y-auto">
                 <code className="text-foreground/80 font-mono">
                   {effect.cssCode}

@@ -52,7 +52,7 @@ const faqEntries: Array<{ question: string; answer: string }> = [
   {
     question: "What's the bundle size?",
     answer:
-      "Only ~10KB of CSS loads initially — the rest is lazy-loaded on demand as you scroll. Each effect averages ~1KB. Use the CLI to tree-shake and include only what you need. The full minified bundle is 990KB for all 1,569 effects, but most projects use <50KB.",
+      "Only ~10KB of CSS loads initially — the rest is lazy-loaded on demand as you scroll. Each effect averages ~1KB. Use the CLI to tree-shake and include only what you need. The full minified bundle is 990KB for all 1,749 effects, but most projects use <50KB.",
   },
   {
     question: "Does it support dark mode?",
@@ -72,7 +72,7 @@ const faqEntries: Array<{ question: string; answer: string }> = [
   {
     question: "Is there an MCP server for AI assistants?",
     answer:
-      "Yes. The RoyCSS MCP Server gives AI assistants (Claude, ChatGPT, Cursor, Windsurf, Codex) access to all 1569+ effects, 12 recipes, 10 patterns, framework examples, and design tokens via 15 tools. Once configured, your AI can search effects, get CSS code, validate class names, suggest effects for intents, and generate accurate RoyCSS — no hallucination.",
+      "Yes. The RoyCSS MCP Server gives AI assistants (Claude, ChatGPT, Cursor, Windsurf, Codex) access to all 1749+ effects, 12 recipes, 10 patterns, framework examples, and design tokens via 15 tools. Once configured, your AI can search effects, get CSS code, validate class names, suggest effects for intents, and generate accurate RoyCSS — no hallucination.",
   },
   {
     question: "What are RoyCSS Platform Products?",

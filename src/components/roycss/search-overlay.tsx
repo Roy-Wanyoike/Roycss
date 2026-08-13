@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, X, ArrowRight, Boxes } from "lucide-react";
+import { Search, X, ArrowRight, Boxes, SearchX } from "lucide-react";
 import { effects, categoryMeta } from "@/lib/roycss-effects";
 import { recipes } from "@/lib/roycss-recipes";
 import { patterns } from "@/lib/roycss-patterns";
@@ -145,7 +145,32 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
                 <div className="p-8 text-center"><p className="text-sm text-muted-foreground">Search effects, recipes, patterns, products, or sections.</p>
                 <p className="text-xs text-muted-foreground/60 mt-2">Try: "glass", "loader", "neon", "kanban", "hero", "loading"</p></div>
               ) : totalResults === 0 ? (
-                <div className="p-8 text-center"><p className="text-sm text-muted-foreground">No results for "{query}"</p></div>
+                <div className="p-8 text-center">
+                  <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full glass">
+                    <SearchX className="size-5 text-muted-foreground" />
+                  </div>
+                  <p className="text-sm font-medium text-foreground">
+                    No results for <span className="text-primary">&ldquo;{query.trim().slice(0, 40)}{query.trim().length > 40 ? "\u2026" : ""}&rdquo;</span>
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1.5">
+                    Try searching for something else, or browse by category.
+                  </p>
+                  <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
+                    <span className="text-[11px] text-muted-foreground/70 mr-0.5">Try:</span>
+                    {["glassmorphism", "neon button", "gradient text", "loading animation"].map((suggestion, i) => (
+                      <motion.button
+                        key={suggestion}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.05 + i * 0.05, duration: 0.2 }}
+                        onClick={() => { setQuery(suggestion); setSelectedIndex(0); inputRef.current?.focus(); }}
+                        className="glass rounded-full px-3 py-1.5 text-xs text-foreground hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer"
+                      >
+                        {suggestion}
+                      </motion.button>
+                    ))}
+                  </div>
+                </div>
               ) : (
                 <div className="p-2">
                   {sectionResults.map((s, i) => (

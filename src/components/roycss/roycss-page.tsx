@@ -223,6 +223,10 @@ const FAQSection = dynamic(
   () => import("@/components/roycss/faq-section").then(m => ({ default: m.FAQSection })),
   { loading: () => <div className="h-96" />, ssr: true },
 );
+const PricingSection = dynamic(
+  () => import("@/components/roycss/pricing-section").then(m => ({ default: m.PricingSection })),
+  { loading: () => <div className="h-96" />, ssr: true },
+);
 
 /* ─── PlatformTools Sheet — lazy-loaded ──────────────────────
    The Sheet is only opened when a user clicks a platform tool
@@ -1349,12 +1353,31 @@ export default function RoyCSSPage() {
     return () => window.removeEventListener("hashchange", openFromUrl);
   }, []);
 
-  // ⌘K / Ctrl+K to open search overlay
+  // ⌘K / Ctrl+K to open search overlay, / to focus search, ? for shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // ⌘K / Ctrl+K → open search
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
         setSearchOverlayOpen(true);
+      }
+      // / → focus search (GitHub-style) — only when not already in an input
+      if (e.key === "/" && !searchOverlayOpen) {
+        const target = e.target as HTMLElement;
+        const isInput = target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable;
+        if (!isInput) {
+          e.preventDefault();
+          setSearchOverlayOpen(true);
+        }
+      }
+      // ? → show keyboard shortcuts overlay
+      if (e.key === "?" && !searchOverlayOpen && !shortcutsOpen) {
+        const target = e.target as HTMLElement;
+        const isInput = target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable;
+        if (!isInput) {
+          e.preventDefault();
+          setShortcutsOpen(true);
+        }
       }
       if (e.key === "Escape") {
         setSearchOverlayOpen(false);
@@ -1362,7 +1385,7 @@ export default function RoyCSSPage() {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [searchOverlayOpen, shortcutsOpen]);
 
   // Active section highlighting via IntersectionObserver
   const [activeSection, setActiveSection] = useState("");
@@ -2380,6 +2403,11 @@ export default function RoyCSSPage() {
           <MigrationTable />
         </div>
       </section>
+
+      <Separator className="opacity-50" />
+
+      {/* ─── Pricing Section ─────────────────────────────────── */}
+      <PricingSection />
 
       <Separator className="opacity-50" />
 

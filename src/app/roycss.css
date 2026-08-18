@@ -1,0 +1,145 @@
+/* ═══════════════════════════════════════════════════════════════
+   RoyCSS — Motion Primitives CSS (2026 Modern CSS)
+   • OKLCH color space throughout
+   • color-mix() for dynamic alpha
+   • CSS Nesting for encapsulation
+   • :where() for zero-specificity base styles
+   • Logical properties (RTL/I18n)
+   • @property for animatable custom properties
+   ═══════════════════════════════════════════════════════════════ */
+
+@property --roy-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* ─── Design Tokens (zero specificity via :where()) ─────────── */
+:where(:root) {
+  --roy-primary: oklch(0.697 0.155 162.48);
+  --roy-secondary: oklch(0.702 0.117 205.44);
+  --roy-accent: oklch(0.606 0.234 283.17);
+  --roy-surface: oklch(0.18 0.02 175);
+
+  /* Relative color syntax for derived shades */
+  --roy-primary-deep: oklch(from var(--roy-primary) calc(l * 0.6) c h);
+  --roy-primary-light: oklch(from var(--roy-primary) calc(l * 1.15) c h);
+  --roy-primary-glow: oklch(from var(--roy-primary) l c h / 0.4);
+
+  @supports not (color: oklch(from white l c h)) {
+    --roy-primary-deep: oklch(0.418 0.093 162.48);
+    --roy-primary-light: oklch(0.802 0.137 162.48);
+    --roy-primary-glow: color-mix(in oklch, var(--roy-primary) 40%, transparent);
+  }
+}
+
+/* ─── Marquee ───────────────────────────────────────────────── */
+@keyframes roycss-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+.roycss-marquee-wrapper {
+  mask-image: linear-gradient(to inline-end, transparent, oklch(0 0 0) 8%, oklch(0 0 0) 92%, transparent);
+
+  & .roycss-marquee-track {
+    animation: roycss-marquee var(--marquee-duration, 30s) linear infinite;
+  }
+
+  &[data-pause-on-hover="true"]:hover .roycss-marquee-track {
+    animation-play-state: paused;
+  }
+}
+
+/* ─── Animated Gradient Text ────────────────────────────────── */
+@keyframes roycss-gradient-pan {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.roycss-animated-gradient-text {
+  background: linear-gradient(
+    90deg,
+    var(--roy-primary),
+    oklch(0.702 0.117 178.89),
+    var(--roy-secondary),
+    var(--roy-accent),
+    var(--roy-primary)
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: roycss-gradient-pan 4s linear infinite;
+}
+
+/* ─── Shine Border (rotating gradient ring) ─────────────────── */
+@keyframes roycss-shine-border-rotate {
+  to { transform: rotate(360deg); }
+}
+
+.roycss-shine-border-wrap {
+  border-radius: 16px;
+  isolation: isolate;
+
+  & .roycss-shine-border {
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0%,
+      var(--roy-primary) 15%,
+      var(--roy-secondary) 25%,
+      transparent 40%,
+      transparent 60%,
+      var(--roy-accent) 75%,
+      transparent 90%
+    );
+    animation: roycss-shine-border-rotate 4s linear infinite;
+    z-index: -1;
+    opacity: 0.6;
+    filter: blur(2px);
+  }
+
+  &:hover .roycss-shine-border {
+    opacity: 1;
+  }
+}
+
+/* ─── Scroll progress bar ───────────────────────────────────── */
+.roycss-scroll-progress {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  block-size: 3px;
+  z-index: 100;
+  transform-origin: 0%;
+  background: linear-gradient(90deg, var(--roy-primary), var(--roy-secondary), var(--roy-accent));
+}
+
+/* ─── Grid fade mask for backgrounds ────────────────────────── */
+.roycss-fade-mask-b {
+  mask-image: linear-gradient(to block-end, oklch(0 0 0) 60%, transparent 100%);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LOGO ANIMATIONS
+   ═══════════════════════════════════════════════════════════════ */
+@keyframes roy-logo-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.roycss-logo-text {
+  background: linear-gradient(90deg, var(--roy-primary), var(--roy-secondary), var(--roy-accent), var(--roy-primary));
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: roy-logo-gradient 4s linear infinite;
+}

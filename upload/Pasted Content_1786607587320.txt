@@ -1,0 +1,984 @@
+Here's the **phased multi-agent orchestration prompt** covering all priority items. This is designed to be run sequentially — Phase 1 first, then Phase 2, etc.
+
+---
+
+# 🏗️ RoyCSS — Phased Multi-Agent Build Prompt
+
+## Global Configuration
+
+```
+TARGET_REPO: <your-github-org>/<roycss-repo-name>
+BRANCH: main
+BASE_URL: https://roycss.space-z.ai
+PRODUCTION_DOMAIN: roycss.space-z.ai
+
+TECH_STACK: Next.js (App Router), React, Tailwind CSS 4, TypeScript
+CSS_SYSTEM: OKLCH colors, CSS custom properties, zero-JS effects
+PACKAGE_MANAGER: npm/pnpm
+
+RESPONSIVE_BREAKPOINTS:
+  - Mobile: 375px
+  - Tablet: 768px
+  - Laptop: 1366px
+  - Desktop: 1920px
+
+THEME: Dual light/dark via CSS custom properties on :root and [data-theme="dark"]
+FONT: System font stack (already in use)
+```
+
+## 🚨 Global Guardrails (All Agents, All Phases)
+
+```
+1. NO FEATURE LOSS — Every existing page, component, style, effect, and function
+   MUST continue working exactly as before. If your change breaks anything, revert
+   immediately and reconsider.
+
+2. NO REMOVALS — Do NOT delete any existing code, styles, components, files, or
+   features UNLESS explicitly confirmed by the user. When in doubt, ADD.
+
+3. ADDITIVE ONLY — Modify existing files by ADDING new code. Preserve ALL existing
+   content. Use new files for new features wherever possible.
+
+4. RESPONSIVE NON-NEGOTIABLE — Every new component/page MUST render correctly at
+   375px, 768px, 1366px, and 1920px. Test before marking complete.
+
+5. DUAL THEME — Every new component MUST work in both light and dark modes. Use
+   CSS custom properties. Test both.
+
+6. GIT DISCIPLINE — Each agent works on a dedicated branch. Merge only after
+   verification. Never force-push to main.
+
+7. STOP AND REPORT — If any agent encounters ambiguity, a potential breaking
+   change, or a conflict, STOP and report before proceeding.
+
+8. TYPE SAFETY — All new code MUST be fully TypeScript-typed. No `any`. No `@ts-ignore`.
+
+9. PERFORMANCE BUDGET — No single new route adds > 50KB JS (gzipped). Code-split
+   everything that isn't immediately visible.
+
+10. ACCESSIBILITY FIRST — Every new interactive element: keyboard-navigable,
+    screen-reader-friendly, focus-visible styled, ARIA-labeled. From iteration 1.
+```
+
+---
+
+# 📦 PHASE 1: Unblock Growth (Week 1-2)
+
+## Agent 1.1 — `hero-fix`
+
+**Branch**: `fix/hero-count-bug`
+**Dependencies**: None
+
+### Task: Fix "0 Effects" Hero Count Bug
+
+The hero section displays "0 Effects", "0 Categories", and "0 Lines of CSS" instead of the actual values (1,569, 20, and approximate line count). This is likely a hydration mismatch or a missing client-side count that depends on data loading.
+
+**Steps**:
+1. Investigate how the hero stats are populated (likely from a data file or API)
+2. If the data loads async, add a skeleton/placeholder state that shows "—" or a loading animation until real values arrive
+3. If the data is static, hardcode the values as fallbacks and override with real data when available
+4. Ensure the count animation works: numbers should count up from 0 to the final value on page load (if this was the intended behavior, make sure the final value is correct)
+5. Verify the fix at all viewports: 375px, 768px, 1366px, 1920px
+6. Verify in both light and dark themes
+7. Take before/after screenshots
+
+**Deliverable**: Stats show correct values (1,569+ effects, 20 categories, ~100K+ lines of CSS) on page load.
+
+---
+
+## Agent 1.2 — `footer-builder`
+
+**Branch**: `feat/footer`
+**Dependencies**: None (can run parallel with 1.1)
+
+### Task: Build a Professional Full Footer
+
+The current footer is just a logo + one line of text + two buttons. Build a comprehensive footer.
+
+**Structure** (4-column on desktop, stacked on mobile):
+```
+Column 1: Brand
+  - RoyCSS logo + tagline ("Production-ready CSS effects with live demos")
+  - "Crafted by Royford Wanyoike Wamaitha" with LinkedIn link
+  - Social icons row: GitHub (link to repo), LinkedIn (company), X/Twitter (create if needed), Discord (if server exists)
+
+Column 2: Product
+  - Link: All Effects (scrolls to #effects)
+  - Link: Platform (scrolls to #platform)
+  - Link: RoyMotion (scrolls to RoyMotion section)
+  - Link: Pricing (links to /pricing — even if page doesn't exist yet, use #)
+  - Link: Changelog (links to #docs → Changelog section)
+
+Column 3: Resources
+  - Link: Documentation (scrolls to #docs)
+  - Link: Blog (links to /blog — placeholder)
+  - Link: Community (scrolls to community section)
+  - Link: GitHub (external: github.com/Roy-Wanyoike/roycss)
+  - Link: VS Code Extension (if marketplace link exists)
+
+Column 4: Legal
+  - Link: Privacy Policy (/privacy — placeholder)
+  - Link: Terms of Service (/terms — placeholder)
+  - Link: Cookie Policy (/cookies — placeholder)
+
+Bottom bar (full width):
+  Left: "© 2024 RoyCSS. MIT Licensed."
+  Center: Newsletter signup — email input + "Subscribe" button (functional: stores to localStorage or sends to API endpoint)
+  Right: "Back to top ↑" button (smooth scroll)
+```
+
+**Responsive behavior**:
+- Desktop (1024px+): 4 columns in a row
+- Tablet (768-1023px): 2×2 grid
+- Mobile (<768px): Single column, stacked, with collapsible sections (click column header to expand/collapse)
+
+**Styling**: Match existing site design. Use `border-t border-border/40` for the top divider. Muted text colors. Hover states on all links.
+
+**Accessibility**: `<footer>` landmark, `<nav aria-label="Footer navigation">` for link columns, proper heading hierarchy within footer.
+
+---
+
+## Agent 1.3 — `legal-compliance`
+
+**Branch**: `feat/legal-compliance`
+**Dependencies**: None (can run parallel with 1.1, 1.2)
+
+### Task: Cookie Consent Banner + Legal Pages
+
+**Part A: Cookie Consent Banner**
+1. Build a fixed-bottom banner that appears on first visit (check `localStorage.getItem('roycss-cookie-consent')`)
+2. Banner content: "We use cookies and tracking to improve your experience. By continuing, you agree to our Cookie Policy." + "Accept" button + "Decline" button + "Cookie Policy" link
+3. Design: match site theme, dark/light mode support, dismiss on Accept/Decline
+4. On Accept: set localStorage, show confirmation toast
+5. On Decline: set localStorage, disable non-essential tracking
+6. Responsive: full-width on mobile, centered max-width card on desktop
+7. Accessibility: `role="dialog"`, `aria-label`, focus trap, escape to close, `prefers-reduced-motion` for animation
+
+**Part B: Privacy Policy Page** (`/privacy`)
+- Create `/app/privacy/page.tsx`
+- Content: Data collection (what), purpose (why), legal basis (GDPR Art. 6), user rights, contact info, data retention, third-party services (LinkedIn Insight Tag, analytics)
+- Standard legal page layout: max-width 65ch, readable typography, table of contents
+- Responsive, themed, accessible
+
+**Part C: Terms of Service Page** (`/terms`)
+- Create `/app/terms/page.tsx`
+- Content: License (MIT for the CSS, separate for platform), usage rights, restrictions, liability limitations, governing law
+- Same layout as Privacy Policy
+
+**Part D: Cookie Policy Page** (`/cookies`)
+- Create `/app/cookies/page.tsx`
+- Content: What cookies, types (essential/analytics/marketing), duration, how to manage
+- Same layout
+
+**All three legal pages**:
+- Proper `<title>`, `<meta description>`, OG tags, canonical URL (correct domain)
+- JSON-LD `WebPage` structured data
+- Last updated date visible on page
+- Print-friendly (print stylesheet that hides nav/footer)
+
+---
+
+## Agent 1.4 — `copy-formats`
+
+**Branch**: `feat/copy-as-formats`
+**Dependencies**: None (can run parallel)
+
+### Task: Multi-Format "Copy As" Dropdown
+
+Currently every effect card has a single "Copy" button that copies CSS. Replace it with a dropdown offering multiple output formats.
+
+**Dropdown options** (per effect):
+1. **CSS Class** — the current behavior (`.roycss-pulse-glow { ... }`)
+2. **Inline Style** — extracted to `style="..."` format
+3. **Tailwind Config** — extends `theme.extend` with the effect as a utility
+4. **SCSS Mixin** — wrapped in `@mixin pulse-glow { ... }`
+5. **CSS-in-JS (React)** — `const pulseGlow = css\`...\`` format
+6. **Vue SFC** — `<style scoped> ... </style>` block
+7. **HTML Snippet** — a complete `<div class="roycss-pulse-glow">Content</div>` with the CSS in a `<style>` tag
+
+**Implementation**:
+1. Create a `CopyDropdown` component that replaces the existing "Copy" button
+2. On click, show a dropdown menu with format options
+3. Each option transforms the CSS string into the target format
+4. On selection: copy to clipboard + show brief "Copied as [format]!" toast
+5. Remember user's last chosen format in `localStorage` — pre-select it next time
+
+**Responsive**:
+- Desktop: dropdown opens below/beside the button
+- Mobile: dropdown becomes a bottom sheet or full-width menu
+- Touch-friendly: minimum 44×44px tap targets
+
+**Accessibility**:
+- `aria-haspopup="true"`, `aria-expanded` state
+- Arrow key navigation within dropdown
+- Escape to close
+- Screen reader announces format name on copy
+
+---
+
+## Agent 1.5 — `pricing-page`
+
+**Branch**: `feat/pricing-page`
+**Dependencies**: None (can run parallel)
+
+### Task: Build Pricing Page
+
+Create `/app/pricing/page.tsx` with a comprehensive pricing comparison.
+
+**Page structure**:
+
+```
+Hero: "Simple, transparent pricing"
+Subtext: "Start free. Upgrade when you need more."
+
+Toggle: Monthly / Annual (annual shows "Save 20%" badge)
+
+Three pricing cards in a row (stack on mobile):
+
+┌─────────────┐  ┌─────────────┐  ┌─────────────┐
+│   Free      │  │    Pro      │  │ Enterprise  │
+│   $0/mo     │  │   $12/mo    │  │  Custom     │
+│             │  │  $9/mo/yr   │  │             │
+│             │  │             │  │             │
+│ ✓ 1,569     │  │ ✓ 1,569     │  │ ✓ 1,569     │
+│   effects   │  │   effects   │  │   effects   │
+│ ✓ 10        │  │ ✓ All 62    │  │ ✓ All 62    │
+│   products  │  │   products  │  │   products  │
+│ ✓ Community │  │ ✓ Priority  │  │ ✓ Dedicated │
+│ ✓ Basic     │  │   support   │  │   support   │
+│   CLI       │  │ ✓ Advanced  │  │ ✓ Custom    │
+│             │  │   CLI       │  │   CLI       │
+│             │  │ ✓ AI agents │  │ ✓ AI agents │
+│             │  │ ✓ VS Code   │  │ ✓ VS Code   │
+│             │  │   extension │  │   extension │
+│             │  │ ✓ Theme     │  │ ✓ Custom    │
+│             │  │   system    │  │   theming   │
+│             │  │             │  │ ✓ SSO/RBAC  │
+│             │  │             │  │ ✓ SLA       │
+│             │  │             │  │ ✓ Audit log │
+│             │  │             │  │ ✓ On-prem   │
+│             │  │             │  │   option    │
+│             │  │             │  │             │
+│ [Get Started]│  │ [Start Free │  │[Contact     │
+│             │  │  Trial]     │  │ Sales]      │
+└─────────────┘  └─────────────┘  └─────────────┘
+```
+
+**Below cards**:
+- **Feature comparison table** (expandable/collapsible): full matrix of every feature across all 3 tiers
+- **FAQ section** specific to pricing: "Can I switch plans?", "Is there a student discount?", "What happens if I cancel?", "Do you offer refunds?"
+- **Trust signals**: "No credit card required for Free", "Cancel anytime", "7-day free trial for Pro"
+
+**SEO**:
+- `<title>RoyCSS Pricing — Free, Pro & Enterprise Plans</title>`
+- Full OG + Twitter Card meta tags
+- JSON-LD `Product` + `Offer` structured data for each plan
+- Canonical URL with correct domain
+
+**Responsive**:
+- Desktop: 3 cards in a row, Pro card elevated/highlighted
+- Tablet: 3 cards still in a row but narrower
+- Mobile: stacked vertically, Pro card first (most popular)
+
+**Note**: Since actual payment processing doesn't exist yet, buttons should link to a `#` or show a "Coming soon" toast. The page structure and content should be production-ready so only the payment integration needs to be added later.
+
+---
+
+## Agent 1.6 — `status-page`
+
+**Branch**: `feat/status-page`
+**Dependencies**: None (can run parallel)
+
+### Task: Build Status Page
+
+Create `/app/status/page.tsx` — a public-facing status dashboard.
+
+**Layout**:
+
+```
+Header: "RoyCSS System Status"
+Large badge: "All Systems Operational" (green) or "Degraded Performance" (yellow) or "Partial Outage" (red)
+
+Service status grid (2-col desktop, 1-col mobile):
+
+┌──────────────────┐  ┌──────────────────┐
+│ 🟢 RoyCSS CDN    │  │ 🟢 RoyCSS API    │
+│ Operational      │  │ Operational      │
+│ 99.98% uptime    │  │ 99.99% uptime    │
+│ Last incident:   │  │ Last incident:   │
+│ 30 days ago      │  │ Never            │
+└──────────────────┘  └──────────────────┘
+┌──────────────────┐  ┌──────────────────┐
+│ 🟢 Roy Deploy    │  │ 🟢 Roy Storage   │
+│ Operational      │  │ Operational      │
+│ 99.95% uptime    │  │ 100% uptime      │
+└──────────────────┘  └──────────────────┘
+┌──────────────────┐  ┌──────────────────┐
+│ 🟢 Roy Edge      │  │ 🟢 Roy MCP       │
+│ Operational      │  │ Operational      │
+│ 99.97% uptime    │  │ 100% uptime      │
+└──────────────────┘  └──────────────────┘
+
+Uptime bars (past 90 days):
+[████████████████████] 100%  CDN
+[███████████████████░] 99.8% API
+[██████████████████░░] 99.5% Deploy
+
+Incident history table:
+| Date       | Service    | Status   | Duration | Summary                    |
+|------------|------------|----------|----------|----------------------------|
+| 2024-07-15 | Roy Deploy | Resolved | 23 min   | Deployment queue delay     |
+| 2024-06-02 | Roy CDN    | Resolved | 8 min    | Cache purge latency spike  |
+
+Scheduled maintenance:
+| Date       | Service    | Window              | Description                    |
+|------------|------------|---------------------|--------------------------------|
+| 2024-08-20 | Roy API    | 02:00-04:00 UTC     | Database migration              |
+
+Footer: "Subscribe to updates" — email input + RSS link
+```
+
+**Important**: Since this is a new product, use **mock data** that shows everything operational. Add a comment in the code indicating where real data would be fetched from an API.
+
+**SEO**: `<title>RoyCSS Status — System Status & Uptime</title>`, OG tags, canonical URL.
+
+**Responsive**: Grid collapses to single column on mobile. Uptime bars stack vertically.
+
+---
+
+## Agent 1.7 — `phase1-verifier`
+
+**Branch**: `test/phase1-verification`
+**Dependencies**: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6 (runs AFTER all above)
+
+### Task: Phase 1 Full Verification
+
+1. **Merge all Phase 1 branches** into `main` in order: 1.1 → 1.2 → 1.3 → 1.4 → 1.5 → 1.6
+2. Resolve any merge conflicts (should be minimal since agents worked on different files)
+3. Run full regression:
+   - Homepage loads without console errors
+   - Hero stats show correct values (not 0)
+   - Footer renders at all breakpoints with all links working
+   - Cookie consent appears on fresh visit, dismisses on Accept/Decline
+   - `/privacy`, `/terms`, `/cookies` pages load with correct content
+   - Copy dropdown appears on effect cards with all 7 format options
+   - `/pricing` page renders with 3 tiers, toggle works
+   - `/status` page renders with all mock data
+   - Dark/light theme toggle works on ALL new pages
+4. Responsive test at 375px, 768px, 1366px, 1920px
+5. Accessibility spot-check: tab through new components, verify focus states
+6. Take screenshots of all new pages/sections at each breakpoint
+7. Generate Phase 1 QA report: pass/fail per feature, any remaining issues
+
+**Output**: Phase 1 QA report + go/no-go recommendation.
+
+---
+
+# 📦 PHASE 2: Multi-Page Foundation (Week 3-4)
+
+## Agent 2.1 — `routing-architect`
+
+**Branch**: `feat/multi-page-routing`
+**Dependencies**: Phase 1 complete
+**Runs first in Phase 2**
+
+### Task: Convert Single-Page to Multi-Page Architecture
+
+This is the foundational change that everything else in Phase 2 depends on.
+
+**Steps**:
+
+1. **Create route structure**:
+```
+/app/page.tsx                    — Homepage (keep existing, slim down)
+/app/effects/page.tsx            — All effects browse page
+/app/effects/[slug]/page.tsx     — Individual effect detail page
+/app/platform/page.tsx           — Platform products browse
+/app/platform/[slug]/page.tsx    — Individual product page
+/app/docs/page.tsx               — Documentation hub
+/app/docs/[slug]/page.tsx        — Individual doc page
+/app/collections/page.tsx        — Collections browse
+/app/collections/[slug]/page.tsx — Individual collection page
+/app/recipes/page.tsx            — Recipes browse
+/app/recipes/[slug]/page.tsx     — Individual recipe page
+/app/blog/page.tsx               — Blog listing
+/app/blog/[slug]/page.tsx        — Blog post
+/app/pricing/page.tsx            — Already built in Phase 1
+/app/status/page.tsx             — Already built in Phase 1
+/app/privacy/page.tsx            — Already built in Phase 1
+/app/terms/page.tsx              — Already built in Phase 1
+/app/cookies/page.tsx            — Already built in Phase 1
+```
+
+2. **Extract homepage sections into separate route components**:
+   - Move "What is RoyCSS?" → reusable component, keep abbreviated version on homepage
+   - Move "All Effects" section → `/app/effects/page.tsx` (full page version)
+   - Move "Platform" section → `/app/platform/page.tsx` (full page version)
+   - Move "Docs" section → `/app/docs/page.tsx`
+   - Move "Collections" → `/app/collections/page.tsx`
+   - Move "Recipes" → `/app/recipes/page.tsx`
+   - Keep homepage as an overview with "Learn more" links pointing to full pages
+
+3. **Update navigation**:
+   - "Explore" button → navigates to `/effects` (not just scrolls)
+   - "Platform" button → navigates to `/platform`
+   - "Docs" button → navigates to `/docs`
+   - "FAQ" → navigates to `/docs/faq`
+   - Update all internal links throughout the site
+   - Add breadcrumbs to all new pages
+
+4. **Preserve homepage anchor links** for backward compatibility:
+   - `#effects` → redirect to `/effects`
+   - `#platform` → redirect to `/platform`
+   - `#docs` → redirect to `/docs`
+   - `#faq` → redirect to `/docs/faq`
+
+5. **SEO for every new page**:
+   - Unique `<title>`, `<meta description>`, OG tags, Twitter Cards, canonical URL, JSON-LD
+   - Breadcrumb structured data on every page
+   - Sitemap entry for every page
+
+6. **Performance**:
+   - Each route is code-split (automatic with Next.js App Router)
+   - Lazy load below-the-fold content
+   - Prefetch links on hover
+
+**CRITICAL**: The homepage must still work as a complete landing page. The sections that move to their own pages should remain on the homepage as **summarized/abbreviated versions** with "View all →" links.
+
+---
+
+## Agent 2.2 — `effect-detail-pages`
+
+**Branch**: `feat/effect-detail-pages`
+**Dependencies**: 2.1 (routing architect)
+
+### Task: Build Effect Detail Pages
+
+For each of the 1,569 effects, create a rich detail page at `/effects/[slug]`.
+
+**Page layout** (desktop: two-column, mobile: stacked):
+
+```
+Left column (main content, 2/3 width on desktop):
+
+  Breadcrumb: Home > Effects > [Category] > [Effect Name]
+
+  H1: "Pulse Glow"
+  Description: "A smooth pulsing glow effect that draws attention to elements."
+  Tags: glow, pulse, attention, animation
+
+  ┌─────────────────────────────────────┐
+  │                                     │
+  │         LIVE PREVIEW AREA           │
+  │     (interactive demo of effect)    │
+  │                                     │
+  │   [Play/Pause] [Reset] [Fullscreen] │
+  └─────────────────────────────────────┘
+
+  Tab bar: CSS Code | Customization | Browser Support | Related Effects
+
+  Tab 1: CSS Code
+    - Full CSS with syntax highlighting
+    - Line numbers
+    - "Copy CSS" button (with format dropdown from Phase 1)
+    - "Open in Sandbox" button
+    - File size: "0.4 KB gzipped"
+    - CSS properties used: animation, @keyframes, box-shadow
+
+  Tab 2: Customization
+    - Color picker (primary color)
+    - Duration slider (0.5s - 5s)
+    - Intensity slider
+    - Direction toggle (if applicable)
+    - "Apply" button → updates live preview
+    - "Copy customized CSS" button
+
+  Tab 3: Browser Support
+    - Visual matrix:
+        Chrome 120+  ✅
+        Firefox 120+ ✅
+        Safari 17+   ✅
+        Edge 120+    ✅
+        Safari 16    ⚠️ (fallback: simple pulse)
+        Firefox ESR  ⚠️ (fallback: opacity pulse)
+    - Performance rating: 🟢 Low paint cost (<0.5ms)
+    - Accessibility: ✅ Respects prefers-reduced-motion
+    - Layout shift: ✅ CLS = 0
+
+  Tab 4: Related Effects
+    - Grid of 6-8 similar effects (same category + similar tags)
+    - "Bounce", "Breathe", "Scale Up", etc.
+
+Right column (sidebar, 1/3 width on desktop, below main on mobile):
+
+  Quick actions:
+    [⭐ Add to Favorites]
+    [🔗 Copy Link] (copies /effects/pulse-glow URL)
+    [📦 Install via CLI]
+
+  Effect meta:
+    Category: Animations
+    Added: v0.1.0
+    Last updated: v1.0.0
+    Author: @amara.css
+    License: MIT
+    Uses: animation, @keyframes, box-shadow
+    Size: 0.4 KB gzipped
+
+  "Used in these recipes":
+    - Glowing Empty State
+    - Pulsing Notification Badge
+    [View all →]
+```
+
+**Data source**: Create a TypeScript data file (`data/effects.ts`) that maps each effect slug to its metadata. For the initial build, populate with the 10 featured effects + a template for the rest. The data file structure should be:
+
+```typescript
+interface Effect {
+  slug: string;
+  name: string;
+  category: string;
+  description: string;
+  tags: string[];
+  css: string;
+  author?: string;
+  version: string;
+  lastUpdated: string;
+  size: string;
+  browserSupport: Record<string, 'full' | 'partial' | 'none'>;
+  performanceRating: 'low' | 'medium' | 'high';
+  respectsReducedMotion: boolean;
+  relatedEffects: string[];
+  usedInRecipes: string[];
+}
+```
+
+**Responsive**:
+- Desktop: two-column (2/3 + 1/3)
+- Tablet: two-column (60/40)
+- Mobile: single column, sidebar content moves below main content
+
+**Accessibility**:
+- Preview area has `role="img"` with `aria-label` describing the effect
+- Code block has `role="code"` with proper labeling
+- Tab panel pattern: `role="tablist"`, `role="tab"`, `role="tabpanel"`, arrow key navigation
+- Color pickers and sliders have associated labels
+
+---
+
+## Agent 2.3 — `comparison-pages`
+
+**Branch**: `feat/comparison-pages`
+**Dependencies**: 2.1 (routing architect)
+
+### Task: Build SEO Comparison Pages
+
+Create 5 comparison pages, each targeting high-intent search queries.
+
+**Pages to create**:
+1. `/compare/roycss-vs-tailwind-css`
+2. `/compare/roycss-vs-framer-motion`
+3. `/compare/roycss-vs-gsap`
+4. `/compare/roycss-vs-animate-css`
+5. `/compare/roycss-vs-bootstrap`
+
+**Each page structure**:
+
+```
+H1: "RoyCSS vs Tailwind CSS — Complete Comparison (2026)"
+Meta description targeting the comparison query.
+
+Quick verdict banner:
+  "Choose RoyCSS if: you want 1,569+ ready-made effects, zero JS, and OKLCH colors."
+  "Choose Tailwind if: you want utility-first styling with complete layout control."
+
+Comparison table:
+| Feature              | RoyCSS           | Tailwind CSS      | Winner   |
+|---------------------|------------------|-------------------|----------|
+| CSS Effects         | 1,569 built-in   | 0 (DIY only)      | RoyCSS   |
+| Bundle Size (used)  | ~5 KB            | ~10-30 KB         | RoyCSS   |
+| JavaScript Runtime  | Zero             | Zero (core)       | Tie      |
+| Color System        | OKLCH native     | RGB/HSL           | RoyCSS   |
+| Dark Mode           | Built-in toggle  | `dark:` prefix    | Tie      |
+| Animation           | 312 effects      | Limited utilities | RoyCSS   |
+| Layout System       | Basic            | Grid + Flex       | Tailwind |
+| Component Library   | 60+ components   | 0 (DIY only)      | RoyCSS   |
+| Framework Support   | All              | All               | Tie      |
+| Learning Curve      | Low (copy-paste) | Medium (memorize) | RoyCSS   |
+| AI Integration      | MCP + 8 agents   | None built-in     | RoyCSS   |
+| Customization       | CSS variables    | Config file       | Tailwind |
+| Community           | Growing          | Massive           | Tailwind |
+| Price               | Free + Pro       | Free              | Tie      |
+
+Code comparison side-by-side:
+  "Pulse Glow Effect"
+  RoyCSS (3 lines):         |  Tailwind (15+ lines):
+  .roycss-pulse-glow {     |  @keyframes pulse { ... }
+    animation: ...          |  .animate-pulse-custom { ... }
+  }                         |  <div class="... 15+ classes">
+
+Performance comparison:
+  - Bundle size chart (bar chart)
+  - Paint time comparison
+  - Layout shift comparison
+
+When to choose RoyCSS:
+  - You want production-ready effects without writing animation code
+  - You need OKLCH color support
+  - You want AI-assisted CSS generation
+  - You're building a marketing site, dashboard, or web app with visual polish
+
+When to choose [Competitor]:
+  - You need fine-grained utility control over every pixel
+  - You're already deeply invested in the competitor's ecosystem
+  - You need the competitor's specific strength (layout for Tailwind, timeline for GSAP, etc.)
+
+Can you use both? Yes.
+  - Code example showing RoyCSS effects + Tailwind layout utilities in the same project
+  - Installation snippet for both
+
+Bottom CTA:
+  "Ready to try RoyCSS?" [Get Started Free] [View All Effects]
+```
+
+**SEO for each page**:
+- `<title>` format: `"RoyCSS vs [Competitor] — Complete Comparison (2026)"`
+- `<meta description>` targeting the exact search query
+- JSON-LD `Article` structured data
+- Breadcrumb: Home > Compare > RoyCSS vs [Competitor]
+- Internal links to relevant RoyCSS effects and features
+- Canonical URL with correct domain
+- `og:type: article`
+
+**Responsive**: Comparison table scrolls horizontally on mobile with sticky first column. Code comparison stacks vertically on mobile.
+
+**Content depth**: Each page should be 1,500-2,500 words of genuine, useful comparison content — not fluff.
+
+---
+
+## Agent 2.4 — `auth-favorites`
+
+**Branch**: `feat/auth-favorites`
+**Dependencies**: 2.1 (routing architect), 2.2 (effect detail pages)
+
+### Task: Authentication System + Favorites + User Dashboard
+
+**Part A: GitHub OAuth Authentication**
+
+1. Set up NextAuth.js (or equivalent) with GitHub provider
+2. Create `/app/auth/signin/page.tsx` — "Sign in with GitHub" page
+3. Create `/app/auth/callback/route.ts` — OAuth callback handler
+4. Create `/api/auth/[...nextauth]/route.ts` — NextAuth API route
+5. Add session provider to layout
+6. Nav bar: replace "Open favorites" button with user avatar (when signed in) or "Sign in" button (when signed out)
+7. User dropdown menu (when signed in): Profile, Favorites, Settings, Sign Out
+
+**Part B: Favorites System**
+
+1. Create `/api/favorites/route.ts` — GET (list user's favorites), POST (add), DELETE (remove)
+2. For MVP: use localStorage + a simple API endpoint (can be upgraded to a database later)
+3. Add favorite toggle (⭐) to every effect card and effect detail page
+4. Create `/app/favorites/page.tsx` — user's favorited effects page
+   - Grid of favorited effect cards
+   - Filter by category
+   - Sort by: recently added, name, category
+   - "Clear all" button with confirmation
+   - Export favorites as a CSS file (combines all favorited effects into one stylesheet)
+5. Show favorite count badge on the nav "Favorites" button
+
+**Part C: User Dashboard** (`/app/dashboard/page.tsx`)
+
+```
+Welcome back, [GitHub username]!
+
+Stats row (4 cards):
+  [12 Favorites]  [5 Recently Viewed]  [Level: Explorer]  [XP: 340]
+
+Recently Viewed:
+  Grid of last 10 viewed effects with timestamps
+
+Your Collections:
+  [Create New Collection] button
+  Grid of user-created collections (name, effect count, last updated)
+  Each collection: add/remove effects, rename, delete, share link
+
+Activity:
+  "You favorited Pulse Glow — 2 hours ago"
+  "You viewed Glassmorphism — 5 hours ago"
+  "You created collection 'Dashboard Effects' — 1 day ago"
+```
+
+**Responsive**: Dashboard cards reflow from 4-col to 2-col to 1-col. All forms and inputs are mobile-friendly.
+
+**Accessibility**: Sign-in form has proper labels, error messages, loading states. Favorite toggle has `aria-pressed` state.
+
+---
+
+## Agent 2.5 — `phase2-verifier`
+
+**Branch**: `test/phase2-verification`
+**Dependencies**: 2.1, 2.2, 2.3, 2.4
+
+### Task: Phase 2 Full Verification
+
+1. Merge all Phase 2 branches in order: 2.1 → 2.2 → 2.3 → 2.4
+2. Full regression of ALL Phase 1 features (nothing broken)
+3. Verify new routes:
+   - `/effects` — full effects browse page loads, search works, category filters work
+   - `/effects/pulse-glow` — detail page loads with live preview, tabs, sidebar
+   - `/platform` — platform products page
+   - `/docs` — documentation hub
+   - `/collections` — collections page
+   - `/recipes` — recipes page
+   - `/compare/roycss-vs-tailwind-css` — comparison page
+   - All 5 comparison pages
+   - `/auth/signin` — sign-in page
+   - `/favorites` — favorites page (requires auth)
+   - `/dashboard` — dashboard (requires auth)
+4. Navigation: all nav links point to correct new routes
+5. Old anchor links (`#effects`, `#platform`) redirect correctly
+6. Homepage still works as a complete landing page
+7. Responsive: all new pages at 375px, 768px, 1366px, 1920px
+8. Dark/light theme on all new pages
+9. SEO: check `<title>`, OG tags, canonical URLs on all new pages
+10. Lighthouse: target 90+ on all new pages (Performance, A11y, Best Practices, SEO)
+11. Generate Phase 2 QA report
+
+---
+
+# 📦 PHASE 3: Content & Community (Month 2)
+
+## Agent 3.1 — `blog-system`
+**Branch**: `feat/blog`
+**Dependencies**: Phase 2 complete
+
+### Task: Blog System + Effect of the Week Articles
+
+1. Create `/app/blog/page.tsx` — blog listing with pagination (10 per page)
+2. Create `/app/blog/[slug]/page.tsx` — individual blog post page
+3. Build MDX support for blog posts (Next.js MDX remote or contentlayer)
+4. Blog post layout: hero image, author, date, reading time, table of contents, content, tags, related posts
+5. Create `/content/blog/` directory with 5 starter posts:
+   - "What's New in RoyCSS v1.0" (release announcement)
+   - "How to Build a Glassmorphism Dashboard with RoyCSS" (tutorial)
+   - "Tailwind vs RoyCSS: Which Should You Choose?" (comparison summary linking to full comparison page)
+   - "Effect of the Week: Pulse Glow — How and When to Use It" (deep dive)
+   - "CSS in 2026: Why Zero-JS Animation Libraries Are the Future" (thought leadership)
+6. Each post: 1,500-2,500 words, code examples, screenshots, SEO-optimized
+7. RSS feed at `/feed.xml`
+8. "Subscribe to newsletter" section on blog listing page
+
+## Agent 3.2 — `sandbox-templates`
+**Branch**: `feat/sandbox-templates`
+**Dependencies**: Phase 2 complete
+
+### Task: CodeSandbox / StackBlitz Templates + Inline Try-It
+
+1. Create 5 CodeSandbox templates (using CodeSandbox API):
+   - RoyCSS + React (Vite)
+   - RoyCSS + Vue 3
+   - RoyCSS + Svelte
+   - RoyCSS + vanilla HTML
+   - RoyCSS + Next.js
+2. Add "Open in CodeSandbox" button to effect detail pages
+3. Add "Try it" inline editor: a collapsible code editor below each effect preview on the detail page — edit CSS, see live result
+4. Create a standalone `/playground` page (like Tailwind Play) with full HTML/CSS/JS editor and live preview
+
+## Agent 3.3 — `storybook-public`
+**Branch**: `feat/storybook-public`
+**Dependencies**: Phase 2 complete
+
+### Task: Deploy Public Storybook
+
+1. Configure Storybook for the RoyCSS component library
+2. Document all 60+ components with: variants, states, props, accessibility notes
+3. Deploy to `storybook.roycss.space-z.ai` (or Vercel subdomain)
+4. Add "View in Storybook" link to relevant docs pages
+5. Add Storybook embeds to the documentation
+
+## Agent 3.4 — `community-hub`
+**Branch**: `feat/community-hub`
+**Dependencies**: Phase 2 complete
+
+### Task: Community Features
+
+1. Add GitHub Discussions link to nav and footer (or create a Discord invite link)
+2. Create `/community/page.tsx` — community hub page:
+   - Links to GitHub Discussions, Discord, Twitter/X
+   - Featured contributors (expanded from homepage version)
+   - Contribution guide (CONTRIBUTING.md content rendered as a page)
+   - "Good first issues" from GitHub (fetched via API)
+   - Community stats: total contributors, total effects, total stars
+3. Create `/community/contribute/page.tsx` — contribution guide
+4. Add "Effect of the Week" nomination form (submit a form → creates a GitHub issue)
+5. Add "Report an issue" button to effect detail pages → links to GitHub issue template pre-filled with effect name
+
+## Agent 3.5 — `public-stats`
+**Branch**: `feat/public-stats`
+**Dependencies**: Phase 2 complete
+
+### Task: Public Stats & Social Proof
+
+1. Add npm download counter to homepage hero (fetch from npm API: `https://api.npmjs.org/downloads/point/last-month/roycss`)
+2. Add GitHub star count to homepage (fetch from GitHub API)
+3. Create `/about/page.tsx`:
+   - "Trusted by X,000+ developers" with animated counter
+   - npm download chart (last 12 months, using a lightweight chart lib)
+   - GitHub star growth chart
+   - Framework usage breakdown (if data available, otherwise placeholder)
+   - Timeline: project history (founded, v0.1, v1.0, milestones)
+   - Team section: Royford Wanyoike Wamaitha + core contributors
+   - Backed by: Youngshark Technologies
+4. Add "Join 1,000+ developers" social proof to pricing page and CTA sections
+
+---
+
+# 📦 PHASE 4: Platform Maturity (Month 3+)
+
+## Agent 4.1 — `public-api`
+**Branch**: `feat/public-api`
+**Dependencies**: Phase 3 complete
+
+### Task: Public REST API + Documentation
+
+1. Create `/api/v1/effects` — list/search effects (query params: `q`, `category`, `tag`, `page`, `limit`)
+2. Create `/api/v1/effects/[slug]` — get single effect details
+3. Create `/api/v1/categories` — list categories with effect counts
+4. Create `/api/v1/collections` — list collections
+5. Rate limiting: 100 requests/minute for unauthenticated, 1000/minute for authenticated
+6. API key management in user dashboard
+7. Create `/docs/api` — API documentation with interactive examples (Swagger-style)
+8. Add `robots.txt` entry allowing `/api/v1/` crawling
+
+## Agent 4.2 — `plugin-sdk`
+**Branch**: `feat/plugin-sdk`
+**Dependencies**: 4.1 (public API)
+
+### Task: Plugin SDK + Community Marketplace
+
+1. Create `@roycss/plugin-sdk` npm package
+2. Plugin template: `npx create-roycss-plugin my-plugin`
+3. Plugin manifest format (package.json extensions)
+4. Plugin lifecycle: install, activate, deactivate, uninstall
+5. Plugin API: access to effect registry, theme system, CLI commands
+6. Create `/plugins/page.tsx` — community plugin marketplace
+7. Plugin submission form → creates GitHub PR template
+8. Plugin review checklist (security, performance, accessibility)
+
+## Agent 4.3 — `enterprise-page`
+**Branch**: `feat/enterprise-page`
+**Dependencies**: Phase 3 complete
+
+### Task: Enterprise Sales Page + Security Page
+
+1. Create `/enterprise/page.tsx`:
+   - Enterprise features overview: SSO, RBAC, audit logs, SLA, on-premise
+   - ROI calculator ("Save X hours/month, reduce CSS bundle by Y%")
+   - Case studies section (placeholder cards for 3 industries: Fintech, Healthcare, SaaS)
+   - Security compliance badges (SOC 2, GDPR, HIPAA — show as "in progress" or "compliant")
+   - "Contact Sales" form: name, company, email, team size, use case
+2. Create `/security/page.tsx`:
+   - Security policy overview
+   - Vulnerability disclosure process
+   - Dependency audit (list of dependencies with versions)
+   - Data handling practices
+   - DPA template download link
+
+## Agent 4.4 — `i18n-foundation`
+**Branch**: `feat/i18n`
+**Dependencies**: Phase 3 complete
+
+### Task: Internationalization Foundation
+
+1. Set up `next-intl` or similar i18n framework
+2. Create locale routing: `/en/`, `/es/`, `/fr/`, `/zh/`, `/ja/`
+3. Extract all homepage text into locale JSON files
+4. Build language switcher component (globe icon + dropdown in nav)
+5. Implement RTL support foundation (CSS logical properties, dir attribute)
+6. Translate homepage + pricing page into Spanish (as proof of concept)
+7. Add `hreflang` tags to all pages
+8. Add locale to sitemap
+
+## Agent 4.5 — `visual-builder`
+**Branch**: `feat/visual-builder`
+**Dependencies**: Phase 3 complete
+
+### Task: Drag-and-Drop Visual Page Builder
+
+1. Create `/builder/page.tsx` — visual page builder
+2. Left panel: component palette (drag effect cards onto canvas)
+3. Center: live canvas (renders selected effects on sample elements)
+4. Right panel: properties editor (tweak colors, speed, intensity per effect)
+5. Layers panel: reorder, show/hide, rename applied effects
+6. Export: HTML + CSS, React component, Vue SFC
+7. Templates: start from blank or choose a pre-built layout
+8. Responsive: builder works on desktop (1024px+), shows "Use desktop for best experience" on mobile
+
+---
+
+# 📋 Execution Flow
+
+```
+Phase 1 (Week 1-2) — Parallel execution:
+  ├── Agent 1.1 (hero-fix) ─────────────┐
+  ├── Agent 1.2 (footer-builder) ───────┤
+  ├── Agent 1.3 (legal-compliance) ─────┤──→ Agent 1.7 (phase1-verifier)
+  ├── Agent 1.4 (copy-formats) ─────────┤
+  ├── Agent 1.5 (pricing-page) ─────────┤
+  └── Agent 1.6 (status-page) ──────────┘
+
+Phase 2 (Week 3-4) — Sequential + parallel:
+  Agent 2.1 (routing-architect) ─────────→ ┬── Agent 2.2 (effect-details) ──┐
+                                           ├── Agent 2.3 (comparisons) ──────┤→ Agent 2.5
+                                           └── Agent 2.4 (auth-favorites) ───┘   (phase2-verifier)
+
+Phase 3 (Month 2) — Parallel after Phase 2:
+  ├── Agent 3.1 (blog-system) ───────────┐
+  ├── Agent 3.2 (sandbox-templates) ─────┤
+  ├── Agent 3.3 (storybook-public) ──────┤──→ Phase 3 verification
+  ├── Agent 3.4 (community-hub) ─────────┤
+  └── Agent 3.5 (public-stats) ──────────┘
+
+Phase 4 (Month 3+) — Parallel after Phase 3:
+  ├── Agent 4.1 (public-api) ────────────┐
+  ├── Agent 4.2 (plugin-sdk) ────────────┤  (4.2 depends on 4.1)
+  ├── Agent 4.3 (enterprise-page) ───────┤
+  ├── Agent 4.4 (i18n-foundation) ───────┤──→ Phase 4 verification
+  └── Agent 4.5 (visual-builder) ────────┘
+```
+
+---
+
+# ✅ Success Criteria (All Phases)
+
+- [ ] All existing features work without regression
+- [ ] Every new page is responsive (375, 768, 1366, 1920)
+- [ ] Dark/light theme works everywhere
+- [ ] Lighthouse 90+ on all new pages
+- [ ] Hero shows correct stats (not 0)
+- [ ] Professional footer with nav, socials, legal, newsletter
+- [ ] Cookie consent + 3 legal pages live
+- [ ] "Copy as" supports 7 formats
+- [ ] Pricing page with 3 tiers
+- [ ] Status page with mock data
+- [ ] Multi-page routing with 15+ unique URLs
+- [ ] Effect detail pages with live preview, code, customization, browser support
+- [ ] 5 comparison pages with real content
+- [ ] GitHub OAuth + favorites + dashboard
+- [ ] Blog with 5 posts + RSS
+- [ ] CodeSandbox/StackBlitz templates
+- [ ] Public Storybook
+- [ ] Community hub with contribution guide
+- [ ] Public stats page
+- [ ] Public API with documentation
+- [ ] Plugin SDK + marketplace
+- [ ] Enterprise + security pages
+- [ ] i18n foundation with 2 languages
+- [ ] Visual page builder MVP
+- [ ] Total JS bundle increase < 500KB (gzipped) across all new routes
+- [ ] Zero console errors on any page
+- [ ] WCAG 2.1 AA compliance on all new pages
+
+---
+
+This prompt covers **everything** identified across all three review sessions — effects, platform features, structural gaps, UX improvements, business features, and technical architecture. Feed it into any multi-agent orchestration system and execute phase by phase. Want me to save this as a document, or start executing Phase 1 directly?

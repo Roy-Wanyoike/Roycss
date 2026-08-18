@@ -1,0 +1,56 @@
+{
+  "id": "/",
+  "name": "RoyCSS — AI-Native Frontend Engineering Platform",
+  "short_name": "RoyCSS",
+  "description": "1,749 CSS effects, 62 platform products, 68 developer tools, design systems, and AI assistance — design, build, customize, and ship modern interfaces.",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "background_color": "#0a0a0a",
+  "theme_color": "#10b981",
+  "orientation": "any",
+  "dir": "auto",
+  "lang": "en-US",
+  "categories": ["developer", "productivity", "design", "utilities"],
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/favicon.png", "sizes": "1024x1024", "type": "image/png", "purpose": "any" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Browse effects",
+      "short_name": "Effects",
+      "description": "Open the 1,749 effects gallery",
+      "url": "/?source=pwa-shortcut#effects",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Platform products",
+      "short_name": "Platform",
+      "description": "Browse 62 platform products across 6 pillars",
+      "url": "/?source=pwa-shortcut#platform",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Search",
+      "short_name": "Search",
+      "description": "Search effects, recipes, patterns, collections, products",
+      "url": "/?source=pwa-shortcut#search",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/og.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "RoyCSS — AI-Native Frontend Engineering Platform"
+    }
+  ]
+}

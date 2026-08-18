@@ -1,0 +1,208 @@
+/**
+ * Observatory service — Roy Observatory (RUM + Core Web Vitals monitoring).
+ *
+ * Mock backend (no DB). Seeds 3 monitored sites with CWV snapshots, 5
+ * alerts, and a 7-day trend per site.
+ *
+ * Reads are LRU-cached. Future: persist via Prisma `ObservatorySite`
+ * model and ingest RUM beacons from the SDK.
+ */
+import { CACHE_TTL } from "../../config/constants.js";
+import { cache, cacheWrap } from "../../lib/cache.js";
+import { createLogger } from "../../lib/logger.js";
+import type {
+  ObservatoryAlert,
+  ObservatorySite,
+  ObservatoryTrend,
+} from "../../types/index.js";
+import { AppError } from "../../server/middleware/error.js";
+
+const log = createLogger("observatory");
+
+const SITES_KEY = "observatory:sites";
+const ALERTS_KEY = "observatory:alerts";
+const trendKey = (id: string): string => `observatory:trend:${id}`;
+const siteKey = (id: string): string => `observatory:site:${id}`;
+
+// ─── Seed: 3 monitored sites ────────────────────────────────────────────
+const SEED_SITES: ObservatorySite[] = [
+  {
+    id: "obs-site-aurora",
+    name: "Aurora Labs",
+    url: "https://aurora.example.com",
+    status: "healthy",
+    region: "us-east-1",
+    cwv: {
+      lcp: 1_820,
+      inp: 142,
+      cls: 0.06,
+      ttfb: 412,
+      fcp: 980,
+    },
+    samples: 18_421,
+    lastSeen: "2025-02-19T08:00:00.000Z",
+  },
+  {
+    id: "obs-site-medtech",
+    name: "MedTech Records",
+    url: "https://medtech.example.com",
+    status: "degraded",
+    region: "eu-west-1",
+    cwv: {
+      lcp: 3_120,
+      inp: 284,
+      cls: 0.18,
+      ttfb: 812,
+      fcp: 1_640,
+    },
+    samples: 8_204,
+    lastSeen: "2025-02-19T08:00:00.000Z",
+  },
+  {
+    id: "obs-site-gaming-portal",
+    name: "Gaming Portal",
+    url: "https://games.example.com",
+    status: "healthy",
+    region: "ap-south-1",
+    cwv: {
+      lcp: 2_140,
+      inp: 96,
+      cls: 0.02,
+      ttfb: 530,
+      fcp: 1_120,
+    },
+    samples: 24_812,
+    lastSeen: "2025-02-19T08:00:00.000Z",
+  },
+];
+
+// ─── Seed: 5 alerts ──────────────────────────────────────────────────────
+const SEED_ALERTS: ObservatoryAlert[] = [
+  {
+    id: "alert-001",
+    siteId: "obs-site-medtech",
+    severity: "critical",
+    metric: "LCP",
+    message: "LCP p75 exceeded 2.5s for the last 6 hours.",
+    value: 3120,
+    threshold: 2500,
+    triggeredAt: "2025-02-19T02:00:00.000Z",
+    resolved: false,
+  },
+  {
+    id: "alert-002",
+    siteId: "obs-site-medtech",
+    severity: "warning",
+    metric: "INP",
+    message: "INP p75 above 200ms for the last 3 hours.",
+    value: 284,
+    threshold: 200,
+    triggeredAt: "2025-02-19T05:00:00.000Z",
+    resolved: false,
+  },
+  {
+    id: "alert-003",
+    siteId: "obs-site-aurora",
+    severity: "info",
+    metric: "TTFB",
+    message: "TTFB p75 trending up by 12% week-over-week.",
+    value: 412,
+    threshold: 380,
+    triggeredAt: "2025-02-18T22:00:00.000Z",
+    resolved: false,
+  },
+  {
+    id: "alert-004",
+    siteId: "obs-site-gaming-portal",
+    severity: "info",
+    metric: "CLS",
+    message: "CLS p75 below 0.05 — keep up the good work!",
+    value: 0.02,
+    threshold: 0.1,
+    triggeredAt: "2025-02-18T18:00:00.000Z",
+    resolved: true,
+  },
+  {
+    id: "alert-005",
+    siteId: "obs-site-aurora",
+    severity: "warning",
+    metric: "LCP",
+    message: "LCP p75 spike detected on mobile.",
+    value: 2480,
+    threshold: 2500,
+    triggeredAt: "2025-02-17T11:00:00.000Z",
+    resolved: true,
+  },
+];
+
+const sites: ObservatorySite[] = SEED_SITES.map((s) => ({ ...s, cwv: { ...s.cwv } }));
+const alerts: ObservatoryAlert[] = SEED_ALERTS.map((a) => ({ ...a }));
+
+/** List all monitored sites. Cached. */
+export async function listSites(): Promise<ObservatorySite[]> {
+  return cacheWrap(
+    SITES_KEY,
+    () => Promise.resolve(sites.map((s) => ({ ...s, cwv: { ...s.cwv } }))),
+    CACHE_TTL.observatorySites,
+  );
+}
+
+/** Get a single monitored site by id. Throws 404 if missing. */
+export async function getSiteById(id: string): Promise<ObservatorySite> {
+  return cacheWrap(
+    siteKey(id),
+    () => {
+      const found = sites.find((s) => s.id === id);
+      if (!found) throw AppError.notFound(`Site '${id}' not found`);
+      return Promise.resolve({ ...found, cwv: { ...found.cwv } });
+    },
+    CACHE_TTL.observatorySiteDetail,
+  );
+}
+
+/** List active alerts. Cached. */
+export async function listAlerts(): Promise<ObservatoryAlert[]> {
+  return cacheWrap(
+    ALERTS_KEY,
+    () => Promise.resolve(alerts.map((a) => ({ ...a }))),
+    CACHE_TTL.observatoryAlerts,
+  );
+}
+
+/** Get the 7-day trend for a site. Throws 404 if site missing. */
+export async function getSiteTrend(id: string): Promise<ObservatoryTrend> {
+  // Verify site exists.
+  await getSiteById(id);
+  return cacheWrap(
+    trendKey(id),
+    () => {
+      const trend: ObservatoryTrend = {
+        siteId: id,
+        window: "7d",
+        points: [
+          { date: "2025-02-13", lcp: 1_940, inp: 158, cls: 0.07 },
+          { date: "2025-02-14", lcp: 1_880, inp: 152, cls: 0.06 },
+          { date: "2025-02-15", lcp: 1_900, inp: 148, cls: 0.06 },
+          { date: "2025-02-16", lcp: 1_860, inp: 144, cls: 0.05 },
+          { date: "2025-02-17", lcp: 1_840, inp: 140, cls: 0.05 },
+          { date: "2025-02-18", lcp: 1_820, inp: 142, cls: 0.06 },
+          { date: "2025-02-19", lcp: 1_820, inp: 142, cls: 0.06 },
+        ],
+      };
+      return Promise.resolve(trend);
+    },
+    CACHE_TTL.observatoryTrend,
+  );
+}
+
+/** Test-only: clear the read caches. No mutable state to reset. */
+export function _resetObservatoryForTest(): void {
+  cache.delete(SITES_KEY);
+  cache.delete(ALERTS_KEY);
+  for (const s of sites) {
+    cache.delete(siteKey(s.id));
+    cache.delete(trendKey(s.id));
+  }
+}
+
+log.debug("Observatory module loaded", { sites: sites.length, alerts: alerts.length });

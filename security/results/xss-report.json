@@ -1,0 +1,79 @@
+{
+  "generatedAt": "2026-07-30T13:13:06.900Z",
+  "filesScanned": 137,
+  "patterns": [
+    "dangerouslySetInnerHTML",
+    "innerHTML-assign",
+    "eval",
+    "new-Function",
+    "document-write",
+    "setTimeout-string",
+    "setInterval-string"
+  ],
+  "findings": [
+    {
+      "file": "src/components/roycss/dynamic-effect-css.tsx",
+      "line": 76,
+      "column": 7,
+      "pattern": "dangerouslySetInnerHTML",
+      "snippet": "dangerouslySetInnerHTML={{ __html: cssToInject }}",
+      "sanitized": true,
+      "sanitizationComment": "-supply-chain.md §3.4 I5. dangerouslySetInnerHTML={{ __html: cssToInject }}",
+      "explanation": "React escape hatch that injects raw HTML. If the string contains user input, it's a critical XSS. Allowed only with a `// SECURITY:` comment naming the threat model entry that justifies it."
+    },
+    {
+      "file": "src/components/roycss/roycss-page.tsx",
+      "line": 657,
+      "column": 14,
+      "pattern": "dangerouslySetInnerHTML",
+      "snippet": "<style dangerouslySetInnerHTML={{ __html: cssToInject }} />",
+      "sanitized": true,
+      "sanitizationComment": "-supply-chain.md §3.4 I5. */} <style dangerouslySetInnerHTML={{ __html: cssToInject }} />",
+      "explanation": "React escape hatch that injects raw HTML. If the string contains user input, it's a critical XSS. Allowed only with a `// SECURITY:` comment naming the threat model entry that justifies it."
+    },
+    {
+      "file": "src/components/ui/chart.tsx",
+      "line": 86,
+      "column": 7,
+      "pattern": "dangerouslySetInnerHTML",
+      "snippet": "dangerouslySetInnerHTML={{",
+      "sanitized": true,
+      "sanitizationComment": "-supply-chain.md §3.4 I5. dangerouslySetInnerHTML={{",
+      "explanation": "React escape hatch that injects raw HTML. If the string contains user input, it's a critical XSS. Allowed only with a `// SECURITY:` comment naming the threat model entry that justifies it."
+    }
+  ],
+  "sanitized": [
+    {
+      "file": "src/components/roycss/dynamic-effect-css.tsx",
+      "line": 76,
+      "column": 7,
+      "pattern": "dangerouslySetInnerHTML",
+      "snippet": "dangerouslySetInnerHTML={{ __html: cssToInject }}",
+      "sanitized": true,
+      "sanitizationComment": "-supply-chain.md §3.4 I5. dangerouslySetInnerHTML={{ __html: cssToInject }}",
+      "explanation": "React escape hatch that injects raw HTML. If the string contains user input, it's a critical XSS. Allowed only with a `// SECURITY:` comment naming the threat model entry that justifies it."
+    },
+    {
+      "file": "src/components/roycss/roycss-page.tsx",
+      "line": 657,
+      "column": 14,
+      "pattern": "dangerouslySetInnerHTML",
+      "snippet": "<style dangerouslySetInnerHTML={{ __html: cssToInject }} />",
+      "sanitized": true,
+      "sanitizationComment": "-supply-chain.md §3.4 I5. */} <style dangerouslySetInnerHTML={{ __html: cssToInject }} />",
+      "explanation": "React escape hatch that injects raw HTML. If the string contains user input, it's a critical XSS. Allowed only with a `// SECURITY:` comment naming the threat model entry that justifies it."
+    },
+    {
+      "file": "src/components/ui/chart.tsx",
+      "line": 86,
+      "column": 7,
+      "pattern": "dangerouslySetInnerHTML",
+      "snippet": "dangerouslySetInnerHTML={{",
+      "sanitized": true,
+      "sanitizationComment": "-supply-chain.md §3.4 I5. dangerouslySetInnerHTML={{",
+      "explanation": "React escape hatch that injects raw HTML. If the string contains user input, it's a critical XSS. Allowed only with a `// SECURITY:` comment naming the threat model entry that justifies it."
+    }
+  ],
+  "unsanitized": [],
+  "exitCode": 0
+}

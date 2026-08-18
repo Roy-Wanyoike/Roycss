@@ -1,0 +1,95 @@
+name: Release
+
+# Trigger: push a tag matching v* (e.g. v1.1.0) to publish to npm.
+# Pre-release tags (v1.2.0-rc.1) do NOT trigger this workflow — they
+# must be published manually with `npm publish --tag next`.
+on:
+  push:
+    tags:
+      - "v*"
+
+# Never cancel a publish mid-flight. Two tag pushes in quick succession
+# run sequentially (the second one will fail at the publish step with
+# "version already exists" — that's the correct behavior).
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write    # required for `git push --tags` (redundant here, but
+                     # kept for the GitHub Release step if added later)
+  id-token: write    # required for npm provenance (Sigstore SLSA L3)
+  packages: none     # we don't publish to GitHub Packages
+
+jobs:
+  release:
+    name: Publish roycss to npm (with provenance)
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # full history for tag verification
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        # Pin a specific version for reproducible builds:
+        # with:
+        #   bun-version: 1.3.4
+
+      - name: Setup Node (for npm publish + provenance)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+          # actions/setup-node reads NODE_AUTH_TOKEN from env at publish time.
+
+      - name: Install dependencies (frozen lockfile)
+        run: bun install --frozen-lockfile
+
+      - name: Lint
+        run: bun run lint
+
+      - name: Build package
+        run: bun run scripts/build-package.ts
+
+      - name: Verify tag matches version
+        run: |
+          set -euo pipefail
+          TAG="${GITHUB_REF#refs/tags/}"
+          VERSION=$(node -e "console.log(require('./package.roycss.json').version)")
+          if [ "v${VERSION}" != "${TAG}" ]; then
+            echo "::error::Tag '${TAG}' does not match version 'v${VERSION}' in package.roycss.json"
+            exit 1
+          fi
+          echo "✓ Tag ${TAG} matches package.roycss.json version ${VERSION}"
+
+      - name: Publish to npm (with provenance)
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # HUSKY=0 disables any pre-commit hooks that might re-trigger CI.
+          HUSKY: "0"
+
+      - name: Summary
+        if: always()
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          VERSION="${TAG#v}"
+          {
+            echo "## RoyCSS Release Summary"
+            echo ""
+            echo "- **Tag:** \`${TAG}\`"
+            echo "- **Version:** \`${VERSION}\`"
+            echo "- **Package:** [roycss@${VERSION}](https://www.npmjs.com/package/roycss/v/${VERSION})"
+            echo "- **Commit:** ${{ github.sha }}"
+            echo "- **Actor:** ${{ github.actor }}"
+            echo "- **Run:** ${{ github.run_id }}"
+            echo ""
+            echo "### Verify"
+            echo ""
+            echo '```bash'
+            echo "npm view roycss@${VERSION} --json | jq '.dist.attestations'"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

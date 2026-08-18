@@ -1,0 +1,792 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-display);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  /* Declare both schemes so UA chrome (form controls, scrollbars) follows
+     the active theme. `.dark` below overrides to `dark` only. */
+  color-scheme: light dark;
+  --radius: 0.75rem;
+  --background: oklch(0.99 0.005 165);
+  --foreground: oklch(0.18 0.02 170);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.02 170);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.02 170);
+  /* Primary darkened from L=0.55 → L=0.50 so primary-as-text on the
+     light background AND primary-foreground (white) on primary both
+     clear WCAG AA at ~5.6:1. The previous L=0.55 value gave only
+     4.37:1 — failing AA for every primary button and primary link.
+     Matches the same darkening pattern already applied to --destructive
+     below (L=0.577 → L=0.50). */
+  --primary: oklch(0.50 0.13 165);
+  --primary-foreground: oklch(0.99 0.005 165);
+  --secondary: oklch(0.96 0.01 165);
+  --secondary-foreground: oklch(0.25 0.02 170);
+  --muted: oklch(0.96 0.01 165);
+  --muted-foreground: oklch(0.5 0.02 170);
+  --accent: oklch(0.93 0.04 165);
+  --accent-foreground: oklch(0.25 0.04 170);
+  /* Destructive darkened from L=0.577 → L=0.50 so white-on-destructive
+     (the standard shadcn `bg-destructive text-destructive-foreground`
+     pattern) clears WCAG AA at 5.72:1, and destructive-as-text on the
+     light background clears AA at 5.56:1. The previous L=0.577 value
+     gave only 4.04:1 / 4.16:1 — both failing AA. */
+  --destructive: oklch(0.50 0.22 27);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.9 0.01 165);
+  --input: oklch(0.92 0.01 165);
+  --ring: oklch(0.55 0.13 165);
+  --chart-1: oklch(0.55 0.13 165);
+  --chart-2: oklch(0.65 0.15 180);
+  --chart-3: oklch(0.45 0.1 150);
+  --chart-4: oklch(0.7 0.12 100);
+  --chart-5: oklch(0.6 0.14 200);
+  --sidebar: oklch(0.985 0.005 165);
+  --sidebar-foreground: oklch(0.18 0.02 170);
+  --sidebar-primary: oklch(0.55 0.13 165);
+  --sidebar-primary-foreground: oklch(0.99 0.005 165);
+  --sidebar-accent: oklch(0.93 0.04 165);
+  --sidebar-accent-foreground: oklch(0.25 0.04 170);
+  --sidebar-border: oklch(0.9 0.01 165);
+  --sidebar-ring: oklch(0.55 0.13 165);
+}
+
+.dark {
+  /* Override the :root declaration: when `.dark` is active, UA chrome
+     (form controls, scrollbars, default canvas color) must render dark. */
+  color-scheme: dark;
+  --background: oklch(0.14 0.015 175);
+  --foreground: oklch(0.96 0.005 165);
+  --card: oklch(0.18 0.02 175);
+  --card-foreground: oklch(0.96 0.005 165);
+  --popover: oklch(0.18 0.02 175);
+  --popover-foreground: oklch(0.96 0.005 165);
+  --primary: oklch(0.7 0.14 165);
+  --primary-foreground: oklch(0.14 0.02 175);
+  --secondary: oklch(0.24 0.025 175);
+  --secondary-foreground: oklch(0.96 0.005 165);
+  --muted: oklch(0.24 0.02 175);
+  --muted-foreground: oklch(0.68 0.02 170);
+  --accent: oklch(0.3 0.05 170);
+  --accent-foreground: oklch(0.96 0.01 165);
+  /* Destructive darkened from L=0.704 → L=0.55 so white-on-destructive
+     (the standard shadcn `bg-destructive text-destructive-foreground`
+     pattern) clears WCAG AA at 4.66:1. The previous L=0.704 value gave
+     only 2.58:1 — failing AA badly for button backgrounds.
+     Note: destructive-as-text on the dark background drops from 7.14:1
+     (AAA) to 3.96:1 (passes AA Large only). This is an accepted
+     trade-off — the button-bg use case is far more common, and there is
+     no single OKLCH value that satisfies both uses against a near-black
+     background. */
+  --destructive: oklch(0.55 0.22 22);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.7 0.14 165);
+  --chart-1: oklch(0.7 0.14 165);
+  --chart-2: oklch(0.65 0.15 180);
+  --chart-3: oklch(0.55 0.13 150);
+  --chart-4: oklch(0.75 0.13 100);
+  --chart-5: oklch(0.65 0.15 200);
+  --sidebar: oklch(0.16 0.02 175);
+  --sidebar-foreground: oklch(0.96 0.005 165);
+  --sidebar-primary: oklch(0.7 0.14 165);
+  --sidebar-primary-foreground: oklch(0.14 0.02 175);
+  --sidebar-accent: oklch(0.3 0.05 170);
+  --sidebar-accent-foreground: oklch(0.96 0.01 165);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.7 0.14 165);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  html {
+    scroll-behavior: smooth;
+    /* `overflow-x: hidden` (instead of `clip`) so window.scrollTo(),
+       scroll-driven animations, and scroll-restoration all keep working
+       on the y-axis. `clip` previously broke window.scrollTo() because
+       it removed the scroll container altogether. */
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  /* ─── Scroll margin for all anchored sections ───────────── */
+  section[id], main[id] {
+    scroll-margin-top: 5rem;
+  }
+
+  /* ─── Focus Visible (uses token, not hardcoded) ──────────── */
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  /* ─── Reduced Motion ─────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* ─── Screen Reader Only ─────────────────────────────────── */
+  .sr-only {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* ─── High Contrast Mode ─────────────────────────────────── */
+  @media (prefers-contrast: high) {
+    .glass, .glass-strong {
+      border-width: 2px;
+      border-color: currentColor;
+    }
+  }
+
+  /* ─── Custom Scrollbar (uses tokens + color-mix) ─────────── */
+  /* Main page scrollbar — wider and more visible for usability */
+  ::-webkit-scrollbar {
+    inline-size: 14px;
+    block-size: 14px;
+  }
+  ::-webkit-scrollbar-track {
+    background: color-mix(in oklch, var(--background) 80%, var(--foreground) 5%);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in oklch, var(--primary) 55%, var(--background));
+    border-radius: 10px;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+    transition: background 0.15s;
+
+    &:hover {
+      background: color-mix(in oklch, var(--primary) 75%, var(--background));
+      background-clip: padding-box;
+    }
+
+    &:active {
+      background: var(--primary);
+      background-clip: padding-box;
+    }
+  }
+  ::-webkit-scrollbar-corner {
+    background: var(--background);
+  }
+
+  /* Firefox — use 'auto' width (not thin) for better visibility */
+  html {
+    scrollbar-width: auto;
+    scrollbar-color: color-mix(in oklch, var(--primary) 55%, var(--background)) color-mix(in oklch, var(--background) 80%, var(--foreground) 5%);
+  }
+
+  /* scrollbar-gutter removed — would force a layout gutter on every page.
+     The scrollbar appears naturally when content overflows. */
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display), var(--font-geist-sans), sans-serif;
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, oklch(0.75 0.16 160) 0%, oklch(0.7 0.13 180) 50%, oklch(0.65 0.12 195) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-muted {
+    background: linear-gradient(135deg, oklch(0.85 0.05 165) 0%, oklch(0.7 0.08 180) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(to inline-end, color-mix(in oklch, white 4%, transparent) 1px, transparent 1px),
+      linear-gradient(to block-end, color-mix(in oklch, white 4%, transparent) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .bg-dots {
+    background-image: radial-gradient(color-mix(in oklch, white 8%, transparent) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .glow-emerald {
+    box-shadow: 0 0 60px -15px color-mix(in oklch, oklch(0.7 0.14 165) 40%, transparent);
+  }
+
+  .glass {
+    background: color-mix(in oklch, var(--foreground) 4%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid color-mix(in oklch, var(--foreground) 10%, transparent);
+  }
+
+  .glass-strong {
+    background: color-mix(in oklch, var(--foreground) 6%, transparent);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid color-mix(in oklch, var(--foreground) 12%, transparent);
+  }
+
+  .animate-blob {
+    animation: blob 18s ease-in-out infinite;
+  }
+
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+
+  /* ─── Scrollbar thin (CSS Nesting + color-mix) ───────────── */
+  /* For inner scrollable areas: code blocks, sheets, dialogs */
+  .scrollbar-thin {
+    scrollbar-width: auto;
+    scrollbar-color: color-mix(in oklch, var(--primary) 50%, transparent) transparent;
+
+    &::-webkit-scrollbar {
+      inline-size: 10px;
+      block-size: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: color-mix(in oklch, var(--foreground) 3%, transparent);
+      border-radius: 9999px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: color-mix(in oklch, var(--primary) 50%, transparent);
+      border-radius: 9999px;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+
+      &:hover {
+        background-color: color-mix(in oklch, var(--primary) 70%, transparent);
+        background-clip: padding-box;
+      }
+    }
+  }
+
+  /* ─── text-wrap utilities ────────────────────────────────── */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* ─── :has() parent-state utilities ──────────────────────── */
+  .roycss-has-hover:has(*:hover) {
+    border-color: var(--primary);
+    box-shadow: 0 0 20px color-mix(in oklch, var(--primary) 20%, transparent);
+  }
+
+  .roycss-has-focus:has(input:focus) {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--primary) 20%, transparent);
+  }
+
+  .roycss-has-invalid:has(input:invalid) {
+    border-color: var(--destructive);
+  }
+
+  /* ─── Container query utilities ──────────────────────────── */
+  .cq-container {
+    container-type: inline-size;
+  }
+
+  @container (min-width: 640px) {
+    .cq-sm\:flex-row {
+      flex-direction: row;
+    }
+  }
+
+  @container (min-width: 768px) {
+    .cq-md\:grid-cols-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+@keyframes blob {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(40px, -60px) scale(1.1);
+  }
+  66% {
+    transform: translate(-30px, 30px) scale(0.95);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, color-mix(in oklch, white 8%, transparent) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s linear infinite;
+}
+
+/* Section padding — logical properties */
+.section-pad {
+  padding-block-start: 6rem;
+  padding-block-end: 6rem;
+}
+
+@media (max-width: 768px) {
+  .section-pad {
+    padding-block-start: 4rem;
+    padding-block-end: 4rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   3D TILT CARD — inspired by originkit.dev
+   Mouse-driven 3D perspective tilt using CSS custom properties
+   ═══════════════════════════════════════════════════════════════ */
+.roycss-tilt-stage {
+  /* Default tilt values (no mouse) */
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --tilt-scale: 1;
+  perspective: 800px;
+  perspective-origin: center;
+  transition: perspective 0.4s ease;
+
+  & .roycss-tilt-target {
+    transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) scale(var(--tilt-scale));
+    transform-style: preserve-3d;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+
+  &:hover .roycss-tilt-target {
+    --tilt-scale: 1.04;
+  }
+
+  /* Reduced motion fallback — disable tilt entirely */
+  @media (prefers-reduced-motion: reduce) {
+    --tilt-x: 0deg;
+    --tilt-y: 0deg;
+
+    & .roycss-tilt-target {
+      transform: none;
+      transition: none;
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   3D ROTATING SPHERE — pure CSS, conic-gradient + transforms
+   Used as a decorative background element in the hero
+   ═══════════════════════════════════════════════════════════════ */
+.roycss-sphere-3d {
+  position: absolute;
+  inset-inline-start: 50%;
+  inset-block-start: 50%;
+  translate: -50% -50%;
+  width: clamp(18rem, 38vw, 32rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  opacity: 0.18;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  animation: roycss-sphere-spin 22s linear infinite;
+
+  /* Build the sphere surface from a conic gradient — gives a "latitudinal" feel */
+  background:
+    conic-gradient(
+      from 0deg at 50% 50%,
+      color-mix(in oklch, var(--primary) 75%, transparent),
+      color-mix(in oklch, oklch(0.7 0.14 180) 70%, transparent),
+      color-mix(in oklch, oklch(0.65 0.13 200) 70%, transparent),
+      color-mix(in oklch, var(--primary) 75%, transparent)
+    );
+
+  /* Radial overlay adds the 3D "shading" — light top-left, dark bottom-right */
+  mask-image: radial-gradient(
+    circle at 35% 30%,
+    oklch(1 0 0 / 95%) 0%,
+    oklch(1 0 0 / 60%) 45%,
+    oklch(1 0 0 / 10%) 80%,
+    transparent 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle at 35% 30%,
+    oklch(1 0 0 / 95%) 0%,
+    oklch(1 0 0 / 60%) 45%,
+    oklch(1 0 0 / 10%) 80%,
+    transparent 100%
+  );
+
+  /* Latitude rings for extra 3D depth */
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid color-mix(in oklch, var(--primary) 35%, transparent);
+    pointer-events: none;
+  }
+
+  &::before {
+    transform: rotateX(70deg);
+    box-shadow: 0 0 30px -5px color-mix(in oklch, var(--primary) 30%, transparent);
+  }
+
+  &::after {
+    transform: rotateX(70deg) scale(0.7);
+    border-color: color-mix(in oklch, oklch(0.7 0.14 200) 35%, transparent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes roycss-sphere-spin {
+  0% {
+    transform: rotateY(0deg) rotateZ(0deg);
+  }
+  50% {
+    transform: rotateY(180deg) rotateZ(10deg);
+  }
+  100% {
+    transform: rotateY(360deg) rotateZ(0deg);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLL-DRIVEN PARALLAX — 3D depth for hero blobs
+   Uses animation-timeline: scroll() where supported, with fallback
+   ═══════════════════════════════════════════════════════════════ */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .roycss-parallax-near,
+    .roycss-parallax-mid,
+    .roycss-parallax-far {
+      animation: roycss-blob-float linear both;
+      animation-timeline: scroll(root);
+    }
+
+    .roycss-parallax-near {
+      --parallax-translate-z: 80px;
+      --parallax-translate-amount: -8%;
+      animation-range: 0 60vh;
+    }
+
+    .roycss-parallax-mid {
+      --parallax-translate-z: 40px;
+      --parallax-translate-amount: -4%;
+      animation-range: 0 60vh;
+    }
+
+    .roycss-parallax-far {
+      --parallax-translate-z: 10px;
+      --parallax-translate-amount: -1%;
+      animation-range: 0 60vh;
+    }
+  }
+}
+
+@keyframes roycss-blob-float {
+  from {
+    transform: translate3d(0, 0, var(--parallax-translate-z, 0));
+  }
+  to {
+    transform: translate3d(0, var(--parallax-translate-amount, 0), 0);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CUSTOM ACCORDION (FAQ) — pure CSS + minimal JS toggle
+   Avoids Radix to prevent hydration mismatch warnings
+   ═══════════════════════════════════════════════════════════════ */
+.roycss-faq-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  overflow: hidden;
+  transition: border-color 0.2s ease, background 0.2s ease;
+
+  & + & {
+    margin-block-start: 0.75rem;
+  }
+
+  &:hover {
+    border-color: color-mix(in oklch, var(--primary) 35%, var(--border));
+  }
+
+  /* Open state — controlled by [data-open="true"] on the item */
+  &[data-open="true"] {
+    border-color: color-mix(in oklch, var(--primary) 50%, var(--border));
+    background: color-mix(in oklch, var(--primary) 4%, var(--card));
+  }
+
+  &[data-open="true"] .roycss-faq-content {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  &[data-open="true"] .roycss-faq-chevron {
+    transform: rotate(180deg);
+  }
+}
+
+.roycss-faq-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  inline-size: 100%;
+  padding: 1rem 1.25rem;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-align: start;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--foreground);
+
+  &:hover {
+    background: color-mix(in oklch, var(--primary) 5%, transparent);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+  }
+}
+
+.roycss-faq-chevron {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+/* Animated grid-row trick for smooth height animation without JS */
+.roycss-faq-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.3s ease, opacity 0.2s ease;
+}
+
+.roycss-faq-content-inner {
+  overflow: hidden;
+  min-block-size: 0;
+}
+
+.roycss-faq-content-inner > p {
+  padding: 0 1.25rem 1rem;
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MIGRATION TABLE — Animate.css → RoyCSS
+   ═══════════════════════════════════════════════════════════════ */
+.roycss-migration-table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+
+  & th,
+  & td {
+    padding: 0.625rem 0.875rem;
+    text-align: start;
+    border-block-end: 1px solid var(--border);
+  }
+
+  & th {
+    font-weight: 600;
+    color: var(--foreground);
+    background: color-mix(in oklch, var(--primary) 8%, transparent);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  & tr:hover td {
+    background: color-mix(in oklch, var(--primary) 4%, transparent);
+  }
+
+  & code {
+    font-family: var(--font-mono), monospace;
+    font-size: 0.78rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 0.375rem;
+    background: var(--muted);
+    color: var(--foreground);
+  }
+
+  & .roycss-arrow {
+    color: var(--primary);
+    font-weight: 700;
+    text-align: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .roycss-migration-table {
+    font-size: 0.78rem;
+
+    & th,
+    & td {
+      padding: 0.5rem 0.5rem;
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PERFORMANCE OPTIMIZATIONS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Skip rendering offscreen effect cards — massive paint savings */
+.perf-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 320px;
+}
+
+/* GPU acceleration for animated elements */
+.perf-gpu {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* Reduce paint complexity for glass elements on scroll */
+@media (prefers-reduced-motion: no-preference) {
+  .glass, .glass-strong {
+    contain: layout style;
+  }
+}
+
+/* Font display swap — prevent invisible text during font load */
+@font-face {
+  font-family: 'Geist';
+  font-display: swap;
+  src: local('Geist');
+}
+
+/* ─── Floating Navbar Neon Glow ────────────────────────────── */
+@keyframes roycss-nav-glow-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 1px color-mix(in oklch, var(--primary) 20%, transparent),
+      0 4px 24px oklch(0 0 0 / 0.12),
+      0 0 20px color-mix(in oklch, var(--primary) 25%, transparent),
+      0 0 40px color-mix(in oklch, var(--primary) 12%, transparent),
+      inset 0 1px 0 oklch(1 0 0 / 0.08);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px color-mix(in oklch, var(--primary) 35%, transparent),
+      0 4px 28px oklch(0 0 0 / 0.15),
+      0 0 28px color-mix(in oklch, var(--primary) 40%, transparent),
+      0 0 56px color-mix(in oklch, var(--primary) 20%, transparent),
+      inset 0 1px 0 oklch(1 0 0 / 0.08);
+  }
+}
+
+.roycss-nav-neon {
+  animation: roycss-nav-glow-pulse 4s ease-in-out infinite;
+}
+
+/* Active nav item gets an inner neon glow */
+.roycss-nav-neon .bg-primary {
+  box-shadow:
+    0 0 12px color-mix(in oklch, var(--primary) 50%, transparent),
+    0 0 24px color-mix(in oklch, var(--primary) 25%, transparent);
+}
+
+/* Hover on any nav button boosts the container glow */
+.roycss-nav-neon:hover {
+  animation-duration: 2s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-neon {
+    animation: none;
+  }
+}

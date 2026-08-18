@@ -1,0 +1,50 @@
+{
+  "generatedAt": "2026-07-30T13:12:57.682Z",
+  "tool": "bun audit",
+  "toolVersion": "v1.3.14",
+  "bunAuditExitCode": 0,
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "moderate": 0,
+    "low": 0,
+    "info": 0,
+    "total": 0
+  },
+  "acceptedAdvisories": [],
+  "acceptedAdvisoryCount": 0,
+  "acceptedAdvisoriesHit": [],
+  "unacceptedHighOrCritical": 0,
+  "affectedPackageCount": 0,
+  "affectedPackages": [],
+  "postInstallScripts": [
+    "@hookform/resolvers",
+    "@prisma/client",
+    "prisma",
+    "react-hook-form",
+    "react-syntax-highlighter",
+    "recharts",
+    "tailwindcss-animate",
+    "uuid"
+  ],
+  "overridesApplied": [
+    "@babel/core",
+    "ajv",
+    "brace-expansion",
+    "defu",
+    "diff",
+    "effect",
+    "flatted",
+    "js-cookie",
+    "js-yaml",
+    "lodash",
+    "lodash-es",
+    "minimatch",
+    "picomatch",
+    "postcss",
+    "prismjs",
+    "sharp"
+  ],
+  "exitCode": 0,
+  "explanation": "PASS: 0 critical, 0 high. (0 moderate, 0 low, 0 accepted-risk.) 8 runtime deps have postinstall scripts (documented in ADR §2.1; native-binary downloaders like prisma/sharp are accepted)."
+}

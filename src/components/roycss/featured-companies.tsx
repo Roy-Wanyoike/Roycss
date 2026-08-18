@@ -447,33 +447,31 @@ export function FeaturedCompanies() {
         <div className="container mx-auto px-4 sm:px-6">
           <ScrollReveal>
             <p className="text-center text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-6">
-              Trusted by teams building with RoyCSS
+              Trusted by developers at companies worldwide
             </p>
           </ScrollReveal>
 
           <ScrollReveal delay={0.1}>
+            {/* When only a single real sponsor exists, a sparse 5-up logo grid
+                looks empty / "still in beta". Instead we show the one real
+                sponsor card (the Founder) front-and-centre, and lead with a
+                concise banner. The placeholder "Your company here" card was
+                removed — the dedicated Sponsor CTA in the navbar + the
+                floating sponsor button already cover recruitment. */}
             <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
               {COMPANIES.map((company) => (
                 <CompanyCard key={company.name} company={company} />
               ))}
 
-              {/* Sponsor CTA card */}
+              {/* Sponsor CTA — a small inline pill so the section still
+                  invites new sponsors without pretending the grid is full. */}
               <button
                 onClick={() => setSponsorOpen(true)}
-                className="group flex items-center gap-3 rounded-xl border border-dashed border-primary/40 bg-primary/5 px-5 py-3 hover:bg-primary/10 transition-all cursor-pointer"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-dashed border-primary/40 bg-primary/5 px-4 py-2 min-h-[44px] text-xs font-medium text-primary hover:bg-primary/10 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                 aria-label="Become a sponsor"
               >
-                <div className="flex items-center justify-center size-10 rounded-lg bg-primary/15 text-primary shrink-0">
-                  <Heart className="size-5" />
-                </div>
-                <div className="text-left">
-                  <p className="font-display font-bold text-sm text-foreground leading-tight">
-                    Your company here
-                  </p>
-                  <p className="text-[11px] text-primary leading-tight mt-0.5">
-                    Sponsor RoyCSS →
-                  </p>
-                </div>
+                <Heart className="size-3.5" />
+                Become a sponsor
               </button>
             </div>
           </ScrollReveal>

@@ -110,6 +110,7 @@ import { EffectCard, LivePreview } from "@/components/roycss/effect-card";
 import { EffectDetailDialog } from "@/components/roycss/effect-detail-dialog";
 import { FavoritesSheet } from "@/components/roycss/favorites-sheet";
 import { ScrollToTop } from "@/components/roycss/scroll-to-top";
+import { MobileBottomNav } from "@/components/roycss/mobile-bottom-nav";
 import { InteractiveTutorial, restartRoyCssTutorial } from "@/components/roycss/interactive-tutorial";
 import { SectionScrollbar } from "@/components/roycss/section-scrollbar";
 import { DynamicEffectCSS } from "@/components/roycss/dynamic-effect-css";
@@ -162,7 +163,7 @@ import { SpacingScaleGenerator } from "@/components/roycss/spacing-scale-generat
 import { CSSVariableManager } from "@/components/roycss/variable-manager";
 import { ResponsivePreview } from "@/components/roycss/responsive-preview";
 import { useFavorites } from "@/hooks/use-favorites";
-import { motion, useScroll, useSpring, AnimatePresence, MotionConfig } from "framer-motion";
+import { motion, AnimatePresence, MotionConfig } from "framer-motion";
 import {
   ScrollReveal,
   StaggerGroup,
@@ -420,10 +421,10 @@ function NavMegaMenu({
         <DropdownMenuTrigger asChild>
           <button
             className={cn(
-              "flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer",
+              "flex items-center gap-1 px-4 py-2 min-h-[44px] rounded-lg text-sm font-semibold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
               active
                 ? "text-primary bg-primary/10"
-                : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
+                : "text-muted-foreground hover:text-foreground hover:bg-muted/60",
             )}
             aria-haspopup="menu"
             aria-expanded={open}
@@ -483,18 +484,55 @@ function MegaMenuRow({
   );
 }
 
-/* ─── Scroll Progress Bar ───────────────────────────────────── */
+/* ─── Scroll Progress Bar ─────────────────────────────────────
+   Tracks window scroll, clamps the ratio to [0, 1] (never negative),
+   uses rAF throttling, and applies `transform: scaleX(ratio)` with
+   `transform-origin: left center`. Explicit window listener is more
+   robust than framer-motion's `useScroll` because the previous CSS
+   `overflow-x: clip` on <html> broke window.scrollTo() and the
+   implicit scroll-tracking that motion relies on — we now use
+   `overflow-x: hidden` (see globals.css) so this is belt-and-suspenders. */
 function ScrollProgress() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 30,
-    restDelta: 0.001,
-  });
+  const [ratio, setRatio] = useState(0);
+
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        if (typeof window === "undefined") return;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        // Guard against divide-by-zero (page shorter than viewport) — and
+        // never let the ratio go negative (safari sometimes reports a tiny
+        // negative scrollY during elastic overscroll).
+        const next = max > 0 ? Math.max(0, Math.min(1, window.scrollY / max)) : 0;
+        setRatio(next);
+      });
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    // Recompute on load in case images/layout shift the page height.
+    window.addEventListener("load", update);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+      window.removeEventListener("load", update);
+    };
+  }, []);
+
   return (
-    <motion.div
-      style={{ scaleX }}
+    <div
       className="roycss-scroll-progress"
+      style={{
+        transform: `scaleX(${ratio})`,
+        transformOrigin: "left center",
+        // Override the .roycss-scroll-progress `transform-origin: 0%` for
+        // explicitness; both are equivalent.
+        willChange: "transform",
+      }}
+      aria-hidden="true"
     />
   );
 }
@@ -607,7 +645,7 @@ function InstallCommand() {
             handleCopy();
           }
         }}
-        className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 group cursor-pointer transition-all outline-none border-2 ${
+        className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 min-h-[44px] group cursor-pointer transition-all outline-none border-2 ${
           copied
             ? "border-emerald-500 bg-emerald-500/10 shadow-lg shadow-emerald-500/20"
             : clicked
@@ -670,7 +708,7 @@ function DocCard({
   // `nested-interactive` violation (WCAG 4.1.2). See ADR-05.
   return (
     <div
-      className="group rounded-2xl border border-border bg-card p-5 hover:border-primary/40 hover:shadow-lg transition-all cursor-pointer"
+      className="group rounded-2xl border border-border bg-card p-5 hover:border-primary/40 hover:shadow-lg transition-all cursor-pointer min-w-0"
       onClick={() => details && setExpanded((e) => !e)}
     >
       <div className="flex items-center gap-3 mb-3">
@@ -1164,6 +1202,7 @@ function FeaturedCarousel({ onSelectEffect }: { onSelectEffect: (effect: CSSEffe
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -16 }}
                   transition={{ duration: 0.4, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                  className="min-w-0"
                 >
                   <FeaturedCard effect={effect} onSelect={onSelectEffect} />
                 </motion.div>
@@ -1519,10 +1558,10 @@ export default function RoyCSSPage() {
                 <button
                   onClick={() => scrollToSection("#get-started")}
                   className={cn(
-                    "px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer",
+                    "px-4 py-2 min-h-[44px] rounded-lg text-sm font-semibold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
                     activeSection === "get-started"
                       ? "text-primary bg-primary/10"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/60",
                   )}
                 >
                   Get Started
@@ -1578,10 +1617,10 @@ export default function RoyCSSPage() {
                 <button
                   onClick={() => setDocsOpen(true)}
                   className={cn(
-                    "px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer",
+                    "px-4 py-2 min-h-[44px] rounded-lg text-sm font-semibold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
                     docsOpen
                       ? "text-primary bg-primary/10"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/60",
                   )}
                 >
                   Docs
@@ -1589,10 +1628,10 @@ export default function RoyCSSPage() {
                 <button
                   onClick={() => scrollToSection("#faq")}
                   className={cn(
-                    "px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer",
+                    "px-4 py-2 min-h-[44px] rounded-lg text-sm font-semibold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
                     activeSection === "faq"
                       ? "text-primary bg-primary/10"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/60",
                   )}
                 >
                   FAQ
@@ -2417,12 +2456,12 @@ export default function RoyCSSPage() {
       <Separator className="opacity-50" />
 
       {/* ─── Footer ─────────────────────────────────────────── */}
-      <footer aria-label="Site footer" className="border-t border-border/50 bg-card/50 backdrop-blur-sm mt-auto">
+      <footer aria-label="Site footer" className="border-t border-border/50 bg-card/50 backdrop-blur-sm mt-auto pb-14 md:pb-0">
         <div className="container mx-auto px-4 sm:px-6 py-10 sm:py-12">
           {/* Top section: nav columns + newsletter */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 mb-10">
             {/* Brand column */}
-            <div className="col-span-2 sm:col-span-3 lg:col-span-1">
+            <div className="col-span-2 sm:col-span-3 lg:col-span-1 min-w-0">
               <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center gap-2.5 mb-3 cursor-pointer hover:opacity-80 transition-opacity" aria-label="RoyCSS — scroll to top">
                 <RoyCSSLogo size="sm" animated={false} />
               </button>
@@ -2585,6 +2624,15 @@ export default function RoyCSSPage() {
 
       {/* Scroll to Top Button */}
       <ScrollToTop />
+
+      {/* Mobile bottom navigation — visible only on < md (768px) viewports.
+          Provides persistent thumb-friendly access to the 5 primary
+          destinations (Home · Effects · Platform · Docs · Search). */}
+      <MobileBottomNav
+        activeSection={activeSection}
+        onOpenDocs={() => setDocsOpen(true)}
+        onOpenSearch={() => setSearchOverlayOpen(true)}
+      />
 
       {/* Sticky Mini Nav — glassmorphism floating nav */}
       <StickyMiniNav

@@ -152,10 +152,16 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    overflow-x: clip;
+    overflow-x: hidden;
   }
   html {
     scroll-behavior: smooth;
+    /* `overflow-x: hidden` (instead of `clip`) so window.scrollTo(),
+       scroll-driven animations, and scroll-restoration all keep working
+       on the y-axis. `clip` previously broke window.scrollTo() because
+       it removed the scroll container altogether. */
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   /* ─── Scroll margin for all anchored sections ───────────── */
@@ -237,7 +243,7 @@
     scrollbar-color: color-mix(in oklch, var(--primary) 55%, var(--background)) color-mix(in oklch, var(--background) 80%, var(--foreground) 5%);
   }
 
-  /* scrollbar-gutter removed — causes layout shift with overflow-x: clip.
+  /* scrollbar-gutter removed — would force a layout gutter on every page.
      The scrollbar appears naturally when content overflows. */
 }
 

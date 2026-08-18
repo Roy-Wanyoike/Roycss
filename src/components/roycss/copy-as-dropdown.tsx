@@ -80,8 +80,8 @@ export function CopyAsDropdown({
 
   const triggerClass =
     variant === "primary"
-      ? "flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-all cursor-pointer"
-      : "flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-background/90 border border-border/50 text-muted-foreground hover:text-foreground hover:bg-background transition-all cursor-pointer";
+      ? "flex items-center gap-1 px-2.5 py-2 min-h-[44px] rounded-lg text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+      : "flex items-center gap-1 px-2.5 py-2 min-h-[44px] rounded-lg text-xs font-medium bg-background/90 border border-border/50 text-muted-foreground hover:text-foreground hover:bg-background transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40";
 
   return (
     <DropdownMenu>

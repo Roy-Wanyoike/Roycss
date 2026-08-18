@@ -6,6 +6,7 @@ import "./roymotion.css";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 import { ServiceWorkerRegistration } from "@/components/roycss/sw-register";
+import { Analytics } from "@vercel/analytics/next";
 
 /**
  * Pre-hydration theme script.
@@ -184,6 +185,7 @@ export default function RootLayout({
         <Toaster />
         <SonnerToaster position="bottom-right" richColors closeButton />
         <ServiceWorkerRegistration />
+        <Analytics />
       </body>
     </html>
   );

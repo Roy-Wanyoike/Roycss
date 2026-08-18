@@ -153,6 +153,7 @@ function clampLeft(left: number): number {
 export function InteractiveTutorial() {
   const [mounted, setMounted] = useState(false);
   const [active, setActive] = useState(false);
+  const [bannerVisible, setBannerVisible] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
   const [spotlight, setSpotlight] = useState<SpotlightState>({
     rect: null,
@@ -160,16 +161,23 @@ export function InteractiveTutorial() {
   });
   const tooltipRef = useRef<HTMLDivElement>(null);
 
-  /* ── Mount: SSR guard + auto-start if not completed ── */
+  /* ── Mount: SSR guard + show dismissible banner (never auto-open dialog) ──
+     Previous behaviour: setTimeout(() => setActive(true), 2500) opened the
+     modal dialog on every page load — annoying + jarring. Now we just show a
+     small dismissible banner at the top of the page inviting the user to
+     "Take Tour". The dialog only opens when they actually click it.
+     The banner is suppressed entirely once the user has completed/skipped
+     (localStorage `roycss-tutorial-completed`). Mobile shows the banner too —
+     the modal still opens on tap (via the same code path), the only difference
+     is that nothing auto-triggers. */
   useEffect(() => {
     // Defer setState to the next frame to satisfy react-hooks/set-state-in-effect
     // (same pattern used by effect-of-the-day, easing-visualizer, perf-analyzer).
     const raf = requestAnimationFrame(() => setMounted(true));
     const done = getStoredCompletion();
     if (!done) {
-      // Defer so the page has time to render target elements and the user
-      // can see the hero before the tutorial overlay appears.
-      const id = window.setTimeout(() => setActive(true), 2500);
+      // Show the dismissible banner — never auto-open the modal dialog.
+      const id = window.setTimeout(() => setBannerVisible(true), 600);
       return () => {
         cancelAnimationFrame(raf);
         window.clearTimeout(id);
@@ -183,10 +191,23 @@ export function InteractiveTutorial() {
     const handleStart = () => {
       setStoredCompletion("completed"); // cleared below if user re-skips? keep simple: restart re-shows
       setStepIndex(0);
+      setBannerVisible(false);
       setActive(true);
     };
     window.addEventListener(START_EVENT, handleStart);
     return () => window.removeEventListener(START_EVENT, handleStart);
+  }, []);
+
+  /* ── Banner handlers ── */
+  const handleTakeTour = useCallback(() => {
+    setBannerVisible(false);
+    setStepIndex(0);
+    setActive(true);
+  }, []);
+
+  const handleDismissBanner = useCallback(() => {
+    setStoredCompletion("skipped");
+    setBannerVisible(false);
   }, []);
 
   const measureStep = useCallback((index: number) => {
@@ -298,7 +319,64 @@ export function InteractiveTutorial() {
   }, [active]);
 
   /* ── Don't render on the server; render via portal once mounted ── */
-  if (!mounted || !active) return null;
+  if (!mounted) return null;
+
+  // Banner mode — small, dismissible invitation shown at the top of the page.
+  // This replaces the previous "auto-open modal dialog after 2.5s" behaviour.
+  // The modal only opens when the user explicitly clicks "Take Tour".
+  if (!active) {
+    return createPortal(
+      <AnimatePresence>
+        {bannerVisible && (
+          <motion.div
+            role="region"
+            aria-label="Tutorial invitation"
+            initial={{ opacity: 0, y: -24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -24 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed top-3 inset-x-3 sm:top-4 sm:left-1/2 sm:right-auto sm:-translate-x-1/2 z-[90] w-auto sm:w-max max-w-[calc(100vw-1.5rem)]"
+          >
+            <div className="flex items-center gap-3 rounded-2xl border border-primary/30 bg-card/90 backdrop-blur-xl px-3 py-2 sm:px-4 sm:py-2.5 shadow-xl shadow-primary/5">
+              <span aria-hidden className="text-lg leading-none">
+                👋
+              </span>
+              <p className="text-xs sm:text-sm font-medium text-foreground leading-tight">
+                New here? Take a quick tour
+              </p>
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={handleTakeTour}
+                  className="inline-flex items-center gap-1 rounded-lg bg-primary px-2.5 py-1.5 sm:px-3 sm:py-2 text-xs font-semibold text-primary-foreground transition-colors hover:bg-primary/90 min-h-[36px] sm:min-h-[40px]"
+                  aria-label="Take the RoyCSS interactive tour"
+                >
+                  Take Tour
+                </button>
+                <button
+                  type="button"
+                  onClick={handleDismissBanner}
+                  className="inline-flex items-center rounded-lg px-2.5 py-1.5 sm:px-3 sm:py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground min-h-[36px] sm:min-h-[40px]"
+                  aria-label="Dismiss the tutorial invitation"
+                >
+                  No thanks
+                </button>
+                <button
+                  type="button"
+                  onClick={handleDismissBanner}
+                  className="ml-0.5 flex size-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                  aria-label="Close banner"
+                >
+                  <X className="size-3.5" />
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>,
+      document.body,
+    );
+  }
 
   const step = STEPS[stepIndex];
   const isLast = stepIndex === STEPS.length - 1;

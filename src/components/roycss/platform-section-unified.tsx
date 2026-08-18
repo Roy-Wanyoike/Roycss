@@ -460,7 +460,7 @@ export function PlatformSectionUnified({
                   transition={{ duration: 0.2 }}
                   whileHover={{ y: -4 }}
                   onClick={() => setSelectedProduct(product)}
-                  className="group text-left rounded-2xl border border-border bg-card p-5 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all cursor-pointer perf-auto flex flex-col"
+                  className="group text-left rounded-2xl border border-border bg-card p-5 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all cursor-pointer perf-auto flex flex-col min-w-0"
                   aria-label={`Open ${product.name}`}
                 >
                   {/* Header row: icon + name + chevron */}

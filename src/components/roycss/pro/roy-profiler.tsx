@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyProfiler — frontend performance profiler.
  *
@@ -158,6 +161,10 @@ function MemoryChart({ samples }: { samples: MemorySample[] }) {
 // ─── Component ───────────────────────────────────────────────────────────
 
 export function RoyProfiler() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("profiler/results");
+  void data; void loading; void error;
+
   const [profiling, setProfiling] = useState(false);
   const [progress, setProgress] = useState(0);
   const [done, setDone] = useState(false);

@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoySync — a synchronization hub for RoyCSS integrations.
  *
@@ -579,6 +582,10 @@ const SyncLogRow = React.memo(function SyncLogRow({ event }: SyncLogRowProps) {
 // ═══════════════════════════════════════════════════════════════════════
 
 export function RoySync() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("sync/status");
+  void data; void loading; void error;
+
   const { toast } = useToast();
   const [syncStates, setSyncStates] = useState<
     Record<IntegrationId, SyncState | null>

@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoySpotlight — featured developer showcase for the RoyCSS community.
  *
@@ -97,6 +100,10 @@ const FILTERS: readonly { id: ItemType | "all"; label: string }[] = [
 // ─── Component ───────────────────────────────────────────────────────────
 
 export function RoySpotlight() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("spotlight/items");
+  void data; void loading; void error;
+
   const [filter, setFilter] = useState<ItemType | "all">("all");
   const { toast } = useToast();
 

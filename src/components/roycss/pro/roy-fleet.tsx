@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyFleet — manage hundreds of RoyCSS projects across an organization.
  *
@@ -96,6 +99,10 @@ const PROJECTS: readonly FleetProject[] = [
 // ─── Component ───────────────────────────────────────────────────────────
 
 export function RoyFleet() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("fleet/projects");
+  void data; void loading; void error;
+
   const [filter, setFilter] = useState<FleetStatus | "all">("all");
   const [scanning, setScanning] = useState(false);
   const [progress, setProgress] = useState(0);

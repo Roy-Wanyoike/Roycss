@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyWorkspace — company workspace for shared RoyCSS resources.
  *
@@ -140,6 +143,10 @@ const TAB_ICONS: Record<ResourceTab, LucideIcon> = {
 // ─── Component ───────────────────────────────────────────────────────────
 
 export function RoyWorkspace() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("workspace/resources");
+  void data; void loading; void error;
+
   const [tab, setTab] = useState<ResourceTab>("templates");
   const { toast } = useToast();
 

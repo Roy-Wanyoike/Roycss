@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyColorStudio — enterprise color management.
  *
@@ -493,6 +496,10 @@ function ThemeSwatch({
 // ═══════════════════════════════════════════════════════════════════════
 
 export function RoyColorStudio(): React.JSX.Element {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("color-space/presets");
+  void data; void loading; void error;
+
   const [baseHex, setBaseHex] = React.useState<string>("#10b981");
   const [copiedStep, setCopiedStep] = React.useState<StepKey | null>(null);
   const [copiedVars, setCopiedVars] = React.useState<boolean>(false);

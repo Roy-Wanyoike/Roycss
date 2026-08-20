@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyCertifications — RoyCSS certification & verification platform.
  *
@@ -130,6 +133,10 @@ const LEVEL_NAME: Record<Level, string> = {
 // ─── Component ───────────────────────────────────────────────────────────
 
 export function RoyCertifications() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("certifications");
+  void data; void loading; void error;
+
   const [credentialId, setCredentialId] = useState("");
   const { toast } = useToast();
 

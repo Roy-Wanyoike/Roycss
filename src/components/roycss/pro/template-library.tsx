@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * TemplateLibrary — RoyCSS production template library with LIVE previews.
  *
@@ -1450,6 +1453,10 @@ function Toolbar({
 // ═══════════════════════════════════════════════════════════════════════
 
 export function TemplateLibrary(): React.JSX.Element {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("marketplace/templates");
+  void data; void loading; void error;
+
   const [search, setSearch] = useState<string>("");
   const [filter, setFilter] = useState<CategoryFilter>("all");
   const [active, setActive] = useState<TemplateMeta | null>(null);

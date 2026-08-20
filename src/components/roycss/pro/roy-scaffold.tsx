@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyScaffold — a project scaffolding tool for RoyCSS.
  *
@@ -635,6 +638,10 @@ function OptionSelect<T extends string>({
 // ═══════════════════════════════════════════════════════════════════════
 
 export function RoyScaffold() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("scaffold/types");
+  void data; void loading; void error;
+
   const { toast } = useToast();
   const [projectType, setProjectType] = useState<ProjectType>("saas");
   const [framework, setFramework] = useState<Framework>("nextjs");

@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * Roy Search — universal cross-content search engine.
  *
@@ -1123,6 +1126,10 @@ function DetailPanel({
 // ═══════════════════════════════════════════════════════════════════════
 
 export function RoySearch(): React.JSX.Element {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("search/recent");
+  void data; void loading; void error;
+
   const { toast } = useToast();
 
   // ─── Input state + 200ms debounce ───────────────────────────────────

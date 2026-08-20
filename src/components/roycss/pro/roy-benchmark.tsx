@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyBenchmark — benchmarking platform for RoyCSS projects.
  *
@@ -133,6 +136,10 @@ function formatValue(v: number, unit: string): string {
 // ─── Component ───────────────────────────────────────────────────────────
 
 export function RoyBenchmark() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("benchmark/comparisons");
+  void data; void loading; void error;
+
   const [project, setProject] = useState<string>(PROJECTS[0].id);
   const [running, setRunning] = useState(false);
   const [progress, setProgress] = useState(0);

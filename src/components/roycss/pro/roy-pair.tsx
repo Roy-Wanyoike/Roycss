@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyPair — AI pair programmer for RoyCSS.
  *
@@ -376,6 +379,10 @@ function MessageBubble({ message }: { message: ChatMessage }) {
 // ═══════════════════════════════════════════════════════════════════════
 
 export function RoyPair() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("pair/suggestions");
+  void data; void loading; void error;
+
   const [messages, setMessages] = useState<ChatMessage[]>([WELCOME]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);

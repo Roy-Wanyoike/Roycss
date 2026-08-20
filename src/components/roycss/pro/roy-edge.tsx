@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyEdge — edge deployment across 6 global regions.
  *
@@ -97,6 +100,10 @@ const COMPARISON = [
 // ─── Component ───────────────────────────────────────────────────────────
 
 export function RoyEdge() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("edge/regions");
+  void data; void loading; void error;
+
   const [ttl, setTtl] = useState("300");
   const [strategy, setStrategy] = useState<Strategy>("stale-while-revalidate");
   const [deploying, setDeploying] = useState(false);

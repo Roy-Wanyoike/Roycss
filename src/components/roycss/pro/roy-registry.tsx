@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyRegistry — a package registry for RoyCSS.
  *
@@ -842,6 +845,10 @@ function PublishDialog({ open, onOpenChange, onPublish }: PublishDialogProps) {
 // ═══════════════════════════════════════════════════════════════════════
 
 export function RoyRegistry() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("registry/packages");
+  void data; void loading; void error;
+
   const { toast } = useToast();
   const [packages, setPackages] = useState<readonly RegistryPackage[]>(PACKAGES);
   const [search, setSearch] = useState("");

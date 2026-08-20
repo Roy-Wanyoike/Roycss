@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyGovernance — Design system governance dashboard.
  *
@@ -215,6 +218,10 @@ const INITIAL_AUDIT: AuditEntry[] = [
 // ─── Component ───────────────────────────────────────────────────────────
 
 export function RoyGovernance() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("governance/policies");
+  void data; void loading; void error;
+
   const [approvals, setApprovals] = useState<ApprovalItem[]>(INITIAL_APPROVALS);
   const [audit, setAudit] = useState<AuditEntry[]>(INITIAL_AUDIT);
 

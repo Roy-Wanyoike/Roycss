@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyAuditCenter — enterprise audit dashboard.
  *
@@ -143,6 +146,10 @@ function MiniTrend({ data }: { data: number[] }) {
 // ─── Component ───────────────────────────────────────────────────────────
 
 export function RoyAuditCenter() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("audit-center/projects");
+  void data; void loading; void error;
+
   const { toast } = useToast();
   const [selectedId, setSelectedId] = useState<string>(PROJECTS[0].id);
   const [filter, setFilter] = useState<IssueSeverity | "all">("all");

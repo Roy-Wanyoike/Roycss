@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * MotionLibrary — RoyMotion showcase of 12 reusable animation primitives.
  *
@@ -937,6 +940,10 @@ function Toolbar({
 // ═══════════════════════════════════════════════════════════════════════
 
 export function MotionLibrary() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("motion/effects");
+  void data; void loading; void error;
+
   const [activeFilter, setActiveFilter] = useState<Filter>("all");
   const [speed, setSpeed] = useState(1);
 

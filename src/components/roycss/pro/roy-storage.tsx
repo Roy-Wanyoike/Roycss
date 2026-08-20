@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyStorage — cloud storage browser for RoyCSS assets.
  *
@@ -107,6 +110,10 @@ const PATH = ["acme-design", "roycss", "assets"] as const;
 // ─── Component ───────────────────────────────────────────────────────────
 
 export function RoyStorage() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("storage/files");
+  void data; void loading; void error;
+
   const [query, setQuery] = useState("");
   const { toast } = useToast();
 

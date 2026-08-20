@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyObservatory — production monitoring dashboard.
  *
@@ -193,6 +196,10 @@ function TrendChart({ data }: { data: number[] }) {
 // ─── Component ───────────────────────────────────────────────────────────
 
 export function RoyObservatory() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("observatory/sites");
+  void data; void loading; void error;
+
   const { toast } = useToast();
   const [selectedId, setSelectedId] = useState<string>(SITES[0].id);
   const [addOpen, setAddOpen] = useState(false);

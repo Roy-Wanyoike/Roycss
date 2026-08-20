@@ -13,7 +13,7 @@ import {
   validateBody,
   validateParams,
 } from "../../server/middleware/validate.js";
-import { listProfilerMetrics, startProfiling, getProfilerResultById } from "./service.js";
+import { listProfilerMetrics, listProfilerResults, startProfiling, getProfilerResultById } from "./service.js";
 import { IdParamsSchema, StartProfilingSchema } from "./schema.js";
 
 export const profilerRouter = Router();
@@ -22,6 +22,14 @@ profilerRouter.get(
   "/metrics",
   asyncHandler(async (_req, res) => {
     const items = await listProfilerMetrics();
+    res.json({ data: items, meta: { count: items.length } });
+  }),
+);
+
+profilerRouter.get(
+  "/results",
+  asyncHandler(async (_req, res) => {
+    const items = await listProfilerResults();
     res.json({ data: items, meta: { count: items.length } });
   }),
 );

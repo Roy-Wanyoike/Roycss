@@ -1,16 +1,24 @@
 /**
- * Inspector service — in-memory RoyCSS class catalog + page scanner.
+ * Inspector service — RoyCSS class catalog + page scanner.
  *
- * Stores 100 mock `roycss-*` class entries (name, category, description,
- * cssSnippet) plus a mock scan-result generator that returns whatever
- * classes the scanner "found" on a page.
+ * Sources its class catalog from the build artifact `dist/class-index.json`
+ * (produced by `scripts/generate-build-artifacts.ts` at build time). The
+ * catalog contains one row per top-level `.{className} { ... }` rule
+ * found in any effect's `cssCode`, alongside the originating effect's
+ * id and category. The service adapts that raw artifact into the
+ * `InspectorClass` domain shape.
  *
  * All reads are LRU-cached. No mutation endpoints — the catalog is a
  * curated platform asset.
  *
- * Future: source class metadata from the same build that produces
- * dist/effects.json (or a dedicated inspector build artifact).
+ * If the artifact is missing or unreadable, the service degrades to an
+ * empty dataset and logs a warning — the server still starts and every
+ * endpoint returns a clear empty result rather than crashing.
  */
+import { readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
 import { CACHE_TTL } from "../../config/constants.js";
 import { cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
@@ -20,84 +28,105 @@ import type { ScanPageInput } from "./schema.js";
 
 const log = createLogger("inspector");
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+// src/modules/inspector/service.ts → ../../.. = backend root
+const BACKEND_ROOT = resolve(__dirname, "..", "..", "..");
+const CLASS_INDEX_PATH = resolve(BACKEND_ROOT, "..", "dist", "class-index.json");
+
 const CLASSES_KEY = "inspector:classes";
 const detailKey = (name: string): string => `inspector:class:${name}`;
 const EFFECTS_KEY = "inspector:effects";
 const scanKey = (url: string, category: string): string =>
   `inspector:scan:${url}:${category}`;
 
-// ─── Seed: 100 roycss-* classes (deterministic generation) ──────────────
-// Generated across 10 categories × 10 classes per category. Using a
-// deterministic generator keeps the cached snapshot stable across runs
-// (no Math.random — same rule as analytics).
-type CategoryDef = {
-  prefix: string;
+/** Raw artifact shape produced by generate-build-artifacts.ts. */
+interface ClassIndexEntry {
+  className: string;
   category: string;
-  description: string;
-};
-
-const CATEGORY_DEFS: CategoryDef[] = [
-  { prefix: "btn", category: "buttons", description: "Button styles" },
-  { prefix: "card", category: "cards", description: "Card containers" },
-  { prefix: "input", category: "forms", description: "Form inputs" },
-  { prefix: "txt", category: "text", description: "Text treatments" },
-  { prefix: "grid", category: "layout", description: "Grid + flex layout" },
-  { prefix: "nav", category: "navigation", description: "Nav components" },
-  { prefix: "modal", category: "overlays", description: "Modal overlays" },
-  { prefix: "tbl", category: "tables", description: "Table styles" },
-  { prefix: "badge", category: "feedback", description: "Badges + tags" },
-  { prefix: "anim", category: "animations", description: "Animation utilities" },
-];
-
-const VARIANTS = [
-  "default",
-  "primary",
-  "secondary",
-  "ghost",
-  "outline",
-  "sm",
-  "md",
-  "lg",
-  "active",
-  "disabled",
-];
-
-function buildClasses(): InspectorClass[] {
-  const out: InspectorClass[] = [];
-  for (const def of CATEGORY_DEFS) {
-    for (let i = 0; i < VARIANTS.length; i++) {
-      const variant = VARIANTS[i]!;
-      const name = `roycss-${def.prefix}-${variant}`;
-      out.push({
-        name,
-        category: def.category,
-        description: `${def.description} — ${variant} variant.`,
-        cssSnippet: `.${name}{/* ${def.category}/${variant} */}`,
-      });
-    }
-  }
-  return out;
+  effectId: string;
+  properties: string;
 }
 
-const SEED_CLASSES: InspectorClass[] = buildClasses();
+let cachedClasses: InspectorClass[] | null = null;
+let cachedEffects: { id: string; name: string; category: string }[] = [];
 
-// ─── Seed: inspectable effects (a small curated subset) ─────────────────
-const SEED_EFFECTS: { id: string; name: string; category: string }[] = [
-  { id: "text-gradient", name: "Text Gradient", category: "text" },
-  { id: "card-glassmorphism", name: "Glassmorphism Card", category: "cards" },
-  { id: "fade-in-up", name: "Fade In Up", category: "animations" },
-  { id: "pulse-glow", name: "Pulse Glow", category: "hover" },
-  { id: "loader-shimmer", name: "Shimmer Loader", category: "loaders" },
-  { id: "input-glow-focus", name: "Input Glow Focus", category: "forms" },
-  { id: "slide-in-right", name: "Slide In Right", category: "animations" },
-  { id: "particles-confetti-burst", name: "Confetti Burst", category: "particles" },
-];
+/** Load + cache the class-index.json artifact. */
+function loadClasses(): InspectorClass[] {
+  if (cachedClasses) return cachedClasses;
+
+  let raw: string;
+  try {
+    raw = readFileSync(CLASS_INDEX_PATH, "utf-8");
+  } catch (err) {
+    log.error(
+      "Failed to read class-index.json artifact — running with empty catalog",
+      {
+        path: CLASS_INDEX_PATH,
+        err: err instanceof Error ? err.message : String(err),
+      },
+    );
+    cachedClasses = [];
+    cachedEffects = [];
+    return cachedClasses;
+  }
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch (err) {
+    log.error("class-index.json is malformed — running with empty catalog", {
+      path: CLASS_INDEX_PATH,
+      err: err instanceof Error ? err.message : String(err),
+    });
+    cachedClasses = [];
+    return cachedClasses;
+  }
+
+  if (!Array.isArray(parsed)) {
+    log.error("class-index.json is not an array — running with empty catalog", {
+      path: CLASS_INDEX_PATH,
+    });
+    cachedClasses = [];
+    return cachedClasses;
+  }
+
+  const entries = parsed as ClassIndexEntry[];
+  const seen = new Set<string>();
+  const classes: InspectorClass[] = [];
+  const effects: { id: string; name: string; category: string }[] = [];
+
+  for (const entry of entries) {
+    if (!entry?.className) continue;
+    if (seen.has(entry.className)) continue;
+    seen.add(entry.className);
+    classes.push({
+      name: entry.className,
+      category: entry.category,
+      description: `CSS class from effect '${entry.effectId}'.`,
+      cssSnippet: `.${entry.className}{${entry.properties}}`,
+    });
+    effects.push({
+      id: entry.effectId,
+      name: entry.effectId,
+      category: entry.category,
+    });
+  }
+
+  cachedClasses = classes;
+  cachedEffects = effects;
+  log.info("Class index loaded", {
+    path: CLASS_INDEX_PATH,
+    classes: classes.length,
+    effects: effects.length,
+  });
+  return cachedClasses;
+}
 
 /** List all inspector classes. Cached. */
 export async function listClasses(): Promise<InspectorClass[]> {
   return cacheWrap(
     CLASSES_KEY,
-    () => Promise.resolve(SEED_CLASSES.map((c) => ({ ...c }))),
+    () => Promise.resolve(loadClasses().map((c) => ({ ...c }))),
     CACHE_TTL.inspectorClasses,
   );
 }
@@ -107,7 +136,7 @@ export async function getClassByName(name: string): Promise<InspectorClass> {
   return cacheWrap(
     detailKey(name),
     () => {
-      const found = SEED_CLASSES.find((c) => c.name === name);
+      const found = loadClasses().find((c) => c.name === name);
       if (!found) throw AppError.notFound(`Class '${name}' not found`);
       return Promise.resolve({ ...found });
     },
@@ -115,13 +144,13 @@ export async function getClassByName(name: string): Promise<InspectorClass> {
   );
 }
 
-/** List inspectable effects (a curated subset). Cached. */
+/** List inspectable effects (a curated subset derived from class-index). */
 export async function listEffects(): Promise<
   { id: string; name: string; category: string }[]
 > {
   return cacheWrap(
     EFFECTS_KEY,
-    () => Promise.resolve(SEED_EFFECTS.map((e) => ({ ...e }))),
+    () => Promise.resolve(cachedEffects.map((e) => ({ ...e }))),
     CACHE_TTL.inspectorEffects,
   );
 }
@@ -131,11 +160,13 @@ export async function scanPage(input: ScanPageInput): Promise<ScanResult> {
   return cacheWrap(
     scanKey(input.url, input.category ?? ""),
     () => {
+      const all = loadClasses();
       // Pick a deterministic subset of classes to "find" — derive from URL
       // hash so each URL gives a stable result across requests.
       const hash = simpleHash(input.url);
-      const take = 6 + (hash % 6); // 6..11 classes
-      const picked = SEED_CLASSES.slice(hash % 10, (hash % 10) + take);
+      const take = Math.min(6 + (hash % 6), all.length); // 6..11 classes
+      const start = hash % Math.max(1, all.length);
+      const picked = all.slice(start, start + take);
 
       const matched = picked.map((c, i) => ({
         name: c.name,
@@ -159,6 +190,16 @@ export async function scanPage(input: ScanPageInput): Promise<ScanResult> {
   );
 }
 
+/** Alias for `getClassByName` (matches the task spec's preferred name). */
+export async function getClass(name: string): Promise<InspectorClass> {
+  return getClassByName(name);
+}
+
+/** Alias for `scanPage` (matches the task spec's preferred name). */
+export async function inspectUrl(url: string): Promise<ScanResult> {
+  return scanPage({ url });
+}
+
 /** Tiny string-hash — stable and fast; not cryptographic. */
 function simpleHash(s: string): number {
   let h = 0;
@@ -170,7 +211,7 @@ function simpleHash(s: string): number {
 
 /** Number of classes in the catalog. */
 export function classesCount(): number {
-  return SEED_CLASSES.length;
+  return loadClasses().length;
 }
 
-log.debug("Inspector module loaded", { classes: SEED_CLASSES.length });
+log.debug("Inspector module loaded");

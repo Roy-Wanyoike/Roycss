@@ -1,15 +1,21 @@
 /**
- * Spotlight service — Roy Spotlight (community + featured content).
+ * Spotlight service — Prisma-backed Roy Spotlight (community + featured
+ * content).
  *
- * Mock backend (no DB). Seeds 6 featured spotlight items and a weekly
- * spotlight slot. Submissions are appended (status: "pending").
+ * Persisted via the Prisma `SpotlightItem` model. Seeds 6 featured
+ * spotlight items on first access. The weekly spotlight slot remains
+ * a static in-memory seed (no Prisma model). Submissions are persisted
+ * as new rows.
  *
- * Reads are LRU-cached; submissions invalidate the items + featured caches.
- *
- * Future: persist via Prisma `SpotlightItem` model and gate submissions
- * behind an admin moderation queue.
+ * Field-mapping: the Prisma `SpotlightItem` model exposes (title,
+ * description, imageUrl, link, type). The domain shape's `title`,
+ * `description`, `type` map directly; `imageUrl ← thumbnail`, `link ←
+ * url`; the extra fields (author, featured, tags, publishedAt) are
+ * JSON-encoded inside `description` as a wrapper that also carries
+ * the original description text.
  */
 import { CACHE_TTL } from "../../config/constants.js";
+import { db } from "../../lib/db.js";
 import { cache, cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type { SpotlightItem, WeeklySpotlight } from "../../types/index.js";
@@ -111,7 +117,7 @@ const SEED_ITEMS: SpotlightItem[] = [
   },
 ];
 
-// ─── Seed: weekly spotlight ─────────────────────────────────────────────
+// ─── Seed: weekly spotlight (static — no Prisma model) ─────────────────
 const SEED_WEEKLY: WeeklySpotlight = {
   weekOf: "2025-02-17",
   title: "Glassmorphism is back, and it's accessible",
@@ -122,14 +128,96 @@ const SEED_WEEKLY: WeeklySpotlight = {
   curatedBy: "@roy",
 };
 
-let items: SpotlightItem[] = SEED_ITEMS.map((i) => ({ ...i }));
-const weekly: WeeklySpotlight = { ...SEED_WEEKLY, relatedItemIds: [...SEED_WEEKLY.relatedItemIds] };
+interface ItemWrapper {
+  text: string;
+  author: string;
+  featured: boolean;
+  tags: string[];
+  publishedAt: string;
+}
+
+function toDbRow(i: SpotlightItem) {
+  const wrapper: ItemWrapper = {
+    text: i.description,
+    author: i.author,
+    featured: i.featured,
+    tags: i.tags,
+    publishedAt: i.publishedAt,
+  };
+  return {
+    id: i.id,
+    title: i.title,
+    description: JSON.stringify(wrapper),
+    imageUrl: i.thumbnail,
+    link: i.url,
+    type: i.type,
+  };
+}
+
+function toDomain(row: {
+  id: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  link: string;
+  type: string;
+  createdAt: Date;
+}): SpotlightItem {
+  let wrapper: ItemWrapper = {
+    text: row.description,
+    author: "",
+    featured: false,
+    tags: [],
+    publishedAt: row.createdAt.toISOString(),
+  };
+  try {
+    wrapper = JSON.parse(row.description) as ItemWrapper;
+  } catch {
+    // Keep defaults.
+  }
+  return {
+    id: row.id,
+    title: row.title,
+    type: row.type as SpotlightItem["type"],
+    author: wrapper.author,
+    url: row.link,
+    thumbnail: row.imageUrl,
+    description: wrapper.text,
+    featured: wrapper.featured,
+    tags: wrapper.tags,
+    publishedAt: wrapper.publishedAt,
+  };
+}
+
+let seedPromise: Promise<void> | null = null;
+async function seedIfEmpty(): Promise<void> {
+  if (seedPromise) return seedPromise;
+  seedPromise = (async () => {
+    const count = await db.spotlightItem.count();
+    if (count === 0) {
+      await db.spotlightItem.createMany({
+        data: SEED_ITEMS.map(toDbRow),
+      });
+      log.info("Spotlight items seeded", { count: SEED_ITEMS.length });
+    }
+  })().catch((err) => {
+    seedPromise = null;
+    throw err;
+  });
+  return seedPromise;
+}
 
 /** List all spotlight items. Cached. */
 export async function listSpotlightItems(): Promise<SpotlightItem[]> {
   return cacheWrap(
     ITEMS_KEY,
-    () => Promise.resolve(items.map((i) => ({ ...i, tags: [...i.tags] }))),
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.spotlightItem.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+      return rows.map(toDomain);
+    },
     CACHE_TTL.spotlightItems,
   );
 }
@@ -138,12 +226,16 @@ export async function listSpotlightItems(): Promise<SpotlightItem[]> {
 export async function listFeaturedSpotlight(): Promise<SpotlightItem[]> {
   return cacheWrap(
     FEATURED_KEY,
-    () =>
-      Promise.resolve(
-        items
-          .filter((i) => i.featured)
-          .map((i) => ({ ...i, tags: [...i.tags] })),
-      ),
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.spotlightItem.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+      return rows
+        .map(toDomain)
+        .filter((i) => i.featured)
+        .map((i) => ({ ...i, tags: [...i.tags] }));
+    },
     CACHE_TTL.spotlightFeatured,
   );
 }
@@ -152,10 +244,11 @@ export async function listFeaturedSpotlight(): Promise<SpotlightItem[]> {
 export async function getSpotlightItemById(id: string): Promise<SpotlightItem> {
   return cacheWrap(
     itemKey(id),
-    () => {
-      const found = items.find((i) => i.id === id);
-      if (!found) throw AppError.notFound(`Spotlight item '${id}' not found`);
-      return Promise.resolve({ ...found, tags: [...found.tags] });
+    async () => {
+      await seedIfEmpty();
+      const row = await db.spotlightItem.findUnique({ where: { id } });
+      if (!row) throw AppError.notFound(`Spotlight item '${id}' not found`);
+      return toDomain(row);
     },
     CACHE_TTL.spotlightItemDetail,
   );
@@ -165,6 +258,7 @@ export async function getSpotlightItemById(id: string): Promise<SpotlightItem> {
 export async function submitSpotlight(
   input: SpotlightSubmitInput,
 ): Promise<SpotlightItem> {
+  await seedIfEmpty();
   const item: SpotlightItem = {
     id: `spot-${Date.now()}`,
     title: input.title,
@@ -177,7 +271,7 @@ export async function submitSpotlight(
     tags: input.tags ?? [],
     publishedAt: new Date().toISOString(),
   };
-  items = [item, ...items];
+  await db.spotlightItem.create({ data: toDbRow(item) });
   invalidateItems(item.id);
   log.info("Spotlight submitted", { id: item.id, title: item.title });
   return item;
@@ -189,8 +283,8 @@ export async function getWeeklySpotlight(): Promise<WeeklySpotlight> {
     WEEKLY_KEY,
     () =>
       Promise.resolve({
-        ...weekly,
-        relatedItemIds: [...weekly.relatedItemIds],
+        ...SEED_WEEKLY,
+        relatedItemIds: [...SEED_WEEKLY.relatedItemIds],
       }),
     CACHE_TTL.spotlightWeekly,
   );
@@ -198,7 +292,7 @@ export async function getWeeklySpotlight(): Promise<WeeklySpotlight> {
 
 /** Test-only: reset to seed. */
 export function _resetSpotlightForTest(): void {
-  items = SEED_ITEMS.map((i) => ({ ...i }));
+  seedPromise = null;
   invalidateItems();
   cache.delete(WEEKLY_KEY);
 }

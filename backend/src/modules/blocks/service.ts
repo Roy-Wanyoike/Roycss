@@ -1,19 +1,20 @@
 /**
- * Blocks service — Roy Blocks (application-level blocks).
+ * Blocks service — Prisma-backed Roy Blocks (application-level blocks).
  *
- * Mock backend (no DB). Seeds 10 application blocks across industry
- * categories (Auth, Billing, CRM, Healthcare, Analytics, Admin, Team,
- * Notifications, Onboarding, Dashboard). Create requests append a new
- * block to the store.
+ * Persisted via the Prisma `Block` model. Seeds 10 application blocks
+ * across industry categories on first access. Create requests persist
+ * a new `Block` row.
  *
- * Reads are LRU-cached; create mutates state and invalidates the list.
- *
- * Future: persist via Prisma `Block` model and gate submissions behind
- * an admin moderation queue.
+ * Field-mapping: the Prisma `Block` model exposes (slug, name,
+ * description, category, htmlCode, cssCode?). The domain shape carries
+ * extra (industry, components, tags, author, version, downloads,
+ * rating) which is JSON-encoded inside `htmlCode` as a wrapper object.
+ * `cssCode` is left null — Block rows are pure metadata in this store.
  */
 import { randomUUID } from "node:crypto";
 
 import { CACHE_TTL } from "../../config/constants.js";
+import { db } from "../../lib/db.js";
 import { cache, cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type { Block, BlockCategory } from "../../types/index.js";
@@ -30,6 +31,17 @@ function invalidate(id?: string): void {
   cache.delete(BLOCKS_KEY);
   cache.delete(CATEGORIES_KEY);
   if (id) cache.delete(blockKey(id));
+}
+
+/** Wrapper persisted in `htmlCode` for the extra domain fields. */
+interface BlockWrapper {
+  industry: string;
+  components: string[];
+  tags: string[];
+  author: string;
+  version: string;
+  downloads: number;
+  rating: number;
 }
 
 function blk(
@@ -82,24 +94,90 @@ const SEED_CATEGORIES: BlockCategory[] = [
   { id: "cat-growth", name: "Growth", count: 1, icon: "trending-up" },
 ];
 
-let blocks: Block[] = SEED_BLOCKS.map((b) => ({
-  ...b,
-  components: [...b.components],
-  tags: [...b.tags],
-}));
+function toDbRow(b: Block) {
+  const wrapper: BlockWrapper = {
+    industry: b.industry,
+    components: b.components,
+    tags: b.tags,
+    author: b.author,
+    version: b.version,
+    downloads: b.downloads,
+    rating: b.rating,
+  };
+  return {
+    id: b.id,
+    slug: b.id,
+    name: b.name,
+    description: b.description,
+    category: b.category,
+    htmlCode: JSON.stringify(wrapper),
+    cssCode: null,
+  };
+}
+
+function toDomain(row: {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  htmlCode: string;
+  updatedAt: Date;
+}): Block {
+  let wrapper: BlockWrapper;
+  try {
+    wrapper = JSON.parse(row.htmlCode) as BlockWrapper;
+  } catch {
+    wrapper = {
+      industry: "general",
+      components: [],
+      tags: [],
+      author: "community",
+      version: "0.0.0",
+      downloads: 0,
+      rating: 0,
+    };
+  }
+  return {
+    id: row.id,
+    name: row.name,
+    category: row.category,
+    industry: wrapper.industry,
+    description: row.description,
+    components: wrapper.components,
+    tags: wrapper.tags,
+    author: wrapper.author,
+    version: wrapper.version,
+    downloads: wrapper.downloads,
+    rating: wrapper.rating,
+    updatedAt: row.updatedAt.toISOString(),
+  };
+}
+
+let seedPromise: Promise<void> | null = null;
+async function seedIfEmpty(): Promise<void> {
+  if (seedPromise) return seedPromise;
+  seedPromise = (async () => {
+    const count = await db.block.count();
+    if (count === 0) {
+      await db.block.createMany({ data: SEED_BLOCKS.map(toDbRow) });
+      log.info("Blocks seeded", { count: SEED_BLOCKS.length });
+    }
+  })().catch((err) => {
+    seedPromise = null;
+    throw err;
+  });
+  return seedPromise;
+}
 
 /** List all blocks. Cached. */
 export async function listBlocks(): Promise<Block[]> {
   return cacheWrap(
     BLOCKS_KEY,
-    () =>
-      Promise.resolve(
-        blocks.map((b) => ({
-          ...b,
-          components: [...b.components],
-          tags: [...b.tags],
-        })),
-      ),
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.block.findMany({ orderBy: { createdAt: "asc" } });
+      return rows.map(toDomain);
+    },
     CACHE_TTL.blocksList,
   );
 }
@@ -108,14 +186,11 @@ export async function listBlocks(): Promise<Block[]> {
 export async function getBlockById(id: string): Promise<Block> {
   return cacheWrap(
     blockKey(id),
-    () => {
-      const found = blocks.find((b) => b.id === id);
-      if (!found) throw AppError.notFound(`Block '${id}' not found`);
-      return Promise.resolve({
-        ...found,
-        components: [...found.components],
-        tags: [...found.tags],
-      });
+    async () => {
+      await seedIfEmpty();
+      const row = await db.block.findUnique({ where: { id } });
+      if (!row) throw AppError.notFound(`Block '${id}' not found`);
+      return toDomain(row);
     },
     CACHE_TTL.blockDetail,
   );
@@ -134,8 +209,10 @@ export async function listBlockCategories(): Promise<BlockCategory[]> {
 export async function createBlock(
   input: BlockCreateInput,
 ): Promise<Block> {
+  await seedIfEmpty();
+  const id = `block-${randomUUID()}`;
   const block: Block = {
-    id: `block-${randomUUID()}`,
+    id,
     name: input.name,
     category: input.category,
     industry: input.industry ?? "general",
@@ -148,7 +225,7 @@ export async function createBlock(
     rating: 0,
     updatedAt: new Date().toISOString(),
   };
-  blocks = [block, ...blocks];
+  await db.block.create({ data: toDbRow(block) });
   invalidate(block.id);
   log.info("Block created", { id: block.id, name: block.name });
   return block;
@@ -156,10 +233,6 @@ export async function createBlock(
 
 /** Test-only: reset to seed. */
 export function _resetBlocksForTest(): void {
-  blocks = SEED_BLOCKS.map((b) => ({
-    ...b,
-    components: [...b.components],
-    tags: [...b.tags],
-  }));
+  seedPromise = null;
   invalidate();
 }

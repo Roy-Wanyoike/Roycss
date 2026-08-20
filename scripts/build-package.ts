@@ -16,6 +16,7 @@ import { effects } from "../src/lib/roycss-effects";
 import { categoryMeta, categoryOrder } from "../src/lib/roycss-types";
 import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
+import { spawnSync } from "node:child_process";
 
 const DIST_DIR = join(import.meta.dir, "..", "dist");
 
@@ -179,3 +180,23 @@ console.log("");
 console.log("✅ RoyCSS build complete!");
 console.log(`   ${effects.length} effects across ${categoryOrder.length} categories`);
 console.log(`   Full: ${(fullCSS.length / 1024).toFixed(1)}KB | Minified: ${(minified.length / 1024).toFixed(1)}KB`);
+
+// ─── Generate derived build artifacts (inspector / motion /
+//     pro-components / version-manifest JSON files) ─────────────────
+// Run the generate-build-artifacts script as a child process so this
+// script stays single-purpose and the artifact script stays testable
+// in isolation. The artifact script reads from src/ + package.json +
+// CHANGELOG.md and writes 4 JSON files into dist/.
+console.log("");
+console.log("Generating derived build artifacts...");
+try {
+  const result = spawnSync("bun", ["run", "scripts/generate-build-artifacts.ts"], {
+    cwd: join(import.meta.dir, ".."),
+    stdio: "inherit",
+  });
+  if (result.status !== 0) {
+    console.warn("  ⚠ generate-build-artifacts exited non-zero — continuing.");
+  }
+} catch (err) {
+  console.warn("  ⚠ generate-build-artifacts failed:", err instanceof Error ? err.message : String(err));
+}

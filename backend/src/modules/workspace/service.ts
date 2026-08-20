@@ -1,17 +1,22 @@
 /**
- * Workspace service — in-memory Roy Workspace resources + team store.
+ * Workspace service — Prisma-backed Roy Workspace resources + team store.
  *
- * Mock backend (no DB). Seeds 4 resource types (Templates, Tokens,
- * Components, Projects), each with 4–6 items, plus 4 team members.
- * All reads are LRU-cached; inviting a team member invalidates the team
- * cache.
+ * Persisted via the Prisma `WorkspaceResource` model. Seeds 4 resource
+ * types (Templates, Tokens, Components, Projects), each with 4–6 items,
+ * on first access. Team members remain a static in-memory seed (no
+ * Prisma model).
  *
- * Future: swap the in-memory arrays for a Prisma `WorkspaceResource` /
- * `WorkspaceTeamMember` model backed by the workspace microservice.
+ * Field-mapping: the Prisma `WorkspaceResource` model exposes (userId,
+ * type, name, contentJson). Each seed item is persisted as one row;
+ * `type ← resource type`, `name ← item.name`; the wrapper for the extra
+ * fields (label, description, itemUpdatedAt) is JSON-encoded inside
+ * `contentJson`. `count` is computed from the persisted items at read
+ * time (no separate column).
  */
 import { randomUUID } from "node:crypto";
 
 import { CACHE_TTL } from "../../config/constants.js";
+import { db } from "../../lib/db.js";
 import { cache, cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type {
@@ -176,7 +181,7 @@ const SEED_RESOURCES: WorkspaceResourceType[] = [
   },
 ];
 
-// ─── Seed: 4 team members ────────────────────────────────────────────────
+// ─── Seed: 4 team members (static — no Prisma model) ───────────────────
 const SEED_TEAM: WorkspaceTeamMember[] = [
   {
     id: "user-1",
@@ -214,17 +219,110 @@ const SEED_TEAM: WorkspaceTeamMember[] = [
 
 let team: WorkspaceTeamMember[] = SEED_TEAM.map((m) => ({ ...m }));
 
+interface ResourceWrapper {
+  label: string;
+  description: string;
+  itemUpdatedAt: string;
+}
+
+function itemsToDbRows(type: WorkspaceResourceType) {
+  return type.items.map((item) => {
+    const wrapper: ResourceWrapper = {
+      label: type.label,
+      description: item.description,
+      itemUpdatedAt: item.updatedAt,
+    };
+    return {
+      id: item.id,
+      userId: null,
+      type: type.type,
+      name: item.name,
+      contentJson: JSON.stringify(wrapper),
+    };
+  });
+}
+
+function rowsToType(
+  type: string,
+  rows: Array<{
+    id: string;
+    name: string;
+    type: string;
+    contentJson: string;
+    updatedAt: Date;
+  }>,
+): WorkspaceResourceType | null {
+  if (rows.length === 0) return null;
+  let label = type;
+  const items = rows.map((row) => {
+    let wrapper: ResourceWrapper = {
+      label,
+      description: "",
+      itemUpdatedAt: row.updatedAt.toISOString(),
+    };
+    try {
+      wrapper = JSON.parse(row.contentJson) as ResourceWrapper;
+      if (wrapper.label) label = wrapper.label;
+    } catch {
+      // Keep defaults.
+    }
+    return {
+      id: row.id,
+      name: row.name,
+      description: wrapper.description,
+      updatedAt: wrapper.itemUpdatedAt,
+    };
+  });
+  return {
+    type,
+    label,
+    count: items.length,
+    items,
+  };
+}
+
+let seedPromise: Promise<void> | null = null;
+async function seedIfEmpty(): Promise<void> {
+  if (seedPromise) return seedPromise;
+  seedPromise = (async () => {
+    const count = await db.workspaceResource.count();
+    if (count === 0) {
+      const rows = SEED_RESOURCES.flatMap(itemsToDbRows);
+      await db.workspaceResource.createMany({ data: rows });
+      log.info("Workspace resources seeded", { rows: rows.length });
+    }
+  })().catch((err) => {
+    seedPromise = null;
+    throw err;
+  });
+  return seedPromise;
+}
+
 /** List all workspace resource types (with their items). Cached. */
 export async function listResources(): Promise<WorkspaceResourceType[]> {
   return cacheWrap(
     RESOURCES_KEY,
-    () =>
-      Promise.resolve(
-        SEED_RESOURCES.map((r) => ({
-          ...r,
-          items: r.items.map((i) => ({ ...i })),
-        })),
-      ),
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.workspaceResource.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+      const byType = new Map<string, typeof rows>();
+      for (const r of rows) {
+        const arr = byType.get(r.type) ?? [];
+        arr.push(r);
+        byType.set(r.type, arr);
+      }
+      // Preserve the seed order of types (templates, tokens, components, projects).
+      const types = SEED_RESOURCES.map((r) => r.type);
+      // Append any new types (e.g. added via a future create) at the end.
+      for (const t of byType.keys()) {
+        if (!types.includes(t)) types.push(t);
+      }
+      return types
+        .map((t) => rowsToType(t, byType.get(t) ?? []))
+        .filter((r): r is WorkspaceResourceType => r !== null);
+    },
     CACHE_TTL.workspaceResources,
   );
 }
@@ -235,15 +333,17 @@ export async function listResourcesByType(
 ): Promise<WorkspaceResourceType> {
   return cacheWrap(
     resourceTypeKey(type),
-    () => {
-      const found = SEED_RESOURCES.find((r) => r.type === type);
-      if (!found) {
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.workspaceResource.findMany({
+        where: { type },
+        orderBy: { createdAt: "asc" },
+      });
+      const result = rowsToType(type, rows);
+      if (!result) {
         throw AppError.notFound(`Resource type '${type}' not found`);
       }
-      return Promise.resolve({
-        ...found,
-        items: found.items.map((i) => ({ ...i })),
-      });
+      return result;
     },
     CACHE_TTL.workspaceResourceType,
   );
@@ -291,6 +391,7 @@ export function teamCount(): number {
 
 /** Test-only: reset to seed. */
 export function _resetWorkspaceForTest(): void {
+  seedPromise = null;
   team = SEED_TEAM.map((m) => ({ ...m }));
   invalidateTeam();
 }

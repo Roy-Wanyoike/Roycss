@@ -1,18 +1,20 @@
 /**
- * Challenges service — in-memory Roy Challenges catalog + leaderboard.
+ * Challenges service — Prisma-backed Roy Challenges catalog + leaderboard.
  *
- * Mock backend (no DB). Seeds 8 challenges across difficulty levels and
- * 10 leaderboard entries. All reads are LRU-cached; submitting a
- * solution invalidates the leaderboard cache so the new entry appears
- * on subsequent reads.
+ * Persisted via the `Challenge` + `ChallengeSubmission` Prisma models.
+ * Seeds 8 challenges across difficulty levels and a static 10-entry
+ * leaderboard (no Prisma model for leaderboard rows).
  *
- * Future: swap the in-memory state for a Prisma `Challenge` /
- * `ChallengeSubmission` model backed by an in-browser code-runner that
- * posts results to the API.
+ * Field-mapping: the Prisma `Challenge` model exposes (slug, title,
+ * description, difficulty, prompt, starterCode, solutionCode, tagsJson).
+ * The domain shape's `id ← slug`, `title`, `description`, `difficulty`
+ * map directly; `prompt ← description`; the extra metadata
+ * (category, timeLimit, participants, completionRate, xpReward) is
+ * JSON-encoded inside `tagsJson` as a wrapper. ChallengeSubmission
+ * maps directly.
  */
-import { randomUUID } from "node:crypto";
-
 import { CACHE_TTL } from "../../config/constants.js";
+import { db } from "../../lib/db.js";
 import { cache, cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type {
@@ -123,7 +125,7 @@ const SEED_CHALLENGES: Challenge[] = [
   },
 ];
 
-// ─── Seed: 10 leaderboard entries ────────────────────────────────────────
+// ─── Seed: 10 leaderboard entries (static — no Prisma model) ────────────
 const SEED_LEADERBOARD: ChallengeLeaderboardEntry[] = [
   { rank: 1, userId: "u-1", name: "Aria K.", score: 9_820, solved: 8, totalTime: 4_120_000, avatar: "https://avatars.roycss.dev/u-1.png" },
   { rank: 2, userId: "u-2", name: "Ben L.", score: 9_610, solved: 8, totalTime: 4_580_000, avatar: "https://avatars.roycss.dev/u-2.png" },
@@ -141,11 +143,96 @@ let leaderboard: ChallengeLeaderboardEntry[] = SEED_LEADERBOARD.map((e) => ({
   ...e,
 }));
 
+interface ChallengeMeta {
+  category: string;
+  timeLimit: number;
+  participants: number;
+  completionRate: number;
+  xpReward: number;
+}
+
+function toDbRow(c: Challenge) {
+  const meta: ChallengeMeta = {
+    category: c.category,
+    timeLimit: c.timeLimit,
+    participants: c.participants,
+    completionRate: c.completionRate,
+    xpReward: c.xpReward,
+  };
+  return {
+    id: c.id,
+    slug: c.id,
+    title: c.title,
+    description: c.description,
+    difficulty: c.difficulty,
+    prompt: c.description,
+    starterCode: "",
+    solutionCode: "",
+    tagsJson: JSON.stringify(meta),
+  };
+}
+
+function toDomain(row: {
+  id: string;
+  title: string;
+  description: string;
+  difficulty: string;
+  tagsJson: string;
+}): Challenge {
+  let meta: ChallengeMeta = {
+    category: "",
+    timeLimit: 0,
+    participants: 0,
+    completionRate: 0,
+    xpReward: 0,
+  };
+  try {
+    meta = JSON.parse(row.tagsJson) as ChallengeMeta;
+  } catch {
+    // Keep defaults.
+  }
+  return {
+    id: row.id,
+    title: row.title,
+    description: row.description,
+    difficulty: row.difficulty as Challenge["difficulty"],
+    category: meta.category,
+    timeLimit: meta.timeLimit,
+    participants: meta.participants,
+    completionRate: meta.completionRate,
+    xpReward: meta.xpReward,
+  };
+}
+
+let seedPromise: Promise<void> | null = null;
+async function seedIfEmpty(): Promise<void> {
+  if (seedPromise) return seedPromise;
+  seedPromise = (async () => {
+    const count = await db.challenge.count();
+    if (count === 0) {
+      await db.challenge.createMany({
+        data: SEED_CHALLENGES.map(toDbRow),
+      });
+      log.info("Challenges seeded", { count: SEED_CHALLENGES.length });
+    }
+  })().catch((err) => {
+    seedPromise = null;
+    throw err;
+  });
+  return seedPromise;
+}
+
 /** List all challenges. Cached. */
 export async function listChallenges(): Promise<Challenge[]> {
   return cacheWrap(
     LIST_KEY,
-    () => Promise.resolve(SEED_CHALLENGES.map((c) => ({ ...c }))),
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.challenge.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+      return rows.map(toDomain);
+    },
     CACHE_TTL.challengesList,
   );
 }
@@ -154,10 +241,11 @@ export async function listChallenges(): Promise<Challenge[]> {
 export async function getChallengeById(id: string): Promise<Challenge> {
   return cacheWrap(
     detailKey(id),
-    () => {
-      const found = SEED_CHALLENGES.find((c) => c.id === id);
-      if (!found) throw AppError.notFound(`Challenge '${id}' not found`);
-      return Promise.resolve({ ...found });
+    async () => {
+      await seedIfEmpty();
+      const row = await db.challenge.findUnique({ where: { id } });
+      if (!row) throw AppError.notFound(`Challenge '${id}' not found`);
+      return toDomain(row);
     },
     CACHE_TTL.challengeDetail,
   );
@@ -173,9 +261,9 @@ export async function getLeaderboard(): Promise<ChallengeLeaderboardEntry[]> {
 }
 
 /**
- * Submit a solution for a challenge — returns the computed score and
- * invalidates the leaderboard cache so the next read reflects the
- * updated rankings (mock: deterministic scoring based on pass/fail).
+ * Submit a solution for a challenge — persists a ChallengeSubmission
+ * row and returns the computed score; invalidates the leaderboard
+ * cache so the next read reflects the updated rankings.
  */
 export async function submitSolution(input: {
   challengeId: string;
@@ -197,6 +285,16 @@ export async function submitSolution(input: {
     ? Math.max(0, Math.round((challenge.timeLimit * 60_000 - input.timeMs) / 1_000))
     : 0;
   const score = baseScore + timeBonus;
+
+  await db.challengeSubmission.create({
+    data: {
+      userId: input.userId,
+      challengeId: input.challengeId,
+      code: input.code,
+      passed: input.passed,
+      score,
+    },
+  });
 
   if (input.passed) {
     // Insert/merge into the leaderboard (mock: bump the user's score).

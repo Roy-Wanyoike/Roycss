@@ -1,14 +1,23 @@
 /**
  * Version service — Roy Version release tracking + upgrade checker.
  *
- * Mock backend (no DB). Seeds the current platform version (v2.0.0),
- * the latest available version (v2.1.0), 5 changelog entries, and 3
- * breaking changes between the current and latest.
+ * Sources its current version + releasedAt + changelog text from the
+ * build artifact `dist/version-manifest.json` (produced by
+ * `scripts/generate-build-artifacts.ts` from `package.json` +
+ * `CHANGELOG.md`). The semver comparisons use the `semver` package.
  *
- * Reads are LRU-cached; check-upgrade is a pure computation.
+ * The breaking-changes list remains a static in-memory seed (the
+ * version-manifest artifact doesn't carry structured breaking-change
+ * data). The 5 historical changelog entries remain a static seed (the
+ * manifest only carries the latest released section's body text).
  *
- * Future: pull from a real release manifest (CHANGELOG.md + semver).
+ * All reads are LRU-cached; check-upgrade is a pure computation.
  */
+import { readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import semver from "semver";
+
 import { CACHE_TTL } from "../../config/constants.js";
 import { cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
@@ -21,16 +30,102 @@ import type { CheckUpgradeInput } from "./schema.js";
 
 const log = createLogger("version");
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const BACKEND_ROOT = resolve(__dirname, "..", "..", "..");
+const VERSION_MANIFEST_PATH = resolve(
+  BACKEND_ROOT,
+  "..",
+  "dist",
+  "version-manifest.json",
+);
+
 const CURRENT_KEY = "version:current";
 const LATEST_KEY = "version:latest";
 const CHANGELOG_KEY = "version:changelog";
 const BREAKING_KEY = "version:breaking";
 
-// ─── Versions ────────────────────────────────────────────────────────────
-const CURRENT_VERSION = "2.0.0";
+/** The next version we expect to ship (mock bump of the current). */
 const LATEST_VERSION = "2.1.0";
 
-// ─── Seed: 5 changelog entries ───────────────────────────────────────────
+/** Manifest shape produced by generate-build-artifacts.ts. */
+interface VersionManifest {
+  version: string;
+  releasedAt: string;
+  changelog: string;
+}
+
+let cachedManifest: VersionManifest | null = null;
+
+/** Load + cache the version-manifest.json artifact. */
+function loadManifest(): VersionManifest {
+  if (cachedManifest) return cachedManifest;
+
+  let raw: string;
+  try {
+    raw = readFileSync(VERSION_MANIFEST_PATH, "utf-8");
+  } catch (err) {
+    log.error(
+      "Failed to read version-manifest.json artifact — falling back to defaults",
+      {
+        path: VERSION_MANIFEST_PATH,
+        err: err instanceof Error ? err.message : String(err),
+      },
+    );
+    cachedManifest = {
+      version: "0.0.0",
+      releasedAt: new Date(0).toISOString(),
+      changelog: "",
+    };
+    return cachedManifest;
+  }
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch (err) {
+    log.error("version-manifest.json is malformed — falling back to defaults", {
+      path: VERSION_MANIFEST_PATH,
+      err: err instanceof Error ? err.message : String(err),
+    });
+    cachedManifest = {
+      version: "0.0.0",
+      releasedAt: new Date(0).toISOString(),
+      changelog: "",
+    };
+    return cachedManifest;
+  }
+
+  if (
+    typeof parsed !== "object" ||
+    parsed === null ||
+    typeof (parsed as { version?: unknown }).version !== "string"
+  ) {
+    log.error("version-manifest.json shape is invalid — falling back to defaults", {
+      path: VERSION_MANIFEST_PATH,
+    });
+    cachedManifest = {
+      version: "0.0.0",
+      releasedAt: new Date(0).toISOString(),
+      changelog: "",
+    };
+    return cachedManifest;
+  }
+
+  const manifest = parsed as VersionManifest;
+  cachedManifest = {
+    version: manifest.version,
+    releasedAt: manifest.releasedAt,
+    changelog: manifest.changelog,
+  };
+  log.info("Version manifest loaded", {
+    path: VERSION_MANIFEST_PATH,
+    version: cachedManifest.version,
+    releasedAt: cachedManifest.releasedAt,
+  });
+  return cachedManifest;
+}
+
+// ─── Seed: 5 changelog entries (static — manifest only carries the latest) ──
 const SEED_CHANGELOG: ChangelogEntry[] = [
   {
     version: "2.1.0",
@@ -130,12 +225,32 @@ const SEED_BREAKING: BreakingChange[] = [
 ];
 
 /** Get the current platform version. Cached. */
-export async function getCurrentVersion(): Promise<{ version: string }> {
+export async function getCurrentVersion(): Promise<{
+  version: string;
+  releasedAt: string;
+  changelog: string;
+}> {
   return cacheWrap(
     CURRENT_KEY,
-    () => Promise.resolve({ version: CURRENT_VERSION }),
+    () => {
+      const manifest = loadManifest();
+      return Promise.resolve({
+        version: manifest.version,
+        releasedAt: manifest.releasedAt,
+        changelog: manifest.changelog,
+      });
+    },
     CACHE_TTL.versionCurrent,
   );
+}
+
+/** Alias for `getCurrentVersion` (matches the task spec's preferred name). */
+export async function getVersion(): Promise<{
+  version: string;
+  releasedAt: string;
+  changelog: string;
+}> {
+  return getCurrentVersion();
 }
 
 /** Get the latest available version. Cached. */
@@ -165,34 +280,16 @@ export async function getBreakingChanges(): Promise<BreakingChange[]> {
   );
 }
 
-/** Compare two semver strings: -1 if a<b, 0 if equal, 1 if a>b. */
-function compareSemver(a: string, b: string): number {
-  const parse = (v: string): [number, number, number] => {
-    const [core] = v.split("+");
-    const base = (core ?? "").split("-")[0] ?? "0";
-    const [majorStr, minorStr, patchStr] = base.split(".");
-    const major = parseInt(majorStr ?? "0", 10) || 0;
-    const minor = parseInt(minorStr ?? "0", 10) || 0;
-    const patch = parseInt(patchStr ?? "0", 10) || 0;
-    return [major, minor, patch];
-  };
-  const [aM, am, ap] = parse(a);
-  const [bM, bm, bp] = parse(b);
-  if (aM !== bM) return aM < bM ? -1 : 1;
-  if (am !== bm) return am < bm ? -1 : 1;
-  if (ap !== bp) return ap < bp ? -1 : 1;
-  return 0;
-}
-
 /** Check whether an upgrade is available (POST /check-upgrade). */
 export async function checkUpgrade(
   input: CheckUpgradeInput,
 ): Promise<UpgradeCheckResult> {
-  const current = input.current ?? CURRENT_VERSION;
+  const currentVersion = await getCurrentVersion();
+  const current = input.current ?? currentVersion.version;
   const latest = (await getLatestVersion()).version;
-  const upgradeAvailable = compareSemver(current, latest) < 0;
+  const upgradeAvailable = semver.lt(current, latest);
   const breaking = (await getBreakingChanges()).filter(
-    (b) => compareSemver(current, b.version) < 0,
+    (b) => semver.lt(current, b.version),
   );
   const recommendation: UpgradeCheckResult["recommendation"] = upgradeAvailable
     ? breaking.some((b) => b.severity === "high")
@@ -214,3 +311,5 @@ export async function checkUpgrade(
     notes,
   };
 }
+
+log.debug("Version module loaded");

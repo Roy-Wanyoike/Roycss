@@ -1,15 +1,21 @@
 /**
- * Academy service — in-memory learning-path store.
+ * Academy service — Prisma-backed learning-path store.
  *
- * Mock backend (no DB). Seeds 4 certification paths (Associate,
- * Professional, Expert, Architect), each with their own lesson list.
- * Progress updates mutate the in-memory lesson.completed flag.
+ * Persisted via the `LearningPath` + `PathProgress` Prisma models.
+ * Seeds 4 certification paths (Associate, Professional, Expert,
+ * Architect) lazily on first access (idempotent via count==0 check).
+ * Progress updates upsert a `PathProgress` row keyed by (userId,pathId).
  *
  * Reads are LRU-cached; writes invalidate the affected path entry.
  *
- * Future: persist progress against the authenticated user via Prisma.
+ * Field-mapping note: the Prisma `LearningPath` model has a constrained
+ * shape (slug, title, description, level, lessonsJson). The extra seed
+ * metadata (duration, price, certificationId, lesson.completed flags)
+ * is persisted inside `lessonsJson` as a wrapper object so we can round-
+ * trip the original domain shape without changing the schema.
  */
 import { CACHE_TTL } from "../../config/constants.js";
+import { db } from "../../lib/db.js";
 import { cache, cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type { LearningPath } from "../../types/index.js";
@@ -105,10 +111,88 @@ const SEED_PATHS: LearningPath[] = [
   },
 ];
 
-let paths: LearningPath[] = SEED_PATHS.map((p) => ({
-  ...p,
-  lessons: p.lessons.map((l) => ({ ...l })),
-}));
+/** Wrapper shape persisted in `lessonsJson` — carries the seed metadata. */
+interface PathWrapper {
+  lessons: LearningPath["lessons"];
+  duration: number;
+  price: number;
+  certificationId: string;
+}
+
+/** Map a domain LearningPath to a Prisma row. */
+function toDbRow(p: LearningPath) {
+  const wrapper: PathWrapper = {
+    lessons: p.lessons,
+    duration: p.duration,
+    price: p.price,
+    certificationId: p.certificationId,
+  };
+  return {
+    id: p.id,
+    slug: p.id.replace(/^path-/, ""),
+    title: p.name,
+    description: p.name,
+    level: p.level,
+    lessonsJson: JSON.stringify(wrapper),
+  };
+}
+
+/** Map a Prisma row back to a domain LearningPath. */
+function toDomain(
+  row: {
+    id: string;
+    title: string;
+    level: string;
+    lessonsJson: string;
+  },
+  progress?: { completedLessonsJson: string | null; lastLessonId: string | null } | null,
+): LearningPath {
+  let wrapper: PathWrapper;
+  try {
+    wrapper = JSON.parse(row.lessonsJson) as PathWrapper;
+  } catch {
+    wrapper = { lessons: [], duration: 0, price: 0, certificationId: "" };
+  }
+  // Merge persisted progress into the lesson.completed flags.
+  const completedSet = new Set<string>();
+  if (progress?.completedLessonsJson) {
+    try {
+      const ids = JSON.parse(progress.completedLessonsJson) as string[];
+      for (const id of ids) completedSet.add(id);
+    } catch {
+      // Ignore — treat as no progress.
+    }
+  }
+  const lessons = wrapper.lessons.map((l) => ({
+    ...l,
+    completed: completedSet.has(l.id),
+  }));
+  return {
+    id: row.id,
+    name: row.title,
+    level: row.level as LearningPath["level"],
+    lessons,
+    duration: wrapper.duration,
+    price: wrapper.price,
+    certificationId: wrapper.certificationId,
+  };
+}
+
+let seedPromise: Promise<void> | null = null;
+async function seedIfEmpty(): Promise<void> {
+  if (seedPromise) return seedPromise;
+  seedPromise = (async () => {
+    const count = await db.learningPath.count();
+    if (count === 0) {
+      await db.learningPath.createMany({ data: SEED_PATHS.map(toDbRow) });
+      log.info("Academy paths seeded", { count: SEED_PATHS.length });
+    }
+  })().catch((err) => {
+    seedPromise = null;
+    throw err;
+  });
+  return seedPromise;
+}
 
 /** Summary shape used by GET /paths (no per-lesson detail). */
 export interface PathSummary {
@@ -125,18 +209,24 @@ export interface PathSummary {
 export async function listPaths(): Promise<PathSummary[]> {
   return cacheWrap(
     listKey,
-    () =>
-      Promise.resolve(
-        paths.map<PathSummary>((p) => ({
-          id: p.id,
-          name: p.name,
-          level: p.level,
-          duration: p.duration,
-          price: p.price,
-          certificationId: p.certificationId,
-          lessonsCount: p.lessons.length,
-        })),
-      ),
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.learningPath.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+      return rows.map<PathSummary>((r) => {
+        const path = toDomain(r);
+        return {
+          id: path.id,
+          name: path.name,
+          level: path.level,
+          duration: path.duration,
+          price: path.price,
+          certificationId: path.certificationId,
+          lessonsCount: path.lessons.length,
+        };
+      });
+    },
     CACHE_TTL.pathsList,
   );
 }
@@ -145,13 +235,14 @@ export async function listPaths(): Promise<PathSummary[]> {
 export async function getPathById(id: string): Promise<LearningPath> {
   return cacheWrap(
     detailKey(id),
-    () => {
-      const found = paths.find((p) => p.id === id);
-      if (!found) throw AppError.notFound(`Learning path '${id}' not found`);
-      return Promise.resolve({
-        ...found,
-        lessons: found.lessons.map((l) => ({ ...l })),
+    async () => {
+      await seedIfEmpty();
+      const row = await db.learningPath.findUnique({ where: { id } });
+      if (!row) throw AppError.notFound(`Learning path '${id}' not found`);
+      const progress = await db.pathProgress.findFirst({
+        where: { pathId: id },
       });
+      return toDomain(row, progress);
     },
     CACHE_TTL.pathDetail,
   );
@@ -170,12 +261,12 @@ export async function recordProgress(
   pathId: string,
   input: ProgressInput,
 ): Promise<{ lessonId: string; completed: boolean; completedLessons: number }> {
-  const idx = paths.findIndex((p) => p.id === pathId);
-  if (idx === -1) {
+  await seedIfEmpty();
+  const row = await db.learningPath.findUnique({ where: { id: pathId } });
+  if (!row) {
     throw AppError.notFound(`Learning path '${pathId}' not found`);
   }
-
-  const path = paths[idx]!;
+  const path = toDomain(row);
   const lesson = path.lessons.find((l) => l.id === input.lessonId);
   if (!lesson) {
     throw AppError.notFound(
@@ -183,10 +274,43 @@ export async function recordProgress(
     );
   }
 
-  lesson.completed = input.completed;
-  invalidate(pathId);
+  // Load existing progress (userId null for anonymous) — upsert by (userId,pathId).
+  const existing = await db.pathProgress.findFirst({
+    where: { pathId, userId: null },
+  });
+  const existingSet = new Set<string>();
+  if (existing?.completedLessonsJson) {
+    try {
+      const ids = JSON.parse(existing.completedLessonsJson) as string[];
+      for (const id of ids) existingSet.add(id);
+    } catch {
+      // Ignore — treat as empty.
+    }
+  }
+  if (input.completed) existingSet.add(input.lessonId);
+  else existingSet.delete(input.lessonId);
+  const completedLessonsJson = JSON.stringify([...existingSet]);
 
-  const completedLessons = path.lessons.filter((l) => l.completed).length;
+  if (existing) {
+    await db.pathProgress.update({
+      where: { id: existing.id },
+      data: {
+        completedLessonsJson,
+        lastLessonId: input.lessonId,
+      },
+    });
+  } else {
+    await db.pathProgress.create({
+      data: {
+        pathId,
+        userId: null,
+        completedLessonsJson,
+        lastLessonId: input.lessonId,
+      },
+    });
+  }
+
+  invalidate(pathId);
   log.info("Progress recorded", {
     pathId,
     lessonId: input.lessonId,
@@ -196,20 +320,17 @@ export async function recordProgress(
   return {
     lessonId: input.lessonId,
     completed: input.completed,
-    completedLessons,
+    completedLessons: existingSet.size,
   };
 }
 
-/** Number of paths in the store. */
+/** Number of paths in the store. Sync stub — real count is in DB. */
 export function pathsCount(): number {
-  return paths.length;
+  return SEED_PATHS.length;
 }
 
-/** Test-only: reset progress and seed. */
+/** Test-only: invalidate caches + reset seed promise. */
 export function _resetPathsForTest(): void {
-  paths = SEED_PATHS.map((p) => ({
-    ...p,
-    lessons: p.lessons.map((l) => ({ ...l })),
-  }));
+  seedPromise = null;
   invalidate();
 }

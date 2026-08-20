@@ -1,17 +1,25 @@
 /**
- * Compliance service — in-memory Roy Compliance standards + scan results.
+ * Compliance service — Prisma-backed Roy Compliance standards + scan results.
  *
- * Mock backend (no DB). Seeds 5 accessibility standards (WCAG 2.2 AA, WCAG
- * 2.2 AAA, ADA, Section 508, EN 301 549) plus 3 sample scan results. All
- * reads are LRU-cached; running a new scan invalidates the results list
- * cache and pushes a fresh result entry.
+ * Persisted via the `ComplianceStandard` + `ComplianceScan` Prisma models.
+ * Seeds 5 accessibility standards (WCAG 2.2 AA, WCAG 2.2 AAA, ADA,
+ * Section 508, EN 301 549) plus 3 sample scan results. Compliance
+ * reports remain a static in-memory seed (no Prisma model).
  *
- * Future: swap the in-memory arrays for a Prisma-backed compliance scan
- * pipeline (axe-core / pa11y runner) without changing the route layer.
+ * Field-mapping: the Prisma `ComplianceStandard` model exposes (slug,
+ * name, description, framework). The domain shape's `id ← slug`,
+ * `name`, `description` map directly; `framework ← code` (e.g.
+ * "WCAG2.2-AA"); the extra fields (level, criteriaCount, region) are
+ * JSON-encoded inside `description` as a wrapper. The Prisma
+ * `ComplianceScan` model exposes (standardId, url, status,
+ * violationsJson). The domain shape's extra fields (standardName,
+ * scannedAt, score, findings, summary) are JSON-encoded inside
+ * `violationsJson`.
  */
 import { randomUUID } from "node:crypto";
 
 import { CACHE_TTL } from "../../config/constants.js";
+import { db } from "../../lib/db.js";
 import { cache, cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type {
@@ -179,12 +187,7 @@ const SEED_RESULTS: ComplianceScanResult[] = [
   },
 ];
 
-let results: ComplianceScanResult[] = SEED_RESULTS.map((r) => ({
-  ...r,
-  findings: r.findings.map((f) => ({ ...f })),
-}));
-
-// ─── Seed: 2 reports ─────────────────────────────────────────────────────
+// ─── Seed: 2 reports (static — no Prisma model) ────────────────────────
 const SEED_REPORTS: ComplianceReport[] = [
   {
     id: "report-q1-2025",
@@ -212,11 +215,153 @@ const SEED_REPORTS: ComplianceReport[] = [
   },
 ];
 
+interface StandardMeta {
+  level: ComplianceStandard["level"];
+  criteriaCount: number;
+  region: string;
+}
+
+function standardToDb(s: ComplianceStandard) {
+  const meta: StandardMeta = {
+    level: s.level,
+    criteriaCount: s.criteriaCount,
+    region: s.region,
+  };
+  return {
+    id: s.id,
+    slug: s.id,
+    name: s.name,
+    description: JSON.stringify({ text: s.description, meta }),
+    framework: s.code,
+  };
+}
+
+function standardToDomain(row: {
+  id: string;
+  name: string;
+  description: string;
+  framework: string;
+}): ComplianceStandard {
+  let text = row.description;
+  let meta: StandardMeta = {
+    level: "—",
+    criteriaCount: 0,
+    region: "",
+  };
+  try {
+    const parsed = JSON.parse(row.description) as { text: string; meta: StandardMeta };
+    text = parsed.text;
+    meta = parsed.meta;
+  } catch {
+    // Keep description as text.
+  }
+  return {
+    id: row.id,
+    name: row.name,
+    code: row.framework,
+    level: meta.level,
+    description: text,
+    criteriaCount: meta.criteriaCount,
+    region: meta.region,
+  };
+}
+
+interface ScanWrapper {
+  standardName: string;
+  scannedAt: string;
+  score: number;
+  findings: ComplianceFinding[];
+  summary: ComplianceScanResult["summary"];
+}
+
+function scanToDb(r: ComplianceScanResult) {
+  const wrapper: ScanWrapper = {
+    standardName: r.standardName,
+    scannedAt: r.scannedAt,
+    score: r.score,
+    findings: r.findings,
+    summary: r.summary,
+  };
+  return {
+    id: r.id,
+    standardId: r.standardId,
+    url: r.url,
+    status: r.status,
+    violationsJson: JSON.stringify(wrapper),
+  };
+}
+
+function scanToDomain(row: {
+  id: string;
+  standardId: string;
+  url: string;
+  status: string;
+  violationsJson: string;
+  createdAt: Date;
+}): ComplianceScanResult {
+  let wrapper: ScanWrapper = {
+    standardName: "",
+    scannedAt: row.createdAt.toISOString(),
+    score: 0,
+    findings: [],
+    summary: { critical: 0, serious: 0, moderate: 0, minor: 0 },
+  };
+  try {
+    wrapper = JSON.parse(row.violationsJson) as ScanWrapper;
+  } catch {
+    // Keep defaults.
+  }
+  return {
+    id: row.id,
+    url: row.url,
+    standardId: row.standardId,
+    standardName: wrapper.standardName,
+    scannedAt: wrapper.scannedAt,
+    score: wrapper.score,
+    status: row.status as ComplianceScanResult["status"],
+    findings: wrapper.findings.map((f) => ({ ...f })),
+    summary: wrapper.summary,
+  };
+}
+
+let seedPromise: Promise<void> | null = null;
+async function seedIfEmpty(): Promise<void> {
+  if (seedPromise) return seedPromise;
+  seedPromise = (async () => {
+    const standardCount = await db.complianceStandard.count();
+    if (standardCount === 0) {
+      await db.complianceStandard.createMany({
+        data: SEED_STANDARDS.map(standardToDb),
+      });
+    }
+    const scanCount = await db.complianceScan.count();
+    if (scanCount === 0) {
+      await db.complianceScan.createMany({
+        data: SEED_RESULTS.map(scanToDb),
+      });
+    }
+    log.info("Compliance seeded", {
+      standards: SEED_STANDARDS.length,
+      scans: SEED_RESULTS.length,
+    });
+  })().catch((err) => {
+    seedPromise = null;
+    throw err;
+  });
+  return seedPromise;
+}
+
 /** List all compliance standards. Cached. */
 export async function listStandards(): Promise<ComplianceStandard[]> {
   return cacheWrap(
     STANDARDS_KEY,
-    () => Promise.resolve(SEED_STANDARDS.map((s) => ({ ...s }))),
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.complianceStandard.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+      return rows.map(standardToDomain);
+    },
     CACHE_TTL.complianceStandards,
   );
 }
@@ -225,16 +370,23 @@ export async function listStandards(): Promise<ComplianceStandard[]> {
 export async function getStandardById(
   id: string,
 ): Promise<ComplianceStandard> {
-  const found = SEED_STANDARDS.find((s) => s.id === id);
-  if (!found) throw AppError.notFound(`Compliance standard '${id}' not found`);
-  return { ...found };
+  await seedIfEmpty();
+  const row = await db.complianceStandard.findUnique({ where: { id } });
+  if (!row) throw AppError.notFound(`Compliance standard '${id}' not found`);
+  return standardToDomain(row);
 }
 
 /** List all scan results. Cached. */
 export async function listResults(): Promise<ComplianceScanResult[]> {
   return cacheWrap(
     RESULTS_KEY,
-    () => Promise.resolve(results.map((r) => ({ ...r, findings: r.findings.map((f) => ({ ...f })) }))),
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.complianceScan.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+      return rows.map(scanToDomain);
+    },
     CACHE_TTL.complianceResults,
   );
 }
@@ -245,13 +397,11 @@ export async function getResultById(
 ): Promise<ComplianceScanResult> {
   return cacheWrap(
     detailKey(id),
-    () => {
-      const found = results.find((r) => r.id === id);
-      if (!found) throw AppError.notFound(`Scan result '${id}' not found`);
-      return Promise.resolve({
-        ...found,
-        findings: found.findings.map((f) => ({ ...f })),
-      });
+    async () => {
+      await seedIfEmpty();
+      const row = await db.complianceScan.findUnique({ where: { id } });
+      if (!row) throw AppError.notFound(`Scan result '${id}' not found`);
+      return scanToDomain(row);
     },
     CACHE_TTL.complianceResultDetail,
   );
@@ -340,7 +490,7 @@ export async function runScan(
     summary,
   };
 
-  results.push(result);
+  await db.complianceScan.create({ data: scanToDb(result) });
   invalidate(id);
   log.info("Compliance scan completed", { id, url: input.url, score });
   return result;
@@ -355,17 +505,14 @@ function simpleHash(s: string): number {
   return Math.abs(h);
 }
 
-/** Number of results in the store. */
+/** Number of results in the store. Sync stub — real count is in DB. */
 export function resultsCount(): number {
-  return results.length;
+  return SEED_RESULTS.length;
 }
 
 /** Test-only: reset to seed. */
 export function _resetComplianceForTest(): void {
-  results = SEED_RESULTS.map((r) => ({
-    ...r,
-    findings: r.findings.map((f) => ({ ...f })),
-  }));
+  seedPromise = null;
   invalidate();
 }
 

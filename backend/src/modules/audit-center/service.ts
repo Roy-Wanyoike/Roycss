@@ -1,14 +1,19 @@
 /**
- * Audit Center service — in-memory project / issue / trend store.
+ * Audit Center service — Prisma-backed project / issue / trend store.
  *
- * Mock backend (no DB). Seeds 5 monitored projects with audit scores,
- * 10 audit issues across severity levels, and 6 months of trend data.
- * All reads are LRU-cached.
+ * Persisted via the `AuditProject` + `AuditResult` Prisma models.
+ * Seeds 5 monitored projects with audit scores and 10 audit issues
+ * on first access. All reads are LRU-cached.
  *
- * Future: swap the in-memory arrays for a Prisma `AuditProject` /
- * `AuditIssue` model backed by scheduled audit runs.
+ * Field-mapping: the Prisma `AuditProject` model exposes
+ * (name, description, url, status, lastAuditAt). The domain shape
+ * carries extra (score, categories) which are JSON-encoded inside
+ * `description`. The Prisma `AuditResult` row stores one project's
+ * issues array in `violationsJson` (so issues can be queried per
+ * project) and the project's audit score in `score`.
  */
 import { CACHE_TTL } from "../../config/constants.js";
+import { db } from "../../lib/db.js";
 import { cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type {
@@ -24,6 +29,12 @@ const PROJECTS_KEY = "audit:projects";
 const detailKey = (id: string): string => `audit:project:${id}`;
 const ISSUES_KEY = "audit:issues";
 const TRENDS_KEY = "audit:trends";
+
+/** Wrapper for the extra domain metadata not in the Prisma schema. */
+interface ProjectMeta {
+  score: number;
+  categories: { name: string; score: number }[];
+}
 
 // ─── Seed: 5 audit projects ──────────────────────────────────────────────
 const SEED_PROJECTS: AuditProject[] = [
@@ -203,17 +214,98 @@ const SEED_TRENDS: AuditTrendPoint[] = [
   { month: "2025-02", score: 87, issues: 12 },
 ];
 
+/** Map an AuditProject domain object to a Prisma row. */
+function projectToDb(p: AuditProject) {
+  const meta: ProjectMeta = { score: p.score, categories: p.categories };
+  return {
+    id: p.id,
+    userId: null,
+    name: p.name,
+    description: JSON.stringify(meta),
+    url: p.url,
+    status: p.status,
+    lastAuditAt: new Date(p.lastAudit),
+  };
+}
+
+/** Map a Prisma AuditProject row to the domain AuditProject. */
+function projectToDomain(row: {
+  id: string;
+  name: string;
+  description: string;
+  url: string;
+  status: string;
+  lastAuditAt: Date | null;
+}): AuditProject {
+  let meta: ProjectMeta = { score: 0, categories: [] };
+  try {
+    meta = JSON.parse(row.description) as ProjectMeta;
+  } catch {
+    // Keep defaults.
+  }
+  return {
+    id: row.id,
+    name: row.name,
+    url: row.url,
+    score: meta.score,
+    status: row.status as AuditProject["status"],
+    lastAudit: row.lastAuditAt ? row.lastAuditAt.toISOString() : new Date(0).toISOString(),
+    categories: meta.categories.map((c) => ({ ...c })),
+  };
+}
+
+let seedPromise: Promise<void> | null = null;
+async function seedIfEmpty(): Promise<void> {
+  if (seedPromise) return seedPromise;
+  seedPromise = (async () => {
+    const projectCount = await db.auditProject.count();
+    if (projectCount === 0) {
+      await db.auditProject.createMany({
+        data: SEED_PROJECTS.map(projectToDb),
+      });
+    }
+    const resultCount = await db.auditResult.count();
+    if (resultCount === 0) {
+      // Group issues by projectId.
+      const byProject = new Map<string, AuditIssue[]>();
+      for (const issue of SEED_ISSUES) {
+        const arr = byProject.get(issue.projectId) ?? [];
+        arr.push(issue);
+        byProject.set(issue.projectId, arr);
+      }
+      const rows = [...byProject.entries()].map(([projectId, issues]) => {
+        const project = SEED_PROJECTS.find((p) => p.id === projectId);
+        return {
+          projectId,
+          summaryJson: JSON.stringify({ count: issues.length }),
+          violationsJson: JSON.stringify(issues),
+          score: project?.score ?? 0,
+        };
+      });
+      await db.auditResult.createMany({ data: rows });
+    }
+    log.debug("Audit Center seeded", {
+      projects: SEED_PROJECTS.length,
+      issueGroups: SEED_ISSUES.length,
+    });
+  })().catch((err) => {
+    seedPromise = null;
+    throw err;
+  });
+  return seedPromise;
+}
+
 /** List all audit projects. Cached. */
 export async function listProjects(): Promise<AuditProject[]> {
   return cacheWrap(
     PROJECTS_KEY,
-    () =>
-      Promise.resolve(
-        SEED_PROJECTS.map((p) => ({
-          ...p,
-          categories: p.categories.map((c) => ({ ...c })),
-        })),
-      ),
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.auditProject.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+      return rows.map(projectToDomain);
+    },
     CACHE_TTL.auditProjects,
   );
 }
@@ -222,13 +314,11 @@ export async function listProjects(): Promise<AuditProject[]> {
 export async function getProjectById(id: string): Promise<AuditProject> {
   return cacheWrap(
     detailKey(id),
-    () => {
-      const found = SEED_PROJECTS.find((p) => p.id === id);
-      if (!found) throw AppError.notFound(`Audit project '${id}' not found`);
-      return Promise.resolve({
-        ...found,
-        categories: found.categories.map((c) => ({ ...c })),
-      });
+    async () => {
+      await seedIfEmpty();
+      const row = await db.auditProject.findUnique({ where: { id } });
+      if (!row) throw AppError.notFound(`Audit project '${id}' not found`);
+      return projectToDomain(row);
     },
     CACHE_TTL.auditProjectDetail,
   );
@@ -240,13 +330,26 @@ export async function listIssues(
 ): Promise<AuditIssue[]> {
   return cacheWrap(
     `${ISSUES_KEY}:${filters.projectId ?? "all"}:${filters.status ?? "all"}`,
-    () => {
-      const filtered = SEED_ISSUES.filter((i) => {
+    async () => {
+      await seedIfEmpty();
+      const rows = filters.projectId
+        ? await db.auditResult.findMany({ where: { projectId: filters.projectId } })
+        : await db.auditResult.findMany();
+      const all: AuditIssue[] = [];
+      for (const r of rows) {
+        try {
+          const arr = JSON.parse(r.violationsJson) as AuditIssue[];
+          for (const issue of arr) all.push({ ...issue });
+        } catch {
+          // Skip malformed.
+        }
+      }
+      const filtered = all.filter((i) => {
         if (filters.projectId && i.projectId !== filters.projectId) return false;
         if (filters.status && i.status !== filters.status) return false;
         return true;
       });
-      return Promise.resolve(filtered.map((i) => ({ ...i })));
+      return filtered;
     },
     CACHE_TTL.auditIssues,
   );
@@ -261,7 +364,7 @@ export async function getTrends(): Promise<AuditTrendPoint[]> {
   );
 }
 
-/** Number of projects in the store. */
+/** Number of projects in the store. Sync stub — real count is in DB. */
 export function projectsCount(): number {
   return SEED_PROJECTS.length;
 }

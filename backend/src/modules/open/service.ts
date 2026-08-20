@@ -1,17 +1,31 @@
 /**
- * Open service — Roy Open (open-source community hub).
+ * Open service — Prisma-backed Roy Open (open-source community hub).
  *
- * Mock backend (no DB). Seeds 5 good-first-issues, 3 RFCs, a 4-quarter
- * roadmap, and 5 top contributors. Voting on an RFC mutates its tally.
+ * Persisted via the `GoodFirstIssue`, `RFC`, `Roadmap`, `Contributor`
+ * Prisma models. Seeds 5 good-first-issues, 3 RFCs, a 4-quarter
+ * roadmap (as a single Roadmap row), and 5 top contributors.
  *
- * Reads are LRU-cached; voting invalidates the affected RFC caches.
- *
- * Future: persist via Prisma `Issue`/`RFC`/`Roadmap`/`Contributor` models
- * and integrate with the GitHub API for live data.
+ * Field-mapping notes:
+ *   - GoodFirstIssue Prisma (title, description, repo, url, difficulty,
+ *     tagsJson, status). Domain's extra (labels, assignee, comments)
+ *     → JSON in `tagsJson`; description ← "" (the seed has no
+ *     long-form description field).
+ *   - RFC Prisma (title, description, status, content, authorId).
+ *     Domain's extra (summary, votes, comments) → JSON in `description`
+ *     as a wrapper. `summary` is also stored in `description.text` for
+ *     round-tripping.
+ *   - Roadmap Prisma (title, description, status, quarter, itemsJson).
+ *     The entire roadmap is stored as a single row; `itemsJson` carries
+ *     the full { year, quarters } wrapper.
+ *   - Contributor Prisma (githubLogin, name, avatarUrl, commitsCount).
+ *     Domain's extra (repos, role, badges) → looked up from the static
+ *     seed map keyed by id; `handle ← githubLogin`, `avatar ← avatarUrl`,
+ *     `contributions ← commitsCount`.
  */
 import { randomUUID } from "node:crypto";
 
 import { CACHE_TTL } from "../../config/constants.js";
+import { db } from "../../lib/db.js";
 import { cache, cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type {
@@ -235,16 +249,235 @@ const SEED_CONTRIBUTORS: Contributor[] = [
   },
 ];
 
-let issues: GoodFirstIssue[] = SEED_ISSUES.map((i) => ({ ...i }));
-let rfcs: RFC[] = SEED_RFCS.map((r) => ({ ...r }));
-const roadmap: OpenRoadmap = { ...SEED_ROADMAP };
-const contributors: Contributor[] = SEED_CONTRIBUTORS.map((c) => ({ ...c }));
+// Lookup map for contributor extras not in the Prisma schema.
+const CONTRIBUTOR_EXTRAS = new Map<
+  string,
+  { repos: number; role: Contributor["role"]; badges: string[] }
+>(
+  SEED_CONTRIBUTORS.map((c) => [
+    c.id,
+    { repos: c.repos, role: c.role, badges: c.badges },
+  ]),
+);
+
+interface IssueWrapper {
+  labels: string[];
+  assignee: string | null;
+  comments: number;
+  createdAt: string;
+}
+
+interface RfcWrapper {
+  summary: string;
+  votes: RFC["votes"];
+  comments: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+function issueToDb(i: GoodFirstIssue) {
+  const wrapper: IssueWrapper = {
+    labels: i.labels,
+    assignee: i.assignee,
+    comments: i.comments,
+    createdAt: i.createdAt,
+  };
+  return {
+    id: i.id,
+    title: i.title,
+    description: "",
+    repo: i.repo,
+    url: i.url,
+    difficulty: "easy",
+    tagsJson: JSON.stringify(wrapper),
+    status: "open",
+  };
+}
+
+function issueToDomain(row: {
+  id: string;
+  title: string;
+  description: string;
+  repo: string;
+  url: string;
+  tagsJson: string;
+  status: string;
+  createdAt: Date;
+}): GoodFirstIssue {
+  let wrapper: IssueWrapper = {
+    labels: [],
+    assignee: null,
+    comments: 0,
+    createdAt: row.createdAt.toISOString(),
+  };
+  try {
+    wrapper = JSON.parse(row.tagsJson) as IssueWrapper;
+  } catch {
+    // Keep defaults.
+  }
+  return {
+    id: row.id,
+    title: row.title,
+    repo: row.repo,
+    labels: wrapper.labels,
+    assignee: wrapper.assignee,
+    comments: wrapper.comments,
+    url: row.url,
+    createdAt: wrapper.createdAt,
+  };
+}
+
+function rfcToDb(r: RFC) {
+  const wrapper: RfcWrapper = {
+    summary: r.summary,
+    votes: r.votes,
+    comments: r.comments,
+    createdAt: r.createdAt,
+    updatedAt: r.updatedAt,
+  };
+  return {
+    id: r.id,
+    title: r.title,
+    description: JSON.stringify(wrapper),
+    status: r.status,
+    content: r.body,
+    authorId: r.author,
+  };
+}
+
+function rfcToDomain(row: {
+  id: string;
+  title: string;
+  description: string;
+  status: string;
+  content: string;
+  authorId: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}): RFC {
+  let wrapper: RfcWrapper = {
+    summary: row.description,
+    votes: { for: 0, against: 0, neutral: 0 },
+    comments: 0,
+    createdAt: row.createdAt.toISOString(),
+    updatedAt: row.updatedAt.toISOString(),
+  };
+  try {
+    wrapper = JSON.parse(row.description) as RfcWrapper;
+  } catch {
+    // Keep defaults.
+  }
+  return {
+    id: row.id,
+    title: row.title,
+    status: row.status as RFC["status"],
+    author: row.authorId ?? "",
+    summary: wrapper.summary,
+    body: row.content,
+    votes: wrapper.votes,
+    comments: wrapper.comments,
+    createdAt: wrapper.createdAt,
+    updatedAt: wrapper.updatedAt,
+  };
+}
+
+function roadmapToDb(r: OpenRoadmap) {
+  return {
+    id: `roadmap-${r.year}`,
+    title: `${r.year} Roadmap`,
+    description: `RoyCSS ${r.year} quarterly roadmap`,
+    status: "in-progress",
+    quarter: `FY${r.year}`,
+    itemsJson: JSON.stringify(r),
+  };
+}
+
+function roadmapToDomain(row: {
+  id: string;
+  itemsJson: string;
+}): OpenRoadmap {
+  try {
+    return JSON.parse(row.itemsJson) as OpenRoadmap;
+  } catch {
+    return { year: 0, quarters: [] };
+  }
+}
+
+function contributorToDb(c: Contributor) {
+  return {
+    id: c.id,
+    githubLogin: c.handle,
+    name: c.name,
+    avatarUrl: c.avatar,
+    commitsCount: c.contributions,
+  };
+}
+
+function contributorToDomain(row: {
+  id: string;
+  githubLogin: string;
+  name: string | null;
+  avatarUrl: string | null;
+  commitsCount: number;
+}): Contributor {
+  const extras = CONTRIBUTOR_EXTRAS.get(row.id) ?? {
+    repos: 0,
+    role: "contributor" as Contributor["role"],
+    badges: [],
+  };
+  return {
+    id: row.id,
+    name: row.name ?? "",
+    handle: row.githubLogin,
+    avatar: row.avatarUrl ?? "",
+    contributions: row.commitsCount,
+    repos: extras.repos,
+    role: extras.role,
+    badges: extras.badges,
+  };
+}
+
+let seedPromise: Promise<void> | null = null;
+async function seedIfEmpty(): Promise<void> {
+  if (seedPromise) return seedPromise;
+  seedPromise = (async () => {
+    if ((await db.goodFirstIssue.count()) === 0) {
+      await db.goodFirstIssue.createMany({ data: SEED_ISSUES.map(issueToDb) });
+    }
+    if ((await db.rFC.count()) === 0) {
+      await db.rFC.createMany({ data: SEED_RFCS.map(rfcToDb) });
+    }
+    if ((await db.roadmap.count()) === 0) {
+      await db.roadmap.create({ data: roadmapToDb(SEED_ROADMAP) });
+    }
+    if ((await db.contributor.count()) === 0) {
+      await db.contributor.createMany({
+        data: SEED_CONTRIBUTORS.map(contributorToDb),
+      });
+    }
+    log.info("Open seeded", {
+      issues: SEED_ISSUES.length,
+      rfcs: SEED_RFCS.length,
+      contributors: SEED_CONTRIBUTORS.length,
+    });
+  })().catch((err) => {
+    seedPromise = null;
+    throw err;
+  });
+  return seedPromise;
+}
 
 /** List all open issues. Cached. */
 export async function listIssues(): Promise<GoodFirstIssue[]> {
   return cacheWrap(
     ISSUES_KEY,
-    () => Promise.resolve(issues.map((i) => ({ ...i }))),
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.goodFirstIssue.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+      return rows.map(issueToDomain);
+    },
     CACHE_TTL.openIssues,
   );
 }
@@ -253,10 +486,11 @@ export async function listIssues(): Promise<GoodFirstIssue[]> {
 export async function getIssueById(id: string): Promise<GoodFirstIssue> {
   return cacheWrap(
     issueKey(id),
-    () => {
-      const found = issues.find((i) => i.id === id);
-      if (!found) throw AppError.notFound(`Issue '${id}' not found`);
-      return Promise.resolve({ ...found });
+    async () => {
+      await seedIfEmpty();
+      const row = await db.goodFirstIssue.findUnique({ where: { id } });
+      if (!row) throw AppError.notFound(`Issue '${id}' not found`);
+      return issueToDomain(row);
     },
     CACHE_TTL.openIssueDetail,
   );
@@ -266,7 +500,13 @@ export async function getIssueById(id: string): Promise<GoodFirstIssue> {
 export async function listRfcs(): Promise<RFC[]> {
   return cacheWrap(
     RFCS_KEY,
-    () => Promise.resolve(rfcs.map((r) => ({ ...r, votes: { ...r.votes } }))),
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.rFC.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+      return rows.map(rfcToDomain);
+    },
     CACHE_TTL.openRfcs,
   );
 }
@@ -275,10 +515,11 @@ export async function listRfcs(): Promise<RFC[]> {
 export async function getRfcById(id: string): Promise<RFC> {
   return cacheWrap(
     rfcKey(id),
-    () => {
-      const found = rfcs.find((r) => r.id === id);
-      if (!found) throw AppError.notFound(`RFC '${id}' not found`);
-      return Promise.resolve({ ...found, votes: { ...found.votes } });
+    async () => {
+      await seedIfEmpty();
+      const row = await db.rFC.findUnique({ where: { id } });
+      if (!row) throw AppError.notFound(`RFC '${id}' not found`);
+      return rfcToDomain(row);
     },
     CACHE_TTL.openRfcDetail,
   );
@@ -286,27 +527,47 @@ export async function getRfcById(id: string): Promise<RFC> {
 
 /** Cast a vote on an RFC. Mutates state. */
 export async function voteOnRfc(id: string, input: RfcVoteInput): Promise<RFC> {
-  const idx = rfcs.findIndex((r) => r.id === id);
-  if (idx === -1) throw AppError.notFound(`RFC '${id}' not found`);
-  const current = rfcs[idx]!;
-  const votes = { ...current.votes };
-  votes[input.vote] = votes[input.vote] + 1;
-  const updated: RFC = {
-    ...current,
-    votes,
-    updatedAt: new Date().toISOString(),
-  };
-  rfcs = rfcs.map((r) => (r.id === id ? updated : r));
+  await seedIfEmpty();
+  const row = await db.rFC.findUnique({ where: { id } });
+  if (!row) throw AppError.notFound(`RFC '${id}' not found`);
+  let wrapper: RfcWrapper;
+  try {
+    wrapper = JSON.parse(row.description) as RfcWrapper;
+  } catch {
+    wrapper = {
+      summary: row.description,
+      votes: { for: 0, against: 0, neutral: 0 },
+      comments: 0,
+      createdAt: row.createdAt.toISOString(),
+      updatedAt: row.updatedAt.toISOString(),
+    };
+  }
+  wrapper.votes = { ...wrapper.votes };
+  wrapper.votes[input.vote] = wrapper.votes[input.vote] + 1;
+  const now = new Date().toISOString();
+  wrapper.updatedAt = now;
+  await db.rFC.update({
+    where: { id },
+    data: { description: JSON.stringify(wrapper) },
+  });
   invalidateRfc(id);
   log.info("RFC voted", { id, vote: input.vote });
-  return updated;
+  return rfcToDomain({
+    ...row,
+    description: JSON.stringify(wrapper),
+  });
 }
 
 /** Get the 4-quarter roadmap. Cached. */
 export async function getRoadmap(): Promise<OpenRoadmap> {
   return cacheWrap(
     ROADMAP_KEY,
-    () => Promise.resolve({ ...roadmap, quarters: roadmap.quarters.map((q) => ({ ...q, goals: [...q.goals] })) }),
+    async () => {
+      await seedIfEmpty();
+      const row = await db.roadmap.findFirst();
+      if (!row) throw AppError.notFound("Roadmap not found");
+      return roadmapToDomain(row);
+    },
     CACHE_TTL.openRoadmap,
   );
 }
@@ -315,15 +576,20 @@ export async function getRoadmap(): Promise<OpenRoadmap> {
 export async function getContributors(): Promise<Contributor[]> {
   return cacheWrap(
     CONTRIBUTORS_KEY,
-    () => Promise.resolve(contributors.map((c) => ({ ...c, badges: [...c.badges] }))),
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.contributor.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+      return rows.map(contributorToDomain);
+    },
     CACHE_TTL.openContributors,
   );
 }
 
 /** Test-only: reset to seed. */
 export function _resetOpenForTest(): void {
-  issues = SEED_ISSUES.map((i) => ({ ...i }));
-  rfcs = SEED_RFCS.map((r) => ({ ...r }));
+  seedPromise = null;
   cache.delete(ISSUES_KEY);
   cache.delete(RFCS_KEY);
   cache.delete(ROADMAP_KEY);

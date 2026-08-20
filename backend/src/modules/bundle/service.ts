@@ -1,18 +1,22 @@
 /**
- * Bundle service — Roy Bundle (CSS/JS bundle analyzer).
+ * Bundle service — Prisma-backed Roy Bundle (CSS/JS bundle analyzer).
  *
- * Mock backend (no DB). Seeds 1 bundle analysis result with a size
- * breakdown, 3 duplicate modules, and 5 dead CSS rules. Analyze requests
- * synthesize a result keyed on the requested entry point.
+ * Persisted via the Prisma `BundleResult` model. Seeds 1 bundle analysis
+ * result with a size breakdown, plus static duplicate-module and
+ * dead-CSS-rule lookups (these are not Prisma-backed because there is
+ * no Prisma model for them in the current schema).
  *
- * Reads are LRU-cached; new analyses invalidate the results list.
- *
- * Future: persist via Prisma `BundleResult` model and stream live
- * measurements from a CI integration.
+ * Field-mapping: the Prisma `BundleResult` model exposes (name,
+ * sizeBytes, gzipBytes, modulesJson). The domain shape carries extra
+ * (entry, status, brotliSize, analyzedAt, breakdown,
+ * duplicatesCount, deadCssCount, warnings) which is JSON-encoded
+ * inside `modulesJson` as a wrapper object. `entry → name`,
+ * `totalSize → sizeBytes`, `gzipSize → gzipBytes` map directly.
  */
 import { randomUUID } from "node:crypto";
 
 import { CACHE_TTL } from "../../config/constants.js";
+import { db } from "../../lib/db.js";
 import { cache, cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type {
@@ -35,7 +39,7 @@ function invalidateResults(id?: string): void {
   if (id) cache.delete(resultKey(id));
 }
 
-// ─── Seed: 3 duplicate modules ──────────────────────────────────────────
+// ─── Seed: 3 duplicate modules (static — no Prisma model) ───────────────
 const SEED_DUPLICATES: DuplicateModule[] = [
   {
     id: "dup-001",
@@ -63,7 +67,7 @@ const SEED_DUPLICATES: DuplicateModule[] = [
   },
 ];
 
-// ─── Seed: 5 dead CSS rules ─────────────────────────────────────────────
+// ─── Seed: 5 dead CSS rules (static — no Prisma model) ─────────────────
 const SEED_DEAD_CSS: DeadCssRule[] = [
   {
     id: "dead-001",
@@ -134,7 +138,94 @@ const SEED_RESULTS: BundleResult[] = [
   },
 ];
 
-let results: BundleResult[] = SEED_RESULTS.map((r) => ({ ...r, breakdown: r.breakdown.map((b) => ({ ...b })), warnings: [...r.warnings] }));
+/** Wrapper persisted in `modulesJson`. */
+interface BundleWrapper {
+  entry: string;
+  status: BundleResult["status"];
+  brotliSize: number;
+  analyzedAt: string;
+  breakdown: BundleResult["breakdown"];
+  duplicatesCount: number;
+  deadCssCount: number;
+  warnings: string[];
+}
+
+function toDbRow(r: BundleResult) {
+  const wrapper: BundleWrapper = {
+    entry: r.entry,
+    status: r.status,
+    brotliSize: r.brotliSize,
+    analyzedAt: r.analyzedAt,
+    breakdown: r.breakdown,
+    duplicatesCount: r.duplicatesCount,
+    deadCssCount: r.deadCssCount,
+    warnings: r.warnings,
+  };
+  return {
+    id: r.id,
+    userId: null,
+    name: r.entry,
+    sizeBytes: r.totalSize,
+    gzipBytes: r.gzipSize,
+    modulesJson: JSON.stringify(wrapper),
+  };
+}
+
+function toDomain(row: {
+  id: string;
+  name: string;
+  sizeBytes: number;
+  gzipBytes: number;
+  modulesJson: string;
+  createdAt: Date;
+}): BundleResult {
+  let wrapper: BundleWrapper;
+  try {
+    wrapper = JSON.parse(row.modulesJson) as BundleWrapper;
+  } catch {
+    wrapper = {
+      entry: row.name,
+      status: "complete",
+      brotliSize: 0,
+      analyzedAt: row.createdAt.toISOString(),
+      breakdown: [],
+      duplicatesCount: 0,
+      deadCssCount: 0,
+      warnings: [],
+    };
+  }
+  return {
+    id: row.id,
+    entry: wrapper.entry,
+    status: wrapper.status,
+    totalSize: row.sizeBytes,
+    gzipSize: row.gzipBytes,
+    brotliSize: wrapper.brotliSize,
+    analyzedAt: wrapper.analyzedAt,
+    breakdown: wrapper.breakdown.map((b) => ({ ...b })),
+    duplicatesCount: wrapper.duplicatesCount,
+    deadCssCount: wrapper.deadCssCount,
+    warnings: [...wrapper.warnings],
+  };
+}
+
+let seedPromise: Promise<void> | null = null;
+async function seedIfEmpty(): Promise<void> {
+  if (seedPromise) return seedPromise;
+  seedPromise = (async () => {
+    const count = await db.bundleResult.count();
+    if (count === 0) {
+      await db.bundleResult.createMany({
+        data: SEED_RESULTS.map(toDbRow),
+      });
+      log.info("Bundle results seeded", { count: SEED_RESULTS.length });
+    }
+  })().catch((err) => {
+    seedPromise = null;
+    throw err;
+  });
+  return seedPromise;
+}
 
 /** List duplicate modules. Cached. */
 export async function listDuplicates(): Promise<DuplicateModule[]> {
@@ -165,14 +256,11 @@ export async function listDeadCss(): Promise<DeadCssRule[]> {
 export async function getBundleResultById(id: string): Promise<BundleResult> {
   return cacheWrap(
     resultKey(id),
-    () => {
-      const found = results.find((r) => r.id === id);
-      if (!found) throw AppError.notFound(`Bundle result '${id}' not found`);
-      return Promise.resolve({
-        ...found,
-        breakdown: found.breakdown.map((b) => ({ ...b })),
-        warnings: [...found.warnings],
-      });
+    async () => {
+      await seedIfEmpty();
+      const row = await db.bundleResult.findUnique({ where: { id } });
+      if (!row) throw AppError.notFound(`Bundle result '${id}' not found`);
+      return toDomain(row);
     },
     CACHE_TTL.bundleResultDetail,
   );
@@ -182,6 +270,7 @@ export async function getBundleResultById(id: string): Promise<BundleResult> {
 export async function analyzeBundle(
   input: AnalyzeBundleInput,
 ): Promise<BundleResult> {
+  await seedIfEmpty();
   const id = `bundle-${randomUUID()}`;
   const total = 200_000 + Math.floor(Math.random() * 400_000);
   const result: BundleResult = {
@@ -207,7 +296,7 @@ export async function analyzeBundle(
       "5 dead CSS rules can be safely removed.",
     ],
   };
-  results = [result, ...results].slice(0, 50);
+  await db.bundleResult.create({ data: toDbRow(result) });
   invalidateResults(id);
   log.info("Bundle analyzed", { id, entry: input.entry });
   return result;
@@ -215,7 +304,7 @@ export async function analyzeBundle(
 
 /** Test-only: reset to seed. */
 export function _resetBundleForTest(): void {
-  results = SEED_RESULTS.map((r) => ({ ...r, breakdown: r.breakdown.map((b) => ({ ...b })), warnings: [...r.warnings] }));
+  seedPromise = null;
   invalidateResults();
   cache.delete(DUPLICATES_KEY);
   cache.delete(DEAD_CSS_KEY);

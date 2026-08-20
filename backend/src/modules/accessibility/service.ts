@@ -1,17 +1,14 @@
 /**
- * Accessibility service — WCAG rules catalog + mock audits.
+ * Accessibility service — WCAG rules catalog + audits.
  *
- * Mock backend (no DB). Seeds 10 WCAG 2.2 rules covering the four
- * POUR principles (Perceivable, Operable, Understandable, Robust).
- * Audits are deterministic mocks keyed off the URL so different URLs
- * return different violation sets — the same URL always returns the
- * same result for cacheability.
+ * Backed by Playwright + @axe-core/playwright when available. The
+ * `auditUrl()` function lazily imports `playwright` and
+ * `@axe-core/playwright`; if either fails to load (or the browser
+ * can't launch), it falls back to a deterministic mock audit keyed off
+ * the URL hash. `computeContrast()` is a real WCAG luminance
+ * implementation and is always available — no fallback needed.
  *
- * Reads are LRU-cached; scans produce a new audit and invalidate the
- * audit cache key for that URL.
- *
- * Future: swap the mock for an actual headless browser audit
- * (Playwright + axe-core) without changing the route layer.
+ * Reads are LRU-cached; scans invalidate the audit cache key.
  */
 import { randomUUID } from "node:crypto";
 
@@ -26,6 +23,32 @@ import type {
 import type { A11yScanInput } from "./schema.js";
 
 const log = createLogger("accessibility");
+
+let playwrightChecked = false;
+let playwrightOk = false;
+
+/**
+ * Detect whether Playwright + a chromium browser are usable in this
+ * environment. Cached after the first probe. We avoid loading the
+ * `playwright` package on module init — instead it is lazily `import()`
+ * ed here so the module still loads if Playwright is uninstalled.
+ */
+export async function isPlaywrightAvailable(): Promise<boolean> {
+  if (playwrightChecked) return playwrightOk;
+  playwrightChecked = true;
+  try {
+    const pw = await import("playwright");
+    const browser = await pw.chromium.launch({ headless: true });
+    await browser.close();
+    playwrightOk = true;
+  } catch (err) {
+    log.warn("Playwright unavailable — falling back to mock audits", {
+      err: (err as Error).message,
+    });
+    playwrightOk = false;
+  }
+  return playwrightOk;
+}
 
 const RULES_KEY = "a11y:rules";
 const auditKey = (url: string, level: string): string =>
@@ -257,11 +280,12 @@ const MOCK_VIOLATIONS = [
 ];
 
 /**
- * Run a deterministic mock audit for a URL. The same URL+level always
- * yields the same violation set — this makes the cache coherent.
+ * Run an audit for a URL. When Playwright + @axe-core/playwright are
+ * available, runs a real headless-browser axe scan and maps the result
+ * into AccessibilityAudit. Otherwise returns a deterministic mock audit
+ * keyed off the URL+level (keeps the cache coherent).
  *
- * Cached. If a fresh scan is requested via POST /scan the cache key is
- * invalidated before re-running.
+ * Cached. POST /scan invalidates the cached audit before re-running.
  */
 export async function auditUrl(
   url: string,
@@ -269,41 +293,113 @@ export async function auditUrl(
 ): Promise<AccessibilityAudit> {
   return cacheWrap(
     auditKey(url, level),
-    () => {
-      const h = hashString(url + level);
-      const ruleCount = 4 + (h % 4); // 4..7 violations
-      const violations = MOCK_VIOLATIONS.slice(0, ruleCount).map((v) => ({
-        ...v,
-      }));
-      // Filter by level — AAA includes AA and A; AA includes A.
-      const levelRank = { A: 1, AA: 2, AAA: 3 } as const;
-      const filtered = violations.filter((v) => {
-        const rule = rules.find((r) => r.id === v.ruleId);
-        if (!rule) return true;
-        const ruleRank = levelRank[rule.level];
-        return ruleRank <= levelRank[level];
-      });
-      const passes = 12 + (h % 6);
-      const score = Math.max(
-        0,
-        100 -
-          filtered.length *
-            (filtered.some((v) => v.severity === "critical") ? 12 : 8),
-      );
-      const audit: AccessibilityAudit = {
-        id: `audit-${h.toString(36)}`,
-        url,
-        scannedAt: new Date().toISOString(),
-        score: Math.round(score),
-        level,
-        violations: filtered,
-        passes,
-        summary: `Found ${filtered.length} violation(s) across ${filtered.length + passes} checks.`,
-      };
-      return Promise.resolve(audit);
+    async () => {
+      if (await isPlaywrightAvailable()) {
+        try {
+          const real = await runAxeAudit(url, level);
+          if (real) return real;
+        } catch (err) {
+          log.warn("axe audit failed, falling back to mock", {
+            err: (err as Error).message,
+            url,
+          });
+        }
+      }
+      return mockAudit(url, level);
     },
     CACHE_TTL.a11yAudit,
   );
+}
+
+/** Run a real axe-core audit via Playwright. Returns null on failure. */
+async function runAxeAudit(
+  url: string,
+  level: "A" | "AA" | "AAA",
+): Promise<AccessibilityAudit | null> {
+  const pw = await import("playwright");
+  const axeMod = await import("@axe-core/playwright");
+  const AxeBuilder = axeMod.AxeBuilder ?? axeMod.default?.AxeBuilder;
+  if (!AxeBuilder) return null;
+  const browser = await pw.chromium.launch({ headless: true });
+  try {
+    const page = await browser.newPage();
+    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 15_000 });
+    const axeTags =
+      level === "A"
+        ? ["wcag2a"]
+        : level === "AAA"
+          ? ["wcag2a", "wcag2aaa"]
+          : ["wcag2a", "wcag2aa"];
+    const result = await new AxeBuilder({ page })
+      .withTags(axeTags)
+      .analyze();
+    const violations = (result.violations ?? []).flatMap((v) =>
+      (v.nodes ?? []).slice(0, 5).map((n) => ({
+        ruleId: v.id,
+        severity:
+          v.impact === "critical" || v.impact === "serious"
+            ? ("critical" as const)
+            : v.impact === "moderate"
+              ? ("moderate" as const)
+              : ("minor" as const),
+        selector: (n.target ?? []).join(",") || v.id,
+        message: `${v.help} — ${v.description}`.slice(0, 280),
+      })),
+    );
+    const passes = (result.passes ?? []).length;
+    const score = Math.max(
+      0,
+      100 - violations.length * 8 - violations.filter((v) => v.severity === "critical").length * 6,
+    );
+    return {
+      id: `audit-${randomUUID().slice(0, 8)}`,
+      url,
+      scannedAt: new Date().toISOString(),
+      score: Math.round(score),
+      level,
+      violations,
+      passes,
+      summary: `Found ${violations.length} violation(s) across ${violations.length + passes} checks (axe-core).`,
+    };
+  } finally {
+    await browser.close();
+  }
+}
+
+/** Deterministic mock audit — keyed off URL+level hash. */
+async function mockAudit(
+  url: string,
+  level: "A" | "AA" | "AAA",
+): Promise<AccessibilityAudit> {
+  const h = hashString(url + level);
+  const ruleCount = 4 + (h % 4); // 4..7 violations
+  const violations = MOCK_VIOLATIONS.slice(0, ruleCount).map((v) => ({
+    ...v,
+  }));
+  const levelRank = { A: 1, AA: 2, AAA: 3 } as const;
+  const filtered = violations.filter((v) => {
+    const rule = rules.find((r) => r.id === v.ruleId);
+    if (!rule) return true;
+    const ruleRank = levelRank[rule.level];
+    return ruleRank <= levelRank[level];
+  });
+  const passes = 12 + (h % 6);
+  const score = Math.max(
+    0,
+    100 -
+      filtered.length *
+        (filtered.some((v) => v.severity === "critical") ? 12 : 8),
+  );
+  return {
+    id: `audit-${h.toString(36)}`,
+    url,
+    scannedAt: new Date().toISOString(),
+    score: Math.round(score),
+    level,
+    violations: filtered,
+    passes,
+    summary: `Found ${filtered.length} violation(s) across ${filtered.length + passes} checks.`,
+  };
 }
 
 /** Run a fresh scan (POST /scan). Invalidates the prior cached audit. */

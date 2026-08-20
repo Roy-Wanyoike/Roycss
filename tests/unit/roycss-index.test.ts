@@ -60,7 +60,7 @@ describe("roycss-index public API", () => {
     });
 
     it("returns an empty array for a category with no effects (shouldn't happen, but contract)", () => {
-      // All 20 categories have effects, but assert the contract.
+      // All 29 categories have effects, but assert the contract.
       const result = getByCategory("misc" as EffectCategory);
       expect(Array.isArray(result)).toBe(true);
     });
@@ -151,6 +151,6 @@ describe("roycss-index re-exports", () => {
     const mod = await import("@/lib/roycss-index");
     expect(mod.categoryMeta).toBeDefined();
     expect(mod.categoryOrder).toBeInstanceOf(Array);
-    expect(mod.categoryOrder.length).toBe(20);
+    expect(mod.categoryOrder.length).toBe(29);
   });
 });

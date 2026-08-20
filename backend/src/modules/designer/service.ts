@@ -1,27 +1,40 @@
 /**
- * Designer service — Roy Designer mock AI UI design generator.
+ * Designer service — Roy Designer UI design generator.
  *
- * Mock backend (no DB). Seeds 4 design presets (Apple, Material,
- * Brutalist, Glassmorphism). Each generation produces a deterministic,
- * repeatable result derived from the prompt + components — the same
- * input always returns the same design so the cache is coherent.
+ * Backed by the unified LLM client. When an LLM key is configured, the
+ * generator asks the LLM for CSS custom properties (design tokens) and
+ * maps them into the existing DesignerResult shape. When no key is set,
+ * a deterministic mock design is returned — same signature, same
+ * cache keys, no breaking change for callers.
  *
  * Reads are LRU-cached; generating a new design invalidates the result
  * list.
- *
- * Future: route to an LLM (or a token-aware CSS generator) emitting
- * the same shape.
  */
 import { randomUUID } from "node:crypto";
 
 import { CACHE_TTL } from "../../config/constants.js";
 import { cache, cacheWrap } from "../../lib/cache.js";
+import { chat, isLLMConfigured } from "../../lib/llm-client.js";
 import { createLogger } from "../../lib/logger.js";
 import type { DesignPreset, DesignerResult } from "../../types/index.js";
 import { AppError } from "../../server/middleware/error.js";
 import type { GenerateDesignInput } from "./schema.js";
 
 const log = createLogger("designer");
+
+const DESIGNER_SYSTEM_PROMPT =
+  "You are an expert UI designer. Given a design brief and optional brand palette, return a JSON object whose values are CSS custom property declarations (e.g. {\"--color-primary\":\"#007aff\"}). Include at minimum: --color-primary, --color-secondary, --color-bg, --color-fg, --radius-base, --space-base, --font-base. Respond with JSON only — no markdown fences.";
+
+function safeJson<T>(raw: string): T | null {
+  try {
+    const start = raw.indexOf("{");
+    const end = raw.lastIndexOf("}");
+    if (start === -1 || end === -1) return null;
+    return JSON.parse(raw.slice(start, end + 1)) as T;
+  } catch {
+    return null;
+  }
+}
 
 const PRESETS_KEY = "designer:presets";
 const RESULT_LIST_KEY = "designer:results:list";
@@ -133,7 +146,7 @@ export async function getResultById(id: string): Promise<DesignerResult> {
   );
 }
 
-/** Generate a new design (mock). Invalidates result list cache. */
+/** Generate a new design. Uses LLM when configured. Invalidates result list cache. */
 export async function generateDesign(
   input: GenerateDesignInput,
 ): Promise<DesignerResult> {
@@ -143,6 +156,66 @@ export async function generateDesign(
     throw AppError.notFound(`Preset '${presetId}' not found`);
   }
 
+  const base = buildMockDesign(input, preset);
+  let result = base;
+
+  if (isLLMConfigured) {
+    try {
+      const paletteHint = input.palette
+        ? ` Brand palette: ${input.palette.join(", ")}.`
+        : "";
+      const raw = await chat(
+        [
+          { role: "system", content: DESIGNER_SYSTEM_PROMPT },
+          {
+            role: "user",
+            content: `Brief: ${input.prompt}.${paletteHint} Components: ${input.components.join(", ")}.`,
+          },
+        ],
+        { temperature: 0.3, maxTokens: 1200 },
+      );
+      const tokens = safeJson<Record<string, string>>(raw);
+      if (tokens && Object.keys(tokens).length > 0) {
+        const mergedTokens = { ...base.tokens, ...tokens };
+        const primary =
+          tokens["--color-primary"] ?? base.tokens["--color-primary"]!;
+        const secondary =
+          tokens["--color-secondary"] ?? base.tokens["--color-secondary"]!;
+        const bg = tokens["--color-bg"] ?? base.tokens["--color-bg"]!;
+        const fg = tokens["--color-fg"] ?? base.tokens["--color-fg"]!;
+        // Re-derive the component CSS from the LLM-suggested tokens.
+        const components = base.components.map((c) => ({
+          ...c,
+          css: `.roycss-${c.type} { background: ${bg}; color: ${fg}; padding: 2rem; border-radius: ${
+            tokens["--radius-base"] ?? preset.radius
+          }; border: 2px solid ${primary}; } .roycss-${c.type} h2 { color: ${primary}; } .roycss-${c.type} p { color: ${secondary}; }`,
+        }));
+        result = { ...base, tokens: mergedTokens, components };
+      }
+      log.info("Design generated via LLM", { id: base.id, presetId, llm: true });
+    } catch (err) {
+      log.warn("LLM call failed, using mock design", {
+        err: (err as Error).message,
+      });
+    }
+  } else {
+    log.info("Design generated (mock fallback)", {
+      id: base.id,
+      presetId,
+      llm: false,
+    });
+  }
+
+  results = [result, ...results].slice(0, 100);
+  invalidateResults(result.id);
+  return result;
+}
+
+/** Deterministic mock design — same shape the route layer expects. */
+function buildMockDesign(
+  input: GenerateDesignInput,
+  preset: DesignPreset,
+): DesignerResult {
   const palette = input.palette ?? preset.palette;
   const primary = palette[0] ?? "#007aff";
   const secondary = palette[1] ?? "#5856d6";
@@ -166,23 +239,15 @@ export async function generateDesign(
     "--font-base": preset.typography.fontFamily,
   };
 
-  const result: DesignerResult = {
+  return {
     id: `design-${randomUUID()}`,
     prompt: input.prompt,
-    presetId,
+    presetId: preset.id,
     status: "complete",
     components,
     tokens,
     createdAt: new Date().toISOString(),
   };
-  results = [result, ...results].slice(0, 100);
-  invalidateResults(result.id);
-  log.info("Design generated", {
-    id: result.id,
-    presetId,
-    componentCount: components.length,
-  });
-  return result;
 }
 
 /** Number of presets in the catalog. */

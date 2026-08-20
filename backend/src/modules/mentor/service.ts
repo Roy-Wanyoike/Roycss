@@ -1,17 +1,21 @@
 /**
  * Mentor service — in-memory Roy Mentor topics / levels / progress store.
  *
- * Mock backend (no DB). Seeds 6 learning topics, 3 skill levels, and a
- * learner progress snapshot. All reads are LRU-cached; chat messages
- * return a deterministic mock response so the route layer stays simple.
+ * Backed by the unified LLM client. The chat endpoint streams a reply
+ * via `chatStream()` when an LLM key is configured; the chunks are
+ * concatenated into the assistant message (the route returns a single
+ * JSON response, not an SSE stream, so this is a clean fit). When no
+ * key is set, a deterministic mock reply is returned — same signature,
+ * same downstream cache keys.
  *
- * Future: swap the in-memory state for an LLM-backed mentor that streams
- * responses and persists conversation history in a Prisma `MentorSession`.
+ * Topics, levels, and the learner progress snapshot are seeded and
+ * LRU-cached.
  */
 import { randomUUID } from "node:crypto";
 
 import { CACHE_TTL } from "../../config/constants.js";
 import { cacheWrap } from "../../lib/cache.js";
+import { chatStream, isLLMConfigured } from "../../lib/llm-client.js";
 import { createLogger } from "../../lib/logger.js";
 import type {
   MentorChatMessage,
@@ -22,6 +26,9 @@ import type {
 import { AppError } from "../../server/middleware/error.js";
 
 const log = createLogger("mentor");
+
+const MENTOR_SYSTEM_PROMPT =
+  "You are Roy Mentor, an expert CSS educator. Be concise, practical, and friendly. Answer the learner's question with at most 3 short paragraphs. Reference relevant RoyCSS topics when helpful.";
 
 const TOPICS_KEY = "mentor:topics";
 const LEVELS_KEY = "mentor:levels";
@@ -166,10 +173,8 @@ export async function getProgress(): Promise<MentorProgress> {
 }
 
 /**
- * Send a chat message to the mentor — returns the user message and a
- * deterministic mock mentor reply.
- *
- * Future: replace with an LLM-backed stream.
+ * Send a chat message to the mentor. Uses chatStream() when an LLM is
+ * configured; otherwise falls back to a deterministic mock reply.
  */
 export async function sendChat(input: {
   message: string;
@@ -183,15 +188,63 @@ export async function sendChat(input: {
   }
   const now = new Date().toISOString();
   const id = `mentor-chat-${randomUUID()}`;
+
+  let mentorContent = "";
+  if (isLLMConfigured) {
+    try {
+      const topic = SEED_TOPICS.find((t) => t.id === input.topicId);
+      const context = topic ? ` (Context: ${topic.title} — ${topic.description})` : "";
+      const stream = chatStream(
+        [
+          { role: "system", content: MENTOR_SYSTEM_PROMPT },
+          { role: "user", content: `${input.message}${context}` },
+        ],
+        { temperature: 0.4, maxTokens: 800 },
+      );
+      let chunk = await stream.next();
+      while (!chunk.done) {
+        mentorContent += chunk.value;
+        chunk = await stream.next();
+      }
+      if (mentorContent.trim().length === 0) {
+        mentorContent = buildMockReply(input.message, input.topicId);
+      }
+      log.info("Mentor reply streamed via LLM", { id, llm: true });
+    } catch (err) {
+      log.warn("LLM stream failed, using mock reply", {
+        err: (err as Error).message,
+      });
+      mentorContent = buildMockReply(input.message, input.topicId);
+    }
+  } else {
+    // Mock provider: chatStream() yields 3 chunks of a deterministic
+    // string; consuming it here exercises the streaming code path.
+    const stream = chatStream(
+      [
+        { role: "system", content: MENTOR_SYSTEM_PROMPT },
+        { role: "user", content: input.message },
+      ],
+      { temperature: 0.4, maxTokens: 800 },
+    );
+    let chunk = await stream.next();
+    while (!chunk.done) {
+      mentorContent += chunk.value;
+      chunk = await stream.next();
+    }
+    if (mentorContent.trim().length === 0) {
+      mentorContent = buildMockReply(input.message, input.topicId);
+    }
+    log.info("Mentor chat message sent (mock stream)", {
+      id,
+      topicId: input.topicId ?? "none",
+      llm: false,
+    });
+  }
+
   const messages: MentorChatMessage[] = [
     { role: "user", content: input.message, ts: now },
-    {
-      role: "mentor",
-      content: buildMockReply(input.message, input.topicId),
-      ts: now,
-    },
+    { role: "mentor", content: mentorContent, ts: new Date().toISOString() },
   ];
-  log.info("Mentor chat message sent", { id, topicId: input.topicId ?? "none" });
   return { id, messages };
 }
 

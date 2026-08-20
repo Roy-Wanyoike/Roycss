@@ -1,21 +1,22 @@
 /**
- * Architect service — Roy Architect mock AI architecture generator.
+ * Architect service — Roy Architect architecture generator.
  *
- * Mock backend (no DB). Seeds 5 reusable architecture templates
- * (SaaS, E-commerce, Realtime, Headless CMS, Microservice). Each
- * generation produces a deterministic, repeatable result derived
- * from the prompt — the same prompt returns the same architecture
- * so the cache is coherent.
+ * Backed by the unified LLM client (`@/lib/llm-client`). When an LLM
+ * provider key is configured (OPENAI_API_KEY or ANTHROPIC_API_KEY) the
+ * generator calls the LLM with a system prompt that asks for JSON with
+ * { techStack, modules, dataFlow, risks, estimatedEffort } and maps it
+ * into the existing ArchitectureResult shape. When no key is set, the
+ * deterministic mock plan is returned instead — same signature, same
+ * downstream cache keys, no breaking change for callers.
  *
- * Reads are LRU-cached; generating a new architecture invalidates
- * the list of recent results.
- *
- * Future: route to an LLM planner that emits the same shape.
+ * Reads are LRU-cached; generating a new architecture invalidates the
+ * list of recent results.
  */
 import { randomUUID } from "node:crypto";
 
 import { CACHE_TTL } from "../../config/constants.js";
 import { cache, cacheWrap } from "../../lib/cache.js";
+import { chat, isLLMConfigured } from "../../lib/llm-client.js";
 import { createLogger } from "../../lib/logger.js";
 import type {
   ArchitectureResult,
@@ -25,6 +26,20 @@ import { AppError } from "../../server/middleware/error.js";
 import type { GenerateArchitectureInput } from "./schema.js";
 
 const log = createLogger("architect");
+
+const ARCHITECT_SYSTEM_PROMPT =
+  "You are an expert software architect. Given a project description and optional constraints, return a JSON object with keys: techStack (string[]), modules ({name,type,responsibility}[]), dataFlow ({from,to,protocol}[]), risks (string[]), estimatedEffort (string). Respond with JSON only — no markdown fences.";
+
+function safeJson<T>(raw: string): T | null {
+  try {
+    const start = raw.indexOf("{");
+    const end = raw.lastIndexOf("}");
+    if (start === -1 || end === -1) return null;
+    return JSON.parse(raw.slice(start, end + 1)) as T;
+  } catch {
+    return null;
+  }
+}
 
 const TEMPLATES_KEY = "architect:templates";
 const templateKey = (id: string): string => `architect:template:${id}`;
@@ -169,7 +184,7 @@ export async function listResults(): Promise<ArchitectureResult[]> {
   );
 }
 
-/** Generate a new architecture from a prompt. Mock. */
+/** Generate a new architecture from a prompt. Uses LLM when configured. */
 export async function generateArchitecture(
   input: GenerateArchitectureInput,
 ): Promise<ArchitectureResult> {
@@ -177,7 +192,78 @@ export async function generateArchitecture(
   // Verify the template exists (throws 404 if missing).
   await getTemplateById(templateId);
 
-  const result: ArchitectureResult = {
+  const base = buildMockArchitecture(input, templateId);
+  let result = base;
+
+  if (isLLMConfigured) {
+    try {
+      const constraints = input.stack ? ` Constraints: ${input.stack.join(", ")}.` : "";
+      const raw = await chat(
+        [
+          { role: "system", content: ARCHITECT_SYSTEM_PROMPT },
+          { role: "user", content: `${input.prompt}${constraints}` },
+        ],
+        { temperature: 0.2, maxTokens: 1500 },
+      );
+      const parsed = safeJson<{
+        techStack?: string[];
+        modules?: { name: string; type: string; responsibility: string }[];
+        dataFlow?: { from: string; to: string; protocol: string }[];
+        risks?: string[];
+        estimatedEffort?: string;
+      }>(raw);
+      if (parsed) {
+        result = {
+          ...base,
+          components:
+            (parsed.modules ?? []).map((m) => ({
+              name: m.name,
+              type: (["web", "service", "data", "queue", "cache"].includes(
+                m.type,
+              )
+                ? m.type
+                : "service") as ArchitectureResult["components"][number]["type"],
+              responsibility: m.responsibility,
+            })) || base.components,
+          connections:
+            (parsed.dataFlow ?? []).map((d) => ({
+              from: d.from,
+              to: d.to,
+              protocol: d.protocol,
+            })) || base.connections,
+          recommendations: [
+            ...(parsed.risks ?? []).map((r) => `Risk: ${r}`),
+            ...(parsed.estimatedEffort
+              ? [`Estimated effort: ${parsed.estimatedEffort}`]
+              : []),
+          ],
+        };
+      }
+      log.info("Architecture generated via LLM", { templateId, llm: true });
+    } catch (err) {
+      log.warn("LLM call failed, using mock plan", {
+        err: (err as Error).message,
+      });
+    }
+  } else {
+    log.info("Architecture generated (mock fallback)", {
+      id: base.id,
+      templateId,
+      llm: false,
+    });
+  }
+
+  results = [result, ...results];
+  invalidateResults(result.id);
+  return result;
+}
+
+/** Deterministic mock plan — same shape the route layer expects. */
+function buildMockArchitecture(
+  input: GenerateArchitectureInput,
+  templateId: string,
+): ArchitectureResult {
+  return {
     id: `arch-res-${randomUUID()}`,
     prompt: input.prompt,
     templateId,
@@ -205,10 +291,6 @@ export async function generateArchitecture(
     ],
     createdAt: new Date().toISOString(),
   };
-  results = [result, ...results];
-  invalidateResults(result.id);
-  log.info("Architecture generated", { id: result.id, templateId });
-  return result;
 }
 
 /** Number of templates in the catalog. */

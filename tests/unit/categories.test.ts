@@ -13,8 +13,8 @@ import { effects } from "@/lib/roycss-effects";
  * marketing site, the CLI, and the inspector extension all hard-code).
  */
 describe("category taxonomy", () => {
-  it("ships exactly 20 categories in categoryOrder", () => {
-    expect(categoryOrder).toHaveLength(20);
+  it("ships exactly 29 categories in categoryOrder", () => {
+    expect(categoryOrder).toHaveLength(29);
   });
 
   it("categoryOrder contains no duplicates", () => {

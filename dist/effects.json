@@ -24140,8 +24140,8 @@
     "childCount": null
   },
   {
-    "id": "morph-shape-cycle",
-    "name": "Shape Cycle",
+    "id": "morph-polygon-cycle",
+    "name": "Polygon Cycle",
     "category": "morphing",
     "description": "Element cycles through circle, triangle, square, and pentagon forms",
     "tags": [

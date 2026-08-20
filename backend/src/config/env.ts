@@ -43,6 +43,28 @@ const EnvSchema = z.object({
   RATE_LIMIT_MAX_CONTACT: z.coerce.number().int().positive().default(5),
 
   EFFECTS_DATA_PATH: z.string().default("../dist/effects.json"),
+
+  // ─── Supabase (production) ────────────────────────────────────────
+  SUPABASE_URL: z.string().url().optional(),
+  SUPABASE_PUBLISHABLE_KEY: z.string().optional(),
+  SUPABASE_SECRET_KEY: z.string().optional(),
+  SUPABASE_JWKS_URL: z.string().url().optional(),
+
+  // ─── External service keys ────────────────────────────────────────
+  OPENAI_API_KEY: z.string().optional(),
+  ANTHROPIC_API_KEY: z.string().optional(),
+  RESEND_API_KEY: z.string().optional(),
+  SENTRY_DSN: z.string().optional(),
+  STORAGE_ENDPOINT: z.string().optional(),
+  STORAGE_BUCKET: z.string().optional(),
+  STORAGE_ACCESS_KEY_ID: z.string().optional(),
+  STORAGE_SECRET_ACCESS_KEY: z.string().optional(),
+  STORAGE_REGION: z.string().optional(),
+  CDN_API_TOKEN: z.string().optional(),
+  CDN_PROVIDER: z.string().optional(),
+  FIGMA_TOKEN: z.string().optional(),
+  GITHUB_TOKEN: z.string().optional(),
+  NPM_TOKEN: z.string().optional(),
 });
 
 export type Env = z.infer<typeof EnvSchema>;

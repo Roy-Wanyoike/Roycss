@@ -134,7 +134,8 @@ function zodErrorDetails(err: ZodError): unknown {
 }
 
 /** Pick the right log level for an error based on its status code. */
-function logLevelFor(statusCode: number): keyof Logger {
+type LogLevel = "debug" | "info" | "warn" | "error";
+function logLevelFor(statusCode: number): LogLevel {
   if (statusCode >= 500) return "error";
   if (statusCode >= 400) return "warn";
   return "info";

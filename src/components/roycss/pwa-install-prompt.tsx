@@ -91,16 +91,18 @@ export function PWAInstallPrompt() {
               {/* Actions */}
               <div className="flex items-center gap-1.5 shrink-0">
                 <button
+                  type="button"
                   onClick={handleInstall}
-                  className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-medium hover:bg-primary/90 transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 min-h-[44px] px-4 rounded-lg bg-primary text-primary-foreground text-xs font-medium hover:bg-primary/90 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
                   <Download className="size-3.5" />
                   Install
                 </button>
                 <button
+                  type="button"
                   onClick={handleDismiss}
-                  className="flex items-center justify-center size-8 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-all cursor-pointer"
                   aria-label="Dismiss"
+                  className="inline-flex items-center justify-center size-9 min-h-[44px] min-w-[44px] rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
                   <X className="size-4" />
                 </button>

@@ -1,15 +1,56 @@
 {
+  "id": "/",
   "name": "RoyCSS — AI-Native Frontend Engineering Platform",
   "short_name": "RoyCSS",
-  "description": "1,569 CSS effects, 62 platform products, 64 developer tools, design systems, and AI assistance — design, build, customize, and ship modern interfaces.",
-  "start_url": "/",
+  "description": "1,749 CSS effects, 62 platform products, 68 developer tools, design systems, and AI assistance — design, build, customize, and ship modern interfaces.",
+  "start_url": "/?source=pwa",
+  "scope": "/",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "background_color": "#0a0a0a",
   "theme_color": "#10b981",
   "orientation": "any",
-  "categories": ["developer", "productivity", "design"],
+  "dir": "ltr",
+  "lang": "en-US",
+  "categories": ["developer", "productivity", "design", "education"],
   "icons": [
-    { "src": "/favicon.png", "sizes": "1024x1024", "type": "image/png", "purpose": "any" },
-    { "src": "/apple-icon.png", "sizes": "1024x1024", "type": "image/png", "purpose": "maskable" }
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-1024.png", "sizes": "1024x1024", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Browse Effects",
+      "short_name": "Effects",
+      "description": "Explore 1,749 production-ready CSS effects with live demos",
+      "url": "/?source=pwa#effects",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Platform Products",
+      "short_name": "Platform",
+      "description": "62 platform products — AI, dev tools, enterprise",
+      "url": "/?source=pwa#platform",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Search Effects",
+      "short_name": "Search",
+      "description": "Search effects, recipes, patterns, and tools",
+      "url": "/?source=pwa#search",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/roycss-logo-mark.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "RoyCSS — Effects Grid"
+    }
   ]
 }

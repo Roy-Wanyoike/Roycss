@@ -6,6 +6,7 @@ import "./roymotion.css";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 import { ServiceWorkerRegistration } from "@/components/roycss/sw-register";
+import { AuthProvider } from "@/components/roycss/auth/auth-context";
 
 /**
  * Pre-hydration theme script.
@@ -31,7 +32,7 @@ const jsonLd = {
   applicationCategory: "DeveloperApplication",
   operatingSystem: "Web",
   description:
-    "RoyCSS is a modern, AI-native frontend engineering platform — 1,749 CSS effects, 62 platform products, 64 developer tools, design systems, and AI assistance.",
+    "RoyCSS is a modern, AI-native frontend engineering platform — 1,749 CSS effects, 62 platform products, 68 developer tools, design systems, and AI assistance.",
   url: "https://roycss.com",
   offers: {
     "@type": "Offer",
@@ -45,17 +46,12 @@ const jsonLd = {
   featureList: [
     "1,749 CSS effects with live demos",
     "62 platform products (components, AI, dev tools, enterprise)",
-    "64 developer tools (CSS generators, visualizers, analyzers)",
+    "68 developer tools (CSS generators, visualizers, analyzers)",
     "AI-native development (RoyAI, Roy Architect, Roy MCP)",
     "Design system (OKLCH tokens, 10 theme presets)",
     "Accessibility-first (WCAG 2.2 AA)",
     "Framework-agnostic (React, Vue, Angular, Svelte)",
   ],
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "5",
-    ratingCount: "1",
-  },
 };
 
 const geistSans = Geist({
@@ -80,9 +76,12 @@ export const metadata: Metadata = {
     "RoyCSS is a modern, AI-native frontend engineering platform — 1,749 CSS effects, 62 platform products, 64 developer tools, design systems, and AI assistance. Design, build, customize, and ship modern interfaces in one cohesive ecosystem.",
   icons: {
     icon: [
-      { url: "/favicon.png", sizes: "1024x1024", type: "image/png" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+      { url: "/icon-1024.png", sizes: "1024x1024", type: "image/png" },
     ],
     apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
       { url: "/apple-icon.png", sizes: "1024x1024", type: "image/png" },
     ],
   },
@@ -108,16 +107,16 @@ export const metadata: Metadata = {
   authors: [{ name: "Royford Wanyoike Wamaitha" }],
   creator: "Royford Wanyoike Wamaitha",
   publisher: "Royford Wanyoike Wamaitha",
-  metadataBase: new URL("https://roycss.com"),
+  metadataBase: new URL("https://roycss.space-z.ai"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "RoyCSS — AI-Native Frontend Engineering Platform",
     description:
-      "1,749 CSS effects, 62 platform products, 64 developer tools, and AI assistance — design, build, customize, and ship modern interfaces in one cohesive ecosystem.",
+      "1,749 CSS effects, 62 platform products, 68 developer tools, and AI assistance — design, build, customize, and ship modern interfaces in one cohesive ecosystem.",
     type: "website",
-    url: "https://roycss.com",
+    url: "https://roycss.space-z.ai",
     siteName: "RoyCSS",
     locale: "en_US",
     images: [
@@ -126,7 +125,7 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         alt: "RoyCSS — AI-Native Frontend Engineering Platform",
-        type: "image/svg+xml",
+        type: "image/png",
       },
     ],
   },
@@ -156,6 +155,11 @@ export const viewport: Viewport = {
   themeColor: "#10b981",
   width: "device-width",
   initialScale: 1,
+  appleWebApp: {
+    capable: true,
+    title: "RoyCSS",
+    statusBarStyle: "black-translucent",
+  },
 };
 
 export default function RootLayout({
@@ -177,7 +181,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} antialiased bg-background text-foreground`}
       >
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
         <Toaster />
         <SonnerToaster position="bottom-right" richColors closeButton />
         <ServiceWorkerRegistration />

@@ -1,27 +1,39 @@
 /**
- * Review service — Roy Review mock code review service.
+ * Review service — Roy Review code review service.
  *
- * Mock backend (no DB). Seeds 8 review rules covering performance,
- * accessibility, security, best-practice, and maintainability.
- * Each code submission produces a deterministic, repeatable review
- * derived from the filename + code hash — the same input always
- * returns the same findings so the cache is coherent.
+ * Backed by the unified LLM client. When an LLM key is configured, the
+ * reviewer asks the LLM for a JSON object `{ findings, summary, score }`
+ * and maps it into the existing ReviewResult shape. When no key is set,
+ * a deterministic regex/heuristic-based review is returned — same
+ * signature, same downstream cache keys.
  *
  * Reads are LRU-cached; submitting code invalidates the history list.
- *
- * Future: route to an LLM reviewer (or eslint/stylelint) emitting
- * the same shape.
  */
 import { randomUUID } from "node:crypto";
 
 import { CACHE_TTL } from "../../config/constants.js";
 import { cache, cacheWrap } from "../../lib/cache.js";
+import { chat as llmChat, isLLMConfigured } from "../../lib/llm-client.js";
 import { createLogger } from "../../lib/logger.js";
 import type { ReviewResult, ReviewRule } from "../../types/index.js";
 import { AppError } from "../../server/middleware/error.js";
 import type { ReviewCodeInput } from "./schema.js";
 
 const log = createLogger("review");
+
+const REVIEW_SYSTEM_PROMPT =
+  'You are a strict code reviewer. Given code and language, return a JSON object: { "findings": [{ "ruleId": string, "severity": "error"|"warning"|"info", "line": number, "message": string, "suggestion": string }], "summary": string, "score": number (0..100) }. Respond with JSON only — no markdown fences.';
+
+function safeJson<T>(raw: string): T | null {
+  try {
+    const start = raw.indexOf("{");
+    const end = raw.lastIndexOf("}");
+    if (start === -1 || end === -1) return null;
+    return JSON.parse(raw.slice(start, end + 1)) as T;
+  } catch {
+    return null;
+  }
+}
 
 const RULES_KEY = "review:rules";
 const HISTORY_KEY = "review:history";
@@ -217,10 +229,103 @@ function hashString(s: string): number {
   return h >>> 0;
 }
 
-/** Submit code for review (mock). Invalidates history cache. */
+/** Submit code for review. Uses LLM when configured. Invalidates history cache. */
 export async function reviewCode(
   input: ReviewCodeInput,
 ): Promise<ReviewResult> {
+  let result: ReviewResult;
+  if (isLLMConfigured) {
+    try {
+      const focus = input.focus
+        ? ` Focus areas: ${input.focus.join(", ")}.`
+        : "";
+      const raw = await llmChat(
+        [
+          { role: "system", content: REVIEW_SYSTEM_PROMPT },
+          {
+            role: "user",
+            content: `File: ${input.filename}\nLanguage: ${input.language}${focus}\n\n\`\`\`${input.language}\n${input.code.slice(0, 8000)}\n\`\`\``,
+          },
+        ],
+        { temperature: 0.1, maxTokens: 2000 },
+      );
+      const parsed = safeJson<{
+        findings?: {
+          ruleId?: string;
+          severity?: string;
+          line?: number;
+          message?: string;
+          suggestion?: string;
+        }[];
+        summary?: string;
+        score?: number;
+      }>(raw);
+      if (parsed) {
+        const findings = (parsed.findings ?? []).map((f, i) => ({
+          ruleId: f.ruleId ?? `rule-llm-${i + 1}`,
+          severity:
+            f.severity === "error" ||
+            f.severity === "warning" ||
+            f.severity === "info"
+              ? (f.severity as "error" | "warning" | "info")
+              : ("info" as const),
+          line: typeof f.line === "number" ? f.line : 1,
+          message: f.message ?? "Issue found by LLM reviewer.",
+          suggestion: f.suggestion ?? "Apply the recommended fix.",
+        }));
+        const errorCount = findings.filter((f) => f.severity === "error").length;
+        const warnCount = findings.filter((f) => f.severity === "warning").length;
+        const score =
+          typeof parsed.score === "number"
+            ? Math.max(0, Math.min(100, Math.round(parsed.score)))
+            : Math.max(
+                0,
+                100 - errorCount * 18 - warnCount * 8,
+              );
+        result = {
+          id: `rev-${randomUUID()}`,
+          filename: input.filename,
+          language: input.language,
+          status: "complete",
+          score,
+          findings,
+          summary:
+            parsed.summary ??
+            `${findings.length} finding(s) (${errorCount} error, ${warnCount} warning).`,
+          createdAt: new Date().toISOString(),
+        };
+        log.info("Review completed via LLM", {
+          id: result.id,
+          filename: input.filename,
+          score: result.score,
+          llm: true,
+        });
+      } else {
+        result = mockReview(input);
+        log.warn("LLM returned non-JSON, using mock review", { llm: true });
+      }
+    } catch (err) {
+      log.warn("LLM call failed, using mock review", {
+        err: (err as Error).message,
+      });
+      result = mockReview(input);
+    }
+  } else {
+    result = mockReview(input);
+    log.info("Review completed (mock fallback)", {
+      id: result.id,
+      filename: input.filename,
+      score: result.score,
+      llm: false,
+    });
+  }
+  history = [result, ...history].slice(0, 100);
+  invalidateHistory(result.id);
+  return result;
+}
+
+/** Regex/heuristic-based deterministic review (fallback). */
+function mockReview(input: ReviewCodeInput): ReviewResult {
   const h = hashString(input.filename + input.code);
   const applicable = rules.filter(
     (r) =>
@@ -235,16 +340,17 @@ export async function reviewCode(
     severity: rule.severity,
     line: 5 + ((h + i * 7) % 80),
     message: rule.description,
-    suggestion: rule.category === "accessibility"
-      ? "Add the missing accessibility attribute."
-      : rule.category === "performance"
-        ? "Refactor to avoid the performance pitfall."
-        : "Apply the recommended change.",
+    suggestion:
+      rule.category === "accessibility"
+        ? "Add the missing accessibility attribute."
+        : rule.category === "performance"
+          ? "Refactor to avoid the performance pitfall."
+          : "Apply the recommended change.",
   }));
   const errorCount = findings.filter((f) => f.severity === "error").length;
   const warnCount = findings.filter((f) => f.severity === "warning").length;
   const score = Math.max(0, 100 - errorCount * 18 - warnCount * 8);
-  const result: ReviewResult = {
+  return {
     id: `rev-${randomUUID()}`,
     filename: input.filename,
     language: input.language,
@@ -254,14 +360,6 @@ export async function reviewCode(
     summary: `${findings.length} finding(s) (${errorCount} error, ${warnCount} warning).`,
     createdAt: new Date().toISOString(),
   };
-  history = [result, ...history].slice(0, 100);
-  invalidateHistory(result.id);
-  log.info("Review completed", {
-    id: result.id,
-    filename: input.filename,
-    score: result.score,
-  });
-  return result;
 }
 
 /** Number of rules in the catalog. */

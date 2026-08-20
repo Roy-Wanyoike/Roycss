@@ -10596,15 +10596,15 @@
     "properties": "position: relative;\n  display: inline-block;"
   },
   {
-    "className": "roycss-morph-shape-cycle",
+    "className": "roycss-morph-polygon-cycle",
     "category": "morphing",
-    "effectId": "morph-shape-cycle",
-    "properties": "background: linear-gradient(135deg, oklch(0.62 0.2 200), oklch(0.55 0.22 280));\n  animation: roy-morph-shape-cycle 8s ease-in-out infinite;"
+    "effectId": "morph-polygon-cycle",
+    "properties": "background: linear-gradient(135deg, oklch(0.62 0.2 200), oklch(0.55 0.22 280));\n  animation: roy-morph-polygon-cycle 8s ease-in-out infinite;"
   },
   {
-    "className": "roycss-morph-shape-cycle",
+    "className": "roycss-morph-polygon-cycle",
     "category": "morphing",
-    "effectId": "morph-shape-cycle",
+    "effectId": "morph-polygon-cycle",
     "properties": "animation: none; clip-path: none;"
   },
   {

@@ -21,6 +21,7 @@ import {
   getLiveSessionById,
   getSessionMessages,
   getSessionUsers,
+  listSessions,
   postSessionMessage,
 } from "./service.js";
 import {
@@ -30,6 +31,14 @@ import {
 } from "./schema.js";
 
 export const liveRouter = Router();
+
+liveRouter.get(
+  "/sessions",
+  asyncHandler(async (_req, res) => {
+    const items = await listSessions();
+    res.json({ data: items, meta: { count: items.length } });
+  }),
+);
 
 liveRouter.post(
   "/sessions",

@@ -1,18 +1,22 @@
 /**
- * Certifications service — in-memory Roy Certifications catalog + exam store.
+ * Certifications service — Prisma-backed Roy Certifications catalog +
+ * exam-attempt store.
  *
- * Mock backend (no DB). Seeds 4 certification levels, 2 earned
- * certifications, and a small pool of exam questions per certification.
- * All reads are LRU-cached; submitting an exam invalidates the verify
- * cache if a new certification is issued.
+ * Persisted via the `Certification` + `CertificationAttempt` Prisma
+ * models. Seeds 4 certification levels on first access. Earned
+ * certifications (with their verify codes) remain static in-memory
+ * seed data — the `CertificationAttempt` schema has no verifyCode
+ * column, so the verify endpoint stays backed by the static seed.
  *
- * Future: swap the in-memory state for a Prisma `Certification` /
- * `EarnedCertification` model backed by a real exam runner and
- * signed verification codes.
+ * Field-mapping: the Prisma `Certification` model exposes (slug, name,
+ * description, requirementsJson). The domain shape's `level`, `price`,
+ * `duration`, `passingScore`, `topicCount` are JSON-encoded inside
+ * `requirementsJson` as a wrapper. `slug ← id`.
  */
 import { randomUUID } from "node:crypto";
 
 import { CACHE_TTL } from "../../config/constants.js";
+import { db } from "../../lib/db.js";
 import { cache, cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type {
@@ -201,7 +205,7 @@ const SEED_QUESTIONS: Record<string, ExamQuestion[]> = {
   ],
 };
 
-// ─── Seed: 2 earned certifications ───────────────────────────────────────
+// ─── Seed: 2 earned certifications (static — no Prisma model field) ───
 const SEED_EARNED: EarnedCertification[] = [
   {
     id: "earned-1",
@@ -227,11 +231,90 @@ const SEED_EARNED: EarnedCertification[] = [
 
 let earned: EarnedCertification[] = SEED_EARNED.map((e) => ({ ...e }));
 
+interface CertMeta {
+  level: Certification["level"];
+  price: number;
+  duration: number;
+  passingScore: number;
+  topicCount: number;
+}
+
+function toDbRow(c: Certification) {
+  const meta: CertMeta = {
+    level: c.level,
+    price: c.price,
+    duration: c.duration,
+    passingScore: c.passingScore,
+    topicCount: c.topicCount,
+  };
+  return {
+    id: c.id,
+    slug: c.id,
+    name: c.name,
+    description: c.description,
+    requirementsJson: JSON.stringify(meta),
+  };
+}
+
+function toDomain(row: {
+  id: string;
+  name: string;
+  description: string;
+  requirementsJson: string;
+}): Certification {
+  let meta: CertMeta = {
+    level: "Associate",
+    price: 0,
+    duration: 0,
+    passingScore: 0,
+    topicCount: 0,
+  };
+  try {
+    meta = JSON.parse(row.requirementsJson) as CertMeta;
+  } catch {
+    // Keep defaults.
+  }
+  return {
+    id: row.id,
+    name: row.name,
+    level: meta.level,
+    description: row.description,
+    price: meta.price,
+    duration: meta.duration,
+    passingScore: meta.passingScore,
+    topicCount: meta.topicCount,
+  };
+}
+
+let seedPromise: Promise<void> | null = null;
+async function seedIfEmpty(): Promise<void> {
+  if (seedPromise) return seedPromise;
+  seedPromise = (async () => {
+    const count = await db.certification.count();
+    if (count === 0) {
+      await db.certification.createMany({
+        data: SEED_CERTIFICATIONS.map(toDbRow),
+      });
+      log.info("Certifications seeded", { count: SEED_CERTIFICATIONS.length });
+    }
+  })().catch((err) => {
+    seedPromise = null;
+    throw err;
+  });
+  return seedPromise;
+}
+
 /** List all certifications. Cached. */
 export async function listCertifications(): Promise<Certification[]> {
   return cacheWrap(
     LIST_KEY,
-    () => Promise.resolve(SEED_CERTIFICATIONS.map((c) => ({ ...c }))),
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.certification.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+      return rows.map(toDomain);
+    },
     CACHE_TTL.certificationsList,
   );
 }
@@ -242,11 +325,11 @@ export async function getCertificationById(
 ): Promise<Certification> {
   return cacheWrap(
     detailKey(id),
-    () => {
-      const found = SEED_CERTIFICATIONS.find((c) => c.id === id);
-      if (!found)
-        throw AppError.notFound(`Certification '${id}' not found`);
-      return Promise.resolve({ ...found });
+    async () => {
+      await seedIfEmpty();
+      const row = await db.certification.findUnique({ where: { id } });
+      if (!row) throw AppError.notFound(`Certification '${id}' not found`);
+      return toDomain(row);
     },
     CACHE_TTL.certificationDetail,
   );
@@ -274,6 +357,7 @@ export async function verifyCertification(
 /**
  * Submit an exam for a certification — returns the score and, if
  * passed, a new `EarnedCertification` entry with a verification code.
+ * Persists a `CertificationAttempt` row for record-keeping.
  */
 export async function submitExam(input: {
   certificationId: string;
@@ -306,6 +390,17 @@ export async function submitExam(input: {
   });
   const score = Math.round((correct / questions.length) * 100);
   const passed = score >= cert.passingScore;
+
+  // Persist the attempt regardless of pass/fail.
+  await db.certificationAttempt.create({
+    data: {
+      userId: input.userId,
+      certificationId: cert.id,
+      score,
+      passed,
+      completedAt: new Date(),
+    },
+  });
 
   let earnedRecord: EarnedCertification | null = null;
   if (passed) {
@@ -351,8 +446,6 @@ export function certificationsCount(): number {
 /** Test-only: reset earned list to seed. */
 export function _resetCertificationsForTest(): void {
   earned = SEED_EARNED.map((e) => ({ ...e }));
-  // Sweep all verify keys — simplest path is to clear the whole cache.
-  // (Acceptable in tests.)
   earned.forEach((e) => invalidateVerify(e.verifyCode));
 }
 

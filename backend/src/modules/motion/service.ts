@@ -1,13 +1,29 @@
 /**
- * Motion service — in-memory Roy Motion library catalog.
+ * Motion service — Roy Motion library catalog.
  *
- * Stores 20 mock motion effects across 6 categories (entrance, exit, loop,
- * scroll, hover, gesture) plus 8 named animation presets. All reads are
- * LRU-cached.
+ * Sources its effect catalog from the build artifact
+ * `dist/motion-library.json` (produced by
+ * `scripts/generate-build-artifacts.ts`). The artifact is a filtered
+ * view of the master effects array restricted to motion-related
+ * categories (animations, hover, scroll, page-transitions, particles,
+ * microinteractions, status-state, cursor), and includes the raw
+ * `cssCode` so duration / easing / keyframes can be derived here.
  *
- * No mutation endpoints — the motion library is a curated catalog.
- * Future: source effects from a JSON build step (like effects.json).
+ * Field-mapping: the artifact carries `{ id, name, category,
+ * description, tags, previewType, previewText, childCount, cssCode }`.
+ * The MotionEffect domain shape carries `{ id, name, category,
+ * duration, easing, keyframes, cssCode }`. The category union
+ * (entrance/exit/loop/scroll/hover/gesture) is derived from the
+ * artifact's category via a small map; duration, easing, and
+ * keyframes are extracted from `cssCode` via regex (with sensible
+ * defaults when the regex doesn't match).
+ *
+ * All reads are LRU-cached. No mutation endpoints.
  */
+import { readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
 import { CACHE_TTL } from "../../config/constants.js";
 import { cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
@@ -16,106 +32,154 @@ import { AppError } from "../../server/middleware/error.js";
 
 const log = createLogger("motion");
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const BACKEND_ROOT = resolve(__dirname, "..", "..", "..");
+const MOTION_LIBRARY_PATH = resolve(BACKEND_ROOT, "..", "dist", "motion-library.json");
+
 const LIST_KEY = "motion:effects";
 const detailKey = (id: string): string => `motion:effect:${id}`;
 const PRESETS_KEY = "motion:presets";
 const CATEGORIES_KEY = "motion:categories";
 
-// ─── Seed: 20 motion effects ─────────────────────────────────────────────
-function eff(
-  id: string,
-  name: string,
-  category: MotionEffect["category"],
-  duration: number,
-  easing: string,
-  keyframes: string,
-  cssCode: string,
-): MotionEffect {
-  return { id, name, category, duration, easing, keyframes, cssCode };
+/** Raw artifact shape produced by generate-build-artifacts.ts. */
+interface MotionArtifactEntry {
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  tags: string[];
+  previewType: string;
+  previewText: string | null;
+  childCount: number | null;
+  cssCode: string;
 }
 
-const SEED_EFFECTS: MotionEffect[] = [
-  eff("motion-fade-in", "Fade In", "entrance", 300, "ease-out",
-    "0%{opacity:0}100%{opacity:1}",
-    "@keyframes motion-fade-in{0%{opacity:0}100%{opacity:1}}.motion-fade-in{animation:motion-fade-in .3s ease-out}"),
-  eff("motion-fade-in-up", "Fade In Up", "entrance", 400, "cubic-bezier(0.16,1,0.3,1)",
-    "0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}",
-    "@keyframes motion-fade-in-up{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}.motion-fade-in-up{animation:motion-fade-in-up .4s cubic-bezier(0.16,1,0.3,1)}"),
-  eff("motion-scale-in", "Scale In", "entrance", 250, "cubic-bezier(0.34,1.56,0.64,1)",
-    "0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:scale(1)}",
-    "@keyframes motion-scale-in{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}.motion-scale-in{animation:motion-scale-in .25s cubic-bezier(0.34,1.56,0.64,1)}"),
-  eff("motion-slide-in-right", "Slide In Right", "entrance", 350, "ease-out",
-    "0%{opacity:0;transform:translateX(40px)}100%{opacity:1;transform:translateX(0)}",
-    "@keyframes motion-slide-in-right{0%{opacity:0;transform:translateX(40px)}100%{opacity:1;transform:translateX(0)}}.motion-slide-in-right{animation:motion-slide-in-right .35s ease-out}"),
-  eff("motion-blur-in", "Blur In", "entrance", 500, "ease-out",
-    "0%{opacity:0;filter:blur(12px)}100%{opacity:1;filter:blur(0)}",
-    "@keyframes motion-blur-in{0%{opacity:0;filter:blur(12px)}100%{opacity:1;filter:blur(0)}}.motion-blur-in{animation:motion-blur-in .5s ease-out}"),
-  eff("motion-fade-out", "Fade Out", "exit", 250, "ease-in",
-    "0%{opacity:1}100%{opacity:0}",
-    "@keyframes motion-fade-out{0%{opacity:1}100%{opacity:0}}.motion-fade-out{animation:motion-fade-out .25s ease-in}"),
-  eff("motion-scale-out", "Scale Out", "exit", 200, "ease-in",
-    "0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.8)}",
-    "@keyframes motion-scale-out{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.8)}}.motion-scale-out{animation:motion-scale-out .2s ease-in}"),
-  eff("motion-slide-out-up", "Slide Out Up", "exit", 300, "ease-in",
-    "0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-20px)}",
-    "@keyframes motion-slide-out-up{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-20px)}}.motion-slide-out-up{animation:motion-slide-out-up .3s ease-in}"),
-  eff("motion-pulse", "Pulse", "loop", 1500, "ease-in-out",
-    "0%,100%{opacity:1}50%{opacity:.5}",
-    "@keyframes motion-pulse{0%,100%{opacity:1}50%{opacity:.5}}.motion-pulse{animation:motion-pulse 1.5s ease-in-out infinite}"),
-  eff("motion-spin", "Spin", "loop", 1000, "linear",
-    "0%{transform:rotate(0)}100%{transform:rotate(360deg)}",
-    "@keyframes motion-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}.motion-spin{animation:motion-spin 1s linear infinite}"),
-  eff("motion-bounce", "Bounce", "loop", 1200, "cubic-bezier(0.28,0.84,0.42,1)",
-    "0%,100%{transform:translateY(0)}50%{transform:translateY(-25%)}",
-    "@keyframes motion-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-25%)}}.motion-bounce{animation:motion-bounce 1.2s cubic-bezier(0.28,0.84,0.42,1) infinite}"),
-  eff("motion-shimmer", "Shimmer", "loop", 2000, "linear",
-    "0%{background-position:-200% 0}100%{background-position:200% 0}",
-    "@keyframes motion-shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}.motion-shimmer{background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.2) 50%,transparent 100%);background-size:200% 100%;animation:motion-shimmer 2s linear infinite}"),
-  eff("motion-float", "Float", "loop", 3000, "ease-in-out",
-    "0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}",
-    "@keyframes motion-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}.motion-float{animation:motion-float 3s ease-in-out infinite}"),
-  eff("motion-parallax-y", "Parallax Y", "scroll", 0, "linear",
-    "0%{transform:translateY(0)}100%{transform:translateY(-100px)}",
-    ".motion-parallax-y{animation:parallax-y linear;animation-timeline:scroll()}"),
-  eff("motion-reveal-up", "Reveal Up", "scroll", 0, "cubic-bezier(0.16,1,0.3,1)",
-    "0%{opacity:0;transform:translateY(60px)}100%{opacity:1;transform:translateY(0)}",
-    ".motion-reveal-up{animation:reveal-up linear both;animation-timeline:view();animation-range:entry 0% cover 30%}"),
-  eff("motion-sticky-fade", "Sticky Fade", "scroll", 0, "ease-out",
-    "0%{opacity:0}100%{opacity:1}",
-    ".motion-sticky-fade{animation:sticky-fade linear both;animation-timeline:scroll()}"),
-  eff("motion-hover-lift", "Hover Lift", "hover", 200, "ease-out",
-    "0%{transform:translateY(0)}100%{transform:translateY(-4px)}",
-    ".motion-hover-lift{transition:transform .2s ease-out}.motion-hover-lift:hover{transform:translateY(-4px)}"),
-  eff("motion-hover-glow", "Hover Glow", "hover", 250, "ease-out",
-    "0%{box-shadow:0 0 0 rgba(16,185,129,0)}100%{box-shadow:0 0 24px rgba(16,185,129,.5)}",
-    ".motion-hover-glow{transition:box-shadow .25s ease-out}.motion-hover-glow:hover{box-shadow:0 0 24px rgba(16,185,129,.5)}"),
-  eff("motion-tap-shrink", "Tap Shrink", "gesture", 100, "ease-out",
-    "0%{transform:scale(1)}100%{transform:scale(.95)}",
-    ".motion-tap-shrink:active{transform:scale(.95);transition:transform .1s ease-out}"),
-  eff("motion-drag-wobble", "Drag Wobble", "gesture", 400, "cubic-bezier(0.36,0.07,0.19,0.97)",
-    "0%,100%{transform:rotate(0)}25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}",
-    "@keyframes motion-drag-wobble{0%,100%{transform:rotate(0)}25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}}.motion-drag-wobble{animation:motion-drag-wobble .4s cubic-bezier(0.36,0.07,0.19,0.97)}"),
-];
+// Maps the artifact's effect-category (one of the motion-related
+// categories from `MOTION_CATEGORIES` in the generate script) onto the
+// MotionEffect domain's narrower union (entrance/exit/loop/scroll/
+// hover/gesture).
+const CATEGORY_MAP: Record<string, MotionEffect["category"]> = {
+  animations: "loop",
+  hover: "hover",
+  scroll: "scroll",
+  "page-transitions": "entrance",
+  particles: "loop",
+  microinteractions: "hover",
+  "status-state": "loop",
+  cursor: "gesture",
+};
 
-// ─── Seed: animation presets (named combinations) ────────────────────────
-const SEED_PRESETS: { name: string; effects: string[]; description: string }[] = [
-  { name: "Page Enter", effects: ["motion-fade-in-up", "motion-blur-in"], description: "Staggered page entrance." },
-  { name: "Card Reveal", effects: ["motion-scale-in", "motion-hover-lift"], description: "Card scales in, lifts on hover." },
-  { name: "Loading Loop", effects: ["motion-spin", "motion-pulse"], description: "Dual-loop loading state." },
-  { name: "Toast Slide", effects: ["motion-slide-in-right", "motion-slide-out-up"], description: "Toast enters right, exits up." },
-  { name: "Button Press", effects: ["motion-tap-shrink", "motion-hover-glow"], description: "Tap-to-shrink, hover-to-glow button." },
-  { name: "Scroll Story", effects: ["motion-reveal-up", "motion-parallax-y"], description: "Scroll-driven story sequence." },
-  { name: "Drag Feedback", effects: ["motion-drag-wobble", "motion-hover-lift"], description: "Wobble while dragging, lift on hover." },
-  { name: "Empty State", effects: ["motion-fade-in", "motion-float"], description: "Gentle fade-in with floating element." },
-];
+let cachedEffects: MotionEffect[] | null = null;
+
+/** Load + cache the motion-library.json artifact. */
+function loadEffects(): MotionEffect[] {
+  if (cachedEffects) return cachedEffects;
+
+  let raw: string;
+  try {
+    raw = readFileSync(MOTION_LIBRARY_PATH, "utf-8");
+  } catch (err) {
+    log.error(
+      "Failed to read motion-library.json artifact — running with empty catalog",
+      {
+        path: MOTION_LIBRARY_PATH,
+        err: err instanceof Error ? err.message : String(err),
+      },
+    );
+    cachedEffects = [];
+    return cachedEffects;
+  }
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch (err) {
+    log.error("motion-library.json is malformed — running with empty catalog", {
+      path: MOTION_LIBRARY_PATH,
+      err: err instanceof Error ? err.message : String(err),
+    });
+    cachedEffects = [];
+    return cachedEffects;
+  }
+
+  if (!Array.isArray(parsed)) {
+    log.error("motion-library.json is not an array — running with empty catalog", {
+      path: MOTION_LIBRARY_PATH,
+    });
+    cachedEffects = [];
+    return cachedEffects;
+  }
+
+  const entries = parsed as MotionArtifactEntry[];
+  cachedEffects = entries.map((entry) => artifactToMotionEffect(entry));
+  log.info("Motion library loaded", {
+    path: MOTION_LIBRARY_PATH,
+    effects: cachedEffects.length,
+  });
+  return cachedEffects;
+}
+
+/** Convert an artifact entry to the MotionEffect domain shape. */
+function artifactToMotionEffect(entry: MotionArtifactEntry): MotionEffect {
+  const category = CATEGORY_MAP[entry.category] ?? "loop";
+  const { duration, easing } = parseAnimationShorthand(entry.cssCode);
+  const keyframes = extractKeyframes(entry.cssCode);
+  return {
+    id: entry.id,
+    name: entry.name,
+    category,
+    duration,
+    easing,
+    keyframes,
+    cssCode: entry.cssCode,
+  };
+}
+
+/** Extract `duration` (ms) and `easing` from a CSS animation shorthand. */
+function parseAnimationShorthand(css: string): { duration: number; easing: string } {
+  // Look for `animation: ...` and try to pull out a duration number and
+  // an easing keyword. Falls back to (0, "ease") if nothing matches.
+  const animMatch = css.match(/animation\s*:\s*([^;}]+)/i);
+  if (!animMatch) {
+    return { duration: 0, easing: "ease" };
+  }
+  const shorthand = animMatch[1] ?? "";
+  // Duration: a number followed by s or ms.
+  const durationMatch = shorthand.match(/(\d+(?:\.\d+)?)\s*(s|ms)/i);
+  let duration = 0;
+  if (durationMatch) {
+    const value = parseFloat(durationMatch[1]!);
+    const unit = (durationMatch[2] ?? "").toLowerCase();
+    duration = unit === "s" ? Math.round(value * 1000) : Math.round(value);
+  }
+  // Easing: a known keyword or a cubic-bezier(...) expression.
+  const easingMatch = shorthand.match(
+    /\b(ease|ease-in|ease-out|ease-in-out|linear|step-start|step-end|cubic-bezier\([^)]+\))\b/i,
+  );
+  const easing = easingMatch ? easingMatch[1]! : "ease";
+  return { duration, easing };
+}
+
+/** Extract the `@keyframes` body as a compact string (best-effort). */
+function extractKeyframes(css: string): string {
+  const m = css.match(/@keyframes\s+[^{]+\{([\s\S]*?)\}\s*\}/i);
+  if (!m) return "";
+  // Normalize whitespace into a single line for compactness.
+  return m[1]!.replace(/\s+/g, " ").trim();
+}
 
 /** List all motion effects. Cached. */
 export async function listEffects(): Promise<MotionEffect[]> {
   return cacheWrap(
     LIST_KEY,
-    () => Promise.resolve(SEED_EFFECTS.map((e) => ({ ...e }))),
+    () => Promise.resolve(loadEffects().map((e) => ({ ...e }))),
     CACHE_TTL.motionEffects,
   );
+}
+
+/** Alias for `listEffects` (matches the task spec's preferred name). */
+export async function listMotions(): Promise<MotionEffect[]> {
+  return listEffects();
 }
 
 /** Get a single motion effect by id. Cached. Throws 404 if missing. */
@@ -123,12 +187,17 @@ export async function getEffectById(id: string): Promise<MotionEffect> {
   return cacheWrap(
     detailKey(id),
     () => {
-      const found = SEED_EFFECTS.find((e) => e.id === id);
+      const found = loadEffects().find((e) => e.id === id);
       if (!found) throw AppError.notFound(`Motion effect '${id}' not found`);
       return Promise.resolve({ ...found });
     },
     CACHE_TTL.motionEffectDetail,
   );
+}
+
+/** Alias for `getEffectById` (matches the task spec's preferred name). */
+export async function getMotion(id: string): Promise<MotionEffect> {
+  return getEffectById(id);
 }
 
 /** List all animation presets. Cached. */
@@ -137,7 +206,30 @@ export async function listPresets(): Promise<
 > {
   return cacheWrap(
     PRESETS_KEY,
-    () => Promise.resolve(SEED_PRESETS.map((p) => ({ ...p }))),
+    () => {
+      const all = loadEffects();
+      if (all.length === 0) {
+        return Promise.resolve([]);
+      }
+      // Synthesize a small deterministic set of presets from the loaded
+      // effects — pick a stable subset across the first few effects.
+      const sample = (offset: number, count: number) =>
+        all
+          .slice(offset, offset + count)
+          .map((e) => e.id)
+          .filter(Boolean);
+      const presets = [
+        { name: "Page Enter", effects: sample(0, 2), description: "Staggered page entrance." },
+        { name: "Card Reveal", effects: sample(2, 2), description: "Card scales in, lifts on hover." },
+        { name: "Loading Loop", effects: sample(4, 2), description: "Dual-loop loading state." },
+        { name: "Toast Slide", effects: sample(6, 2), description: "Toast enters right, exits up." },
+        { name: "Button Press", effects: sample(8, 2), description: "Tap-to-shrink, hover-to-glow button." },
+        { name: "Scroll Story", effects: sample(10, 2), description: "Scroll-driven story sequence." },
+        { name: "Drag Feedback", effects: sample(12, 2), description: "Wobble while dragging, lift on hover." },
+        { name: "Empty State", effects: sample(14, 2), description: "Gentle fade-in with floating element." },
+      ];
+      return Promise.resolve(presets.filter((p) => p.effects.length > 0));
+    },
     CACHE_TTL.motionPresets,
   );
 }
@@ -150,7 +242,7 @@ export async function listCategories(): Promise<
     CATEGORIES_KEY,
     () => {
       const byCategory = new Map<MotionEffect["category"], number>();
-      for (const e of SEED_EFFECTS) {
+      for (const e of loadEffects()) {
         byCategory.set(e.category, (byCategory.get(e.category) ?? 0) + 1);
       }
       const ordered: MotionEffect["category"][] = [
@@ -173,7 +265,7 @@ export async function listCategories(): Promise<
 
 /** Number of motion effects in the catalog. */
 export function motionCount(): number {
-  return SEED_EFFECTS.length;
+  return loadEffects().length;
 }
 
-log.debug("Motion module loaded", { effects: SEED_EFFECTS.length });
+log.debug("Motion module loaded");

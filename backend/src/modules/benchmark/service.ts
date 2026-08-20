@@ -1,18 +1,20 @@
 /**
- * Benchmark service — Roy Benchmark (perf vs industry).
+ * Benchmark service — Prisma-backed Roy Benchmark (perf vs industry).
  *
- * Mock backend (no DB). Seeds 6 benchmark comparisons vs industry
- * averages and 1 historical benchmark result. Run requests synthesize
- * a new result keyed on the requested suite.
+ * Persisted via the Prisma `BenchmarkResult` model. Seeds 6 benchmark
+ * comparisons vs industry averages (static — served from cache, since
+ * there's no `BenchmarkComparison` model) and 1 historical benchmark
+ * result. Run requests persist a new `BenchmarkResult` row.
  *
- * Reads are LRU-cached; new runs invalidate the results list.
- *
- * Future: persist via Prisma `BenchmarkResult` model and stream live
- * measurements from a CI integration.
+ * Field-mapping: the Prisma model exposes (name, metricsJson, duration,
+ * createdAt). The domain shape carries extra (suite, url, status, runs,
+ * summary, metrics) which is JSON-encoded inside `metricsJson` as a
+ * wrapper object. `duration` maps directly.
  */
 import { randomUUID } from "node:crypto";
 
 import { CACHE_TTL } from "../../config/constants.js";
+import { db } from "../../lib/db.js";
 import { cache, cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type {
@@ -119,10 +121,84 @@ const SEED_RESULTS: BenchmarkResult[] = [
   },
 ];
 
-let results: BenchmarkResult[] = SEED_RESULTS.map((r) => ({
-  ...r,
-  metrics: r.metrics.map((m) => ({ ...m })),
-}));
+/** Wrapper persisted in `metricsJson` so we can round-trip the full domain. */
+interface ResultWrapper {
+  suite: string;
+  url: string;
+  status: BenchmarkResult["status"];
+  runs: number;
+  summary: string;
+  metrics: BenchmarkResult["metrics"];
+}
+
+function toDbRow(r: BenchmarkResult) {
+  const wrapper: ResultWrapper = {
+    suite: r.suite,
+    url: r.url,
+    status: r.status,
+    runs: r.runs,
+    summary: r.summary,
+    metrics: r.metrics,
+  };
+  return {
+    id: r.id,
+    userId: null,
+    name: r.suite,
+    metricsJson: JSON.stringify(wrapper),
+    duration: r.duration,
+  };
+}
+
+function toDomain(row: {
+  id: string;
+  name: string;
+  metricsJson: string;
+  duration: number;
+  createdAt: Date;
+}): BenchmarkResult {
+  let wrapper: ResultWrapper;
+  try {
+    wrapper = JSON.parse(row.metricsJson) as ResultWrapper;
+  } catch {
+    wrapper = {
+      suite: row.name,
+      url: "",
+      status: "complete",
+      runs: 0,
+      summary: "",
+      metrics: [],
+    };
+  }
+  return {
+    id: row.id,
+    suite: wrapper.suite,
+    url: wrapper.url,
+    status: wrapper.status,
+    runs: wrapper.runs,
+    duration: row.duration,
+    createdAt: row.createdAt.toISOString(),
+    metrics: wrapper.metrics.map((m) => ({ ...m })),
+    summary: wrapper.summary,
+  };
+}
+
+let seedPromise: Promise<void> | null = null;
+async function seedIfEmpty(): Promise<void> {
+  if (seedPromise) return seedPromise;
+  seedPromise = (async () => {
+    const count = await db.benchmarkResult.count();
+    if (count === 0) {
+      await db.benchmarkResult.createMany({
+        data: SEED_RESULTS.map(toDbRow),
+      });
+      log.info("Benchmark results seeded", { count: SEED_RESULTS.length });
+    }
+  })().catch((err) => {
+    seedPromise = null;
+    throw err;
+  });
+  return seedPromise;
+}
 
 /** List benchmark comparisons vs industry average. Cached. */
 export async function listComparisons(): Promise<BenchmarkComparison[]> {
@@ -139,13 +215,11 @@ export async function getBenchmarkResultById(
 ): Promise<BenchmarkResult> {
   return cacheWrap(
     resultKey(id),
-    () => {
-      const found = results.find((r) => r.id === id);
-      if (!found) throw AppError.notFound(`Benchmark result '${id}' not found`);
-      return Promise.resolve({
-        ...found,
-        metrics: found.metrics.map((m) => ({ ...m })),
-      });
+    async () => {
+      await seedIfEmpty();
+      const row = await db.benchmarkResult.findUnique({ where: { id } });
+      if (!row) throw AppError.notFound(`Benchmark result '${id}' not found`);
+      return toDomain(row);
     },
     CACHE_TTL.benchmarkResultDetail,
   );
@@ -155,7 +229,9 @@ export async function getBenchmarkResultById(
 export async function runBenchmark(
   input: BenchmarkRunInput,
 ): Promise<BenchmarkResult> {
+  await seedIfEmpty();
   const id = `bench-${randomUUID()}`;
+  const now = new Date().toISOString();
   const result: BenchmarkResult = {
     id,
     suite: input.suite,
@@ -163,7 +239,7 @@ export async function runBenchmark(
     status: "complete",
     runs: input.runs ?? 5,
     duration: 14_000 + Math.floor(Math.random() * 8_000),
-    createdAt: new Date().toISOString(),
+    createdAt: now,
     metrics: [
       { name: "FCP", value: 900 + Math.floor(Math.random() * 200), unit: "ms", p50: 980, p75: 1080, p99: 1240 },
       { name: "LCP", value: 1700 + Math.floor(Math.random() * 400), unit: "ms", p50: 1820, p75: 1980, p99: 2240 },
@@ -174,7 +250,7 @@ export async function runBenchmark(
     ],
     summary: "All metrics in the 'good' Core Web Vitals range.",
   };
-  results = [result, ...results].slice(0, 50);
+  await db.benchmarkResult.create({ data: toDbRow(result) });
   invalidate(id);
   log.info("Benchmark run started", { id, suite: input.suite, url: input.url });
   return result;
@@ -182,10 +258,7 @@ export async function runBenchmark(
 
 /** Test-only: reset to seed. */
 export function _resetBenchmarkForTest(): void {
-  results = SEED_RESULTS.map((r) => ({
-    ...r,
-    metrics: r.metrics.map((m) => ({ ...m })),
-  }));
+  seedPromise = null;
   invalidate();
   cache.delete(COMPARISONS_KEY);
 }

@@ -1,17 +1,20 @@
 /**
- * Blueprints service — Roy Blueprints (industry solution blueprints).
+ * Blueprints service — Prisma-backed Roy Blueprints (industry solution
+ * blueprints).
  *
- * Mock backend (no DB). Seeds 8 blueprints (Hospital, POS, ERP, HR,
- * Banking, Education, AI Dashboard, Logistics) plus an architecture
- * doc per blueprint and an industry index.
+ * Persisted via the Prisma `Blueprint` model. Seeds 8 blueprints
+ * (Hospital, POS, ERP, HR, Banking, Education, AI Dashboard,
+ * Logistics) plus a static architecture doc per blueprint and a
+ * static industry index.
  *
- * Reads are LRU-cached. No mutation endpoints — blueprints are a
- * curated catalog.
- *
- * Future: persist via Prisma `Blueprint` model and author content in
- * a CMS.
+ * Field-mapping: the Prisma `Blueprint` model exposes (slug, title,
+ * description, category, nodesJson, edgesJson). The domain shape's
+ * `name` → `title`, `industry` → `category`, and the arrays
+ * (stack, components) + (integrations, estimatedCost, duration) are
+ * JSON-encoded inside `nodesJson` / `edgesJson` respectively.
  */
 import { CACHE_TTL } from "../../config/constants.js";
+import { db } from "../../lib/db.js";
 import { cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type {
@@ -77,26 +80,103 @@ const SEED_INDUSTRIES: BlueprintIndustry[] = [
   { id: "ind-logistics", name: "Logistics", count: 1, icon: "truck" },
 ];
 
-const blueprints: Blueprint[] = SEED_BLUEPRINTS.map((b) => ({
-  ...b,
-  stack: [...b.stack],
-  components: [...b.components],
-  integrations: [...b.integrations],
-}));
+interface NodesWrapper {
+  stack: string[];
+  components: string[];
+}
+
+interface EdgesWrapper {
+  integrations: string[];
+  estimatedCost: string;
+  duration: string;
+}
+
+function toDbRow(b: Blueprint) {
+  const nodes: NodesWrapper = { stack: b.stack, components: b.components };
+  const edges: EdgesWrapper = {
+    integrations: b.integrations,
+    estimatedCost: b.estimatedCost,
+    duration: b.duration,
+  };
+  return {
+    id: b.id,
+    slug: b.id,
+    title: b.name,
+    description: b.description,
+    category: b.industry,
+    nodesJson: JSON.stringify(nodes),
+    edgesJson: JSON.stringify(edges),
+  };
+}
+
+function toDomain(row: {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  nodesJson: string;
+  edgesJson: string;
+  updatedAt: Date;
+}): Blueprint {
+  let nodes: NodesWrapper = { stack: [], components: [] };
+  try {
+    nodes = JSON.parse(row.nodesJson) as NodesWrapper;
+  } catch {
+    // Keep defaults.
+  }
+  let edges: EdgesWrapper = {
+    integrations: [],
+    estimatedCost: "",
+    duration: "",
+  };
+  try {
+    edges = JSON.parse(row.edgesJson) as EdgesWrapper;
+  } catch {
+    // Keep defaults.
+  }
+  return {
+    id: row.id,
+    name: row.title,
+    industry: row.category,
+    description: row.description,
+    stack: nodes.stack,
+    components: nodes.components,
+    integrations: edges.integrations,
+    estimatedCost: edges.estimatedCost,
+    duration: edges.duration,
+    updatedAt: row.updatedAt.toISOString(),
+  };
+}
+
+let seedPromise: Promise<void> | null = null;
+async function seedIfEmpty(): Promise<void> {
+  if (seedPromise) return seedPromise;
+  seedPromise = (async () => {
+    const count = await db.blueprint.count();
+    if (count === 0) {
+      await db.blueprint.createMany({
+        data: SEED_BLUEPRINTS.map(toDbRow),
+      });
+      log.info("Blueprints seeded", { count: SEED_BLUEPRINTS.length });
+    }
+  })().catch((err) => {
+    seedPromise = null;
+    throw err;
+  });
+  return seedPromise;
+}
 
 /** List all blueprints. Cached. */
 export async function listBlueprints(): Promise<Blueprint[]> {
   return cacheWrap(
     BLUEPRINTS_KEY,
-    () =>
-      Promise.resolve(
-        blueprints.map((b) => ({
-          ...b,
-          stack: [...b.stack],
-          components: [...b.components],
-          integrations: [...b.integrations],
-        })),
-      ),
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.blueprint.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+      return rows.map(toDomain);
+    },
     CACHE_TTL.blueprintsList,
   );
 }
@@ -105,15 +185,11 @@ export async function listBlueprints(): Promise<Blueprint[]> {
 export async function getBlueprintById(id: string): Promise<Blueprint> {
   return cacheWrap(
     blueprintKey(id),
-    () => {
-      const found = blueprints.find((b) => b.id === id);
-      if (!found) throw AppError.notFound(`Blueprint '${id}' not found`);
-      return Promise.resolve({
-        ...found,
-        stack: [...found.stack],
-        components: [...found.components],
-        integrations: [...found.integrations],
-      });
+    async () => {
+      await seedIfEmpty();
+      const row = await db.blueprint.findUnique({ where: { id } });
+      if (!row) throw AppError.notFound(`Blueprint '${id}' not found`);
+      return toDomain(row);
     },
     CACHE_TTL.blueprintDetail,
   );
@@ -134,17 +210,16 @@ export async function getBlueprintArchitecture(
 ): Promise<BlueprintArchitecture> {
   return cacheWrap(
     architectureKey(id),
-    () => {
-      const found = blueprints.find((b) => b.id === id);
-      if (!found) throw AppError.notFound(`Blueprint '${id}' not found`);
+    async () => {
+      const blueprint = await getBlueprintById(id);
       const architecture: BlueprintArchitecture = {
-        blueprintId: found.id,
+        blueprintId: blueprint.id,
         layers: [
           { name: "Presentation", technologies: ["Next.js", "RoyCSS"], responsibility: "UI, accessibility, performance" },
           { name: "Application", technologies: ["Node.js", "tRPC"], responsibility: "Business logic, orchestration" },
           { name: "Domain", technologies: ["TypeScript"], responsibility: "Domain models, validation" },
           { name: "Persistence", technologies: ["PostgreSQL", "Redis"], responsibility: "Storage, caching" },
-          { name: "Integration", technologies: found.integrations, responsibility: "Third-party services" },
+          { name: "Integration", technologies: blueprint.integrations, responsibility: "Third-party services" },
         ],
         dataFlow: [
           { from: "Client", to: "Edge", protocol: "HTTPS" },
@@ -159,21 +234,13 @@ export async function getBlueprintArchitecture(
           "RoyCSS Pro Components power the entire UI surface.",
         ],
       };
-      return Promise.resolve({
-        ...architecture,
-        layers: architecture.layers.map((l) => ({
-          ...l,
-          technologies: [...l.technologies],
-        })),
-        dataFlow: architecture.dataFlow.map((f) => ({ ...f })),
-        decisions: [...architecture.decisions],
-      });
+      return architecture;
     },
     CACHE_TTL.blueprintArchitecture,
   );
 }
 
 log.debug("Blueprints module loaded", {
-  blueprints: blueprints.length,
+  blueprints: SEED_BLUEPRINTS.length,
   industries: SEED_INDUSTRIES.length,
 });

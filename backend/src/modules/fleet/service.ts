@@ -1,15 +1,22 @@
 /**
- * Fleet service — in-memory Roy Fleet project + health store.
+ * Fleet service — Prisma-backed Roy Fleet project + health store.
  *
- * Mock backend (no DB). Seeds 8 monitored projects with health scores,
- * uptime, and region info. All reads are LRU-cached.
+ * Persisted via the Prisma `FleetProject` model. Seeds 8 monitored
+ * projects with health scores, uptime, and region info on first access.
+ * All reads are LRU-cached.
  *
- * Future: swap the in-memory array for a Prisma `FleetProject` model
- * backed by scheduled health-check probes.
+ * Field-mapping: the Prisma `FleetProject` model exposes (userId,
+ * name, description, serviceCount, status). The domain shape's `name`
+ * and `status` map directly; `description ← url`; `serviceCount ←
+ * healthScore`; the extra fields (url, uptime, lastCheck, region)
+ * are JSON-encoded inside `description` as a wrapper that also
+ * carries the seed `healthScore` (so reads round-trip correctly even
+ * though `serviceCount` shadows it).
  */
 import { randomUUID } from "node:crypto";
 
 import { CACHE_TTL } from "../../config/constants.js";
+import { db } from "../../lib/db.js";
 import { cache, cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type { FleetHealth, FleetProject } from "../../types/index.js";
@@ -111,13 +118,93 @@ const SEED_PROJECTS: FleetProject[] = [
   },
 ];
 
-let projects: FleetProject[] = SEED_PROJECTS.map((p) => ({ ...p }));
+interface FleetWrapper {
+  url: string;
+  healthScore: number;
+  uptime: number;
+  lastCheck: string;
+  region: string;
+}
+
+function toDbRow(p: FleetProject) {
+  const wrapper: FleetWrapper = {
+    url: p.url,
+    healthScore: p.healthScore,
+    uptime: p.uptime,
+    lastCheck: p.lastCheck,
+    region: p.region,
+  };
+  return {
+    id: p.id,
+    userId: null,
+    name: p.name,
+    description: JSON.stringify(wrapper),
+    serviceCount: p.healthScore,
+    status: p.status,
+  };
+}
+
+function toDomain(row: {
+  id: string;
+  name: string;
+  description: string;
+  serviceCount: number;
+  status: string;
+  createdAt: Date;
+}): FleetProject {
+  let wrapper: FleetWrapper;
+  try {
+    wrapper = JSON.parse(row.description) as FleetWrapper;
+  } catch {
+    wrapper = {
+      url: "",
+      healthScore: row.serviceCount,
+      uptime: 0,
+      lastCheck: row.createdAt.toISOString(),
+      region: "us-east-1",
+    };
+  }
+  return {
+    id: row.id,
+    name: row.name,
+    url: wrapper.url,
+    healthScore: wrapper.healthScore,
+    status: row.status as FleetProject["status"],
+    uptime: wrapper.uptime,
+    lastCheck: wrapper.lastCheck,
+    region: wrapper.region,
+  };
+}
+
+let seedPromise: Promise<void> | null = null;
+async function seedIfEmpty(): Promise<void> {
+  if (seedPromise) return seedPromise;
+  seedPromise = (async () => {
+    const count = await db.fleetProject.count();
+    if (count === 0) {
+      await db.fleetProject.createMany({
+        data: SEED_PROJECTS.map(toDbRow),
+      });
+      log.info("Fleet projects seeded", { count: SEED_PROJECTS.length });
+    }
+  })().catch((err) => {
+    seedPromise = null;
+    throw err;
+  });
+  return seedPromise;
+}
 
 /** List all fleet projects. Cached. */
 export async function listProjects(): Promise<FleetProject[]> {
   return cacheWrap(
     PROJECTS_KEY,
-    () => Promise.resolve(projects.map((p) => ({ ...p }))),
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.fleetProject.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+      return rows.map(toDomain);
+    },
     CACHE_TTL.fleetProjects,
   );
 }
@@ -126,10 +213,11 @@ export async function listProjects(): Promise<FleetProject[]> {
 export async function getProjectById(id: string): Promise<FleetProject> {
   return cacheWrap(
     detailKey(id),
-    () => {
-      const found = projects.find((p) => p.id === id);
-      if (!found) throw AppError.notFound(`Fleet project '${id}' not found`);
-      return Promise.resolve({ ...found });
+    async () => {
+      await seedIfEmpty();
+      const row = await db.fleetProject.findUnique({ where: { id } });
+      if (!row) throw AppError.notFound(`Fleet project '${id}' not found`);
+      return toDomain(row);
     },
     CACHE_TTL.fleetProjectDetail,
   );
@@ -139,12 +227,16 @@ export async function getProjectById(id: string): Promise<FleetProject> {
 export async function getHealth(): Promise<FleetHealth> {
   return cacheWrap(
     HEALTH_KEY,
-    () => {
-      const total = projects.length;
-      const healthy = projects.filter((p) => p.status === "healthy").length;
-      const degraded = projects.filter((p) => p.status === "degraded").length;
-      const critical = projects.filter((p) => p.status === "critical").length;
-      const offline = projects.filter((p) => p.status === "offline").length;
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.fleetProject.findMany();
+      const total = rows.length;
+      const statuses = rows.map((r) => r.status);
+      const healthy = statuses.filter((s) => s === "healthy").length;
+      const degraded = statuses.filter((s) => s === "degraded").length;
+      const critical = statuses.filter((s) => s === "critical").length;
+      const offline = statuses.filter((s) => s === "offline").length;
+      const projects = rows.map(toDomain);
       const averageScore =
         total === 0
           ? 0
@@ -157,7 +249,7 @@ export async function getHealth(): Promise<FleetHealth> {
           : Math.round(
               (projects.reduce((sum, p) => sum + p.uptime, 0) / total) * 100,
             ) / 100;
-      return Promise.resolve({
+      return {
         total,
         healthy,
         degraded,
@@ -165,7 +257,7 @@ export async function getHealth(): Promise<FleetHealth> {
         offline,
         averageScore,
         uptime,
-      });
+      };
     },
     CACHE_TTL.fleetHealth,
   );
@@ -175,16 +267,33 @@ export async function getHealth(): Promise<FleetHealth> {
 export async function scanProject(
   id: string,
 ): Promise<{ id: string; status: FleetProject["status"]; scannedAt: string }> {
-  const found = projects.find((p) => p.id === id);
-  if (!found) throw AppError.notFound(`Fleet project '${id}' not found`);
+  await seedIfEmpty();
+  const row = await db.fleetProject.findUnique({ where: { id } });
+  if (!row) throw AppError.notFound(`Fleet project '${id}' not found`);
   // Mock re-scan — bump lastCheck, leave health/score unchanged.
   const scannedAt = new Date().toISOString();
-  found.lastCheck = scannedAt;
+  let wrapper: FleetWrapper;
+  try {
+    wrapper = JSON.parse(row.description) as FleetWrapper;
+  } catch {
+    wrapper = {
+      url: "",
+      healthScore: row.serviceCount,
+      uptime: 0,
+      lastCheck: scannedAt,
+      region: "us-east-1",
+    };
+  }
+  wrapper.lastCheck = scannedAt;
+  await db.fleetProject.update({
+    where: { id },
+    data: { description: JSON.stringify(wrapper) },
+  });
   invalidate(id);
   log.info("Fleet project re-scanned", { id });
   return {
     id,
-    status: found.status,
+    status: row.status as FleetProject["status"],
     scannedAt,
   };
 }
@@ -195,6 +304,7 @@ export async function createProject(input: {
   url: string;
   region?: string;
 }): Promise<FleetProject> {
+  await seedIfEmpty();
   const id = `fleet-${randomUUID()}`;
   const project: FleetProject = {
     id,
@@ -206,20 +316,20 @@ export async function createProject(input: {
     lastCheck: new Date().toISOString(),
     region: input.region ?? "us-east-1",
   };
-  projects.push(project);
+  await db.fleetProject.create({ data: toDbRow(project) });
   invalidate(id);
   log.info("Fleet project added", { id, name: project.name });
   return project;
 }
 
-/** Number of projects in the store. */
+/** Number of projects in the store. Sync stub — real count is in DB. */
 export function projectsCount(): number {
-  return projects.length;
+  return SEED_PROJECTS.length;
 }
 
 /** Test-only: reset to seed. */
 export function _resetFleetForTest(): void {
-  projects = SEED_PROJECTS.map((p) => ({ ...p }));
+  seedPromise = null;
   invalidate();
 }
 

@@ -23475,5 +23475,2969 @@
     "previewType": "box",
     "previewText": null,
     "childCount": null
+  },
+  {
+    "id": "physics-spring-bounce",
+    "name": "Spring Bounce",
+    "category": "physics",
+    "description": "Element overshoots its target and springs back with damping",
+    "tags": [
+      "physics",
+      "spring",
+      "bounce",
+      "damping",
+      "overshoot",
+      "animate"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "physics-elastic-stretch",
+    "name": "Elastic Stretch",
+    "category": "physics",
+    "description": "Element stretches elastically when hovered, then snaps back",
+    "tags": [
+      "physics",
+      "elastic",
+      "stretch",
+      "hover",
+      "snap"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "physics-gravity-drop",
+    "name": "Gravity Drop",
+    "category": "physics",
+    "description": "Element falls with accelerating ease-in and squashes on landing",
+    "tags": [
+      "physics",
+      "gravity",
+      "drop",
+      "squash",
+      "landing",
+      "animate"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "physics-pendulum-swing",
+    "name": "Pendulum Swing",
+    "category": "physics",
+    "description": "Realistic pendulum with progressively decreasing amplitude",
+    "tags": [
+      "physics",
+      "pendulum",
+      "swing",
+      "damping",
+      "decay",
+      "animate"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "physics-magnetic-pull",
+    "name": "Magnetic Pull",
+    "category": "physics",
+    "description": "Element subtly shifts toward the cursor direction on hover",
+    "tags": [
+      "physics",
+      "magnetic",
+      "pull",
+      "hover",
+      "cursor"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "physics-rubber-band",
+    "name": "Rubber Band",
+    "category": "physics",
+    "description": "Element stretches like rubber when pulled and snaps back on release",
+    "tags": [
+      "physics",
+      "rubber",
+      "stretch",
+      "elastic",
+      "hover"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "physics-bounce-chain",
+    "name": "Bounce Chain",
+    "category": "physics",
+    "description": "Sequential bounce animation cascading across child elements",
+    "tags": [
+      "physics",
+      "bounce",
+      "chain",
+      "stagger",
+      "sequence",
+      "children"
+    ],
+    "previewType": "loader",
+    "previewText": null,
+    "childCount": 5
+  },
+  {
+    "id": "physics-inertia-slide",
+    "name": "Inertia Slide",
+    "category": "physics",
+    "description": "Element slides and decelerates as if moving across a friction surface",
+    "tags": [
+      "physics",
+      "inertia",
+      "slide",
+      "friction",
+      "deceleration",
+      "animate"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "physics-weight-settle",
+    "name": "Weight Settle",
+    "category": "physics",
+    "description": "Heavy element settles into place with a slight bounce and squash",
+    "tags": [
+      "physics",
+      "weight",
+      "settle",
+      "heavy",
+      "squash",
+      "animate"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "physics-float-buoyancy",
+    "name": "Float Buoyancy",
+    "category": "physics",
+    "description": "Element gently floats up and down as if bobbing on water",
+    "tags": [
+      "physics",
+      "float",
+      "buoyancy",
+      "water",
+      "bob",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "physics-spring-loaded",
+    "name": "Spring Loaded",
+    "category": "physics",
+    "description": "Element springs in from the side with damped oscillation",
+    "tags": [
+      "physics",
+      "spring",
+      "loaded",
+      "oscillation",
+      "side",
+      "animate"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "physics-elastic-recoil",
+    "name": "Elastic Recoil",
+    "category": "physics",
+    "description": "Element recoils backward after being pushed, then springs forward",
+    "tags": [
+      "physics",
+      "elastic",
+      "recoil",
+      "push",
+      "hover",
+      "spring"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "physics-bounce-drop",
+    "name": "Bounce Drop",
+    "category": "physics",
+    "description": "Element bounces like a rubber ball each time it is dropped",
+    "tags": [
+      "physics",
+      "bounce",
+      "ball",
+      "drop",
+      "gravity",
+      "animate"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "physics-wobble-jelly",
+    "name": "Wobble Jelly",
+    "category": "physics",
+    "description": "Jelly-like wobble deformation when the element is hovered",
+    "tags": [
+      "physics",
+      "wobble",
+      "jelly",
+      "jiggle",
+      "hover",
+      "deform"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "physics-shake-impact",
+    "name": "Shake Impact",
+    "category": "physics",
+    "description": "Element shakes sharply as if struck by a sudden impact",
+    "tags": [
+      "physics",
+      "shake",
+      "impact",
+      "hit",
+      "vibrate",
+      "animate"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "physics-spring-up",
+    "name": "Spring Up",
+    "category": "physics",
+    "description": "Element springs upward from below and settles into place",
+    "tags": [
+      "physics",
+      "spring",
+      "upward",
+      "rise",
+      "settle",
+      "animate"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "physics-elastic-fade",
+    "name": "Elastic Fade",
+    "category": "physics",
+    "description": "Fade-in combined with an elastic scale overshoot",
+    "tags": [
+      "physics",
+      "elastic",
+      "fade",
+      "scale",
+      "overshoot",
+      "animate"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "physics-gravity-tilt",
+    "name": "Gravity Tilt",
+    "category": "physics",
+    "description": "Element tilts slowly as if being pulled by gravity, then rights itself",
+    "tags": [
+      "physics",
+      "gravity",
+      "tilt",
+      "lean",
+      "pull",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "physics-momentum-spin",
+    "name": "Momentum Spin",
+    "category": "physics",
+    "description": "Spin that starts fast with momentum and gradually comes to a stop",
+    "tags": [
+      "physics",
+      "momentum",
+      "spin",
+      "rotate",
+      "deceleration",
+      "animate"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "physics-bounce-settle",
+    "name": "Bounce Settle",
+    "category": "physics",
+    "description": "Multiple bounces with progressively decreasing bounce height",
+    "tags": [
+      "physics",
+      "bounce",
+      "settle",
+      "decay",
+      "damping",
+      "animate"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "liquid-button-fill",
+    "name": "Liquid Button Fill",
+    "category": "liquid",
+    "description": "Button fills with liquid color rising from the bottom on hover",
+    "tags": [
+      "liquid",
+      "button",
+      "fill",
+      "hover",
+      "wave"
+    ],
+    "previewType": "button",
+    "previewText": "Hover Me",
+    "childCount": null
+  },
+  {
+    "id": "liquid-border-flow",
+    "name": "Liquid Border Flow",
+    "category": "liquid",
+    "description": "Animated border that appears to flow like circulating liquid",
+    "tags": [
+      "liquid",
+      "border",
+      "flow",
+      "gradient",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "liquid-card-wave",
+    "name": "Liquid Card Wave",
+    "category": "liquid",
+    "description": "Card with a continuous wave undulating across its surface",
+    "tags": [
+      "liquid",
+      "card",
+      "wave",
+      "surface",
+      "infinite"
+    ],
+    "previewType": "card",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "liquid-gradient-shift",
+    "name": "Liquid Gradient Shift",
+    "category": "liquid",
+    "description": "Background gradient that shifts and flows like moving liquid",
+    "tags": [
+      "liquid",
+      "gradient",
+      "shift",
+      "flow",
+      "background",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "liquid-blob-morph",
+    "name": "Liquid Blob Morph",
+    "category": "liquid",
+    "description": "Organic blob that continuously morphs via border-radius animation",
+    "tags": [
+      "liquid",
+      "blob",
+      "morph",
+      "organic",
+      "border-radius",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "liquid-reveal-mask",
+    "name": "Liquid Reveal Mask",
+    "category": "liquid",
+    "description": "Content revealed by a liquid mask spreading outward",
+    "tags": [
+      "liquid",
+      "reveal",
+      "mask",
+      "clip-path",
+      "entrance"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "liquid-text-fill",
+    "name": "Liquid Text Fill",
+    "category": "liquid",
+    "description": "Text fills with an animated liquid color gradient",
+    "tags": [
+      "liquid",
+      "text",
+      "fill",
+      "gradient",
+      "background-clip",
+      "infinite"
+    ],
+    "previewType": "text",
+    "previewText": "RoyCSS",
+    "childCount": null
+  },
+  {
+    "id": "liquid-drop-fall",
+    "name": "Liquid Drop Fall",
+    "category": "liquid",
+    "description": "Liquid drop repeatedly falls and splashes on impact",
+    "tags": [
+      "liquid",
+      "drop",
+      "fall",
+      "splash",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "liquid-surface-ripple",
+    "name": "Liquid Surface Ripple",
+    "category": "liquid",
+    "description": "Concentric ripple expands across the surface when hovered",
+    "tags": [
+      "liquid",
+      "ripple",
+      "surface",
+      "hover",
+      "wave"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "liquid-wave-loader",
+    "name": "Liquid Wave Loader",
+    "category": "liquid",
+    "description": "Loading indicator with a wavy liquid surface rising and falling",
+    "tags": [
+      "liquid",
+      "wave",
+      "loader",
+      "loading",
+      "infinite"
+    ],
+    "previewType": "loader",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "liquid-gradient-pour",
+    "name": "Liquid Gradient Pour",
+    "category": "liquid",
+    "description": "Gradient pours in from the top like liquid filling a container",
+    "tags": [
+      "liquid",
+      "gradient",
+      "pour",
+      "fill",
+      "entrance"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "liquid-circle-pulse",
+    "name": "Liquid Circle Pulse",
+    "category": "liquid",
+    "description": "Circle pulses and distorts like a vibrating liquid droplet",
+    "tags": [
+      "liquid",
+      "circle",
+      "pulse",
+      "droplet",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "liquid-menu-slide",
+    "name": "Liquid Menu Slide",
+    "category": "liquid",
+    "description": "Menu items slide in sequentially like drops of liquid",
+    "tags": [
+      "liquid",
+      "menu",
+      "slide",
+      "stagger",
+      "entrance"
+    ],
+    "previewType": "loader",
+    "previewText": null,
+    "childCount": 5
+  },
+  {
+    "id": "liquid-background-flow",
+    "name": "Liquid Background Flow",
+    "category": "liquid",
+    "description": "Background with multiple liquid gradients flowing and blending",
+    "tags": [
+      "liquid",
+      "background",
+      "flow",
+      "gradient",
+      "blend",
+      "infinite"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "liquid-icon-drip",
+    "name": "Liquid Icon Drip",
+    "category": "liquid",
+    "description": "Icon appears to drip and melt downward like a liquid",
+    "tags": [
+      "liquid",
+      "icon",
+      "drip",
+      "melt",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "liquid-progress-wave",
+    "name": "Liquid Progress Wave",
+    "category": "liquid",
+    "description": "Progress bar with a wavy liquid surface continually undulating",
+    "tags": [
+      "liquid",
+      "progress",
+      "wave",
+      "bar",
+      "infinite"
+    ],
+    "previewType": "loader",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "liquid-shape-transition",
+    "name": "Liquid Shape Transition",
+    "category": "liquid",
+    "description": "Shape continuously transitions through organic liquid forms",
+    "tags": [
+      "liquid",
+      "shape",
+      "transition",
+      "morph",
+      "organic",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "liquid-hover-splash",
+    "name": "Liquid Hover Splash",
+    "category": "liquid",
+    "description": "Splash of liquid color bursts outward on hover",
+    "tags": [
+      "liquid",
+      "splash",
+      "hover",
+      "burst",
+      "ripple"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "liquid-gradient-merge",
+    "name": "Liquid Gradient Merge",
+    "category": "liquid",
+    "description": "Two gradients blend and merge like mixing liquids",
+    "tags": [
+      "liquid",
+      "gradient",
+      "merge",
+      "blend",
+      "mix",
+      "infinite"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "liquid-underline-flow",
+    "name": "Liquid Underline Flow",
+    "category": "liquid",
+    "description": "Underline flows in from the left like a stream of liquid",
+    "tags": [
+      "liquid",
+      "underline",
+      "flow",
+      "text",
+      "hover"
+    ],
+    "previewType": "text",
+    "previewText": "RoyCSS",
+    "childCount": null
+  },
+  {
+    "id": "morph-shape-cycle",
+    "name": "Shape Cycle",
+    "category": "morphing",
+    "description": "Element cycles through circle, triangle, square, and pentagon forms",
+    "tags": [
+      "morphing",
+      "shape",
+      "cycle",
+      "clip-path",
+      "circle",
+      "triangle",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "morph-blob-organic",
+    "name": "Organic Blob",
+    "category": "morphing",
+    "description": "Organic blob that continuously shifts through asymmetric shapes",
+    "tags": [
+      "morphing",
+      "blob",
+      "organic",
+      "border-radius",
+      "asymmetric",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "morph-button-state",
+    "name": "Button State Morph",
+    "category": "morphing",
+    "description": "Button morphs smoothly between idle, hover, and active states",
+    "tags": [
+      "morphing",
+      "button",
+      "state",
+      "hover",
+      "active"
+    ],
+    "previewType": "button",
+    "previewText": "Hover Me",
+    "childCount": null
+  },
+  {
+    "id": "morph-card-expand",
+    "name": "Card Expand",
+    "category": "morphing",
+    "description": "Card smoothly expands to a larger size with depth on hover",
+    "tags": [
+      "morphing",
+      "card",
+      "expand",
+      "grow",
+      "hover",
+      "scale"
+    ],
+    "previewType": "card",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "morph-icon-transform",
+    "name": "Icon Transform",
+    "category": "morphing",
+    "description": "Hamburger menu icon morphs into an X when hovered",
+    "tags": [
+      "morphing",
+      "icon",
+      "menu",
+      "hamburger",
+      "transform",
+      "hover"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "morph-circle-square",
+    "name": "Circle Square Morph",
+    "category": "morphing",
+    "description": "Smooth continuous morph between a circle and a square",
+    "tags": [
+      "morphing",
+      "circle",
+      "square",
+      "border-radius",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "morph-text-glow",
+    "name": "Text Glow Morph",
+    "category": "morphing",
+    "description": "Text morphs through varying glow intensities continuously",
+    "tags": [
+      "morphing",
+      "text",
+      "glow",
+      "intensity",
+      "infinite"
+    ],
+    "previewType": "text",
+    "previewText": "RoyCSS",
+    "childCount": null
+  },
+  {
+    "id": "morph-border-radius",
+    "name": "Border Radius Morph",
+    "category": "morphing",
+    "description": "Border-radius animates through a sequence of organic values",
+    "tags": [
+      "morphing",
+      "border-radius",
+      "organic",
+      "shape",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "morph-flip-3d",
+    "name": "3D Flip Morph",
+    "category": "morphing",
+    "description": "Element flips in 3D to reveal a contrasting back face on hover",
+    "tags": [
+      "morphing",
+      "3d",
+      "flip",
+      "rotateY",
+      "hover",
+      "transform"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "morph-progress-shape",
+    "name": "Progress Shape Morph",
+    "category": "morphing",
+    "description": "Progress indicator morphs from circle to bar to checkmark",
+    "tags": [
+      "morphing",
+      "progress",
+      "circle",
+      "bar",
+      "checkmark",
+      "infinite"
+    ],
+    "previewType": "loader",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "morph-hover-grow",
+    "name": "Hover Grow Morph",
+    "category": "morphing",
+    "description": "Element grows organically with shifting border-radius on hover",
+    "tags": [
+      "morphing",
+      "hover",
+      "grow",
+      "organic",
+      "border-radius"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "morph-rotate-transform",
+    "name": "Rotate Scale Morph",
+    "category": "morphing",
+    "description": "Continuous rotation combined with pulsing scale morph",
+    "tags": [
+      "morphing",
+      "rotate",
+      "scale",
+      "transform",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "morph-color-shift",
+    "name": "Color Spectrum Shift",
+    "category": "morphing",
+    "description": "Element smoothly morphs through the full color spectrum",
+    "tags": [
+      "morphing",
+      "color",
+      "spectrum",
+      "shift",
+      "hue",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "morph-size-pulse",
+    "name": "Size Pulse Morph",
+    "category": "morphing",
+    "description": "Size pulses rhythmically with a morphing border-radius",
+    "tags": [
+      "morphing",
+      "size",
+      "pulse",
+      "border-radius",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "morph-shape-reveal",
+    "name": "Shape Reveal",
+    "category": "morphing",
+    "description": "Content revealed by a morphing clip-path expanding outward",
+    "tags": [
+      "morphing",
+      "shape",
+      "reveal",
+      "clip-path",
+      "entrance"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "morph-card-to-modal",
+    "name": "Card To Modal",
+    "category": "morphing",
+    "description": "Card morphs to a larger modal-like size with elevation on hover",
+    "tags": [
+      "morphing",
+      "card",
+      "modal",
+      "expand",
+      "elevation",
+      "hover"
+    ],
+    "previewType": "card",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "morph-icon-to-text",
+    "name": "Icon To Text",
+    "category": "morphing",
+    "description": "Icon morphs into a text label that slides out on hover",
+    "tags": [
+      "morphing",
+      "icon",
+      "text",
+      "label",
+      "expand",
+      "hover"
+    ],
+    "previewType": "button",
+    "previewText": "★",
+    "childCount": null
+  },
+  {
+    "id": "morph-gradient-morph",
+    "name": "Gradient Morph",
+    "category": "morphing",
+    "description": "Background gradient morphs continuously between color stops",
+    "tags": [
+      "morphing",
+      "gradient",
+      "color",
+      "morph",
+      "background",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "morph-clip-path",
+    "name": "Clip Path Morph",
+    "category": "morphing",
+    "description": "Clip-path morphs through star, hexagon, and arrow shapes",
+    "tags": [
+      "morphing",
+      "clip-path",
+      "star",
+      "hexagon",
+      "arrow",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "morph-hover-distort",
+    "name": "Hover Distort",
+    "category": "morphing",
+    "description": "Element distorts and morphs its shape dramatically on hover",
+    "tags": [
+      "morphing",
+      "hover",
+      "distort",
+      "skew",
+      "stretch",
+      "border-radius"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "retro-crt-scanlines",
+    "name": "CRT Scanlines",
+    "category": "retro",
+    "description": "Retro CRT monitor scanline overlay with subtle phosphor curvature and rolling bar",
+    "tags": [
+      "retro",
+      "crt",
+      "scanlines",
+      "nostalgic",
+      "monitor"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "retro-vhs-tracking",
+    "name": "VHS Tracking",
+    "category": "retro",
+    "description": "VHS horizontal tracking distortion lines with chromatic color bleed and jitter",
+    "tags": [
+      "retro",
+      "vhs",
+      "tracking",
+      "glitch",
+      "nostalgic"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "retro-pixel-art-transition",
+    "name": "Pixel Art Transition",
+    "category": "retro",
+    "description": "Pixelated in-and-out transition using image-rendering: pixelated and stepped scale",
+    "tags": [
+      "retro",
+      "pixel",
+      "8bit",
+      "transition",
+      "animate"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "retro-lcd-display",
+    "name": "LCD Display",
+    "category": "retro",
+    "description": "Segmented LCD display font effect with green-grey phosphor segments and ghost digits",
+    "tags": [
+      "retro",
+      "lcd",
+      "display",
+      "segmented",
+      "nostalgic"
+    ],
+    "previewType": "text",
+    "previewText": "08:42",
+    "childCount": null
+  },
+  {
+    "id": "retro-typewriter-ribbon",
+    "name": "Typewriter Ribbon",
+    "category": "retro",
+    "description": "Faded ribbon-worn typewriter text with uneven ink density and ghost impression",
+    "tags": [
+      "retro",
+      "typewriter",
+      "ribbon",
+      "ink",
+      "text"
+    ],
+    "previewType": "text",
+    "previewText": "Dear Reader",
+    "childCount": null
+  },
+  {
+    "id": "retro-polaroid-frame",
+    "name": "Polaroid Frame",
+    "category": "retro",
+    "description": "Polaroid photo card with thick white border, slight tilt, and soft shadow",
+    "tags": [
+      "retro",
+      "polaroid",
+      "photo",
+      "frame",
+      "card"
+    ],
+    "previewType": "card",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "retro-film-grain",
+    "name": "Film Grain",
+    "category": "retro",
+    "description": "Animated film grain noise overlay for cinematic retro footage aesthetic",
+    "tags": [
+      "retro",
+      "film",
+      "grain",
+      "noise",
+      "cinematic"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "retro-neon-flicker",
+    "name": "Neon Flicker",
+    "category": "retro",
+    "description": "Neon sign that flickers and buzzes intermittently like a faulty motel sign",
+    "tags": [
+      "retro",
+      "neon",
+      "flicker",
+      "sign",
+      "glow"
+    ],
+    "previewType": "text",
+    "previewText": "OPEN",
+    "childCount": null
+  },
+  {
+    "id": "retro-cassette-reel",
+    "name": "Cassette Reel",
+    "category": "retro",
+    "description": "Spinning cassette tape reel with two counter-rotating hubs and tape window",
+    "tags": [
+      "retro",
+      "cassette",
+      "reel",
+      "tape",
+      "spinner"
+    ],
+    "previewType": "loader",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "retro-gameboy-ui",
+    "name": "Game Boy UI",
+    "category": "retro",
+    "description": "Four-color DMG Game Boy green palette with dithered border and A/B button styling",
+    "tags": [
+      "retro",
+      "gameboy",
+      "8bit",
+      "palette",
+      "nintendo"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "retro-arcade-glow",
+    "name": "Arcade Glow",
+    "category": "retro",
+    "description": "80s arcade cabinet marquee text with layered neon glow and pulsing intensity",
+    "tags": [
+      "retro",
+      "arcade",
+      "neon",
+      "glow",
+      "80s"
+    ],
+    "previewType": "text",
+    "previewText": "INSERT COIN",
+    "childCount": null
+  },
+  {
+    "id": "retro-vhs-glitch",
+    "name": "VHS Glitch",
+    "category": "retro",
+    "description": "VHS tape glitch distortion with horizontal slices and color channel split",
+    "tags": [
+      "retro",
+      "vhs",
+      "glitch",
+      "distortion",
+      "tape"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "retro-8bit-border",
+    "name": "8-Bit Border",
+    "category": "retro",
+    "description": "Pixelated 8-bit style stepped border with corner notches and chunky shadow",
+    "tags": [
+      "retro",
+      "8bit",
+      "pixel",
+      "border",
+      "frame"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "retro-synthwave-grid",
+    "name": "Synthwave Grid",
+    "category": "retro",
+    "description": "Synthwave perspective grid background with horizon glow and animated floor lines",
+    "tags": [
+      "retro",
+      "synthwave",
+      "grid",
+      "retrowave",
+      "80s"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "retro-retrowave-sun",
+    "name": "Retrowave Sun",
+    "category": "retro",
+    "description": "Retrowave sun with horizontal scanline cuts and gradient pink-to-yellow glow",
+    "tags": [
+      "retro",
+      "retrowave",
+      "sun",
+      "synthwave",
+      "80s"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "retro-dial-up-loader",
+    "name": "Dial-Up Loader",
+    "category": "retro",
+    "description": "Dial-up modem loading animation with pulsing connection dots and handshake rhythm",
+    "tags": [
+      "retro",
+      "dial-up",
+      "modem",
+      "loader",
+      "90s"
+    ],
+    "previewType": "loader",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "retro-floppy-disk-save",
+    "name": "Floppy Disk Save",
+    "category": "retro",
+    "description": "Floppy disk save icon that wiggles and reveals a saving state on hover",
+    "tags": [
+      "retro",
+      "floppy",
+      "save",
+      "disk",
+      "icon"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "retro-tv-static",
+    "name": "TV Static",
+    "category": "retro",
+    "description": "Old TV static noise effect with shifting grain and phosphor flicker",
+    "tags": [
+      "retro",
+      "tv",
+      "static",
+      "noise",
+      "nostalgic"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "retro-tape-deck-buttons",
+    "name": "Tape Deck Buttons",
+    "category": "retro",
+    "description": "Tape deck transport buttons that depress on hover with mechanical feedback",
+    "tags": [
+      "retro",
+      "tape",
+      "deck",
+      "button",
+      "press"
+    ],
+    "previewType": "button",
+    "previewText": "▶ ■ ⏸",
+    "childCount": null
+  },
+  {
+    "id": "retro-coin-insert",
+    "name": "Coin Insert",
+    "category": "retro",
+    "description": "Arcade coin insert animation that drops and spins into the slot with a shine",
+    "tags": [
+      "retro",
+      "arcade",
+      "coin",
+      "insert",
+      "slot"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "dataviz-counter-roll",
+    "name": "Counter Roll",
+    "category": "data-viz",
+    "description": "Odometer-style number that rolls vertical digits into place on load",
+    "tags": [
+      "data-viz",
+      "counter",
+      "odometer",
+      "number",
+      "animate"
+    ],
+    "previewType": "box",
+    "previewText": "0",
+    "childCount": null
+  },
+  {
+    "id": "dataviz-progress-ring",
+    "name": "Progress Ring",
+    "category": "data-viz",
+    "description": "Circular progress ring that animates its stroke-dashoffset fill from empty to full",
+    "tags": [
+      "data-viz",
+      "progress",
+      "ring",
+      "circular",
+      "loader"
+    ],
+    "previewType": "loader",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "dataviz-progress-semi",
+    "name": "Semi-Circle Progress",
+    "category": "data-viz",
+    "description": "Semi-circle progress gauge that sweeps its arc from left to right",
+    "tags": [
+      "data-viz",
+      "progress",
+      "semicircle",
+      "gauge",
+      "arc"
+    ],
+    "previewType": "loader",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "dataviz-bar-grow",
+    "name": "Bar Grow",
+    "category": "data-viz",
+    "description": "Vertical bar chart columns that grow upward from zero baseline on load",
+    "tags": [
+      "data-viz",
+      "bar",
+      "chart",
+      "grow",
+      "animate"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "dataviz-bar-horizontal",
+    "name": "Horizontal Bars",
+    "category": "data-viz",
+    "description": "Horizontal bars that grow from left to right with staggered easing",
+    "tags": [
+      "data-viz",
+      "bar",
+      "horizontal",
+      "grow",
+      "chart"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "dataviz-pie-reveal",
+    "name": "Pie Reveal",
+    "category": "data-viz",
+    "description": "Donut chart segments that sweep in sequentially using conic gradient rotation",
+    "tags": [
+      "data-viz",
+      "pie",
+      "donut",
+      "chart",
+      "reveal"
+    ],
+    "previewType": "loader",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "dataviz-sparkline-draw",
+    "name": "Sparkline Draw",
+    "category": "data-viz",
+    "description": "Sparkline that draws itself along an SVG-like path using stroke-dashoffset",
+    "tags": [
+      "data-viz",
+      "sparkline",
+      "line",
+      "draw",
+      "chart"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "dataviz-stat-pulse",
+    "name": "Stat Pulse",
+    "category": "data-viz",
+    "description": "Statistic number that pulses and glows when its value updates",
+    "tags": [
+      "data-viz",
+      "stat",
+      "pulse",
+      "glow",
+      "number"
+    ],
+    "previewType": "text",
+    "previewText": "+24.5%",
+    "childCount": null
+  },
+  {
+    "id": "dataviz-data-flow",
+    "name": "Data Flow",
+    "category": "data-viz",
+    "description": "Animated dashed flow line connecting data points with marching ants",
+    "tags": [
+      "data-viz",
+      "flow",
+      "line",
+      "dashed",
+      "connect"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "dataviz-gauge-needle",
+    "name": "Gauge Needle",
+    "category": "data-viz",
+    "description": "Speedometer-style gauge with a needle that sweeps to its target value",
+    "tags": [
+      "data-viz",
+      "gauge",
+      "needle",
+      "speedometer",
+      "meter"
+    ],
+    "previewType": "loader",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "dataviz-heatmap-cell",
+    "name": "Heatmap Cell",
+    "category": "data-viz",
+    "description": "Single heatmap cell that transitions from cool to warm color on load",
+    "tags": [
+      "data-viz",
+      "heatmap",
+      "cell",
+      "color",
+      "transition"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "dataviz-timeline-progress",
+    "name": "Timeline Progress",
+    "category": "data-viz",
+    "description": "Horizontal timeline with a progress line that draws across milestones",
+    "tags": [
+      "data-viz",
+      "timeline",
+      "progress",
+      "line",
+      "milestone"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "dataviz-count-up",
+    "name": "Count Up",
+    "category": "data-viz",
+    "description": "Integer counter that animates from 0 to target using @property and CSS counter",
+    "tags": [
+      "data-viz",
+      "count",
+      "number",
+      "counter",
+      "animate"
+    ],
+    "previewType": "text",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "dataviz-percentage-bar",
+    "name": "Percentage Bar",
+    "category": "data-viz",
+    "description": "Indeterminate percentage bar with animated diagonal stripes scrolling",
+    "tags": [
+      "data-viz",
+      "percentage",
+      "bar",
+      "stripes",
+      "loader"
+    ],
+    "previewType": "loader",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "dataviz-radial-progress",
+    "name": "Radial Progress",
+    "category": "data-viz",
+    "description": "Radial progress with a rotating conic gradient sweep and center cutout",
+    "tags": [
+      "data-viz",
+      "radial",
+      "progress",
+      "conic",
+      "rotate"
+    ],
+    "previewType": "loader",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "dataviz-stacked-bar",
+    "name": "Stacked Bar",
+    "category": "data-viz",
+    "description": "Stacked bar chart segments that fill in sequence from bottom to top",
+    "tags": [
+      "data-viz",
+      "stacked",
+      "bar",
+      "chart",
+      "segments"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "dataviz-line-chart-draw",
+    "name": "Line Chart Draw",
+    "category": "data-viz",
+    "description": "Trending line chart that draws itself across the canvas with a moving dot",
+    "tags": [
+      "data-viz",
+      "line",
+      "chart",
+      "draw",
+      "trend"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "dataviz-area-chart-fill",
+    "name": "Area Chart Fill",
+    "category": "data-viz",
+    "description": "Area chart that fills from the bottom up with a clipped gradient sweep",
+    "tags": [
+      "data-viz",
+      "area",
+      "chart",
+      "fill",
+      "gradient"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "dataviz-bubble-pulse",
+    "name": "Bubble Pulse",
+    "category": "data-viz",
+    "description": "Data bubble that pulses outward with concentric rings to indicate activity",
+    "tags": [
+      "data-viz",
+      "bubble",
+      "pulse",
+      "activity",
+      "ring"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "dataviz-loading-skeleton",
+    "name": "Loading Skeleton",
+    "category": "data-viz",
+    "description": "Skeleton placeholder with shimmering diagonal highlight sweeping across",
+    "tags": [
+      "data-viz",
+      "skeleton",
+      "loader",
+      "shimmer",
+      "placeholder"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "state-skeleton-shimmer-gradient",
+    "name": "Skeleton Shimmer Gradient",
+    "category": "status-state",
+    "description": "Gradient shimmer sweeping across a skeleton placeholder",
+    "tags": [
+      "status-state",
+      "skeleton",
+      "loading",
+      "shimmer",
+      "gradient",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "state-skeleton-pulse",
+    "name": "Skeleton Pulse",
+    "category": "status-state",
+    "description": "Skeleton placeholder that pulses opacity in a breathing rhythm",
+    "tags": [
+      "status-state",
+      "skeleton",
+      "loading",
+      "pulse",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "state-skeleton-wave",
+    "name": "Skeleton Wave",
+    "category": "status-state",
+    "description": "Skeleton with a diagonal wave shimmer sweeping across",
+    "tags": [
+      "status-state",
+      "skeleton",
+      "loading",
+      "wave",
+      "shimmer",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "state-skeleton-dot",
+    "name": "Skeleton Dot Pattern",
+    "category": "status-state",
+    "description": "Skeleton placeholder with animated dot pattern shimmer",
+    "tags": [
+      "status-state",
+      "skeleton",
+      "loading",
+      "dots",
+      "pattern",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "state-success-checkmark",
+    "name": "Success Checkmark Draw",
+    "category": "status-state",
+    "description": "Checkmark that draws itself with a subtle celebratory glow",
+    "tags": [
+      "status-state",
+      "success",
+      "checkmark",
+      "draw",
+      "celebration",
+      "svg-path"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "state-success-confetti",
+    "name": "Success Confetti Burst",
+    "category": "status-state",
+    "description": "Confetti pieces burst outward from center on success",
+    "tags": [
+      "status-state",
+      "success",
+      "confetti",
+      "burst",
+      "celebration"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 6
+  },
+  {
+    "id": "state-error-shake",
+    "name": "Error Shake",
+    "category": "status-state",
+    "description": "Form field shakes horizontally to signal a validation error",
+    "tags": [
+      "status-state",
+      "error",
+      "shake",
+      "validation",
+      "feedback",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "state-error-flash",
+    "name": "Error Flash",
+    "category": "status-state",
+    "description": "Element briefly flashes red to signal an error state",
+    "tags": [
+      "status-state",
+      "error",
+      "flash",
+      "feedback",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "state-offline-pulse",
+    "name": "Offline Pulse",
+    "category": "status-state",
+    "description": "Red status dot with expanding ring indicating offline state",
+    "tags": [
+      "status-state",
+      "offline",
+      "pulse",
+      "dot",
+      "indicator",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "state-online-pulse",
+    "name": "Online Pulse",
+    "category": "status-state",
+    "description": "Green status dot with expanding ring indicating online state",
+    "tags": [
+      "status-state",
+      "online",
+      "pulse",
+      "dot",
+      "indicator",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "state-sync-spin",
+    "name": "Sync Spin",
+    "category": "status-state",
+    "description": "Two curved arrows rotating to indicate data synchronization",
+    "tags": [
+      "status-state",
+      "sync",
+      "spin",
+      "rotate",
+      "arrows",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "state-upload-progress",
+    "name": "Upload Progress",
+    "category": "status-state",
+    "description": "Indeterminate upload bar with a moving highlight stripe",
+    "tags": [
+      "status-state",
+      "upload",
+      "progress",
+      "bar",
+      "indeterminate",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "state-connection-bars",
+    "name": "Connection Bars",
+    "category": "status-state",
+    "description": "WiFi/signal strength bars that animate in sequence",
+    "tags": [
+      "status-state",
+      "connection",
+      "wifi",
+      "signal",
+      "bars",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 4
+  },
+  {
+    "id": "state-loading-dots",
+    "name": "Loading Dots",
+    "category": "status-state",
+    "description": "Three classic bouncing dots loading animation",
+    "tags": [
+      "status-state",
+      "loading",
+      "dots",
+      "bounce",
+      "classic",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 3
+  },
+  {
+    "id": "state-loading-spinner",
+    "name": "Loading Spinner Fade",
+    "category": "status-state",
+    "description": "Clean spinner ring with a fading tail segment",
+    "tags": [
+      "status-state",
+      "loading",
+      "spinner",
+      "fade",
+      "ring",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "state-loading-bar",
+    "name": "Indeterminate Loading Bar",
+    "category": "status-state",
+    "description": "Indeterminate progress bar that sweeps back and forth",
+    "tags": [
+      "status-state",
+      "loading",
+      "bar",
+      "indeterminate",
+      "progress",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "state-toggle-switch",
+    "name": "Toggle Switch",
+    "category": "status-state",
+    "description": "Smooth toggle switch that animates between on and off states",
+    "tags": [
+      "status-state",
+      "toggle",
+      "switch",
+      "slide",
+      "on-off",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "state-checkbox-check",
+    "name": "Checkbox Check",
+    "category": "status-state",
+    "description": "Checkbox that animates the checkmark drawing on and off",
+    "tags": [
+      "status-state",
+      "checkbox",
+      "checkmark",
+      "draw",
+      "toggle",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "state-radio-select",
+    "name": "Radio Select",
+    "category": "status-state",
+    "description": "Radio button with inner dot that scales in on selection",
+    "tags": [
+      "status-state",
+      "radio",
+      "select",
+      "dot",
+      "scale",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "state-toast-slide",
+    "name": "Toast Slide In",
+    "category": "status-state",
+    "description": "Toast notification that slides in, holds, and slides out",
+    "tags": [
+      "status-state",
+      "toast",
+      "notification",
+      "slide",
+      "in-out",
+      "feedback"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "audio-equalizer-bars",
+    "name": "Equalizer Bars",
+    "category": "audio",
+    "description": "Vertical bars simulating frequency response with staggered heights",
+    "tags": [
+      "audio",
+      "equalizer",
+      "bars",
+      "frequency",
+      "music",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 5
+  },
+  {
+    "id": "audio-vinyl-spin",
+    "name": "Vinyl Spin",
+    "category": "audio",
+    "description": "Rotating vinyl record with concentric grooves and a tone arm",
+    "tags": [
+      "audio",
+      "vinyl",
+      "record",
+      "spin",
+      "rotate",
+      "grooves",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "audio-wave-pulse",
+    "name": "Sound Wave Pulse",
+    "category": "audio",
+    "description": "Concentric circles expanding outward like sound waves from a source",
+    "tags": [
+      "audio",
+      "wave",
+      "pulse",
+      "ripple",
+      "concentric",
+      "sound",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "audio-speaker-vibrate",
+    "name": "Speaker Vibrate",
+    "category": "audio",
+    "description": "Speaker cone that pulses and vibrates as if emitting sound",
+    "tags": [
+      "audio",
+      "speaker",
+      "vibrate",
+      "pulse",
+      "cone",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "audio-waveform-sine",
+    "name": "Sine Waveform",
+    "category": "audio",
+    "description": "Animated sine wave that flows horizontally like an audio signal",
+    "tags": [
+      "audio",
+      "waveform",
+      "sine",
+      "wave",
+      "signal",
+      "infinite"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "audio-waveform-square",
+    "name": "Square Waveform",
+    "category": "audio",
+    "description": "Animated square wave that scrolls horizontally like a digital signal",
+    "tags": [
+      "audio",
+      "waveform",
+      "square",
+      "wave",
+      "signal",
+      "digital",
+      "infinite"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "audio-note-float",
+    "name": "Floating Music Notes",
+    "category": "audio",
+    "description": "Musical notes floating upward and fading like an audio visualization",
+    "tags": [
+      "audio",
+      "note",
+      "music",
+      "float",
+      "fade",
+      "rising",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 4
+  },
+  {
+    "id": "audio-visualizer-circle",
+    "name": "Circular Visualizer",
+    "category": "audio",
+    "description": "Circular audio visualizer with pulsing concentric rings",
+    "tags": [
+      "audio",
+      "visualizer",
+      "circular",
+      "pulse",
+      "ring",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "audio-beat-pulse",
+    "name": "Beat Pulse",
+    "category": "audio",
+    "description": "Element pulses on a simulated musical beat with overshoot",
+    "tags": [
+      "audio",
+      "beat",
+      "pulse",
+      "bass",
+      "rhythm",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "audio-frequency-bars",
+    "name": "Frequency Spectrum",
+    "category": "audio",
+    "description": "Full frequency spectrum bars with mirrored top and bottom halves",
+    "tags": [
+      "audio",
+      "frequency",
+      "spectrum",
+      "bars",
+      "mirror",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 7
+  },
+  {
+    "id": "audio-ripple-effect",
+    "name": "Sound Ripple",
+    "category": "audio",
+    "description": "Ripple expanding from a sound source with multiple staggered rings",
+    "tags": [
+      "audio",
+      "ripple",
+      "sound",
+      "source",
+      "expanding",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "audio-vu-meter",
+    "name": "VU Meter",
+    "category": "audio",
+    "description": "Classic VU meter with needle that sweeps across the scale",
+    "tags": [
+      "audio",
+      "vu-meter",
+      "needle",
+      "gauge",
+      "volume",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "audio-cassette-spin",
+    "name": "Cassette Tape Spin",
+    "category": "audio",
+    "description": "Cassette tape with two reels rotating in opposite directions",
+    "tags": [
+      "audio",
+      "cassette",
+      "tape",
+      "reel",
+      "spin",
+      "retro",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "audio-headphone-bounce",
+    "name": "Headphone Bounce",
+    "category": "audio",
+    "description": "Headphone icon bouncing rhythmically on a simulated beat",
+    "tags": [
+      "audio",
+      "headphone",
+      "bounce",
+      "beat",
+      "rhythm",
+      "icon",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "audio-sound-icon-wave",
+    "name": "Sound Icon Waves",
+    "category": "audio",
+    "description": "Speaker icon with animated concentric sound waves emanating outward",
+    "tags": [
+      "audio",
+      "sound",
+      "icon",
+      "speaker",
+      "waves",
+      "volume",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "audio-mic-pulse",
+    "name": "Mic Pulse",
+    "category": "audio",
+    "description": "Microphone pulsing with a recording ring while in active recording",
+    "tags": [
+      "audio",
+      "mic",
+      "microphone",
+      "pulse",
+      "recording",
+      "ring",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "audio-play-to-pause",
+    "name": "Play to Pause Morph",
+    "category": "audio",
+    "description": "Play triangle that morphs into a pause bar and back",
+    "tags": [
+      "audio",
+      "play",
+      "pause",
+      "morph",
+      "media",
+      "toggle",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "audio-volume-knob",
+    "name": "Volume Knob",
+    "category": "audio",
+    "description": "Volume knob that rotates back and forth like a user adjusting volume",
+    "tags": [
+      "audio",
+      "volume",
+      "knob",
+      "rotate",
+      "dial",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "audio-spectrum-gradient",
+    "name": "Spectrum Gradient",
+    "category": "audio",
+    "description": "Spectrum analyzer with gradient bars that shift through the rainbow",
+    "tags": [
+      "audio",
+      "spectrum",
+      "gradient",
+      "analyzer",
+      "bars",
+      "rainbow",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 8
+  },
+  {
+    "id": "audio-bass-drop",
+    "name": "Bass Drop Impact",
+    "category": "audio",
+    "description": "Element implodes then explodes outward simulating a bass drop impact",
+    "tags": [
+      "audio",
+      "bass",
+      "drop",
+      "impact",
+      "explode",
+      "implode",
+      "infinite"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "immersive-starfield",
+    "name": "Parallax Starfield",
+    "category": "immersive",
+    "description": "Three parallax star layers drift at different speeds across a deep-space gradient",
+    "tags": [
+      "immersive",
+      "background",
+      "stars",
+      "space",
+      "parallax"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "immersive-rain",
+    "name": "Falling Rain",
+    "category": "immersive",
+    "description": "Thin diagonal rain streaks fall endlessly with a faint splash glow at the base",
+    "tags": [
+      "immersive",
+      "background",
+      "rain",
+      "weather",
+      "water"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "immersive-snow-drift",
+    "name": "Snow Drift",
+    "category": "immersive",
+    "description": "Two layers of snowflakes drift downward with gentle horizontal wind sway",
+    "tags": [
+      "immersive",
+      "background",
+      "snow",
+      "weather",
+      "winter"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "immersive-fire-flame",
+    "name": "Layered Flame",
+    "category": "immersive",
+    "description": "CSS-only flame built from layered gradients that flicker and rise from the base",
+    "tags": [
+      "immersive",
+      "background",
+      "fire",
+      "flame",
+      "heat"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "immersive-smoke-fog",
+    "name": "Drifting Smoke & Fog",
+    "category": "immersive",
+    "description": "Three blurred radial-gradient plumes drift and rotate to suggest drifting fog",
+    "tags": [
+      "immersive",
+      "background",
+      "smoke",
+      "fog",
+      "atmosphere"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "immersive-ocean-waves",
+    "name": "Ocean Waves",
+    "category": "immersive",
+    "description": "Three stacked wave layers ripple across a deep-blue gradient at staggered speeds",
+    "tags": [
+      "immersive",
+      "background",
+      "ocean",
+      "waves",
+      "water"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "immersive-matrix-rain",
+    "name": "Matrix Rain",
+    "category": "immersive",
+    "description": "Falling green character columns evoke the iconic Matrix digital rain",
+    "tags": [
+      "immersive",
+      "background",
+      "matrix",
+      "rain",
+      "retro"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "immersive-geometric-hex",
+    "name": "Hexagon Tessellation",
+    "category": "immersive",
+    "description": "Animated hexagon grid pulses with shifting gradient light across the surface",
+    "tags": [
+      "immersive",
+      "background",
+      "hexagon",
+      "geometric",
+      "pattern"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "immersive-topographic",
+    "name": "Topographic Contours",
+    "category": "immersive",
+    "description": "Concentric contour lines flow across the surface like an animated topographic map",
+    "tags": [
+      "immersive",
+      "background",
+      "topographic",
+      "contour",
+      "map"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "immersive-aurora-bg",
+    "name": "Aurora Borealis",
+    "category": "immersive",
+    "description": "Flowing bands of green and violet light ripple like the northern lights",
+    "tags": [
+      "immersive",
+      "background",
+      "aurora",
+      "northern-lights",
+      "gradient"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "immersive-nebula",
+    "name": "Space Nebula",
+    "category": "immersive",
+    "description": "Colorful gas-cloud gradients swirl over a starfield to evoke a deep-space nebula",
+    "tags": [
+      "immersive",
+      "background",
+      "nebula",
+      "space",
+      "cosmic"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "immersive-underwater",
+    "name": "Underwater Caustics",
+    "category": "immersive",
+    "description": "Animated light caustics ripple across a deep teal underwater backdrop",
+    "tags": [
+      "immersive",
+      "background",
+      "underwater",
+      "caustics",
+      "water"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "immersive-fireflies",
+    "name": "Glowing Fireflies",
+    "category": "immersive",
+    "description": "Tiny glowing dots flicker and drift like fireflies in a warm summer night",
+    "tags": [
+      "immersive",
+      "background",
+      "fireflies",
+      "glow",
+      "particles"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "immersive-cloud-drift",
+    "name": "Drifting Clouds",
+    "category": "immersive",
+    "description": "Soft cloud shapes drift horizontally across a calm sky gradient",
+    "tags": [
+      "immersive",
+      "background",
+      "clouds",
+      "sky",
+      "weather"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "immersive-rain-bokeh",
+    "name": "Rain Bokeh",
+    "category": "immersive",
+    "description": "Raindrops fall behind soft blurred bokeh circles on a moody nocturnal backdrop",
+    "tags": [
+      "immersive",
+      "background",
+      "rain",
+      "bokeh",
+      "night"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "immersive-lightning",
+    "name": "Lightning Flash",
+    "category": "immersive",
+    "description": "Occasional lightning bolts flare across a stormy night sky with afterglow",
+    "tags": [
+      "immersive",
+      "background",
+      "lightning",
+      "storm",
+      "flash"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "immersive-dust-particles",
+    "name": "Dust in Light Beam",
+    "category": "immersive",
+    "description": "Tiny dust motes drift through a diagonal sunbeam against a dark backdrop",
+    "tags": [
+      "immersive",
+      "background",
+      "dust",
+      "light",
+      "particles"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "immersive-gradient-mesh-bg",
+    "name": "Animated Mesh Gradient",
+    "category": "immersive",
+    "description": "Four-color mesh gradient blobs slowly orbit each other to form a living backdrop",
+    "tags": [
+      "immersive",
+      "background",
+      "gradient",
+      "mesh",
+      "colorful"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "immersive-confetti-bg",
+    "name": "Falling Confetti",
+    "category": "immersive",
+    "description": "Colorful confetti pieces rotate and fall across a festive backdrop",
+    "tags": [
+      "immersive",
+      "background",
+      "confetti",
+      "celebration",
+      "party"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "immersive-bubble-rise",
+    "name": "Rising Bubbles",
+    "category": "immersive",
+    "description": "Translucent bubbles rise from the bottom of an aquatic backdrop with sway",
+    "tags": [
+      "immersive",
+      "background",
+      "bubbles",
+      "water",
+      "rise"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "advtext-typewriter-cursor",
+    "name": "Typewriter Cursor",
+    "category": "advanced-text",
+    "description": "Text reveals one character at a time with a blinking caret at the end",
+    "tags": [
+      "advanced-text",
+      "typewriter",
+      "cursor",
+      "reveal",
+      "typing"
+    ],
+    "previewType": "text",
+    "previewText": "RoyCSS",
+    "childCount": null
+  },
+  {
+    "id": "advtext-scramble-decrypt",
+    "name": "Scramble Decrypt",
+    "category": "advanced-text",
+    "description": "Hacker-style decode: characters blur through random values before settling",
+    "tags": [
+      "advanced-text",
+      "scramble",
+      "decrypt",
+      "hacker",
+      "glitch"
+    ],
+    "previewType": "text",
+    "previewText": "RoyCSS",
+    "childCount": null
+  },
+  {
+    "id": "advtext-on-path",
+    "name": "Text On Path",
+    "category": "advanced-text",
+    "description": "Text rides along a curved SVG-like offset-path, orbiting a closed loop",
+    "tags": [
+      "advanced-text",
+      "offset-path",
+      "path",
+      "curve",
+      "orbit"
+    ],
+    "previewType": "text",
+    "previewText": "RoyCSS",
+    "childCount": null
+  },
+  {
+    "id": "advtext-kinetic-fly",
+    "name": "Kinetic Fly-In",
+    "category": "advanced-text",
+    "description": "Each letter of the word flies in from below with a staggered kinetic cascade",
+    "tags": [
+      "advanced-text",
+      "kinetic",
+      "fly",
+      "stagger",
+      "entrance"
+    ],
+    "previewType": "loader",
+    "previewText": null,
+    "childCount": 6
+  },
+  {
+    "id": "advtext-fill-gradient",
+    "name": "Gradient Fill Sweep",
+    "category": "advanced-text",
+    "description": "Transparent text fills left-to-right with a colorful gradient sweep on load",
+    "tags": [
+      "advanced-text",
+      "gradient",
+      "fill",
+      "sweep",
+      "background-clip"
+    ],
+    "previewType": "text",
+    "previewText": "RoyCSS",
+    "childCount": null
+  },
+  {
+    "id": "advtext-3d-extruded",
+    "name": "3D Extruded Text",
+    "category": "advanced-text",
+    "description": "Text extruded into 3D using stacked text-shadows with subtle breathing depth",
+    "tags": [
+      "advanced-text",
+      "3d",
+      "extruded",
+      "depth",
+      "text-shadow"
+    ],
+    "previewType": "text",
+    "previewText": "RoyCSS",
+    "childCount": null
+  },
+  {
+    "id": "advtext-glitch-rgb",
+    "name": "RGB Split Glitch",
+    "category": "advanced-text",
+    "description": "Cyan and magenta color channels split and shift around the text on a loop",
+    "tags": [
+      "advanced-text",
+      "glitch",
+      "rgb",
+      "split",
+      "chromatic"
+    ],
+    "previewType": "text",
+    "previewText": "RoyCSS",
+    "childCount": null
+  },
+  {
+    "id": "advtext-glitch-scanline",
+    "name": "Scanline Glitch",
+    "category": "advanced-text",
+    "description": "Horizontal scan tear slices across the text while a scanline rolls vertically",
+    "tags": [
+      "advanced-text",
+      "glitch",
+      "scanline",
+      "tear",
+      "tv"
+    ],
+    "previewType": "text",
+    "previewText": "RoyCSS",
+    "childCount": null
+  },
+  {
+    "id": "advtext-glitch-vhs",
+    "name": "VHS Tracking Glitch",
+    "category": "advanced-text",
+    "description": "VHS tracking distortion: text wobbles with hue-shifted ghosting and noise bars",
+    "tags": [
+      "advanced-text",
+      "glitch",
+      "vhs",
+      "tracking",
+      "retro"
+    ],
+    "previewType": "text",
+    "previewText": "RoyCSS",
+    "childCount": null
+  },
+  {
+    "id": "advtext-split-flap",
+    "name": "Split-Flap Board",
+    "category": "advanced-text",
+    "description": "Airport departure-board flip: each letter tumbles into place on its own axis",
+    "tags": [
+      "advanced-text",
+      "split-flap",
+      "flip",
+      "departure",
+      "stagger"
+    ],
+    "previewType": "loader",
+    "previewText": null,
+    "childCount": 6
+  },
+  {
+    "id": "advtext-marquee-modern",
+    "name": "Modern Marquee",
+    "category": "advanced-text",
+    "description": "Smooth horizontal marquee with fade edges and pause-on-hover for readability",
+    "tags": [
+      "advanced-text",
+      "marquee",
+      "scroll",
+      "fade",
+      "hover"
+    ],
+    "previewType": "text",
+    "previewText": "RoyCSS  ✦  Pure CSS Effects  ✦  ",
+    "childCount": null
+  },
+  {
+    "id": "advtext-outline-draw",
+    "name": "Outline Draw",
+    "category": "advanced-text",
+    "description": "Hollow text outline that progressively draws itself with a sweeping gradient mask",
+    "tags": [
+      "advanced-text",
+      "outline",
+      "draw",
+      "stroke",
+      "mask"
+    ],
+    "previewType": "text",
+    "previewText": "RoyCSS",
+    "childCount": null
+  },
+  {
+    "id": "advtext-neon-sign",
+    "name": "Neon Sign Flicker",
+    "category": "advanced-text",
+    "description": "Glowing neon-tube text that flickers irregularly like an aging bar sign",
+    "tags": [
+      "advanced-text",
+      "neon",
+      "glow",
+      "flicker",
+      "sign"
+    ],
+    "previewType": "text",
+    "previewText": "RoyCSS",
+    "childCount": null
+  },
+  {
+    "id": "advtext-gradient-animated",
+    "name": "Animated Gradient Text",
+    "category": "advanced-text",
+    "description": "Text fill animated by a multi-stop gradient that continuously shifts hue",
+    "tags": [
+      "advanced-text",
+      "gradient",
+      "animated",
+      "rainbow",
+      "background-clip"
+    ],
+    "previewType": "text",
+    "previewText": "RoyCSS",
+    "childCount": null
+  },
+  {
+    "id": "advtext-shadow-layered",
+    "name": "Layered Long Shadow",
+    "category": "advanced-text",
+    "description": "Many stacked text-shadows create a soft, layered long shadow with breathing depth",
+    "tags": [
+      "advanced-text",
+      "shadow",
+      "long-shadow",
+      "layered",
+      "depth"
+    ],
+    "previewType": "text",
+    "previewText": "RoyCSS",
+    "childCount": null
+  },
+  {
+    "id": "advtext-mask-reveal",
+    "name": "Mask Reveal",
+    "category": "advanced-text",
+    "description": "Text is revealed left-to-right by an animated clip-path mask wipe on loop",
+    "tags": [
+      "advanced-text",
+      "mask",
+      "reveal",
+      "wipe",
+      "clip-path"
+    ],
+    "previewType": "text",
+    "previewText": "RoyCSS",
+    "childCount": null
+  },
+  {
+    "id": "advtext-stretch-bounce",
+    "name": "Stretch Bounce",
+    "category": "advanced-text",
+    "description": "Text stretches vertically and snaps back with an elastic bounce on load",
+    "tags": [
+      "advanced-text",
+      "stretch",
+      "bounce",
+      "elastic",
+      "entrance"
+    ],
+    "previewType": "text",
+    "previewText": "RoyCSS",
+    "childCount": null
+  },
+  {
+    "id": "advtext-typewriter-multi",
+    "name": "Multi-Line Typewriter",
+    "category": "advanced-text",
+    "description": "Two-line typewriter reveals character by character with a soft blinking caret",
+    "tags": [
+      "advanced-text",
+      "typewriter",
+      "multi-line",
+      "cursor",
+      "typing"
+    ],
+    "previewType": "text",
+    "previewText": "Hello\\nWorld",
+    "childCount": null
+  },
+  {
+    "id": "advtext-wave-bounce",
+    "name": "Wave Bounce",
+    "category": "advanced-text",
+    "description": "Each letter bounces in a sequential wave pattern across the word",
+    "tags": [
+      "advanced-text",
+      "wave",
+      "bounce",
+      "stagger",
+      "rhythm"
+    ],
+    "previewType": "loader",
+    "previewText": null,
+    "childCount": 6
+  },
+  {
+    "id": "advtext-clip-image",
+    "name": "Image Clip Text",
+    "category": "advanced-text",
+    "description": "Text is clipped to show an image fill that pans slowly across the letters",
+    "tags": [
+      "advanced-text",
+      "clip",
+      "image",
+      "background-clip",
+      "pan"
+    ],
+    "previewType": "text",
+    "previewText": "RoyCSS",
+    "childCount": null
   }
 ]

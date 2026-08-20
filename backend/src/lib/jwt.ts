@@ -68,7 +68,7 @@ export function signAccessToken(payload: Omit<AccessTokenPayload, "type">): stri
   return jwt.sign(
     { ...payload, type: "access" } satisfies AccessTokenPayload,
     JWT_CONFIG.secret,
-    { ...BASE_SIGN_OPTS, expiresIn: JWT_CONFIG.expiresIn },
+    { ...BASE_SIGN_OPTS, expiresIn: durationToSeconds(JWT_CONFIG.expiresIn) },
   );
 }
 
@@ -77,7 +77,7 @@ export function signRefreshToken(payload: Omit<RefreshTokenPayload, "type">): st
   return jwt.sign(
     { ...payload, type: "refresh" } satisfies RefreshTokenPayload,
     JWT_CONFIG.refreshSecret,
-    { ...BASE_SIGN_OPTS, expiresIn: JWT_CONFIG.refreshExpiresIn },
+    { ...BASE_SIGN_OPTS, expiresIn: durationToSeconds(JWT_CONFIG.refreshExpiresIn) },
   );
 }
 

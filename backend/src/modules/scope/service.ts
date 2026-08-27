@@ -1,14 +1,20 @@
 /**
  * Scope service — analyze @scope rules against a sample DOM tree.
  *
- * Mock backend (no DB). Seeds 4 scope presets. The analyzer walks the DOM
- * recursively: any element matching the `root` selector opens a scope;
- * descendants are IN scope until an element matching the `limit` selector
- * is hit (the limit element AND its subtree become OUT — the donut hole).
+ * The analyzer walks the DOM recursively: any element matching the `root`
+ * selector opens a scope; descendants are IN scope until an element
+ * matching the `limit` selector is hit (the limit element AND its subtree
+ * become OUT — the donut hole).
  *
  * Selector matching is a small built-in subset: tag, .class, #id, and
  * compound forms like "div.card" or "section#main". Combinators and
- * pseudo-classes are out of scope for the mock.
+ * pseudo-classes are out of scope for this lightweight analyzer.
+ *
+ * 4 @scope presets demonstrate the canonical @scope selector patterns:
+ *   `.root`       — scope by container class
+ *   `:has()`      — scope based on descendant state (relational)
+ *   `> .child`    — scope to direct children only
+ *   `~ .sibling`  — scope to following siblings
  *
  * Reference: CSS Cascading and Inheritance Level 6 §3 (@scope).
  */
@@ -189,15 +195,20 @@ function analyze(input: ScopeAnalyzeInput): ScopeResult {
   };
 }
 
-// ─── Seed: 4 scope presets ───────────────────────────────────────────────
-const SEED_PRESETS: ScopePreset[] = [
+// ─── 4 @scope presets covering the canonical selector patterns ──────────
+// Each preset demonstrates one of the four core @scope selector shapes
+//   .root | :has() | > .child | ~ .sibling
+// against a small DOM tree. The DOM is structured so the scope-root,
+// scope-limit, in-scope, and out-of-scope classifications are obvious
+// from the element `text` annotations.
+const PRESETS: ScopePreset[] = [
   {
-    id: "preset-card-scoped",
-    name: "Card-Scoped Styles",
+    id: "preset-root-class",
+    name: ".root scoping",
     description:
-      "Apply heading styles only to headings inside a .card component, never leaking to siblings.",
+      "Apply heading styles only inside a `.root` container — never leaking to siblings outside the container.",
     input: {
-      root: ".card",
+      root: ".root",
       declarations: { "font-family": "Inter, sans-serif", color: "#1c1c1e" },
       dom: {
         tag: "main",
@@ -208,106 +219,117 @@ const SEED_PRESETS: ScopePreset[] = [
             children: [],
           },
           {
+            tag: "section",
+            class: "root",
+            children: [
+              { tag: "h2", text: "Container title (in scope)", children: [] },
+              { tag: "p", text: "Container body (in scope)", children: [] },
+            ],
+          },
+        ],
+      },
+    },
+  },
+  {
+    id: "preset-has-selector",
+    name: ":has() scope",
+    description:
+      "Scope styles to a card only when it contains a featured badge — uses :has() inside the scope root selector.",
+    input: {
+      root: ".card:has(.badge-featured)",
+      declarations: {
+        "border-color": "gold",
+        "border-width": "2px",
+      },
+      dom: {
+        tag: "main",
+        children: [
+          {
             tag: "article",
             class: "card",
             children: [
-              { tag: "h2", text: "Card title (in scope)", children: [] },
-              { tag: "p", text: "Card body (in scope)", children: [] },
-            ],
-          },
-        ],
-      },
-    },
-  },
-  {
-    id: "preset-donut-scope",
-    name: "Donut Scope",
-    description:
-      "Style a hero section but exclude the CTA widget nested inside it using the limit selector.",
-    input: {
-      root: ".hero",
-      limit: ".cta",
-      declarations: {
-        "background-color": "#f5f5f7",
-        padding: "2rem",
-      },
-      dom: {
-        tag: "section",
-        class: "hero",
-        children: [
-          { tag: "h2", text: "Hero headline", children: [] },
-          { tag: "p", text: "Hero subtext", children: [] },
-          {
-            tag: "div",
-            class: "cta",
-            children: [
-              { tag: "button", text: "Sign up (out of scope)", children: [] },
-            ],
-          },
-        ],
-      },
-    },
-  },
-  {
-    id: "preset-nested-components",
-    name: "Nested Components",
-    description:
-      "Scope styles to the outermost .panel so the nested .panel inside doesn't double-apply.",
-    input: {
-      root: ".panel",
-      limit: ".panel",
-      declarations: {
-        border: "1px solid #e5e5ea",
-        "border-radius": "0.75rem",
-      },
-      dom: {
-        tag: "div",
-        class: "panel",
-        children: [
-          { tag: "h3", text: "Outer panel title", children: [] },
-          {
-            tag: "div",
-            class: "panel",
-            children: [
-              { tag: "p", text: "Inner panel body (out of scope)", children: [] },
-            ],
-          },
-        ],
-      },
-    },
-  },
-  {
-    id: "preset-proximity-scoping",
-    name: "Proximity Scoping",
-    description:
-      "Use @scope to apply link colors only to links inside article.main-content, not the global nav.",
-    input: {
-      root: "article.main-content",
-      declarations: { color: "#0a60ff", "text-decoration": "underline" },
-      dom: {
-        tag: "body",
-        children: [
-          {
-            tag: "nav",
-            children: [
-              { tag: "a", text: "Nav link (out of scope)", children: [] },
+              { tag: "h2", text: "Plain card (out of scope)", children: [] },
             ],
           },
           {
             tag: "article",
-            class: "main-content",
+            class: "card",
             children: [
-              { tag: "p", text: "Paragraph in scope", children: [] },
-              { tag: "a", text: "Article link (in scope)", children: [] },
+              { tag: "h2", text: "Featured card title (in scope)", children: [] },
+              {
+                tag: "span",
+                class: "badge-featured",
+                text: "Featured (scope trigger)",
+                children: [],
+              },
             ],
           },
+        ],
+      },
+    },
+  },
+  {
+    id: "preset-direct-child",
+    name: "> .child direct child",
+    description:
+      "Scope styles to a direct-child element under the parent — `.parent > .child` limits scoping to one level deep.",
+    input: {
+      root: ".parent > .child",
+      declarations: {
+        "background-color": "#fef3c7",
+        padding: "0.5rem",
+      },
+      dom: {
+        tag: "main",
+        children: [
+          {
+            tag: "div",
+            class: "parent",
+            children: [
+              {
+                tag: "div",
+                class: "child",
+                text: "Direct child (in scope)",
+                children: [
+                  {
+                    tag: "div",
+                    class: "child",
+                    text: "Nested grandchild (out of scope — too deep)",
+                    children: [],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    },
+  },
+  {
+    id: "preset-adjacent-sibling",
+    name: "~ .sibling adjacent sibling",
+    description:
+      "Scope styles to siblings that follow a `.trigger` element — `.trigger ~ .sibling` matches general siblings after the trigger.",
+    input: {
+      root: ".trigger ~ .sibling",
+      declarations: {
+        "margin-left": "1rem",
+        opacity: "0.75",
+      },
+      dom: {
+        tag: "main",
+        children: [
+          { tag: "div", class: "sibling", text: "Sibling BEFORE trigger (out of scope)", children: [] },
+          { tag: "div", class: "trigger", text: "Trigger (the anchor)", children: [] },
+          { tag: "div", class: "sibling", text: "Following sibling 1 (in scope)", children: [] },
+          { tag: "div", class: "sibling", text: "Following sibling 2 (in scope)", children: [] },
         ],
       },
     },
   },
 ];
 
-const presets: ScopePreset[] = SEED_PRESETS.map((p) => ({ ...p }));
+const presets: ScopePreset[] = PRESETS.map((p) => ({ ...p }));
 
 // ─── Public service API ──────────────────────────────────────────────────
 

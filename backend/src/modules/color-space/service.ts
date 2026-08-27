@@ -2,9 +2,9 @@
  * Color-space service — convert between sRGB / HSL / OKLCH / OKLab /
  * Display-P3 and check sRGB gamut coverage.
  *
- * Mock backend (no DB). All conversions use the canonical linear-algebra
- * pipeline (sRGB ↔ linear ↔ XYZ ↔ OKLab ↔ OKLCH, with Display-P3 sharing
- * the XYZ ↔ OKLab step under a different RGB→XYZ matrix).
+ * All conversions use the canonical linear-algebra pipeline (sRGB ↔ linear ↔
+ * XYZ ↔ OKLab ↔ OKLCH, with Display-P3 sharing the XYZ ↔ OKLab step under a
+ * different RGB→XYZ matrix). Pure functions, no external dependency.
  *
  * Reads are LRU-cached; conversions cache their results per (from,to,value)
  * triple so identical inputs never recompute.
@@ -354,8 +354,8 @@ function computeAllValues(
   };
 }
 
-// ─── Seed: 6 preset colors ───────────────────────────────────────────────
-const SEED_PRESETS: { id: string; name: string; description: string; from: ColorSpace; value: string }[] = [
+// ─── Preset colors ───────────────────────────────────────────────────────
+const PRESETS: { id: string; name: string; description: string; from: ColorSpace; value: string }[] = [
   { id: "preset-roy-purple", name: "Roy Purple", description: "Brand primary, ~P3-wide vivid violet.", from: "oklch", value: "0.55 0.22 290" },
   { id: "preset-cyan-pop", name: "Cyan Pop", description: "Out-of-sRGB cyan, only renderable on P3 displays.", from: "oklch", value: "0.78 0.18 195" },
   { id: "preset-forest", name: "Forest Canopy", description: "Deep moss green, in sRGB gamut.", from: "srgb", value: "#2d5016" },
@@ -364,7 +364,7 @@ const SEED_PRESETS: { id: string; name: string; description: string; from: Color
   { id: "preset-amber", name: "Amber Glow", description: "Highlight amber, common in dark themes.", from: "oklch", value: "0.80 0.16 75" },
 ];
 
-const presets: ColorPreset[] = SEED_PRESETS.map((p) => ({
+const presets: ColorPreset[] = PRESETS.map((p) => ({
   id: p.id,
   name: p.name,
   description: p.description,

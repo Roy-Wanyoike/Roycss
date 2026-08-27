@@ -1,0 +1,91 @@
+# ─────────────────────────────────────────────────────────────────────────
+# Dependabot — automated dependency upgrade PRs for the RoyCSS monorepo.
+#
+# Three ecosystems:
+#   1. Root npm  — the Next.js frontend + RoyCSS library (weekly)
+#   2. Backend npm — the Express + Prisma API (weekly)
+#   3. GitHub Actions — workflow action versions (monthly)
+#
+# Update strategy:
+#   - Patch + minor bumps are GROUPED into one PR per ecosystem so a
+#     reviewer can land a "bump everything that is safe" PR in one merge.
+#   - Major version bumps (e.g. next@15 → next@16, prisma@5 → prisma@6)
+#     open their OWN PR — they need a dedicated review because they
+#     frequently carry breaking changes that touch application code.
+# ─────────────────────────────────────────────────────────────────────────
+version: 2
+
+updates:
+  # ─── 1. Root npm (Next.js + RoyCSS library) ────────────────────────────
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+      timezone: America/New_York
+    open-pull-requests-limit: 5
+    versioning-strategy: increase
+    # Group all patch + minor updates into a single PR.
+    groups:
+      patch-and-minor:
+        update-types:
+          - "patch"
+          - "minor"
+    # Major version bumps always get their own PR — `allow` plus the
+    # default "major updates open own PR" behavior in dependabot v2.
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+    commit-message:
+      prefix: "deps(frontend)"
+      include: scope
+    labels:
+      - "dependencies"
+      - "frontend"
+
+  # ─── 2. Backend npm (Express + Prisma + JWT) ──────────────────────────
+  - package-ecosystem: npm
+    directory: "/backend"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+      timezone: America/New_York
+    open-pull-requests-limit: 5
+    versioning-strategy: increase
+    groups:
+      patch-and-minor:
+        update-types:
+          - "patch"
+          - "minor"
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+    commit-message:
+      prefix: "deps(backend)"
+      include: scope
+    labels:
+      - "dependencies"
+      - "backend"
+
+  # ─── 3. GitHub Actions (workflow action versions) ─────────────────────
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: monthly
+      day: monday
+      time: "07:00"
+      timezone: America/New_York
+    open-pull-requests-limit: 3
+    groups:
+      patch-and-minor:
+        update-types:
+          - "patch"
+          - "minor"
+    commit-message:
+      prefix: "deps(ci)"
+      include: scope
+    labels:
+      - "dependencies"
+      - "ci"

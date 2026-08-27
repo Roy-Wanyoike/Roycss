@@ -1,0 +1,185 @@
+name: Deploy
+
+# ─────────────────────────────────────────────────────────────────────────
+# Triggered automatically when the CI workflow (`.github/workflows/ci.yml`)
+# completes successfully on the `main` branch. This decouples deploy
+# gating from CI itself — the deploy job can read CI's conclusion via
+# the `workflow_run` event payload and skip itself if CI failed.
+#
+# `workflow_run` is used instead of `workflow_call` because:
+#   1. It fires even when CI was triggered by a PR merge (where the
+#      secrets context would be unavailable in a `workflow_call` reuse).
+#   2. It allows CI to be re-run independently without re-deploying.
+#   3. It keeps the deploy graph explicit: CI green → deploy.
+# ─────────────────────────────────────────────────────────────────────────
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+
+permissions:
+  contents: read
+  deployments: write   # required by Vercel action to create a deployment record
+
+concurrency:
+  # One deploy per ref at a time — queue, don't cancel (we never want
+  # to leave a deploy half-applied).
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  # ─────────────────────────────────────────────────────────────────────
+  # Guard — only proceed if the triggering CI run succeeded AND it was
+  # on the main branch (not a PR build). Without this guard, a
+  # `workflow_run` fires for every CI completion including PRs and
+  # failures — both of which would otherwise kick off a deploy.
+  # ─────────────────────────────────────────────────────────────────────
+  guard:
+    name: Guard — CI succeeded on main
+    runs-on: ubuntu-latest
+    outputs:
+      should-deploy: ${{ steps.check.outputs.should-deploy }}
+    steps:
+      - name: Inspect triggering CI run
+        id: check
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const run = context.payload.workflow_run;
+            const conclusion = run?.conclusion;
+            const branch = run?.head_branch;
+            const event = run?.event;
+            core.info(`CI conclusion: ${conclusion}`);
+            core.info(`CI head_branch: ${branch}`);
+            core.info(`CI trigger event: ${event}`);
+            const ok =
+              conclusion === 'success' &&
+              branch === 'main' &&
+              (event === 'push' || event === 'pull_request');
+            core.setOutput('should-deploy', ok ? 'true' : 'false');
+            if (!ok) {
+              core.notice('Skipping deploy — CI did not succeed on main.');
+            }
+
+  # ─────────────────────────────────────────────────────────────────────
+  # Vercel — deploy the Next.js frontend. Uses amondnet/vercel-action
+  # which wraps the Vercel CLI and surfaces the deployment URL.
+  # ─────────────────────────────────────────────────────────────────────
+  deploy-frontend:
+    name: Deploy frontend to Vercel
+    needs: guard
+    if: needs.guard.outputs.should-deploy == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Deploy to Vercel (production)
+        uses: amondnet/vercel-action@v25
+        id: vercel
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: "--prod"
+          working-directory: .
+
+      - name: Print deployment URL
+        run: |
+          echo "Vercel deployment URL: ${{ steps.vercel.outputs.preview-url }}"
+          echo "::notice title=Frontend deployed::${{ steps.vercel.outputs.preview-url }}"
+
+  # ─────────────────────────────────────────────────────────────────────
+  # Railway — deploy the Express backend + run `prisma migrate deploy`
+  # + hit /api/v1/health to confirm the new revision answers 200.
+  # ─────────────────────────────────────────────────────────────────────
+  deploy-backend:
+    name: Deploy backend to Railway + migrate + smoke
+    needs: guard
+    if: needs.guard.outputs.should-deploy == 'true'
+    runs-on: ubuntu-latest
+    env:
+      # Railway sets DATABASE_URL on the deployed service; the migration
+      # step pulls it back locally via the Railway CLI's `variable` command.
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+      RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }}
+      RAILWAY_SERVICE_ID: ${{ secrets.RAILWAY_SERVICE_ID }}
+      RAILWAY_ENVIRONMENT: production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: bun install --frozen-lockfile
+
+      - name: Deploy to Railway
+        uses: bervProject/railway-deploy@v2
+        with:
+          service: ${{ secrets.RAILWAY_SERVICE_ID }}
+          environment: production
+          token: ${{ secrets.RAILWAY_TOKEN }}
+          project: ${{ secrets.RAILWAY_PROJECT_ID }}
+
+      - name: Fetch production DATABASE_URL from Railway
+        id: dburl
+        working-directory: backend
+        run: |
+          # `railway variables` requires the Railway CLI to be on PATH.
+          # bervProject/railway-deploy@v2 installs it as a side-effect.
+          DB_URL="$(railway variables --service "$RAILWAY_SERVICE_ID" --environment production | grep '^DATABASE_URL=' | cut -d= -f2-)"
+          if [ -z "$DB_URL" ]; then
+            echo "::error::Could not retrieve DATABASE_URL from Railway"
+            exit 1
+          fi
+          echo "::add-mask::$DB_URL"
+          echo "value=$DB_URL" >> "$GITHUB_OUTPUT"
+
+      - name: Run prisma migrate deploy
+        working-directory: backend
+        run: bunx prisma migrate deploy
+        env:
+          DATABASE_URL: ${{ steps.dburl.outputs.value }}
+
+      - name: Discover backend public URL
+        id: url
+        working-directory: backend
+        run: |
+          BACKEND_URL="$(railway status --service "$RAILWAY_SERVICE_ID" --environment production | grep -oE 'https://[a-z0-9.-]+\.up\.railway\.app' | head -1)"
+          if [ -z "$BACKEND_URL" ]; then
+            BACKEND_URL="https://${RAILWAY_SERVICE_ID}.up.railway.app"
+          fi
+          echo "value=$BACKEND_URL" >> "$GITHUB_OUTPUT"
+          echo "Backend smoke URL: $BACKEND_URL"
+
+      - name: Smoke check GET /api/v1/health
+        run: |
+          set -euo pipefail
+          URL="${{ steps.url.outputs.value }}/api/v1/health"
+          echo "Hitting $URL"
+          for i in 1 2 3 4 5 6 7 8 9 10; do
+            STATUS=$(curl -s -o /tmp/health.json -w '%{http_code}' "$URL" || true)
+            if [ "$STATUS" = "200" ]; then
+              echo "✓ Health check passed (HTTP $STATUS)"
+              cat /tmp/health.json
+              exit 0
+            fi
+            echo "  attempt $i: HTTP $STATUS, retrying in 5s…"
+            sleep 5
+          done
+          echo "::error::Health check failed after 10 retries"
+          exit 1

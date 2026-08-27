@@ -1,0 +1,140 @@
+name: CI
+
+# Triggered on every push to main and on every pull request targeting main.
+# Both jobs run in parallel — frontend (Next.js / RoyCSS library) and
+# backend (Express + Prisma API) live in separate dependency trees so
+# there is no benefit from serializing them.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Cancel an in-flight CI run when a new commit lands on the same ref —
+# keeps PR feedback fast and frees runners. Releases (workflow_run)
+# are NOT affected by this concurrency group.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  # ─────────────────────────────────────────────────────────────────────
+  # Frontend — lint, typecheck, vitest unit tests, build the package
+  # ─────────────────────────────────────────────────────────────────────
+  frontend:
+    name: Frontend — lint + typecheck + unit + build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        # Pin a specific version for reproducible CI builds:
+        # with:
+        #   bun-version: 1.3.4
+
+      - name: Install dependencies (frozen lockfile)
+        run: bun install --frozen-lockfile
+
+      - name: Lint (eslint)
+        run: bun run lint
+
+      - name: Typecheck (tsc --noEmit)
+        run: bunx tsc --noEmit
+
+      - name: Unit tests (vitest)
+        run: bunx vitest run
+        env:
+          # RoyCSS lib unit tests are pure TS — no DB, no network — but
+          # vitest still reads process.env for any incidental imports.
+          NODE_ENV: test
+
+      - name: Build package (scripts/build-package.ts → dist/)
+        run: bun run build:package
+
+      - name: Upload dist artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: roycss-dist
+          path: dist/
+          if-no-files-found: warn
+          retention-days: 7
+
+  # ─────────────────────────────────────────────────────────────────────
+  # Backend — typecheck, Prisma generate + push to a throwaway test DB,
+  # then run the integration suite via supertest + vitest.
+  # ─────────────────────────────────────────────────────────────────────
+  backend:
+    name: Backend — typecheck + db + integration
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    env:
+      # Throwaway SQLite file — never the production dev.db. The setup
+      # file runs `bun db:push --skip-generate` against this path before
+      # the integration suite starts.
+      DATABASE_URL: "file:./test.db"
+      NODE_ENV: test
+      # The integration suite does not exercise auth flows that depend
+      # on a strong JWT secret, but the env schema rejects short secrets.
+      JWT_SECRET: "ci-test-jwt-secret-not-for-production-use-64chars"
+      JWT_REFRESH_SECRET: "ci-test-jwt-refresh-secret-different-from-access-64chars"
+      # Effects data lives in the parent project's dist/ folder; the
+      # backend reads it via a relative path from the backend root.
+      EFFECTS_DATA_PATH: "../dist/effects.json"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Build parent dist/effects.json (dependency of backend integration tests)
+        working-directory: .
+        run: |
+          bun install --frozen-lockfile
+          bun run build:package
+
+      - name: Install backend dependencies (frozen lockfile)
+        run: bun install --frozen-lockfile
+
+      - name: Typecheck backend (tsc --noEmit)
+        run: bun run typecheck
+
+      - name: Prisma generate
+        run: bun run db:generate
+
+      - name: Prisma db push (test DB)
+        run: bun run db:push
+        env:
+          DATABASE_URL: "file:./test.db"
+
+      - name: Typecheck integration tests (tsc -p tsconfig.test.json)
+        run: bun run typecheck:tests
+
+      - name: Integration tests (vitest + supertest)
+        run: bun run test:integration
+        env:
+          DATABASE_URL: "file:./test.db"
+
+      - name: Upload test coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-coverage
+          path: backend/coverage/
+          if-no-files-found: warn
+          retention-days: 7

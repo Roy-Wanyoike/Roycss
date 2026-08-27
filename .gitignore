@@ -114,3 +114,23 @@ worklog.md
 .cache/
 .turbo/
 .eslintcache
+
+# ─── Stray clones / downloaded archives (not part of source) ───
+RoyCSS-evolved/
+download/
+portfolio/
+inspector/
+
+# ─── Build artifacts that shouldn't be committed ────────────────
+backend/dist/
+backend/prisma/test.db*
+backend/prisma/custom.db*
+backend/test.db*
+
+# ─── Misc dev artifacts ─────────────────────────────────────────
+.zscripts/
+.roycss-cache/
+upload/
+
+# ─── Reports (regenerated, not source) ─────────────────────────
+roycss-upgrade-report.md

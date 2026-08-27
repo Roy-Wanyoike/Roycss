@@ -1,15 +1,17 @@
 /**
- * Refactor service — Roy Refactor mock CSS framework migrator.
+ * Refactor service — Roy Refactor CSS framework migrator + pattern catalog.
  *
- * Mock backend (no DB). Seeds 5 source frameworks Roy Refactor can
- * migrate FROM (Bootstrap, Tailwind, Material, Bulma, Legacy).
- * Each transform produces a deterministic, repeatable result derived
- * from the source framework + total file size — the same input always
- * returns the same diff so the cache is coherent.
+ * The catalog of refactor patterns covers 6 canonical CSS refactors
+ * (vendor-prefix removal, hex → oklch, physical → logical, !important
+ * removal, @media → @container, float → flex) — each with `find`, `replace`,
+ * `why`, and `example`. The source-frameworks list (Bootstrap, Tailwind,
+ * Material, Bulma, Legacy) remains for the transform endpoint.
+ *
+ * Each transform produces a deterministic, repeatable result derived from
+ * the source framework + total file size — the same input always returns
+ * the same diff so the cache is coherent.
  *
  * Reads are LRU-cached; transforms invalidate the result list.
- *
- * Future: route to a real AST-based transformer emitting the same shape.
  */
 import { randomUUID } from "node:crypto";
 
@@ -23,10 +25,11 @@ import type { RefactorTransformInput } from "./schema.js";
 const log = createLogger("refactor");
 
 const FRAMEWORKS_KEY = "refactor:frameworks";
+const PATTERNS_KEY = "refactor:patterns";
 const resultKey = (id: string): string => `refactor:result:${id}`;
 
-// ─── Seed: 5 source frameworks ───────────────────────────────────────────
-const SEED_FRAMEWORKS: SourceFramework[] = [
+// ─── 5 source frameworks ───────────────────────────────────────────────
+const FRAMEWORKS: SourceFramework[] = [
   {
     id: "fw-bootstrap",
     name: "Bootstrap",
@@ -69,13 +72,105 @@ const SEED_FRAMEWORKS: SourceFramework[] = [
   },
 ];
 
-const frameworks: SourceFramework[] = SEED_FRAMEWORKS.map((f) => ({ ...f }));
+const frameworks: SourceFramework[] = FRAMEWORKS.map((f) => ({ ...f }));
 
-/** List all source frameworks. Cached. */
+// ─── 6 CSS refactor patterns ─────────────────────────────────────────────
+export interface RefactorPattern {
+  id: string;
+  name: string;
+  /** What to search for (regex / selector / property pattern). */
+  find: string;
+  /** What to replace it with. */
+  replace: string;
+  /** Why this refactor improves the code. */
+  why: string;
+  /** A concrete before → after example. */
+  example: { before: string; after: string };
+}
+
+const PATTERNS: RefactorPattern[] = [
+  {
+    id: "pattern-vendor-prefix-removal",
+    name: "Vendor-Prefix Removal",
+    find: "-webkit-/-moz-/-ms-/-o- prefixed properties that are now Baseline-widely-supported",
+    replace: "Drop the prefixed declaration; keep the unprefixed standard one.",
+    why: "Vendor prefixes were a transition tool. Modern browsers (Chrome 88+, Safari 15+, Firefox 89+) support the unprefixed properties for flex, grid, transition, animation, gradient, etc. — keeping the prefixes only adds bytes and confuses PostCSS tools.",
+    example: {
+      before: ".btn {\n  -webkit-border-radius: 8px;\n  -moz-border-radius: 8px;\n  border-radius: 8px;\n  -webkit-transition: background 0.2s;\n  transition: background 0.2s;\n}",
+      after: ".btn {\n  border-radius: 8px;\n  transition: background 0.2s;\n}",
+    },
+  },
+  {
+    id: "pattern-hex-to-oklch",
+    name: "Hex → OKLCH",
+    find: "Hard-coded hex colors (#5b8def) and rgb()/hsl() literals.",
+    replace: "Convert to oklch() for perceptually-uniform lightness/chroma/hue.",
+    why: "OKLCH makes color manipulation predictable: `oklch(from var(--base) calc(l + 0.1) c h)` lightens perceptually — hex/rgb do not. OKLCH also gamut-maps gracefully to wide-gamut displays.",
+    example: {
+      before: ":root {\n  --primary: #5b8def;\n  --primary-hover: #4a7fc7;\n}",
+      after: ":root {\n  --primary: oklch(0.62 0.18 250);\n  --primary-hover: oklch(from var(--primary) calc(l - 0.05) c h);\n}",
+    },
+  },
+  {
+    id: "pattern-physical-to-logical",
+    name: "Physical → Logical Properties",
+    find: "margin-left, padding-right, border-top, left, right, width, height, text-align: left/right.",
+    replace: "margin-inline-start, padding-inline-end, border-block-start, inset-inline-*, inline-size, block-size, text-align: start/end.",
+    why: "Logical properties honor `dir=rtl` automatically, work for vertical writing-modes, and are Baseline 2021+. Physical properties lock the layout to one direction.",
+    example: {
+      before: ".card { margin-left: 1rem; padding-right: 1rem; text-align: left; width: 320px; }",
+      after: ".card { margin-inline-start: 1rem; padding-inline-end: 1rem; text-align: start; inline-size: 320px; }",
+    },
+  },
+  {
+    id: "pattern-important-removal",
+    name: "!important Removal",
+    find: "Declarations using `!important` (usually a specificity escalation).",
+    replace: "Increase selector specificity via class composition or `:where()` and drop `!important`.",
+    why: "`!important` is a code smell — it indicates the cascade is fighting itself. Removing it (via higher specificity or `@layer`) makes the cascade predictable again.",
+    example: {
+      before: ".btn.btn-primary { color: white !important; }",
+      after: ".btn.btn-primary,\n:where(.btn).btn-primary { color: white; }",
+    },
+  },
+  {
+    id: "pattern-media-to-container",
+    name: "@media → @container",
+    find: "@media (min-width: 600px) { .card { ... } } patterns that should respond to the component's container, not the viewport.",
+    replace: "Add `container-type: inline-size` on the container and convert the @media query to an @container query.",
+    why: "Container queries make components responsive to where they're placed, not to the viewport. A 200px card in a 1200px viewport shouldn't apply a desktop layout just because the viewport is wide.",
+    example: {
+      before: ".card { font-size: 1rem; }\n@media (min-width: 600px) {\n  .card { font-size: 1.25rem; }\n}",
+      after: ".card-host { container-type: inline-size; }\n.card { font-size: 1rem; }\n@container (min-width: 300px) {\n  .card { font-size: 1.25rem; }\n}",
+    },
+  },
+  {
+    id: "pattern-float-to-flex",
+    name: "Float → Flex",
+    find: "Float-based layouts: `float: left` + `clear: both` + width/height hacks + clearfix pseudo-elements.",
+    replace: "Use `display: flex` with `gap`, `flex-direction`, and `align-items` for the same visual layout.",
+    why: "Floats were a layout hack from the 2000s — they have no concept of gap, alignment, or true two-dimensional arrangement. Flexbox replaces them with a single declaration that's predictable, RTL-aware, and gap-friendly.",
+    example: {
+      before: ".row { overflow: hidden; }\n.row > * { float: left; width: 33.33%; padding: 0 8px; box-sizing: border-box; }\n.row::after { content: ''; display: table; clear: both; }",
+      after: ".row { display: flex; gap: 16px; }\n.row > * { flex: 1 1 0; }",
+    },
+  },
+];
+
+/** List all 5 source frameworks. Cached. */
 export async function listFrameworks(): Promise<SourceFramework[]> {
   return cacheWrap(
     FRAMEWORKS_KEY,
     () => Promise.resolve(frameworks.map((f) => ({ ...f }))),
+    CACHE_TTL.refactorFrameworks,
+  );
+}
+
+/** List all 6 CSS refactor patterns. Cached. */
+export async function listPatterns(): Promise<RefactorPattern[]> {
+  return cacheWrap(
+    PATTERNS_KEY,
+    () => Promise.resolve(PATTERNS.map((p) => ({ ...p, example: { ...p.example } }))),
     CACHE_TTL.refactorFrameworks,
   );
 }
@@ -103,7 +198,7 @@ function hashString(s: string): number {
   return h >>> 0;
 }
 
-// ─── Seed: one historical result ─────────────────────────────────────────
+// ─── One historical result so the GET /results/:id route works ───────────
 const SEED_RESULTS: RefactorResult[] = [
   {
     id: "rfc-seed-1",
@@ -123,7 +218,7 @@ const SEED_RESULTS: RefactorResult[] = [
 
 let results: RefactorResult[] = SEED_RESULTS.map((r) => ({ ...r }));
 
-/** Submit code for refactor (mock). Invalidates the result list cache. */
+/** Submit code for refactor. Invalidates the result list cache. */
 export async function transform(
   input: RefactorTransformInput,
 ): Promise<RefactorResult> {

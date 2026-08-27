@@ -2,10 +2,11 @@
  * Initial-letter service — generate ::first-letter CSS for a drop cap
  * from a size/sink/font configuration.
  *
- * Mock backend (no DB). Seeds 6 drop-cap presets covering medieval 3-line,
- * modern 2-line, raised-cap, sunken-5-line, colored-gradient, and ornate
- * serif treatments. Each generation produces a self-contained ::first-letter
- * rule with optional @supports fallback to the float hack.
+ * The 8 presets cover the full range of `initial-letter` syntax: classic
+ * drop caps (size 2-5, drop keyword), raised caps (sink=0), sunken caps
+ * (sink<size), and decorator oversized caps. Each generation produces a
+ * self-contained ::first-letter rule with optional @supports fallback to
+ * the float hack.
  *
  * Reads are LRU-cached; generations cache per input hash.
  *
@@ -42,6 +43,8 @@ export interface InitialLetterPreset {
   name: string;
   description: string;
   input: InitialLetterGenerateInput;
+  /** Generated CSS for this preset (pre-computed from input). */
+  css: string;
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────
@@ -104,13 +107,37 @@ function buildFallback(input: InitialLetterGenerateInput): string {
   ].join("\n");
 }
 
-// ─── Seed: 6 drop-cap presets ────────────────────────────────────────────
-const SEED_PRESETS: InitialLetterPreset[] = [
+// ─── 8 real `initial-letter` presets ───────────────────────────────────────
+// Each preset demonstrates a distinct `initial-letter` value:
+//   Drop Cap 2   — 2-line drop cap (default sink = size)
+//   Sunrise 3    — 3-line drop cap with first-baseline alignment
+//   Raised 3 0   — 3-line raised cap (sink=0, baseline sits on first line)
+//   Sunken 3 1   — 3-line cap sunk only 1 line (overhangs 2 lines above)
+//   Big Drop 4   — 4-line drop cap, display serif, dramatic magazine opener
+//   Title 1 5    — size=1 sunk 5 lines (tiny cap elevated to title slot)
+//   Magazine 2 1 — 2-line cap sunk 1 (overhanging pull-quote lede)
+//   Decorator 5  — 5-line drop with the `drop` keyword for explicit drop shape
+const PRESETS: { id: string; name: string; description: string; input: InitialLetterGenerateInput }[] = [
   {
-    id: "preset-medieval-3-line",
-    name: "Medieval 3-Line",
-    description:
-      "Classic 3-line drop cap in a serif display face, sunk into the paragraph.",
+    id: "preset-drop-cap-2",
+    name: "Drop Cap 2",
+    description: "2-line drop cap sunk 2 lines into the paragraph — the textbook entry point.",
+    input: {
+      selector: "article p:first-of-type",
+      size: 2,
+      sink: 2,
+      dropCap: false,
+      fontFamily: "serif",
+      fontWeight: 700,
+      color: "#1c1c1e",
+      multiplier: 1,
+      align: "leading",
+    },
+  },
+  {
+    id: "preset-sunrise-3",
+    name: "Sunrise 3",
+    description: "3-line drop cap with first-baseline alignment — the cap 'rises' out of the paragraph like a sunrise.",
     input: {
       selector: "article p:first-of-type",
       size: 3,
@@ -118,36 +145,18 @@ const SEED_PRESETS: InitialLetterPreset[] = [
       dropCap: false,
       fontFamily: "display",
       fontWeight: 700,
-      color: "#7a2c1a",
+      color: "#b45309",
       multiplier: 1,
-      align: "leading",
+      align: "first-baseline",
     },
   },
   {
-    id: "preset-modern-2-line",
-    name: "Modern 2-Line",
-    description:
-      "Tight 2-line sans-serif drop cap for editorial body copy.",
-    input: {
-      selector: "article p:first-of-type",
-      size: 2,
-      sink: 2,
-      dropCap: false,
-      fontFamily: "sans-serif",
-      fontWeight: 800,
-      color: "#1c1c1e",
-      multiplier: 1,
-      align: "leading",
-    },
-  },
-  {
-    id: "preset-raised-cap",
-    name: "Raised Cap",
-    description:
-      "Sink=0 raises the cap so its baseline aligns with the first line.",
+    id: "preset-raised-3-0",
+    name: "Raised 3 0",
+    description: "3-line raised cap with sink=0 — the cap sits above the first line, baseline-aligned with the body.",
     input: {
       selector: "h1",
-      size: 2,
+      size: 3,
       sink: 0,
       dropCap: false,
       fontFamily: "serif",
@@ -158,67 +167,106 @@ const SEED_PRESETS: InitialLetterPreset[] = [
     },
   },
   {
-    id: "preset-sunken-5-line",
-    name: "Sunken 5-Line",
-    description:
-      "Large 5-line sunken cap for a magazine opener — high drama.",
+    id: "preset-sunken-3-1",
+    name: "Sunken 3 1",
+    description: "3-line cap sunk only 1 line — the cap overhangs 2 lines above its baseline for a magazine-pull-quote feel.",
     input: {
       selector: ".lede",
-      size: 5,
-      sink: 5,
+      size: 3,
+      sink: 1,
       dropCap: false,
       fontFamily: "display",
-      fontWeight: 900,
+      fontWeight: 700,
+      color: "#7c2d12",
+      multiplier: 1,
+      align: "leading",
+    },
+  },
+  {
+    id: "preset-big-drop-4",
+    name: "Big Drop 4",
+    description: "4-line drop cap in a display serif — high drama, the classic magazine opener.",
+    input: {
+      selector: "article p:first-of-type",
+      size: 4,
+      sink: 4,
+      dropCap: false,
+      fontFamily: "display",
+      fontWeight: 800,
       color: "#111827",
       multiplier: 1,
       align: "leading",
     },
   },
   {
-    id: "preset-colored-gradient",
-    name: "Colored Gradient",
-    description:
-      "Drop cap with a vivid gradient color and slightly oversized font.",
+    id: "preset-title-1-5",
+    name: "Title 1 5",
+    description: "size=1 cap sunk 5 lines — a tiny cap floated up to a 5-line slot, used as a section title marker.",
     input: {
-      selector: "article p:first-of-type",
-      size: 3,
-      sink: 3,
+      selector: "section h2",
+      size: 1,
+      sink: 5,
       dropCap: false,
       fontFamily: "sans-serif",
       fontWeight: 900,
-      color: "#7c3aed",
-      multiplier: 1.15,
-      align: "first-baseline",
+      color: "#374151",
+      multiplier: 1.4,
+      align: "leading",
     },
   },
   {
-    id: "preset-ornate-serif",
-    name: "Ornate Serif",
-    description:
-      "Display serif with auto drop keyword and first-baseline alignment.",
+    id: "preset-magazine-2-1",
+    name: "Magazine 2 1",
+    description: "2-line cap sunk 1 line — the overhanging lede made famous by magazine layouts.",
     input: {
-      selector: ".ornament",
-      size: 4,
-      sink: 4,
+      selector: ".pull-quote p:first-of-type",
+      size: 2,
+      sink: 1,
+      dropCap: false,
+      fontFamily: "serif",
+      fontWeight: 700,
+      color: "#92400e",
+      multiplier: 1,
+      align: "leading",
+    },
+  },
+  {
+    id: "preset-decorator-5",
+    name: "Decorator 5",
+    description: "5-line drop using the `drop` keyword for an explicit drop shape — theatrical, oversized opening cap.",
+    input: {
+      selector: ".ornament p:first-of-type",
+      size: 5,
+      sink: 5,
       dropCap: true,
       fontFamily: "display",
       fontWeight: 700,
-      color: "#92400e",
+      color: "#7a2c1a",
       multiplier: 1,
       align: "first-baseline",
     },
   },
 ];
 
-const presets: InitialLetterPreset[] = SEED_PRESETS.map((p) => ({ ...p }));
+const presets: InitialLetterPreset[] = PRESETS.map((p) => ({
+  id: p.id,
+  name: p.name,
+  description: p.description,
+  input: { ...p.input },
+  css: buildCss(p.input),
+}));
 
 // ─── Public service API ──────────────────────────────────────────────────
 
-/** List all 6 drop-cap presets. Cached. */
+/** List all 8 initial-letter presets. Cached. */
 export async function listPresets(): Promise<InitialLetterPreset[]> {
   return cacheWrap(
     "initial-letter:presets",
-    () => Promise.resolve(presets.map((p) => ({ ...p }))),
+    () => Promise.resolve(presets.map((p) => ({
+      ...p,
+      input: { ...p.input },
+      css: p.css,
+    }))),
     CACHE_TTL.initialLetterPresets,
   );
 }

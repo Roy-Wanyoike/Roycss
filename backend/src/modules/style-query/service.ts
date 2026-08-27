@@ -2,9 +2,10 @@
  * Style-query service — build @container style() queries from a
  * property+value+selector+declarations tuple.
  *
- * Mock backend (no DB). Seeds 3 style-query presets covering the most
- * common real-world use-cases (light/dark via custom property, condensed
- * vs. comfortable density, and a card variant swap).
+ * 4 style-query presets cover the canonical style() container-query
+ * patterns: `--mode: dark`, `--theme: neon`, `--size: large`, and
+ * `--density: compact` — each toggling a custom-property on the closest
+ * container.
  *
  * Conversions are cached per (input) hash so identical requests are cheap.
  *
@@ -75,16 +76,16 @@ function buildFallback(input: StyleQueryGenerateInput): string {
   ].join("\n");
 }
 
-// ─── Seed: 3 style-query presets ─────────────────────────────────────────
-const SEED_PRESETS: StyleQueryPreset[] = [
+// ─── 4 style() container-query presets ────────────────────────────────────
+const PRESETS: StyleQueryPreset[] = [
   {
-    id: "preset-dark-mode",
-    name: "Custom-Property Dark Mode",
+    id: "preset-mode-dark",
+    name: "style(--mode: dark)",
     description:
-      "Swap a card's surface and text colors based on the --theme custom property set on the closest container.",
+      "Switch a card's surface and text colors when an ancestor container sets `--mode: dark` — the canonical dark-mode-via-style-query pattern.",
     input: {
       containerName: "card",
-      property: "--theme",
+      property: "--mode",
       value: "dark",
       selector: ".card__body",
       declarations: {
@@ -99,15 +100,51 @@ const SEED_PRESETS: StyleQueryPreset[] = [
     },
   },
   {
-    id: "preset-density",
-    name: "Density Switcher",
+    id: "preset-theme-neon",
+    name: "style(--theme: neon)",
     description:
-      "Reduce padding and font-size on a sidebar when --density is set to compact by the layout above.",
+      "Apply neon accent + glow when an ancestor container sets `--theme: neon` — switch the whole visual identity from a single custom property.",
+    input: {
+      containerName: "page",
+      property: "--theme",
+      value: "neon",
+      selector: ".btn-primary",
+      declarations: {
+        "background-color": "#b026ff",
+        "box-shadow": "0 0 20px #b026ff, 0 0 40px #b026ff80",
+        color: "#fff",
+        "border-color": "#d066ff",
+      },
+    },
+  },
+  {
+    id: "preset-size-large",
+    name: "style(--size: large)",
+    description:
+      "Bump type and spacing when an ancestor container sets `--size: large` — typographic scale driven by a style() query, not a media query.",
     input: {
       containerName: "sidebar",
+      property: "--size",
+      value: "large",
+      selector: ".sidebar__title",
+      declarations: {
+        "font-size": "1.5rem",
+        "line-height": "1.2",
+        "letter-spacing": "-0.01em",
+        "margin-block": "1rem",
+      },
+    },
+  },
+  {
+    id: "preset-density-compact",
+    name: "style(--density: compact)",
+    description:
+      "Reduce padding and font-size on a list when an ancestor container sets `--density: compact` — the canonical density-switcher pattern.",
+    input: {
+      containerName: "list",
       property: "--density",
       value: "compact",
-      selector: ".sidebar__item",
+      selector: ".list__item",
       declarations: {
         padding: "0.25rem 0.5rem",
         "font-size": "0.8125rem",
@@ -115,29 +152,13 @@ const SEED_PRESETS: StyleQueryPreset[] = [
       },
     },
   },
-  {
-    id: "preset-variant",
-    name: "Card Variant Swap",
-    description:
-      "Switch a button's accent color based on the --variant property declared on the parent card container.",
-    input: {
-      property: "--variant",
-      value: "primary",
-      selector: ".btn",
-      declarations: {
-        "background-color": "#5b8def",
-        "border-color": "#3b6fd4",
-        color: "#ffffff",
-      },
-    },
-  },
 ];
 
-const presets: StyleQueryPreset[] = SEED_PRESETS.map((p) => ({ ...p }));
+const presets: StyleQueryPreset[] = PRESETS.map((p) => ({ ...p }));
 
 // ─── Public service API ──────────────────────────────────────────────────
 
-/** List all 3 style-query presets. Cached. */
+/** List all 4 style-query presets. Cached. */
 export async function listPresets(): Promise<StyleQueryPreset[]> {
   return cacheWrap(
     "style-query:presets",

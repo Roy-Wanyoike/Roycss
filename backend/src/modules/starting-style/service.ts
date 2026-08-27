@@ -2,11 +2,11 @@
  * Starting-style service — generate @starting-style CSS from a duration +
  * easing + animated properties + allow-discrete configuration.
  *
- * Mock backend (no DB). Seeds 4 starting-style presets (fade-in, slide-up,
- * scale-in, combined) demonstrating how `@starting-style` + (optionally)
- * `transition-behavior: allow-discrete` enable entry animations for
- * elements that previously had no old computed style (e.g. display:none →
- * visible, modal opens, popover shows).
+ * 6 starting-style presets (fade-in, slide-up, scale-up, opacity-transition,
+ * height-collapse, transform-in) demonstrate how `@starting-style` +
+ * (optionally) `transition-behavior: allow-discrete` enable entry
+ * animations for elements that previously had no old computed style (e.g.
+ * display:none → visible, modal opens, popover shows).
  *
  * The generate path returns:
  *   - baseCss           : the visible (final) state with the transition
@@ -160,8 +160,8 @@ function buildExplanation(input: StartingStyleGenerateInput): string {
   );
 }
 
-// ─── Seed: 4 starting-style presets ──────────────────────────────────────
-const SEED_PRESETS: StartingStylePreset[] = [
+// ─── 6 starting-style presets ─────────────────────────────────────────────
+const PRESETS: StartingStylePreset[] = [
   {
     id: "preset-fade-in",
     name: "Fade In",
@@ -195,10 +195,10 @@ const SEED_PRESETS: StartingStylePreset[] = [
     },
   },
   {
-    id: "preset-scale-in",
-    name: "Scale In",
+    id: "preset-scale-up",
+    name: "Scale Up",
     description:
-      "Opacity + scale pop-in for modals. 250ms with a springy cubic-bezier overshoot.",
+      "Opacity + scale pop-in for modals and popovers. 250ms springy cubic-bezier overshoot.",
     input: {
       selector: ".modal",
       duration: 250,
@@ -207,37 +207,68 @@ const SEED_PRESETS: StartingStylePreset[] = [
       properties: ["opacity", "transform"],
       translateY: 0,
       scaleFrom: 0.9,
-      allowDiscrete: true,
+      allowDiscrete: false,
       hiddenClass: "is-hidden",
     },
   },
   {
-    id: "preset-combined",
-    name: "Combined (Slide + Scale + Fade)",
+    id: "preset-opacity-transition",
+    name: "Opacity Transition",
     description:
-      "Opacity + translateY + scale entry for popovers, with allow-discrete so display:none exits also animate. 400ms springy.",
+      "Pure long-form opacity transition — 500ms ease-in-out for ambient cross-fades between slides.",
     input: {
-      selector: ".popover",
-      duration: 400,
-      easing: "cubic-bezier",
-      cubicBezier: [0.34, 1.56, 0.64, 1],
+      selector: ".slide",
+      duration: 500,
+      easing: "ease-in-out",
+      properties: ["opacity"],
+      translateY: 0,
+      scaleFrom: 1,
+      allowDiscrete: false,
+      hiddenClass: "is-hidden",
+    },
+  },
+  {
+    id: "preset-height-collapse",
+    name: "Height Collapse (Display → none)",
+    description:
+      "Collapsible disclosure pattern — `transition-behavior: allow-discrete` lets `display: none` participate in the transition so an accordion can animate its close. 250ms ease-out.",
+    input: {
+      selector: ".accordion-panel",
+      duration: 250,
+      easing: "ease-out",
       properties: ["opacity", "transform"],
-      translateY: 24,
-      scaleFrom: 0.92,
+      translateY: -8,
+      scaleFrom: 1,
       allowDiscrete: true,
+      hiddenClass: "is-collapsed",
+    },
+  },
+  {
+    id: "preset-transform-in",
+    name: "Transform In (Translate + Scale, no opacity)",
+    description:
+      "Pure transform entry — translate + scale, no opacity. Useful when the element must remain visible throughout (e.g. inline icons). 300ms ease-out.",
+    input: {
+      selector: ".icon-pop",
+      duration: 300,
+      easing: "ease-out",
+      properties: ["transform"],
+      translateY: 12,
+      scaleFrom: 0.85,
+      allowDiscrete: false,
       hiddenClass: "is-hidden",
     },
   },
 ];
 
-const presets: StartingStylePreset[] = SEED_PRESETS.map((p) => ({
+const presets: StartingStylePreset[] = PRESETS.map((p) => ({
   ...p,
   input: { ...p.input },
 }));
 
 // ─── Public service API ──────────────────────────────────────────────────
 
-/** List all 4 starting-style presets. Cached. */
+/** List all 6 starting-style presets. Cached. */
 export async function listPresets(): Promise<StartingStylePreset[]> {
   return cacheWrap(
     "starting-style:presets",

@@ -41,6 +41,9 @@ export interface ChannelInfo {
   range: string;
   /** Example expression. */
   example: string;
+  /** Conversion examples: how to derive this channel from a source color
+   *  in each of the supported output spaces. */
+  conversionExamples?: string[];
 }
 
 export interface RelativeColorResult {
@@ -356,14 +359,25 @@ const SPACE_DEFS: Record<OutputSpace, SpaceDef> = {
   oklab: { channels: ["l", "a", "b"], fn: "oklab" },
 };
 
-// ─── Seed: 14-channel reference table ────────────────────────────────────
-const SEED_CHANNELS: ChannelInfo[] = [
+// ─── 8-channel reference table ─────────────────────────────────────────────
+// Curated to the 8 channels that cover the most useful relative-color
+// derivations across the rgb/hsl/oklab/oklch output spaces. The `l` channel
+// serves double duty — it's the HSL Lightness (0-100%) when used in an
+// `hsl(from ...)` call, and the OKLab/OKLCH L (0-1) when used in
+// `oklab(from ...)`/`oklch(from ...)` calls. The `conversionExamples` array
+// shows how each channel can be derived from a source color in each
+// applicable output space.
+const CHANNELS: ChannelInfo[] = [
   {
     letter: "r",
     name: "Red",
     spaces: ["rgb"],
     range: "0-255",
     example: "calc(r + 20)",
+    conversionExamples: [
+      "rgb(from #3498db calc(r + 20) g b)        /* lighten red channel */",
+      "rgb(from #3498db r calc(g * 0.8) b)       /* desaturate green */",
+    ],
   },
   {
     letter: "g",
@@ -371,6 +385,10 @@ const SEED_CHANNELS: ChannelInfo[] = [
     spaces: ["rgb"],
     range: "0-255",
     example: "calc(g * 0.8)",
+    conversionExamples: [
+      "rgb(from #3498db r calc(g * 0.8) b)        /* mute green */",
+      "rgb(from #3498db calc(r + 10) calc(g + 10) calc(b + 10))  /* tint */",
+    ],
   },
   {
     letter: "b",
@@ -378,6 +396,10 @@ const SEED_CHANNELS: ChannelInfo[] = [
     spaces: ["rgb"],
     range: "0-255",
     example: "calc(b - 30)",
+    conversionExamples: [
+      "rgb(from #3498db r g calc(b - 30))         /* shift toward yellow */",
+      "rgb(from #3498db b g r)                    /* swap to bgr */",
+    ],
   },
   {
     letter: "h",
@@ -385,13 +407,21 @@ const SEED_CHANNELS: ChannelInfo[] = [
     spaces: ["hsl", "oklch"],
     range: "0-360 (degrees)",
     example: "calc(h + 180)",
+    conversionExamples: [
+      "hsl(from #3498db calc(h + 180) s l)        /* complementary */",
+      "oklch(from #3498db l c calc(h + 30))       /* analogous */",
+    ],
   },
   {
     letter: "s",
-    name: "Saturation",
+    name: "Saturation (HSL)",
     spaces: ["hsl"],
     range: "0-100 (%)",
     example: "calc(s + 10)",
+    conversionExamples: [
+      "hsl(from #3498db h calc(s + 10) l)         /* more saturated */",
+      "hsl(from #3498db h calc(s - 20) l)         /* less saturated */",
+    ],
   },
   {
     letter: "l",
@@ -399,27 +429,22 @@ const SEED_CHANNELS: ChannelInfo[] = [
     spaces: ["hsl", "oklab", "oklch"],
     range: "0-100 (hsl) · 0-1 (oklab/oklch)",
     example: "calc(l + 0.1)",
+    conversionExamples: [
+      "hsl(from #3498db h s calc(l + 10))         /* lighten (hsl) */",
+      "oklch(from #3498db calc(l + 0.1) c h)       /* lighten (oklch) */",
+      "oklab(from #3498db calc(l - 0.1) a b)      /* darken (oklab) */",
+    ],
   },
   {
     letter: "c",
-    name: "Chroma",
+    name: "Chroma (OKLCH)",
     spaces: ["oklch"],
     range: "0-0.4 unbounded",
     example: "calc(c + 0.05)",
-  },
-  {
-    letter: "a",
-    name: "a-axis",
-    spaces: ["oklab"],
-    range: "-0.4 to +0.4 unbounded",
-    example: "calc(a + 0.02)",
-  },
-  {
-    letter: "b",
-    name: "b-axis",
-    spaces: ["oklab"],
-    range: "-0.4 to +0.4 unbounded",
-    example: "calc(b - 0.02)",
+    conversionExamples: [
+      "oklch(from #3498db l calc(c + 0.05) h)     /* more colorful */",
+      "oklch(from #3498db l calc(c - 0.05) h)    /* less colorful */",
+    ],
   },
   {
     letter: "alpha",
@@ -427,39 +452,15 @@ const SEED_CHANNELS: ChannelInfo[] = [
     spaces: ["rgb", "hsl", "oklch", "oklab"],
     range: "0-1",
     example: "calc(alpha * 0.5)",
-  },
-  {
-    letter: "w",
-    name: "White-point X",
-    spaces: ["color(xyz)"],
-    range: "0-1",
-    example: "calc(w + 0.01)",
-  },
-  {
-    letter: "x",
-    name: "XYZ X",
-    spaces: ["color(xyz)"],
-    range: "0-1",
-    example: "calc(x + 0.01)",
-  },
-  {
-    letter: "y",
-    name: "XYZ Y",
-    spaces: ["color(xyz)"],
-    range: "0-1",
-    example: "calc(y + 0.01)",
-  },
-  {
-    letter: "z",
-    name: "XYZ Z",
-    spaces: ["color(xyz)"],
-    range: "0-1",
-    example: "calc(z + 0.01)",
+    conversionExamples: [
+      "rgb(from #3498db r g b / calc(alpha * 0.5))    /* 50% transparent */",
+      "oklch(from #3498db l c h / calc(alpha + 0.1))   /* more opaque */",
+    ],
   },
 ];
 
-// ─── Seed: 6 RCS presets ─────────────────────────────────────────────────
-const SEED_PRESETS: RelativeColorPreset[] = [
+// ─── 6 RCS presets ───────────────────────────────────────────────────────
+const PRESETS: RelativeColorPreset[] = [
   {
     id: "preset-lighten",
     name: "Lighten",
@@ -526,15 +527,15 @@ const SEED_PRESETS: RelativeColorPreset[] = [
   },
 ];
 
-const channelsSeed: ChannelInfo[] = SEED_CHANNELS.map((c) => ({ ...c }));
-const presets: RelativeColorPreset[] = SEED_PRESETS.map((p) => ({
+const channelsSeed: ChannelInfo[] = CHANNELS.map((c) => ({ ...c }));
+const presets: RelativeColorPreset[] = PRESETS.map((p) => ({
   ...p,
   input: { ...p.input, channels: { ...p.input.channels } },
 }));
 
 // ─── Public service API ──────────────────────────────────────────────────
 
-/** List all 14 RCS channel letters with descriptions. Cached. */
+/** List all 8 RCS channel letters with conversion examples + syntax. Cached. */
 export async function listChannels(): Promise<ChannelInfo[]> {
   return cacheWrap(
     "relative-color:channels",

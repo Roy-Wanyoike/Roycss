@@ -212,13 +212,13 @@ function buildCss(input: TextWrapAnalyzeInput): string {
   return lines.join("\n");
 }
 
-// ─── Seed: 6 text-wrap presets ───────────────────────────────────────────
-const SEED_PRESETS: TextWrapPreset[] = [
+// ─── 5 text-wrap presets: balance, pretty, stable, nowrap, wrap ───────────
+const PRESETS: TextWrapPreset[] = [
   {
-    id: "preset-headline-balance",
-    name: "Headline Balance",
+    id: "preset-balance",
+    name: "Balance",
     description:
-      "A short headline wrapped with text-wrap: balance so line widths are even.",
+      "text-wrap: balance evens out line widths in headlines — best for short, attention-grabbing copy.",
     input: {
       text: "CSS is finally getting the typographic tools designers have wanted for decades",
       containerWidth: 360,
@@ -237,10 +237,10 @@ const SEED_PRESETS: TextWrapPreset[] = [
     },
   },
   {
-    id: "preset-body-pretty",
-    name: "Body Pretty",
+    id: "preset-pretty",
+    name: "Pretty",
     description:
-      "Long paragraph with text-wrap: pretty to avoid orphaned last words.",
+      "text-wrap: pretty optimizes the last few lines of a paragraph so the final line isn't a single short word (the 'orphan' problem).",
     input: {
       text: "Modern CSS gives us text-wrap: pretty, which optimizes the final few lines of a paragraph so the last line doesn't end on a single short word. The browser picks better break points than the naive greedy algorithm.",
       containerWidth: 480,
@@ -259,42 +259,20 @@ const SEED_PRESETS: TextWrapPreset[] = [
     },
   },
   {
-    id: "preset-justified-book",
-    name: "Justified Book",
+    id: "preset-stable",
+    name: "Stable",
     description:
-      "Justified body text with auto-hyphenation, mimicking a printed book column.",
+      "text-wrap: stable locks the wrapping while the user types in an editable region — earlier lines don't reflow as the caret advances.",
     input: {
-      text: "Justified text combined with hyphens: auto produces the dense, even columns familiar from printed books. Without hyphenation, justified text suffers from rivers of whitespace and large gaps between words.",
-      containerWidth: 360,
+      text: "Editable content uses text-wrap: stable so wrapping doesn't shift while the user types — critical for contenteditable regions and live textareas.",
+      containerWidth: 320,
       fontSize: 14,
-      lineHeight: 1.55,
+      lineHeight: 1.5,
       properties: {
-        textWrap: "pretty",
+        textWrap: "stable",
         textWrapMode: "wrap",
         lineBreak: "auto",
         wordBreak: "normal",
-        overflowWrap: "normal",
-        hyphens: "auto",
-        hangingPunctuation: "last",
-        textAlign: "justify",
-      },
-    },
-  },
-  {
-    id: "preset-cjk-keep-all",
-    name: "CJK keep-all",
-    description:
-      "word-break: keep-all preserves CJK word boundaries (no mid-word breaks).",
-    input: {
-      text: "日本語 の 文章 は 単語 の 境界 で 折り返す べき です",
-      containerWidth: 240,
-      fontSize: 16,
-      lineHeight: 1.7,
-      properties: {
-        textWrap: "wrap",
-        textWrapMode: "wrap",
-        lineBreak: "strict",
-        wordBreak: "keep-all",
         overflowWrap: "normal",
         hyphens: "none",
         hangingPunctuation: "none",
@@ -303,21 +281,21 @@ const SEED_PRESETS: TextWrapPreset[] = [
     },
   },
   {
-    id: "preset-code-break-all",
-    name: "Code break-all",
+    id: "preset-nowrap",
+    name: "No Wrap",
     description:
-      "Long code identifiers break anywhere via word-break: break-all in narrow columns.",
+      "text-wrap: nowrap (or text-wrap-mode: nowrap) prevents line breaks entirely — overflow scrolls or clips. Used for code, badges, and inline labels.",
     input: {
-      text: "function antidisestablishmentarianismImplementationStrategy() { return processPipeline(longArgumentName); }",
+      text: "ThisIsAnExtremelyLongUnbrokenIdentifierThatShouldNeverWrapEvenWhenItExceedsTheContainerWidth",
       containerWidth: 200,
       fontSize: 13,
       lineHeight: 1.4,
       properties: {
-        textWrap: "wrap",
-        textWrapMode: "wrap",
-        lineBreak: "anywhere",
-        wordBreak: "break-all",
-        overflowWrap: "anywhere",
+        textWrap: "nowrap",
+        textWrapMode: "nowrap",
+        lineBreak: "auto",
+        wordBreak: "normal",
+        overflowWrap: "normal",
         hyphens: "none",
         hangingPunctuation: "none",
         textAlign: "start",
@@ -325,34 +303,34 @@ const SEED_PRESETS: TextWrapPreset[] = [
     },
   },
   {
-    id: "preset-poetry-hanging",
-    name: "Poetry Hanging Punctuation",
+    id: "preset-wrap",
+    name: "Wrap",
     description:
-      "Hanging punctuation lets quotes and em-dashes hang outside the text block.",
+      "text-wrap: wrap is the default greedy line-fill behavior — words are packed onto each line until the next would overflow.",
     input: {
-      text: '"To be, or not to be — that is the question:\nWhether \'tis nobler in the mind to suffer\nThe slings and arrows of outrageous fortune."',
-      containerWidth: 320,
-      fontSize: 18,
-      lineHeight: 1.4,
+      text: "Default greedy wrapping packs as many words as possible onto each line until the next would overflow the container. It's fast and predictable but can leave a ragged right edge.",
+      containerWidth: 360,
+      fontSize: 15,
+      lineHeight: 1.5,
       properties: {
-        textWrap: "pretty",
+        textWrap: "wrap",
         textWrapMode: "wrap",
         lineBreak: "auto",
         wordBreak: "normal",
         overflowWrap: "normal",
         hyphens: "none",
-        hangingPunctuation: "first last",
+        hangingPunctuation: "none",
         textAlign: "start",
       },
     },
   },
 ];
 
-const presets: TextWrapPreset[] = SEED_PRESETS.map((p) => ({ ...p }));
+const presets: TextWrapPreset[] = PRESETS.map((p) => ({ ...p }));
 
 // ─── Public service API ──────────────────────────────────────────────────
 
-/** List all 6 text-wrap presets. Cached. */
+/** List all 5 text-wrap presets. Cached. */
 export async function listPresets(): Promise<TextWrapPreset[]> {
   return cacheWrap(
     "text-wrap:presets",

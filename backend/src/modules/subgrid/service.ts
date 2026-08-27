@@ -2,8 +2,9 @@
  * Subgrid service — generate subgrid CSS from a parent track config +
  * child span config.
  *
- * Mock backend (no DB). Seeds 4 subgrid presets covering dashboard cards,
- * form layouts, magazine grids, and aligned label/value rows.
+ * 6 subgrid presets cover the canonical column-count patterns:
+ * 3-col, 4-col, 5-col, 6-col, 12-col, and an auto-fit-style layout using
+ * fit-content tracks so the columns flex to their content.
  *
  * Conversions are cached per input so identical configurations return
  * instantly on subsequent calls.
@@ -118,13 +119,27 @@ function buildChildCss(
   return { selector, body, tracks, cells: child.subgrid ? cells : undefined };
 }
 
-// ─── Seed: 4 subgrid presets ─────────────────────────────────────────────
+// ─── 6 subgrid presets: 3-col, 4-col, 5-col, 6-col, 12-col, auto-fit ───────
 const PALETTE = ["#5b8def", "#22c55e", "#f59e0b", "#ef4444", "#8b5cf6"] as const;
 
-const SEED_PRESETS: SubgridPreset[] = [
+const PRESETS: SubgridPreset[] = [
   {
-    id: "preset-dashboard",
-    name: "Dashboard Cards",
+    id: "preset-3-col",
+    name: "3-Column Subgrid",
+    description:
+      "3-column grid with each child spanning all 3 columns and inheriting the parent tracks via subgrid — great for triple-pane layouts.",
+    input: {
+      parent: { columns: 3, trackSize: "fr", trackPx: 120, trackMin: 80, gap: 16, name: "three-col" },
+      children: [
+        { label: "Header", span: 3, subgrid: true, color: PALETTE[0] },
+        { label: "Body", span: 3, subgrid: true, color: PALETTE[1] },
+        { label: "Footer", span: 3, subgrid: true, color: PALETTE[2] },
+      ],
+    },
+  },
+  {
+    id: "preset-4-col",
+    name: "4-Column Subgrid",
     description:
       "4-column dashboard grid where each card spans 2 columns and inherits the parent gap via subgrid.",
     input: {
@@ -138,10 +153,26 @@ const SEED_PRESETS: SubgridPreset[] = [
     },
   },
   {
-    id: "preset-form",
-    name: "Form Layout",
+    id: "preset-5-col",
+    name: "5-Column Subgrid",
     description:
-      "6-column form where label + field pairs each take 3 columns with subgrid alignment.",
+      "5-column metric strip — each tile spans 1 column and inherits the parent tracks. Common for KPI rows and timeline weeks.",
+    input: {
+      parent: { columns: 5, trackSize: "fr", trackPx: 100, trackMin: 60, gap: 12, name: "metric-strip" },
+      children: [
+        { label: "Mon", span: 1, subgrid: true, color: PALETTE[0] },
+        { label: "Tue", span: 1, subgrid: true, color: PALETTE[1] },
+        { label: "Wed", span: 1, subgrid: true, color: PALETTE[2] },
+        { label: "Thu", span: 1, subgrid: true, color: PALETTE[3] },
+        { label: "Fri", span: 1, subgrid: true, color: PALETTE[4] },
+      ],
+    },
+  },
+  {
+    id: "preset-6-col",
+    name: "6-Column Subgrid",
+    description:
+      "6-column form layout where label + field pairs each take 3 columns with subgrid alignment — pixel-perfect label/value rows.",
     input: {
       parent: { columns: 6, trackSize: "fr", trackPx: 120, trackMin: 80, gap: 12, name: "form" },
       children: [
@@ -153,10 +184,10 @@ const SEED_PRESETS: SubgridPreset[] = [
     },
   },
   {
-    id: "preset-magazine",
-    name: "Magazine Grid",
+    id: "preset-12-col",
+    name: "12-Column Subgrid",
     description:
-      "12-column magazine layout with a 6-column feature article and 3+3 sidebar widgets.",
+      "12-column magazine layout with a 6-column feature article and 3+3 sidebar widgets — the classic print-grid ported to CSS grid.",
     input: {
       parent: { columns: 12, trackSize: "fr", trackPx: 120, trackMin: 80, gap: 24, name: "magazine" },
       children: [
@@ -167,26 +198,26 @@ const SEED_PRESETS: SubgridPreset[] = [
     },
   },
   {
-    id: "preset-aligned-labels",
-    name: "Aligned Labels",
+    id: "preset-auto-fit",
+    name: "Auto-Fit (fit-content tracks)",
     description:
-      "2-column grid where each row is a subgrid child spanning both columns so labels and values align perfectly.",
+      "Auto-fit-style responsive layout using `fit-content()` tracks — each column flexes to its content's natural width while children inherit the tracks via subgrid.",
     input: {
-      parent: { columns: 2, trackSize: "minmax", trackPx: 120, trackMin: 100, gap: 8, name: "labels" },
+      parent: { columns: 6, trackSize: "fit-content", trackPx: 120, trackMin: 80, gap: 12, name: "auto-fit" },
       children: [
-        { label: "Row 1", span: 2, subgrid: true, color: PALETTE[1] },
-        { label: "Row 2", span: 2, subgrid: true, color: PALETTE[1] },
-        { label: "Row 3", span: 2, subgrid: true, color: PALETTE[1] },
+        { label: "Tag 1", span: 2, subgrid: true, color: PALETTE[0] },
+        { label: "Tag 2", span: 2, subgrid: true, color: PALETTE[1] },
+        { label: "Tag 3", span: 2, subgrid: true, color: PALETTE[2] },
       ],
     },
   },
 ];
 
-const presets: SubgridPreset[] = SEED_PRESETS.map((p) => ({ ...p }));
+const presets: SubgridPreset[] = PRESETS.map((p) => ({ ...p }));
 
 // ─── Public service API ──────────────────────────────────────────────────
 
-/** List all 4 subgrid presets. Cached. */
+/** List all 6 subgrid presets. Cached. */
 export async function listPresets(): Promise<SubgridPreset[]> {
   return cacheWrap(
     "subgrid:presets",

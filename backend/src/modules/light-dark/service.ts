@@ -2,11 +2,12 @@
  * Light-dark service — generate light-dark() CSS from a color-scheme and
  * 5 semantic tokens (each with light + dark values).
  *
- * Mock backend (no DB). Seeds 4 light-dark presets (neutral-gray,
- * warm-paper, cool-slate, vibrant) demonstrating how the light-dark() CSS
- * function lets a single declaration serve both color schemes — driven by
- * the inherited `color-scheme` property, NOT by a document-global @media
- * query (so it works for per-element color-scheme overrides too).
+ * 6 light-dark() presets demonstrate how the function lets a single
+ * declaration serve both color schemes — driven by the inherited
+ * `color-scheme` property, NOT by a document-global @media query (so it
+ * works for per-element color-scheme overrides too). Several presets use
+ * `color-mix()` to derive a tint or shade from a base token, illustrating
+ * how light-dark() composes with the rest of the CSS color pipeline.
  *
  * The generate path returns:
  *   - css       : the light-dark() version (one declaration per property)
@@ -67,7 +68,13 @@ function buildCss(input: LightDarkGenerateInput): string {
   lines.push(`}`);
   lines.push(`${input.primarySelector} {`);
   lines.push(
+    `  /* color-mix(): derive a 12%-tinted primary for hover states */`,
+  );
+  lines.push(
     `  background: light-dark(${t.primary.light}, ${t.primary.dark});`,
+  );
+  lines.push(
+    `  --primary-hover: light-dark(color-mix(in srgb, ${t.primary.light} 88%, ${t.background.light}), color-mix(in srgb, ${t.primary.dark} 88%, ${t.background.dark}));`,
   );
   lines.push(`}`);
   lines.push(`${input.mutedSelector} {`);
@@ -87,6 +94,7 @@ function buildLegacyCss(input: LightDarkGenerateInput): string {
   lines.push(`}`);
   lines.push(`${input.primarySelector} {`);
   lines.push(`  background: ${t.primary.light};`);
+  lines.push(`  --primary-hover: color-mix(in srgb, ${t.primary.light} 88%, ${t.background.light});`);
   lines.push(`}`);
   lines.push(`${input.mutedSelector} {`);
   lines.push(`  color: ${t.muted.light};`);
@@ -99,6 +107,7 @@ function buildLegacyCss(input: LightDarkGenerateInput): string {
   lines.push(`  }`);
   lines.push(`  ${input.primarySelector} {`);
   lines.push(`    background: ${t.primary.dark};`);
+  lines.push(`    --primary-hover: color-mix(in srgb, ${t.primary.dark} 88%, ${t.background.dark});`);
   lines.push(`  }`);
   lines.push(`  ${input.mutedSelector} {`);
   lines.push(`    color: ${t.muted.dark};`);
@@ -115,7 +124,8 @@ function buildExplanation(input: LightDarkGenerateInput): string {
       `via light-dark(). The function resolves based on the INHERITED ` +
       `color-scheme value, so the same declaration works at the document root ` +
       `(driven by prefers-color-scheme) AND for per-element overrides ` +
-      `(e.g. a \`color-scheme: light\` island inside a dark page).`
+      `(e.g. a \`color-scheme: light\` island inside a dark page). ` +
+      `The primary selector also uses color-mix() to derive a hover-tinted variant.`
     );
   }
   return (
@@ -126,13 +136,13 @@ function buildExplanation(input: LightDarkGenerateInput): string {
   );
 }
 
-// ─── Seed: 4 light-dark presets ──────────────────────────────────────────
-const SEED_PRESETS: LightDarkPreset[] = [
+// ─── 6 light-dark() presets (several use color-mix in their generated CSS) ─
+const PRESETS: LightDarkPreset[] = [
   {
     id: "preset-neutral-gray",
     name: "Neutral Gray",
     description:
-      "A neutral gray palette — light bg/ink, dark bg/light ink. Default for product UI shells.",
+      "A neutral gray palette — light bg/ink, dark bg/light ink. Default for product UI shells; primary hover is a color-mix tint.",
     input: {
       selector: ".card",
       colorScheme: "light dark",
@@ -151,7 +161,7 @@ const SEED_PRESETS: LightDarkPreset[] = [
     id: "preset-warm-paper",
     name: "Warm Paper",
     description:
-      "Warm cream/sepia palette — light is paper-like, dark is warm dark brown.",
+      "Warm cream/sepia palette — light is paper-like, dark is warm dark brown. color-mix tints the primary link color.",
     input: {
       selector: ".reader",
       colorScheme: "light dark",
@@ -170,7 +180,7 @@ const SEED_PRESETS: LightDarkPreset[] = [
     id: "preset-cool-slate",
     name: "Cool Slate",
     description:
-      "Cool slate palette — light is icy gray-blue, dark is deep slate. Calm, technical.",
+      "Cool slate palette — light is icy gray-blue, dark is deep slate. Calm, technical; CTA hover uses color-mix tint.",
     input: {
       selector: ".panel",
       colorScheme: "light dark",
@@ -189,7 +199,7 @@ const SEED_PRESETS: LightDarkPreset[] = [
     id: "preset-vibrant",
     name: "Vibrant",
     description:
-      "High-energy palette — light is soft warm white, dark is near-black with pink accent.",
+      "High-energy palette — light is soft warm white, dark is near-black with pink accent. color-mix derives the hover pink.",
     input: {
       selector: ".hero",
       colorScheme: "light dark",
@@ -204,9 +214,47 @@ const SEED_PRESETS: LightDarkPreset[] = [
       mutedSelector: ".sub",
     },
   },
+  {
+    id: "preset-neon-accent",
+    name: "Neon Accent",
+    description:
+      "Dark-first neon palette for gaming/nightlife UIs — light mode is a low-key desaturated variant, dark mode pops with electric accent. color-mix derives hover glow.",
+    input: {
+      selector: ".neon-panel",
+      colorScheme: "light dark",
+      tokens: {
+        background: { light: "#1a1a2e", dark: "#0a0a14" },
+        foreground: { light: "#e0e0e0", dark: "#f0f0ff" },
+        primary: { light: "#8b00ff", dark: "#b026ff" },
+        muted: { light: "#6b6b85", dark: "#9090b0" },
+        border: { light: "#2a2a4e", dark: "#3a3a5e" },
+      },
+      primarySelector: ".neon-btn",
+      mutedSelector: ".neon-meta",
+    },
+  },
+  {
+    id: "preset-high-contrast",
+    name: "High Contrast (A11y)",
+    description:
+      "WCAG AAA-friendly palette — pure white on near-black for dark mode, pure black on white for light mode. color-mix softens the link color for hover.",
+    input: {
+      selector: ".a11y-shell",
+      colorScheme: "light dark",
+      tokens: {
+        background: { light: "#ffffff", dark: "#000000" },
+        foreground: { light: "#000000", dark: "#ffffff" },
+        primary: { light: "#0033cc", dark: "#99c2ff" },
+        muted: { light: "#595959", dark: "#a6a6a6" },
+        border: { light: "#bfbfbf", dark: "#404040" },
+      },
+      primarySelector: ".a11y-link",
+      mutedSelector: ".a11y-meta",
+    },
+  },
 ];
 
-const presets: LightDarkPreset[] = SEED_PRESETS.map((p) => ({
+const presets: LightDarkPreset[] = PRESETS.map((p) => ({
   ...p,
   input: {
     ...p.input,
@@ -222,7 +270,7 @@ const presets: LightDarkPreset[] = SEED_PRESETS.map((p) => ({
 
 // ─── Public service API ──────────────────────────────────────────────────
 
-/** List all 4 light-dark presets. Cached. */
+/** List all 6 light-dark presets. Cached. */
 export async function listPresets(): Promise<LightDarkPreset[]> {
   return cacheWrap(
     "light-dark:presets",

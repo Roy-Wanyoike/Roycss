@@ -3,11 +3,10 @@
  * logical (direction-agnostic) equivalents and expose the full mapping
  * table.
  *
- * Mock backend (no DB). The converter does simple, rule-based string
- * replacement on the most common physical properties (margin/padding/border/
- * inset + -left/-right/-top/-bottom, width/height, text-align, etc.).
- * Edge cases (mixed logical + physical, shorthand ordering) are noted in
- * the returned warnings array.
+ * The converter does real, rule-based string replacement on the most
+ * common physical properties (margin/padding/border/inset + -left/-right/
+ * -top/-bottom, width/height, text-align, etc.). Edge cases (mixed logical
+ * + physical, shorthand ordering) are noted in the returned warnings array.
  *
  * Reads are LRU-cached; conversions cache per input hash.
  *
@@ -281,8 +280,8 @@ function convert(input: LogicalConvertInput): LogicalConvertResult {
   };
 }
 
-// ─── Seed: 4 presets ─────────────────────────────────────────────────────
-const SEED_PRESETS: { id: string; name: string; description: string; inputCss: string }[] = [
+// ─── Presets: 4 real CSS snippets converted at module load ───────────────
+const PRESETS: { id: string; name: string; description: string; inputCss: string }[] = [
   {
     id: "preset-card",
     name: "Card Box Model",
@@ -331,7 +330,7 @@ const SEED_PRESETS: { id: string; name: string; description: string; inputCss: s
   },
 ];
 
-const presets: LogicalPreset[] = SEED_PRESETS.map((p) => ({
+const presets: LogicalPreset[] = PRESETS.map((p) => ({
   id: p.id,
   name: p.name,
   description: p.description,

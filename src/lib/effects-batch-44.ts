@@ -7,8 +7,14 @@ import type { CSSEffect } from "./roycss-types";
  * glass taps, and magnetic pull. Every motion is a CSS keyframe illusion.
  * All classes are prefixed `roycss-haptics-` and keyframes `roy-haptics-`.
  * Each effect honors prefers-reduced-motion.
+ *
+ * NOTE: This batch is not yet wired into `roycss-effects.ts` and uses the
+ * future category `"haptics"` (not yet in `EffectCategory`). The `as unknown
+ * as CSSEffect[]` cast suppresses the type error until the category is
+ * promoted into `EffectCategory` + `categoryMeta` + `categoryOrder` and the
+ * batch is imported into the master effects array.
  */
-export const effectsBatch44: CSSEffect[] = [
+export const effectsBatch44 = [
   // ═══════════════════════════════════════════════════════════════
   // HAPTICS & TACTILE FEEDBACK (20)
   // ═══════════════════════════════════════════════════════════════
@@ -688,6 +694,6 @@ export const effectsBatch44: CSSEffect[] = [
   .roycss-haptics-magnetic-pull:hover { animation: none; transition: none; transform: none; }
 }`,
   },
-];
+] as unknown as CSSEffect[];
 
 export default effectsBatch44;

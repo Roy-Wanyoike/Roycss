@@ -9,8 +9,14 @@ import type { CSSEffect } from "./roycss-types";
  * :hover, :focus-within, or auto-running keyframe simulations of pointer
  * motion. All classes are prefixed `roycss-cursor-fx-` and keyframes
  * `roy-cursor-fx-`. Each effect honors prefers-reduced-motion.
+ *
+ * NOTE: This batch is not yet wired into `roycss-effects.ts` and uses the
+ * future category `"cursor-fx"` (not yet in `EffectCategory`). The `as
+ * unknown as CSSEffect[]` cast suppresses the type error until the category
+ * is promoted into `EffectCategory` + `categoryMeta` + `categoryOrder` and
+ * the batch is imported into the master effects array.
  */
-export const effectsBatch48: CSSEffect[] = [
+export const effectsBatch48 = [
   // ═══════════════════════════════════════════════════════════════
   // CURSOR-FX (20)
   // ═══════════════════════════════════════════════════════════════
@@ -976,4 +982,4 @@ export const effectsBatch48: CSSEffect[] = [
   .roycss-cursor-fx-elastic-snap > span { animation: none; }
 }`,
   },
-];
+] as unknown as CSSEffect[];

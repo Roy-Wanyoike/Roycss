@@ -9,8 +9,14 @@ import type { CSSEffect } from "./roycss-types";
  * blur + saturate + highlight overlays. All classes are prefixed
  * `roycss-glass2-` and keyframes `roy-glass2-`. Each effect honors
  * prefers-reduced-motion.
+ *
+ * NOTE: This batch is not yet wired into `roycss-effects.ts` and uses the
+ * future category `"glass-2"` (not yet in `EffectCategory`). The `as unknown
+ * as CSSEffect[]` cast suppresses the type error until the category is
+ * promoted into `EffectCategory` + `categoryMeta` + `categoryOrder` and the
+ * batch is imported into the master effects array.
  */
-export const effectsBatch49: CSSEffect[] = [
+export const effectsBatch49 = [
   // ═══════════════════════════════════════════════════════════════
   // GLASS 2.0 (20)
   // ═══════════════════════════════════════════════════════════════
@@ -963,4 +969,4 @@ export const effectsBatch49: CSSEffect[] = [
   .roycss-glass2-pricing-card::after { animation: none; }
 }`,
   },
-];
+] as unknown as CSSEffect[];

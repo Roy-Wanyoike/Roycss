@@ -790,3 +790,7 @@
     animation: none;
   }
 }
+
+[data-animation-paused="true"] {
+  animation-play-state: paused !important;
+}

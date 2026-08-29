@@ -159,3 +159,15 @@ sentry.properties
 *.bak
 *.backup
 *.orig
+
+# ─── Stray folders (not part of source) ─────────────────────────
+inspector/
+performance/
+test-results/
+upload/
+vscode-support/
+compat/
+examples/
+skills/
+.changeset/
+*.bak

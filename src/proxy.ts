@@ -59,7 +59,7 @@ function generateNonce(): string {
   return btoa(bin);
 }
 
-export function middleware(request: NextRequest): NextResponse {
+export function proxy(request: NextRequest): NextResponse {
   // In dev, do nothing — the dev CSP from next.config.ts applies.
   // Next.js sets NODE_ENV based on the script: `next dev` → "development",
   // `next build && next start` → "production".

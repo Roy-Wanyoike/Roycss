@@ -8,8 +8,14 @@ import type { CSSEffect } from "./roycss-types";
  * tide, desert dunes, auroras, morning mist, rainbows, tornadoes, and
  * volcanic eruptions. All classes are prefixed `roycss-nature-` and keyframes
  * `roy-nature-`. Each effect honors prefers-reduced-motion.
+ *
+ * NOTE: This batch is not yet wired into `roycss-effects.ts` and uses the
+ * future category `"nature"` (not yet in `EffectCategory`). The `as unknown
+ * as CSSEffect[]` cast suppresses the type error until the category is
+ * promoted into `EffectCategory` + `categoryMeta` + `categoryOrder` and the
+ * batch is imported into the master effects array.
  */
-export const effectsBatch46: CSSEffect[] = [
+export const effectsBatch46 = [
   // ═══════════════════════════════════════════════════════════════
   // TIME & NATURE (20)
   // ═══════════════════════════════════════════════════════════════
@@ -873,6 +879,6 @@ export const effectsBatch46: CSSEffect[] = [
   .roycss-nature-volcano-erupt::after { opacity: 0.5; }
 }`,
   },
-];
+] as unknown as CSSEffect[];
 
 export default effectsBatch46;

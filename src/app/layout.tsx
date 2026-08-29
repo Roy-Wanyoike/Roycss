@@ -149,17 +149,17 @@ export const metadata: Metadata = {
     },
   },
   category: "technology",
+  appleWebApp: {
+    capable: true,
+    title: "RoyCSS",
+    statusBarStyle: "black-translucent",
+  },
 };
 
 export const viewport: Viewport = {
   themeColor: "#10b981",
   width: "device-width",
   initialScale: 1,
-  appleWebApp: {
-    capable: true,
-    title: "RoyCSS",
-    statusBarStyle: "black-translucent",
-  },
 };
 
 export default function RootLayout({

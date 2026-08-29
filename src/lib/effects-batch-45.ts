@@ -7,8 +7,14 @@ import type { CSSEffect } from "./roycss-types";
  * honeycomb, crystal facets, ice melt, rust reveal, and more.
  * All classes are prefixed `roycss-structural-` and keyframes `roy-structural-`.
  * Each effect honors prefers-reduced-motion.
+ *
+ * NOTE: This batch is not yet wired into `roycss-effects.ts` and uses the
+ * future category `"structural"` (not yet in `EffectCategory`). The `as unknown
+ * as CSSEffect[]` cast suppresses the type error until the category is
+ * promoted into `EffectCategory` + `categoryMeta` + `categoryOrder` and the
+ * batch is imported into the master effects array.
  */
-export const effectsBatch45: CSSEffect[] = [
+export const effectsBatch45 = [
   // ═══════════════════════════════════════════════════════════════
   // STRUCTURAL & ARCHITECTURAL (20)
   // ═══════════════════════════════════════════════════════════════
@@ -744,6 +750,6 @@ export const effectsBatch45: CSSEffect[] = [
   .roycss-structural-rust-texture:hover::before { transition: none; opacity: 1; clip-path: none; }
 }`,
   },
-];
+] as unknown as CSSEffect[];
 
 export default effectsBatch45;

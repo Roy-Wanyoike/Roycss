@@ -9,8 +9,14 @@ import type { CSSEffect } from "./roycss-types";
  * storytelling, pinned cards, progress rings, and 3D rotate-on-scroll.
  * All classes are prefixed `roycss-scroll-` and keyframes `roy-scroll-`.
  * Each effect honors prefers-reduced-motion.
+ *
+ * NOTE: This batch is not yet wired into `roycss-effects.ts` and uses the
+ * future category `"scroll-intelligence"` (not yet in `EffectCategory`). The
+ * `as unknown as CSSEffect[]` cast suppresses the type error until the
+ * category is promoted into `EffectCategory` + `categoryMeta` +
+ * `categoryOrder` and the batch is imported into the master effects array.
  */
-export const effectsBatch47: CSSEffect[] = [
+export const effectsBatch47 = [
   // ═══════════════════════════════════════════════════════════════
   // SCROLL-INTELLIGENCE (20)
   // ═══════════════════════════════════════════════════════════════
@@ -849,4 +855,4 @@ export const effectsBatch47: CSSEffect[] = [
   .roycss-scroll-snap-sections::before { animation: none; background-position: 0% 0%; }
 }`,
   },
-];
+] as unknown as CSSEffect[];

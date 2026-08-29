@@ -93,6 +93,7 @@ const LOADERS: Record<string, LazyComp> = {
   "roy-gradient-studio": lazy(() => import("@/components/roycss/pro/roy-gradient-studio").then(m => ({ default: m.RoyGradientStudio }))),
   "roy-layout-studio": lazy(() => import("@/components/roycss/pro/roy-layout-studio").then(m => ({ default: m.RoyLayoutStudio }))),
   "roy-designer": lazy(() => import("@/components/roycss/pro/roy-designer").then(m => ({ default: m.RoyDesigner }))),
+  "plugin-hub": lazy(() => import("@/components/roycss/pro/plugin-hub").then(m => ({ default: m.PluginHub }))),
 };
 
 /* Status tabs: All + ready + beta + experimental (skipping roadmap — no entries use it). */

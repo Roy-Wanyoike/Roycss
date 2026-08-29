@@ -1,119 +1,68 @@
 /**
- * RoyCSS OG Image Generator
- *
- * Generates `public/og.png` (1200×630 PNG) from an inline SVG using sharp.
- * Tile-style: dark background (#0a0a0a), brand pill, two-line title
- * ("AI-Native Frontend" / "Engineering Platform"), stats row, and
- * "roycss.com" pill at bottom-right.
- *
- * Usage: `bun run scripts/generate-og-image.ts`
+ * Generate the OG image (1200×630 PNG) using sharp.
+ * Uses the new RoyCSS logo + branding colors.
  */
 import sharp from "sharp";
-import { resolve } from "node:path";
+import { writeFileSync } from "fs";
+import { join } from "path";
 
-const ROOT = resolve(import.meta.dir, "..");
-const OUT = resolve(ROOT, "public", "og.png");
+const PUBLIC_DIR = join(import.meta.dir, "..", "public");
 
-const W = 1200;
-const H = 630;
-const BG = "#0a0a0a";
-const FG = "#ffffff";
-const BRAND = "#10b981";
-const MUTED = "#94a3b8";
-
-// Inline SVG with system fonts — sharp will rasterize via librsvg.
-const ogSvg = `<?xml version="1.0" encoding="UTF-8"?>
-<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+const SVG = `<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0f0f0f"/>
-      <stop offset="1" stop-color="#000000"/>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#064e3b"/>
     </linearGradient>
-    <linearGradient id="brandGrad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#10b981"/>
-      <stop offset="1" stop-color="#34d399"/>
+    <linearGradient id="text-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fafafa"/>
+      <stop offset="100%" stop-color="#34d399"/>
     </linearGradient>
-    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="${BRAND}" stop-opacity="0.15"/>
-      <stop offset="1" stop-color="${BRAND}" stop-opacity="0"/>
-    </radialGradient>
+    <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
   </defs>
 
-  <!-- Background -->
-  <rect width="${W}" height="${H}" fill="url(#bgGrad)"/>
-  <circle cx="${W * 0.78}" cy="${H * 0.28}" r="280" fill="url(#glow)"/>
+  <rect width="1200" height="630" fill="url(#bg)"/>
 
   <!-- Subtle grid -->
-  <g opacity="0.04" stroke="${FG}" stroke-width="1">
-    <line x1="0" y1="${H * 0.5}" x2="${W}" y2="${H * 0.5}"/>
-    <line x1="${W * 0.5}" y1="0" x2="${W * 0.5}" y2="${H}"/>
+  <g opacity="0.06">
+    ${Array.from({ length: 25 }, (_, i) => `<line x1="${i * 48}" y1="0" x2="${i * 48}" y2="630" stroke="#10b981" stroke-width="0.5"/>`).join("")}
+    ${Array.from({ length: 14 }, (_, i) => `<line x1="0" y1="${i * 48}" x2="1200" y2="${i * 48}" stroke="#10b981" stroke-width="0.5"/>`).join("")}
   </g>
 
-  <!-- Brand pill -->
-  <g transform="translate(80, 80)">
-    <rect width="220" height="46" rx="23" fill="${BRAND}" fill-opacity="0.12" stroke="${BRAND}" stroke-opacity="0.4" stroke-width="1"/>
-    <text x="110" y="29" text-anchor="middle" font-size="20" font-weight="600" fill="${BRAND}" letter-spacing="1.5">ROYCSS · v2</text>
+  <!-- Logo mark (top-left) -->
+  <g transform="translate(80, 60) scale(0.8)">
+    <rect width="120" height="120" rx="28" fill="#0a0a0a" stroke="#10b981" stroke-width="2" opacity="0.9"/>
+    <rect x="32" y="28" width="12" height="64" rx="6" fill="url(#logo-grad)"/>
+    <path d="M44 28 L66 28 C78 28 84 36 84 46 C84 56 78 64 66 64 L44 64" stroke="url(#logo-grad)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M48 64 L80 92" stroke="url(#logo-grad)" stroke-width="12" stroke-linecap="round"/>
+    <circle cx="96" cy="92" r="5" fill="#34d399"/>
   </g>
+  <text x="220" y="130" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#34d399" letter-spacing="2">ROYCSS</text>
 
-  <!-- Headline -->
-  <text x="80" y="250" font-size="78" font-weight="800" fill="${FG}" letter-spacing="-2">AI-Native Frontend</text>
-  <text x="80" y="335" font-size="78" font-weight="800" fill="url(#brandGrad)" letter-spacing="-2">Engineering Platform</text>
+  <!-- Main title -->
+  <text x="80" y="300" font-family="system-ui, sans-serif" font-size="72" font-weight="800" fill="url(#text-grad)" letter-spacing="-2">AI-Native Frontend</text>
+  <text x="80" y="380" font-family="system-ui, sans-serif" font-size="72" font-weight="800" fill="#fafafa" letter-spacing="-2">Engineering Platform</text>
 
-  <!-- Subtitle -->
-  <text x="80" y="390" font-size="22" fill="${MUTED}">Production-ready CSS effects · AI-native tools · Design systems</text>
+  <!-- Stats -->
+  <text x="80" y="470" font-family="system-ui, sans-serif" font-size="22" fill="#9ca3af">
+    <tspan fill="#34d399" font-weight="700">1,749</tspan> Effects · <tspan fill="#34d399" font-weight="700">62</tspan> Products · <tspan fill="#34d399" font-weight="700">68</tspan> DevTools · <tspan fill="#34d399" font-weight="700">AI</tspan> Assistance
+  </text>
 
-  <!-- Stats row -->
-  <g transform="translate(80, 460)">
-    <!-- Stat 1 -->
-    <g>
-      <text x="0" y="36" font-size="38" font-weight="700" fill="${FG}">1,749</text>
-      <text x="0" y="64" font-size="15" fill="${MUTED}">CSS EFFECTS</text>
-    </g>
-    <!-- Divider -->
-    <rect x="180" y="10" width="2" height="60" fill="${BRAND}" fill-opacity="0.3"/>
-    <!-- Stat 2 -->
-    <g transform="translate(210, 0)">
-      <text x="0" y="36" font-size="38" font-weight="700" fill="${FG}">62</text>
-      <text x="0" y="64" font-size="15" fill="${MUTED}">PLATFORM PRODUCTS</text>
-    </g>
-    <!-- Divider -->
-    <rect x="320" y="10" width="2" height="60" fill="${BRAND}" fill-opacity="0.3"/>
-    <!-- Stat 3 -->
-    <g transform="translate(350, 0)">
-      <text x="0" y="36" font-size="38" font-weight="700" fill="${FG}">68</text>
-      <text x="0" y="64" font-size="15" fill="${MUTED}">DEVELOPER TOOLS</text>
-    </g>
-    <!-- Divider -->
-    <rect x="460" y="10" width="2" height="60" fill="${BRAND}" fill-opacity="0.3"/>
-    <!-- Stat 4 -->
-    <g transform="translate(490, 0)">
-      <text x="0" y="36" font-size="38" font-weight="700" fill="${FG}">100%</text>
-      <text x="0" y="64" font-size="15" fill="${MUTED}">OPEN SOURCE</text>
-    </g>
-  </g>
-
-  <!-- Bottom-right URL pill -->
-  <g transform="translate(${W - 240}, ${H - 90})">
-    <rect width="160" height="48" rx="24" fill="${BRAND}"/>
-    <text x="80" y="31" text-anchor="middle" font-size="20" font-weight="600" fill="#ffffff">roycss.com</text>
-  </g>
-
-  <!-- Top-left Z mark badge -->
-  <g transform="translate(960, 90)">
-    <rect width="160" height="160" rx="32" fill="${BRAND}" fill-opacity="0.08" stroke="${BRAND}" stroke-opacity="0.4"/>
-    <path d="M50 50 L110 50 L50 110 L110 110" stroke="${FG}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  </g>
+  <!-- Bottom bar -->
+  <rect x="80" y="520" width="160" height="44" rx="22" fill="#10b981"/>
+  <text x="160" y="549" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0a0a0a" text-anchor="middle">roycss.com</text>
+  <text x="260" y="549" font-family="system-ui, sans-serif" font-size="18" fill="#9ca3af">by Royford Wanyoike Wamaitha</text>
 </svg>`;
 
-async function main(): Promise<void> {
-  await sharp(Buffer.from(ogSvg), { density: 144 })
-    .resize(W, H, { fit: "cover", position: "center" })
-    .png({ compressionLevel: 9, quality: 92 })
-    .toFile(OUT);
-  console.log(`✅ Generated ${OUT} (${W}×${H})`);
+async function main() {
+  const png = await sharp(Buffer.from(SVG), { density: 144 })
+    .png({ quality: 95, compressionLevel: 9 })
+    .toBuffer();
+  writeFileSync(join(PUBLIC_DIR, "og.png"), png);
+  console.log(`✓ Generated og.png (${(png.length / 1024).toFixed(1)}KB)`);
 }
 
-main().catch((err) => {
-  console.error("❌ OG image generation failed:", err);
-  process.exit(1);
-});
+main().catch((err) => { console.error("Failed:", err); process.exit(1); });

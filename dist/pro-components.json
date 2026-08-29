@@ -1,68 +1,8 @@
 [
   {
-    "id": "plugin-hub",
-    "name": "Plugin Hub",
-    "path": "src/components/roycss/pro/plugin-hub.tsx"
-  },
-  {
-    "id": "roy-ai",
-    "name": "Roy Ai",
-    "path": "src/components/roycss/pro/roy-ai.tsx"
-  },
-  {
-    "id": "template-library",
-    "name": "Template Library",
-    "path": "src/components/roycss/pro/template-library.tsx"
-  },
-  {
-    "id": "roy-agents",
-    "name": "Roy Agents",
-    "path": "src/components/roycss/pro/roy-agents.tsx"
-  },
-  {
-    "id": "pattern-library",
-    "name": "Pattern Library",
-    "path": "src/components/roycss/pro/pattern-library.tsx"
-  },
-  {
-    "id": "roy-digital-twin",
-    "name": "Roy Digital Twin",
-    "path": "src/components/roycss/pro/roy-digital-twin.tsx"
-  },
-  {
-    "id": "marketplace",
-    "name": "Marketplace",
-    "path": "src/components/roycss/pro/marketplace.tsx"
-  },
-  {
-    "id": "roy-profiler",
-    "name": "Roy Profiler",
-    "path": "src/components/roycss/pro/roy-profiler.tsx"
-  },
-  {
-    "id": "roy-refactor",
-    "name": "Roy Refactor",
-    "path": "src/components/roycss/pro/roy-refactor.tsx"
-  },
-  {
-    "id": "roy-sync",
-    "name": "Roy Sync",
-    "path": "src/components/roycss/pro/roy-sync.tsx"
-  },
-  {
-    "id": "roy-motion-studio",
-    "name": "Roy Motion Studio",
-    "path": "src/components/roycss/pro/roy-motion-studio.tsx"
-  },
-  {
-    "id": "roy-observatory",
-    "name": "Roy Observatory",
-    "path": "src/components/roycss/pro/roy-observatory.tsx"
-  },
-  {
-    "id": "roy-workspace",
-    "name": "Roy Workspace",
-    "path": "src/components/roycss/pro/roy-workspace.tsx"
+    "id": "roy-spotlight",
+    "name": "Roy Spotlight",
+    "path": "src/components/roycss/pro/roy-spotlight.tsx"
   },
   {
     "id": "roy-designer",
@@ -70,54 +10,19 @@
     "path": "src/components/roycss/pro/roy-designer.tsx"
   },
   {
-    "id": "roy-search",
-    "name": "Roy Search",
-    "path": "src/components/roycss/pro/roy-search.tsx"
+    "id": "roy-layout-studio",
+    "name": "Roy Layout Studio",
+    "path": "src/components/roycss/pro/roy-layout-studio.tsx"
   },
   {
-    "id": "roy-deploy",
-    "name": "Roy Deploy",
-    "path": "src/components/roycss/pro/roy-deploy.tsx"
+    "id": "roy-sync",
+    "name": "Roy Sync",
+    "path": "src/components/roycss/pro/roy-sync.tsx"
   },
   {
-    "id": "roy-registry",
-    "name": "Roy Registry",
-    "path": "src/components/roycss/pro/roy-registry.tsx"
-  },
-  {
-    "id": "roy-forms",
-    "name": "Roy Forms",
-    "path": "src/components/roycss/pro/roy-forms.tsx"
-  },
-  {
-    "id": "roy-live",
-    "name": "Roy Live",
-    "path": "src/components/roycss/pro/roy-live.tsx"
-  },
-  {
-    "id": "roy-mentor",
-    "name": "Roy Mentor",
-    "path": "src/components/roycss/pro/roy-mentor.tsx"
-  },
-  {
-    "id": "roy-color-studio",
-    "name": "Roy Color Studio",
-    "path": "src/components/roycss/pro/roy-color-studio.tsx"
-  },
-  {
-    "id": "roy-bundle",
-    "name": "Roy Bundle",
-    "path": "src/components/roycss/pro/roy-bundle.tsx"
-  },
-  {
-    "id": "roy-blocks",
-    "name": "Roy Blocks",
-    "path": "src/components/roycss/pro/roy-blocks.tsx"
-  },
-  {
-    "id": "roy-edge",
-    "name": "Roy Edge",
-    "path": "src/components/roycss/pro/roy-edge.tsx"
+    "id": "marketplace",
+    "name": "Marketplace",
+    "path": "src/components/roycss/pro/marketplace.tsx"
   },
   {
     "id": "roy-generator",
@@ -125,84 +30,19 @@
     "path": "src/components/roycss/pro/roy-generator.tsx"
   },
   {
-    "id": "theme-system",
-    "name": "Theme System",
-    "path": "src/components/roycss/pro/theme-system.tsx"
+    "id": "roy-storage",
+    "name": "Roy Storage",
+    "path": "src/components/roycss/pro/roy-storage.tsx"
   },
   {
-    "id": "roy-scaffold",
-    "name": "Roy Scaffold",
-    "path": "src/components/roycss/pro/roy-scaffold.tsx"
+    "id": "roy-deploy",
+    "name": "Roy Deploy",
+    "path": "src/components/roycss/pro/roy-deploy.tsx"
   },
   {
-    "id": "roy-architect",
-    "name": "Roy Architect",
-    "path": "src/components/roycss/pro/roy-architect.tsx"
-  },
-  {
-    "id": "roy-challenges",
-    "name": "Roy Challenges",
-    "path": "src/components/roycss/pro/roy-challenges.tsx"
-  },
-  {
-    "id": "roy-os",
-    "name": "Roy Os",
-    "path": "src/components/roycss/pro/roy-os.tsx"
-  },
-  {
-    "id": "academy",
-    "name": "Academy",
-    "path": "src/components/roycss/pro/academy.tsx"
-  },
-  {
-    "id": "roy-governance",
-    "name": "Roy Governance",
-    "path": "src/components/roycss/pro/roy-governance.tsx"
-  },
-  {
-    "id": "roy-audit-center",
-    "name": "Roy Audit Center",
-    "path": "src/components/roycss/pro/roy-audit-center.tsx"
-  },
-  {
-    "id": "community-hub",
-    "name": "Community Hub",
-    "path": "src/components/roycss/pro/community-hub.tsx"
-  },
-  {
-    "id": "charts",
-    "name": "Charts",
-    "path": "src/components/roycss/pro/charts.tsx"
-  },
-  {
-    "id": "visual-studio",
-    "name": "Visual Studio",
-    "path": "src/components/roycss/pro/visual-studio.tsx"
-  },
-  {
-    "id": "roy-review",
-    "name": "Roy Review",
-    "path": "src/components/roycss/pro/roy-review.tsx"
-  },
-  {
-    "id": "roy-showcase",
-    "name": "Roy Showcase",
-    "path": "src/components/roycss/pro/roy-showcase.tsx"
-  },
-  {
-    "id": "roy-certifications",
-    "name": "Roy Certifications",
-    "path": "src/components/roycss/pro/roy-certifications.tsx"
-  },
-  {
-    "id": "roy-fleet",
-    "name": "Roy Fleet",
-    "path": "src/components/roycss/pro/roy-fleet.tsx"
-  },
-  {
-    "id": "roy-compliance",
-    "name": "Roy Compliance",
-    "path": "src/components/roycss/pro/roy-compliance.tsx"
+    "id": "roy-forms",
+    "name": "Roy Forms",
+    "path": "src/components/roycss/pro/roy-forms.tsx"
   },
   {
     "id": "roy-storybook",
@@ -210,29 +50,9 @@
     "path": "src/components/roycss/pro/roy-storybook.tsx"
   },
   {
-    "id": "roy-open",
-    "name": "Roy Open",
-    "path": "src/components/roycss/pro/roy-open.tsx"
-  },
-  {
-    "id": "roy-sandbox",
-    "name": "Roy Sandbox",
-    "path": "src/components/roycss/pro/roy-sandbox.tsx"
-  },
-  {
-    "id": "analytics-dashboard",
-    "name": "Analytics Dashboard",
-    "path": "src/components/roycss/pro/analytics-dashboard.tsx"
-  },
-  {
-    "id": "roy-gradient-studio",
-    "name": "Roy Gradient Studio",
-    "path": "src/components/roycss/pro/roy-gradient-studio.tsx"
-  },
-  {
-    "id": "roy-layout-studio",
-    "name": "Roy Layout Studio",
-    "path": "src/components/roycss/pro/roy-layout-studio.tsx"
+    "id": "roy-blocks",
+    "name": "Roy Blocks",
+    "path": "src/components/roycss/pro/roy-blocks.tsx"
   },
   {
     "id": "kanban-board",
@@ -240,14 +60,39 @@
     "path": "src/components/roycss/pro/kanban-board.tsx"
   },
   {
-    "id": "roy-spotlight",
-    "name": "Roy Spotlight",
-    "path": "src/components/roycss/pro/roy-spotlight.tsx"
+    "id": "roy-certifications",
+    "name": "Roy Certifications",
+    "path": "src/components/roycss/pro/roy-certifications.tsx"
   },
   {
-    "id": "roy-pair",
-    "name": "Roy Pair",
-    "path": "src/components/roycss/pro/roy-pair.tsx"
+    "id": "template-library",
+    "name": "Template Library",
+    "path": "src/components/roycss/pro/template-library.tsx"
+  },
+  {
+    "id": "platform-products-showcase",
+    "name": "Platform Products Showcase",
+    "path": "src/components/roycss/pro/platform-products-showcase.tsx"
+  },
+  {
+    "id": "academy",
+    "name": "Academy",
+    "path": "src/components/roycss/pro/academy.tsx"
+  },
+  {
+    "id": "roy-bundle",
+    "name": "Roy Bundle",
+    "path": "src/components/roycss/pro/roy-bundle.tsx"
+  },
+  {
+    "id": "roy-cdn",
+    "name": "Roy Cdn",
+    "path": "src/components/roycss/pro/roy-cdn.tsx"
+  },
+  {
+    "id": "roy-architect",
+    "name": "Roy Architect",
+    "path": "src/components/roycss/pro/roy-architect.tsx"
   },
   {
     "id": "roy-benchmark",
@@ -255,9 +100,29 @@
     "path": "src/components/roycss/pro/roy-benchmark.tsx"
   },
   {
-    "id": "roy-cdn",
-    "name": "Roy Cdn",
-    "path": "src/components/roycss/pro/roy-cdn.tsx"
+    "id": "visual-studio",
+    "name": "Visual Studio",
+    "path": "src/components/roycss/pro/visual-studio.tsx"
+  },
+  {
+    "id": "roy-refactor",
+    "name": "Roy Refactor",
+    "path": "src/components/roycss/pro/roy-refactor.tsx"
+  },
+  {
+    "id": "data-grid",
+    "name": "Data Grid",
+    "path": "src/components/roycss/pro/data-grid.tsx"
+  },
+  {
+    "id": "roy-agents",
+    "name": "Roy Agents",
+    "path": "src/components/roycss/pro/roy-agents.tsx"
+  },
+  {
+    "id": "roy-motion-studio",
+    "name": "Roy Motion Studio",
+    "path": "src/components/roycss/pro/roy-motion-studio.tsx"
   },
   {
     "id": "roy-blueprints",
@@ -270,34 +135,19 @@
     "path": "src/components/roycss/pro/scheduler.tsx"
   },
   {
-    "id": "roy-preview",
-    "name": "Roy Preview",
-    "path": "src/components/roycss/pro/roy-preview.tsx"
+    "id": "roy-registry",
+    "name": "Roy Registry",
+    "path": "src/components/roycss/pro/roy-registry.tsx"
   },
   {
-    "id": "platform-products-showcase",
-    "name": "Platform Products Showcase",
-    "path": "src/components/roycss/pro/platform-products-showcase.tsx"
+    "id": "roy-review",
+    "name": "Roy Review",
+    "path": "src/components/roycss/pro/roy-review.tsx"
   },
   {
-    "id": "data-grid",
-    "name": "Data Grid",
-    "path": "src/components/roycss/pro/data-grid.tsx"
-  },
-  {
-    "id": "roy-storage",
-    "name": "Roy Storage",
-    "path": "src/components/roycss/pro/roy-storage.tsx"
-  },
-  {
-    "id": "roy-version",
-    "name": "Roy Version",
-    "path": "src/components/roycss/pro/roy-version.tsx"
-  },
-  {
-    "id": "motion-library",
-    "name": "Motion Library",
-    "path": "src/components/roycss/pro/motion-library.tsx"
+    "id": "roy-os",
+    "name": "Roy Os",
+    "path": "src/components/roycss/pro/roy-os.tsx"
   },
   {
     "id": "roy-typography",
@@ -305,13 +155,163 @@
     "path": "src/components/roycss/pro/roy-typography.tsx"
   },
   {
+    "id": "roy-governance",
+    "name": "Roy Governance",
+    "path": "src/components/roycss/pro/roy-governance.tsx"
+  },
+  {
+    "id": "analytics-dashboard",
+    "name": "Analytics Dashboard",
+    "path": "src/components/roycss/pro/analytics-dashboard.tsx"
+  },
+  {
+    "id": "plugin-hub",
+    "name": "Plugin Hub",
+    "path": "src/components/roycss/pro/plugin-hub.tsx"
+  },
+  {
+    "id": "roy-sandbox",
+    "name": "Roy Sandbox",
+    "path": "src/components/roycss/pro/roy-sandbox.tsx"
+  },
+  {
+    "id": "roy-version",
+    "name": "Roy Version",
+    "path": "src/components/roycss/pro/roy-version.tsx"
+  },
+  {
+    "id": "roy-edge",
+    "name": "Roy Edge",
+    "path": "src/components/roycss/pro/roy-edge.tsx"
+  },
+  {
+    "id": "roy-audit-center",
+    "name": "Roy Audit Center",
+    "path": "src/components/roycss/pro/roy-audit-center.tsx"
+  },
+  {
+    "id": "roy-showcase",
+    "name": "Roy Showcase",
+    "path": "src/components/roycss/pro/roy-showcase.tsx"
+  },
+  {
+    "id": "theme-system",
+    "name": "Theme System",
+    "path": "src/components/roycss/pro/theme-system.tsx"
+  },
+  {
     "id": "accessibility-suite",
     "name": "Accessibility Suite",
     "path": "src/components/roycss/pro/accessibility-suite.tsx"
   },
   {
+    "id": "roy-pair",
+    "name": "Roy Pair",
+    "path": "src/components/roycss/pro/roy-pair.tsx"
+  },
+  {
+    "id": "roy-profiler",
+    "name": "Roy Profiler",
+    "path": "src/components/roycss/pro/roy-profiler.tsx"
+  },
+  {
+    "id": "roy-live",
+    "name": "Roy Live",
+    "path": "src/components/roycss/pro/roy-live.tsx"
+  },
+  {
+    "id": "roy-search",
+    "name": "Roy Search",
+    "path": "src/components/roycss/pro/roy-search.tsx"
+  },
+  {
+    "id": "pattern-library",
+    "name": "Pattern Library",
+    "path": "src/components/roycss/pro/pattern-library.tsx"
+  },
+  {
+    "id": "roy-mentor",
+    "name": "Roy Mentor",
+    "path": "src/components/roycss/pro/roy-mentor.tsx"
+  },
+  {
     "id": "icon-pack",
     "name": "Icon Pack",
     "path": "src/components/roycss/pro/icon-pack.tsx"
+  },
+  {
+    "id": "motion-library",
+    "name": "Motion Library",
+    "path": "src/components/roycss/pro/motion-library.tsx"
+  },
+  {
+    "id": "roy-digital-twin",
+    "name": "Roy Digital Twin",
+    "path": "src/components/roycss/pro/roy-digital-twin.tsx"
+  },
+  {
+    "id": "roy-preview",
+    "name": "Roy Preview",
+    "path": "src/components/roycss/pro/roy-preview.tsx"
+  },
+  {
+    "id": "roy-scaffold",
+    "name": "Roy Scaffold",
+    "path": "src/components/roycss/pro/roy-scaffold.tsx"
+  },
+  {
+    "id": "roy-fleet",
+    "name": "Roy Fleet",
+    "path": "src/components/roycss/pro/roy-fleet.tsx"
+  },
+  {
+    "id": "roy-workspace",
+    "name": "Roy Workspace",
+    "path": "src/components/roycss/pro/roy-workspace.tsx"
+  },
+  {
+    "id": "roy-gradient-studio",
+    "name": "Roy Gradient Studio",
+    "path": "src/components/roycss/pro/roy-gradient-studio.tsx"
+  },
+  {
+    "id": "roy-open",
+    "name": "Roy Open",
+    "path": "src/components/roycss/pro/roy-open.tsx"
+  },
+  {
+    "id": "roy-challenges",
+    "name": "Roy Challenges",
+    "path": "src/components/roycss/pro/roy-challenges.tsx"
+  },
+  {
+    "id": "roy-ai",
+    "name": "Roy Ai",
+    "path": "src/components/roycss/pro/roy-ai.tsx"
+  },
+  {
+    "id": "roy-compliance",
+    "name": "Roy Compliance",
+    "path": "src/components/roycss/pro/roy-compliance.tsx"
+  },
+  {
+    "id": "community-hub",
+    "name": "Community Hub",
+    "path": "src/components/roycss/pro/community-hub.tsx"
+  },
+  {
+    "id": "roy-observatory",
+    "name": "Roy Observatory",
+    "path": "src/components/roycss/pro/roy-observatory.tsx"
+  },
+  {
+    "id": "roy-color-studio",
+    "name": "Roy Color Studio",
+    "path": "src/components/roycss/pro/roy-color-studio.tsx"
+  },
+  {
+    "id": "charts",
+    "name": "Charts",
+    "path": "src/components/roycss/pro/charts.tsx"
   }
 ]

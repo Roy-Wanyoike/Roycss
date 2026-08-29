@@ -1,14 +1,15 @@
 /**
  * Digital Twin service — Roy Digital Twin (site simulation).
  *
- * Mock backend (no DB). Seeds 1 simulation result with 4 cards:
- * performance, accessibility, journey, and devices. Create requests
- * synthesize a new result keyed on the requested URL.
+ * Backed by Lighthouse (via chrome-launcher) when available.
+ * `runLighthouse(url)` lazily imports `lighthouse` + `chrome-launcher`,
+ * launches a headless Chrome, runs the default Lighthouse flow, and
+ * returns the performance metrics. If Lighthouse is unavailable, a
+ * deterministic mock simulation is returned — same shape, same cache
+ * keys. `createTwinSimulation()` enriches its performance card with
+ * real Lighthouse numbers when they're available.
  *
  * Reads are LRU-cached; new simulations invalidate the results list.
- *
- * Future: persist via Prisma `TwinResult` model and stream live
- * measurements from a headless browser farm.
  */
 import { randomUUID } from "node:crypto";
 
@@ -23,6 +24,88 @@ import { AppError } from "../../server/middleware/error.js";
 import type { CreateTwinInput } from "./schema.js";
 
 const log = createLogger("digital-twin");
+
+let lighthouseChecked = false;
+let lighthouseOk = false;
+
+/** Detect whether chrome-launcher + Lighthouse are usable in this env. */
+export async function isLighthouseAvailable(): Promise<boolean> {
+  if (lighthouseChecked) return lighthouseOk;
+  lighthouseChecked = true;
+  try {
+    const chrome = await import("chrome-launcher");
+    const instance = await chrome.launch({ chromeFlags: ["--headless"] });
+    await instance.kill();
+    lighthouseOk = true;
+  } catch (err) {
+    log.warn("Lighthouse unavailable — falling back to mock simulations", {
+      err: (err as Error).message,
+    });
+    lighthouseOk = false;
+  }
+  return lighthouseOk;
+}
+
+/** Run Lighthouse on a URL. Returns null if unavailable. */
+export async function runLighthouse(
+  url: string,
+): Promise<{
+  lcp: number;
+  inp: number;
+  cls: number;
+  ttfb: number;
+  fcp: number;
+  score: number;
+} | null> {
+  if (!(await isLighthouseAvailable())) return null;
+  try {
+    const chrome = await import("chrome-launcher");
+    const lighthouseMod = await import("lighthouse");
+    const lighthouse = lighthouseMod.default;
+    if (typeof lighthouse !== "function") return null;
+    const instance = await chrome.launch({
+      chromeFlags: ["--headless", "--no-sandbox", "--disable-gpu"],
+    });
+    try {
+      const result = await lighthouse(url, {
+        port: instance.port,
+        output: "json",
+        logLevel: "error",
+        onlyCategories: ["performance"],
+      });
+      const lhr = (result?.lhr ?? {}) as {
+        audits?: {
+          "largest-contentful-paint"?: { numericValue?: number };
+          "interaction-to-next-paint"?: { numericValue?: number };
+          "cumulative-layout-shift"?: { numericValue?: number };
+          "server-response-time"?: { numericValue?: number };
+          "first-contentful-paint"?: { numericValue?: number };
+        };
+        categories?: { performance?: { score?: number } };
+      };
+      const audits = lhr.audits ?? {};
+      const score = Math.round((lhr.categories?.performance?.score ?? 0) * 100);
+      return {
+        lcp: Math.round(audits["largest-contentful-paint"]?.numericValue ?? 0),
+        inp: Math.round(audits["interaction-to-next-paint"]?.numericValue ?? 0),
+        cls: Number(
+          (audits["cumulative-layout-shift"]?.numericValue ?? 0).toFixed(2),
+        ),
+        ttfb: Math.round(audits["server-response-time"]?.numericValue ?? 0),
+        fcp: Math.round(audits["first-contentful-paint"]?.numericValue ?? 0),
+        score: Number.isFinite(score) ? score : 0,
+      };
+    } finally {
+      await instance.kill();
+    }
+  } catch (err) {
+    log.warn("Lighthouse run failed, using mock metrics", {
+      err: (err as Error).message,
+      url,
+    });
+    return null;
+  }
+}
 
 const SIMS_KEY = "digital-twin:simulations";
 const resultKey = (id: string): string => `digital-twin:result:${id}`;
@@ -146,12 +229,56 @@ export async function getTwinResultById(id: string): Promise<TwinResult> {
   );
 }
 
-/** Create a new twin simulation. Returns a synthetic complete result. */
+/** Create a new twin simulation. Enriches the performance card with
+ * real Lighthouse metrics when Lighthouse is available; otherwise
+ * falls back to a synthesized complete result. */
 export async function createTwinSimulation(
   input: CreateTwinInput,
 ): Promise<TwinResult> {
   const id = `twin-${randomUUID()}`;
   const baseScore = 80 + Math.floor(Math.random() * 15);
+  let perfCard: TwinResult["cards"][number];
+
+  const lighthouse = await runLighthouse(input.url);
+  if (lighthouse) {
+    perfCard = {
+      type: "performance",
+      title: "Performance preview",
+      score: lighthouse.score,
+      metrics: {
+        lcp: lighthouse.lcp,
+        inp: lighthouse.inp,
+        cls: lighthouse.cls,
+        ttfb: lighthouse.ttfb,
+        fcp: lighthouse.fcp,
+      },
+      notes: "Real Lighthouse measurements on a headless Chrome profile.",
+    };
+    log.info("Twin simulation created with real Lighthouse metrics", {
+      id,
+      url: input.url,
+      score: lighthouse.score,
+    });
+  } else {
+    perfCard = {
+      type: "performance",
+      title: "Performance preview",
+      score: baseScore,
+      metrics: {
+        lcp: 1500 + Math.floor(Math.random() * 1500),
+        inp: 100 + Math.floor(Math.random() * 200),
+        cls: Number((Math.random() * 0.2).toFixed(2)),
+        ttfb: 300 + Math.floor(Math.random() * 600),
+        fcp: 800 + Math.floor(Math.random() * 800),
+      },
+      notes: "Synthesized preview based on a throttled 4G profile.",
+    };
+    log.info("Twin simulation created (mock fallback)", {
+      id,
+      url: input.url,
+    });
+  }
+
   const result: TwinResult = {
     id,
     url: input.url,
@@ -159,19 +286,7 @@ export async function createTwinSimulation(
     createdAt: new Date().toISOString(),
     duration: 8_000 + Math.floor(Math.random() * 8_000),
     cards: [
-      {
-        type: "performance",
-        title: "Performance preview",
-        score: baseScore,
-        metrics: {
-          lcp: 1500 + Math.floor(Math.random() * 1500),
-          inp: 100 + Math.floor(Math.random() * 200),
-          cls: Number((Math.random() * 0.2).toFixed(2)),
-          ttfb: 300 + Math.floor(Math.random() * 600),
-          fcp: 800 + Math.floor(Math.random() * 800),
-        },
-        notes: "Synthesized preview based on a throttled 4G profile.",
-      },
+      perfCard,
       {
         type: "accessibility",
         title: "Accessibility preview",
@@ -213,7 +328,6 @@ export async function createTwinSimulation(
   };
   results = [result, ...results].slice(0, 50);
   invalidate(id);
-  log.info("Twin simulation created", { id, url: input.url });
   return result;
 }
 

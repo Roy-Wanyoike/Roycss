@@ -6,7 +6,7 @@ import "./roymotion.css";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 import { ServiceWorkerRegistration } from "@/components/roycss/sw-register";
-import { Analytics } from "@vercel/analytics/next";
+import { AuthProvider } from "@/components/roycss/auth/auth-context";
 
 /**
  * Pre-hydration theme script.
@@ -73,12 +73,12 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "RoyCSS — AI-Native Frontend Engineering Platform",
   description:
-    "RoyCSS is a modern, AI-native frontend engineering platform — 1,749 CSS effects, 62 platform products, 68 developer tools, design systems, and AI assistance. Design, build, customize, and ship modern interfaces in one cohesive ecosystem.",
+    "RoyCSS is a modern, AI-native frontend engineering platform — 1,749 CSS effects, 62 platform products, 64 developer tools, design systems, and AI assistance. Design, build, customize, and ship modern interfaces in one cohesive ecosystem.",
   icons: {
     icon: [
-      { url: "/favicon.png", sizes: "1024x1024", type: "image/png" },
       { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
       { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+      { url: "/icon-1024.png", sizes: "1024x1024", type: "image/png" },
     ],
     apple: [
       { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
@@ -86,11 +86,6 @@ export const metadata: Metadata = {
     ],
   },
   manifest: "/manifest.json",
-  appleWebApp: {
-    capable: true,
-    title: "RoyCSS",
-    statusBarStyle: "black-translucent",
-  },
   keywords: [
     "RoyCSS",
     "CSS effects library",
@@ -121,7 +116,7 @@ export const metadata: Metadata = {
     description:
       "1,749 CSS effects, 62 platform products, 68 developer tools, and AI assistance — design, build, customize, and ship modern interfaces in one cohesive ecosystem.",
     type: "website",
-    url: "https://roycss.com",
+    url: "https://roycss.space-z.ai",
     siteName: "RoyCSS",
     locale: "en_US",
     images: [
@@ -138,7 +133,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "RoyCSS — AI-Native Frontend Engineering Platform",
     description:
-      "1,749 CSS effects, 62 platform products, 68 developer tools, and AI assistance — design, build, and ship modern interfaces.",
+      "1,749 CSS effects, 62 platform products, 64 developer tools, and AI assistance — design, build, and ship modern interfaces.",
     creator: "@wanyoikeroy",
     images: ["/api/og"],
   },
@@ -154,6 +149,11 @@ export const metadata: Metadata = {
     },
   },
   category: "technology",
+  appleWebApp: {
+    capable: true,
+    title: "RoyCSS",
+    statusBarStyle: "black-translucent",
+  },
 };
 
 export const viewport: Viewport = {
@@ -181,11 +181,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} antialiased bg-background text-foreground`}
       >
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
         <Toaster />
         <SonnerToaster position="bottom-right" richColors closeButton />
         <ServiceWorkerRegistration />
-        <Analytics />
       </body>
     </html>
   );

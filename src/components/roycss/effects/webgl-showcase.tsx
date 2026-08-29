@@ -216,7 +216,7 @@ export function WebGLShowcase() {
             }}
           >
             <Sparkles className="size-4 mr-2" />
-            Explore 1,749 CSS Effects
+            Explore 1,569 CSS Effects
           </Button>
         </ScrollReveal>
       </div>

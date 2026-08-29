@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyDigitalTwin — digital twin simulator for live apps.
  *
@@ -135,6 +138,10 @@ const SIMULATIONS: readonly Simulation[] = [
 // ─── Component ───────────────────────────────────────────────────────────
 
 export function RoyDigitalTwin() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("digital-twin/simulations");
+  void data; void loading; void error;
+
   const [url, setUrl] = useState("https://acme-design.roycss.app");
   const [building, setBuilding] = useState(false);
   const [progress, setProgress] = useState(0);

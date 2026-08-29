@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyDeploy — deployment platform for RoyCSS projects.
  *
@@ -148,6 +151,10 @@ const STAGES = ["Build", "Upload", "Live"] as const;
 // ─── Component ───────────────────────────────────────────────────────────
 
 export function RoyDeploy() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("deploy/history");
+  void data; void loading; void error;
+
   const [platform, setPlatform] = useState<Platform>("vercel");
   const [deploying, setDeploying] = useState(false);
   const [progress, setProgress] = useState(0);

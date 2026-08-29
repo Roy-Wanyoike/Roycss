@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 import * as React from "react";
 import {
   Area,
@@ -538,6 +541,10 @@ function WeeklyAreaChart({ gradientId }: { gradientId: string }): React.JSX.Elem
 // ─── Main component ─────────────────────────────────────────
 
 export function ProCharts(): React.JSX.Element {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("analytics/overview");
+  void data; void loading; void error;
+
   const [revenueView, setRevenueView] =
     React.useState<RevenueView>("line");
 

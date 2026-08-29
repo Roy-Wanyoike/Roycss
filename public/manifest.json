@@ -6,51 +6,51 @@
   "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
-  "display_override": ["standalone", "minimal-ui", "browser"],
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "background_color": "#0a0a0a",
   "theme_color": "#10b981",
   "orientation": "any",
-  "dir": "auto",
+  "dir": "ltr",
   "lang": "en-US",
-  "categories": ["developer", "productivity", "design", "utilities"],
+  "categories": ["developer", "productivity", "design", "education"],
   "icons": [
     { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-1024.png", "sizes": "1024x1024", "type": "image/png", "purpose": "any" },
     { "src": "/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
     { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
-    { "src": "/favicon.png", "sizes": "1024x1024", "type": "image/png", "purpose": "any" },
     { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" }
   ],
   "shortcuts": [
     {
-      "name": "Browse effects",
+      "name": "Browse Effects",
       "short_name": "Effects",
-      "description": "Open the 1,749 effects gallery",
-      "url": "/?source=pwa-shortcut#effects",
+      "description": "Explore 1,749 production-ready CSS effects with live demos",
+      "url": "/?source=pwa#effects",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     },
     {
-      "name": "Platform products",
+      "name": "Platform Products",
       "short_name": "Platform",
-      "description": "Browse 62 platform products across 6 pillars",
-      "url": "/?source=pwa-shortcut#platform",
+      "description": "62 platform products — AI, dev tools, enterprise",
+      "url": "/?source=pwa#platform",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     },
     {
-      "name": "Search",
+      "name": "Search Effects",
       "short_name": "Search",
-      "description": "Search effects, recipes, patterns, collections, products",
-      "url": "/?source=pwa-shortcut#search",
+      "description": "Search effects, recipes, patterns, and tools",
+      "url": "/?source=pwa#search",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     }
   ],
   "screenshots": [
     {
-      "src": "/og.png",
-      "sizes": "1200x630",
+      "src": "/roycss-logo-mark.png",
+      "sizes": "1024x1024",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "RoyCSS — AI-Native Frontend Engineering Platform"
+      "label": "RoyCSS — Effects Grid"
     }
   ]
 }

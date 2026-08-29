@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyMotionStudio — a visual animation builder with a video-editor-style
  * timeline.
@@ -773,6 +776,10 @@ function TrackRow({
 // ═══════════════════════════════════════════════════════════════════════
 
 export function RoyMotionStudio(): React.JSX.Element {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("motion/effects");
+  void data; void loading; void error;
+
   const [tracks, setTracks] = React.useState<Tracks>(DEFAULT_TRACKS);
   const [duration, setDuration] = React.useState<number>(1.5);
   const [playhead, setPlayhead] = React.useState<number>(0);

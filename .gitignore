@@ -1,3 +1,8 @@
+# ═══════════════════════════════════════════════════════════════
+# RoyCSS — .gitignore
+# Comprehensive — excludes all dev/build/secret/cache artifacts
+# ═══════════════════════════════════════════════════════════════
+
 # ─── Dependencies ──────────────────────────────────────────────
 node_modules/
 .pnp
@@ -8,6 +13,7 @@ node_modules/
 !.yarn/releases
 !.yarn/versions
 bun.lockb
+backend/bun.lock
 
 # ─── Next.js ───────────────────────────────────────────────────
 .next/
@@ -17,10 +23,10 @@ next-env.d.ts
 *.tsbuildinfo
 
 # ─── Production build artifacts ────────────────────────────────
+# dist/ at root IS committed (roycss.css, effects.json — published npm artifacts)
+# backend/dist/ is regenerated — don't commit
+backend/dist/
 dist/coverage/
-
-# Note: dist/ IS committed (roycss.css, effects.json, etc. are the
-# published npm package artifacts). Only dist/coverage/ is ignored.
 
 # ─── Testing & coverage ────────────────────────────────────────
 coverage/
@@ -29,11 +35,29 @@ playwright-report/
 test-results/
 test-results.xml
 *.lcov
+backend/coverage/
+backend/test.db
+backend/test.db-journal
+backend/prisma/test.db*
+backend/prisma/custom.db*
 
-# ─── Environment variables ─────────────────────────────────────
+# ─── Environment variables (NEVER commit secrets) ─────────────
 .env
 .env.*
 !.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+
+# ─── Database (SQLite — regenerated per environment) ───────────
+db/*.db
+db/*.db-journal
+db/*.db-wal
+db/*.db-shm
+backend/prisma/dev.db*
+backend/prisma/migrations/dev.db*
+prisma/migrations/dev.db*
+prisma/generated/
 
 # ─── Debug logs ────────────────────────────────────────────────
 npm-debug.log*
@@ -44,41 +68,21 @@ yarn-error.log*
 dev.log
 dev.out.log
 server.log
+backend/*.log
+/tmp/*.log
 
-# ─── OS files ──────────────────────────────────────────────────
+# ─── OS files ───────────────────────────────────────────────────
 .DS_Store
 .DS_Store?
 ._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
-*.pem
-
-# ─── IDE & editor ──────────────────────────────────────────────
-.vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json
-!.vscode/launch.json
-!.vscode/tasks.json
-.idea/
-*.swp
-*.swo
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
 *~
-.agent
 
 # ─── Vercel ────────────────────────────────────────────────────
 .vercel
-
-# ─── Database (SQLite — regenerated per environment) ───────────
-db/*.db
-db/*.db-journal
-db/*.db-wal
-db/*.db-shm
-prisma/migrations/dev.db*
-
-# ─── Prisma ────────────────────────────────────────────────────
-prisma/generated/
 
 # ─── Local config & agent context ──────────────────────────────
 local-*
@@ -86,11 +90,13 @@ local-*
 .z-ai-config
 agent-ctx/
 .zscripts/
+.roycss-cache/
+upload/
 
 # ─── Skills (not part of the app) ──────────────────────────────
 /skills/
 
-# ─── Tool results & screenshots (not for source control) ──────
+# ─── Tool results & screenshots (not for source control) ────────
 .tool-results/
 tool-results/
 screenshots/
@@ -102,15 +108,67 @@ scripts/curate-results/
 
 # ─── Worklog & dev notes ───────────────────────────────────────
 worklog.md
+.agent
 
 # ─── Bundled zip & tarball artifacts ───────────────────────────
 # RoyCSS.zip is rebuilt from source — don't commit the binary
 *.zip
+# roycss-release folder — zip artifacts stored here (not committed)
+roycss-release/
 # ...but DO track the downloadable zip in public/
-!public/roycss.zip
+# Zip stored in roycss-release/ (gitignored, not committed)
 *.tgz
+*.tar.gz
+
+# ─── VS Code extension packages (regenerated on release) ──────
+# Block stray .vsix files; the two published extension packages
+# below stay tracked as release artifacts.
+*.vsix
+# Keep the two committed release artifacts tracked even if rebuilt:
+!vscode-extension/roycss-1.0.0.vsix
+!vscode-extension/roycss-vscode-1.0.0.vsix
 
 # ─── Miscellaneous ─────────────────────────────────────────────
 .cache/
 .turbo/
 .eslintcache
+
+# ─── Stray clones / downloaded archives (not part of source) ───
+RoyCSS-evolved/
+download/
+portfolio/
+inspector/
+
+# ─── Reports (regenerated, not source) ─────────────────────────
+roycss-upgrade-report.md
+
+# ─── IDE / editor ───────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+*.bak
+
+# ─── Playwright (browser binaries — too big, regenerated) ─────
+# (Playwright browsers live in ~/.cache/ms-playwright/ — not in repo)
+# But ignore any local playwright config that's not for source
+playwright.config.local.ts
+
+# ─── Sentry / observability (local config) ─────────────────────
+.sentryclrc
+sentry.properties
+
+# ─── Misc pids / lock files ────────────────────────────────────
+*.pid
+*.lock
+!bun.lock
+!backend/bun.lock
+# Also keep bun.lock files tracked in sub-projects:
+!mini-services/live-service/bun.lock
+!vscode-extension/bun.lock
+.pids/
+
+# ─── Backup files ──────────────────────────────────────────────
+*.bak
+*.backup
+*.orig

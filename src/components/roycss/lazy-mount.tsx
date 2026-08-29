@@ -1,94 +1,79 @@
 "use client";
 
-import { useState, useEffect, useRef, type ReactNode } from "react";
-
-interface LazyMountProps {
-  children: ReactNode;
-  /**
-   * Margin around the viewport that triggers pre-loading. The wrapper
-   * observes itself with an IntersectionObserver configured with this
-   * rootMargin. Default: `"200px"` — children mount when the wrapper is
-   * within 200px of the viewport edge.
-   */
-  rootMargin?: string;
-  /**
-   * Optional placeholder rendered before the children mount. Use this to
-   * preserve layout (e.g., a fixed-height skeleton) and avoid CLS.
-   * Defaults to `null` (no placeholder).
-   */
-  fallback?: ReactNode;
-  /** Class applied to the wrapper div. */
-  className?: string;
-}
+import { useEffect, useRef, useState, type ReactNode, type ElementType } from "react";
 
 /**
- * LazyMount — only renders its children once they are near the viewport.
+ * LazyMount — defers mounting of children until the wrapper enters
+ * the viewport (with a 200px rootMargin). Useful for heavy widgets
+ * that should not contribute to initial DOM/hydration cost.
  *
- * Uses an IntersectionObserver with a 200px rootMargin. Once the wrapper
- * enters the pre-load zone, the children are mounted and the observer is
- * disconnected (one-shot — children stay mounted after that). Before
- * triggering, only the lightweight placeholder (or `null`) is rendered,
- * keeping the DOM small for offscreen cards.
- *
- * Why this matters for the effects grid:
- *  - `VirtualScrollGrid` already renders ~24 cards at a time
- *  - But only ~4–8 of those are visible above the fold
- *  - The other ~16–20 are mounted-but-offscreen, each contributing a
- *    `LivePreview` with 2–7 nested DOM nodes
- *  - Wrapping `LivePreview` in `LazyMount` defers those ~80–140 nodes
- *    until the card actually scrolls near the viewport
- *
- * SSR / no-IO fallback: if `IntersectionObserver` is not available
- * (e.g., server render, legacy browser), children are mounted
- * immediately so SSR HTML is unaffected and there's no flash of empty
- * content.
- *
- * Used by `EffectCard` to lazily mount the (heavy) `LivePreview`. Could
- * also be used to lazily mount WebGL `<canvas>` effects, deep code
- * blocks, or any heavyweight subtree that lives inside a virtualized
- * grid.
+ * After the first intersection, the children render once and stay mounted.
+ * Falls back to immediate mount when IntersectionObserver is unavailable
+ * (SSR / very old browsers).
  */
+export interface LazyMountProps {
+  children: ReactNode;
+  /** Render a fallback (e.g. skeleton) before mount. Default null. */
+  fallback?: ReactNode;
+  /** rootMargin forwarded to IntersectionObserver. Default "200px". */
+  rootMargin?: string;
+  /** Threshold forwarded to IntersectionObserver. Default 0. */
+  threshold?: number;
+  /** Wrapper element tag. Default "div". */
+  as?: ElementType;
+  className?: string;
+  id?: string;
+  /** aria-hidden while collapsed — set false to keep semantic. */
+  keepAriaHidden?: boolean;
+}
+
 export function LazyMount({
   children,
-  rootMargin = "200px",
   fallback = null,
+  rootMargin = "200px",
+  threshold = 0,
+  as: Tag = "div",
   className,
+  id,
+  keepAriaHidden = true,
 }: LazyMountProps) {
-  // Lazy initial state: if IntersectionObserver is unavailable at first
-  // client render (legacy browser), start mounted so the subtree is
-  // always available. On the server, `window` is undefined and we start
-  // unmounted so SSR emits only the lightweight placeholder.
-  const [shouldMount, setShouldMount] = useState(
-    () =>
-      typeof window !== "undefined" &&
-      typeof IntersectionObserver === "undefined",
-  );
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLElement | null>(null);
+  const [shouldMount, setShouldMount] = useState(false);
 
   useEffect(() => {
-    // Already mounted (no IO available) — nothing to observe.
     if (shouldMount) return;
-    const el = ref.current;
-    if (!el) return;
+    const node = ref.current;
+    if (!node) return;
 
-    const io = new IntersectionObserver(
+    if (typeof IntersectionObserver === "undefined") {
+      queueMicrotask(() => setShouldMount(true));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
       (entries) => {
-        // The wrapper observes itself, so there's only one entry.
-        if (entries[0]?.isIntersecting) {
-          setShouldMount(true);
-          io.disconnect();
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setShouldMount(true);
+            observer.disconnect();
+            break;
+          }
         }
       },
-      { rootMargin },
+      { rootMargin, threshold },
     );
-
-    io.observe(el);
-    return () => io.disconnect();
-  }, [rootMargin, shouldMount]);
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [shouldMount, rootMargin, threshold]);
 
   return (
-    <div ref={ref} className={className}>
+    <Tag
+      ref={ref as React.Ref<HTMLElement>}
+      className={className}
+      id={id}
+      aria-hidden={keepAriaHidden && !shouldMount ? true : undefined}
+    >
       {shouldMount ? children : fallback}
-    </div>
+    </Tag>
   );
 }

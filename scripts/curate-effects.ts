@@ -2,7 +2,7 @@
 /**
  * RoyCSS Effect Curation Script
  *
- * Loads all 1,749 effects from src/lib/roycss-effects.ts, runs the curation
+ * Loads all 1,569 effects from src/lib/roycss-effects.ts, runs the curation
  * pipeline (tag normalization, quality scoring, duplicate detection,
  * miscategorization detection), and writes four outputs:
  *

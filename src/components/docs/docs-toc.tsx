@@ -36,7 +36,7 @@ export function DocsToc({
 
   // Reset active when doc changes
   useEffect(() => {
-     
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot reset on doc change
     setActiveId(null);
   }, [docSlug]);
 

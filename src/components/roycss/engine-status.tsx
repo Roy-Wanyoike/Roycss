@@ -1,113 +1,123 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Check, AlertTriangle, XCircle, HelpCircle } from "lucide-react";
 
 /**
- * EngineStatus — Live "all systems operational" indicator.
+ * EngineStatus — live platform health indicator.
  *
- * Polls `/api/health` every 60s and reflects the actual platform state.
- * Replaces the hardcoded "All systems operational" pill in the footer so
- * the user gets real signal (not a static green dot).
+ * Polls /api/health every 60s and renders a compact pill in the footer
+ * (or anywhere). Replaces the previously-hardcoded "All systems
+ * operational" text.
  *
- * Visual states:
- *   ok       → emerald pulse + "All systems operational"
- *   degraded → amber      + "Degraded — {service}"
- *   down     → rose       + "Service offline"
- *   unknown  → slate      + "Checking systems…" (only on first load)
+ * States: ok / degraded / down / unknown.
+ *
+ * Accessibility: role="status" + aria-live="polite" so screen readers
+ * announce transitions only when the state actually changes.
  */
-type HealthStatus = "ok" | "degraded" | "down" | "unknown";
+type HealthState = "ok" | "degraded" | "down" | "unknown";
 
 interface HealthResponse {
-  status: HealthStatus;
+  status: HealthState;
   effectsCount?: number;
-  dbStatus?: "ok" | "degraded" | "down";
-  backendStatus?: "ok" | "degraded" | "down";
-  liveServiceStatus?: "ok" | "degraded" | "down";
-  timestamp?: string;
-  version?: string;
+  backendStatus?: { status: string; latencyMs?: number };
+  liveServiceStatus?: { status: string; latencyMs?: number };
 }
 
-const DOT_CLASSES: Record<HealthStatus, string> = {
-  ok: "bg-emerald-500 animate-pulse",
-  degraded: "bg-amber-500",
-  down: "bg-rose-500",
-  unknown: "bg-slate-400",
-};
+const POLL_INTERVAL_MS = 60_000;
 
-const LABELS: Record<HealthStatus, string> = {
-  ok: "All systems operational",
-  degraded: "Degraded performance",
-  down: "Service offline",
-  unknown: "Checking systems…",
+const STATE_CONFIG: Record<
+  HealthState,
+  { label: string; dot: string; text: string; icon: typeof Check }
+> = {
+  ok: {
+    label: "All systems operational",
+    dot: "bg-emerald-500",
+    text: "text-emerald-600 dark:text-emerald-400",
+    icon: Check,
+  },
+  degraded: {
+    label: "Degraded performance",
+    dot: "bg-amber-500",
+    text: "text-amber-600 dark:text-amber-400",
+    icon: AlertTriangle,
+  },
+  down: {
+    label: "Some services down",
+    dot: "bg-red-500",
+    text: "text-red-600 dark:text-red-400",
+    icon: XCircle,
+  },
+  unknown: {
+    label: "Checking status…",
+    dot: "bg-slate-400",
+    text: "text-muted-foreground",
+    icon: HelpCircle,
+  },
 };
 
 export function EngineStatus() {
-  const [status, setStatus] = useState<HealthStatus>("unknown");
-  const [detail, setDetail] = useState<string>("");
+  const [state, setState] = useState<HealthState>("unknown");
+  const [effectsCount, setEffectsCount] = useState<number | null>(null);
+  const lastStateRef = useRef<HealthState>("unknown");
 
   useEffect(() => {
     let cancelled = false;
-    let timer: ReturnType<typeof setTimeout> | null = null;
 
-    async function check() {
+    const poll = async () => {
       try {
-        const res = await fetch("/api/health", {
-          cache: "no-store",
-          headers: { Accept: "application/json" },
-        });
+        const res = await fetch("/api/health", { cache: "no-store" });
         if (!res.ok) {
-          if (!cancelled) {
-            setStatus("down");
-            setDetail("");
-          }
+          if (!cancelled) setState("degraded");
           return;
         }
         const data: HealthResponse = await res.json();
         if (cancelled) return;
-        setStatus(data.status ?? "unknown");
-
-        // Surface which subsystem is degraded
-        const degraded: string[] = [];
-        if (data.dbStatus === "degraded") degraded.push("DB");
-        if (data.backendStatus === "degraded") degraded.push("API");
-        if (data.liveServiceStatus === "degraded") degraded.push("Live");
-        setDetail(degraded.length > 0 ? degraded.join(" · ") : "");
+        setState(data.status);
+        setEffectsCount(data.effectsCount ?? null);
+        lastStateRef.current = data.status;
       } catch {
-        if (!cancelled) {
-          setStatus("down");
-          setDetail("");
-        }
-      } finally {
-        if (!cancelled) {
-          // Schedule next poll (60s)
-          timer = setTimeout(check, 60_000);
-        }
+        if (!cancelled) setState("down");
       }
-    }
+    };
 
-    check();
-
+    poll();
+    const timer = setInterval(poll, POLL_INTERVAL_MS);
     return () => {
       cancelled = true;
-      if (timer) clearTimeout(timer);
+      clearInterval(timer);
     };
   }, []);
 
-  const label = detail ? `${LABELS[status]} — ${detail}` : LABELS[status];
+  const cfg = STATE_CONFIG[state];
+  const Icon = cfg.icon;
 
   return (
     <span
-      className="flex items-center gap-1.5"
       role="status"
       aria-live="polite"
-      aria-label={`RoyCSS engine status: ${label}`}
-      title={`Engine: ${label}`}
+      className="inline-flex items-center gap-1.5 text-xs"
+      title={`RoyCSS engine: ${cfg.label}${
+        effectsCount ? ` · ${effectsCount.toLocaleString()} effects` : ""
+      }`}
     >
-      <span
-        className={`size-2 rounded-full ${DOT_CLASSES[status]}`}
-        aria-hidden="true"
-      />
-      {label}
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.span
+          key={state}
+          initial={{ opacity: 0, scale: 0.6 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.6 }}
+          transition={{ duration: 0.2 }}
+          className={`size-2 rounded-full ${cfg.dot} ${
+            state === "ok" ? "animate-pulse" : ""
+          }`}
+        />
+      </AnimatePresence>
+      <span className={`flex items-center gap-1 ${cfg.text}`}>
+        <Icon className="size-3" aria-hidden="true" />
+        {cfg.label}
+      </span>
     </span>
   );
 }

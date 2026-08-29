@@ -14,18 +14,18 @@ export const effectsBatch37: CSSEffect[] = [
 
   // 1. morph-shape-cycle
   {
-    id: "morph-shape-cycle",
-    name: "Shape Cycle",
+    id: "morph-polygon-cycle",
+    name: "Polygon Cycle",
     category: "morphing",
     description: "Element cycles through circle, triangle, square, and pentagon forms",
     tags: ["morphing", "shape", "cycle", "clip-path", "circle", "triangle", "infinite"],
     previewType: "box",
     cssCode: `/* Morphing: Shape Cycle */
-.roycss-morph-shape-cycle {
+.roycss-morph-polygon-cycle {
   background: linear-gradient(135deg, oklch(0.62 0.2 200), oklch(0.55 0.22 280));
-  animation: roy-morph-shape-cycle 8s ease-in-out infinite;
+  animation: roy-morph-polygon-cycle 8s ease-in-out infinite;
 }
-@keyframes roy-morph-shape-cycle {
+@keyframes roy-morph-polygon-cycle {
   0%, 18%   { clip-path: circle(50%); }
   25%, 43%  { clip-path: polygon(50% 0%, 100% 100%, 0% 100%); }
   50%, 68%  { clip-path: inset(0%); }
@@ -33,7 +33,7 @@ export const effectsBatch37: CSSEffect[] = [
   100%      { clip-path: circle(50%); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-morph-shape-cycle { animation: none; clip-path: none; }
+  .roycss-morph-polygon-cycle { animation: none; clip-path: none; }
 }`,
   },
 

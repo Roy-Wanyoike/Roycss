@@ -180,7 +180,7 @@ interface Stat {
 }
 
 const STATS: Stat[] = [
-  { value: 1749, label: "CSS Effects", format: true },
+  { value: 1569, label: "CSS Effects", format: true },
   { value: 62, label: "Platform Products" },
   { value: 64, label: "Developer Tools" },
   { value: 22000, label: "Lines of CSS", suffix: "+", format: true },

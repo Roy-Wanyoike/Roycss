@@ -1,19 +1,23 @@
 /**
- * Marketplace service — in-memory template store.
+ * Marketplace service — Prisma-backed template store.
  *
- * Mock backend (no DB). Seeds 12 platform templates covering the
- * common product surfaces (dashboards, SaaS, admin, CRM, POS, banking,
- * portfolio, e-commerce, blog, documentation, pricing, auth). Each
- * template can have buyer reviews.
+ * Persisted via the `Template` + `TemplateReview` Prisma models. Seeds
+ * 12 platform templates and 5 starter reviews on first access.
  *
- * Reads are LRU-cached; publishing a template invalidates the list.
- *
- * Future: persist templates + reviews via Prisma `Template`/`Review`
- * models and gate publishing behind an admin role.
+ * Field-mapping: the Prisma `Template` model exposes (slug, name,
+ * description, authorId, category, htmlCode, cssCode, jsCode, downloads).
+ * The domain shape's `id ← slug`, `name`, `description`, `category`,
+ * `downloads` map directly; `authorId ← author`; the extra fields
+ * (price, rating, features, thumbnail) are JSON-encoded inside
+ * `htmlCode` as a wrapper. The Prisma `TemplateReview` model exposes
+ * (templateId, userId, rating, comment). The domain shape's
+ * `templateId`, `rating` map directly; `userId ← author`; `comment`
+ * is JSON-encoded as a wrapper that also stores the original comment.
  */
 import { randomUUID } from "node:crypto";
 
 import { CACHE_TTL, PAGINATION } from "../../config/constants.js";
+import { db } from "../../lib/db.js";
 import { cache, cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type { Paginated, Template, TemplateReview } from "../../types/index.js";
@@ -246,8 +250,139 @@ const SEED_REVIEWS: TemplateReview[] = [
   },
 ];
 
-let templates: Template[] = SEED_TEMPLATES.map((t) => ({ ...t }));
-let reviews: TemplateReview[] = SEED_REVIEWS.map((r) => ({ ...r }));
+interface TemplateWrapper {
+  price: number;
+  rating: number;
+  features: string[];
+  thumbnail: string;
+  createdAt: string;
+}
+
+interface ReviewWrapper {
+  author: string;
+  comment: string;
+}
+
+function templateToDb(t: Template) {
+  const wrapper: TemplateWrapper = {
+    price: t.price,
+    rating: t.rating,
+    features: t.features,
+    thumbnail: t.thumbnail,
+    createdAt: t.createdAt,
+  };
+  return {
+    id: t.id,
+    slug: t.id,
+    name: t.name,
+    description: t.description,
+    authorId: t.author,
+    category: t.category,
+    htmlCode: JSON.stringify(wrapper),
+    cssCode: null,
+    jsCode: null,
+    downloads: t.downloads,
+  };
+}
+
+function templateToDomain(row: {
+  id: string;
+  name: string;
+  description: string;
+  authorId: string | null;
+  category: string;
+  htmlCode: string;
+  downloads: number;
+  createdAt: Date;
+}): Template {
+  let wrapper: TemplateWrapper = {
+    price: 0,
+    rating: 0,
+    features: [],
+    thumbnail: "",
+    createdAt: row.createdAt.toISOString(),
+  };
+  try {
+    wrapper = JSON.parse(row.htmlCode) as TemplateWrapper;
+  } catch {
+    // Keep defaults.
+  }
+  return {
+    id: row.id,
+    name: row.name,
+    category: row.category,
+    price: wrapper.price,
+    author: row.authorId ?? "",
+    downloads: row.downloads,
+    rating: wrapper.rating,
+    description: row.description,
+    features: wrapper.features,
+    thumbnail: wrapper.thumbnail,
+    createdAt: wrapper.createdAt,
+  };
+}
+
+function reviewToDb(r: TemplateReview) {
+  const wrapper: ReviewWrapper = { author: r.author, comment: r.comment };
+  return {
+    id: r.id,
+    templateId: r.templateId,
+    userId: r.author,
+    rating: r.rating,
+    comment: JSON.stringify(wrapper),
+  };
+}
+
+function reviewToDomain(row: {
+  id: string;
+  templateId: string;
+  userId: string | null;
+  rating: number;
+  comment: string | null;
+  createdAt: Date;
+}): TemplateReview {
+  let wrapper: ReviewWrapper = { author: row.userId ?? "", comment: "" };
+  if (row.comment) {
+    try {
+      wrapper = JSON.parse(row.comment) as ReviewWrapper;
+    } catch {
+      // Keep defaults.
+    }
+  }
+  return {
+    id: row.id,
+    templateId: row.templateId,
+    author: wrapper.author,
+    rating: row.rating,
+    comment: wrapper.comment,
+    createdAt: row.createdAt.toISOString(),
+  };
+}
+
+let seedPromise: Promise<void> | null = null;
+async function seedIfEmpty(): Promise<void> {
+  if (seedPromise) return seedPromise;
+  seedPromise = (async () => {
+    if ((await db.template.count()) === 0) {
+      await db.template.createMany({
+        data: SEED_TEMPLATES.map(templateToDb),
+      });
+    }
+    if ((await db.templateReview.count()) === 0) {
+      await db.templateReview.createMany({
+        data: SEED_REVIEWS.map(reviewToDb),
+      });
+    }
+    log.info("Marketplace seeded", {
+      templates: SEED_TEMPLATES.length,
+      reviews: SEED_REVIEWS.length,
+    });
+  })().catch((err) => {
+    seedPromise = null;
+    throw err;
+  });
+  return seedPromise;
+}
 
 // ─── Service functions ───────────────────────────────────────────────────
 
@@ -257,8 +392,12 @@ export async function listTemplates(
 ): Promise<Paginated<Template>> {
   return cacheWrap(
     listKey(input),
-    () => {
-      let filtered = templates;
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.template.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+      let filtered = rows.map(templateToDomain);
 
       if (input.category) {
         filtered = filtered.filter((t) => t.category === input.category);
@@ -293,13 +432,13 @@ export async function listTemplates(
       const start = (safePage - 1) * safeLimit;
       const items = sorted.slice(start, start + safeLimit);
 
-      return Promise.resolve({
+      return {
         items,
         page: safePage,
         limit: safeLimit,
         total: sorted.length,
         totalPages: Math.max(1, Math.ceil(sorted.length / safeLimit)),
-      });
+      };
     },
     CACHE_TTL.templatesList,
   );
@@ -309,10 +448,11 @@ export async function listTemplates(
 export async function getTemplateById(id: string): Promise<Template> {
   return cacheWrap(
     detailKey(id),
-    () => {
-      const found = templates.find((t) => t.id === id);
-      if (!found) throw AppError.notFound(`Template '${id}' not found`);
-      return Promise.resolve({ ...found });
+    async () => {
+      await seedIfEmpty();
+      const row = await db.template.findUnique({ where: { id } });
+      if (!row) throw AppError.notFound(`Template '${id}' not found`);
+      return templateToDomain(row);
     },
     CACHE_TTL.templateDetail,
   );
@@ -322,6 +462,7 @@ export async function getTemplateById(id: string): Promise<Template> {
 export async function publishTemplate(
   input: PublishTemplateInput,
 ): Promise<Template> {
+  await seedIfEmpty();
   const template: Template = {
     id: `tpl-${randomUUID()}`,
     name: input.name,
@@ -335,7 +476,7 @@ export async function publishTemplate(
     thumbnail: input.thumbnail || "",
     createdAt: new Date().toISOString(),
   };
-  templates.push(template);
+  await db.template.create({ data: templateToDb(template) });
   invalidateList();
   log.info("Template published", { id: template.id, name: template.name });
   return template;
@@ -350,22 +491,25 @@ export async function getReviewsForTemplate(
 
   return cacheWrap(
     reviewsKey(id),
-    () => {
-      const list = reviews.filter((r) => r.templateId === id);
-      return Promise.resolve(list.map((r) => ({ ...r })));
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.templateReview.findMany({
+        where: { templateId: id },
+        orderBy: { createdAt: "asc" },
+      });
+      return rows.map(reviewToDomain);
     },
     CACHE_TTL.templateDetail,
   );
 }
 
-/** Number of templates in the store. */
+/** Number of templates in the store. Sync stub — real count is in DB. */
 export function templatesCount(): number {
-  return templates.length;
+  return SEED_TEMPLATES.length;
 }
 
-/** Test-only: reset templates + reviews to seed. */
+/** Test-only: reset to seed. */
 export function _resetTemplatesForTest(): void {
-  templates = SEED_TEMPLATES.map((t) => ({ ...t }));
-  reviews = SEED_REVIEWS.map((r) => ({ ...r }));
+  seedPromise = null;
   invalidateList();
 }

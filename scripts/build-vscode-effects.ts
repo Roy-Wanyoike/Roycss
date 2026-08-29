@@ -2,7 +2,7 @@
  * Build script: generates the VSCode extension's embedded effects data.
  *
  * Outputs:
- *   vscode-extension/src/effects-data.ts  — compact metadata for all 1749 effects
+ *   vscode-extension/src/effects-data.ts  — compact metadata for all 1569 effects
  *                                            (id, name, category, description, tags, previewType).
  *                                            Embedded in the .vsix, <500 KB compiled.
  *   vscode-extension/data/css-data.json   — full cssCode map keyed by effect id.

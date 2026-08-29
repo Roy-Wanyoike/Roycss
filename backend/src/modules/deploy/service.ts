@@ -1,17 +1,24 @@
 /**
- * Deploy service — in-memory Roy Deploy platform + history store.
+ * Deploy service — Prisma-backed Roy Deploy platform + history store.
  *
- * Mock backend (no DB). Seeds 6 deployment platforms (Vercel, Netlify,
- * Cloudflare, AWS, Azure, GCP), 5 historical deployments, and 3
- * configured environments. All reads are LRU-cached; deploying a new
- * build invalidates the history cache.
+ * Persisted via the Prisma `Deployment` model (shared with the cloud
+ * module). Seeds 6 deployment platforms (static — no Prisma model), 5
+ * historical deployments, and 3 configured environments (static). The
+ * 5 seed deployments are persisted as `Deployment` rows tagged with
+ * `source: "deploy"` inside the `logsUrl` wrapper so they can be
+ * filtered apart from the cloud module's Deployment rows.
  *
- * Future: swap the in-memory arrays for a Prisma `Deployment` model
- * backed by webhook events from the real platforms.
+ * Field-mapping: the Prisma `Deployment` model exposes (projectId,
+ * environment, status, url, logsUrl). The domain shape's `projectId`
+ * maps directly; `environment ← environment`, `status ← status`,
+ * `url ← url`; the extra fields (platform, commit, branch, duration,
+ * timestamp) are JSON-encoded inside `logsUrl` as a wrapper that also
+ * carries a `source` discriminator.
  */
 import { randomUUID } from "node:crypto";
 
 import { CACHE_TTL } from "../../config/constants.js";
+import { db } from "../../lib/db.js";
 import { cache, cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type {
@@ -33,7 +40,7 @@ function invalidateHistory(id?: string): void {
   if (id) cache.delete(detailKey(id));
 }
 
-// ─── Seed: 6 platforms ───────────────────────────────────────────────────
+// ─── Seed: 6 platforms (static — no Prisma model) ──────────────────────
 const SEED_PLATFORMS: DeployPlatform[] = [
   {
     id: "vercel",
@@ -78,21 +85,21 @@ const SEED_PLATFORMS: DeployPlatform[] = [
   {
     id: "gcp",
     name: "Google Cloud (Firebase)",
-    description: "Firebase Hosting with global CDN and SSL.",
+    description: "Firebase Hosting with global CDN and rollback support.",
     connected: false,
-    regions: ["us-central", "europe-west", "asia-east"],
-    features: ["firebase", "cloud-functions", "cloud-run"],
+    regions: ["us-central1", "europe-west1", "asia-east1"],
+    features: ["hosting", "functions", "emulators"],
   },
 ];
 
-// ─── Seed: 3 environments ────────────────────────────────────────────────
+// ─── Seed: 3 environments (static — no Prisma model) ───────────────────
 const SEED_ENVIRONMENTS: DeployEnvironment[] = [
   {
-    id: "env-production",
+    id: "env-prod",
     name: "Production",
     branch: "main",
     platformId: "vercel",
-    url: "https://marketing.roycss.cloud",
+    url: "https://roycss.cloud",
     autoDeploy: true,
   },
   {
@@ -113,7 +120,7 @@ const SEED_ENVIRONMENTS: DeployEnvironment[] = [
   },
 ];
 
-// ─── Seed: 5 deployments ─────────────────────────────────────────────────
+// ─── Seed: 5 historical deployments ─────────────────────────────────────
 const SEED_HISTORY: DeployHistoryEntry[] = [
   {
     id: "deploy-hist-1",
@@ -177,9 +184,94 @@ const SEED_HISTORY: DeployHistoryEntry[] = [
   },
 ];
 
-let history: DeployHistoryEntry[] = SEED_HISTORY.map((h) => ({ ...h }));
+interface HistoryWrapper {
+  source: "deploy";
+  platform: string;
+  commit: string;
+  branch: string;
+  duration: number;
+  timestamp: string;
+}
 
-/** List all configured platforms. Cached. */
+function toDbRow(h: DeployHistoryEntry) {
+  const wrapper: HistoryWrapper = {
+    source: "deploy",
+    platform: h.platform,
+    commit: h.commit,
+    branch: h.branch,
+    duration: h.duration,
+    timestamp: h.timestamp,
+  };
+  return {
+    id: h.id,
+    projectId: h.projectId,
+    environment: h.environment,
+    status: h.status,
+    url: h.url,
+    logsUrl: JSON.stringify(wrapper),
+  };
+}
+
+function toDomain(row: {
+  id: string;
+  projectId: string | null;
+  environment: string;
+  status: string;
+  url: string | null;
+  logsUrl: string | null;
+  createdAt: Date;
+}): DeployHistoryEntry | null {
+  if (!row.logsUrl) return null;
+  let wrapper: HistoryWrapper;
+  try {
+    wrapper = JSON.parse(row.logsUrl) as HistoryWrapper;
+  } catch {
+    return null;
+  }
+  if (wrapper.source !== "deploy") return null;
+  return {
+    id: row.id,
+    projectId: row.projectId ?? "",
+    environment: row.environment,
+    platform: wrapper.platform,
+    status: row.status as DeployHistoryEntry["status"],
+    commit: wrapper.commit,
+    branch: wrapper.branch,
+    duration: wrapper.duration,
+    timestamp: wrapper.timestamp,
+    url: row.url ?? "",
+  };
+}
+
+let seedPromise: Promise<void> | null = null;
+async function seedIfEmpty(): Promise<void> {
+  if (seedPromise) return seedPromise;
+  seedPromise = (async () => {
+    // Count deploy-tagged rows specifically (the table is shared with cloud).
+    const all = await db.deployment.findMany();
+    const deployRows = all.filter((r) => {
+      if (!r.logsUrl) return false;
+      try {
+        const w = JSON.parse(r.logsUrl) as { source?: string };
+        return w.source === "deploy";
+      } catch {
+        return false;
+      }
+    });
+    if (deployRows.length === 0) {
+      await db.deployment.createMany({
+        data: SEED_HISTORY.map(toDbRow),
+      });
+      log.info("Deploy history seeded", { count: SEED_HISTORY.length });
+    }
+  })().catch((err) => {
+    seedPromise = null;
+    throw err;
+  });
+  return seedPromise;
+}
+
+/** List configured deployment platforms. Cached. */
 export async function listPlatforms(): Promise<DeployPlatform[]> {
   return cacheWrap(
     PLATFORMS_KEY,
@@ -188,7 +280,7 @@ export async function listPlatforms(): Promise<DeployPlatform[]> {
   );
 }
 
-/** List all configured environments. Cached. */
+/** List configured environments. Cached. */
 export async function listEnvironments(): Promise<DeployEnvironment[]> {
   return cacheWrap(
     ENVIRONMENTS_KEY,
@@ -201,7 +293,15 @@ export async function listEnvironments(): Promise<DeployEnvironment[]> {
 export async function listHistory(): Promise<DeployHistoryEntry[]> {
   return cacheWrap(
     HISTORY_KEY,
-    () => Promise.resolve(history.map((h) => ({ ...h }))),
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.deployment.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+      return rows
+        .map(toDomain)
+        .filter((d): d is DeployHistoryEntry => d !== null);
+    },
     CACHE_TTL.deployHistory,
   );
 }
@@ -212,11 +312,12 @@ export async function getHistoryById(
 ): Promise<DeployHistoryEntry> {
   return cacheWrap(
     detailKey(id),
-    () => {
-      const found = history.find((h) => h.id === id);
-      if (!found)
-        throw AppError.notFound(`Deployment '${id}' not found`);
-      return Promise.resolve({ ...found });
+    async () => {
+      await seedIfEmpty();
+      const row = await db.deployment.findUnique({ where: { id } });
+      const entry = row ? toDomain(row) : null;
+      if (!entry) throw AppError.notFound(`Deployment '${id}' not found`);
+      return entry;
     },
     CACHE_TTL.deployHistoryDetail,
   );
@@ -256,20 +357,20 @@ export async function createDeployment(input: {
     timestamp: now,
     url: `https://${input.projectId}.roycss.cloud`,
   };
-  history.push(entry);
+  await db.deployment.create({ data: toDbRow(entry) });
   invalidateHistory(id);
   log.info("Deployment created", { id, platform: platform.name });
   return entry;
 }
 
-/** Number of deployments in the history. */
+/** Number of deployments in the history. Sync stub — real count is in DB. */
 export function historyCount(): number {
-  return history.length;
+  return SEED_HISTORY.length;
 }
 
 /** Test-only: reset to seed. */
 export function _resetDeployForTest(): void {
-  history = SEED_HISTORY.map((h) => ({ ...h }));
+  seedPromise = null;
   invalidateHistory();
 }
 

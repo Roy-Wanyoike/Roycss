@@ -1,19 +1,25 @@
 /**
- * Governance service — Roy Governance approval workflow.
+ * Governance service — Prisma-backed Roy Governance approval workflow.
  *
- * Mock backend (no DB). Seeds 5 pending approvals, 3 policies, and
- * 8 audit-log entries. Approving or rejecting an approval mutates
- * its status and appends a new audit-log entry.
+ * Persisted via the `GovernancePolicy` + `GovernanceApproval` Prisma
+ * models. Seeds 5 pending approvals, 3 policies, and 8 audit-log
+ * entries. The audit log has no Prisma model — it remains a static
+ * in-memory seed (cached).
  *
- * Reads are LRU-cached; mutations invalidate the approvals + audit-log
- * caches.
- *
- * Future: persist via Prisma `Approval`/`Policy`/`AuditLog` models
- * and gate writes behind an admin role + SSO.
+ * Field-mapping: the Prisma `GovernancePolicy` model exposes (orgId,
+ * name, rulesJson). The domain shape's `name` maps directly; the extra
+ * fields (category, description, enforcement, severity) are JSON-encoded
+ * inside `rulesJson` as a wrapper. The Prisma `GovernanceApproval`
+ * model exposes (policyId, userId, resourceType, resourceId, decision,
+ * reason). The domain shape's `type → resourceType`, `resource →
+ * resourceId`, `status → decision`, `requester → userId`, `policyId ←
+ * id`; the extra fields (reason, risk, reviewer, decidedAt, createdAt)
+ * are JSON-encoded inside `reason` as a wrapper.
  */
 import { randomUUID } from "node:crypto";
 
 import { CACHE_TTL } from "../../config/constants.js";
+import { db } from "../../lib/db.js";
 import { cache, cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type {
@@ -132,7 +138,7 @@ const SEED_POLICIES: GovernancePolicy[] = [
   },
 ];
 
-// ─── Seed: 8 audit-log entries ───────────────────────────────────────────
+// ─── Seed: 8 audit-log entries (static — no Prisma model) ──────────────
 const SEED_AUDIT: GovernanceAuditEntry[] = [
   { id: "gov-audit-1", actor: "user-roy", action: "approval.create", resource: "appr-publish-healthcare-theme", result: "success", ip: "192.0.2.10", timestamp: "2025-02-15T10:00:00.000Z" },
   { id: "gov-audit-2", actor: "user-devon", action: "approval.create", resource: "appr-delete-legacy-util", result: "success", ip: "192.0.2.22", timestamp: "2025-02-16T14:30:00.000Z" },
@@ -144,15 +150,162 @@ const SEED_AUDIT: GovernanceAuditEntry[] = [
   { id: "gov-audit-8", actor: "user-asha", action: "approval.withdraw", resource: "appr-old-template-cleanup", result: "success", ip: "198.51.100.42", timestamp: "2025-02-14T16:20:00.000Z" },
 ];
 
-let approvals: GovernanceApproval[] = SEED_APPROVALS.map((a) => ({ ...a }));
-const policies: GovernancePolicy[] = SEED_POLICIES.map((p) => ({ ...p }));
 let auditLog: GovernanceAuditEntry[] = SEED_AUDIT.map((a) => ({ ...a }));
+
+interface PolicyWrapper {
+  category: GovernancePolicy["category"];
+  description: string;
+  enforcement: GovernancePolicy["enforcement"];
+  severity: GovernancePolicy["severity"];
+}
+
+interface ApprovalWrapper {
+  type: GovernanceApproval["type"];
+  reason: string;
+  risk: GovernanceApproval["risk"];
+  requester: string;
+  reviewer: string | null;
+  decidedAt: string | null;
+  createdAt: string;
+}
+
+function policyToDb(p: GovernancePolicy) {
+  const wrapper: PolicyWrapper = {
+    category: p.category,
+    description: p.description,
+    enforcement: p.enforcement,
+    severity: p.severity,
+  };
+  return {
+    id: p.id,
+    orgId: null,
+    name: p.name,
+    rulesJson: JSON.stringify(wrapper),
+  };
+}
+
+function policyToDomain(row: {
+  id: string;
+  name: string;
+  rulesJson: string;
+}): GovernancePolicy {
+  let wrapper: PolicyWrapper = {
+    category: "deployment",
+    description: "",
+    enforcement: "manual",
+    severity: "info",
+  };
+  try {
+    wrapper = JSON.parse(row.rulesJson) as PolicyWrapper;
+  } catch {
+    // Keep defaults.
+  }
+  return {
+    id: row.id,
+    name: row.name,
+    category: wrapper.category,
+    description: wrapper.description,
+    enforcement: wrapper.enforcement,
+    severity: wrapper.severity,
+  };
+}
+
+function approvalToDb(a: GovernanceApproval) {
+  const wrapper: ApprovalWrapper = {
+    type: a.type,
+    reason: a.reason,
+    risk: a.risk,
+    requester: a.requester,
+    reviewer: a.reviewer,
+    decidedAt: a.decidedAt,
+    createdAt: a.createdAt,
+  };
+  return {
+    id: a.id,
+    policyId: a.id, // self-reference (no foreign-key constraint on the column)
+    userId: a.requester,
+    resourceType: a.type,
+    resourceId: a.resource,
+    decision: a.status,
+    reason: JSON.stringify(wrapper),
+  };
+}
+
+function approvalToDomain(row: {
+  id: string;
+  userId: string | null;
+  resourceType: string;
+  resourceId: string;
+  decision: string;
+  reason: string | null;
+  createdAt: Date;
+}): GovernanceApproval {
+  let wrapper: ApprovalWrapper = {
+    type: row.resourceType as GovernanceApproval["type"],
+    reason: "",
+    risk: "low",
+    requester: row.userId ?? "",
+    reviewer: null,
+    decidedAt: null,
+    createdAt: row.createdAt.toISOString(),
+  };
+  if (row.reason) {
+    try {
+      wrapper = JSON.parse(row.reason) as ApprovalWrapper;
+    } catch {
+      // Keep defaults.
+    }
+  }
+  return {
+    id: row.id,
+    type: wrapper.type,
+    resource: row.resourceId,
+    requester: wrapper.requester,
+    reviewer: wrapper.reviewer,
+    status: row.decision as GovernanceApproval["status"],
+    reason: wrapper.reason,
+    risk: wrapper.risk,
+    createdAt: wrapper.createdAt,
+    decidedAt: wrapper.decidedAt,
+  };
+}
+
+let seedPromise: Promise<void> | null = null;
+async function seedIfEmpty(): Promise<void> {
+  if (seedPromise) return seedPromise;
+  seedPromise = (async () => {
+    if ((await db.governancePolicy.count()) === 0) {
+      await db.governancePolicy.createMany({
+        data: SEED_POLICIES.map(policyToDb),
+      });
+    }
+    if ((await db.governanceApproval.count()) === 0) {
+      await db.governanceApproval.createMany({
+        data: SEED_APPROVALS.map(approvalToDb),
+      });
+    }
+    log.info("Governance seeded", {
+      policies: SEED_POLICIES.length,
+      approvals: SEED_APPROVALS.length,
+    });
+  })().catch((err) => {
+    seedPromise = null;
+    throw err;
+  });
+  return seedPromise;
+}
 
 /** List all approvals. Cached. */
 export async function listApprovals(): Promise<GovernanceApproval[]> {
   return cacheWrap(
     APPROVALS_KEY,
-    () => Promise.resolve(approvals.map((a) => ({ ...a }))),
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.governanceApproval.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+      return rows.map(approvalToDomain);
+    },
     CACHE_TTL.governanceApprovals,
   );
 }
@@ -161,7 +314,13 @@ export async function listApprovals(): Promise<GovernanceApproval[]> {
 export async function listPolicies(): Promise<GovernancePolicy[]> {
   return cacheWrap(
     POLICIES_KEY,
-    () => Promise.resolve(policies.map((p) => ({ ...p }))),
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.governancePolicy.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+      return rows.map(policyToDomain);
+    },
     CACHE_TTL.governancePolicies,
   );
 }
@@ -175,7 +334,7 @@ export async function listAuditLog(): Promise<GovernanceAuditEntry[]> {
   );
 }
 
-/** Helper — append an audit-log entry. */
+/** Helper — append an audit-log entry (in-memory only — no Prisma model). */
 function recordAudit(
   actor: string,
   action: string,
@@ -200,30 +359,58 @@ export async function approveApproval(
   id: string,
   input: ApproveInput,
 ): Promise<GovernanceApproval> {
-  const idx = approvals.findIndex((a) => a.id === id);
-  if (idx === -1) {
-    throw AppError.notFound(`Approval '${id}' not found`);
-  }
-  const current = approvals[idx]!;
-  if (current.status !== "pending") {
+  await seedIfEmpty();
+  const row = await db.governanceApproval.findUnique({ where: { id } });
+  if (!row) throw AppError.notFound(`Approval '${id}' not found`);
+  if (row.decision !== "pending") {
     throw AppError.conflict(
-      `Approval '${id}' is already ${current.status}`,
-      { currentStatus: current.status },
+      `Approval '${id}' is already ${row.decision}`,
+      { currentStatus: row.decision },
     );
   }
   const reviewer = input.reviewer ?? "system-reviewer";
   const now = new Date().toISOString();
-  const updated: GovernanceApproval = {
-    ...current,
-    reviewer,
-    status: "approved",
-    decidedAt: now,
-  };
-  approvals = approvals.map((a) => (a.id === id ? updated : a));
+  let wrapper: ApprovalWrapper;
+  try {
+    wrapper = row.reason
+      ? (JSON.parse(row.reason) as ApprovalWrapper)
+      : {
+          type: row.resourceType as GovernanceApproval["type"],
+          reason: "",
+          risk: "low",
+          requester: row.userId ?? "",
+          reviewer: null,
+          decidedAt: null,
+          createdAt: row.createdAt.toISOString(),
+        };
+  } catch {
+    wrapper = {
+      type: row.resourceType as GovernanceApproval["type"],
+      reason: "",
+      risk: "low",
+      requester: row.userId ?? "",
+      reviewer: null,
+      decidedAt: null,
+      createdAt: row.createdAt.toISOString(),
+    };
+  }
+  wrapper.reviewer = reviewer;
+  wrapper.decidedAt = now;
+  await db.governanceApproval.update({
+    where: { id },
+    data: {
+      decision: "approved",
+      reason: JSON.stringify(wrapper),
+    },
+  });
   recordAudit(reviewer, "approval.approve", id, "success");
   invalidateApprovals(id);
   log.info("Approval approved", { id, reviewer });
-  return updated;
+  return approvalToDomain({
+    ...row,
+    decision: "approved",
+    reason: JSON.stringify(wrapper),
+  });
 }
 
 /** Reject a pending approval. Mutates state + appends audit entry. */
@@ -231,41 +418,69 @@ export async function rejectApproval(
   id: string,
   input: RejectInput,
 ): Promise<GovernanceApproval> {
-  const idx = approvals.findIndex((a) => a.id === id);
-  if (idx === -1) {
-    throw AppError.notFound(`Approval '${id}' not found`);
-  }
-  const current = approvals[idx]!;
-  if (current.status !== "pending") {
+  await seedIfEmpty();
+  const row = await db.governanceApproval.findUnique({ where: { id } });
+  if (!row) throw AppError.notFound(`Approval '${id}' not found`);
+  if (row.decision !== "pending") {
     throw AppError.conflict(
-      `Approval '${id}' is already ${current.status}`,
-      { currentStatus: current.status },
+      `Approval '${id}' is already ${row.decision}`,
+      { currentStatus: row.decision },
     );
   }
   const reviewer = input.reviewer ?? "system-reviewer";
   const now = new Date().toISOString();
-  const updated: GovernanceApproval = {
-    ...current,
-    reviewer,
-    status: "rejected",
-    decidedAt: now,
-    reason: `${current.reason}\n\nRejection reason: ${input.reason}`,
-  };
-  approvals = approvals.map((a) => (a.id === id ? updated : a));
+  let wrapper: ApprovalWrapper;
+  try {
+    wrapper = row.reason
+      ? (JSON.parse(row.reason) as ApprovalWrapper)
+      : {
+          type: row.resourceType as GovernanceApproval["type"],
+          reason: "",
+          risk: "low",
+          requester: row.userId ?? "",
+          reviewer: null,
+          decidedAt: null,
+          createdAt: row.createdAt.toISOString(),
+        };
+  } catch {
+    wrapper = {
+      type: row.resourceType as GovernanceApproval["type"],
+      reason: "",
+      risk: "low",
+      requester: row.userId ?? "",
+      reviewer: null,
+      decidedAt: null,
+      createdAt: row.createdAt.toISOString(),
+    };
+  }
+  wrapper.reviewer = reviewer;
+  wrapper.decidedAt = now;
+  wrapper.reason = `${wrapper.reason}\n\nRejection reason: ${input.reason}`;
+  await db.governanceApproval.update({
+    where: { id },
+    data: {
+      decision: "rejected",
+      reason: JSON.stringify(wrapper),
+    },
+  });
   recordAudit(reviewer, "approval.reject", id, "success");
   invalidateApprovals(id);
   log.info("Approval rejected", { id, reviewer });
-  return updated;
+  return approvalToDomain({
+    ...row,
+    decision: "rejected",
+    reason: JSON.stringify(wrapper),
+  });
 }
 
-/** Number of approvals in the store. */
+/** Number of approvals in the store. Sync stub — real count is in DB. */
 export function approvalsCount(): number {
-  return approvals.length;
+  return SEED_APPROVALS.length;
 }
 
 /** Test-only: reset to seed. */
 export function _resetGovernanceForTest(): void {
-  approvals = SEED_APPROVALS.map((a) => ({ ...a }));
+  seedPromise = null;
   auditLog = SEED_AUDIT.map((a) => ({ ...a }));
   invalidateApprovals();
 }

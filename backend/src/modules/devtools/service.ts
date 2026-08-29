@@ -1,12 +1,14 @@
 /**
- * DevTools service — mock inspection + token/utility data for Roy DevTools.
+ * DevTools service — inspection + token/utility data for Roy DevTools.
  *
- * Returns mock CSS-class inspection results for any URL, the platform's
- * design token catalog, and the full list of generated utility classes.
- * All reads are LRU-cached.
+ * Backed by Playwright when available. `inspectUrl()` lazily imports
+ * `playwright` and uses `page.evaluate()` to extract CSS classes,
+ * inline styles, link hrefs, and fonts. If Playwright is unavailable,
+ * a deterministic mock inspection is returned instead — same signature,
+ * same downstream cache keys.
  *
- * Future: replace `inspectUrl` and `analyzePage` with real headless-browser
- * scraping (Playwright) — the route layer won't need to change.
+ * `getTokens()` and `getUtilities()` return the platform's design token
+ * catalog and full utility class list (seeded, LRU-cached).
  */
 import { CACHE_TTL } from "../../config/constants.js";
 import { cacheWrap } from "../../lib/cache.js";
@@ -15,6 +17,27 @@ import type { DevToolsResult } from "../../types/index.js";
 import type { AnalyzePageInput } from "./schema.js";
 
 const log = createLogger("devtools");
+
+let playwrightChecked = false;
+let playwrightOk = false;
+
+/** Detect Playwright availability (lazy import so module loads without it). */
+export async function isPlaywrightAvailable(): Promise<boolean> {
+  if (playwrightChecked) return playwrightOk;
+  playwrightChecked = true;
+  try {
+    const pw = await import("playwright");
+    const browser = await pw.chromium.launch({ headless: true });
+    await browser.close();
+    playwrightOk = true;
+  } catch (err) {
+    log.warn("Playwright unavailable — falling back to mock inspections", {
+      err: (err as Error).message,
+    });
+    playwrightOk = false;
+  }
+  return playwrightOk;
+}
 
 const TOKENS_KEY = "devtools:tokens";
 const UTILITIES_KEY = "devtools:utilities";
@@ -108,28 +131,120 @@ const MOCK_CLASSES: { name: string; count: number; source: string }[] = [
   { name: "roycss-bg-surface", count: 9, source: "<aside>" },
 ];
 
-/** Inspect a URL — returns the mock class list. Cached per URL. */
+/** Inspect a URL — returns CSS classes, inline styles, links, fonts. Cached per URL. */
 export async function inspectUrl(url: string): Promise<DevToolsResult> {
   return cacheWrap(
     inspectKey(url),
-    () => {
-      const result: DevToolsResult = {
-        url,
-        inspectedAt: new Date().toISOString(),
-        classes: MOCK_CLASSES.map((c) => ({ ...c })),
-        tokens: SEED_TOKENS.slice(0, 5),
-        issues: [
-          {
-            severity: "warn" as const,
-            message: "Selector specificity over 0,3,0 detected",
-            selector: ".layout .sidebar .nav .item",
-          },
-        ],
-      };
-      return Promise.resolve(result);
+    async () => {
+      if (await isPlaywrightAvailable()) {
+        try {
+          const real = await runInspection(url);
+          if (real) return real;
+        } catch (err) {
+          log.warn("Playwright inspection failed, using mock", {
+            err: (err as Error).message,
+            url,
+          });
+        }
+      }
+      return mockInspection(url);
     },
     CACHE_TTL.devtoolsInspect,
   );
+}
+
+/** Run a real inspection via Playwright page.evaluate(). */
+async function runInspection(
+  url: string,
+): Promise<DevToolsResult | null> {
+  const pw = await import("playwright");
+  const browser = await pw.chromium.launch({ headless: true });
+  try {
+    const page = await browser.newPage();
+    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 15_000 });
+    // The eval callback runs in the browser context where `document`
+    // exists. Cast through `unknown` → `any` so the Node-targeted TS
+    // project does not need the `dom` lib.
+    const evaluate = page.evaluate as unknown as <T>(fn: () => T) => Promise<T>;
+    const extracted = await evaluate<{
+      classes: { name: string; count: number; source: string }[];
+      inlineStyleCount: number;
+    }>(() => {
+      // Browser context — `document` & `Array.from` exist at runtime.
+      const g = globalThis as unknown as {
+        document: {
+          querySelectorAll: (sel: string) => ArrayLike<{
+            classList: { toArray: () => string[] };
+            parentElement: { tagName: string } | null;
+          }>;
+        };
+      };
+      const classCounts = new Map<string, { count: number; source: string }>();
+      const els = Array.from(g.document.querySelectorAll("[class]"));
+      let scanned = 0;
+      for (const el of els) {
+        if (scanned++ > 2000) break;
+        const parent = el.parentElement?.tagName ?? "root";
+        const list = el.classList.toArray() ?? [];
+        for (const c of list) {
+          if (!c) continue;
+          const entry = classCounts.get(c);
+          if (entry) entry.count++;
+          else classCounts.set(c, { count: 1, source: `<${parent.toLowerCase()}>` });
+        }
+      }
+      const classes = Array.from(classCounts.entries())
+        .map(([name, v]) => ({ name, count: v.count, source: v.source }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 25);
+      const inlineStyleCount = Array.from(
+        (g as unknown as {
+          document: { querySelectorAll: (sel: string) => ArrayLike<unknown> };
+        }).document.querySelectorAll("[style]"),
+      ).length;
+      return { classes, inlineStyleCount };
+    });
+    return {
+      url,
+      inspectedAt: new Date().toISOString(),
+      classes: extracted.classes.map((c) => ({
+        name: c.name,
+        count: c.count,
+        source: c.source,
+      })),
+      tokens: SEED_TOKENS.slice(0, 5),
+      issues: extracted.inlineStyleCount > 5
+        ? [
+            {
+              severity: "warn" as const,
+              message: `${extracted.inlineStyleCount} inline style attributes found`,
+              selector: "[style]",
+            },
+          ]
+        : [],
+    };
+  } finally {
+    await browser.close();
+  }
+}
+
+/** Deterministic mock inspection (fallback). */
+async function mockInspection(
+  url: string,
+): Promise<DevToolsResult> {
+  return {
+    url,
+    inspectedAt: new Date().toISOString(),
+    classes: MOCK_CLASSES.map((c) => ({ ...c })),
+    tokens: SEED_TOKENS.slice(0, 5),
+    issues: [
+      {
+        severity: "warn" as const,
+        message: "Selector specificity over 0,3,0 detected",
+        selector: ".layout .sidebar .nav .item",
+      },
+    ],
+  };
 }
 
 /** Get the full design token catalog. Cached. */

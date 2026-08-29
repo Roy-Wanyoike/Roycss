@@ -7,7 +7,7 @@ import { EffectCard } from "@/components/roycss/effect-card";
 
 /**
  * VirtualScrollGrid — Only renders effect cards that are visible in the viewport.
- * Instead of rendering 1749+ cards (26,000 DOM elements), renders ~20 at a time (~600 elements).
+ * Instead of rendering 1569+ cards (26,000 DOM elements), renders ~20 at a time (~600 elements).
  * Uses a sentinel-based intersection observer to load more cards as user scrolls.
  *
  * Performance impact: 26,000 DOM elements → ~600 DOM elements (97.7% reduction)

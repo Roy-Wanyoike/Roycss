@@ -1,35 +1,31 @@
 import { NextResponse } from "next/server";
 import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import { resolve } from "node:path";
 
-/**
- * OG image endpoint.
- *
- * Returns the static /public/og.png asset (generated at build time by
- * `scripts/generate-og-image.ts` using sharp) directly as image/png.
- *
- * Why: `next/og` (Satori + wasm) crashes silently under Turbopack dev.
- * Serving a pre-built PNG is rock-solid, ~215KB, and instant for crawlers.
- */
 export const runtime = "nodejs";
 
+// Memoized — read PNG once per server instance; cached as Buffer.
 let cachedPng: Buffer | null = null;
 
-function loadPng(): Buffer {
+function getOgPng(): Buffer {
   if (cachedPng) return cachedPng;
-  const filePath = join(process.cwd(), "public", "og.png");
-  cachedPng = readFileSync(filePath);
+  const path = resolve(process.cwd(), "public", "og.png");
+  cachedPng = readFileSync(path);
   return cachedPng;
 }
 
 export function GET() {
-  const png = loadPng();
-  return new NextResponse(png, {
-    status: 200,
-    headers: {
-      "Content-Type": "image/png",
-      "Cache-Control": "public, max-age=86400, immutable",
-      "Content-Length": String(png.length),
-    },
-  });
+  try {
+    const png = getOgPng();
+    return new NextResponse(new Uint8Array(png), {
+      status: 200,
+      headers: {
+        "Content-Type": "image/png",
+        "Cache-Control": "public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800",
+        "X-Content-Type-Options": "nosniff",
+      },
+    });
+  } catch {
+    return new NextResponse("OG image not found", { status: 404 });
+  }
 }

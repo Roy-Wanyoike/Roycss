@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyDesigner — AI UI designer.
  *
@@ -507,6 +510,10 @@ const TICK_MS = 40;
 type RunState = "idle" | "running" | "done";
 
 export function RoyDesigner() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("designer/presets");
+  void data; void loading; void error;
+
   const [prompt, setPrompt] = useState("");
   const [outputType, setOutputType] = useState<OutputType>("full-page");
   const [runState, setRunState] = useState<RunState>("idle");

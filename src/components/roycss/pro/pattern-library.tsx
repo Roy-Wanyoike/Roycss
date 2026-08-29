@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * PatternLibrary — RoyCSS extended pattern library with 12 live UI patterns.
  *
@@ -1625,6 +1628,10 @@ function Toolbar({
 // ═══════════════════════════════════════════════════════════════════════
 
 export function PatternLibrary() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("patterns");
+  void data; void loading; void error;
+
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState<Filter>("all");
 

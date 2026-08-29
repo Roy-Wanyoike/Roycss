@@ -1,19 +1,23 @@
 /**
  * Generator service — Roy Generator code generator.
  *
- * Mock backend (no DB). Seeds 6 generation types (Component, Form,
- * CRUD, Table, Dashboard, API). Each generation type has one or more
- * templates per language. Generation is template-driven — the same
- * inputs always return the same output so the cache is coherent.
+ * The catalog of "what can I generate" is sourced from
+ * `dist/pro-components.json` (63 RoyCSS Pro components), so the generator
+ * reflects the actual component surface the front-end ships. Each
+ * generation type maps to one pro component, with the inputs/languages/
+ * output derived from the component's file path.
  *
  * Reads are LRU-cached; generations are not persisted (one-shot).
  *
- * Future: route to a real template engine (Hygen / Plop) emitting the
- * same shape.
+ * Reference: `dist/pro-components.json` (built by the parent project's
+ * build-package step).
  */
 import { randomUUID } from "node:crypto";
+import { readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
-import { CACHE_TTL } from "../../config/constants.js";
+import { CACHE_TTL, EFFECTS_DATA_PATH } from "../../config/constants.js";
 import { cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type {
@@ -26,123 +30,121 @@ import type { GenerateCodeInput } from "./schema.js";
 
 const log = createLogger("generator");
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const BACKEND_ROOT = resolve(__dirname, "..", "..", "..");
+// pro-components.json lives at <repo-root>/dist/pro-components.json —
+// EFFECTS_DATA_PATH already encodes the `../dist/effects.json` path so we
+// derive the pro-components path from it.
+const PRO_COMPONENTS_PATH = EFFECTS_DATA_PATH.replace(
+  "effects.json",
+  "pro-components.json",
+);
+
 const TYPES_KEY = "generator:types";
 const typeKey = (id: string): string => `generator:type:${id}`;
 const templatesKey = (typeId: string): string =>
   `generator:templates:${typeId}`;
 
-// ─── Seed: 6 generation types ────────────────────────────────────────────
-const SEED_TYPES: GenerationType[] = [
-  {
-    id: "gt-component",
-    name: "Component",
-    description: "A reusable React component scaffold.",
-    inputs: ["name", "props"],
-    languages: ["tsx", "jsx"],
-    output: "1 .tsx/.jsx file",
-  },
-  {
-    id: "gt-form",
-    name: "Form",
-    description: "A controlled form with validation scaffold.",
-    inputs: ["name", "fields"],
-    languages: ["tsx", "jsx"],
-    output: "1 form component + 1 schema file",
-  },
-  {
-    id: "gt-crud",
-    name: "CRUD",
-    description: "A CRUD module: list, detail, create, edit, delete.",
-    inputs: ["name", "fields"],
-    languages: ["tsx", "jsx", "typescript"],
-    output: "5 files",
-  },
-  {
-    id: "gt-table",
-    name: "Table",
-    description: "A sortable, filterable data table.",
-    inputs: ["name", "columns"],
-    languages: ["tsx", "jsx"],
-    output: "1 table component",
-  },
-  {
-    id: "gt-dashboard",
-    name: "Dashboard",
-    description: "A dashboard layout with metric cards + chart slots.",
-    inputs: ["name", "metrics"],
-    languages: ["tsx", "jsx"],
-    output: "1 dashboard layout + KPI card component",
-  },
-  {
-    id: "gt-api",
-    name: "API",
-    description: "An Express route + service + schema triplet.",
-    inputs: ["name", "resource"],
-    languages: ["typescript", "javascript"],
-    output: "3 files: routes, service, schema",
-  },
-];
+// ─── Sourced generation types from dist/pro-components.json ───────────────
+interface ProComponent {
+  id: string;
+  name: string;
+  path: string;
+}
 
-// ─── Seed: 1 template per type (tsx for UI, ts for API) ──────────────────
-const SEED_TEMPLATES: GeneratorTemplate[] = [
-  {
-    id: "tpl-component-tsx",
-    typeId: "gt-component",
-    name: "React Component (TS)",
-    language: "tsx",
-    framework: "react",
-    code: "export function {{Name}}({{props}}) {\n  return <div className=\"roycss-{{name}}\">{{Name}}</div>;\n}\n",
+function deriveDescription(name: string): string {
+  return `Generate a ${name} component scaffold from the RoyCSS Pro catalog.`;
+}
+
+function deriveInputs(path: string): string[] {
+  // Pro components live under src/components/roycss/pro/*.tsx — every one
+  // accepts at least a `name` prop, and most also accept `props` for
+  // configuration. We conservatively list both.
+  if (path.includes("pro/")) return ["name", "props"];
+  return ["name"];
+}
+
+function deriveLanguages(path: string): string[] {
+  return path.endsWith(".tsx")
+    ? ["tsx", "jsx"]
+    : path.endsWith(".ts")
+      ? ["typescript", "javascript"]
+      : ["typescript"];
+}
+
+function deriveOutput(path: string): string {
+  // Strip "src/" prefix; the generator emits one file at the same path.
+  const stripped = path.replace(/^src\//, "");
+  return `1 file at ${stripped}`;
+}
+
+function buildTypesFromProComponents(): GenerationType[] {
+  let raw: string;
+  try {
+    raw = readFileSync(resolve(BACKEND_ROOT, PRO_COMPONENTS_PATH), "utf-8");
+  } catch (err) {
+    log.warn("Failed to read pro-components.json — falling back to empty catalog", {
+      path: PRO_COMPONENTS_PATH,
+      err: err instanceof Error ? err.message : String(err),
+    });
+    return [];
+  }
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch (err) {
+    log.warn("pro-components.json malformed — falling back to empty catalog", {
+      err: err instanceof Error ? err.message : String(err),
+    });
+    return [];
+  }
+  if (!Array.isArray(parsed)) return [];
+
+  const out: GenerationType[] = [];
+  for (const c of parsed as ProComponent[]) {
+    if (!c || typeof c !== "object" || !c.id || !c.name || !c.path) continue;
+    out.push({
+      id: `gt-${c.id}`,
+      name: c.name,
+      description: deriveDescription(c.name),
+      inputs: deriveInputs(c.path),
+      languages: deriveLanguages(c.path),
+      output: deriveOutput(c.path),
+    });
+  }
+  log.info("Generator types sourced from pro-components.json", {
+    count: out.length,
+  });
+  return out;
+}
+
+const SOURCE_TYPES: GenerationType[] = buildTypesFromProComponents();
+
+// ─── 1 template per type (tsx for UI, ts for API) ───────────────────────
+// The template uses the pro component's id as the imported identifier so
+// the generated code wires into the existing Pro component directly.
+const SOURCE_TEMPLATES: GeneratorTemplate[] = SOURCE_TYPES.map((t) => {
+  const isTsx = t.languages.includes("tsx");
+  const lang = isTsx ? "tsx" : "typescript";
+  const framework = isTsx ? "react" : "roycss-pro";
+  // Pull the pro component's id (stripped of the `gt-` prefix) for the import.
+  const componentId = t.id.replace(/^gt-/, "");
+  const componentName = t.name.replace(/[^a-zA-Z0-9_]/g, "");
+  return {
+    id: `tpl-${componentId}-${lang}`,
+    typeId: t.id,
+    name: `${t.name} (${lang.toUpperCase()})`,
+    language: lang,
+    framework,
+    code: isTsx
+      ? `import { ${componentName} } from "@/components/roycss/pro/${componentId}";\n\nexport function {{Name}}Wrapper({{props}}) {\n  return <${componentName} {{props}} />;\n}\n`
+      : `export const {{name}}Factory = {\n  create: ({{props}}) => ({ component: "${componentId}", ...({{props}} || {}) }),\n};\n`,
     variables: ["Name", "name", "props"],
-  },
-  {
-    id: "tpl-form-tsx",
-    typeId: "gt-form",
-    name: "React Form (TS)",
-    language: "tsx",
-    framework: "react",
-    code: "export function {{Name}}Form() {\n  return <form className=\"roycss-form\">{{Name}} form</form>;\n}\n",
-    variables: ["Name", "name"],
-  },
-  {
-    id: "tpl-crud-tsx",
-    typeId: "gt-crud",
-    name: "CRUD Module (TS)",
-    language: "tsx",
-    framework: "react",
-    code: "// {{Name}} list, detail, create, edit, delete\nexport const {{Name}}CRUD = {};\n",
-    variables: ["Name", "name"],
-  },
-  {
-    id: "tpl-table-tsx",
-    typeId: "gt-table",
-    name: "Data Table (TS)",
-    language: "tsx",
-    framework: "react",
-    code: "export function {{Name}}Table({ rows }: { rows: any[] }) {\n  return <table className=\"roycss-table\" />;\n}\n",
-    variables: ["Name", "name"],
-  },
-  {
-    id: "tpl-dashboard-tsx",
-    typeId: "gt-dashboard",
-    name: "Dashboard Layout (TS)",
-    language: "tsx",
-    framework: "react",
-    code: "export function {{Name}}Dashboard() {\n  return <main className=\"roycss-dashboard\">{{Name}}</main>;\n}\n",
-    variables: ["Name", "name"],
-  },
-  {
-    id: "tpl-api-ts",
-    typeId: "gt-api",
-    name: "Express API (TS)",
-    language: "typescript",
-    framework: "express",
-    code: "import { Router } from \"express\";\nexport const {{name}}Router = Router();\n{{name}}Router.get(\"/\", (_req, res) => res.json({ ok: true }));\n",
-    variables: ["Name", "name"],
-  },
-];
+  };
+});
 
-const types: GenerationType[] = SEED_TYPES.map((t) => ({ ...t }));
-const templates: GeneratorTemplate[] = SEED_TEMPLATES.map((t) => ({ ...t }));
+const types: GenerationType[] = SOURCE_TYPES.map((t) => ({ ...t }));
+const templates: GeneratorTemplate[] = SOURCE_TEMPLATES.map((t) => ({ ...t }));
 
 /** List all generation types. Cached. */
 export async function listTypes(): Promise<GenerationType[]> {

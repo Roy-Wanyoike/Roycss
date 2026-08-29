@@ -394,7 +394,7 @@ export function CollectionsSection({
               Curated Effect Collections
             </h2>
             <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-              1749 effects is a lot. Collections hand-pick the best effects for
+              1569 effects is a lot. Collections hand-pick the best effects for
               specific aesthetics and use cases — so you find what you need in
               seconds, not minutes.
             </p>
@@ -460,7 +460,7 @@ export function CollectionsSection({
             }
             className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:gap-2.5 transition-all cursor-pointer"
           >
-            Browse all 1749 effects
+            Browse all 1569 effects
             <ArrowRight className="size-3.5" />
           </button>
         </ScrollReveal>

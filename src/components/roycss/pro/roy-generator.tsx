@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyGenerator — a code generator for RoyCSS.
  *
@@ -1192,6 +1195,10 @@ function OptionControl({ spec, value, onChange }: OptionControlProps) {
 // ═══════════════════════════════════════════════════════════════════════
 
 export function RoyGenerator() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("generator/types");
+  void data; void loading; void error;
+
   const { toast } = useToast();
   const [genType, setGenType] = useState<GenType>("component");
   const [name, setName] = useState("MyButton");

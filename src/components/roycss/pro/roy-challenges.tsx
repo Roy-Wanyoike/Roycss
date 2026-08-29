@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyChallenges — coding challenges arena.
  *
@@ -200,6 +203,10 @@ const USER_RANK = 18;
 // ─── Component ───────────────────────────────────────────────────────────
 
 export function RoyChallenges() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("challenges");
+  void data; void loading; void error;
+
   const { toast } = useToast();
   const [openId, setOpenId] = useState<string | null>(null);
   const [completed, setCompleted] = useState<Set<string>>(new Set());

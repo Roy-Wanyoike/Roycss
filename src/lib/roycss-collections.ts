@@ -4,7 +4,7 @@ import { effects } from "./roycss-effects";
 /**
  * RoyCSS Collections — curated themed bundles of effects.
  *
- * With 1749 effects, discoverability is a challenge. Collections solve this
+ * With 1569 effects, discoverability is a challenge. Collections solve this
  * by hand-picking the best effects for specific aesthetics, use cases, or
  * design languages. Each collection tells you WHAT to use and WHY.
  */

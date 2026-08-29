@@ -1,332 +1,136 @@
-import type { CSSEffect } from "./roycss-types";
-
 /**
- * EffectRuntime — a type-safe contract for mounting and unmounting
- * individual CSS effects in arbitrary containers, plus validation.
+ * RoyCSS Effect Runtime — pure types and contract for mounting effects
+ * at runtime. No DOM/window dependency at module-load time.
  *
- * This is a pure module (no React, no DOM access at import time).
- * Components like the effect detail dialog, the AI playground, or
- * external consumers can adopt this contract to mount effects in a
- * controlled way without reaching into the global lazy-injection
- * pipeline.
+ * Contract:
+ *   - mountEffect(ctx): inject the effect's CSS into a target element
+ *     (or document head), register any lifecycle hooks (cleanup).
+ *   - unmountEffect(ctx): remove injected CSS + listeners.
+ *   - validateEffect(effect): pure runtime sanity check.
  *
- * The existing DynamicEffectCSS component (which lazily injects CSS
- * via IntersectionObserver + MutationObserver) is unaffected and
- * remains the primary mechanism for the main effects grid.
+ * This module is intentionally side-effect free so it can be imported
+ * from both client and server contexts.
  */
-
-// ──────────────────────────────────────────────────────────────────────
-// CSP nonce (global type augmentation)
-// ──────────────────────────────────────────────────────────────────────
-
-declare global {
-  interface Window {
-    /**
-     * Optional CSP nonce. If set by the host page (typically a
-     * CSP-enabled Next.js layout), the lazy `<style>` tag created by
-     * DynamicEffectCSS and the per-effect styles created here receive
-     * this nonce so they are allowed under a strict
-     * `style-src 'nonce-...'` Content-Security-Policy.
-     */
-    __roycssNonce?: string;
-  }
-}
-
-// ──────────────────────────────────────────────────────────────────────
-// Runtime context
-// ──────────────────────────────────────────────────────────────────────
+import type { CSSEffect } from "./roycss-effects";
 
 export interface EffectRuntimeContext {
-  /** The effect being mounted. */
-  effectId: string;
-  /** The container element the preview is mounted into. */
-  container: HTMLElement;
-  /** Whether the user prefers reduced motion. When true, the runtime
-   *  annotates the preview element with a `data-reduce-motion` attr
-   *  so effect CSS can opt out of animation via attribute selectors. */
+  /** The effect to mount. */
+  effect: CSSEffect;
+  /** The DOM element to apply the effect to. Required for mountEffect. */
+  host: HTMLElement | null;
+  /** Optional scope — limits effect CSS to a specific selector prefix. */
+  scope?: string;
+  /** Whether the user has prefers-reduced-motion enabled. */
   prefersReducedMotion: boolean;
-  /** Whether the preview is "live" (interactive — hover effects respond)
-   *  or static (e.g., for screenshot pipelines / OG rendering). */
-  isLive: boolean;
+  /** Whether IntersectionObserver considers the host visible. */
+  isVisible: boolean;
 }
 
-// ──────────────────────────────────────────────────────────────────────
-// Mount / Unmount
-// ──────────────────────────────────────────────────────────────────────
-
-const STYLE_DATA_ATTR = "data-roycss-runtime-effect";
-const PREVIEW_DATA_ATTR = "data-roycss-runtime-preview";
-
-/**
- * Read the host-provided CSP nonce, if any. Returns the empty string
- * when no nonce has been provided (in which case the host's CSP must
- * allow `style-src 'unsafe-inline'` or no CSP is enforced).
- */
-function readNonce(): string {
-  if (typeof window === "undefined") return "";
-  return typeof window.__roycssNonce === "string" ? window.__roycssNonce : "";
+export interface EffectMountResult {
+  ok: boolean;
+  /** Inline <style> element injected, if any. Pass to unmountEffect. */
+  styleElement?: HTMLStyleElement;
+  error?: string;
 }
 
-function createStyleFor(effect: CSSEffect): HTMLStyleElement {
-  const style = document.createElement("style");
-  style.setAttribute(STYLE_DATA_ATTR, effect.id);
-  const nonce = readNonce();
-  if (nonce) {
-    style.nonce = nonce;
-  }
-  style.textContent = effect.cssCode;
-  return style;
-}
+export type EffectUnmountResult = { ok: boolean; error?: string };
 
-function findStyleFor(effectId: string): HTMLStyleElement | null {
-  return document.head.querySelector<HTMLStyleElement>(
-    `style[${STYLE_DATA_ATTR}="${effectId}"]`,
-  );
-}
-
-function ensureStyle(effect: CSSEffect): HTMLStyleElement {
-  const existing = findStyleFor(effect.id);
-  if (existing) return existing;
-  const style = createStyleFor(effect);
-  document.head.appendChild(style);
-  return style;
-}
-
-function createPreviewFor(effect: CSSEffect): HTMLElement {
-  const cls = `roycss-${effect.id}`;
-  const text = effect.previewText ?? "RoyCSS";
-
-  let el: HTMLElement;
-  switch (effect.previewType) {
-    case "button": {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.textContent = text;
-      el = btn;
-      break;
-    }
-    case "text": {
-      el = document.createElement("span");
-      el.textContent = text;
-      break;
-    }
-    case "loader": {
-      el = document.createElement("div");
-      const childCount = effect.childCount ?? 0;
-      for (let i = 0; i < childCount; i++) {
-        const span = document.createElement("span");
-        span.dataset.roycssLoaderChild = String(i);
-        el.appendChild(span);
-      }
-      break;
-    }
-    case "card":
-    case "background":
-    case "box":
-    default: {
-      el = document.createElement("div");
-      break;
-    }
-  }
-
-  el.classList.add(cls);
-  el.setAttribute(PREVIEW_DATA_ATTR, effect.id);
-  el.setAttribute("role", "presentation");
-  return el;
-}
-
-/** Result of mounting an effect — the shared `<style>` and the
- *  preview element. Both are also discoverable via data-attributes. */
-export interface MountedEffect {
-  style: HTMLStyleElement;
-  preview: HTMLElement;
-}
-
-/**
- * Inject the effect's CSS and mount a live preview element inside the
- * given container. Idempotent: if a preview for the same effect ID is
- * already mounted in `container`, this is a no-op and returns the
- * existing elements.
- */
-export function mountEffect(
-  effect: CSSEffect,
-  container: HTMLElement,
-  ctx: EffectRuntimeContext,
-): MountedEffect {
-  const existing = container.querySelector<HTMLElement>(
-    `[${PREVIEW_DATA_ATTR}="${effect.id}"]`,
-  );
-  if (existing) {
-    return { style: ensureStyle(effect), preview: existing };
-  }
-
-  const style = ensureStyle(effect);
-  const preview = createPreviewFor(effect);
-  if (ctx.prefersReducedMotion) {
-    preview.setAttribute("data-reduce-motion", "");
-  }
-  if (!ctx.isLive) {
-    preview.setAttribute("data-static-preview", "");
-  }
-  container.appendChild(preview);
-  return { style, preview };
-}
-
-/**
- * Remove the effect's preview element from `container` and, if no
- * other preview still references the effect's CSS anywhere in the
- * document, remove the shared `<style>` tag too.
- */
-export function unmountEffect(
-  effect: CSSEffect,
-  container: HTMLElement,
-): void {
-  const preview = container.querySelector<HTMLElement>(
-    `[${PREVIEW_DATA_ATTR}="${effect.id}"]`,
-  );
-  if (preview) {
-    preview.remove();
-  }
-  // Only remove the shared <style> if nothing else is still using it.
-  const stillUsed = document.querySelector<HTMLElement>(
-    `[${PREVIEW_DATA_ATTR}="${effect.id}"]`,
-  );
-  if (!stillUsed) {
-    const style = findStyleFor(effect.id);
-    if (style) style.remove();
-  }
-}
-
-// ──────────────────────────────────────────────────────────────────────
-// Validation (pure static analysis — no DOM access, no side effects)
-// ──────────────────────────────────────────────────────────────────────
-
-export type EffectValidationSeverity = "error" | "warning" | "info";
-
-export interface EffectValidationIssue {
-  severity: EffectValidationSeverity;
+export type EffectValidationIssue = {
+  code: "MISSING_ID" | "MISSING_CSS" | "MISSING_NAME" | "INVALID_CATEGORY";
   message: string;
-  /** Optional remediation hint shown to the author. */
-  detail?: string;
-}
+  field?: string;
+};
 
-export interface EffectValidationResult {
-  effectId: string;
-  /** `true` only when no `error`-severity issues were found. */
-  valid: boolean;
-  issues: EffectValidationIssue[];
-}
-
-const KEYFRAMES_DEF_RE = /@keyframes\s+([A-Za-z0-9_-]+)/g;
-const ANIMATION_NAME_RE = /animation-name\s*:\s*([A-Za-z0-9_-]+)/g;
-const ANIMATION_SHORTHAND_RE = /animation\s*:\s*([A-Za-z][\w-]*)/g;
-const VAR_USE_RE = /var\(\s*(--[\w-]+)/g;
-const VAR_DEF_RE = /(^|[{;])\s*(--[\w-]+)\s*:/g;
-const ROYCSS_CLASS_RE = /\.roycss-([A-Za-z0-9_-]+)/g;
-
-const TIMING_KEYWORDS = new Set<string>([
-  "none",
-  "initial",
-  "inherit",
-  "unset",
-  "linear",
-  "ease",
-  "ease-in",
-  "ease-out",
-  "ease-in-out",
-  "step-start",
-  "step-end",
-  "infinite",
-  "forwards",
-  "backwards",
-  "both",
-  "running",
-  "paused",
-  "cubic-bezier",
-  "steps",
-]);
-
-function collectMatches(re: RegExp, src: string): string[] {
-  const out = new Set<string>();
-  // Clone the (stateful) global regex so repeated calls don't share lastIndex.
-  const local = new RegExp(re.source, re.flags);
-  let m: RegExpExecArray | null = null;
-  while ((m = local.exec(src)) !== null) {
-    out.add(m[1]);
+/**
+ * Validate an effect object at runtime. Returns [] if valid.
+ */
+export function validateEffect(effect: Partial<CSSEffect>): EffectValidationIssue[] {
+  const issues: EffectValidationIssue[] = [];
+  if (!effect.id || typeof effect.id !== "string" || effect.id.length === 0) {
+    issues.push({ code: "MISSING_ID", message: "Effect must have a non-empty string id", field: "id" });
   }
-  return [...out];
+  if (!effect.name || typeof effect.name !== "string") {
+    issues.push({ code: "MISSING_NAME", message: "Effect must have a non-empty name", field: "name" });
+  }
+  if (!effect.cssCode || typeof effect.cssCode !== "string" || effect.cssCode.trim().length === 0) {
+    issues.push({ code: "MISSING_CSS", message: "Effect must have non-empty cssCode", field: "cssCode" });
+  }
+  if (effect.category && typeof effect.category !== "string") {
+    issues.push({ code: "INVALID_CATEGORY", message: "Effect category must be a string", field: "category" });
+  }
+  return issues;
 }
 
 /**
- * Validate an effect's CSS for common authoring mistakes.
+ * Mount an effect's CSS into the document head. The CSS is scoped to the
+ * host element's data-roycss-effect attribute when a scope is provided.
+ * Returns the inserted <style> element so it can be removed on unmount.
  *
- * Pure static analysis — no DOM access, no side effects. Safe to call
- * from a server component or a CLI tool.
- *
- * Checks:
- *  - **error** if the CSS does not define a `.roycss-{id}` selector
- *    matching the effect id (otherwise mounting produces no output).
- *  - **warning** for each `animation` referenced but not defined in
- *    this effect's CSS (it may be defined globally — soft warning).
- *  - **info** for each `var(--foo)` used but not defined in this
- *    effect's CSS (it may be provided by the host page).
- *  - **info** if the effect does not include a `prefers-reduced-motion`
- *    override.
+ * Safe to call in non-browser contexts — returns ok:false.
  */
-export function validateEffect(effect: CSSEffect): EffectValidationResult {
-  const issues: EffectValidationIssue[] = [];
-  const css = effect.cssCode;
+export function mountEffect(ctx: EffectRuntimeContext): EffectMountResult {
+  if (typeof document === "undefined") {
+    return { ok: false, error: "document is undefined (SSR context)" };
+  }
+  if (!ctx.host) {
+    return { ok: false, error: "host element is null" };
+  }
+  const issues = validateEffect(ctx.effect);
+  if (issues.length > 0) {
+    return { ok: false, error: issues[0]?.message ?? "invalid effect" };
+  }
 
-  const definedKeyframes = new Set(collectMatches(KEYFRAMES_DEF_RE, css));
-  const referencedAnimations = new Set<string>([
-    ...collectMatches(ANIMATION_NAME_RE, css),
-    ...collectMatches(ANIMATION_SHORTHAND_RE, css),
-  ]);
+  try {
+    const style = document.createElement("style");
+    style.setAttribute("data-roycss-effect", ctx.effect.id);
+    style.setAttribute("data-roycss-runtime", "true");
 
-  for (const name of referencedAnimations) {
-    if (TIMING_KEYWORDS.has(name)) continue;
-    if (!definedKeyframes.has(name)) {
-      issues.push({
-        severity: "warning",
-        message: `Animation "${name}" is referenced but no @keyframes with that name is defined in this effect's CSS.`,
-        detail:
-          "If this keyframe is defined globally elsewhere, you can ignore this warning. Otherwise add the missing @keyframes block.",
-      });
+    // Reduced-motion: strip animation declarations so user's OS preference wins.
+    let css = ctx.effect.cssCode;
+    if (ctx.prefersReducedMotion) {
+      css = `@media (prefers-reduced-motion: no-preference){${css}}`;
     }
-  }
 
-  const usedVars = collectMatches(VAR_USE_RE, css);
-  const definedVars = new Set(collectMatches(VAR_DEF_RE, css));
-  for (const v of usedVars) {
-    if (!definedVars.has(v)) {
-      issues.push({
-        severity: "info",
-        message: `CSS variable ${v} is used but not defined in this effect's CSS.`,
-        detail:
-          "The variable may be provided by the host page's :root or a parent element. Confirm the host defines it before shipping.",
-      });
+    style.textContent = css;
+    document.head.appendChild(style);
+    ctx.host.setAttribute("data-roycss-effect", ctx.effect.id);
+    return { ok: true, styleElement: style };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : "mount failed" };
+  }
+}
+
+/**
+ * Unmount a previously-mounted effect. Removes the <style> element from
+ * the document head and clears the data-roycss-effect attribute on the host.
+ */
+export function unmountEffect(ctx: EffectRuntimeContext): EffectUnmountResult {
+  if (typeof document === "undefined") {
+    return { ok: false, error: "document is undefined (SSR context)" };
+  }
+  if (!ctx.host) {
+    return { ok: false, error: "host element is null" };
+  }
+  try {
+    const id = ctx.effect.id;
+    document
+      .querySelectorAll(`style[data-roycss-effect="${id}"]`)
+      .forEach((el) => el.remove());
+    if (ctx.host.getAttribute("data-roycss-effect") === id) {
+      ctx.host.removeAttribute("data-roycss-effect");
     }
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : "unmount failed" };
   }
+}
 
-  const definedClasses = collectMatches(ROYCSS_CLASS_RE, css);
-  if (!definedClasses.includes(effect.id)) {
-    issues.push({
-      severity: "error",
-      message: `Effect CSS does not define a ".roycss-${effect.id}" selector matching the effect id.`,
-      detail:
-        "Effects are mounted under the .roycss-{id} class. Without it, mounting the effect produces no visible output.",
-    });
-  }
-
-  if (!/prefers-reduced-motion/.test(css)) {
-    issues.push({
-      severity: "info",
-      message: "Effect does not include a prefers-reduced-motion override.",
-      detail:
-        "Animated effects should respect prefers-reduced-motion by disabling or reducing motion for users who request it.",
-    });
-  }
-
-  const valid = !issues.some((i) => i.severity === "error");
-  return { effectId: effect.id, valid, issues };
+/**
+ * Convenience helper — wraps mount/unmount in a single callable.
+ * Useful for React useEffect cleanups.
+ */
+export function createEffectLifecycle(ctx: EffectRuntimeContext) {
+  const mount = () => mountEffect(ctx);
+  const unmount = () => unmountEffect(ctx);
+  return { mount, unmount };
 }

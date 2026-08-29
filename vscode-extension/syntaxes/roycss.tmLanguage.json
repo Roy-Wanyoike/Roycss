@@ -1,0 +1,43 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "scopeName": "roycss.injection",
+  "injectionSelector": "L:text.html -string.quoted, L:source.css -string.quoted, L:source.js.jsx -string, L:source.tsx -string, L:source.vue -string, L:source.svelte -string",
+  "patterns": [
+    {
+      "name": "support.class.roycss",
+      "match": "\\broycss-[a-z0-9]+(?:-[a-z0-9]+)*\\b",
+      "captures": {
+        "0": {
+          "name": "support.class.roycss"
+        }
+      }
+    },
+    {
+      "name": "entity.other.attribute-name.class.roycss",
+      "match": "(\\broycss-[a-z0-9]+(?:-[a-z0-9]+)*\\b)",
+      "captures": {
+        "0": {
+          "name": "entity.other.attribute-name.class.roycss"
+        }
+      }
+    },
+    {
+      "name": "entity.name.keyframe.roycss",
+      "match": "\\broy-[a-z0-9]+(?:-[a-z0-9]+)*\\b",
+      "captures": {
+        "0": {
+          "name": "entity.name.keyframe.roycss"
+        }
+      }
+    },
+    {
+      "name": "variable.other.custom-property.roycss",
+      "match": "\\b--roy-[a-z0-9]+(?:-[a-z0-9]+)*\\b",
+      "captures": {
+        "0": {
+          "name": "variable.other.custom-property.roycss"
+        }
+      }
+    }
+  ]
+}

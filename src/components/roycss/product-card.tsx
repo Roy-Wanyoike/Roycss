@@ -1,317 +1,113 @@
 "use client";
 
-/**
- * ProductCard — reusable card for the 62 platform products.
- *
- * Reads a single `ProductEntry` from `src/lib/product-registry.ts` (the
- * single source of truth) and renders:
- *   - icon + name
- *   - category badge, tier badge, status badge
- *   - short description (≤ 80 chars)
- *   - CTA button (uses <Link> for internal href, <a> for external,
- *     <button> for actions)
- *   - quality score badge (computed via `src/lib/effect-quality.ts`)
- *
- * Hover effect: subtle lift + primary border glow.
- *
- * The card is a controlled component — it does NOT manage modal state.
- * The parent grid decides what "open" means (pass `onOpen`).
- */
-
-import { memo, useMemo } from "react";
-import Link from "next/link";
-import {
-  Grid3x3,
-  KanbanSquare,
-  Calendar,
-  BarChart3,
-  Blocks,
-  Package,
-  LayoutGrid,
-  Building2,
-  Store,
-  Plug,
-  FormInput,
-  BookOpen,
-  Layers,
-  Palette,
-  Type,
-  Sparkles,
-  Shapes,
-  Accessibility,
-  Bot,
-  Wrench,
-  Code2,
-  Search,
-  LineChart,
-  GraduationCap,
-  Trophy,
-  Award,
-  Users,
-  Shield,
-  BrainCircuit,
-  Hammer,
-  ChevronRight,
-  ExternalLink,
-  type LucideIcon,
-} from "lucide-react";
+import { motion } from "framer-motion";
+import * as Icons from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import {
-  PRODUCT_TIER_META,
-  PRODUCT_STATUS_META,
-  PRODUCT_CATEGORIES,
-  type ProductEntry,
-} from "@/lib/product-registry";
-import {
-  computeQualityScore,
-  scoreToGrade,
-  gradeToClassName,
-} from "@/lib/effect-quality";
+import type { ProductEntry, ProductStatus, ProductTier } from "@/lib/product-registry";
 
-/* ═══════════════════════════════════════════════════════════════
-   ICON MAP — resolve string icon names from the registry to Lucide
-   components. Curated to the ~30 icons used across the 62 products.
-   ═══════════════════════════════════════════════════════════════ */
-
-const PRODUCT_ICON_MAP: Record<string, LucideIcon> = {
-  Grid3x3,
-  KanbanSquare,
-  Calendar,
-  BarChart3,
-  Blocks,
-  Package,
-  LayoutGrid,
-  Building2,
-  Store,
-  Plug,
-  FormInput,
-  BookOpen,
-  Layers,
-  Palette,
-  Type,
-  Sparkles,
-  Shapes,
-  Accessibility,
-  Bot,
-  Wrench,
-  Code2,
-  Search,
-  LineChart,
-  GraduationCap,
-  Trophy,
-  Award,
-  Users,
-  Shield,
-  BrainCircuit,
-  Hammer,
+const TIER_BADGE: Record<ProductTier, { label: string; className: string }> = {
+  free: { label: "Free", className: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/20" },
+  pro: { label: "Pro", className: "bg-primary/15 text-primary border-primary/25" },
+  enterprise: { label: "Enterprise", className: "bg-amber-500/15 text-amber-700 dark:text-amber-400 border-amber-500/25" },
+  cloud: { label: "Cloud", className: "bg-cyan-500/15 text-cyan-700 dark:text-cyan-400 border-cyan-500/25" },
 };
 
-/** Resolve a string icon name to a Lucide component, fallback to Layers. */
-export function resolveProductIcon(name: string): LucideIcon {
-  return PRODUCT_ICON_MAP[name] ?? Layers;
-}
+const STATUS_DOT: Record<ProductStatus, string> = {
+  ready: "bg-emerald-500",
+  beta: "bg-amber-500",
+  experimental: "bg-violet-500",
+  roadmap: "bg-muted-foreground/40",
+};
 
-/* ═══════════════════════════════════════════════════════════════
-   COMPONENT
-   ═══════════════════════════════════════════════════════════════ */
-
-export interface ProductCardProps {
+interface ProductCardProps {
   product: ProductEntry;
-  /** Called when the user clicks the card or its primary CTA action button. */
   onOpen?: (product: ProductEntry) => void;
-  /** Visual variant — `compact` for grids, `featured` for hero spots. */
-  variant?: "compact" | "featured";
-  /** Optional extra className merged onto the card root. */
-  className?: string;
-  /** Tab index for keyboard navigation. */
-  tabIndex?: number;
 }
 
-function ProductCardImpl({
-  product,
-  onOpen,
-  variant = "compact",
-  className,
-  tabIndex,
-}: ProductCardProps) {
-  const Icon = resolveProductIcon(product.icon);
-  const tierMeta = PRODUCT_TIER_META[product.tier];
-  const statusMeta = PRODUCT_STATUS_META[product.status];
-  const categoryMeta = PRODUCT_CATEGORIES.find((c) => c.id === product.category);
-
-  const qualityGrade = useMemo(() => {
-    const score = computeQualityScore({
-      status: product.status,
-      tier: product.tier,
-      descriptionLength: product.shortDescription.length,
-      tagCount: product.tags.length,
-      hasMetrics: Boolean(product.metrics),
-    });
-    return { grade: scoreToGrade(score), score };
-  }, [product]);
-
-  const isFeatured = variant === "featured";
-  const ctaIsInternalHref =
-    product.cta.href && product.cta.href.startsWith("/");
-  const ctaIsExternalHref =
-    product.cta.href && !product.cta.href.startsWith("/");
-
-  const handleClick = () => {
-    if (onOpen && (product.cta.action || !product.cta.href)) {
-      onOpen(product);
-    }
-  };
+/**
+ * ProductCard — single product tile.
+ *
+ * Visual: icon + name + tier badge + status dot + description + CTA.
+ * Hover: lift + primary border glow (via `hover:-translate-y-1` + `ring-primary/40`).
+ */
+export function ProductCard({ product, onOpen }: ProductCardProps) {
+  // Resolve the lucide icon dynamically. Falls back to "Sparkle".
+  const IconComp = ((Icons as unknown) as Record<string, React.ComponentType<{ className?: string }>>)[product.icon] ?? Icons.Sparkle;
+  const tierBadge = TIER_BADGE[product.tier];
 
   return (
-    <Card
-      className={cn(
-        "group relative overflow-hidden p-5 cursor-pointer perf-auto",
-        "border-border bg-card transition-all duration-200",
-        "hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10",
-        "hover:-translate-y-1 focus-within:border-primary/60 focus-within:ring-2 focus-within:ring-primary/30",
-        isFeatured && "p-6 sm:p-7",
-        className,
-      )}
-      onClick={handleClick}
+    <motion.button
+      layout
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -4 }}
+      transition={{ duration: 0.18 }}
+      onClick={() => onOpen?.(product)}
       onKeyDown={(e) => {
-        if ((e.key === "Enter" || e.key === " ") && onOpen) {
+        if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          onOpen(product);
+          onOpen?.(product);
         }
       }}
-      role="button"
-      tabIndex={tabIndex ?? 0}
-      aria-label={`Open ${product.name}`}
+      className={cn(
+        "group relative flex flex-col gap-3 p-4 sm:p-5 text-start rounded-2xl",
+        "bg-card/80 backdrop-blur-sm border border-border",
+        "hover:border-primary/40 hover:ring-2 hover:ring-primary/20 hover:-translate-y-1 transition-all",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
+        "cursor-pointer min-h-[180px]",
+      )}
+      aria-label={`${product.name} — ${product.shortDescription}`}
     >
-      {/* ── Hover border-glow ring (pure CSS, no JS) ────────────── */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        style={{
-          background:
-            "radial-gradient(ellipse at top, color-mix(in oklch, var(--primary) 18%, transparent), transparent 65%)",
-        }}
-      />
-
-      {/* ── Header: icon + name + chevron ─────────────────────── */}
-      <div className="relative flex items-start justify-between gap-3 mb-3">
-        <div className="flex items-center gap-3 min-w-0">
+      <div className="flex items-start justify-between gap-2">
+        <div className="flex items-center gap-3">
           <div
             className={cn(
-              "flex items-center justify-center rounded-xl bg-primary/10 text-primary shrink-0 transition-colors",
-              "group-hover:bg-primary/20 group-hover:scale-105",
-              isFeatured ? "size-12" : "size-10",
+              "flex items-center justify-center size-10 rounded-xl shrink-0",
+              "bg-primary/10 text-primary border border-primary/20",
+              "group-hover:bg-primary/20 group-hover:scale-105 transition-all",
             )}
           >
-            <Icon className={isFeatured ? "size-6" : "size-5"} />
+            <IconComp className="size-5" />
           </div>
           <div className="min-w-0">
-            <h3
-              className={cn(
-                "font-display font-bold text-foreground leading-tight truncate",
-                isFeatured ? "text-base sm:text-lg" : "text-sm",
-              )}
-            >
-              {product.name}
-            </h3>
-            <div className="flex items-center gap-1.5 mt-1 flex-wrap">
+            <h3 className="font-semibold text-sm sm:text-base text-foreground truncate">{product.name}</h3>
+            <div className="flex items-center gap-1.5 mt-0.5">
               <span
-                className={cn(
-                  "inline-flex items-center text-[9px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded-full",
-                  statusMeta.className,
-                )}
-              >
-                {statusMeta.label}
-              </span>
-              <span
-                className={cn(
-                  "inline-flex items-center text-[9px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded-full",
-                  tierMeta.className,
-                )}
-              >
-                {tierMeta.label}
-              </span>
-              <span
-                className={cn(
-                  "inline-flex items-center text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-full",
-                  gradeToClassName(qualityGrade.grade),
-                )}
-                title={`Quality score: ${qualityGrade.score}/100`}
-              >
-                {qualityGrade.grade}
-                <span className="ml-0.5 opacity-70 tabular-nums">
-                  {qualityGrade.score}
-                </span>
-              </span>
+                className={cn("size-1.5 rounded-full", STATUS_DOT[product.status])}
+                aria-hidden
+              />
+              <span className="text-[11px] capitalize text-muted-foreground">{product.status}</span>
             </div>
           </div>
         </div>
-        <ChevronRight className="size-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all shrink-0 mt-1" />
+        <Badge variant="outline" className={cn("shrink-0 text-[10px] font-semibold px-1.5 py-0", tierBadge.className)}>
+          {tierBadge.label}
+        </Badge>
       </div>
 
-      {/* ── Description ────────────────────────────────────────── */}
-      <p
-        className={cn(
-          "relative text-muted-foreground line-clamp-2 leading-relaxed flex-1",
-          isFeatured ? "text-sm" : "text-xs",
-        )}
-      >
+      <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 flex-1">
         {product.shortDescription}
       </p>
 
-      {/* ── Footer: category badge + CTA ───────────────────────── */}
-      <div className="relative flex items-center justify-between gap-2 mt-4 pt-3 border-t border-border/50">
-        <Badge
-          variant="secondary"
-          className="text-[10px] bg-muted/60 text-muted-foreground"
-          title={categoryMeta?.description}
+      <div className="flex items-center justify-between mt-1">
+        <div className="flex flex-wrap gap-1">
+          {product.tags.slice(0, 3).map((tag) => (
+            <span key={tag} className="text-[10px] text-muted-foreground/80 px-1.5 py-0.5 rounded-md bg-muted/60">
+              {tag}
+            </span>
+          ))}
+        </div>
+        <Button
+          size="sm"
+          variant="ghost"
+          className="h-7 px-2 text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+          tabIndex={-1}
         >
-          {categoryMeta?.label ?? product.category}
-        </Badge>
-
-        {/* CTA — <Link> for internal href, <a> for external, <button> otherwise */}
-        {ctaIsInternalHref && product.cta.href ? (
-          <Link
-            href={product.cta.href}
-            onClick={(e) => e.stopPropagation()}
-            className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline"
-          >
-            {product.cta.label}
-            <ChevronRight className="size-3" />
-          </Link>
-        ) : ctaIsExternalHref && product.cta.href ? (
-          <a
-            href={product.cta.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline"
-          >
-            {product.cta.label}
-            <ExternalLink className="size-3" />
-          </a>
-        ) : (
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleClick();
-            }}
-            className="h-auto p-0 text-xs font-medium text-primary hover:bg-transparent hover:text-primary"
-          >
-            {product.cta.label}
-            <ChevronRight className="size-3" />
-          </Button>
-        )}
+          {product.cta}
+        </Button>
       </div>
-    </Card>
+    </motion.button>
   );
 }
-
-export const ProductCard = memo(ProductCardImpl);
-export default ProductCard;

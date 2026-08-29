@@ -95,7 +95,7 @@ export function UserAnalyticsDashboard({ open, onOpenChange, favoritesCount, onS
             <StatCard icon={Star} label="Rated" value={stats.rated} color="text-amber-500 bg-amber-500/10" />
             <StatCard icon={Heart} label="Favorites" value={stats.favorites} color="text-rose-500 bg-rose-500/10" />
             <StatCard icon={TrendingUp} label="Avg Rating" value={stats.avgRating} color="text-violet-500 bg-violet-500/10" />
-            <StatCard icon={Clock} label="Explore Rate" value={`${stats.viewed > 0 ? Math.round(stats.viewed / 1749 * 100 * 10) / 10 : 0}%`} color="text-primary bg-primary/10" />
+            <StatCard icon={Clock} label="Explore Rate" value={`${stats.viewed > 0 ? Math.round(stats.viewed / 1569 * 100 * 10) / 10 : 0}%`} color="text-primary bg-primary/10" />
           </div>
 
           {/* Top rated effects */}

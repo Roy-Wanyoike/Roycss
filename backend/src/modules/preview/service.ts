@@ -1,16 +1,22 @@
 /**
- * Preview service — in-memory Roy Preview branch deployment store.
+ * Preview service — Prisma-backed Roy Preview branch deployment store.
  *
- * Mock backend (no DB). Seeds 4 preview branches with URLs and status.
- * All reads are LRU-cached; creating or deleting a preview invalidates
- * the list cache.
+ * Persisted via the Prisma `PreviewBranch` model. Seeds 4 preview
+ * branches with URLs and status on first access. All reads are
+ * LRU-cached; creating or deleting a preview invalidates the list cache.
  *
- * Future: swap the in-memory array for a Prisma `PreviewBranch` model
- * backed by webhook events from the hosting platform.
+ * Field-mapping: the Prisma `PreviewBranch` model exposes (projectId,
+ * branchName, previewUrl, status). The domain shape's `branch ←
+ * branchName`, `url ← previewUrl`, `project ← projectId`, `status ←
+ * status` map directly; the extra fields (commit, createdAt, expiresAt)
+ * are JSON-encoded inside `previewUrl`? no — `previewUrl` carries the
+ * URL itself, so we wrap the extra fields inside `branchName` as a
+ * JSON envelope that also carries the original branch name.
  */
 import { randomUUID } from "node:crypto";
 
 import { CACHE_TTL } from "../../config/constants.js";
+import { db } from "../../lib/db.js";
 import { cache, cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type { PreviewBranch } from "../../types/index.js";
@@ -70,13 +76,90 @@ const SEED_PREVIEWS: PreviewBranch[] = [
   },
 ];
 
-let previews: PreviewBranch[] = SEED_PREVIEWS.map((p) => ({ ...p }));
+interface BranchWrapper {
+  branch: string;
+  commit: string;
+  createdAt: string;
+  expiresAt: string;
+}
+
+function toDbRow(p: PreviewBranch) {
+  const wrapper: BranchWrapper = {
+    branch: p.branch,
+    commit: p.commit,
+    createdAt: p.createdAt,
+    expiresAt: p.expiresAt,
+  };
+  return {
+    id: p.id,
+    projectId: p.project,
+    branchName: JSON.stringify(wrapper),
+    previewUrl: p.url,
+    status: p.status,
+  };
+}
+
+function toDomain(row: {
+  id: string;
+  projectId: string | null;
+  branchName: string;
+  previewUrl: string;
+  status: string;
+  createdAt: Date;
+}): PreviewBranch {
+  let wrapper: BranchWrapper = {
+    branch: row.branchName,
+    commit: "",
+    createdAt: row.createdAt.toISOString(),
+    expiresAt: row.createdAt.toISOString(),
+  };
+  try {
+    wrapper = JSON.parse(row.branchName) as BranchWrapper;
+  } catch {
+    // Keep defaults — branchName was not a JSON wrapper.
+    wrapper.branch = row.branchName;
+  }
+  return {
+    id: row.id,
+    branch: wrapper.branch,
+    project: row.projectId ?? "",
+    url: row.previewUrl,
+    status: row.status as PreviewBranch["status"],
+    commit: wrapper.commit,
+    createdAt: wrapper.createdAt,
+    expiresAt: wrapper.expiresAt,
+  };
+}
+
+let seedPromise: Promise<void> | null = null;
+async function seedIfEmpty(): Promise<void> {
+  if (seedPromise) return seedPromise;
+  seedPromise = (async () => {
+    const count = await db.previewBranch.count();
+    if (count === 0) {
+      await db.previewBranch.createMany({
+        data: SEED_PREVIEWS.map(toDbRow),
+      });
+      log.info("Preview branches seeded", { count: SEED_PREVIEWS.length });
+    }
+  })().catch((err) => {
+    seedPromise = null;
+    throw err;
+  });
+  return seedPromise;
+}
 
 /** List all preview branches. Cached. */
 export async function listPreviews(): Promise<PreviewBranch[]> {
   return cacheWrap(
     LIST_KEY,
-    () => Promise.resolve(previews.map((p) => ({ ...p }))),
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.previewBranch.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+      return rows.map(toDomain);
+    },
     CACHE_TTL.previewList,
   );
 }
@@ -85,10 +168,11 @@ export async function listPreviews(): Promise<PreviewBranch[]> {
 export async function getPreviewById(id: string): Promise<PreviewBranch> {
   return cacheWrap(
     detailKey(id),
-    () => {
-      const found = previews.find((p) => p.id === id);
-      if (!found) throw AppError.notFound(`Preview '${id}' not found`);
-      return Promise.resolve({ ...found });
+    async () => {
+      await seedIfEmpty();
+      const row = await db.previewBranch.findUnique({ where: { id } });
+      if (!row) throw AppError.notFound(`Preview '${id}' not found`);
+      return toDomain(row);
     },
     CACHE_TTL.previewDetail,
   );
@@ -100,6 +184,7 @@ export async function createPreview(input: {
   project: string;
   commit?: string;
 }): Promise<PreviewBranch> {
+  await seedIfEmpty();
   const id = `preview-${randomUUID()}`;
   const now = new Date().toISOString();
   const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
@@ -114,7 +199,7 @@ export async function createPreview(input: {
     createdAt: now,
     expiresAt: expires,
   };
-  previews.push(preview);
+  await db.previewBranch.create({ data: toDbRow(preview) });
   invalidate(id);
   log.info("Preview created", { id, branch: input.branch });
   return preview;
@@ -122,23 +207,22 @@ export async function createPreview(input: {
 
 /** Delete a preview branch by id. Invalidates caches. */
 export async function deletePreview(id: string): Promise<void> {
-  const before = previews.length;
-  previews = previews.filter((p) => p.id !== id);
-  if (previews.length === before) {
-    throw AppError.notFound(`Preview '${id}' not found`);
-  }
+  await seedIfEmpty();
+  const row = await db.previewBranch.findUnique({ where: { id } });
+  if (!row) throw AppError.notFound(`Preview '${id}' not found`);
+  await db.previewBranch.delete({ where: { id } });
   invalidate(id);
   log.info("Preview deleted", { id });
 }
 
-/** Number of previews in the store. */
+/** Number of previews in the store. Sync stub — real count is in DB. */
 export function previewsCount(): number {
-  return previews.length;
+  return SEED_PREVIEWS.length;
 }
 
 /** Test-only: reset to seed. */
 export function _resetPreviewForTest(): void {
-  previews = SEED_PREVIEWS.map((p) => ({ ...p }));
+  seedPromise = null;
   invalidate();
 }
 

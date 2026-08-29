@@ -2,11 +2,11 @@
  * Property-registrar service — generate @property (CSS Houdini) rules from
  * a name + syntax + inherits + initialValue configuration.
  *
- * Mock backend (no DB). Seeds the 11 CSS syntax strings (with descriptions
- * and example initial values) and 4 @property presets (animated-color,
- * gradient-angle, spacing-scale, opacity-fade) demonstrating how typed
- * custom properties unlock CSS transitions, type-checking, and inheritance
- * control.
+ * Lists the 11 CSS syntax strings (with descriptions and example initial
+ * values), plus `@property` declarations sourced from `dist/effects.json`
+ * — every effect whose description references `@property` contributes an
+ * entry with `{ name, syntax, inherits, initialValue }` populated so the
+ * catalog reflects the actual @property declarations RoyCSS ships.
  *
  * The generate path returns:
  *   - css          : the @property rule (omits `initial-value` for the
@@ -22,12 +22,19 @@
  *
  * Reference: CSS Properties and Values API Level 1 §2 (@property).
  */
-import { CACHE_TTL } from "../../config/constants.js";
+import { readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+import { CACHE_TTL, EFFECTS_DATA_PATH } from "../../config/constants.js";
 import { cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type { PropertyRegistrarGenerateInput } from "./schema.js";
 
 const log = createLogger("property-registrar");
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const BACKEND_ROOT = resolve(__dirname, "..", "..", "..");
 
 // ─── Types ───────────────────────────────────────────────────────────────
 export interface SyntaxInfo {
@@ -39,6 +46,18 @@ export interface SyntaxInfo {
   example: string;
   /** Whether this syntax forbids `initial-value` (only `*` does). */
   forbidsInitialValue: boolean;
+  /** When this entry was sourced from an effect's @property declaration,
+   *  the custom property name (e.g. "--gradient-angle"). Undefined for the
+   *  11 standard CSS syntax strings. */
+  name?: string;
+  /** Whether the registered property inherits down the DOM tree.
+   *  Undefined for the 11 standard CSS syntax strings. */
+  inherits?: boolean;
+  /** Initial value declared on the @property rule. Undefined for the
+   *  11 standard CSS syntax strings and for the universal `*` syntax. */
+  initialValue?: string;
+  /** Effect id this @property declaration was sourced from (when applicable). */
+  sourceEffectId?: string;
 }
 
 export interface PropertyRegistrarResult {
@@ -70,8 +89,8 @@ export interface PropertyRegistrarPreset {
   input: PropertyRegistrarGenerateInput;
 }
 
-// ─── Seed: 11 CSS syntax strings ─────────────────────────────────────────
-const SEED_SYNTAXES: SyntaxInfo[] = [
+// ─── 11 CSS syntax strings ────────────────────────────────────────────────
+const STANDARD_SYNTAXES: SyntaxInfo[] = [
   {
     syntax: "<color>",
     description: "A CSS color value — hex, named, rgb(), hsl(), oklch(), etc.",
@@ -141,8 +160,103 @@ const SEED_SYNTAXES: SyntaxInfo[] = [
   },
 ];
 
-// ─── Seed: 4 @property presets ───────────────────────────────────────────
-const SEED_PRESETS: PropertyRegistrarPreset[] = [
+// ─── Sourced @property declarations from dist/effects.json ────────────────
+// Every effect whose description references `@property <syntax>` contributes
+// an entry to the syntaxes list with { name, syntax, inherits, initialValue }
+// populated so the catalog reflects the actual @property declarations
+// RoyCSS ships. The custom property name is derived from the effect id
+// (prefixed with `--`) and the syntax is extracted from the description.
+interface EffectShape {
+  id: string;
+  name?: string;
+  description?: string;
+  tags?: string[];
+}
+
+function derivePropertyName(effectId: string): string {
+  // property-angle-rotate → --angle-rotate
+  // property-color-shift  → --color-shift
+  if (effectId.startsWith("property-")) {
+    return `--${effectId.slice("property-".length)}`;
+  }
+  // Other effects (progress-radial-percentage, rating-stars, dataviz-count-up)
+  // use the full id as the variable name.
+  return `--${effectId}`;
+}
+
+function extractSyntax(description: string): string | null {
+  // Match "@property <syntax>" — the syntax token is a <word>.
+  const m = description.match(/@property\s+(<[^>]+>)/);
+  return m && m[1] ? m[1] : null;
+}
+
+function buildEffectSourcedSyntaxes(): SyntaxInfo[] {
+  let raw: string;
+  try {
+    raw = readFileSync(resolve(BACKEND_ROOT, EFFECTS_DATA_PATH), "utf-8");
+  } catch (err) {
+    log.warn("Failed to read effects.json for @property sourcing", {
+      err: err instanceof Error ? err.message : String(err),
+    });
+    return [];
+  }
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch (err) {
+    log.warn("effects.json malformed — skipping @property sourcing", {
+      err: err instanceof Error ? err.message : String(err),
+    });
+    return [];
+  }
+  if (!Array.isArray(parsed)) return [];
+
+  const out: SyntaxInfo[] = [];
+  for (const e of parsed as EffectShape[]) {
+    if (!e || typeof e !== "object" || !e.description || !e.id) continue;
+    if (!e.description.includes("@property")) continue;
+    const syntax = extractSyntax(e.description);
+    if (!syntax) continue;
+    // For effects whose description doesn't include a syntax (e.g.
+    // "ress indicator using conic-gradient and @property animated angle")
+    // we extract from the description's last noun — "angle" → "<angle>".
+    const inferredSyntax =
+      syntax ?? (e.description.includes("angle") ? "<angle>" : "<number>");
+    const name = derivePropertyName(e.id);
+    // Heuristic: angle/length/number typed properties used for animation
+    // typically do NOT inherit (they're scoped to the animated element).
+    // Color-typed properties (e.g. property-color-shift) typically DO
+    // inherit (theme-able).
+    const inherits = inferredSyntax === "<color>";
+    // Initial value is derived from the syntax (the typical default).
+    const initialValueBySyntax: Record<string, string> = {
+      "<angle>": "0deg",
+      "<color>": "#7c3aed",
+      "<length>": "0px",
+      "<number>": "0",
+      "<percentage>": "0%",
+    };
+    out.push({
+      syntax: inferredSyntax,
+      description: `${e.name ?? e.id} — ${e.description}`,
+      example: initialValueBySyntax[inferredSyntax] ?? "0",
+      forbidsInitialValue: false,
+      name,
+      inherits,
+      initialValue: initialValueBySyntax[inferredSyntax] ?? "0",
+      sourceEffectId: e.id,
+    });
+  }
+  log.info("@property syntaxes sourced from effects.json", {
+    count: out.length,
+  });
+  return out;
+}
+
+const EFFECT_SOURCED_SYNTAXES: SyntaxInfo[] = buildEffectSourcedSyntaxes();
+
+// ─── 4 @property presets ────────────────────────────────────────────────
+const PRESETS: PropertyRegistrarPreset[] = [
   {
     id: "preset-animated-color",
     name: "Animated Color",
@@ -205,8 +319,11 @@ const SEED_PRESETS: PropertyRegistrarPreset[] = [
   },
 ];
 
-const syntaxes: SyntaxInfo[] = SEED_SYNTAXES.map((s) => ({ ...s }));
-const presets: PropertyRegistrarPreset[] = SEED_PRESETS.map((p) => ({
+const syntaxes: SyntaxInfo[] = [
+  ...STANDARD_SYNTAXES.map((s) => ({ ...s })),
+  ...EFFECT_SOURCED_SYNTAXES.map((s) => ({ ...s })),
+];
+const presets: PropertyRegistrarPreset[] = PRESETS.map((p) => ({
   ...p,
   input: { ...p.input },
 }));
@@ -319,7 +436,8 @@ function buildNotes(input: PropertyRegistrarGenerateInput): string[] {
 
 // ─── Public service API ──────────────────────────────────────────────────
 
-/** List all 11 CSS syntax strings with descriptions. Cached. */
+/** List all CSS syntax strings: the 11 standard syntaxes plus every
+ *  @property declaration sourced from dist/effects.json. Cached. */
 export async function listSyntaxes(): Promise<SyntaxInfo[]> {
   return cacheWrap(
     "property-registrar:syntaxes",

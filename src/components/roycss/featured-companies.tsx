@@ -438,62 +438,41 @@ function SponsorModal({ open, onOpenChange }: SponsorModalProps) {
 export function FeaturedCompanies() {
   const [sponsorOpen, setSponsorOpen] = useState(false);
 
-  // Build a stable reference so re-renders don't re-map the array.
-  const founders = COMPANIES;
-
   return (
     <>
       <section
-        className="py-8 border-y border-border/40 bg-gradient-to-r from-card/40 via-card/20 to-card/40"
-        aria-label="Sponsors and supporters"
+        className="py-10 border-y border-border/40 bg-card/20"
+        aria-label="Featured companies"
       >
         <div className="container mx-auto px-4 sm:px-6">
           <ScrollReveal>
-            {/*
-              Single horizontal banner — avoids the "sparse logo grid" anti-pattern.
-              Founder card lives left, sponsor CTA lives right. No fake "your logo
-              here" placeholders.
-            */}
-            <div className="flex flex-col items-center gap-6 md:flex-row md:items-center md:justify-between">
-              {/* Left — text + Founder card */}
-              <div className="flex flex-col items-center gap-3 text-center md:flex-row md:text-left">
-                <div className="flex flex-col gap-1">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                    Built &amp; maintained by
-                  </p>
-                  <p className="font-display text-sm font-bold text-foreground">
-                    Youngshark Technologies
-                  </p>
-                </div>
-                <span className="hidden md:inline-block h-8 w-px bg-border/60" aria-hidden="true" />
-                <div className="flex flex-wrap items-center justify-center gap-3">
-                  {founders.map((company) => (
-                    <CompanyCard key={company.name} company={company} />
-                  ))}
-                </div>
-              </div>
+            <p className="text-center text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-6">
+              Trusted by developers at companies worldwide
+            </p>
+          </ScrollReveal>
 
-              {/* Right — Sponsor CTA pill with stat */}
-              <div className="flex flex-col items-center gap-2 md:items-end">
-                <div className="text-center md:text-right">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                    Independent · Open Source
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Funded by the community, not venture capital.
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setSponsorOpen(true)}
-                  className="inline-flex items-center gap-1.5 rounded-xl border border-primary/40 bg-primary/5 px-5 py-2.5 min-h-[44px] text-xs font-semibold text-primary hover:bg-primary/10 hover:border-primary/60 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-                  aria-label="Become a sponsor — open sponsorship modal"
-                >
-                  <Heart className="size-3.5" />
-                  Become a sponsor
-                  <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
-                </button>
-              </div>
+          <ScrollReveal delay={0.1}>
+            {/* When only a single real sponsor exists, a sparse 5-up logo grid
+                looks empty / "still in beta". Instead we show the one real
+                sponsor card (the Founder) front-and-centre, and lead with a
+                concise banner. The placeholder "Your company here" card was
+                removed — the dedicated Sponsor CTA in the navbar + the
+                floating sponsor button already cover recruitment. */}
+            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+              {COMPANIES.map((company) => (
+                <CompanyCard key={company.name} company={company} />
+              ))}
+
+              {/* Sponsor CTA — a small inline pill so the section still
+                  invites new sponsors without pretending the grid is full. */}
+              <button
+                onClick={() => setSponsorOpen(true)}
+                className="inline-flex items-center gap-1.5 rounded-xl border border-dashed border-primary/40 bg-primary/5 px-4 py-2 min-h-[44px] text-xs font-medium text-primary hover:bg-primary/10 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                aria-label="Become a sponsor"
+              >
+                <Heart className="size-3.5" />
+                Become a sponsor
+              </button>
             </div>
           </ScrollReveal>
         </div>

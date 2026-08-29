@@ -1,31 +1,22 @@
 /**
- * product-registry.ts — SINGLE SOURCE OF TRUTH for the 62 RoyCSS platform
- * products.
+ * ProductRegistry — single source of truth for the 62 RoyCSS platform products.
  *
- * Each entry carries full product metadata:
- *   - identity (id, name)
- *   - classification (category, tier, status)
- *   - display (icon, shortDescription, longDescription)
- *   - action (cta)
- *   - loading (componentPath for dynamic import, tags for search, metrics)
+ * Each entry is a self-describing record (no JSX, no component imports) so
+ * that the same registry can be used by:
+ *   - The ProductGrid (filtering, badges, CTA)
+ *   - The ComponentComposer (effect composition tool)
+ *   - The /api/og social card generator
+ *   - The JSON-LD structured data in src/app/layout.tsx
  *
- * Consumers (product-card, product-grid, component-composer,
- * platform-section-unified) MUST import their metadata from here — never
- * duplicate product data elsewhere. The previous `products-catalog.ts`
- * file is now a thin compatibility re-exporter of this registry.
+ * Components themselves are loaded lazily by `product-grid.tsx` via the
+ * `componentPath` field — which is the bare module specifier under
+ * `@/components/roycss/pro/`. This keeps this file free of any client-side
+ * import graph and makes it usable on the server.
  *
- * IMPORTANT: `componentPath` is a STRING path to a module that default-exports
- * the React component. Consumers use a static lookup map (see
- * `product-loaders.tsx` or the inline map in `product-grid.tsx`) that resolves
- * this string into an actual `import()` call. This is a Next.js limitation:
- * dynamic imports must be statically analyzable.
+ * Categories (62 total):
+ *   ai (10) · components (12) · devtools (14) · enterprise (13) ·
+ *   integrations (3) · design (10)
  */
-
-import type { ComponentType } from "react";
-
-/* ═══════════════════════════════════════════════════════════════
-   TYPES
-   ═══════════════════════════════════════════════════════════════ */
 
 export type ProductCategory =
   | "ai"
@@ -35,1191 +26,405 @@ export type ProductCategory =
   | "integrations"
   | "design";
 
-export type ProductTier = "free" | "pro" | "team" | "enterprise";
-
-export type ProductStatus = "live" | "beta" | "coming-soon";
-
-export interface ProductCta {
-  label: string;
-  /** Internal route — rendered via next/link if present. */
-  href?: string;
-  /** Custom client-side action key — rendered via onAction callback. */
-  action?: string;
-}
+export type ProductTier = "free" | "pro" | "enterprise" | "cloud";
+export type ProductStatus = "ready" | "beta" | "roadmap" | "experimental";
 
 export interface ProductEntry {
-  /** Stable kebab-case identifier — used as React key & loader lookup. */
   id: string;
-  /** Human-readable display name. */
   name: string;
-  /** One of the 6 platform categories. */
   category: ProductCategory;
-  /** Pricing tier. */
   tier: ProductTier;
-  /** Lifecycle status. */
   status: ProductStatus;
-  /** Lucide icon name (string) — consumer maps to the actual icon component. */
-  icon: string;
-  /** ≤80 chars — used on cards. */
+  icon: string; // lucide icon name, resolved in product-card.tsx
   shortDescription: string;
-  /** 1–2 sentences — used in modal/dialog. */
   longDescription: string;
-  /** Primary call-to-action. */
-  cta: ProductCta;
-  /** String module path for dynamic import (e.g. "@/components/roycss/pro/data-grid"). */
-  componentPath: string;
-  /** Named export from the module (e.g. "ProDataGrid"). */
-  exportName: string;
-  /** Discoverability tags — surfaced in search & filter. */
+  cta: string;
+  componentPath: string; // e.g. "@/components/roycss/pro/roy-blocks"
   tags: string[];
-  /** Optional quantitative metrics like "62 effects" or "1.2MB bundle". */
-  metrics?: string;
-  /** ISO date string — only set when status === "coming-soon". */
-  comingSoonAt?: string;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   CATEGORY METADATA (6 pillars)
-   ═══════════════════════════════════════════════════════════════ */
-
-export interface CategoryMeta {
-  id: ProductCategory;
-  label: string;
-  shortLabel: string;
-  icon: string;
-  description: string;
+/** helper to reduce per-entry boilerplate (positional args + sensible defaults). */
+function entry(
+  id: string,
+  name: string,
+  category: ProductCategory,
+  tier: ProductTier,
+  status: ProductStatus,
+  icon: string,
+  shortDescription: string,
+  longDescription: string,
+  cta: string,
+  componentPath: string,
+  tags: string[],
+): ProductEntry {
+  return { id, name, category, tier, status, icon, shortDescription, longDescription, cta, componentPath, tags };
 }
 
-export const PRODUCT_CATEGORIES: CategoryMeta[] = [
-  {
-    id: "components",
-    label: "Build",
-    shortLabel: "Build",
-    icon: "Hammer",
-    description: "Components, blocks, patterns, templates & marketplace",
-  },
-  {
-    id: "design",
-    label: "Design",
-    shortLabel: "Design",
-    icon: "Palette",
-    description: "Studios for theme, color, type, layout, motion & icons",
-  },
-  {
-    id: "ai",
-    label: "AI",
-    shortLabel: "AI",
-    icon: "BrainCircuit",
-    description: "Assistants, agents & code intelligence",
-  },
-  {
-    id: "devtools",
-    label: "Developer Tools",
-    shortLabel: "DevTools",
-    icon: "Wrench",
-    description: "Scaffold, sync, ship, profile & benchmark",
-  },
-  {
-    id: "enterprise",
-    label: "Enterprise",
-    shortLabel: "Enterprise",
-    icon: "Building2",
-    description: "Governance, compliance, fleet, cloud & ops",
-  },
-  {
-    id: "integrations",
-    label: "Learning & Community",
-    shortLabel: "Learning",
-    icon: "GraduationCap",
-    description: "Academy, community hub & showcase",
-  },
+export const PRODUCT_CATEGORIES: { id: ProductCategory; label: string; description: string }[] = [
+  { id: "ai", label: "AI", description: "AI agents, AI migration, AI playground, MCP server & code review" },
+  { id: "components", label: "Components", description: "Blocks, patterns, templates, marketplace & layout studio" },
+  { id: "devtools", label: "Dev Tools", description: "Specificity, generators, visualizers, analyzers & studios" },
+  { id: "enterprise", label: "Enterprise", description: "Governance, compliance, observatory, fleet & OS" },
+  { id: "integrations", label: "Integrations", description: "Registry, CDN, sync, deploy & edge" },
+  { id: "design", label: "Design", description: "Theme, color, type, motion, gradients & icons" },
 ];
 
-/* ═══════════════════════════════════════════════════════════════
-   TIER & STATUS METADATA
-   ═══════════════════════════════════════════════════════════════ */
-
-export const PRODUCT_TIER_META: Record<
-  ProductTier,
-  { label: string; className: string }
-> = {
-  free: { label: "Free", className: "bg-primary/10 text-primary" },
-  pro: { label: "Pro", className: "bg-foreground/10 text-foreground" },
-  team: { label: "Team", className: "bg-violet-500/15 text-violet-600 dark:text-violet-400" },
-  enterprise: {
-    label: "Enterprise",
-    className: "bg-rose-500/15 text-rose-600 dark:text-rose-400",
-  },
-};
-
-export const PRODUCT_STATUS_META: Record<
-  ProductStatus,
-  { label: string; className: string }
-> = {
-  live: {
-    label: "Live",
-    className: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400",
-  },
-  beta: {
-    label: "Beta",
-    className: "bg-amber-500/15 text-amber-600 dark:text-amber-400",
-  },
-  "coming-soon": {
-    label: "Coming Soon",
-    className: "bg-muted text-muted-foreground",
-  },
-};
-
-/**
- * Legacy status aliases — keep the old "ready" / "roadmap" strings usable
- * for downstream consumers (e.g. search-overlay imports the catalog) without
- * forcing a refactor of every call-site.
- */
-export function normalizeStatus(
-  s: "ready" | "beta" | "roadmap" | ProductStatus,
-): ProductStatus {
-  if (s === "ready") return "live";
-  if (s === "roadmap") return "coming-soon";
-  return s;
-}
-
-/**
- * Legacy tier alias — `cloud` was used in the old catalog; we map it onto
- * the closest tier (`enterprise`) so the new registry stays clean.
- */
-export function normalizeTier(
-  t: "free" | "pro" | "enterprise" | "cloud" | "team",
-): ProductTier {
-  if (t === "cloud") return "enterprise";
-  return t;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   THE REGISTRY — 62 platform products
-   ═══════════════════════════════════════════════════════════════ */
-
-export const PRODUCT_REGISTRY: ProductEntry[] = [
-  /* ── Build / components (12) ─────────────────────────────── */
-  {
-    id: "data-grid",
-    name: "Pro Data Grid",
-    category: "components",
-    tier: "pro",
-    status: "live",
-    icon: "Grid3x3",
-    shortDescription: "Sortable, filterable, paginated data table with row selection.",
-    longDescription:
-      "Production-grade data table with 50 rows, sortable columns, multi-filter, row selection, and column visibility toggles.",
-    cta: { label: "Try it", action: "open:data-grid" },
-    componentPath: "@/components/roycss/pro/data-grid",
-    exportName: "ProDataGrid",
-    tags: ["table", "grid", "data", "filter", "sort", "pagination"],
-    metrics: "50 rows",
-  },
-  {
-    id: "kanban",
-    name: "Kanban Board",
-    category: "components",
-    tier: "pro",
-    status: "live",
-    icon: "KanbanSquare",
-    shortDescription: "Drag-and-drop board with priority badges and inline editing.",
-    longDescription:
-      "Visual project board with 4 columns, 14 cards, drag-and-drop reordering, priority badges, and inline editing.",
-    cta: { label: "Try it", action: "open:kanban" },
-    componentPath: "@/components/roycss/pro/kanban-board",
-    exportName: "ProKanbanBoard",
-    tags: ["kanban", "board", "drag-drop", "project-management"],
-    metrics: "14 cards",
-  },
-  {
-    id: "scheduler",
-    name: "Calendar Scheduler",
-    category: "components",
-    tier: "pro",
-    status: "live",
-    icon: "Calendar",
-    shortDescription: "Month + week views with overlap-aware layout.",
-    longDescription:
-      "Calendar scheduler with month & week views, 11 events, overlap-aware layout, and a live 'now' indicator.",
-    cta: { label: "Try it", action: "open:scheduler" },
-    componentPath: "@/components/roycss/pro/scheduler",
-    exportName: "ProScheduler",
-    tags: ["calendar", "scheduler", "events", "date"],
-    metrics: "11 events",
-  },
-  {
-    id: "charts",
-    name: "Pro Charts",
-    category: "components",
-    tier: "pro",
-    status: "live",
-    icon: "BarChart3",
-    shortDescription: "Line, bar, donut, and area charts with OKLCH colors.",
-    longDescription:
-      "Chart library built on recharts with line, bar, donut, and area charts using OKLCH color tokens for theming.",
-    cta: { label: "Try it", action: "open:charts" },
-    componentPath: "@/components/roycss/pro/charts",
-    exportName: "ProCharts",
-    tags: ["charts", "graphs", "recharts", "data-viz"],
-    metrics: "4 chart types",
-  },
-  {
-    id: "blocks",
-    name: "Roy Blocks",
-    category: "components",
-    tier: "pro",
-    status: "live",
-    icon: "Blocks",
-    shortDescription: "10 application blocks (Auth, Billing, CRM, Healthcare, Analytics).",
-    longDescription:
-      "Pre-built application blocks for Auth, Billing, CRM, Healthcare, Analytics with live previews and code export.",
-    cta: { label: "Try it", action: "open:blocks" },
-    componentPath: "@/components/roycss/pro/roy-blocks",
-    exportName: "RoyBlocks",
-    tags: ["blocks", "sections", "templates", "ui"],
-    metrics: "10 blocks",
-  },
-  {
-    id: "patterns",
-    name: "Pattern Library",
-    category: "components",
-    tier: "pro",
-    status: "live",
-    icon: "Package",
-    shortDescription: "12 interactive UI patterns (Accordion, Toast, CommandMenu).",
-    longDescription:
-      "Curated interactive UI patterns — Accordion, Toast, CommandMenu, FileUpload and 8 more, each with live preview.",
-    cta: { label: "Try it", action: "open:patterns" },
-    componentPath: "@/components/roycss/pro/pattern-library",
-    exportName: "PatternLibrary",
-    tags: ["patterns", "ui", "components", "library"],
-    metrics: "12 patterns",
-  },
-  {
-    id: "template-library",
-    name: "Template Library",
-    category: "components",
-    tier: "pro",
-    status: "live",
-    icon: "LayoutGrid",
-    shortDescription: "8 live template previews (Hero, Pricing, Testimonial).",
-    longDescription:
-      "Drop-in page templates — Hero, FeatureGrid, Pricing, Testimonial and 4 more, each rendered live and exportable.",
-    cta: { label: "Try it", action: "open:template-library" },
-    componentPath: "@/components/roycss/pro/template-library",
-    exportName: "TemplateLibrary",
-    tags: ["templates", "landing", "hero", "pricing"],
-    metrics: "8 templates",
-  },
-  {
-    id: "blueprints",
-    name: "Roy Blueprints",
-    category: "components",
-    tier: "pro",
-    status: "live",
-    icon: "Building2",
-    shortDescription: "8 complete app architectures with folder trees.",
-    longDescription:
-      "Full application blueprints — Hospital, POS, ERP, HR, Banking and 3 more — each with folder tree and tech stack.",
-    cta: { label: "Try it", action: "open:blueprints" },
-    componentPath: "@/components/roycss/pro/roy-blueprints",
-    exportName: "RoyBlueprints",
-    tags: ["blueprints", "architecture", "apps", "starter"],
-    metrics: "8 blueprints",
-  },
-  {
-    id: "marketplace",
-    name: "Marketplace",
-    category: "components",
-    tier: "pro",
-    status: "live",
-    icon: "Store",
-    shortDescription: "12 templates with search, filter, and install toasts.",
-    longDescription:
-      "Community template marketplace — 12 templates, search/filter/sort, detail dialogs, and one-click install toasts.",
-    cta: { label: "Try it", action: "open:marketplace" },
-    componentPath: "@/components/roycss/pro/marketplace",
-    exportName: "Marketplace",
-    tags: ["marketplace", "templates", "community"],
-    metrics: "12 templates",
-  },
-  {
-    id: "plugin-hub",
-    name: "Plugin Hub",
-    category: "components",
-    tier: "pro",
-    status: "live",
-    icon: "Plug",
-    shortDescription: "12 plugins (Stripe, Clerk, Supabase, Firebase).",
-    longDescription:
-      "Plugin hub with 12 first-class integrations — Stripe, Clerk, Supabase, Firebase and 8 more — install commands and changelogs.",
-    cta: { label: "Try it", action: "open:plugin-hub" },
-    componentPath: "@/components/roycss/pro/plugin-hub",
-    exportName: "PluginHub",
-    tags: ["plugins", "integrations", "stripe", "supabase", "firebase"],
-    metrics: "12 plugins",
-  },
-  {
-    id: "forms",
-    name: "Roy Forms",
-    category: "components",
-    tier: "pro",
-    status: "live",
-    icon: "FormInput",
-    shortDescription: "Visual form builder with 10 field types & code export.",
-    longDescription:
-      "Drag-and-drop form builder with 10 field types, multi-step, conditional logic, validation, and code export.",
-    cta: { label: "Try it", action: "open:forms" },
-    componentPath: "@/components/roycss/pro/roy-forms",
-    exportName: "RoyForms",
-    tags: ["forms", "builder", "inputs", "validation"],
-    metrics: "10 field types",
-  },
-  {
-    id: "storybook",
-    name: "Roy Storybook",
-    category: "components",
-    tier: "pro",
-    status: "live",
-    icon: "BookOpen",
-    shortDescription: "Component docs: 10 components, variants, a11y notes.",
-    longDescription:
-      "In-app component documentation — 10 components, variants, states, props tables, and a11y notes.",
-    cta: { label: "Try it", action: "open:storybook" },
-    componentPath: "@/components/roycss/pro/roy-storybook",
-    exportName: "RoyStorybook",
-    tags: ["storybook", "docs", "components", "variants"],
-    metrics: "10 components",
-  },
-
-  /* ── Design (10) ───────────────────────────────────────── */
-  {
-    id: "visual-studio",
-    name: "Visual Studio",
-    category: "design",
-    tier: "pro",
-    status: "live",
-    icon: "Layers",
-    shortDescription: "Drag-and-drop page builder with HTML export.",
-    longDescription:
-      "Visual page builder with 8 component types, properties panel, layer tree, and one-click HTML export.",
-    cta: { label: "Try it", action: "open:visual-studio" },
-    componentPath: "@/components/roycss/pro/visual-studio",
-    exportName: "VisualStudio",
-    tags: ["builder", "visual", "drag-drop", "page", "html"],
-    metrics: "8 component types",
-  },
-  {
-    id: "theme-system",
-    name: "Theme System",
-    category: "design",
-    tier: "pro",
-    status: "live",
-    icon: "Palette",
-    shortDescription: "10 production-ready OKLCH theme presets.",
-    longDescription:
-      "Theme system with 10 production-ready OKLCH theme presets, live preview, and CSS variable export.",
-    cta: { label: "Try it", action: "open:theme-system" },
-    componentPath: "@/components/roycss/pro/theme-system",
-    exportName: "ThemeSystem",
-    tags: ["theme", "oklch", "design-tokens", "colors"],
-    metrics: "10 presets",
-  },
-  {
-    id: "color-studio",
-    name: "Color Studio",
-    category: "design",
-    tier: "pro",
-    status: "live",
-    icon: "Palette",
-    shortDescription: "Enterprise color management with WCAG validation.",
-    longDescription:
-      "Enterprise color management — 11-step OKLCH scale, WCAG contrast validation, and brand generation.",
-    cta: { label: "Try it", action: "open:color-studio" },
-    componentPath: "@/components/roycss/pro/roy-color-studio",
-    exportName: "RoyColorStudio",
-    tags: ["color", "oklch", "wcag", "contrast", "brand"],
-    metrics: "11-step scale",
-  },
-  {
-    id: "gradient-studio",
-    name: "Gradient Studio",
-    category: "design",
-    tier: "pro",
-    status: "live",
-    icon: "Palette",
-    shortDescription: "Linear/Radial/Conic/Mesh gradients with 6 presets.",
-    longDescription:
-      "Advanced gradient editor — Linear, Radial, Conic, Mesh, noise texture, animated, and aurora — with 6 presets.",
-    cta: { label: "Try it", action: "open:gradient-studio" },
-    componentPath: "@/components/roycss/pro/roy-gradient-studio",
-    exportName: "RoyGradientStudio",
-    tags: ["gradient", "mesh", "conic", "aurora", "design"],
-    metrics: "6 presets",
-  },
-  {
-    id: "typography",
-    name: "Roy Typography",
-    category: "design",
-    tier: "pro",
-    status: "live",
-    icon: "Type",
-    shortDescription: "Fluid clamp type scale with modular ratios.",
-    longDescription:
-      "Type scale generator with fluid clamp(), modular ratios, variable font config, and reading tips.",
-    cta: { label: "Try it", action: "open:typography" },
-    componentPath: "@/components/roycss/pro/roy-typography",
-    exportName: "RoyTypography",
-    tags: ["typography", "fonts", "fluid", "scale"],
-  },
-  {
-    id: "layout-studio",
-    name: "Layout Studio",
-    category: "design",
-    tier: "pro",
-    status: "live",
-    icon: "LayoutGrid",
-    shortDescription: "Visual grid builder with Container Queries.",
-    longDescription:
-      "Visual layout builder — CSS Grid template-areas, Flexbox, Masonry, and Container Queries — with live preview.",
-    cta: { label: "Try it", action: "open:layout-studio" },
-    componentPath: "@/components/roycss/pro/roy-layout-studio",
-    exportName: "RoyLayoutStudio",
-    tags: ["layout", "grid", "flexbox", "masonry", "container-queries"],
-  },
-  {
-    id: "motion-studio",
-    name: "Motion Studio",
-    category: "design",
-    tier: "pro",
-    status: "live",
-    icon: "Sparkles",
-    shortDescription: "Visual animation builder with draggable keyframes.",
-    longDescription:
-      "Visual animation builder — 5-track timeline, draggable keyframes, easing curves, live preview, and CSS export.",
-    cta: { label: "Try it", action: "open:motion-studio" },
-    componentPath: "@/components/roycss/pro/roy-motion-studio",
-    exportName: "RoyMotionStudio",
-    tags: ["animation", "keyframes", "motion", "timeline"],
-    metrics: "5 tracks",
-  },
-  {
-    id: "motion-library",
-    name: "Motion Library",
-    category: "design",
-    tier: "pro",
-    status: "live",
-    icon: "Sparkles",
-    shortDescription: "12 framer-motion animation primitives.",
-    longDescription:
-      "12 framer-motion animation primitives with speed control and copy-ready code snippets.",
-    cta: { label: "Try it", action: "open:motion-library" },
-    componentPath: "@/components/roycss/pro/motion-library",
-    exportName: "MotionLibrary",
-    tags: ["motion", "framer", "animations", "primitives"],
-    metrics: "12 primitives",
-  },
-  {
-    id: "icon-pack",
-    name: "Icon Pack",
-    category: "design",
-    tier: "pro",
-    status: "live",
-    icon: "Shapes",
-    shortDescription: "158 icons across 7 categories with click-to-copy.",
-    longDescription:
-      "RoyCSS icon pack — 158 icons across 7 categories with search, size selector, and click-to-copy imports.",
-    cta: { label: "Try it", action: "open:icon-pack" },
-    componentPath: "@/components/roycss/pro/icon-pack",
-    exportName: "IconPack",
-    tags: ["icons", "svg", "lucide", "search"],
-    metrics: "158 icons",
-  },
-  {
-    id: "accessibility",
-    name: "Accessibility Suite",
-    category: "design",
-    tier: "pro",
-    status: "live",
-    icon: "Accessibility",
-    shortDescription: "Live DOM audit, a11y score, contrast & tab order.",
-    longDescription:
-      "Live DOM audit running 10 WCAG checks, an a11y score, contrast checker, and a tab-order visualizer.",
-    cta: { label: "Try it", action: "open:accessibility" },
-    componentPath: "@/components/roycss/pro/accessibility-suite",
-    exportName: "AccessibilitySuite",
-    tags: ["a11y", "wcag", "audit", "contrast"],
-    metrics: "10 checks",
-  },
-
-  /* ── AI (10) ───────────────────────────────────────────── */
-  {
-    id: "roy-ai",
-    name: "RoyAI Assistant",
-    category: "ai",
-    tier: "pro",
-    status: "live",
-    icon: "Bot",
-    shortDescription: "Chat assistant that generates CSS and answers questions.",
-    longDescription:
-      "RoyAI chat assistant that generates CSS, answers RoyCSS usage questions, and suggests effects from natural language.",
-    cta: { label: "Try it", action: "open:roy-ai" },
-    componentPath: "@/components/roycss/pro/roy-ai",
-    exportName: "RoyAI",
-    tags: ["ai", "chat", "assistant", "css", "llm"],
-  },
-  {
-    id: "roy-agents",
-    name: "Roy Agents",
-    category: "ai",
-    tier: "pro",
-    status: "live",
-    icon: "Wrench",
-    shortDescription: "8 specialized AI agents (a11y, perf, refactor).",
-    longDescription:
-      "8 specialized AI agents for accessibility, performance, docs, refactoring, security, and more.",
-    cta: { label: "Try it", action: "open:roy-agents" },
-    componentPath: "@/components/roycss/pro/roy-agents",
-    exportName: "RoyAgents",
-    tags: ["ai", "agents", "automation"],
-    metrics: "8 agents",
-  },
-  {
-    id: "architect",
-    name: "Roy Architect",
-    category: "ai",
-    tier: "enterprise",
-    status: "live",
-    icon: "Building2",
-    shortDescription: "AI app architect: requirements → folder, stack, APIs.",
-    longDescription:
-      "AI application architect — generates folder structure, tech stack, APIs, and deployment plans from natural-language requirements.",
-    cta: { label: "Try it", action: "open:architect" },
-    componentPath: "@/components/roycss/pro/roy-architect",
-    exportName: "RoyArchitect",
-    tags: ["ai", "architect", "scaffold", "stack"],
-  },
-  {
-    id: "review",
-    name: "Roy Review",
-    category: "ai",
-    tier: "enterprise",
-    status: "live",
-    icon: "Wrench",
-    shortDescription: "AI code reviewer with severity findings & fixes.",
-    longDescription:
-      "AI code reviewer — paste code, get a score, findings by severity, and concrete fix recommendations.",
-    cta: { label: "Try it", action: "open:review" },
-    componentPath: "@/components/roycss/pro/roy-review",
-    exportName: "RoyReview",
-    tags: ["ai", "review", "code-quality", "lint"],
-  },
-  {
-    id: "refactor",
-    name: "Roy Refactor",
-    category: "ai",
-    tier: "pro",
-    status: "live",
-    icon: "Wrench",
-    shortDescription: "Modernize Bootstrap/Tailwind → RoyCSS with diff view.",
-    longDescription:
-      "Code modernizer — converts Bootstrap/Tailwind/Material markup into RoyCSS with OKLCH, logical properties, and a diff view.",
-    cta: { label: "Try it", action: "open:refactor" },
-    componentPath: "@/components/roycss/pro/roy-refactor",
-    exportName: "RoyRefactor",
-    tags: ["ai", "refactor", "migration", "modernize"],
-  },
-  {
-    id: "pair",
-    name: "Roy Pair",
-    category: "ai",
-    tier: "pro",
-    status: "live",
-    icon: "Bot",
-    shortDescription: "AI pair programmer chat specialized for RoyCSS.",
-    longDescription:
-      "AI pair programmer chat specialized for RoyCSS — code highlighting, suggestion chips, and inline previews.",
-    cta: { label: "Try it", action: "open:pair" },
-    componentPath: "@/components/roycss/pro/roy-pair",
-    exportName: "RoyPair",
-    tags: ["ai", "pair", "chat", "copilot"],
-  },
-  {
-    id: "designer",
-    name: "Roy Designer",
-    category: "ai",
-    tier: "enterprise",
-    status: "live",
-    icon: "Bot",
-    shortDescription: "AI UI designer: prompt → mockup + palette + type.",
-    longDescription:
-      "AI UI designer — prompt → mockup preview, color palette, typography, and a recommended component list.",
-    cta: { label: "Try it", action: "open:designer" },
-    componentPath: "@/components/roycss/pro/roy-designer",
-    exportName: "RoyDesigner",
-    tags: ["ai", "design", "mockup", "palette"],
-  },
-  {
-    id: "generator",
-    name: "Roy Generator",
-    category: "ai",
-    tier: "pro",
-    status: "live",
-    icon: "Code2",
-    shortDescription: "Code generator for Component/Form/CRUD/API.",
-    longDescription:
-      "Code generator — Component/Form/CRUD/Table/Dashboard/API with configurable options and copy-ready output.",
-    cta: { label: "Try it", action: "open:generator" },
-    componentPath: "@/components/roycss/pro/roy-generator",
-    exportName: "RoyGenerator",
-    tags: ["ai", "generator", "scaffold", "crud"],
-  },
-  {
-    id: "search",
-    name: "Roy Search",
-    category: "ai",
-    tier: "pro",
-    status: "live",
-    icon: "Search",
-    shortDescription: "Universal AI search across 8 content types.",
-    longDescription:
-      "Universal AI search across 54 items in 8 content types with keyboard navigation and result highlighting.",
-    cta: { label: "Try it", action: "open:search" },
-    componentPath: "@/components/roycss/pro/roy-search",
-    exportName: "RoySearch",
-    tags: ["search", "ai", "fuzzy", "command-palette"],
-    metrics: "54 items",
-  },
-  {
-    id: "sandbox",
-    name: "Roy Sandbox",
-    category: "ai",
-    tier: "enterprise",
-    status: "live",
-    icon: "Code2",
-    shortDescription: "Online dev environment with live iframe preview.",
-    longDescription:
-      "Online dev environment — HTML/CSS/JS editors, live iframe preview, templates, and share links.",
-    cta: { label: "Try it", action: "open:sandbox" },
-    componentPath: "@/components/roycss/pro/roy-sandbox",
-    exportName: "RoySandbox",
-    tags: ["sandbox", "playground", "editor", "ide"],
-  },
-
-  /* ── Developer Tools / devtools (14) ────────────────────── */
-  {
-    id: "scaffold",
-    name: "Roy Scaffold",
-    category: "devtools",
-    tier: "pro",
-    status: "live",
-    icon: "Layers",
-    shortDescription: "Project scaffolding for 8 project types.",
-    longDescription:
-      "Project scaffolding — 8 project types, framework/db/auth selectors, and folder tree generation.",
-    cta: { label: "Try it", action: "open:scaffold" },
-    componentPath: "@/components/roycss/pro/roy-scaffold",
-    exportName: "RoyScaffold",
-    tags: ["scaffold", "cli", "starter", "project"],
-    metrics: "8 project types",
-  },
-  {
-    id: "sync",
-    name: "Roy Sync",
-    category: "devtools",
-    tier: "enterprise",
-    status: "live",
-    icon: "Layers",
-    shortDescription: "Sync hub for Figma, GitHub, Tokens, Theme.",
-    longDescription:
-      "Sync hub — Figma, GitHub, Tokens, Theme sync status, sync log, and a one-click sync-all action.",
-    cta: { label: "Try it", action: "open:sync" },
-    componentPath: "@/components/roycss/pro/roy-sync",
-    exportName: "RoySync",
-    tags: ["sync", "figma", "github", "tokens"],
-  },
-  {
-    id: "version",
-    name: "Roy Version",
-    category: "devtools",
-    tier: "pro",
-    status: "live",
-    icon: "Layers",
-    shortDescription: "Version management with upgrade simulator.",
-    longDescription:
-      "Version management — current/latest, dependency graph, breaking changes, and an upgrade simulator.",
-    cta: { label: "Try it", action: "open:version" },
-    componentPath: "@/components/roycss/pro/roy-version",
-    exportName: "RoyVersion",
-    tags: ["version", "upgrade", "semver", "dependencies"],
-  },
-  {
-    id: "registry",
-    name: "Roy Registry",
-    category: "devtools",
-    tier: "enterprise",
-    status: "live",
-    icon: "Package",
-    shortDescription: "Package registry with public/private/internal.",
-    longDescription:
-      "Package registry — 10 packages, public/private/internal scopes, publish actions, and a detail dialog.",
-    cta: { label: "Try it", action: "open:registry" },
-    componentPath: "@/components/roycss/pro/roy-registry",
-    exportName: "RoyRegistry",
-    tags: ["registry", "npm", "packages", "publish"],
-    metrics: "10 packages",
-  },
-  {
-    id: "bundle",
-    name: "Roy Bundle",
-    category: "devtools",
-    tier: "pro",
-    status: "live",
-    icon: "Package",
-    shortDescription: "Bundle optimizer: size, duplicates, dead CSS.",
-    longDescription:
-      "Bundle optimizer — size breakdown, duplicates, dead CSS, oversized chunks, and before/after comparison.",
-    cta: { label: "Try it", action: "open:bundle" },
-    componentPath: "@/components/roycss/pro/roy-bundle",
-    exportName: "RoyBundle",
-    tags: ["bundle", "size", "webpack", "vite", "tree-shake"],
-  },
-  {
-    id: "profiler",
-    name: "Roy Profiler",
-    category: "devtools",
-    tier: "pro",
-    status: "live",
-    icon: "LineChart",
-    shortDescription: "Frontend profiler: render phases, CLS, FPS.",
-    longDescription:
-      "Frontend profiler — render phases, CLS, memory, FPS, and prioritized recommendations.",
-    cta: { label: "Try it", action: "open:profiler" },
-    componentPath: "@/components/roycss/pro/roy-profiler",
-    exportName: "RoyProfiler",
-    tags: ["profiler", "performance", "cls", "fps", "render"],
-  },
-  {
-    id: "benchmark",
-    name: "Roy Benchmark",
-    category: "devtools",
-    tier: "pro",
-    status: "beta",
-    icon: "LineChart",
-    shortDescription: "Benchmark against industry averages & best-in-class.",
-    longDescription:
-      "Benchmarking platform — compare your metrics against industry averages and best-in-class targets.",
-    cta: { label: "Try it", action: "open:benchmark" },
-    componentPath: "@/components/roycss/pro/roy-benchmark",
-    exportName: "RoyBenchmark",
-    tags: ["benchmark", "performance", "comparison"],
-  },
-  {
-    id: "observatory",
-    name: "Roy Observatory",
-    category: "devtools",
-    tier: "enterprise",
-    status: "live",
-    icon: "LineChart",
-    shortDescription: "Production monitoring: CWV, errors, uptime.",
-    longDescription:
-      "Production monitoring — Core Web Vitals, error rate, uptime, alerts, and a 7-day trend chart.",
-    cta: { label: "Try it", action: "open:observatory" },
-    componentPath: "@/components/roycss/pro/roy-observatory",
-    exportName: "RoyObservatory",
-    tags: ["monitoring", "observability", "cwv", "alerts"],
-  },
-  {
-    id: "analytics",
-    name: "Analytics Dashboard",
-    category: "devtools",
-    tier: "pro",
-    status: "live",
-    icon: "LineChart",
-    shortDescription: "KPI cards, traffic, top effects, geo, devices.",
-    longDescription:
-      "Analytics dashboard — KPI cards, traffic chart, top effects, geo distribution, device donut, and time ranges.",
-    cta: { label: "Try it", action: "open:analytics" },
-    componentPath: "@/components/roycss/pro/analytics-dashboard",
-    exportName: "AnalyticsDashboard",
-    tags: ["analytics", "kpi", "traffic", "dashboard"],
-  },
-  {
-    id: "mentor",
-    name: "Roy Mentor",
-    category: "devtools",
-    tier: "free",
-    status: "live",
-    icon: "GraduationCap",
-    shortDescription: "AI tutor chat with XP tracker.",
-    longDescription:
-      "AI tutor chat — skill levels, topic chips, code examples, and an XP tracker that rewards progress.",
-    cta: { label: "Try it", action: "open:mentor" },
-    componentPath: "@/components/roycss/pro/roy-mentor",
-    exportName: "RoyMentor",
-    tags: ["mentor", "learning", "tutor", "xp"],
-  },
-  {
-    id: "challenges",
-    name: "Roy Challenges",
-    category: "devtools",
-    tier: "free",
-    status: "live",
-    icon: "Trophy",
-    shortDescription: "8 coding challenges with validator & leaderboard.",
-    longDescription:
-      "Coding challenges — 8 challenges, difficulty levels, validator, leaderboard, and XP rewards.",
-    cta: { label: "Try it", action: "open:challenges" },
-    componentPath: "@/components/roycss/pro/roy-challenges",
-    exportName: "RoyChallenges",
-    tags: ["challenges", "kata", "leaderboard", "practice"],
-    metrics: "8 challenges",
-  },
-  {
-    id: "certifications",
-    name: "Roy Certifications",
-    category: "devtools",
-    tier: "pro",
-    status: "live",
-    icon: "Award",
-    shortDescription: "4 certification levels with exam scheduling.",
-    longDescription:
-      "Certification platform — 4 levels, exam scheduling, verification, and earned-cert tracking.",
-    cta: { label: "Try it", action: "open:certifications" },
-    componentPath: "@/components/roycss/pro/roy-certifications",
-    exportName: "RoyCertifications",
-    tags: ["certifications", "exams", "credentials"],
-    metrics: "4 levels",
-  },
-  {
-    id: "open",
-    name: "Roy Open",
-    category: "devtools",
-    tier: "free",
-    status: "live",
-    icon: "Users",
-    shortDescription: "Open-source hub: good first issues, RFCs, roadmap.",
-    longDescription:
-      "Open-source hub — good first issues, RFCs, public roadmap, and contributor stats.",
-    cta: { label: "Try it", action: "open:open" },
-    componentPath: "@/components/roycss/pro/roy-open",
-    exportName: "RoyOpen",
-    tags: ["opensource", "rfc", "roadmap", "contributors"],
-  },
-  {
-    id: "spotlight",
-    name: "Roy Spotlight",
-    category: "devtools",
-    tier: "free",
-    status: "live",
-    icon: "Trophy",
-    shortDescription: "Featured developer showcase with submit form.",
-    longDescription:
-      "Featured developer showcase — templates, components, plugins, projects, and a submit form.",
-    cta: { label: "Try it", action: "open:spotlight" },
-    componentPath: "@/components/roycss/pro/roy-spotlight",
-    exportName: "RoySpotlight",
-    tags: ["spotlight", "showcase", "community"],
-  },
-
-  /* ── Enterprise (13) ──────────────────────────────────── */
-  {
-    id: "governance",
-    name: "Roy Governance",
-    category: "enterprise",
-    tier: "enterprise",
-    status: "live",
-    icon: "Shield",
-    shortDescription: "Design system governance with audit log.",
-    longDescription:
-      "Design system governance — approval queue, team roster, policies, and an audit log.",
-    cta: { label: "Try it", action: "open:governance" },
-    componentPath: "@/components/roycss/pro/roy-governance",
-    exportName: "RoyGovernance",
-    tags: ["governance", "approval", "audit", "policy"],
-  },
-  {
-    id: "compliance",
-    name: "Roy Compliance",
-    category: "enterprise",
-    tier: "enterprise",
-    status: "live",
-    icon: "Shield",
-    shortDescription: "WCAG/ADA/Section 508 compliance reporting.",
-    longDescription:
-      "Compliance reporting — WCAG, ADA, and Section 508 — with scan, findings, and report download.",
-    cta: { label: "Try it", action: "open:compliance" },
-    componentPath: "@/components/roycss/pro/roy-compliance",
-    exportName: "RoyCompliance",
-    tags: ["compliance", "wcag", "ada", "section-508"],
-  },
-  {
-    id: "audit-center",
-    name: "Audit Center",
-    category: "enterprise",
-    tier: "enterprise",
-    status: "live",
-    icon: "Shield",
-    shortDescription: "Enterprise audit dashboard across 5 projects.",
-    longDescription:
-      "Enterprise audit dashboard — 5 projects, a11y/perf/security scores, trend chart, and issues.",
-    cta: { label: "Try it", action: "open:audit-center" },
-    componentPath: "@/components/roycss/pro/roy-audit-center",
-    exportName: "RoyAuditCenter",
-    tags: ["audit", "a11y", "security", "performance"],
-    metrics: "5 projects",
-  },
-  {
-    id: "fleet",
-    name: "Roy Fleet",
-    category: "enterprise",
-    tier: "enterprise",
-    status: "live",
-    icon: "Layers",
-    shortDescription: "Manage hundreds of RoyCSS projects at scale.",
-    longDescription:
-      "Manage hundreds of RoyCSS projects — status, version, health score, and one-click scan-all.",
-    cta: { label: "Try it", action: "open:fleet" },
-    componentPath: "@/components/roycss/pro/roy-fleet",
-    exportName: "RoyFleet",
-    tags: ["fleet", "projects", "scale", "health"],
-  },
-  {
-    id: "workspace",
-    name: "Roy Workspace",
-    category: "enterprise",
-    tier: "enterprise",
-    status: "live",
-    icon: "Users",
-    shortDescription: "Company workspace with shared templates & team.",
-    longDescription:
-      "Company workspace — shared templates, tokens, components, projects, and team members.",
-    cta: { label: "Try it", action: "open:workspace" },
-    componentPath: "@/components/roycss/pro/roy-workspace",
-    exportName: "RoyWorkspace",
-    tags: ["workspace", "team", "shared", "company"],
-  },
-  {
-    id: "deploy",
-    name: "Roy Deploy",
-    category: "enterprise",
-    tier: "enterprise",
-    status: "live",
-    icon: "Layers",
-    shortDescription: "One-click deploy to Vercel/Netlify/Cloudflare/AWS.",
-    longDescription:
-      "One-click deployment — Vercel, Netlify, Cloudflare, AWS, Azure, GCP — with history and env vars.",
-    cta: { label: "Try it", action: "open:deploy" },
-    componentPath: "@/components/roycss/pro/roy-deploy",
-    exportName: "RoyDeploy",
-    tags: ["deploy", "vercel", "netlify", "cloudflare", "aws"],
-  },
-  {
-    id: "preview",
-    name: "Roy Preview",
-    category: "enterprise",
-    tier: "enterprise",
-    status: "live",
-    icon: "Layers",
-    shortDescription: "Shareable preview environments for PRs.",
-    longDescription:
-      "Shareable preview environments for branches and pull requests — ephemeral URLs and a history list.",
-    cta: { label: "Try it", action: "open:preview" },
-    componentPath: "@/components/roycss/pro/roy-preview",
-    exportName: "RoyPreview",
-    tags: ["preview", "pr", "ephemeral", "deploy"],
-  },
-  {
-    id: "cdn",
-    name: "Roy CDN",
-    category: "enterprise",
-    tier: "enterprise",
-    status: "live",
-    icon: "Layers",
-    shortDescription: "CDN dashboard with cache hit rate & purge.",
-    longDescription:
-      "CDN dashboard — requests, bandwidth, cache hit rate, edge locations, and one-click cache purge.",
-    cta: { label: "Try it", action: "open:cdn" },
-    componentPath: "@/components/roycss/pro/roy-cdn",
-    exportName: "RoyCDN",
-    tags: ["cdn", "cache", "edge", "purge"],
-  },
-  {
-    id: "storage",
-    name: "Roy Storage",
-    category: "enterprise",
-    tier: "enterprise",
-    status: "live",
-    icon: "Package",
-    shortDescription: "Cloud storage with file browser & search.",
-    longDescription:
-      "Cloud storage — file browser, upload, usage bar, breadcrumb navigation, and search.",
-    cta: { label: "Try it", action: "open:storage" },
-    componentPath: "@/components/roycss/pro/roy-storage",
-    exportName: "RoyStorage",
-    tags: ["storage", "files", "upload", "cloud"],
-  },
-  {
-    id: "edge",
-    name: "Roy Edge",
-    category: "enterprise",
-    tier: "enterprise",
-    status: "live",
-    icon: "Layers",
-    shortDescription: "Edge deployment across 6 regions.",
-    longDescription:
-      "Edge deployment — 6 regions, latency, TTL, cache strategy, and an edge-vs-origin comparison.",
-    cta: { label: "Try it", action: "open:edge" },
-    componentPath: "@/components/roycss/pro/roy-edge",
-    exportName: "RoyEdge",
-    tags: ["edge", "regions", "latency", "cache"],
-    metrics: "6 regions",
-  },
-  {
-    id: "digital-twin",
-    name: "Roy Digital Twin",
-    category: "enterprise",
-    tier: "enterprise",
-    status: "beta",
-    icon: "Layers",
-    shortDescription: "Digital twin simulator for performance & a11y.",
-    longDescription:
-      "Digital twin simulator — performance, accessibility, user journeys, and device compatibility.",
-    cta: { label: "Try it", action: "open:digital-twin" },
-    componentPath: "@/components/roycss/pro/roy-digital-twin",
-    exportName: "RoyDigitalTwin",
-    tags: ["digital-twin", "simulator", "performance"],
-  },
-  {
-    id: "os",
-    name: "Roy OS",
-    category: "enterprise",
-    tier: "enterprise",
-    status: "beta",
-    icon: "Layers",
-    shortDescription: "Unified workspace dashboard with global search.",
-    longDescription:
-      "Unified workspace dashboard — 12 product tiles, quick actions, activity feed, and global search.",
-    cta: { label: "Try it", action: "open:os" },
-    componentPath: "@/components/roycss/pro/roy-os",
-    exportName: "RoyOS",
-    tags: ["os", "workspace", "dashboard", "search"],
-    metrics: "12 tiles",
-  },
-  {
-    id: "live",
-    name: "Roy Live",
-    category: "enterprise",
-    tier: "enterprise",
-    status: "beta",
-    icon: "Users",
-    shortDescription: "Real-time collaboration with multiplayer cursors.",
-    longDescription:
-      "Real-time collaboration — multiplayer editing, presence cursors, comments, and share links.",
-    cta: { label: "Try it", action: "open:live" },
-    componentPath: "@/components/roycss/pro/roy-live",
-    exportName: "RoyLive",
-    tags: ["live", "collaboration", "realtime", "presence"],
-  },
-
-  /* ── Learning & Community / integrations (3) ──────────── */
-  {
-    id: "academy",
-    name: "Roy Academy",
-    category: "integrations",
-    tier: "pro",
-    status: "live",
-    icon: "GraduationCap",
-    shortDescription: "4 learning paths, 60 lessons, 4 certifications.",
-    longDescription:
-      "Roy Academy — 4 learning paths, 60 lessons, 4 certifications, and progress tracking.",
-    cta: { label: "Try it", action: "open:academy" },
-    componentPath: "@/components/roycss/pro/academy",
-    exportName: "Academy",
-    tags: ["academy", "courses", "learning", "certifications"],
-    metrics: "60 lessons",
-  },
-  {
-    id: "community",
-    name: "Community Hub",
-    category: "integrations",
-    tier: "pro",
-    status: "live",
-    icon: "Users",
-    shortDescription: "Stats, contributors, feed, leaderboard, discussions.",
-    longDescription:
-      "Community hub — stats, 6 contributors, activity feed, leaderboard, and discussions across 3 tabs.",
-    cta: { label: "Try it", action: "open:community" },
-    componentPath: "@/components/roycss/pro/community-hub",
-    exportName: "CommunityHub",
-    tags: ["community", "contributors", "discussions", "leaderboard"],
-    metrics: "6 contributors",
-  },
-  {
-    id: "showcase",
-    name: "Roy Showcase",
-    category: "integrations",
-    tier: "pro",
-    status: "live",
-    icon: "Trophy",
-    shortDescription: "12 curated projects with perf/a11y scores.",
-    longDescription:
-      "12 curated projects with performance and a11y scores, industry filters, and a submit form.",
-    cta: { label: "Try it", action: "open:showcase" },
-    componentPath: "@/components/roycss/pro/roy-showcase",
-    exportName: "RoyShowcase",
-    tags: ["showcase", "projects", "portfolio"],
-    metrics: "12 projects",
-  },
+export const PRODUCT_TIERS: { id: ProductTier; label: string }[] = [
+  { id: "free", label: "Free" },
+  { id: "pro", label: "Pro" },
+  { id: "enterprise", label: "Enterprise" },
+  { id: "cloud", label: "Cloud" },
 ];
 
-/* ═══════════════════════════════════════════════════════════════
-   CONVENIENCE LOOKUPS
-   ═══════════════════════════════════════════════════════════════ */
+export const PRODUCT_STATUSES: { id: ProductStatus; label: string }[] = [
+  { id: "ready", label: "Ready" },
+  { id: "beta", label: "Beta" },
+  { id: "experimental", label: "Experimental" },
+  { id: "roadmap", label: "Roadmap" },
+];
 
-/** Fast O(1) lookup from id → entry. */
-export const PRODUCT_MAP: ReadonlyMap<string, ProductEntry> = new Map(
-  PRODUCT_REGISTRY.map((p) => [p.id, p]),
-);
+export const PRODUCTS: ProductEntry[] = [
+  /* ───────────── AI (10) ───────────── */
+  entry("roy-ai", "RoyAI", "ai", "pro", "ready", "Bot",
+    "AI assistant for CSS questions & migration.",
+    "Conversational AI trained on RoyCSS recipes, effect catalog, and migration paths from Tailwind, Bootstrap, and Radix.",
+    "Chat with RoyAI", "@/components/roycss/pro/roy-ai",
+    ["ai", "assistant", "chatbot"]),
+  entry("roy-architect", "RoyArchitect", "ai", "pro", "beta", "BrainCircuit",
+    "AI generator for full-page layouts from prompts.",
+    "RoyArchitect turns a single sentence like 'pricing page for a SaaS with 3 tiers' into production-ready JSX wired to the RoyCSS design system.",
+    "Generate a page", "@/components/roycss/pro/roy-architect",
+    ["ai", "generator", "layout", "prompt"]),
+  entry("roy-agents", "RoyAgents", "ai", "enterprise", "beta", "Users",
+    "Autonomous agents for audits & refactors.",
+    "RoyAgents dispatches a fleet of autonomous agents to audit a codebase, propose refactor patches, and open PRs with human-readable diffs.",
+    "Spawn agents", "@/components/roycss/pro/roy-agents",
+    ["ai", "agents", "autonomous", "refactor"]),
+  entry("roy-pair", "RoyPair", "ai", "pro", "beta", "Sparkles",
+    "AI pair-programmer for CSS suggestions.",
+    "RoyPair sits beside your editor and proposes class substitutions, accessibility fixes, and performance wins as you type.",
+    "Pair with RoyPair", "@/components/roycss/pro/roy-pair",
+    ["ai", "pair-programming", "suggestions"]),
+  entry("roy-mentor", "RoyMentor", "ai", "pro", "beta", "GraduationCap",
+    "Adaptive mentor for learning modern CSS.",
+    "RoyMentor generates a personalized curriculum from a 5-minute skill check and walks you through progressive exercises with live previews.",
+    "Start learning", "@/components/roycss/pro/roy-mentor",
+    ["ai", "learning", "mentor", "curriculum"]),
+  entry("roy-review", "RoyReview", "ai", "enterprise", "beta", "Shield",
+    "AI code review with rule engine.",
+    "RoyReview runs 60+ rules on every PR — accessibility, performance, browser support, color contrast — and posts inline comments with one-click fixes.",
+    "Review code", "@/components/roycss/pro/roy-review",
+    ["ai", "review", "pr", "accessibility"]),
+  entry("roy-refactor", "RoyRefactor", "ai", "pro", "beta", "Wand2",
+    "Refactor engine for legacy CSS.",
+    "RoyRefactor rewrites legacy CSS into RoyCSS utilities, logical properties, and OKLCH colors with a 3-way merge preview.",
+    "Refactor now", "@/components/roycss/pro/roy-refactor",
+    ["ai", "refactor", "migration"]),
+  entry("roy-generator", "RoyGenerator", "ai", "pro", "beta", "Hammer",
+    "Scaffold generators from natural language.",
+    "RoyGenerator turns 'auth form with email + magic link' into a complete JSX file with form validation, a11y labels, and preview.",
+    "Generate code", "@/components/roycss/pro/roy-generator",
+    ["ai", "generator", "scaffold"]),
+  entry("roy-scaffold", "RoyScaffold", "ai", "pro", "beta", "Blocks",
+    "Project scaffolds with one click.",
+    "RoyScaffold bootstraps a Next.js + RoyCSS project with auth, design tokens, and accessibility tooling wired in.",
+    "Scaffold a project", "@/components/roycss/pro/roy-scaffold",
+    ["ai", "scaffold", "bootstrap"]),
+  entry("roy-search", "RoySearch", "ai", "pro", "ready", "Search",
+    "AI semantic search across effects & recipes.",
+    "RoySearch indexes 1,749 effects and 200+ recipes and lets you search by meaning — 'subtle entrance animation' returns the right 5 cards.",
+    "Search RoyCSS", "@/components/roycss/pro/roy-search",
+    ["ai", "search", "semantic"]),
 
-/** Lookup by component path string. */
-export const PRODUCT_BY_PATH: ReadonlyMap<string, ProductEntry> = new Map(
-  PRODUCT_REGISTRY.map((p) => [p.componentPath, p]),
-);
+  /* ───────────── Components (12) ───────────── */
+  entry("roy-blocks", "RoyBlocks", "components", "pro", "ready", "Blocks",
+    "Marketplace of production-ready application blocks.",
+    "RoyBlocks ships 10 application blocks — Auth, Billing, CRM, Healthcare, Analytics, Admin, Team, Notifications, Onboarding, Dashboard — each with live preview + code view.",
+    "Browse blocks", "@/components/roycss/pro/roy-blocks",
+    ["blocks", "marketplace", "jsx"]),
+  entry("pattern-library", "PatternLibrary", "components", "free", "ready", "Shapes",
+    "Curated CSS pattern library with copy-paste recipes.",
+    "PatternLibrary contains 80+ design patterns (cards, lists, navigation) — each with HTML, CSS, and a live preview at three breakpoints.",
+    "Browse patterns", "@/components/roycss/pro/pattern-library",
+    ["patterns", "library", "copy"]),
+  entry("template-library", "TemplateLibrary", "components", "pro", "ready", "LayoutGrid",
+    "Full-page templates for SaaS, marketing, docs & admin.",
+    "TemplateLibrary ships 24 templates — landing pages, pricing, docs, admin dashboards, error pages — built on RoyCSS design tokens.",
+    "Browse templates", "@/components/roycss/pro/template-library",
+    ["templates", "landing", "dashboard"]),
+  entry("marketplace", "Marketplace", "components", "cloud", "beta", "Store",
+    "Community marketplace for RoyCSS templates.",
+    "Marketplace lets creators publish templates, blocks, and effects — buyers get one-click install with automatic version updates.",
+    "Visit marketplace", "@/components/roycss/pro/marketplace",
+    ["marketplace", "community", "templates"]),
+  entry("roy-blueprints", "RoyBlueprints", "components", "pro", "ready", "BookOpen",
+    "Page-level blueprints for design systems.",
+    "RoyBlueprints gives you 18 blueprints — pricing, contact, dashboard, blog, marketing — each as a complete page wired to the RoyCSS design system.",
+    "Browse blueprints", "@/components/roycss/pro/roy-blueprints",
+    ["blueprints", "page", "design-system"]),
+  entry("roy-forms", "RoyForms", "components", "pro", "beta", "FormInput",
+    "Accessible form components with validation.",
+    "RoyForms ships 24 form primitives (input, select, datepicker, toggle, slider) with built-in validation, ARIA, and keyboard nav.",
+    "Browse forms", "@/components/roycss/pro/roy-forms",
+    ["forms", "validation", "a11y"]),
+  entry("data-grid", "DataGrid", "components", "enterprise", "ready", "Table2",
+    "High-performance data grid with sorting & filtering.",
+    "DataGrid handles 100k rows via virtualization, with column resize, sort, multi-filter, and inline edit — all keyboard accessible.",
+    "View data grid", "@/components/roycss/pro/data-grid",
+    ["data-grid", "virtualization", "table"]),
+  entry("kanban-board", "KanbanBoard", "components", "pro", "ready", "KanbanSquare",
+    "Drag-and-drop Kanban board with columns & cards.",
+    "KanbanBoard is a fully accessible drag-and-drop board with column reordering, card labels, due dates, and swimlanes.",
+    "View Kanban", "@/components/roycss/pro/kanban-board",
+    ["kanban", "board", "drag-drop"]),
+  entry("scheduler", "Scheduler", "components", "pro", "ready", "Calendar",
+    "Calendar scheduler with month / week / day views.",
+    "Scheduler renders month/week/day views with drag-to-create events, all-day banners, and timezone-aware syncing.",
+    "Open scheduler", "@/components/roycss/pro/scheduler",
+    ["scheduler", "calendar", "events"]),
+  entry("charts", "Charts", "components", "pro", "ready", "BarChart3",
+    "Chart library with OKLCH colors & dark mode.",
+    "Charts renders area, bar, line, and pie charts using OKLCH colors and respecting the active theme — built on Recharts with a custom theme layer.",
+    "View charts", "@/components/roycss/pro/charts",
+    ["charts", "data-viz", "oklch"]),
+  entry("roy-storybook", "RoyStorybook", "components", "pro", "beta", "BookOpen",
+    "Storybook-style playground for components.",
+    "RoyStorybook lets you isolate, view, and tweak props on every RoyCSS component without leaving the page.",
+    "Open Storybook", "@/components/roycss/pro/roy-storybook",
+    ["storybook", "playground", "isolated"]),
+  entry("roy-showcase", "RoyShowcase", "components", "free", "ready", "LayoutGrid",
+    "Visual showcase of all RoyCSS components.",
+    "RoyShowcase is the one-stop gallery of every RoyCSS component — perfect for marketing and onboarding.",
+    "Browse showcase", "@/components/roycss/pro/roy-showcase",
+    ["showcase", "gallery", "components"]),
 
-/** Get a single product by id (returns undefined if not found). */
+  /* ───────────── DevTools (14) ───────────── */
+  entry("roy-bundle", "RoyBundle", "devtools", "pro", "ready", "Package",
+    "Bundle analyzer for CSS duplicates & dead rules.",
+    "RoyBundle scans your CSS for duplicate selectors, dead rules, and unused variables — and produces a one-click patch.",
+    "Analyze bundle", "@/components/roycss/pro/roy-bundle",
+    ["bundle", "analyzer", "dead-code"]),
+  entry("roy-profiler", "RoyProfiler", "devtools", "pro", "ready", "Gauge",
+    "Runtime CSS profiler with paint metrics.",
+    "RoyProfiler instruments layout, paint, and composite times per CSS rule so you can find what's actually jank.",
+    "Profile CSS", "@/components/roycss/pro/roy-profiler",
+    ["profiler", "performance", "paint"]),
+  entry("roy-benchmark", "RoyBenchmark", "devtools", "pro", "ready", "Activity",
+    "Headless benchmarks across browsers & devices.",
+    "RoyBenchmark runs your CSS through 12 browsers + 6 devices and produces a support matrix with median paint times.",
+    "Run benchmark", "@/components/roycss/pro/roy-benchmark",
+    ["benchmark", "browsers", "performance"]),
+  entry("roy-observatory", "RoyObservatory", "devtools", "enterprise", "beta", "Eye",
+    "Observability for production CSS payloads.",
+    "RoyObservatory tracks your production CSS payload size, unused rules, and override rate across every page on your site.",
+    "Observe CSS", "@/components/roycss/pro/roy-observatory",
+    ["observability", "monitor", "production"]),
+  entry("roy-sandbox", "RoySandbox", "devtools", "free", "ready", "Boxes",
+    "Isolated sandbox for testing CSS snippets.",
+    "RoySandbox spins up an isolated iframe so you can test CSS in pure isolation — no cascade leakage.",
+    "Open sandbox", "@/components/roycss/pro/roy-sandbox",
+    ["sandbox", "iframe", "test"]),
+  entry("roy-preview", "RoyPreview", "devtools", "free", "ready", "Eye",
+    "Multi-viewport preview at 6 breakpoints.",
+    "RoyPreview renders your component at 6 breakpoints side-by-side so you can spot responsive issues instantly.",
+    "Preview component", "@/components/roycss/pro/roy-preview",
+    ["preview", "responsive", "breakpoints"]),
+  entry("roy-cdn", "RoyCDN", "devtools", "cloud", "ready", "Cloud",
+    "CDN distribution for RoyCSS versions.",
+    "RoyCDN publishes every tagged version to a multi-region edge network and exposes per-version traffic stats.",
+    "View CDN stats", "@/components/roycss/pro/roy-cdn",
+    ["cdn", "distribution", "edge"]),
+  entry("roy-edge", "RoyEdge", "devtools", "cloud", "beta", "Globe",
+    "Edge runtime for per-region CSS overrides.",
+    "RoyEdge runs per-region CSS overrides at the edge so EU users get GDPR-friendly defaults without an extra round-trip.",
+    "Configure edge", "@/components/roycss/pro/roy-edge",
+    ["edge", "runtime", "regions"]),
+  entry("roy-storage", "RoyStorage", "devtools", "cloud", "beta", "Database",
+    "Object storage for user collections & favorites.",
+    "RoyStorage persists user collections, favorites, and copy history to the cloud so they sync across devices.",
+    "View storage", "@/components/roycss/pro/roy-storage",
+    ["storage", "sync", "cloud"]),
+  entry("roy-sync", "RoySync", "devtools", "cloud", "beta", "RefreshCw",
+    "Real-time sync for cross-device state.",
+    "RoySync pushes collections, favorites, and history changes to every signed-in device in under 200ms via websockets.",
+    "View sync status", "@/components/roycss/pro/roy-sync",
+    ["sync", "realtime", "websocket"]),
+  entry("roy-version", "RoyVersion", "devtools", "free", "ready", "GitBranch",
+    "Versioned RoyCSS release explorer.",
+    "RoyVersion lets you browse every RoyCSS release, diff any two versions, and pin your CDN link to a specific version.",
+    "Browse versions", "@/components/roycss/pro/roy-version",
+    ["version", "release", "diff"]),
+  entry("roy-deploy", "RoyDeploy", "devtools", "cloud", "beta", "Rocket",
+    "One-click deploy of static sites to the edge.",
+    "RoyDeploy ships your static site to 14 edge regions in one command with atomic deploys + instant rollbacks.",
+    "Deploy now", "@/components/roycss/pro/roy-deploy",
+    ["deploy", "edge", "static"]),
+  entry("roy-live", "RoyLive", "devtools", "cloud", "beta", "Radio",
+    "Live share sessions for pair-programming.",
+    "RoyLive lets you share your RoyCSS playground with a teammate in real-time — both cursors, both edits, no merge conflicts.",
+    "Start live share", "@/components/roycss/pro/roy-live",
+    ["live", "pair", "share"]),
+  entry("roy-open", "RoyOpen", "devtools", "free", "ready", "Unlock",
+    "Open-source mirror of the RoyCSS repo.",
+    "RoyOpen is the public open-source home for RoyCSS — issues, RFCs, and contribution guides.",
+    "View repo", "@/components/roycss/pro/roy-open",
+    ["open-source", "github", "contributing"]),
+
+  /* ───────────── Enterprise (13) ───────────── */
+  entry("roy-governance", "RoyGovernance", "enterprise", "enterprise", "beta", "Shield",
+    "Governance policies for design systems.",
+    "RoyGovernance enforces your design-token policy at PR time — no off-system colors, no off-system spacing, no surprises in prod.",
+    "View policies", "@/components/roycss/pro/roy-governance",
+    ["governance", "policy", "design-system"]),
+  entry("roy-compliance", "RoyCompliance", "enterprise", "enterprise", "beta", "CheckCircle",
+    "Compliance pack for WCAG, GDPR, SOC2.",
+    "RoyCompliance ships automated checks for WCAG 2.2 AA, GDPR cookie banners, and SOC2 audit logs.",
+    "View compliance", "@/components/roycss/pro/roy-compliance",
+    ["compliance", "wcag", "gdpr", "soc2"]),
+  entry("roy-audit-center", "RoyAuditCenter", "enterprise", "enterprise", "beta", "ClipboardCheck",
+    "Central audit center for accessibility & performance.",
+    "RoyAuditCenter aggregates a11y + perf audits across every page on your site, with trend graphs and per-team leaderboards.",
+    "Open audit center", "@/components/roycss/pro/roy-audit-center",
+    ["audit", "accessibility", "performance"]),
+  entry("roy-fleet", "RoyFleet", "enterprise", "enterprise", "beta", "Truck",
+    "Multi-site fleet management for RoyCSS deploys.",
+    "RoyFleet manages RoyCSS deploys across 100+ sites — atomic, scheduled, with automatic rollback on regression.",
+    "View fleet", "@/components/roycss/pro/roy-fleet",
+    ["fleet", "multi-site", "deploy"]),
+  entry("roy-os", "RoyOS", "enterprise", "enterprise", "beta", "Monitor",
+    "Operating system for design system teams.",
+    "RoyOS unifies tokens, components, docs, and governance into one workspace with SSO + audit logs.",
+    "Open RoyOS", "@/components/roycss/pro/roy-os",
+    ["os", "workspace", "design-system"]),
+  entry("roy-workspace", "RoyWorkspace", "enterprise", "enterprise", "beta", "LayoutDashboard",
+    "Workspace with role-based access control.",
+    "RoyWorkspace gives every team a private workspace with RBAC, shared collections, and per-team audit trails.",
+    "Open workspace", "@/components/roycss/pro/roy-workspace",
+    ["workspace", "rbac", "teams"]),
+  entry("roy-digital-twin", "RoyDigitalTwin", "enterprise", "enterprise", "beta", "Boxes",
+    "Digital twin of your production frontend.",
+    "RoyDigitalTwin mirrors your production frontend in a sandbox so you can run what-if experiments (new tokens, new components) without breaking prod.",
+    "View twin", "@/components/roycss/pro/roy-digital-twin",
+    ["digital-twin", "simulation", "what-if"]),
+  entry("roy-registry", "RoyRegistry", "enterprise", "enterprise", "beta", "Package",
+    "Private registry for internal RoyCSS packages.",
+    "RoyRegistry hosts your private RoyCSS packages — components, blocks, recipes — with versioning + access control.",
+    "Open registry", "@/components/roycss/pro/roy-registry",
+    ["registry", "private", "npm"]),
+  entry("roy-spotlight", "RoySpotlight", "enterprise", "pro", "beta", "Sparkle",
+    "Spotlight search across all RoyCSS resources.",
+    "RoySpotlight is a ⌘K-style command bar that searches effects, recipes, components, docs, and your team's private collections in one place.",
+    "Open spotlight", "@/components/roycss/pro/roy-spotlight",
+    ["spotlight", "search", "command-bar"]),
+  entry("roy-challenges", "RoyChallenges", "enterprise", "free", "ready", "Trophy",
+    "Daily CSS challenges for teams.",
+    "RoyChallenges sends a daily 5-minute CSS challenge to your team — leaderboard, badges, and an end-of-week recap.",
+    "View challenges", "@/components/roycss/pro/roy-challenges",
+    ["challenges", "team", "leaderboard"]),
+  entry("roy-certifications", "RoyCertifications", "enterprise", "pro", "beta", "Award",
+    "RoyCSS certifications for individuals & teams.",
+    "RoyCertifications offers verified RoyCSS certifications (Foundation, Practitioner, Architect) with online proctored exams.",
+    "View certifications", "@/components/roycss/pro/roy-certifications",
+    ["certifications", "exam", "badges"]),
+  entry("academy", "Academy", "enterprise", "free", "ready", "GraduationCap",
+    "Free courses on RoyCSS + modern CSS.",
+    "Academy is a free 12-module course covering OKLCH, logical properties, container queries, scroll-driven animations, and RoyCSS best practices.",
+    "Start academy", "@/components/roycss/pro/academy",
+    ["academy", "courses", "free"]),
+  entry("community-hub", "CommunityHub", "enterprise", "free", "ready", "Users",
+    "Community hub for RoyCSS users.",
+    "CommunityHub is the social home for RoyCSS — forums, showcase, events, and a job board for RoyCSS-certified engineers.",
+    "Visit community", "@/components/roycss/pro/community-hub",
+    ["community", "forums", "events"]),
+
+  /* ───────────── Integrations (3) ───────────── */
+  entry("plugin-hub", "PluginHub", "integrations", "cloud", "beta", "Plug",
+    "Plugin hub for VSCode, Figma & browser.",
+    "PluginHub is the official marketplace for RoyCSS plugins — VSCode snippets, Figma variables, and a Chrome inspector.",
+    "Browse plugins", "@/components/roycss/pro/plugin-hub",
+    ["plugins", "vscode", "figma"]),
+  entry("analytics-dashboard", "AnalyticsDashboard", "integrations", "cloud", "beta", "LineChart",
+    "Analytics dashboard for RoyCSS usage.",
+    "AnalyticsDashboard shows which RoyCSS components are used most across your team, plus adoption trends and power-user leaderboards.",
+    "View analytics", "@/components/roycss/pro/analytics-dashboard",
+    ["analytics", "adoption", "metrics"]),
+  entry("accessibility-suite", "AccessibilitySuite", "integrations", "pro", "ready", "Accessibility",
+    "Full accessibility suite: axe + manual checks.",
+    "AccessibilitySuite bundles automated axe checks with manual keyboard nav and contrast tests, exported as a shareable report.",
+    "Run a11y suite", "@/components/roycss/pro/accessibility-suite",
+    ["a11y", "wcag", "audit"]),
+
+  /* ───────────── Design (10) ───────────── */
+  entry("theme-system", "ThemeSystem", "design", "free", "ready", "Palette",
+    "10 theme presets with OKLCH tokens.",
+    "ThemeSystem ships 10 curated theme presets (forest, sunset, midnight, etc.) all expressed in OKLCH with auto dark mode.",
+    "Browse themes", "@/components/roycss/pro/theme-system",
+    ["theme", "presets", "oklch"]),
+  entry("icon-pack", "IconPack", "design", "free", "ready", "Sparkle",
+    "Curated icon pack with 480 icons.",
+    "IconPack ships 480 pixel-perfect icons in 3 weights — all as React components with auto a11y labels.",
+    "Browse icons", "@/components/roycss/pro/icon-pack",
+    ["icons", "svg", "library"]),
+  entry("motion-library", "MotionLibrary", "design", "free", "ready", "Film",
+    "Curated motion library with 60 presets.",
+    "MotionLibrary contains 60 motion presets — entrance, exit, hover, attention — each as a copy-paste CSS keyframe.",
+    "Browse motion", "@/components/roycss/pro/motion-library",
+    ["motion", "animation", "presets"]),
+  entry("visual-studio", "VisualStudio", "design", "pro", "ready", "Wand2",
+    "Visual editor for RoyCSS design tokens.",
+    "VisualStudio is a drag-and-drop editor for design tokens — change one color, see the entire system update live.",
+    "Open VisualStudio", "@/components/roycss/pro/visual-studio",
+    ["visual", "editor", "tokens"]),
+  entry("roy-color-studio", "RoyColorStudio", "design", "pro", "ready", "Palette",
+    "OKLCH color studio with palette presets.",
+    "RoyColorStudio is a full OKLCH color studio — palette generator, contrast checker, and per-preset previews.",
+    "Open color studio", "@/components/roycss/pro/roy-color-studio",
+    ["color", "oklch", "palette"]),
+  entry("roy-typography", "RoyTypography", "design", "pro", "ready", "Type",
+    "Type studio with fluid typography.",
+    "RoyTypography ships fluid type scales, font pairings, and a clamp() generator with live previews at every breakpoint.",
+    "Open type studio", "@/components/roycss/pro/roy-typography",
+    ["typography", "fluid", "fonts"]),
+  entry("roy-motion-studio", "RoyMotionStudio", "design", "pro", "beta", "Clapperboard",
+    "Motion studio with keyframe editor.",
+    "RoyMotionStudio is a full visual keyframe editor with timeline, easing curves, and copy-as-CSS export.",
+    "Open motion studio", "@/components/roycss/pro/roy-motion-studio",
+    ["motion", "keyframes", "editor"]),
+  entry("roy-gradient-studio", "RoyGradientStudio", "design", "pro", "ready", "Droplets",
+    "Gradient studio with mesh & conic.",
+    "RoyGradientStudio generates linear, radial, conic, and mesh gradients with a live preview and copy-as-CSS export.",
+    "Open gradient studio", "@/components/roycss/pro/roy-gradient-studio",
+    ["gradient", "mesh", "conic"]),
+  entry("roy-layout-studio", "RoyLayoutStudio", "design", "pro", "beta", "LayoutTemplate",
+    "Layout studio for grid & flexbox.",
+    "RoyLayoutStudio is a visual editor for grid + flexbox — drag columns, drop rows, copy the CSS, done.",
+    "Open layout studio", "@/components/roycss/pro/roy-layout-studio",
+    ["layout", "grid", "flexbox"]),
+  entry("roy-designer", "RoyDesigner", "design", "pro", "beta", "PenTool",
+    "Full design editor for RoyCSS presets.",
+    "RoyDesigner is a full visual design editor — change tokens, preview components live, then export as a theme preset.",
+    "Open designer", "@/components/roycss/pro/roy-designer",
+    ["designer", "editor", "presets"]),
+];
+
+/** Quick lookup helpers — keep functions pure so they're tree-shakeable. */
 export function getProductById(id: string): ProductEntry | undefined {
-  return PRODUCT_MAP.get(id);
+  return PRODUCTS.find((p) => p.id === id);
 }
 
-/** All category ids in display order. */
-export const PRODUCT_CATEGORY_IDS: ProductCategory[] =
-  PRODUCT_CATEGORIES.map((c) => c.id);
-
-/** Filter products by category. */
-export function getProductsByCategory(category: ProductCategory): ProductEntry[] {
-  return PRODUCT_REGISTRY.filter((p) => p.category === category);
+export function getProductsByCategory(cat: ProductCategory): ProductEntry[] {
+  return PRODUCTS.filter((p) => p.category === cat);
 }
 
-/** Counts per category — useful for tab labels. */
-export function PRODUCT_CATEGORY_COUNTS(): Record<ProductCategory, number> {
-  const counts: Record<ProductCategory, number> = {
-    ai: 0,
-    components: 0,
-    devtools: 0,
-    enterprise: 0,
-    integrations: 0,
-    design: 0,
-  };
-  for (const p of PRODUCT_REGISTRY) {
-    counts[p.category] += 1;
-  }
-  return counts;
+export function searchProducts(query: string): ProductEntry[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return PRODUCTS;
+  return PRODUCTS.filter((p) =>
+    p.name.toLowerCase().includes(q) ||
+    p.shortDescription.toLowerCase().includes(q) ||
+    p.longDescription.toLowerCase().includes(q) ||
+    p.tags.some((t) => t.toLowerCase().includes(q)),
+  );
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   TYPE-ONLY RE-EXPORT (so consumers can `import type` cleanly)
-   ═══════════════════════════════════════════════════════════════ */
-
-export type ProductLoader = () => Promise<{ default: ComponentType<unknown> }>;
+export const PRODUCT_COUNT = PRODUCTS.length;

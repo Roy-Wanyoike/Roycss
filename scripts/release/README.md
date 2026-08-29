@@ -144,7 +144,7 @@ npm view roycss@1.1.0 --json | jq '.dist.attestations'
 # Install in a fresh temp dir
 cd $(mktemp -d)
 npm install roycss
-node -e "console.log(require('roycss').length)"   # should print 1749
+node -e "console.log(require('roycss').length)"   # should print 1569
 ```
 
 ### 6. Create the GitHub Release

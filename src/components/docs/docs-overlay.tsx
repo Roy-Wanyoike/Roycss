@@ -121,7 +121,7 @@ export function DocsOverlay({ open, onOpenChange }: DocsOverlayProps) {
     // If already cached, skip
     const cached = getDocs();
     if (cached) {
-       
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot cache hydration on first open
       setDocs(cached);
       if (!selectedSlug && cached.length > 0) {
         setSelectedSlug(cached[0].slug);

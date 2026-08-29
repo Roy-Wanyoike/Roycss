@@ -1513,7 +1513,7 @@ const TOOL_META: Record<ToolType, { title: string; icon: React.ComponentType<{ c
   "specificity": { title: "Specificity Calculator", icon: Calculator, description: "Paste CSS selectors → see each one's (a, b, c) specificity score, ranked." },
   "easing": { title: "Easing Visualizer", icon: Spline, description: "Design cubic-bezier curves visually — drag control points, compare presets, copy CSS." },
   "stacking": { title: "Stacking Context Inspector", icon: Layers, description: "Paste HTML → see the stacking-context tree, or sandbox z-index live." },
-  "similarity": { title: "Effect Similarity Finder", icon: Radar, description: "Pick any effect → instantly find the most similar effects in the 1,749-effect library." },
+  "similarity": { title: "Effect Similarity Finder", icon: Radar, description: "Pick any effect → instantly find the most similar effects in the 1,569-effect library." },
   "perf": { title: "CSS Performance Analyzer", icon: Zap, description: "Paste CSS → get a 0–100 performance score with categorized findings and fixes." },
   "browser-support": { title: "Browser Support Matrix", icon: Globe, description: "Look up caniuse-style support for 27 modern CSS features across 5 major browsers." },
   "print": { title: "Print Stylesheet Simulator", icon: Printer, description: "Preview @media print CSS in a live iframe — see exactly what prints, without the print dialog." },

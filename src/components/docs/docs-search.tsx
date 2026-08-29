@@ -88,7 +88,7 @@ export function DocsSearch({ docs, onSelect, onClearQuery, autoFocus }: DocsSear
 
   // Reset active index when query changes
   useEffect(() => {
-     
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot reset on query change
     setActiveIndex(0);
   }, [query]);
 

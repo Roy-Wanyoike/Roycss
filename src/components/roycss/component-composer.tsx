@@ -1,632 +1,367 @@
 "use client";
 
-/**
- * ComponentComposer — visually compose 2+ RoyCSS effects into a single
- * composite preview, copy the combined CSS in any framework format, and
- * optionally save the composition as a custom collection.
- *
- * Features:
- *   - Effect picker (live search across all 1,749 effects)
- *   - Live preview iframe with the composite CSS injected
- *   - Add / remove / reorder effects via a chip rail
- *   - Copy composite CSS button (uses `src/lib/copy-formats.ts`)
- *   - Save composite as a custom collection (localStorage, same shape
- *     as `CustomCollectionsSheet` — see `src/components/roycss/custom-collections.tsx`)
- *
- * Requires at least 2 effects before the Copy / Save actions enable.
- */
-
-import {
-  useState, useMemo, useCallback, useRef, useEffect,
-} from "react";
+import { useMemo, useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Sparkles,
   Search as SearchIcon,
-  X,
   Plus,
+  X,
   Copy,
-  Check,
   Save,
-  Layers,
-  GripVertical,
-  ChevronUp,
-  ChevronDown,
-  Trash2,
-  Wand2,
+  Check,
+  Eye,
   Loader2,
+  Sparkles,
 } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { effects as ALL_EFFECTS, type CSSEffect } from "@/lib/roycss-effects";
-import { formatCss, COPY_FORMATS, type CopyFormat } from "@/lib/copy-formats";
-import { toast } from "sonner";
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
+import { effects as allEffects, type CSSEffect } from "@/lib/roycss-effects";
 
-/* ═══════════════════════════════════════════════════════════════
-   CONSTANTS — must stay in sync with custom-collections.tsx
-   ═══════════════════════════════════════════════════════════════ */
-
-const STORAGE_KEY = "roycss-custom-collections";
-
-interface CustomCollection {
+/* ── LocalStorage-backed saved compositions ───────────────────
+   Each composition: { id, name, effects: CSSEffect[], createdAt }.
+   Stored under roycss-compositions. */
+interface SavedComposition {
   id: string;
   name: string;
-  description: string;
-  effectIds: string[];
-  createdAt: number;
+  effects: CSSEffect[];
+  createdAt: string;
 }
 
-function readCollections(): CustomCollection[] {
+const STORAGE_KEY = "roycss-compositions";
+
+function loadCompositions(): SavedComposition[] {
   if (typeof window === "undefined") return [];
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    return raw ? (JSON.parse(raw) as SavedComposition[]) : [];
   } catch {
     return [];
   }
 }
 
-function writeCollections(collections: CustomCollection[]) {
+function saveCompositions(list: SavedComposition[]) {
   if (typeof window === "undefined") return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(collections));
-  window.dispatchEvent(new CustomEvent("roycss-collections-change"));
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+  } catch {
+    /* ignore quota errors */
+  }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   COMPOSER — main component
-   ═══════════════════════════════════════════════════════════════ */
-
-export interface ComponentComposerProps {
-  /** Optional list of effect ids to pre-select (e.g. from a related effect's recommendations). */
-  defaultEffectIds?: string[];
-  /** When provided, the composer will mount inside a Dialog when `open` is true. */
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  /** Optional max number of effects a user can stack. Defaults to 6. */
-  maxEffects?: number;
+/* ── Helper: build a self-contained preview document ────────
+   Wraps every effect's CSS plus a few demo targets in a tiny
+   HTML page rendered in an iframe (sandboxed). */
+function buildPreviewDoc(selected: CSSEffect[]): string {
+  const css = selected.map((e) => `/* ${e.name} */\n${e.cssCode}`).join("\n\n");
+  const targets = selected.map((e, i) => {
+    const baseCls = `roycss-comp-${i}`;
+    const inner = e.previewType === "loader" && e.childCount
+      ? Array.from({ length: e.childCount }).map(() => "<span></span>").join("")
+      : e.previewText ?? (e.previewType === "button" ? "Hover Me" : "RoyCSS");
+    return `<div class="${baseCls} roycss-effect-target" data-effect="${e.id}">${inner}</div>`;
+  }).join("\n");
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"/>
+  <style>
+    body{margin:0;padding:16px;font-family:system-ui,Segoe UI,sans-serif;background:#0b0f14;color:#e5e7eb;display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));place-items:center;min-height:100%}
+    .roycss-effect-target{display:flex;align-items:center;justify-content:center;min-height:48px;min-width:96px;padding:10px;border-radius:8px;border:1px solid #1f2937;font-size:13px;color:#e5e7eb;background:rgba(255,255,255,.02)}
+    .roycss-effect-target:empty{min-height:48px}
+    ${css}
+  </style></head><body>${targets}</body></html>`;
 }
 
-export function ComponentComposer({
-  defaultEffectIds = [],
-  open: controlledOpen,
-  onOpenChange,
-  maxEffects = 6,
-}: ComponentComposerProps) {
-  const isControlled = controlledOpen !== undefined;
-  const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
-  const open = isControlled ? controlledOpen : uncontrolledOpen;
-  const setOpen = (v: boolean) => {
-    if (isControlled && onOpenChange) onOpenChange(v);
-    else setUncontrolledOpen(v);
-  };
+/** Strips per-effect classes so the composite CSS is copy-paste clean. */
+function buildCompositeCSS(selected: CSSEffect[]): string {
+  return selected.map((e) => `/* ${e.name} — ${e.id} */\n${e.cssCode}`).join("\n\n");
+}
 
-  // Pre-resolve default effects (skip any missing ids).
-  const initialSelected = useMemo<CSSEffect[]>(() => {
-    const all = new Map(ALL_EFFECTS.map((e) => [e.id, e] as const));
-    const out: CSSEffect[] = [];
-    for (const id of defaultEffectIds) {
-      const e = all.get(id);
-      if (e) out.push(e);
-    }
-    return out;
-  }, [defaultEffectIds]);
+interface ComponentComposerProps {
+  open: boolean;
+  onOpenChange: (o: boolean) => void;
+}
 
-  const [selected, setSelected] = useState<CSSEffect[]>(initialSelected);
+export function ComponentComposer({ open, onOpenChange }: ComponentComposerProps) {
   const [search, setSearch] = useState("");
-  const [copiedFormat, setCopiedFormat] = useState<CopyFormat | null>(null);
+  const [selected, setSelected] = useState<CSSEffect[]>([]);
+  const [copied, setCopied] = useState(false);
   const [saveName, setSaveName] = useState("");
-  const [saving, setSaving] = useState(false);
-  const [savedToast, setSavedToast] = useState(false);
+  const [saved, setSaved] = useState<SavedComposition[]>([]);
+  const iframeRef = useRef<HTMLIFrameElement | null>(null);
 
-  // Reset selection when the composer is opened with default effect ids.
-  useEffect(() => {
-    if (open) setSelected(initialSelected);
-     
-  }, [open]);
+  // Sample 60 effects for the picker (avoid mounting the full 1,749-list).
+  const pickable = useMemo<CSSEffect[]>(() => {
+    const seen = new Set<string>();
+    const out: CSSEffect[] = [];
+    for (const e of allEffects) {
+      if (seen.has(e.category)) continue;
+      // 10 per category, evenly spread — take every Nth.
+      seen.add(e.category);
+    }
+    // Just take a flat sample of 60 from the start — stable across renders.
+    return allEffects.slice(0, 60);
+  }, []);
 
-  const searchResults = useMemo<CSSEffect[]>(() => {
+  const filteredPickable = useMemo(() => {
     const q = search.trim().toLowerCase();
-    if (!q) return ALL_EFFECTS.slice(0, 12);
-    const matches = ALL_EFFECTS.filter(
-      (e) =>
-        e.name.toLowerCase().includes(q) ||
-        e.description.toLowerCase().includes(q) ||
-        e.tags.some((t) => t.toLowerCase().includes(q)) ||
-        e.id.includes(q),
+    if (!q) return pickable;
+    return pickable.filter((e) =>
+      e.name.toLowerCase().includes(q) ||
+      e.category.toLowerCase().includes(q) ||
+      e.tags.some((t) => t.toLowerCase().includes(q)),
     );
-    return matches.slice(0, 12);
-  }, [search]);
+  }, [pickable, search]);
 
-  /** Combined CSS of all selected effects — used for preview + copy. */
-  const compositeCss = useMemo(() => {
-    return selected.map((e) => e.cssCode).join("\n\n");
-  }, [selected]);
+  const compositeCss = useMemo(() => buildCompositeCSS(selected), [selected]);
+  const previewHtml = useMemo(() => buildPreviewDoc(selected), [selected]);
 
-  /** HTML rendered inside the preview iframe — demo divs for each effect. */
-  const previewSrcDoc = useMemo(() => {
-    const demoBlocks = selected.length
-      ? selected
-          .map((e, idx) => {
-            const text = e.previewText ?? "RoyCSS";
-            const isText = e.previewType === "text";
-            const isButton = e.previewType === "button";
-            const className = `roycss-${e.id}`;
-            if (isText) {
-              return `<div class="composer-block"><span class="${className}" data-text="${text}">${text}</span></div>`;
-            }
-            if (isButton) {
-              return `<div class="composer-block"><button class="${className}">${text}</button></div>`;
-            }
-            return `<div class="composer-block"><div class="${className} composer-box"></div><p class="composer-label">Effect ${idx + 1} · ${e.name}</p></div>`;
-          })
-          .join("\n")
-      : `<div class="composer-empty"><p class="composer-empty-text">Stack 2+ effects to see them composed live.</p></div>`;
-
-    return `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<style>
-  :root {
-    --primary: oklch(0.55 0.2 264);
-    --bg: #ffffff;
-    --fg: #18181b;
-    --muted: #f4f4f5;
-    --border: #e4e4e7;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg: #09090b; --fg: #fafafa; --muted: #18181b; --border: #27272a; }
-  }
-  html, body {
-    margin: 0; padding: 0;
-    background: var(--bg);
-    color: var(--fg);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    min-height: 100%;
-  }
-  body {
-    display: flex; flex-direction: column; gap: 12px;
-    padding: 16px;
-    align-items: stretch; justify-content: flex-start;
-  }
-  .composer-block {
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 8px;
-    padding: 18px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: var(--muted);
-    min-height: 80px;
-  }
-  .composer-box {
-    width: 64px; height: 64px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, color-mix(in oklch, var(--primary) 24%, transparent), transparent);
-    border: 1px solid color-mix(in oklch, var(--primary) 24%, transparent);
-  }
-  .composer-label {
-    margin: 0; font-size: 11px; color: var(--fg); opacity: 0.7;
-    text-align: center;
-  }
-  .composer-empty {
-    text-align: center; padding: 48px 16px;
-    color: var(--fg); opacity: 0.6;
-  }
-  .composer-empty-text { margin: 8px 0 0; font-size: 13px; }
-
-  /* Inject every selected effect's CSS — runs in the iframe context. */
-${compositeCss}
-</style>
-</head>
-<body>
-${demoBlocks}
-</body>
-</html>`;
-  }, [selected, compositeCss]);
-
-  /* ─── Actions ────────────────────────────────────────────── */
-  const addEffect = useCallback(
-    (effect: CSSEffect) => {
-      setSelected((prev) => {
-        if (prev.some((e) => e.id === effect.id)) return prev;
-        if (prev.length >= maxEffects) {
-          toast.info(`Max ${maxEffects} effects — remove one to add more.`);
-          return prev;
-        }
-        return [...prev, effect];
-      });
-    },
-    [maxEffects],
-  );
-
+  const addEffect = useCallback((e: CSSEffect) => {
+    setSelected((prev) => prev.find((x) => x.id === e.id) ? prev : [...prev, e]);
+  }, []);
   const removeEffect = useCallback((id: string) => {
     setSelected((prev) => prev.filter((e) => e.id !== id));
   }, []);
-
   const moveEffect = useCallback((id: string, dir: -1 | 1) => {
     setSelected((prev) => {
-      const idx = prev.findIndex((e) => e.id === id);
-      if (idx === -1) return prev;
-      const target = idx + dir;
-      if (target < 0 || target >= prev.length) return prev;
-      const copy = [...prev];
-      const [item] = copy.splice(idx, 1);
-      copy.splice(target, 0, item);
-      return copy;
+      const i = prev.findIndex((e) => e.id === id);
+      if (i < 0) return prev;
+      const j = i + dir;
+      if (j < 0 || j >= prev.length) return prev;
+      const next = [...prev];
+      [next[i], next[j]] = [next[j], next[i]];
+      return next;
     });
   }, []);
 
-  const clearAll = useCallback(() => {
-    setSelected([]);
-    setSaveName("");
-  }, []);
-
-  const handleCopy = useCallback(
-    async (format: CopyFormat) => {
-      if (selected.length < 2) return;
-      const compositeId = "composer-composite";
-      const formatted = formatCss(compositeCss, compositeId, format);
-      const label =
-        COPY_FORMATS.find((f) => f.id === format)?.label ?? format;
-      try {
-        await navigator.clipboard.writeText(formatted);
-        setCopiedFormat(format);
-        toast.success(`Copied ${selected.length} effects as ${label}!`);
-        setTimeout(() => setCopiedFormat(null), 2000);
-      } catch {
-        toast.error("Failed to copy — please try again");
-      }
-    },
-    [compositeCss, selected],
-  );
-
-  const handleSave = useCallback(async () => {
-    if (selected.length < 2 || !saveName.trim()) return;
-    setSaving(true);
-    try {
-      const col: CustomCollection = {
-        id: `composer-${Date.now()}`,
-        name: saveName.trim(),
-        description: `Composite of ${selected.length} effects — ${selected.map((e) => e.name).join(", ")}`,
-        effectIds: selected.map((e) => e.id),
-        createdAt: Date.now(),
-      };
-      const updated = [col, ...readCollections()];
-      writeCollections(updated);
-      setSavedToast(true);
-      toast.success(`Saved "${col.name}" to My Collections!`);
-      setTimeout(() => {
-        setSavedToast(false);
-        setSaving(false);
-        setSaveName("");
-      }, 1500);
-    } catch {
-      setSaving(false);
-      toast.error("Failed to save collection");
+  const copyComposite = useCallback(async () => {
+    if (selected.length === 0) {
+      toast.error("Add at least one effect first.");
+      return;
     }
+    try {
+      await navigator.clipboard.writeText(compositeCss);
+      setCopied(true);
+      toast.success(`Copied ${selected.length} effects to clipboard`);
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      toast.error("Clipboard not available in this browser");
+    }
+  }, [compositeCss, selected.length]);
+
+  const saveCollection = useCallback(() => {
+    if (selected.length === 0) {
+      toast.error("Add at least one effect first.");
+      return;
+    }
+    const name = saveName.trim() || `Composition ${new Date().toLocaleString()}`;
+    const entry: SavedComposition = {
+      id: `comp-${Date.now()}`,
+      name,
+      effects: selected,
+      createdAt: new Date().toISOString(),
+    };
+    const next = [entry, ...loadCompositions()];
+    saveCompositions(next);
+    setSaved(next);
+    setSaveName("");
+    toast.success(`Saved "${name}" with ${selected.length} effects`);
   }, [selected, saveName]);
 
-  const canCopy = selected.length >= 2;
-  const canSave = selected.length >= 2 && saveName.trim().length > 0;
-
-  /* ─── Composer body (shared between inline + dialog usage) ── */
-  const body = (
-    <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,1.4fr)] gap-4">
-      {/* LEFT: effect picker */}
-      <div className="flex flex-col gap-3">
-        <div className="relative">
-          <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
-          <Input
-            type="search"
-            placeholder="Search effects to stack…"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="pl-10 pr-3 h-10"
-            aria-label="Search effects"
-          />
-        </div>
-
-        <div className="text-xs text-muted-foreground flex items-center justify-between gap-2">
-          <span>
-            {selected.length}/{maxEffects} effects stacked
-          </span>
-          {selected.length > 0 && (
-            <button
-              type="button"
-              onClick={clearAll}
-              className="text-xs text-muted-foreground hover:text-rose-500 transition-colors inline-flex items-center gap-1"
-            >
-              <Trash2 className="size-3" /> Clear
-            </button>
-          )}
-        </div>
-
-        {/* Selected chips rail */}
-        {selected.length > 0 && (
-          <div className="rounded-xl border border-border/60 bg-muted/30 p-3 space-y-2">
-            <AnimatePresence mode="popLayout">
-              {selected.map((effect, idx) => (
-                <motion.div
-                  key={effect.id}
-                  layout
-                  initial={{ opacity: 0, x: -8 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 8 }}
-                  className="flex items-center gap-2 p-2 rounded-lg bg-background border border-border/40"
-                >
-                  <GripVertical className="size-3.5 text-muted-foreground/60 shrink-0" />
-                  <span className="text-xs font-mono text-muted-foreground/70 shrink-0 tabular-nums">
-                    {idx + 1}.
-                  </span>
-                  <span className="text-xs font-medium text-foreground truncate flex-1">
-                    {effect.name}
-                  </span>
-                  <div className="flex items-center gap-0.5 shrink-0">
-                    <TooltipProvider delayDuration={200}>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <button
-                            type="button"
-                            onClick={() => moveEffect(effect.id, -1)}
-                            disabled={idx === 0}
-                            className="flex items-center justify-center size-6 rounded text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
-                            aria-label="Move up"
-                          >
-                            <ChevronUp className="size-3.5" />
-                          </button>
-                        </TooltipTrigger>
-                        <TooltipContent>Move up</TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                    <TooltipProvider delayDuration={200}>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <button
-                            type="button"
-                            onClick={() => moveEffect(effect.id, 1)}
-                            disabled={idx === selected.length - 1}
-                            className="flex items-center justify-center size-6 rounded text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
-                            aria-label="Move down"
-                          >
-                            <ChevronDown className="size-3.5" />
-                          </button>
-                        </TooltipTrigger>
-                        <TooltipContent>Move down</TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                    <button
-                      type="button"
-                      onClick={() => removeEffect(effect.id)}
-                      className="flex items-center justify-center size-6 rounded text-muted-foreground hover:text-rose-500 hover:bg-rose-500/10 transition-all"
-                      aria-label={`Remove ${effect.name}`}
-                    >
-                      <X className="size-3.5" />
-                    </button>
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
-        )}
-
-        {/* Search results */}
-        <div className="rounded-xl border border-border/60 bg-background max-h-72 overflow-y-auto">
-          {searchResults.length === 0 ? (
-            <p className="text-xs text-muted-foreground text-center py-6">
-              No effects match &ldquo;{search}&rdquo;
-            </p>
-          ) : (
-            searchResults.map((effect) => {
-              const isSelected = selected.some((e) => e.id === effect.id);
-              return (
-                <button
-                  key={effect.id}
-                  type="button"
-                  onClick={() => (isSelected ? removeEffect(effect.id) : addEffect(effect))}
-                  className={`w-full flex items-center gap-3 p-2 text-left transition-colors ${
-                    isSelected
-                      ? "bg-primary/10 text-primary"
-                      : "hover:bg-muted/40 text-foreground"
-                  }`}
-                >
-                  <div className="flex items-center justify-center size-7 rounded bg-muted/60 border border-border/40 shrink-0">
-                    {isSelected ? (
-                      <Check className="size-3 text-primary" />
-                    ) : (
-                      <Plus className="size-3 text-muted-foreground" />
-                    )}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs font-medium truncate">{effect.name}</p>
-                    <p className="text-[10px] text-muted-foreground truncate">
-                      {effect.description}
-                    </p>
-                  </div>
-                  <Badge variant="outline" className="text-[9px] uppercase shrink-0">
-                    {effect.category}
-                  </Badge>
-                </button>
-              );
-            })
-          )}
-        </div>
-      </div>
-
-      {/* RIGHT: live preview + actions */}
-      <div className="flex flex-col gap-3">
-        <div className="rounded-xl border border-border bg-muted/20 overflow-hidden">
-          <div className="px-3 py-2 border-b border-border/40 flex items-center justify-between gap-2">
-            <div className="flex items-center gap-1.5 text-xs font-medium text-foreground">
-              <Sparkles className="size-3.5 text-primary" />
-              Live composite preview
-            </div>
-            <span className="text-[10px] text-muted-foreground tabular-nums">
-              {selected.length} effect{selected.length === 1 ? "" : "s"}
-            </span>
-          </div>
-          <iframe
-            title="Composite preview"
-            srcDoc={previewSrcDoc}
-            sandbox="allow-same-origin"
-            className="w-full h-72 bg-background"
-          />
-        </div>
-
-        {/* Copy composite CSS */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              type="button"
-              disabled={!canCopy}
-              className="w-full"
-              variant={canCopy ? "default" : "secondary"}
-            >
-              {copiedFormat ? (
-                <Check className="size-4 text-emerald-300" />
-              ) : (
-                <Copy className="size-4" />
-              )}
-              {copiedFormat
-                ? "Copied!"
-                : `Copy composite CSS (${selected.length} effects)`}
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-64">
-            <DropdownMenuLabel className="text-xs text-muted-foreground uppercase tracking-wider">
-              Copy as…
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            {COPY_FORMATS.map((opt) => (
-              <DropdownMenuItem
-                key={opt.id}
-                onSelect={() => void handleCopy(opt.id)}
-                className="flex flex-col items-start gap-0.5 py-2 cursor-pointer"
-              >
-                <span className="text-sm font-medium text-foreground">
-                  {opt.label}
-                </span>
-                <span className="text-xs text-muted-foreground">
-                  {opt.description}
-                </span>
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-
-        {!canCopy && (
-          <p className="text-[11px] text-muted-foreground text-center">
-            Stack at least 2 effects to enable Copy &amp; Save.
-          </p>
-        )}
-
-        {/* Save composite as a custom collection */}
-        <div className="rounded-xl border border-border/60 bg-muted/20 p-3 space-y-2">
-          <div className="flex items-center gap-1.5 text-xs font-medium text-foreground">
-            <Save className="size-3.5 text-primary" />
-            Save as a custom collection
-          </div>
-          <Input
-            type="text"
-            placeholder="Collection name (e.g. 'Hero stack')"
-            value={saveName}
-            onChange={(e) => setSaveName(e.target.value)}
-            className="h-9 text-sm"
-            disabled={!canCopy}
-          />
-          <Button
-            type="button"
-            variant="outline"
-            disabled={!canSave || saving}
-            onClick={handleSave}
-            className="w-full"
-          >
-            {saving ? (
-              <Loader2 className="size-4 animate-spin" />
-            ) : savedToast ? (
-              <Check className="size-4 text-emerald-500" />
-            ) : (
-              <Layers className="size-4" />
-            )}
-            {savedToast ? "Saved!" : saving ? "Saving…" : "Save to My Collections"}
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-
-  /* ─── If a controlled `open` prop is passed, render in a Dialog ─── */
-  if (isControlled) {
-    return (
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-5xl w-[95vw] max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 font-display text-lg">
-              <Wand2 className="size-5 text-primary" />
-              Component Composer
-            </DialogTitle>
-            <DialogDescription>
-              Compose 2+ RoyCSS effects into a single composite preview, then
-              copy the combined CSS or save it as a custom collection.
-            </DialogDescription>
-          </DialogHeader>
-          {body}
-        </DialogContent>
-      </Dialog>
-    );
+  // Hydrate saved compositions on open.
+  if (open && saved.length === 0) {
+    const list = loadCompositions();
+    if (list.length > 0) setSaved(list);
   }
 
-  /* ─── Inline (non-dialog) usage — render with a launch button ─── */
   return (
-    <div className="w-full">
-      <Button
-        type="button"
-        variant="outline"
-        onClick={() => setOpen(true)}
-        className="w-full sm:w-auto"
-      >
-        <Wand2 className="size-4 text-primary" />
-        Open Component Composer
-      </Button>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-5xl w-[95vw] max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 font-display text-lg">
-              <Wand2 className="size-5 text-primary" />
-              Component Composer
-            </DialogTitle>
-            <DialogDescription>
-              Compose 2+ RoyCSS effects into a single composite preview, then
-              copy the combined CSS or save it as a custom collection.
-            </DialogDescription>
-          </DialogHeader>
-          {body}
-        </DialogContent>
-      </Dialog>
-    </div>
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent className="w-full sm:max-w-5xl overflow-y-auto">
+        <SheetHeader>
+          <SheetTitle className="flex items-center gap-2">
+            <Sparkles className="size-4 text-primary" />
+            Component Composer
+          </SheetTitle>
+          <SheetDescription>
+            Stack multiple RoyCSS effects into a single composite stylesheet. Preview, copy, and save as a collection.
+          </SheetDescription>
+        </SheetHeader>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 px-4 pb-6">
+          {/* LEFT — picker + selected list */}
+          <div className="space-y-3">
+            <div className="relative">
+              <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
+              <Input
+                type="search"
+                placeholder="Search effects..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="pl-9 h-9"
+                aria-label="Search effects"
+              />
+            </div>
+            <div className="rounded-xl border border-border bg-muted/30 p-2 max-h-64 overflow-y-auto">
+              <div className="grid grid-cols-1 gap-1">
+                {filteredPickable.slice(0, 30).map((e) => {
+                  const isAdded = selected.some((s) => s.id === e.id);
+                  return (
+                    <button
+                      key={e.id}
+                      onClick={() => (isAdded ? removeEffect(e.id) : addEffect(e))}
+                      disabled={isAdded}
+                      className={cn(
+                        "flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-xs transition-colors cursor-pointer min-h-[36px]",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
+                        isAdded
+                          ? "bg-primary/10 text-primary cursor-default"
+                          : "hover:bg-muted text-foreground",
+                      )}
+                    >
+                      <span className="truncate text-start">{e.name}</span>
+                      {isAdded ? <Check className="size-3.5 shrink-0" /> : <Plus className="size-3.5 shrink-0" />}
+                    </button>
+                  );
+                })}
+                {filteredPickable.length === 0 && (
+                  <p className="text-xs text-muted-foreground p-4 text-center">No effects match.</p>
+                )}
+              </div>
+            </div>
+
+            {/* Selected list — ordered, removable, reorderable */}
+            <div className="rounded-xl border border-border p-2">
+              <div className="flex items-center justify-between mb-2 px-1">
+                <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  Composition ({selected.length})
+                </span>
+                {selected.length > 0 && (
+                  <button onClick={() => setSelected([])} className="text-xs text-destructive hover:underline cursor-pointer">
+                    Clear
+                  </button>
+                )}
+              </div>
+              <AnimatePresence initial={false}>
+                {selected.map((e, i) => (
+                  <motion.div
+                    key={e.id}
+                    layout
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 8 }}
+                    transition={{ duration: 0.15 }}
+                    className="flex items-center justify-between gap-2 px-2 py-1.5 rounded-md hover:bg-muted/60 group"
+                  >
+                    <span className="text-xs truncate text-foreground">
+                      <span className="text-muted-foreground mr-1.5 tabular-nums">{i + 1}.</span>
+                      {e.name}
+                    </span>
+                    <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button onClick={() => moveEffect(e.id, -1)} disabled={i === 0}
+                        className="p-1 rounded hover:bg-muted text-muted-foreground disabled:opacity-30 cursor-pointer"
+                        aria-label="Move up">
+                        ↑
+                      </button>
+                      <button onClick={() => moveEffect(e.id, 1)} disabled={i === selected.length - 1}
+                        className="p-1 rounded hover:bg-muted text-muted-foreground disabled:opacity-30 cursor-pointer"
+                        aria-label="Move down">
+                        ↓
+                      </button>
+                      <button onClick={() => removeEffect(e.id)}
+                        className="p-1 rounded hover:bg-destructive/10 text-destructive cursor-pointer"
+                        aria-label={`Remove ${e.name}`}>
+                        <X className="size-3" />
+                      </button>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+              {selected.length === 0 && (
+                <p className="text-xs text-muted-foreground p-3 text-center">No effects selected yet.</p>
+              )}
+            </div>
+          </div>
+
+          {/* RIGHT — preview + actions */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
+                <Eye className="size-3.5" /> Live preview
+              </h4>
+              {selected.length > 0 && (
+                <Badge variant="secondary" className="text-[10px]">{compositeCss.length} bytes CSS</Badge>
+              )}
+            </div>
+            <div className="rounded-xl border border-border overflow-hidden bg-background min-h-[220px] flex items-center justify-center">
+              {selected.length === 0 ? (
+                <div className="text-center text-muted-foreground p-6">
+                  <Loader2 className="size-5 mx-auto mb-2 opacity-40" />
+                  <p className="text-xs">Add effects to see a live preview.</p>
+                </div>
+              ) : (
+                <iframe
+                  ref={iframeRef}
+                  title="Composer preview"
+                  srcDoc={previewHtml}
+                  sandbox="allow-same-origin"
+                  className="w-full h-[280px] border-0"
+                />
+              )}
+            </div>
+
+            {/* Actions: copy composite CSS + save as collection */}
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-2">
+                <Button onClick={copyComposite} className="flex-1 h-9" variant="default">
+                  {copied ? <Check className="size-4 mr-1.5" /> : <Copy className="size-4 mr-1.5" />}
+                  {copied ? "Copied!" : "Copy composite CSS"}
+                </Button>
+              </div>
+              <div className="flex gap-2">
+                <Input
+                  placeholder="Collection name (optional)"
+                  value={saveName}
+                  onChange={(e) => setSaveName(e.target.value)}
+                  className="h-9"
+                  aria-label="Collection name"
+                />
+                <Button onClick={saveCollection} variant="outline" className="h-9 shrink-0">
+                  <Save className="size-4 mr-1.5" />
+                  Save
+                </Button>
+              </div>
+            </div>
+
+            {/* Saved compositions list */}
+            {saved.length > 0 && (
+              <div className="rounded-xl border border-border p-2">
+                <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-1">
+                  Saved ({saved.length})
+                </span>
+                <div className="mt-1 space-y-1 max-h-40 overflow-y-auto">
+                  {saved.map((s) => (
+                    <button
+                      key={s.id}
+                      onClick={() => { setSelected(s.effects); toast.info(`Loaded "${s.name}"`); }}
+                      className="w-full flex items-center justify-between gap-2 px-2 py-1.5 rounded-md hover:bg-muted/60 transition-colors cursor-pointer text-start"
+                    >
+                      <span className="text-xs truncate">{s.name}</span>
+                      <Badge variant="secondary" className="text-[10px] shrink-0">{s.effects.length}</Badge>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 }
-
-export default ComponentComposer;

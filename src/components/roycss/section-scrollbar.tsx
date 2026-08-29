@@ -52,8 +52,8 @@ export function SectionScrollbar({
 
   // Pre-compute per-category effect counts ONCE. Without this, every
   // scroll event (which flips `scrollProgress` state and re-renders the
-  // component) would re-filter the entire 1749-effect array once per
-  // section dot — ~22 × 1749 = ~34k array scans per scroll frame.
+  // component) would re-filter the entire 1569-effect array once per
+  // section dot — ~22 × 1569 = ~34k array scans per scroll frame.
   const categoryCounts = useMemo(() => {
     const counts = new Map<EffectCategory, number>();
     for (const e of effects) {

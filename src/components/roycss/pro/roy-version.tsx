@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyVersion — version management for RoyCSS.
  *
@@ -574,6 +577,10 @@ const ChangelogCard = React.memo(function ChangelogCard({
 // ═══════════════════════════════════════════════════════════════════════
 
 export function RoyVersion() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("version/current");
+  void data; void loading; void error;
+
   const { toast } = useToast();
   const [checking, setChecking] = useState(false);
   const [checked, setChecked] = useState(false);

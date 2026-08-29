@@ -101,7 +101,7 @@ In a fresh temp dir:
 
 ```bash
 npm install roycss
-node -e "console.log(require('roycss').length)"  # should print 1749
+node -e "console.log(require('roycss').length)"  # should print 1569
 ```
 
 ## How to publish manually (emergency only)

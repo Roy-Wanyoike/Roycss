@@ -114,7 +114,6 @@ import { MobileBottomNav } from "@/components/roycss/mobile-bottom-nav";
 import { InteractiveTutorial, restartRoyCssTutorial } from "@/components/roycss/interactive-tutorial";
 import { SectionScrollbar } from "@/components/roycss/section-scrollbar";
 import { DynamicEffectCSS } from "@/components/roycss/dynamic-effect-css";
-import { LazySection } from "@/components/roycss/lazy-section";
 import { VirtualScrollGrid } from "@/components/roycss/virtual-scroll-grid";
 import { AnimationPauser } from "@/components/roycss/animation-pauser";
 import { RoyCSSLogo, RoyCSSHeroLogo } from "@/components/roycss/roycss-logo";
@@ -130,8 +129,8 @@ import { SearchOverlay } from "@/components/roycss/search-overlay";
 import { DocsViewer } from "@/components/roycss/docs-viewer";
 import { StickyMiniNav } from "@/components/roycss/sticky-mini-nav";
 import { FloatingSponsorButton } from "@/components/roycss/floating-sponsor-button";
-import { EngineStatus } from "@/components/roycss/engine-status";
-import { SWUpdateBanner } from "@/components/roycss/sw-update-banner";
+import { UserMenu, MobileAuthMenuItem } from "@/components/roycss/auth/user-menu";
+import { AuthSheets } from "@/components/roycss/auth/auth-sheets";
 import { RecentEffectsSheet, pushRecentEffect } from "@/components/roycss/recent-effects-sheet";
 import { KeyboardShortcutsOverlay } from "@/components/roycss/keyboard-shortcuts-overlay";
 import { EffectOfTheDay } from "@/components/roycss/effect-of-the-day";
@@ -142,6 +141,9 @@ import { TagsCloud } from "@/components/roycss/tags-cloud";
 import { BundleCalculator } from "@/components/roycss/bundle-calculator";
 import { UserAnalyticsDashboard } from "@/components/roycss/analytics-dashboard";
 import { PWAInstallPrompt } from "@/components/roycss/pwa-install-prompt";
+import { SWUpdateBanner } from "@/components/roycss/sw-update-banner";
+import { LazySection } from "@/components/roycss/lazy-section";
+import { EngineStatus } from "@/components/roycss/engine-status";
 import { CSSBeautifier } from "@/components/roycss/css-beautifier";
 import { CustomCollectionsSheet } from "@/components/roycss/custom-collections";
 import { EffectRecommendationEngine } from "@/components/roycss/recommendation-engine";
@@ -1035,7 +1037,7 @@ function TiltStage({ children }: { children: React.ReactNode }) {
 
 /* ─── Featured Carousel — rotates through ALL effects ──────── */
 const FEATURED_BATCH_SIZE = 4;
-const FEATURED_INTERVAL_MS = 6000; // 6s per batch → full cycle ≈ 19 min for 1749+ effects
+const FEATURED_INTERVAL_MS = 6000; // 6s per batch → full cycle ≈ 19 min for 1569+ effects
 
 /* useSyncExternalStore helpers for prefers-reduced-motion.
    This is the React-idiomatic way to read an external system (the OS
@@ -1459,7 +1461,7 @@ export default function RoyCSSPage() {
   );
 
   // Memoize the search/category-filtered list. Without this, the filter
-  // runs across all 1749 effects on every parent re-render (any of the
+  // runs across all 1569 effects on every parent re-render (any of the
   // ~40 useState hooks flipping causes it) — including ones unrelated
   // to search/category. `search` and `activeCategory` are the only
   // relevant deps; the `effects` import is module-constant.
@@ -1479,7 +1481,7 @@ export default function RoyCSSPage() {
 
   // Pre-compute per-category counts ONCE. Without this, every category
   // pill calls `getCategoryCount(cat)` on each render, each filtering
-  // the entire 1749-effect array — ~22 × 1749 = ~34k scans per render.
+  // the entire 1569-effect array — ~22 × 1569 = ~34k scans per render.
   const categoryCounts = useMemo(() => {
     const counts = new Map<EffectCategory, number>();
     for (const e of effects) {
@@ -1816,6 +1818,9 @@ export default function RoyCSSPage() {
                 <Heart className="size-3.5" />
                 Sponsor
               </button>
+              {/* User menu — Sign in / Create account when logged out, avatar + dropdown when logged in.
+                  Only renders at xl+ to keep the navbar compact on smaller viewports. */}
+              <UserMenu />
               {/* GitHub icon link — hidden below lg (footer has a duplicate GitHub link
                   that's always reachable). */}
               <a
@@ -1910,6 +1915,7 @@ export default function RoyCSSPage() {
                     Sponsor
                     <Heart className="size-3.5" />
                   </button>
+                  <MobileAuthMenuItem />
                 </div>
               </motion.div>
             )}
@@ -2261,7 +2267,7 @@ export default function RoyCSSPage() {
       <Separator className="opacity-50" />
 
       {/* ─── Recipes Section ─────────────────────────────────── */}
-      <LazySection fallbackHeight={500} rootMargin="400px">
+      <LazySection minHeight={600} ariaLabel="Recipes">
         <RecipesSection />
       </LazySection>
 
@@ -2336,21 +2342,21 @@ export default function RoyCSSPage() {
       <RoyMotionShowcase />
 
       {/* ─── Content Taxonomy (explains Components vs Effects vs Patterns etc.) ─── */}
-      <LazySection fallbackHeight={400} rootMargin="400px">
+      <LazySection minHeight={500} ariaLabel="Content taxonomy">
         <ContentTaxonomy />
       </LazySection>
 
       <Separator className="opacity-50" />
 
       {/* ─── Patterns Section (UI state patterns) ─────────────── */}
-      <LazySection fallbackHeight={600} rootMargin="400px">
+      <LazySection minHeight={500} ariaLabel="Patterns">
         <PatternsSection />
       </LazySection>
 
       <Separator className="opacity-50" />
 
       {/* ─── Collections Section (curated themed bundles) ────── */}
-      <LazySection fallbackHeight={600} rootMargin="400px">
+      <LazySection minHeight={500} ariaLabel="Collections">
         <CollectionsSection onSelectEffect={(effect) => { setSelectedEffect(effect); setDialogOpen(true); }} />
       </LazySection>
 
@@ -2360,14 +2366,14 @@ export default function RoyCSSPage() {
       <Separator className="opacity-50" />
 
       {/* ─── RoyCSS Platform (unified — 62 products, 6 categories) ─── */}
-      <LazySection fallbackHeight={600} rootMargin="400px">
-        <PlatformSectionUnified
-          onLaunchTool={(toolId) => {
-            if (toolId === "ai-playground" || toolId === "css-doctor" || toolId === "utility-explorer" || toolId === "benchmark" || toolId === "genome" || toolId === "ai-migration" || toolId === "challenges" || toolId === "design-diff" || toolId === "css-minifier" || toolId === "specificity" || toolId === "easing" || toolId === "stacking" || toolId === "similarity" || toolId === "perf" || toolId === "browser-support" || toolId === "print" || toolId === "selector-tester" || toolId === "dark-mode" || toolId === "variable-graph" || toolId === "fluid-type" || toolId === "scroll-animation" || toolId === "grid-areas" || toolId === "container-query" || toolId === "nesting" || toolId === "contrast-matrix" || toolId === "unit-converter" || toolId === "box-model" || toolId === "flex-playground" || toolId === "transition-studio" || toolId === "pattern-generator" || toolId === "transform-studio" || toolId === "cursor-gallery" || toolId === "scrollbar-styler" || toolId === "gap-spacing" || toolId === "writing-mode" || toolId === "object-fit" || toolId === "positioning" || toolId === "property-inspector" || toolId === "animation-timeline" || toolId === "sprite-sheet" || toolId === "text-shadow" || toolId === "filter-studio" || toolId === "conic-gradient" || toolId === "motion-path" || toolId === "view-transition" || toolId === "mask-studio" || toolId === "gradient-mesh" || toolId === "table-styler" || toolId === "aspect-ratio" || toolId === "shape-generator" || toolId === "scroll-snap" || toolId === "keyframes-studio" || toolId === "theming-engine" || toolId === "has-selector-tester" || toolId === "css-layers" || toolId === "input-mode" || toolId === "cascade-specificity" || toolId === "color-space" || toolId === "style-query" || toolId === "scope" || toolId === "subgrid" || toolId === "fallback" || toolId === "logical-properties" || toolId === "initial-letter" || toolId === "text-wrap" || toolId === "property-registrar" || toolId === "relative-color" || toolId === "starting-style" || toolId === "light-dark") {
-              setPlatformTool(toolId);
-            }
-          }}
-        />
+      <LazySection minHeight={700} ariaLabel="Platform">
+      <PlatformSectionUnified
+        onLaunchTool={(toolId) => {
+          if (toolId === "ai-playground" || toolId === "css-doctor" || toolId === "utility-explorer" || toolId === "benchmark" || toolId === "genome" || toolId === "ai-migration" || toolId === "challenges" || toolId === "design-diff" || toolId === "css-minifier" || toolId === "specificity" || toolId === "easing" || toolId === "stacking" || toolId === "similarity" || toolId === "perf" || toolId === "browser-support" || toolId === "print" || toolId === "selector-tester" || toolId === "dark-mode" || toolId === "variable-graph" || toolId === "fluid-type" || toolId === "scroll-animation" || toolId === "grid-areas" || toolId === "container-query" || toolId === "nesting" || toolId === "contrast-matrix" || toolId === "unit-converter" || toolId === "box-model" || toolId === "flex-playground" || toolId === "transition-studio" || toolId === "pattern-generator" || toolId === "transform-studio" || toolId === "cursor-gallery" || toolId === "scrollbar-styler" || toolId === "gap-spacing" || toolId === "writing-mode" || toolId === "object-fit" || toolId === "positioning" || toolId === "property-inspector" || toolId === "animation-timeline" || toolId === "sprite-sheet" || toolId === "text-shadow" || toolId === "filter-studio" || toolId === "conic-gradient" || toolId === "motion-path" || toolId === "view-transition" || toolId === "mask-studio" || toolId === "gradient-mesh" || toolId === "table-styler" || toolId === "aspect-ratio" || toolId === "shape-generator" || toolId === "scroll-snap" || toolId === "keyframes-studio" || toolId === "theming-engine" || toolId === "has-selector-tester" || toolId === "css-layers" || toolId === "input-mode" || toolId === "cascade-specificity" || toolId === "color-space" || toolId === "style-query" || toolId === "scope" || toolId === "subgrid" || toolId === "fallback" || toolId === "logical-properties" || toolId === "initial-letter" || toolId === "text-wrap" || toolId === "property-registrar" || toolId === "relative-color" || toolId === "starting-style" || toolId === "light-dark") {
+            setPlatformTool(toolId);
+          }
+        }}
+      />
       </LazySection>
 
       <Separator className="opacity-50" />
@@ -2407,7 +2413,7 @@ export default function RoyCSSPage() {
               items={["10KB initial CSS (lazy-loaded)", "~1KB per effect on demand", "Zero JS runtime", "Tree-shakeable exports"]}
               details={[
                 { label: "Dynamic Loading", content: "The showcase uses IntersectionObserver to inject CSS only for visible effects — 10KB initial, 98.7% reduction from the full 828KB. In your project, import the full CSS or use the CLI to copy individual effects." },
-                { label: "Virtual Scrolling", content: "The effects grid renders 24 cards at a time instead of 1749 — a 97.7% DOM reduction. Offscreen animations are paused via animation-play-state: paused." },
+                { label: "Virtual Scrolling", content: "The effects grid renders 24 cards at a time instead of 1569 — a 97.7% DOM reduction. Offscreen animations are paused via animation-play-state: paused." },
               ]}
             />
             <DocCard
@@ -2464,7 +2470,7 @@ export default function RoyCSSPage() {
       <Separator className="opacity-50" />
 
       {/* ─── FAQ Section ────────────────────────────────────── */}
-      <LazySection fallbackHeight={500} rootMargin="400px">
+      <LazySection minHeight={500} ariaLabel="FAQ">
         <FAQSection />
       </LazySection>
 
@@ -2481,7 +2487,7 @@ export default function RoyCSSPage() {
                 <RoyCSSLogo size="sm" animated={false} />
               </button>
               <p className="text-xs text-muted-foreground leading-relaxed mb-4 max-w-xs">
-                AI-Native Frontend Engineering Platform — 1,749 CSS effects, 62 platform products, 64 developer tools.
+                AI-Native Frontend Engineering Platform — 1,629 CSS effects, 62 platform products, 64 developer tools.
               </p>
               <div className="flex items-center gap-2">
                 <a
@@ -2598,7 +2604,7 @@ export default function RoyCSSPage() {
             </p>
             <div className="flex items-center gap-4 text-xs text-muted-foreground">
               <EngineStatus />
-              <span>v1.0</span>
+              <span>v2.1</span>
             </div>
           </div>
         </div>
@@ -2690,7 +2696,7 @@ export default function RoyCSSPage() {
       {/* PWA Install Prompt — smart install banner */}
       <PWAInstallPrompt />
 
-      {/* Service Worker Update Banner — surfaces new SW versions */}
+      {/* SW Update Banner — refresh prompt when new SW is waiting */}
       <SWUpdateBanner />
 
       {/* Custom Collections Sheet */}
@@ -2957,6 +2963,9 @@ export default function RoyCSSPage() {
 
       {/* Sponsor Modal — GitHub Sponsor card + M-Pesa + PayPal + Crypto */}
       <SponsorModal open={sponsorModalOpen} onOpenChange={setSponsorModalOpen} />
+
+      {/* Auth Sheets — Login + Register, mounted at page root */}
+      <AuthSheets />
 
       {/* Animation Playground */}
       <PlaygroundPanel open={playgroundOpen} onOpenChange={setPlaygroundOpen} />

@@ -1,19 +1,24 @@
 /**
- * Live service — Roy Live (real-time collaborative sessions).
+ * Live service — Prisma-backed Roy Live (real-time collaborative sessions).
  *
- * Mock backend (no DB). Seeds 2 live sessions, 3 users per session,
- * and a handful of seeded messages. Posting a message appends to the
- * session and bumps its `updatedAt`.
+ * Persisted via the `LiveSession` + `LiveMessage` Prisma models. Seeds
+ * 2 live sessions and a handful of seeded messages. Live users and
+ * cursor positions remain static in-memory seeds (no Prisma models).
  *
- * Reads are LRU-cached; message-post and session-create mutate state
- * and invalidate the affected caches.
- *
- * Future: persist via Prisma `LiveSession`/`LiveMessage` models and
- * broadcast mutations over a WebSocket gateway.
+ * Field-mapping: the Prisma `LiveSession` model exposes (slug, name,
+ * ownerId, roomId, isPublic, maxUsers). The domain shape's `id ← slug`,
+ * `title ← name`, `hostId ← ownerId` map directly; the extra fields
+ * (active, cursors) are looked up from the static seed (keyed by id),
+ * falling back to defaults for newly created sessions. The Prisma
+ * `LiveMessage` model exposes (sessionId, userId, content, type,
+ * createdAt). The domain shape's `id`, `sessionId`, `userId`, `content`
+ * map directly; `ts ← createdAt.toISOString()`; `type` defaults to
+ * "message".
  */
 import { randomUUID } from "node:crypto";
 
 import { CACHE_TTL } from "../../config/constants.js";
+import { db } from "../../lib/db.js";
 import { cache, cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type { LiveMessage, LiveSession, LiveUser } from "../../types/index.js";
@@ -25,11 +30,13 @@ import type {
 
 const log = createLogger("live");
 
+const SESSIONS_LIST_KEY = "live:sessions";
 const sessionKey = (id: string): string => `live:session:${id}`;
 const usersKey = (id: string): string => `live:session:${id}:users`;
 const messagesKey = (id: string): string => `live:session:${id}:messages`;
 
 function invalidateSession(id: string): void {
+  cache.delete(SESSIONS_LIST_KEY);
   cache.delete(sessionKey(id));
   cache.delete(usersKey(id));
   cache.delete(messagesKey(id));
@@ -92,27 +99,133 @@ const SEED_MESSAGES: Record<string, LiveMessage[]> = {
   ],
 };
 
-let sessions: LiveSession[] = SEED_SESSIONS.map((s) => ({
-  ...s,
-  cursors: s.cursors.map((c) => ({ ...c })),
-}));
-const users: Record<string, LiveUser[]> = Object.fromEntries(
-  Object.entries(SEED_USERS).map(([k, v]) => [k, v.map((u) => ({ ...u }))]),
+// Lookup maps for the extra domain fields not in the Prisma schema.
+const SESSION_EXTRAS = new Map<
+  string,
+  { active: boolean; updatedAt: string; cursors: LiveSession["cursors"] }
+>(
+  SEED_SESSIONS.map((s) => [
+    s.id,
+    { active: s.active, updatedAt: s.updatedAt, cursors: s.cursors },
+  ]),
 );
-const messages: Record<string, LiveMessage[]> = Object.fromEntries(
-  Object.entries(SEED_MESSAGES).map(([k, v]) => [k, v.map((m) => ({ ...m }))]),
+const USERS_LOOKUP = new Map<string, LiveUser[]>(
+  Object.entries(SEED_USERS).map(([k, v]) => [k, v]),
 );
 
-function requireSession(id: string): LiveSession {
-  const found = sessions.find((s) => s.id === id);
-  if (!found) throw AppError.notFound(`Live session '${id}' not found`);
-  return found;
+function sessionToDb(s: LiveSession) {
+  return {
+    id: s.id,
+    slug: s.id,
+    name: s.title,
+    ownerId: s.hostId,
+    roomId: `room-${s.id}`,
+    isPublic: true,
+    maxUsers: 50,
+  };
+}
+
+function sessionToDomain(row: {
+  id: string;
+  name: string;
+  ownerId: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}): LiveSession {
+  const extras = SESSION_EXTRAS.get(row.id) ?? {
+    active: true,
+    updatedAt: row.updatedAt.toISOString(),
+    cursors: [],
+  };
+  return {
+    id: row.id,
+    title: row.name,
+    hostId: row.ownerId ?? "",
+    active: extras.active,
+    createdAt: row.createdAt.toISOString(),
+    updatedAt: extras.updatedAt,
+    cursors: extras.cursors.map((c) => ({ ...c })),
+  };
+}
+
+function messageToDb(m: LiveMessage) {
+  return {
+    id: m.id,
+    sessionId: m.sessionId,
+    userId: m.userId,
+    content: m.content,
+    type: "message",
+  };
+}
+
+function messageToDomain(row: {
+  id: string;
+  sessionId: string;
+  userId: string | null;
+  content: string;
+  type: string;
+  createdAt: Date;
+}): LiveMessage {
+  return {
+    id: row.id,
+    sessionId: row.sessionId,
+    userId: row.userId ?? "",
+    content: row.content,
+    ts: row.createdAt.toISOString(),
+  };
+}
+
+let seedPromise: Promise<void> | null = null;
+async function seedIfEmpty(): Promise<void> {
+  if (seedPromise) return seedPromise;
+  seedPromise = (async () => {
+    if ((await db.liveSession.count()) === 0) {
+      await db.liveSession.createMany({
+        data: SEED_SESSIONS.map(sessionToDb),
+      });
+    }
+    if ((await db.liveMessage.count()) === 0) {
+      const all = Object.values(SEED_MESSAGES).flat();
+      await db.liveMessage.createMany({ data: all.map(messageToDb) });
+    }
+    log.info("Live seeded", {
+      sessions: SEED_SESSIONS.length,
+      messages: Object.values(SEED_MESSAGES).flat().length,
+    });
+  })().catch((err) => {
+    seedPromise = null;
+    throw err;
+  });
+  return seedPromise;
+}
+
+async function requireSessionRow(id: string): Promise<LiveSession> {
+  await seedIfEmpty();
+  const row = await db.liveSession.findUnique({ where: { id } });
+  if (!row) throw AppError.notFound(`Live session '${id}' not found`);
+  return sessionToDomain(row);
+}
+
+/** List all live sessions. Cached. */
+export async function listSessions(): Promise<LiveSession[]> {
+  return cacheWrap(
+    SESSIONS_LIST_KEY,
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.liveSession.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+      return rows.map(sessionToDomain);
+    },
+    CACHE_TTL.liveSessionDetail,
+  );
 }
 
 /** Create a new live session. */
 export async function createLiveSession(
   input: CreateSessionInput,
 ): Promise<LiveSession> {
+  await seedIfEmpty();
   const id = `live-sess-${randomUUID()}`;
   const now = new Date().toISOString();
   const session: LiveSession = {
@@ -124,8 +237,14 @@ export async function createLiveSession(
     updatedAt: now,
     cursors: [],
   };
-  sessions = [session, ...sessions];
-  users[id] = [
+  await db.liveSession.create({ data: sessionToDb(session) });
+  // Track extras for the new session so reads round-trip correctly.
+  SESSION_EXTRAS.set(id, {
+    active: true,
+    updatedAt: now,
+    cursors: [],
+  });
+  USERS_LOOKUP.set(id, [
     {
       id: input.hostId,
       name: input.hostName ?? input.hostId,
@@ -134,8 +253,7 @@ export async function createLiveSession(
       role: "host",
       joinedAt: now,
     },
-  ];
-  messages[id] = [];
+  ]);
   invalidateSession(id);
   log.info("Live session created", { id, title: input.title });
   return session;
@@ -145,13 +263,7 @@ export async function createLiveSession(
 export async function getLiveSessionById(id: string): Promise<LiveSession> {
   return cacheWrap(
     sessionKey(id),
-    () => {
-      const found = requireSession(id);
-      return Promise.resolve({
-        ...found,
-        cursors: found.cursors.map((c) => ({ ...c })),
-      });
-    },
+    async () => requireSessionRow(id),
     CACHE_TTL.liveSessionDetail,
   );
 }
@@ -160,10 +272,10 @@ export async function getLiveSessionById(id: string): Promise<LiveSession> {
 export async function getSessionUsers(id: string): Promise<LiveUser[]> {
   return cacheWrap(
     usersKey(id),
-    () => {
-      requireSession(id);
-      const list = users[id] ?? [];
-      return Promise.resolve(list.map((u) => ({ ...u })));
+    async () => {
+      await requireSessionRow(id);
+      const list = USERS_LOOKUP.get(id) ?? [];
+      return list.map((u) => ({ ...u }));
     },
     CACHE_TTL.liveSessionUsers,
   );
@@ -175,10 +287,13 @@ export async function getSessionMessages(
 ): Promise<LiveMessage[]> {
   return cacheWrap(
     messagesKey(id),
-    () => {
-      requireSession(id);
-      const list = messages[id] ?? [];
-      return Promise.resolve(list.map((m) => ({ ...m })));
+    async () => {
+      await requireSessionRow(id);
+      const rows = await db.liveMessage.findMany({
+        where: { sessionId: id },
+        orderBy: { createdAt: "asc" },
+      });
+      return rows.map(messageToDomain);
     },
     CACHE_TTL.liveSessionMessages,
   );
@@ -189,7 +304,7 @@ export async function postSessionMessage(
   id: string,
   input: PostMessageInput,
 ): Promise<LiveMessage> {
-  requireSession(id);
+  await requireSessionRow(id);
   const message: LiveMessage = {
     id: `msg-${randomUUID()}`,
     sessionId: id,
@@ -197,11 +312,12 @@ export async function postSessionMessage(
     content: input.content,
     ts: new Date().toISOString(),
   };
-  const list = messages[id] ?? [];
-  messages[id] = [...list, message];
-  sessions = sessions.map((s) =>
-    s.id === id ? { ...s, updatedAt: message.ts } : s,
-  );
+  await db.liveMessage.create({ data: messageToDb(message) });
+  // Bump the session's updatedAt extras tracker (in-memory only).
+  const extras = SESSION_EXTRAS.get(id);
+  if (extras) {
+    extras.updatedAt = message.ts;
+  }
   invalidateSession(id);
   log.info("Live message posted", { sessionId: id, userId: input.userId });
   return message;
@@ -209,15 +325,6 @@ export async function postSessionMessage(
 
 /** Test-only: reset to seed. */
 export function _resetLiveForTest(): void {
-  sessions = SEED_SESSIONS.map((s) => ({
-    ...s,
-    cursors: s.cursors.map((c) => ({ ...c })),
-  }));
-  for (const [k, v] of Object.entries(SEED_USERS)) {
-    users[k] = v.map((u) => ({ ...u }));
-  }
-  for (const [k, v] of Object.entries(SEED_MESSAGES)) {
-    messages[k] = v.map((m) => ({ ...m }));
-  }
-  for (const s of sessions) invalidateSession(s.id);
+  seedPromise = null;
+  for (const s of SEED_SESSIONS) invalidateSession(s.id);
 }

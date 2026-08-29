@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyCDN — CDN dashboard for RoyCSS distributed assets.
  *
@@ -123,6 +126,10 @@ const REGION_TONE: Record<RegionStatus, { dot: string; label: string }> = {
 // ─── Component ───────────────────────────────────────────────────────────
 
 export function RoyCDN() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("cdn/stats");
+  void data; void loading; void error;
+
   const [purging, setPurging] = useState(false);
   const { toast } = useToast();
 

@@ -76,7 +76,7 @@ export const newRecipes: NewRecipe[] = [
       Ship delightful products faster
     </h1>
     <p style="font-size: 1.125rem; color: oklch(0.7 0.02 250); max-width: 560px; margin: 0 auto 2rem;">
-      The all-in-one platform for design, build, and deploy — with 1,749+ production-ready CSS effects baked in.
+      The all-in-one platform for design, build, and deploy — with 1,569+ production-ready CSS effects baked in.
     </p>
     <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
       <button class="roycss-btn-gradient-glow-b18" style="padding: 0.85rem 2rem; font-weight: 600;">Start free trial</button>
@@ -95,7 +95,7 @@ export const newRecipes: NewRecipe[] = [
         <p style="margin: 0; font-size: 0.85rem; color: oklch(0.6 0.02 250);">Uptime SLA</p>
       </div>
       <div>
-        <h3 style="margin: 0 0 0.25rem; font-size: 1.5rem;">1,749</h3>
+        <h3 style="margin: 0 0 0.25rem; font-size: 1.5rem;">1,569</h3>
         <p style="margin: 0; font-size: 0.85rem; color: oklch(0.6 0.02 250);">CSS effects</p>
       </div>
     </div>
@@ -187,7 +187,7 @@ export const newRecipes: NewRecipe[] = [
     <p style="margin: 0 0 1.5rem;"><span style="font-size: 2.5rem; font-weight: 800; color: oklch(0.95 0.01 250);">$29</span><span style="color: oklch(0.6 0.02 250);">/mo</span></p>
     <ul style="list-style: none; padding: 0; margin: 0 0 1.5rem; font-size: 0.85rem; color: oklch(0.75 0.02 250); display: flex; flex-direction: column; gap: 0.5rem;">
       <li>✓ Unlimited projects</li>
-      <li>✓ All 1,749 effects</li>
+      <li>✓ All 1,569 effects</li>
       <li>✓ Priority support</li>
       <li>✓ Custom themes</li>
     </ul>

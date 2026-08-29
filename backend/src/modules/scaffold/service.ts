@@ -1,15 +1,14 @@
 /**
  * Scaffold service — Roy Scaffold project scaffold generator.
  *
- * Mock backend (no DB). Seeds 8 project types and 5 frameworks Roy
- * Scaffold can target. Each generation produces a deterministic, small
- * file set derived from the project type + framework.
+ * The catalog of project types reflects real `create-next-app` flags
+ * + non-Next scaffolders (Vite, Express, Commander). Each project type's
+ * `features` array carries the actual CLI flags the scaffold will pass
+ * through, so the front-end can render the exact command (e.g.
+ * `bun create next-app my-app --ts --app --tailwind --eslint --import-alias '@/*'`).
  *
  * Reads are LRU-cached; generations produce a result and return it
  * (the result list is not kept — scaffolds are one-shot).
- *
- * Future: route to an actual `create-*` template engine emitting the
- * same shape.
  */
 import { randomUUID } from "node:crypto";
 
@@ -30,80 +29,82 @@ const TYPES_KEY = "scaffold:types";
 const typeKey = (id: string): string => `scaffold:type:${id}`;
 const FRAMEWORKS_KEY = "scaffold:frameworks";
 
-// ─── Seed: 8 project types ───────────────────────────────────────────────
-const SEED_TYPES: ProjectType[] = [
+// ─── 8 project types mapped to real create-next-app / scaffolder flags ───
+// Each `features` array holds the actual CLI flags the scaffold will pass
+// through, so the front-end can render the exact command verbatim.
+const TYPES: ProjectType[] = [
   {
-    id: "pt-web-app",
-    name: "Web App",
-    description: "Full-stack web application with routing, SSR, and API routes.",
+    id: "pt-next-app-ts",
+    name: "Next.js App Router (TypeScript)",
+    description: "Next.js 16 with App Router + TypeScript + Tailwind + ESLint — the canonical fullstack starter.",
     category: "web",
     defaultFramework: "next",
-    features: ["routing", "ssr", "api", "auth"],
+    features: ["--ts", "--app", "--tailwind", "--eslint", "--src-dir", "--import-alias '@/*'"],
   },
   {
-    id: "pt-landing",
-    name: "Landing Page",
-    description: "Single-page marketing site with hero, features, and CTA.",
+    id: "pt-next-app-js",
+    name: "Next.js App Router (JavaScript)",
+    description: "Next.js App Router + JavaScript + Tailwind + ESLint — for teams not yet on TypeScript.",
     category: "web",
     defaultFramework: "next",
-    features: ["seo", "analytics", "forms"],
+    features: ["--js", "--app", "--tailwind", "--eslint", "--import-alias '@/*'"],
   },
   {
-    id: "pt-docs",
-    name: "Documentation Site",
-    description: "Docs site with sidebar, search, MDX, and version selector.",
+    id: "pt-next-app-minimal",
+    name: "Next.js Minimal",
+    description: "Next.js with TypeScript + App Router only — no Tailwind, no ESLint. The smallest viable Next.js app.",
     category: "web",
     defaultFramework: "next",
-    features: ["mdx", "search", "sidebar"],
+    features: ["--ts", "--app", "--no-tailwind", "--no-eslint", "--import-alias '@/*'"],
   },
   {
-    id: "pt-blog",
-    name: "Blog",
-    description: "Personal or team blog with RSS, tags, and drafts.",
+    id: "pt-next-app-turbopack",
+    name: "Next.js + Turbopack",
+    description: "Next.js with --turbopack for the dev server and bundler — faster HMR, native SWC.",
     category: "web",
-    defaultFramework: "astro",
-    features: ["rss", "tags", "drafts"],
+    defaultFramework: "next",
+    features: ["--ts", "--app", "--tailwind", "--eslint", "--turbopack", "--import-alias '@/*'"],
   },
   {
-    id: "pt-component-library",
-    name: "Component Library",
-    description: "Publishable React component library with Storybook.",
-    category: "library",
+    id: "pt-next-pages-router",
+    name: "Next.js Pages Router",
+    description: "Next.js with the legacy Pages Router (--no-app) — for projects migrating from Next 12 and earlier.",
+    category: "web",
+    defaultFramework: "next",
+    features: ["--ts", "--no-app", "--src-dir", "--tailwind", "--import-alias '@/*'"],
+  },
+  {
+    id: "pt-vite-react",
+    name: "Vite + React",
+    description: "Vite React-TS template (`bun create vite@latest -- --template react-ts`) — fast SPA without SSR.",
+    category: "web",
     defaultFramework: "vite",
-    features: ["storybook", "tests", "docs"],
+    features: ["--template", "react-ts"],
   },
   {
-    id: "pt-api-server",
-    name: "API Server",
-    description: "REST API server with auth, validation, and OpenAPI spec.",
+    id: "pt-express-api",
+    name: "Express API Server",
+    description: "Express 4 + TypeScript REST API scaffold — routes + service + schema triplet generator.",
     category: "server",
     defaultFramework: "express",
-    features: ["auth", "validation", "openapi"],
+    features: ["--ts", "--json", "--no-view", "express-generator"],
   },
   {
-    id: "pt-cli",
-    name: "CLI Tool",
-    description: "Node CLI with commands, flags, and auto-update.",
+    id: "pt-cli-tool",
+    name: "Node CLI Tool",
+    description: "CLI scaffold with Commander + Inquirer — Node 22, ESM, tsup for builds.",
     category: "library",
     defaultFramework: "commander",
-    features: ["commands", "flags", "auto-update"],
-  },
-  {
-    id: "pt-desktop",
-    name: "Desktop App",
-    description: "Cross-platform desktop app with native menus.",
-    category: "desktop",
-    defaultFramework: "electron",
-    features: ["native-menu", "auto-update", "squirrel"],
+    features: ["commander", "inquirer", "tsup", "--type=module"],
   },
 ];
 
-// ─── Seed: 5 frameworks ──────────────────────────────────────────────────
-const SEED_FRAMEWORKS: ScaffoldFramework[] = [
+// ─── 5 scaffold frameworks ───────────────────────────────────────────────
+const FRAMEWORKS: ScaffoldFramework[] = [
   {
     id: "fw-next",
     name: "Next.js",
-    version: "15.0",
+    version: "16.0",
     language: "typescript",
     runtime: "node",
     popularity: 96,
@@ -133,17 +134,17 @@ const SEED_FRAMEWORKS: ScaffoldFramework[] = [
     popularity: 84,
   },
   {
-    id: "fw-electron",
-    name: "Electron",
-    version: "31.0",
+    id: "fw-commander",
+    name: "Commander",
+    version: "12.1",
     language: "typescript",
     runtime: "node",
     popularity: 71,
   },
 ];
 
-const types: ProjectType[] = SEED_TYPES.map((t) => ({ ...t }));
-const frameworks: ScaffoldFramework[] = SEED_FRAMEWORKS.map((f) => ({
+const types: ProjectType[] = TYPES.map((t) => ({ ...t }));
+const frameworks: ScaffoldFramework[] = FRAMEWORKS.map((f) => ({
   ...f,
 }));
 
@@ -151,7 +152,7 @@ const frameworks: ScaffoldFramework[] = SEED_FRAMEWORKS.map((f) => ({
 export async function listTypes(): Promise<ProjectType[]> {
   return cacheWrap(
     TYPES_KEY,
-    () => Promise.resolve(types.map((t) => ({ ...t }))),
+    () => Promise.resolve(types.map((t) => ({ ...t, features: [...t.features] }))),
     CACHE_TTL.scaffoldTypes,
   );
 }
@@ -163,7 +164,7 @@ export async function getTypeById(id: string): Promise<ProjectType> {
     () => {
       const found = types.find((t) => t.id === id);
       if (!found) throw AppError.notFound(`Project type '${id}' not found`);
-      return Promise.resolve({ ...found });
+      return Promise.resolve({ ...found, features: [...found.features] });
     },
     CACHE_TTL.scaffoldTypeDetail,
   );
@@ -178,7 +179,7 @@ export async function listFrameworks(): Promise<ScaffoldFramework[]> {
   );
 }
 
-/** Generate a project scaffold (mock). Returns a small file set. */
+/** Generate a project scaffold. Returns a small file set. */
 export async function generateScaffold(
   input: ScaffoldGenerateInput,
 ): Promise<ScaffoldResult> {
@@ -218,7 +219,7 @@ export async function generateScaffold(
     },
     {
       path: "README.md",
-      content: `# ${input.name}\n\nGenerated by Roy Scaffold.\n- Project type: ${type.name}\n- Framework: ${framework.name} ${framework.version}\n- Language: ${input.language}\n`,
+      content: `# ${input.name}\n\nGenerated by Roy Scaffold.\n- Project type: ${type.name}\n- Framework: ${framework.name} ${framework.version}\n- Language: ${input.language}\n- CLI flags: ${type.features.join(" ")}\n`,
     },
     {
       path: `src/index.${input.language === "typescript" ? "ts" : "js"}`,

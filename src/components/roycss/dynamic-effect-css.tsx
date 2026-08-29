@@ -56,35 +56,6 @@ export function DynamicEffectCSS() {
     const lazyStyle = document.createElement("style");
     lazyStyle.id = "roycss-dynamic-effects-lazy";
     lazyStyle.dataset.dynamicEffectCss = "lazy";
-
-    // CSP-friendly nonce support: if the host page has provided a nonce
-    // via `window.__roycssNonce` (typically by a CSP-enabled Next.js
-    // layout), attach it to the lazy <style> tag so the injected rules
-    // are allowed under a strict `style-src 'nonce-...'` policy.
-    //
-    // Without a nonce, this tag still works when the host's CSP allows
-    // `style-src 'unsafe-inline'`. In strict CSP environments without a
-    // nonce, the browser will silently drop the injected rules — hence
-    // the dev-mode console warning below so authors notice during local
-    // development rather than in production.
-    const nonce =
-      typeof window !== "undefined" && typeof window.__roycssNonce === "string"
-        ? window.__roycssNonce
-        : "";
-    if (nonce) {
-      lazyStyle.nonce = nonce;
-    } else if (process.env.NODE_ENV !== "production") {
-      // Dev-only: nudge authors toward either providing a nonce or
-      // including 'unsafe-inline' in style-src. Production builds fail
-      // silently (the page still renders, the effect CSS is just
-      // ignored by the browser).
-      console.warn(
-        "[RoyCSS] DynamicEffectCSS is injecting inline <style> tags without a CSP nonce. " +
-          "If your CSP enforces style-src, set window.__roycssNonce before this component mounts, " +
-          "or include 'unsafe-inline' in style-src. (This warning only appears in development.)",
-      );
-    }
-
     document.head.appendChild(lazyStyle);
 
     const inject = (id: string) => {

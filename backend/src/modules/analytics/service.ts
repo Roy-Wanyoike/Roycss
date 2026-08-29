@@ -1,15 +1,24 @@
 /**
- * Analytics service — in-memory mock analytics data.
+ * Analytics service — platform KPI dashboard.
  *
  * Returns platform KPIs (totalUsers, activeEffects, apiCalls,
  * avgResponseTime), 30-day traffic, top 10 effects by usage, device
- * breakdown, and top 5 countries. All values are static snapshots
- * suitable for the dashboard preview — no real telemetry is collected.
+ * breakdown, and top 5 countries.
+ *
+ * `totalUsers` is sourced from the live Prisma User table via
+ * `db.user.count()`. `activeEffects` is sourced from the dist/effects.json
+ * build artifact (1,749 effects at time of writing). All other KPIs
+ * (apiCalls, avgResponseTime, week-over-week deltas, traffic, devices, geo,
+ * top effects) are static snapshots suitable for the dashboard preview — no
+ * real telemetry is collected.
  *
  * All reads are LRU-cached for 5 minutes.
  */
 import { CACHE_TTL } from "../../config/constants.js";
 import { cacheWrap } from "../../lib/cache.js";
+import { db } from "../../lib/db.js";
+import { createLogger } from "../../lib/logger.js";
+import { effectsCount } from "../effects/service.js";
 import type {
   AnalyticsOverview,
   DeviceBreakdown,
@@ -18,11 +27,14 @@ import type {
   TrafficDataPoint,
 } from "../../types/index.js";
 
-// ─── Static mock dataset ─────────────────────────────────────────────────
+const log = createLogger("analytics");
 
-const OVERVIEW: AnalyticsOverview = {
-  totalUsers: 48_217,
-  activeEffects: 1_284,
+// ─── Static mock dataset (kept static per task spec) ────────────────────
+
+const BASE_OVERVIEW: Omit<
+  AnalyticsOverview,
+  "totalUsers" | "activeEffects"
+> = {
   apiCalls: 9_412_886,
   avgResponseTime: 87, // ms
   totalUsersChange: 12.4, // %
@@ -92,11 +104,34 @@ function buildTrafficSeries(days: number): TrafficDataPoint[] {
 
 // ─── Service functions ───────────────────────────────────────────────────
 
-/** Top-line KPIs. Cached. */
+/**
+ * Top-line KPIs.
+ *
+ * `totalUsers` is a live count from the Prisma User table.
+ * `activeEffects` is the count of effects in dist/effects.json (1,749).
+ * Other KPIs (apiCalls, avgResponseTime, deltas) are static snapshots.
+ * Cached.
+ */
 export async function getOverview(): Promise<AnalyticsOverview> {
   return cacheWrap(
     "analytics:overview",
-    () => Promise.resolve({ ...OVERVIEW }),
+    async () => {
+      const [totalUsers, activeEffects] = await Promise.all([
+        db.user.count().catch((err) => {
+          log.warn("Failed to count users — falling back to 0", {
+            err: err instanceof Error ? err.message : String(err),
+          });
+          return 0;
+        }),
+        Promise.resolve(effectsCount()),
+      ]);
+      log.debug("Overview computed", { totalUsers, activeEffects });
+      return {
+        ...BASE_OVERVIEW,
+        totalUsers,
+        activeEffects,
+      };
+    },
     CACHE_TTL.analytics,
   );
 }

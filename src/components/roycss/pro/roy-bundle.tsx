@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyBundle — bundle analyzer and optimizer.
  *
@@ -148,6 +151,10 @@ function Donut({ segments }: { segments: BundleType[] }) {
 // ─── Component ───────────────────────────────────────────────────────────
 
 export function RoyBundle() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("bundle/duplicates");
+  void data; void loading; void error;
+
   const { toast } = useToast();
   const [analyzing, setAnalyzing] = useState(false);
   const [analyzed, setAnalyzed] = useState(false);

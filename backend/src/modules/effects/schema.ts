@@ -31,15 +31,16 @@ export const EffectCategoryEnum = z.enum([
   "microinteractions",
   "visual",
   "misc",
-  "physics",
-  "liquid",
-  "morphing",
-  "status-state",
+  // ── 9 additional categories used by modern-CSS effects (RESTORE-5) ──────
+  "advanced-text",
   "audio",
-  "retro",
   "data-viz",
   "immersive",
-  "advanced-text",
+  "liquid",
+  "morphing",
+  "physics",
+  "retro",
+  "status-state",
 ]);
 export type EffectCategory = z.infer<typeof EffectCategoryEnum>;
 

@@ -1,15 +1,19 @@
 /**
- * OS service — Roy OS (the unified launcher / dashboard surface).
+ * OS service — Prisma-backed Roy OS (the unified launcher / dashboard
+ * surface).
  *
- * Mock backend (no DB). Seeds 12 product tiles, 5 activity items, 5
- * quick actions, and a single dashboard layout that composes them.
+ * Persisted via the Prisma `OSDashboard` model. Seeds a single
+ * dashboard layout composed of 12 product tiles, 5 activity items,
+ * 5 quick actions, and a section layout on first access. The full
+ * dashboard (including products/activity/quickActions) is JSON-encoded
+ * inside `layoutJson` so reads round-trip the entire shape; there are
+ * no separate Prisma models for those sub-collections.
  *
  * Reads are LRU-cached. No mutation endpoints — Roy OS is a curated
  * launcher surface.
- *
- * Future: persist per-user customization via Prisma `OSDashboard` model.
  */
 import { CACHE_TTL } from "../../config/constants.js";
+import { db } from "../../lib/db.js";
 import { cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type {
@@ -60,22 +64,60 @@ const SEED_QUICK_ACTIONS: OSQuickAction[] = [
   { id: "qa-invite", label: "Invite teammate", icon: "user-plus", shortcut: "", url: "/workspace/invite" },
 ];
 
+const SEED_DASHBOARD: OSDashboard = {
+  products: SEED_PRODUCTS.map((p) => ({ ...p })),
+  activity: SEED_ACTIVITY.map((a) => ({ ...a, meta: { ...a.meta } })),
+  quickActions: SEED_QUICK_ACTIONS.map((q) => ({ ...q })),
+  layout: [
+    { section: "Pinned", productIds: ["p-effects", "p-recipes", "p-themes"] },
+    { section: "Code", productIds: ["p-architect", "p-blocks", "p-blueprints"] },
+    { section: "Operations", productIds: ["p-observatory", "p-cloud"] },
+    { section: "Learn & Marketplace", productIds: ["p-academy", "p-marketplace"] },
+  ],
+};
+
+let seedPromise: Promise<void> | null = null;
+async function seedIfEmpty(): Promise<void> {
+  if (seedPromise) return seedPromise;
+  seedPromise = (async () => {
+    const count = await db.oSDashboard.count();
+    if (count === 0) {
+      await db.oSDashboard.create({
+        data: {
+          id: "os-dashboard-default",
+          userId: null,
+          layoutJson: JSON.stringify(SEED_DASHBOARD),
+        },
+      });
+      log.info("OS dashboard seeded");
+    }
+  })().catch((err) => {
+    seedPromise = null;
+    throw err;
+  });
+  return seedPromise;
+}
+
 /** Compose the dashboard. Cached. */
 export async function getDashboard(): Promise<OSDashboard> {
   return cacheWrap(
     DASHBOARD_KEY,
-    () =>
-      Promise.resolve({
-        products: SEED_PRODUCTS.map((p) => ({ ...p })),
-        activity: SEED_ACTIVITY.map((a) => ({ ...a, meta: { ...a.meta } })),
-        quickActions: SEED_QUICK_ACTIONS.map((q) => ({ ...q })),
-        layout: [
-          { section: "Pinned", productIds: ["p-effects", "p-recipes", "p-themes"] },
-          { section: "Code", productIds: ["p-architect", "p-blocks", "p-blueprints"] },
-          { section: "Operations", productIds: ["p-observatory", "p-cloud"] },
-          { section: "Learn & Marketplace", productIds: ["p-academy", "p-marketplace"] },
-        ],
-      }),
+    async () => {
+      await seedIfEmpty();
+      const row = await db.oSDashboard.findFirst();
+      if (!row) return SEED_DASHBOARD;
+      try {
+        const parsed = JSON.parse(row.layoutJson) as OSDashboard;
+        return {
+          products: parsed.products.map((p) => ({ ...p })),
+          activity: parsed.activity.map((a) => ({ ...a, meta: { ...a.meta } })),
+          quickActions: parsed.quickActions.map((q) => ({ ...q })),
+          layout: parsed.layout.map((l) => ({ ...l, productIds: [...l.productIds] })),
+        };
+      } catch {
+        return SEED_DASHBOARD;
+      }
+    },
     CACHE_TTL.osDashboard,
   );
 }

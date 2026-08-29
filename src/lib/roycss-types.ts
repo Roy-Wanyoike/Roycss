@@ -225,7 +225,7 @@ export const categoryMeta: Record<
   },
   "advanced-text": {
     label: "Advanced Text",
-    icon: "Type",
+    icon: "TextCursorInput",
     color: "amber",
     description: "Cinematic text treatments: typewriters, glitches, neon, kinetic motion, and gradient fills",
   },
@@ -251,7 +251,6 @@ export const categoryOrder: EffectCategory[] = [
   "particles",
   "microinteractions",
   "visual",
-  "misc",
   "physics",
   "liquid",
   "morphing",
@@ -261,4 +260,5 @@ export const categoryOrder: EffectCategory[] = [
   "data-viz",
   "immersive",
   "advanced-text",
+  "misc",
 ];

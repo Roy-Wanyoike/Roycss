@@ -56,7 +56,7 @@ export default function NotFound() {
               className="flex flex-col items-center gap-2 p-4 rounded-xl border border-border bg-card/50 hover:border-primary/40 hover:bg-muted/30 transition-all"
             >
               <Sparkles className="size-5 text-primary" />
-              <span className="text-xs font-medium text-foreground">1,749 Effects</span>
+              <span className="text-xs font-medium text-foreground">1,629 Effects</span>
             </Link>
             <Link
               href="/#platform"

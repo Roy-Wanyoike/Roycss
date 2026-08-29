@@ -1,17 +1,23 @@
 /**
- * Themes service — in-memory theme store with CRUD operations.
+ * Themes service — Prisma-backed theme store with CRUD operations.
  *
- * Mock backend (no DB). Themes are seeded with 10 platform presets on
- * first access. All reads are LRU-cached (10min list, 10min detail);
- * every mutation invalidates the list cache and any affected detail
- * cache entry so subsequent reads see the new state.
+ * Persisted via the Prisma `Theme` model. Themes are seeded with 10
+ * platform presets on first access. All reads are LRU-cached (10min
+ * list, 10min detail); every mutation invalidates the list cache and
+ * any affected detail cache entry so subsequent reads see the new state.
  *
- * Future: swap the in-memory array for a Prisma `Theme` model without
- * changing the route layer.
+ * Field-mapping: the Prisma `Theme` model exposes (slug, name,
+ * description, tokensJson, isPublic, userId). The domain shape's
+ * `id ← slug`, `name`, `tokens` map directly (`tokensJson ← JSON of
+ * tokens`); the extra color fields (primary, secondary, accent,
+ * background, foreground, createdAt) are JSON-encoded inside
+ * `description` as a wrapper that also carries the seed `createdAt`
+ * timestamp.
  */
 import { randomUUID } from "node:crypto";
 
 import { CACHE_TTL } from "../../config/constants.js";
+import { db } from "../../lib/db.js";
 import { cache, cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type { Theme } from "../../types/index.js";
@@ -149,14 +155,101 @@ const SEED_THEMES: Theme[] = [
   },
 ];
 
-// Mutable in-memory store (seeded lazily on first access).
-let themes: Theme[] = SEED_THEMES.map((t) => ({ ...t }));
+interface ThemeWrapper {
+  primary: string;
+  secondary: string;
+  accent: string;
+  background: string;
+  foreground: string;
+  seedCreatedAt: string;
+}
+
+function toDbRow(t: Theme) {
+  const wrapper: ThemeWrapper = {
+    primary: t.primary,
+    secondary: t.secondary,
+    accent: t.accent,
+    background: t.background,
+    foreground: t.foreground,
+    seedCreatedAt: t.createdAt,
+  };
+  return {
+    id: t.id,
+    slug: t.id,
+    name: t.name,
+    description: JSON.stringify(wrapper),
+    tokensJson: JSON.stringify(t.tokens),
+    isPublic: true,
+    userId: null,
+  };
+}
+
+function toDomain(row: {
+  id: string;
+  name: string;
+  description: string;
+  tokensJson: string;
+  createdAt: Date;
+}): Theme {
+  let wrapper: ThemeWrapper = {
+    primary: "#000000",
+    secondary: "#000000",
+    accent: "#000000",
+    background: "#ffffff",
+    foreground: "#000000",
+    seedCreatedAt: row.createdAt.toISOString(),
+  };
+  try {
+    wrapper = JSON.parse(row.description) as ThemeWrapper;
+  } catch {
+    // Keep defaults.
+  }
+  let tokens: Record<string, unknown> = {};
+  try {
+    tokens = JSON.parse(row.tokensJson) as Record<string, unknown>;
+  } catch {
+    // Keep default.
+  }
+  return {
+    id: row.id,
+    name: row.name,
+    primary: wrapper.primary,
+    secondary: wrapper.secondary,
+    accent: wrapper.accent,
+    background: wrapper.background,
+    foreground: wrapper.foreground,
+    tokens,
+    createdAt: wrapper.seedCreatedAt,
+  };
+}
+
+let seedPromise: Promise<void> | null = null;
+async function seedIfEmpty(): Promise<void> {
+  if (seedPromise) return seedPromise;
+  seedPromise = (async () => {
+    const count = await db.theme.count();
+    if (count === 0) {
+      await db.theme.createMany({ data: SEED_THEMES.map(toDbRow) });
+      log.info("Themes seeded", { count: SEED_THEMES.length });
+    }
+  })().catch((err) => {
+    seedPromise = null;
+    throw err;
+  });
+  return seedPromise;
+}
 
 /** List all themes. Cached. */
 export async function listThemes(): Promise<Theme[]> {
   return cacheWrap(
     THEMES_LIST_KEY,
-    () => Promise.resolve(themes.map((t) => ({ ...t }))),
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.theme.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+      return rows.map(toDomain);
+    },
     CACHE_TTL.themesList,
   );
 }
@@ -165,10 +258,11 @@ export async function listThemes(): Promise<Theme[]> {
 export async function getThemeById(id: string): Promise<Theme> {
   return cacheWrap(
     detailKey(id),
-    () => {
-      const found = themes.find((t) => t.id === id);
-      if (!found) throw AppError.notFound(`Theme '${id}' not found`);
-      return Promise.resolve({ ...found });
+    async () => {
+      await seedIfEmpty();
+      const row = await db.theme.findUnique({ where: { id } });
+      if (!row) throw AppError.notFound(`Theme '${id}' not found`);
+      return toDomain(row);
     },
     CACHE_TTL.themeDetail,
   );
@@ -176,6 +270,7 @@ export async function getThemeById(id: string): Promise<Theme> {
 
 /** Create a new theme. Invalidates list cache. */
 export async function createTheme(input: CreateThemeInput): Promise<Theme> {
+  await seedIfEmpty();
   const theme: Theme = {
     id: `theme-${randomUUID()}`,
     name: input.name,
@@ -187,7 +282,7 @@ export async function createTheme(input: CreateThemeInput): Promise<Theme> {
     tokens: input.tokens,
     createdAt: new Date().toISOString(),
   };
-  themes.push(theme);
+  await db.theme.create({ data: toDbRow(theme) });
   invalidate();
   log.info("Theme created", { id: theme.id, name: theme.name });
   return theme;
@@ -198,45 +293,73 @@ export async function updateTheme(
   id: string,
   input: UpdateThemeInput,
 ): Promise<Theme> {
-  const idx = themes.findIndex((t) => t.id === id);
-  if (idx === -1) throw AppError.notFound(`Theme '${id}' not found`);
+  await seedIfEmpty();
+  const row = await db.theme.findUnique({ where: { id } });
+  if (!row) throw AppError.notFound(`Theme '${id}' not found`);
 
-  const current = themes[idx]!;
-  const updated: Theme = {
-    ...current,
-    ...(input.name !== undefined && { name: input.name }),
-    ...(input.primary !== undefined && { primary: input.primary }),
-    ...(input.secondary !== undefined && { secondary: input.secondary }),
-    ...(input.accent !== undefined && { accent: input.accent }),
-    ...(input.background !== undefined && { background: input.background }),
-    ...(input.foreground !== undefined && { foreground: input.foreground }),
-    ...(input.tokens !== undefined && { tokens: input.tokens }),
-  };
-  themes[idx] = updated;
+  let wrapper: ThemeWrapper;
+  try {
+    wrapper = JSON.parse(row.description) as ThemeWrapper;
+  } catch {
+    wrapper = {
+      primary: "#000000",
+      secondary: "#000000",
+      accent: "#000000",
+      background: "#ffffff",
+      foreground: "#000000",
+      seedCreatedAt: row.createdAt.toISOString(),
+    };
+  }
+  let tokens: Record<string, unknown> = {};
+  try {
+    tokens = JSON.parse(row.tokensJson) as Record<string, unknown>;
+  } catch {
+    // Keep default.
+  }
+  if (input.primary !== undefined) wrapper.primary = input.primary;
+  if (input.secondary !== undefined) wrapper.secondary = input.secondary;
+  if (input.accent !== undefined) wrapper.accent = input.accent;
+  if (input.background !== undefined) wrapper.background = input.background;
+  if (input.foreground !== undefined) wrapper.foreground = input.foreground;
+  if (input.tokens !== undefined) tokens = input.tokens;
+  const updatedName = input.name ?? row.name;
+
+  await db.theme.update({
+    where: { id },
+    data: {
+      name: updatedName,
+      description: JSON.stringify(wrapper),
+      tokensJson: JSON.stringify(tokens),
+    },
+  });
   invalidate(id);
-  log.info("Theme updated", { id: updated.id });
-  return updated;
+  log.info("Theme updated", { id });
+  return toDomain({
+    ...row,
+    name: updatedName,
+    description: JSON.stringify(wrapper),
+    tokensJson: JSON.stringify(tokens),
+  });
 }
 
 /** Delete a theme by id. Invalidates list + detail cache. */
 export async function deleteTheme(id: string): Promise<void> {
-  const before = themes.length;
-  themes = themes.filter((t) => t.id !== id);
-  if (themes.length === before) {
-    throw AppError.notFound(`Theme '${id}' not found`);
-  }
+  await seedIfEmpty();
+  const row = await db.theme.findUnique({ where: { id } });
+  if (!row) throw AppError.notFound(`Theme '${id}' not found`);
+  await db.theme.delete({ where: { id } });
   invalidate(id);
   log.info("Theme deleted", { id });
 }
 
 /** Number of themes in the store — useful for the health/info endpoint. */
 export function themesCount(): number {
-  return themes.length;
+  return SEED_THEMES.length;
 }
 
 /** Test-only: reset the store to the original seed. */
 export function _resetThemesForTest(): void {
-  themes = SEED_THEMES.map((t) => ({ ...t }));
+  seedPromise = null;
   invalidate();
 }
 

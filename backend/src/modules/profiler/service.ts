@@ -1,18 +1,23 @@
 /**
- * Profiler service — Roy Profiler (runtime performance tracing).
+ * Profiler service — Prisma-backed Roy Profiler (runtime performance
+ * tracing).
  *
- * Mock backend (no DB). Seeds 1 profiling result with 5 render phases,
- * CLS entries, memory samples, and FPS data. Starting a new session
- * returns a synthetic result keyed on the requested URL.
+ * Persisted via the Prisma `ProfilerResult` model. Seeds 1 profiling
+ * result with 5 render phases, CLS entries, memory samples, and FPS
+ * data on first access. Profiler metrics remain a static in-memory
+ * seed (no Prisma model). Starting a new session persists a new row.
  *
- * Reads are LRU-cached; new sessions invalidate the results list.
- *
- * Future: persist via Prisma `ProfilerResult` model and stream live
- * samples over a WebSocket from a browser agent.
+ * Field-mapping: the Prisma `ProfilerResult` model exposes (userId,
+ * url, metricsJson). The domain shape's `url` maps directly; the
+ * extra fields (id, status, duration, samples, startedAt,
+ * finishedAt, renderPhases, clsEntries, memory, fps, longTasks,
+ * interactionLatency, summary) are JSON-encoded inside `metricsJson`
+ * as a wrapper.
  */
 import { randomUUID } from "node:crypto";
 
 import { CACHE_TTL } from "../../config/constants.js";
+import { db } from "../../lib/db.js";
 import { cache, cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type {
@@ -34,7 +39,7 @@ function invalidateResults(id?: string): void {
   if (id) cache.delete(resultKey(id));
 }
 
-// ─── Seed: profiler metrics ─────────────────────────────────────────────
+// ─── Seed: profiler metrics (static — no Prisma model) ──────────────────
 const SEED_METRICS: ProfilerMetric[] = [
   { id: "m-render", name: "Render phases", unit: "ms", category: "render" },
   { id: "m-cls", name: "Layout shift", unit: "score", category: "layout" },
@@ -95,14 +100,111 @@ const SEED_RESULTS: ProfilerResult[] = [
   },
 ];
 
-let results: ProfilerResult[] = SEED_RESULTS.map((r) => ({ ...r }));
-const metrics: ProfilerMetric[] = SEED_METRICS.map((m) => ({ ...m }));
+/** Wrapper persisted in `metricsJson`. */
+interface ProfilerWrapper {
+  status: ProfilerResult["status"];
+  duration: number;
+  samples: number;
+  startedAt: string;
+  finishedAt: string;
+  renderPhases: ProfilerResult["renderPhases"];
+  clsEntries: ProfilerResult["clsEntries"];
+  memory: ProfilerResult["memory"];
+  fps: ProfilerResult["fps"];
+  longTasks: number;
+  interactionLatency: ProfilerResult["interactionLatency"];
+  summary: ProfilerResult["summary"];
+}
+
+function toDbRow(r: ProfilerResult) {
+  const wrapper: ProfilerWrapper = {
+    status: r.status,
+    duration: r.duration,
+    samples: r.samples,
+    startedAt: r.startedAt,
+    finishedAt: r.finishedAt,
+    renderPhases: r.renderPhases,
+    clsEntries: r.clsEntries,
+    memory: r.memory,
+    fps: r.fps,
+    longTasks: r.longTasks,
+    interactionLatency: r.interactionLatency,
+    summary: r.summary,
+  };
+  return {
+    id: r.id,
+    userId: null,
+    url: r.url,
+    metricsJson: JSON.stringify(wrapper),
+  };
+}
+
+function toDomain(row: {
+  id: string;
+  url: string;
+  metricsJson: string;
+  createdAt: Date;
+}): ProfilerResult {
+  let wrapper: ProfilerWrapper;
+  try {
+    wrapper = JSON.parse(row.metricsJson) as ProfilerWrapper;
+  } catch {
+    wrapper = {
+      status: "complete",
+      duration: 0,
+      samples: 0,
+      startedAt: row.createdAt.toISOString(),
+      finishedAt: row.createdAt.toISOString(),
+      renderPhases: [],
+      clsEntries: [],
+      memory: [],
+      fps: [],
+      longTasks: 0,
+      interactionLatency: { p50: 0, p75: 0, p99: 0 },
+      summary: { clsScore: 0, averageFps: 0, peakMemoryMb: 0, jankRatio: 0 },
+    };
+  }
+  return {
+    id: row.id,
+    url: row.url,
+    status: wrapper.status,
+    duration: wrapper.duration,
+    samples: wrapper.samples,
+    startedAt: wrapper.startedAt,
+    finishedAt: wrapper.finishedAt,
+    renderPhases: wrapper.renderPhases,
+    clsEntries: wrapper.clsEntries,
+    memory: wrapper.memory,
+    fps: wrapper.fps,
+    longTasks: wrapper.longTasks,
+    interactionLatency: wrapper.interactionLatency,
+    summary: wrapper.summary,
+  };
+}
+
+let seedPromise: Promise<void> | null = null;
+async function seedIfEmpty(): Promise<void> {
+  if (seedPromise) return seedPromise;
+  seedPromise = (async () => {
+    const count = await db.profilerResult.count();
+    if (count === 0) {
+      await db.profilerResult.createMany({
+        data: SEED_RESULTS.map(toDbRow),
+      });
+      log.info("Profiler results seeded", { count: SEED_RESULTS.length });
+    }
+  })().catch((err) => {
+    seedPromise = null;
+    throw err;
+  });
+  return seedPromise;
+}
 
 /** List profiler metrics. Cached. */
 export async function listProfilerMetrics(): Promise<ProfilerMetric[]> {
   return cacheWrap(
     METRICS_KEY,
-    () => Promise.resolve(metrics.map((m) => ({ ...m }))),
+    () => Promise.resolve(SEED_METRICS.map((m) => ({ ...m }))),
     CACHE_TTL.profilerMetrics,
   );
 }
@@ -111,7 +213,13 @@ export async function listProfilerMetrics(): Promise<ProfilerMetric[]> {
 export async function listProfilerResults(): Promise<ProfilerResult[]> {
   return cacheWrap(
     RESULTS_KEY,
-    () => Promise.resolve(results.map((r) => ({ ...r }))),
+    async () => {
+      await seedIfEmpty();
+      const rows = await db.profilerResult.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+      return rows.map(toDomain);
+    },
     CACHE_TTL.profilerResults,
   );
 }
@@ -122,10 +230,11 @@ export async function getProfilerResultById(
 ): Promise<ProfilerResult> {
   return cacheWrap(
     resultKey(id),
-    () => {
-      const found = results.find((r) => r.id === id);
-      if (!found) throw AppError.notFound(`Profiler result '${id}' not found`);
-      return Promise.resolve({ ...found });
+    async () => {
+      await seedIfEmpty();
+      const row = await db.profilerResult.findUnique({ where: { id } });
+      if (!row) throw AppError.notFound(`Profiler result '${id}' not found`);
+      return toDomain(row);
     },
     CACHE_TTL.profilerResultDetail,
   );
@@ -135,6 +244,7 @@ export async function getProfilerResultById(
 export async function startProfiling(
   input: StartProfilingInput,
 ): Promise<ProfilerResult> {
+  await seedIfEmpty();
   const id = `prof-${randomUUID()}`;
   const now = Date.now();
   const duration = 3500 + Math.floor(Math.random() * 1500);
@@ -186,7 +296,7 @@ export async function startProfiling(
       jankRatio: 0.08,
     },
   };
-  results = [result, ...results].slice(0, 50);
+  await db.profilerResult.create({ data: toDbRow(result) });
   invalidateResults(id);
   log.info("Profiler started", { id, url: input.url });
   return result;
@@ -194,7 +304,7 @@ export async function startProfiling(
 
 /** Test-only: reset to seed. */
 export function _resetProfilerForTest(): void {
-  results = SEED_RESULTS.map((r) => ({ ...r }));
+  seedPromise = null;
   invalidateResults();
   cache.delete(METRICS_KEY);
 }

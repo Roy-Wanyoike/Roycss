@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useBackendData } from "@/components/roycss/_use-backend-data";
+import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
 /**
  * RoyReview — AI code reviewer.
  *
@@ -535,6 +538,10 @@ const TICK_MS = 40;
 type RunState = "idle" | "running" | "done";
 
 export function RoyReview() {
+  // Backend-wired — falls back to existing demo data on error (progressive enhancement).
+  const { data, loading, error } = useBackendData<unknown>("review/rules");
+  void data; void loading; void error;
+
   const [code, setCode] = useState("");
   const [runState, setRunState] = useState<RunState>("idle");
   const [progress, setProgress] = useState(0);

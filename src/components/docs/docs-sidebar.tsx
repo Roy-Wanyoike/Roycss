@@ -74,7 +74,7 @@ export function DocsSidebar({ docs, selectedSlug, onSelect }: DocsSidebarProps) 
       const stored = localStorage.getItem(COLLAPSE_STORAGE_KEY);
       if (stored) {
         const arr = JSON.parse(stored) as string[];
-         
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot localStorage hydration on mount
         setCollapsed(new Set(arr));
       }
     } catch {
@@ -104,7 +104,7 @@ export function DocsSidebar({ docs, selectedSlug, onSelect }: DocsSidebarProps) 
     if (!selectedSlug) return;
     const doc = docs.find((d) => d.slug === selectedSlug);
     if (!doc) return;
-     
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- auto-expand selected doc's category
     setCollapsed((prev) => {
       if (!prev.has(doc.category)) return prev;
       const next = new Set(prev);

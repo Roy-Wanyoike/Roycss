@@ -39,8 +39,8 @@ export function CategoryExplorer({ onCategorySelect }: { onCategorySelect: (cat:
 
   // Pre-compute per-category counts ONCE. Without this, every hover
   // (which flips `hoveredCategory` state and re-renders the component)
-  // would re-filter the entire 1749-effect array once per category —
-  // ~20 × 1749 = ~31k scans per hover.
+  // would re-filter the entire 1569-effect array once per category —
+  // ~20 × 1569 = ~31k scans per hover.
   const categoryCounts = useMemo(() => {
     const counts = new Map<EffectCategory, number>();
     for (const e of effects) {

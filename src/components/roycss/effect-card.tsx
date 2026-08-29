@@ -1,12 +1,11 @@
 "use client";
 
-import { useRef, useCallback, memo } from "react";
+import { useState, useRef, useCallback, memo } from "react";
 import { motion, useInView } from "framer-motion";
-import { ChevronDown, Code2, Eye, Heart } from "lucide-react";
+import { ChevronDown, ChevronUp, Code2, Eye, Heart } from "lucide-react";
 import type { CSSEffect } from "@/lib/roycss-types";
 import { Badge } from "@/components/ui/badge";
 import { CopyAsDropdown } from "@/components/roycss/copy-as-dropdown";
-import { LazyMount } from "@/components/roycss/lazy-mount";
 
 /* ═══════════════════════════════════════════════════════════════
    LIVE PREVIEW RENDERER
@@ -278,6 +277,7 @@ export const EffectCard = memo(function EffectCard({
   isFavorite?: boolean;
   onToggleFavorite?: (id: string) => void;
 }) {
+  const [showCode, setShowCode] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-40px" });
 
@@ -301,17 +301,10 @@ export const EffectCard = memo(function EffectCard({
       data-effect-id={effect.id}
       className="group rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 cursor-pointer perf-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
     >
-      {/* Preview Area — LivePreview is lazily mounted via LazyMount so the
-          heavy preview DOM (and any CSS animations it carries) only mount
-          when the card is within ~200px of the viewport. This saves ~5–10
-          DOM nodes per offscreen card across the 24-card batch. */}
+      {/* Preview Area */}
       <div className="relative h-48 bg-gradient-to-br from-muted/50 to-muted/30 overflow-hidden">
-        <LazyMount className="absolute inset-0">
-          <LivePreview effect={effect} />
-        </LazyMount>
-
-        {/* Favorite button — plain Heart icon, no motion.span wrapper
-            (the color change is enough feedback; one fewer node per card). */}
+        <LivePreview effect={effect} />
+        {/* Favorite button */}
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -320,18 +313,19 @@ export const EffectCard = memo(function EffectCard({
           className="absolute top-3 right-3 flex items-center justify-center size-11 rounded-lg bg-background/80 backdrop-blur-sm border border-border/50 hover:bg-background transition-all cursor-pointer z-10"
           aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
         >
-          <Heart
-            className={`size-3.5 transition-colors ${
-              isFavorite ? "fill-rose-500 text-rose-500" : "text-muted-foreground hover:text-rose-500"
-            }`}
-          />
+          <motion.span
+            animate={isFavorite ? { scale: [1, 1.3, 1] } : { scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Heart
+              className={`size-3.5 transition-colors ${
+                isFavorite ? "fill-rose-500 text-rose-500" : "text-muted-foreground hover:text-rose-500"
+              }`}
+            />
+          </motion.span>
         </button>
-
-        {/* Compact badge row — Live + CSS combined into a single wrapper
-            div (was two separate absolute-positioned wrappers, one of
-            which was bottom-3 left-3; both now share top-3 left-3 and
-            sit in a flex gap row). */}
-        <div className="absolute top-3 left-3 flex gap-1.5 z-10">
+        {/* Live badge */}
+        <div className="absolute top-3 left-3">
           <Badge
             variant="secondary"
             className="text-xs px-2 py-0.5 bg-background/80 backdrop-blur-sm border-border/50"
@@ -339,6 +333,8 @@ export const EffectCard = memo(function EffectCard({
             <Eye className="size-3 mr-1" />
             Live
           </Badge>
+        </div>
+        <div className="absolute bottom-3 left-3">
           <Badge
             variant="outline"
             className="text-xs px-2 py-0.5 bg-background/80 backdrop-blur-sm border-border/50"
@@ -351,12 +347,16 @@ export const EffectCard = memo(function EffectCard({
 
       {/* Info */}
       <div className="p-4">
-        <h3 className="font-display font-semibold text-foreground text-sm truncate">
-          {effect.name}
-        </h3>
-        <p className="mt-1 text-xs text-muted-foreground line-clamp-2 leading-relaxed">
-          {effect.description}
-        </p>
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0">
+            <h3 className="font-display font-semibold text-foreground text-sm truncate">
+              {effect.name}
+            </h3>
+            <p className="mt-1 text-xs text-muted-foreground line-clamp-2 leading-relaxed">
+              {effect.description}
+            </p>
+          </div>
+        </div>
 
         {/* Tags */}
         <div className="mt-3 flex flex-wrap gap-1.5">
@@ -371,40 +371,55 @@ export const EffectCard = memo(function EffectCard({
           ))}
         </div>
 
-        {/* Code section — native <details> replaces the toggle button +
-            useState + motion.div animation. The <summary> provides the
-            toggle natively (clicking it flips the open attribute), and the
-            chevron rotates via group-open/details. stopPropagation on both
-            the <details> and the inner container prevents the click from
-            bubbling up to the card's onClick (which opens the detail
-            dialog). min-h-7 + py-1.5 on the summary preserves the ≥ 28px
-            tap target (WCAG 2.5.8 AA ≥ 24px). */}
-        <details
-          className="mt-3 group/details"
-          onClick={(e) => e.stopPropagation()}
+        {/* Code Toggle — min-h-7 + py-1.5 ensures ≥ 28px tap target (WCAG 2.5.8 AA ≥ 24px) */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            setShowCode(!showCode);
+          }}
+          className="mt-3 inline-flex items-center gap-1.5 px-1.5 py-1.5 min-h-7 -mx-1.5 rounded-md text-xs text-primary hover:text-primary/80 hover:bg-primary/5 transition-colors font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
         >
-          <summary className="inline-flex items-center gap-1.5 px-1.5 py-1.5 min-h-7 -mx-1.5 rounded-md text-xs text-primary hover:text-primary/80 hover:bg-primary/5 transition-colors font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 list-none [&::-webkit-details-marker]:hidden">
-            <ChevronDown className="size-3.5 transition-transform group-open/details:rotate-180" />
-            View CSS Code
-          </summary>
-          <div
-            className="relative mt-2 rounded-xl bg-muted/80 border border-border/50 overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
+          {showCode ? (
+            <>
+              <ChevronUp className="size-3.5" />
+              Hide Code
+            </>
+          ) : (
+            <>
+              <ChevronDown className="size-3.5" />
+              View CSS Code
+            </>
+          )}
+        </button>
+
+        {/* Code Block */}
+        {showCode && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="relative mt-2"
           >
-            <div className="absolute top-2 right-2 z-10">
-              <CopyAsDropdown
-                css={effect.cssCode}
-                effectId={effect.id}
-                variant="compact"
-              />
+            <div className="relative rounded-xl bg-muted/80 border border-border/50 overflow-hidden">
+              <div
+                className="absolute top-2 right-2 z-10"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <CopyAsDropdown
+                  css={effect.cssCode}
+                  effectId={effect.id}
+                  variant="compact"
+                />
+              </div>
+              <pre className="p-3 pt-2 overflow-x-auto text-xs leading-relaxed scrollbar-thin max-h-52 overflow-y-auto">
+                <code className="text-foreground/80 font-mono">
+                  {effect.cssCode}
+                </code>
+              </pre>
             </div>
-            <pre className="p-3 pt-2 overflow-x-auto text-xs leading-relaxed scrollbar-thin max-h-52 overflow-y-auto">
-              <code className="text-foreground/80 font-mono">
-                {effect.cssCode}
-              </code>
-            </pre>
-          </div>
-        </details>
+          </motion.div>
+        )}
       </div>
     </motion.div>
   );

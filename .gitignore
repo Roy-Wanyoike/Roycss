@@ -179,7 +179,7 @@ sentry.properties
 /.vscode
 /examples
 
-# Other files
+# Internal project reports and audit documentation
 API_KEYS_REQUIRED.md
 ARCHITECTURE.md
 AUDIT-REPORT.md

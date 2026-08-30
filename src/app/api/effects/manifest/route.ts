@@ -24,7 +24,7 @@ function buildManifest() {
 }
 
 /**
- * GET /api/effects/manifest — JSON manifest of all 1,749 effects
+ * GET /api/effects/manifest — JSON manifest of all 1,779 effects
  * (metadata only — no cssCode to keep payload small).
  *
  * Cache: 24h public.

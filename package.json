@@ -64,6 +64,7 @@
     "db:reset": "prisma migrate reset"
   },
   "dependencies": {
+    "@flydotio/litestream": "^1.0.1",
     "socket.io-client": "^4.8.3",
     "three": "^0.185.1"
   },
@@ -149,5 +150,8 @@
     "z-ai-web-dev-sdk": "^0.0.18",
     "zod": "^4.0.2",
     "zustand": "^5.0.6"
+  },
+  "dockerfile": {
+    "litestream": true
   }
 }

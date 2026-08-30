@@ -3,7 +3,7 @@
  * API calls routed through the Caddy gateway.
  *
  * Why centralized?
- *   - One place to enforce the gateway convention (`?XTransformPort=4000`)
+ *   - One place to enforce the gateway convention (``)
  *   - One place to normalize the `{ error: { message } }` error envelope
  *     returned by all 68 backend modules (see backend/src/server/middleware/error.ts)
  *   - One place to apply a request timeout + cancellation (AbortController)
@@ -13,7 +13,7 @@
  *   - If `path` starts with "http" (absolute URL), it is used verbatim.
  *   - Otherwise the path is treated as a backend route segment and is
  *     prefixed with `/api/v1/` and routed to the backend via the gateway
- *     query param `?XTransformPort=4000` (Caddy rewrites this to
+ *     query param `` (Caddy rewrites this to
  *     http://localhost:4000/api/v1/<path>).
  *
  * Frontend proxy routes (`/api/auth/*`, `/api/health`, `/api/contact`,
@@ -54,7 +54,7 @@ export async function apiClient<T>(
   const method = (fetchOptions.method ?? "GET").toUpperCase();
   const url = path.startsWith("http")
     ? path
-    : `/api/v1/${path}?XTransformPort=4000`;
+    : `/api/v1/${path}`;
 
   if (IS_DEV) {
     console.debug("[apiClient] →", method, url);

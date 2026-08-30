@@ -1,36 +1,42 @@
 <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!--
-    RoyCSS Logo — Modern, geometric "R" monogram
-    - Emerald gradient on dark background
-    - Clean geometric shapes
-    - Works at all sizes (favicon to hero)
-    - SVG-first, optimized for fast loading
+    RoyCSS Logo — Concept 1: "Modern • Clean • Code"
+    Stylized "R" with gradient + code brackets { } in the negative space
+    Colors: White, Electric Blue, Purple/Indigo gradient
   -->
   <defs>
-    <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#34d399"/>
-      <stop offset="100%" stop-color="#10b981"/>
+    <linearGradient id="r-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#00A8FF"/>
     </linearGradient>
-    <linearGradient id="logo-grad-light" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#10b981"/>
-      <stop offset="100%" stop-color="#059669"/>
+    <linearGradient id="bracket-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00A8FF"/>
+      <stop offset="100%" stop-color="#8B5CF6"/>
     </linearGradient>
   </defs>
 
-  <!-- Background: rounded square with dark fill -->
-  <rect width="120" height="120" rx="28" fill="#0a0a0a"/>
+  <!-- Background: rounded dark square -->
+  <rect width="120" height="120" rx="28" fill="#0F1729"/>
 
-  <!-- Geometric "R" mark — constructed from clean shapes -->
-  <!-- Left vertical bar -->
-  <rect x="32" y="28" width="12" height="64" rx="6" fill="url(#logo-grad)"/>
+  <!-- R letterform — left vertical bar -->
+  <rect x="30" y="28" width="14" height="64" rx="7" fill="url(#r-grad)"/>
 
-  <!-- Top arc of the R (the bowl) -->
-  <path d="M44 28 L66 28 C78 28 84 36 84 46 C84 56 78 64 66 64 L44 64"
-        stroke="url(#logo-grad)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- R letterform — top bowl (curved section) -->
+  <path d="M44 28 L64 28 C78 28 84 36 84 46 C84 56 78 64 64 64 L44 64"
+        stroke="url(#r-grad)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
 
-  <!-- Diagonal leg of the R -->
-  <path d="M48 64 L80 92" stroke="url(#logo-grad-light)" stroke-width="12" stroke-linecap="round"/>
+  <!-- R letterform — diagonal leg -->
+  <path d="M46 64 L82 92" stroke="url(#r-grad)" stroke-width="14" stroke-linecap="round"/>
 
-  <!-- Accent dot — represents the "CSS" dot / period -->
-  <circle cx="96" cy="92" r="5" fill="#34d399"/>
+  <!-- Code brackets { } in the negative space of the R -->
+  <!-- Left bracket { -->
+  <path d="M64 40 C60 40 60 44 56 44 C52 44 52 48 52 52 C52 56 52 60 56 60 C60 60 60 64 64 64"
+        stroke="url(#bracket-grad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.8"/>
+  
+  <!-- Right bracket } -->
+  <path d="M72 40 C76 40 76 44 80 44 C84 44 84 48 84 52 C84 56 84 60 80 60 C76 60 76 64 72 64"
+        stroke="url(#bracket-grad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.8"/>
+
+  <!-- Small dot/minus between brackets (CSS property indicator) -->
+  <circle cx="68" cy="52" r="2" fill="#00A8FF" opacity="0.6"/>
 </svg>

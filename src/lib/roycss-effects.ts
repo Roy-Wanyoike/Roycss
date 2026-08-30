@@ -43,6 +43,7 @@ import { effectsBatch43 } from "./effects-batch-43";
 import { effectsBatch40 } from "./effects-batch-40";
 import { effectsBatch41 } from "./effects-batch-41";
 import { effectsBatch50 } from "./effects-batch-50";
+import { effectsBatch51 } from "./effects-batch-51";
 import { effectsBatch52 } from "./effects-batch-52";
 
 // Re-export types and metadata
@@ -95,6 +96,7 @@ export const effects: CSSEffect[] = [
   ...effectsBatch40,
   ...effectsBatch41,
   ...effectsBatch50,
+  ...effectsBatch51,
   ...effectsBatch52,
 ];
 

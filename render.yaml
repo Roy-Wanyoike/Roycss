@@ -1,0 +1,48 @@
+# Render Blueprint — deploys the RoyCSS backend as a web service
+# Documentation: https://render.com/docs/blueprint-spec
+# 
+# This file tells Render how to deploy the backend separately.
+# The frontend deploys to Vercel (see vercel.json).
+#
+# Steps:
+# 1. Push this repo to GitHub
+# 2. Go to https://dashboard.render.com → New → Blueprint
+# 3. Select this repository
+# 4. Render will read this file and create the backend service
+# 5. Set environment variables in the Render dashboard:
+#    - DATABASE_URL (Supabase Postgres connection string)
+#    - JWT_SECRET (64-char random string)
+#    - JWT_REFRESH_SECRET (different 64-char random string)
+#    - SUPABASE_URL, SUPABASE_SECRET_KEY, etc. (from your Supabase project)
+
+services:
+  - type: web
+    name: roycss-backend
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: backend
+    buildCommand: bun install && bunx prisma generate
+    startCommand: bun run --env-file=.env dev
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: JWT_REFRESH_SECRET
+        sync: false
+      - key: CORS_ORIGINS
+        value: "*"
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SECRET_KEY
+        sync: false
+      - key: SUPABASE_PUBLISHABLE_KEY
+        sync: false
+      - key: SUPABASE_JWKS_URL
+        sync: false

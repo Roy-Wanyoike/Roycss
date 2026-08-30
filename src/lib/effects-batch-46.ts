@@ -24,7 +24,7 @@ export const effectsBatch46 = [
   {
     id: "nature-day-night",
     name: "Day to Night",
-    category: "nature",
+    category: "backgrounds",
     description: "Background transitions from a blue day sky to a starry night",
     tags: ["nature", "day-night", "sky", "stars", "cycle"],
     previewType: "background",
@@ -68,7 +68,7 @@ export const effectsBatch46 = [
   {
     id: "nature-cloud-drift",
     name: "Cloud Drift",
-    category: "nature",
+    category: "backgrounds",
     description: "Realistic cloud shapes drift slowly across a sky background",
     tags: ["nature", "cloud", "drift", "sky", "weather"],
     previewType: "background",
@@ -114,7 +114,7 @@ export const effectsBatch46 = [
   {
     id: "nature-sunrise-gradient",
     name: "Sunrise Gradient",
-    category: "nature",
+    category: "backgrounds",
     description: "Animated sky gradient mimicking the warm hues of a sunrise",
     tags: ["nature", "sunrise", "sky", "gradient", "warm"],
     previewType: "background",
@@ -143,7 +143,7 @@ export const effectsBatch46 = [
   {
     id: "nature-plant-growth",
     name: "Plant Growth",
-    category: "nature",
+    category: "backgrounds",
     description: "Element grows upward like a sprouting plant from the bottom",
     tags: ["nature", "plant", "growth", "sprout", "organic"],
     previewType: "box",
@@ -170,7 +170,7 @@ export const effectsBatch46 = [
   {
     id: "nature-water-reflection",
     name: "Water Reflection",
-    category: "nature",
+    category: "backgrounds",
     description: "Mirrored element below with subtle wave distortion on the surface",
     tags: ["nature", "water", "reflection", "mirror", "wave"],
     previewType: "box",
@@ -212,7 +212,7 @@ export const effectsBatch46 = [
   {
     id: "nature-firefly-ambient",
     name: "Firefly Ambient",
-    category: "nature",
+    category: "backgrounds",
     description: "Small dots randomly glow and float, simulating fireflies at dusk",
     tags: ["nature", "firefly", "ambient", "glow", "particles"],
     previewType: "background",
@@ -264,7 +264,7 @@ export const effectsBatch46 = [
   {
     id: "nature-seasons-switcher",
     name: "Seasons Switcher",
-    category: "nature",
+    category: "backgrounds",
     description: "Component cycles through spring, summer, autumn, and winter themes",
     tags: ["nature", "seasons", "spring", "summer", "autumn", "winter", "cycle"],
     previewType: "background",
@@ -291,7 +291,7 @@ export const effectsBatch46 = [
   {
     id: "nature-rain-drops",
     name: "Rain Drops",
-    category: "nature",
+    category: "backgrounds",
     description: "Rain drops falling on a surface with subtle streaking motion",
     tags: ["nature", "rain", "drops", "falling", "weather"],
     previewType: "background",
@@ -334,7 +334,7 @@ export const effectsBatch46 = [
   {
     id: "nature-snow-falling",
     name: "Snow Falling",
-    category: "nature",
+    category: "backgrounds",
     description: "Gentle snowfall with multiple snowflake layers drifting down",
     tags: ["nature", "snow", "snowfall", "winter", "weather"],
     previewType: "background",
@@ -381,7 +381,7 @@ export const effectsBatch46 = [
   {
     id: "nature-autumn-leaves",
     name: "Autumn Leaves",
-    category: "nature",
+    category: "backgrounds",
     description: "Falling autumn leaves with swaying motion and warm colors",
     tags: ["nature", "autumn", "leaves", "fall", "season"],
     previewType: "background",
@@ -427,7 +427,7 @@ export const effectsBatch46 = [
   {
     id: "nature-thunder-flash",
     name: "Thunder Flash",
-    category: "nature",
+    category: "backgrounds",
     description: "Occasional lightning flash with brightening sky on a stormy backdrop",
     tags: ["nature", "thunder", "lightning", "flash", "storm"],
     previewType: "background",
@@ -477,7 +477,7 @@ export const effectsBatch46 = [
   {
     id: "nature-fog-drift",
     name: "Fog Drift",
-    category: "nature",
+    category: "backgrounds",
     description: "Drifting fog layers that slowly move across the surface",
     tags: ["nature", "fog", "mist", "drift", "weather"],
     previewType: "background",
@@ -519,7 +519,7 @@ export const effectsBatch46 = [
   {
     id: "nature-spring-bloom",
     name: "Spring Bloom",
-    category: "nature",
+    category: "backgrounds",
     description: "Flowers bloom into full petals with a soft scaling animation",
     tags: ["nature", "spring", "bloom", "flower", "petals"],
     previewType: "box",
@@ -565,7 +565,7 @@ export const effectsBatch46 = [
   {
     id: "nature-ocean-tide",
     name: "Ocean Tide",
-    category: "nature",
+    category: "backgrounds",
     description: "Tide coming in and out with a wave cresting motion",
     tags: ["nature", "ocean", "tide", "wave", "water"],
     previewType: "background",
@@ -608,7 +608,7 @@ export const effectsBatch46 = [
   {
     id: "nature-desert-dune",
     name: "Desert Dune",
-    category: "nature",
+    category: "backgrounds",
     description: "Sand dune shifting effect with warm gradient layers sliding",
     tags: ["nature", "desert", "dune", "sand", "warm"],
     previewType: "background",
@@ -650,7 +650,7 @@ export const effectsBatch46 = [
   {
     id: "nature-aurora-sky",
     name: "Aurora Sky",
-    category: "nature",
+    category: "backgrounds",
     description: "Aurora borealis with shifting green and violet ribbons in the sky",
     tags: ["nature", "aurora", "borealis", "sky", "northern-lights"],
     previewType: "background",
@@ -692,7 +692,7 @@ export const effectsBatch46 = [
   {
     id: "nature-mist-morning",
     name: "Morning Mist",
-    category: "nature",
+    category: "backgrounds",
     description: "Morning mist rising slowly with warm dawn light behind it",
     tags: ["nature", "mist", "morning", "dawn", "warm"],
     previewType: "background",
@@ -734,7 +734,7 @@ export const effectsBatch46 = [
   {
     id: "nature-rainbow-arc",
     name: "Rainbow Arc",
-    category: "nature",
+    category: "backgrounds",
     description: "Rainbow arc appears on hover with a sweeping multi-color reveal",
     tags: ["nature", "rainbow", "arc", "color", "hover"],
     previewType: "box",
@@ -781,7 +781,7 @@ export const effectsBatch46 = [
   {
     id: "nature-tornado-spin",
     name: "Tornado Spin",
-    category: "nature",
+    category: "backgrounds",
     description: "Spinning vortex effect with rotating layers and a tapering shape",
     tags: ["nature", "tornado", "vortex", "spin", "storm"],
     previewType: "background",
@@ -831,7 +831,7 @@ export const effectsBatch46 = [
   {
     id: "nature-volcano-erupt",
     name: "Volcano Erupt",
-    category: "nature",
+    category: "backgrounds",
     description: "Volcanic eruption with rising particles and a glowing crater",
     tags: ["nature", "volcano", "eruption", "lava", "particles"],
     previewType: "background",

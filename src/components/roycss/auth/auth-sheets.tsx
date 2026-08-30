@@ -1,5 +1,3 @@
-"use client";
-
 import { LoginSheet } from "./login-sheet";
 import { RegisterSheet } from "./register-sheet";
 

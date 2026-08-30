@@ -23,7 +23,7 @@ export const effectsBatch45 = [
   {
     id: "structural-brick-reveal",
     name: "Brick Reveal",
-    category: "structural",
+    category: "misc",
     description: "Bricks appear one by one in staggered rows to form a wall on hover",
     tags: ["structural", "brick", "wall", "reveal", "stagger"],
     previewType: "box",
@@ -69,7 +69,7 @@ export const effectsBatch45 = [
   {
     id: "structural-fold-paper",
     name: "Fold Paper",
-    category: "structural",
+    category: "misc",
     description: "Element folds like a sheet of paper using CSS 3D transforms on hover",
     tags: ["structural", "paper", "fold", "3d", "transform"],
     previewType: "box",
@@ -100,7 +100,7 @@ export const effectsBatch45 = [
   {
     id: "structural-page-curl",
     name: "Page Curl",
-    category: "structural",
+    category: "misc",
     description: "Corner curls upward on hover, revealing content beneath the page",
     tags: ["structural", "page", "curl", "corner", "reveal"],
     previewType: "box",
@@ -151,7 +151,7 @@ export const effectsBatch45 = [
   {
     id: "structural-shatter-break",
     name: "Shatter Break",
-    category: "structural",
+    category: "misc",
     description: "Element appears to shatter into pieces on hover using clip-path",
     tags: ["structural", "shatter", "break", "clip-path", "crack"],
     previewType: "box",
@@ -189,7 +189,7 @@ export const effectsBatch45 = [
   {
     id: "structural-dissolve",
     name: "Dissolve",
-    category: "structural",
+    category: "misc",
     description: "Element dissolves into particles and noise on hover",
     tags: ["structural", "dissolve", "particles", "noise", "fade"],
     previewType: "box",
@@ -218,7 +218,7 @@ export const effectsBatch45 = [
   {
     id: "structural-assemble",
     name: "Assemble",
-    category: "structural",
+    category: "misc",
     description: "Pieces fly in from different directions to assemble the element",
     tags: ["structural", "assemble", "fly-in", "pieces", "construction"],
     previewType: "box",
@@ -262,7 +262,7 @@ export const effectsBatch45 = [
   {
     id: "structural-origami-fold",
     name: "Origami Fold",
-    category: "structural",
+    category: "misc",
     description: "Origami-style fold animation that pleats the element on hover",
     tags: ["structural", "origami", "fold", "pleat", "3d"],
     previewType: "box",
@@ -293,7 +293,7 @@ export const effectsBatch45 = [
   {
     id: "structural-glass-shatter",
     name: "Glass Shatter",
-    category: "structural",
+    category: "misc",
     description: "Glass crack pattern animates across the surface on hover",
     tags: ["structural", "glass", "shatter", "crack", "fracture"],
     previewType: "box",
@@ -342,7 +342,7 @@ export const effectsBatch45 = [
   {
     id: "structural-stone-crack",
     name: "Stone Crack",
-    category: "structural",
+    category: "misc",
     description: "Stone cracking effect that progressively reveals fissures on hover",
     tags: ["structural", "stone", "crack", "fissure", "rock"],
     previewType: "box",
@@ -387,7 +387,7 @@ export const effectsBatch45 = [
   {
     id: "structural-metal-bend",
     name: "Metal Bend",
-    category: "structural",
+    category: "misc",
     description: "Sheet metal bending effect with flexed perspective on hover",
     tags: ["structural", "metal", "bend", "sheet", "flex"],
     previewType: "box",
@@ -420,7 +420,7 @@ export const effectsBatch45 = [
   {
     id: "structural-wood-grain",
     name: "Wood Grain",
-    category: "structural",
+    category: "misc",
     description: "Wood grain texture with flowing grain lines on hover",
     tags: ["structural", "wood", "grain", "timber", "texture"],
     previewType: "box",
@@ -463,7 +463,7 @@ export const effectsBatch45 = [
   {
     id: "structural-marble-vein",
     name: "Marble Vein",
-    category: "structural",
+    category: "misc",
     description: "Marble surface with flowing veins that subtly shift on hover",
     tags: ["structural", "marble", "vein", "stone", "luxury"],
     previewType: "box",
@@ -492,7 +492,7 @@ export const effectsBatch45 = [
   {
     id: "structural-concrete-texture",
     name: "Concrete Surface",
-    category: "structural",
+    category: "misc",
     description: "Raw concrete surface with mottled stains and aggregate speckles",
     tags: ["structural", "concrete", "surface", "aggregate", "texture"],
     previewType: "box",
@@ -518,7 +518,7 @@ export const effectsBatch45 = [
   {
     id: "structural-water-ripple-surface",
     name: "Water Ripple Surface",
-    category: "structural",
+    category: "misc",
     description: "Water surface ripple that expands across the surface on hover",
     tags: ["structural", "water", "ripple", "surface", "wave"],
     previewType: "box",
@@ -563,7 +563,7 @@ export const effectsBatch45 = [
   {
     id: "structural-fabric-weave",
     name: "Fabric Weave Pattern",
-    category: "structural",
+    category: "misc",
     description: "Tightly woven fabric pattern with warp and weft interlacing",
     tags: ["structural", "fabric", "weave", "warp", "weft"],
     previewType: "box",
@@ -586,7 +586,7 @@ export const effectsBatch45 = [
   {
     id: "structural-carbon-fiber",
     name: "Carbon Fiber",
-    category: "structural",
+    category: "misc",
     description: "Carbon fiber weave pattern with the characteristic twill sheen",
     tags: ["structural", "carbon", "fiber", "twill", "weave"],
     previewType: "box",
@@ -610,7 +610,7 @@ export const effectsBatch45 = [
   {
     id: "structural-honeycomb-structure",
     name: "Honeycomb Structure",
-    category: "structural",
+    category: "misc",
     description: "Hexagonal honeycomb pattern with cells that warm up on hover",
     tags: ["structural", "honeycomb", "hexagon", "pattern", "cells"],
     previewType: "box",
@@ -649,7 +649,7 @@ export const effectsBatch45 = [
   {
     id: "structural-crystal-facet",
     name: "Crystal Facet",
-    category: "structural",
+    category: "misc",
     description: "Crystal facets reflect shifting light across geometric planes",
     tags: ["structural", "crystal", "facet", "light", "reflection"],
     previewType: "box",
@@ -678,7 +678,7 @@ export const effectsBatch45 = [
   {
     id: "structural-ice-melt",
     name: "Ice Melt",
-    category: "structural",
+    category: "misc",
     description: "Ice melts with opacity and blur transition on hover, revealing what's beneath",
     tags: ["structural", "ice", "melt", "blur", "fade"],
     previewType: "box",
@@ -714,7 +714,7 @@ export const effectsBatch45 = [
   {
     id: "structural-rust-texture",
     name: "Rust Texture",
-    category: "structural",
+    category: "misc",
     description: "Rust texture with progressive reveal of oxidation on hover",
     tags: ["structural", "rust", "oxidation", "metal", "texture"],
     previewType: "box",

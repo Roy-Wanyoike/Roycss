@@ -11134,5 +11134,1378 @@
     "previewText": null,
     "childCount": null,
     "cssCode": "/* Status: Toast Slide In */\n.roycss-state-toast-slide {\n  position: relative;\n  background: linear-gradient(135deg, oklch(0.3 0.02 230), oklch(0.22 0.02 230));\n  color: oklch(0.98 0 0);\n  border-radius: 8px;\n  border-left: 4px solid oklch(0.6 0.2 150);\n  animation: roy-state-toast-slide 3s ease-in-out infinite;\n}\n@keyframes roy-state-toast-slide {\n  0%        { transform: translateX(120%); opacity: 0; }\n  10%, 75%  { transform: translateX(0); opacity: 1; }\n  90%, 100% { transform: translateX(120%); opacity: 0; }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-state-toast-slide { animation: none; transform: none; opacity: 1; }\n}"
+  },
+  {
+    "id": "haptics-pressure-press",
+    "name": "Pressure Press",
+    "category": "microinteractions",
+    "description": "Element deforms with deepening inset shadow and scale as if physically pressed",
+    "tags": [
+      "haptics",
+      "press",
+      "tactile",
+      "physical",
+      "deform"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Haptics: Pressure Press */\n.roycss-haptics-pressure-press {\n  background: linear-gradient(145deg, oklch(0.85 0.05 220), oklch(0.75 0.06 220));\n  border-radius: 14px;\n  box-shadow: 0 10px 24px oklch(0 0 0 / 0.18), inset 0 0 0 oklch(0 0 0 / 0);\n  transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 220ms ease;\n  cursor: pointer;\n}\n.roycss-haptics-pressure-press:hover {\n  transform: scale(0.94);\n  box-shadow: 0 4px 8px oklch(0 0 0 / 0.12), inset 0 6px 14px oklch(0 0 0 / 0.28);\n}\n.roycss-haptics-pressure-press:active {\n  transform: scale(0.9);\n  box-shadow: 0 1px 2px oklch(0 0 0 / 0.1), inset 0 10px 22px oklch(0 0 0 / 0.42);\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-haptics-pressure-press,\n  .roycss-haptics-pressure-press:hover,\n  .roycss-haptics-pressure-press:active {\n    transform: none;\n    box-shadow: 0 10px 24px oklch(0 0 0 / 0.18);\n  }\n}"
+  },
+  {
+    "id": "haptics-surface-tension",
+    "name": "Surface Tension",
+    "category": "microinteractions",
+    "description": "Liquid-like ripple with surface-tension behavior emanates on hover",
+    "tags": [
+      "haptics",
+      "surface-tension",
+      "ripple",
+      "liquid",
+      "hover"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Haptics: Surface Tension */\n.roycss-haptics-surface-tension {\n  position: relative;\n  background: radial-gradient(circle at 50% 50%, oklch(0.78 0.12 200), oklch(0.6 0.18 220));\n  border-radius: 18px;\n  overflow: hidden;\n  cursor: pointer;\n}\n.roycss-haptics-surface-tension::before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  border-radius: 50%;\n  background: radial-gradient(circle, oklch(0.95 0.05 200 / 0.65), transparent 60%);\n  transform: scale(0);\n  opacity: 0;\n  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1), opacity 600ms ease;\n}\n.roycss-haptics-surface-tension:hover::before {\n  transform: scale(2.4);\n  opacity: 1;\n  animation: roy-haptics-surface-tension 1.6s ease-out infinite;\n}\n@keyframes roy-haptics-surface-tension {\n  0%   { transform: scale(0.4); opacity: 0.85; border-radius: 50%; }\n  60%  { border-radius: 40% 60% 50% 50% / 50% 50% 40% 60%; }\n  100% { transform: scale(2.6); opacity: 0; border-radius: 50%; }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-haptics-surface-tension:hover::before {\n    animation: none;\n    transform: scale(1.6);\n    opacity: 0.5;\n  }\n}"
+  },
+  {
+    "id": "haptics-rubber-stretch",
+    "name": "Rubber Stretch",
+    "category": "microinteractions",
+    "description": "Element stretches like rubber when hovered and snaps back on release",
+    "tags": [
+      "haptics",
+      "rubber",
+      "stretch",
+      "elastic",
+      "snap"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Haptics: Rubber Stretch */\n.roycss-haptics-rubber-stretch {\n  background: linear-gradient(135deg, oklch(0.82 0.13 12), oklch(0.72 0.16 28));\n  border-radius: 22px;\n  transition: transform 380ms cubic-bezier(0.68, -0.6, 0.32, 1.6),\n              border-radius 380ms cubic-bezier(0.68, -0.6, 0.32, 1.6);\n  cursor: grab;\n}\n.roycss-haptics-rubber-stretch:hover {\n  transform: scaleX(1.18) scaleY(0.86);\n  border-radius: 36% 64% 36% 64% / 50% 50% 50% 50%;\n  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1),\n              border-radius 220ms cubic-bezier(0.16, 1, 0.3, 1);\n}\n.roycss-haptics-rubber-stretch:active {\n  transform: scaleX(1.32) scaleY(0.7);\n  border-radius: 50% 50% 30% 70% / 60% 40% 60% 40%;\n  transition: transform 120ms ease-out;\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-haptics-rubber-stretch,\n  .roycss-haptics-rubber-stretch:hover,\n  .roycss-haptics-rubber-stretch:active {\n    transform: none;\n    border-radius: 22px;\n  }\n}"
+  },
+  {
+    "id": "haptics-weight-settle",
+    "name": "Weight Settle",
+    "category": "microinteractions",
+    "description": "Heavy element settles with bounce and squash on load, like a heavy weight",
+    "tags": [
+      "haptics",
+      "weight",
+      "settle",
+      "bounce",
+      "squash",
+      "load"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Haptics: Weight Settle */\n.roycss-haptics-weight-settle {\n  background: linear-gradient(160deg, oklch(0.42 0.02 240), oklch(0.28 0.03 240));\n  border-radius: 12px;\n  animation: roy-haptics-weight-settle 1.4s cubic-bezier(0.5, 1.4, 0.5, 1) both;\n}\n@keyframes roy-haptics-weight-settle {\n  0%   { transform: translateY(-340px) scaleY(1.1); opacity: 0; }\n  45%  { transform: translateY(0) scaleY(0.7); opacity: 1; }\n  55%  { transform: translateY(-44px) scaleY(1.08); }\n  72%  { transform: translateY(0) scaleY(0.9); }\n  85%  { transform: translateY(-12px) scaleY(1.02); }\n  100% { transform: translateY(0) scaleY(1); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-haptics-weight-settle { animation: none; transform: none; }\n}"
+  },
+  {
+    "id": "haptics-light-float",
+    "name": "Light Float",
+    "category": "microinteractions",
+    "description": "Element gently floats up and down as if resting on water",
+    "tags": [
+      "haptics",
+      "float",
+      "buoyancy",
+      "water",
+      "ambient"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Haptics: Light Float */\n.roycss-haptics-light-float {\n  background: radial-gradient(circle at 30% 30%, oklch(0.88 0.1 200), oklch(0.7 0.13 220));\n  border-radius: 50%;\n  box-shadow: 0 14px 32px oklch(0.4 0.15 220 / 0.3);\n  animation: roy-haptics-light-float 4.5s ease-in-out infinite;\n}\n@keyframes roy-haptics-light-float {\n  0%, 100% { transform: translateY(0) rotate(0deg); }\n  30%      { transform: translateY(-12px) rotate(-2deg); }\n  65%      { transform: translateY(8px) rotate(1.5deg); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-haptics-light-float { animation: none; }\n}"
+  },
+  {
+    "id": "haptics-texture-concrete",
+    "name": "Concrete Texture",
+    "category": "microinteractions",
+    "description": "Directional grain and noise that shifts on hover, evoking raw concrete",
+    "tags": [
+      "haptics",
+      "texture",
+      "concrete",
+      "grain",
+      "noise"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Haptics: Concrete Texture */\n.roycss-haptics-texture-concrete {\n  background:\n    repeating-linear-gradient(45deg, oklch(0.72 0.005 240 / 0.6) 0 2px, transparent 2px 5px),\n    repeating-linear-gradient(-45deg, oklch(0.6 0.01 240 / 0.5) 0 1.5px, transparent 1.5px 4px),\n    linear-gradient(145deg, oklch(0.74 0.005 240), oklch(0.62 0.008 240));\n  border-radius: 8px;\n  box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.06), 0 8px 20px oklch(0 0 0 / 0.12);\n  position: relative;\n  overflow: hidden;\n  transition: background-position 700ms ease;\n}\n.roycss-haptics-texture-concrete::before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  background:\n    radial-gradient(circle at 22% 18%, oklch(0.55 0.01 240 / 0.5) 0 1px, transparent 1px),\n    radial-gradient(circle at 70% 60%, oklch(0.55 0.01 240 / 0.45) 0 1.5px, transparent 1.5px),\n    radial-gradient(circle at 40% 88%, oklch(0.55 0.01 240 / 0.4) 0 1px, transparent 1px);\n  background-size: 22px 22px, 32px 32px, 26px 26px;\n  background-position: 0 0, 0 0, 0 0;\n  transition: background-position 700ms ease;\n  pointer-events: none;\n}\n.roycss-haptics-texture-concrete:hover::before {\n  background-position: 18px -10px, -14px 12px, 8px -8px;\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-haptics-texture-concrete::before { transition: none; }\n}"
+  },
+  {
+    "id": "haptics-texture-metal",
+    "name": "Brushed Metal",
+    "category": "microinteractions",
+    "description": "Brushed metal surface with a sweeping light reflection on hover",
+    "tags": [
+      "haptics",
+      "texture",
+      "metal",
+      "brushed",
+      "reflection"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Haptics: Brushed Metal */\n.roycss-haptics-texture-metal {\n  position: relative;\n  background:\n    repeating-linear-gradient(90deg, oklch(0.7 0.005 250 / 0.18) 0 1px, transparent 1px 3px),\n    linear-gradient(180deg, oklch(0.78 0.005 250), oklch(0.58 0.008 250));\n  border-radius: 10px;\n  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.4), inset 0 -2px 6px oklch(0 0 0 / 0.2), 0 8px 20px oklch(0 0 0 / 0.18);\n  overflow: hidden;\n}\n.roycss-haptics-texture-metal::after {\n  content: \"\";\n  position: absolute;\n  top: 0; left: -60%;\n  width: 40%; height: 100%;\n  background: linear-gradient(110deg, transparent, oklch(1 0 0 / 0.6) 50%, transparent);\n  transform: skewX(-20deg);\n  transition: left 700ms ease;\n}\n.roycss-haptics-texture-metal:hover::after {\n  left: 120%;\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-haptics-texture-metal::after { transition: none; left: -60%; }\n}"
+  },
+  {
+    "id": "haptics-texture-fabric",
+    "name": "Fabric Weave",
+    "category": "microinteractions",
+    "description": "Fabric weave texture with subtle horizontal drift on hover",
+    "tags": [
+      "haptics",
+      "texture",
+      "fabric",
+      "weave",
+      "cloth"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Haptics: Fabric Weave */\n.roycss-haptics-texture-fabric {\n  background:\n    repeating-linear-gradient(0deg, oklch(0.55 0.1 12 / 0.55) 0 2px, oklch(0.7 0.12 12 / 0.4) 2px 4px),\n    repeating-linear-gradient(90deg, oklch(0.55 0.1 12 / 0.55) 0 2px, oklch(0.7 0.12 12 / 0.4) 2px 4px),\n    linear-gradient(135deg, oklch(0.68 0.12 12), oklch(0.58 0.1 28));\n  border-radius: 8px;\n  background-size: 8px 8px;\n  transition: background-position 1.2s ease;\n  background-position: 0 0;\n}\n.roycss-haptics-texture-fabric:hover {\n  background-position: 8px 4px, 4px 8px, 0 0;\n  animation: roy-haptics-fabric-shimmer 3s linear infinite;\n}\n@keyframes roy-haptics-fabric-shimmer {\n  0%, 100% { filter: brightness(1); }\n  50%      { filter: brightness(1.08); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-haptics-texture-fabric:hover { animation: none; transition: none; }\n}"
+  },
+  {
+    "id": "haptics-texture-leather",
+    "name": "Leather Grain",
+    "category": "microinteractions",
+    "description": "Leather grain texture with pebbled surface and warm tone",
+    "tags": [
+      "haptics",
+      "texture",
+      "leather",
+      "grain",
+      "pebbled"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Haptics: Leather Grain */\n.roycss-haptics-texture-leather {\n  background:\n    radial-gradient(circle at 25% 25%, oklch(0.45 0.05 35) 0 2px, transparent 2.5px),\n    radial-gradient(circle at 75% 35%, oklch(0.4 0.05 35) 0 1.5px, transparent 2px),\n    radial-gradient(circle at 45% 75%, oklch(0.42 0.05 35) 0 2px, transparent 2.5px),\n    radial-gradient(circle at 85% 80%, oklch(0.38 0.06 35) 0 1.5px, transparent 2px),\n    linear-gradient(135deg, oklch(0.5 0.06 30), oklch(0.36 0.06 35));\n  background-size: 18px 18px, 22px 22px, 16px 16px, 20px 20px, 100% 100%;\n  border-radius: 6px;\n  box-shadow: inset 0 0 8px oklch(0 0 0 / 0.3), 0 6px 14px oklch(0 0 0 / 0.2);\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-haptics-texture-leather { /* static texture — no animation to disable */ }\n}"
+  },
+  {
+    "id": "haptics-spring-loaded",
+    "name": "Spring Loaded",
+    "category": "microinteractions",
+    "description": "Element springs in from the side with oscillating overshoot",
+    "tags": [
+      "haptics",
+      "spring",
+      "oscillate",
+      "entrance",
+      "load"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Haptics: Spring Loaded */\n.roycss-haptics-spring-loaded {\n  background: linear-gradient(135deg, oklch(0.78 0.13 160), oklch(0.66 0.14 180));\n  border-radius: 14px;\n  animation: roy-haptics-spring-loaded 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;\n}\n@keyframes roy-haptics-spring-loaded {\n  0%   { transform: translateX(-360px); opacity: 0; }\n  55%  { transform: translateX(24px); opacity: 1; }\n  68%  { transform: translateX(-14px); }\n  80%  { transform: translateX(6px); }\n  90%  { transform: translateX(-2px); }\n  100% { transform: translateX(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-haptics-spring-loaded { animation: none; transform: none; }\n}"
+  },
+  {
+    "id": "haptics-elastic-recoil",
+    "name": "Elastic Recoil",
+    "category": "microinteractions",
+    "description": "Element recoils back after being pushed, with elastic overshoot",
+    "tags": [
+      "haptics",
+      "elastic",
+      "recoil",
+      "push",
+      "spring-back"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Haptics: Elastic Recoil */\n.roycss-haptics-elastic-recoil {\n  background: linear-gradient(135deg, oklch(0.82 0.12 280), oklch(0.7 0.16 320));\n  border-radius: 50%;\n  cursor: pointer;\n  transition: transform 200ms cubic-bezier(0.5, 0, 0.75, 0);\n}\n.roycss-haptics-elastic-recoil:hover {\n  transform: translateX(40px) scale(0.9);\n  transition: transform 180ms cubic-bezier(0.5, 0, 0.75, 0);\n}\n.roycss-haptics-elastic-recoil:active {\n  animation: roy-haptics-elastic-recoil 700ms cubic-bezier(0.34, 1.56, 0.64, 1) both;\n}\n@keyframes roy-haptics-elastic-recoil {\n  0%   { transform: translateX(40px) scale(0.9); }\n  40%  { transform: translateX(-30px) scale(1.08); }\n  70%  { transform: translateX(10px) scale(0.96); }\n  100% { transform: translateX(0) scale(1); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-haptics-elastic-recoil,\n  .roycss-haptics-elastic-recoil:hover,\n  .roycss-haptics-elastic-recoil:active { animation: none; transform: none; transition: none; }\n}"
+  },
+  {
+    "id": "haptics-bounce-impact",
+    "name": "Bounce Impact",
+    "category": "microinteractions",
+    "description": "Element bounces as if struck by an impact, with secondary decay",
+    "tags": [
+      "haptics",
+      "bounce",
+      "impact",
+      "force",
+      "decay"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Haptics: Bounce Impact */\n.roycss-haptics-bounce-impact {\n  background: linear-gradient(135deg, oklch(0.78 0.15 50), oklch(0.66 0.18 30));\n  border-radius: 12px;\n  cursor: pointer;\n}\n.roycss-haptics-bounce-impact:hover {\n  animation: roy-haptics-bounce-impact 900ms cubic-bezier(0.34, 1.56, 0.64, 1) both;\n}\n@keyframes roy-haptics-bounce-impact {\n  0%   { transform: translateY(0) scale(1); }\n  20%  { transform: translateY(-50px) scaleY(1.1) scaleX(0.92); }\n  40%  { transform: translateY(0) scaleY(0.86) scaleX(1.12); }\n  55%  { transform: translateY(-22px) scaleY(1.05); }\n  70%  { transform: translateY(0) scaleY(0.95) scaleX(1.04); }\n  85%  { transform: translateY(-6px); }\n  100% { transform: translateY(0) scale(1); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-haptics-bounce-impact:hover { animation: none; }\n}"
+  },
+  {
+    "id": "haptics-mass-drop",
+    "name": "Mass Drop",
+    "category": "microinteractions",
+    "description": "Element drops with weight — fast ease-in and squash on landing",
+    "tags": [
+      "haptics",
+      "mass",
+      "drop",
+      "weight",
+      "squash"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Haptics: Mass Drop */\n.roycss-haptics-mass-drop {\n  background: linear-gradient(160deg, oklch(0.5 0.04 240), oklch(0.34 0.05 240));\n  border-radius: 14px;\n  animation: roy-haptics-mass-drop 1.1s cubic-bezier(0.55, 0, 1, 0.45) both;\n}\n@keyframes roy-haptics-mass-drop {\n  0%   { transform: translateY(-300px) scaleY(1.05); opacity: 0; }\n  60%  { opacity: 1; }\n  78%  { transform: translateY(0) scaleY(0.62) scaleX(1.18); }\n  86%  { transform: translateY(-26px) scaleY(1.04) scaleX(0.97); }\n  93%  { transform: translateY(0) scaleY(0.92) scaleX(1.04); }\n  100% { transform: translateY(0) scaleY(1) scaleX(1); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-haptics-mass-drop { animation: none; transform: none; }\n}"
+  },
+  {
+    "id": "haptics-vibration-hum",
+    "name": "Vibration Hum",
+    "category": "microinteractions",
+    "description": "Subtle continuous vibration on hover, like a device buzzing",
+    "tags": [
+      "haptics",
+      "vibration",
+      "hum",
+      "buzz",
+      "hover"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Haptics: Vibration Hum */\n.roycss-haptics-vibration-hum {\n  background: linear-gradient(135deg, oklch(0.82 0.12 280), oklch(0.7 0.14 320));\n  border-radius: 14px;\n  cursor: pointer;\n}\n.roycss-haptics-vibration-hum:hover {\n  animation: roy-haptics-vibration-hum 90ms linear infinite;\n}\n@keyframes roy-haptics-vibration-hum {\n  0%   { transform: translate(0, 0) rotate(0deg); }\n  20%  { transform: translate(-0.7px, 0.5px) rotate(-0.4deg); }\n  40%  { transform: translate(0.7px, -0.5px) rotate(0.4deg); }\n  60%  { transform: translate(-0.5px, -0.7px) rotate(-0.2deg); }\n  80%  { transform: translate(0.5px, 0.7px) rotate(0.3deg); }\n  100% { transform: translate(0, 0) rotate(0deg); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-haptics-vibration-hum:hover { animation: none; }\n}"
+  },
+  {
+    "id": "haptics-friction-grip",
+    "name": "Friction Grip",
+    "category": "microinteractions",
+    "description": "Element grips the surface on hover — slight scale down with shadow",
+    "tags": [
+      "haptics",
+      "friction",
+      "grip",
+      "press",
+      "hover"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Haptics: Friction Grip */\n.roycss-haptics-friction-grip {\n  background: linear-gradient(145deg, oklch(0.78 0.1 200), oklch(0.66 0.12 210));\n  border-radius: 12px;\n  box-shadow: 0 8px 18px oklch(0 0 0 / 0.16);\n  transition: transform 320ms cubic-bezier(0.34, 1.2, 0.64, 1),\n              box-shadow 320ms ease,\n              filter 320ms ease;\n  cursor: pointer;\n}\n.roycss-haptics-friction-grip:hover {\n  transform: scale(0.96);\n  box-shadow: 0 2px 6px oklch(0 0 0 / 0.24), inset 0 3px 8px oklch(0 0 0 / 0.18);\n  filter: saturate(1.1) brightness(0.96);\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-haptics-friction-grip,\n  .roycss-haptics-friction-grip:hover {\n    transition: none;\n    transform: none;\n    filter: none;\n    box-shadow: 0 8px 18px oklch(0 0 0 / 0.16);\n  }\n}"
+  },
+  {
+    "id": "haptics-soft-press",
+    "name": "Soft Press",
+    "category": "microinteractions",
+    "description": "Soft depress effect with shadow expansion, like pressing foam",
+    "tags": [
+      "haptics",
+      "soft",
+      "press",
+      "depress",
+      "foam"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Haptics: Soft Press */\n.roycss-haptics-soft-press {\n  background: linear-gradient(145deg, oklch(0.86 0.04 220), oklch(0.74 0.05 220));\n  border-radius: 18px;\n  box-shadow: 0 14px 26px oklch(0 0 0 / 0.12), inset 0 -3px 8px oklch(0 0 0 / 0.08);\n  transition: transform 360ms cubic-bezier(0.16, 1, 0.3, 1),\n              box-shadow 360ms ease,\n              border-radius 360ms ease;\n  cursor: pointer;\n}\n.roycss-haptics-soft-press:hover {\n  transform: scale(0.97) translateY(2px);\n  box-shadow: 0 20px 40px oklch(0 0 0 / 0.18), inset 0 -8px 18px oklch(0 0 0 / 0.18);\n  border-radius: 22px;\n}\n.roycss-haptics-soft-press:active {\n  transform: scale(0.92) translateY(4px);\n  box-shadow: 0 4px 10px oklch(0 0 0 / 0.18), inset 0 -14px 26px oklch(0 0 0 / 0.28);\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-haptics-soft-press,\n  .roycss-haptics-soft-press:hover,\n  .roycss-haptics-soft-press:active {\n    transition: none;\n    transform: none;\n    border-radius: 18px;\n    box-shadow: 0 14px 26px oklch(0 0 0 / 0.12);\n  }\n}"
+  },
+  {
+    "id": "haptics-snap-back",
+    "name": "Snap Back",
+    "category": "microinteractions",
+    "description": "Element drifts away on hover then snaps back to origin on release",
+    "tags": [
+      "haptics",
+      "snap",
+      "drift",
+      "spring-back",
+      "release"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Haptics: Snap Back */\n.roycss-haptics-snap-back {\n  background: linear-gradient(135deg, oklch(0.78 0.13 12), oklch(0.66 0.16 28));\n  border-radius: 14px;\n  transition: transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1);\n  cursor: grab;\n}\n.roycss-haptics-snap-back:hover {\n  transform: translate(28px, -22px) rotate(6deg);\n  transition: transform 380ms cubic-bezier(0.16, 1, 0.3, 1);\n}\n.roycss-haptics-snap-back:active {\n  cursor: grabbing;\n  animation: roy-haptics-snap-back 600ms cubic-bezier(0.34, 1.56, 0.64, 1) both;\n}\n@keyframes roy-haptics-snap-back {\n  0%   { transform: translate(28px, -22px) rotate(6deg); }\n  35%  { transform: translate(-14px, 12px) rotate(-4deg); }\n  65%  { transform: translate(6px, -4px) rotate(1.5deg); }\n  100% { transform: translate(0, 0) rotate(0deg); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-haptics-snap-back,\n  .roycss-haptics-snap-back:hover,\n  .roycss-haptics-snap-back:active { transition: none; animation: none; transform: none; }\n}"
+  },
+  {
+    "id": "haptics-velvet-touch",
+    "name": "Velvet Touch",
+    "category": "microinteractions",
+    "description": "Soft, luxurious hover with velvet-like deep shadow and warmth",
+    "tags": [
+      "haptics",
+      "velvet",
+      "soft",
+      "luxury",
+      "hover"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Haptics: Velvet Touch */\n.roycss-haptics-velvet-touch {\n  background: linear-gradient(135deg, oklch(0.42 0.13 350), oklch(0.32 0.16 360));\n  border-radius: 16px;\n  box-shadow: 0 6px 14px oklch(0.3 0.12 350 / 0.4), inset 0 1px 0 oklch(1 0 0 / 0.12);\n  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1),\n              box-shadow 600ms ease,\n              filter 600ms ease;\n  cursor: pointer;\n}\n.roycss-haptics-velvet-touch:hover {\n  transform: translateY(-4px);\n  box-shadow: 0 26px 50px oklch(0.34 0.16 350 / 0.6),\n              0 12px 20px oklch(0.4 0.18 360 / 0.5),\n              inset 0 1px 0 oklch(1 0 0 / 0.18);\n  filter: brightness(1.1) saturate(1.1);\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-haptics-velvet-touch,\n  .roycss-haptics-velvet-touch:hover { transition: none; transform: none; filter: none; }\n}"
+  },
+  {
+    "id": "haptics-glass-tap",
+    "name": "Glass Tap",
+    "category": "microinteractions",
+    "description": "Tap creates a glass-like concentric ripple that shimmers outward",
+    "tags": [
+      "haptics",
+      "glass",
+      "tap",
+      "ripple",
+      "shimmer"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Haptics: Glass Tap */\n.roycss-haptics-glass-tap {\n  position: relative;\n  background: linear-gradient(145deg, oklch(0.92 0.02 220 / 0.7), oklch(0.78 0.04 220 / 0.6));\n  border-radius: 16px;\n  backdrop-filter: blur(8px);\n  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.6), 0 10px 22px oklch(0 0 0 / 0.1);\n  overflow: hidden;\n  cursor: pointer;\n}\n.roycss-haptics-glass-tap::before,\n.roycss-haptics-glass-tap::after {\n  content: \"\";\n  position: absolute;\n  top: 50%; left: 50%;\n  width: 8px; height: 8px;\n  border-radius: 50%;\n  border: 2px solid oklch(0.95 0.05 200 / 0.6);\n  transform: translate(-50%, -50%) scale(0);\n  opacity: 0;\n  pointer-events: none;\n}\n.roycss-haptics-glass-tap:hover::before {\n  animation: roy-haptics-glass-tap 900ms ease-out infinite;\n}\n.roycss-haptics-glass-tap:hover::after {\n  animation: roy-haptics-glass-tap 900ms ease-out 300ms infinite;\n}\n@keyframes roy-haptics-glass-tap {\n  0%   { transform: translate(-50%, -50%) scale(0); opacity: 0.9; border-width: 3px; }\n  100% { transform: translate(-50%, -50%) scale(20); opacity: 0; border-width: 0.5px; }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-haptics-glass-tap:hover::before,\n  .roycss-haptics-glass-tap:hover::after { animation: none; opacity: 0; }\n}"
+  },
+  {
+    "id": "haptics-magnetic-pull",
+    "name": "Magnetic Pull",
+    "category": "microinteractions",
+    "description": "Element subtly shifts toward the cursor direction with a magnetic feel",
+    "tags": [
+      "haptics",
+      "magnetic",
+      "pull",
+      "cursor",
+      "hover"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Haptics: Magnetic Pull */\n.roycss-haptics-magnetic-pull {\n  background: linear-gradient(135deg, oklch(0.78 0.13 200), oklch(0.66 0.16 220));\n  border-radius: 50%;\n  box-shadow: 0 8px 22px oklch(0 0 0 / 0.16);\n  transition: transform 280ms cubic-bezier(0.34, 1.2, 0.64, 1),\n              box-shadow 280ms ease;\n  animation: roy-haptics-magnetic-idle 4s ease-in-out infinite;\n  cursor: pointer;\n}\n.roycss-haptics-magnetic-pull:hover {\n  transform: translate(10px, -8px) scale(1.05);\n  box-shadow: 0 14px 32px oklch(0 0 0 / 0.22);\n  animation: roy-haptics-magnetic-pull 2.4s ease-in-out infinite;\n}\n@keyframes roy-haptics-magnetic-pull {\n  0%, 100% { transform: translate(10px, -8px) scale(1.05); }\n  25%      { transform: translate(14px, -10px) scale(1.06); }\n  50%      { transform: translate(6px, -4px) scale(1.04); }\n  75%      { transform: translate(12px, -8px) scale(1.05); }\n}\n@keyframes roy-haptics-magnetic-idle {\n  0%, 100% { transform: translate(0, 0); }\n  50%      { transform: translate(2px, -2px); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-haptics-magnetic-pull,\n  .roycss-haptics-magnetic-pull:hover { animation: none; transition: none; transform: none; }\n}"
+  },
+  {
+    "id": "scroll-intelligence-parallax-depth",
+    "name": "Parallax Depth",
+    "category": "scroll",
+    "description": "Multi-layer parallax creating 3D depth illusion on scroll",
+    "tags": [
+      "scroll",
+      "parallax",
+      "depth",
+      "3d",
+      "scroll-intelligence"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Scroll-Intelligence: Parallax Depth */\n.roycss-scroll-intelligence-parallax-depth {\n  position: relative;\n  width: 100%; height: 100%;\n  background: linear-gradient(180deg, oklch(0.85 0.05 230), oklch(0.6 0.18 250));\n  border-radius: 14px;\n  overflow: hidden;\n}\n.roycss-scroll-intelligence-parallax-depth::before,\n.roycss-scroll-intelligence-parallax-depth::after,\n.roycss-scroll-intelligence-parallax-depth > span {\n  content: \"\";\n  position: absolute;\n  display: block;\n}\n.roycss-scroll-intelligence-parallax-depth::before {\n  inset: 30% 20% 30% 20%;\n  background: radial-gradient(ellipse at center, oklch(0.9 0.12 350) 0 60%, transparent 70%);\n  filter: blur(8px);\n  animation: roy-scroll-parallax-depth-far 18s linear infinite;\n}\n.roycss-scroll-intelligence-parallax-depth::after {\n  inset: 50% 35% 15% 35%;\n  background: radial-gradient(circle at center, oklch(0.85 0.18 140) 0 60%, transparent 70%);\n  filter: blur(4px);\n  animation: roy-scroll-parallax-depth-mid 12s linear infinite;\n}\n.roycss-scroll-intelligence-parallax-depth > span {\n  inset: 70% 45% 5% 45%;\n  background: radial-gradient(circle at center, oklch(0.95 0.1 60) 0 50%, transparent 70%);\n  animation: roy-scroll-parallax-depth-near 7s linear infinite;\n}\n@keyframes roy-scroll-parallax-depth-far  { 0%,100% { transform: translateX(-12%); } 50% { transform: translateX(12%); } }\n@keyframes roy-scroll-parallax-depth-mid  { 0%,100% { transform: translateX(-22%); } 50% { transform: translateX(22%); } }\n@keyframes roy-scroll-parallax-depth-near { 0%,100% { transform: translateX(-40%); } 50% { transform: translateX(40%); } }\n@media (prefers-reduced-motion: reduce) {\n  .roycss-scroll-intelligence-parallax-depth::before,\n  .roycss-scroll-intelligence-parallax-depth::after,\n  .roycss-scroll-intelligence-parallax-depth > span { animation: none; }\n}"
+  },
+  {
+    "id": "scroll-intelligence-speed-morph",
+    "name": "Speed Morph",
+    "category": "scroll",
+    "description": "Text morphs shape and skew based on simulated scroll velocity",
+    "tags": [
+      "scroll",
+      "velocity",
+      "morph",
+      "text",
+      "scroll-intelligence"
+    ],
+    "previewType": "text",
+    "previewText": "Velocity",
+    "childCount": null,
+    "cssCode": "/* Scroll-Intelligence: Speed Morph */\n.roycss-scroll-intelligence-speed-morph {\n  display: inline-block;\n  font: 900 36px/1 system-ui, sans-serif;\n  letter-spacing: -0.03em;\n  background: linear-gradient(90deg, oklch(0.9 0.18 35), oklch(0.7 0.22 280));\n  -webkit-background-clip: text;\n  background-clip: text;\n  color: transparent;\n  transform-origin: left center;\n  animation: roy-scroll-speed-morph 4s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;\n}\n@keyframes roy-scroll-speed-morph {\n  0%   { transform: scaleX(1) skewX(0deg);   filter: blur(0); }\n  20%  { transform: scaleX(1.6) skewX(-12deg); filter: blur(2.5px); }\n  40%  { transform: scaleX(0.85) skewX(8deg); filter: blur(1px); }\n  60%  { transform: scaleX(1.25) skewX(-4deg); filter: blur(1.5px); }\n  80%  { transform: scaleX(0.95) skewX(2deg); filter: blur(0.4px); }\n  100% { transform: scaleX(1) skewX(0deg);   filter: blur(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-scroll-intelligence-speed-morph { animation: none; transform: none; }\n}"
+  },
+  {
+    "id": "scroll-intelligence-horizontal-section",
+    "name": "Horizontal Section",
+    "category": "scroll",
+    "description": "Full-width section scrolls horizontally while page scrolls vertically",
+    "tags": [
+      "scroll",
+      "horizontal",
+      "section",
+      "scroll-intelligence"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Scroll-Intelligence: Horizontal Section */\n.roycss-scroll-intelligence-horizontal-section {\n  position: relative;\n  width: 100%; height: 100%;\n  background: oklch(0.18 0.04 260);\n  border-radius: 14px;\n  overflow: hidden;\n  perspective: 800px;\n}\n.roycss-scroll-intelligence-horizontal-section > .track {\n  position: absolute;\n  inset: 0;\n  display: flex;\n  gap: 8%;\n  padding: 0 5%;\n  align-items: center;\n  animation: roy-scroll-horizontal-section 9s linear infinite;\n}\n.roycss-scroll-intelligence-horizontal-section > .track > span {\n  flex: 0 0 22%;\n  height: 60%;\n  background: linear-gradient(135deg, oklch(0.7 0.18 280), oklch(0.6 0.22 320));\n  border-radius: 12px;\n  box-shadow: 0 10px 30px oklch(0 0 0 / 0.4);\n}\n@keyframes roy-scroll-horizontal-section {\n  from { transform: translateX(0); }\n  to   { transform: translateX(-50%); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-scroll-intelligence-horizontal-section > .track { animation: none; }\n}"
+  },
+  {
+    "id": "scroll-intelligence-color-shift",
+    "name": "Color Spectrum Shift",
+    "category": "scroll",
+    "description": "Background hue rotates through full spectrum as you scroll",
+    "tags": [
+      "scroll",
+      "color",
+      "hue",
+      "spectrum",
+      "scroll-intelligence"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Scroll-Intelligence: Color Spectrum Shift */\n.roycss-scroll-intelligence-color-shift {\n  position: relative;\n  width: 100%; height: 100%;\n  border-radius: 14px;\n  background: linear-gradient(135deg, oklch(0.7 0.2 0), oklch(0.65 0.22 90), oklch(0.7 0.2 180), oklch(0.65 0.22 270), oklch(0.7 0.2 360));\n  background-size: 300% 300%;\n  animation: roy-scroll-color-shift 12s linear infinite;\n}\n.roycss-scroll-intelligence-color-shift::after {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  background: radial-gradient(circle at 50% 50%, transparent 40%, oklch(0 0 0 / 0.3) 100%);\n  border-radius: inherit;\n}\n@keyframes roy-scroll-color-shift {\n  0%   { background-position: 0% 50%; }\n  50%  { background-position: 100% 50%; }\n  100% { background-position: 0% 50%; }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-scroll-intelligence-color-shift { animation: none; }\n}"
+  },
+  {
+    "id": "scroll-intelligence-cinematic-fade",
+    "name": "Cinematic Fade",
+    "category": "scroll",
+    "description": "Elements fade and blur in/out at specific scroll positions",
+    "tags": [
+      "scroll",
+      "fade",
+      "cinematic",
+      "blur",
+      "scroll-intelligence"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Scroll-Intelligence: Cinematic Fade */\n.roycss-scroll-intelligence-cinematic-fade {\n  position: relative;\n  width: 100%; height: 100%;\n  background: linear-gradient(135deg, oklch(0.2 0.03 250), oklch(0.35 0.05 280));\n  border-radius: 14px;\n  display: grid;\n  place-items: center;\n  overflow: hidden;\n}\n.roycss-scroll-intelligence-cinematic-fade::before {\n  content: \"\";\n  position: absolute;\n  width: 70%; height: 70%;\n  background: radial-gradient(circle at center, oklch(0.95 0.12 60), oklch(0.65 0.2 320));\n  border-radius: 50%;\n  filter: blur(6px);\n  animation: roy-scroll-cinematic-fade 6s ease-in-out infinite;\n}\n.roycss-scroll-intelligence-cinematic-fade::after {\n  content: \"Cinematic\";\n  position: relative;\n  color: oklch(0.98 0 0);\n  font: 800 24px/1 system-ui, sans-serif;\n  letter-spacing: 0.05em;\n  animation: roy-scroll-cinematic-fade-text 6s ease-in-out infinite;\n}\n@keyframes roy-scroll-cinematic-fade {\n  0%, 100% { opacity: 0; transform: scale(0.7); filter: blur(20px); }\n  50%      { opacity: 1; transform: scale(1);   filter: blur(0); }\n}\n@keyframes roy-scroll-cinematic-fade-text {\n  0%, 100% { opacity: 0; filter: blur(8px); transform: translateY(20px); }\n  50%      { opacity: 1; filter: blur(0);  transform: translateY(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-scroll-intelligence-cinematic-fade::before,\n  .roycss-scroll-intelligence-cinematic-fade::after { animation: none; opacity: 1; transform: none; filter: none; }\n}"
+  },
+  {
+    "id": "scroll-intelligence-text-reveal",
+    "name": "Text Reveal",
+    "category": "scroll",
+    "description": "Characters appear one by one as they enter the viewport",
+    "tags": [
+      "scroll",
+      "text",
+      "reveal",
+      "stagger",
+      "scroll-intelligence"
+    ],
+    "previewType": "text",
+    "previewText": "Reveal",
+    "childCount": 6,
+    "cssCode": "/* Scroll-Intelligence: Text Reveal */\n.roycss-scroll-intelligence-text-reveal {\n  display: inline-flex;\n  font: 800 36px/1 system-ui, sans-serif;\n  color: oklch(0.95 0.1 220);\n  letter-spacing: 0.02em;\n}\n.roycss-scroll-intelligence-text-reveal > span {\n  display: inline-block;\n  opacity: 0;\n  transform: translateY(40%) rotateX(-90deg);\n  transform-origin: bottom;\n  animation: roy-scroll-text-reveal 3s cubic-bezier(0.22, 1, 0.36, 1) infinite;\n}\n.roycss-scroll-intelligence-text-reveal > span:nth-child(1) { animation-delay: 0s; }\n.roycss-scroll-intelligence-text-reveal > span:nth-child(2) { animation-delay: 0.1s; }\n.roycss-scroll-intelligence-text-reveal > span:nth-child(3) { animation-delay: 0.2s; }\n.roycss-scroll-intelligence-text-reveal > span:nth-child(4) { animation-delay: 0.3s; }\n.roycss-scroll-intelligence-text-reveal > span:nth-child(5) { animation-delay: 0.4s; }\n.roycss-scroll-intelligence-text-reveal > span:nth-child(6) { animation-delay: 0.5s; }\n@keyframes roy-scroll-text-reveal {\n  0%       { opacity: 0; transform: translateY(40%) rotateX(-90deg); }\n  20%, 80% { opacity: 1; transform: translateY(0)    rotateX(0); }\n  100%     { opacity: 0; transform: translateY(-40%) rotateX(90deg); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-scroll-intelligence-text-reveal > span { animation: none; opacity: 1; transform: none; }\n}"
+  },
+  {
+    "id": "scroll-intelligence-progress-morph",
+    "name": "Progress Morph",
+    "category": "scroll",
+    "description": "Shape morphs from circle to square based on scroll progress",
+    "tags": [
+      "scroll",
+      "morph",
+      "progress",
+      "shape",
+      "scroll-intelligence"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Scroll-Intelligence: Progress Morph */\n.roycss-scroll-intelligence-progress-morph {\n  width: 120px; height: 120px;\n  background: linear-gradient(135deg, oklch(0.72 0.22 175), oklch(0.6 0.24 220));\n  animation: roy-scroll-progress-morph 6s ease-in-out infinite;\n  box-shadow: 0 12px 30px oklch(0 0 0 / 0.25);\n}\n@keyframes roy-scroll-progress-morph {\n  0%   { border-radius: 50%; transform: rotate(0deg) scale(1); }\n  25%  { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; transform: rotate(90deg) scale(1.1); }\n  50%  { border-radius: 0; transform: rotate(180deg) scale(1.2); }\n  75%  { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; transform: rotate(270deg) scale(1.1); }\n  100% { border-radius: 50%; transform: rotate(360deg) scale(1); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-scroll-intelligence-progress-morph { animation: none; border-radius: 50%; transform: none; }\n}"
+  },
+  {
+    "id": "scroll-intelligence-sticky-storytelling",
+    "name": "Sticky Storytelling",
+    "category": "scroll",
+    "description": "Sticky element stays fixed while scene content scrolls past",
+    "tags": [
+      "scroll",
+      "sticky",
+      "storytelling",
+      "scene",
+      "scroll-intelligence"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Scroll-Intelligence: Sticky Storytelling */\n.roycss-scroll-intelligence-sticky-storytelling {\n  position: relative;\n  width: 100%; height: 100%;\n  background: oklch(0.12 0.04 240);\n  border-radius: 14px;\n  overflow: hidden;\n}\n.roycss-scroll-intelligence-sticky-storytelling::before {\n  content: \"\";\n  position: sticky;\n  top: 50%;\n  left: 50%;\n  width: 45%; height: 45%;\n  transform: translate(-50%, -50%);\n  background: radial-gradient(circle at 35% 30%, oklch(0.95 0.12 50) 0 50%, oklch(0.6 0.2 350) 50% 100%);\n  border-radius: 50%;\n  box-shadow: 0 0 60px oklch(0.8 0.18 40 / 0.6);\n  animation: roy-scroll-sticky-storytelling 8s ease-in-out infinite;\n}\n.roycss-scroll-intelligence-sticky-storytelling::after {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  background: repeating-linear-gradient(180deg, transparent 0 12%, oklch(0.9 0.05 200 / 0.06) 12% 14%);\n  animation: roy-scroll-sticky-storytelling-bg 6s linear infinite;\n}\n@keyframes roy-scroll-sticky-storytelling {\n  0%, 100% { transform: translate(-50%, -50%) scale(1); filter: hue-rotate(0deg); }\n  50%      { transform: translate(-50%, -50%) scale(1.12); filter: hue-rotate(60deg); }\n}\n@keyframes roy-scroll-sticky-storytelling-bg {\n  from { transform: translateY(0); }\n  to   { transform: translateY(-30%); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-scroll-intelligence-sticky-storytelling::before,\n  .roycss-scroll-intelligence-sticky-storytelling::after { animation: none; }\n}"
+  },
+  {
+    "id": "scroll-intelligence-image-transition",
+    "name": "Image Transition",
+    "category": "scroll",
+    "description": "Cross-fade between scenes as you scroll between sections",
+    "tags": [
+      "scroll",
+      "image",
+      "transition",
+      "crossfade",
+      "scroll-intelligence"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Scroll-Intelligence: Image Transition */\n.roycss-scroll-intelligence-image-transition {\n  position: relative;\n  width: 100%; height: 100%;\n  border-radius: 14px;\n  overflow: hidden;\n  background: oklch(0.1 0.04 230);\n}\n.roycss-scroll-intelligence-image-transition::before,\n.roycss-scroll-intelligence-image-transition::after {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  background-size: cover;\n  background-position: center;\n}\n.roycss-scroll-intelligence-image-transition::before {\n  background: radial-gradient(circle at 30% 30%, oklch(0.85 0.18 30), oklch(0.4 0.2 0));\n  clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);\n  animation: roy-scroll-image-transition-a 7s ease-in-out infinite;\n}\n.roycss-scroll-intelligence-image-transition::after {\n  background: radial-gradient(circle at 70% 70%, oklch(0.7 0.18 200), oklch(0.35 0.22 260));\n  clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);\n  animation: roy-scroll-image-transition-b 7s ease-in-out infinite;\n}\n@keyframes roy-scroll-image-transition-a {\n  0%, 100% { clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); }\n  50%      { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }\n}\n@keyframes roy-scroll-image-transition-b {\n  0%, 100% { clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%); }\n  50%      { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-scroll-intelligence-image-transition::before,\n  .roycss-scroll-intelligence-image-transition::after { animation: none; }\n}"
+  },
+  {
+    "id": "scroll-intelligence-text-choreography",
+    "name": "Text Choreography",
+    "category": "scroll",
+    "description": "Words fly in and out in sequence on scroll rhythm",
+    "tags": [
+      "scroll",
+      "text",
+      "choreography",
+      "kinetic",
+      "scroll-intelligence"
+    ],
+    "previewType": "text",
+    "previewText": "Flow",
+    "childCount": 4,
+    "cssCode": "/* Scroll-Intelligence: Text Choreography */\n.roycss-scroll-intelligence-text-choreography {\n  position: relative;\n  display: inline-flex;\n  font: 800 36px/1 system-ui, sans-serif;\n  color: oklch(0.98 0.02 220);\n  letter-spacing: -0.02em;\n}\n.roycss-scroll-intelligence-text-choreography > span {\n  display: inline-block;\n  opacity: 0;\n  animation: roy-scroll-text-choreography 4s cubic-bezier(0.5, 0, 0.1, 1) infinite;\n}\n.roycss-scroll-intelligence-text-choreography > span:nth-child(1) { animation-delay: 0s;    color: oklch(0.9 0.2 30); }\n.roycss-scroll-intelligence-text-choreography > span:nth-child(2) { animation-delay: 0.25s; color: oklch(0.85 0.2 140); }\n.roycss-scroll-intelligence-text-choreography > span:nth-child(3) { animation-delay: 0.5s;  color: oklch(0.85 0.2 230); }\n.roycss-scroll-intelligence-text-choreography > span:nth-child(4) { animation-delay: 0.75s; color: oklch(0.85 0.2 320); }\n@keyframes roy-scroll-text-choreography {\n  0%   { opacity: 0; transform: translateX(-80px) rotate(-8deg); }\n  20%  { opacity: 1; transform: translateX(0) rotate(0); }\n  60%  { opacity: 1; transform: translateX(0) rotate(0); }\n  80%, 100% { opacity: 0; transform: translateX(80px) rotate(8deg); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-scroll-intelligence-text-choreography > span { animation: none; opacity: 1; transform: none; }\n}"
+  },
+  {
+    "id": "scroll-intelligence-section-morph",
+    "name": "Section Morph",
+    "category": "scroll",
+    "description": "Section container morphs shape and corners on scroll",
+    "tags": [
+      "scroll",
+      "section",
+      "morph",
+      "container",
+      "scroll-intelligence"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Scroll-Intelligence: Section Morph */\n.roycss-scroll-intelligence-section-morph {\n  width: 100%; height: 100%;\n  background:\n    linear-gradient(135deg, oklch(0.72 0.2 200), oklch(0.55 0.24 280));\n  animation: roy-scroll-section-morph 8s ease-in-out infinite;\n  display: grid;\n  place-items: center;\n  position: relative;\n  overflow: hidden;\n}\n.roycss-scroll-intelligence-section-morph::before {\n  content: \"MORPH\";\n  color: oklch(1 0 0 / 0.92);\n  font: 900 28px/1 system-ui, sans-serif;\n  letter-spacing: 0.2em;\n}\n@keyframes roy-scroll-section-morph {\n  0%   { border-radius: 14px 14px 14px 14px; transform: scale(1) rotate(0deg); }\n  25%  { border-radius: 50% 14px 50% 14px; transform: scale(0.95) rotate(-2deg); }\n  50%  { border-radius: 14px 50% 14px 50%; transform: scale(1.02) rotate(2deg); }\n  75%  { border-radius: 50% 50% 14px 14px; transform: scale(0.98) rotate(-1deg); }\n  100% { border-radius: 14px 14px 14px 14px; transform: scale(1) rotate(0deg); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-scroll-intelligence-section-morph { animation: none; border-radius: 14px; }\n}"
+  },
+  {
+    "id": "scroll-intelligence-progress-ring",
+    "name": "Progress Ring",
+    "category": "scroll",
+    "description": "Circular SVG-free progress ring tracking scroll position",
+    "tags": [
+      "scroll",
+      "progress",
+      "ring",
+      "circle",
+      "scroll-intelligence"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Scroll-Intelligence: Progress Ring */\n.roycss-scroll-intelligence-progress-ring {\n  position: relative;\n  width: 140px; height: 140px;\n  border-radius: 50%;\n  background:\n    conic-gradient(from -90deg, oklch(0.75 0.22 175) 0deg, oklch(0.6 0.24 280) 270deg, oklch(0.2 0.04 260) 270deg 360deg);\n  display: grid;\n  place-items: center;\n  animation: roy-scroll-progress-ring 4s linear infinite;\n}\n.roycss-scroll-intelligence-progress-ring::before {\n  content: \"\";\n  position: absolute;\n  inset: 12%;\n  background: oklch(0.16 0.03 250);\n  border-radius: 50%;\n  z-index: 1;\n}\n.roycss-scroll-intelligence-progress-ring::after {\n  content: \"75%\";\n  position: relative;\n  z-index: 2;\n  color: oklch(0.95 0.05 220);\n  font: 800 22px/1 system-ui, sans-serif;\n}\n@keyframes roy-scroll-progress-ring {\n  from { transform: rotate(-90deg); }\n  to   { transform: rotate(270deg); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-scroll-intelligence-progress-ring { animation: none; }\n}"
+  },
+  {
+    "id": "scroll-intelligence-velocity-blur",
+    "name": "Velocity Blur",
+    "category": "scroll",
+    "description": "Element blurs when scrolling fast, sharpens when slow",
+    "tags": [
+      "scroll",
+      "velocity",
+      "blur",
+      "kinetic",
+      "scroll-intelligence"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Scroll-Intelligence: Velocity Blur */\n.roycss-scroll-intelligence-velocity-blur {\n  width: 100%; height: 100%;\n  background: linear-gradient(135deg, oklch(0.65 0.2 280), oklch(0.85 0.16 320));\n  border-radius: 14px;\n  display: grid;\n  place-items: center;\n  color: oklch(0.98 0 0);\n  font: 800 22px/1 system-ui, sans-serif;\n  letter-spacing: 0.1em;\n  animation: roy-scroll-velocity-blur 3s ease-in-out infinite;\n}\n.roycss-scroll-intelligence-velocity-blur::before {\n  content: \"FAST\";\n  display: block;\n  animation: roy-scroll-velocity-blur-content 3s ease-in-out infinite;\n}\n@keyframes roy-scroll-velocity-blur {\n  0%, 100% { filter: blur(0); transform: translateX(0) scale(1); }\n  25%      { filter: blur(6px); transform: translateX(-30px) scale(0.97); }\n  75%      { filter: blur(8px); transform: translateX(30px) scale(0.96); }\n}\n@keyframes roy-scroll-velocity-blur-content {\n  0%, 100% { content: \"SLOW\"; opacity: 1; }\n  25%, 75% { content: \"FAST\"; opacity: 0.85; }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-scroll-intelligence-velocity-blur,\n  .roycss-scroll-intelligence-velocity-blur::before { animation: none; filter: none; transform: none; }\n}"
+  },
+  {
+    "id": "scroll-intelligence-pinned-card",
+    "name": "Pinned Card",
+    "category": "scroll",
+    "description": "Card pins to viewport and tilts, releases at section end",
+    "tags": [
+      "scroll",
+      "pinned",
+      "card",
+      "sticky",
+      "scroll-intelligence"
+    ],
+    "previewType": "card",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Scroll-Intelligence: Pinned Card */\n.roycss-scroll-intelligence-pinned-card {\n  position: relative;\n  width: 220px; height: 280px;\n  background: linear-gradient(160deg, oklch(0.92 0.05 230), oklch(0.7 0.18 280));\n  border-radius: 18px;\n  box-shadow: 0 30px 60px oklch(0 0 0 / 0.35), inset 0 1px 0 oklch(1 0 0 / 0.6);\n  display: grid;\n  place-items: center;\n  overflow: hidden;\n  animation: roy-scroll-pinned-card 6s ease-in-out infinite;\n  transform-style: preserve-3d;\n}\n.roycss-scroll-intelligence-pinned-card::before {\n  content: \"\";\n  position: absolute;\n  inset: -2px;\n  background: linear-gradient(135deg, transparent 30%, oklch(1 0 0 / 0.4) 50%, transparent 70%);\n  background-size: 200% 200%;\n  animation: roy-scroll-pinned-card-shine 4s linear infinite;\n}\n.roycss-scroll-intelligence-pinned-card::after {\n  content: \"PINNED\";\n  position: relative;\n  z-index: 2;\n  color: oklch(0.98 0 0);\n  font: 900 18px/1 system-ui, sans-serif;\n  letter-spacing: 0.25em;\n}\n@keyframes roy-scroll-pinned-card {\n  0%   { transform: perspective(800px) rotateY(0) rotateX(0) scale(1); }\n  35%  { transform: perspective(800px) rotateY(12deg) rotateX(-6deg) scale(0.98); }\n  65%  { transform: perspective(800px) rotateY(-12deg) rotateX(6deg) scale(0.98); }\n  100% { transform: perspective(800px) rotateY(0) rotateX(0) scale(1); }\n}\n@keyframes roy-scroll-pinned-card-shine {\n  from { background-position: 0% 0%; }\n  to   { background-position: 200% 200%; }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-scroll-intelligence-pinned-card,\n  .roycss-scroll-intelligence-pinned-card::before { animation: none; }\n}"
+  },
+  {
+    "id": "scroll-intelligence-gradient-shift",
+    "name": "Gradient Shift",
+    "category": "scroll",
+    "description": "Gradient angle and position shift continuously with scroll",
+    "tags": [
+      "scroll",
+      "gradient",
+      "shift",
+      "angle",
+      "scroll-intelligence"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Scroll-Intelligence: Gradient Shift */\n.roycss-scroll-intelligence-gradient-shift {\n  width: 100%; height: 100%;\n  background: linear-gradient(135deg, oklch(0.75 0.22 200), oklch(0.65 0.24 320), oklch(0.7 0.22 40));\n  background-size: 200% 200%;\n  border-radius: 14px;\n  animation: roy-scroll-gradient-shift 10s ease-in-out infinite;\n}\n@keyframes roy-scroll-gradient-shift {\n  0%   { background-position: 0% 0%;   filter: hue-rotate(0deg); }\n  25%  { background-position: 100% 0%;  filter: hue-rotate(60deg); }\n  50%  { background-position: 100% 100%; filter: hue-rotate(120deg); }\n  75%  { background-position: 0% 100%;  filter: hue-rotate(180deg); }\n  100% { background-position: 0% 0%;   filter: hue-rotate(360deg); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-scroll-intelligence-gradient-shift { animation: none; }\n}"
+  },
+  {
+    "id": "scroll-intelligence-scale-reveal",
+    "name": "Scale Reveal",
+    "category": "scroll",
+    "description": "Elements scale from 0 to full size as they enter viewport",
+    "tags": [
+      "scroll",
+      "scale",
+      "reveal",
+      "entry",
+      "scroll-intelligence"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Scroll-Intelligence: Scale Reveal */\n.roycss-scroll-intelligence-scale-reveal {\n  width: 100%; height: 100%;\n  background: linear-gradient(135deg, oklch(0.25 0.05 250), oklch(0.45 0.2 320));\n  border-radius: 14px;\n  display: grid;\n  place-items: center;\n  position: relative;\n}\n.roycss-scroll-intelligence-scale-reveal::before,\n.roycss-scroll-intelligence-scale-reveal::after {\n  content: \"\";\n  position: absolute;\n  border-radius: 50%;\n  animation: roy-scroll-scale-reveal 4s ease-in-out infinite;\n}\n.roycss-scroll-intelligence-scale-reveal::before {\n  width: 70%; height: 70%;\n  background: radial-gradient(circle at center, oklch(0.95 0.18 60), oklch(0.7 0.2 320));\n  animation-delay: 0s;\n}\n.roycss-scroll-intelligence-scale-reveal::after {\n  width: 30%; height: 30%;\n  background: radial-gradient(circle at center, oklch(1 0 0 / 0.95), oklch(0.95 0.1 220));\n  animation-delay: 0.3s;\n}\n@keyframes roy-scroll-scale-reveal {\n  0%   { transform: scale(0); opacity: 0; }\n  50%  { transform: scale(1); opacity: 1; }\n  100% { transform: scale(1.3); opacity: 0; }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-scroll-intelligence-scale-reveal::before,\n  .roycss-scroll-intelligence-scale-reveal::after { animation: none; transform: scale(1); opacity: 1; }\n}"
+  },
+  {
+    "id": "scroll-intelligence-rotate-3d",
+    "name": "Rotate 3D",
+    "category": "scroll",
+    "description": "Element rotates in full 3D space tied to scroll position",
+    "tags": [
+      "scroll",
+      "3d",
+      "rotate",
+      "perspective",
+      "scroll-intelligence"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Scroll-Intelligence: Rotate 3D */\n.roycss-scroll-intelligence-rotate-3d {\n  width: 140px; height: 140px;\n  background: linear-gradient(135deg, oklch(0.78 0.18 180), oklch(0.55 0.22 280));\n  border-radius: 18px;\n  box-shadow: 0 18px 40px oklch(0 0 0 / 0.3);\n  transform-style: preserve-3d;\n  animation: roy-scroll-rotate-3d 6s linear infinite;\n}\n.roycss-scroll-intelligence-rotate-3d::before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  background: linear-gradient(135deg, transparent 40%, oklch(1 0 0 / 0.4) 50%, transparent 60%);\n  border-radius: inherit;\n}\n.roycss-scroll-intelligence-rotate-3d::after {\n  content: \"3D\";\n  position: absolute;\n  top: 50%; left: 50%;\n  transform: translate(-50%, -50%);\n  color: oklch(0.98 0 0);\n  font: 900 22px/1 system-ui, sans-serif;\n  letter-spacing: 0.2em;\n}\n@keyframes roy-scroll-rotate-3d {\n  0%   { transform: perspective(700px) rotateX(0)    rotateY(0)    rotateZ(0); }\n  25%  { transform: perspective(700px) rotateX(90deg) rotateY(0)   rotateZ(0); }\n  50%  { transform: perspective(700px) rotateX(0)    rotateY(90deg) rotateZ(0); }\n  75%  { transform: perspective(700px) rotateX(0)    rotateY(0)    rotateZ(90deg); }\n  100% { transform: perspective(700px) rotateX(0)    rotateY(0)    rotateZ(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-scroll-intelligence-rotate-3d { animation: none; }\n}"
+  },
+  {
+    "id": "scroll-intelligence-stagger-reveal",
+    "name": "Stagger Reveal",
+    "category": "scroll",
+    "description": "Child elements reveal in a staggered cascade on scroll",
+    "tags": [
+      "scroll",
+      "stagger",
+      "reveal",
+      "cascade",
+      "scroll-intelligence"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 5,
+    "cssCode": "/* Scroll-Intelligence: Stagger Reveal */\n.roycss-scroll-intelligence-stagger-reveal {\n  width: 100%; height: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 12px;\n  background: linear-gradient(135deg, oklch(0.2 0.04 250), oklch(0.32 0.08 270));\n  border-radius: 14px;\n}\n.roycss-scroll-intelligence-stagger-reveal > span {\n  width: 24px; height: 80px;\n  background: linear-gradient(180deg, oklch(0.85 0.2 50), oklch(0.65 0.22 320));\n  border-radius: 8px;\n  opacity: 0;\n  transform: translateY(40px) scale(0.6);\n  animation: roy-scroll-stagger-reveal 3s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;\n}\n.roycss-scroll-intelligence-stagger-reveal > span:nth-child(1) { animation-delay: 0s; }\n.roycss-scroll-intelligence-stagger-reveal > span:nth-child(2) { animation-delay: 0.15s; }\n.roycss-scroll-intelligence-stagger-reveal > span:nth-child(3) { animation-delay: 0.3s; }\n.roycss-scroll-intelligence-stagger-reveal > span:nth-child(4) { animation-delay: 0.45s; }\n.roycss-scroll-intelligence-stagger-reveal > span:nth-child(5) { animation-delay: 0.6s; }\n@keyframes roy-scroll-stagger-reveal {\n  0%   { opacity: 0; transform: translateY(40px) scale(0.6); }\n  40%, 70% { opacity: 1; transform: translateY(0) scale(1); }\n  100% { opacity: 0; transform: translateY(-40px) scale(0.6); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-scroll-intelligence-stagger-reveal > span { animation: none; opacity: 1; transform: none; }\n}"
+  },
+  {
+    "id": "scroll-intelligence-progress-bar-top",
+    "name": "Progress Bar Top",
+    "category": "scroll",
+    "description": "Thin gradient progress bar pinned to top tracking scroll",
+    "tags": [
+      "scroll",
+      "progress",
+      "bar",
+      "top",
+      "scroll-intelligence"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Scroll-Intelligence: Progress Bar Top */\n.roycss-scroll-intelligence-progress-bar-top {\n  position: relative;\n  width: 100%; height: 100%;\n  background: linear-gradient(180deg, oklch(0.18 0.04 250), oklch(0.35 0.08 270));\n  border-radius: 14px;\n  overflow: hidden;\n}\n.roycss-scroll-intelligence-progress-bar-top::before {\n  content: \"\";\n  position: absolute;\n  top: 0; left: 0;\n  height: 6px;\n  width: 100%;\n  transform-origin: left center;\n  background: linear-gradient(90deg, oklch(0.75 0.22 175), oklch(0.65 0.24 280), oklch(0.85 0.2 30));\n  box-shadow: 0 0 12px oklch(0.75 0.22 175 / 0.7);\n  animation: roy-scroll-progress-bar-top 4s cubic-bezier(0.65, 0, 0.35, 1) infinite;\n}\n.roycss-scroll-intelligence-progress-bar-top::after {\n  content: \"Scroll Position\";\n  position: absolute;\n  bottom: 16px; left: 50%;\n  transform: translateX(-50%);\n  color: oklch(0.95 0.05 220);\n  font: 700 14px/1 system-ui, sans-serif;\n  letter-spacing: 0.15em;\n}\n@keyframes roy-scroll-progress-bar-top {\n  0%   { transform: scaleX(0); }\n  100% { transform: scaleX(1); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-scroll-intelligence-progress-bar-top::before { animation: none; transform: scaleX(0.6); }\n}"
+  },
+  {
+    "id": "scroll-intelligence-snap-sections",
+    "name": "Snap Sections",
+    "category": "scroll",
+    "description": "Sections snap into place using scroll-snap on a vertical track",
+    "tags": [
+      "scroll",
+      "snap",
+      "sections",
+      "scroll-snap",
+      "scroll-intelligence"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Scroll-Intelligence: Snap Sections */\n.roycss-scroll-intelligence-snap-sections {\n  width: 100%; height: 100%;\n  background: oklch(0.15 0.04 250);\n  border-radius: 14px;\n  overflow: hidden;\n  position: relative;\n}\n.roycss-scroll-intelligence-snap-sections::before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  background:\n    linear-gradient(180deg, oklch(0.7 0.2 30) 0 33%, oklch(0.6 0.22 200) 33% 66%, oklch(0.55 0.24 320) 66% 100%);\n  background-size: 100% 300%;\n  animation: roy-scroll-snap-sections 9s steps(3, end) infinite;\n}\n.roycss-scroll-intelligence-snap-sections::after {\n  content: \"SNAP\";\n  position: absolute;\n  top: 50%; left: 50%;\n  transform: translate(-50%, -50%);\n  color: oklch(1 0 0);\n  font: 900 28px/1 system-ui, sans-serif;\n  letter-spacing: 0.25em;\n  text-shadow: 0 4px 12px oklch(0 0 0 / 0.5);\n}\n@keyframes roy-scroll-snap-sections {\n  0%   { background-position: 0% 0%; }\n  33%  { background-position: 0% 50%; }\n  66%  { background-position: 0% 100%; }\n  100% { background-position: 0% 0%; }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-scroll-intelligence-snap-sections::before { animation: none; background-position: 0% 0%; }\n}"
+  },
+  {
+    "id": "cursor-fx-glow-trail",
+    "name": "Glow Trail",
+    "category": "cursor",
+    "description": "Glowing comet-like trail follows an animated cursor path",
+    "tags": [
+      "cursor",
+      "glow",
+      "trail",
+      "comet",
+      "cursor-fx"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Cursor-FX: Glow Trail */\n.roycss-cursor-fx-glow-trail {\n  position: relative;\n  width: 100%; height: 100%;\n  background: oklch(0.1 0.04 250);\n  border-radius: 14px;\n  overflow: hidden;\n}\n.roycss-cursor-fx-glow-trail::before,\n.roycss-cursor-fx-glow-trail::after {\n  content: \"\";\n  position: absolute;\n  width: 18px; height: 18px;\n  border-radius: 50%;\n  background: radial-gradient(circle, oklch(1 0 0 / 0.95), oklch(0.85 0.22 60 / 0.6) 40%, transparent 70%);\n  filter: blur(1px);\n}\n.roycss-cursor-fx-glow-trail::before {\n  offset-path: path(\"M 20 80 Q 120 -20 220 80 T 420 80\");\n  animation: roy-cursor-fx-glow-trail 3s linear infinite;\n}\n.roycss-cursor-fx-glow-trail::after {\n  width: 60px; height: 60px;\n  background: radial-gradient(circle, oklch(0.9 0.22 60 / 0.5), transparent 60%);\n  filter: blur(8px);\n  offset-path: path(\"M 20 80 Q 120 -20 220 80 T 420 80\");\n  animation: roy-cursor-fx-glow-trail 3s linear infinite;\n  animation-delay: -0.1s;\n}\n@keyframes roy-cursor-fx-glow-trail {\n  from { offset-distance: 0%;   opacity: 1; }\n  to   { offset-distance: 100%; opacity: 0; }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-cursor-fx-glow-trail::before,\n  .roycss-cursor-fx-glow-trail::after { animation: none; opacity: 0.7; }\n}"
+  },
+  {
+    "id": "cursor-fx-spotlight",
+    "name": "Spotlight",
+    "category": "cursor",
+    "description": "Spotlight reveals hidden content near a moving cursor",
+    "tags": [
+      "cursor",
+      "spotlight",
+      "reveal",
+      "mask",
+      "cursor-fx"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Cursor-FX: Spotlight */\n.roycss-cursor-fx-spotlight {\n  position: relative;\n  width: 100%; height: 100%;\n  background:\n    linear-gradient(135deg, oklch(0.18 0.04 250), oklch(0.32 0.06 270)),\n    radial-gradient(circle at center, oklch(0.85 0.22 60), oklch(0.65 0.24 320));\n  background-blend-mode: multiply;\n  border-radius: 14px;\n  overflow: hidden;\n  color: oklch(0.96 0 0);\n}\n.roycss-cursor-fx-spotlight::before {\n  content: \"\";\n  position: absolute;\n  width: 140px; height: 140px;\n  border-radius: 50%;\n  background: radial-gradient(circle, transparent 0 38%, oklch(0.2 0.04 250) 42%, oklch(0.2 0.04 250 / 0.9) 100%);\n  mix-blend-mode: multiply;\n  pointer-events: none;\n  animation: roy-cursor-fx-spotlight 4s ease-in-out infinite;\n}\n.roycss-cursor-fx-spotlight::after {\n  content: \"Hidden Text\";\n  position: absolute;\n  top: 50%; left: 50%;\n  transform: translate(-50%, -50%);\n  color: oklch(1 0 0);\n  font: 800 24px/1 system-ui, sans-serif;\n  letter-spacing: 0.1em;\n  opacity: 0.4;\n}\n@keyframes roy-cursor-fx-spotlight {\n  0%   { transform: translate(10%, 80%); }\n  25%  { transform: translate(80%, 10%); }\n  50%  { transform: translate(60%, 90%); }\n  75%  { transform: translate(10%, 30%); }\n  100% { transform: translate(10%, 80%); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-cursor-fx-spotlight::before { animation: none; transform: translate(40%, 40%); }\n}"
+  },
+  {
+    "id": "cursor-fx-magnetic-attraction",
+    "name": "Magnetic Attraction",
+    "category": "cursor",
+    "description": "Element magnetically attracts toward an orbiting cursor",
+    "tags": [
+      "cursor",
+      "magnetic",
+      "attraction",
+      "pull",
+      "cursor-fx"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Cursor-FX: Magnetic Attraction */\n.roycss-cursor-fx-magnetic-attraction {\n  position: relative;\n  width: 100%; height: 100%;\n  background: linear-gradient(135deg, oklch(0.25 0.05 250), oklch(0.4 0.08 270));\n  border-radius: 14px;\n  display: grid;\n  place-items: center;\n  overflow: hidden;\n}\n.roycss-cursor-fx-magnetic-attraction::before {\n  content: \"\";\n  position: absolute;\n  width: 12px; height: 12px;\n  border-radius: 50%;\n  background: oklch(0.95 0.05 60);\n  box-shadow: 0 0 20px oklch(0.9 0.18 60 / 0.8);\n  animation: roy-cursor-fx-magnetic-attraction-cursor 5s linear infinite;\n}\n.roycss-cursor-fx-magnetic-attraction::after {\n  content: \"\";\n  width: 80px; height: 80px;\n  border-radius: 18px;\n  background: linear-gradient(135deg, oklch(0.78 0.2 180), oklch(0.6 0.22 320));\n  box-shadow: 0 8px 24px oklch(0 0 0 / 0.3);\n  animation: roy-cursor-fx-magnetic-attraction-card 5s linear infinite;\n}\n@keyframes roy-cursor-fx-magnetic-attraction-cursor {\n  0%   { transform: translate(-60px, -40px); }\n  50%  { transform: translate(80px, 60px); }\n  100% { transform: translate(-60px, -40px); }\n}\n@keyframes roy-cursor-fx-magnetic-attraction-card {\n  0%, 100% { transform: translate(-20px, -15px); }\n  50%      { transform: translate(30px, 20px); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-cursor-fx-magnetic-attraction::before,\n  .roycss-cursor-fx-magnetic-attraction::after { animation: none; }\n}"
+  },
+  {
+    "id": "cursor-fx-distortion",
+    "name": "Distortion",
+    "category": "cursor",
+    "description": "Background distorts and warps near the moving cursor",
+    "tags": [
+      "cursor",
+      "distortion",
+      "warp",
+      "displace",
+      "cursor-fx"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Cursor-FX: Distortion */\n.roycss-cursor-fx-distortion {\n  position: relative;\n  width: 100%; height: 100%;\n  background:\n    repeating-linear-gradient(0deg, oklch(0.65 0.22 200) 0 14px, oklch(0.5 0.24 280) 14px 28px);\n  border-radius: 14px;\n  overflow: hidden;\n}\n.roycss-cursor-fx-distortion::before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  background: radial-gradient(circle at 30% 50%, transparent 0 60px, oklch(0.85 0.2 30 / 0.6) 65px, transparent 75px);\n  mix-blend-mode: screen;\n  animation: roy-cursor-fx-distortion 5s ease-in-out infinite;\n}\n.roycss-cursor-fx-distortion::after {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  background: radial-gradient(circle at 30% 50%, transparent 0 50px, oklch(0.7 0.22 320 / 0.4) 55px, transparent 70px);\n  filter: blur(4px);\n  mix-blend-mode: overlay;\n  animation: roy-cursor-fx-distortion 5s ease-in-out infinite;\n}\n@keyframes roy-cursor-fx-distortion {\n  0%, 100% { background-position: 30% 50%; transform: translateX(0); }\n  25%      { background-position: 70% 30%; transform: translateX(20px) scaleY(1.05); }\n  50%      { background-position: 60% 80%; transform: translateX(-15px) scaleY(0.95); }\n  75%      { background-position: 20% 60%; transform: translateX(10px) scaleY(1.02); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-cursor-fx-distortion::before,\n  .roycss-cursor-fx-distortion::after { animation: none; }\n}"
+  },
+  {
+    "id": "cursor-fx-text-replacement",
+    "name": "Text Replacement",
+    "category": "cursor",
+    "description": "Cursor swaps the displayed text on hover via ::before",
+    "tags": [
+      "cursor",
+      "text",
+      "replacement",
+      "hover",
+      "cursor-fx"
+    ],
+    "previewType": "text",
+    "previewText": "Hover",
+    "childCount": null,
+    "cssCode": "/* Cursor-FX: Text Replacement */\n.roycss-cursor-fx-text-replacement {\n  display: inline-block;\n  position: relative;\n  font: 800 36px/1 system-ui, sans-serif;\n  color: oklch(0.95 0.1 220);\n  cursor: pointer;\n}\n.roycss-cursor-fx-text-replacement::before {\n  content: \"Hover\";\n  display: block;\n}\n.roycss-cursor-fx-text-replacement::after {\n  content: \"Clicked!\";\n  position: absolute;\n  inset: 0;\n  display: block;\n  color: oklch(0.85 0.22 30);\n  opacity: 0;\n  transform: translateY(0);\n  transition: opacity 0.4s, transform 0.4s;\n}\n.roycss-cursor-fx-text-replacement:hover::before {\n  opacity: 0;\n  transform: translateY(-12px);\n  transition: opacity 0.4s, transform 0.4s;\n}\n.roycss-cursor-fx-text-replacement:hover::after {\n  opacity: 1;\n  transform: translateY(0);\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-cursor-fx-text-replacement::before,\n  .roycss-cursor-fx-text-replacement::after,\n  .roycss-cursor-fx-text-replacement:hover::before,\n  .roycss-cursor-fx-text-replacement:hover::after { transition: none; transform: none; }\n}"
+  },
+  {
+    "id": "cursor-fx-image-preview",
+    "name": "Image Preview",
+    "category": "cursor",
+    "description": "Floating image preview follows an animated cursor path",
+    "tags": [
+      "cursor",
+      "image",
+      "preview",
+      "follow",
+      "cursor-fx"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Cursor-FX: Image Preview */\n.roycss-cursor-fx-image-preview {\n  position: relative;\n  width: 100%; height: 100%;\n  background:\n    repeating-linear-gradient(45deg, oklch(0.3 0.05 250) 0 12px, oklch(0.22 0.04 260) 12px 24px);\n  border-radius: 14px;\n  overflow: hidden;\n}\n.roycss-cursor-fx-image-preview::before {\n  content: \"\";\n  position: absolute;\n  width: 90px; height: 90px;\n  border-radius: 10px;\n  background:\n    linear-gradient(135deg, oklch(0.85 0.22 30), oklch(0.65 0.24 320));\n  box-shadow: 0 12px 30px oklch(0 0 0 / 0.45), 0 0 0 3px oklch(1 0 0 / 0.6);\n  animation: roy-cursor-fx-image-preview 5s cubic-bezier(0.65, 0, 0.35, 1) infinite;\n}\n.roycss-cursor-fx-image-preview::after {\n  content: \"\";\n  position: absolute;\n  width: 14px; height: 14px;\n  border-radius: 50%;\n  background: oklch(1 0 0);\n  box-shadow: 0 0 0 4px oklch(1 0 0 / 0.4);\n  animation: roy-cursor-fx-image-preview-dot 5s cubic-bezier(0.65, 0, 0.35, 1) infinite;\n}\n@keyframes roy-cursor-fx-image-preview {\n  0%, 100% { transform: translate(-180px, -60px) rotate(-6deg); }\n  50%      { transform: translate(60px, 40px)   rotate(6deg); }\n}\n@keyframes roy-cursor-fx-image-preview-dot {\n  0%, 100% { transform: translate(-100px, -90px); }\n  50%      { transform: translate(140px, 10px); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-cursor-fx-image-preview::before,\n  .roycss-cursor-fx-image-preview::after { animation: none; }\n}"
+  },
+  {
+    "id": "cursor-fx-gradient-follow",
+    "name": "Gradient Follow",
+    "category": "cursor",
+    "description": "Soft gradient highlight follows the cursor position",
+    "tags": [
+      "cursor",
+      "gradient",
+      "follow",
+      "highlight",
+      "cursor-fx"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Cursor-FX: Gradient Follow */\n.roycss-cursor-fx-gradient-follow {\n  position: relative;\n  width: 100%; height: 100%;\n  background: linear-gradient(135deg, oklch(0.18 0.04 250), oklch(0.32 0.08 270));\n  border-radius: 14px;\n  overflow: hidden;\n}\n.roycss-cursor-fx-gradient-follow::before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  background: radial-gradient(circle at 30% 50%, oklch(0.95 0.18 60 / 0.55), oklch(0.7 0.22 320 / 0.3) 30%, transparent 60%);\n  animation: roy-cursor-fx-gradient-follow 5s ease-in-out infinite;\n}\n.roycss-cursor-fx-gradient-follow::after {\n  content: \"FOLLOW\";\n  position: absolute;\n  bottom: 16px; left: 50%;\n  transform: translateX(-50%);\n  color: oklch(0.96 0.05 220);\n  font: 800 18px/1 system-ui, sans-serif;\n  letter-spacing: 0.3em;\n}\n@keyframes roy-cursor-fx-gradient-follow {\n  0%   { background: radial-gradient(circle at 10% 20%, oklch(0.95 0.18 60 / 0.55), oklch(0.7 0.22 320 / 0.3) 30%, transparent 60%); }\n  33%  { background: radial-gradient(circle at 80% 30%, oklch(0.85 0.22 140 / 0.55), oklch(0.6 0.24 220 / 0.3) 30%, transparent 60%); }\n  66%  { background: radial-gradient(circle at 50% 80%, oklch(0.95 0.18 320 / 0.55), oklch(0.7 0.22 30 / 0.3) 30%, transparent 60%); }\n  100% { background: radial-gradient(circle at 10% 20%, oklch(0.95 0.18 60 / 0.55), oklch(0.7 0.22 320 / 0.3) 30%, transparent 60%); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-cursor-fx-gradient-follow::before { animation: none; }\n}"
+  },
+  {
+    "id": "cursor-fx-border-follow",
+    "name": "Border Follow",
+    "category": "cursor",
+    "description": "Highlighted border segment travels around the perimeter",
+    "tags": [
+      "cursor",
+      "border",
+      "follow",
+      "highlight",
+      "cursor-fx"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Cursor-FX: Border Follow */\n.roycss-cursor-fx-border-follow {\n  position: relative;\n  width: 100%; height: 100%;\n  background: linear-gradient(135deg, oklch(0.25 0.05 250), oklch(0.4 0.08 270));\n  border-radius: 14px;\n  display: grid;\n  place-items: center;\n  color: oklch(0.95 0.1 220);\n  font: 800 18px/1 system-ui, sans-serif;\n  letter-spacing: 0.2em;\n  overflow: hidden;\n}\n.roycss-cursor-fx-border-follow::before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  border-radius: inherit;\n  padding: 2px;\n  background:\n    conic-gradient(from 0deg,\n      transparent 0deg 80deg,\n      oklch(0.85 0.22 60) 90deg,\n      transparent 100deg 360deg);\n  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);\n  -webkit-mask-composite: xor;\n          mask-composite: exclude;\n  animation: roy-cursor-fx-border-follow 4s linear infinite;\n}\n@keyframes roy-cursor-fx-border-follow {\n  from { transform: rotate(0deg); }\n  to   { transform: rotate(360deg); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-cursor-fx-border-follow::before { animation: none; }\n}"
+  },
+  {
+    "id": "cursor-fx-hover-lens",
+    "name": "Hover Lens",
+    "category": "cursor",
+    "description": "Magnifying lens zooms content where the cursor hovers",
+    "tags": [
+      "cursor",
+      "lens",
+      "magnify",
+      "zoom",
+      "cursor-fx"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Cursor-FX: Hover Lens */\n.roycss-cursor-fx-hover-lens {\n  position: relative;\n  width: 100%; height: 100%;\n  background:\n    repeating-linear-gradient(45deg, oklch(0.85 0.18 30) 0 10px, oklch(0.65 0.2 200) 10px 20px);\n  border-radius: 14px;\n  overflow: hidden;\n}\n.roycss-cursor-fx-hover-lens::before {\n  content: \"\";\n  position: absolute;\n  width: 120px; height: 120px;\n  border-radius: 50%;\n  background:\n    repeating-linear-gradient(45deg, oklch(0.85 0.18 30) 0 5px, oklch(0.65 0.2 200) 5px 10px);\n  background-size: 200% 200%;\n  border: 4px solid oklch(1 0 0 / 0.6);\n  box-shadow: 0 0 0 6px oklch(0 0 0 / 0.3), inset 0 0 20px oklch(0 0 0 / 0.4);\n  animation: roy-cursor-fx-hover-lens 4s ease-in-out infinite;\n}\n.roycss-cursor-fx-hover-lens::after {\n  content: \"\";\n  position: absolute;\n  width: 12px; height: 12px;\n  border-radius: 50%;\n  background: oklch(1 0 0);\n  box-shadow: 0 0 0 4px oklch(1 0 0 / 0.3);\n  animation: roy-cursor-fx-hover-lens-dot 4s ease-in-out infinite;\n}\n@keyframes roy-cursor-fx-hover-lens {\n  0%, 100% { transform: translate(-50%, -30%) scale(1); }\n  50%      { transform: translate(30%, 40%)  scale(1.1); }\n}\n@keyframes roy-cursor-fx-hover-lens-dot {\n  0%, 100% { transform: translate(20%, 30%); }\n  50%      { transform: translate(140%, 130%); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-cursor-fx-hover-lens::before,\n  .roycss-cursor-fx-hover-lens::after { animation: none; }\n}"
+  },
+  {
+    "id": "cursor-fx-spotlight-card",
+    "name": "Spotlight Card",
+    "category": "cursor",
+    "description": "Card with radial spotlight that tracks the cursor position",
+    "tags": [
+      "cursor",
+      "spotlight",
+      "card",
+      "radial",
+      "cursor-fx"
+    ],
+    "previewType": "card",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Cursor-FX: Spotlight Card */\n.roycss-cursor-fx-spotlight-card {\n  position: relative;\n  width: 220px; height: 280px;\n  border-radius: 18px;\n  background: linear-gradient(135deg, oklch(0.22 0.04 250), oklch(0.4 0.08 270));\n  box-shadow: 0 18px 40px oklch(0 0 0 / 0.4), inset 0 1px 0 oklch(1 0 0 / 0.15);\n  overflow: hidden;\n  display: grid;\n  place-items: center;\n  color: oklch(0.95 0.05 220);\n  font: 800 18px/1 system-ui, sans-serif;\n  letter-spacing: 0.15em;\n}\n.roycss-cursor-fx-spotlight-card::before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  background: radial-gradient(circle at 30% 30%, oklch(0.95 0.18 60 / 0.35), transparent 50%);\n  animation: roy-cursor-fx-spotlight-card 5s ease-in-out infinite;\n}\n.roycss-cursor-fx-spotlight-card::after {\n  content: \"CARD\";\n  position: relative;\n  z-index: 2;\n}\n@keyframes roy-cursor-fx-spotlight-card {\n  0%   { background: radial-gradient(circle at 15% 25%, oklch(0.95 0.18 60 / 0.45), transparent 50%); }\n  33%  { background: radial-gradient(circle at 80% 20%, oklch(0.85 0.22 140 / 0.45), transparent 50%); }\n  66%  { background: radial-gradient(circle at 50% 80%, oklch(0.95 0.18 320 / 0.45), transparent 50%); }\n  100% { background: radial-gradient(circle at 15% 25%, oklch(0.95 0.18 60 / 0.45), transparent 50%); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-cursor-fx-spotlight-card::before { animation: none; }\n}"
+  },
+  {
+    "id": "cursor-fx-ripple-click",
+    "name": "Ripple Click",
+    "category": "cursor",
+    "description": "Ripple emanates outward from each simulated click position",
+    "tags": [
+      "cursor",
+      "ripple",
+      "click",
+      "wave",
+      "cursor-fx"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Cursor-FX: Ripple Click */\n.roycss-cursor-fx-ripple-click {\n  position: relative;\n  width: 100%; height: 100%;\n  background: linear-gradient(135deg, oklch(0.2 0.04 250), oklch(0.32 0.06 270));\n  border-radius: 14px;\n  overflow: hidden;\n}\n.roycss-cursor-fx-ripple-click::before,\n.roycss-cursor-fx-ripple-click::after {\n  content: \"\";\n  position: absolute;\n  width: 30px; height: 30px;\n  border-radius: 50%;\n  border: 3px solid oklch(0.95 0.18 60);\n  box-shadow: 0 0 18px oklch(0.95 0.18 60 / 0.5);\n  animation: roy-cursor-fx-ripple-click 3s ease-out infinite;\n}\n.roycss-cursor-fx-ripple-click::after {\n  border-color: oklch(0.85 0.22 320);\n  box-shadow: 0 0 18px oklch(0.85 0.22 320 / 0.5);\n  animation-delay: 1.5s;\n}\n@keyframes roy-cursor-fx-ripple-click {\n  0%   { transform: scale(0);   opacity: 1; top: 50%; left: 50%; }\n  100% { transform: scale(8);   opacity: 0; top: 50%; left: 50%; }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-cursor-fx-ripple-click::before,\n  .roycss-cursor-fx-ripple-click::after { animation: none; opacity: 0.5; }\n}"
+  },
+  {
+    "id": "cursor-fx-tilt-3d",
+    "name": "Tilt 3D",
+    "category": "cursor",
+    "description": "Card tilts in 3D space following cursor position",
+    "tags": [
+      "cursor",
+      "tilt",
+      "3d",
+      "perspective",
+      "cursor-fx"
+    ],
+    "previewType": "card",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Cursor-FX: Tilt 3D */\n.roycss-cursor-fx-tilt-3d {\n  width: 200px; height: 240px;\n  background: linear-gradient(135deg, oklch(0.78 0.2 180), oklch(0.55 0.22 320));\n  border-radius: 18px;\n  box-shadow: 0 18px 40px oklch(0 0 0 / 0.35);\n  display: grid;\n  place-items: center;\n  color: oklch(0.98 0 0);\n  font: 900 20px/1 system-ui, sans-serif;\n  letter-spacing: 0.2em;\n  transform-style: preserve-3d;\n  animation: roy-cursor-fx-tilt-3d 5s ease-in-out infinite;\n}\n.roycss-cursor-fx-tilt-3d::before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  border-radius: inherit;\n  background: linear-gradient(135deg, transparent 40%, oklch(1 0 0 / 0.4) 50%, transparent 60%);\n  background-size: 200% 200%;\n  animation: roy-cursor-fx-tilt-3d-shine 5s ease-in-out infinite;\n}\n@keyframes roy-cursor-fx-tilt-3d {\n  0%   { transform: perspective(800px) rotateX(-15deg) rotateY(15deg); }\n  25%  { transform: perspective(800px) rotateX(15deg)  rotateY(-15deg); }\n  50%  { transform: perspective(800px) rotateX(-10deg) rotateY(-20deg); }\n  75%  { transform: perspective(800px) rotateX(20deg)  rotateY(10deg); }\n  100% { transform: perspective(800px) rotateX(-15deg) rotateY(15deg); }\n}\n@keyframes roy-cursor-fx-tilt-3d-shine {\n  0%, 100% { background-position: 0% 0%; }\n  50%      { background-position: 100% 100%; }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-cursor-fx-tilt-3d,\n  .roycss-cursor-fx-tilt-3d::before { animation: none; }\n}"
+  },
+  {
+    "id": "cursor-fx-particle-emit",
+    "name": "Particle Emit",
+    "category": "cursor",
+    "description": "Particles emit and scatter from a moving cursor point",
+    "tags": [
+      "cursor",
+      "particle",
+      "emit",
+      "scatter",
+      "cursor-fx"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": 6,
+    "cssCode": "/* Cursor-FX: Particle Emit */\n.roycss-cursor-fx-particle-emit {\n  position: relative;\n  width: 100%; height: 100%;\n  background: radial-gradient(circle at center, oklch(0.18 0.05 250), oklch(0.1 0.04 230));\n  border-radius: 14px;\n  overflow: hidden;\n  display: grid;\n  place-items: center;\n}\n.roycss-cursor-fx-particle-emit > span {\n  position: absolute;\n  width: 8px; height: 8px;\n  border-radius: 50%;\n  background: oklch(0.95 0.2 60);\n  box-shadow: 0 0 10px oklch(0.95 0.2 60 / 0.8);\n  animation: roy-cursor-fx-particle-emit 2s ease-out infinite;\n}\n.roycss-cursor-fx-particle-emit > span:nth-child(1) { animation-delay: 0s;   --tx: 60px;  --ty: -40px; }\n.roycss-cursor-fx-particle-emit > span:nth-child(2) { animation-delay: 0.25s; --tx: -50px; --ty: -60px; }\n.roycss-cursor-fx-particle-emit > span:nth-child(3) { animation-delay: 0.5s;  --tx: 70px;  --ty: 50px;  }\n.roycss-cursor-fx-particle-emit > span:nth-child(4) { animation-delay: 0.75s; --tx: -60px; --ty: 30px;  }\n.roycss-cursor-fx-particle-emit > span:nth-child(5) { animation-delay: 1s;    --tx: 10px;  --ty: -80px; }\n.roycss-cursor-fx-particle-emit > span:nth-child(6) { animation-delay: 1.25s; --tx: -30px; --ty: 70px;  }\n@keyframes roy-cursor-fx-particle-emit {\n  0%   { transform: translate(0, 0) scale(1);   opacity: 1; }\n  100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-cursor-fx-particle-emit > span { animation: none; opacity: 0.4; }\n}"
+  },
+  {
+    "id": "cursor-fx-blur-background",
+    "name": "Blur Background",
+    "category": "cursor",
+    "description": "Background blurs under a sharp cursor region",
+    "tags": [
+      "cursor",
+      "blur",
+      "background",
+      "region",
+      "cursor-fx"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Cursor-FX: Blur Background */\n.roycss-cursor-fx-blur-background {\n  position: relative;\n  width: 100%; height: 100%;\n  background:\n    repeating-linear-gradient(45deg, oklch(0.8 0.22 30) 0 12px, oklch(0.6 0.24 320) 12px 24px);\n  border-radius: 14px;\n  overflow: hidden;\n}\n.roycss-cursor-fx-blur-background::before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  background: inherit;\n  filter: blur(8px);\n  opacity: 0.6;\n  animation: roy-cursor-fx-blur-background 4s ease-in-out infinite;\n}\n.roycss-cursor-fx-blur-background::after {\n  content: \"\";\n  position: absolute;\n  width: 100px; height: 100px;\n  border-radius: 50%;\n  border: 3px solid oklch(1 0 0 / 0.7);\n  box-shadow: 0 0 0 6px oklch(0 0 0 / 0.3);\n  background:\n    repeating-linear-gradient(45deg, oklch(0.8 0.22 30) 0 12px, oklch(0.6 0.24 320) 12px 24px);\n  animation: roy-cursor-fx-blur-background-ring 4s ease-in-out infinite;\n}\n@keyframes roy-cursor-fx-blur-background {\n  0%, 100% { opacity: 0.6; }\n  50%      { opacity: 0.4; }\n}\n@keyframes roy-cursor-fx-blur-background-ring {\n  0%, 100% { transform: translate(-30%, -20%); }\n  50%      { transform: translate(30%, 30%); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-cursor-fx-blur-background::before,\n  .roycss-cursor-fx-blur-background::after { animation: none; }\n}"
+  },
+  {
+    "id": "cursor-fx-color-picker",
+    "name": "Color Picker",
+    "category": "cursor",
+    "description": "Element samples and shows color from a moving cursor position",
+    "tags": [
+      "cursor",
+      "color",
+      "picker",
+      "sample",
+      "cursor-fx"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Cursor-FX: Color Picker */\n.roycss-cursor-fx-color-picker {\n  position: relative;\n  width: 100%; height: 100%;\n  background:\n    conic-gradient(from 0deg,\n      oklch(0.75 0.25 0), oklch(0.75 0.25 60),\n      oklch(0.75 0.25 120), oklch(0.75 0.25 180),\n      oklch(0.75 0.25 240), oklch(0.75 0.25 300),\n      oklch(0.75 0.25 360));\n  border-radius: 14px;\n  display: grid;\n  place-items: center;\n  overflow: hidden;\n}\n.roycss-cursor-fx-color-picker::before {\n  content: \"\";\n  position: absolute;\n  width: 30px; height: 30px;\n  border-radius: 50%;\n  border: 4px solid oklch(1 0 0);\n  box-shadow: 0 0 0 4px oklch(0 0 0 / 0.4), 0 0 20px oklch(0 0 0 / 0.3);\n  animation: roy-cursor-fx-color-picker-cursor 6s linear infinite;\n}\n.roycss-cursor-fx-color-picker::after {\n  content: \"#FF9500\";\n  position: relative;\n  z-index: 2;\n  padding: 6px 14px;\n  background: oklch(0 0 0 / 0.7);\n  color: oklch(1 0 0);\n  font: 700 14px/1.2 ui-monospace, monospace;\n  border-radius: 8px;\n  animation: roy-cursor-fx-color-picker-label 6s steps(6, end) infinite;\n}\n@keyframes roy-cursor-fx-color-picker-cursor {\n  0%   { transform: translate(-160%, -80%); }\n  16%  { transform: translate(120%, -100%); }\n  33%  { transform: translate(180%, 20%); }\n  50%  { transform: translate(60%, 120%); }\n  66%  { transform: translate(-120%, 100%); }\n  83%  { transform: translate(-180%, -20%); }\n  100% { transform: translate(-160%, -80%); }\n}\n@keyframes roy-cursor-fx-color-picker-label {\n  0%   { content: \"#FF3030\"; }\n  16%  { content: \"#FFD030\"; }\n  33%  { content: \"#30FF30\"; }\n  50%  { content: \"#30C0FF\"; }\n  66%  { content: \"#6030FF\"; }\n  83%  { content: \"#FF30C0\"; }\n  100% { content: \"#FF3030\"; }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-cursor-fx-color-picker::before,\n  .roycss-cursor-fx-color-picker::after { animation: none; }\n}"
+  },
+  {
+    "id": "cursor-fx-zoom-region",
+    "name": "Zoom Region",
+    "category": "cursor",
+    "description": "Circular region zooms content where the cursor hovers",
+    "tags": [
+      "cursor",
+      "zoom",
+      "region",
+      "magnify",
+      "cursor-fx"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Cursor-FX: Zoom Region */\n.roycss-cursor-fx-zoom-region {\n  position: relative;\n  width: 100%; height: 100%;\n  background:\n    repeating-linear-gradient(0deg, oklch(0.7 0.22 200) 0 8px, oklch(0.55 0.24 280) 8px 16px);\n  border-radius: 14px;\n  overflow: hidden;\n}\n.roycss-cursor-fx-zoom-region::before {\n  content: \"\";\n  position: absolute;\n  width: 140px; height: 140px;\n  border-radius: 50%;\n  background:\n    repeating-linear-gradient(0deg, oklch(0.7 0.22 200) 0 4px, oklch(0.55 0.24 280) 4px 8px);\n  background-size: 200% 200%;\n  border: 4px solid oklch(1 0 0 / 0.7);\n  box-shadow: 0 0 0 6px oklch(0 0 0 / 0.3), inset 0 0 30px oklch(0 0 0 / 0.4);\n  animation: roy-cursor-fx-zoom-region 5s ease-in-out infinite;\n}\n.roycss-cursor-fx-zoom-region::after {\n  content: \"ZOOM\";\n  position: absolute;\n  bottom: 16px; right: 20px;\n  color: oklch(1 0 0);\n  font: 800 16px/1 system-ui, sans-serif;\n  letter-spacing: 0.25em;\n  text-shadow: 0 2px 6px oklch(0 0 0 / 0.5);\n}\n@keyframes roy-cursor-fx-zoom-region {\n  0%, 100% { transform: translate(-30%, -10%) scale(1); background-position: 0% 0%; }\n  50%      { transform: translate(30%, 30%) scale(1.05); background-position: 100% 100%; }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-cursor-fx-zoom-region::before { animation: none; }\n}"
+  },
+  {
+    "id": "cursor-fx-tooltip-follow",
+    "name": "Tooltip Follow",
+    "category": "cursor",
+    "description": "Tooltip smoothly follows an animated cursor with delay",
+    "tags": [
+      "cursor",
+      "tooltip",
+      "follow",
+      "smooth",
+      "cursor-fx"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Cursor-FX: Tooltip Follow */\n.roycss-cursor-fx-tooltip-follow {\n  position: relative;\n  width: 100%; height: 100%;\n  background: linear-gradient(135deg, oklch(0.25 0.05 250), oklch(0.4 0.08 270));\n  border-radius: 14px;\n  overflow: hidden;\n}\n.roycss-cursor-fx-tooltip-follow::before {\n  content: \"\";\n  position: absolute;\n  width: 12px; height: 12px;\n  border-radius: 50%;\n  background: oklch(1 0 0);\n  box-shadow: 0 0 0 4px oklch(1 0 0 / 0.4);\n  animation: roy-cursor-fx-tooltip-follow-cursor 4s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;\n}\n.roycss-cursor-fx-tooltip-follow::after {\n  content: \"Tooltip\";\n  position: absolute;\n  padding: 4px 10px;\n  background: oklch(0.1 0.04 250);\n  color: oklch(0.98 0 0);\n  font: 700 12px/1.4 system-ui, sans-serif;\n  border-radius: 6px;\n  box-shadow: 0 6px 14px oklch(0 0 0 / 0.4);\n  animation: roy-cursor-fx-tooltip-follow-tip 4s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;\n  animation-delay: 0.15s;\n}\n@keyframes roy-cursor-fx-tooltip-follow-cursor {\n  0%   { transform: translate(-180px, -60px); }\n  50%  { transform: translate(60px, 60px); }\n  100% { transform: translate(-180px, -60px); }\n}\n@keyframes roy-cursor-fx-tooltip-follow-tip {\n  0%   { transform: translate(-180px, -90px); }\n  50%  { transform: translate(60px, 30px); }\n  100% { transform: translate(-180px, -90px); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-cursor-fx-tooltip-follow::before,\n  .roycss-cursor-fx-tooltip-follow::after { animation: none; }\n}"
+  },
+  {
+    "id": "cursor-fx-glow-ring",
+    "name": "Glow Ring",
+    "category": "cursor",
+    "description": "Pulsing glow ring sits at the cursor position",
+    "tags": [
+      "cursor",
+      "glow",
+      "ring",
+      "pulse",
+      "cursor-fx"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Cursor-FX: Glow Ring */\n.roycss-cursor-fx-glow-ring {\n  position: relative;\n  width: 100%; height: 100%;\n  background: oklch(0.1 0.04 250);\n  border-radius: 14px;\n  overflow: hidden;\n}\n.roycss-cursor-fx-glow-ring::before {\n  content: \"\";\n  position: absolute;\n  width: 40px; height: 40px;\n  border-radius: 50%;\n  border: 3px solid oklch(0.95 0.18 60);\n  box-shadow:\n    0 0 0 6px oklch(0.95 0.18 60 / 0.3),\n    0 0 30px oklch(0.95 0.18 60 / 0.6);\n  animation: roy-cursor-fx-glow-ring-move 5s ease-in-out infinite,\n             roy-cursor-fx-glow-ring-pulse 1.5s ease-in-out infinite;\n}\n@keyframes roy-cursor-fx-glow-ring-move {\n  0%, 100% { transform: translate(-180px, -60px); }\n  50%      { transform: translate(60px, 60px); }\n}\n@keyframes roy-cursor-fx-glow-ring-pulse {\n  0%, 100% { width: 40px; height: 40px; opacity: 1; }\n  50%      { width: 60px; height: 60px; opacity: 0.7; }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-cursor-fx-glow-ring::before { animation: none; }\n}"
+  },
+  {
+    "id": "cursor-fx-invert-region",
+    "name": "Invert Region",
+    "category": "cursor",
+    "description": "Color inversion circular region follows the cursor",
+    "tags": [
+      "cursor",
+      "invert",
+      "region",
+      "color",
+      "cursor-fx"
+    ],
+    "previewType": "background",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Cursor-FX: Invert Region */\n.roycss-cursor-fx-invert-region {\n  position: relative;\n  width: 100%; height: 100%;\n  background:\n    repeating-conic-gradient(from 0deg at 50% 50%, oklch(0.85 0.22 30) 0deg 30deg, oklch(0.65 0.24 320) 30deg 60deg);\n  border-radius: 14px;\n  overflow: hidden;\n}\n.roycss-cursor-fx-invert-region::before {\n  content: \"\";\n  position: absolute;\n  width: 120px; height: 120px;\n  border-radius: 50%;\n  background: inherit;\n  filter: invert(1) hue-rotate(180deg);\n  border: 3px solid oklch(1 0 0 / 0.7);\n  box-shadow: 0 0 0 6px oklch(0 0 0 / 0.3);\n  animation: roy-cursor-fx-invert-region 5s ease-in-out infinite;\n}\n.roycss-cursor-fx-invert-region::after {\n  content: \"INVERT\";\n  position: absolute;\n  bottom: 16px; left: 50%;\n  transform: translateX(-50%);\n  color: oklch(0.95 0 0);\n  font: 800 16px/1 system-ui, sans-serif;\n  letter-spacing: 0.3em;\n  text-shadow: 0 2px 6px oklch(0 0 0 / 0.6);\n  filter: invert(0);\n}\n@keyframes roy-cursor-fx-invert-region {\n  0%, 100% { transform: translate(-30%, -10%); }\n  50%      { transform: translate(30%, 30%); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-cursor-fx-invert-region::before { animation: none; }\n}"
+  },
+  {
+    "id": "cursor-fx-elastic-snap",
+    "name": "Elastic Snap",
+    "category": "cursor",
+    "description": "Elements elastically snap toward the cursor and bounce back",
+    "tags": [
+      "cursor",
+      "elastic",
+      "snap",
+      "spring",
+      "cursor-fx"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 5,
+    "cssCode": "/* Cursor-FX: Elastic Snap */\n.roycss-cursor-fx-elastic-snap {\n  position: relative;\n  width: 100%; height: 100%;\n  background: linear-gradient(135deg, oklch(0.2 0.04 250), oklch(0.35 0.08 270));\n  border-radius: 14px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 14px;\n  overflow: hidden;\n}\n.roycss-cursor-fx-elastic-snap > span {\n  width: 28px; height: 28px;\n  border-radius: 8px;\n  background: linear-gradient(135deg, oklch(0.85 0.18 60), oklch(0.65 0.22 320));\n  box-shadow: 0 6px 14px oklch(0 0 0 / 0.3);\n  animation: roy-cursor-fx-elastic-snap 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;\n}\n.roycss-cursor-fx-elastic-snap > span:nth-child(1) { animation-delay: 0s; }\n.roycss-cursor-fx-elastic-snap > span:nth-child(2) { animation-delay: 0.1s; }\n.roycss-cursor-fx-elastic-snap > span:nth-child(3) { animation-delay: 0.2s; }\n.roycss-cursor-fx-elastic-snap > span:nth-child(4) { animation-delay: 0.3s; }\n.roycss-cursor-fx-elastic-snap > span:nth-child(5) { animation-delay: 0.4s; }\n@keyframes roy-cursor-fx-elastic-snap {\n  0%   { transform: translateY(0) scale(1); }\n  30%  { transform: translateY(-30px) scale(1.25); }\n  55%  { transform: translateY(8px) scale(0.9); }\n  80%  { transform: translateY(-4px) scale(1.05); }\n  100% { transform: translateY(0) scale(1); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-cursor-fx-elastic-snap > span { animation: none; }\n}"
+  },
+  {
+    "id": "vfx-magnetic-hover",
+    "name": "VFX Magnetic Hover",
+    "category": "hover",
+    "description": "On hover the element glides toward the cursor with a slight scale-up — pure-CSS approximation of magnetic buttons.",
+    "tags": [
+      "hover",
+      "magnetic",
+      "pull",
+      "interactive",
+      "vfx"
+    ],
+    "previewType": "button",
+    "previewText": "Magnet",
+    "childCount": null,
+    "cssCode": "/* VFX Magnetic Hover — pure CSS approximation */\n.roycss-vfx-magnetic-hover {\n  position: relative;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  padding: 0.7em 1.6em;\n  border-radius: 12px;\n  font-weight: 700;\n  color: oklch(0.98 0.02 240);\n  background: linear-gradient(135deg, oklch(0.62 0.22 145), oklch(0.58 0.22 195));\n  box-shadow: 0 6px 18px oklch(0.58 0.22 175 / 0.35);\n  transform: translateZ(0);\n  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),\n              box-shadow 0.25s ease;\n  will-change: transform;\n}\n.roycss-vfx-magnetic-hover::before {\n  content: \"\";\n  position: absolute;\n  inset: -40%;\n  background: radial-gradient(circle at center, oklch(0.85 0.22 175 / 0.35), transparent 70%);\n  opacity: 0;\n  transition: opacity 0.3s ease;\n  pointer-events: none;\n}\n.roycss-vfx-magnetic-hover:hover {\n  transform: translateY(-4px) scale(1.06);\n  box-shadow: 0 14px 28px oklch(0.58 0.22 175 / 0.5),\n              0 0 24px oklch(0.78 0.22 175 / 0.45);\n}\n.roycss-vfx-magnetic-hover:hover::before { opacity: 1; }\n.roycss-vfx-magnetic-hover:active {\n  transform: translateY(-1px) scale(1.02);\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-vfx-magnetic-hover,\n  .roycss-vfx-magnetic-hover::before { transition: none; }\n}"
+  },
+  {
+    "id": "vfx-shine-sweep",
+    "name": "VFX Shine Sweep",
+    "category": "hover",
+    "description": "A bright diagonal sheen sweeps across the surface on hover. Pure CSS, GPU-friendly transform on the overlay.",
+    "tags": [
+      "hover",
+      "shine",
+      "sweep",
+      "sheen",
+      "interactive",
+      "vfx"
+    ],
+    "previewType": "button",
+    "previewText": "Shine",
+    "childCount": null,
+    "cssCode": "/* VFX Shine Sweep */\n.roycss-vfx-shine-sweep {\n  position: relative;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  padding: 0.7em 1.6em;\n  border-radius: 10px;\n  font-weight: 700;\n  color: oklch(0.98 0.02 240);\n  background: linear-gradient(135deg, oklch(0.45 0.18 260), oklch(0.55 0.20 290));\n  overflow: hidden;\n  isolation: isolate;\n}\n.roycss-vfx-shine-sweep::before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  background: linear-gradient(\n    100deg,\n    transparent 30%,\n    oklch(0.98 0.04 240 / 0.65) 50%,\n    transparent 70%\n  );\n  transform: translateX(-120%);\n  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);\n  pointer-events: none;\n  z-index: 1;\n}\n.roycss-vfx-shine-sweep:hover::before { transform: translateX(120%); }\n.roycss-vfx-shine-sweep > * { position: relative; z-index: 2; }\n@media (prefers-reduced-motion: reduce) {\n  .roycss-vfx-shine-sweep::before { transition: none; }\n}"
+  },
+  {
+    "id": "vfx-glow-hover",
+    "name": "VFX Glow Hover",
+    "category": "hover",
+    "description": "On hover, a layered OKLCH box-shadow blooms into a soft neon halo. Smooth, GPU-friendly.",
+    "tags": [
+      "hover",
+      "glow",
+      "neon",
+      "halo",
+      "box-shadow",
+      "vfx"
+    ],
+    "previewType": "button",
+    "previewText": "Glow",
+    "childCount": null,
+    "cssCode": "/* VFX Glow Hover */\n.roycss-vfx-glow-hover {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  padding: 0.7em 1.6em;\n  border-radius: 12px;\n  font-weight: 700;\n  color: oklch(0.98 0.02 240);\n  background: oklch(0.30 0.10 240);\n  box-shadow: 0 0 0 oklch(0.85 0.22 195 / 0);\n  transition: box-shadow 0.35s ease, transform 0.25s ease, background 0.35s ease;\n  will-change: box-shadow, transform;\n}\n.roycss-vfx-glow-hover:hover {\n  background: oklch(0.40 0.16 195);\n  transform: translateY(-2px);\n  box-shadow:\n    0 0 8px  oklch(0.85 0.22 195 / 0.75),\n    0 0 18px oklch(0.78 0.24 195 / 0.55),\n    0 0 32px oklch(0.72 0.24 195 / 0.35),\n    0 0 52px oklch(0.66 0.24 195 / 0.18);\n}\n.roycss-vfx-glow-hover:active { transform: translateY(0); }\n@media (prefers-reduced-motion: reduce) {\n  .roycss-vfx-glow-hover { transition: none; }\n}"
+  },
+  {
+    "id": "vfx-border-anim",
+    "name": "VFX Animated Gradient Border",
+    "category": "hover",
+    "description": "A conic gradient border that rotates around the element. Mask + ::before keep the inside clean.",
+    "tags": [
+      "hover",
+      "border",
+      "gradient",
+      "conic",
+      "animated",
+      "vfx"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* VFX Animated Gradient Border */\n.roycss-vfx-border-anim {\n  position: relative;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  inline-size: 120px;\n  block-size: 120px;\n  border-radius: 16px;\n  background: oklch(0.25 0.05 240);\n  isolation: isolate;\n  overflow: hidden;\n}\n.roycss-vfx-border-anim::before {\n  content: \"\";\n  position: absolute;\n  inset: -50%;\n  z-index: -1;\n  background: conic-gradient(\n    oklch(0.78 0.22 35),\n    oklch(0.78 0.22 195),\n    oklch(0.78 0.22 290),\n    oklch(0.78 0.22 145),\n    oklch(0.78 0.22 35)\n  );\n  animation: roy-vfx-border-spin 4s linear infinite;\n  will-change: transform;\n}\n.roycss-vfx-border-anim::after {\n  content: \"\";\n  position: absolute;\n  inset: 2px;\n  border-radius: 14px;\n  background: oklch(0.25 0.05 240);\n  z-index: -1;\n}\n.roycss-vfx-border-anim:hover::before { animation-duration: 1.2s; }\n@keyframes roy-vfx-border-spin {\n  0%   { transform: rotate(0deg); }\n  100% { transform: rotate(360deg); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-vfx-border-anim::before { animation: none; }\n}"
+  },
+  {
+    "id": "vfx-image-zoom-hover",
+    "name": "VFX Image Zoom Hover",
+    "category": "hover",
+    "description": "On hover the inner content scales up smoothly while a subtle vignette lifts — a clean gallery-card zoom.",
+    "tags": [
+      "hover",
+      "image",
+      "zoom",
+      "scale",
+      "gallery",
+      "vfx"
+    ],
+    "previewType": "card",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* VFX Image Zoom Hover */\n.roycss-vfx-image-zoom-hover {\n  position: relative;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  inline-size: 144px;\n  block-size: 96px;\n  border-radius: 14px;\n  overflow: hidden;\n  background: linear-gradient(135deg, oklch(0.55 0.20 145), oklch(0.45 0.22 195));\n  isolation: isolate;\n}\n.roycss-vfx-image-zoom-hover::before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  background:\n    radial-gradient(circle at 30% 30%, oklch(0.85 0.18 75 / 0.6), transparent 60%),\n    radial-gradient(circle at 70% 80%, oklch(0.78 0.22 290 / 0.5), transparent 60%);\n  transform: scale(1);\n  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);\n  will-change: transform;\n}\n.roycss-vfx-image-zoom-hover::after {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  box-shadow: inset 0 0 60px oklch(0.20 0.05 240 / 0.6);\n  opacity: 0;\n  transition: opacity 0.4s ease;\n}\n.roycss-vfx-image-zoom-hover:hover::before { transform: scale(1.18); }\n.roycss-vfx-image-zoom-hover:hover::after  { opacity: 1; }\n.roycss-vfx-image-zoom-hover > * {\n  position: relative;\n  z-index: 1;\n  color: oklch(0.98 0.02 240);\n  font-weight: 700;\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-vfx-image-zoom-hover::before,\n  .roycss-vfx-image-zoom-hover::after { transition: none; }\n}"
+  },
+  {
+    "id": "vfx-3d-tilt-hover",
+    "name": "VFX 3D Tilt Hover",
+    "category": "hover",
+    "description": "On hover the element tilts back in 3D with perspective and lifts slightly — pure-CSS approximation of a tilt card.",
+    "tags": [
+      "hover",
+      "3d",
+      "tilt",
+      "perspective",
+      "card",
+      "vfx"
+    ],
+    "previewType": "card",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* VFX 3D Tilt Hover */\n.roycss-vfx-3d-tilt-hover {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  inline-size: 144px;\n  block-size: 96px;\n  border-radius: 14px;\n  background: linear-gradient(135deg, oklch(0.30 0.10 240), oklch(0.40 0.16 290));\n  color: oklch(0.95 0.02 240);\n  font-weight: 700;\n  border: 1px solid oklch(0.55 0.18 290 / 0.4);\n  transform: perspective(800px) rotateX(0deg) rotateY(0deg) translateZ(0);\n  transform-style: preserve-3d;\n  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),\n              box-shadow 0.4s ease;\n  will-change: transform;\n  box-shadow: 0 4px 12px oklch(0.20 0.05 240 / 0.4);\n}\n.roycss-vfx-3d-tilt-hover:hover {\n  transform: perspective(800px) rotateX(-12deg) rotateY(14deg) translateZ(10px);\n  box-shadow:\n    0 16px 28px oklch(0.20 0.05 240 / 0.5),\n    -8px 8px 0 oklch(0.65 0.22 290 / 0.25);\n}\n.roycss-vfx-3d-tilt-hover:active {\n  transform: perspective(800px) rotateX(-4deg) rotateY(4deg) translateZ(4px);\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-vfx-3d-tilt-hover { transition: none; }\n}"
+  },
+  {
+    "id": "vfx-card-lift",
+    "name": "VFX Card Lift",
+    "category": "hover",
+    "description": "On hover the card rises with a deepening shadow and a subtle border glow — the classic card hover.",
+    "tags": [
+      "hover",
+      "card",
+      "lift",
+      "shadow",
+      "interactive",
+      "vfx"
+    ],
+    "previewType": "card",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* VFX Card Lift */\n.roycss-vfx-card-lift {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  inline-size: 144px;\n  block-size: 96px;\n  border-radius: 14px;\n  background: linear-gradient(135deg, oklch(0.98 0.01 240), oklch(0.94 0.02 240));\n  color: oklch(0.25 0.05 240);\n  font-weight: 700;\n  border: 1px solid oklch(0.85 0.02 240);\n  box-shadow: 0 2px 8px oklch(0.20 0.05 240 / 0.12);\n  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),\n              box-shadow 0.3s ease,\n              border-color 0.3s ease;\n  will-change: transform;\n}\n.roycss-vfx-card-lift:hover {\n  transform: translateY(-8px);\n  border-color: oklch(0.65 0.22 195 / 0.5);\n  box-shadow:\n    0 18px 32px oklch(0.20 0.05 240 / 0.22),\n    0 0 0 1px oklch(0.65 0.22 195 / 0.15),\n    0 0 22px oklch(0.78 0.22 195 / 0.18);\n}\n.roycss-vfx-card-lift:active { transform: translateY(-3px); }\n@media (prefers-reduced-motion: reduce) {\n  .roycss-vfx-card-lift { transition: none; }\n}"
+  },
+  {
+    "id": "vfx-spotlight-hover",
+    "name": "VFX Spotlight Hover",
+    "category": "hover",
+    "description": "On hover a radial spotlight follows the element from top-left to bottom-right, illuminating the surface.",
+    "tags": [
+      "hover",
+      "spotlight",
+      "radial",
+      "light",
+      "interactive",
+      "vfx"
+    ],
+    "previewType": "card",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* VFX Spotlight Hover */\n.roycss-vfx-spotlight-hover {\n  position: relative;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  inline-size: 144px;\n  block-size: 96px;\n  border-radius: 14px;\n  background: oklch(0.22 0.04 240);\n  color: oklch(0.95 0.02 240);\n  font-weight: 700;\n  overflow: hidden;\n  isolation: isolate;\n  border: 1px solid oklch(0.40 0.10 240 / 0.5);\n}\n.roycss-vfx-spotlight-hover::before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  background: radial-gradient(\n    circle at 70% 30%,\n    oklch(0.85 0.22 195 / 0.55),\n    oklch(0.78 0.22 290 / 0.25) 30%,\n    transparent 60%\n  );\n  opacity: 0;\n  transform: translate(-10%, 10%);\n  transition: opacity 0.35s ease, transform 0.35s ease;\n  pointer-events: none;\n}\n.roycss-vfx-spotlight-hover:hover::before {\n  opacity: 1;\n  transform: translate(0, 0);\n}\n.roycss-vfx-spotlight-hover > * { position: relative; z-index: 1; }\n@media (prefers-reduced-motion: reduce) {\n  .roycss-vfx-spotlight-hover::before { transition: none; }\n}"
+  },
+  {
+    "id": "vfx-liquid-hover",
+    "name": "VFX Liquid Hover",
+    "category": "hover",
+    "description": "On hover the element morphs its border-radius through organic curves — a gooey, fluid shape change.",
+    "tags": [
+      "hover",
+      "liquid",
+      "morph",
+      "border-radius",
+      "organic",
+      "vfx"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* VFX Liquid Hover */\n.roycss-vfx-liquid-hover {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  inline-size: 120px;\n  block-size: 120px;\n  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;\n  background: linear-gradient(135deg, oklch(0.62 0.22 195), oklch(0.58 0.22 145));\n  color: oklch(0.98 0.02 240);\n  font-weight: 700;\n  box-shadow: 0 8px 24px oklch(0.58 0.22 175 / 0.35);\n  transition: border-radius 0.6s cubic-bezier(0.22, 1, 0.36, 1),\n              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),\n              box-shadow 0.6s ease;\n  will-change: border-radius, transform;\n}\n.roycss-vfx-liquid-hover:hover {\n  border-radius: 70% 30% 30% 70% / 60% 40% 60% 40%;\n  transform: rotate(-6deg) scale(1.05);\n  box-shadow: 0 12px 32px oklch(0.58 0.22 175 / 0.5);\n}\n.roycss-vfx-liquid-hover:active {\n  border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%;\n  transform: rotate(0deg) scale(0.98);\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-vfx-liquid-hover { transition: none; }\n}"
+  },
+  {
+    "id": "vfx-glitch-hover",
+    "name": "VFX Glitch Hover",
+    "category": "hover",
+    "description": "On hover the element snaps into a glitchy position-offset and clip-path tear — a digital distortion burst.",
+    "tags": [
+      "hover",
+      "glitch",
+      "clip-path",
+      "tear",
+      "distortion",
+      "vfx"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* VFX Glitch Hover */\n.roycss-vfx-glitch-hover {\n  position: relative;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  inline-size: 120px;\n  block-size: 120px;\n  border-radius: 14px;\n  background: linear-gradient(135deg, oklch(0.30 0.10 240), oklch(0.40 0.16 290));\n  color: oklch(0.95 0.02 240);\n  font-weight: 700;\n  isolation: isolate;\n  clip-path: inset(0 0 0 0);\n  transition: transform 0.18s steps(2, end), clip-path 0.18s steps(2, end);\n  will-change: transform, clip-path;\n}\n.roycss-vfx-glitch-hover::before,\n.roycss-vfx-glitch-hover::after {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  background: inherit;\n  border-radius: inherit;\n  opacity: 0;\n  pointer-events: none;\n}\n.roycss-vfx-glitch-hover::before {\n  background: linear-gradient(135deg, oklch(0.55 0.28 25 / 0.55), oklch(0.55 0.28 25 / 0.55));\n  clip-path: inset(0 0 60% 0);\n}\n.roycss-vfx-glitch-hover::after {\n  background: linear-gradient(135deg, oklch(0.55 0.28 200 / 0.55), oklch(0.55 0.28 200 / 0.55));\n  clip-path: inset(60% 0 0 0);\n}\n.roycss-vfx-glitch-hover:hover {\n  transform: translate(2px, -2px);\n  clip-path: inset(10% 0 12% 0);\n}\n.roycss-vfx-glitch-hover:hover::before {\n  opacity: 1;\n  transform: translate(-3px, 0);\n}\n.roycss-vfx-glitch-hover:hover::after {\n  opacity: 1;\n  transform: translate(3px, 0);\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-vfx-glitch-hover,\n  .roycss-vfx-glitch-hover::before,\n  .roycss-vfx-glitch-hover::after { transition: none; }\n}"
+  },
+  {
+    "id": "vfx-fade-up",
+    "name": "VFX Fade Up",
+    "category": "animations",
+    "description": "Element fades in while translating upward. The classic entrance — runs once on load.",
+    "tags": [
+      "entrance",
+      "fade",
+      "up",
+      "translate",
+      "vfx"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* VFX Fade Up */\n.roycss-vfx-fade-up {\n  animation: roy-vfx-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;\n  will-change: transform, opacity;\n}\n@keyframes roy-vfx-fade-up {\n  0%   { opacity: 0; transform: translateY(28px); }\n  100% { opacity: 1; transform: translateY(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-vfx-fade-up { animation: none; opacity: 1; }\n}"
+  },
+  {
+    "id": "vfx-fade-down",
+    "name": "VFX Fade Down",
+    "category": "animations",
+    "description": "Element fades in while translating downward. Runs once on load.",
+    "tags": [
+      "entrance",
+      "fade",
+      "down",
+      "translate",
+      "vfx"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* VFX Fade Down */\n.roycss-vfx-fade-down {\n  animation: roy-vfx-fade-down 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;\n  will-change: transform, opacity;\n}\n@keyframes roy-vfx-fade-down {\n  0%   { opacity: 0; transform: translateY(-28px); }\n  100% { opacity: 1; transform: translateY(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-vfx-fade-down { animation: none; opacity: 1; }\n}"
+  },
+  {
+    "id": "vfx-fade-left",
+    "name": "VFX Fade Left",
+    "category": "animations",
+    "description": "Element fades in while sliding in from the right toward the left. Runs once on load.",
+    "tags": [
+      "entrance",
+      "fade",
+      "left",
+      "slide",
+      "vfx"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* VFX Fade Left */\n.roycss-vfx-fade-left {\n  animation: roy-vfx-fade-left 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;\n  will-change: transform, opacity;\n}\n@keyframes roy-vfx-fade-left {\n  0%   { opacity: 0; transform: translateX(36px); }\n  100% { opacity: 1; transform: translateX(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-vfx-fade-left { animation: none; opacity: 1; }\n}"
+  },
+  {
+    "id": "vfx-fade-right",
+    "name": "VFX Fade Right",
+    "category": "animations",
+    "description": "Element fades in while sliding in from the left toward the right. Runs once on load.",
+    "tags": [
+      "entrance",
+      "fade",
+      "right",
+      "slide",
+      "vfx"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* VFX Fade Right */\n.roycss-vfx-fade-right {\n  animation: roy-vfx-fade-right 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;\n  will-change: transform, opacity;\n}\n@keyframes roy-vfx-fade-right {\n  0%   { opacity: 0; transform: translateX(-36px); }\n  100% { opacity: 1; transform: translateX(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-vfx-fade-right { animation: none; opacity: 1; }\n}"
+  },
+  {
+    "id": "vfx-scale-in",
+    "name": "VFX Scale In",
+    "category": "animations",
+    "description": "Element fades in while scaling up from 80% — a soft zoom-in entrance. Runs once on load.",
+    "tags": [
+      "entrance",
+      "scale",
+      "zoom",
+      "fade",
+      "vfx"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* VFX Scale In */\n.roycss-vfx-scale-in {\n  animation: roy-vfx-scale-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;\n  will-change: transform, opacity;\n}\n@keyframes roy-vfx-scale-in {\n  0%   { opacity: 0; transform: scale(0.8); }\n  100% { opacity: 1; transform: scale(1); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-vfx-scale-in { animation: none; opacity: 1; }\n}"
+  },
+  {
+    "id": "vfx-slide-reveal",
+    "name": "VFX Slide Reveal",
+    "category": "animations",
+    "description": "Element reveals via an animated clip-path wipe from left to right — a clean editorial slide-in.",
+    "tags": [
+      "entrance",
+      "slide",
+      "reveal",
+      "clip-path",
+      "wipe",
+      "vfx"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* VFX Slide Reveal */\n.roycss-vfx-slide-reveal {\n  animation: roy-vfx-slide-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;\n  will-change: clip-path, transform;\n}\n@keyframes roy-vfx-slide-reveal {\n  0%   {\n    clip-path: inset(0 100% 0 0);\n    transform: translateX(-16px);\n    opacity: 0;\n  }\n  60%  { opacity: 1; }\n  100% {\n    clip-path: inset(0 0 0 0);\n    transform: translateX(0);\n    opacity: 1;\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-vfx-slide-reveal { animation: none; opacity: 1; clip-path: none; }\n}"
+  },
+  {
+    "id": "vfx-clip-path-reveal",
+    "name": "VFX Clip-Path Reveal",
+    "category": "animations",
+    "description": "Element appears via an expanding circular clip-path — a mask wipe from the center outward.",
+    "tags": [
+      "entrance",
+      "clip-path",
+      "circle",
+      "reveal",
+      "mask",
+      "vfx"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* VFX Clip-Path Reveal */\n.roycss-vfx-clip-path-reveal {\n  animation: roy-vfx-clip-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;\n  will-change: clip-path, opacity;\n}\n@keyframes roy-vfx-clip-reveal {\n  0% {\n    clip-path: circle(0% at 50% 50%);\n    opacity: 0;\n  }\n  60% { opacity: 1; }\n  100% {\n    clip-path: circle(75% at 50% 50%);\n    opacity: 1;\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-vfx-clip-path-reveal { animation: none; opacity: 1; clip-path: none; }\n}"
+  },
+  {
+    "id": "vfx-flip-in",
+    "name": "VFX Flip In",
+    "category": "animations",
+    "description": "Element flips in along the Y axis with a fade — a 3D card-flip entrance.",
+    "tags": [
+      "entrance",
+      "flip",
+      "3d",
+      "rotate-y",
+      "vfx"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* VFX Flip In */\n.roycss-vfx-flip-in {\n  transform-origin: center;\n  animation: roy-vfx-flip-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;\n  will-change: transform, opacity;\n}\n@keyframes roy-vfx-flip-in {\n  0% {\n    opacity: 0;\n    transform: perspective(800px) rotateY(90deg) translateZ(-40px);\n  }\n  100% {\n    opacity: 1;\n    transform: perspective(800px) rotateY(0deg) translateZ(0);\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-vfx-flip-in { animation: none; opacity: 1; }\n}"
+  },
+  {
+    "id": "vfx-elastic-in",
+    "name": "VFX Elastic In",
+    "category": "animations",
+    "description": "Element springs in with an elastic cubic-bezier overshoot, scaling from 0 to 1 with a bouncy settle.",
+    "tags": [
+      "entrance",
+      "elastic",
+      "spring",
+      "bounce",
+      "scale",
+      "vfx"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* VFX Elastic In */\n.roycss-vfx-elastic-in {\n  animation: roy-vfx-elastic-in 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) both;\n  will-change: transform, opacity;\n}\n@keyframes roy-vfx-elastic-in {\n  0% {\n    opacity: 0;\n    transform: scale(0) rotate(-12deg);\n  }\n  60% {\n    opacity: 1;\n    transform: scale(1.12) rotate(2deg);\n  }\n  80% {\n    transform: scale(0.96) rotate(-1deg);\n  }\n  100% {\n    opacity: 1;\n    transform: scale(1) rotate(0deg);\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-vfx-elastic-in { animation: none; opacity: 1; }\n}"
+  },
+  {
+    "id": "vfx-stagger-fade",
+    "name": "VFX Stagger Fade",
+    "category": "animations",
+    "description": "Parent fades up; up to 8 children fade in sequentially with animation-delay — a pure-CSS staggered list entrance.",
+    "tags": [
+      "entrance",
+      "stagger",
+      "fade",
+      "list",
+      "delay",
+      "vfx"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* VFX Stagger Fade — apply .roycss-vfx-stagger-fade to a container; up to 8 children stagger in */\n.roycss-vfx-stagger-fade {\n  animation: roy-vfx-stagger-fade 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;\n}\n.roycss-vfx-stagger-fade > * {\n  opacity: 0;\n  animation: roy-vfx-stagger-child 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;\n  will-change: transform, opacity;\n}\n.roycss-vfx-stagger-fade > *:nth-child(1) { animation-delay: 0.10s; }\n.roycss-vfx-stagger-fade > *:nth-child(2) { animation-delay: 0.20s; }\n.roycss-vfx-stagger-fade > *:nth-child(3) { animation-delay: 0.30s; }\n.roycss-vfx-stagger-fade > *:nth-child(4) { animation-delay: 0.40s; }\n.roycss-vfx-stagger-fade > *:nth-child(5) { animation-delay: 0.50s; }\n.roycss-vfx-stagger-fade > *:nth-child(6) { animation-delay: 0.60s; }\n.roycss-vfx-stagger-fade > *:nth-child(7) { animation-delay: 0.70s; }\n.roycss-vfx-stagger-fade > *:nth-child(8) { animation-delay: 0.80s; }\n@keyframes roy-vfx-stagger-fade {\n  0%   { opacity: 0; transform: translateY(20px); }\n  100% { opacity: 1; transform: translateY(0); }\n}\n@keyframes roy-vfx-stagger-child {\n  0%   { opacity: 0; transform: translateY(12px); }\n  100% { opacity: 1; transform: translateY(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-vfx-stagger-fade,\n  .roycss-vfx-stagger-fade > * { animation: none; opacity: 1; }\n}"
   }
 ]

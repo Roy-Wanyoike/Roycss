@@ -25,38 +25,38 @@ export const effectsBatch47 = [
   {
     id: "scroll-intelligence-parallax-depth",
     name: "Parallax Depth",
-    category: "scroll-intelligence",
+    category: "scroll",
     description: "Multi-layer parallax creating 3D depth illusion on scroll",
     tags: ["scroll", "parallax", "depth", "3d", "scroll-intelligence"],
     previewType: "background",
     cssCode: `/* Scroll-Intelligence: Parallax Depth */
-.roycss-scroll-parallax-depth {
+.roycss-scroll-intelligence-parallax-depth {
   position: relative;
   width: 100%; height: 100%;
   background: linear-gradient(180deg, oklch(0.85 0.05 230), oklch(0.6 0.18 250));
   border-radius: 14px;
   overflow: hidden;
 }
-.roycss-scroll-parallax-depth::before,
-.roycss-scroll-parallax-depth::after,
-.roycss-scroll-parallax-depth > span {
+.roycss-scroll-intelligence-parallax-depth::before,
+.roycss-scroll-intelligence-parallax-depth::after,
+.roycss-scroll-intelligence-parallax-depth > span {
   content: "";
   position: absolute;
   display: block;
 }
-.roycss-scroll-parallax-depth::before {
+.roycss-scroll-intelligence-parallax-depth::before {
   inset: 30% 20% 30% 20%;
   background: radial-gradient(ellipse at center, oklch(0.9 0.12 350) 0 60%, transparent 70%);
   filter: blur(8px);
   animation: roy-scroll-parallax-depth-far 18s linear infinite;
 }
-.roycss-scroll-parallax-depth::after {
+.roycss-scroll-intelligence-parallax-depth::after {
   inset: 50% 35% 15% 35%;
   background: radial-gradient(circle at center, oklch(0.85 0.18 140) 0 60%, transparent 70%);
   filter: blur(4px);
   animation: roy-scroll-parallax-depth-mid 12s linear infinite;
 }
-.roycss-scroll-parallax-depth > span {
+.roycss-scroll-intelligence-parallax-depth > span {
   inset: 70% 45% 5% 45%;
   background: radial-gradient(circle at center, oklch(0.95 0.1 60) 0 50%, transparent 70%);
   animation: roy-scroll-parallax-depth-near 7s linear infinite;
@@ -65,9 +65,9 @@ export const effectsBatch47 = [
 @keyframes roy-scroll-parallax-depth-mid  { 0%,100% { transform: translateX(-22%); } 50% { transform: translateX(22%); } }
 @keyframes roy-scroll-parallax-depth-near { 0%,100% { transform: translateX(-40%); } 50% { transform: translateX(40%); } }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-scroll-parallax-depth::before,
-  .roycss-scroll-parallax-depth::after,
-  .roycss-scroll-parallax-depth > span { animation: none; }
+  .roycss-scroll-intelligence-parallax-depth::before,
+  .roycss-scroll-intelligence-parallax-depth::after,
+  .roycss-scroll-intelligence-parallax-depth > span { animation: none; }
 }`,
   },
 
@@ -75,13 +75,13 @@ export const effectsBatch47 = [
   {
     id: "scroll-intelligence-speed-morph",
     name: "Speed Morph",
-    category: "scroll-intelligence",
+    category: "scroll",
     description: "Text morphs shape and skew based on simulated scroll velocity",
     tags: ["scroll", "velocity", "morph", "text", "scroll-intelligence"],
     previewType: "text",
     previewText: "Velocity",
     cssCode: `/* Scroll-Intelligence: Speed Morph */
-.roycss-scroll-speed-morph {
+.roycss-scroll-intelligence-speed-morph {
   display: inline-block;
   font: 900 36px/1 system-ui, sans-serif;
   letter-spacing: -0.03em;
@@ -101,7 +101,7 @@ export const effectsBatch47 = [
   100% { transform: scaleX(1) skewX(0deg);   filter: blur(0); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-scroll-speed-morph { animation: none; transform: none; }
+  .roycss-scroll-intelligence-speed-morph { animation: none; transform: none; }
 }`,
   },
 
@@ -109,12 +109,12 @@ export const effectsBatch47 = [
   {
     id: "scroll-intelligence-horizontal-section",
     name: "Horizontal Section",
-    category: "scroll-intelligence",
+    category: "scroll",
     description: "Full-width section scrolls horizontally while page scrolls vertically",
     tags: ["scroll", "horizontal", "section", "scroll-intelligence"],
     previewType: "background",
     cssCode: `/* Scroll-Intelligence: Horizontal Section */
-.roycss-scroll-horizontal-section {
+.roycss-scroll-intelligence-horizontal-section {
   position: relative;
   width: 100%; height: 100%;
   background: oklch(0.18 0.04 260);
@@ -122,7 +122,7 @@ export const effectsBatch47 = [
   overflow: hidden;
   perspective: 800px;
 }
-.roycss-scroll-horizontal-section > .track {
+.roycss-scroll-intelligence-horizontal-section > .track {
   position: absolute;
   inset: 0;
   display: flex;
@@ -131,7 +131,7 @@ export const effectsBatch47 = [
   align-items: center;
   animation: roy-scroll-horizontal-section 9s linear infinite;
 }
-.roycss-scroll-horizontal-section > .track > span {
+.roycss-scroll-intelligence-horizontal-section > .track > span {
   flex: 0 0 22%;
   height: 60%;
   background: linear-gradient(135deg, oklch(0.7 0.18 280), oklch(0.6 0.22 320));
@@ -143,7 +143,7 @@ export const effectsBatch47 = [
   to   { transform: translateX(-50%); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-scroll-horizontal-section > .track { animation: none; }
+  .roycss-scroll-intelligence-horizontal-section > .track { animation: none; }
 }`,
   },
 
@@ -151,12 +151,12 @@ export const effectsBatch47 = [
   {
     id: "scroll-intelligence-color-shift",
     name: "Color Spectrum Shift",
-    category: "scroll-intelligence",
+    category: "scroll",
     description: "Background hue rotates through full spectrum as you scroll",
     tags: ["scroll", "color", "hue", "spectrum", "scroll-intelligence"],
     previewType: "background",
     cssCode: `/* Scroll-Intelligence: Color Spectrum Shift */
-.roycss-scroll-color-shift {
+.roycss-scroll-intelligence-color-shift {
   position: relative;
   width: 100%; height: 100%;
   border-radius: 14px;
@@ -164,7 +164,7 @@ export const effectsBatch47 = [
   background-size: 300% 300%;
   animation: roy-scroll-color-shift 12s linear infinite;
 }
-.roycss-scroll-color-shift::after {
+.roycss-scroll-intelligence-color-shift::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -177,7 +177,7 @@ export const effectsBatch47 = [
   100% { background-position: 0% 50%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-scroll-color-shift { animation: none; }
+  .roycss-scroll-intelligence-color-shift { animation: none; }
 }`,
   },
 
@@ -185,12 +185,12 @@ export const effectsBatch47 = [
   {
     id: "scroll-intelligence-cinematic-fade",
     name: "Cinematic Fade",
-    category: "scroll-intelligence",
+    category: "scroll",
     description: "Elements fade and blur in/out at specific scroll positions",
     tags: ["scroll", "fade", "cinematic", "blur", "scroll-intelligence"],
     previewType: "box",
     cssCode: `/* Scroll-Intelligence: Cinematic Fade */
-.roycss-scroll-cinematic-fade {
+.roycss-scroll-intelligence-cinematic-fade {
   position: relative;
   width: 100%; height: 100%;
   background: linear-gradient(135deg, oklch(0.2 0.03 250), oklch(0.35 0.05 280));
@@ -199,7 +199,7 @@ export const effectsBatch47 = [
   place-items: center;
   overflow: hidden;
 }
-.roycss-scroll-cinematic-fade::before {
+.roycss-scroll-intelligence-cinematic-fade::before {
   content: "";
   position: absolute;
   width: 70%; height: 70%;
@@ -208,7 +208,7 @@ export const effectsBatch47 = [
   filter: blur(6px);
   animation: roy-scroll-cinematic-fade 6s ease-in-out infinite;
 }
-.roycss-scroll-cinematic-fade::after {
+.roycss-scroll-intelligence-cinematic-fade::after {
   content: "Cinematic";
   position: relative;
   color: oklch(0.98 0 0);
@@ -225,8 +225,8 @@ export const effectsBatch47 = [
   50%      { opacity: 1; filter: blur(0);  transform: translateY(0); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-scroll-cinematic-fade::before,
-  .roycss-scroll-cinematic-fade::after { animation: none; opacity: 1; transform: none; filter: none; }
+  .roycss-scroll-intelligence-cinematic-fade::before,
+  .roycss-scroll-intelligence-cinematic-fade::after { animation: none; opacity: 1; transform: none; filter: none; }
 }`,
   },
 
@@ -234,39 +234,39 @@ export const effectsBatch47 = [
   {
     id: "scroll-intelligence-text-reveal",
     name: "Text Reveal",
-    category: "scroll-intelligence",
+    category: "scroll",
     description: "Characters appear one by one as they enter the viewport",
     tags: ["scroll", "text", "reveal", "stagger", "scroll-intelligence"],
     previewType: "text",
     previewText: "Reveal",
     childCount: 6,
     cssCode: `/* Scroll-Intelligence: Text Reveal */
-.roycss-scroll-text-reveal {
+.roycss-scroll-intelligence-text-reveal {
   display: inline-flex;
   font: 800 36px/1 system-ui, sans-serif;
   color: oklch(0.95 0.1 220);
   letter-spacing: 0.02em;
 }
-.roycss-scroll-text-reveal > span {
+.roycss-scroll-intelligence-text-reveal > span {
   display: inline-block;
   opacity: 0;
   transform: translateY(40%) rotateX(-90deg);
   transform-origin: bottom;
   animation: roy-scroll-text-reveal 3s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
-.roycss-scroll-text-reveal > span:nth-child(1) { animation-delay: 0s; }
-.roycss-scroll-text-reveal > span:nth-child(2) { animation-delay: 0.1s; }
-.roycss-scroll-text-reveal > span:nth-child(3) { animation-delay: 0.2s; }
-.roycss-scroll-text-reveal > span:nth-child(4) { animation-delay: 0.3s; }
-.roycss-scroll-text-reveal > span:nth-child(5) { animation-delay: 0.4s; }
-.roycss-scroll-text-reveal > span:nth-child(6) { animation-delay: 0.5s; }
+.roycss-scroll-intelligence-text-reveal > span:nth-child(1) { animation-delay: 0s; }
+.roycss-scroll-intelligence-text-reveal > span:nth-child(2) { animation-delay: 0.1s; }
+.roycss-scroll-intelligence-text-reveal > span:nth-child(3) { animation-delay: 0.2s; }
+.roycss-scroll-intelligence-text-reveal > span:nth-child(4) { animation-delay: 0.3s; }
+.roycss-scroll-intelligence-text-reveal > span:nth-child(5) { animation-delay: 0.4s; }
+.roycss-scroll-intelligence-text-reveal > span:nth-child(6) { animation-delay: 0.5s; }
 @keyframes roy-scroll-text-reveal {
   0%       { opacity: 0; transform: translateY(40%) rotateX(-90deg); }
   20%, 80% { opacity: 1; transform: translateY(0)    rotateX(0); }
   100%     { opacity: 0; transform: translateY(-40%) rotateX(90deg); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-scroll-text-reveal > span { animation: none; opacity: 1; transform: none; }
+  .roycss-scroll-intelligence-text-reveal > span { animation: none; opacity: 1; transform: none; }
 }`,
   },
 
@@ -274,12 +274,12 @@ export const effectsBatch47 = [
   {
     id: "scroll-intelligence-progress-morph",
     name: "Progress Morph",
-    category: "scroll-intelligence",
+    category: "scroll",
     description: "Shape morphs from circle to square based on scroll progress",
     tags: ["scroll", "morph", "progress", "shape", "scroll-intelligence"],
     previewType: "box",
     cssCode: `/* Scroll-Intelligence: Progress Morph */
-.roycss-scroll-progress-morph {
+.roycss-scroll-intelligence-progress-morph {
   width: 120px; height: 120px;
   background: linear-gradient(135deg, oklch(0.72 0.22 175), oklch(0.6 0.24 220));
   animation: roy-scroll-progress-morph 6s ease-in-out infinite;
@@ -293,7 +293,7 @@ export const effectsBatch47 = [
   100% { border-radius: 50%; transform: rotate(360deg) scale(1); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-scroll-progress-morph { animation: none; border-radius: 50%; transform: none; }
+  .roycss-scroll-intelligence-progress-morph { animation: none; border-radius: 50%; transform: none; }
 }`,
   },
 
@@ -301,19 +301,19 @@ export const effectsBatch47 = [
   {
     id: "scroll-intelligence-sticky-storytelling",
     name: "Sticky Storytelling",
-    category: "scroll-intelligence",
+    category: "scroll",
     description: "Sticky element stays fixed while scene content scrolls past",
     tags: ["scroll", "sticky", "storytelling", "scene", "scroll-intelligence"],
     previewType: "background",
     cssCode: `/* Scroll-Intelligence: Sticky Storytelling */
-.roycss-scroll-sticky-storytelling {
+.roycss-scroll-intelligence-sticky-storytelling {
   position: relative;
   width: 100%; height: 100%;
   background: oklch(0.12 0.04 240);
   border-radius: 14px;
   overflow: hidden;
 }
-.roycss-scroll-sticky-storytelling::before {
+.roycss-scroll-intelligence-sticky-storytelling::before {
   content: "";
   position: sticky;
   top: 50%;
@@ -325,7 +325,7 @@ export const effectsBatch47 = [
   box-shadow: 0 0 60px oklch(0.8 0.18 40 / 0.6);
   animation: roy-scroll-sticky-storytelling 8s ease-in-out infinite;
 }
-.roycss-scroll-sticky-storytelling::after {
+.roycss-scroll-intelligence-sticky-storytelling::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -341,8 +341,8 @@ export const effectsBatch47 = [
   to   { transform: translateY(-30%); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-scroll-sticky-storytelling::before,
-  .roycss-scroll-sticky-storytelling::after { animation: none; }
+  .roycss-scroll-intelligence-sticky-storytelling::before,
+  .roycss-scroll-intelligence-sticky-storytelling::after { animation: none; }
 }`,
   },
 
@@ -350,32 +350,32 @@ export const effectsBatch47 = [
   {
     id: "scroll-intelligence-image-transition",
     name: "Image Transition",
-    category: "scroll-intelligence",
+    category: "scroll",
     description: "Cross-fade between scenes as you scroll between sections",
     tags: ["scroll", "image", "transition", "crossfade", "scroll-intelligence"],
     previewType: "background",
     cssCode: `/* Scroll-Intelligence: Image Transition */
-.roycss-scroll-image-transition {
+.roycss-scroll-intelligence-image-transition {
   position: relative;
   width: 100%; height: 100%;
   border-radius: 14px;
   overflow: hidden;
   background: oklch(0.1 0.04 230);
 }
-.roycss-scroll-image-transition::before,
-.roycss-scroll-image-transition::after {
+.roycss-scroll-intelligence-image-transition::before,
+.roycss-scroll-intelligence-image-transition::after {
   content: "";
   position: absolute;
   inset: 0;
   background-size: cover;
   background-position: center;
 }
-.roycss-scroll-image-transition::before {
+.roycss-scroll-intelligence-image-transition::before {
   background: radial-gradient(circle at 30% 30%, oklch(0.85 0.18 30), oklch(0.4 0.2 0));
   clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
   animation: roy-scroll-image-transition-a 7s ease-in-out infinite;
 }
-.roycss-scroll-image-transition::after {
+.roycss-scroll-intelligence-image-transition::after {
   background: radial-gradient(circle at 70% 70%, oklch(0.7 0.18 200), oklch(0.35 0.22 260));
   clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
   animation: roy-scroll-image-transition-b 7s ease-in-out infinite;
@@ -389,8 +389,8 @@ export const effectsBatch47 = [
   50%      { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-scroll-image-transition::before,
-  .roycss-scroll-image-transition::after { animation: none; }
+  .roycss-scroll-intelligence-image-transition::before,
+  .roycss-scroll-intelligence-image-transition::after { animation: none; }
 }`,
   },
 
@@ -398,29 +398,29 @@ export const effectsBatch47 = [
   {
     id: "scroll-intelligence-text-choreography",
     name: "Text Choreography",
-    category: "scroll-intelligence",
+    category: "scroll",
     description: "Words fly in and out in sequence on scroll rhythm",
     tags: ["scroll", "text", "choreography", "kinetic", "scroll-intelligence"],
     previewType: "text",
     previewText: "Flow",
     childCount: 4,
     cssCode: `/* Scroll-Intelligence: Text Choreography */
-.roycss-scroll-text-choreography {
+.roycss-scroll-intelligence-text-choreography {
   position: relative;
   display: inline-flex;
   font: 800 36px/1 system-ui, sans-serif;
   color: oklch(0.98 0.02 220);
   letter-spacing: -0.02em;
 }
-.roycss-scroll-text-choreography > span {
+.roycss-scroll-intelligence-text-choreography > span {
   display: inline-block;
   opacity: 0;
   animation: roy-scroll-text-choreography 4s cubic-bezier(0.5, 0, 0.1, 1) infinite;
 }
-.roycss-scroll-text-choreography > span:nth-child(1) { animation-delay: 0s;    color: oklch(0.9 0.2 30); }
-.roycss-scroll-text-choreography > span:nth-child(2) { animation-delay: 0.25s; color: oklch(0.85 0.2 140); }
-.roycss-scroll-text-choreography > span:nth-child(3) { animation-delay: 0.5s;  color: oklch(0.85 0.2 230); }
-.roycss-scroll-text-choreography > span:nth-child(4) { animation-delay: 0.75s; color: oklch(0.85 0.2 320); }
+.roycss-scroll-intelligence-text-choreography > span:nth-child(1) { animation-delay: 0s;    color: oklch(0.9 0.2 30); }
+.roycss-scroll-intelligence-text-choreography > span:nth-child(2) { animation-delay: 0.25s; color: oklch(0.85 0.2 140); }
+.roycss-scroll-intelligence-text-choreography > span:nth-child(3) { animation-delay: 0.5s;  color: oklch(0.85 0.2 230); }
+.roycss-scroll-intelligence-text-choreography > span:nth-child(4) { animation-delay: 0.75s; color: oklch(0.85 0.2 320); }
 @keyframes roy-scroll-text-choreography {
   0%   { opacity: 0; transform: translateX(-80px) rotate(-8deg); }
   20%  { opacity: 1; transform: translateX(0) rotate(0); }
@@ -428,7 +428,7 @@ export const effectsBatch47 = [
   80%, 100% { opacity: 0; transform: translateX(80px) rotate(8deg); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-scroll-text-choreography > span { animation: none; opacity: 1; transform: none; }
+  .roycss-scroll-intelligence-text-choreography > span { animation: none; opacity: 1; transform: none; }
 }`,
   },
 
@@ -436,12 +436,12 @@ export const effectsBatch47 = [
   {
     id: "scroll-intelligence-section-morph",
     name: "Section Morph",
-    category: "scroll-intelligence",
+    category: "scroll",
     description: "Section container morphs shape and corners on scroll",
     tags: ["scroll", "section", "morph", "container", "scroll-intelligence"],
     previewType: "box",
     cssCode: `/* Scroll-Intelligence: Section Morph */
-.roycss-scroll-section-morph {
+.roycss-scroll-intelligence-section-morph {
   width: 100%; height: 100%;
   background:
     linear-gradient(135deg, oklch(0.72 0.2 200), oklch(0.55 0.24 280));
@@ -451,7 +451,7 @@ export const effectsBatch47 = [
   position: relative;
   overflow: hidden;
 }
-.roycss-scroll-section-morph::before {
+.roycss-scroll-intelligence-section-morph::before {
   content: "MORPH";
   color: oklch(1 0 0 / 0.92);
   font: 900 28px/1 system-ui, sans-serif;
@@ -465,7 +465,7 @@ export const effectsBatch47 = [
   100% { border-radius: 14px 14px 14px 14px; transform: scale(1) rotate(0deg); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-scroll-section-morph { animation: none; border-radius: 14px; }
+  .roycss-scroll-intelligence-section-morph { animation: none; border-radius: 14px; }
 }`,
   },
 
@@ -473,12 +473,12 @@ export const effectsBatch47 = [
   {
     id: "scroll-intelligence-progress-ring",
     name: "Progress Ring",
-    category: "scroll-intelligence",
+    category: "scroll",
     description: "Circular SVG-free progress ring tracking scroll position",
     tags: ["scroll", "progress", "ring", "circle", "scroll-intelligence"],
     previewType: "box",
     cssCode: `/* Scroll-Intelligence: Progress Ring */
-.roycss-scroll-progress-ring {
+.roycss-scroll-intelligence-progress-ring {
   position: relative;
   width: 140px; height: 140px;
   border-radius: 50%;
@@ -488,7 +488,7 @@ export const effectsBatch47 = [
   place-items: center;
   animation: roy-scroll-progress-ring 4s linear infinite;
 }
-.roycss-scroll-progress-ring::before {
+.roycss-scroll-intelligence-progress-ring::before {
   content: "";
   position: absolute;
   inset: 12%;
@@ -496,7 +496,7 @@ export const effectsBatch47 = [
   border-radius: 50%;
   z-index: 1;
 }
-.roycss-scroll-progress-ring::after {
+.roycss-scroll-intelligence-progress-ring::after {
   content: "75%";
   position: relative;
   z-index: 2;
@@ -508,7 +508,7 @@ export const effectsBatch47 = [
   to   { transform: rotate(270deg); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-scroll-progress-ring { animation: none; }
+  .roycss-scroll-intelligence-progress-ring { animation: none; }
 }`,
   },
 
@@ -516,12 +516,12 @@ export const effectsBatch47 = [
   {
     id: "scroll-intelligence-velocity-blur",
     name: "Velocity Blur",
-    category: "scroll-intelligence",
+    category: "scroll",
     description: "Element blurs when scrolling fast, sharpens when slow",
     tags: ["scroll", "velocity", "blur", "kinetic", "scroll-intelligence"],
     previewType: "box",
     cssCode: `/* Scroll-Intelligence: Velocity Blur */
-.roycss-scroll-velocity-blur {
+.roycss-scroll-intelligence-velocity-blur {
   width: 100%; height: 100%;
   background: linear-gradient(135deg, oklch(0.65 0.2 280), oklch(0.85 0.16 320));
   border-radius: 14px;
@@ -532,7 +532,7 @@ export const effectsBatch47 = [
   letter-spacing: 0.1em;
   animation: roy-scroll-velocity-blur 3s ease-in-out infinite;
 }
-.roycss-scroll-velocity-blur::before {
+.roycss-scroll-intelligence-velocity-blur::before {
   content: "FAST";
   display: block;
   animation: roy-scroll-velocity-blur-content 3s ease-in-out infinite;
@@ -547,8 +547,8 @@ export const effectsBatch47 = [
   25%, 75% { content: "FAST"; opacity: 0.85; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-scroll-velocity-blur,
-  .roycss-scroll-velocity-blur::before { animation: none; filter: none; transform: none; }
+  .roycss-scroll-intelligence-velocity-blur,
+  .roycss-scroll-intelligence-velocity-blur::before { animation: none; filter: none; transform: none; }
 }`,
   },
 
@@ -556,12 +556,12 @@ export const effectsBatch47 = [
   {
     id: "scroll-intelligence-pinned-card",
     name: "Pinned Card",
-    category: "scroll-intelligence",
+    category: "scroll",
     description: "Card pins to viewport and tilts, releases at section end",
     tags: ["scroll", "pinned", "card", "sticky", "scroll-intelligence"],
     previewType: "card",
     cssCode: `/* Scroll-Intelligence: Pinned Card */
-.roycss-scroll-pinned-card {
+.roycss-scroll-intelligence-pinned-card {
   position: relative;
   width: 220px; height: 280px;
   background: linear-gradient(160deg, oklch(0.92 0.05 230), oklch(0.7 0.18 280));
@@ -573,7 +573,7 @@ export const effectsBatch47 = [
   animation: roy-scroll-pinned-card 6s ease-in-out infinite;
   transform-style: preserve-3d;
 }
-.roycss-scroll-pinned-card::before {
+.roycss-scroll-intelligence-pinned-card::before {
   content: "";
   position: absolute;
   inset: -2px;
@@ -581,7 +581,7 @@ export const effectsBatch47 = [
   background-size: 200% 200%;
   animation: roy-scroll-pinned-card-shine 4s linear infinite;
 }
-.roycss-scroll-pinned-card::after {
+.roycss-scroll-intelligence-pinned-card::after {
   content: "PINNED";
   position: relative;
   z-index: 2;
@@ -600,8 +600,8 @@ export const effectsBatch47 = [
   to   { background-position: 200% 200%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-scroll-pinned-card,
-  .roycss-scroll-pinned-card::before { animation: none; }
+  .roycss-scroll-intelligence-pinned-card,
+  .roycss-scroll-intelligence-pinned-card::before { animation: none; }
 }`,
   },
 
@@ -609,12 +609,12 @@ export const effectsBatch47 = [
   {
     id: "scroll-intelligence-gradient-shift",
     name: "Gradient Shift",
-    category: "scroll-intelligence",
+    category: "scroll",
     description: "Gradient angle and position shift continuously with scroll",
     tags: ["scroll", "gradient", "shift", "angle", "scroll-intelligence"],
     previewType: "background",
     cssCode: `/* Scroll-Intelligence: Gradient Shift */
-.roycss-scroll-gradient-shift {
+.roycss-scroll-intelligence-gradient-shift {
   width: 100%; height: 100%;
   background: linear-gradient(135deg, oklch(0.75 0.22 200), oklch(0.65 0.24 320), oklch(0.7 0.22 40));
   background-size: 200% 200%;
@@ -629,7 +629,7 @@ export const effectsBatch47 = [
   100% { background-position: 0% 0%;   filter: hue-rotate(360deg); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-scroll-gradient-shift { animation: none; }
+  .roycss-scroll-intelligence-gradient-shift { animation: none; }
 }`,
   },
 
@@ -637,12 +637,12 @@ export const effectsBatch47 = [
   {
     id: "scroll-intelligence-scale-reveal",
     name: "Scale Reveal",
-    category: "scroll-intelligence",
+    category: "scroll",
     description: "Elements scale from 0 to full size as they enter viewport",
     tags: ["scroll", "scale", "reveal", "entry", "scroll-intelligence"],
     previewType: "box",
     cssCode: `/* Scroll-Intelligence: Scale Reveal */
-.roycss-scroll-scale-reveal {
+.roycss-scroll-intelligence-scale-reveal {
   width: 100%; height: 100%;
   background: linear-gradient(135deg, oklch(0.25 0.05 250), oklch(0.45 0.2 320));
   border-radius: 14px;
@@ -650,19 +650,19 @@ export const effectsBatch47 = [
   place-items: center;
   position: relative;
 }
-.roycss-scroll-scale-reveal::before,
-.roycss-scroll-scale-reveal::after {
+.roycss-scroll-intelligence-scale-reveal::before,
+.roycss-scroll-intelligence-scale-reveal::after {
   content: "";
   position: absolute;
   border-radius: 50%;
   animation: roy-scroll-scale-reveal 4s ease-in-out infinite;
 }
-.roycss-scroll-scale-reveal::before {
+.roycss-scroll-intelligence-scale-reveal::before {
   width: 70%; height: 70%;
   background: radial-gradient(circle at center, oklch(0.95 0.18 60), oklch(0.7 0.2 320));
   animation-delay: 0s;
 }
-.roycss-scroll-scale-reveal::after {
+.roycss-scroll-intelligence-scale-reveal::after {
   width: 30%; height: 30%;
   background: radial-gradient(circle at center, oklch(1 0 0 / 0.95), oklch(0.95 0.1 220));
   animation-delay: 0.3s;
@@ -673,8 +673,8 @@ export const effectsBatch47 = [
   100% { transform: scale(1.3); opacity: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-scroll-scale-reveal::before,
-  .roycss-scroll-scale-reveal::after { animation: none; transform: scale(1); opacity: 1; }
+  .roycss-scroll-intelligence-scale-reveal::before,
+  .roycss-scroll-intelligence-scale-reveal::after { animation: none; transform: scale(1); opacity: 1; }
 }`,
   },
 
@@ -682,12 +682,12 @@ export const effectsBatch47 = [
   {
     id: "scroll-intelligence-rotate-3d",
     name: "Rotate 3D",
-    category: "scroll-intelligence",
+    category: "scroll",
     description: "Element rotates in full 3D space tied to scroll position",
     tags: ["scroll", "3d", "rotate", "perspective", "scroll-intelligence"],
     previewType: "box",
     cssCode: `/* Scroll-Intelligence: Rotate 3D */
-.roycss-scroll-rotate-3d {
+.roycss-scroll-intelligence-rotate-3d {
   width: 140px; height: 140px;
   background: linear-gradient(135deg, oklch(0.78 0.18 180), oklch(0.55 0.22 280));
   border-radius: 18px;
@@ -695,14 +695,14 @@ export const effectsBatch47 = [
   transform-style: preserve-3d;
   animation: roy-scroll-rotate-3d 6s linear infinite;
 }
-.roycss-scroll-rotate-3d::before {
+.roycss-scroll-intelligence-rotate-3d::before {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(135deg, transparent 40%, oklch(1 0 0 / 0.4) 50%, transparent 60%);
   border-radius: inherit;
 }
-.roycss-scroll-rotate-3d::after {
+.roycss-scroll-intelligence-rotate-3d::after {
   content: "3D";
   position: absolute;
   top: 50%; left: 50%;
@@ -719,7 +719,7 @@ export const effectsBatch47 = [
   100% { transform: perspective(700px) rotateX(0)    rotateY(0)    rotateZ(0); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-scroll-rotate-3d { animation: none; }
+  .roycss-scroll-intelligence-rotate-3d { animation: none; }
 }`,
   },
 
@@ -727,13 +727,13 @@ export const effectsBatch47 = [
   {
     id: "scroll-intelligence-stagger-reveal",
     name: "Stagger Reveal",
-    category: "scroll-intelligence",
+    category: "scroll",
     description: "Child elements reveal in a staggered cascade on scroll",
     tags: ["scroll", "stagger", "reveal", "cascade", "scroll-intelligence"],
     previewType: "box",
     childCount: 5,
     cssCode: `/* Scroll-Intelligence: Stagger Reveal */
-.roycss-scroll-stagger-reveal {
+.roycss-scroll-intelligence-stagger-reveal {
   width: 100%; height: 100%;
   display: flex;
   align-items: center;
@@ -742,7 +742,7 @@ export const effectsBatch47 = [
   background: linear-gradient(135deg, oklch(0.2 0.04 250), oklch(0.32 0.08 270));
   border-radius: 14px;
 }
-.roycss-scroll-stagger-reveal > span {
+.roycss-scroll-intelligence-stagger-reveal > span {
   width: 24px; height: 80px;
   background: linear-gradient(180deg, oklch(0.85 0.2 50), oklch(0.65 0.22 320));
   border-radius: 8px;
@@ -750,18 +750,18 @@ export const effectsBatch47 = [
   transform: translateY(40px) scale(0.6);
   animation: roy-scroll-stagger-reveal 3s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
 }
-.roycss-scroll-stagger-reveal > span:nth-child(1) { animation-delay: 0s; }
-.roycss-scroll-stagger-reveal > span:nth-child(2) { animation-delay: 0.15s; }
-.roycss-scroll-stagger-reveal > span:nth-child(3) { animation-delay: 0.3s; }
-.roycss-scroll-stagger-reveal > span:nth-child(4) { animation-delay: 0.45s; }
-.roycss-scroll-stagger-reveal > span:nth-child(5) { animation-delay: 0.6s; }
+.roycss-scroll-intelligence-stagger-reveal > span:nth-child(1) { animation-delay: 0s; }
+.roycss-scroll-intelligence-stagger-reveal > span:nth-child(2) { animation-delay: 0.15s; }
+.roycss-scroll-intelligence-stagger-reveal > span:nth-child(3) { animation-delay: 0.3s; }
+.roycss-scroll-intelligence-stagger-reveal > span:nth-child(4) { animation-delay: 0.45s; }
+.roycss-scroll-intelligence-stagger-reveal > span:nth-child(5) { animation-delay: 0.6s; }
 @keyframes roy-scroll-stagger-reveal {
   0%   { opacity: 0; transform: translateY(40px) scale(0.6); }
   40%, 70% { opacity: 1; transform: translateY(0) scale(1); }
   100% { opacity: 0; transform: translateY(-40px) scale(0.6); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-scroll-stagger-reveal > span { animation: none; opacity: 1; transform: none; }
+  .roycss-scroll-intelligence-stagger-reveal > span { animation: none; opacity: 1; transform: none; }
 }`,
   },
 
@@ -769,19 +769,19 @@ export const effectsBatch47 = [
   {
     id: "scroll-intelligence-progress-bar-top",
     name: "Progress Bar Top",
-    category: "scroll-intelligence",
+    category: "scroll",
     description: "Thin gradient progress bar pinned to top tracking scroll",
     tags: ["scroll", "progress", "bar", "top", "scroll-intelligence"],
     previewType: "background",
     cssCode: `/* Scroll-Intelligence: Progress Bar Top */
-.roycss-scroll-progress-bar-top {
+.roycss-scroll-intelligence-progress-bar-top {
   position: relative;
   width: 100%; height: 100%;
   background: linear-gradient(180deg, oklch(0.18 0.04 250), oklch(0.35 0.08 270));
   border-radius: 14px;
   overflow: hidden;
 }
-.roycss-scroll-progress-bar-top::before {
+.roycss-scroll-intelligence-progress-bar-top::before {
   content: "";
   position: absolute;
   top: 0; left: 0;
@@ -792,7 +792,7 @@ export const effectsBatch47 = [
   box-shadow: 0 0 12px oklch(0.75 0.22 175 / 0.7);
   animation: roy-scroll-progress-bar-top 4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
 }
-.roycss-scroll-progress-bar-top::after {
+.roycss-scroll-intelligence-progress-bar-top::after {
   content: "Scroll Position";
   position: absolute;
   bottom: 16px; left: 50%;
@@ -806,7 +806,7 @@ export const effectsBatch47 = [
   100% { transform: scaleX(1); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-scroll-progress-bar-top::before { animation: none; transform: scaleX(0.6); }
+  .roycss-scroll-intelligence-progress-bar-top::before { animation: none; transform: scaleX(0.6); }
 }`,
   },
 
@@ -814,19 +814,19 @@ export const effectsBatch47 = [
   {
     id: "scroll-intelligence-snap-sections",
     name: "Snap Sections",
-    category: "scroll-intelligence",
+    category: "scroll",
     description: "Sections snap into place using scroll-snap on a vertical track",
     tags: ["scroll", "snap", "sections", "scroll-snap", "scroll-intelligence"],
     previewType: "background",
     cssCode: `/* Scroll-Intelligence: Snap Sections */
-.roycss-scroll-snap-sections {
+.roycss-scroll-intelligence-snap-sections {
   width: 100%; height: 100%;
   background: oklch(0.15 0.04 250);
   border-radius: 14px;
   overflow: hidden;
   position: relative;
 }
-.roycss-scroll-snap-sections::before {
+.roycss-scroll-intelligence-snap-sections::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -835,7 +835,7 @@ export const effectsBatch47 = [
   background-size: 100% 300%;
   animation: roy-scroll-snap-sections 9s steps(3, end) infinite;
 }
-.roycss-scroll-snap-sections::after {
+.roycss-scroll-intelligence-snap-sections::after {
   content: "SNAP";
   position: absolute;
   top: 50%; left: 50%;
@@ -852,7 +852,7 @@ export const effectsBatch47 = [
   100% { background-position: 0% 0%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-scroll-snap-sections::before { animation: none; background-position: 0% 0%; }
+  .roycss-scroll-intelligence-snap-sections::before { animation: none; background-position: 0% 0%; }
 }`,
   },
 ] as unknown as CSSEffect[];

@@ -23,7 +23,7 @@ export const effectsBatch44 = [
   {
     id: "haptics-pressure-press",
     name: "Pressure Press",
-    category: "haptics",
+    category: "microinteractions",
     description: "Element deforms with deepening inset shadow and scale as if physically pressed",
     tags: ["haptics", "press", "tactile", "physical", "deform"],
     previewType: "box",
@@ -57,7 +57,7 @@ export const effectsBatch44 = [
   {
     id: "haptics-surface-tension",
     name: "Surface Tension",
-    category: "haptics",
+    category: "microinteractions",
     description: "Liquid-like ripple with surface-tension behavior emanates on hover",
     tags: ["haptics", "surface-tension", "ripple", "liquid", "hover"],
     previewType: "box",
@@ -102,7 +102,7 @@ export const effectsBatch44 = [
   {
     id: "haptics-rubber-stretch",
     name: "Rubber Stretch",
-    category: "haptics",
+    category: "microinteractions",
     description: "Element stretches like rubber when hovered and snaps back on release",
     tags: ["haptics", "rubber", "stretch", "elastic", "snap"],
     previewType: "box",
@@ -139,7 +139,7 @@ export const effectsBatch44 = [
   {
     id: "haptics-weight-settle",
     name: "Weight Settle",
-    category: "haptics",
+    category: "microinteractions",
     description: "Heavy element settles with bounce and squash on load, like a heavy weight",
     tags: ["haptics", "weight", "settle", "bounce", "squash", "load"],
     previewType: "box",
@@ -166,7 +166,7 @@ export const effectsBatch44 = [
   {
     id: "haptics-light-float",
     name: "Light Float",
-    category: "haptics",
+    category: "microinteractions",
     description: "Element gently floats up and down as if resting on water",
     tags: ["haptics", "float", "buoyancy", "water", "ambient"],
     previewType: "box",
@@ -191,7 +191,7 @@ export const effectsBatch44 = [
   {
     id: "haptics-texture-concrete",
     name: "Concrete Texture",
-    category: "haptics",
+    category: "microinteractions",
     description: "Directional grain and noise that shifts on hover, evoking raw concrete",
     tags: ["haptics", "texture", "concrete", "grain", "noise"],
     previewType: "box",
@@ -232,7 +232,7 @@ export const effectsBatch44 = [
   {
     id: "haptics-texture-metal",
     name: "Brushed Metal",
-    category: "haptics",
+    category: "microinteractions",
     description: "Brushed metal surface with a sweeping light reflection on hover",
     tags: ["haptics", "texture", "metal", "brushed", "reflection"],
     previewType: "box",
@@ -267,7 +267,7 @@ export const effectsBatch44 = [
   {
     id: "haptics-texture-fabric",
     name: "Fabric Weave",
-    category: "haptics",
+    category: "microinteractions",
     description: "Fabric weave texture with subtle horizontal drift on hover",
     tags: ["haptics", "texture", "fabric", "weave", "cloth"],
     previewType: "box",
@@ -299,7 +299,7 @@ export const effectsBatch44 = [
   {
     id: "haptics-texture-leather",
     name: "Leather Grain",
-    category: "haptics",
+    category: "microinteractions",
     description: "Leather grain texture with pebbled surface and warm tone",
     tags: ["haptics", "texture", "leather", "grain", "pebbled"],
     previewType: "box",
@@ -324,7 +324,7 @@ export const effectsBatch44 = [
   {
     id: "haptics-spring-loaded",
     name: "Spring Loaded",
-    category: "haptics",
+    category: "microinteractions",
     description: "Element springs in from the side with oscillating overshoot",
     tags: ["haptics", "spring", "oscillate", "entrance", "load"],
     previewType: "box",
@@ -351,7 +351,7 @@ export const effectsBatch44 = [
   {
     id: "haptics-elastic-recoil",
     name: "Elastic Recoil",
-    category: "haptics",
+    category: "microinteractions",
     description: "Element recoils back after being pushed, with elastic overshoot",
     tags: ["haptics", "elastic", "recoil", "push", "spring-back"],
     previewType: "box",
@@ -386,7 +386,7 @@ export const effectsBatch44 = [
   {
     id: "haptics-bounce-impact",
     name: "Bounce Impact",
-    category: "haptics",
+    category: "microinteractions",
     description: "Element bounces as if struck by an impact, with secondary decay",
     tags: ["haptics", "bounce", "impact", "force", "decay"],
     previewType: "box",
@@ -417,7 +417,7 @@ export const effectsBatch44 = [
   {
     id: "haptics-mass-drop",
     name: "Mass Drop",
-    category: "haptics",
+    category: "microinteractions",
     description: "Element drops with weight — fast ease-in and squash on landing",
     tags: ["haptics", "mass", "drop", "weight", "squash"],
     previewType: "box",
@@ -444,7 +444,7 @@ export const effectsBatch44 = [
   {
     id: "haptics-vibration-hum",
     name: "Vibration Hum",
-    category: "haptics",
+    category: "microinteractions",
     description: "Subtle continuous vibration on hover, like a device buzzing",
     tags: ["haptics", "vibration", "hum", "buzz", "hover"],
     previewType: "box",
@@ -474,7 +474,7 @@ export const effectsBatch44 = [
   {
     id: "haptics-friction-grip",
     name: "Friction Grip",
-    category: "haptics",
+    category: "microinteractions",
     description: "Element grips the surface on hover — slight scale down with shadow",
     tags: ["haptics", "friction", "grip", "press", "hover"],
     previewType: "box",
@@ -508,7 +508,7 @@ export const effectsBatch44 = [
   {
     id: "haptics-soft-press",
     name: "Soft Press",
-    category: "haptics",
+    category: "microinteractions",
     description: "Soft depress effect with shadow expansion, like pressing foam",
     tags: ["haptics", "soft", "press", "depress", "foam"],
     previewType: "box",
@@ -547,7 +547,7 @@ export const effectsBatch44 = [
   {
     id: "haptics-snap-back",
     name: "Snap Back",
-    category: "haptics",
+    category: "microinteractions",
     description: "Element drifts away on hover then snaps back to origin on release",
     tags: ["haptics", "snap", "drift", "spring-back", "release"],
     previewType: "box",
@@ -583,7 +583,7 @@ export const effectsBatch44 = [
   {
     id: "haptics-velvet-touch",
     name: "Velvet Touch",
-    category: "haptics",
+    category: "microinteractions",
     description: "Soft, luxurious hover with velvet-like deep shadow and warmth",
     tags: ["haptics", "velvet", "soft", "luxury", "hover"],
     previewType: "box",
@@ -614,7 +614,7 @@ export const effectsBatch44 = [
   {
     id: "haptics-glass-tap",
     name: "Glass Tap",
-    category: "haptics",
+    category: "microinteractions",
     description: "Tap creates a glass-like concentric ripple that shimmers outward",
     tags: ["haptics", "glass", "tap", "ripple", "shimmer"],
     previewType: "box",
@@ -660,7 +660,7 @@ export const effectsBatch44 = [
   {
     id: "haptics-magnetic-pull",
     name: "Magnetic Pull",
-    category: "haptics",
+    category: "microinteractions",
     description: "Element subtly shifts toward the cursor direction with a magnetic feel",
     tags: ["haptics", "magnetic", "pull", "cursor", "hover"],
     previewType: "box",

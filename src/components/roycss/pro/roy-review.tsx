@@ -540,7 +540,7 @@ type RunState = "idle" | "running" | "done";
 export function RoyReview() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("review/rules");
-  void data; void loading; void error;
+  void data;
 
   const [code, setCode] = useState("");
   const [runState, setRunState] = useState<RunState>("idle");
@@ -678,6 +678,7 @@ export function RoyReview() {
               <Code2 className="size-3" aria-hidden />
               AI Code Reviewer
             </Badge>
+            <BackendLiveBadge loading={loading} error={error} />
           </div>
           <p className="text-muted-foreground truncate text-xs">
             Paste CSS / HTML / TS — get a scored review with concrete fixes.

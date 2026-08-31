@@ -129,7 +129,7 @@ const STATUS_BADGE: Record<TileStatus, { label: string; className: string }> = {
 export function RoyOS() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("os/dashboard");
-  void data; void loading; void error;
+  void data;
 
   const { toast } = useToast();
   const [search, setSearch] = useState("");
@@ -187,6 +187,7 @@ export function RoyOS() {
               <div>
                 <p className="text-sm font-bold">RoyOS</p>
                 <p className="text-muted-foreground text-[10px]">Workspace v2.4.1</p>
+                <BackendLiveBadge loading={loading} error={error} className="mt-1" />
               </div>
             </div>
           </CardHeader>

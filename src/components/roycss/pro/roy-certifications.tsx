@@ -135,7 +135,7 @@ const LEVEL_NAME: Record<Level, string> = {
 export function RoyCertifications() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("certifications");
-  void data; void loading; void error;
+  void data;
 
   const [credentialId, setCredentialId] = useState("");
   const { toast } = useToast();
@@ -166,7 +166,10 @@ export function RoyCertifications() {
                 <GraduationCap className="size-5" />
               </div>
               <div>
-                <CardTitle>Certifications</CardTitle>
+                <div className="flex flex-wrap items-center gap-2">
+                  <CardTitle>Certifications</CardTitle>
+                  <BackendLiveBadge loading={loading} error={error} />
+                </div>
                 <CardDescription>
                   Validate your RoyCSS expertise. 4 levels, recognized industry-wide.
                 </CardDescription>

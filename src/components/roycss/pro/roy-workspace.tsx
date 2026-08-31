@@ -145,7 +145,7 @@ const TAB_ICONS: Record<ResourceTab, LucideIcon> = {
 export function RoyWorkspace() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("workspace/resources");
-  void data; void loading; void error;
+  void data;
 
   const [tab, setTab] = useState<ResourceTab>("templates");
   const { toast } = useToast();
@@ -172,6 +172,7 @@ export function RoyWorkspace() {
                   <Badge variant="secondary" className="gap-1">
                     <ShieldCheck className="size-3" /> Pro
                   </Badge>
+                  <BackendLiveBadge loading={loading} error={error} />
                 </CardTitle>
                 <CardDescription>
                   Shared templates, tokens, components, and projects.

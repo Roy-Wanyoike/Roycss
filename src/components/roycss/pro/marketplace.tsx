@@ -829,7 +829,7 @@ function StatCell({ icon, label, value }: StatCellProps): React.JSX.Element {
 export function Marketplace(): React.JSX.Element {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("marketplace/templates");
-  void data; void loading; void error;
+  void data;
 
   const { toast } = useToast();
 
@@ -943,6 +943,7 @@ export function Marketplace(): React.JSX.Element {
           rating {stats.avgRating.toFixed(1)} stars
         </CardDescription>
         <CardAction>
+          <BackendLiveBadge loading={loading} error={error} />
           <Badge variant="secondary" className="gap-1">
             <Package className="size-3" aria-hidden />
             {visible.length} shown

@@ -942,7 +942,7 @@ function Toolbar({
 export function MotionLibrary() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("motion/effects");
-  void data; void loading; void error;
+  void data;
 
   const [activeFilter, setActiveFilter] = useState<Filter>("all");
   const [speed, setSpeed] = useState(1);
@@ -961,6 +961,7 @@ export function MotionLibrary() {
           <h2 className="text-xl font-semibold tracking-tight">
             RoyMotion Library
           </h2>
+          <BackendLiveBadge loading={loading} error={error} />
         </div>
         <p className="text-sm text-muted-foreground">
           12 reusable framer-motion animation primitives — entrance, interactive,

@@ -205,7 +205,7 @@ const USER_RANK = 18;
 export function RoyChallenges() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("challenges");
-  void data; void loading; void error;
+  void data;
 
   const { toast } = useToast();
   const [openId, setOpenId] = useState<string | null>(null);
@@ -262,7 +262,10 @@ export function RoyChallenges() {
                 <Trophy className="size-5" />
               </div>
               <div>
-                <CardTitle>Coding Challenges</CardTitle>
+                <div className="flex flex-wrap items-center gap-2">
+                  <CardTitle>Coding Challenges</CardTitle>
+                  <BackendLiveBadge loading={loading} error={error} />
+                </div>
                 <CardDescription>Solve CSS challenges, earn XP, climb the leaderboard.</CardDescription>
               </div>
             </div>

@@ -153,7 +153,7 @@ function Donut({ segments }: { segments: BundleType[] }) {
 export function RoyBundle() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("bundle/duplicates");
-  void data; void loading; void error;
+  void data;
 
   const { toast } = useToast();
   const [analyzing, setAnalyzing] = useState(false);
@@ -190,7 +190,10 @@ export function RoyBundle() {
                 <Package className="size-5" />
               </div>
               <div>
-                <CardTitle>Bundle Optimizer</CardTitle>
+                <div className="flex flex-wrap items-center gap-2">
+                  <CardTitle>Bundle Optimizer</CardTitle>
+                  <BackendLiveBadge loading={loading} error={error} />
+                </div>
                 <CardDescription>
                   Analyze asset sizes, dead CSS, and duplicate code.
                 </CardDescription>

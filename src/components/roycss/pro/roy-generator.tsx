@@ -1197,7 +1197,7 @@ function OptionControl({ spec, value, onChange }: OptionControlProps) {
 export function RoyGenerator() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("generator/types");
-  void data; void loading; void error;
+  void data;
 
   const { toast } = useToast();
   const [genType, setGenType] = useState<GenType>("component");
@@ -1320,6 +1320,7 @@ export function RoyGenerator() {
           code in one click.
         </CardDescription>
         <CardAction>
+          <BackendLiveBadge loading={loading} error={error} />
           <Badge variant="secondary" className="gap-1">
             <Code2 className="size-3" aria-hidden />
             {GEN_TYPES.length} generators

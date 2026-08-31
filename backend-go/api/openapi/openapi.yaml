@@ -1,0 +1,313 @@
+openapi: 3.1.0
+info:
+  title: RoyCSS Platform API
+  version: 0.1.0
+  description: |
+    The RoyCSS platform API — the Go production target. Both backend-node
+    (Express) and backend-go expose this identical `/api/v1` surface so the
+    frontend is backend-agnostic.
+
+    ## Dual-backend failover
+    backend-node is the running source of truth; backend-go is the production
+    target (Cloud Run + PostgreSQL + Redis). Modules not yet ported to Go
+    return `501` so clients fall back to backend-node.
+  license:
+    name: MIT
+    url: https://github.com/Roy-Wanyoike/Roycss/blob/main/LICENSE
+
+servers:
+  - url: http://localhost:4000/api/v1
+    description: Local dev (backend-node or backend-go)
+  - url: https://api.roycss.com/api/v1
+    description: Production (Cloud Run)
+
+# ─── Authentication ───────────────────────────────────────────────────
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT access token from /auth/login or /auth/signup
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Personal/org API key (hashed at rest, shown once at creation)
+
+  schemas:
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code: { type: string, example: VALIDATION }
+            message: { type: string }
+            details: { type: object }
+
+    ListMeta:
+      type: object
+      properties:
+        total: { type: integer }
+        page: { type: integer }
+        limit: { type: integer }
+        totalPages: { type: integer }
+        count: { type: integer }
+
+    User:
+      type: object
+      properties:
+        id: { type: string }
+        email: { type: string, format: email }
+        name: { type: string }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+
+    TokenResponse:
+      type: object
+      properties:
+        accessToken: { type: string }
+        refreshToken: { type: string }
+        user: { $ref: '#/components/schemas/User' }
+
+    Effect:
+      type: object
+      properties:
+        id: { type: string, example: 3d-book }
+        name: { type: string, example: 3D Book }
+        category: { type: string, example: 3d-transforms }
+        description: { type: string }
+        tags:
+          type: array
+          items: { type: string }
+        previewType: { type: string }
+
+# ─── Security ─────────────────────────────────────────────────────────
+security:
+  - bearerAuth: []
+
+# ─── Paths ────────────────────────────────────────────────────────────
+paths:
+  # ── Health ─────────────────────────────────────────────────────────
+  /health:
+    get:
+      tags: [health]
+      summary: Full health (uptime + DB + Redis + memory)
+      security: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      status: { type: string, example: ok }
+                      service: { type: string }
+                      version: { type: string }
+                      checks:
+                        type: object
+                        properties:
+                          database: { type: string }
+                          redis: { type: string }
+                          memory: { type: object }
+
+  /health/live:
+    get:
+      tags: [health]
+      summary: Liveness probe
+      security: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { type: object, properties: { status: { type: string, example: ok } } }
+
+  /health/ready:
+    get:
+      tags: [health]
+      summary: Readiness probe (checks DB + Redis)
+      security: []
+      responses:
+        '200': { description: Ready }
+        '503': { description: Degraded — a dependency is down }
+
+  # ── Auth ────────────────────────────────────────────────────────────
+  /auth/signup:
+    post:
+      tags: [auth]
+      summary: Register a new user
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string, minLength: 8 }
+                name: { type: string }
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/TokenResponse' }
+        '409': { description: Email already registered }
+
+  /auth/login:
+    post:
+      tags: [auth]
+      summary: Log in
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/TokenResponse' }
+        '401': { description: Invalid credentials }
+
+  /auth/refresh:
+    post:
+      tags: [auth]
+      summary: Refresh access token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [refreshToken]
+              properties:
+                refreshToken: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/TokenResponse' }
+        '401': { description: Invalid or expired refresh token }
+
+  /auth/me:
+    get:
+      tags: [auth]
+      summary: Current user profile
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/User' }
+        '401': { description: Unauthenticated }
+
+  # ── Effects ─────────────────────────────────────────────────────────
+  /effects:
+    get:
+      tags: [effects]
+      summary: List effects (paginated, filterable)
+      security: []
+      parameters:
+        - { name: page, in: query, schema: { type: integer, default: 1 } }
+        - { name: limit, in: query, schema: { type: integer, default: 20, maximum: 100 } }
+        - { name: category, in: query, schema: { type: string } }
+        - { name: tag, in: query, schema: { type: string } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/Effect' }
+                  meta: { $ref: '#/components/schemas/ListMeta' }
+
+  /effects/{slug}:
+    get:
+      tags: [effects]
+      summary: Single effect by slug
+      security: []
+      parameters:
+        - { name: slug, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/Effect' }
+        '404': { description: Not found }
+
+  # ── Registry (canonical source of truth) ────────────────────────────
+  /registry/packages:
+    get:
+      tags: [registry]
+      summary: List registry packages
+      security: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { type: array, items: { type: object } }
+                  meta: { type: object, properties: { count: { type: integer } } }
+
+  # ── 66 stub modules (return 501 → failover to backend-node) ─────────
+  # Each of these returns 501 from backend-go today. The backend-node
+  # implementation is the source of truth until the Go port is complete.
+  # See docs/ROYCSS_MIGRATION_GUIDE.md for the module-by-module plan.
+  #
+  # /academy, /accessibility, /analytics, /architect, /audit-center,
+  # /benchmark, /blocks, /blueprints, /bundle, /cdn, /certifications,
+  # /challenges, /cloud, /color-space, /compliance, /contact, /deploy,
+  # /designer, /devtools, /digital-twin, /edge, /enterprise, /fallback,
+  # /fleet, /generator, /governance, /icons, /initial-letter, /inspector,
+  # /light-dark, /live, /logical-properties, /marketplace, /mcp, /mentor,
+  # /motion, /observatory, /open, /os, /pair, /patterns, /plugin-hub,
+  # /preview, /pro-components, /profiler, /property-registrar, /recipes,
+  # /refactor, /registry, /relative-color, /review, /scaffold, /scope,
+  # /search, /spotlight, /starting-style, /storage, /studio, /style-query,
+  # /subgrid, /sync, /text-wrap, /themes, /version, /workspace

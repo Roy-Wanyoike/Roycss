@@ -1630,7 +1630,7 @@ function Toolbar({
 export function PatternLibrary() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("patterns");
-  void data; void loading; void error;
+  void data;
 
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState<Filter>("all");
@@ -1648,12 +1648,15 @@ export function PatternLibrary() {
     <div className="space-y-6">
       {/* Header */}
       <div className="space-y-1">
-        <h2 className="text-2xl font-semibold tracking-tight">
-          Pattern Library
-          <span className="ml-2 text-sm font-normal text-muted-foreground">
-            (Extended · 12 patterns)
-          </span>
-        </h2>
+        <div className="flex flex-wrap items-center gap-2">
+          <h2 className="text-2xl font-semibold tracking-tight">
+            Pattern Library
+            <span className="ml-2 text-sm font-normal text-muted-foreground">
+              (Extended · 12 patterns)
+            </span>
+          </h2>
+          <BackendLiveBadge loading={loading} error={error} />
+        </div>
         <p className="text-sm text-muted-foreground">
           Live, interactive UI patterns with copy-ready JSX. Each card renders
           the actual component — click, type, and drag to see it in action.

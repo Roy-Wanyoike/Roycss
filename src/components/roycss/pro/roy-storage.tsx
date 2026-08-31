@@ -112,7 +112,7 @@ const PATH = ["acme-design", "roycss", "assets"] as const;
 export function RoyStorage() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("storage/files");
-  void data; void loading; void error;
+  void data;
 
   const [query, setQuery] = useState("");
   const { toast } = useToast();
@@ -140,7 +140,10 @@ export function RoyStorage() {
                 <HardDrive className="size-5" />
               </div>
               <div>
-                <CardTitle>Cloud Storage</CardTitle>
+                <div className="flex flex-wrap items-center gap-2">
+                  <CardTitle>Cloud Storage</CardTitle>
+                  <BackendLiveBadge loading={loading} error={error} />
+                </div>
                 <CardDescription>2.3 GB used of 10 GB.</CardDescription>
               </div>
             </div>

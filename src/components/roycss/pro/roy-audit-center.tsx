@@ -148,7 +148,7 @@ function MiniTrend({ data }: { data: number[] }) {
 export function RoyAuditCenter() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("audit-center/projects");
-  void data; void loading; void error;
+  void data;
 
   const { toast } = useToast();
   const [selectedId, setSelectedId] = useState<string>(PROJECTS[0].id);
@@ -184,7 +184,10 @@ export function RoyAuditCenter() {
                 <Activity className="size-5" />
               </div>
               <div>
-                <CardTitle>Enterprise Audit Center</CardTitle>
+                <div className="flex flex-wrap items-center gap-2">
+                  <CardTitle>Enterprise Audit Center</CardTitle>
+                  <BackendLiveBadge loading={loading} error={error} />
+                </div>
                 <CardDescription>
                   Cross-project accessibility, performance, and security scores.
                 </CardDescription>

@@ -163,7 +163,7 @@ function MemoryChart({ samples }: { samples: MemorySample[] }) {
 export function RoyProfiler() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("profiler/results");
-  void data; void loading; void error;
+  void data;
 
   const [profiling, setProfiling] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -214,7 +214,10 @@ export function RoyProfiler() {
                 <Gauge className="size-5" />
               </div>
               <div>
-                <CardTitle>Frontend Profiler</CardTitle>
+                <div className="flex flex-wrap items-center gap-2">
+                  <CardTitle>Frontend Profiler</CardTitle>
+                  <BackendLiveBadge loading={loading} error={error} />
+                </div>
                 <CardDescription>
                   Measure rendering, layout shifts, memory, and animation FPS.
                 </CardDescription>

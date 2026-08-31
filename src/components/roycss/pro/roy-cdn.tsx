@@ -128,7 +128,7 @@ const REGION_TONE: Record<RegionStatus, { dot: string; label: string }> = {
 export function RoyCDN() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("cdn/stats");
-  void data; void loading; void error;
+  void data;
 
   const [purging, setPurging] = useState(false);
   const { toast } = useToast();
@@ -155,7 +155,10 @@ export function RoyCDN() {
                 <Globe2 className="size-5" />
               </div>
               <div>
-                <CardTitle>CDN Dashboard</CardTitle>
+                <div className="flex flex-wrap items-center gap-2">
+                  <CardTitle>CDN Dashboard</CardTitle>
+                  <BackendLiveBadge loading={loading} error={error} />
+                </div>
                 <CardDescription>
                   Edge delivery across 6 regions · 94.6% hit rate.
                 </CardDescription>

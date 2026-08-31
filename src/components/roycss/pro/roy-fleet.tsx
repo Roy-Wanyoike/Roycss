@@ -101,7 +101,7 @@ const PROJECTS: readonly FleetProject[] = [
 export function RoyFleet() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("fleet/projects");
-  void data; void loading; void error;
+  void data;
 
   const [filter, setFilter] = useState<FleetStatus | "all">("all");
   const [scanning, setScanning] = useState(false);
@@ -165,7 +165,10 @@ export function RoyFleet() {
                 <Boxes className="size-5" />
               </div>
               <div>
-                <CardTitle>Project Fleet</CardTitle>
+                <div className="flex flex-wrap items-center gap-2">
+                  <CardTitle>Project Fleet</CardTitle>
+                  <BackendLiveBadge loading={loading} error={error} />
+                </div>
                 <CardDescription>
                   Monitor every RoyCSS project across your organization.
                 </CardDescription>

@@ -778,7 +778,7 @@ function TrackRow({
 export function RoyMotionStudio(): React.JSX.Element {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("motion/effects");
-  void data; void loading; void error;
+  void data;
 
   const [tracks, setTracks] = React.useState<Tracks>(DEFAULT_TRACKS);
   const [duration, setDuration] = React.useState<number>(1.5);
@@ -1001,9 +1001,12 @@ export function RoyMotionStudio(): React.JSX.Element {
       {/* ─── Header ──────────────────────────────────────────────── */}
       <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h2 className="text-xl font-semibold tracking-tight text-foreground">
-            Roy Motion Studio
-          </h2>
+          <div className="flex flex-wrap items-center gap-2">
+            <h2 className="text-xl font-semibold tracking-tight text-foreground">
+              Roy Motion Studio
+            </h2>
+            <BackendLiveBadge loading={loading} error={error} />
+          </div>
           <p className="text-sm text-muted-foreground">
             Visual keyframe animation builder · 5 tracks · 8 easings · live
             preview · CSS + framer-motion export.

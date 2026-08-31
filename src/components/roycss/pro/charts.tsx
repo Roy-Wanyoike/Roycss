@@ -543,7 +543,7 @@ function WeeklyAreaChart({ gradientId }: { gradientId: string }): React.JSX.Elem
 export function ProCharts(): React.JSX.Element {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("analytics/overview");
-  void data; void loading; void error;
+  void data;
 
   const [revenueView, setRevenueView] =
     React.useState<RevenueView>("line");
@@ -589,9 +589,12 @@ export function ProCharts(): React.JSX.Element {
       className="mx-auto w-full max-w-6xl px-1 py-2"
     >
       <div className="mb-5 flex flex-col gap-1">
-        <h2 className="text-xl font-semibold tracking-tight text-foreground">
-          Charts
-        </h2>
+        <div className="flex flex-wrap items-center gap-2">
+          <h2 className="text-xl font-semibold tracking-tight text-foreground">
+            Charts
+          </h2>
+          <BackendLiveBadge loading={loading} error={error} />
+        </div>
         <p className="text-sm text-muted-foreground">
           Production-ready visualizations built on Recharts · OKLCH palette ·
           responsive 2×2 grid.

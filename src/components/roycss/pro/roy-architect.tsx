@@ -525,7 +525,7 @@ type RunState = "idle" | "running" | "done";
 export function RoyArchitect() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("architect/templates");
-  void data; void loading; void error;
+  void data;
 
   const [prompt, setPrompt] = useState("");
   const [runState, setRunState] = useState<RunState>("idle");
@@ -771,6 +771,7 @@ export function RoyArchitect() {
               <Boxes className="size-3" aria-hidden />
               AI Architect
             </Badge>
+            <BackendLiveBadge loading={loading} error={error} />
           </div>
           <p className="text-muted-foreground truncate text-xs">
             Describe a product — get a full architecture, stack, and deploy plan.

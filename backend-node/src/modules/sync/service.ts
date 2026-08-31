@@ -472,8 +472,6 @@ export async function syncTokens(
   input: SyncTokensInput,
 ): Promise<SyncHistoryEntry> {
   const start = Date.now();
-  // 1-in-10 chance of partial to simulate validation failures (mock path).
-  const isPartial = Math.random() < 0.1;
   const count = 250 + Math.floor(Math.random() * 100);
 
   if (input.target === "github" && isGithubConfigured) {
@@ -490,13 +488,14 @@ export async function syncTokens(
       log.info("Tokens sync completed via GitHub REST", { target: input.target });
       return entry;
     }
+    // Fall through to mock.
   }
 
-  // Default: deterministic mock behavior (preserved from prior impl).
-  const status = isPartial ? "partial" : "success";
-  const message = isPartial
-    ? `Pushed ${count} tokens to ${input.target}; 4 failed validation and were skipped.`
-    : `Pushed ${count} tokens to ${input.target}.`;
+  // Default: deterministic mock behavior (always success — the real-token
+  // paths above already return real results; the mock path must not inject
+  // spurious failures because it would break real usage probabilistically).
+  const status = "success";
+  const message = `Pushed ${count} tokens to ${input.target}.`;
   const entry = recordSync(
     "tokens",
     status,

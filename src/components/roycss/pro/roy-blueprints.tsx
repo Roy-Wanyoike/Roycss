@@ -1681,7 +1681,7 @@ function StackCell({
 export function RoyBlueprints(): React.JSX.Element {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("blueprints");
-  void data; void loading; void error;
+  void data;
 
   const { toast } = useToast();
 
@@ -1780,6 +1780,7 @@ export function RoyBlueprints(): React.JSX.Element {
           features · avg {stats.avgWeeks} weeks build
         </CardDescription>
         <CardAction>
+          <BackendLiveBadge loading={loading} error={error} />
           <Badge variant="secondary" className="gap-1">
             <Boxes className="size-3" aria-hidden />
             {visible.length} shown

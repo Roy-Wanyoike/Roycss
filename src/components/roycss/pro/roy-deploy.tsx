@@ -153,7 +153,7 @@ const STAGES = ["Build", "Upload", "Live"] as const;
 export function RoyDeploy() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("deploy/history");
-  void data; void loading; void error;
+  void data;
 
   const [platform, setPlatform] = useState<Platform>("vercel");
   const [deploying, setDeploying] = useState(false);
@@ -202,7 +202,10 @@ export function RoyDeploy() {
                 <Rocket className="size-5" />
               </div>
               <div>
-                <CardTitle>Deployments</CardTitle>
+                <div className="flex flex-wrap items-center gap-2">
+                  <CardTitle>Deployments</CardTitle>
+                  <BackendLiveBadge loading={loading} error={error} />
+                </div>
                 <CardDescription>
                   Ship to any edge in seconds. Pick a platform and deploy.
                 </CardDescription>

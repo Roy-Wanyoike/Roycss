@@ -1,36 +1,29 @@
 // Package main is the entry point for the RoyCSS Go API.
 //
-// RoyCSS runs a DUAL-BACKEND architecture for scaling and failover:
+// RoyCSS runs a DUAL-BACKEND architecture:
+//   - backend-node/  — Express + Prisma (the running source of truth)
+//   - backend-go/    — this package (production target: Cloud Run + PG + Redis)
 //
-//   - backend-node/  — Express + Prisma + SQLite (the running source of
-//                      truth; works in any Node environment)
-//   - backend-go/    — this package; Go modular monolith (production
-//                      target; needs Go 1.23+, PostgreSQL, Redis)
-//
-// Both backends expose the SAME /api/v1 surface. When the Go backend is
-// fully implemented, traffic can be switched (or split) between the two
-// per module. Today the Go backend registers all 68 module route surfaces;
-// modules not yet ported return 501 so clients fall back to backend-node.
-//
-// See docs/ROYCSS_BACKEND_ARCHITECTURE.md and
-//     docs/ROYCSS_MIGRATION_GUIDE.md for the module-by-module cutover plan.
+// Both expose the same /api/v1 surface. Today the Go backend has real
+// implementations for auth, effects, and health; the other 66 modules return
+// 501 so clients fall back to backend-node per the failover design.
 package main
 
 import (
         "context"
-        "log"
+        "errors"
         "net/http"
         "os"
         "os/signal"
         "syscall"
         "time"
 
-        "github.com/roycss/platform/internal/academy"
         "github.com/roycss/platform/internal/accessibility"
+        "github.com/roycss/platform/internal/academy"
         "github.com/roycss/platform/internal/analytics"
         "github.com/roycss/platform/internal/architect"
+        authmod "github.com/roycss/platform/internal/auth"
         "github.com/roycss/platform/internal/auditcenter"
-        "github.com/roycss/platform/internal/auth"
         "github.com/roycss/platform/internal/benchmark"
         "github.com/roycss/platform/internal/blocks"
         "github.com/roycss/platform/internal/blueprints"
@@ -93,92 +86,140 @@ import (
         "github.com/roycss/platform/internal/themes"
         "github.com/roycss/platform/internal/version"
         "github.com/roycss/platform/internal/workspace"
+
+        "github.com/roycss/platform/pkg/cache"
+        "github.com/roycss/platform/pkg/config"
+        "github.com/roycss/platform/pkg/database"
+        "github.com/roycss/platform/pkg/httpmw"
+        "github.com/roycss/platform/pkg/logger"
 )
 
 func main() {
-        port := os.Getenv("PORT")
-        if port == "" {
-                port = "4000"
+        log := logger.New("info")
+
+        cfg, err := config.Load()
+        if err != nil {
+                log.Error("config load failed", "err", err)
+                os.Exit(1)
+        }
+        log = logger.New(cfg.LogLevel)
+
+        ctx, cancel := context.WithCancel(context.Background())
+        defer cancel()
+
+        // ── Database (PostgreSQL via pgx) ──────────────────────────────────
+        pool, err := database.New(ctx, cfg.DatabaseURL)
+        if err != nil {
+                log.Error("database connection failed", "err", err)
+                os.Exit(1)
+        }
+        defer pool.Close()
+        log.Info("database connected", "maxConns", 25)
+
+        // ── Redis cache (optional) ──────────────────────────────────────────
+        c, err := cache.New(ctx, cfg.RedisURL, 5*time.Minute)
+        if err != nil {
+                log.Warn("redis connection failed — caching disabled", "err", err)
+        } else if c != nil {
+                log.Info("redis connected", "ttl", "5m")
+        }
+
+        // ── Seed effects from dist/effects.json ─────────────────────────────
+        eff := effects.New(cfg.EffectsDataPath, c)
+        if err := eff.Load(); err != nil {
+                log.Warn("effects seed failed — effects endpoints will error", "err", err, "path", cfg.EffectsDataPath)
+        } else {
+                log.Info("effects seeded", "count", eff.Count())
         }
 
         mux := http.NewServeMux()
 
-        // ── Register all 68 domain module routes ────────────────────────────
-        // Modules with real Go implementations: health, effects.
-        // All other modules are 501 stubs mirroring backend-node/src/modules/*.
-        health.RegisterRoutes(mux)
-        effects.RegisterRoutes(mux)
-        academy.RegisterRoutes(mux)
-        accessibility.RegisterRoutes(mux)
-        analytics.RegisterRoutes(mux)
-        architect.RegisterRoutes(mux)
-        auditcenter.RegisterRoutes(mux)
-        auth.RegisterRoutes(mux)
-        benchmark.RegisterRoutes(mux)
-        blocks.RegisterRoutes(mux)
-        blueprints.RegisterRoutes(mux)
-        bundle.RegisterRoutes(mux)
-        cdn.RegisterRoutes(mux)
-        certifications.RegisterRoutes(mux)
-        challenges.RegisterRoutes(mux)
-        cloud.RegisterRoutes(mux)
-        colorspace.RegisterRoutes(mux)
-        compliance.RegisterRoutes(mux)
-        contact.RegisterRoutes(mux)
-        deploy.RegisterRoutes(mux)
-        designer.RegisterRoutes(mux)
-        devtools.RegisterRoutes(mux)
-        digitaltwin.RegisterRoutes(mux)
-        edge.RegisterRoutes(mux)
-        enterprise.RegisterRoutes(mux)
-        fallback.RegisterRoutes(mux)
-        fleet.RegisterRoutes(mux)
-        generator.RegisterRoutes(mux)
-        governance.RegisterRoutes(mux)
-        icons.RegisterRoutes(mux)
-        initialletter.RegisterRoutes(mux)
-        inspector.RegisterRoutes(mux)
-        lightdark.RegisterRoutes(mux)
-        live.RegisterRoutes(mux)
-        logicalproperties.RegisterRoutes(mux)
-        marketplace.RegisterRoutes(mux)
-        mcp.RegisterRoutes(mux)
-        mentor.RegisterRoutes(mux)
-        motion.RegisterRoutes(mux)
-        observatory.RegisterRoutes(mux)
-        open.RegisterRoutes(mux)
-        osmod.RegisterRoutes(mux)
-        pair.RegisterRoutes(mux)
-        patterns.RegisterRoutes(mux)
-        pluginhub.RegisterRoutes(mux)
-        preview.RegisterRoutes(mux)
-        procomponents.RegisterRoutes(mux)
-        profiler.RegisterRoutes(mux)
-        propertyregistrar.RegisterRoutes(mux)
-        recipes.RegisterRoutes(mux)
-        refactor.RegisterRoutes(mux)
-        registry.RegisterRoutes(mux)
-        relativecolor.RegisterRoutes(mux)
-        review.RegisterRoutes(mux)
-        scaffold.RegisterRoutes(mux)
-        scope.RegisterRoutes(mux)
-        search.RegisterRoutes(mux)
-        spotlight.RegisterRoutes(mux)
-        startingstyle.RegisterRoutes(mux)
-        storage.RegisterRoutes(mux)
-        studio.RegisterRoutes(mux)
-        stylequery.RegisterRoutes(mux)
-        subgrid.RegisterRoutes(mux)
-        syncmod.RegisterRoutes(mux)
-        textwrap.RegisterRoutes(mux)
-        themes.RegisterRoutes(mux)
-        version.RegisterRoutes(mux)
-        workspace.RegisterRoutes(mux)
+        // ── Real implementations ────────────────────────────────────────────
+        health.New(pool, c).RegisterRoutes(mux)
+        authSvc := authmod.New(pool, cfg)
+        authSvc.RegisterRoutes(mux)
+        eff.RegisterRoutes(mux)
 
-        handler := withSecurityHeaders(mux)
+        // ── 66 stub modules (return 501 → failover to backend-node) ─────────
+        registerStubs(mux,
+                academy.RegisterRoutes,
+                accessibility.RegisterRoutes,
+                analytics.RegisterRoutes,
+                architect.RegisterRoutes,
+                auditcenter.RegisterRoutes,
+                benchmark.RegisterRoutes,
+                blocks.RegisterRoutes,
+                blueprints.RegisterRoutes,
+                bundle.RegisterRoutes,
+                cdn.RegisterRoutes,
+                certifications.RegisterRoutes,
+                challenges.RegisterRoutes,
+                cloud.RegisterRoutes,
+                colorspace.RegisterRoutes,
+                compliance.RegisterRoutes,
+                contact.RegisterRoutes,
+                deploy.RegisterRoutes,
+                designer.RegisterRoutes,
+                devtools.RegisterRoutes,
+                digitaltwin.RegisterRoutes,
+                edge.RegisterRoutes,
+                enterprise.RegisterRoutes,
+                fallback.RegisterRoutes,
+                fleet.RegisterRoutes,
+                generator.RegisterRoutes,
+                governance.RegisterRoutes,
+                icons.RegisterRoutes,
+                initialletter.RegisterRoutes,
+                inspector.RegisterRoutes,
+                lightdark.RegisterRoutes,
+                live.RegisterRoutes,
+                logicalproperties.RegisterRoutes,
+                marketplace.RegisterRoutes,
+                mcp.RegisterRoutes,
+                mentor.RegisterRoutes,
+                motion.RegisterRoutes,
+                observatory.RegisterRoutes,
+                open.RegisterRoutes,
+                osmod.RegisterRoutes,
+                pair.RegisterRoutes,
+                patterns.RegisterRoutes,
+                pluginhub.RegisterRoutes,
+                preview.RegisterRoutes,
+                procomponents.RegisterRoutes,
+                profiler.RegisterRoutes,
+                propertyregistrar.RegisterRoutes,
+                recipes.RegisterRoutes,
+                refactor.RegisterRoutes,
+                registry.RegisterRoutes,
+                relativecolor.RegisterRoutes,
+                review.RegisterRoutes,
+                scaffold.RegisterRoutes,
+                scope.RegisterRoutes,
+                search.RegisterRoutes,
+                spotlight.RegisterRoutes,
+                startingstyle.RegisterRoutes,
+                storage.RegisterRoutes,
+                studio.RegisterRoutes,
+                stylequery.RegisterRoutes,
+                subgrid.RegisterRoutes,
+                syncmod.RegisterRoutes,
+                textwrap.RegisterRoutes,
+                themes.RegisterRoutes,
+                version.RegisterRoutes,
+                workspace.RegisterRoutes,
+        )
+
+        // ── Middleware chain ────────────────────────────────────────────────
+        handler := httpmw.Recover(
+                httpmw.RequestID(
+                        httpmw.SecurityHeaders(
+                                httpmw.CORS(cfg)(mux),
+                        ),
+                ),
+        )
 
         server := &http.Server{
-                Addr:         ":" + port,
+                Addr:         ":" + cfg.Port,
                 Handler:      handler,
                 ReadTimeout:  10 * time.Second,
                 WriteTimeout: 30 * time.Second,
@@ -186,35 +227,28 @@ func main() {
         }
 
         go func() {
-                log.Printf("RoyCSS Go API (dual-backend) starting on :%s — stubs return 501, use backend-node for now", port)
-                if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-                        log.Fatalf("Server failed: %v", err)
+                log.Info("RoyCSS Go API starting", "port", cfg.Port, "env", cfg.NodeEnv)
+                if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+                        log.Error("server failed", "err", err)
+                        os.Exit(1)
                 }
         }()
 
         quit := make(chan os.Signal, 1)
         signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
         <-quit
-        log.Println("Shutting down...")
+        log.Info("shutting down")
 
-        ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-        defer cancel()
-        _ = server.Shutdown(ctx)
-        log.Println("Stopped")
+        shutCtx, shutCancel := context.WithTimeout(context.Background(), 30*time.Second)
+        defer shutCancel()
+        _ = server.Shutdown(shutCtx)
+        log.Info("stopped")
 }
 
-func withSecurityHeaders(h http.Handler) http.Handler {
-        return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-                w.Header().Set("X-Content-Type-Options", "nosniff")
-                w.Header().Set("X-Frame-Options", "DENY")
-                w.Header().Set("Referrer-Policy", "strict-origin-when-cross-origin")
-                w.Header().Set("Access-Control-Allow-Origin", "*")
-                w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS")
-                w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
-                if r.Method == http.MethodOptions {
-                        w.WriteHeader(http.StatusOK)
-                        return
-                }
-                h.ServeHTTP(w, r)
-        })
+// registerStubs mounts each stub module's routes on the mux. The stubs
+// return 501 so clients fall back to backend-node.
+func registerStubs(mux *http.ServeMux, registrations ...func(*http.ServeMux)) {
+        for _, reg := range registrations {
+                reg(mux)
+        }
 }

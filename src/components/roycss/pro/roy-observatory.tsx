@@ -198,7 +198,7 @@ function TrendChart({ data }: { data: number[] }) {
 export function RoyObservatory() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("observatory/sites");
-  void data; void loading; void error;
+  void data;
 
   const { toast } = useToast();
   const [selectedId, setSelectedId] = useState<string>(SITES[0].id);
@@ -237,7 +237,10 @@ export function RoyObservatory() {
                 <Radio className="size-5" />
               </div>
               <div>
-                <CardTitle>Production Observatory</CardTitle>
+                <div className="flex flex-wrap items-center gap-2">
+                  <CardTitle>Production Observatory</CardTitle>
+                  <BackendLiveBadge loading={loading} error={error} />
+                </div>
                 <CardDescription>
                   Real-time monitoring across {SITES.length} sites.
                 </CardDescription>

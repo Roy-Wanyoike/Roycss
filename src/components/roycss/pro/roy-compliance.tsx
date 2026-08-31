@@ -137,7 +137,7 @@ const SEVERITY_TONE: Record<Severity, string> = {
 export function RoyCompliance() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("compliance/standards");
-  void data; void loading; void error;
+  void data;
 
   const { toast } = useToast();
   const [standard, setStandard] = useState<Standard>("WCAG 2.2 AA");
@@ -198,7 +198,10 @@ export function RoyCompliance() {
                 <ShieldCheck className="size-5" />
               </div>
               <div>
-                <CardTitle>Compliance Reporting</CardTitle>
+                <div className="flex flex-wrap items-center gap-2">
+                  <CardTitle>Compliance Reporting</CardTitle>
+                  <BackendLiveBadge loading={loading} error={error} />
+                </div>
                 <CardDescription>
                   Scan the project against accessibility standards.
                 </CardDescription>

@@ -71,7 +71,8 @@ RoyCSS is not just a CSS effects library — it's a **complete frontend engineer
 | Layer | Technology |
 |---|---|
 | **Frontend** | Next.js 16 (App Router, Turbopack), TypeScript 5, Tailwind CSS 4, shadcn/ui (New York) |
-| **Backend** | Express.js 4, TypeScript, Prisma ORM, Zod validation, JWT auth |
+| **Backend (Node)** | Express.js 4, TypeScript, Prisma ORM, Zod validation, JWT auth — the running source of truth |
+| **Backend (Go)** | Go 1.23, `net/http` + `chi`, modular monolith — production target (Cloud Run + PostgreSQL + Redis) |
 | **Database** | SQLite (dev) / Supabase Postgres (prod) — 45 Prisma models |
 | **WebSocket** | Socket.io (Roy Live, port 3003) |
 | **PWA** | Service Worker v2.1.0, manifest.json, 5 icons |
@@ -99,12 +100,25 @@ roycss/
 │   │   └── auth/                  # Auth UI (LoginSheet, RegisterSheet, UserMenu)
 │   └── lib/                      # Shared libraries (effects, registry, types)
 │
-├── backend/                      # Express.js backend
+├── backend-node/                 # Express.js backend — the running source of truth
 │   ├── src/modules/               # 68 API modules (routes + service + schema)
 │   ├── src/lib/                   # Shared libs (db, cache, llm-client, supabase)
 │   ├── prisma/schema.prisma       # 45 Prisma models
 │   └── tests/integration/          # 15 integration tests
 │
+├── backend-go/                    # Go modular monolith — production target (dual-backend)
+│   ├── cmd/api/main.go            # HTTP server — registers all 68 module routes
+│   ├── cmd/migrate/main.go        # PostgreSQL migration runner
+│   ├── internal/                  # 68 domain packages mirroring backend-node/src/modules
+│   │   ├── effects/               # real handler (the only fully-implemented Go module)
+│   │   ├── health/                # real handler
+│   │   └── <66 more>/handler.go    # 501 stubs mirroring backend-node (failover-ready)
+│   ├── pkg/                       # platform layer (database, redis, http, telemetry — to fill)
+│   ├── database/sql/              # → ../database/sql (14 PostgreSQL migrations)
+│   ├── Dockerfile                 # Cloud Run container build
+│   └── go.mod
+│
+├── database/sql/                  # 14 PostgreSQL migration files (shared by backend-go)
 ├── mini-services/live-service/    # Socket.io WebSocket (port 3003)
 ├── mcp-server/                    # MCP Server for AI assistants
 ├── cli/                           # RoyCLI
@@ -122,6 +136,15 @@ roycss/
 └── README.md                     # You are here
 ```
 
+### Dual-backend architecture
+
+RoyCSS runs **two backend folders** for scaling and failover:
+
+- **`backend-node/`** — Express + Prisma + SQLite. The **running source of truth**; works in any Node environment and serves all 68 modules today.
+- **`backend-go/`** — Go modular monolith. The **production target** (Cloud Run + PostgreSQL + Redis). Today it registers all 68 module route surfaces; modules not yet ported return `501` so clients fall back to `backend-node`.
+
+Both backends expose the **same `/api/v1` contract**. The frontend (`src/components/roycss/_use-backend-data.ts`) is backend-agnostic — it just hits `/api/v1/<module>?XTransformPort=<port>`. When the Go backend is fully implemented, traffic can be switched or split between the two per module. See `docs/ROYCSS_BACKEND_ARCHITECTURE.md` and `docs/ROYCSS_MIGRATION_GUIDE.md`.
+
 ---
 
 ## Getting Started
@@ -137,15 +160,15 @@ roycss/
 git clone https://github.com/Roy-Wanyoike/roycss.git
 cd roycss
 
-# Install frontend + backend
+# Install frontend + backend-node
 bun install
-cd backend && bun install && cd ..
+cd backend-node && bun install && cd ..
 
-# Set up backend environment
-cp backend/.env.example backend/.env
+# Set up backend-node environment
+cp backend-node/.env.example backend-node/.env
 
 # Initialize database
-cd backend
+cd backend-node
 bunx prisma generate
 bunx prisma db push --schema=./prisma/schema.prisma
 cd ..
@@ -153,14 +176,16 @@ cd ..
 # Build effects package
 bun run build:package
 
-# Start backend (port 4000)
-cd backend && bun run --env-file=.env dev &
+# Start backend-node (port 4000)
+cd backend-node && bun run --env-file=.env dev &
 
 # Start frontend (port 3000)
 bun run dev
 ```
 
 Open `http://localhost:3000` — you should see 1,749 effects, 62 platform products, live previews, search (⌘K), and auth (Sign in / Create account).
+
+> **backend-go** (the Go production target) requires Go 1.23+, PostgreSQL, and Redis — see `docs/ROYCSS_DEPLOYMENT.md` for build/run instructions. The Go backend registers all 68 module routes today; unported modules return `501` and clients fall back to `backend-node`.
 
 ---
 
@@ -174,19 +199,24 @@ bun run build            # Production build
 bun run build:package    # Build dist/ artifacts
 bun run test             # Unit tests (111 tests)
 
-# Backend
-cd backend
+# Backend (Node)
+cd backend-node
 bun run dev              # Dev server (port 4000)
 bun run typecheck        # TypeScript check
 bun run test:integration # Integration tests (15 tests)
 bun run db:push          # Push schema to database
+
+# Backend (Go) — requires Go 1.23+ + PostgreSQL + Redis
+cd backend-go
+go run ./cmd/api         # API server (port 4000 by default)
+go run ./cmd/migrate     # Apply database/sql/*.sql migrations
 ```
 
 ---
 
 ## Environment Variables
 
-See [`backend/.env.example`](backend/.env.example) for all variables.
+See [`backend-node/.env.example`](backend-node/.env.example) for all variables.
 
 **Required for dev**: `DATABASE_URL`, `JWT_SECRET`, `JWT_REFRESH_SECRET`
 **Optional** (modules use mock fallback): `OPENAI_API_KEY`, `CDN_API_TOKEN`, `STORAGE_*`, `FIGMA_TOKEN`, `GITHUB_TOKEN`, `RESEND_API_KEY`, `SENTRY_DSN`
@@ -207,12 +237,33 @@ See [`backend/.env.example`](backend/.env.example) for all variables.
 ## Architecture
 
 ```
-Next.js 16 (port 3000)
-    ↕
-Express.js + Prisma (port 4000) — 68 modules, 45 models
-    ↕
-Socket.io (port 3003) — Roy Live real-time sessions
+                    ┌─────────────────────────────────────┐
+                    │            Next.js 16 (port 3000)   │
+                    │   Frontend — renders, SEO, PWA, UI │
+                    └───────────────┬─────────────────────┘
+                                    │  /api/v1/<module>?XTransformPort=<port>
+                                    │  (Caddy gateway routes by port)
+                    ┌───────────────┴───────────────┐
+                    │                               │
+            ┌───────▼────────┐              ┌───────▼────────┐
+            │  backend-node  │              │  backend-go   │
+            │  Express+Prisma│              │  Go monolith  │
+            │  SQLite        │  failover    │  PostgreSQL   │
+            │  68 modules ✓  │◄────────────►│  68 routes     │
+            │  SOURCE OF TRUTH│              │  (501 stubs → │
+            │  (port 4000)   │              │   port 4000)  │
+            └────────────────┘              └───────────────┘
+                    │                               │
+                    └───────────────┬───────────────┘
+                                    │
+                            ┌───────▼────────┐
+                            │  Socket.io    │
+                            │  Roy Live     │
+                            │  (port 3003)  │
+                            └──────────────┘
 ```
+
+Both backends expose the **same `/api/v1` surface** (68 modules). `backend-node` is the running source of truth; `backend-go` mirrors all 68 module routes for failover and is the production target (Cloud Run + PostgreSQL + Redis). See `docs/ROYCSS_BACKEND_ARCHITECTURE.md`.
 
 ---
 

@@ -25,7 +25,7 @@ export const effectsBatch49 = [
   {
     id: "glass2-dynamic",
     name: "Dynamic Glass",
-    category: "glass-2",
+    category: "glass-ui",
     description: "Glass surface that shimmers and shifts hues dynamically",
     tags: ["glass", "dynamic", "shimmer", "backdrop", "glass-2"],
     previewType: "card",
@@ -69,7 +69,7 @@ export const effectsBatch49 = [
   {
     id: "glass2-frosted",
     name: "Frosted Slab",
-    category: "glass-2",
+    category: "glass-ui",
     description: "Thick frosted glass with heavy blur and snow-crystal edge",
     tags: ["glass", "frosted", "blur", "thick", "glass-2"],
     previewType: "card",
@@ -107,7 +107,7 @@ export const effectsBatch49 = [
   {
     id: "glass2-edge-lit",
     name: "Edge Lit",
-    category: "glass-2",
+    category: "glass-ui",
     description: "Glass with luminous edge lighting that pulses around border",
     tags: ["glass", "edge", "lit", "neon", "glass-2"],
     previewType: "box",
@@ -153,7 +153,7 @@ export const effectsBatch49 = [
   {
     id: "glass2-refraction",
     name: "Refraction",
-    category: "glass-2",
+    category: "glass-ui",
     description: "Light refracts through glass creating a prismatic spectrum",
     tags: ["glass", "refraction", "prism", "spectrum", "glass-2"],
     previewType: "box",
@@ -200,7 +200,7 @@ export const effectsBatch49 = [
   {
     id: "glass2-distortion",
     name: "Distortion Glass",
-    category: "glass-2",
+    category: "glass-ui",
     description: "Glass with subtle wavy distortion across its surface",
     tags: ["glass", "distortion", "wavy", "ripple", "glass-2"],
     previewType: "box",
@@ -244,7 +244,7 @@ export const effectsBatch49 = [
   {
     id: "glass2-layered",
     name: "Layered Glass",
-    category: "glass-2",
+    category: "glass-ui",
     description: "Multiple stacked glass layers creating depth of field",
     tags: ["glass", "layered", "stack", "depth", "glass-2"],
     previewType: "card",
@@ -291,7 +291,7 @@ export const effectsBatch49 = [
   {
     id: "glass2-adaptive",
     name: "Adaptive Glass",
-    category: "glass-2",
+    category: "glass-ui",
     description: "Glass adapts opacity and blur based on a simulated background",
     tags: ["glass", "adaptive", "opacity", "contextual", "glass-2"],
     previewType: "box",
@@ -327,7 +327,7 @@ export const effectsBatch49 = [
   {
     id: "glass2-depth",
     name: "Depth Glass",
-    category: "glass-2",
+    category: "glass-ui",
     description: "Glass with perceived depth from layered inner shadows",
     tags: ["glass", "depth", "shadow", "inset", "glass-2"],
     previewType: "card",
@@ -365,7 +365,7 @@ export const effectsBatch49 = [
   {
     id: "glass2-navigation",
     name: "Glass Navigation",
-    category: "glass-2",
+    category: "glass-ui",
     description: "Glass navbar with strong blur and animated indicator",
     tags: ["glass", "navigation", "navbar", "blur", "glass-2"],
     previewType: "card",
@@ -418,7 +418,7 @@ export const effectsBatch49 = [
   {
     id: "glass2-modal",
     name: "Glass Modal",
-    category: "glass-2",
+    category: "glass-ui",
     description: "Glass modal with deep backdrop blur and rim lighting",
     tags: ["glass", "modal", "dialog", "backdrop", "glass-2"],
     previewType: "card",
@@ -465,7 +465,7 @@ export const effectsBatch49 = [
   {
     id: "glass2-card-glow",
     name: "Glow Card",
-    category: "glass-2",
+    category: "glass-ui",
     description: "Glass card with an outer animated glow halo",
     tags: ["glass", "card", "glow", "halo", "glass-2"],
     previewType: "card",
@@ -509,7 +509,7 @@ export const effectsBatch49 = [
   {
     id: "glass2-button-press",
     name: "Press Button",
-    category: "glass-2",
+    category: "glass-ui",
     description: "Glass button with deep tactile press feedback",
     tags: ["glass", "button", "press", "tactile", "glass-2"],
     previewType: "button",
@@ -560,7 +560,7 @@ export const effectsBatch49 = [
   {
     id: "glass2-input-focus",
     name: "Focus Input",
-    category: "glass-2",
+    category: "glass-ui",
     description: "Glass input field that lights up on focus with rim glow",
     tags: ["glass", "input", "focus", "form", "glass-2"],
     previewType: "button",
@@ -607,7 +607,7 @@ export const effectsBatch49 = [
   {
     id: "glass2-dropdown",
     name: "Glass Dropdown",
-    category: "glass-2",
+    category: "glass-ui",
     description: "Glass dropdown menu with cascading blurred items",
     tags: ["glass", "dropdown", "menu", "blur", "glass-2"],
     previewType: "card",
@@ -655,7 +655,7 @@ export const effectsBatch49 = [
   {
     id: "glass2-tooltip",
     name: "Glass Tooltip",
-    category: "glass-2",
+    category: "glass-ui",
     description: "Floating glass tooltip with backdrop blur and pointer",
     tags: ["glass", "tooltip", "popover", "blur", "glass-2"],
     previewType: "box",
@@ -713,7 +713,7 @@ export const effectsBatch49 = [
   {
     id: "glass2-sidebar",
     name: "Glass Sidebar",
-    category: "glass-2",
+    category: "glass-ui",
     description: "Glass sidebar panel with nav items and indicator pill",
     tags: ["glass", "sidebar", "panel", "nav", "glass-2"],
     previewType: "card",
@@ -766,7 +766,7 @@ export const effectsBatch49 = [
   {
     id: "glass2-tab-bar",
     name: "Tab Bar",
-    category: "glass-2",
+    category: "glass-ui",
     description: "Glass tab bar with sliding indicator pill across tabs",
     tags: ["glass", "tab", "bar", "indicator", "glass-2"],
     previewType: "card",
@@ -818,7 +818,7 @@ export const effectsBatch49 = [
   {
     id: "glass2-hero-overlay",
     name: "Hero Overlay",
-    category: "glass-2",
+    category: "glass-ui",
     description: "Glass overlay panel on a hero with cinematic shimmer",
     tags: ["glass", "hero", "overlay", "cinematic", "glass-2"],
     previewType: "card",
@@ -871,7 +871,7 @@ export const effectsBatch49 = [
   {
     id: "glass2-notification",
     name: "Notification Toast",
-    category: "glass-2",
+    category: "glass-ui",
     description: "Glass notification toast with sliding entrance and glow",
     tags: ["glass", "notification", "toast", "alert", "glass-2"],
     previewType: "card",
@@ -920,7 +920,7 @@ export const effectsBatch49 = [
   {
     id: "glass2-pricing-card",
     name: "Pricing Card",
-    category: "glass-2",
+    category: "glass-ui",
     description: "Glass pricing card with CTA button and featured glow",
     tags: ["glass", "pricing", "card", "cta", "glass-2"],
     previewType: "card",

@@ -25,7 +25,7 @@ export const effectsBatch48 = [
   {
     id: "cursor-fx-glow-trail",
     name: "Glow Trail",
-    category: "cursor-fx",
+    category: "cursor",
     description: "Glowing comet-like trail follows an animated cursor path",
     tags: ["cursor", "glow", "trail", "comet", "cursor-fx"],
     previewType: "background",
@@ -72,7 +72,7 @@ export const effectsBatch48 = [
   {
     id: "cursor-fx-spotlight",
     name: "Spotlight",
-    category: "cursor-fx",
+    category: "cursor",
     description: "Spotlight reveals hidden content near a moving cursor",
     tags: ["cursor", "spotlight", "reveal", "mask", "cursor-fx"],
     previewType: "background",
@@ -124,7 +124,7 @@ export const effectsBatch48 = [
   {
     id: "cursor-fx-magnetic-attraction",
     name: "Magnetic Attraction",
-    category: "cursor-fx",
+    category: "cursor",
     description: "Element magnetically attracts toward an orbiting cursor",
     tags: ["cursor", "magnetic", "attraction", "pull", "cursor-fx"],
     previewType: "box",
@@ -174,7 +174,7 @@ export const effectsBatch48 = [
   {
     id: "cursor-fx-distortion",
     name: "Distortion",
-    category: "cursor-fx",
+    category: "cursor",
     description: "Background distorts and warps near the moving cursor",
     tags: ["cursor", "distortion", "warp", "displace", "cursor-fx"],
     previewType: "background",
@@ -220,7 +220,7 @@ export const effectsBatch48 = [
   {
     id: "cursor-fx-text-replacement",
     name: "Text Replacement",
-    category: "cursor-fx",
+    category: "cursor",
     description: "Cursor swaps the displayed text on hover via ::before",
     tags: ["cursor", "text", "replacement", "hover", "cursor-fx"],
     previewType: "text",
@@ -268,7 +268,7 @@ export const effectsBatch48 = [
   {
     id: "cursor-fx-image-preview",
     name: "Image Preview",
-    category: "cursor-fx",
+    category: "cursor",
     description: "Floating image preview follows an animated cursor path",
     tags: ["cursor", "image", "preview", "follow", "cursor-fx"],
     previewType: "background",
@@ -318,7 +318,7 @@ export const effectsBatch48 = [
   {
     id: "cursor-fx-gradient-follow",
     name: "Gradient Follow",
-    category: "cursor-fx",
+    category: "cursor",
     description: "Soft gradient highlight follows the cursor position",
     tags: ["cursor", "gradient", "follow", "highlight", "cursor-fx"],
     previewType: "background",
@@ -361,7 +361,7 @@ export const effectsBatch48 = [
   {
     id: "cursor-fx-border-follow",
     name: "Border Follow",
-    category: "cursor-fx",
+    category: "cursor",
     description: "Highlighted border segment travels around the perimeter",
     tags: ["cursor", "border", "follow", "highlight", "cursor-fx"],
     previewType: "box",
@@ -407,7 +407,7 @@ export const effectsBatch48 = [
   {
     id: "cursor-fx-hover-lens",
     name: "Hover Lens",
-    category: "cursor-fx",
+    category: "cursor",
     description: "Magnifying lens zooms content where the cursor hovers",
     tags: ["cursor", "lens", "magnify", "zoom", "cursor-fx"],
     previewType: "background",
@@ -459,7 +459,7 @@ export const effectsBatch48 = [
   {
     id: "cursor-fx-spotlight-card",
     name: "Spotlight Card",
-    category: "cursor-fx",
+    category: "cursor",
     description: "Card with radial spotlight that tracks the cursor position",
     tags: ["cursor", "spotlight", "card", "radial", "cursor-fx"],
     previewType: "card",
@@ -504,7 +504,7 @@ export const effectsBatch48 = [
   {
     id: "cursor-fx-ripple-click",
     name: "Ripple Click",
-    category: "cursor-fx",
+    category: "cursor",
     description: "Ripple emanates outward from each simulated click position",
     tags: ["cursor", "ripple", "click", "wave", "cursor-fx"],
     previewType: "background",
@@ -545,7 +545,7 @@ export const effectsBatch48 = [
   {
     id: "cursor-fx-tilt-3d",
     name: "Tilt 3D",
-    category: "cursor-fx",
+    category: "cursor",
     description: "Card tilts in 3D space following cursor position",
     tags: ["cursor", "tilt", "3d", "perspective", "cursor-fx"],
     previewType: "card",
@@ -593,7 +593,7 @@ export const effectsBatch48 = [
   {
     id: "cursor-fx-particle-emit",
     name: "Particle Emit",
-    category: "cursor-fx",
+    category: "cursor",
     description: "Particles emit and scatter from a moving cursor point",
     tags: ["cursor", "particle", "emit", "scatter", "cursor-fx"],
     previewType: "background",
@@ -635,7 +635,7 @@ export const effectsBatch48 = [
   {
     id: "cursor-fx-blur-background",
     name: "Blur Background",
-    category: "cursor-fx",
+    category: "cursor",
     description: "Background blurs under a sharp cursor region",
     tags: ["cursor", "blur", "background", "region", "cursor-fx"],
     previewType: "background",
@@ -686,7 +686,7 @@ export const effectsBatch48 = [
   {
     id: "cursor-fx-color-picker",
     name: "Color Picker",
-    category: "cursor-fx",
+    category: "cursor",
     description: "Element samples and shows color from a moving cursor position",
     tags: ["cursor", "color", "picker", "sample", "cursor-fx"],
     previewType: "box",
@@ -753,7 +753,7 @@ export const effectsBatch48 = [
   {
     id: "cursor-fx-zoom-region",
     name: "Zoom Region",
-    category: "cursor-fx",
+    category: "cursor",
     description: "Circular region zooms content where the cursor hovers",
     tags: ["cursor", "zoom", "region", "magnify", "cursor-fx"],
     previewType: "background",
@@ -800,7 +800,7 @@ export const effectsBatch48 = [
   {
     id: "cursor-fx-tooltip-follow",
     name: "Tooltip Follow",
-    category: "cursor-fx",
+    category: "cursor",
     description: "Tooltip smoothly follows an animated cursor with delay",
     tags: ["cursor", "tooltip", "follow", "smooth", "cursor-fx"],
     previewType: "background",
@@ -853,7 +853,7 @@ export const effectsBatch48 = [
   {
     id: "cursor-fx-glow-ring",
     name: "Glow Ring",
-    category: "cursor-fx",
+    category: "cursor",
     description: "Pulsing glow ring sits at the cursor position",
     tags: ["cursor", "glow", "ring", "pulse", "cursor-fx"],
     previewType: "background",
@@ -894,7 +894,7 @@ export const effectsBatch48 = [
   {
     id: "cursor-fx-invert-region",
     name: "Invert Region",
-    category: "cursor-fx",
+    category: "cursor",
     description: "Color inversion circular region follows the cursor",
     tags: ["cursor", "invert", "region", "color", "cursor-fx"],
     previewType: "background",
@@ -942,7 +942,7 @@ export const effectsBatch48 = [
   {
     id: "cursor-fx-elastic-snap",
     name: "Elastic Snap",
-    category: "cursor-fx",
+    category: "cursor",
     description: "Elements elastically snap toward the cursor and bounce back",
     tags: ["cursor", "elastic", "snap", "spring", "cursor-fx"],
     previewType: "box",

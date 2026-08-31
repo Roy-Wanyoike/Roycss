@@ -126,7 +126,6 @@ worklog.md
 # ─── Stray clones / downloaded archives (not part of source) ───
 RoyCSS-evolved/
 download/
-portfolio/
 inspector/
 
 # ─── Reports (regenerated, not source) ─────────────────────────
@@ -171,3 +170,4 @@ examples/
 skills/
 .changeset/
 *.bak
+*.zip

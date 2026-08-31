@@ -1,4 +1,5 @@
 import { type Metadata, type Viewport } from "next";
+import { headers } from "next/headers";
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import "./roycss.css";
@@ -162,18 +163,27 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Read the per-request CSP nonce set by src/proxy.ts middleware.
+  // Next.js 16 auto-applies this nonce to its own framework scripts;
+  // we must apply it to OUR inline scripts (theme init + JSON-LD) so the
+  // strict production CSP (script-src 'self' 'nonce-...' 'strict-dynamic')
+  // doesn't block them.
+  const nonce = (await headers()).get("x-nonce") ?? "";
+
   return (
     <html lang="en" suppressHydrationWarning className="dark">
       <head>
         <script
+          nonce={nonce}
           dangerouslySetInnerHTML={{ __html: themeInitScript }}
         />
         <script
+          nonce={nonce}
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />

@@ -59,7 +59,7 @@ For each virtual user (VU), `effects-api.k6.js`:
 
 1. Issues `GET /api/v1/effects?limit=20` against the target URL.
 2. Checks the response is HTTP 200, has a `data` array of > 0 items,
-   reports `meta.total === 1749`, and `meta.limit === 20`.
+   reports `meta.total === 1779`, and `meta.limit === 20`.
 3. Records `http_req_duration` (raw) and a custom
    `effects_api_duration` Trend (in ms) into the k6 metrics stream.
 4. Sleeps 50 ms before the next iteration (≈ 20 req/s per VU).

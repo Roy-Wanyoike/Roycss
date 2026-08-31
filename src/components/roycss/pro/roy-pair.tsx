@@ -381,7 +381,7 @@ function MessageBubble({ message }: { message: ChatMessage }) {
 export function RoyPair() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading: backendLoading, error } = useBackendData<unknown>("pair/suggestions");
-  void data; void backendLoading; void error;
+  void data;
 
   const [messages, setMessages] = useState<ChatMessage[]>([WELCOME]);
   const [input, setInput] = useState("");
@@ -513,6 +513,7 @@ export function RoyPair() {
               <Sparkles className="size-3" />
               Pair Programmer
             </Badge>
+            <BackendLiveBadge loading={backendLoading} error={error} />
           </div>
           <p className="text-muted-foreground truncate text-xs">
             Suggests RoyCSS code we can iterate on together.

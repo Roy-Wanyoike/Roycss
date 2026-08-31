@@ -102,7 +102,7 @@ const FILTERS: readonly { id: ItemType | "all"; label: string }[] = [
 export function RoySpotlight() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("spotlight/items");
-  void data; void loading; void error;
+  void data;
 
   const [filter, setFilter] = useState<ItemType | "all">("all");
   const { toast } = useToast();
@@ -135,7 +135,10 @@ export function RoySpotlight() {
                 <Star className="size-5" />
               </div>
               <div>
-                <CardTitle>Developer Spotlight</CardTitle>
+                <div className="flex flex-wrap items-center gap-2">
+                  <CardTitle>Developer Spotlight</CardTitle>
+                  <BackendLiveBadge loading={loading} error={error} />
+                </div>
                 <CardDescription>
                   Featured community work, fresh every week.
                 </CardDescription>

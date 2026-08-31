@@ -138,7 +138,7 @@ function formatValue(v: number, unit: string): string {
 export function RoyBenchmark() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("benchmark/comparisons");
-  void data; void loading; void error;
+  void data;
 
   const [project, setProject] = useState<string>(PROJECTS[0].id);
   const [running, setRunning] = useState(false);
@@ -182,7 +182,10 @@ export function RoyBenchmark() {
                 <Gauge className="size-5" />
               </div>
               <div>
-                <CardTitle>Benchmarks</CardTitle>
+                <div className="flex flex-wrap items-center gap-2">
+                  <CardTitle>Benchmarks</CardTitle>
+                  <BackendLiveBadge loading={loading} error={error} />
+                </div>
                 <CardDescription>
                   Compare your project to industry averages & best-in-class.
                 </CardDescription>

@@ -102,7 +102,7 @@ const COMPARISON = [
 export function RoyEdge() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("edge/regions");
-  void data; void loading; void error;
+  void data;
 
   const [ttl, setTtl] = useState("300");
   const [strategy, setStrategy] = useState<Strategy>("stale-while-revalidate");
@@ -147,7 +147,10 @@ export function RoyEdge() {
                 <Globe className="size-5" />
               </div>
               <div>
-                <CardTitle>Edge Deployment</CardTitle>
+                <div className="flex flex-wrap items-center gap-2">
+                  <CardTitle>Edge Deployment</CardTitle>
+                  <BackendLiveBadge loading={loading} error={error} />
+                </div>
                 <CardDescription>
                   6 PoPs · 4 live · 1 warming · 1 down.
                 </CardDescription>

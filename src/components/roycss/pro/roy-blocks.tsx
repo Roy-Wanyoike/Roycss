@@ -2305,7 +2305,7 @@ function PreviewDialog({
 export function RoyBlocks(): React.JSX.Element {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("blocks");
-  void data; void loading; void error;
+  void data;
 
   const { toast } = useToast();
 
@@ -2394,6 +2394,7 @@ export function RoyBlocks(): React.JSX.Element {
           {stats.total} blocks · {stats.categories} categories
         </CardDescription>
         <CardAction>
+          <BackendLiveBadge loading={loading} error={error} />
           <Badge variant="secondary" className="gap-1">
             <Package className="size-3" aria-hidden />
             {visible.length} shown

@@ -1,0 +1,112 @@
+# RoyCSS — local development Docker Compose.
+#
+# Brings up PostgreSQL + Redis + the Go API + the Go worker so the full
+# dual-backend stack runs locally with one command:
+#
+#   docker compose -f infrastructure/docker/docker-compose.yml up --build
+#
+# The Next.js frontend (port 3000) and the backend-node (port 4000) run
+# on the host via `bun run dev` — this compose file only orchestrates the
+# Go-backend-side dependencies (PG + Redis) + the Go API + worker, so you
+# can develop the frontend and backend-node on the host while the Go
+# backend runs in the container.
+#
+# To switch the frontend from backend-node to backend-go, point
+# XTransformPort to 4100 (the Go API's host port below).
+#
+# Services:
+#   postgres  — PostgreSQL 16 (the Go backend's database)
+#   redis     — Redis 7 (caching + job queue)
+#   api       — Go API (builds from backend-go/, port 4100 → 4000)
+#   worker    — Go worker (same image, CMD override)
+#   migrate   — one-shot: applies database/sql/*.sql then exits
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: roycss
+      POSTGRES_PASSWORD: roycss_dev
+      POSTGRES_DB: roycss
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U roycss"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  migrate:
+    build:
+      context: ../../backend-go
+      dockerfile: Dockerfile
+    command: ["/app/migrate"]
+    environment:
+      DATABASE_URL: "postgres://roycss:roycss_dev@postgres:5432/roycss"
+      MIGRATIONS_DIR: "/app/database/sql"
+    volumes:
+      - ../../database/sql:/app/database/sql:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  api:
+    build:
+      context: ../../backend-go
+      dockerfile: Dockerfile
+    command: ["/app/api"]
+    environment:
+      NODE_ENV: development
+      PORT: "4000"
+      DATABASE_URL: "postgres://roycss:roycss_dev@postgres:5432/roycss"
+      REDIS_URL: "redis://redis:6379"
+      JWT_SECRET: "dev-jwt-secret-32-chars-long-0001"
+      JWT_REFRESH_SECRET: "dev-refresh-secret-32-chars-long-0001"
+      CORS_ORIGINS: "http://localhost:3000,http://127.0.0.1:3000"
+      EFFECTS_DATA_PATH: "/app/dist/effects.json"
+    ports:
+      - "4100:4000"
+    volumes:
+      - ../../dist:/app/dist:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:4000/api/v1/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  worker:
+    build:
+      context: ../../backend-go
+      dockerfile: Dockerfile
+    command: ["/app/worker"]
+    environment:
+      REDIS_URL: "redis://redis:6379"
+      DATABASE_URL: "postgres://roycss:roycss_dev@postgres:5432/roycss"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  pgdata:

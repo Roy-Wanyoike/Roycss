@@ -140,7 +140,7 @@ const SIMULATIONS: readonly Simulation[] = [
 export function RoyDigitalTwin() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("digital-twin/simulations");
-  void data; void loading; void error;
+  void data;
 
   const [url, setUrl] = useState("https://acme-design.roycss.app");
   const [building, setBuilding] = useState(false);
@@ -198,7 +198,10 @@ export function RoyDigitalTwin() {
                 <Cpu className="size-5" />
               </div>
               <div>
-                <CardTitle>Digital Twin</CardTitle>
+                <div className="flex flex-wrap items-center gap-2">
+                  <CardTitle>Digital Twin</CardTitle>
+                  <BackendLiveBadge loading={loading} error={error} />
+                </div>
                 <CardDescription>
                   Mirror any URL and simulate real-world conditions.
                 </CardDescription>

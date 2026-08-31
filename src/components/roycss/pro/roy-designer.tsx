@@ -512,7 +512,7 @@ type RunState = "idle" | "running" | "done";
 export function RoyDesigner() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("designer/presets");
-  void data; void loading; void error;
+  void data;
 
   const [prompt, setPrompt] = useState("");
   const [outputType, setOutputType] = useState<OutputType>("full-page");
@@ -742,6 +742,7 @@ export function RoyDesigner() {
               <Wand2 className="size-3" aria-hidden />
               AI UI Designer
             </Badge>
+            <BackendLiveBadge loading={loading} error={error} />
           </div>
           <p className="text-muted-foreground truncate text-xs">
             Describe a screen — get a mockup, palette, type, components, and

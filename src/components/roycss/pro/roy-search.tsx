@@ -1128,7 +1128,7 @@ function DetailPanel({
 export function RoySearch(): React.JSX.Element {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("search/recent");
-  void data; void loading; void error;
+  void data;
 
   const { toast } = useToast();
 
@@ -1506,6 +1506,7 @@ export function RoySearch(): React.JSX.Element {
           <Badge variant="secondary" className="ml-1">
             Beta
           </Badge>
+          <BackendLiveBadge loading={loading} error={error} />
         </div>
         <p className="max-w-2xl text-sm text-muted-foreground">
           One box, every corner of the RoyCSS platform. Search{" "}

@@ -220,7 +220,7 @@ const INITIAL_AUDIT: AuditEntry[] = [
 export function RoyGovernance() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("governance/policies");
-  void data; void loading; void error;
+  void data;
 
   const [approvals, setApprovals] = useState<ApprovalItem[]>(INITIAL_APPROVALS);
   const [audit, setAudit] = useState<AuditEntry[]>(INITIAL_AUDIT);
@@ -261,7 +261,10 @@ export function RoyGovernance() {
                 <Gavel className="size-5" />
               </div>
               <div>
-                <CardTitle>Design System Governance</CardTitle>
+                <div className="flex flex-wrap items-center gap-2">
+                  <CardTitle>Design System Governance</CardTitle>
+                  <BackendLiveBadge loading={loading} error={error} />
+                </div>
                 <CardDescription>
                   Approvals, policies, and audit trail for the RoyCSS design system.
                 </CardDescription>

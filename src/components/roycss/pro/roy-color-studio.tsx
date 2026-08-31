@@ -498,7 +498,7 @@ function ThemeSwatch({
 export function RoyColorStudio(): React.JSX.Element {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("color-space/presets");
-  void data; void loading; void error;
+  void data;
 
   const [baseHex, setBaseHex] = React.useState<string>("#10b981");
   const [copiedStep, setCopiedStep] = React.useState<StepKey | null>(null);
@@ -624,6 +624,7 @@ export function RoyColorStudio(): React.JSX.Element {
           <h2 className="flex items-center gap-2 text-xl font-semibold tracking-tight text-foreground">
             <PaletteIcon className="size-5 text-emerald-500" aria-hidden />
             Roy Color Studio
+            <BackendLiveBadge loading={loading} error={error} />
           </h2>
           <p className="text-sm text-muted-foreground">
             OKLCH-lightness color scaling · WCAG AA/AAA validation · brand

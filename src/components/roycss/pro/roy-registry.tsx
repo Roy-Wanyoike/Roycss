@@ -847,7 +847,7 @@ function PublishDialog({ open, onOpenChange, onPublish }: PublishDialogProps) {
 export function RoyRegistry() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("registry/packages");
-  void data; void loading; void error;
+  void data;
 
   const { toast } = useToast();
   const [packages, setPackages] = useState<readonly RegistryPackage[]>(PACKAGES);
@@ -944,6 +944,7 @@ export function RoyRegistry() {
           Total downloads: {formatCount(stats.downloads)}
         </CardDescription>
         <CardAction>
+          <BackendLiveBadge loading={loading} error={error} />
           <Button
             size="sm"
             onClick={() => setPublishOpen(true)}

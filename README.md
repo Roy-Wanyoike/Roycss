@@ -143,7 +143,7 @@ RoyCSS runs **two backend folders** for scaling and failover:
 - **`backend-node/`** — Express + Prisma + SQLite. The **running source of truth**; works in any Node environment and serves all 68 modules today.
 - **`backend-go/`** — Go modular monolith. The **production target** (Cloud Run + PostgreSQL + Redis). Today it registers all 68 module route surfaces; modules not yet ported return `501` so clients fall back to `backend-node`.
 
-Both backends expose the **same `/api/v1` contract**. The frontend (`src/components/roycss/_use-backend-data.ts`) is backend-agnostic — it just hits `/api/v1/<module>?XTransformPort=<port>`. When the Go backend is fully implemented, traffic can be switched or split between the two per module. See `docs/ROYCSS_BACKEND_ARCHITECTURE.md` and `docs/ROYCSS_MIGRATION_GUIDE.md`.
+Both backends expose the **same `/api/v1` contract**. The frontend (`src/components/roycss/_use-backend-data.ts`) is backend-agnostic — it just hits `/api/v1/<module>?XTransformPort=<port>`. When the Go backend is fully implemented, traffic can be switched or split between the two per module. See `docs/PENDING-FEATURES.md` for the implementation backlog.
 
 ---
 
@@ -185,7 +185,7 @@ bun run dev
 
 Open `http://localhost:3000` — you should see 1,749 effects, 62 platform products, live previews, search (⌘K), and auth (Sign in / Create account).
 
-> **backend-go** (the Go production target) requires Go 1.23+, PostgreSQL, and Redis — see `docs/ROYCSS_DEPLOYMENT.md` for build/run instructions. The Go backend registers all 68 module routes today; unported modules return `501` and clients fall back to `backend-node`.
+> **backend-go** (the Go production target) requires Go 1.23+, PostgreSQL, and Redis. The Go backend registers all 68 module routes today; unported modules return `501` and clients fall back to `backend-node`. See `docs/PENDING-FEATURES.md` (PF-008) for the batched Go port plan.
 
 ---
 
@@ -263,22 +263,17 @@ See [`backend-node/.env.example`](backend-node/.env.example) for all variables.
                             └──────────────┘
 ```
 
-Both backends expose the **same `/api/v1` surface** (68 modules). `backend-node` is the running source of truth; `backend-go` mirrors all 68 module routes for failover and is the production target (Cloud Run + PostgreSQL + Redis). See `docs/ROYCSS_BACKEND_ARCHITECTURE.md`.
+Both backends expose the **same `/api/v1` surface** (68 modules). `backend-node` is the running source of truth; `backend-go` mirrors all 68 module routes for failover and is the production target (Cloud Run + PostgreSQL + Redis). See `docs/PENDING-FEATURES.md` for the full implementation backlog.
 
 ---
 
 ## Documentation
 
-| Report | Location |
+The implementation backlog lives in [`docs/PENDING-FEATURES.md`](docs/PENDING-FEATURES.md) — 47 actionable items (7 P0 / 8 P1 / 16 P2 / 16 P3) with acceptance criteria, files-to-touch, and recommended agent type per item. Dispatch agents per PF-NNN.
+
+| Reference | Location |
 |---|---|
-| Executive Audit | `docs/reports/ROYCSS_EXECUTIVE_AUDIT.md` |
-| Feature Inventory | `docs/reports/ROYCSS_MASTER_FEATURE_INVENTORY.md` |
-| Architecture | `docs/reports/ROYCSS_CURRENT_ARCHITECTURE.md` |
-| API Report (270+ endpoints) | `docs/reports/ROYCSS_API_REPORT.md` |
-| Database Report (45 models) | `docs/reports/ROYCSS_DATABASE_REPORT.md` |
-| Security Report | `docs/reports/ROYCSS_SECURITY_REPORT.md` |
-| Test Report | `docs/reports/ROYCSS_TEST_REPORT.md` |
-| API Keys Required | `docs/reports/API_KEYS_REQUIRED.md` |
+| Pending Features (single source of truth) | `docs/PENDING-FEATURES.md` |
 | Contributing | `docs/CONTRIBUTING.md` |
 
 ---

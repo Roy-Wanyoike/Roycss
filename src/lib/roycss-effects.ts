@@ -40,8 +40,17 @@ import { effectsBatch38 } from "./effects-batch-38";
 import { effectsBatch39 } from "./effects-batch-39";
 import { effectsBatch42 } from "./effects-batch-42";
 import { effectsBatch43 } from "./effects-batch-43";
+import { effectsBatch44 } from "./effects-batch-44";
+import { effectsBatch45 } from "./effects-batch-45";
+import { effectsBatch46 } from "./effects-batch-46";
+import { effectsBatch47 } from "./effects-batch-47";
+import { effectsBatch48 } from "./effects-batch-48";
+import { effectsBatch49 } from "./effects-batch-49";
 import { effectsBatch40 } from "./effects-batch-40";
 import { effectsBatch41 } from "./effects-batch-41";
+import { effectsBatch50 } from "./effects-batch-50";
+import { effectsBatch51 } from "./effects-batch-51";
+import { effectsBatch52 } from "./effects-batch-52";
 
 // Re-export types and metadata
 export type { CSSEffect, EffectCategory, PreviewType } from "./roycss-types";
@@ -90,8 +99,17 @@ export const effects: CSSEffect[] = [
   ...effectsBatch39,
   ...effectsBatch42,
   ...effectsBatch43,
+  ...effectsBatch44,
+  ...effectsBatch45,
+  ...effectsBatch46,
+  ...effectsBatch47,
+  ...effectsBatch48,
+  ...effectsBatch49,
   ...effectsBatch40,
   ...effectsBatch41,
+  ...effectsBatch50,
+  ...effectsBatch51,
+  ...effectsBatch52,
 ];
 
 // Generate combined CSS string for injection (avoids FOUC by rendering server-side)

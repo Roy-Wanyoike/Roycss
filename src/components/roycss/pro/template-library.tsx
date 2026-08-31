@@ -1455,7 +1455,7 @@ function Toolbar({
 export function TemplateLibrary(): React.JSX.Element {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("marketplace/templates");
-  void data; void loading; void error;
+  void data;
 
   const [search, setSearch] = useState<string>("");
   const [filter, setFilter] = useState<CategoryFilter>("all");
@@ -1506,6 +1506,7 @@ export function TemplateLibrary(): React.JSX.Element {
           copy-paste code. Built with RoyCSS semantic tokens.
         </CardDescription>
         <CardAction>
+          <BackendLiveBadge loading={loading} error={error} />
           <Badge variant="secondary" className="gap-1">
             <Sparkles className="size-3" aria-hidden />
             {visible.length} shown

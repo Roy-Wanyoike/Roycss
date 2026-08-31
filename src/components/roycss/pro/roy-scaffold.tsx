@@ -640,7 +640,7 @@ function OptionSelect<T extends string>({
 export function RoyScaffold() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("scaffold/types");
-  void data; void loading; void error;
+  void data;
 
   const { toast } = useToast();
   const [projectType, setProjectType] = useState<ProjectType>("saas");
@@ -742,6 +742,7 @@ export function RoyScaffold() {
           monorepo in one command.
         </CardDescription>
         <CardAction>
+          <BackendLiveBadge loading={loading} error={error} />
           <Badge variant="secondary" className="gap-1">
             <FolderTree className="size-3" aria-hidden />
             {PROJECT_TYPES.length} templates

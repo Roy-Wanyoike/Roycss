@@ -102,8 +102,8 @@ jobs:
   # Railway — deploy the Express backend + run `prisma migrate deploy`
   # + hit /api/v1/health to confirm the new revision answers 200.
   # ─────────────────────────────────────────────────────────────────────
-  deploy-backend:
-    name: Deploy backend to Railway + migrate + smoke
+  deploy-backend-node:
+    name: Deploy backend-node to Railway + migrate + smoke
     needs: guard
     if: needs.guard.outputs.should-deploy == 'true'
     runs-on: ubuntu-latest
@@ -123,8 +123,8 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
 
-      - name: Install backend dependencies
-        working-directory: backend
+      - name: Install backend-node dependencies
+        working-directory: backend-node
         run: bun install --frozen-lockfile
 
       - name: Deploy to Railway
@@ -137,7 +137,7 @@ jobs:
 
       - name: Fetch production DATABASE_URL from Railway
         id: dburl
-        working-directory: backend
+        working-directory: backend-node
         run: |
           # `railway variables` requires the Railway CLI to be on PATH.
           # bervProject/railway-deploy@v2 installs it as a side-effect.
@@ -150,14 +150,14 @@ jobs:
           echo "value=$DB_URL" >> "$GITHUB_OUTPUT"
 
       - name: Run prisma migrate deploy
-        working-directory: backend
+        working-directory: backend-node
         run: bunx prisma migrate deploy
         env:
           DATABASE_URL: ${{ steps.dburl.outputs.value }}
 
-      - name: Discover backend public URL
+      - name: Discover backend-node public URL
         id: url
-        working-directory: backend
+        working-directory: backend-node
         run: |
           BACKEND_URL="$(railway status --service "$RAILWAY_SERVICE_ID" --environment production | grep -oE 'https://[a-z0-9.-]+\.up\.railway\.app' | head -1)"
           if [ -z "$BACKEND_URL" ]; then

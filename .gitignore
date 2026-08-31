@@ -13,7 +13,7 @@ node_modules/
 !.yarn/releases
 !.yarn/versions
 bun.lockb
-backend/bun.lock
+backend-node/bun.lock
 
 # ─── Next.js ───────────────────────────────────────────────────
 .next/
@@ -24,8 +24,8 @@ next-env.d.ts
 
 # ─── Production build artifacts ────────────────────────────────
 # dist/ at root IS committed (roycss.css, effects.json — published npm artifacts)
-# backend/dist/ is regenerated — don't commit
-backend/dist/
+# backend-node/dist/ is regenerated — don't commit
+backend-node/dist/
 dist/coverage/
 
 # ─── Testing & coverage ────────────────────────────────────────
@@ -35,27 +35,27 @@ playwright-report/
 test-results/
 test-results.xml
 *.lcov
-backend/coverage/
-backend/test.db
-backend/test.db-journal
-backend/prisma/test.db*
-backend/prisma/custom.db*
+backend-node/coverage/
+backend-node/test.db
+backend-node/test.db-journal
+backend-node/prisma/test.db*
+backend-node/prisma/custom.db*
 
 # ─── Environment variables (NEVER commit secrets) ─────────────
 .env
 .env.*
 !.env.example
-backend/.env
-backend/.env.*
-!backend/.env.example
+backend-node/.env
+backend-node/.env.*
+!backend-node/.env.example
 
 # ─── Database (SQLite — regenerated per environment) ───────────
 db/*.db
 db/*.db-journal
 db/*.db-wal
 db/*.db-shm
-backend/prisma/dev.db*
-backend/prisma/migrations/dev.db*
+backend-node/prisma/dev.db*
+backend-node/prisma/migrations/dev.db*
 prisma/migrations/dev.db*
 prisma/generated/
 
@@ -68,7 +68,7 @@ yarn-error.log*
 dev.log
 dev.out.log
 server.log
-backend/*.log
+backend-node/*.log
 /tmp/*.log
 
 # ─── OS files ───────────────────────────────────────────────────
@@ -118,6 +118,14 @@ worklog.md
 *.tgz
 *.tar.gz
 
+# ─── backend-go (Go modular monolith skeleton) ─────────────────────
+# Go build artifacts (regenerated, not source)
+backend-go/bin/
+backend-go/vendor/
+*.exe
+*.test
+*.out
+
 # ─── Miscellaneous ─────────────────────────────────────────────
 .cache/
 .turbo/
@@ -126,6 +134,7 @@ worklog.md
 # ─── Stray clones / downloaded archives (not part of source) ───
 RoyCSS-evolved/
 download/
+portfolio/
 inspector/
 
 # ─── Reports (regenerated, not source) ─────────────────────────
@@ -151,7 +160,7 @@ sentry.properties
 *.pid
 *.lock
 !bun.lock
-!backend/bun.lock
+!backend-node/bun.lock
 .pids/
 
 # ─── Backup files ──────────────────────────────────────────────
@@ -170,4 +179,18 @@ examples/
 skills/
 .changeset/
 *.bak
-*.zip
+
+# ─── Root-level dev screenshots (agent-browser captures) ─────
+roycss-*.png
+
+# ─── Repo hygiene (regenerable / dev-only — never push) ─────────────
+# RoyCSS zip artifacts are rebuilt from source; never commit the binary
+roycss.zip
+public/roycss.zip
+
+# Agent / dev context (local only)
+.zscripts/
+agent-ctx/
+worklog.md
+.agent/
+*.pid

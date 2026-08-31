@@ -74,13 +74,14 @@ cd Roycss
 
 # Install dependencies
 bun install                    # Frontend
-cd backend && bun install      # Backend
+cd backend-node && bun install  # Backend (Node)
+cd ..
 
 # Set up backend environment
-cp backend/.env.example backend/.env
+cp backend-node/.env.example backend-node/.env
 
 # Initialize database
-cd backend
+cd backend-node
 bunx prisma generate
 bunx prisma db push --schema=./prisma/schema.prisma
 cd ..
@@ -89,7 +90,7 @@ cd ..
 bun run build:package
 
 # Start the backend (port 4000)
-cd backend && bun run --env-file=.env dev &
+cd backend-node && bun run --env-file=.env dev &
 
 # Start the frontend (port 3000)
 bun run dev
@@ -104,7 +105,8 @@ Open `http://localhost:3000` — you should see 1,959 effects, 62 platform produ
 | Layer | Technology |
 |---|---|
 | **Frontend** | Next.js 16 (App Router, Turbopack), TypeScript 5, Tailwind CSS 4, shadcn/ui |
-| **Backend** | Express.js 4, TypeScript, Prisma ORM, Zod validation, JWT auth |
+| **Backend (Node)** | Express.js 4, TypeScript, Prisma ORM, Zod validation, JWT auth — the running source of truth |
+| **Backend (Go)** | Go 1.23, `net/http` + `chi`, modular monolith — production target (Cloud Run + PostgreSQL + Redis) |
 | **Database** | SQLite (dev) / Supabase Postgres (prod) — 45 Prisma models |
 | **WebSocket** | Socket.io (Roy Live, port 3003) |
 | **PWA** | Service Worker v2.1.0, manifest.json, 5 icons |
@@ -132,7 +134,8 @@ Roycss/
 │   │   └── auth/           # Auth UI (LoginSheet, RegisterSheet, UserMenu)
 │   └── lib/               # Effects (1,959), product registry, types, API client
 │
-├── backend/               # Backend (Express.js + Prisma)
+├── backend-node/           # Express.js + Prisma — the running source of truth
+├── backend-go/             # Go modular monolith — production target
 │   ├── src/modules/        # 68 API modules
 │   ├── prisma/schema.prisma # 45 Prisma models
 │   ├── tests/integration/  # 15 integration tests
@@ -152,6 +155,15 @@ Roycss/
 ├── render.yaml            # Backend deployment (Render)
 └── .nvmrc                 # Node version (20)
 ```
+
+### Dual-backend architecture
+
+RoyCSS runs **two backend folders** for scaling and failover:
+
+- **`backend-node/`** — Express + Prisma + SQLite. The **running source of truth**; works in any Node environment and serves all 68 modules today.
+- **`backend-go/`** — Go modular monolith. The **production target** (Cloud Run + PostgreSQL + Redis). Today it registers all 68 module route surfaces; modules not yet ported return `501` so clients fall back to `backend-node`.
+
+Both backends expose the **same `/api/v1` contract** (68 modules). The frontend is backend-agnostic — it hits `/api/v1/<module>` and the catch-all proxy (or Caddy `XTransformPort` in dev) routes to the active backend. See `docs/PENDING-FEATURES.md` (PF-008) for the batched Go port plan.
 
 ---
 
@@ -188,7 +200,7 @@ The backend deploys as a Node.js web service on Render.
 
 **No.** This single repo works for both:
 - **Frontend** deploys from the root directory → Vercel reads `vercel.json`
-- **Backend** deploys from the `backend/` subdirectory → Render reads `render.yaml` (which specifies `rootDir: backend`)
+- **Backend** deploys from the `backend-node/` subdirectory → Render reads `render.yaml` (which specifies `rootDir: backend-node`)
 
 Both services read from the same GitHub repo but deploy independently.
 
@@ -200,7 +212,7 @@ RoyCSS supports **Node.js 18.18+** and **Bun 1.0+**:
 
 - `.nvmrc` specifies Node 20 (LTS)
 - `package.json` declares `"engines": {"node": ">=18.18.0", "bun": ">=1.0.0"}`
-- `backend/package.json` declares `"engines": {"node": ">=18.18.0"}`
+- `backend-node/package.json` declares `"engines": {"node": ">=18.18.0"}`
 
 To switch Node versions locally:
 ```bash
@@ -215,7 +227,7 @@ The project uses `bun` as the primary runtime, which is compatible with all Node
 
 ## Environment Variables
 
-See [`backend/.env.example`](backend/.env.example) for all variables.
+See [`backend-node/.env.example`](backend-node/.env.example) for all variables.
 
 ### Required for Development
 
@@ -294,14 +306,14 @@ bun run db:push          # Push schema to database
 ```
 Frontend (Next.js 16, Vercel)
     ↕  REST API via catch-all proxy
-Backend (Express + Prisma, Render)
+Backend-node (Express + Prisma, Render)  ⇄  Backend-go (Go, Cloud Run — production target)
     ↕  Database (Supabase Postgres)
 Live Service (Socket.io, separate)
 ```
 
-**Modular monolith** — the correct architecture for this project. No microservices needed.
+**Dual-backend modular monolith** — `backend-node` is the running source of truth; `backend-go` is the production target with the same `/api/v1` surface for failover. No microservices needed.
 
-See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for full details.
+See [`docs/PENDING-FEATURES.md`](docs/PENDING-FEATURES.md) for the full implementation backlog (47 items: 7 P0 / 8 P1 / 16 P2 / 16 P3) — the single source of truth for pending work, ready for per-item agent dispatch.
 
 ---
 

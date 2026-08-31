@@ -584,7 +584,7 @@ const SyncLogRow = React.memo(function SyncLogRow({ event }: SyncLogRowProps) {
 export function RoySync() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("sync/status");
-  void data; void loading; void error;
+  void data;
 
   const { toast } = useToast();
   const [syncStates, setSyncStates] = useState<
@@ -749,6 +749,7 @@ export function RoySync() {
           place. {connectedCount}/{INTEGRATIONS.length} integrations connected.
         </CardDescription>
         <CardAction>
+          <BackendLiveBadge loading={loading} error={error} />
           <Button
             size="sm"
             onClick={handleSyncAll}

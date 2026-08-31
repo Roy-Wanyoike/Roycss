@@ -579,7 +579,7 @@ const ChangelogCard = React.memo(function ChangelogCard({
 export function RoyVersion() {
   // Backend-wired — falls back to existing demo data on error (progressive enhancement).
   const { data, loading, error } = useBackendData<unknown>("version/current");
-  void data; void loading; void error;
+  void data;
 
   const { toast } = useToast();
   const [checking, setChecking] = useState(false);
@@ -678,6 +678,7 @@ export function RoyVersion() {
           upgrade before you commit.
         </CardDescription>
         <CardAction>
+          <BackendLiveBadge loading={loading} error={error} />
           <Button
             size="sm"
             onClick={handleCheck}

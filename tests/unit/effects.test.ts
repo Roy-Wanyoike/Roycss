@@ -22,8 +22,8 @@ const VALID_PREVIEW_TYPES: ReadonlySet<PreviewType> = new Set([
  * `.roycss-<id>` selector doesn't actually match the effect id.
  */
 describe("effects corpus", () => {
-  it("exposes exactly 1749 effects (the documented catalog size)", () => {
-    expect(effects.length).toBe(1749);
+  it("exposes exactly 1959 effects (the documented catalog size)", () => {
+    expect(effects.length).toBe(1959);
   });
 
   it("exposes a non-empty allEffectCSS string that contains every effect's cssCode", () => {

@@ -84,10 +84,10 @@ export default function vuLoop(data) {
         return false;
       }
     },
-    "body meta.total = 1749": (r) => {
+    "body meta.total = 1779": (r) => {
       try {
         const body = r.json();
-        return body?.meta?.total === 1749;
+        return body?.meta?.total === 1779;
       } catch {
         return false;
       }

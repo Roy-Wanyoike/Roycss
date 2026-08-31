@@ -1,5 +1,3 @@
-"use client";
-
 import { ThreeTubesCursor } from "@/components/roycss/effects/three-tubes-cursor";
 
 /**

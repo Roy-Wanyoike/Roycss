@@ -1,7 +1,7 @@
 /**
  * Generate dist/effects.json from the live TypeScript effects array.
  *
- * The backend's `effects` service (`backend/src/modules/effects/service.ts`)
+ * The backend-node's `effects` service (`backend-node/src/modules/effects/service.ts`)
  * reads `dist/effects.json` at boot via `EFFECTS_DATA_PATH` (default
  * `../dist/effects.json`). The previous file shipped 1,569 effects across
  * 20 categories; the current TypeScript source ships 1,809 effects across

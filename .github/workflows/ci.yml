@@ -74,12 +74,12 @@ jobs:
   # Backend — typecheck, Prisma generate + push to a throwaway test DB,
   # then run the integration suite via supertest + vitest.
   # ─────────────────────────────────────────────────────────────────────
-  backend:
-    name: Backend — typecheck + db + integration
+  backend-node:
+    name: Backend (Node) — typecheck + db + integration
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: backend
+        working-directory: backend-node
     env:
       # Throwaway SQLite file — never the production dev.db. The setup
       # file runs `bun db:push --skip-generate` against this path before
@@ -91,7 +91,7 @@ jobs:
       JWT_SECRET: "ci-test-jwt-secret-not-for-production-use-64chars"
       JWT_REFRESH_SECRET: "ci-test-jwt-refresh-secret-different-from-access-64chars"
       # Effects data lives in the parent project's dist/ folder; the
-      # backend reads it via a relative path from the backend root.
+      # backend reads it via a relative path from the backend-node root.
       EFFECTS_DATA_PATH: "../dist/effects.json"
     steps:
       - name: Checkout
@@ -108,10 +108,10 @@ jobs:
           bun install --frozen-lockfile
           bun run build:package
 
-      - name: Install backend dependencies (frozen lockfile)
+      - name: Install backend-node dependencies (frozen lockfile)
         run: bun install --frozen-lockfile
 
-      - name: Typecheck backend (tsc --noEmit)
+      - name: Typecheck backend-node (tsc --noEmit)
         run: bun run typecheck
 
       - name: Prisma generate
@@ -134,7 +134,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: backend-coverage
-          path: backend/coverage/
+          name: backend-node-coverage
+          path: backend-node/coverage/
           if-no-files-found: warn
           retention-days: 7

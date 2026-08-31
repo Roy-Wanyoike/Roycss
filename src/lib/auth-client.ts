@@ -26,7 +26,7 @@ export const cookieOptions = {
 };
 
 /** Backend auth base URL — never exposed to the browser. */
-export const BACKEND_AUTH_URL = "http://localhost:4000/api/v1/auth";
+export const BACKEND_AUTH_URL = (process.env.BACKEND_URL || "http://localhost:4000") + "/api/v1/auth";
 
 /**
  * Coerce any thrown value (Error, fetch Response.json, plain string)

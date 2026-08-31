@@ -4,7 +4,6 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:4000";
-const LIVE_URL = process.env.LIVE_URL || "http://localhost:3003";
 
 async function ping(url: string, timeoutMs = 5000) {
   try {
@@ -17,21 +16,15 @@ async function ping(url: string, timeoutMs = 5000) {
 }
 
 export async function GET() {
-  const [backend, live] = await Promise.all([
-    ping(`${BACKEND_URL}/api/v1/health`),
-    ping(`${LIVE_URL}/health`),
-  ]);
-
-  const allOk = backend.status === "ok" && live.status === "ok";
+  const backend = await ping(`${BACKEND_URL}/api/v1/health`);
   const dbStatus = backend.status === "ok" ? "ok" : "down";
 
   return NextResponse.json(
     {
-      status: allOk ? "ok" : "degraded",
+      status: dbStatus === "ok" ? "ok" : "degraded",
       effectsCount: 1959,
       dbStatus,
       backendStatus: backend,
-      liveServiceStatus: live,
       timestamp: new Date().toISOString(),
       version: "2.1.0",
     },

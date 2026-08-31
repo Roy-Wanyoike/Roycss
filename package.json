@@ -1,7 +1,7 @@
 {
   "name": "roycss",
   "version": "2.0.0",
-  "description": "RoyCSS — 1569+ production-ready CSS effects. Zero JavaScript runtime. OKLCH colors, logical properties, container queries, scroll-driven animations.",
+  "description": "RoyCSS \u2014 1569+ production-ready CSS effects. Zero JavaScript runtime. OKLCH colors, logical properties, container queries, scroll-driven animations.",
   "keywords": [
     "css",
     "css-framework",
@@ -149,5 +149,9 @@
     "z-ai-web-dev-sdk": "^0.0.18",
     "zod": "^4.0.2",
     "zustand": "^5.0.6"
+  },
+  "engines": {
+    "node": ">=18.18.0",
+    "bun": ">=1.0.0"
   }
 }

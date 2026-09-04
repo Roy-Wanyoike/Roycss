@@ -38,7 +38,19 @@
   ],
   "exclude": [
     "node_modules",
-    "backend",
-    "vscode-extension"
+    "backend-node",
+    "backend-go",
+    "mini-services",
+    "vscode-extension",
+    "cli",
+    "mcp-server",
+    "a11y",
+    "perf",
+    "security",
+    "database",
+    "infrastructure",
+    "dist",
+    "playwright-report",
+    ".next"
   ]
 }

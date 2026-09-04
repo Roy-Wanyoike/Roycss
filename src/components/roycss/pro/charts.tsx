@@ -17,7 +17,6 @@ import {
   PieChart,
   ResponsiveContainer,
   Tooltip,
-  type TooltipProps,
   XAxis,
   YAxis,
 } from "recharts";
@@ -143,10 +142,21 @@ function formatUsers(value: number): string {
 }
 
 // ─── Custom tooltip ─────────────────────────────────────────
-// Typed via recharts' TooltipProps<number, string>; no `any` leakage.
+// recharts 3 no longer exposes `payload`/`label` on TooltipProps
+// (they are injected into custom content elements at runtime), so
+// the injected props this component consumes are declared explicitly.
 
-interface ChartTooltipProps
-  extends Omit<TooltipProps<number, string>, "content"> {
+interface ChartTooltipPayloadItem {
+  name?: string | number;
+  value?: number | string | ReadonlyArray<number | string>;
+  color?: string;
+  dataKey?: string | number;
+}
+
+interface ChartTooltipProps {
+  active?: boolean;
+  payload?: ReadonlyArray<ChartTooltipPayloadItem>;
+  label?: string | number;
   valueFormatter: (value: number) => string;
   /** When true, hides the top-level label (e.g. for the donut where label === name). */
   hideLabel?: boolean;

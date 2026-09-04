@@ -1,7 +1,7 @@
 {
   "name": "roycss",
   "version": "2.0.0",
-  "description": "RoyCSS \u2014 1569+ production-ready CSS effects. Zero JavaScript runtime. OKLCH colors, logical properties, container queries, scroll-driven animations.",
+  "description": "RoyCSS \u2014 1,959 production-ready CSS effects. Zero JavaScript runtime. OKLCH colors, logical properties, container queries, scroll-driven animations.",
   "keywords": [
     "css",
     "css-framework",

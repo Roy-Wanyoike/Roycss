@@ -16,6 +16,7 @@ model User {
   updatedAt    DateTime @updatedAt
   favorites    EffectFavorite[]
   collections  Collection[]
+  memberships  Membership[]
   @@index([email])
 }
 
@@ -213,6 +214,30 @@ model Organization {
   seats     Int      @default(1)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  memberships Membership[]
+}
+
+// ─── Org-scoped authorization (issue #64) ─────────────────────────────────
+// Links a User to an Organization with a role. Consumed by the
+// `requireRole()` middleware (src/server/middleware/auth.ts) which
+// enforces a role hierarchy OWNER > ADMIN > MEMBER > VIEWER.
+//
+// NOTE: Prisma `enum` is not supported on SQLite, so `role` is a plain
+// string; the allowed values are validated application-side by
+// requireRole (see ORG_ROLES in the middleware).
+model Membership {
+  id        String       @id @default(cuid())
+  orgId     String
+  userId    String
+  role      String       @default("MEMBER") // OWNER | ADMIN | MEMBER | VIEWER
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  org        Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@unique([orgId, userId])
+  @@index([userId])
+  @@index([orgId])
 }
 model Team {
   id        String   @id @default(cuid())

@@ -1,13 +1,17 @@
 /**
  * Profiler routes — /api/v1/profiler
  *
- *   POST  /start              start a new profiling session
+ *   POST  /start              start a new profiling session (auth: Bearer token)
  *   GET   /results/:id        fetch a profiling result by id
  *   GET   /metrics            list all known profiler metrics
+ *
+ * Mutating routes require authentication (issue #64) — profiler runs
+ * persist to the `ProfilerResult` Prisma model.
  */
 import { Router } from "express";
 import type { z } from "zod";
 
+import { requireAuth } from "../../server/middleware/auth.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import {
   validateBody,
@@ -36,6 +40,7 @@ profilerRouter.get(
 
 profilerRouter.post(
   "/start",
+  requireAuth,
   validateBody(StartProfilingSchema),
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<

@@ -3,8 +3,11 @@
  *
  *   GET  /projects        list all monitored fleet projects
  *   GET  /health          fleet-wide health summary
- *   POST /scan            trigger a re-scan of a project
+ *   POST /scan            trigger a re-scan of a project (auth: Bearer token)
  *   GET  /projects/:id    single project by id
+ *
+ * Mutating routes require authentication (issue #64) — scans persist
+ * updates to the `FleetProject` Prisma model.
  *
  * Order matters: static routes (`/projects`, `/health`, `/scan`) are
  * declared before `/projects/:id` so the literal paths aren't captured
@@ -13,6 +16,7 @@
 import { Router } from "express";
 import type { z } from "zod";
 
+import { requireAuth } from "../../server/middleware/auth.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import {
   validateBody,
@@ -46,6 +50,7 @@ fleetRouter.get(
 
 fleetRouter.post(
   "/scan",
+  requireAuth,
   validateBody(FleetScanSchema),
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<typeof FleetScanSchema>;

@@ -1,10 +1,13 @@
 /**
  * Mentor routes — /api/v1/mentor
  *
- *   POST /chat        send a chat message to the mentor
+ *   POST /chat        send a chat message to the mentor (auth: Bearer token)
  *   GET  /topics      list all mentor topics
  *   GET  /progress    learner progress snapshot
  *   GET  /levels      list skill levels
+ *
+ * Mutating routes require authentication (issue #64) — chat is
+ * LLM-backed when LLM keys are configured (cost/abuse vector).
  *
  * Order matters: static routes (`/chat`, `/topics`, `/progress`,
  * `/levels`) are declared before any param routes (currently none).
@@ -12,6 +15,7 @@
 import { Router } from "express";
 import type { z } from "zod";
 
+import { requireAuth } from "../../server/middleware/auth.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import { validateBody } from "../../server/middleware/validate.js";
 import {
@@ -26,6 +30,7 @@ export const mentorRouter = Router();
 
 mentorRouter.post(
   "/chat",
+  requireAuth,
   validateBody(MentorChatSchema),
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<typeof MentorChatSchema>;

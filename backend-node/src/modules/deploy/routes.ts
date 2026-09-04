@@ -1,11 +1,14 @@
 /**
  * Deploy routes — /api/v1/deploy
  *
- *   POST /create           create a new deployment
+ *   POST /create           create a new deployment (auth: Bearer token)
  *   GET  /history          list deployment history
  *   GET  /platforms        list configured platforms
  *   GET  /environments     list configured environments
  *   GET  /history/:id      single deployment by id
+ *
+ * Mutating routes require authentication (issue #64) — deployments
+ * persist to the `Deployment` Prisma model.
  *
  * Order matters: static routes (`/create`, `/history`, `/platforms`,
  * `/environments`) are declared before `/history/:id` so the literal
@@ -14,6 +17,7 @@
 import { Router } from "express";
 import type { z } from "zod";
 
+import { requireAuth } from "../../server/middleware/auth.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import {
   validateBody,
@@ -32,6 +36,7 @@ export const deployRouter = Router();
 
 deployRouter.post(
   "/create",
+  requireAuth,
   validateBody(DeployCreateSchema),
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<typeof DeployCreateSchema>;

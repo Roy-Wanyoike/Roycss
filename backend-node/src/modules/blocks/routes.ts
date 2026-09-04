@@ -4,13 +4,17 @@
  *   GET   /                list all application blocks
  *   GET   /:id             single block by id
  *   GET   /categories      list all block categories
- *   POST  /                create a new block (community submission)
+ *   POST  /                create a new block (auth: Bearer token)
+ *
+ * Mutating routes require authentication (issue #64) — blocks persist
+ * to the `Block` Prisma model.
  *
  * Order matters: static collection routes are declared before /:id.
  */
 import { Router } from "express";
 import type { z } from "zod";
 
+import { requireAuth } from "../../server/middleware/auth.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import {
   validateBody,
@@ -44,6 +48,7 @@ blocksRouter.get(
 
 blocksRouter.post(
   "/",
+  requireAuth,
   validateBody(BlockCreateSchema),
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<typeof BlockCreateSchema>;

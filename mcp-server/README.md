@@ -32,7 +32,7 @@ When connected to your AI assistant, the RoyCSS MCP Server provides:
 
 | # | Tool | What it does |
 |---|------|---|
-| 1 | `search_effects` | Search 1,569 effects by keyword, category, or tags |
+| 1 | `search_effects` | Search 1,959 effects by keyword, category, or tags |
 | 2 | `get_effect` | Get full metadata for any effect by ID |
 | 3 | `list_categories` | List all 20 categories with effect counts |
 | 4 | `get_install` | Get install commands for npm/pnpm/yarn/bun/deno/CDN |
@@ -52,7 +52,7 @@ Resources are URI-addressable static data the AI client can attach as context (n
 
 | URI | Type | Returns |
 |-----|------|---------|
-| `roycss://effects` | static | All 1,569 effects (compact: `{id, name, category}`) |
+| `roycss://effects` | static | All 1,959 effects (compact: `{id, name, category}`) |
 | `roycss://effects/{id}` | template | Single effect detail |
 | `roycss://categories` | static | 20 categories with counts |
 | `roycss://patterns` | static | 10 UI patterns (compact, no HTML) |
@@ -434,7 +434,7 @@ Returns: `{ contents: [{ uri, mimeType: "application/json", text: "<json>" }] }`
 
 Available URIs:
 
-- `roycss://effects` — all 1,569 effects (compact: `{id, name, category}`)
+- `roycss://effects` — all 1,959 effects (compact: `{id, name, category}`)
 - `roycss://effects/{id}` — single effect detail (template — substitute `{id}`)
 - `roycss://categories` — 20 categories with counts
 - `roycss://patterns` — 10 UI patterns (compact, no HTML)
@@ -552,7 +552,7 @@ echo '{"jsonrpc":"2.0","method":"tools/list","id":1}' | bun index.ts
 ```
 
 1. The AI assistant sends a tool call (e.g., `search_effects("neon")`)
-2. The MCP server queries the local `effects.json` (1,569 effects) + `patterns.json` (10 patterns)
+2. The MCP server queries the local `effects.json` (1,959 effects) + `patterns.json` (10 patterns)
 3. The server returns structured JSON with matching results
 4. The AI uses the result to generate accurate RoyCSS code
 

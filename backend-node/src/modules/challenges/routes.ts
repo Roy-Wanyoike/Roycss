@@ -4,7 +4,10 @@
  *   GET  /                    list all challenges
  *   GET  /leaderboard         global leaderboard
  *   GET  /:id                 single challenge by id
- *   POST /:id/submit          submit a solution for a challenge
+ *   POST /:id/submit          submit a solution   (auth: Bearer token)
+ *
+ * Mutating routes require authentication (issue #64) — submissions
+ * persist to the `ChallengeSubmission` Prisma model.
  *
  * Order matters: static routes (`/leaderboard`) are declared before
  * `/:id` so the literal path isn't captured as an id.
@@ -12,6 +15,7 @@
 import { Router } from "express";
 import type { z } from "zod";
 
+import { requireAuth } from "../../server/middleware/auth.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import {
   validateBody,
@@ -57,6 +61,7 @@ challengesRouter.get(
 
 challengesRouter.post(
   "/:id/submit",
+  requireAuth,
   validateParams(ChallengeParamsSchema),
   validateBody(ChallengeSubmitSchema),
   asyncHandler(async (req, res) => {

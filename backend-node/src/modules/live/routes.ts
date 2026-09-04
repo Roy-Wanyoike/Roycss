@@ -1,16 +1,20 @@
 /**
  * Live routes — /api/v1/live
  *
- *   POST  /sessions                  create a live collaboration session
+ *   POST  /sessions                  create a live session (auth: Bearer token)
  *   GET   /sessions/:id              fetch a live session by id
  *   GET   /sessions/:id/users        list users in a live session
- *   POST  /sessions/:id/message      post a message into a live session
+ *   POST  /sessions/:id/message      post a message     (auth: Bearer token)
+ *
+ * Mutating routes require authentication (issue #64) — sessions and
+ * messages persist to the `LiveSession`/`LiveMessage` Prisma models.
  *
  * Order matters: static collection routes are declared before /:id.
  */
 import { Router } from "express";
 import type { z } from "zod";
 
+import { requireAuth } from "../../server/middleware/auth.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import {
   validateBody,
@@ -42,6 +46,7 @@ liveRouter.get(
 
 liveRouter.post(
   "/sessions",
+  requireAuth,
   validateBody(CreateSessionSchema),
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<typeof CreateSessionSchema>;
@@ -72,6 +77,7 @@ liveRouter.get(
 
 liveRouter.post(
   "/sessions/:id/message",
+  requireAuth,
   validateParams(IdParamsSchema),
   validateBody(PostMessageSchema),
   asyncHandler(async (req, res) => {

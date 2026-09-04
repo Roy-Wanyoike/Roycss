@@ -1,10 +1,13 @@
 /**
  * Compliance routes — /api/v1/compliance
  *
- *   POST /scan            run a compliance scan against a URL
+ *   POST /scan            run a compliance scan against a URL (auth: Bearer token)
  *   GET  /standards       list all compliance standards
  *   GET  /reports         list all compliance reports
  *   GET  /results/:id     single scan result by id
+ *
+ * Mutating routes require authentication (issue #64) — scans persist
+ * to the `ComplianceScan` Prisma model.
  *
  * Order matters: static routes (`/scan`, `/standards`, `/reports`) are
  * declared before `/results/:id` so the literal paths aren't captured
@@ -13,6 +16,7 @@
 import { Router } from "express";
 import type { z } from "zod";
 
+import { requireAuth } from "../../server/middleware/auth.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import {
   validateBody,
@@ -34,6 +38,7 @@ export const complianceRouter = Router();
 
 complianceRouter.post(
   "/scan",
+  requireAuth,
   validateBody(ComplianceScanSchema),
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<typeof ComplianceScanSchema>;

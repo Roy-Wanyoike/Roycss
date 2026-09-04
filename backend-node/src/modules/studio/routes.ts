@@ -2,11 +2,14 @@
  * Studio routes — /api/v1/studio
  *
  *   GET    /projects          list user's visual-builder projects
- *   POST   /projects          create a new project
+ *   POST   /projects          create a new project (auth: Bearer token)
  *   GET    /projects/:id      single project (with component tree)
- *   PUT    /projects/:id      update a project
- *   DELETE /projects/:id      delete a project
+ *   PUT    /projects/:id      update a project        (auth: Bearer token)
+ *   DELETE /projects/:id      delete a project        (auth: Bearer token)
  *   GET    /templates         studio starter templates
+ *
+ * Mutating routes require authentication (issue #64) — studio projects
+ * persist to the `StudioProject` Prisma model. Reads stay public.
  *
  * Order matters: /projects and /templates are declared before /projects/:id
  * so the literal paths aren't captured as an id.
@@ -14,6 +17,7 @@
 import { Router } from "express";
 import type { z } from "zod";
 
+import { requireAuth } from "../../server/middleware/auth.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import {
   validateBody,
@@ -45,6 +49,7 @@ studioRouter.get(
 
 studioRouter.post(
   "/projects",
+  requireAuth,
   validateBody(CreateStudioProjectSchema),
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<
@@ -77,6 +82,7 @@ studioRouter.get(
 
 studioRouter.put(
   "/projects/:id",
+  requireAuth,
   validateParams(StudioProjectParamsSchema),
   validateBody(UpdateStudioProjectSchema),
   asyncHandler(async (req, res) => {
@@ -93,6 +99,7 @@ studioRouter.put(
 
 studioRouter.delete(
   "/projects/:id",
+  requireAuth,
   validateParams(StudioProjectParamsSchema),
   asyncHandler(async (req, res) => {
     const { id } = req.params as unknown as z.infer<

@@ -163,22 +163,30 @@ sentry.properties
 !backend-node/bun.lock
 .pids/
 
-# ─── Backup files ──────────────────────────────────────────────
+# ─── Test / build artifacts ─────────────────────────────
+playwright-report/
+next-env.d.ts
+.vercel
+
+# ─── Backup files ─────────────────────────────────────────
 *.bak
 *.backup
 *.orig
 
-# ─── Stray folders (not part of source) ─────────────────────────
-inspector/
-performance/
-test-results/
-upload/
-vscode-support/
-compat/
-examples/
-skills/
-.changeset/
-*.bak
+# ─── Stray folders (not part of source — repo root only) ───────
+# NOTE: anchored to the REPO ROOT. A bare `inspector/` pattern matched ANY
+# directory named inspector at any depth — which silently ignored
+# backend-node/src/modules/inspector/ (the #57 boot-blocking module) and is
+# why new files there never got committed. Keep entries root-anchored.
+/inspector/
+/performance/
+/test-results/
+/upload/
+/vscode-support/
+/compat/
+/examples/
+/skills/
+/.changeset/
 
 # ─── Root-level dev screenshots (agent-browser captures) ─────
 roycss-*.png

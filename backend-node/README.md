@@ -167,7 +167,7 @@ Stable error codes: `VALIDATION_ERROR`, `BAD_REQUEST`, `UNAUTHORIZED`,
 ## Quick start
 
 ```bash
-cd backend
+cd backend-node
 cp .env.example .env          # adjust secrets for prod
 bun install                    # or: npm install / pnpm install
 bun run db:generate            # generate Prisma client
@@ -179,7 +179,48 @@ Server starts on `http://localhost:4000`. Visit
 `http://localhost:4000/api/v1` for an endpoint listing, or
 `http://localhost:4000/api/v1/health` for the health check.
 
-### Building for production
+### Deploying to Render (blueprint)
+
+The repo root ships `render.yaml`, a Render Blueprint that deploys this
+directory as a web service (`https://<service>.onrender.com`). In the
+Render dashboard: **New → Blueprint → select this repo** — Render reads
+`render.yaml` and prompts for the required secrets.
+
+What the blueprint does:
+
+- `rootDir: backend-node` — builds from this directory.
+- `buildCommand: bun install && bunx prisma generate && bunx prisma db push`
+  — installs deps, generates the Prisma client, applies the schema to the
+  database.
+- `startCommand: bunx tsx src/index.ts` — runs the server in production
+  (no dev watch script, no `.env` file; env vars come from Render).
+- `healthCheckPath: /api/v1/health` — deploy is green only when this
+  returns 200 (503 = database unreachable).
+
+Required environment variables (prompted by Render, `sync: false`):
+
+| Variable              | Value                                          |
+|-----------------------|------------------------------------------------|
+| `DATABASE_URL`        | SQLite path or Postgres URL (see caveat below) |
+| `JWT_SECRET`          | Random string, ≥ 16 chars (32+ recommended)    |
+| `JWT_REFRESH_SECRET`  | Different random string, ≥ 16 chars            |
+
+The blueprint also pins `NODE_ENV=production`, `PORT=4000`, `BUN_VERSION`,
+and `CORS_ORIGINS=https://roycss.vercel.app` (comma-separated allowlist —
+production CORS rejects any origin not on the list). All other vars in
+`src/config/env.ts` are optional with sane defaults.
+
+> **SQLite persistence caveat**: Render's free tier has an ephemeral
+> filesystem — the schema is applied at build time and the service boots
+> healthy, but user data written at runtime (accounts, contact messages,
+> favorites) is wiped on every deploy/restart. For durable data, mount a
+> persistent disk at `/data` and set `DATABASE_URL=file:/data/roycss.db`
+> (move `bunx prisma db push` to `preDeployCommand`), or switch to Postgres
+> (see "Switch to Postgres" below) — recommended for real production use.
+
+Generate secrets locally with `openssl rand -base64 48`.
+
+### Building and running locally
 
 ```bash
 bun run build                  # tsc → dist/

@@ -1,5 +1,4 @@
 import { type Metadata, type Viewport } from "next";
-import { headers } from "next/headers";
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import "./roycss.css";
@@ -168,22 +167,18 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Read the per-request CSP nonce set by src/proxy.ts middleware.
-  // Next.js 16 auto-applies this nonce to its own framework scripts;
-  // we must apply it to OUR inline scripts (theme init + JSON-LD) so the
-  // strict production CSP (script-src 'self' 'nonce-...' 'strict-dynamic')
-  // doesn't block them.
-  const nonce = (await headers()).get("x-nonce") ?? "";
+  // NOTE: no headers() call here on purpose. The old per-request CSP nonce
+  // (x-nonce) was removed with the static-safe CSP fix (#54) — proxy.ts no
+  // longer sets that header, and reading headers() forces EVERY page into
+  // dynamic streaming (killing static prerendering and turning notFound()
+  // into soft 200 responses app-wide). The production CSP now allows
+  // 'unsafe-inline' scripts, so nonce attributes are neither needed nor set.
 
   return (
     <html lang="en" suppressHydrationWarning className="dark">
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <script
-          nonce={nonce}
-          dangerouslySetInnerHTML={{ __html: themeInitScript }}
-        />
-        <script
-          nonce={nonce}
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />

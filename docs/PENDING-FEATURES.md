@@ -1,5 +1,15 @@
 # RoyCSS — Pending Features & Implementation Backlog
 
+> ⚠️ **Banner (2026-09-04, audit AUDIT-2026-09):** stale counts and states in this file are
+> superseded by [`docs/AUDIT-2026-09.md`](./AUDIT-2026-09.md) — the verified current
+> numbers are **1,959 effects / 29 categories / 62 products / 68 backend modules /
+> 46 Prisma models / 111 + 30 tests green** (the "Current state" section and older
+> per-item counts below predate the September 2026 engagement). Also per that audit:
+> **PF-001 is DONE** (PR #76), **PF-013 is DONE** (PR #78), **PF-014 is DONE**
+> (PR #77), and issue #75 tracks the owner-action deploy runbook. This file remains the
+> backlog source of truth for item scope and acceptance criteria — update item `State`
+> fields at triage rather than trusting the stale header prose.
+
 > Consolidated from all audit reports. This is the single source of truth
 > for pending work. The old report docs will be removed after this list
 > is committed.

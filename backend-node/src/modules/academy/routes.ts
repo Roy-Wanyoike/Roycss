@@ -4,11 +4,15 @@
  *   GET   /paths                list learning paths (summaries)
  *   GET   /paths/:id            single path with full lesson list
  *   GET   /paths/:id/lessons    lessons for a path
- *   POST  /paths/:id/progress   mark a lesson complete/incomplete
+ *   POST  /paths/:id/progress   mark a lesson complete (auth: Bearer token)
+ *
+ * Mutating routes require authentication (issue #64) — progress
+ * persists to the `PathProgress` Prisma model.
  */
 import { Router } from "express";
 import type { z } from "zod";
 
+import { requireAuth } from "../../server/middleware/auth.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import {
   validateBody,
@@ -54,6 +58,7 @@ academyRouter.get(
 
 academyRouter.post(
   "/paths/:id/progress",
+  requireAuth,
   validateParams(PathParamsSchema),
   validateBody(ProgressInputSchema),
   asyncHandler(async (req, res) => {

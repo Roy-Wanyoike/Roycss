@@ -3,11 +3,14 @@
  *
  *   GET    /status            cloud service status
  *   GET    /projects          user's cloud projects
- *   POST   /projects          deploy a new project
+ *   POST   /projects          deploy a new project   (auth: Bearer token)
  *   GET    /projects/:id      single project
- *   DELETE /projects/:id      delete a project
+ *   DELETE /projects/:id      delete a project       (auth: Bearer token)
  *   GET    /storage           storage usage summary
  *   GET    /deployments       deployment history
+ *
+ * Mutating routes require authentication (issue #64) — cloud projects
+ * persist to the `CloudProject`/`Deployment` Prisma models.
  *
  * Order matters: static routes (`/status`, `/projects`, `/storage`,
  * `/deployments`) are declared before `/projects/:id` so the literal
@@ -16,6 +19,7 @@
 import { Router } from "express";
 import type { z } from "zod";
 
+import { requireAuth } from "../../server/middleware/auth.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import {
   validateBody,
@@ -55,6 +59,7 @@ cloudRouter.get(
 
 cloudRouter.post(
   "/projects",
+  requireAuth,
   validateBody(DeployCloudProjectSchema),
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<
@@ -79,6 +84,7 @@ cloudRouter.get(
 
 cloudRouter.delete(
   "/projects/:id",
+  requireAuth,
   validateParams(CloudProjectParamsSchema),
   asyncHandler(async (req, res) => {
     const { id } = req.params as unknown as z.infer<

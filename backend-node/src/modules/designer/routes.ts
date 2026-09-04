@@ -1,15 +1,20 @@
 /**
  * Designer routes — /api/v1/designer
  *
- *   POST  /generate       kick off a design generation (mock)
+ *   POST  /generate       kick off a design generation (auth: Bearer token)
  *   GET   /results/:id    single design result by id
  *   GET   /presets        design presets catalog
+ *
+ * Mutating routes require authentication (issue #64) — generation is
+ * LLM-backed when LLM keys are configured (cost/abuse vector) and
+ * results accumulate in the in-process result store.
  *
  * Order matters: static collection routes are declared before /:id.
  */
 import { Router } from "express";
 import type { z } from "zod";
 
+import { requireAuth } from "../../server/middleware/auth.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import {
   validateBody,
@@ -30,6 +35,7 @@ designerRouter.get(
 
 designerRouter.post(
   "/generate",
+  requireAuth,
   validateBody(GenerateDesignSchema),
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<typeof GenerateDesignSchema>;

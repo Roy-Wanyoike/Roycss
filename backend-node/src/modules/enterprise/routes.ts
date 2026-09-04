@@ -3,16 +3,22 @@
  *
  *   GET   /organizations          list all organizations
  *   GET   /organizations/:id      single organization
- *   POST  /organizations          create an organization
+ *   POST  /organizations          create an organization (auth: Bearer token)
  *   GET   /teams                  list all teams
  *   GET   /licenses               list all licenses
  *   GET   /audit-log              list audit log entries
+ *
+ * Org-scoped note (issue #64): there is no Membership context for a
+ * route that CREATES an organization (the org does not exist yet), so
+ * requireAuth alone gates it. Mutating routes persist to the
+ * `Organization` Prisma model. Reads stay public.
  *
  * Order matters: static collection routes are declared before /:id.
  */
 import { Router } from "express";
 import type { z } from "zod";
 
+import { requireAuth } from "../../server/middleware/auth.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import {
   validateBody,
@@ -40,6 +46,7 @@ enterpriseRouter.get(
 
 enterpriseRouter.post(
   "/organizations",
+  requireAuth,
   validateBody(CreateOrganizationSchema),
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<

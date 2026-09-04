@@ -4,7 +4,10 @@
  *   GET  /                 list all certifications
  *   GET  /verify/:id       verify a certification by its verify code
  *   GET  /:id              single certification by id
- *   POST /:id/exam         submit exam answers for a certification
+ *   POST /:id/exam         submit exam answers    (auth: Bearer token)
+ *
+ * Mutating routes require authentication (issue #64) — exam attempts
+ * persist to the `CertificationAttempt` Prisma model.
  *
  * Order matters: `/verify/:id` is declared before `/:id` so the literal
  * "verify" path segment isn't captured as a certification id.
@@ -12,6 +15,7 @@
 import { Router } from "express";
 import type { z } from "zod";
 
+import { requireAuth } from "../../server/middleware/auth.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import {
   validateBody,
@@ -61,6 +65,7 @@ certificationsRouter.get(
 
 certificationsRouter.post(
   "/:id/exam",
+  requireAuth,
   validateParams(CertificationParamsSchema),
   validateBody(CertificationExamSchema),
   asyncHandler(async (req, res) => {

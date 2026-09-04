@@ -1,16 +1,21 @@
 /**
  * Architect routes — /api/v1/architect
  *
- *   POST  /generate        kick off an architecture generation (mock)
+ *   POST  /generate        kick off an architecture generation (auth: Bearer token)
  *   GET   /templates       list all architecture templates
  *   GET   /templates/:id   single template by id
  *   GET   /results/:id     single generation result by id
+ *
+ * Mutating routes require authentication (issue #64) — generation is
+ * LLM-backed when LLM keys are configured (cost/abuse vector) and
+ * results accumulate in the in-process result store.
  *
  * Order matters: static collection routes are declared before /:id.
  */
 import { Router } from "express";
 import type { z } from "zod";
 
+import { requireAuth } from "../../server/middleware/auth.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import {
   validateBody,
@@ -39,6 +44,7 @@ architectRouter.get(
 
 architectRouter.post(
   "/generate",
+  requireAuth,
   validateBody(GenerateArchitectureSchema),
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<

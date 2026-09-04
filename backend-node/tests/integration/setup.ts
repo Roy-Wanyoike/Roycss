@@ -107,14 +107,17 @@ export default async function globalSetup(): Promise<() => Promise<void>> {
 //            SearchIndex, ContactMessage
 //   Tier 4 — parents: User (last, after EffectFavorite + Collection)
 //
-// Total: 45 tables (4 base models + 41 wave-3 models). The schema's
+// Total: 46 tables (4 base models + 41 wave-3 models + Membership from
+// issue #64 org-scoped authorization). The schema's
 // comment block "41 NEW MODELS (Wave 3)" refers to the wave-3 additions;
-// this file clears all 45 so tests in auth.test.ts (User) and
+// this file clears all 46 so tests in auth.test.ts (User) and
 // contact.test.ts (ContactMessage) start clean too.
 const TABLES_IN_FK_SAFE_ORDER = [
   // ── Tier 1 — children with enforced FK to User ────────────────────
   "effectFavorite",
   "collection",
+  // ── Tier 1.1 — org membership (enforced FKs to User + Organization) ─
+  "membership",
   // ── Tier 2 — dependent tables (logical *Id, no enforced FK) ──────
   "pathProgress",
   "challengeSubmission",

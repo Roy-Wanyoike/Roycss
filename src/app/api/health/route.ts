@@ -22,7 +22,7 @@ export async function GET() {
   return NextResponse.json(
     {
       status: dbStatus === "ok" ? "ok" : "degraded",
-      effectsCount: 1959,
+      effectsCount: 1959, // pinned by tests/unit/effects.test.ts ("exposes exactly 1959 effects") — keep in sync
       dbStatus,
       backendStatus: backend,
       timestamp: new Date().toISOString(),

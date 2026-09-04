@@ -1,16 +1,21 @@
 /**
  * Review routes — /api/v1/review
  *
- *   POST  /code           submit code for review (mock)
+ *   POST  /code           submit code for review (auth: Bearer token)
  *   GET   /results/:id    single review result by id
  *   GET   /rules          review rules catalog
  *   GET   /history        list all historical review results
+ *
+ * Mutating routes require authentication (issue #64) — review is
+ * LLM-backed when LLM keys are configured (cost/abuse vector) and
+ * results accumulate in the in-process result store.
  *
  * Order matters: static collection routes are declared before /:id.
  */
 import { Router } from "express";
 import type { z } from "zod";
 
+import { requireAuth } from "../../server/middleware/auth.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import {
   validateBody,
@@ -28,6 +33,7 @@ export const reviewRouter = Router();
 
 reviewRouter.post(
   "/code",
+  requireAuth,
   validateBody(ReviewCodeSchema),
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<typeof ReviewCodeSchema>;

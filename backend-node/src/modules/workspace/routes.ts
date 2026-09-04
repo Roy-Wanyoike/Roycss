@@ -3,8 +3,10 @@
  *
  *   GET  /resources           list all resource types (with items)
  *   GET  /team                list team members
- *   POST /invite              invite a new team member
+ *   POST /invite              invite a new team member (auth: Bearer token)
  *   GET  /resources/:type     single resource type with its items
+ *
+ * Mutating routes require authentication (issue #64). Reads stay public.
  *
  * Order matters: static routes (`/resources`, `/team`, `/invite`) are
  * declared before `/resources/:type` so the literal paths aren't captured
@@ -13,6 +15,7 @@
 import { Router } from "express";
 import type { z } from "zod";
 
+import { requireAuth } from "../../server/middleware/auth.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import {
   validateBody,
@@ -49,6 +52,7 @@ workspaceRouter.get(
 
 workspaceRouter.post(
   "/invite",
+  requireAuth,
   validateBody(WorkspaceInviteSchema),
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<typeof WorkspaceInviteSchema>;

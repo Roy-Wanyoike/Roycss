@@ -1,10 +1,13 @@
 /**
  * Preview routes — /api/v1/preview
  *
- *   POST   /create     spin up a new preview branch deployment
+ *   POST   /create     spin up a new preview branch (auth: Bearer token)
  *   GET    /list       list all preview branches
- *   DELETE /:id        delete a preview branch by id
+ *   DELETE /:id        delete a preview branch by id (auth: Bearer token)
  *   GET    /:id        single preview by id
+ *
+ * Mutating routes require authentication (issue #64) — preview branches
+ * persist to the `PreviewBranch` Prisma model.
  *
  * Order matters: static routes (`/create`, `/list`) are declared before
  * `/:id` so the literal paths aren't captured as an id.
@@ -12,6 +15,7 @@
 import { Router } from "express";
 import type { z } from "zod";
 
+import { requireAuth } from "../../server/middleware/auth.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import {
   validateBody,
@@ -29,6 +33,7 @@ export const previewRouter = Router();
 
 previewRouter.post(
   "/create",
+  requireAuth,
   validateBody(PreviewCreateSchema),
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<typeof PreviewCreateSchema>;
@@ -51,6 +56,7 @@ previewRouter.get(
 
 previewRouter.delete(
   "/:id",
+  requireAuth,
   validateParams(PreviewParamsSchema),
   asyncHandler(async (req, res) => {
     const { id } = req.params as unknown as z.infer<typeof PreviewParamsSchema>;

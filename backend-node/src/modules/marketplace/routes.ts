@@ -3,12 +3,16 @@
  *
  *   GET   /templates              list with search + filter (category, rating, free)
  *   GET   /templates/:id          single template by id
- *   POST  /templates              publish a new template
+ *   POST  /templates              publish a new template (auth: Bearer token)
  *   GET   /templates/:id/reviews  buyer reviews for a template
+ *
+ * Mutating routes require authentication (issue #64) — templates
+ * persist to the `Template` Prisma model.
  */
 import { Router } from "express";
 import type { z } from "zod";
 
+import { requireAuth } from "../../server/middleware/auth.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import {
   validateBody,
@@ -51,6 +55,7 @@ marketplaceRouter.get(
 
 marketplaceRouter.post(
   "/templates",
+  requireAuth,
   validateBody(PublishTemplateSchema),
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<

@@ -1,14 +1,18 @@
 /**
  * Bundle routes — /api/v1/bundle
  *
- *   POST  /analyze             analyze a bundle (returns a result id)
+ *   POST  /analyze             analyze a bundle (auth: Bearer token)
  *   GET   /results/:id         fetch a bundle analysis result
  *   GET   /duplicates          list duplicate modules across the bundle
  *   GET   /dead-css            list unused CSS rules
+ *
+ * Mutating routes require authentication (issue #64) — analyses
+ * persist to the `BundleResult` Prisma model.
  */
 import { Router } from "express";
 import type { z } from "zod";
 
+import { requireAuth } from "../../server/middleware/auth.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import {
   validateBody,
@@ -37,6 +41,7 @@ bundleRouter.get(
 
 bundleRouter.post(
   "/analyze",
+  requireAuth,
   validateBody(AnalyzeBundleSchema),
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<typeof AnalyzeBundleSchema>;

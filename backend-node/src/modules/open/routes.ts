@@ -5,15 +5,19 @@
  *   GET   /issues/:id              single issue by id
  *   GET   /rfcs                    list all open RFCs
  *   GET   /rfcs/:id                single RFC by id
- *   POST  /rfcs/:id/vote           cast a vote on an RFC
+ *   POST  /rfcs/:id/vote           cast a vote on an RFC (auth: Bearer token)
  *   GET   /roadmap                 quarterly roadmap
  *   GET   /contributors            top contributors
+ *
+ * Mutating routes require authentication (issue #64) — votes persist
+ * to the `RFC` Prisma model.
  *
  * Order matters: static collection routes are declared before /:id.
  */
 import { Router } from "express";
 import type { z } from "zod";
 
+import { requireAuth } from "../../server/middleware/auth.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import {
   validateBody,
@@ -86,6 +90,7 @@ openRouter.get(
 
 openRouter.post(
   "/rfcs/:id/vote",
+  requireAuth,
   validateParams(IdParamsSchema),
   validateBody(RfcVoteSchema),
   asyncHandler(async (req, res) => {

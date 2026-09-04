@@ -1,8 +1,6 @@
 {
   "framework": "nextjs",
-  "buildCommand": "bun run build",
   "installCommand": "bun install",
-  "outputDirectory": ".next/standalone",
   "env": {
     "BACKEND_URL": "https://roycss.onrender.com"
   }

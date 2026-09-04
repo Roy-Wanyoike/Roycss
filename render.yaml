@@ -1,48 +1,75 @@
-# Render Blueprint — deploys the RoyCSS backend as a web service
-# Documentation: https://render.com/docs/blueprint-spec
-# 
-# This file tells Render how to deploy the backend separately.
-# The frontend deploys to Vercel (see vercel.json).
+# Render Blueprint — deploys the RoyCSS backend (backend-node/) as a web service.
+# Spec: https://render.com/docs/blueprint-spec
 #
-# Steps:
-# 1. Push this repo to GitHub
-# 2. Go to https://dashboard.render.com → New → Blueprint
-# 3. Select this repository
-# 4. Render will read this file and create the backend service
-# 5. Set environment variables in the Render dashboard:
-#    - DATABASE_URL (Supabase Postgres connection string)
-#    - JWT_SECRET (64-char random string)
-#    - JWT_REFRESH_SECRET (different 64-char random string)
-#    - SUPABASE_URL, SUPABASE_SECRET_KEY, etc. (from your Supabase project)
+# The frontend deploys to Vercel (see vercel.json); this blueprint deploys the
+# Express + Prisma + Zod REST API (serves /api/v1, listens on PORT 4000).
+#
+# How to deploy:
+#   1. Push this branch to GitHub.
+#   2. Go to https://dashboard.render.com → New → Blueprint → select this repo.
+#   3. Render reads this file and prompts for the three REQUIRED secrets
+#      (sync: false — they live only in the Render dashboard, never in git):
+#        • DATABASE_URL       — SQLite path or Postgres URL (see caveat below)
+#        • JWT_SECRET         — ≥ 16 chars (Zod validation floor; 32+ recommended)
+#        • JWT_REFRESH_SECRET — ≥ 16 chars, must differ from JWT_SECRET
+#      Generate secrets locally with:  openssl rand -base64 48
+#   4. Apply. Render builds (bun install → prisma generate → prisma db push)
+#      and runs `bunx tsx src/index.ts`. GET /api/v1/health must return 200
+#      (503 = DB unreachable) for the deploy to pass its health check.
+#
+# ─── Env contract (source of truth: backend-node/src/config/env.ts) ─────────
+# REQUIRED (server exits at boot if missing/malformed):
+#   DATABASE_URL, JWT_SECRET (min 16 chars), JWT_REFRESH_SECRET (min 16 chars)
+# Optional with sane defaults (not listed below unless prod needs a different
+# value): PORT 4000, LOG_LEVEL info, JWT_EXPIRES_IN 15m,
+# JWT_REFRESH_EXPIRES_IN 7d, RATE_LIMIT_* , EFFECTS_DATA_PATH ../dist/effects.json
+# (the effects file ships in the repo, so that default works as-is).
+# The old blueprint's comment claimed Supabase vars were required — they are
+# NOT: SUPABASE_* and all external-service keys are optional in env.ts. Set
+# them in the Render dashboard only if you actually wire those integrations.
+#
+# ─── SQLite persistence caveat (READ BEFORE GOING LIVE) ─────────────────────
+# The Prisma datasource is SQLite (backend-node/prisma/schema.prisma). Render's
+# free tier has an EPHEMERAL filesystem: every deploy, restart, or scale event
+# wipes files written at RUNTIME. `bunx prisma db push` runs at BUILD time, so
+# the schema is applied and the service boots healthy — but user data written
+# after boot (registrations, contact messages, favorites) is lost on the next
+# deploy/restart. Treat the free-tier database as disposable.
+# Two ways to get durable data:
+#   1. Persistent disk (requires a paid instance): add to this service —
+#        disk:
+#          name: roycss-data
+#          mountPath: /data
+#      set DATABASE_URL=file:/data/roycss.db, and move the `bunx prisma db push`
+#      step from buildCommand to preDeployCommand (pre-deploys run after the
+#      disk is mounted: preDeployCommand: bunx prisma db push).
+#   2. Migrate to Postgres (recommended long-term): flip provider to
+#      "postgresql" in backend-node/prisma/schema.prisma and set DATABASE_URL
+#      to a Render Postgres / Supabase connection string — see
+#      backend-node/README.md → "Switch to Postgres".
 
 services:
   - type: web
     name: roycss-backend
-    runtime: node
+    runtime: node          # native JS/TS runtime: bun + node are preinstalled at build AND runtime
     plan: free
     region: oregon
-    rootDir: backend
-    buildCommand: bun install && bunx prisma generate
-    startCommand: bun run --env-file=.env dev
+    rootDir: backend-node
+    buildCommand: bun install && bunx prisma generate && bunx prisma db push
+    startCommand: bunx tsx src/index.ts
     healthCheckPath: /api/v1/health
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
         value: 4000
+      - key: BUN_VERSION
+        value: 1.3.14      # pin the version the blueprint was verified with
       - key: DATABASE_URL
-        sync: false
+        sync: false        # REQUIRED secret — see SQLite caveat above
       - key: JWT_SECRET
-        sync: false
+        sync: false        # REQUIRED secret — ≥16 chars (validation), 32+ recommended
       - key: JWT_REFRESH_SECRET
-        sync: false
+        sync: false        # REQUIRED secret — ≥16 chars, must differ from JWT_SECRET
       - key: CORS_ORIGINS
-        value: "*"
-      - key: SUPABASE_URL
-        sync: false
-      - key: SUPABASE_SECRET_KEY
-        sync: false
-      - key: SUPABASE_PUBLISHABLE_KEY
-        sync: false
-      - key: SUPABASE_JWKS_URL
-        sync: false
+        value: https://roycss.vercel.app  # comma-separated allowlist; prod mode rejects everything else

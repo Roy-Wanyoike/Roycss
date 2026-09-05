@@ -166,7 +166,7 @@ const MODULE_BLURBS: Record<string, string> = {
   version: "Release metadata — current, latest, changelog, breaking changes, upgrade check.",
   search: "Cross-resource search over effects/recipes/patterns (Prisma `SearchIndex`).",
   fallback: "`@supports` fallback recipes for modern CSS features.",
-  auth: "JWT account lifecycle — register / login / refresh / me (bcrypt + Prisma `User`).",
+  auth: "JWT account lifecycle + API key management (register / login / refresh / me; mint / list / revoke CLI–SDK–MCP keys).",
   contact: "Contact form intake (Prisma `ContactMessage`; 5 submissions/min/IP).",
   devtools: "CSS introspection — class inspection, design tokens, utilities, CSS analysis.",
   inspector: "CSS lint — 8 correctness/a11y rules with line-precise findings (read-only).",
@@ -227,7 +227,7 @@ const MODULE_MODELS: Record<string, string> = {
   academy: "LearningPath, PathProgress",
   analytics: "User (read-only)",
   "audit-center": "AuditProject, AuditResult",
-  auth: "User",
+  auth: "User, ApiKey",
   benchmark: "BenchmarkResult",
   blocks: "Block",
   blueprints: "Blueprint",
@@ -279,6 +279,12 @@ const RESPONSE_OVERRIDES: Record<string, string> = {
   "POST /api/v1/auth/refresh":
     "`{ data: { user, accessToken, refreshToken, expiresIn } }` · 200",
   "GET /api/v1/auth/me": "`{ data: user }` · 200",
+  "POST /api/v1/auth/api-keys":
+    "`{ data: { apiKey (masked), key (plaintext — shown ONCE), warning } }` · 201",
+  "GET /api/v1/auth/api-keys":
+    "`{ data: apiKey[] (masked), meta }` · 200",
+  "DELETE /api/v1/auth/api-keys/:id":
+    "`{ data: apiKey (masked, revokedAt set) }` · 200",
   "POST /api/v1/contact": "`{ ok, message, id }` · 201 — non-envelope",
 };
 
@@ -289,14 +295,29 @@ const ERROR_OVERRIDES: Record<string, string> = {
   "POST /api/v1/auth/login": "400 · 401 · 429",
   "POST /api/v1/auth/refresh": "400 · 401 · 429",
   "GET /api/v1/auth/me": "401",
+  "POST /api/v1/auth/api-keys": "400 · 401 · 404 · 409 · 429",
+  "GET /api/v1/auth/api-keys": "401",
+  "DELETE /api/v1/auth/api-keys/:id": "400 · 401 · 404 · 409",
   "POST /api/v1/contact": "400 · 429 · 503",
   "GET /api/v1/search": "400",
+  // effects — public reads, but a presented X-API-Key must be valid,
+  // in scope, and within its per-key rate budget (issue #65).
+  "GET /api/v1/effects": "400 · 401 · 403 · 429",
+  "GET /api/v1/effects/search": "400 · 401 · 403 · 429",
+  "GET /api/v1/effects/categories": "401 · 403 · 429",
+  "GET /api/v1/effects/tags": "401 · 403 · 429",
+  "GET /api/v1/effects/:id": "400 · 401 · 403 · 404 · 429",
 };
 
 /** Hand-curated request cells (manual validation / composed schemas). */
 const REQUEST_OVERRIDES: Record<string, string> = {
   // Manually validated in the handler (no Zod schema).
   "GET /api/v1/search": "query: { `q` (required), `limit?`, `types?` } — manually validated",
+  // Schema lives in modules/api-keys/schema.ts (not the auth module the
+  // route is mounted under), so the walker can't extract its fields.
+  "POST /api/v1/auth/api-keys":
+    "body: { `name`, `scopes?` (default [`effects:read`]), `orgId?` } — plaintext key minted server-side",
+  "DELETE /api/v1/auth/api-keys/:id": "path: `:id` (the key record id, not the key itself)",
   // z.object().refine() — cross-field constraint the walker can't infer.
   "POST /api/v1/cdn/purge":
     "body: { `paths?`, `all?` } — refine: `paths` non-empty **or** `all: true` required",
@@ -313,9 +334,17 @@ const MODULE_NOTE_OVERRIDES: Record<string, string> = {
   health:
     "> Read-only DB connectivity probe (`pingDatabase`) — mounted **before** " +
     "the global rate limiter so it never throttles.",
+  effects:
+    "> Public reads for browsers/anonymous traffic, **scope-gated for API " +
+    "keys** (issue #65): a request presenting `X-API-Key` must hold " +
+    "`effects:read` (or `*`) and stay within its per-key rate budget " +
+    "(401 invalid/revoked · 403 missing scope · 429 over budget).",
   auth:
-    "> Prisma-backed (`User`). register/login/refresh stay public by design " +
-    "(token bootstrap, 10/min/IP); only `GET /me` requires a Bearer token.",
+    "> Prisma-backed (`User`, `ApiKey`). register/login/refresh stay public " +
+    "by design (token bootstrap, 10/min/IP). `GET /me` requires a Bearer " +
+    "token (an X-API-Key with `*` also works). The API-key management " +
+    "routes are **Bearer-JWT-only** — X-API-Key credentials are rejected " +
+    "there so a leaked key can never mint, enumerate, or revive keys.",
   contact:
     "> Prisma-backed (`ContactMessage`). The POST stays public by design — " +
     "anonymous form intake (rate-limited 5/min/IP).",
@@ -618,19 +647,25 @@ function generate(): string {
   out.push("");
   out.push("### Auth");
   out.push("");
-  out.push("- **Today** only `GET /api/v1/auth/me` requires " +
-      "\`Authorization: Bearer <accessToken>\`. Register/login/refresh are " +
-      "public (rate-limited) token-bootstrap endpoints.");
+  out.push("- **Bearer JWT:** \`Authorization: Bearer <accessToken>\` on " +
+      "every protected route (\`requireAuth\`, issue #64 rollout). " +
+      "Register/login/refresh are public (rate-limited) token-bootstrap " +
+      "endpoints.");
   out.push(
-    "- **Planned (issue #64):** mutating endpoints (POST/PUT/PATCH/DELETE) " +
-      "on Prisma-backed modules gain \`requireAuth\`. They are annotated " +
-      "`\`Public → Bearer JWT *(#64)*\`` per row below; the errors column " +
-      "documents today's behavior.",
+    "- **API keys (issue #65):** an \`X-API-Key: rk_live_…\` header is " +
+      "accepted IN PLACE OF the Bearer token on every protected route " +
+      "(for keys holding the \`*\` scope). Keys with narrow scopes (e.g. " +
+      "\`effects:read\`) are accepted only on routes that enforce their " +
+      "scope (the effects module today). Manage keys via " +
+      "\`POST/GET/DELETE /auth/api-keys\` — those routes are " +
+      "**Bearer-JWT-only**, so a leaked key can never mint or revive keys.",
   );
   out.push(
     "- **Tokens:** \`POST /auth/register|login|refresh\` return " +
       "`{ user, accessToken (15 min), refreshToken (7 days), expiresIn }` " +
-      "(JWT, HS256, issuer `roycss-backend`, audience `roycss-client`).",
+      "(JWT, HS256, issuer `roycss-backend`, audience `roycss-client`). " +
+      "API keys are long-lived, bcrypt-hashed at rest, revocable, and the " +
+      "plaintext is shown exactly once at creation.",
   );
   out.push(
     "- **Browser flow:** the frontend wraps these in httpOnly cookies " +
@@ -638,13 +673,22 @@ function generate(): string {
       "[Frontend routes](#frontend-routes-nextjs).",
   );
   out.push("");
-  out.push("### Rate limits (per IP, sliding window)");
+  out.push("### Rate limits");
+  out.push("");
+  out.push("Per IP, sliding window:");
   out.push("");
   out.push("| Scope | Limit | Applies to | Env override |");
   out.push("|-------|-------|------------|--------------|");
   out.push("| general | 100 / min | every `/api/v1` route **except** `/health` | `RATE_LIMIT_MAX_GENERAL` |");
-  out.push("| auth | 10 / min | `/auth/register`, `/auth/login`, `/auth/refresh` | `RATE_LIMIT_MAX_AUTH` |");
+  out.push("| auth | 10 / min | `/auth/register`, `/auth/login`, `/auth/refresh`, `POST /auth/api-keys` | `RATE_LIMIT_MAX_AUTH` |");
   out.push("| contact | 5 / min | `/api/v1/contact` | `RATE_LIMIT_MAX_CONTACT` |");
+  out.push("");
+  out.push("Per API key (issue #65), in addition to the per-IP limits, on " +
+      "requests authenticated with \`X-API-Key\`:");
+  out.push("");
+  out.push("| Scope | Limit | Applies to | Env override |");
+  out.push("|-------|-------|------------|--------------|");
+  out.push("| api-key | 120 / min / key | every request presenting a valid \`X-API-Key\` | `API_KEY_RATE_LIMIT_MAX` |");
   out.push("");
   out.push(
     "Window via \`RATE_LIMIT_WINDOW_MS\` (60 s). Responses carry " +

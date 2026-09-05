@@ -42,6 +42,14 @@ const EnvSchema = z.object({
   RATE_LIMIT_MAX_AUTH: z.coerce.number().int().positive().default(10),
   RATE_LIMIT_MAX_CONTACT: z.coerce.number().int().positive().default(5),
 
+  // ─── Per-API-key rate limiting (issue #65) ──────────────────────
+  API_KEY_RATE_LIMIT_MAX: z.coerce.number().int().positive().default(120),
+  API_KEY_RATE_LIMIT_WINDOW_MS: z.coerce
+    .number()
+    .int()
+    .positive()
+    .default(60_000),
+
   EFFECTS_DATA_PATH: z.string().default("../dist/effects.json"),
 
   // ─── Supabase (production) ────────────────────────────────────────

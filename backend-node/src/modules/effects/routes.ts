@@ -9,10 +9,17 @@
  *
  * Order matters: /search, /categories, /tags must come before /:id
  * or they'd be captured as an id.
+ *
+ * API-key scope enforcement (issue #65): every route mounts
+ * `requireApiKeyScope("effects:read")`. These reads stay PUBLIC for
+ * browser/anonymous traffic, but a request presenting `X-API-Key` must
+ * hold the `effects:read` (or `*`) scope — 403 otherwise — and is
+ * subject to the per-key rate limit.
  */
 import { Router } from "express";
 import type { z } from "zod";
 
+import { requireApiKeyScope } from "../../server/middleware/api-key.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import { validateParams, validateQuery } from "../../server/middleware/validate.js";
 import {
@@ -28,10 +35,13 @@ import {
   SearchEffectsQuerySchema,
 } from "./schema.js";
 
+const effectsScope = requireApiKeyScope("effects:read");
+
 export const effectsRouter = Router();
 
 effectsRouter.get(
   "/",
+  effectsScope,
   validateQuery(ListEffectsQuerySchema),
   asyncHandler(async (req, res) => {
     const input = req.query as unknown as z.infer<typeof ListEffectsQuerySchema>;
@@ -50,6 +60,7 @@ effectsRouter.get(
 
 effectsRouter.get(
   "/search",
+  effectsScope,
   validateQuery(SearchEffectsQuerySchema),
   asyncHandler(async (req, res) => {
     const input = req.query as unknown as z.infer<typeof SearchEffectsQuerySchema>;
@@ -69,6 +80,7 @@ effectsRouter.get(
 
 effectsRouter.get(
   "/categories",
+  effectsScope,
   asyncHandler(async (_req, res) => {
     const categories = listCategories();
     res.json({ data: categories, meta: { count: categories.length } });
@@ -77,6 +89,7 @@ effectsRouter.get(
 
 effectsRouter.get(
   "/tags",
+  effectsScope,
   asyncHandler(async (_req, res) => {
     const tags = listTags();
     res.json({ data: tags, meta: { count: tags.length } });
@@ -85,6 +98,7 @@ effectsRouter.get(
 
 effectsRouter.get(
   "/:id",
+  effectsScope,
   validateParams(EffectParamsSchema),
   asyncHandler(async (req, res) => {
     const { id } = req.params as unknown as z.infer<typeof EffectParamsSchema>;

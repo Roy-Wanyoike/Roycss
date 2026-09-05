@@ -138,6 +138,18 @@ Base URL: `http://localhost:4000/api/v1`
 | POST   | `/auth/login`    | Email + password → token pair            | –    | 10 / min / IP |
 | POST   | `/auth/refresh`  | Refresh token → new token pair           | –    | 10 / min / IP |
 | GET    | `/auth/me`       | Current user                             | Bearer | 100 / min / IP (general) |
+| POST   | `/auth/api-keys` | Mint an API key (plaintext shown ONCE)   | Bearer JWT only | 10 / min / IP |
+| GET    | `/auth/api-keys` | List the caller's keys (masked)          | Bearer JWT only | 100 / min / IP (general) |
+| DELETE | `/auth/api-keys/:id` | Revoke a key (soft delete via `revokedAt`) | Bearer JWT only | 100 / min / IP (general) |
+
+**API keys (issue #65)** are long-lived `rk_live_<base62(32)>` credentials
+for the CLI / SDK / MCP server. Send one via the `X-API-Key` header in
+place of `Authorization: Bearer` on any protected route (requires the `*`
+scope) or on scope-enforcing public routes (the effects module requires
+`effects:read`). Only a bcrypt hash is stored — the plaintext is returned
+exactly once, at creation, and is never logged. Management endpoints
+reject `X-API-Key` so a leaked key can never mint more keys. Per-key rate
+limit: 120 req/min (in addition to the per-IP limits).
 
 ### Standard Response Shape
 
@@ -257,6 +269,8 @@ See `.env.example` for the full list with defaults. Required for prod:
 | `CORS_ORIGINS`        | `http://localhost:3000,...`      | Comma-separated allowed origins                  |
 | `RATE_LIMIT_MAX_AUTH`     | `10`                        | Auth attempts per minute per IP              |
 | `RATE_LIMIT_MAX_CONTACT`  | `5`                         | Contact submissions per minute per IP       |
+| `API_KEY_RATE_LIMIT_MAX` | `120`                      | Requests per minute **per API key** (issue #65) |
+| `API_KEY_RATE_LIMIT_WINDOW_MS` | `60000`             | Per-API-key rate limit window (ms)         |
 | `EFFECTS_DATA_PATH`   | `../dist/effects.json`           | Path to the parent project's effects JSON        |
 
 ---
@@ -269,6 +283,10 @@ See `.env.example` for the full list with defaults. Required for prod:
 - **JWT** — HS256 with separate access + refresh secrets; refresh tokens
   are typed (`type: "refresh"`) so an access-token leak can't mint refreshes
 - **Password hashing** — bcryptjs with 10 rounds (bump to 12 for prod)
+- **API keys (issue #65)** — bcrypt-hashed at rest with a SHA-256 lookup
+  handle (indexed, preimage-safe); plaintext shown once, never stored or
+  logged; soft-revocable; scope-gated (`effects:read`, …, `*`);
+  per-key rate limiting via a pluggable `RateLimitTier` interface
 - **Timing-safe login** — always runs bcrypt compare, even if user doesn't
   exist, to prevent user-enumeration via response timing
 - **Body size limit** — 256kb JSON / urlencoded

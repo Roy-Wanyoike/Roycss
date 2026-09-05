@@ -46,6 +46,7 @@ import {
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
+import { DemoBadge } from "@/components/roycss/demo-badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -514,6 +515,8 @@ export function RoyRefactor() {
               <Wand2 className="size-3" aria-hidden />
               Code Modernizer
             </Badge>
+            {/* PF-012 F14 — simulated refactor run (mock variance, no CSS-lint AST) */}
+            <DemoBadge module="refactor" className="shrink-0" />
           </div>
           <p className="text-muted-foreground truncate text-xs">
             Convert legacy CSS / HTML to RoyCSS — OKLCH, logical properties,

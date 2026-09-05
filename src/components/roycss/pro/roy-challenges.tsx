@@ -264,7 +264,7 @@ export function RoyChallenges() {
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <CardTitle>Coding Challenges</CardTitle>
-                  <BackendLiveBadge loading={loading} error={error} />
+                  <BackendLiveBadge module="challenges" loading={loading} error={error} />
                 </div>
                 <CardDescription>Solve CSS challenges, earn XP, climb the leaderboard.</CardDescription>
               </div>

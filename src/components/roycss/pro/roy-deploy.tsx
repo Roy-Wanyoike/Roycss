@@ -204,7 +204,7 @@ export function RoyDeploy() {
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <CardTitle>Deployments</CardTitle>
-                  <BackendLiveBadge loading={loading} error={error} />
+                  <BackendLiveBadge module="deploy" loading={loading} error={error} />
                 </div>
                 <CardDescription>
                   Ship to any edge in seconds. Pick a platform and deploy.

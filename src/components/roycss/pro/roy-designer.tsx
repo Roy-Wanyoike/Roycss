@@ -742,7 +742,7 @@ export function RoyDesigner() {
               <Wand2 className="size-3" aria-hidden />
               AI UI Designer
             </Badge>
-            <BackendLiveBadge loading={loading} error={error} />
+            <BackendLiveBadge module="designer" loading={loading} error={error} />
           </div>
           <p className="text-muted-foreground truncate text-xs">
             Describe a screen — get a mockup, palette, type, components, and

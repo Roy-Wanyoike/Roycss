@@ -200,7 +200,7 @@ export function RoyCompliance() {
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <CardTitle>Compliance Reporting</CardTitle>
-                  <BackendLiveBadge loading={loading} error={error} />
+                  <BackendLiveBadge module="compliance" loading={loading} error={error} />
                 </div>
                 <CardDescription>
                   Scan the project against accessibility standards.

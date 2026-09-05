@@ -167,7 +167,7 @@ export function RoyFleet() {
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <CardTitle>Project Fleet</CardTitle>
-                  <BackendLiveBadge loading={loading} error={error} />
+                  <BackendLiveBadge module="fleet" loading={loading} error={error} />
                 </div>
                 <CardDescription>
                   Monitor every RoyCSS project across your organization.

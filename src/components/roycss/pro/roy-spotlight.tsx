@@ -137,7 +137,7 @@ export function RoySpotlight() {
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <CardTitle>Developer Spotlight</CardTitle>
-                  <BackendLiveBadge loading={loading} error={error} />
+                  <BackendLiveBadge module="spotlight" loading={loading} error={error} />
                 </div>
                 <CardDescription>
                   Featured community work, fresh every week.

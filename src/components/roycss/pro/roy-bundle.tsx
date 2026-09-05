@@ -192,7 +192,7 @@ export function RoyBundle() {
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <CardTitle>Bundle Optimizer</CardTitle>
-                  <BackendLiveBadge loading={loading} error={error} />
+                  <BackendLiveBadge module="bundle" loading={loading} error={error} />
                 </div>
                 <CardDescription>
                   Analyze asset sizes, dead CSS, and duplicate code.

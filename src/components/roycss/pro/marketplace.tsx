@@ -943,7 +943,7 @@ export function Marketplace(): React.JSX.Element {
           rating {stats.avgRating.toFixed(1)} stars
         </CardDescription>
         <CardAction>
-          <BackendLiveBadge loading={loading} error={error} />
+          <BackendLiveBadge module="marketplace" loading={loading} error={error} />
           <Badge variant="secondary" className="gap-1">
             <Package className="size-3" aria-hidden />
             {visible.length} shown

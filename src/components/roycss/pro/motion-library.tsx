@@ -961,7 +961,7 @@ export function MotionLibrary() {
           <h2 className="text-xl font-semibold tracking-tight">
             RoyMotion Library
           </h2>
-          <BackendLiveBadge loading={loading} error={error} />
+          <BackendLiveBadge module="motion" loading={loading} error={error} />
         </div>
         <p className="text-sm text-muted-foreground">
           12 reusable framer-motion animation primitives — entrance, interactive,

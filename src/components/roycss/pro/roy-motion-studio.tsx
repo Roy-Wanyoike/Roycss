@@ -1005,7 +1005,7 @@ export function RoyMotionStudio(): React.JSX.Element {
             <h2 className="text-xl font-semibold tracking-tight text-foreground">
               Roy Motion Studio
             </h2>
-            <BackendLiveBadge loading={loading} error={error} />
+            <BackendLiveBadge module="motion" loading={loading} error={error} />
           </div>
           <p className="text-sm text-muted-foreground">
             Visual keyframe animation builder · 5 tracks · 8 easings · live

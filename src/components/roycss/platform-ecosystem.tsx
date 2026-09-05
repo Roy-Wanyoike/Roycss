@@ -104,6 +104,7 @@ import {
   TIER_META as SPONSOR_TIER_META,
   SponsorModal,
 } from "@/components/roycss/featured-companies";
+import { DemoBadge } from "@/components/roycss/demo-badge";
 
 /* ═══════════════════════════════════════════════════════════════
    DATA: 16 platform products
@@ -124,6 +125,9 @@ interface PlatformProduct {
   features: string[];
   /** Optional lifecycle label (e.g. "Complete", "Planned"). Vestigial in UI. */
   status?: string;
+  /** Optional module-status registry key — renders an honest Demo/Catalog badge
+      when the module is registered as demo or catalog-only (PF-012). */
+  statusModule?: string;
   /** Optional setup instructions string shown in the docs deep-link. */
   setup?: string;
   /** Optional slug linking this product to a docs entry. */
@@ -261,6 +265,7 @@ const PRODUCTS: PlatformProduct[] = [
     id: "devtools",
     name: "Roy DevTools",
     tagline: "Browser DevTools integration",
+    statusModule: "devtools",
     description:
       "Select any element and instantly see RoyCSS classes, accessibility score, design tokens, suggestions, performance metrics, and contrast checks — inline.",
     icon: Wrench,
@@ -283,6 +288,7 @@ const PRODUCTS: PlatformProduct[] = [
   },
   {
     id: "accessibility-suite",
+    statusModule: "accessibility",
     name: "Roy Accessibility Suite",
     tagline: "Audit & auto-fix entire apps",
     description:
@@ -309,6 +315,7 @@ const PRODUCTS: PlatformProduct[] = [
     id: "analytics",
     name: "Roy Analytics",
     tagline: "Usage, dead CSS, a11y scores",
+    statusModule: "analytics",
     description:
       "Analyze which components are used, find unused utilities, detect duplicate styles, measure performance, dead CSS, and accessibility scores across your codebase.",
     icon: BarChart3,
@@ -321,6 +328,7 @@ const PRODUCTS: PlatformProduct[] = [
     id: "mcp-server",
     name: "RoyCSS MCP Server",
     tagline: "AI assistant integration — no hallucination",
+    statusModule: "mcp",
     description:
       "Model Context Protocol server that gives AI assistants (Claude, ChatGPT, Cursor, Windsurf, Codex) access to official RoyCSS effects, documentation, and framework examples. Every AI produces accurate RoyCSS code — no hallucination.",
     icon: BrainCircuit,
@@ -956,6 +964,8 @@ function ProductCard({ product, onLaunchTool, onLearnMore }: { product: Platform
                 {product.name}
               </h3>
               <p className="text-xs text-muted-foreground truncate mt-0.5">{product.tagline}</p>
+              {/* PF-012 honesty pass — honest status when the module's data is demo/catalog-only */}
+              {product.statusModule && <DemoBadge module={product.statusModule} className="mt-1.5" />}
             </div>
           </div>
           {/* Priority stars */}

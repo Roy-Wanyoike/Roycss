@@ -1780,7 +1780,7 @@ export function RoyBlueprints(): React.JSX.Element {
           features · avg {stats.avgWeeks} weeks build
         </CardDescription>
         <CardAction>
-          <BackendLiveBadge loading={loading} error={error} />
+          <BackendLiveBadge module="blueprints" loading={loading} error={error} />
           <Badge variant="secondary" className="gap-1">
             <Boxes className="size-3" aria-hidden />
             {visible.length} shown

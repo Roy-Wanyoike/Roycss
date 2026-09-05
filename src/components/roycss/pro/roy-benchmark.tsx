@@ -184,7 +184,7 @@ export function RoyBenchmark() {
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <CardTitle>Benchmarks</CardTitle>
-                  <BackendLiveBadge loading={loading} error={error} />
+                  <BackendLiveBadge module="benchmark" loading={loading} error={error} />
                 </div>
                 <CardDescription>
                   Compare your project to industry averages & best-in-class.

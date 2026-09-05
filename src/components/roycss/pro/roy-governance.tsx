@@ -263,7 +263,7 @@ export function RoyGovernance() {
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <CardTitle>Design System Governance</CardTitle>
-                  <BackendLiveBadge loading={loading} error={error} />
+                  <BackendLiveBadge module="governance" loading={loading} error={error} />
                 </div>
                 <CardDescription>
                   Approvals, policies, and audit trail for the RoyCSS design system.

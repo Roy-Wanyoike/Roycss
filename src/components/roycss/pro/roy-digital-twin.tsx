@@ -200,7 +200,7 @@ export function RoyDigitalTwin() {
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <CardTitle>Digital Twin</CardTitle>
-                  <BackendLiveBadge loading={loading} error={error} />
+                  <BackendLiveBadge module="digital-twin" loading={loading} error={error} />
                 </div>
                 <CardDescription>
                   Mirror any URL and simulate real-world conditions.

@@ -239,7 +239,7 @@ export function RoyObservatory() {
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <CardTitle>Production Observatory</CardTitle>
-                  <BackendLiveBadge loading={loading} error={error} />
+                  <BackendLiveBadge module="observatory" loading={loading} error={error} />
                 </div>
                 <CardDescription>
                   Real-time monitoring across {SITES.length} sites.

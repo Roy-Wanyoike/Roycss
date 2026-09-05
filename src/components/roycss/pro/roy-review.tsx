@@ -678,7 +678,7 @@ export function RoyReview() {
               <Code2 className="size-3" aria-hidden />
               AI Code Reviewer
             </Badge>
-            <BackendLiveBadge loading={loading} error={error} />
+            <BackendLiveBadge module="review" loading={loading} error={error} />
           </div>
           <p className="text-muted-foreground truncate text-xs">
             Paste CSS / HTML / TS — get a scored review with concrete fixes.

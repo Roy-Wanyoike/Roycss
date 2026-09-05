@@ -1655,7 +1655,7 @@ export function PatternLibrary() {
               (Extended · 12 patterns)
             </span>
           </h2>
-          <BackendLiveBadge loading={loading} error={error} />
+          <BackendLiveBadge module="patterns" loading={loading} error={error} />
         </div>
         <p className="text-sm text-muted-foreground">
           Live, interactive UI patterns with copy-ready JSX. Each card renders

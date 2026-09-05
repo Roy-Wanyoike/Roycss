@@ -157,7 +157,7 @@ export function RoyCDN() {
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <CardTitle>CDN Dashboard</CardTitle>
-                  <BackendLiveBadge loading={loading} error={error} />
+                  <BackendLiveBadge module="cdn" loading={loading} error={error} />
                 </div>
                 <CardDescription>
                   Edge delivery across 6 regions · 94.6% hit rate.

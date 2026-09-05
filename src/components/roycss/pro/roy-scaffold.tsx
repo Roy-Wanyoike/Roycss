@@ -742,7 +742,7 @@ export function RoyScaffold() {
           monorepo in one command.
         </CardDescription>
         <CardAction>
-          <BackendLiveBadge loading={loading} error={error} />
+          <BackendLiveBadge module="scaffold" loading={loading} error={error} />
           <Badge variant="secondary" className="gap-1">
             <FolderTree className="size-3" aria-hidden />
             {PROJECT_TYPES.length} templates

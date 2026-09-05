@@ -749,7 +749,7 @@ export function RoySync() {
           place. {connectedCount}/{INTEGRATIONS.length} integrations connected.
         </CardDescription>
         <CardAction>
-          <BackendLiveBadge loading={loading} error={error} />
+          <BackendLiveBadge module="sync" loading={loading} error={error} />
           <Button
             size="sm"
             onClick={handleSyncAll}

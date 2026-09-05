@@ -79,6 +79,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { DemoBadge } from "@/components/roycss/demo-badge";
 
 // ─── Types ────────────────────────────────────────────────────────────────
 
@@ -820,6 +821,8 @@ export function RoyLive() {
                   <CardTitle className="flex items-center gap-2">
                     Join a Roy Live room
                     <Badge variant="secondary" className="text-[10px]">beta</Badge>
+                    {/* PF-012 F9 — sessions/cursors/chat live in service memory; nothing is persisted */}
+                    <DemoBadge module="live" />
                   </CardTitle>
                   <CardDescription>
                     Real-time collaborative CSS editor — cursors, chat, live preview.
@@ -922,6 +925,8 @@ export function RoyLive() {
               <CardTitle className="flex items-center gap-2 text-base">
                 <Hash className="text-primary size-4" />
                 Room
+                {/* PF-012 F9 — in-memory demo state, nothing persisted */}
+                <DemoBadge module="live" />
               </CardTitle>
               <ConnectionBadge status={status} />
             </div>

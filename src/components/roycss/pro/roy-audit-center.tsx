@@ -186,7 +186,7 @@ export function RoyAuditCenter() {
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <CardTitle>Enterprise Audit Center</CardTitle>
-                  <BackendLiveBadge loading={loading} error={error} />
+                  <BackendLiveBadge module="audit-center" loading={loading} error={error} />
                 </div>
                 <CardDescription>
                   Cross-project accessibility, performance, and security scores.

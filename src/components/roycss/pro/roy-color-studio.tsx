@@ -624,7 +624,7 @@ export function RoyColorStudio(): React.JSX.Element {
           <h2 className="flex items-center gap-2 text-xl font-semibold tracking-tight text-foreground">
             <PaletteIcon className="size-5 text-emerald-500" aria-hidden />
             Roy Color Studio
-            <BackendLiveBadge loading={loading} error={error} />
+            <BackendLiveBadge module="color-space" loading={loading} error={error} />
           </h2>
           <p className="text-sm text-muted-foreground">
             OKLCH-lightness color scaling · WCAG AA/AAA validation · brand

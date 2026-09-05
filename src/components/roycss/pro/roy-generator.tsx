@@ -1320,7 +1320,7 @@ export function RoyGenerator() {
           code in one click.
         </CardDescription>
         <CardAction>
-          <BackendLiveBadge loading={loading} error={error} />
+          <BackendLiveBadge module="generator" loading={loading} error={error} />
           <Badge variant="secondary" className="gap-1">
             <Code2 className="size-3" aria-hidden />
             {GEN_TYPES.length} generators

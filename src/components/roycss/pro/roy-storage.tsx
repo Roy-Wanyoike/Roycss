@@ -142,7 +142,7 @@ export function RoyStorage() {
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <CardTitle>Cloud Storage</CardTitle>
-                  <BackendLiveBadge loading={loading} error={error} />
+                  <BackendLiveBadge module="storage" loading={loading} error={error} />
                 </div>
                 <CardDescription>2.3 GB used of 10 GB.</CardDescription>
               </div>

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import * as Icons from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { DemoBadge } from "@/components/roycss/demo-badge";
 import { cn } from "@/lib/utils";
 import type { ProductEntry, ProductStatus, ProductTier } from "@/lib/product-registry";
 
@@ -21,6 +22,66 @@ const STATUS_DOT: Record<ProductStatus, string> = {
   roadmap: "bg-muted-foreground/40",
 };
 
+/**
+ * Product id → module-status registry key (`src/lib/module-status.ts`).
+ *
+ * PF-012 honesty pass: cards whose backend module renders demo/catalog
+ * data show a "Demo data — not live" / "Catalog only" pill on the card
+ * face. `DemoBadge` renders nothing for live modules, so this map stays
+ * valid in both directions — if a module graduates to live (or degrades
+ * to demo), the registry flip alone updates every card + modal badge.
+ */
+const PRODUCT_MODULE: Record<string, string> = {
+  /* AI */
+  "roy-refactor": "refactor",
+  "roy-generator": "generator",
+  "roy-scaffold": "scaffold",
+  "roy-architect": "architect",
+  "roy-pair": "pair",
+  "roy-review": "review",
+  "roy-search": "search",
+  /* Components */
+  "roy-blocks": "blocks",
+  "pattern-library": "patterns",
+  "template-library": "marketplace",
+  marketplace: "marketplace",
+  "roy-blueprints": "blueprints",
+  charts: "analytics",
+  /* DevTools */
+  "roy-bundle": "bundle",
+  "roy-profiler": "profiler",
+  "roy-benchmark": "benchmark",
+  "roy-observatory": "observatory",
+  "roy-cdn": "cdn",
+  "roy-edge": "edge",
+  "roy-storage": "storage",
+  "roy-sync": "sync",
+  "roy-version": "version",
+  "roy-deploy": "deploy",
+  "roy-live": "live",
+  /* Enterprise */
+  "roy-governance": "governance",
+  "roy-compliance": "compliance",
+  "roy-audit-center": "audit-center",
+  "roy-fleet": "fleet",
+  "roy-os": "os",
+  "roy-workspace": "workspace",
+  "roy-digital-twin": "digital-twin",
+  "roy-registry": "registry",
+  "roy-spotlight": "spotlight",
+  "roy-challenges": "challenges",
+  "roy-certifications": "certifications",
+  /* Integrations */
+  "plugin-hub": "plugin-hub",
+  "analytics-dashboard": "analytics",
+  "accessibility-suite": "accessibility",
+  /* Design */
+  "motion-library": "motion",
+  "roy-color-studio": "color-space",
+  "roy-motion-studio": "motion",
+  "roy-designer": "designer",
+};
+
 interface ProductCardProps {
   product: ProductEntry;
   onOpen?: (product: ProductEntry) => void;
@@ -36,6 +97,7 @@ export function ProductCard({ product, onOpen }: ProductCardProps) {
   // Resolve the lucide icon dynamically. Falls back to "Sparkle".
   const IconComp = ((Icons as unknown) as Record<string, React.ComponentType<{ className?: string }>>)[product.icon] ?? Icons.Sparkle;
   const tierBadge = TIER_BADGE[product.tier];
+  const moduleKey = PRODUCT_MODULE[product.id];
 
   return (
     <motion.button
@@ -73,12 +135,14 @@ export function ProductCard({ product, onOpen }: ProductCardProps) {
           </div>
           <div className="min-w-0">
             <h3 className="font-semibold text-sm sm:text-base text-foreground truncate">{product.name}</h3>
-            <div className="flex items-center gap-1.5 mt-0.5">
+            <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
               <span
                 className={cn("size-1.5 rounded-full", STATUS_DOT[product.status])}
                 aria-hidden
               />
               <span className="text-[11px] capitalize text-muted-foreground">{product.status}</span>
+              {/* PF-012 — honest data-status pill (renders nothing for live modules) */}
+              {moduleKey && <DemoBadge module={moduleKey} />}
             </div>
           </div>
         </div>

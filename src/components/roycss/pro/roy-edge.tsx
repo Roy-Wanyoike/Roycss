@@ -82,12 +82,16 @@ const REGIONS: readonly EdgeRegion[] = [
   { id: "r6", city: "AF-South", code: "CPT", status: "down", latency: "—", rps: "0" },
 ];
 
+/* PF-012 honesty pass: edge regions are mock data (backend `edge` module
+ * keeps an in-memory store — see `Future:` comment in its service.ts), so
+ * the per-region chip must never read "Live". The simulated health states
+ * are labeled honestly: a mock-healthy region reads "Demo". */
 const STATUS_TONE: Record<
   RegionStatus,
   { label: string; tone: string; dot: string }
 > = {
-  live: { label: "Live", tone: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400", dot: "bg-emerald-500" },
-  warming: { label: "Warming", tone: "bg-amber-500/15 text-amber-600 dark:text-amber-400", dot: "bg-amber-500" },
+  live: { label: "Demo", tone: "bg-amber-500/15 text-amber-600 dark:text-amber-400", dot: "bg-amber-500" },
+  warming: { label: "Warming", tone: "bg-sky-500/15 text-sky-600 dark:text-sky-400", dot: "bg-sky-500" },
   down: { label: "Down", tone: "bg-rose-500/15 text-rose-600 dark:text-rose-400", dot: "bg-rose-500" },
 };
 
@@ -149,10 +153,11 @@ export function RoyEdge() {
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <CardTitle>Edge Deployment</CardTitle>
-                  <BackendLiveBadge loading={loading} error={error} />
+                  <BackendLiveBadge module="edge" loading={loading} error={error} />
                 </div>
                 <CardDescription>
-                  6 PoPs · 4 live · 1 warming · 1 down.
+                  Demo regions — 6 PoPs · 4 up · 1 warming · 1 down (sample
+                  data, not a real edge platform).
                 </CardDescription>
               </div>
             </div>

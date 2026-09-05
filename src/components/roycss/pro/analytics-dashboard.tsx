@@ -46,6 +46,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
+import { DemoBadge } from "@/components/roycss/demo-badge";
 
 // ─── OKLCH palette (no indigo / blue) ───────────────────────
 // Primary hue 165° (brand emerald). Complementary accents stay
@@ -771,11 +772,13 @@ export function AnalyticsDashboard(): React.JSX.Element {
       {/* ── Header row ─────────────────────────────────────── */}
       <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-1">
-          <h2 className="font-display text-xl font-semibold tracking-tight text-foreground">
+          <h2 className="font-display flex items-center flex-wrap gap-2 text-xl font-semibold tracking-tight text-foreground">
             Analytics Dashboard
+            {/* PF-012 F4 — per-range mock datasets, no real telemetry */}
+            <DemoBadge module="analytics" />
           </h2>
           <p className="text-sm text-muted-foreground">
-            Live product metrics · OKLCH palette · mock data for the selected
+            Product metrics preview · OKLCH palette · mock data for the selected
             range.
           </p>
         </div>

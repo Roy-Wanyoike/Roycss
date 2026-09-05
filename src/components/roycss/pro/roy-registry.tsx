@@ -944,7 +944,7 @@ export function RoyRegistry() {
           Total downloads: {formatCount(stats.downloads)}
         </CardDescription>
         <CardAction>
-          <BackendLiveBadge loading={loading} error={error} />
+          <BackendLiveBadge module="registry" loading={loading} error={error} />
           <Button
             size="sm"
             onClick={() => setPublishOpen(true)}

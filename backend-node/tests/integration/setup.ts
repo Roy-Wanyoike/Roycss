@@ -34,9 +34,29 @@
 import { execSync } from "node:child_process";
 import { resolve } from "node:path";
 
-import { db } from "../../src/lib/db.js";
-
 const TEST_DB_PATH = "file:./test.db";
+
+// ─── Env canonicalization (must run BEFORE importing src/**) ─────────
+// globalSetup runs in its own process WITHOUT the worker's `setupFiles`,
+// and importing src/lib/db.js evaluates the Zod-validated env loader
+// (src/config/env.ts) which hard-exits when DATABASE_URL / JWT secrets
+// are missing. Two rules:
+//   1. DATABASE_URL is FORCED to the throwaway `file:./test.db` — an
+//      ambient value (shell export, sandbox default) must never point
+//      the suite at a real dev/prod database. This matches CI and the
+//      `test:integration` script, which both set exactly this value.
+//   2. JWT secrets get defaults when absent so a bare `bun run test`
+//      works from a clean shell.
+if (process.env.DATABASE_URL !== TEST_DB_PATH) {
+  console.log(
+    `[setup] Ignoring ambient DATABASE_URL="${process.env.DATABASE_URL ?? "<unset>"}" — tests always use ${TEST_DB_PATH}`,
+  );
+  process.env.DATABASE_URL = TEST_DB_PATH;
+}
+process.env.JWT_SECRET ??= "test-jwt-secret-32-chars-long";
+process.env.JWT_REFRESH_SECRET ??= "test-refresh-secret-32-chars";
+
+const { db } = await import("../../src/lib/db.js");
 
 // `tests/integration/setup.ts` → backend root is two `..` segments up.
 const BACKEND_ROOT = resolve(import.meta.dirname, "..", "..");
@@ -60,7 +80,7 @@ export default async function globalSetup(): Promise<() => Promise<void>> {
     stdio: "inherit",
     env: {
       ...process.env,
-      DATABASE_URL: process.env.DATABASE_URL ?? TEST_DB_PATH,
+      DATABASE_URL: TEST_DB_PATH,
     },
   });
 
@@ -107,17 +127,20 @@ export default async function globalSetup(): Promise<() => Promise<void>> {
 //            SearchIndex, ContactMessage
 //   Tier 4 — parents: User (last, after EffectFavorite + Collection)
 //
-// Total: 46 tables (4 base models + 41 wave-3 models + Membership from
-// issue #64 org-scoped authorization). The schema's
-// comment block "41 NEW MODELS (Wave 3)" refers to the wave-3 additions;
-// this file clears all 46 so tests in auth.test.ts (User) and
-// contact.test.ts (ContactMessage) start clean too.
+// Total: 47 tables (4 base models + 41 wave-3 models + Membership from
+// issue #64 org-scoped authorization + ApiKey from issue #65 API-key
+// auth). The schema's comment block "41 NEW MODELS (Wave 3)" refers to
+// the wave-3 additions; this file clears all 47 so tests in auth.test.ts
+// (User), contact.test.ts (ContactMessage), and api-keys.test.ts (ApiKey)
+// start clean too.
 const TABLES_IN_FK_SAFE_ORDER = [
   // ── Tier 1 — children with enforced FK to User ────────────────────
   "effectFavorite",
   "collection",
   // ── Tier 1.1 — org membership (enforced FKs to User + Organization) ─
   "membership",
+  // ── Tier 1.2 — API keys (enforced FK to User; issue #65) ─────────
+  "apiKey",
   // ── Tier 2 — dependent tables (logical *Id, no enforced FK) ──────
   "pathProgress",
   "challengeSubmission",

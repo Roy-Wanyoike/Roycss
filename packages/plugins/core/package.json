@@ -1,0 +1,28 @@
+{
+  "name": "@roycss/plugin-core",
+  "version": "0.1.0",
+  "description": "Shared class-scanner and CSS-extractor core for first-party RoyCSS build plugins (vite, next, …).",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "roycss",
+    "css",
+    "effects",
+    "build-plugin",
+    "scanner",
+    "extractor"
+  ]
+}

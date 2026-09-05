@@ -1,0 +1,29 @@
+{
+  "name": "@roycss/plugin-next",
+  "version": "0.1.0",
+  "description": "Next.js (app router) integration for RoyCSS — withRoyCss(nextConfig), a postcss-style pipeline, and an SSR critical-CSS injection hook.",
+  "license": "MIT",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "next": ">=13.0.0"
+  },
+  "keywords": [
+    "roycss",
+    "next",
+    "nextjs",
+    "css",
+    "critical-css"
+  ]
+}

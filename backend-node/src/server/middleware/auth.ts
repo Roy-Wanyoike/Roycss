@@ -1,10 +1,18 @@
 /**
  * JWT authentication + organization role authorization middleware.
  *
- * ─── requireAuth ─────────────────────────────────────────────────────────
- * Reads `Authorization: Bearer <token>` header, verifies the access
- * token, and attaches the decoded payload to `req.user`. Throws
- * AppError(401) if missing, malformed, or invalid.
+ * ─── requireAuth (issue #65: dual credential) ────────────────────────
+ * Accepts EITHER credential on every protected route:
+ *   - `Authorization: Bearer <token>` — verifies the access token and
+ *     attaches the decoded payload to `req.user`, OR
+ *   - `X-API-Key: rk_live_…` — resolves the API key, enforces the
+ *     per-key rate limit, and attaches both `req.apiKey` and a
+ *     JWT-shaped `req.user` built from the key OWNER. Only wildcard
+ *     (`*`) keys are accepted on requireAuth routes — narrow-scope keys
+ *     are for endpoints that enforce their own scope (see
+ *     `requireApiKeyScope` in server/middleware/api-key.ts).
+ * Throws AppError(401) if the credential is missing, malformed, or
+ * invalid (403 for a valid but under-scoped API key).
  *
  * Usage:
  *   router.get("/me", requireAuth, (req, res) => {
@@ -42,6 +50,7 @@ import type { NextFunction, Request, RequestHandler, Response } from "express";
 
 import { db } from "../../lib/db.js";
 import { verifyAccessToken, type AccessTokenPayload } from "../../lib/jwt.js";
+import { getApiKeyHeader, handleApiKeyCredentials } from "./api-key.js";
 import { AppError, asyncHandler } from "./error.js";
 
 // Augment Express's Request with our user field.
@@ -68,9 +77,21 @@ const BEARER_RE = /^Bearer\s+(.+)$/i;
 
 export function requireAuth(
   req: Request,
-  _res: Response,
+  res: Response,
   next: NextFunction,
 ): void {
+  // ─── X-API-Key branch (issue #65) ─────────────────────────────────
+  // If an API key is presented it is the credential of record — do NOT
+  // silently fall back to a (possibly absent) Bearer token, otherwise a
+  // client sending a dead key while holding a valid JWT would be
+  // authenticated without ever noticing the key is invalid.
+  const apiKey = getApiKeyHeader(req);
+  if (apiKey !== null) {
+    handleApiKeyCredentials(apiKey, req, res, next);
+    return;
+  }
+
+  // ─── Bearer JWT branch (original behavior) ───────────────────────
   const header = req.headers.authorization;
   if (!header) {
     next(AppError.unauthorized("Missing Authorization header"));

@@ -2,7 +2,7 @@
 
 The public HTTP surface of the platform: the Express backend (`/api/v1/*`, `backend-node/`) and the Next.js frontend routes (`/api/*`, `src/app/api/`).
 
-**Coverage:** 68 backend modules · 258 backend routes (GET 191, POST 60, PUT 2, DELETE 5) · 14 frontend endpoints.
+**Coverage:** 68 backend modules · 261 backend routes (GET 192, POST 61, PUT 2, DELETE 6) · 14 frontend endpoints.
 
 > **Drift gate:** `cd backend-node && bun run api:check` walks `src/server/app.ts`, every module's `routes.ts` and `src/app/api/**` and fails when a route here is missing or stale. Regenerate the tables with `bun run api:gen` (curated prose lives in `backend-node/scripts/gen-api-md.ts` — edit there, not in API.md).
 
@@ -64,18 +64,26 @@ Errors always use one shape (see the [error codes](#error-codes) table):
 
 ### Auth
 
-- **Today** only `GET /api/v1/auth/me` requires `Authorization: Bearer <accessToken>`. Register/login/refresh are public (rate-limited) token-bootstrap endpoints.
-- **Planned (issue #64):** mutating endpoints (POST/PUT/PATCH/DELETE) on Prisma-backed modules gain `requireAuth`. They are annotated ``Public → Bearer JWT *(#64)*`` per row below; the errors column documents today's behavior.
-- **Tokens:** `POST /auth/register|login|refresh` return `{ user, accessToken (15 min), refreshToken (7 days), expiresIn }` (JWT, HS256, issuer `roycss-backend`, audience `roycss-client`).
+- **Bearer JWT:** `Authorization: Bearer <accessToken>` on every protected route (`requireAuth`, issue #64 rollout). Register/login/refresh are public (rate-limited) token-bootstrap endpoints.
+- **API keys (issue #65):** an `X-API-Key: rk_live_…` header is accepted IN PLACE OF the Bearer token on every protected route (for keys holding the `*` scope). Keys with narrow scopes (e.g. `effects:read`) are accepted only on routes that enforce their scope (the effects module today). Manage keys via `POST/GET/DELETE /auth/api-keys` — those routes are **Bearer-JWT-only**, so a leaked key can never mint or revive keys.
+- **Tokens:** `POST /auth/register|login|refresh` return `{ user, accessToken (15 min), refreshToken (7 days), expiresIn }` (JWT, HS256, issuer `roycss-backend`, audience `roycss-client`). API keys are long-lived, bcrypt-hashed at rest, revocable, and the plaintext is shown exactly once at creation.
 - **Browser flow:** the frontend wraps these in httpOnly cookies (`roycss-access` / `roycss-refresh`) via `/api/auth/*` — see [Frontend routes](#frontend-routes-nextjs).
 
-### Rate limits (per IP, sliding window)
+### Rate limits
+
+Per IP, sliding window:
 
 | Scope | Limit | Applies to | Env override |
 |-------|-------|------------|--------------|
 | general | 100 / min | every `/api/v1` route **except** `/health` | `RATE_LIMIT_MAX_GENERAL` |
-| auth | 10 / min | `/auth/register`, `/auth/login`, `/auth/refresh` | `RATE_LIMIT_MAX_AUTH` |
+| auth | 10 / min | `/auth/register`, `/auth/login`, `/auth/refresh`, `POST /auth/api-keys` | `RATE_LIMIT_MAX_AUTH` |
 | contact | 5 / min | `/api/v1/contact` | `RATE_LIMIT_MAX_CONTACT` |
+
+Per API key (issue #65), in addition to the per-IP limits, on requests authenticated with `X-API-Key`:
+
+| Scope | Limit | Applies to | Env override |
+|-------|-------|------------|--------------|
+| api-key | 120 / min / key | every request presenting a valid `X-API-Key` | `API_KEY_RATE_LIMIT_MAX` |
 
 Window via `RATE_LIMIT_WINDOW_MS` (60 s). Responses carry `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset` and `Retry-After` (on 429).
 
@@ -110,15 +118,15 @@ Catalog + registry reads that power the docs site, the package, and the integrat
 
 #### `effects` — Effect catalog — list/search/filter the packaged effects (from `dist/effects.json`).
 
-> Stateless — no persistence; safe to call unauthenticated.
+> Public reads for browsers/anonymous traffic, **scope-gated for API keys** (issue #65): a request presenting `X-API-Key` must hold `effects:read` (or `*`) and stay within its per-key rate budget (401 invalid/revoked · 403 missing scope · 429 over budget).
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
-| GET | `/api/v1/effects` | Public | query: { `page?`, `limit?`, `category?`, `tag?`, `previewType?`, `sort?` } | `{ data, meta }` · 200 | 400 |
-| GET | `/api/v1/effects/search` | Public | query: { `q`, `page?`, `limit?`, `category?` } | `{ data, meta }` · 200 | 400 |
-| GET | `/api/v1/effects/categories` | Public | — | `{ data, meta }` · 200 | — |
-| GET | `/api/v1/effects/tags` | Public | — | `{ data, meta }` · 200 | — |
-| GET | `/api/v1/effects/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
+| GET | `/api/v1/effects` | Public | query: { `page?`, `limit?`, `category?`, `tag?`, `previewType?`, `sort?` } | `{ data, meta }` · 200 | 400 · 401 · 403 · 429 |
+| GET | `/api/v1/effects/search` | Public | query: { `q`, `page?`, `limit?`, `category?` } | `{ data, meta }` · 200 | 400 · 401 · 403 · 429 |
+| GET | `/api/v1/effects/categories` | Public | — | `{ data, meta }` · 200 | 401 · 403 · 429 |
+| GET | `/api/v1/effects/tags` | Public | — | `{ data, meta }` · 200 | 401 · 403 · 429 |
+| GET | `/api/v1/effects/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 401 · 403 · 404 · 429 |
 
 #### `recipes` — Curated recipe collection (list + detail).
 
@@ -178,7 +186,7 @@ Catalog + registry reads that power the docs site, the package, and the integrat
 |--------|------|------|---------|----------|--------|
 | GET | `/api/v1/blocks/categories` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/blocks` | Public | — | `{ data, meta }` · 200 | — |
-| POST | `/api/v1/blocks` | Public → Bearer JWT *(#64)* | body: { `name`, `category`, `industry?`, `description`, `components?`, `tags?`, `author?` } | `{ data }` · 201 | 400 |
+| POST | `/api/v1/blocks` | Bearer JWT | body: { `name`, `category`, `industry?`, `description`, `components?`, `tags?`, `author?` } | `{ data }` · 201 | 400 · 401 |
 | GET | `/api/v1/blocks/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
 
 #### `blueprints` — Industry architecture blueprints (list, detail, architecture, industries).
@@ -199,10 +207,10 @@ Catalog + registry reads that power the docs site, the package, and the integrat
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
 | GET | `/api/v1/themes` | Public | — | `{ data, meta }` · 200 | — |
-| POST | `/api/v1/themes` | Public → Bearer JWT *(#64)* | body: { `name`, `primary`, `secondary`, `accent`, `background`, `foreground`, `tokens?` } | `{ data }` · 201 | 400 |
+| POST | `/api/v1/themes` | Bearer JWT | body: { `name`, `primary`, `secondary`, `accent`, `background`, `foreground`, `tokens?` } | `{ data }` · 201 | 400 · 401 |
 | GET | `/api/v1/themes/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
-| PUT | `/api/v1/themes/:id` | Public → Bearer JWT *(#64)* | body: { `name?`, `primary?`, `secondary?`, `accent?`, `background?`, `foreground?`, `tokens?` } — partial update | `{ data }` · 200 | 400 · 404 |
-| DELETE | `/api/v1/themes/:id` | Public → Bearer JWT *(#64)* | path: `:id` | 204 — no body | 400 · 404 |
+| PUT | `/api/v1/themes/:id` | Bearer JWT | body: { `name?`, `primary?`, `secondary?`, `accent?`, `background?`, `foreground?`, `tokens?` } — partial update | `{ data }` · 200 | 400 · 404 · 401 |
+| DELETE | `/api/v1/themes/:id` | Bearer JWT | path: `:id` | 204 — no body | 400 · 404 · 401 |
 
 #### `registry` — Package registry — packages, versions, publish.
 
@@ -252,9 +260,9 @@ Catalog + registry reads that power the docs site, the package, and the integrat
 
 Account lifecycle (JWT) and the contact intake form.
 
-#### `auth` — JWT account lifecycle — register / login / refresh / me (bcrypt + Prisma `User`).
+#### `auth` — JWT account lifecycle + API key management (register / login / refresh / me; mint / list / revoke CLI–SDK–MCP keys).
 
-> Prisma-backed (`User`). register/login/refresh stay public by design (token bootstrap, 10/min/IP); only `GET /me` requires a Bearer token.
+> Prisma-backed (`User`, `ApiKey`). register/login/refresh stay public by design (token bootstrap, 10/min/IP). `GET /me` requires a Bearer token (an X-API-Key with `*` also works). The API-key management routes are **Bearer-JWT-only** — X-API-Key credentials are rejected there so a leaked key can never mint, enumerate, or revive keys.
 > Extra rate limit: **auth 10/min/IP** on register/login/refresh.
 
 | Method | Path | Auth | Request | Response | Errors |
@@ -263,6 +271,9 @@ Account lifecycle (JWT) and the contact intake form.
 | POST | `/api/v1/auth/login` | Public | body: { `email`, `password` } | `{ data: { user, accessToken, refreshToken, expiresIn } }` · 200 | 400 · 401 · 429 |
 | POST | `/api/v1/auth/refresh` | Public | body: { `refreshToken` } | `{ data: { user, accessToken, refreshToken, expiresIn } }` · 200 | 400 · 401 · 429 |
 | GET | `/api/v1/auth/me` | Bearer JWT | — | `{ data: user }` · 200 | 401 |
+| POST | `/api/v1/auth/api-keys` | Bearer JWT | body: { `name`, `scopes?` (default [`effects:read`]), `orgId?` } — plaintext key minted server-side | `{ data: { apiKey (masked), key (plaintext — shown ONCE), warning } }` · 201 | 400 · 401 · 404 · 409 · 429 |
+| GET | `/api/v1/auth/api-keys` | Bearer JWT | — | `{ data: apiKey[] (masked), meta }` · 200 | 401 |
+| DELETE | `/api/v1/auth/api-keys/:id` | Bearer JWT | path: `:id` (the key record id, not the key itself) | `{ data: apiKey (masked, revokedAt set) }` · 200 | 400 · 401 · 404 · 409 |
 
 #### `contact` — Contact form intake (Prisma `ContactMessage`; 5 submissions/min/IP).
 
@@ -412,7 +423,7 @@ AI-assisted generation, review, auditing, profiling and simulation surfaces (LLM
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
 | GET | `/api/v1/architect/templates` | Public | — | `{ data, meta }` · 200 | — |
-| POST | `/api/v1/architect/generate` | Public | body: { `prompt`, `templateId?`, `stack?` } | `{ data }` · 201 | 400 |
+| POST | `/api/v1/architect/generate` | Bearer JWT | body: { `prompt`, `templateId?`, `stack?` } | `{ data }` · 201 | 400 · 401 |
 | GET | `/api/v1/architect/templates/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
 | GET | `/api/v1/architect/results/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
 
@@ -422,7 +433,7 @@ AI-assisted generation, review, auditing, profiling and simulation surfaces (LLM
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
-| POST | `/api/v1/review/code` | Public | body: { `filename`, `language`, `code`, `focus?` } | `{ data }` · 201 | 400 |
+| POST | `/api/v1/review/code` | Bearer JWT | body: { `filename`, `language`, `code`, `focus?` } | `{ data }` · 201 | 400 · 401 |
 | GET | `/api/v1/review/rules` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/review/history` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/review/results/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
@@ -445,7 +456,7 @@ AI-assisted generation, review, auditing, profiling and simulation surfaces (LLM
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
 | GET | `/api/v1/designer/presets` | Public | — | `{ data, meta }` · 200 | — |
-| POST | `/api/v1/designer/generate` | Public | body: { `prompt`, `presetId?`, `palette?`, `components?` } | `{ data }` · 201 | 400 |
+| POST | `/api/v1/designer/generate` | Bearer JWT | body: { `prompt`, `presetId?`, `palette?`, `components?` } | `{ data }` · 201 | 400 · 401 |
 | GET | `/api/v1/designer/results/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
 
 #### `scaffold` — Project scaffolding — scaffold types and frameworks.
@@ -475,7 +486,7 @@ AI-assisted generation, review, auditing, profiling and simulation surfaces (LLM
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
-| POST | `/api/v1/pair/chat` | Public | body: { `message`, `sessionId?`, `language?`, `code?` } | `{ data }` · 201 | 400 |
+| POST | `/api/v1/pair/chat` | Bearer JWT | body: { `message`, `sessionId?`, `language?`, `code?` } | `{ data }` · 201 | 400 · 401 |
 | GET | `/api/v1/pair/history` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/pair/suggestions` | Public | — | `{ data, meta }` · 200 | — |
 
@@ -485,7 +496,7 @@ AI-assisted generation, review, auditing, profiling and simulation surfaces (LLM
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
-| POST | `/api/v1/mentor/chat` | Public | body: { `message`, `topicId` } | `{ data }` · 201 | 400 |
+| POST | `/api/v1/mentor/chat` | Bearer JWT | body: { `message`, `topicId` } | `{ data }` · 201 | 400 · 401 |
 | GET | `/api/v1/mentor/topics` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/mentor/progress` | Public | — | `{ data }` · 200 | — |
 | GET | `/api/v1/mentor/levels` | Public | — | `{ data, meta }` · 200 | — |
@@ -506,9 +517,9 @@ AI-assisted generation, review, auditing, profiling and simulation surfaces (LLM
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
-| POST | `/api/v1/preview/create` | Public → Bearer JWT *(#64)* | body: { `branch`, `project`, `commit` } | `{ data }` · 201 | 400 |
+| POST | `/api/v1/preview/create` | Bearer JWT | body: { `branch`, `project`, `commit` } | `{ data }` · 201 | 400 · 401 |
 | GET | `/api/v1/preview/list` | Public | — | `{ data, meta }` · 200 | — |
-| DELETE | `/api/v1/preview/:id` | Public → Bearer JWT *(#64)* | path: `:id` | 204 — no body | 400 · 404 |
+| DELETE | `/api/v1/preview/:id` | Bearer JWT | path: `:id` | 204 — no body | 400 · 404 · 401 |
 | GET | `/api/v1/preview/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
 
 #### `studio` — Project studio — projects CRUD + templates (Prisma).
@@ -518,11 +529,11 @@ AI-assisted generation, review, auditing, profiling and simulation surfaces (LLM
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
 | GET | `/api/v1/studio/projects` | Public | — | `{ data, meta }` · 200 | — |
-| POST | `/api/v1/studio/projects` | Public → Bearer JWT *(#64)* | body: { `name`, `description?`, `components?` } | `{ data }` · 201 | 400 |
+| POST | `/api/v1/studio/projects` | Bearer JWT | body: { `name`, `description?`, `components?` } | `{ data }` · 201 | 400 · 401 |
 | GET | `/api/v1/studio/templates` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/studio/projects/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
-| PUT | `/api/v1/studio/projects/:id` | Public → Bearer JWT *(#64)* | body: partial `UpdateStudioProjectSchema` — all fields optional | `{ data }` · 200 | 400 · 404 |
-| DELETE | `/api/v1/studio/projects/:id` | Public → Bearer JWT *(#64)* | path: `:id` | 204 — no body | 400 · 404 |
+| PUT | `/api/v1/studio/projects/:id` | Bearer JWT | body: partial `UpdateStudioProjectSchema` — all fields optional | `{ data }` · 200 | 400 · 404 · 401 |
+| DELETE | `/api/v1/studio/projects/:id` | Bearer JWT | path: `:id` | 204 — no body | 400 · 404 · 401 |
 
 #### `sync` — Design-token sync — Figma/GitHub/token imports + history.
 
@@ -544,7 +555,7 @@ AI-assisted generation, review, auditing, profiling and simulation surfaces (LLM
 |--------|------|------|---------|----------|--------|
 | GET | `/api/v1/profiler/metrics` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/profiler/results` | Public | — | `{ data, meta }` · 200 | — |
-| POST | `/api/v1/profiler/start` | Public → Bearer JWT *(#64)* | body: { `url`, `sampleRate?`, `durationSec?` } | `{ data }` · 202 | 400 |
+| POST | `/api/v1/profiler/start` | Bearer JWT | body: { `url`, `sampleRate?`, `durationSec?` } | `{ data }` · 202 | 400 · 401 |
 | GET | `/api/v1/profiler/results/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
 
 #### `benchmark` — Runtime benchmarks — run, results, comparisons.
@@ -554,7 +565,7 @@ AI-assisted generation, review, auditing, profiling and simulation surfaces (LLM
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
 | GET | `/api/v1/benchmark/comparisons` | Public | — | `{ data, meta }` · 200 | — |
-| POST | `/api/v1/benchmark/run` | Public → Bearer JWT *(#64)* | body: { `url`, `suite`, `runs?`, `profile?` } | `{ data }` · 202 | 400 |
+| POST | `/api/v1/benchmark/run` | Bearer JWT | body: { `url`, `suite`, `runs?`, `profile?` } | `{ data }` · 202 | 400 · 401 |
 | GET | `/api/v1/benchmark/results/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
 
 #### `bundle` — CSS bundle analysis — duplicates, dead CSS, results.
@@ -565,7 +576,7 @@ AI-assisted generation, review, auditing, profiling and simulation surfaces (LLM
 |--------|------|------|---------|----------|--------|
 | GET | `/api/v1/bundle/duplicates` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/bundle/dead-css` | Public | — | `{ data, meta }` · 200 | — |
-| POST | `/api/v1/bundle/analyze` | Public → Bearer JWT *(#64)* | body: { `entry`, `repo?`, `commit?` } | `{ data }` · 202 | 400 |
+| POST | `/api/v1/bundle/analyze` | Bearer JWT | body: { `entry`, `repo?`, `commit?` } | `{ data }` · 202 | 400 · 401 |
 | GET | `/api/v1/bundle/results/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
 
 #### `audit-center` — Aggregated audits — projects, issues, trends.
@@ -585,7 +596,7 @@ AI-assisted generation, review, auditing, profiling and simulation surfaces (LLM
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
-| POST | `/api/v1/compliance/scan` | Public → Bearer JWT *(#64)* | body: { `url`, `standardId?`, `depth?` } | `{ data }` · 201 | 400 |
+| POST | `/api/v1/compliance/scan` | Bearer JWT | body: { `url`, `standardId?`, `depth?` } | `{ data }` · 201 | 400 · 401 |
 | GET | `/api/v1/compliance/standards` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/compliance/reports` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/compliance/results/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
@@ -614,7 +625,7 @@ Academy, challenges, certifications, open-source program, showcase, marketplace 
 | GET | `/api/v1/academy/paths` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/academy/paths/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
 | GET | `/api/v1/academy/paths/:id/lessons` | Public | path: `:id` | `{ data, meta }` · 200 | 400 · 404 |
-| POST | `/api/v1/academy/paths/:id/progress` | Public → Bearer JWT *(#64)* | body: { `lessonId`, `completed` } · path: `:id` | `{ data }` · 200 | 400 · 404 |
+| POST | `/api/v1/academy/paths/:id/progress` | Bearer JWT | body: { `lessonId`, `completed` } · path: `:id` | `{ data }` · 200 | 400 · 404 · 401 |
 
 #### `challenges` — Coding challenges, submissions, leaderboard.
 
@@ -625,7 +636,7 @@ Academy, challenges, certifications, open-source program, showcase, marketplace 
 | GET | `/api/v1/challenges` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/challenges/leaderboard` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/challenges/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
-| POST | `/api/v1/challenges/:id/submit` | Public → Bearer JWT *(#64)* | body: { `userId`, `code`, `passed`, `timeMs?` } · path: `:id` | `{ data }` · 201 | 400 · 404 |
+| POST | `/api/v1/challenges/:id/submit` | Bearer JWT | body: { `userId`, `code`, `passed`, `timeMs?` } · path: `:id` | `{ data }` · 201 | 400 · 404 · 401 |
 
 #### `certifications` — Certification exams + credential verification.
 
@@ -636,7 +647,7 @@ Academy, challenges, certifications, open-source program, showcase, marketplace 
 | GET | `/api/v1/certifications` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/certifications/verify/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
 | GET | `/api/v1/certifications/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
-| POST | `/api/v1/certifications/:id/exam` | Public → Bearer JWT *(#64)* | body: { `userId`, `userName`, `answers` } · path: `:id` | `{ data }` · 201 | 400 · 404 |
+| POST | `/api/v1/certifications/:id/exam` | Bearer JWT | body: { `userId`, `userName`, `answers` } · path: `:id` | `{ data }` · 201 | 400 · 404 · 401 |
 
 #### `open` — Open-source program — issues, RFCs (+ voting), roadmap, contributors.
 
@@ -650,7 +661,7 @@ Academy, challenges, certifications, open-source program, showcase, marketplace 
 | GET | `/api/v1/open/contributors` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/open/issues/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
 | GET | `/api/v1/open/rfcs/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
-| POST | `/api/v1/open/rfcs/:id/vote` | Public → Bearer JWT *(#64)* | body: { `vote`, `voter?` } · path: `:id` | `{ data }` · 200 | 400 · 404 |
+| POST | `/api/v1/open/rfcs/:id/vote` | Bearer JWT | body: { `vote`, `voter?` } · path: `:id` | `{ data }` · 200 | 400 · 404 · 401 |
 
 #### `spotlight` — Community showcase — featured, items, submit, weekly.
 
@@ -661,7 +672,7 @@ Academy, challenges, certifications, open-source program, showcase, marketplace 
 | GET | `/api/v1/spotlight/featured` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/spotlight/items` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/spotlight/weekly` | Public | — | `{ data }` · 200 | — |
-| POST | `/api/v1/spotlight/submit` | Public → Bearer JWT *(#64)* | body: { `title`, `type`, `author`, `url`, `description`, `thumbnail?`, `tags?` } | `{ data }` · 201 | 400 |
+| POST | `/api/v1/spotlight/submit` | Bearer JWT | body: { `title`, `type`, `author`, `url`, `description`, `thumbnail?`, `tags?` } | `{ data }` · 201 | 400 · 401 |
 | GET | `/api/v1/spotlight/items/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
 
 #### `marketplace` — Template marketplace — list, detail, publish, reviews.
@@ -671,7 +682,7 @@ Academy, challenges, certifications, open-source program, showcase, marketplace 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
 | GET | `/api/v1/marketplace/templates` | Public | query: { `page?`, `limit?`, `category?`, `search?`, `minRating?`, `free?` } | `{ data, meta }` · 200 | 400 |
-| POST | `/api/v1/marketplace/templates` | Public → Bearer JWT *(#64)* | body: { `name`, `category`, `price`, `author`, `description`, `features?`, `thumbnail` } | `{ data }` · 201 | 400 |
+| POST | `/api/v1/marketplace/templates` | Bearer JWT | body: { `name`, `category`, `price`, `author`, `description`, `features?`, `thumbnail` } | `{ data }` · 201 | 400 · 401 |
 | GET | `/api/v1/marketplace/templates/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
 | GET | `/api/v1/marketplace/templates/:id/reviews` | Public | path: `:id` | `{ data, meta }` · 200 | 400 · 404 |
 
@@ -699,9 +710,9 @@ Cloud, deploys, CDN/edge/storage, fleet, workspace, enterprise, governance, anal
 |--------|------|------|---------|----------|--------|
 | GET | `/api/v1/cloud/status` | Public | — | `{ data }` · 200 | — |
 | GET | `/api/v1/cloud/projects` | Public | — | `{ data, meta }` · 200 | — |
-| POST | `/api/v1/cloud/projects` | Public → Bearer JWT *(#64)* | body: { `name`, `environment?`, `source` } | `{ data }` · 201 | 400 |
+| POST | `/api/v1/cloud/projects` | Bearer JWT | body: { `name`, `environment?`, `source` } | `{ data }` · 201 | 400 · 401 |
 | GET | `/api/v1/cloud/projects/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
-| DELETE | `/api/v1/cloud/projects/:id` | Public → Bearer JWT *(#64)* | path: `:id` | 204 — no body | 400 · 404 |
+| DELETE | `/api/v1/cloud/projects/:id` | Bearer JWT | path: `:id` | 204 — no body | 400 · 404 · 401 |
 | GET | `/api/v1/cloud/storage` | Public | — | `{ data }` · 200 | — |
 | GET | `/api/v1/cloud/deployments` | Public | — | `{ data, meta }` · 200 | — |
 
@@ -711,7 +722,7 @@ Cloud, deploys, CDN/edge/storage, fleet, workspace, enterprise, governance, anal
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
-| POST | `/api/v1/deploy/create` | Public → Bearer JWT *(#64)* | body: { `projectId`, `environment`, `platformId`, `branch`, `commit` } | `{ data }` · 201 | 400 |
+| POST | `/api/v1/deploy/create` | Bearer JWT | body: { `projectId`, `environment`, `platformId`, `branch`, `commit` } | `{ data }` · 201 | 400 · 401 |
 | GET | `/api/v1/deploy/history` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/deploy/platforms` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/deploy/environments` | Public | — | `{ data, meta }` · 200 | — |
@@ -735,10 +746,10 @@ Cloud, deploys, CDN/edge/storage, fleet, workspace, enterprise, governance, anal
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
 | GET | `/api/v1/storage/files` | Public | — | `{ data, meta }` · 200 | — |
-| POST | `/api/v1/storage/upload` | Public | body: { `name`, `type`, `size`, `mimeType` } | `{ data }` · 201 | 400 |
+| POST | `/api/v1/storage/upload` | Bearer JWT | body: { `name`, `type`, `size`, `mimeType` } | `{ data }` · 201 | 400 · 401 |
 | GET | `/api/v1/storage/usage` | Public | — | `{ data }` · 200 | — |
 | GET | `/api/v1/storage/files/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
-| DELETE | `/api/v1/storage/files/:id` | Public | path: `:id` | 204 — no body | 400 · 404 |
+| DELETE | `/api/v1/storage/files/:id` | Bearer JWT | path: `:id` | 204 — no body | 400 · 404 · 401 |
 
 #### `edge` — Edge compute — regions, config, deploy, performance.
 
@@ -759,7 +770,7 @@ Cloud, deploys, CDN/edge/storage, fleet, workspace, enterprise, governance, anal
 |--------|------|------|---------|----------|--------|
 | GET | `/api/v1/fleet/projects` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/fleet/health` | Public | — | `{ data }` · 200 | — |
-| POST | `/api/v1/fleet/scan` | Public → Bearer JWT *(#64)* | body: { `projectId` } | `{ data }` · 200 | 400 |
+| POST | `/api/v1/fleet/scan` | Bearer JWT | body: { `projectId` } | `{ data }` · 200 | 400 · 401 |
 | GET | `/api/v1/fleet/projects/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
 
 #### `workspace` — Team workspace — resources, team, invites.
@@ -770,7 +781,7 @@ Cloud, deploys, CDN/edge/storage, fleet, workspace, enterprise, governance, anal
 |--------|------|------|---------|----------|--------|
 | GET | `/api/v1/workspace/resources` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/workspace/team` | Public | — | `{ data, meta }` · 200 | — |
-| POST | `/api/v1/workspace/invite` | Public → Bearer JWT *(#64)* | body: { `email`, `name`, `role?` } | `{ data }` · 201 | 400 |
+| POST | `/api/v1/workspace/invite` | Bearer JWT | body: { `email`, `name`, `role?` } | `{ data }` · 201 | 400 · 401 |
 | GET | `/api/v1/workspace/resources/:type` | Public | path: `:type` | `{ data }` · 200 | 400 · 404 |
 
 #### `enterprise` — Organizations, teams, licenses, audit log.
@@ -780,7 +791,7 @@ Cloud, deploys, CDN/edge/storage, fleet, workspace, enterprise, governance, anal
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
 | GET | `/api/v1/enterprise/organizations` | Public | — | `{ data, meta }` · 200 | — |
-| POST | `/api/v1/enterprise/organizations` | Public → Bearer JWT *(#64)* | body: { `name`, `plan?`, `seats?`, `ownerId` } | `{ data }` · 201 | 400 |
+| POST | `/api/v1/enterprise/organizations` | Bearer JWT | body: { `name`, `plan?`, `seats?`, `ownerId` } | `{ data }` · 201 | 400 · 401 |
 | GET | `/api/v1/enterprise/organizations/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
 | GET | `/api/v1/enterprise/teams` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/enterprise/licenses` | Public | — | `{ data, meta }` · 200 | — |
@@ -795,8 +806,8 @@ Cloud, deploys, CDN/edge/storage, fleet, workspace, enterprise, governance, anal
 | GET | `/api/v1/governance/approvals` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/governance/policies` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/governance/audit-log` | Public | — | `{ data, meta }` · 200 | — |
-| POST | `/api/v1/governance/approvals/:id/approve` | Public → Bearer JWT *(#64)* | body: { `reviewer?`, `note?` } · path: `:id` | `{ data }` · 200 | 400 · 404 |
-| POST | `/api/v1/governance/approvals/:id/reject` | Public → Bearer JWT *(#64)* | body: { `reviewer?`, `reason` } · path: `:id` | `{ data }` · 200 | 400 · 404 |
+| POST | `/api/v1/governance/approvals/:id/approve` | Bearer JWT | body: { `reviewer?`, `note?` } · path: `:id` | `{ data }` · 200 | 400 · 404 · 401 |
+| POST | `/api/v1/governance/approvals/:id/reject` | Bearer JWT | body: { `reviewer?`, `reason` } · path: `:id` | `{ data }` · 200 | 400 · 404 · 401 |
 
 #### `analytics` — Platform analytics — overview, effects, traffic, devices.
 
@@ -838,10 +849,10 @@ Cloud, deploys, CDN/edge/storage, fleet, workspace, enterprise, governance, anal
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
 | GET | `/api/v1/live/sessions` | Public | — | `{ data, meta }` · 200 | — |
-| POST | `/api/v1/live/sessions` | Public → Bearer JWT *(#64)* | body: { `title`, `hostId`, `hostName?` } | `{ data }` · 201 | 400 |
+| POST | `/api/v1/live/sessions` | Bearer JWT | body: { `title`, `hostId`, `hostName?` } | `{ data }` · 201 | 400 · 401 |
 | GET | `/api/v1/live/sessions/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
 | GET | `/api/v1/live/sessions/:id/users` | Public | path: `:id` | `{ data, meta }` · 200 | 400 · 404 |
-| POST | `/api/v1/live/sessions/:id/message` | Public → Bearer JWT *(#64)* | body: { `userId`, `content` } · path: `:id` | `{ data }` · 201 | 400 · 404 |
+| POST | `/api/v1/live/sessions/:id/message` | Bearer JWT | body: { `userId`, `content` } · path: `:id` | `{ data }` · 201 | 400 · 404 · 401 |
 
 #### `mcp` — MCP tool hub — tools, execute, resources, prompts.
 

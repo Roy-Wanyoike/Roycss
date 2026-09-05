@@ -1,7 +1,4 @@
 {
   "framework": "nextjs",
-  "installCommand": "bun install",
-  "env": {
-    "BACKEND_URL": "https://roycss.onrender.com"
-  }
+  "installCommand": "bun install"
 }

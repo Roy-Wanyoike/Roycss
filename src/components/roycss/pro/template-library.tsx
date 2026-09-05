@@ -1506,7 +1506,7 @@ export function TemplateLibrary(): React.JSX.Element {
           copy-paste code. Built with RoyCSS semantic tokens.
         </CardDescription>
         <CardAction>
-          <BackendLiveBadge loading={loading} error={error} />
+          <BackendLiveBadge module="marketplace" loading={loading} error={error} />
           <Badge variant="secondary" className="gap-1">
             <Sparkles className="size-3" aria-hidden />
             {visible.length} shown

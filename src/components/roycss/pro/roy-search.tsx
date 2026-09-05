@@ -1506,7 +1506,7 @@ export function RoySearch(): React.JSX.Element {
           <Badge variant="secondary" className="ml-1">
             Beta
           </Badge>
-          <BackendLiveBadge loading={loading} error={error} />
+          <BackendLiveBadge module="search" loading={loading} error={error} />
         </div>
         <p className="max-w-2xl text-sm text-muted-foreground">
           One box, every corner of the RoyCSS platform. Search{" "}

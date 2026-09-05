@@ -678,7 +678,7 @@ export function RoyVersion() {
           upgrade before you commit.
         </CardDescription>
         <CardAction>
-          <BackendLiveBadge loading={loading} error={error} />
+          <BackendLiveBadge module="version" loading={loading} error={error} />
           <Button
             size="sm"
             onClick={handleCheck}

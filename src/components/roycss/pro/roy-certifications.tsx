@@ -168,7 +168,7 @@ export function RoyCertifications() {
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <CardTitle>Certifications</CardTitle>
-                  <BackendLiveBadge loading={loading} error={error} />
+                  <BackendLiveBadge module="certifications" loading={loading} error={error} />
                 </div>
                 <CardDescription>
                   Validate your RoyCSS expertise. 4 levels, recognized industry-wide.

@@ -771,7 +771,7 @@ export function RoyArchitect() {
               <Boxes className="size-3" aria-hidden />
               AI Architect
             </Badge>
-            <BackendLiveBadge loading={loading} error={error} />
+            <BackendLiveBadge module="architect" loading={loading} error={error} />
           </div>
           <p className="text-muted-foreground truncate text-xs">
             Describe a product — get a full architecture, stack, and deploy plan.

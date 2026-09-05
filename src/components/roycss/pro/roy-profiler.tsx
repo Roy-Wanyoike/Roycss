@@ -216,7 +216,7 @@ export function RoyProfiler() {
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <CardTitle>Frontend Profiler</CardTitle>
-                  <BackendLiveBadge loading={loading} error={error} />
+                  <BackendLiveBadge module="profiler" loading={loading} error={error} />
                 </div>
                 <CardDescription>
                   Measure rendering, layout shifts, memory, and animation FPS.

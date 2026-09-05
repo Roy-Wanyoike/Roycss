@@ -80,6 +80,7 @@ import {
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { DemoBadge } from "@/components/roycss/demo-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -1893,9 +1894,11 @@ export function PluginHub(): React.JSX.Element {
         <CardTitle className="flex items-center gap-2 text-xl">
           <Plug className="size-5 text-primary" aria-hidden />
           Roy Plugin Hub
+          {/* PF-012 F7 — curated mock catalog, no npm discovery yet */}
+          <DemoBadge module="plugin-hub" />
         </CardTitle>
         <CardDescription>
-          {stats.total} plugins · {stats.verified} verified ·{" "}
+          Curated catalog of {stats.total} plugins · {stats.verified} verified ·{" "}
           {stats.categories} categories · Total downloads:{" "}
           <span className="font-medium text-foreground tabular-nums">
             {formatCompact(stats.totalDownloads)}

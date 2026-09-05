@@ -2394,7 +2394,7 @@ export function RoyBlocks(): React.JSX.Element {
           {stats.total} blocks · {stats.categories} categories
         </CardDescription>
         <CardAction>
-          <BackendLiveBadge loading={loading} error={error} />
+          <BackendLiveBadge module="blocks" loading={loading} error={error} />
           <Badge variant="secondary" className="gap-1">
             <Package className="size-3" aria-hidden />
             {visible.length} shown

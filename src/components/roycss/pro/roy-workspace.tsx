@@ -172,7 +172,7 @@ export function RoyWorkspace() {
                   <Badge variant="secondary" className="gap-1">
                     <ShieldCheck className="size-3" /> Pro
                   </Badge>
-                  <BackendLiveBadge loading={loading} error={error} />
+                  <BackendLiveBadge module="workspace" loading={loading} error={error} />
                 </CardTitle>
                 <CardDescription>
                   Shared templates, tokens, components, and projects.

@@ -603,7 +603,7 @@ export function ProCharts(): React.JSX.Element {
           <h2 className="text-xl font-semibold tracking-tight text-foreground">
             Charts
           </h2>
-          <BackendLiveBadge loading={loading} error={error} />
+          <BackendLiveBadge module="analytics" loading={loading} error={error} />
         </div>
         <p className="text-sm text-muted-foreground">
           Production-ready visualizations built on Recharts · OKLCH palette ·

@@ -513,7 +513,7 @@ export function RoyPair() {
               <Sparkles className="size-3" />
               Pair Programmer
             </Badge>
-            <BackendLiveBadge loading={backendLoading} error={error} />
+            <BackendLiveBadge module="pair" loading={backendLoading} error={error} />
           </div>
           <p className="text-muted-foreground truncate text-xs">
             Suggests RoyCSS code we can iterate on together.

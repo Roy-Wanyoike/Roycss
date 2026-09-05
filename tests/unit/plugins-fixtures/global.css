@@ -1,0 +1,9 @@
+@import "roycss.css";
+
+:root {
+  --app-margin: 16px;
+}
+
+.app-shell {
+  margin: var(--app-margin);
+}

@@ -64,17 +64,28 @@ jobs:
       # run and report signal when the typecheck gate above is red (see
       # #60 note) — but never after a run is cancelled. They do NOT weaken
       # the gate: any failed step still fails the job.
-      - name: Unit tests (vitest)
+      # Coverage floor (issue #84 / PF-006): thresholds live in
+      # vitest.config.ts (80 % statements / 70 % branches). `--coverage`
+      # is REQUIRED for thresholds to be enforced — a plain `vitest run`
+      # never evaluates them.
+      - name: Unit tests + coverage floor (vitest)
         if: ${{ !cancelled() }}
-        run: bunx vitest run
+        run: bunx vitest run --coverage
         env:
           # RoyCSS lib unit tests are pure TS — no DB, no network — but
           # vitest still reads process.env for any incidental imports.
           NODE_ENV: test
 
+      # Bundle-size gate (issue #84 / PF-006): ratchet limits for the
+      # shipped npm artifacts in dist/ (.size-limit.json). Runs AFTER
+      # build:package so dist/ reflects THIS commit, not the last tag.
       - name: Build package (scripts/build-package.ts → dist/)
         if: ${{ !cancelled() }}
         run: bun run build:package
+
+      - name: Bundle-size gate (size-limit)
+        if: ${{ !cancelled() }}
+        run: bunx size-limit
 
       - name: Upload dist artifact
         if: always()
@@ -171,3 +182,67 @@ jobs:
           path: backend-node/coverage/
           if-no-files-found: warn
           retention-days: 7
+
+  # ─────────────────────────────────────────────────────────────────────
+  # Perf gate (issue #84 / PF-006) — page-level performance budgets.
+  # `bun run perf:budget` (scripts/perf-budget.ts) is self-contained:
+  # it verifies .next/BUILD_ID, starts `next start` on :3310, measures
+  # runtime metrics with headless Chromium (Playwright), parses the
+  # worst-of-N Lighthouse reports produced by the LHCI step, writes
+  # perf/results/budget-report.json, and exits non-zero when any metric
+  # breaches its perf/budget.json budget. Requires a production build.
+  # Lighthouse runs FIRST (LHCI `collect` + `assert`) so the budget gate
+  # can consume .lighthouseci/ reports; the LHCI assertions themselves
+  # (lighthouserc.json) also gate this job independently.
+  # ─────────────────────────────────────────────────────────────────────
+  perf-gate:
+    name: Perf gate — budget.json + Lighthouse
+    # Pushes to main only — on pull requests the identical gate runs in
+    # .github/workflows/lighthouse.yml (which additionally posts the
+    # scores as a PR comment), so running both would duplicate ~4 min of
+    # Chromium measurement per PR.
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.3.14"
+
+      - name: Install dependencies (frozen lockfile)
+        run: bun install --frozen-lockfile
+
+      - name: Install Chromium for Playwright
+        run: bunx playwright install chromium --with-deps
+
+      - name: Production build (next build)
+        run: bun run build
+
+      - name: Lighthouse CI (collect + assert, worst-of-3)
+        run: |
+          bunx @lhci/cli autorun --config=lighthouserc.json || {
+            # `autorun` includes an `upload` section pointed at temporary
+            # public storage; on runner-network hiccups we still want the
+            # assert results — rerun collect+assert only.
+            bunx @lhci/cli collect --config=lighthouserc.json
+            bunx @lhci/cli assert --config=lighthouserc.json
+          }
+
+      - name: Performance budget gate (perf:budget)
+        run: bun run perf:budget --require-lighthouse
+
+      - name: Upload budget report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: perf-budget-report
+          path: perf/results/budget-report.json
+          if-no-files-found: warn
+          retention-days: 30

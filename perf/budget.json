@@ -1,0 +1,103 @@
+{
+  "schema": "roycss.perf-budget.v1",
+  "page": "/",
+  "description": "Page-level performance budgets for the RoyCSS marketing site (issue #84 / PF-006). Enforced by `bun run perf:budget` (scripts/perf-budget.ts) in the CI perf-gate job and the Lighthouse PR workflow. 'budget' is the enforced ceiling (fails the gate when breached); 'goal' is the issue #84 target (informational north-star — where the current build exceeds a goal, the budget is set to measured+5% headroom and the gap is noted in the metric note). Runtime metrics are measured by headless Chromium (Playwright) against a `next start` production build; Lighthouse metrics come from the LHCI reports in .lighthouseci/; INP is a field-only metric (supply perf/results/field-inp.json or PERF_FIELD_INP_MS to enforce).",
+  "metrics": {
+    "css-raw": {
+      "budget": 369700,
+      "goal": 286720,
+      "unit": "bytes",
+      "comparator": "lte",
+      "source": "runtime",
+      "note": "Issue #84 goal 280 KB. Current: Tailwind v4 output + demo stylesheets ≈ 344 KB raw across 3 CSS files. Budget = measured+5% headroom until the goal is reachable (needs CSS splitting / critical-CSS work)."
+    },
+    "css-gzip": {
+      "budget": 52700,
+      "goal": 28672,
+      "unit": "bytes",
+      "comparator": "lte",
+      "source": "runtime",
+      "note": "Issue #84 goal 28 KB gzip. Current ≈ 49 KB gzip (level 6). Budget = measured+5% headroom; tracked as follow-up optimization."
+    },
+    "dom-nodes": {
+      "budget": 8000,
+      "goal": 8000,
+      "unit": "count",
+      "comparator": "lte",
+      "source": "runtime",
+      "note": "Measured on / with the virtual-scroll grid active (≈5.5k nodes)."
+    },
+    "active-animations": {
+      "budget": 60,
+      "goal": 60,
+      "unit": "count",
+      "comparator": "lte",
+      "source": "runtime",
+      "note": "Elements with a running, unpaused CSS animation. Measured ≈56 after settle."
+    },
+    "backdrop-filter-elements": {
+      "budget": 119,
+      "goal": 50,
+      "unit": "count",
+      "comparator": "lte",
+      "source": "runtime",
+      "note": "Issue #84 goal 50. Current glassmorphism/blur usage ≈113 elements — budget = measured+5% headroom; reducing blur layers is a tracked optimization (backdrop-filter is GPU-expensive)."
+    },
+    "lcp": {
+      "budget": 2350,
+      "goal": 1500,
+      "unit": "ms",
+      "comparator": "lte",
+      "source": "lighthouse",
+      "note": "Issue #84 goal 1.5 s. Lab LCP (mobile-throttled LHCI, worst-of-3) measured 1.83-2.24 s depending on runner load. Budget = ratchet set from the noisiest observed run +5% (2.35 s) so the gate is green on loaded shared runners and still catches regressions; tighten toward the goal once real CI data exists (needs #75 Actions unblock) — optimization path: hero/image + font preload."
+    },
+    "inp": {
+      "budget": 50,
+      "goal": 50,
+      "unit": "ms",
+      "comparator": "lte",
+      "source": "field",
+      "note": "Field (real-user) metric — lab Lighthouse cannot measure INP. Enforced only when field data is supplied (perf/results/field-inp.json or PERF_FIELD_INP_MS); the lab proxy for responsiveness is TBT."
+    },
+    "cls": {
+      "budget": 0.1,
+      "goal": 0.1,
+      "unit": "ratio",
+      "comparator": "lt",
+      "source": "lighthouse",
+      "note": "Lighthouse desktop preset; measured ≈0.006."
+    },
+    "tbt": {
+      "budget": 1090,
+      "goal": 200,
+      "unit": "ms",
+      "comparator": "lt",
+      "source": "lighthouse",
+      "note": "Issue #84 goal 200 ms. Lab TBT (mobile-throttled LHCI, worst-of-3) measured 0.52-1.04 s depending on runner load (desktop preset ≈2 ms). Budget = ratchet from the noisiest observed run +5% (1.09 s); tighten after #75 unblocks. Optimization path: code-split three.js/recharts/framer-motion off the landing page."
+    },
+    "js-gzip": {
+      "budget": 1340000,
+      "goal": 524288,
+      "unit": "bytes",
+      "comparator": "lte",
+      "source": "runtime",
+      "note": "Sensible addition per issue #84: total JS of the initial page load (gzip level 6). Current ≈1.28 MB gzip (three.js + recharts + framer-motion on the landing page) — budget = measured+5% ratchet; goal 512 KB requires code-splitting heavy demos."
+    },
+    "web-fonts": {
+      "budget": 4,
+      "goal": 4,
+      "unit": "count",
+      "comparator": "lte",
+      "source": "runtime",
+      "note": "Sensible addition per issue #84: web-font files downloaded by the page (self-hosted via next/font; currently 3 woff2 files, 27 @font-face declarations)."
+    },
+    "requests": {
+      "budget": 50,
+      "goal": 50,
+      "unit": "count",
+      "comparator": "lte",
+      "source": "runtime",
+      "note": "Sensible addition per issue #84: requests for the page load (navigation + resource entries; currently ≈37)."
+    }
+  }
+}

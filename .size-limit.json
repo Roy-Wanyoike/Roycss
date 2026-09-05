@@ -1,0 +1,25 @@
+[
+  {
+    "name": "library CSS \u2014 minified (gzip)",
+    "path": "dist/roycss.min.css",
+    "gzip": true,
+    "limit": "216 KB"
+  },
+  {
+    "name": "library CSS \u2014 raw",
+    "path": "dist/roycss.css",
+    "limit": "1.7 MB"
+  },
+  {
+    "name": "effects data + ESM loader (gzip)",
+    "path": "dist/effects.js",
+    "gzip": true,
+    "limit": "93 KB"
+  },
+  {
+    "name": "critical CSS (gzip)",
+    "path": "dist/roycss-critical.css",
+    "gzip": true,
+    "limit": "4.5 KB"
+  }
+]

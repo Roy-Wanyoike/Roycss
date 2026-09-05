@@ -202,3 +202,9 @@ agent-ctx/
 worklog.md
 .agent/
 *.pid
+
+# ─── Performance tooling (issue #84 / PF-006) ────────────────────────
+# Lighthouse CI reports + assertion results (regenerated per run)
+.lighthouseci/
+# perf-budget.ts scratch space (server logs, temp probes)
+.perf-scratch/

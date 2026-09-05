@@ -17,6 +17,7 @@ model User {
   favorites    EffectFavorite[]
   collections  Collection[]
   memberships  Membership[]
+  apiKeys      ApiKey[]
   @@index([email])
 }
 
@@ -238,6 +239,48 @@ model Membership {
   @@unique([orgId, userId])
   @@index([userId])
   @@index([orgId])
+}
+// ─── API key authentication (issue #65 / PF-002) ──────────────────────────
+// Long-lived credentials for the CLI / SDK / MCP server — an alternative to
+// short-lived Bearer JWTs on protected routes. Verified by the
+// `X-API-Key` middleware (src/server/middleware/api-key.ts).
+//
+// SECURITY properties:
+//   - `hash`       : bcrypt(10) of the FULL key — the only credential check.
+//                    The plaintext key is never stored and never logged.
+//   - `lookupHash` : SHA-256 of the full key — an indexed, UNIQUE lookup
+//                    handle so resolution is one indexed query + one bcrypt
+//                    compare (never an O(n) scan of bcrypt hashes). A SHA-256
+//                    of a ~190-bit random secret is preimage-resistant, so a
+//                    DB leak does not help an attacker recover the key —
+//                    they still have to break bcrypt.
+//   - `prefix`/`last4` : display-only fragments for masked listing
+//     (e.g. `rk_live_…ab12`). Not secrets.
+//   - `revokedAt`  : soft delete. Null = active; set = rejected with 401.
+//
+// NOTE: Prisma `enum`/arrays are unsupported on SQLite, so `scopes` is a
+// JSON-encoded string[] validated application-side (see API_KEY_SCOPES in
+// src/lib/api-key.ts). `orgId` is a logical (non-enforced) FK like `License`.
+model ApiKey {
+  id          String    @id @default(cuid())
+  name        String
+  hash        String    @unique
+  lookupHash  String    @unique
+  prefix      String
+  last4       String
+  scopesJson  String
+  ownerId     String
+  orgId       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  lastUsedAt  DateTime?
+  revokedAt   DateTime?
+  owner       User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  @@unique([ownerId, name])
+  @@index([ownerId])
+  @@index([orgId])
+  @@index([revokedAt])
 }
 model Team {
   id        String   @id @default(cuid())

@@ -28,6 +28,16 @@ export const RATE_LIMIT = {
   contact: env.RATE_LIMIT_MAX_CONTACT,
 } as const;
 
+/**
+ * Per-API-key rate limiting (issue #65). Applied IN ADDITION to the
+ * per-IP limiters above whenever a request authenticates with an
+ * `X-API-Key` credential — one bucket per key id. Default: 120/min/key.
+ */
+export const API_KEY_RATE_LIMIT = {
+  max: env.API_KEY_RATE_LIMIT_MAX,
+  windowMs: env.API_KEY_RATE_LIMIT_WINDOW_MS,
+} as const;
+
 /** JWT lifetimes — passed straight to jsonwebtoken. */
 export const JWT_CONFIG = {
   secret: env.JWT_SECRET,

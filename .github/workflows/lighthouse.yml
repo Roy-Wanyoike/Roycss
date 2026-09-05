@@ -1,0 +1,159 @@
+name: Lighthouse CI + Performance Budget (PRs)
+
+# Issue #84 / PF-006 — Lighthouse CI on every pull request against a
+# production preview build, plus the perf/budget.json page-level gate
+# (scripts/perf-budget.ts), with the combined scores posted as a PR
+# comment. On pushes to main the identical gate (without the comment)
+# runs in ci.yml's perf-gate job.
+
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: lighthouse-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write   # required to post the scores comment
+
+jobs:
+  lighthouse:
+    name: Lighthouse + perf budget (PR preview build)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.3.14"
+
+      - name: Install dependencies (frozen lockfile)
+        run: bun install --frozen-lockfile
+
+      - name: Install Chromium for Playwright + Lighthouse
+        run: bunx playwright install chromium --with-deps
+
+      - name: Production build (next build)
+        run: bun run build
+
+      # `autorun` = collect (3 runs, worst-of) + assert (lighthouserc.json
+      # assertions) + upload (temporary public storage — the report links
+      # land in the run log). The fallback re-runs collect+assert without
+      # upload so a storage hiccup can never mask the assertion results.
+      - name: Lighthouse CI (autorun — collect + assert + upload)
+        run: |
+          bunx @lhci/cli autorun --config=lighthouserc.json || {
+            bunx @lhci/cli collect --config=lighthouserc.json
+            bunx @lhci/cli assert --config=lighthouserc.json
+          }
+
+      # Page-level budget gate: consumes the .lighthouseci/ reports just
+      # produced (LCP/TBT/CLS) + measures runtime metrics (CSS/JS bytes,
+      # DOM, animations, fonts, requests) against perf/budget.json.
+      - name: Performance budget gate (perf:budget)
+        run: bun run perf:budget --require-lighthouse
+
+      # Post the combined Lighthouse + budget scores as a PR comment.
+      # Parses .lighthouseci/lhr-*.json (median run) and
+      # perf/results/budget-report.json; edits its own previous comment
+      # (searches for the marker) instead of spamming new ones.
+      - name: Post scores as PR comment
+        if: always()
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+
+            const lhciDir = '.lighthouseci';
+            let scores = {};
+            let lighthouseLines = [];
+            try {
+              const files = fs.readdirSync(lhciDir).filter(f => f.startsWith('lhr-') && f.endsWith('.json'));
+              // Worst-of runs for scores (gate semantics — a flaky fast run
+              // must never mask a slow one).
+              for (const f of files) {
+                const lhr = JSON.parse(fs.readFileSync(path.join(lhciDir, f), 'utf8'));
+                const cats = lhr.categories || {};
+                for (const [id, cat] of Object.entries(cats)) {
+                  const s = Math.round((cat.score ?? 0) * 100);
+                  scores[id] = Math.min(scores[id] ?? 100, s);
+                }
+              }
+              const wanted = ['performance', 'accessibility', 'best-practices', 'seo'];
+              lighthouseLines = wanted
+                .filter(id => scores[id] !== undefined)
+                .map(id => `| ${id} | ${scores[id]} |`);
+            } catch (e) {
+              core.warning(`No Lighthouse reports found: ${e.message}`);
+            }
+
+            let budgetLines = [];
+            let pass = 0, fail = 0;
+            try {
+              const report = JSON.parse(fs.readFileSync('perf/results/budget-report.json', 'utf8'));
+              const metrics = report.metrics || {};
+              for (const [id, m] of Object.entries(metrics)) {
+                if (m.status === 'fail') fail++;
+                else if (m.status === 'pass') pass++;
+                const icon = m.status === 'fail' ? '❌' : m.status === 'pass' ? '✅' : 'ℹ️';
+                const fmt = v => v === null || v === undefined ? '—' : (m.unit === 'bytes' ? `${(v / 1024).toFixed(1)} KB` : `${Math.round(v * 100) / 100}`);
+                budgetLines.push(`| ${icon} ${id} | ${fmt(m.measured)} | ${fmt(m.budget)} | ${fmt(m.goal)} |`);
+              }
+            } catch (e) {
+              core.warning(`No budget report found: ${e.message}`);
+            }
+
+            const verdict = fail === 0 && Object.keys(scores).length > 0
+              ? '✅ **All performance budgets pass**'
+              : `❌ **${fail} budget violation(s)** — see the job log for the violations table`;
+            const lhrBadge = Object.entries(scores).length
+              ? `Lighthouse (worst-of-3, desktop preset): perf **${scores.performance ?? '—'}** / a11y **${scores.accessibility ?? '—'}** / bp **${scores['best-practices'] ?? '—'}** / seo **${scores.seo ?? '—'}**`
+              : 'Lighthouse: no reports produced';
+
+            const body = [
+              `## 🎯 Performance report (Lighthouse CI + budget.json)`,
+              '',
+              verdict, '', lhrBadge, '',
+              '| Category | Score (worst-of-3) |', '|---|---|',
+              ...lighthouseLines, '',
+              '| Metric | Measured | Budget | Goal |', '|---|---|---|---|',
+              ...budgetLines, '',
+              `_Budgets are ratchets (measured + 5 % headroom); goals are the issue #84 north-star. Full reports: job artifacts \`perf-budget-report\` + the LHCI run log links._`,
+              `<!-- roycss-perf-report -->`
+            ].join('\n');
+
+            const marker = '<!-- roycss-perf-report -->';
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              per_page: 100
+            });
+            const previous = comments.find(c => c.body && c.body.includes(marker));
+            if (previous) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner, repo: context.repo.repo,
+                comment_id: previous.id, body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: context.issue.number, body
+              });
+            }
+
+      - name: Upload budget report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: perf-budget-report
+          path: perf/results/budget-report.json
+          if-no-files-found: warn
+          retention-days: 30

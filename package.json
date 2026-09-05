@@ -63,7 +63,10 @@
     "db:push": "prisma db push",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
-    "db:reset": "prisma migrate reset"
+    "db:reset": "prisma migrate reset",
+    "perf:budget": "bun run scripts/perf-budget.ts",
+    "perf:benchmark": "bun run perf/benchmark.ts",
+    "size": "size-limit"
   },
   "dependencies": {
     "socket.io-client": "^4.8.3",
@@ -75,6 +78,7 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@hookform/resolvers": "^5.1.1",
+    "@lhci/cli": "^0.15.1",
     "@mdxeditor/editor": "^3.39.1",
     "@modelcontextprotocol/sdk": "^1.30.0",
     "@playwright/test": "^1.62",
@@ -107,6 +111,7 @@
     "@radix-ui/react-toggle-group": "^1.1.10",
     "@radix-ui/react-tooltip": "^1.2.7",
     "@reactuses/core": "^6.0.5",
+    "@size-limit/file": "^13.0.3",
     "@tailwindcss/postcss": "^4",
     "@tanstack/react-query": "^5.82.0",
     "@tanstack/react-table": "^8.21.3",
@@ -139,6 +144,7 @@
     "react-syntax-highlighter": "^15.6.1",
     "recharts": "^3.10.1",
     "sharp": "^0.35.4",
+    "size-limit": "^13.0.3",
     "sonner": "^2.0.6",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4",

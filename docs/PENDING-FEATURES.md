@@ -203,9 +203,31 @@ if scope expands.
 
 ### PF-005: LTS + SLA + Governance docs (bus-factor + enterprise readiness)
 - **Area:** docs
-- **State:** not started. ENTERPRISE-REVIEW §16.1 R1 (bus factor —
-  Critical), R3 (no LTS/SLA — Critical). V2 §16.6/16.12/16.15/16.16/16.17/16.18.
-  LABS-30 §7.3. COMPETITIVE-ANALYSIS R10/R15.
+- **State:** DONE (issue #92, PR #96). ENTERPRISE-REVIEW
+  §16.1 R1 (bus factor — Critical), R3 (no LTS/SLA — Critical). V2
+  §16.6/16.12/16.15/16.16/16.17/16.18. LABS-30 §7.3.
+  COMPETITIVE-ANALYSIS R10/R15.
+- **Shipped:** the full governance pack landed in PR #96
+  (branch `docs/governance-pack`, issue #92) — `docs/LTS.md` (one active major LTS
+  line, 18-month window after the successor ships, critical backports,
+  breaking changes announced one minor ahead with codemods),
+  `docs/SLA.md` (1h P0 / 4h P1 / next-business-day P2, enterprise Slack
+  channel, quarterly architecture review), `docs/SECURITY-SLA.md` (72h
+  critical-fix SLA, security@roycss.dev mailbox policy, PGP key policy,
+  GitHub Security Advisories process, safe disclosure), `MAINTAINERS.md`
+  (8-area owner table + per-area onboarding notes + explicit
+  single-maintainer disclosure and recruitment plan),
+  `docs/GOVERNANCE.md` (consensus / lazy-consensus / steering-vote tiers,
+  role ladder, quarterly cadence), `CODE_OF_CONDUCT.md` (Contributor
+  Covenant 2.1 + conduct@roycss.dev moderation contact),
+  `docs/SEMVER.md` (mapped to the versioned-effects scheme),
+  `docs/DEPRECATION.md` (1-minor soft warning → codemod → 6 months →
+  removal in next major), `docs/RFC-PROCESS.md` (14-day window, 2 core +
+  3 community approvals, draft/review/accepted/withdrawn), and
+  `rfcs/README.md` + `rfcs/0000-template.md` +
+  `rfcs/0001-versioned-effects.md` (retrospective RFC documenting the
+  shipped versioned-effects design in `src/lib/`). Docs-only change —
+  `tsc` 0 errors and the 248-test unit suite unaffected.
 - **Acceptance:**
   1. `docs/LTS.md` — one major LTS at all times, 18 months after
      successor ships, critical patches backported, breaking changes
@@ -231,6 +253,8 @@ if scope expands.
 - **Files:** `docs/{LTS,SLA,SECURITY-SLA,GOVERNANCE,DEPRECATION,SEMVER,RFC-PROCESS}.md`
   (new), `MAINTAINERS.md`, `CODE_OF_CONDUCT.md`, `rfcs/` (new dir).
 - **Agent:** general-purpose
+- **Done in:** PR #96 (issue #92, branch `docs/governance-pack`) — see the
+  **Shipped** note above for the per-file summary and verification.
 
 ### PF-006: CI performance + bundle-size gate (Lighthouse CI + size-limit + budget.json)
 - **Area:** infra / CI

@@ -49,3 +49,26 @@ export type PublishPackageInput = z.infer<typeof PublishPackageSchema>;
 export const RegistryParamsSchema = z.object({
   id: z.string().min(1),
 });
+
+// ─── PF-009 / issue #94 (A1) — canonical item resolution ─────────────────
+
+/** Route params for /registry/resolve/:slug. */
+export const ResolveParamsSchema = z.object({
+  slug: z.string().min(1, "slug is required").max(214),
+});
+
+/**
+ * Query for /registry/resolve/:slug — optional type filter to
+ * disambiguate slugs present in more than one dataset.
+ */
+export const ResolveQuerySchema = z.object({
+  type: z.enum([
+    "effect",
+    "component",
+    "pattern",
+    "theme",
+    "token",
+    "icon",
+    "motion",
+  ]).optional(),
+});

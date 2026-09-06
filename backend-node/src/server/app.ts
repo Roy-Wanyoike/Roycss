@@ -83,6 +83,11 @@ import {
   generalRateLimit,
 } from "./middleware/rateLimit.js";
 import { requestIdMiddleware, requestLogger } from "./middleware/logging.js";
+import { buildRouteTable, routeMetricsMiddleware } from "../lib/route-metrics.js";
+// ── PF-009 / issue #94 — new platform surface ──────────────────────
+import { auditRouter } from "../modules/audit/routes.js";
+import { metricsRouter } from "../modules/metrics/routes.js";
+import { openapiRouter } from "../modules/openapi/routes.js";
 
 const log = createLogger("app");
 
@@ -99,12 +104,18 @@ export function createApp(): Express {
   // ─── Request identity + logging ────────────────────────────────────────
   app.use(requestIdMiddleware);
   app.use(requestLogger);
+  // Per-route latency histograms (issue #94 A9) — finish-hook based,
+  // mounted before routing so every route is measured.
+  app.use(routeMetricsMiddleware);
 
   // ─── Trust proxy (so req.ip reflects real client behind nginx/caddy) ───
   app.set("trust proxy", 1);
 
   // ─── Health (mounted BEFORE general rate limit so it never gets throttled)
   app.use(`${API_PREFIX}/health`, healthRouter);
+
+  // ─── Generated OpenAPI document (issue #94 A4) ────────────────────────
+  app.use(`${API_PREFIX}/openapi.json`, openapiRouter);
 
   // ─── Global rate limiter for everything else ───────────────────────────
   app.use(generalRateLimit);
@@ -183,6 +194,12 @@ export function createApp(): Express {
   app.use(`${API_PREFIX}/relative-color`, relativeColorRouter);
   app.use(`${API_PREFIX}/starting-style`, startingStyleRouter);
   app.use(`${API_PREFIX}/light-dark`, lightDarkRouter);
+  // ── PF-009 / issue #94 — audit trail + route metrics (admin) ─────────
+  app.use(`${API_PREFIX}/audit`, auditRouter);
+  app.use(`${API_PREFIX}/metrics`, metricsRouter);
+
+  // ─── Route metrics pattern table (must run after all mounts) ──────────
+  buildRouteTable(app);
 
   // ─── Root info endpoint ────────────────────────────────────────────────
   app.get(

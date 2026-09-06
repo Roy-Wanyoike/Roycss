@@ -13,3 +13,17 @@ export const TrafficQuerySchema = z.object({
 });
 
 export type TrafficQuery = z.infer<typeof TrafficQuerySchema>;
+
+// ─── PF-009 / issue #94 (A7) — job queue endpoints ────────────────────────
+
+/** Body for POST /analytics/jobs — aggregation window (days). */
+export const AnalyticsJobSchema = z.object({
+  days: z.coerce.number().int().min(1).max(90).default(30),
+});
+
+export type AnalyticsJobInput = z.infer<typeof AnalyticsJobSchema>;
+
+/** Params for GET /analytics/jobs/:id. */
+export const JobParamsSchema = z.object({
+  id: z.string().min(1),
+});

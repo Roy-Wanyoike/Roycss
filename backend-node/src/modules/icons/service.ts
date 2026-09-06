@@ -12,6 +12,10 @@
  * carries the real `d` attribute(s) used to render the icon — not a mock.
  *
  * All reads are LRU-cached (10min list, 10min detail).
+ *
+ * PF-009 / issue #94 (A1): the icon dataset is REGISTERED with the
+ * registry catalog and the read paths (list / detail) resolve through
+ * it — one code path for framework content. Envelopes are unchanged.
  */
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -23,6 +27,7 @@ import { cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type { Icon, IconCategory, Paginated } from "../../types/index.js";
 import { AppError } from "../../server/middleware/error.js";
+import { getItemData, listItemData, registerSource } from "../registry/catalog.js";
 import type { ListIconsQuerySchema } from "./schema.js";
 import type { z } from "zod";
 
@@ -200,14 +205,24 @@ const allIcons: Icon[] = (() => {
 
 // ─── Service functions ───────────────────────────────────────────────────
 
-/** List icons with optional category filter and full-text search. Cached. */
+// ─── Registry catalog registration (PF-009 / issue #94 A1) ───────────────
+registerSource("icon", {
+  list: () => allIcons,
+  slugOf: (item) => (item as Icon).name,
+  nameOf: (item) => (item as Icon).name,
+  descriptionOf: (item) =>
+    `${(item as Icon).name} icon (${(item as Icon).category}).`,
+});
+
+/** List icons with optional category filter and full-text search. Cached.
+ *  Data sourced via the registry catalog. */
 export async function listIcons(
   input: ListIconsInput,
 ): Promise<Paginated<Icon>> {
   return cacheWrap(
     listKey(input),
-    () => {
-      let filtered = allIcons;
+    async () => {
+      let filtered = (await listItemData("icon")) as Icon[];
 
       if (input.category) {
         filtered = filtered.filter((i) => i.category === input.category);
@@ -243,14 +258,17 @@ export async function listIcons(
   );
 }
 
-/** Get a single icon by name. Cached. Throws 404 if missing. */
+/** Get a single icon by name — resolved via the registry catalog.
+ *  Cached. Throws 404 if missing. */
 export async function getIconByName(name: string): Promise<Icon> {
   return cacheWrap(
     detailKey(name),
-    () => {
-      const found = allIcons.find((i) => i.name === name);
-      if (!found) throw AppError.notFound(`Icon '${name}' not found`);
-      return Promise.resolve(found);
+    async () => {
+      const item = await getItemData("icon", name);
+      if (item === undefined) {
+        throw AppError.notFound(`Icon '${name}' not found`);
+      }
+      return item as Icon;
     },
     CACHE_TTL.iconDetail,
   );

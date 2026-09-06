@@ -19,7 +19,8 @@ import { Router } from "express";
 import type { z } from "zod";
 
 import { requireAuth } from "../../server/middleware/auth.js";
-import { asyncHandler } from "../../server/middleware/error.js";
+import { asyncHandler } from "../../server/middleware/error.js";import { recordAuditEvent } from "../audit/service.js";
+
 import {
   validateBody,
   validateParams,
@@ -53,6 +54,15 @@ enterpriseRouter.post(
       typeof CreateOrganizationSchema
     >;
     const org = await createOrganization(input);
+    await recordAuditEvent({
+      actor: req.user!.sub,
+      action: "enterprise.organization.create",
+      resourceType: "organization",
+      resourceId: org.id,
+      orgId: org.id,
+      requestId: req.requestId,
+      metadata: { name: org.name, plan: org.plan },
+    });
     res.status(201).json({ data: org });
   }),
 );

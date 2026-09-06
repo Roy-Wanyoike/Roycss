@@ -3,11 +3,16 @@
  *
  * Source: src/lib/roycss-patterns.ts in the parent project. Snapshot
  * kept here so the backend is self-contained.
+ *
+ * PF-009 / issue #94 (A1): the pattern dataset is REGISTERED with the
+ * registry catalog and the read paths (list / detail) resolve through
+ * it — one code path for framework content. Envelopes are unchanged.
  */
 import { CACHE_TTL } from "../../config/constants.js";
 import { cacheWrap } from "../../lib/cache.js";
 import type { Pattern } from "../../types/index.js";
 import { AppError } from "../../server/middleware/error.js";
+import { getItemData, listItemData, registerSource } from "../registry/catalog.js";
 import { ListPatternsQuerySchema } from "./schema.js";
 import type { z } from "zod";
 
@@ -110,12 +115,22 @@ export interface PatternListResult {
   totalPages: number;
 }
 
-/** List patterns with optional filters. Cached. */
+// ─── Registry catalog registration (PF-009 / issue #94 A1) ──────────────
+registerSource("pattern", {
+  list: () => PATTERNS,
+  slugOf: (item) => (item as Pattern).id,
+  nameOf: (item) => (item as Pattern).name,
+  descriptionOf: (item) => (item as Pattern).description,
+});
+
+/** List patterns with optional filters. Cached.
+ *  Data sourced via the registry catalog. */
 export async function listPatterns(input: ListPatternsInput): Promise<PatternListResult> {
   return cacheWrap(
     `patterns:list:${JSON.stringify(input)}`,
-    () => {
-      let filtered = PATTERNS;
+    async () => {
+      const all = (await listItemData("pattern")) as Pattern[];
+      let filtered = all;
       if (input.category) filtered = filtered.filter((p) => p.category === input.category);
       if (input.tag) filtered = filtered.filter((p) => p.tags.includes(input.tag!));
 
@@ -124,26 +139,29 @@ export async function listPatterns(input: ListPatternsInput): Promise<PatternLis
       const start = (page - 1) * limit;
       const items = filtered.slice(start, start + limit);
 
-      return Promise.resolve({
+      return {
         items,
         page,
         limit,
         total: filtered.length,
         totalPages: Math.max(1, Math.ceil(filtered.length / limit)),
-      });
+      };
     },
     CACHE_TTL.patternsList,
   );
 }
 
-/** Get a single pattern by id. Cached. Throws 404 if missing. */
+/** Get a single pattern by id — resolved via the registry catalog.
+ *  Cached. Throws 404 if missing. */
 export async function getPatternById(id: string): Promise<Pattern> {
   return cacheWrap(
     `pattern:${id}`,
-    () => {
-      const found = PATTERNS.find((p) => p.id === id);
-      if (!found) throw AppError.notFound(`Pattern '${id}' not found`);
-      return Promise.resolve(found);
+    async () => {
+      const item = await getItemData("pattern", id);
+      if (item === undefined) {
+        throw AppError.notFound(`Pattern '${id}' not found`);
+      }
+      return item as Pattern;
     },
     CACHE_TTL.patternDetail,
   );

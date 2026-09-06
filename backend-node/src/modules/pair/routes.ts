@@ -10,6 +10,8 @@
  * sessions accumulate in the in-process store.
  */
 import { Router } from "express";
+
+import { aiRateLimit } from "../../server/middleware/rateLimit.js";
 import type { z } from "zod";
 
 import { requireAuth } from "../../server/middleware/auth.js";
@@ -22,6 +24,7 @@ export const pairRouter = Router();
 
 pairRouter.post(
   "/chat",
+  aiRateLimit,
   requireAuth,
   validateBody(PairChatSchema),
   asyncHandler(async (req, res) => {

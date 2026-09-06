@@ -19,6 +19,10 @@
  * defaults when the regex doesn't match).
  *
  * All reads are LRU-cached. No mutation endpoints.
+ *
+ * PF-009 / issue #94 (A1): the motion dataset is REGISTERED with the
+ * registry catalog and the read paths (list / detail) resolve through
+ * it — one code path for framework content. Envelopes are unchanged.
  */
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -29,6 +33,7 @@ import { cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type { MotionEffect } from "../../types/index.js";
 import { AppError } from "../../server/middleware/error.js";
+import { getItemData, listItemData, registerSource } from "../registry/catalog.js";
 
 const log = createLogger("motion");
 
@@ -168,11 +173,20 @@ function extractKeyframes(css: string): string {
   return m[1]!.replace(/\s+/g, " ").trim();
 }
 
-/** List all motion effects. Cached. */
+// ─── Registry catalog registration (PF-009 / issue #94 A1) ───────────────
+registerSource("motion", {
+  list: () => loadEffects(),
+  slugOf: (item) => (item as MotionEffect).id,
+  nameOf: (item) => (item as MotionEffect).name,
+});
+
+/** List all motion effects. Cached.
+ *  Data sourced via the registry catalog. */
 export async function listEffects(): Promise<MotionEffect[]> {
   return cacheWrap(
     LIST_KEY,
-    () => Promise.resolve(loadEffects().map((e) => ({ ...e }))),
+    async () =>
+      ((await listItemData("motion")) as MotionEffect[]).map((e) => ({ ...e })),
     CACHE_TTL.motionEffects,
   );
 }
@@ -182,14 +196,17 @@ export async function listMotions(): Promise<MotionEffect[]> {
   return listEffects();
 }
 
-/** Get a single motion effect by id. Cached. Throws 404 if missing. */
+/** Get a single motion effect by id — resolved via the registry catalog.
+ *  Cached. Throws 404 if missing. */
 export async function getEffectById(id: string): Promise<MotionEffect> {
   return cacheWrap(
     detailKey(id),
-    () => {
-      const found = loadEffects().find((e) => e.id === id);
-      if (!found) throw AppError.notFound(`Motion effect '${id}' not found`);
-      return Promise.resolve({ ...found });
+    async () => {
+      const item = await getItemData("motion", id);
+      if (item === undefined) {
+        throw AppError.notFound(`Motion effect '${id}' not found`);
+      }
+      return { ...(item as MotionEffect) };
     },
     CACHE_TTL.motionEffectDetail,
   );

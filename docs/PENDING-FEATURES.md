@@ -203,12 +203,12 @@ if scope expands.
 
 ### PF-005: LTS + SLA + Governance docs (bus-factor + enterprise readiness)
 - **Area:** docs
-- **State:** DONE (issue #92, PR pending — pinned below). ENTERPRISE-REVIEW
+- **State:** DONE (issue #92, PR #96). ENTERPRISE-REVIEW
   §16.1 R1 (bus factor — Critical), R3 (no LTS/SLA — Critical). V2
   §16.6/16.12/16.15/16.16/16.17/16.18. LABS-30 §7.3.
   COMPETITIVE-ANALYSIS R10/R15.
-- **Shipped:** the full governance pack landed on branch
-  `docs/governance-pack` (issue #92) — `docs/LTS.md` (one active major LTS
+- **Shipped:** the full governance pack landed in PR #96
+  (branch `docs/governance-pack`, issue #92) — `docs/LTS.md` (one active major LTS
   line, 18-month window after the successor ships, critical backports,
   breaking changes announced one minor ahead with codemods),
   `docs/SLA.md` (1h P0 / 4h P1 / next-business-day P2, enterprise Slack
@@ -253,7 +253,7 @@ if scope expands.
 - **Files:** `docs/{LTS,SLA,SECURITY-SLA,GOVERNANCE,DEPRECATION,SEMVER,RFC-PROCESS}.md`
   (new), `MAINTAINERS.md`, `CODE_OF_CONDUCT.md`, `rfcs/` (new dir).
 - **Agent:** general-purpose
-- **Done in:** issue #92 (branch `docs/governance-pack`) — see the
+- **Done in:** PR #96 (issue #92, branch `docs/governance-pack`) — see the
   **Shipped** note above for the per-file summary and verification.
 
 ### PF-006: CI performance + bundle-size gate (Lighthouse CI + size-limit + budget.json)

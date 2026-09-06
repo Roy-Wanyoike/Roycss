@@ -280,10 +280,16 @@ if scope expands.
 
 ### PF-007: Backend integration + contract test coverage (all 68 modules)
 - **Area:** backend-node / tests
-- **State:** partial — only `auth`, `effects`, `contact` have integration
-  tests (15 total). 65 modules have zero integration tests; no contract
-  test harness. (ROYCSS_BACKEND_TODO A8, ROYCSS_TEST_REPORT §5,
-  ROYCSS_V2-BLUEPRINT §13.)
+- **State:** **shipped (issue #93, PR #99)** — registry-driven contract
+  harness (envelope + mutating + single-resource sweeps walking the live
+  Express router, fail-on-missing module guard), 5-file security suite
+  (authn/authz/injection/rate-limit/secret-exposure), 16 module
+  integration files, coverage-ratchet thresholds (60.30% statements on
+  src/modules — honest floor, closing to 80% is follow-up), plus one
+  real production fix surfaced by the suite (search missing-`q` now
+  uses the centralized error envelope via `AppError.badRequest`).
+  Follow-up: per-module deep-path tests for the remaining ~50 modules
+  to reach the 80% statements goal.
 - **Acceptance:**
   1. At least one integration test per `backend-node/src/modules/*`
      module (68 total) using `supertest` against a test SQLite DB.

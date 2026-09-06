@@ -16,6 +16,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:integration": "DATABASE_URL=\"file:./test.db\" JWT_SECRET=\"test-jwt-secret-32-chars-long\" JWT_REFRESH_SECRET=\"test-refresh-secret-32-chars\" vitest run tests/integration",
+    "test:coverage": "DATABASE_URL=\"file:./test.db\" JWT_SECRET=\"test-jwt-secret-32-chars-long\" JWT_REFRESH_SECRET=\"test-refresh-secret-32-chars\" vitest run --coverage",
     "typecheck:tests": "tsc --noEmit -p tsconfig.test.json",
     "api:check": "tsx scripts/check-api-docs.ts",
     "api:gen": "tsx scripts/gen-api-md.ts",

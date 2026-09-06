@@ -16,7 +16,7 @@ import { Router } from "express";
 import { searchRateLimit } from "../../server/middleware/rateLimit.js";
 import type { z } from "zod";
 
-import { asyncHandler } from "../../server/middleware/error.js";
+import { AppError, asyncHandler } from "../../server/middleware/error.js";
 import { validateBody, validateQuery } from "../../server/middleware/validate.js";
 import { getRecentSearches, getSuggestions, search } from "./service.js";
 import { SearchSchema, SuggestionQuerySchema } from "./schema.js";
@@ -50,11 +50,14 @@ searchRouter.get(
   asyncHandler(async (req, res) => {
     const rawQuery = (req.query.q ?? "").toString().trim();
     if (!rawQuery) {
-      res.status(400).json({
-        error: "q is required",
-        message: "GET /api/v1/search requires a `q` query parameter (e.g. ?q=neon)",
-      });
-      return;
+      // Contract fix (PF-007): the missing-`q` branch previously returned a
+      // non-standard `{ error: "q is required", message }` body. Every other
+      // 4xx in the API uses the centralized error envelope
+      // `{ error: { code, message }, requestId }` — throwing AppError routes
+      // this through the errorHandler so the documented shape is kept.
+      throw AppError.badRequest(
+        "GET /api/v1/search requires a `q` query parameter (e.g. ?q=neon)",
+      );
     }
     const rawLimit = (req.query.limit ?? "").toString().trim();
     const limit = rawLimit ? Math.min(Math.max(parseInt(rawLimit, 10) || 20, 1), 50) : 20;

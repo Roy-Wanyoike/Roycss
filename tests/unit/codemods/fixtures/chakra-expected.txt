@@ -1,0 +1,10 @@
+export function Demo() {
+  return (
+    <div>
+      <button className="roycss-btn-glow chakra-button__icon">OK</button>
+      <input className="roycss-form-focus-glow css-hash-99" />
+      <div className="roycss-card-glassmorphism chakra-card__body chakra-stack">x</div>
+      <span className="roycss-loader-spinner">…</span>
+    </div>
+  );
+}

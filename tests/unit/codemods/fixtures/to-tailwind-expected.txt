@@ -1,0 +1,7 @@
+export function Demo() {
+  return (
+    <div className="animate-spin shadow-md roycss-fade-in my-own">
+      <span className="backdrop-blur">glass</span>
+    </div>
+  );
+}

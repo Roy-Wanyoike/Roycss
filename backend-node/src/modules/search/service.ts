@@ -101,6 +101,28 @@ export interface SearchResponse {
   took: number;
 }
 
+/**
+ * Search subsystem health (PF-009 / issue #94 A9): awaits index
+ * population and reports the indexed row count. Returns
+ * { ok: false, count: 0 } when the index is empty/unreachable —
+ * never throws.
+ */
+export async function searchIndexHealth(): Promise<{
+  ok: boolean;
+  count: number;
+}> {
+  try {
+    await ensureSearchIndexPopulated();
+    const count = await db.searchIndex.count();
+    return { ok: count > 0, count };
+  } catch (err) {
+    log.warn("Search health check failed", {
+      err: err instanceof Error ? err.message : String(err),
+    });
+    return { ok: false, count: 0 };
+  }
+}
+
 /** Run a search against the SearchIndex Prisma table.
  *  Matches on ILIKE (case-insensitive LIKE on SQLite) on `content` OR
  *  `title`. Cached per (query, types, limit). */

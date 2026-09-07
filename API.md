@@ -2,7 +2,7 @@
 
 The public HTTP surface of the platform: the Express backend (`/api/v1/*`, `backend-node/`) and the Next.js frontend routes (`/api/*`, `src/app/api/`).
 
-**Coverage:** 68 backend modules · 261 backend routes (GET 192, POST 61, PUT 2, DELETE 6) · 14 frontend endpoints.
+**Coverage:** 70 backend modules · 271 backend routes (GET 199, POST 64, PUT 2, DELETE 6) · 15 frontend endpoints.
 
 > **Drift gate:** `cd backend-node && bun run api:check` walks `src/server/app.ts`, every module's `routes.ts` and `src/app/api/**` and fails when a route here is missing or stale. Regenerate the tables with `bun run api:gen` (curated prose lives in `backend-node/scripts/gen-api-md.ts` — edit there, not in API.md).
 
@@ -114,6 +114,7 @@ Catalog + registry reads that power the docs site, the package, and the integrat
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
+| GET | `/api/v1/health/ready` | Public | — | see handler | — |
 | GET | `/api/v1/health` | Public | — | `{ status, service, version, uptime, time, checks }` · 200 · **503 degraded** when the DB is down | 503 |
 
 #### `effects` — Effect catalog — list/search/filter the packaged effects (from `dist/effects.json`).
@@ -218,6 +219,7 @@ Catalog + registry reads that power the docs site, the package, and the integrat
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
+| GET | `/api/v1/registry/resolve/:slug` | Public | query: { `type?` } · path: `:slug` | `{ data }` · 200 | 400 · 404 |
 | GET | `/api/v1/registry/packages` | Public | — | `{ data, meta }` · 200 | — |
 | POST | `/api/v1/registry/packages` | Public | body: { `name`, `description`, `author`, `version`, `license?`, `tags?` } | `{ data }` · 201 | 400 |
 | GET | `/api/v1/registry/packages/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
@@ -422,6 +424,8 @@ AI-assisted generation, review, auditing, profiling and simulation surfaces (LLM
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
+| POST | `/api/v1/architect/jobs` | Bearer JWT | body: { `prompt`, `templateId?`, `stack?` } | `{ data }` · 201 | 400 · 401 |
+| GET | `/api/v1/architect/jobs/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
 | GET | `/api/v1/architect/templates` | Public | — | `{ data, meta }` · 200 | — |
 | POST | `/api/v1/architect/generate` | Bearer JWT | body: { `prompt`, `templateId?`, `stack?` } | `{ data }` · 201 | 400 · 401 |
 | GET | `/api/v1/architect/templates/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
@@ -607,6 +611,8 @@ AI-assisted generation, review, auditing, profiling and simulation surfaces (LLM
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
+| POST | `/api/v1/accessibility/jobs` | Public | body: { `url`, `level?`, `maxViolations?` } | `{ data }` · 201 | 400 |
+| GET | `/api/v1/accessibility/jobs/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
 | GET | `/api/v1/accessibility/rules` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/accessibility/contrast/:fg/:bg` | Public | path: `:fg` `:bg` | `{ data }` · 200 | 400 · 404 |
 | POST | `/api/v1/accessibility/scan` | Public | body: { `url`, `level?`, `maxViolations?` } | `{ data }` · 201 | 400 |
@@ -811,10 +817,12 @@ Cloud, deploys, CDN/edge/storage, fleet, workspace, enterprise, governance, anal
 
 #### `analytics` — Platform analytics — overview, effects, traffic, devices.
 
-> Prisma-backed (User (read-only)) — read-only surface (no mutating routes).
+> Prisma-backed (User (read-only)). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
+| POST | `/api/v1/analytics/jobs` | Public → Bearer JWT *(#64)* | body: { `days?` } | `{ data }` · 201 | 400 |
+| GET | `/api/v1/analytics/jobs/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
 | GET | `/api/v1/analytics/overview` | Public | — | `{ data }` · 200 | — |
 | GET | `/api/v1/analytics/effects` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/analytics/traffic` | Public | — | `{ data, meta }` · 200 | — |
@@ -865,6 +873,22 @@ Cloud, deploys, CDN/edge/storage, fleet, workspace, enterprise, governance, anal
 | GET | `/api/v1/mcp/prompts` | Public | — | `{ data, meta }` · 200 | — |
 | POST | `/api/v1/mcp/execute` | Public | body: { `name`, `arguments?` } | `{ data }` · 200 | 400 |
 | GET | `/api/v1/mcp/tools/:name` | Public | path: `:name` | `{ data }` · 200 | 400 · 404 |
+
+#### `audit` — Enterprise audit trail — mutating routes in the audited modules write `EnterpriseAuditLog` rows; admin query with actor/action/since filters (PF-009 A6).
+
+> Prisma-backed (EnterpriseAuditLog) — read-only surface (no mutating routes).
+
+| Method | Path | Auth | Request | Response | Errors |
+|--------|------|------|---------|----------|--------|
+| GET | `/api/v1/audit` | Bearer JWT | query: { `actor?`, `action?`, `since?`, `limit?`, `offset?` } | `{ data, meta }` · 200 | 400 · 401 |
+
+#### `metrics` — Per-route latency histograms (p50/p95/p99, in-memory) for platform admins (PF-009 A9).
+
+> Stateless — no persistence; safe to call unauthenticated.
+
+| Method | Path | Auth | Request | Response | Errors |
+|--------|------|------|---------|----------|--------|
+| GET | `/api/v1/metrics/routes` | Bearer JWT | — | `{ data, meta }` · 200 | 401 |
 
 ## Frontend routes (Next.js)
 

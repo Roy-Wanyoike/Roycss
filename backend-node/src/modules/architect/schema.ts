@@ -26,3 +26,10 @@ export type GenerateArchitectureInput = z.infer<
 export const ArchitectureParamsSchema = z.object({
   id: z.string().min(1),
 });
+
+// ─── PF-009 / issue #94 (A7) — job queue endpoints ────────────────────────
+
+/** Params for GET /architect/jobs/:id. */
+export const JobParamsSchema = z.object({
+  id: z.string().min(1),
+});

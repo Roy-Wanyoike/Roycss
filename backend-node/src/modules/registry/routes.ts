@@ -5,6 +5,10 @@
  *   POST  /packages              publish a new package
  *   GET   /packages/:id          single package by id
  *   GET   /packages/:id/versions version history for a package
+ *   GET   /resolve/:slug         canonical framework-content item
+ *                                (PF-009 / issue #94 A1 — the single
+ *                                source of truth for effect/component/
+ *                                pattern/theme/token/icon/motion reads)
  *
  * Order matters: the POST collection route is declared before /:id,
  * and the nested /:id/versions route is declared last so /:id still
@@ -17,6 +21,7 @@ import { asyncHandler } from "../../server/middleware/error.js";
 import {
   validateBody,
   validateParams,
+  validateQuery,
 } from "../../server/middleware/validate.js";
 import {
   getPackageById,
@@ -24,9 +29,30 @@ import {
   listPackages,
   publishPackage,
 } from "./service.js";
-import { PublishPackageSchema, RegistryParamsSchema } from "./schema.js";
+import {
+  PublishPackageSchema,
+  RegistryParamsSchema,
+  ResolveParamsSchema,
+  ResolveQuerySchema,
+} from "./schema.js";
+import { resolveItem } from "./catalog.js";
+import type { RegistryItemType } from "./catalog.js";
 
 export const registryRouter = Router();
+
+registryRouter.get(
+  "/resolve/:slug",
+  validateParams(ResolveParamsSchema),
+  validateQuery(ResolveQuerySchema),
+  asyncHandler(async (req, res) => {
+    const { slug } = req.params as unknown as z.infer<
+      typeof ResolveParamsSchema
+    >;
+    const q = req.query as unknown as z.infer<typeof ResolveQuerySchema>;
+    const item = await resolveItem(slug, q.type as RegistryItemType | undefined);
+    res.json({ data: item });
+  }),
+);
 
 registryRouter.get(
   "/packages",

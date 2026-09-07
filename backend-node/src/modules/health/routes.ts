@@ -1,8 +1,19 @@
 /**
- * Health module — GET /api/v1/health
+ * Health module — GET /api/v1/health + GET /api/v1/health/ready
  *
- * Returns server status, uptime, version, and DB connection status.
- * Mounted BEFORE the global rate limiter so it can always be polled.
+ * `GET /` returns server status, uptime, version, and DB connection
+ * status. Mounted BEFORE the global rate limiter so it can always be
+ * polled.
+ *
+ * `GET /ready` (PF-009 / issue #94 A9) is the readiness probe: it
+ * checks the dependencies the API actually needs —
+ *   db       — Prisma `SELECT 1`
+ *   registry — the framework-content catalog (registry/resolve source)
+ *   search   — the Prisma SearchIndex (awaits initial population)
+ * Each check reports `connected` or `degraded`; the response is 503
+ * when any CRITICAL dependency (db, registry) is degraded. Search is
+ * non-critical (it degrades gracefully to empty results), so a search
+ * outage yields `status: "degraded"` with HTTP 200.
  */
 import { Router } from "express";
 
@@ -10,11 +21,59 @@ import { APP_NAME, APP_VERSION } from "../../config/constants.js";
 import { pingDatabase } from "../../lib/db.js";
 import { createLogger } from "../../lib/logger.js";
 import { asyncHandler } from "../../server/middleware/error.js";
+import { catalogHealth } from "../registry/catalog.js";
+import { searchIndexHealth } from "../search/service.js";
 
 const log = createLogger("health");
 export const healthRouter = Router();
 
 const startedAt = Date.now();
+
+healthRouter.get(
+  "/ready",
+  asyncHandler(async (_req, res) => {
+    const [dbOk, catalog, search] = await Promise.all([
+      pingDatabase(),
+      catalogHealth(),
+      searchIndexHealth(),
+    ]);
+
+    const checks = {
+      db: dbOk ? ("connected" as const) : ("degraded" as const),
+      registry:
+        catalog.ok && catalog.types.length > 0
+          ? ("connected" as const)
+          : ("degraded" as const),
+      search: search.ok ? ("connected" as const) : ("degraded" as const),
+    };
+
+    // Critical dependencies: DB + registry (framework content).
+    const criticalDown = !dbOk || !catalog.ok;
+    const anyDegraded = criticalDown || !search.ok;
+
+    const status = anyDegraded ? ("degraded" as const) : ("ready" as const);
+
+    if (criticalDown) {
+      log.warn("Readiness probe failed — critical dependency down", {
+        checks,
+      });
+    } else if (!search.ok) {
+      log.warn("Readiness probe degraded — search index unavailable", {
+        count: search.count,
+      });
+    }
+
+    res.status(criticalDown ? 503 : 200).json({
+      status,
+      checks,
+      ...(catalog.ok
+        ? { registry: { items: catalog.items, types: catalog.types } }
+        : {}),
+      ...(search.ok ? { search: { indexed: search.count } } : {}),
+      time: new Date().toISOString(),
+    });
+  }),
+);
 
 healthRouter.get(
   "/",

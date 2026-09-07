@@ -17,6 +17,11 @@
  * doesn't parse the .tsx source).
  *
  * All reads are LRU-cached. Read-only — no mutation endpoints.
+ *
+ * PF-009 / issue #94 (A1): the component dataset is REGISTERED with
+ * the registry catalog (as the "component" item type) and the read
+ * paths (list / detail / code) resolve through it — one code path for
+ * framework content. Envelopes are unchanged.
  */
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -27,6 +32,7 @@ import { cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type { ProComponent } from "../../types/index.js";
 import { AppError } from "../../server/middleware/error.js";
+import { getItemData, listItemData, registerSource } from "../registry/catalog.js";
 
 const log = createLogger("pro-components");
 
@@ -129,23 +135,38 @@ function artifactToComponent(entry: ProArtifactEntry): ProComponent {
   };
 }
 
-/** List all pro components. Cached. */
+// ─── Registry catalog registration (PF-009 / issue #94 A1) ───────────────
+registerSource("component", {
+  list: () => loadComponents(),
+  slugOf: (item) => (item as ProComponent).id,
+  nameOf: (item) => (item as ProComponent).name,
+  descriptionOf: (item) => (item as ProComponent).description,
+});
+
+/** List all pro components. Cached.
+ *  Data sourced via the registry catalog. */
 export async function listComponents(): Promise<ProComponent[]> {
   return cacheWrap(
     LIST_KEY,
-    () => Promise.resolve(loadComponents().map((c) => ({ ...c }))),
+    async () =>
+      ((await listItemData("component")) as ProComponent[]).map((c) => ({
+        ...c,
+      })),
     CACHE_TTL.proComponents,
   );
 }
 
-/** Get a single pro component by id. Cached. Throws 404 if missing. */
+/** Get a single pro component by id — resolved via the registry catalog.
+ *  Cached. Throws 404 if missing. */
 export async function getComponentById(id: string): Promise<ProComponent> {
   return cacheWrap(
     detailKey(id),
-    () => {
-      const found = loadComponents().find((c) => c.id === id);
-      if (!found) throw AppError.notFound(`Pro component '${id}' not found`);
-      return Promise.resolve({ ...found });
+    async () => {
+      const item = await getItemData("component", id);
+      if (item === undefined) {
+        throw AppError.notFound(`Pro component '${id}' not found`);
+      }
+      return { ...(item as ProComponent) };
     },
     CACHE_TTL.proComponentDetail,
   );
@@ -156,21 +177,25 @@ export async function getComponent(id: string): Promise<ProComponent> {
   return getComponentById(id);
 }
 
-/** Get a single component's source code. Cached. Throws 404 if missing. */
+/** Get a single component's source code. Cached. Throws 404 if missing.
+ *  Data sourced via the registry catalog. */
 export async function getComponentCode(
   id: string,
 ): Promise<{ id: string; code: string; language: "tsx" }> {
   return cacheWrap(
     codeKey(id),
-    () => {
-      const found = loadComponents().find((c) => c.id === id);
-      if (!found) throw AppError.notFound(`Pro component '${id}' not found`);
+    async () => {
+      const item = await getItemData("component", id);
+      if (item === undefined) {
+        throw AppError.notFound(`Pro component '${id}' not found`);
+      }
+      const found = item as ProComponent;
       const fnName = found.name.replace(/[^a-zA-Z0-9]/g, "");
-      return Promise.resolve({
+      return {
         id: found.id,
         code: `// ${found.name}\n// ${found.description}\n// Source: ${found.id}\n\nexport function ${fnName}(props) {\n  // …\n}\n\n// Usage:\n${found.codeSnippet}\n`,
         language: "tsx" as const,
-      });
+      };
     },
     CACHE_TTL.proComponentCode,
   );

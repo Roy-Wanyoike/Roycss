@@ -16,7 +16,8 @@ import { Router } from "express";
 import type { z } from "zod";
 
 import { requireAuth } from "../../server/middleware/auth.js";
-import { asyncHandler } from "../../server/middleware/error.js";
+import { asyncHandler } from "../../server/middleware/error.js";import { recordAuditEvent } from "../audit/service.js";
+
 import {
   validateBody,
   validateParams,
@@ -60,6 +61,14 @@ workspaceRouter.post(
       email: input.email,
       name: input.name || undefined,
       role: input.role,
+    });
+    await recordAuditEvent({
+      actor: req.user!.sub,
+      action: "workspace.member.invite",
+      resourceType: "team_member",
+      resourceId: member.id,
+      requestId: req.requestId,
+      metadata: { email: input.email, role: input.role },
     });
     res.status(201).json({ data: member });
   }),

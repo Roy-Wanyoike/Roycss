@@ -6,6 +6,11 @@
  * in the parent project. This keeps the backend self-contained and
  * lets the effects data update without rebuilding the backend.
  *
+ * PF-009 / issue #94 (A1): the effects dataset is REGISTERED with the
+ * registry catalog (modules/registry/catalog.ts) and the read paths
+ * (list / search / detail) resolve through the catalog so there is one
+ * code path for framework content. Response envelopes are unchanged.
+ *
  * If the file is missing or unreadable, the service degrades to an
  * empty dataset and logs a warning — the server still starts and
  * every endpoint returns a clear empty result rather than crashing.
@@ -22,6 +27,7 @@ import { cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type { Effect, Paginated } from "../../types/index.js";
 import { AppError } from "../../server/middleware/error.js";
+import { getItemData, listItemData, registerSource } from "../registry/catalog.js";
 import {
   EffectSchema,
   ListEffectsQuerySchema,
@@ -44,6 +50,9 @@ let cachedTags: string[] = [];
 /**
  * Load + validate the effects JSON file.
  * Cached in memory after first load.
+ *
+ * This is the RAW source registered with the registry catalog — it must
+ * not itself call back into the catalog (that would recurse).
  */
 export function loadEffects(): Effect[] {
   if (cachedEffects) return cachedEffects;
@@ -108,18 +117,29 @@ export function loadEffects(): Effect[] {
   return cachedEffects;
 }
 
-/** Get a single effect by id. Cached. Throws 404 if missing. */
+// ─── Registry catalog registration (PF-009 / issue #94 A1) ────────────────
+// The effects dataset is the registered source of truth for the "effect"
+// registry item type. Registering at module load (not lazily) guarantees
+// the source exists as soon as app.ts imports the effects router.
+registerSource("effect", {
+  list: () => loadEffects(),
+  slugOf: (item) => (item as Effect).id,
+  nameOf: (item) => (item as Effect).name,
+  descriptionOf: (item) => (item as Effect).description,
+});
+
+/** Get a single effect by id — resolved via the registry catalog.
+ *  Cached. Throws 404 if missing. */
 export async function getEffectById(id: string): Promise<Effect> {
   const cacheKey = `effect:${id}`;
   return cacheWrap(
     cacheKey,
-    () => {
-      const all = loadEffects();
-      const found = all.find((e) => e.id === id);
-      if (!found) {
+    async () => {
+      const item = await getItemData("effect", id);
+      if (item === undefined) {
         throw AppError.notFound(`Effect '${id}' not found`);
       }
-      return found;
+      return item as Effect;
     },
     CACHE_TTL.effectDetail,
   );
@@ -128,15 +148,16 @@ export async function getEffectById(id: string): Promise<Effect> {
 export type ListEffectsInput = z.infer<typeof ListEffectsQuerySchema>;
 export type SearchEffectsInput = z.infer<typeof SearchEffectsQuerySchema>;
 
-/** List effects with optional filtering + pagination. Cached. */
+/** List effects with optional filtering + pagination. Cached.
+ *  Data sourced via the registry catalog. */
 export async function listEffects(
   input: ListEffectsInput,
 ): Promise<Paginated<Effect>> {
   const cacheKey = `effects:list:${JSON.stringify(input)}`;
   return cacheWrap(
     cacheKey,
-    () => {
-      const all = loadEffects();
+    async () => {
+      const all = (await listItemData("effect")) as Effect[];
       let filtered = all;
 
       if (input.category) {
@@ -159,15 +180,16 @@ export async function listEffects(
   );
 }
 
-/** Full-text-ish search across name, description, tags, category. Cached. */
+/** Full-text-ish search across name, description, tags, category. Cached.
+ *  Data sourced via the registry catalog. */
 export async function searchEffects(
   input: SearchEffectsInput,
 ): Promise<Paginated<Effect>> {
   const cacheKey = `effects:search:${JSON.stringify(input)}`;
   return cacheWrap(
     cacheKey,
-    () => {
-      const all = loadEffects();
+    async () => {
+      const all = (await listItemData("effect")) as Effect[];
       const q = input.q.toLowerCase();
       const terms = q.split(/\s+/).filter(Boolean);
 

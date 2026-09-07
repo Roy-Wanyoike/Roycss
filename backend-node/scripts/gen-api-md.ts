@@ -147,6 +147,8 @@ const DOMAINS: Domain[] = [
       "os",
       "live",
       "mcp",
+      "audit",
+      "metrics",
     ],
   },
 ];
@@ -220,6 +222,8 @@ const MODULE_BLURBS: Record<string, string> = {
   os: "RoyOS dashboard — products, activity, quick actions.",
   live: "Live collaboration sessions + messages (Prisma).",
   mcp: "MCP tool hub — tools, execute, resources, prompts.",
+  audit: "Enterprise audit trail — mutating routes in the audited modules write `EnterpriseAuditLog` rows; admin query with actor/action/since filters (PF-009 A6).",
+  metrics: "Per-route latency histograms (p50/p95/p99, in-memory) for platform admins (PF-009 A9).",
 };
 
 /** Prisma models backing each persisted module (for the auth-planning note). */
@@ -248,6 +252,7 @@ const MODULE_MODELS: Record<string, string> = {
   os: "OSDashboard",
   preview: "PreviewBranch",
   profiler: "ProfilerResult",
+  audit: "EnterpriseAuditLog",
   search: "SearchIndex",
   spotlight: "SpotlightItem",
   studio: "StudioProject",

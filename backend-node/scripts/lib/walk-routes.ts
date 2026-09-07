@@ -235,11 +235,12 @@ export function schemaFields(
     for (const line of bodyLines) {
       const km = keyLineRe.exec(line);
       if (km) {
-        const indent = km[1].length;
+        // Groups 1+2 are non-optional in keyLineRe — safe on a match.
+        const indent = km[1]!.length;
         if (keyIndent === null) keyIndent = indent;
         if (indent === keyIndent) {
           flush();
-          pending = { key: km[2], optional: km[3] === "?" };
+          pending = { key: km[2]!, optional: km[3] === "?" };
           valueBuf.push(line.slice(km[0].length));
           continue;
         }
@@ -268,13 +269,14 @@ export function parseMounts(): MountInfo[] {
   const importRe =
     /import\s*\{\s*(\w+Router)\s*\}\s*from\s*"\.\.\/modules\/([\w-]+)\/routes\.js"/g;
   for (const m of appSrc.matchAll(importRe)) {
-    routerToModule.set(m[1], m[2]);
+    routerToModule.set(m[1]!, m[2]!);
   }
 
   const mounts: MountInfo[] = [];
   const mountRe = /app\.use\(`\$\{API_PREFIX\}\/([\w-]+)`,\s*(\w+)\)/g;
   for (const m of appSrc.matchAll(mountRe)) {
-    const routerVar = m[2];
+    // Both groups are non-optional in mountRe — safe on a match.
+    const routerVar = m[2]!;
     const module = routerToModule.get(routerVar);
     if (!module) {
       throw new Error(
@@ -282,7 +284,7 @@ export function parseMounts(): MountInfo[] {
           `import from ../modules/<name>/routes.js was found`,
       );
     }
-    mounts.push({ mount: m[1], module, routerVar });
+    mounts.push({ mount: m[1]!, module, routerVar });
   }
   return mounts;
 }
@@ -336,7 +338,8 @@ export function walkBackendRoutes(): BackendRouteInfo[] {
       "g",
     );
     for (const call of src.matchAll(callRe)) {
-      const method = call[1].toUpperCase();
+      // Group 1 is non-optional in callRe — safe on a match.
+      const method = call[1]!.toUpperCase();
       const openParen = call.index + call[0].length - 1;
       const callText = sliceCall(src, openParen);
 
@@ -390,7 +393,7 @@ export function walkBackendRoutes(): BackendRouteInfo[] {
         const chosen =
           jsonMatches.find((m) => /^\s*\{\s*(?:\.\.\.)?\s*data\b/.test(
             windowAfter(m),
-          )) ?? jsonMatches[jsonMatches.length - 1];
+          )) ?? jsonMatches[jsonMatches.length - 1]!;
         const afterParen = windowAfter(chosen);
         const hasData = /^\s*\{\s*(?:\.\.\.)?\s*data\b/.test(afterParen);
         const hasMeta = /\bmeta\s*:/.test(afterParen);
@@ -401,7 +404,7 @@ export function walkBackendRoutes(): BackendRouteInfo[] {
           for (const k of afterParen.matchAll(
             /(?:^|[,{]\s*)([A-Za-z_$][\w$]*)\s*[:,}]/g,
           )) {
-            if (k[1] !== "true" && k[1] !== "false") customKeys.push(k[1]);
+            if (k[1] !== "true" && k[1] !== "false") customKeys.push(k[1]!);
             if (customKeys.length >= 6) break;
           }
         }
@@ -456,7 +459,8 @@ export function walkFrontendRoutes(): FrontendRouteInfo[] {
     const methodRe =
       /export\s+(?:async\s+)?(?:function|const)\s+(GET|POST|PUT|PATCH|DELETE|HEAD|OPTIONS)\b/g;
     for (const m of src.matchAll(methodRe)) {
-      routes.push({ method: m[1], path: `/api${path}`, file });
+      // Group 1 is the method name — non-optional on a match.
+      routes.push({ method: m[1]!, path: `/api${path}`, file });
     }
   }
   return routes;

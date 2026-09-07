@@ -26,6 +26,9 @@ export const RATE_LIMIT = {
   general: env.RATE_LIMIT_MAX_GENERAL,
   auth: env.RATE_LIMIT_MAX_AUTH,
   contact: env.RATE_LIMIT_MAX_CONTACT,
+  /** Per-route tiers (PF-009 / issue #94 A5). */
+  ai: env.RATE_LIMIT_MAX_AI,
+  search: env.RATE_LIMIT_MAX_SEARCH,
 } as const;
 
 /**
@@ -167,6 +170,8 @@ export const CACHE_TTL = {
   registryPackages: 10 * 60 * 1000,
   registryPackageDetail: 10 * 60 * 1000,
   registryPackageVersions: 10 * 60 * 1000,
+  // ── PF-009 / issue #94 — registry catalog (content resolution) ──────
+  registryCatalog: 5 * 60 * 1000,
   governanceApprovals: 5 * 60 * 1000,
   governancePolicies: 10 * 60 * 1000,
   governanceAuditLog: 5 * 60 * 1000,

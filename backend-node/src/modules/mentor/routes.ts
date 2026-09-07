@@ -13,6 +13,8 @@
  * `/levels`) are declared before any param routes (currently none).
  */
 import { Router } from "express";
+
+import { aiRateLimit } from "../../server/middleware/rateLimit.js";
 import type { z } from "zod";
 
 import { requireAuth } from "../../server/middleware/auth.js";
@@ -30,6 +32,7 @@ export const mentorRouter = Router();
 
 mentorRouter.post(
   "/chat",
+  aiRateLimit,
   requireAuth,
   validateBody(MentorChatSchema),
   asyncHandler(async (req, res) => {

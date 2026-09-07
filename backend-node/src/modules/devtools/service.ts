@@ -9,11 +9,17 @@
  *
  * `getTokens()` and `getUtilities()` return the platform's design token
  * catalog and full utility class list (seeded, LRU-cached).
+ *
+ * PF-009 / issue #94 (A1): the design-token catalog is REGISTERED with
+ * the registry catalog (as the "token" item type) and `getTokens()`
+ * resolves through it — one code path for framework content. The
+ * envelope is unchanged.
  */
 import { CACHE_TTL } from "../../config/constants.js";
 import { cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type { DevToolsResult } from "../../types/index.js";
+import { listItemData, registerSource } from "../registry/catalog.js";
 import type { AnalyzePageInput } from "./schema.js";
 
 const log = createLogger("devtools");
@@ -68,6 +74,17 @@ const SEED_TOKENS: { name: string; value: string }[] = [
   { name: "--roycss-duration-fast", value: "150ms" },
   { name: "--roycss-duration-normal", value: "300ms" },
 ];
+
+// ─── Registry catalog registration (PF-009 / issue #94 A1) ───────────────
+// The design-token catalog is the registered source of truth for the
+// "token" registry item type.
+registerSource("token", {
+  list: () => SEED_TOKENS,
+  slugOf: (item) => (item as { name: string }).name,
+  nameOf: (item) => (item as { name: string }).name,
+  descriptionOf: (item) =>
+    `Design token ${(item as { name: string }).name} = ${(item as { value: string }).value}.`,
+});
 
 // ─── Seed: utility class list ────────────────────────────────────────────
 const SEED_UTILITIES: string[] = [
@@ -247,11 +264,15 @@ async function mockInspection(
   };
 }
 
-/** Get the full design token catalog. Cached. */
+/** Get the full design token catalog. Cached.
+ *  Data sourced via the registry catalog (PF-009 / issue #94 A1). */
 export async function getTokens(): Promise<{ name: string; value: string }[]> {
   return cacheWrap(
     TOKENS_KEY,
-    () => Promise.resolve(SEED_TOKENS.map((t) => ({ ...t }))),
+    async () =>
+      ((await listItemData("token")) as { name: string; value: string }[]).map(
+        (t) => ({ ...t }),
+      ),
     CACHE_TTL.devtoolsTokens,
   );
 }

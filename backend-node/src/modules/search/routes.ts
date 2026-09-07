@@ -12,6 +12,8 @@
  * tests hit `GET /api/v1/search?q=neon` without crafting a JSON body.
  */
 import { Router } from "express";
+
+import { searchRateLimit } from "../../server/middleware/rateLimit.js";
 import type { z } from "zod";
 
 import { asyncHandler } from "../../server/middleware/error.js";
@@ -75,6 +77,7 @@ searchRouter.get(
 
 searchRouter.post(
   "/",
+  searchRateLimit,
   validateBody(SearchSchema),
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<typeof SearchSchema>;

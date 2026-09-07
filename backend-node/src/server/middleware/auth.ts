@@ -282,3 +282,75 @@ export function requireRole(
     next();
   });
 }
+
+// ─── Platform-level role guard (PF-009 / issue #94 A6/A9) ─────────────────
+//
+// Unlike `requireRole` (org-scoped), `requirePlatformRole` authorizes
+// PLATFORM-admin endpoints (GET /api/v1/audit, GET /api/v1/metrics/routes)
+// that are not tied to one organization: the caller passes when they hold
+// `minimumRole` or higher in AT LEAST ONE organization. Role semantics,
+// ranking, and error codes reuse the org-role machinery above.
+
+/**
+ * Require that the authenticated caller holds `minimumRole` or higher in
+ * at least one organization. Rejects with:
+ *   - 401 when requireAuth has not run (fail closed)
+ *   - 403 when the caller has no memberships at all
+ *   - 403 when none of the caller's roles reaches the minimum
+ *
+ * On success the caller's highest-satisfied membership is attached to
+ * `req.membership` (best-effort context for handlers).
+ */
+export function requirePlatformRole(
+  minimumRole: OrgRole,
+): RequestHandler {
+  return asyncHandler(async (req, _res, next) => {
+    // Fail closed — a role check without a preceding requireAuth is a
+    // route wiring bug, not a client error.
+    if (!req.user) {
+      next(AppError.unauthorized("Authentication required before role check"));
+      return;
+    }
+
+    const memberships = await db.membership.findMany({
+      where: { userId: req.user.sub },
+      select: { orgId: true, userId: true, role: true },
+    });
+    if (memberships.length === 0) {
+      next(
+        AppError.forbidden(
+          `Requires role ${minimumRole} or higher in at least one organization (you have no memberships)`,
+        ),
+      );
+      return;
+    }
+
+    let best: { orgId: string; userId: string; role: OrgRole } | null = null;
+    for (const m of memberships) {
+      const role = toOrgRole(m.role);
+      if (!role) continue;
+      if (ROLE_RANK[role] >= ROLE_RANK[minimumRole]) {
+        if (!best || ROLE_RANK[role] > ROLE_RANK[best.role]) {
+          best = { orgId: m.orgId, userId: m.userId, role };
+        }
+      }
+    }
+
+    if (!best) {
+      const roles = memberships
+        .map((m) => m.role)
+        .filter((r) => ORG_ROLES.includes(r.toUpperCase() as OrgRole));
+      next(
+        AppError.forbidden(
+          `Requires role ${minimumRole} or higher in at least one organization (your roles: ${
+            roles.length > 0 ? roles.join(", ") : "none"
+          })`,
+        ),
+      );
+      return;
+    }
+
+    req.membership = best;
+    next();
+  });
+}

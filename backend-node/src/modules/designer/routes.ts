@@ -12,6 +12,8 @@
  * Order matters: static collection routes are declared before /:id.
  */
 import { Router } from "express";
+
+import { aiRateLimit } from "../../server/middleware/rateLimit.js";
 import type { z } from "zod";
 
 import { requireAuth } from "../../server/middleware/auth.js";
@@ -35,6 +37,7 @@ designerRouter.get(
 
 designerRouter.post(
   "/generate",
+  aiRateLimit,
   requireAuth,
   validateBody(GenerateDesignSchema),
   asyncHandler(async (req, res) => {

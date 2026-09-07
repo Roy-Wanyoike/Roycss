@@ -22,7 +22,8 @@ import type { Request } from "express";
 import type { z } from "zod";
 
 import { requireAuth, requireRole } from "../../server/middleware/auth.js";
-import { asyncHandler } from "../../server/middleware/error.js";
+import { asyncHandler } from "../../server/middleware/error.js";import { recordAuditEvent } from "../audit/service.js";
+
 import { db } from "../../lib/db.js";
 import {
   validateBody,
@@ -101,6 +102,13 @@ governanceRouter.post(
     >;
     const input = req.body as unknown as z.infer<typeof ApproveSchema>;
     const approval = await approveApproval(id, input);
+    await recordAuditEvent({
+      actor: req.user!.sub,
+      action: "governance.approval.approve",
+      resourceType: "approval",
+      resourceId: id,
+      requestId: req.requestId,
+    });
     res.json({ data: approval });
   }),
 );
@@ -117,6 +125,13 @@ governanceRouter.post(
     >;
     const input = req.body as unknown as z.infer<typeof RejectSchema>;
     const approval = await rejectApproval(id, input);
+    await recordAuditEvent({
+      actor: req.user!.sub,
+      action: "governance.approval.reject",
+      resourceType: "approval",
+      resourceId: id,
+      requestId: req.requestId,
+    });
     res.json({ data: approval });
   }),
 );

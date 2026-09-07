@@ -13,7 +13,8 @@ import { Router } from "express";
 import type { z } from "zod";
 
 import { requireAuth } from "../../server/middleware/auth.js";
-import { asyncHandler } from "../../server/middleware/error.js";
+import { asyncHandler } from "../../server/middleware/error.js";import { recordAuditEvent } from "../audit/service.js";
+
 import {
   validateBody,
   validateParams,
@@ -62,6 +63,13 @@ marketplaceRouter.post(
       typeof PublishTemplateSchema
     >;
     const template = await publishTemplate(input);
+    await recordAuditEvent({
+      actor: req.user!.sub,
+      action: "marketplace.template.publish",
+      resourceType: "template",
+      resourceId: template.id,
+      requestId: req.requestId,
+    });
     res.status(201).json({ data: template });
   }),
 );

@@ -6,6 +6,11 @@
  * list, 10min detail); every mutation invalidates the list cache and
  * any affected detail cache entry so subsequent reads see the new state.
  *
+ * PF-009 / issue #94 (A1): the theme dataset is REGISTERED with the
+ * registry catalog (`listThemes` is the registered source) and the
+ * detail read path resolves through the catalog. Mutations invalidate
+ * the catalog's list cache so resolve/list reads observe writes.
+ *
  * Field-mapping: the Prisma `Theme` model exposes (slug, name,
  * description, tokensJson, isPublic, userId). The domain shape's
  * `id ← slug`, `name`, `tokens` map directly (`tokensJson ← JSON of
@@ -22,6 +27,7 @@ import { cache, cacheWrap } from "../../lib/cache.js";
 import { createLogger } from "../../lib/logger.js";
 import type { Theme } from "../../types/index.js";
 import { AppError } from "../../server/middleware/error.js";
+import { getItemData, invalidateCatalog, registerSource } from "../registry/catalog.js";
 import type { CreateThemeInput, UpdateThemeInput } from "./schema.js";
 
 const log = createLogger("themes");
@@ -30,10 +36,13 @@ const log = createLogger("themes");
 const THEMES_LIST_KEY = "themes:list";
 const detailKey = (id: string): string => `theme:${id}`;
 
-/** Helper — invalidate the list cache (and optionally one detail entry). */
+/** Helper — invalidate the list cache (and optionally one detail entry).
+ *  Also drops the registry catalog's theme list cache so /registry/resolve
+ *  and catalog reads observe theme writes immediately (issue #94 A1). */
 function invalidate(id?: string): void {
   cache.delete(THEMES_LIST_KEY);
   if (id) cache.delete(detailKey(id));
+  invalidateCatalog("theme");
 }
 
 // ─── Seed: 10 platform theme presets ─────────────────────────────────────
@@ -239,7 +248,8 @@ async function seedIfEmpty(): Promise<void> {
   return seedPromise;
 }
 
-/** List all themes. Cached. */
+/** List all themes. Cached.
+ *  Also the registered registry source for the "theme" item type. */
 export async function listThemes(): Promise<Theme[]> {
   return cacheWrap(
     THEMES_LIST_KEY,
@@ -254,15 +264,29 @@ export async function listThemes(): Promise<Theme[]> {
   );
 }
 
-/** Get a single theme by id. Cached. Throws 404 if missing. */
+// ─── Registry catalog registration (PF-009 / issue #94 A1) ───────────────
+// Registered AFTER listThemes is declared: the (Prisma-backed) theme
+// list IS the source of truth for the "theme" registry item type.
+registerSource("theme", {
+  list: () => listThemes(),
+  slugOf: (item) => (item as Theme).id,
+  nameOf: (item) => (item as Theme).name,
+  descriptionOf: (item) =>
+    `Theme preset with primary color ${(item as Theme).primary}.`,
+  updatedAtOf: (item) => (item as Theme).createdAt,
+});
+
+/** Get a single theme by id — resolved via the registry catalog.
+ *  Cached. Throws 404 if missing. */
 export async function getThemeById(id: string): Promise<Theme> {
   return cacheWrap(
     detailKey(id),
     async () => {
-      await seedIfEmpty();
-      const row = await db.theme.findUnique({ where: { id } });
-      if (!row) throw AppError.notFound(`Theme '${id}' not found`);
-      return toDomain(row);
+      const item = await getItemData("theme", id);
+      if (item === undefined) {
+        throw AppError.notFound(`Theme '${id}' not found`);
+      }
+      return item as Theme;
     },
     CACHE_TTL.themeDetail,
   );

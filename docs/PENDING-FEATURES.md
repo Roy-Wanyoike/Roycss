@@ -361,9 +361,9 @@ if scope expands.
 
 ### PF-009: backend-node hardening batch (TODO A1, A4, A5, A6, A7, A9)
 - **Area:** backend-node
-- **State:** DONE (issue #94, PR #98). (ROYCSS_BACKEND_TODO
+- **State:** DONE (issue #94, PR #97). (ROYCSS_BACKEND_TODO
   A1/A4/A5/A6/A7/A9, ROYCSS_OBSERVABILITY §7, ROYCSS_API_SPECIFICATION §2.)
-- **Shipped:** the hardening batch landed in PR #98
+- **Shipped:** the hardening batch landed in PR #97
   (branch `feat/backend-hardening`, issue #94) — registry catalog is the
   single source of truth for framework content
   (`GET /api/v1/registry/resolve/:slug`; effects/patterns/themes/icons/

@@ -50,11 +50,25 @@ export default defineConfig({
         "src/**/*.d.ts",
         "src/lib/logger.ts", // pino-style logger — out of scope
       ],
+      // PF-007 coverage gate (issue #93 scope: backend-node/src/modules).
+      //
+      // HONEST NUMBERS: issue #93 asked for ≥ 80% statements. The shipped
+      // suite (contract + security + 15-module integration, 504 tests)
+      // reaches, on src/modules as of this PR:
+      //   statements 60.30%   branches 32.86%
+      //   functions  67.87%   lines    60.35%
+      // Rather than silently claiming the 80% goal, the thresholds below
+      // are floored at the honestly-achieved numbers so they act as a
+      // ratchet: coverage may only go UP from here. Closing the remaining
+      // gap (deep service paths of the 68 modules) is follow-up work on
+      // the same issue — the numbers are reported in the PR body.
       thresholds: {
-        lines: 0,
-        functions: 0,
-        branches: 0,
-        statements: 0,
+        "src/modules/**/*.ts": {
+          statements: 60,
+          branches: 32,
+          functions: 67,
+          lines: 60,
+        },
       },
     },
     // Resolve `@/...` aliases if a test ever imports backend code with
@@ -77,7 +91,19 @@ export default defineConfig({
       {
         test: {
           name: "integration",
-          include: ["tests/integration/**/*.test.ts"],
+          // PF-007 (issue #93): the integration project now also owns the
+          // CONTRACT suite (tests/contract/** — registry-driven envelope
+          // walker over the live router) and the SECURITY suite
+          // (tests/security/** — authn/authz/injection/rate-limit/secret
+          // probes). All three need the same isolation contract: ONE
+          // worker, shared module registry (PrismaClient singleton +
+          // shared in-memory rate-limit buckets + shared unique-IP counter
+          // in tests/helpers/api-client.ts), global DB push + wipe.
+          include: [
+            "tests/integration/**/*.test.ts",
+            "tests/contract/**/*.test.ts",
+            "tests/security/**/*.test.ts",
+          ],
           setupFiles: ["tests/unit/setup-env.ts"],
           // Vitest 4 — `poolOptions.forks.singleFork` was removed; the
           // replacement is `fileParallelism: false` (forces a single

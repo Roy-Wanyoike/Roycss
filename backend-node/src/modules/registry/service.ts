@@ -36,6 +36,27 @@ export const isNpmConfigured: boolean = Boolean(env.NPM_TOKEN);
 
 const NPM_REGISTRY = "https://registry.npmjs.org";
 
+/**
+ * Outbound npm fetches are hard-bounded. Undici's default headers timeout
+ * is 300 s — without an explicit abort signal a hung/slow registry could
+ * hold an API request open for minutes (surfaced by the PF-007 contract
+ * suite: GET /registry/packages exceeded the test budget when offline).
+ */
+const NPM_FETCH_TIMEOUT_MS = 3_000;
+
+/** Shared fetch options for npm registry calls (timeout + auth headers). */
+async function npmFetch(url: string, init: RequestInit = {}): Promise<Response> {
+  return fetch(url, {
+    ...init,
+    headers: {
+      accept: "application/json",
+      ...(env.NPM_TOKEN ? { authorization: `Bearer ${env.NPM_TOKEN}` } : {}),
+      ...(init.headers as Record<string, string> | undefined),
+    },
+    signal: AbortSignal.timeout(NPM_FETCH_TIMEOUT_MS),
+  });
+}
+
 const PACKAGES_KEY = "registry:packages";
 const packageKey = (id: string): string => `registry:package:${id}`;
 const versionsKey = (id: string): string => `registry:package:${id}:versions`;
@@ -292,14 +313,7 @@ async function fetchNpmPackage(
 ): Promise<NpmRegistryResponse | null> {
   try {
     const url = `${NPM_REGISTRY}/${encodeURIComponent(name).replace("%40", "@")}`;
-    const res = await fetch(url, {
-      headers: {
-        accept: "application/json",
-        ...(env.NPM_TOKEN
-          ? { authorization: `Bearer ${env.NPM_TOKEN}` }
-          : {}),
-      },
-    });
+    const res = await npmFetch(url);
     if (res.status === 404) return null;
     if (!res.ok) {
       log.warn("npm registry fetch failed", {
@@ -346,12 +360,16 @@ export async function listPackages(): Promise<RegistryPackage[]> {
   return cacheWrap(
     PACKAGES_KEY,
     async () => {
-      const enriched: RegistryPackage[] = [];
-      for (const seed of packages) {
-        const npm = await fetchNpmPackage(seed.name);
-        enriched.push(npm ? mapNpmToRegistry(seed, npm) : { ...seed });
-      }
-      return enriched;
+      // Enrichment runs in PARALLEL — 10 sequential round-trips multiplied
+      // cold-cache latency by the catalog size (a contract-suite finding).
+      // With the per-fetch timeout + Promise.all, worst-case cold-cache
+      // latency is ~NPM_FETCH_TIMEOUT_MS regardless of registry health.
+      return Promise.all(
+        packages.map(async (seed) => {
+          const npm = await fetchNpmPackage(seed.name);
+          return npm ? mapNpmToRegistry(seed, npm) : { ...seed };
+        }),
+      );
     },
     CACHE_TTL.registryPackages,
   );
@@ -437,15 +455,11 @@ export async function publishPackage(
         license: input.license,
         tags: input.tags,
       };
-      const res = await fetch(
+      const res = await npmFetch(
         `${NPM_REGISTRY}/${encodeURIComponent(input.name).replace("%40", "@")}`,
         {
           method: "PUT",
-          headers: {
-            "content-type": "application/json",
-            authorization: `Bearer ${env.NPM_TOKEN}`,
-            accept: "application/json",
-          },
+          headers: { "content-type": "application/json" },
           body: JSON.stringify(manifest),
         },
       );

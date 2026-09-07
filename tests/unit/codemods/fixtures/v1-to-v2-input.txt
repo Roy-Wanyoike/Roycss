@@ -1,0 +1,5 @@
+import "roycss/dist/roycss.css";
+
+export function Hero() {
+  return <h1 className="roycss-pulse-glow custom-headline">RoyCSS</h1>;
+}

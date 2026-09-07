@@ -36555,7 +36555,8 @@ var effectsBatch23 = [
     display: flex;
     flex-direction: column;
     gap: 12px;
-    border: 1px solid oklch(0.931 0.0 89.88);`
+    border: 1px solid oklch(0.931 0.0 89.88);
+}`
   },
   {
     id: "ferrum-skeleton-card-header",
@@ -36567,7 +36568,8 @@ var effectsBatch23 = [
     cssCode: `.roycss-ferrum-skeleton-card-header {
     display: flex;
     align-items: center;
-    gap: 12px;`
+    gap: 12px;
+}`
   },
   {
     id: "ferrum-skeleton-card-avatar",
@@ -36587,6 +36589,7 @@ var effectsBatch23 = [
     background-size: 200% 100%;
     animation: roy-ferrum-skeleton-card 1.6s ease-in-out infinite;
     flex-shrink: 0;
+}
 
 @keyframes roy-ferrum-skeleton-card {
 
@@ -36606,7 +36609,8 @@ var effectsBatch23 = [
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 8px;`
+    gap: 8px;
+}`
   },
   {
     id: "ferrum-skeleton-card-line",
@@ -36624,6 +36628,7 @@ var effectsBatch23 = [
     );
     background-size: 200% 100%;
     animation: roy-ferrum-skeleton-card 1.6s ease-in-out infinite;
+}
 
 @keyframes roy-ferrum-skeleton-card {
 
@@ -36706,7 +36711,8 @@ var effectsBatch23 = [
     cssCode: `.roycss-ferrum-skeleton-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;`
+    gap: 16px;
+}`
   },
   {
     id: "ferrum-skeleton-grid-item",
@@ -36718,7 +36724,8 @@ var effectsBatch23 = [
     cssCode: `.roycss-ferrum-skeleton-grid-item {
     display: flex;
     flex-direction: column;
-    gap: 10px;`
+    gap: 10px;
+}`
   },
   {
     id: "ferrum-skeleton-grid-img",
@@ -36737,6 +36744,7 @@ var effectsBatch23 = [
     );
     background-size: 200% 100%;
     animation: roy-ferrum-skeleton-grid 1.8s ease-in-out infinite;
+}
 
 @keyframes roy-ferrum-skeleton-grid {
 
@@ -37025,7 +37033,8 @@ var effectsBatch23 = [
     tags: ["input", "form", "input-float-label-wrapper", "float"],
     previewType: "box",
     cssCode: `.roycss-ferrum-input-float-label-wrapper {
-    position: relative;`
+    position: relative;
+}`
   },
   {
     id: "ferrum-input-float-label",
@@ -37046,7 +37055,8 @@ var effectsBatch23 = [
     box-sizing: border-box;
 }
 .roycss-ferrum-input-float-label::placeholder {
-    color: transparent;`
+    color: transparent;
+}`
   },
   {
     id: "ferrum-input-float-label-label",
@@ -37088,7 +37098,8 @@ var effectsBatch23 = [
     previewType: "box",
     cssCode: `.roycss-ferrum-tooltip-fade-wrapper {
     position: relative;
-    display: inline-block;`
+    display: inline-block;
+}`
   },
   {
     id: "ferrum-tooltip-fade",
@@ -37189,7 +37200,8 @@ var effectsBatch23 = [
     background-color: oklch(0.931 0.0 89.88);
     border-radius: 10px;
     overflow: hidden;
-    position: relative;`
+    position: relative;
+}`
   },
   {
     id: "ferrum-progress-bar-fill",
@@ -37291,7 +37303,8 @@ var effectsBatch23 = [
 .roycss-ferrum-accordion-slide.roycss-ferrum-open {
     max-height: 500px;
     opacity: 1;
-    padding: 16px;`
+    padding: 16px;
+}`
   },
   {
     id: "ferrum-accordion-trigger",
@@ -37301,7 +37314,8 @@ var effectsBatch23 = [
     tags: ["accordion", "navigation", "accordion-trigger", "trigger"],
     previewType: "box",
     cssCode: `.roycss-ferrum-accordion-trigger {
-    display: none;`
+    display: none;
+}`
   },
   {
     id: "ferrum-accordion-trigger-label",
@@ -37350,7 +37364,8 @@ var effectsBatch23 = [
     position: relative;
     display: flex;
     gap: 0;
-    border-bottom: 2px solid oklch(0.907 0.0 89.88);`
+    border-bottom: 2px solid oklch(0.907 0.0 89.88);
+}`
   },
   {
     id: "ferrum-tab-underline",
@@ -37407,7 +37422,8 @@ var effectsBatch23 = [
     previewType: "box",
     cssCode: `.roycss-ferrum-dropdown-slide-wrapper {
     position: relative;
-    display: inline-block;`
+    display: inline-block;
+}`
   },
   {
     id: "ferrum-dropdown-slide",
@@ -37438,7 +37454,8 @@ var effectsBatch23 = [
 .roycss-ferrum-dropdown-slide-wrapper:hover .roycss-ferrum-dropdown-slide {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);`
+    transform: translateY(0);
+}`
   },
   {
     id: "ferrum-dropdown-slide-item",
@@ -49092,6 +49109,15291 @@ var effectsBatch34 = [
   }
 ];
 
+// src/lib/effects-batch-35.ts
+var effectsBatch35 = [
+  {
+    id: "physics-spring-bounce",
+    name: "Spring Bounce",
+    category: "physics",
+    description: "Element overshoots its target and springs back with damping",
+    tags: ["physics", "spring", "bounce", "damping", "overshoot", "animate"],
+    previewType: "box",
+    cssCode: `/* Physics: Spring Bounce */
+.roycss-physics-spring-bounce {
+  animation: roy-physics-spring-bounce 1.1s cubic-bezier(0.5, 1.6, 0.4, 1) both;
+}
+@keyframes roy-physics-spring-bounce {
+  0%   { transform: translateY(-220px) scale(0.92, 1.08); opacity: 0; }
+  55%  { transform: translateY(0) scale(1.06, 0.94); opacity: 1; }
+  72%  { transform: translateY(-34px) scale(0.98, 1.02); }
+  86%  { transform: translateY(0) scale(1.02, 0.98); }
+  100% { transform: translateY(0) scale(1, 1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-physics-spring-bounce { animation: none; transform: none; opacity: 1; }
+}`
+  },
+  {
+    id: "physics-elastic-stretch",
+    name: "Elastic Stretch",
+    category: "physics",
+    description: "Element stretches elastically when hovered, then snaps back",
+    tags: ["physics", "elastic", "stretch", "hover", "snap"],
+    previewType: "box",
+    cssCode: `/* Physics: Elastic Stretch */
+.roycss-physics-elastic-stretch {
+  transition: transform 0.55s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform-origin: bottom center;
+}
+.roycss-physics-elastic-stretch:hover {
+  transform: scaleY(1.35) scaleX(0.82);
+  transition: transform 0.18s cubic-bezier(0.5, 0, 0.75, 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-physics-elastic-stretch,
+  .roycss-physics-elastic-stretch:hover {
+    transition: none;
+    transform: none;
+  }
+}`
+  },
+  {
+    id: "physics-gravity-drop",
+    name: "Gravity Drop",
+    category: "physics",
+    description: "Element falls with accelerating ease-in and squashes on landing",
+    tags: ["physics", "gravity", "drop", "squash", "landing", "animate"],
+    previewType: "box",
+    cssCode: `/* Physics: Gravity Drop */
+.roycss-physics-gravity-drop {
+  animation: roy-physics-gravity-drop 0.9s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+}
+@keyframes roy-physics-gravity-drop {
+  0%   { transform: translateY(-260px); opacity: 0; }
+  60%  { transform: translateY(0); opacity: 1; }
+  70%  { transform: translateY(0) scale(1.18, 0.62); }
+  82%  { transform: translateY(-26px) scale(0.96, 1.04); }
+  91%  { transform: translateY(0) scale(1.06, 0.94); }
+  100% { transform: translateY(0) scale(1, 1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-physics-gravity-drop { animation: none; transform: none; opacity: 1; }
+}`
+  },
+  {
+    id: "physics-pendulum-swing",
+    name: "Pendulum Swing",
+    category: "physics",
+    description: "Realistic pendulum with progressively decreasing amplitude",
+    tags: ["physics", "pendulum", "swing", "damping", "decay", "animate"],
+    previewType: "box",
+    cssCode: `/* Physics: Pendulum Swing */
+.roycss-physics-pendulum-swing {
+  transform-origin: top center;
+  animation: roy-physics-pendulum-swing 2.6s ease-out infinite;
+}
+@keyframes roy-physics-pendulum-swing {
+  0%   { transform: rotate(0deg); }
+  12%  { transform: rotate(42deg); }
+  24%  { transform: rotate(-34deg); }
+  36%  { transform: rotate(27deg); }
+  48%  { transform: rotate(-21deg); }
+  60%  { transform: rotate(15deg); }
+  72%  { transform: rotate(-10deg); }
+  84%  { transform: rotate(6deg); }
+  92%  { transform: rotate(-3deg); }
+  100% { transform: rotate(0deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-physics-pendulum-swing { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "physics-magnetic-pull",
+    name: "Magnetic Pull",
+    category: "physics",
+    description: "Element subtly shifts toward the cursor direction on hover",
+    tags: ["physics", "magnetic", "pull", "hover", "cursor"],
+    previewType: "box",
+    cssCode: `/* Physics: Magnetic Pull */
+.roycss-physics-magnetic-pull {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.roycss-physics-magnetic-pull:hover {
+  transform: translate(14px, -10px) rotate(2deg);
+}
+.roycss-physics-magnetic-pull:active {
+  transform: translate(0, 0) rotate(0deg);
+  transition: transform 0.12s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-physics-magnetic-pull,
+  .roycss-physics-magnetic-pull:hover,
+  .roycss-physics-magnetic-pull:active {
+    transition: none;
+    transform: none;
+  }
+}`
+  },
+  {
+    id: "physics-rubber-band",
+    name: "Rubber Band",
+    category: "physics",
+    description: "Element stretches like rubber when pulled and snaps back on release",
+    tags: ["physics", "rubber", "stretch", "elastic", "hover"],
+    previewType: "box",
+    cssCode: `/* Physics: Rubber Band */
+.roycss-physics-rubber-band {
+  transition: transform 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  transform-origin: left center;
+}
+.roycss-physics-rubber-band:hover {
+  transform: scaleX(1.45) scaleY(0.7);
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.6, 0.4);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-physics-rubber-band,
+  .roycss-physics-rubber-band:hover {
+    transition: none;
+    transform: none;
+  }
+}`
+  },
+  {
+    id: "physics-bounce-chain",
+    name: "Bounce Chain",
+    category: "physics",
+    description: "Sequential bounce animation cascading across child elements",
+    tags: ["physics", "bounce", "chain", "stagger", "sequence", "children"],
+    previewType: "loader",
+    childCount: 5,
+    cssCode: `/* Physics: Bounce Chain */
+.roycss-physics-bounce-chain > * {
+  animation: roy-physics-bounce-chain 1.1s cubic-bezier(0.5, 1.6, 0.4, 1) infinite;
+  transform-origin: center bottom;
+}
+.roycss-physics-bounce-chain > *:nth-child(1) { animation-delay: 0s; }
+.roycss-physics-bounce-chain > *:nth-child(2) { animation-delay: 0.12s; }
+.roycss-physics-bounce-chain > *:nth-child(3) { animation-delay: 0.24s; }
+.roycss-physics-bounce-chain > *:nth-child(4) { animation-delay: 0.36s; }
+.roycss-physics-bounce-chain > *:nth-child(5) { animation-delay: 0.48s; }
+@keyframes roy-physics-bounce-chain {
+  0%, 70%, 100% { transform: translateY(0) scale(1, 1); }
+  35%           { transform: translateY(-44px) scale(0.92, 1.08); }
+  50%           { transform: translateY(0) scale(1.12, 0.88); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-physics-bounce-chain > * { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "physics-inertia-slide",
+    name: "Inertia Slide",
+    category: "physics",
+    description: "Element slides and decelerates as if moving across a friction surface",
+    tags: ["physics", "inertia", "slide", "friction", "deceleration", "animate"],
+    previewType: "box",
+    cssCode: `/* Physics: Inertia Slide */
+.roycss-physics-inertia-slide {
+  animation: roy-physics-inertia-slide 1.4s cubic-bezier(0.08, 0.6, 0.18, 1) both;
+}
+@keyframes roy-physics-inertia-slide {
+  0%   { transform: translateX(-360px); opacity: 0; }
+  30%  { transform: translateX(28px); opacity: 1; }
+  50%  { transform: translateX(-12px); }
+  70%  { transform: translateX(6px); }
+  85%  { transform: translateX(-2px); }
+  100% { transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-physics-inertia-slide { animation: none; transform: none; opacity: 1; }
+}`
+  },
+  {
+    id: "physics-weight-settle",
+    name: "Weight Settle",
+    category: "physics",
+    description: "Heavy element settles into place with a slight bounce and squash",
+    tags: ["physics", "weight", "settle", "heavy", "squash", "animate"],
+    previewType: "box",
+    cssCode: `/* Physics: Weight Settle */
+.roycss-physics-weight-settle {
+  animation: roy-physics-weight-settle 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+}
+@keyframes roy-physics-weight-settle {
+  0%   { transform: translateY(-180px); opacity: 0; }
+  55%  { transform: translateY(0) scale(1.14, 0.7); opacity: 1; }
+  70%  { transform: translateY(0) scale(0.96, 1.08); }
+  82%  { transform: translateY(0) scale(1.03, 0.95); }
+  100% { transform: translateY(0) scale(1, 1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-physics-weight-settle { animation: none; transform: none; opacity: 1; }
+}`
+  },
+  {
+    id: "physics-float-buoyancy",
+    name: "Float Buoyancy",
+    category: "physics",
+    description: "Element gently floats up and down as if bobbing on water",
+    tags: ["physics", "float", "buoyancy", "water", "bob", "infinite"],
+    previewType: "box",
+    cssCode: `/* Physics: Float Buoyancy */
+.roycss-physics-float-buoyancy {
+  animation: roy-physics-float-buoyancy 3.2s ease-in-out infinite;
+}
+@keyframes roy-physics-float-buoyancy {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50%      { transform: translateY(-14px) rotate(2deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-physics-float-buoyancy { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "physics-spring-loaded",
+    name: "Spring Loaded",
+    category: "physics",
+    description: "Element springs in from the side with damped oscillation",
+    tags: ["physics", "spring", "loaded", "oscillation", "side", "animate"],
+    previewType: "box",
+    cssCode: `/* Physics: Spring Loaded */
+.roycss-physics-spring-loaded {
+  animation: roy-physics-spring-loaded 1.2s cubic-bezier(0.5, 1.8, 0.4, 0.95) both;
+}
+@keyframes roy-physics-spring-loaded {
+  0%   { transform: translateX(-300px); opacity: 0; }
+  40%  { transform: translateX(48px); opacity: 1; }
+  55%  { transform: translateX(-22px); }
+  70%  { transform: translateX(12px); }
+  85%  { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-physics-spring-loaded { animation: none; transform: none; opacity: 1; }
+}`
+  },
+  {
+    id: "physics-elastic-recoil",
+    name: "Elastic Recoil",
+    category: "physics",
+    description: "Element recoils backward after being pushed, then springs forward",
+    tags: ["physics", "elastic", "recoil", "push", "hover", "spring"],
+    previewType: "box",
+    cssCode: `/* Physics: Elastic Recoil */
+.roycss-physics-elastic-recoil {
+  transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.roycss-physics-elastic-recoil:hover {
+  transform: translateX(-22px) rotate(-3deg);
+  transition: transform 0.1s ease-out;
+}
+.roycss-physics-elastic-recoil:active {
+  transform: translateX(18px) rotate(2deg);
+  transition: transform 0.08s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-physics-elastic-recoil,
+  .roycss-physics-elastic-recoil:hover,
+  .roycss-physics-elastic-recoil:active {
+    transition: none;
+    transform: none;
+  }
+}`
+  },
+  {
+    id: "physics-bounce-drop",
+    name: "Bounce Drop",
+    category: "physics",
+    description: "Element bounces like a rubber ball each time it is dropped",
+    tags: ["physics", "bounce", "ball", "drop", "gravity", "animate"],
+    previewType: "box",
+    cssCode: `/* Physics: Bounce Drop */
+.roycss-physics-bounce-drop {
+  animation: roy-physics-bounce-drop 1.5s cubic-bezier(0.5, 0.05, 0.95, 0.3) both;
+}
+@keyframes roy-physics-bounce-drop {
+  0%   { transform: translateY(-200px); opacity: 0; }
+  10%  { transform: translateY(0); opacity: 1; }
+  20%  { transform: translateY(-90px); }
+  30%  { transform: translateY(0) scale(1.1, 0.9); }
+  38%  { transform: translateY(-50px) scale(0.96, 1.04); }
+  46%  { transform: translateY(0) scale(1.05, 0.95); }
+  54%  { transform: translateY(-22px); }
+  62%  { transform: translateY(0) scale(1.02, 0.98); }
+  72%  { transform: translateY(-8px); }
+  82%  { transform: translateY(0); }
+  100% { transform: translateY(0) scale(1, 1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-physics-bounce-drop { animation: none; transform: none; opacity: 1; }
+}`
+  },
+  {
+    id: "physics-wobble-jelly",
+    name: "Wobble Jelly",
+    category: "physics",
+    description: "Jelly-like wobble deformation when the element is hovered",
+    tags: ["physics", "wobble", "jelly", "jiggle", "hover", "deform"],
+    previewType: "box",
+    cssCode: `/* Physics: Wobble Jelly */
+.roycss-physics-wobble-jelly {
+  transition: transform 0.3s ease-out;
+}
+.roycss-physics-wobble-jelly:hover {
+  animation: roy-physics-wobble-jelly 0.9s ease-in-out;
+}
+@keyframes roy-physics-wobble-jelly {
+  0%, 100% { transform: skewX(0deg) scaleY(1); }
+  20%      { transform: skewX(-12deg) scaleY(0.85); }
+  40%      { transform: skewX(8deg) scaleY(1.12); }
+  60%      { transform: skewX(-5deg) scaleY(0.94); }
+  80%      { transform: skewX(2deg) scaleY(1.04); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-physics-wobble-jelly,
+  .roycss-physics-wobble-jelly:hover {
+    transition: none;
+    animation: none;
+    transform: none;
+  }
+}`
+  },
+  {
+    id: "physics-shake-impact",
+    name: "Shake Impact",
+    category: "physics",
+    description: "Element shakes sharply as if struck by a sudden impact",
+    tags: ["physics", "shake", "impact", "hit", "vibrate", "animate"],
+    previewType: "box",
+    cssCode: `/* Physics: Shake Impact */
+.roycss-physics-shake-impact {
+  animation: roy-physics-shake-impact 0.7s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+@keyframes roy-physics-shake-impact {
+  0%, 100%   { transform: translate(0, 0) rotate(0deg); }
+  10%        { transform: translate(-12px, 4px) rotate(-2deg); }
+  20%        { transform: translate(14px, -4px) rotate(2deg); }
+  30%        { transform: translate(-10px, 3px) rotate(-1.5deg); }
+  40%        { transform: translate(10px, -3px) rotate(1.5deg); }
+  50%        { transform: translate(-7px, 2px) rotate(-1deg); }
+  60%        { transform: translate(6px, -2px) rotate(1deg); }
+  70%        { transform: translate(-4px, 1px) rotate(-0.5deg); }
+  80%        { transform: translate(3px, -1px) rotate(0.5deg); }
+  90%        { transform: translate(-1px, 0) rotate(0deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-physics-shake-impact { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "physics-spring-up",
+    name: "Spring Up",
+    category: "physics",
+    description: "Element springs upward from below and settles into place",
+    tags: ["physics", "spring", "upward", "rise", "settle", "animate"],
+    previewType: "box",
+    cssCode: `/* Physics: Spring Up */
+.roycss-physics-spring-up {
+  animation: roy-physics-spring-up 1.1s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes roy-physics-spring-up {
+  0%   { transform: translateY(180px); opacity: 0; }
+  50%  { transform: translateY(-24px); opacity: 1; }
+  70%  { transform: translateY(8px); }
+  85%  { transform: translateY(-3px); }
+  100% { transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-physics-spring-up { animation: none; transform: none; opacity: 1; }
+}`
+  },
+  {
+    id: "physics-elastic-fade",
+    name: "Elastic Fade",
+    category: "physics",
+    description: "Fade-in combined with an elastic scale overshoot",
+    tags: ["physics", "elastic", "fade", "scale", "overshoot", "animate"],
+    previewType: "box",
+    cssCode: `/* Physics: Elastic Fade */
+.roycss-physics-elastic-fade {
+  animation: roy-physics-elastic-fade 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) both;
+}
+@keyframes roy-physics-elastic-fade {
+  0%   { opacity: 0; transform: scale(0.6); }
+  60%  { opacity: 1; transform: scale(1.15); }
+  78%  { transform: scale(0.92); }
+  90%  { transform: scale(1.04); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-physics-elastic-fade { animation: none; transform: none; opacity: 1; }
+}`
+  },
+  {
+    id: "physics-gravity-tilt",
+    name: "Gravity Tilt",
+    category: "physics",
+    description: "Element tilts slowly as if being pulled by gravity, then rights itself",
+    tags: ["physics", "gravity", "tilt", "lean", "pull", "infinite"],
+    previewType: "box",
+    cssCode: `/* Physics: Gravity Tilt */
+.roycss-physics-gravity-tilt {
+  transform-origin: bottom right;
+  animation: roy-physics-gravity-tilt 4s ease-in-out infinite;
+}
+@keyframes roy-physics-gravity-tilt {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  25%      { transform: rotate(7deg) translateY(2px); }
+  50%      { transform: rotate(0deg) translateY(0); }
+  75%      { transform: rotate(-5deg) translateY(1px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-physics-gravity-tilt { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "physics-momentum-spin",
+    name: "Momentum Spin",
+    category: "physics",
+    description: "Spin that starts fast with momentum and gradually comes to a stop",
+    tags: ["physics", "momentum", "spin", "rotate", "deceleration", "animate"],
+    previewType: "box",
+    cssCode: `/* Physics: Momentum Spin */
+.roycss-physics-momentum-spin {
+  animation: roy-physics-momentum-spin 2.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes roy-physics-momentum-spin {
+  0%   { transform: rotate(0deg); }
+  20%  { transform: rotate(540deg); }
+  40%  { transform: rotate(820deg); }
+  55%  { transform: rotate(960deg); }
+  70%  { transform: rotate(1020deg); }
+  85%  { transform: rotate(1050deg); }
+  100% { transform: rotate(1060deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-physics-momentum-spin { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "physics-bounce-settle",
+    name: "Bounce Settle",
+    category: "physics",
+    description: "Multiple bounces with progressively decreasing bounce height",
+    tags: ["physics", "bounce", "settle", "decay", "damping", "animate"],
+    previewType: "box",
+    cssCode: `/* Physics: Bounce Settle */
+.roycss-physics-bounce-settle {
+  animation: roy-physics-bounce-settle 1.6s cubic-bezier(0.5, 0.05, 0.95, 0.3) both;
+}
+@keyframes roy-physics-bounce-settle {
+  0%   { transform: translateY(-200px); opacity: 0; }
+  8%   { transform: translateY(0); opacity: 1; }
+  16%  { transform: translateY(-110px); }
+  24%  { transform: translateY(0); }
+  32%  { transform: translateY(-70px); }
+  40%  { transform: translateY(0); }
+  48%  { transform: translateY(-42px); }
+  56%  { transform: translateY(0); }
+  64%  { transform: translateY(-24px); }
+  72%  { transform: translateY(0); }
+  80%  { transform: translateY(-12px); }
+  88%  { transform: translateY(0); }
+  94%  { transform: translateY(-4px); }
+  100% { transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-physics-bounce-settle { animation: none; transform: none; opacity: 1; }
+}`
+  }
+];
+
+// src/lib/effects-batch-36.ts
+var effectsBatch36 = [
+  {
+    id: "liquid-button-fill",
+    name: "Liquid Button Fill",
+    category: "liquid",
+    description: "Button fills with liquid color rising from the bottom on hover",
+    tags: ["liquid", "button", "fill", "hover", "wave"],
+    previewType: "button",
+    previewText: "Hover Me",
+    cssCode: `/* Liquid: Button Fill */
+.roycss-liquid-button-fill {
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  color: oklch(0.35 0.18 220);
+  background: transparent;
+  border: 2px solid oklch(0.6 0.18 220);
+}
+.roycss-liquid-button-fill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, oklch(0.62 0.19 220), oklch(0.55 0.2 240));
+  transform: translateY(101%);
+  transition: transform 0.55s cubic-bezier(0.34, 1.2, 0.64, 1);
+  border-radius: 49% 51% 0 0 / 12% 12% 0 0;
+}
+.roycss-liquid-button-fill:hover::before {
+  transform: translateY(0);
+}
+.roycss-liquid-button-fill:hover {
+  color: oklch(0.98 0.02 220);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-liquid-button-fill::before { transition: none; }
+}`
+  },
+  {
+    id: "liquid-border-flow",
+    name: "Liquid Border Flow",
+    category: "liquid",
+    description: "Animated border that appears to flow like circulating liquid",
+    tags: ["liquid", "border", "flow", "gradient", "infinite"],
+    previewType: "box",
+    cssCode: `/* Liquid: Border Flow */
+.roycss-liquid-border-flow {
+  position: relative;
+  border-radius: 12px;
+  background: oklch(0.18 0.02 240);
+  z-index: 0;
+}
+.roycss-liquid-border-flow::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: inherit;
+  background: conic-gradient(from 0deg,
+    oklch(0.7 0.2 200), oklch(0.65 0.22 240), oklch(0.55 0.2 280),
+    oklch(0.6 0.2 200), oklch(0.7 0.2 200));
+  animation: roy-liquid-border-flow 4s linear infinite;
+}
+@keyframes roy-liquid-border-flow {
+  to { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-liquid-border-flow::before { animation: none; }
+}`
+  },
+  {
+    id: "liquid-card-wave",
+    name: "Liquid Card Wave",
+    category: "liquid",
+    description: "Card with a continuous wave undulating across its surface",
+    tags: ["liquid", "card", "wave", "surface", "infinite"],
+    previewType: "card",
+    cssCode: `/* Liquid: Card Wave */
+.roycss-liquid-card-wave {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, oklch(0.25 0.05 240), oklch(0.2 0.06 260));
+  border-radius: 14px;
+}
+.roycss-liquid-card-wave::before {
+  content: "";
+  position: absolute;
+  left: -50%;
+  right: -50%;
+  bottom: -30%;
+  height: 60%;
+  background: radial-gradient(ellipse at center, oklch(0.6 0.18 220 / 0.55), transparent 70%);
+  border-radius: 45% 55% 50% 50% / 60% 50% 50% 40%;
+  animation: roy-liquid-card-wave 6s ease-in-out infinite;
+}
+@keyframes roy-liquid-card-wave {
+  0%, 100% { transform: translateX(-15%) rotate(0deg); }
+  50%      { transform: translateX(15%) rotate(8deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-liquid-card-wave::before { animation: none; }
+}`
+  },
+  {
+    id: "liquid-gradient-shift",
+    name: "Liquid Gradient Shift",
+    category: "liquid",
+    description: "Background gradient that shifts and flows like moving liquid",
+    tags: ["liquid", "gradient", "shift", "flow", "background", "infinite"],
+    previewType: "box",
+    cssCode: `/* Liquid: Gradient Shift */
+.roycss-liquid-gradient-shift {
+  background: linear-gradient(120deg,
+    oklch(0.6 0.2 200), oklch(0.62 0.22 240), oklch(0.55 0.2 280),
+    oklch(0.6 0.2 320), oklch(0.6 0.2 200));
+  background-size: 300% 300%;
+  animation: roy-liquid-gradient-shift 8s ease-in-out infinite;
+}
+@keyframes roy-liquid-gradient-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-liquid-gradient-shift { animation: none; }
+}`
+  },
+  {
+    id: "liquid-blob-morph",
+    name: "Liquid Blob Morph",
+    category: "liquid",
+    description: "Organic blob that continuously morphs via border-radius animation",
+    tags: ["liquid", "blob", "morph", "organic", "border-radius", "infinite"],
+    previewType: "box",
+    cssCode: `/* Liquid: Blob Morph */
+.roycss-liquid-blob-morph {
+  background: linear-gradient(135deg, oklch(0.65 0.2 220), oklch(0.6 0.22 280));
+  animation: roy-liquid-blob-morph 8s ease-in-out infinite;
+}
+@keyframes roy-liquid-blob-morph {
+  0%, 100% { border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%; }
+  25%      { border-radius: 67% 33% 41% 59% / 63% 51% 49% 37%; }
+  50%      { border-radius: 38% 62% 56% 44% / 49% 62% 38% 51%; }
+  75%      { border-radius: 56% 44% 33% 67% / 37% 56% 44% 63%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-liquid-blob-morph { animation: none; border-radius: 50%; }
+}`
+  },
+  {
+    id: "liquid-reveal-mask",
+    name: "Liquid Reveal Mask",
+    category: "liquid",
+    description: "Content revealed by a liquid mask spreading outward",
+    tags: ["liquid", "reveal", "mask", "clip-path", "entrance"],
+    previewType: "box",
+    cssCode: `/* Liquid: Reveal Mask */
+.roycss-liquid-reveal-mask {
+  clip-path: circle(0% at 50% 50%);
+  animation: roy-liquid-reveal-mask 1.1s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+  background: linear-gradient(135deg, oklch(0.6 0.2 220), oklch(0.55 0.22 280));
+}
+@keyframes roy-liquid-reveal-mask {
+  0%   { clip-path: circle(0% at 50% 50%); }
+  60%  { clip-path: circle(80% at 50% 50%); }
+  100% { clip-path: circle(100% at 50% 50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-liquid-reveal-mask { animation: none; clip-path: none; }
+}`
+  },
+  {
+    id: "liquid-text-fill",
+    name: "Liquid Text Fill",
+    category: "liquid",
+    description: "Text fills with an animated liquid color gradient",
+    tags: ["liquid", "text", "fill", "gradient", "background-clip", "infinite"],
+    previewType: "text",
+    previewText: "RoyCSS",
+    cssCode: `/* Liquid: Text Fill */
+.roycss-liquid-text-fill {
+  background: linear-gradient(90deg,
+    oklch(0.5 0.2 220), oklch(0.6 0.22 280), oklch(0.55 0.2 320), oklch(0.5 0.2 220));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: roy-liquid-text-fill 4s linear infinite;
+}
+@keyframes roy-liquid-text-fill {
+  to { background-position: 200% center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-liquid-text-fill { animation: none; }
+}`
+  },
+  {
+    id: "liquid-drop-fall",
+    name: "Liquid Drop Fall",
+    category: "liquid",
+    description: "Liquid drop repeatedly falls and splashes on impact",
+    tags: ["liquid", "drop", "fall", "splash", "infinite"],
+    previewType: "box",
+    cssCode: `/* Liquid: Drop Fall */
+.roycss-liquid-drop-fall {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, oklch(0.22 0.04 240), oklch(0.18 0.05 260));
+  border-radius: 10px;
+}
+.roycss-liquid-drop-fall::before {
+  content: "";
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  width: 18px;
+  height: 26px;
+  background: oklch(0.7 0.2 220);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  transform: translateX(-50%);
+  animation: roy-liquid-drop-fall 2.4s ease-in infinite;
+}
+.roycss-liquid-drop-fall::after {
+  content: "";
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: oklch(0.7 0.2 220 / 0.6);
+  transform: translateX(-50%);
+  animation: roy-liquid-drop-splash 2.4s ease-out infinite;
+}
+@keyframes roy-liquid-drop-fall {
+  0%   { top: -10%; transform: translateX(-50%) scaleY(1); }
+  70%  { top: 78%; transform: translateX(-50%) scaleY(1.4); }
+  80%  { top: 78%; transform: translateX(-50%) scaleY(0.2); opacity: 0; }
+  81%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes roy-liquid-drop-splash {
+  0%, 79% { width: 0; height: 0; opacity: 0; }
+  80%     { width: 8px; height: 8px; opacity: 1; }
+  100%    { width: 90px; height: 20px; opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-liquid-drop-fall::before,
+  .roycss-liquid-drop-fall::after { animation: none; }
+}`
+  },
+  {
+    id: "liquid-surface-ripple",
+    name: "Liquid Surface Ripple",
+    category: "liquid",
+    description: "Concentric ripple expands across the surface when hovered",
+    tags: ["liquid", "ripple", "surface", "hover", "wave"],
+    previewType: "box",
+    cssCode: `/* Liquid: Surface Ripple */
+.roycss-liquid-surface-ripple {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, oklch(0.25 0.06 220), oklch(0.2 0.05 260));
+}
+.roycss-liquid-surface-ripple::before,
+.roycss-liquid-surface-ripple::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid oklch(0.7 0.2 220 / 0.7);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+}
+.roycss-liquid-surface-ripple:hover::before {
+  animation: roy-liquid-ripple 1s ease-out;
+}
+.roycss-liquid-surface-ripple:hover::after {
+  animation: roy-liquid-ripple 1s ease-out 0.3s;
+}
+@keyframes roy-liquid-ripple {
+  0%   { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(20); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-liquid-surface-ripple::before,
+  .roycss-liquid-surface-ripple::after { animation: none; }
+}`
+  },
+  {
+    id: "liquid-wave-loader",
+    name: "Liquid Wave Loader",
+    category: "liquid",
+    description: "Loading indicator with a wavy liquid surface rising and falling",
+    tags: ["liquid", "wave", "loader", "loading", "infinite"],
+    previewType: "loader",
+    cssCode: `/* Liquid: Wave Loader */
+.roycss-liquid-wave-loader {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: oklch(0.2 0.03 240);
+  box-shadow: inset 0 0 0 3px oklch(0.6 0.2 220 / 0.4);
+}
+.roycss-liquid-wave-loader::before,
+.roycss-liquid-wave-loader::after {
+  content: "";
+  position: absolute;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  border-radius: 42% 58% 50% 50% / 50% 50% 58% 42%;
+  background: oklch(0.6 0.2 220);
+}
+.roycss-liquid-wave-loader::before {
+  top: 60%;
+  animation: roy-liquid-wave-loader 3s ease-in-out infinite;
+}
+.roycss-liquid-wave-loader::after {
+  top: 65%;
+  background: oklch(0.7 0.2 200 / 0.55);
+  animation: roy-liquid-wave-loader 3s ease-in-out -1.5s infinite reverse;
+}
+@keyframes roy-liquid-wave-loader {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  50%      { transform: translateX(15%) rotate(180deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-liquid-wave-loader::before,
+  .roycss-liquid-wave-loader::after { animation: none; }
+}`
+  },
+  {
+    id: "liquid-gradient-pour",
+    name: "Liquid Gradient Pour",
+    category: "liquid",
+    description: "Gradient pours in from the top like liquid filling a container",
+    tags: ["liquid", "gradient", "pour", "fill", "entrance"],
+    previewType: "box",
+    cssCode: `/* Liquid: Gradient Pour */
+.roycss-liquid-gradient-pour {
+  position: relative;
+  overflow: hidden;
+  background: oklch(0.18 0.02 240);
+  z-index: 0;
+}
+.roycss-liquid-gradient-pour::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, oklch(0.62 0.2 200), oklch(0.55 0.22 260));
+  transform: translateY(-101%);
+  animation: roy-liquid-gradient-pour 1.4s cubic-bezier(0.34, 1.1, 0.64, 1) forwards;
+}
+@keyframes roy-liquid-gradient-pour {
+  0%   { transform: translateY(-101%); }
+  70%  { transform: translateY(8%); }
+  85%  { transform: translateY(-3%); }
+  100% { transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-liquid-gradient-pour::before { animation: none; transform: translateY(0); }
+}`
+  },
+  {
+    id: "liquid-circle-pulse",
+    name: "Liquid Circle Pulse",
+    category: "liquid",
+    description: "Circle pulses and distorts like a vibrating liquid droplet",
+    tags: ["liquid", "circle", "pulse", "droplet", "infinite"],
+    previewType: "box",
+    cssCode: `/* Liquid: Circle Pulse */
+.roycss-liquid-circle-pulse {
+  width: 72px;
+  height: 72px;
+  background: radial-gradient(circle at 35% 35%, oklch(0.75 0.18 200), oklch(0.55 0.22 260));
+  animation: roy-liquid-circle-pulse 2.4s ease-in-out infinite;
+}
+@keyframes roy-liquid-circle-pulse {
+  0%, 100% { border-radius: 50%; transform: scale(1); }
+  25%      { border-radius: 48% 52% 55% 45% / 52% 48% 52% 48%; transform: scale(1.08); }
+  50%      { border-radius: 52% 48% 45% 55% / 48% 55% 45% 52%; transform: scale(0.94); }
+  75%      { border-radius: 50% 50% 52% 48% / 55% 45% 50% 50%; transform: scale(1.04); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-liquid-circle-pulse { animation: none; border-radius: 50%; }
+}`
+  },
+  {
+    id: "liquid-menu-slide",
+    name: "Liquid Menu Slide",
+    category: "liquid",
+    description: "Menu items slide in sequentially like drops of liquid",
+    tags: ["liquid", "menu", "slide", "stagger", "entrance"],
+    previewType: "loader",
+    childCount: 5,
+    cssCode: `/* Liquid: Menu Slide */
+.roycss-liquid-menu-slide > * {
+  opacity: 0;
+  transform: translateY(-30px) scaleY(0.6);
+  transform-origin: top center;
+  animation: roy-liquid-menu-slide 0.7s cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
+}
+.roycss-liquid-menu-slide > *:nth-child(1) { animation-delay: 0.05s; }
+.roycss-liquid-menu-slide > *:nth-child(2) { animation-delay: 0.15s; }
+.roycss-liquid-menu-slide > *:nth-child(3) { animation-delay: 0.25s; }
+.roycss-liquid-menu-slide > *:nth-child(4) { animation-delay: 0.35s; }
+.roycss-liquid-menu-slide > *:nth-child(5) { animation-delay: 0.45s; }
+@keyframes roy-liquid-menu-slide {
+  0%   { opacity: 0; transform: translateY(-30px) scaleY(0.6); }
+  60%  { opacity: 1; transform: translateY(4px) scaleY(1.08); }
+  100% { opacity: 1; transform: translateY(0) scaleY(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-liquid-menu-slide > * { animation: none; opacity: 1; transform: none; }
+}`
+  },
+  {
+    id: "liquid-background-flow",
+    name: "Liquid Background Flow",
+    category: "liquid",
+    description: "Background with multiple liquid gradients flowing and blending",
+    tags: ["liquid", "background", "flow", "gradient", "blend", "infinite"],
+    previewType: "background",
+    cssCode: `/* Liquid: Background Flow */
+.roycss-liquid-background-flow {
+  background:
+    radial-gradient(circle at 20% 30%, oklch(0.6 0.2 200 / 0.7), transparent 40%),
+    radial-gradient(circle at 80% 70%, oklch(0.55 0.22 280 / 0.7), transparent 40%),
+    radial-gradient(circle at 60% 20%, oklch(0.6 0.2 320 / 0.55), transparent 40%),
+    linear-gradient(135deg, oklch(0.2 0.04 240), oklch(0.18 0.05 260));
+  background-size: 200% 200%, 200% 200%, 200% 200%, 100% 100%;
+  animation: roy-liquid-background-flow 14s ease-in-out infinite;
+}
+@keyframes roy-liquid-background-flow {
+  0%, 100% { background-position: 0% 0%, 100% 100%, 50% 0%, 0 0; }
+  33%      { background-position: 100% 50%, 0% 50%, 80% 30%, 0 0; }
+  66%      { background-position: 50% 100%, 50% 0%, 20% 80%, 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-liquid-background-flow { animation: none; }
+}`
+  },
+  {
+    id: "liquid-icon-drip",
+    name: "Liquid Icon Drip",
+    category: "liquid",
+    description: "Icon appears to drip and melt downward like a liquid",
+    tags: ["liquid", "icon", "drip", "melt", "infinite"],
+    previewType: "box",
+    cssCode: `/* Liquid: Icon Drip */
+.roycss-liquid-icon-drip {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(180deg, oklch(0.7 0.2 200), oklch(0.55 0.22 260));
+  border-radius: 50% 50% 30% 30%;
+  animation: roy-liquid-icon-drip 3s ease-in-out infinite;
+}
+.roycss-liquid-icon-drip::after {
+  content: "";
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  width: 12px;
+  height: 18px;
+  background: inherit;
+  border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%;
+  transform: translateX(-50%);
+  animation: roy-liquid-icon-drip-drop 3s ease-in infinite;
+}
+@keyframes roy-liquid-icon-drip {
+  0%, 100% { border-radius: 50% 50% 30% 30%; transform: scaleY(1); }
+  50%      { border-radius: 45% 55% 25% 35%; transform: scaleY(1.08); }
+}
+@keyframes roy-liquid-icon-drip-drop {
+  0%, 60%   { transform: translateX(-50%) scaleY(0.6); opacity: 0; }
+  70%       { transform: translateX(-50%) scaleY(1); opacity: 1; }
+  100%      { transform: translateX(-50%) translateY(40px) scaleY(1.4); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-liquid-icon-drip,
+  .roycss-liquid-icon-drip::after { animation: none; }
+}`
+  },
+  {
+    id: "liquid-progress-wave",
+    name: "Liquid Progress Wave",
+    category: "liquid",
+    description: "Progress bar with a wavy liquid surface continually undulating",
+    tags: ["liquid", "progress", "wave", "bar", "infinite"],
+    previewType: "loader",
+    cssCode: `/* Liquid: Progress Wave */
+.roycss-liquid-progress-wave {
+  position: relative;
+  width: 100%;
+  height: 36px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: oklch(0.2 0.03 240);
+  box-shadow: inset 0 0 0 2px oklch(0.6 0.2 220 / 0.3);
+}
+.roycss-liquid-progress-wave::before,
+.roycss-liquid-progress-wave::after {
+  content: "";
+  position: absolute;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  top: 35%;
+  border-radius: 42% 58% 50% 50% / 50% 50% 58% 42%;
+}
+.roycss-liquid-progress-wave::before {
+  background: oklch(0.6 0.2 220);
+  animation: roy-liquid-progress-wave 3s linear infinite;
+}
+.roycss-liquid-progress-wave::after {
+  background: oklch(0.7 0.18 200 / 0.5);
+  top: 40%;
+  animation: roy-liquid-progress-wave 3.5s linear infinite reverse;
+}
+@keyframes roy-liquid-progress-wave {
+  0%   { transform: translateX(0) rotate(0deg); }
+  100% { transform: translateX(25%) rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-liquid-progress-wave::before,
+  .roycss-liquid-progress-wave::after { animation: none; }
+}`
+  },
+  {
+    id: "liquid-shape-transition",
+    name: "Liquid Shape Transition",
+    category: "liquid",
+    description: "Shape continuously transitions through organic liquid forms",
+    tags: ["liquid", "shape", "transition", "morph", "organic", "infinite"],
+    previewType: "box",
+    cssCode: `/* Liquid: Shape Transition */
+.roycss-liquid-shape-transition {
+  background: linear-gradient(135deg, oklch(0.62 0.2 200), oklch(0.55 0.22 280));
+  animation: roy-liquid-shape-transition 10s ease-in-out infinite;
+}
+@keyframes roy-liquid-shape-transition {
+  0%, 100% { border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%; transform: rotate(0deg); }
+  25%      { border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%; transform: rotate(90deg); }
+  50%      { border-radius: 50% 50% 40% 60% / 40% 60% 50% 50%; transform: rotate(180deg); }
+  75%      { border-radius: 60% 40% 60% 40% / 50% 50% 60% 40%; transform: rotate(270deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-liquid-shape-transition { animation: none; border-radius: 30%; }
+}`
+  },
+  {
+    id: "liquid-hover-splash",
+    name: "Liquid Hover Splash",
+    category: "liquid",
+    description: "Splash of liquid color bursts outward on hover",
+    tags: ["liquid", "splash", "hover", "burst", "ripple"],
+    previewType: "box",
+    cssCode: `/* Liquid: Hover Splash */
+.roycss-liquid-hover-splash {
+  position: relative;
+  overflow: hidden;
+  background: oklch(0.2 0.04 240);
+  z-index: 0;
+}
+.roycss-liquid-hover-splash::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(0.62 0.2 220), oklch(0.55 0.22 280));
+  transform: translate(-50%, -50%);
+  transition: width 0.5s ease, height 0.5s ease;
+  z-index: -1;
+}
+.roycss-liquid-hover-splash:hover::before {
+  width: 300%;
+  height: 300%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-liquid-hover-splash::before { transition: none; }
+}`
+  },
+  {
+    id: "liquid-gradient-merge",
+    name: "Liquid Gradient Merge",
+    category: "liquid",
+    description: "Two gradients blend and merge like mixing liquids",
+    tags: ["liquid", "gradient", "merge", "blend", "mix", "infinite"],
+    previewType: "background",
+    cssCode: `/* Liquid: Gradient Merge */
+.roycss-liquid-gradient-merge {
+  background:
+    linear-gradient(90deg, oklch(0.62 0.2 200 / 0.85), transparent 50%),
+    linear-gradient(270deg, oklch(0.6 0.22 320 / 0.85), transparent 50%),
+    oklch(0.18 0.03 240);
+  background-size: 200% 100%, 200% 100%, 100% 100%;
+  background-position: 0% 0%, 100% 0%, 0 0;
+  animation: roy-liquid-gradient-merge 6s ease-in-out infinite;
+}
+@keyframes roy-liquid-gradient-merge {
+  0%, 100% { background-position: 0% 0%, 100% 0%, 0 0; }
+  50%      { background-position: 80% 0%, 20% 0%, 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-liquid-gradient-merge { animation: none; }
+}`
+  },
+  {
+    id: "liquid-underline-flow",
+    name: "Liquid Underline Flow",
+    category: "liquid",
+    description: "Underline flows in from the left like a stream of liquid",
+    tags: ["liquid", "underline", "flow", "text", "hover"],
+    previewType: "text",
+    previewText: "RoyCSS",
+    cssCode: `/* Liquid: Underline Flow */
+.roycss-liquid-underline-flow {
+  position: relative;
+  display: inline-block;
+}
+.roycss-liquid-underline-flow::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, oklch(0.62 0.2 200), oklch(0.55 0.22 280));
+  border-radius: 4px;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.5s cubic-bezier(0.34, 1.2, 0.64, 1);
+}
+.roycss-liquid-underline-flow:hover::after {
+  transform: scaleX(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-liquid-underline-flow::after { transition: none; }
+}`
+  }
+];
+
+// src/lib/effects-batch-37.ts
+var effectsBatch37 = [
+  {
+    id: "morph-polygon-cycle",
+    name: "Polygon Cycle",
+    category: "morphing",
+    description: "Element cycles through circle, triangle, square, and pentagon forms",
+    tags: ["morphing", "shape", "cycle", "clip-path", "circle", "triangle", "infinite"],
+    previewType: "box",
+    cssCode: `/* Morphing: Shape Cycle */
+.roycss-morph-polygon-cycle {
+  background: linear-gradient(135deg, oklch(0.62 0.2 200), oklch(0.55 0.22 280));
+  animation: roy-morph-polygon-cycle 8s ease-in-out infinite;
+}
+@keyframes roy-morph-polygon-cycle {
+  0%, 18%   { clip-path: circle(50%); }
+  25%, 43%  { clip-path: polygon(50% 0%, 100% 100%, 0% 100%); }
+  50%, 68%  { clip-path: inset(0%); }
+  75%, 93%  { clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); }
+  100%      { clip-path: circle(50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-morph-polygon-cycle { animation: none; clip-path: none; }
+}`
+  },
+  {
+    id: "morph-blob-organic",
+    name: "Organic Blob",
+    category: "morphing",
+    description: "Organic blob that continuously shifts through asymmetric shapes",
+    tags: ["morphing", "blob", "organic", "border-radius", "asymmetric", "infinite"],
+    previewType: "box",
+    cssCode: `/* Morphing: Organic Blob */
+.roycss-morph-blob-organic {
+  background: linear-gradient(135deg, oklch(0.65 0.2 200), oklch(0.55 0.22 320));
+  animation: roy-morph-blob-organic 10s ease-in-out infinite;
+}
+@keyframes roy-morph-blob-organic {
+  0%, 100% { border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%; transform: rotate(0deg); }
+  25%      { border-radius: 67% 33% 41% 59% / 63% 51% 49% 37%; transform: rotate(90deg); }
+  50%      { border-radius: 38% 62% 56% 44% / 49% 62% 38% 51%; transform: rotate(180deg); }
+  75%      { border-radius: 56% 44% 33% 67% / 37% 56% 44% 63%; transform: rotate(270deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-morph-blob-organic { animation: none; border-radius: 40%; }
+}`
+  },
+  {
+    id: "morph-button-state",
+    name: "Button State Morph",
+    category: "morphing",
+    description: "Button morphs smoothly between idle, hover, and active states",
+    tags: ["morphing", "button", "state", "hover", "active"],
+    previewType: "button",
+    previewText: "Hover Me",
+    cssCode: `/* Morphing: Button State */
+.roycss-morph-button-state {
+  background: oklch(0.55 0.18 220);
+  color: oklch(0.98 0.01 220);
+  border: none;
+  border-radius: 8px;
+  transition: all 0.4s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+.roycss-morph-button-state:hover {
+  background: oklch(0.6 0.2 260);
+  border-radius: 24px;
+  transform: scale(1.05);
+  letter-spacing: 0.04em;
+}
+.roycss-morph-button-state:active {
+  background: oklch(0.5 0.22 200);
+  border-radius: 4px;
+  transform: scale(0.96);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-morph-button-state,
+  .roycss-morph-button-state:hover,
+  .roycss-morph-button-state:active {
+    transition: none;
+    transform: none;
+  }
+}`
+  },
+  {
+    id: "morph-card-expand",
+    name: "Card Expand",
+    category: "morphing",
+    description: "Card smoothly expands to a larger size with depth on hover",
+    tags: ["morphing", "card", "expand", "grow", "hover", "scale"],
+    previewType: "card",
+    cssCode: `/* Morphing: Card Expand */
+.roycss-morph-card-expand {
+  background: linear-gradient(135deg, oklch(0.28 0.05 240), oklch(0.22 0.06 260));
+  border-radius: 14px;
+  transition: transform 0.5s cubic-bezier(0.34, 1.2, 0.64, 1),
+              box-shadow 0.5s ease,
+              border-radius 0.5s ease;
+}
+.roycss-morph-card-expand:hover {
+  transform: scale(1.12);
+  border-radius: 22px;
+  box-shadow: 0 24px 60px -12px oklch(0.5 0.2 240 / 0.55);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-morph-card-expand,
+  .roycss-morph-card-expand:hover {
+    transition: none;
+    transform: none;
+  }
+}`
+  },
+  {
+    id: "morph-icon-transform",
+    name: "Icon Transform",
+    category: "morphing",
+    description: "Hamburger menu icon morphs into an X when hovered",
+    tags: ["morphing", "icon", "menu", "hamburger", "transform", "hover"],
+    previewType: "box",
+    cssCode: `/* Morphing: Icon Transform */
+.roycss-morph-icon-transform {
+  position: relative;
+  width: 48px;
+  height: 36px;
+  background: transparent;
+}
+.roycss-morph-icon-transform,
+.roycss-morph-icon-transform::before,
+.roycss-morph-icon-transform::after {
+  display: block;
+}
+.roycss-morph-icon-transform::before,
+.roycss-morph-icon-transform::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: oklch(0.7 0.2 220);
+  border-radius: 2px;
+  transition: transform 0.4s cubic-bezier(0.68, -0.4, 0.27, 1.4),
+              top 0.3s ease;
+}
+.roycss-morph-icon-transform::before { top: 6px; }
+.roycss-morph-icon-transform::after  { top: 26px; }
+.roycss-morph-icon-transform:hover::before {
+  top: 16px;
+  transform: rotate(45deg);
+}
+.roycss-morph-icon-transform:hover::after {
+  top: 16px;
+  transform: rotate(-45deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-morph-icon-transform::before,
+  .roycss-morph-icon-transform::after { transition: none; }
+}`
+  },
+  {
+    id: "morph-circle-square",
+    name: "Circle Square Morph",
+    category: "morphing",
+    description: "Smooth continuous morph between a circle and a square",
+    tags: ["morphing", "circle", "square", "border-radius", "infinite"],
+    previewType: "box",
+    cssCode: `/* Morphing: Circle Square */
+.roycss-morph-circle-square {
+  background: linear-gradient(135deg, oklch(0.62 0.2 200), oklch(0.55 0.22 280));
+  animation: roy-morph-circle-square 4s ease-in-out infinite;
+}
+@keyframes roy-morph-circle-square {
+  0%, 100% { border-radius: 50%; }
+  50%      { border-radius: 8%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-morph-circle-square { animation: none; border-radius: 50%; }
+}`
+  },
+  {
+    id: "morph-text-glow",
+    name: "Text Glow Morph",
+    category: "morphing",
+    description: "Text morphs through varying glow intensities continuously",
+    tags: ["morphing", "text", "glow", "intensity", "infinite"],
+    previewType: "text",
+    previewText: "RoyCSS",
+    cssCode: `/* Morphing: Text Glow */
+.roycss-morph-text-glow {
+  color: oklch(0.85 0.18 220);
+  animation: roy-morph-text-glow 3s ease-in-out infinite;
+}
+@keyframes roy-morph-text-glow {
+  0%, 100% { text-shadow: 0 0 4px oklch(0.7 0.2 220 / 0.4); }
+  50%      { text-shadow: 0 0 14px oklch(0.7 0.2 220 / 0.9),
+                       0 0 28px oklch(0.6 0.22 280 / 0.6); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-morph-text-glow { animation: none; }
+}`
+  },
+  {
+    id: "morph-border-radius",
+    name: "Border Radius Morph",
+    category: "morphing",
+    description: "Border-radius animates through a sequence of organic values",
+    tags: ["morphing", "border-radius", "organic", "shape", "infinite"],
+    previewType: "box",
+    cssCode: `/* Morphing: Border Radius */
+.roycss-morph-border-radius {
+  background: linear-gradient(135deg, oklch(0.6 0.2 200), oklch(0.55 0.22 280));
+  animation: roy-morph-border-radius 6s ease-in-out infinite;
+}
+@keyframes roy-morph-border-radius {
+  0%, 100% { border-radius: 50% 30% 70% 40% / 40% 60% 30% 50%; }
+  25%      { border-radius: 30% 70% 40% 60% / 70% 30% 60% 40%; }
+  50%      { border-radius: 60% 40% 50% 50% / 30% 70% 40% 60%; }
+  75%      { border-radius: 40% 60% 30% 70% / 60% 40% 70% 30%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-morph-border-radius { animation: none; border-radius: 16px; }
+}`
+  },
+  {
+    id: "morph-flip-3d",
+    name: "3D Flip Morph",
+    category: "morphing",
+    description: "Element flips in 3D to reveal a contrasting back face on hover",
+    tags: ["morphing", "3d", "flip", "rotateY", "hover", "transform"],
+    previewType: "box",
+    cssCode: `/* Morphing: 3D Flip */
+.roycss-morph-flip-3d {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  perspective: 800px;
+  background: transparent;
+}
+.roycss-morph-flip-3d::before,
+.roycss-morph-flip-3d::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  backface-visibility: hidden;
+  transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+.roycss-morph-flip-3d::before {
+  background: linear-gradient(135deg, oklch(0.62 0.2 200), oklch(0.55 0.22 280));
+}
+.roycss-morph-flip-3d::after {
+  background: linear-gradient(135deg, oklch(0.6 0.22 320), oklch(0.55 0.2 40));
+  transform: rotateY(180deg);
+}
+.roycss-morph-flip-3d:hover::before { transform: rotateY(180deg); }
+.roycss-morph-flip-3d:hover::after  { transform: rotateY(360deg); }
+@media (prefers-reduced-motion: reduce) {
+  .roycss-morph-flip-3d::before,
+  .roycss-morph-flip-3d::after { transition: none; }
+}`
+  },
+  {
+    id: "morph-progress-shape",
+    name: "Progress Shape Morph",
+    category: "morphing",
+    description: "Progress indicator morphs from circle to bar to checkmark",
+    tags: ["morphing", "progress", "circle", "bar", "checkmark", "infinite"],
+    previewType: "loader",
+    cssCode: `/* Morphing: Progress Shape */
+.roycss-morph-progress-shape {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  background: transparent;
+  animation: roy-morph-progress-shape 6s ease-in-out infinite;
+}
+.roycss-morph-progress-shape::before,
+.roycss-morph-progress-shape::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 4px solid oklch(0.6 0.2 220);
+  box-sizing: border-box;
+}
+.roycss-morph-progress-shape::before {
+  border-radius: 50%;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  animation: roy-morph-progress-before 6s ease-in-out infinite;
+}
+.roycss-morph-progress-shape::after {
+  border-radius: 0;
+  border-color: transparent;
+  width: 0;
+  height: 0;
+  inset: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  animation: roy-morph-progress-after 6s ease-in-out infinite;
+}
+@keyframes roy-morph-progress-shape {
+  0%, 30%, 100% { width: 64px; height: 64px; }
+  50%, 70%      { width: 160px; height: 16px; }
+}
+@keyframes roy-morph-progress-before {
+  0%, 30%  { transform: rotate(0deg); border-radius: 50%; opacity: 1; }
+  35%, 70% { transform: rotate(0deg); border-radius: 999px; opacity: 1; }
+  75%, 100%{ opacity: 0; }
+}
+@keyframes roy-morph-progress-after {
+  0%, 70%   { width: 0; height: 0; opacity: 0; }
+  80%, 100% { width: 28px; height: 16px; opacity: 1;
+              border-color: transparent oklch(0.7 0.2 150) transparent transparent;
+              border-style: solid; border-width: 0 6px 6px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-morph-progress-shape,
+  .roycss-morph-progress-shape::before,
+  .roycss-morph-progress-shape::after { animation: none; }
+}`
+  },
+  {
+    id: "morph-hover-grow",
+    name: "Hover Grow Morph",
+    category: "morphing",
+    description: "Element grows organically with shifting border-radius on hover",
+    tags: ["morphing", "hover", "grow", "organic", "border-radius"],
+    previewType: "box",
+    cssCode: `/* Morphing: Hover Grow */
+.roycss-morph-hover-grow {
+  background: linear-gradient(135deg, oklch(0.62 0.2 200), oklch(0.55 0.22 280));
+  border-radius: 24px;
+  transition: transform 0.5s cubic-bezier(0.34, 1.3, 0.64, 1),
+              border-radius 0.5s ease;
+}
+.roycss-morph-hover-grow:hover {
+  transform: scale(1.15);
+  border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-morph-hover-grow,
+  .roycss-morph-hover-grow:hover {
+    transition: none;
+    transform: none;
+  }
+}`
+  },
+  {
+    id: "morph-rotate-transform",
+    name: "Rotate Scale Morph",
+    category: "morphing",
+    description: "Continuous rotation combined with pulsing scale morph",
+    tags: ["morphing", "rotate", "scale", "transform", "infinite"],
+    previewType: "box",
+    cssCode: `/* Morphing: Rotate Transform */
+.roycss-morph-rotate-transform {
+  background: linear-gradient(135deg, oklch(0.62 0.2 200), oklch(0.55 0.22 280));
+  animation: roy-morph-rotate-transform 4s ease-in-out infinite;
+}
+@keyframes roy-morph-rotate-transform {
+  0%   { transform: rotate(0deg) scale(1); border-radius: 16px; }
+  25%  { transform: rotate(90deg) scale(1.15); border-radius: 50%; }
+  50%  { transform: rotate(180deg) scale(0.9); border-radius: 8px; }
+  75%  { transform: rotate(270deg) scale(1.1); border-radius: 50%; }
+  100% { transform: rotate(360deg) scale(1); border-radius: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-morph-rotate-transform { animation: none; }
+}`
+  },
+  {
+    id: "morph-color-shift",
+    name: "Color Spectrum Shift",
+    category: "morphing",
+    description: "Element smoothly morphs through the full color spectrum",
+    tags: ["morphing", "color", "spectrum", "shift", "hue", "infinite"],
+    previewType: "box",
+    cssCode: `/* Morphing: Color Shift */
+.roycss-morph-color-shift {
+  background: oklch(0.6 0.2 200);
+  animation: roy-morph-color-shift 6s linear infinite;
+}
+@keyframes roy-morph-color-shift {
+  0%   { background: oklch(0.6 0.2 30); }
+  20%  { background: oklch(0.6 0.2 90); }
+  40%  { background: oklch(0.6 0.2 150); }
+  60%  { background: oklch(0.6 0.2 210); }
+  80%  { background: oklch(0.6 0.2 280); }
+  100% { background: oklch(0.6 0.2 330); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-morph-color-shift { animation: none; }
+}`
+  },
+  {
+    id: "morph-size-pulse",
+    name: "Size Pulse Morph",
+    category: "morphing",
+    description: "Size pulses rhythmically with a morphing border-radius",
+    tags: ["morphing", "size", "pulse", "border-radius", "infinite"],
+    previewType: "box",
+    cssCode: `/* Morphing: Size Pulse */
+.roycss-morph-size-pulse {
+  background: linear-gradient(135deg, oklch(0.62 0.2 200), oklch(0.55 0.22 280));
+  animation: roy-morph-size-pulse 3s ease-in-out infinite;
+}
+@keyframes roy-morph-size-pulse {
+  0%, 100% { transform: scale(1); border-radius: 24px; }
+  50%      { transform: scale(1.2); border-radius: 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-morph-size-pulse { animation: none; }
+}`
+  },
+  {
+    id: "morph-shape-reveal",
+    name: "Shape Reveal",
+    category: "morphing",
+    description: "Content revealed by a morphing clip-path expanding outward",
+    tags: ["morphing", "shape", "reveal", "clip-path", "entrance"],
+    previewType: "box",
+    cssCode: `/* Morphing: Shape Reveal */
+.roycss-morph-shape-reveal {
+  clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+  background: linear-gradient(135deg, oklch(0.62 0.2 200), oklch(0.55 0.22 280));
+  animation: roy-morph-shape-reveal 1.2s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+}
+@keyframes roy-morph-shape-reveal {
+  0%   { clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%); }
+  50%  { clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
+  100% { clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-morph-shape-reveal { animation: none; clip-path: none; }
+}`
+  },
+  {
+    id: "morph-card-to-modal",
+    name: "Card To Modal",
+    category: "morphing",
+    description: "Card morphs to a larger modal-like size with elevation on hover",
+    tags: ["morphing", "card", "modal", "expand", "elevation", "hover"],
+    previewType: "card",
+    cssCode: `/* Morphing: Card To Modal */
+.roycss-morph-card-to-modal {
+  background: linear-gradient(135deg, oklch(0.28 0.05 240), oklch(0.22 0.06 260));
+  border-radius: 16px;
+  transform-origin: center center;
+  transition: transform 0.55s cubic-bezier(0.34, 1.2, 0.64, 1),
+              border-radius 0.55s ease,
+              box-shadow 0.55s ease;
+}
+.roycss-morph-card-to-modal:hover {
+  transform: scale(1.25);
+  border-radius: 28px;
+  box-shadow: 0 30px 80px -10px oklch(0.2 0.05 240 / 0.7);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-morph-card-to-modal,
+  .roycss-morph-card-to-modal:hover {
+    transition: none;
+    transform: none;
+  }
+}`
+  },
+  {
+    id: "morph-icon-to-text",
+    name: "Icon To Text",
+    category: "morphing",
+    description: "Icon morphs into a text label that slides out on hover",
+    tags: ["morphing", "icon", "text", "label", "expand", "hover"],
+    previewType: "button",
+    previewText: "★",
+    cssCode: `/* Morphing: Icon To Text */
+.roycss-morph-icon-to-text {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 14px;
+  background: oklch(0.55 0.18 220);
+  color: oklch(0.98 0.01 220);
+  border-radius: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.roycss-morph-icon-to-text::after {
+  content: "RoyCSS";
+  max-width: 0;
+  margin-left: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-width 0.5s cubic-bezier(0.34, 1.2, 0.64, 1),
+              opacity 0.3s ease,
+              margin-left 0.5s ease;
+}
+.roycss-morph-icon-to-text:hover::after {
+  max-width: 120px;
+  margin-left: 8px;
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-morph-icon-to-text::after { transition: none; }
+}`
+  },
+  {
+    id: "morph-gradient-morph",
+    name: "Gradient Morph",
+    category: "morphing",
+    description: "Background gradient morphs continuously between color stops",
+    tags: ["morphing", "gradient", "color", "morph", "background", "infinite"],
+    previewType: "box",
+    cssCode: `/* Morphing: Gradient Morph */
+.roycss-morph-gradient-morph {
+  background: linear-gradient(135deg,
+    oklch(0.62 0.2 200), oklch(0.55 0.22 280), oklch(0.6 0.2 320), oklch(0.62 0.2 200));
+  background-size: 400% 400%;
+  animation: roy-morph-gradient-morph 8s ease infinite;
+}
+@keyframes roy-morph-gradient-morph {
+  0%   { background-position: 0% 50%; }
+  25%  { background-position: 50% 0%; }
+  50%  { background-position: 100% 50%; }
+  75%  { background-position: 50% 100%; }
+  100% { background-position: 0% 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-morph-gradient-morph { animation: none; }
+}`
+  },
+  {
+    id: "morph-clip-path",
+    name: "Clip Path Morph",
+    category: "morphing",
+    description: "Clip-path morphs through star, hexagon, and arrow shapes",
+    tags: ["morphing", "clip-path", "star", "hexagon", "arrow", "infinite"],
+    previewType: "box",
+    cssCode: `/* Morphing: Clip Path */
+.roycss-morph-clip-path {
+  background: linear-gradient(135deg, oklch(0.62 0.2 200), oklch(0.55 0.22 280));
+  animation: roy-morph-clip-path 8s ease-in-out infinite;
+}
+@keyframes roy-morph-clip-path {
+  0%, 18%   { clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+  25%, 43%  { clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
+  50%, 68%  { clip-path: polygon(0% 20%, 60% 20%, 60% 0%, 100% 50%, 60% 100%, 60% 80%, 0% 80%); }
+  75%, 93%  { clip-path: polygon(50% 0%, 90% 50%, 50% 100%, 10% 50%); }
+  100%      { clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-morph-clip-path { animation: none; clip-path: none; }
+}`
+  },
+  {
+    id: "morph-hover-distort",
+    name: "Hover Distort",
+    category: "morphing",
+    description: "Element distorts and morphs its shape dramatically on hover",
+    tags: ["morphing", "hover", "distort", "skew", "stretch", "border-radius"],
+    previewType: "box",
+    cssCode: `/* Morphing: Hover Distort */
+.roycss-morph-hover-distort {
+  background: linear-gradient(135deg, oklch(0.62 0.2 200), oklch(0.55 0.22 280));
+  border-radius: 16px;
+  transition: transform 0.5s cubic-bezier(0.34, 1.5, 0.64, 1),
+              border-radius 0.5s ease,
+              filter 0.5s ease;
+}
+.roycss-morph-hover-distort:hover {
+  transform: skewX(-15deg) scaleY(1.2) scaleX(0.85);
+  border-radius: 50% 20% 50% 20% / 20% 50% 20% 50%;
+  filter: hue-rotate(60deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-morph-hover-distort,
+  .roycss-morph-hover-distort:hover {
+    transition: none;
+    transform: none;
+    filter: none;
+  }
+}`
+  }
+];
+
+// src/lib/effects-batch-38.ts
+var effectsBatch38 = [
+  {
+    id: "retro-crt-scanlines",
+    name: "CRT Scanlines",
+    category: "retro",
+    description: "Retro CRT monitor scanline overlay with subtle phosphor curvature and rolling bar",
+    tags: ["retro", "crt", "scanlines", "nostalgic", "monitor"],
+    previewType: "box",
+    cssCode: `/* Retro: CRT Scanlines */
+.roycss-retro-crt-scanlines {
+  position: relative;
+  background: radial-gradient(ellipse at center, #0c3a2a 0%, #021510 100%);
+  color: #7dffb0;
+  border-radius: 16px;
+  overflow: hidden;
+  font-family: ui-monospace, monospace;
+  text-shadow: 0 0 4px #7dffb0, 0 0 10px rgba(125,255,176,0.6);
+}
+.roycss-retro-crt-scanlines::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0px,
+    rgba(0,0,0,0) 2px,
+    rgba(0,0,0,0.35) 3px,
+    rgba(0,0,0,0.35) 4px
+  );
+  pointer-events: none;
+  animation: roy-retro-crt-scan 6s linear infinite;
+}
+.roycss-retro-crt-scanlines::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  height: 28%;
+  top: -28%;
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(125,255,176,0.18) 50%, rgba(255,255,255,0) 100%);
+  animation: roy-retro-crt-roll 5s linear infinite;
+  pointer-events: none;
+}
+@keyframes roy-retro-crt-scan {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 100px; }
+}
+@keyframes roy-retro-crt-roll {
+  0%   { top: -28%; }
+  100% { top: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-crt-scanlines::before,
+  .roycss-retro-crt-scanlines::after { animation: none; }
+}`
+  },
+  {
+    id: "retro-vhs-tracking",
+    name: "VHS Tracking",
+    category: "retro",
+    description: "VHS horizontal tracking distortion lines with chromatic color bleed and jitter",
+    tags: ["retro", "vhs", "tracking", "glitch", "nostalgic"],
+    previewType: "box",
+    cssCode: `/* Retro: VHS Tracking */
+.roycss-retro-vhs-tracking {
+  position: relative;
+  background: #0a0a0f;
+  color: #f4f4f8;
+  border-radius: 4px;
+  overflow: hidden;
+  font-family: ui-monospace, monospace;
+  text-shadow: 2px 0 #ff0050, -2px 0 #00d4ff;
+  animation: roy-retro-vhs-jitter 0.18s steps(2) infinite;
+}
+.roycss-retro-vhs-tracking::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0) 0px,
+      rgba(255,255,255,0) 6px,
+      rgba(255,255,255,0.08) 7px,
+      rgba(255,255,255,0) 8px
+    ),
+    linear-gradient(180deg, rgba(0,212,255,0.08) 0%, transparent 30%, transparent 70%, rgba(255,0,80,0.08) 100%);
+  pointer-events: none;
+  animation: roy-retro-vhs-scan 3s linear infinite;
+}
+.roycss-retro-vhs-tracking::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: 40%;
+  height: 14px;
+  background: rgba(255,255,255,0.18);
+  filter: blur(2px);
+  animation: roy-retro-vhs-bar 2.6s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes roy-retro-vhs-jitter {
+  0%   { transform: translate(0,0); }
+  50%  { transform: translate(-0.5px, 0.5px); }
+  100% { transform: translate(0.5px, -0.5px); }
+}
+@keyframes roy-retro-vhs-scan {
+  0%   { background-position: 0 0, 0 0; }
+  100% { background-position: 0 60px, 0 0; }
+}
+@keyframes roy-retro-vhs-bar {
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50%      { transform: translateY(-30px); opacity: 0.9; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-vhs-tracking,
+  .roycss-retro-vhs-tracking::before,
+  .roycss-retro-vhs-tracking::after { animation: none; }
+}`
+  },
+  {
+    id: "retro-pixel-art-transition",
+    name: "Pixel Art Transition",
+    category: "retro",
+    description: "Pixelated in-and-out transition using image-rendering: pixelated and stepped scale",
+    tags: ["retro", "pixel", "8bit", "transition", "animate"],
+    previewType: "box",
+    cssCode: `/* Retro: Pixel Art Transition */
+.roycss-retro-pixel-art-transition {
+  background: linear-gradient(135deg, #ff71ce, #01cdfe, #05ffa1, #b967ff);
+  border-radius: 0;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  animation: roy-retro-pixel 2.4s steps(8) infinite;
+}
+@keyframes roy-retro-pixel {
+  0%   { transform: scale(1) translateZ(0); filter: contrast(1); }
+  25%  { transform: scale(1.4) translateZ(0); filter: contrast(1.8) saturate(1.5); }
+  50%  { transform: scale(0.6) translateZ(0); filter: contrast(2.2) saturate(2); }
+  75%  { transform: scale(1.4) translateZ(0); filter: contrast(1.8) saturate(1.5); }
+  100% { transform: scale(1) translateZ(0); filter: contrast(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-pixel-art-transition { animation: none; transform: none; filter: none; }
+}`
+  },
+  {
+    id: "retro-lcd-display",
+    name: "LCD Display",
+    category: "retro",
+    description: "Segmented LCD display font effect with green-grey phosphor segments and ghost digits",
+    tags: ["retro", "lcd", "display", "segmented", "nostalgic"],
+    previewType: "text",
+    previewText: "08:42",
+    cssCode: `/* Retro: LCD Display */
+.roycss-retro-lcd-display {
+  background: linear-gradient(180deg, #9ba78d 0%, #828c74 100%);
+  color: rgba(28, 38, 22, 0.92);
+  font-family: ui-monospace, "Courier New", monospace;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  border-radius: 6px;
+  padding: 0.4em 0.6em;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.35), inset 0 -1px 0 rgba(255,255,255,0.2);
+  position: relative;
+}
+.roycss-retro-lcd-display::before {
+  content: "88:88";
+  position: absolute;
+  inset: 0.4em 0.6em;
+  color: rgba(28, 38, 22, 0.12);
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-lcd-display { animation: none; }
+}`
+  },
+  {
+    id: "retro-typewriter-ribbon",
+    name: "Typewriter Ribbon",
+    category: "retro",
+    description: "Faded ribbon-worn typewriter text with uneven ink density and ghost impression",
+    tags: ["retro", "typewriter", "ribbon", "ink", "text"],
+    previewType: "text",
+    previewText: "Dear Reader",
+    cssCode: `/* Retro: Typewriter Ribbon */
+.roycss-retro-typewriter-ribbon {
+  font-family: "Courier New", ui-monospace, monospace;
+  color: #2a1d10;
+  background: #f1e7d2;
+  padding: 0.5em 0.8em;
+  letter-spacing: 0.05em;
+  text-shadow:
+    0.5px 0 0 rgba(60,40,20,0.6),
+    -0.5px 0 0 rgba(120,80,40,0.4),
+    1px 0 1px rgba(40,25,10,0.3);
+  border-radius: 2px;
+  position: relative;
+}
+.roycss-retro-typewriter-ribbon::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 0.8em;
+  top: 0.5em;
+  color: rgba(80, 50, 20, 0.18);
+  transform: translate(2px, 1px);
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-typewriter-ribbon { animation: none; }
+}`
+  },
+  {
+    id: "retro-polaroid-frame",
+    name: "Polaroid Frame",
+    category: "retro",
+    description: "Polaroid photo card with thick white border, slight tilt, and soft shadow",
+    tags: ["retro", "polaroid", "photo", "frame", "card"],
+    previewType: "card",
+    cssCode: `/* Retro: Polaroid Frame */
+.roycss-retro-polaroid-frame {
+  background: #fbf8f1;
+  padding: 14px 14px 48px;
+  border-radius: 4px;
+  box-shadow:
+    0 1px 1px rgba(0,0,0,0.1),
+    0 10px 24px rgba(0,0,0,0.18),
+    0 18px 40px rgba(0,0,0,0.08);
+  transform: rotate(-3deg);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+.roycss-retro-polaroid-frame::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 120px;
+  background:
+    linear-gradient(135deg, rgba(255,140,180,0.5), rgba(140,200,255,0.5)),
+    radial-gradient(circle at 30% 30%, rgba(255,220,120,0.7), transparent 60%),
+    linear-gradient(180deg, #6b5a4a 0%, #b08d6a 100%);
+  background-blend-mode: screen, screen, normal;
+  filter: saturate(0.85) contrast(0.95);
+}
+.roycss-retro-polaroid-frame::after {
+  content: "▚ 1987";
+  position: absolute;
+  bottom: 14px;
+  left: 0; right: 0;
+  text-align: center;
+  font-family: "Courier New", monospace;
+  font-size: 0.7rem;
+  color: #5a4636;
+  letter-spacing: 0.1em;
+}
+.roycss-retro-polaroid-frame:hover {
+  transform: rotate(0deg) scale(1.04);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-polaroid-frame { transition: none; transform: rotate(-3deg); }
+}`
+  },
+  {
+    id: "retro-film-grain",
+    name: "Film Grain",
+    category: "retro",
+    description: "Animated film grain noise overlay for cinematic retro footage aesthetic",
+    tags: ["retro", "film", "grain", "noise", "cinematic"],
+    previewType: "background",
+    cssCode: `/* Retro: Film Grain */
+.roycss-retro-film-grain {
+  position: relative;
+  background:
+    radial-gradient(circle at 30% 20%, #5a3a1a 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, #2a1a0a 0%, transparent 50%),
+    linear-gradient(135deg, #3a2a1a 0%, #1a1208 100%);
+  color: #f4e8c8;
+  overflow: hidden;
+}
+.roycss-retro-film-grain::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background-image:
+    radial-gradient(rgba(255,255,255,0.12) 1px, transparent 1px),
+    radial-gradient(rgba(0,0,0,0.18) 1px, transparent 1px);
+  background-size: 3px 3px, 5px 5px;
+  background-position: 0 0, 1px 2px;
+  animation: roy-retro-grain 0.4s steps(4) infinite;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+@keyframes roy-retro-grain {
+  0%   { transform: translate(0,0); }
+  25%  { transform: translate(-5px, 3px); }
+  50%  { transform: translate(4px, -4px); }
+  75%  { transform: translate(-3px, -2px); }
+  100% { transform: translate(2px, 4px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-film-grain::before { animation: none; }
+}`
+  },
+  {
+    id: "retro-neon-flicker",
+    name: "Neon Flicker",
+    category: "retro",
+    description: "Neon sign that flickers and buzzes intermittently like a faulty motel sign",
+    tags: ["retro", "neon", "flicker", "sign", "glow"],
+    previewType: "text",
+    previewText: "OPEN",
+    cssCode: `/* Retro: Neon Flicker */
+.roycss-retro-neon-flicker {
+  color: #fff;
+  background: #0a0510;
+  font-family: "Arial Black", sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-shadow:
+    0 0 6px #ff2d95,
+    0 0 14px #ff2d95,
+    0 0 30px #ff2d95,
+    0 0 60px #ff007a,
+    0 0 90px #ff007a;
+  animation: roy-retro-neon-flicker 3.2s infinite;
+}
+@keyframes roy-retro-neon-flicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    text-shadow:
+      0 0 6px #ff2d95,
+      0 0 14px #ff2d95,
+      0 0 30px #ff2d95,
+      0 0 60px #ff007a,
+      0 0 90px #ff007a;
+    opacity: 1;
+  }
+  20%, 24%, 55% {
+    text-shadow: none;
+    opacity: 0.35;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-neon-flicker { animation: none; opacity: 1; }
+}`
+  },
+  {
+    id: "retro-cassette-reel",
+    name: "Cassette Reel",
+    category: "retro",
+    description: "Spinning cassette tape reel with two counter-rotating hubs and tape window",
+    tags: ["retro", "cassette", "reel", "tape", "spinner"],
+    previewType: "loader",
+    cssCode: `/* Retro: Cassette Reel */
+.roycss-retro-cassette-reel {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(180deg, #d4a017 0%, #8a6210 100%);
+  border-radius: 8px;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.4), inset 0 -4px 8px rgba(0,0,0,0.3), 0 4px 10px rgba(0,0,0,0.3);
+}
+.roycss-retro-cassette-reel::before,
+.roycss-retro-cassette-reel::after {
+  content: "";
+  position: absolute;
+  top: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, #1a1a1a 30%, #3a3a3a 32%, #1a1a1a 50%, #3a3a3a 52%, #1a1a1a 70%);
+  border: 2px solid #2a2a2a;
+  box-shadow: inset 0 0 0 4px rgba(255,255,255,0.1);
+}
+.roycss-retro-cassette-reel::before {
+  left: 8px;
+  animation: roy-retro-reel-spin 1.6s linear infinite;
+}
+.roycss-retro-cassette-reel::after {
+  right: 8px;
+  animation: roy-retro-reel-spin 1.6s linear infinite reverse;
+}
+@keyframes roy-retro-reel-spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-cassette-reel::before,
+  .roycss-retro-cassette-reel::after { animation: none; }
+}`
+  },
+  {
+    id: "retro-gameboy-ui",
+    name: "Game Boy UI",
+    category: "retro",
+    description: "Four-color DMG Game Boy green palette with dithered border and A/B button styling",
+    tags: ["retro", "gameboy", "8bit", "palette", "nintendo"],
+    previewType: "box",
+    cssCode: `/* Retro: Game Boy UI */
+.roycss-retro-gameboy-ui {
+  background: #9bbc0f;
+  color: #0f380f;
+  border: 4px solid #0f380f;
+  border-radius: 4px;
+  padding: 12px;
+  font-family: ui-monospace, monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  box-shadow:
+    inset 0 0 0 2px #306230,
+    4px 4px 0 #0f380f;
+  position: relative;
+}
+.roycss-retro-gameboy-ui::before {
+  content: "▶ PRESS START";
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+  text-shadow: 1px 1px 0 #8bac0f;
+}
+.roycss-retro-gameboy-ui::after {
+  content: "";
+  display: block;
+  width: 14px;
+  height: 14px;
+  background: #0f380f;
+  border-radius: 50%;
+  box-shadow: 20px 0 0 #0f380f, -2px 2px 0 #306230, 22px 2px 0 #306230;
+  margin-top: 8px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-gameboy-ui { animation: none; }
+}`
+  },
+  {
+    id: "retro-arcade-glow",
+    name: "Arcade Glow",
+    category: "retro",
+    description: "80s arcade cabinet marquee text with layered neon glow and pulsing intensity",
+    tags: ["retro", "arcade", "neon", "glow", "80s"],
+    previewType: "text",
+    previewText: "INSERT COIN",
+    cssCode: `/* Retro: Arcade Glow */
+.roycss-retro-arcade-glow {
+  color: #fff;
+  background: #0a0014;
+  font-family: "Arial Black", sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 4px #fff,
+    0 0 10px #fff,
+    0 0 20px #ff00ff,
+    0 0 40px #ff00ff,
+    0 0 60px #ff00ff,
+    0 0 80px #ff00ff;
+  animation: roy-retro-arcade-pulse 1.6s ease-in-out infinite;
+}
+@keyframes roy-retro-arcade-pulse {
+  0%, 100% {
+    text-shadow:
+      0 0 4px #fff,
+      0 0 10px #fff,
+      0 0 20px #ff00ff,
+      0 0 40px #ff00ff,
+      0 0 60px #ff00ff,
+      0 0 80px #ff00ff;
+  }
+  50% {
+    text-shadow:
+      0 0 6px #fff,
+      0 0 14px #fff,
+      0 0 28px #00ffff,
+      0 0 52px #00ffff,
+      0 0 80px #00ffff,
+      0 0 110px #00ffff;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-arcade-glow { animation: none; }
+}`
+  },
+  {
+    id: "retro-vhs-glitch",
+    name: "VHS Glitch",
+    category: "retro",
+    description: "VHS tape glitch distortion with horizontal slices and color channel split",
+    tags: ["retro", "vhs", "glitch", "distortion", "tape"],
+    previewType: "box",
+    cssCode: `/* Retro: VHS Glitch */
+.roycss-retro-vhs-glitch {
+  position: relative;
+  background: #1a0a2a;
+  color: #f0f0f5;
+  font-family: ui-monospace, monospace;
+  overflow: hidden;
+  border-radius: 4px;
+  animation: roy-retro-vhs-glitch-shift 2s infinite;
+}
+.roycss-retro-vhs-glitch::before {
+  content: "▌▚▞▌▚▞ SIGNAL LOST";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(90deg, #ff0050 0%, transparent 2%, transparent 98%, #00d4ff 100%);
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.2em;
+  text-shadow: 2px 0 #ff0050, -2px 0 #00d4ff;
+  clip-path: polygon(0 30%, 100% 30%, 100% 45%, 0 45%, 0 60%, 100% 60%, 100% 75%, 0 75%);
+  animation: roy-retro-vhs-glitch-clip 0.6s steps(3) infinite;
+}
+@keyframes roy-retro-vhs-glitch-shift {
+  0%, 100% { transform: translateX(0); }
+  10%      { transform: translateX(-3px); }
+  20%      { transform: translateX(4px); }
+  30%      { transform: translateX(-1px); }
+  40%      { transform: translateX(2px); }
+}
+@keyframes roy-retro-vhs-glitch-clip {
+  0%   { clip-path: polygon(0 20%, 100% 20%, 100% 35%, 0 35%, 0 55%, 100% 55%, 100% 70%, 0 70%); }
+  33%  { clip-path: polygon(0 40%, 100% 40%, 100% 50%, 0 50%, 0 65%, 100% 65%, 100% 80%, 0 80%); }
+  66%  { clip-path: polygon(0 10%, 100% 10%, 100% 25%, 0 25%, 0 45%, 100% 45%, 100% 90%, 0 90%); }
+  100% { clip-path: polygon(0 30%, 100% 30%, 100% 45%, 0 45%, 0 60%, 100% 60%, 100% 75%, 0 75%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-vhs-glitch,
+  .roycss-retro-vhs-glitch::before { animation: none; }
+}`
+  },
+  {
+    id: "retro-8bit-border",
+    name: "8-Bit Border",
+    category: "retro",
+    description: "Pixelated 8-bit style stepped border with corner notches and chunky shadow",
+    tags: ["retro", "8bit", "pixel", "border", "frame"],
+    previewType: "box",
+    cssCode: `/* Retro: 8-Bit Border */
+.roycss-retro-8bit-border {
+  background: #2d1b4e;
+  color: #ffd700;
+  font-family: ui-monospace, monospace;
+  font-weight: 700;
+  padding: 14px;
+  position: relative;
+  border: 4px solid #ffd700;
+  box-shadow:
+    0 0 0 4px #2d1b4e,
+    0 0 0 8px #ffd700,
+    8px 8px 0 8px #1a0f2e;
+  clip-path: polygon(
+    0 8px, 8px 8px, 8px 0,
+    calc(100% - 8px) 0, calc(100% - 8px) 8px, 100% 8px,
+    100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px), calc(100% - 8px) 100%,
+    8px 100%, 8px calc(100% - 8px), 0 calc(100% - 8px)
+  );
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-8bit-border { animation: none; }
+}`
+  },
+  {
+    id: "retro-synthwave-grid",
+    name: "Synthwave Grid",
+    category: "retro",
+    description: "Synthwave perspective grid background with horizon glow and animated floor lines",
+    tags: ["retro", "synthwave", "grid", "retrowave", "80s"],
+    previewType: "background",
+    cssCode: `/* Retro: Synthwave Grid */
+.roycss-retro-synthwave-grid {
+  position: relative;
+  background:
+    linear-gradient(180deg, #1a0033 0%, #2d0a4e 40%, #ff2d95 60%, #ff6b3d 70%, #1a0033 70.5%, #0a0014 100%);
+  overflow: hidden;
+}
+.roycss-retro-synthwave-grid::before {
+  content: "";
+  position: absolute;
+  left: -50%; right: -50%;
+  bottom: 0;
+  height: 50%;
+  background-image:
+    linear-gradient(to right, rgba(255, 45, 149, 0.6) 1px, transparent 1px),
+    linear-gradient(to top, rgba(255, 45, 149, 0.6) 1px, transparent 1px);
+  background-size: 40px 40px;
+  transform: perspective(280px) rotateX(60deg);
+  transform-origin: bottom;
+  animation: roy-retro-synth-grid 1.4s linear infinite;
+}
+.roycss-retro-synthwave-grid::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: 60%;
+  width: 120px; height: 120px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, #ffe066 0%, #ff6b3d 40%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(2px);
+}
+@keyframes roy-retro-synth-grid {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-synthwave-grid::before { animation: none; }
+}`
+  },
+  {
+    id: "retro-retrowave-sun",
+    name: "Retrowave Sun",
+    category: "retro",
+    description: "Retrowave sun with horizontal scanline cuts and gradient pink-to-yellow glow",
+    tags: ["retro", "retrowave", "sun", "synthwave", "80s"],
+    previewType: "background",
+    cssCode: `/* Retro: Retrowave Sun */
+.roycss-retro-retrowave-sun {
+  position: relative;
+  background: linear-gradient(180deg, #1a0033 0%, #4a0a6e 50%, #2d0a4e 100%);
+  overflow: hidden;
+}
+.roycss-retro-retrowave-sun::before {
+  content: "";
+  position: absolute;
+  left: 50%; top: 45%;
+  width: 140px; height: 140px;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(180deg, #ffe066 0%, #ff6b3d 35%, #ff2d95 65%, #8a1a8a 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 60px rgba(255, 107, 61, 0.7), 0 0 100px rgba(255, 45, 149, 0.5);
+}
+.roycss-retro-retrowave-sun::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: 45%;
+  width: 140px; height: 140px;
+  transform: translate(-50%, -50%);
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 14px,
+    #1a0033 14px,
+    #1a0033 18px,
+    transparent 18px,
+    transparent 28px,
+    #1a0033 28px,
+    #1a0033 34px,
+    transparent 34px,
+    transparent 48px,
+    #1a0033 48px,
+    #1a0033 56px,
+    transparent 56px,
+    transparent 76px,
+    #1a0033 76px,
+    #1a0033 90px
+  );
+  border-radius: 50%;
+  mix-blend-mode: multiply;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-retrowave-sun::before,
+  .roycss-retro-retrowave-sun::after { animation: none; }
+}`
+  },
+  {
+    id: "retro-dial-up-loader",
+    name: "Dial-Up Loader",
+    category: "retro",
+    description: "Dial-up modem loading animation with pulsing connection dots and handshake rhythm",
+    tags: ["retro", "dial-up", "modem", "loader", "90s"],
+    previewType: "loader",
+    cssCode: `/* Retro: Dial-Up Loader */
+.roycss-retro-dial-up-loader {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border: 3px solid #2a2a2a;
+  border-top-color: #00ff7f;
+  border-radius: 50%;
+  background: #0a0a0a;
+  animation: roy-retro-dial-spin 1.4s linear infinite;
+}
+.roycss-retro-dial-up-loader::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 2px dashed #ff8800;
+  border-radius: 50%;
+  animation: roy-retro-dial-pulse 0.7s ease-in-out infinite alternate;
+}
+.roycss-retro-dial-up-loader::after {
+  content: "";
+  position: absolute;
+  inset: 22px;
+  background: #00ff7f;
+  border-radius: 50%;
+  box-shadow: 0 0 12px #00ff7f;
+  animation: roy-retro-dial-blink 0.4s steps(2) infinite;
+}
+@keyframes roy-retro-dial-spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes roy-retro-dial-pulse {
+  0%   { transform: scale(0.85); opacity: 0.5; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes roy-retro-dial-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.2; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-dial-up-loader,
+  .roycss-retro-dial-up-loader::before,
+  .roycss-retro-dial-up-loader::after { animation: none; }
+}`
+  },
+  {
+    id: "retro-floppy-disk-save",
+    name: "Floppy Disk Save",
+    category: "retro",
+    description: "Floppy disk save icon that wiggles and reveals a saving state on hover",
+    tags: ["retro", "floppy", "save", "disk", "icon"],
+    previewType: "box",
+    cssCode: `/* Retro: Floppy Disk Save */
+.roycss-retro-floppy-disk-save {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(180deg, #1a1a2a 0%, #0a0a14 100%);
+  border-radius: 4px;
+  border: 2px solid #2a2a3a;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.roycss-retro-floppy-disk-save::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 12px; right: 12px;
+  height: 22px;
+  background: #8a8a8a;
+  border-radius: 2px 2px 0 0;
+  box-shadow: inset 0 -4px 0 #5a5a5a;
+}
+.roycss-retro-floppy-disk-save::after {
+  content: "";
+  position: absolute;
+  top: 30px;
+  left: 14px; right: 14px;
+  bottom: 6px;
+  background: linear-gradient(180deg, #d4d4d4 0%, #a8a8a8 100%);
+  border-radius: 2px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
+.roycss-retro-floppy-disk-save:hover {
+  animation: roy-retro-floppy-wiggle 0.5s ease-in-out;
+}
+@keyframes roy-retro-floppy-wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25%      { transform: rotate(-8deg) scale(1.05); }
+  75%      { transform: rotate(8deg) scale(1.05); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-floppy-disk-save:hover { animation: none; transition: none; }
+}`
+  },
+  {
+    id: "retro-tv-static",
+    name: "TV Static",
+    category: "retro",
+    description: "Old TV static noise effect with shifting grain and phosphor flicker",
+    tags: ["retro", "tv", "static", "noise", "nostalgic"],
+    previewType: "background",
+    cssCode: `/* Retro: TV Static */
+.roycss-retro-tv-static {
+  position: relative;
+  background: #0a0a0a;
+  overflow: hidden;
+  border-radius: 8px;
+}
+.roycss-retro-tv-static::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background-image:
+    repeating-conic-gradient(
+      from 0deg at 50% 50%,
+      #ffffff 0deg, #888888 1deg, #ffffff 2deg, #444444 3deg,
+      #cccccc 4deg, #222222 5deg, #eeeeee 6deg, #555555 7deg
+    );
+  background-size: 4px 4px;
+  animation: roy-retro-tv-static 0.18s steps(6) infinite;
+  opacity: 0.65;
+  mix-blend-mode: screen;
+}
+.roycss-retro-tv-static::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%);
+  pointer-events: none;
+  animation: roy-retro-tv-flicker 0.4s steps(2) infinite;
+}
+@keyframes roy-retro-tv-static {
+  0%   { transform: translate(0,0); background-position: 0 0; }
+  20%  { transform: translate(-4px, 2px); background-position: 4px -2px; }
+  40%  { transform: translate(3px, -3px); background-position: -3px 3px; }
+  60%  { transform: translate(-2px, 4px); background-position: 2px -4px; }
+  80%  { transform: translate(4px, 1px); background-position: -4px 2px; }
+  100% { transform: translate(-3px, -2px); background-position: 3px 4px; }
+}
+@keyframes roy-retro-tv-flicker {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.85; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-tv-static::before,
+  .roycss-retro-tv-static::after { animation: none; }
+}`
+  },
+  {
+    id: "retro-tape-deck-buttons",
+    name: "Tape Deck Buttons",
+    category: "retro",
+    description: "Tape deck transport buttons that depress on hover with mechanical feedback",
+    tags: ["retro", "tape", "deck", "button", "press"],
+    previewType: "button",
+    previewText: "▶ ■ ⏸",
+    cssCode: `/* Retro: Tape Deck Buttons */
+.roycss-retro-tape-deck-buttons {
+  display: inline-flex;
+  gap: 6px;
+  padding: 8px 12px;
+  background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+  border-radius: 4px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 6px rgba(0,0,0,0.5);
+  color: #c8c8c8;
+  font-family: ui-monospace, monospace;
+  font-size: 1.1rem;
+  letter-spacing: 0.4em;
+  cursor: pointer;
+  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out, color 0.1s;
+}
+.roycss-retro-tape-deck-buttons:hover {
+  color: #ff6b00;
+  text-shadow: 0 0 6px rgba(255, 107, 0, 0.6);
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.6), 0 1px 2px rgba(0,0,0,0.3);
+}
+.roycss-retro-tape-deck-buttons:active {
+  transform: translateY(3px);
+  box-shadow: inset 0 4px 6px rgba(0,0,0,0.8);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-tape-deck-buttons,
+  .roycss-retro-tape-deck-buttons:hover,
+  .roycss-retro-tape-deck-buttons:active {
+    transition: none;
+    transform: none;
+  }
+}`
+  },
+  {
+    id: "retro-coin-insert",
+    name: "Coin Insert",
+    category: "retro",
+    description: "Arcade coin insert animation that drops and spins into the slot with a shine",
+    tags: ["retro", "arcade", "coin", "insert", "slot"],
+    previewType: "box",
+    cssCode: `/* Retro: Coin Insert */
+.roycss-retro-coin-insert {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(180deg, #1a1a2e 0%, #0a0a14 100%);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.roycss-retro-coin-insert::before {
+  content: "★";
+  position: absolute;
+  left: 50%;
+  top: -40px;
+  width: 36px;
+  height: 36px;
+  margin-left: -18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 35% 35%, #fff5b0 0%, #ffd700 30%, #c8a000 70%, #8a6a00 100%);
+  color: #8a6a00;
+  font-size: 1.1rem;
+  font-weight: 900;
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
+  animation: roy-retro-coin-drop 1.8s cubic-bezier(0.55, 0.085, 0.68, 0.53) infinite;
+}
+.roycss-retro-coin-insert::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  width: 40px;
+  height: 4px;
+  margin-left: -20px;
+  background: #000;
+  border-radius: 2px;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.1);
+}
+@keyframes roy-retro-coin-drop {
+  0% {
+    top: -40px;
+    transform: rotateY(0deg) scale(1);
+    opacity: 1;
+  }
+  60% {
+    top: 60%;
+    transform: rotateY(720deg) scale(0.8);
+    opacity: 1;
+  }
+  75% {
+    top: 60%;
+    transform: rotateY(720deg) scale(0.3, 0.6);
+    opacity: 0.6;
+  }
+  85% {
+    top: 70%;
+    transform: rotateY(720deg) scale(0.1, 0.1);
+    opacity: 0;
+  }
+  100% {
+    top: -40px;
+    transform: rotateY(0deg) scale(1);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-coin-insert::before { animation: none; top: 40%; }
+}`
+  }
+];
+
+// src/lib/effects-batch-39.ts
+var effectsBatch39 = [
+  {
+    id: "dataviz-counter-roll",
+    name: "Counter Roll",
+    category: "data-viz",
+    description: "Odometer-style number that rolls vertical digits into place on load",
+    tags: ["data-viz", "counter", "odometer", "number", "animate"],
+    previewType: "box",
+    previewText: "0",
+    cssCode: `/* DataViz: Counter Roll */
+.roycss-dataviz-counter-roll {
+  position: relative;
+  display: inline-block;
+  font-family: ui-monospace, "Courier New", monospace;
+  font-weight: 700;
+  font-size: 2rem;
+  color: #0f172a;
+  background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+  padding: 0.2em 0.5em;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.15);
+  height: 1.4em;
+  line-height: 1.4;
+  width: 1.2em;
+  text-align: center;
+}
+.roycss-dataviz-counter-roll::before {
+  content: "0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9";
+  position: absolute;
+  left: 0; right: 0;
+  top: 0;
+  white-space: pre;
+  animation: roy-dataviz-roll 2.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes roy-dataviz-roll {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-12.6em); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-dataviz-counter-roll::before { animation: none; transform: translateY(-9em); }
+}`
+  },
+  {
+    id: "dataviz-progress-ring",
+    name: "Progress Ring",
+    category: "data-viz",
+    description: "Circular progress ring that animates its stroke-dashoffset fill from empty to full",
+    tags: ["data-viz", "progress", "ring", "circular", "loader"],
+    previewType: "loader",
+    cssCode: `/* DataViz: Progress Ring */
+.roycss-dataviz-progress-ring {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background:
+    conic-gradient(#10b981 0deg, #10b981 252deg, #e2e8f0 252deg, #e2e8f0 360deg);
+  animation: roy-dataviz-ring-fill 1.8s ease-out both;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.roycss-dataviz-progress-ring::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  background: #fff;
+  border-radius: 50%;
+  z-index: 1;
+}
+.roycss-dataviz-progress-ring::after {
+  content: "70%";
+  position: relative;
+  z-index: 2;
+  font-family: ui-monospace, monospace;
+  font-weight: 700;
+  color: #10b981;
+  font-size: 1rem;
+}
+@keyframes roy-dataviz-ring-fill {
+  0%   { background: conic-gradient(#10b981 0deg, #10b981 0deg, #e2e8f0 0deg, #e2e8f0 360deg); }
+  100% { background: conic-gradient(#10b981 0deg, #10b981 252deg, #e2e8f0 252deg, #e2e8f0 360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-dataviz-progress-ring { animation: none; }
+}`
+  },
+  {
+    id: "dataviz-progress-semi",
+    name: "Semi-Circle Progress",
+    category: "data-viz",
+    description: "Semi-circle progress gauge that sweeps its arc from left to right",
+    tags: ["data-viz", "progress", "semicircle", "gauge", "arc"],
+    previewType: "loader",
+    cssCode: `/* DataViz: Semi-Circle Progress */
+.roycss-dataviz-progress-semi {
+  position: relative;
+  width: 100px;
+  height: 50px;
+  overflow: hidden;
+}
+.roycss-dataviz-progress-semi::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 12px solid #e2e8f0;
+  border-bottom: none;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  box-sizing: border-box;
+  clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+}
+.roycss-dataviz-progress-semi::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 12px solid #6366f1;
+  border-bottom: none;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  box-sizing: border-box;
+  clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+  transform-origin: 50% 50%;
+  animation: roy-dataviz-semi-fill 2s ease-out both;
+}
+@keyframes roy-dataviz-semi-fill {
+  0%   { transform: rotate(-180deg); }
+  100% { transform: rotate(-54deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-dataviz-progress-semi::after { animation: none; transform: rotate(-54deg); }
+}`
+  },
+  {
+    id: "dataviz-bar-grow",
+    name: "Bar Grow",
+    category: "data-viz",
+    description: "Vertical bar chart columns that grow upward from zero baseline on load",
+    tags: ["data-viz", "bar", "chart", "grow", "animate"],
+    previewType: "box",
+    cssCode: `/* DataViz: Bar Grow */
+.roycss-dataviz-bar-grow {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 100%;
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 6px;
+}
+.roycss-dataviz-bar-grow::before,
+.roycss-dataviz-bar-grow::after {
+  content: "";
+  width: 14px;
+  background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+  border-radius: 3px 3px 0 0;
+  transform-origin: bottom;
+  animation: roy-dataviz-bar-grow 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  box-shadow: 0 -2px 4px rgba(16, 185, 129, 0.3);
+}
+.roycss-dataviz-bar-grow::before {
+  height: 70%;
+  animation-delay: 0s;
+}
+.roycss-dataviz-bar-grow::after {
+  height: 45%;
+  animation-delay: 0.15s;
+  background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
+  box-shadow: 0 -2px 4px rgba(99, 102, 241, 0.3);
+}
+@keyframes roy-dataviz-bar-grow {
+  0%   { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-dataviz-bar-grow::before,
+  .roycss-dataviz-bar-grow::after { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "dataviz-bar-horizontal",
+    name: "Horizontal Bars",
+    category: "data-viz",
+    description: "Horizontal bars that grow from left to right with staggered easing",
+    tags: ["data-viz", "bar", "horizontal", "grow", "chart"],
+    previewType: "box",
+    cssCode: `/* DataViz: Horizontal Bars */
+.roycss-dataviz-bar-horizontal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+  background: #f8fafc;
+  border-radius: 6px;
+  height: 100%;
+}
+.roycss-dataviz-bar-horizontal::before,
+.roycss-dataviz-bar-horizontal::after {
+  content: "";
+  height: 12px;
+  border-radius: 6px;
+  transform-origin: left;
+  animation: roy-dataviz-hbar-grow 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.roycss-dataviz-bar-horizontal::before {
+  width: 85%;
+  background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+  animation-delay: 0s;
+}
+.roycss-dataviz-bar-horizontal::after {
+  width: 60%;
+  background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+  animation-delay: 0.18s;
+}
+@keyframes roy-dataviz-hbar-grow {
+  0%   { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-dataviz-bar-horizontal::before,
+  .roycss-dataviz-bar-horizontal::after { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "dataviz-pie-reveal",
+    name: "Pie Reveal",
+    category: "data-viz",
+    description: "Donut chart segments that sweep in sequentially using conic gradient rotation",
+    tags: ["data-viz", "pie", "donut", "chart", "reveal"],
+    previewType: "loader",
+    cssCode: `/* DataViz: Pie Reveal */
+.roycss-dataviz-pie-reveal {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #10b981 0deg 130deg,
+    #6366f1 130deg 240deg,
+    #f59e0b 240deg 320deg,
+    #ef4444 320deg 360deg
+  );
+  animation: roy-dataviz-pie-reveal 1.6s ease-out both;
+  mask: radial-gradient(circle, transparent 22px, #000 23px);
+  -webkit-mask: radial-gradient(circle, transparent 22px, #000 23px);
+}
+@keyframes roy-dataviz-pie-reveal {
+  0%   { transform: rotate(-90deg) scale(0.6); opacity: 0; }
+  60%  { transform: rotate(0deg) scale(1.05); opacity: 1; }
+  100% { transform: rotate(0deg) scale(1); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-dataviz-pie-reveal { animation: none; }
+}`
+  },
+  {
+    id: "dataviz-sparkline-draw",
+    name: "Sparkline Draw",
+    category: "data-viz",
+    description: "Sparkline that draws itself along an SVG-like path using stroke-dashoffset",
+    tags: ["data-viz", "sparkline", "line", "draw", "chart"],
+    previewType: "background",
+    cssCode: `/* DataViz: Sparkline Draw */
+.roycss-dataviz-sparkline-draw {
+  position: relative;
+  height: 100%;
+  background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.roycss-dataviz-sparkline-draw::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: 30%;
+  height: 4px;
+  background:
+    linear-gradient(90deg,
+      transparent 0%, transparent 5%,
+      #6366f1 5%, #6366f1 12%,
+      transparent 12%, transparent 22%,
+      #6366f1 22%, #6366f1 35%,
+      transparent 35%, transparent 45%,
+      #6366f1 45%, #6366f1 60%,
+      transparent 60%, transparent 72%,
+      #6366f1 72%, #6366f1 88%,
+      transparent 88%);
+  transform-origin: left center;
+  transform: scaleX(0);
+  animation: roy-dataviz-sparkline 1.6s ease-out 0.2s forwards;
+  filter: drop-shadow(0 1px 2px rgba(99,102,241,0.4));
+}
+.roycss-dataviz-sparkline-draw::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: 30%;
+  height: 4px;
+  background: linear-gradient(90deg, transparent 0%, #6366f1 50%, transparent 100%);
+  opacity: 0.15;
+}
+@keyframes roy-dataviz-sparkline {
+  0%   { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-dataviz-sparkline-draw::before { animation: none; transform: scaleX(1); }
+}`
+  },
+  {
+    id: "dataviz-stat-pulse",
+    name: "Stat Pulse",
+    category: "data-viz",
+    description: "Statistic number that pulses and glows when its value updates",
+    tags: ["data-viz", "stat", "pulse", "glow", "number"],
+    previewType: "text",
+    previewText: "+24.5%",
+    cssCode: `/* DataViz: Stat Pulse */
+.roycss-dataviz-stat-pulse {
+  font-family: ui-monospace, monospace;
+  font-weight: 800;
+  font-size: 1.6rem;
+  color: #10b981;
+  background: #f0fdf4;
+  padding: 0.3em 0.6em;
+  border-radius: 6px;
+  animation: roy-dataviz-stat-pulse 2s ease-in-out infinite;
+}
+@keyframes roy-dataviz-stat-pulse {
+  0%, 100% {
+    transform: scale(1);
+    text-shadow: 0 0 0 rgba(16, 185, 129, 0);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+  20% {
+    transform: scale(1.08);
+    text-shadow: 0 0 12px rgba(16, 185, 129, 0.8);
+    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.25);
+  }
+  40% {
+    transform: scale(1);
+    text-shadow: 0 0 4px rgba(16, 185, 129, 0.4);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-dataviz-stat-pulse { animation: none; }
+}`
+  },
+  {
+    id: "dataviz-data-flow",
+    name: "Data Flow",
+    category: "data-viz",
+    description: "Animated dashed flow line connecting data points with marching ants",
+    tags: ["data-viz", "flow", "line", "dashed", "connect"],
+    previewType: "box",
+    cssCode: `/* DataViz: Data Flow */
+.roycss-dataviz-data-flow {
+  position: relative;
+  height: 100%;
+  background: #f8fafc;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.roycss-dataviz-data-flow::before {
+  content: "";
+  position: absolute;
+  left: 12px; right: 12px;
+  top: 50%;
+  height: 3px;
+  background-image: linear-gradient(90deg, #6366f1 50%, transparent 50%);
+  background-size: 14px 3px;
+  background-repeat: repeat-x;
+  animation: roy-dataviz-flow-march 0.7s linear infinite;
+}
+.roycss-dataviz-data-flow::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 50%;
+  height: 14px;
+  transform: translateY(-50%);
+  background:
+    radial-gradient(circle at 0% 50%, #6366f1 4px, transparent 5px),
+    radial-gradient(circle at 50% 50%, #10b981 4px, transparent 5px),
+    radial-gradient(circle at 100% 50%, #f59e0b 4px, transparent 5px);
+}
+@keyframes roy-dataviz-flow-march {
+  0%   { background-position: 0 0; }
+  100% { background-position: 14px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-dataviz-data-flow::before { animation: none; }
+}`
+  },
+  {
+    id: "dataviz-gauge-needle",
+    name: "Gauge Needle",
+    category: "data-viz",
+    description: "Speedometer-style gauge with a needle that sweeps to its target value",
+    tags: ["data-viz", "gauge", "needle", "speedometer", "meter"],
+    previewType: "loader",
+    cssCode: `/* DataViz: Gauge Needle */
+.roycss-dataviz-gauge-needle {
+  position: relative;
+  width: 100px;
+  height: 60px;
+  overflow: hidden;
+}
+.roycss-dataviz-gauge-needle::before {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100px;
+  height: 100px;
+  border-radius: 100px 100px 0 0;
+  border: 12px solid;
+  border-color: #ef4444 #f59e0b #e2e8f0 #e2e8f0;
+  border-bottom: none;
+  box-sizing: border-box;
+  transform: rotate(0deg);
+}
+.roycss-dataviz-gauge-needle::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 4px;
+  height: 38px;
+  margin-left: -2px;
+  background: #0f172a;
+  border-radius: 2px;
+  transform-origin: bottom center;
+  animation: roy-dataviz-gauge-sweep 1.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  box-shadow: 0 0 4px rgba(0,0,0,0.3);
+}
+@keyframes roy-dataviz-gauge-sweep {
+  0%   { transform: rotate(-90deg); }
+  100% { transform: rotate(36deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-dataviz-gauge-needle::after { animation: none; transform: rotate(36deg); }
+}`
+  },
+  {
+    id: "dataviz-heatmap-cell",
+    name: "Heatmap Cell",
+    category: "data-viz",
+    description: "Single heatmap cell that transitions from cool to warm color on load",
+    tags: ["data-viz", "heatmap", "cell", "color", "transition"],
+    previewType: "box",
+    cssCode: `/* DataViz: Heatmap Cell */
+.roycss-dataviz-heatmap-cell {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  background: #e0f2fe;
+  animation: roy-dataviz-heat 2.4s ease-in-out infinite;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+  position: relative;
+}
+.roycss-dataviz-heatmap-cell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4), transparent 60%);
+  pointer-events: none;
+}
+@keyframes roy-dataviz-heat {
+  0%   { background: #e0f2fe; }
+  25%  { background: #93c5fd; }
+  50%  { background: #fbbf24; }
+  75%  { background: #f97316; }
+  100% { background: #dc2626; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-dataviz-heatmap-cell { animation: none; background: #fbbf24; }
+}`
+  },
+  {
+    id: "dataviz-timeline-progress",
+    name: "Timeline Progress",
+    category: "data-viz",
+    description: "Horizontal timeline with a progress line that draws across milestones",
+    tags: ["data-viz", "timeline", "progress", "line", "milestone"],
+    previewType: "box",
+    cssCode: `/* DataViz: Timeline Progress */
+.roycss-dataviz-timeline-progress {
+  position: relative;
+  height: 100%;
+  background: #f8fafc;
+  border-radius: 6px;
+  padding: 24px 16px;
+}
+.roycss-dataviz-timeline-progress::before {
+  content: "";
+  position: absolute;
+  left: 16px; right: 16px;
+  top: 50%;
+  height: 3px;
+  background: #e2e8f0;
+  border-radius: 2px;
+  transform: translateY(-50%);
+}
+.roycss-dataviz-timeline-progress::after {
+  content: "";
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  width: 60%;
+  height: 3px;
+  background: linear-gradient(90deg, #6366f1 0%, #10b981 100%);
+  border-radius: 2px;
+  transform: translateY(-50%);
+  transform-origin: left center;
+  animation: roy-dataviz-timeline-draw 1.6s ease-out both;
+  box-shadow: 0 0 8px rgba(99, 102, 241, 0.4);
+}
+@keyframes roy-dataviz-timeline-draw {
+  0%   { width: 0; }
+  100% { width: 60%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-dataviz-timeline-progress::after { animation: none; }
+}`
+  },
+  {
+    id: "dataviz-count-up",
+    name: "Count Up",
+    category: "data-viz",
+    description: "Integer counter that animates from 0 to target using @property and CSS counter",
+    tags: ["data-viz", "count", "number", "counter", "animate"],
+    previewType: "text",
+    previewText: "",
+    cssCode: `/* DataViz: Count Up */
+@property --roy-dataviz-count {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+.roycss-dataviz-count-up {
+  --roy-dataviz-count: 0;
+  counter-reset: count var(--roy-dataviz-count);
+  font-family: ui-monospace, monospace;
+  font-weight: 800;
+  font-size: 2rem;
+  color: #6366f1;
+  background: #eef2ff;
+  padding: 0.2em 0.5em;
+  border-radius: 6px;
+  animation: roy-dataviz-count-up 2s ease-out both;
+}
+.roycss-dataviz-count-up::before {
+  content: counter(count);
+}
+@keyframes roy-dataviz-count-up {
+  0%   { --roy-dataviz-count: 0; }
+  100% { --roy-dataviz-count: 1284; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-dataviz-count-up { animation: none; --roy-dataviz-count: 1284; }
+}`
+  },
+  {
+    id: "dataviz-percentage-bar",
+    name: "Percentage Bar",
+    category: "data-viz",
+    description: "Indeterminate percentage bar with animated diagonal stripes scrolling",
+    tags: ["data-viz", "percentage", "bar", "stripes", "loader"],
+    previewType: "loader",
+    cssCode: `/* DataViz: Percentage Bar */
+.roycss-dataviz-percentage-bar {
+  position: relative;
+  width: 100%;
+  height: 24px;
+  background: #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-dataviz-percentage-bar::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 65%;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      #6366f1 0px,
+      #6366f1 10px,
+      #4f46e5 10px,
+      #4f46e5 20px
+    );
+  background-size: 28px 28px;
+  border-radius: 12px 0 0 12px;
+  animation: roy-dataviz-pct-stripes 0.8s linear infinite, roy-dataviz-pct-fill 1.6s ease-out both;
+  box-shadow: inset 0 -2px 0 rgba(0,0,0,0.15);
+}
+.roycss-dataviz-percentage-bar::after {
+  content: "65%";
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: ui-monospace, monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+@keyframes roy-dataviz-pct-stripes {
+  0%   { background-position: 0 0; }
+  100% { background-position: 28px 0; }
+}
+@keyframes roy-dataviz-pct-fill {
+  0%   { width: 0; }
+  100% { width: 65%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-dataviz-percentage-bar::before { animation: none; width: 65%; }
+}`
+  },
+  {
+    id: "dataviz-radial-progress",
+    name: "Radial Progress",
+    category: "data-viz",
+    description: "Radial progress with a rotating conic gradient sweep and center cutout",
+    tags: ["data-viz", "radial", "progress", "conic", "rotate"],
+    previewType: "loader",
+    cssCode: `/* DataViz: Radial Progress */
+.roycss-dataviz-radial-progress {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #6366f1, #8b5cf6, #ec4899, #f59e0b, #6366f1);
+  animation: roy-dataviz-radial-spin 1.4s linear infinite;
+}
+.roycss-dataviz-radial-progress::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  background: #fff;
+  border-radius: 50%;
+}
+.roycss-dataviz-radial-progress::after {
+  content: "⋯";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: ui-monospace, monospace;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #6366f1;
+}
+@keyframes roy-dataviz-radial-spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-dataviz-radial-progress { animation: none; }
+}`
+  },
+  {
+    id: "dataviz-stacked-bar",
+    name: "Stacked Bar",
+    category: "data-viz",
+    description: "Stacked bar chart segments that fill in sequence from bottom to top",
+    tags: ["data-viz", "stacked", "bar", "chart", "segments"],
+    previewType: "box",
+    cssCode: `/* DataViz: Stacked Bar */
+.roycss-dataviz-stacked-bar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  padding: 14px;
+  background: #f8fafc;
+  border-radius: 6px;
+}
+.roycss-dataviz-stacked-bar::before,
+.roycss-dataviz-stacked-bar::after {
+  content: "";
+  display: block;
+  border-radius: 0;
+  transform-origin: bottom;
+}
+.roycss-dataviz-stacked-bar::before {
+  height: 30%;
+  background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
+  animation: roy-dataviz-stack-grow 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+}
+.roycss-dataviz-stacked-bar::after {
+  height: 50%;
+  background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+  animation: roy-dataviz-stack-grow 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0s both;
+  box-shadow: 0 -2px 4px rgba(16, 185, 129, 0.2);
+}
+@keyframes roy-dataviz-stack-grow {
+  0%   { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-dataviz-stacked-bar::before,
+  .roycss-dataviz-stacked-bar::after { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "dataviz-line-chart-draw",
+    name: "Line Chart Draw",
+    category: "data-viz",
+    description: "Trending line chart that draws itself across the canvas with a moving dot",
+    tags: ["data-viz", "line", "chart", "draw", "trend"],
+    previewType: "background",
+    cssCode: `/* DataViz: Line Chart Draw */
+.roycss-dataviz-line-chart-draw {
+  position: relative;
+  height: 100%;
+  background:
+    linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%),
+    repeating-linear-gradient(0deg, transparent 0, transparent 19px, rgba(99,102,241,0.08) 19px, rgba(99,102,241,0.08) 20px);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.roycss-dataviz-line-chart-draw::before {
+  content: "";
+  position: absolute;
+  left: 6%; right: 6%;
+  top: 60%;
+  height: 4px;
+  background: linear-gradient(90deg,
+    #6366f1 0%, #6366f1 25%,
+    transparent 25%, transparent 40%,
+    #6366f1 40%, #6366f1 65%,
+    transparent 65%, transparent 78%,
+    #6366f1 78%, #6366f1 100%);
+  transform-origin: left center;
+  transform: scaleX(0);
+  animation: roy-dataviz-line-draw 1.8s ease-out 0.2s forwards;
+  filter: drop-shadow(0 2px 4px rgba(99,102,241,0.4));
+}
+.roycss-dataviz-line-chart-draw::after {
+  content: "";
+  position: absolute;
+  left: 6%;
+  top: 60%;
+  width: 10px;
+  height: 10px;
+  margin-top: -3px;
+  margin-left: -5px;
+  background: #fff;
+  border: 3px solid #6366f1;
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(99,102,241,0.6);
+  animation: roy-dataviz-line-dot 1.8s ease-out 0.2s both;
+}
+@keyframes roy-dataviz-line-draw {
+  0%   { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+@keyframes roy-dataviz-line-dot {
+  0%   { left: 6%; top: 60%; }
+  40%  { left: 35%; top: 60%; }
+  65%  { left: 60%; top: 30%; }
+  100% { left: 94%; top: 30%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-dataviz-line-chart-draw::before,
+  .roycss-dataviz-line-chart-draw::after { animation: none; transform: scaleX(1); }
+}`
+  },
+  {
+    id: "dataviz-area-chart-fill",
+    name: "Area Chart Fill",
+    category: "data-viz",
+    description: "Area chart that fills from the bottom up with a clipped gradient sweep",
+    tags: ["data-viz", "area", "chart", "fill", "gradient"],
+    previewType: "background",
+    cssCode: `/* DataViz: Area Chart Fill */
+.roycss-dataviz-area-chart-fill {
+  position: relative;
+  height: 100%;
+  background: #f8fafc;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.roycss-dataviz-area-chart-fill::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 0;
+  height: 100%;
+  background:
+    linear-gradient(180deg, rgba(99,102,241,0.5) 0%, rgba(99,102,241,0.15) 60%, rgba(99,102,241,0.05) 100%);
+  clip-path: polygon(
+    0% 100%, 0% 60%, 15% 50%, 30% 70%, 45% 30%, 60% 45%, 75% 20%, 90% 35%, 100% 15%, 100% 100%
+  );
+  transform-origin: bottom;
+  transform: scaleY(0);
+  animation: roy-dataviz-area-fill 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.roycss-dataviz-area-chart-fill::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: 0;
+  height: 100%;
+  background:
+    repeating-linear-gradient(0deg, transparent 0, transparent 19px, rgba(99,102,241,0.06) 19px, rgba(99,102,241,0.06) 20px);
+  pointer-events: none;
+}
+@keyframes roy-dataviz-area-fill {
+  0%   { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-dataviz-area-chart-fill::before { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "dataviz-bubble-pulse",
+    name: "Bubble Pulse",
+    category: "data-viz",
+    description: "Data bubble that pulses outward with concentric rings to indicate activity",
+    tags: ["data-viz", "bubble", "pulse", "activity", "ring"],
+    previewType: "box",
+    cssCode: `/* DataViz: Bubble Pulse */
+.roycss-dataviz-bubble-pulse {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8fafc;
+  border-radius: 50%;
+}
+.roycss-dataviz-bubble-pulse::before,
+.roycss-dataviz-bubble-pulse::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid #6366f1;
+  animation: roy-dataviz-bubble-pulse 2s ease-out infinite;
+}
+.roycss-dataviz-bubble-pulse::before {
+  width: 36px;
+  height: 36px;
+  background: radial-gradient(circle at 30% 30%, #818cf8, #4f46e5);
+  box-shadow: 0 0 16px rgba(99,102,241,0.6);
+  animation: roy-dataviz-bubble-bob 2s ease-in-out infinite;
+}
+.roycss-dataviz-bubble-pulse::after {
+  width: 36px;
+  height: 36px;
+  border-color: #6366f1;
+  animation: roy-dataviz-bubble-ring 2s ease-out infinite;
+}
+@keyframes roy-dataviz-bubble-bob {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.12); }
+}
+@keyframes roy-dataviz-bubble-ring {
+  0%   { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-dataviz-bubble-pulse::before,
+  .roycss-dataviz-bubble-pulse::after { animation: none; }
+  .roycss-dataviz-bubble-pulse::after { opacity: 0; }
+}`
+  },
+  {
+    id: "dataviz-loading-skeleton",
+    name: "Loading Skeleton",
+    category: "data-viz",
+    description: "Skeleton placeholder with shimmering diagonal highlight sweeping across",
+    tags: ["data-viz", "skeleton", "loader", "shimmer", "placeholder"],
+    previewType: "box",
+    cssCode: `/* DataViz: Loading Skeleton */
+.roycss-dataviz-loading-skeleton {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+.roycss-dataviz-loading-skeleton::before,
+.roycss-dataviz-loading-skeleton::after {
+  content: "";
+  border-radius: 4px;
+  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+  background-size: 200% 100%;
+  animation: roy-dataviz-shimmer 1.6s ease-in-out infinite;
+}
+.roycss-dataviz-loading-skeleton::before {
+  height: 14px;
+  width: 80%;
+}
+.roycss-dataviz-loading-skeleton::after {
+  height: 14px;
+  width: 55%;
+}
+@keyframes roy-dataviz-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-dataviz-loading-skeleton::before,
+  .roycss-dataviz-loading-skeleton::after { animation: none; background: #e2e8f0; }
+}`
+  }
+];
+
+// src/lib/effects-batch-42.ts
+var effectsBatch42 = [
+  {
+    id: "state-skeleton-shimmer-gradient",
+    name: "Skeleton Shimmer Gradient",
+    category: "status-state",
+    description: "Gradient shimmer sweeping across a skeleton placeholder",
+    tags: ["status-state", "skeleton", "loading", "shimmer", "gradient", "infinite"],
+    previewType: "box",
+    cssCode: `/* Status: Skeleton Shimmer Gradient */
+.roycss-state-skeleton-shimmer-gradient {
+  background: linear-gradient(90deg,
+    oklch(0.92 0.005 250) 0%,
+    oklch(0.96 0.01 250) 45%,
+    oklch(0.99 0.01 250) 50%,
+    oklch(0.96 0.01 250) 55%,
+    oklch(0.92 0.005 250) 100%);
+  background-size: 220% 100%;
+  animation: roy-state-skeleton-shimmer-gradient 1.6s ease-in-out infinite;
+}
+@keyframes roy-state-skeleton-shimmer-gradient {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -120% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-state-skeleton-shimmer-gradient { animation: none; background-position: 0 0; }
+}`
+  },
+  {
+    id: "state-skeleton-pulse",
+    name: "Skeleton Pulse",
+    category: "status-state",
+    description: "Skeleton placeholder that pulses opacity in a breathing rhythm",
+    tags: ["status-state", "skeleton", "loading", "pulse", "infinite"],
+    previewType: "box",
+    cssCode: `/* Status: Skeleton Pulse */
+.roycss-state-skeleton-pulse {
+  background: oklch(0.92 0.005 250);
+  animation: roy-state-skeleton-pulse 1.4s ease-in-out infinite;
+}
+@keyframes roy-state-skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.45; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-state-skeleton-pulse { animation: none; opacity: 1; }
+}`
+  },
+  {
+    id: "state-skeleton-wave",
+    name: "Skeleton Wave",
+    category: "status-state",
+    description: "Skeleton with a diagonal wave shimmer sweeping across",
+    tags: ["status-state", "skeleton", "loading", "wave", "shimmer", "infinite"],
+    previewType: "box",
+    cssCode: `/* Status: Skeleton Wave */
+.roycss-state-skeleton-wave {
+  position: relative;
+  background: oklch(0.92 0.005 250);
+  overflow: hidden;
+}
+.roycss-state-skeleton-wave::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%) skewX(-18deg);
+  background: linear-gradient(90deg, transparent, oklch(0.99 0.01 250), transparent);
+  animation: roy-state-skeleton-wave 1.7s ease-in-out infinite;
+}
+@keyframes roy-state-skeleton-wave {
+  0%   { transform: translateX(-100%) skewX(-18deg); }
+  100% { transform: translateX(200%) skewX(-18deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-state-skeleton-wave::before { animation: none; display: none; }
+}`
+  },
+  {
+    id: "state-skeleton-dot",
+    name: "Skeleton Dot Pattern",
+    category: "status-state",
+    description: "Skeleton placeholder with animated dot pattern shimmer",
+    tags: ["status-state", "skeleton", "loading", "dots", "pattern", "infinite"],
+    previewType: "box",
+    cssCode: `/* Status: Skeleton Dot Pattern */
+.roycss-state-skeleton-dot {
+  background-color: oklch(0.92 0.005 250);
+  background-image: radial-gradient(oklch(0.78 0.01 250) 1.4px, transparent 1.6px);
+  background-size: 14px 14px;
+  animation: roy-state-skeleton-dot 1.2s linear infinite;
+}
+@keyframes roy-state-skeleton-dot {
+  0%   { background-position: 0 0; }
+  100% { background-position: 14px 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-state-skeleton-dot { animation: none; background-position: 0 0; }
+}`
+  },
+  {
+    id: "state-success-checkmark",
+    name: "Success Checkmark Draw",
+    category: "status-state",
+    description: "Checkmark that draws itself with a subtle celebratory glow",
+    tags: ["status-state", "success", "checkmark", "draw", "celebration", "svg-path"],
+    previewType: "box",
+    cssCode: `/* Status: Success Checkmark */
+.roycss-state-success-checkmark {
+  position: relative;
+  background: oklch(0.95 0.05 150);
+  border-radius: 50%;
+  animation: roy-state-success-checkmark-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.roycss-state-success-checkmark::before {
+  content: "";
+  position: absolute;
+  left: 28%;
+  top: 46%;
+  width: 36%;
+  height: 18%;
+  border-right: 4px solid oklch(0.55 0.18 150);
+  border-bottom: 4px solid oklch(0.55 0.18 150);
+  transform: rotate(45deg) translate(-10%, -10%) scale(0);
+  transform-origin: left top;
+  animation: roy-state-success-checkmark-draw 0.5s 0.35s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+@keyframes roy-state-success-checkmark-pop {
+  0%   { transform: scale(0); opacity: 0; }
+  60%  { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); }
+}
+@keyframes roy-state-success-checkmark-draw {
+  0%   { transform: rotate(45deg) translate(-10%, -10%) scale(0); opacity: 0; }
+  40%  { opacity: 1; }
+  100% { transform: rotate(45deg) translate(0, 0) scale(1); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-state-success-checkmark,
+  .roycss-state-success-checkmark::before { animation: none; transform: rotate(45deg) scale(1); opacity: 1; }
+}`
+  },
+  {
+    id: "state-success-confetti",
+    name: "Success Confetti Burst",
+    category: "status-state",
+    description: "Confetti pieces burst outward from center on success",
+    tags: ["status-state", "success", "confetti", "burst", "celebration"],
+    previewType: "box",
+    childCount: 6,
+    cssCode: `/* Status: Success Confetti Burst */
+.roycss-state-success-confetti {
+  position: relative;
+  background: oklch(0.97 0.02 200);
+  border-radius: 8px;
+}
+.roycss-state-success-confetti > span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  opacity: 0;
+  animation: roy-state-success-confetti 1.4s ease-out infinite;
+}
+.roycss-state-success-confetti > span:nth-child(1) { background: oklch(0.65 0.22 25);  --dx:  60px; --dy: -55px; animation-delay: 0s; }
+.roycss-state-success-confetti > span:nth-child(2) { background: oklch(0.65 0.22 145); --dx: -55px; --dy: -50px; animation-delay: 0.08s; }
+.roycss-state-success-confetti > span:nth-child(3) { background: oklch(0.65 0.22 265); --dx:  70px; --dy:  10px; animation-delay: 0.16s; }
+.roycss-state-success-confetti > span:nth-child(4) { background: oklch(0.7 0.18 90);  --dx: -60px; --dy:  20px; animation-delay: 0.24s; }
+.roycss-state-success-confetti > span:nth-child(5) { background: oklch(0.7 0.18 320); --dx:  30px; --dy:  60px; animation-delay: 0.32s; }
+.roycss-state-success-confetti > span:nth-child(6) { background: oklch(0.7 0.18 200); --dx: -35px; --dy:  55px; animation-delay: 0.4s; }
+@keyframes roy-state-success-confetti {
+  0%   { transform: translate(-50%, -50%) translate(0, 0) rotate(0deg) scale(0.6); opacity: 1; }
+  70%  { opacity: 1; }
+  100% { transform: translate(-50%, -50%) translate(var(--dx), var(--dy)) rotate(540deg) scale(1.1); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-state-success-confetti > span { animation: none; opacity: 0; }
+}`
+  },
+  {
+    id: "state-error-shake",
+    name: "Error Shake",
+    category: "status-state",
+    description: "Form field shakes horizontally to signal a validation error",
+    tags: ["status-state", "error", "shake", "validation", "feedback", "infinite"],
+    previewType: "box",
+    cssCode: `/* Status: Error Shake */
+.roycss-state-error-shake {
+  background: oklch(0.95 0.05 25);
+  border: 2px solid oklch(0.6 0.22 25);
+  border-radius: 6px;
+  animation: roy-state-error-shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+}
+@keyframes roy-state-error-shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-6px); }
+  20%, 40%, 60%, 80% { transform: translateX(6px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-state-error-shake { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "state-error-flash",
+    name: "Error Flash",
+    category: "status-state",
+    description: "Element briefly flashes red to signal an error state",
+    tags: ["status-state", "error", "flash", "feedback", "infinite"],
+    previewType: "box",
+    cssCode: `/* Status: Error Flash */
+.roycss-state-error-flash {
+  background: oklch(0.92 0.01 250);
+  border-radius: 6px;
+  animation: roy-state-error-flash 1.6s ease-out infinite;
+}
+@keyframes roy-state-error-flash {
+  0%, 70%, 100% { background-color: oklch(0.92 0.01 250); box-shadow: none; }
+  5%            { background-color: oklch(0.7 0.22 25); box-shadow: 0 0 0 4px oklch(0.7 0.22 25 / 0.35); }
+  20%           { background-color: oklch(0.92 0.01 250); box-shadow: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-state-error-flash { animation: none; background-color: oklch(0.92 0.01 250); }
+}`
+  },
+  {
+    id: "state-offline-pulse",
+    name: "Offline Pulse",
+    category: "status-state",
+    description: "Red status dot with expanding ring indicating offline state",
+    tags: ["status-state", "offline", "pulse", "dot", "indicator", "infinite"],
+    previewType: "box",
+    cssCode: `/* Status: Offline Pulse */
+.roycss-state-offline-pulse {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  margin: auto;
+  background: oklch(0.6 0.22 25);
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 oklch(0.6 0.22 25 / 0.55);
+  animation: roy-state-offline-pulse 1.8s ease-out infinite;
+}
+@keyframes roy-state-offline-pulse {
+  0%   { box-shadow: 0 0 0 0 oklch(0.6 0.22 25 / 0.55); }
+  70%  { box-shadow: 0 0 0 14px oklch(0.6 0.22 25 / 0); }
+  100% { box-shadow: 0 0 0 0 oklch(0.6 0.22 25 / 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-state-offline-pulse { animation: none; box-shadow: none; }
+}`
+  },
+  {
+    id: "state-online-pulse",
+    name: "Online Pulse",
+    category: "status-state",
+    description: "Green status dot with expanding ring indicating online state",
+    tags: ["status-state", "online", "pulse", "dot", "indicator", "infinite"],
+    previewType: "box",
+    cssCode: `/* Status: Online Pulse */
+.roycss-state-online-pulse {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  margin: auto;
+  background: oklch(0.6 0.2 150);
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 oklch(0.6 0.2 150 / 0.55);
+  animation: roy-state-online-pulse 2s ease-out infinite;
+}
+@keyframes roy-state-online-pulse {
+  0%   { box-shadow: 0 0 0 0 oklch(0.6 0.2 150 / 0.55); }
+  70%  { box-shadow: 0 0 0 16px oklch(0.6 0.2 150 / 0); }
+  100% { box-shadow: 0 0 0 0 oklch(0.6 0.2 150 / 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-state-online-pulse { animation: none; box-shadow: none; }
+}`
+  },
+  {
+    id: "state-sync-spin",
+    name: "Sync Spin",
+    category: "status-state",
+    description: "Two curved arrows rotating to indicate data synchronization",
+    tags: ["status-state", "sync", "spin", "rotate", "arrows", "infinite"],
+    previewType: "box",
+    cssCode: `/* Status: Sync Spin */
+.roycss-state-sync-spin {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  margin: auto;
+  border: 4px solid oklch(0.9 0.04 230);
+  border-top-color: oklch(0.55 0.2 230);
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: roy-state-sync-spin 1s linear infinite;
+}
+.roycss-state-sync-spin::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 4px solid transparent;
+  border-bottom-color: oklch(0.55 0.2 230);
+  border-left-color: oklch(0.55 0.2 230);
+  border-radius: 50%;
+  animation: roy-state-sync-spin-reverse 1s linear infinite;
+}
+@keyframes roy-state-sync-spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes roy-state-sync-spin-reverse {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-state-sync-spin,
+  .roycss-state-sync-spin::before { animation: none; }
+}`
+  },
+  {
+    id: "state-upload-progress",
+    name: "Upload Progress",
+    category: "status-state",
+    description: "Indeterminate upload bar with a moving highlight stripe",
+    tags: ["status-state", "upload", "progress", "bar", "indeterminate", "infinite"],
+    previewType: "box",
+    cssCode: `/* Status: Upload Progress */
+.roycss-state-upload-progress {
+  position: relative;
+  width: 100%;
+  height: 14px;
+  margin: auto;
+  background: oklch(0.92 0.01 250);
+  border-radius: 7px;
+  overflow: hidden;
+}
+.roycss-state-upload-progress::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: linear-gradient(90deg, oklch(0.55 0.2 230), oklch(0.65 0.22 200));
+  border-radius: 7px;
+  animation: roy-state-upload-progress 1.6s ease-in-out infinite;
+}
+.roycss-state-upload-progress::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: repeating-linear-gradient(45deg,
+    oklch(1 0 0 / 0.18) 0 8px,
+    oklch(1 0 0 / 0) 8px 16px);
+  border-radius: 7px;
+  animation: roy-state-upload-progress 1.6s ease-in-out infinite;
+}
+@keyframes roy-state-upload-progress {
+  0%   { left: -40%; }
+  100% { left: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-state-upload-progress::before,
+  .roycss-state-upload-progress::after { animation: none; left: 0; }
+}`
+  },
+  {
+    id: "state-connection-bars",
+    name: "Connection Bars",
+    category: "status-state",
+    description: "WiFi/signal strength bars that animate in sequence",
+    tags: ["status-state", "connection", "wifi", "signal", "bars", "infinite"],
+    previewType: "box",
+    childCount: 4,
+    cssCode: `/* Status: Connection Bars */
+.roycss-state-connection-bars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+  height: 100%;
+}
+.roycss-state-connection-bars > span {
+  width: 8px;
+  background: oklch(0.55 0.2 230);
+  border-radius: 2px;
+  opacity: 0.3;
+  animation: roy-state-connection-bars 1.6s ease-in-out infinite;
+}
+.roycss-state-connection-bars > span:nth-child(1) { height: 25%; animation-delay: 0s; }
+.roycss-state-connection-bars > span:nth-child(2) { height: 50%; animation-delay: 0.2s; }
+.roycss-state-connection-bars > span:nth-child(3) { height: 75%; animation-delay: 0.4s; }
+.roycss-state-connection-bars > span:nth-child(4) { height: 100%; animation-delay: 0.6s; }
+@keyframes roy-state-connection-bars {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  30%, 70% { opacity: 1; transform: scaleY(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-state-connection-bars > span { animation: none; opacity: 1; }
+}`
+  },
+  {
+    id: "state-loading-dots",
+    name: "Loading Dots",
+    category: "status-state",
+    description: "Three classic bouncing dots loading animation",
+    tags: ["status-state", "loading", "dots", "bounce", "classic", "infinite"],
+    previewType: "box",
+    childCount: 3,
+    cssCode: `/* Status: Loading Dots */
+.roycss-state-loading-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 100%;
+}
+.roycss-state-loading-dots > span {
+  width: 12px;
+  height: 12px;
+  background: oklch(0.55 0.2 230);
+  border-radius: 50%;
+  animation: roy-state-loading-dots 1.2s ease-in-out infinite;
+}
+.roycss-state-loading-dots > span:nth-child(1) { animation-delay: 0s; }
+.roycss-state-loading-dots > span:nth-child(2) { animation-delay: 0.18s; }
+.roycss-state-loading-dots > span:nth-child(3) { animation-delay: 0.36s; }
+@keyframes roy-state-loading-dots {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40%           { transform: translateY(-14px); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-state-loading-dots > span { animation: none; opacity: 1; transform: none; }
+}`
+  },
+  {
+    id: "state-loading-spinner",
+    name: "Loading Spinner Fade",
+    category: "status-state",
+    description: "Clean spinner ring with a fading tail segment",
+    tags: ["status-state", "loading", "spinner", "fade", "ring", "infinite"],
+    previewType: "box",
+    cssCode: `/* Status: Loading Spinner Fade */
+.roycss-state-loading-spinner {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  margin: auto;
+  border: 4px solid oklch(0.9 0.01 250);
+  border-top-color: oklch(0.55 0.2 230);
+  border-radius: 50%;
+  animation: roy-state-loading-spinner 0.9s linear infinite;
+}
+.roycss-state-loading-spinner::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border: 4px solid transparent;
+  border-top-color: oklch(0.55 0.2 230 / 0.35);
+  border-radius: 50%;
+  animation: roy-state-loading-spinner-fade 0.9s linear infinite reverse;
+}
+@keyframes roy-state-loading-spinner {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes roy-state-loading-spinner-fade {
+  0%   { transform: rotate(0deg); opacity: 0.2; }
+  50%  { opacity: 0.6; }
+  100% { transform: rotate(360deg); opacity: 0.2; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-state-loading-spinner,
+  .roycss-state-loading-spinner::before { animation: none; }
+}`
+  },
+  {
+    id: "state-loading-bar",
+    name: "Indeterminate Loading Bar",
+    category: "status-state",
+    description: "Indeterminate progress bar that sweeps back and forth",
+    tags: ["status-state", "loading", "bar", "indeterminate", "progress", "infinite"],
+    previewType: "box",
+    cssCode: `/* Status: Indeterminate Loading Bar */
+.roycss-state-loading-bar {
+  position: relative;
+  width: 100%;
+  height: 6px;
+  margin: auto;
+  background: oklch(0.92 0.01 250);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.roycss-state-loading-bar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -35%;
+  width: 35%;
+  height: 100%;
+  background: oklch(0.55 0.2 230);
+  border-radius: 3px;
+  animation: roy-state-loading-bar 1.4s ease-in-out infinite;
+}
+@keyframes roy-state-loading-bar {
+  0%   { left: -35%; }
+  50%  { left: 100%; }
+  100% { left: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-state-loading-bar::before { animation: none; left: 0; width: 50%; }
+}`
+  },
+  {
+    id: "state-toggle-switch",
+    name: "Toggle Switch",
+    category: "status-state",
+    description: "Smooth toggle switch that animates between on and off states",
+    tags: ["status-state", "toggle", "switch", "slide", "on-off", "infinite"],
+    previewType: "box",
+    cssCode: `/* Status: Toggle Switch */
+.roycss-state-toggle-switch {
+  position: relative;
+  width: 64px;
+  height: 32px;
+  margin: auto;
+  border-radius: 16px;
+  background: oklch(0.9 0.01 250);
+  animation: roy-state-toggle-track 2s ease-in-out infinite;
+}
+.roycss-state-toggle-switch::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: oklch(1 0 0);
+  box-shadow: 0 2px 6px oklch(0 0 0 / 0.2);
+  animation: roy-state-toggle-knob 2s ease-in-out infinite;
+}
+@keyframes roy-state-toggle-track {
+  0%, 45%   { background: oklch(0.9 0.01 250); }
+  55%, 100% { background: oklch(0.55 0.2 150); }
+}
+@keyframes roy-state-toggle-knob {
+  0%, 45%   { left: 3px; }
+  55%, 100% { left: 35px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-state-toggle-switch,
+  .roycss-state-toggle-switch::before { animation: none; }
+}`
+  },
+  {
+    id: "state-checkbox-check",
+    name: "Checkbox Check",
+    category: "status-state",
+    description: "Checkbox that animates the checkmark drawing on and off",
+    tags: ["status-state", "checkbox", "checkmark", "draw", "toggle", "infinite"],
+    previewType: "box",
+    cssCode: `/* Status: Checkbox Check */
+.roycss-state-checkbox-check {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  margin: auto;
+  border-radius: 6px;
+  animation: roy-state-checkbox-bg 2s steps(1, end) infinite;
+}
+.roycss-state-checkbox-check::before {
+  content: "";
+  position: absolute;
+  left: 28%;
+  top: 48%;
+  width: 36%;
+  height: 18%;
+  border-right: 3px solid oklch(1 0 0);
+  border-bottom: 3px solid oklch(1 0 0);
+  transform: rotate(45deg) scale(0);
+  transform-origin: left top;
+  animation: roy-state-checkbox-draw 2s ease-in-out infinite;
+}
+@keyframes roy-state-checkbox-bg {
+  0%, 45%   { background: oklch(0.9 0.01 250); }
+  50%, 100% { background: oklch(0.55 0.2 230); }
+}
+@keyframes roy-state-checkbox-draw {
+  0%, 45%   { transform: rotate(45deg) scale(0); }
+  55%, 90%  { transform: rotate(45deg) scale(1); }
+  100%      { transform: rotate(45deg) scale(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-state-checkbox-check,
+  .roycss-state-checkbox-check::before { animation: none; }
+  .roycss-state-checkbox-check { background: oklch(0.55 0.2 230); }
+  .roycss-state-checkbox-check::before { transform: rotate(45deg) scale(1); }
+}`
+  },
+  {
+    id: "state-radio-select",
+    name: "Radio Select",
+    category: "status-state",
+    description: "Radio button with inner dot that scales in on selection",
+    tags: ["status-state", "radio", "select", "dot", "scale", "infinite"],
+    previewType: "box",
+    cssCode: `/* Status: Radio Select */
+.roycss-state-radio-select {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  margin: auto;
+  border-radius: 50%;
+  border: 2px solid oklch(0.55 0.2 230);
+  animation: roy-state-radio-ring 2s ease-in-out infinite;
+}
+.roycss-state-radio-select::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: oklch(0.55 0.2 230);
+  transform: translate(-50%, -50%) scale(0);
+  animation: roy-state-radio-dot 2s ease-in-out infinite;
+}
+@keyframes roy-state-radio-ring {
+  0%, 100% { border-color: oklch(0.55 0.2 230); }
+  50%      { border-color: oklch(0.6 0.22 200); }
+}
+@keyframes roy-state-radio-dot {
+  0%, 40%   { transform: translate(-50%, -50%) scale(0); }
+  55%, 90%  { transform: translate(-50%, -50%) scale(1); }
+  100%      { transform: translate(-50%, -50%) scale(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-state-radio-select,
+  .roycss-state-radio-select::before { animation: none; }
+  .roycss-state-radio-select::before { transform: translate(-50%, -50%) scale(1); }
+}`
+  },
+  {
+    id: "state-toast-slide",
+    name: "Toast Slide In",
+    category: "status-state",
+    description: "Toast notification that slides in, holds, and slides out",
+    tags: ["status-state", "toast", "notification", "slide", "in-out", "feedback"],
+    previewType: "box",
+    cssCode: `/* Status: Toast Slide In */
+.roycss-state-toast-slide {
+  position: relative;
+  background: linear-gradient(135deg, oklch(0.3 0.02 230), oklch(0.22 0.02 230));
+  color: oklch(0.98 0 0);
+  border-radius: 8px;
+  border-left: 4px solid oklch(0.6 0.2 150);
+  animation: roy-state-toast-slide 3s ease-in-out infinite;
+}
+@keyframes roy-state-toast-slide {
+  0%        { transform: translateX(120%); opacity: 0; }
+  10%, 75%  { transform: translateX(0); opacity: 1; }
+  90%, 100% { transform: translateX(120%); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-state-toast-slide { animation: none; transform: none; opacity: 1; }
+}`
+  }
+];
+
+// src/lib/effects-batch-43.ts
+var effectsBatch43 = [
+  {
+    id: "audio-equalizer-bars",
+    name: "Equalizer Bars",
+    category: "audio",
+    description: "Vertical bars simulating frequency response with staggered heights",
+    tags: ["audio", "equalizer", "bars", "frequency", "music", "infinite"],
+    previewType: "box",
+    childCount: 5,
+    cssCode: `/* Audio: Equalizer Bars */
+.roycss-audio-equalizer-bars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+  height: 100%;
+}
+.roycss-audio-equalizer-bars > span {
+  width: 8px;
+  background: linear-gradient(to top, oklch(0.55 0.22 230), oklch(0.7 0.22 200));
+  border-radius: 2px;
+  animation: roy-audio-equalizer-bars 1s ease-in-out infinite;
+}
+.roycss-audio-equalizer-bars > span:nth-child(1) { animation-delay: 0s;   animation-duration: 0.9s; }
+.roycss-audio-equalizer-bars > span:nth-child(2) { animation-delay: 0.2s; animation-duration: 1.1s; }
+.roycss-audio-equalizer-bars > span:nth-child(3) { animation-delay: 0.4s; animation-duration: 0.8s; }
+.roycss-audio-equalizer-bars > span:nth-child(4) { animation-delay: 0.1s; animation-duration: 1.2s; }
+.roycss-audio-equalizer-bars > span:nth-child(5) { animation-delay: 0.3s; animation-duration: 1s; }
+@keyframes roy-audio-equalizer-bars {
+  0%, 100% { height: 25%; }
+  50%      { height: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-audio-equalizer-bars > span { animation: none; height: 60%; }
+}`
+  },
+  {
+    id: "audio-vinyl-spin",
+    name: "Vinyl Spin",
+    category: "audio",
+    description: "Rotating vinyl record with concentric grooves and a tone arm",
+    tags: ["audio", "vinyl", "record", "spin", "rotate", "grooves", "infinite"],
+    previewType: "box",
+    cssCode: `/* Audio: Vinyl Spin */
+.roycss-audio-vinyl-spin {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, oklch(0.7 0.18 25) 0 14%, oklch(0.1 0 0) 14% 16%, oklch(0.15 0 0) 16% 100%),
+    repeating-radial-gradient(circle, oklch(0.15 0 0) 0 1px, oklch(0.12 0 0) 1px 3px);
+  animation: roy-audio-vinyl-spin 3s linear infinite;
+}
+.roycss-audio-vinyl-spin::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: oklch(0.3 0 0);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.roycss-audio-vinyl-spin::after {
+  content: "";
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  width: 50%;
+  height: 4px;
+  background: oklch(0.4 0 0);
+  transform-origin: right center;
+  transform: rotate(35deg);
+  border-radius: 2px;
+}
+@keyframes roy-audio-vinyl-spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-audio-vinyl-spin { animation: none; }
+}`
+  },
+  {
+    id: "audio-wave-pulse",
+    name: "Sound Wave Pulse",
+    category: "audio",
+    description: "Concentric circles expanding outward like sound waves from a source",
+    tags: ["audio", "wave", "pulse", "ripple", "concentric", "sound", "infinite"],
+    previewType: "box",
+    cssCode: `/* Audio: Sound Wave Pulse */
+.roycss-audio-wave-pulse {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  margin: auto;
+  border-radius: 50%;
+  background: oklch(0.55 0.2 230);
+}
+.roycss-audio-wave-pulse::before,
+.roycss-audio-wave-pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid oklch(0.55 0.2 230 / 0.6);
+  animation: roy-audio-wave-pulse 2s ease-out infinite;
+}
+.roycss-audio-wave-pulse::after { animation-delay: 1s; }
+@keyframes roy-audio-wave-pulse {
+  0%   { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(3.5); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-audio-wave-pulse::before,
+  .roycss-audio-wave-pulse::after { animation: none; opacity: 0; }
+}`
+  },
+  {
+    id: "audio-speaker-vibrate",
+    name: "Speaker Vibrate",
+    category: "audio",
+    description: "Speaker cone that pulses and vibrates as if emitting sound",
+    tags: ["audio", "speaker", "vibrate", "pulse", "cone", "infinite"],
+    previewType: "box",
+    cssCode: `/* Audio: Speaker Vibrate */
+.roycss-audio-speaker-vibrate {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: auto;
+  background: linear-gradient(135deg, oklch(0.3 0.02 230), oklch(0.22 0.02 230));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: roy-audio-speaker-vibrate 0.4s ease-in-out infinite;
+}
+.roycss-audio-speaker-vibrate::before {
+  content: "";
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(0.2 0 0) 0 30%, oklch(0.45 0.04 230) 30% 60%, oklch(0.25 0.02 230) 60% 100%);
+  animation: roy-audio-speaker-cone 0.4s ease-in-out infinite;
+}
+.roycss-audio-speaker-vibrate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  border: 2px solid oklch(0.6 0.2 230 / 0.5);
+  animation: roy-audio-speaker-ring 1.2s ease-out infinite;
+}
+@keyframes roy-audio-speaker-vibrate {
+  0%, 100% { transform: translate(0, 0); }
+  25%      { transform: translate(-1px, 1px); }
+  75%      { transform: translate(1px, -1px); }
+}
+@keyframes roy-audio-speaker-cone {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(0.92); }
+}
+@keyframes roy-audio-speaker-ring {
+  0%   { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-audio-speaker-vibrate,
+  .roycss-audio-speaker-vibrate::before,
+  .roycss-audio-speaker-vibrate::after { animation: none; }
+}`
+  },
+  {
+    id: "audio-waveform-sine",
+    name: "Sine Waveform",
+    category: "audio",
+    description: "Animated sine wave that flows horizontally like an audio signal",
+    tags: ["audio", "waveform", "sine", "wave", "signal", "infinite"],
+    previewType: "background",
+    cssCode: `/* Audio: Sine Waveform */
+.roycss-audio-waveform-sine {
+  background:
+    radial-gradient(ellipse 20% 50% at 20% 50%, oklch(0.6 0.2 230 / 0.5), transparent 70%),
+    radial-gradient(ellipse 20% 50% at 60% 50%, oklch(0.6 0.2 230 / 0.5), transparent 70%),
+    radial-gradient(ellipse 20% 50% at 100% 50%, oklch(0.6 0.2 230 / 0.5), transparent 70%);
+  background-size: 60% 100%, 60% 100%, 60% 100%;
+  background-repeat: no-repeat;
+  background-position: 0 50%, 0 50%, 0 50%;
+  animation: roy-audio-waveform-sine 2s linear infinite;
+}
+.roycss-audio-waveform-sine::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 100'><path d='M0 50 Q 25 0 50 50 T 100 50 T 150 50 T 200 50' fill='none' stroke='oklch(0.55 0.2 230)' stroke-width='3'/></svg>");
+  background-size: 60% 100%;
+  background-repeat: repeat-x;
+  background-position: 0 50%;
+  animation: roy-audio-waveform-sine-flow 2s linear infinite;
+}
+@keyframes roy-audio-waveform-sine {
+  0%   { background-position: 0% 50%, 0% 50%, 0% 50%; }
+  100% { background-position: 100% 50%, 100% 50%, 100% 50%; }
+}
+@keyframes roy-audio-waveform-sine-flow {
+  0%   { background-position-x: 0%; }
+  100% { background-position-x: 60%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-audio-waveform-sine,
+  .roycss-audio-waveform-sine::before { animation: none; }
+}`
+  },
+  {
+    id: "audio-waveform-square",
+    name: "Square Waveform",
+    category: "audio",
+    description: "Animated square wave that scrolls horizontally like a digital signal",
+    tags: ["audio", "waveform", "square", "wave", "signal", "digital", "infinite"],
+    previewType: "background",
+    cssCode: `/* Audio: Square Waveform */
+.roycss-audio-waveform-square {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 100'><path d='M0 80 L 0 20 L 50 20 L 50 80 L 100 80 L 100 20 L 150 20 L 150 80 L 200 80 L 200 20' fill='none' stroke='oklch(0.55 0.2 25)' stroke-width='3'/></svg>");
+  background-size: 50% 100%;
+  background-repeat: repeat-x;
+  background-position: 0 50%;
+  background-color: oklch(0.96 0.01 250);
+  animation: roy-audio-waveform-square 1.5s linear infinite;
+}
+@keyframes roy-audio-waveform-square {
+  0%   { background-position-x: 0%; }
+  100% { background-position-x: 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-audio-waveform-square { animation: none; }
+}`
+  },
+  {
+    id: "audio-note-float",
+    name: "Floating Music Notes",
+    category: "audio",
+    description: "Musical notes floating upward and fading like an audio visualization",
+    tags: ["audio", "note", "music", "float", "fade", "rising", "infinite"],
+    previewType: "box",
+    childCount: 4,
+    cssCode: `/* Audio: Floating Music Notes */
+.roycss-audio-note-float {
+  position: relative;
+  background: oklch(0.97 0.02 250);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.roycss-audio-note-float > span {
+  position: absolute;
+  bottom: -20%;
+  font-size: 24px;
+  line-height: 1;
+  color: oklch(0.55 0.2 230);
+  opacity: 0;
+  animation: roy-audio-note-float 3s ease-out infinite;
+}
+.roycss-audio-note-float > span:nth-child(1) { left: 15%; animation-delay: 0s; }
+.roycss-audio-note-float > span:nth-child(2) { left: 45%; animation-delay: 0.75s; }
+.roycss-audio-note-float > span:nth-child(3) { left: 70%; animation-delay: 1.5s; }
+.roycss-audio-note-float > span:nth-child(4) { left: 30%; animation-delay: 2.25s; }
+@keyframes roy-audio-note-float {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10%  { opacity: 1; }
+  100% { transform: translateY(-260px) rotate(20deg); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-audio-note-float > span { animation: none; opacity: 0; }
+}`
+  },
+  {
+    id: "audio-visualizer-circle",
+    name: "Circular Visualizer",
+    category: "audio",
+    description: "Circular audio visualizer with pulsing concentric rings",
+    tags: ["audio", "visualizer", "circular", "pulse", "ring", "infinite"],
+    previewType: "box",
+    cssCode: `/* Audio: Circular Visualizer */
+.roycss-audio-visualizer-circle {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: auto;
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(0.55 0.2 230) 0 30%, transparent 30%);
+  animation: roy-audio-visualizer-circle-core 1s ease-in-out infinite;
+}
+.roycss-audio-visualizer-circle::before,
+.roycss-audio-visualizer-circle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid oklch(0.6 0.2 230);
+  animation: roy-audio-visualizer-circle-ring 1.5s ease-out infinite;
+}
+.roycss-audio-visualizer-circle::after { animation-delay: 0.75s; }
+@keyframes roy-audio-visualizer-circle-core {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(0.85); }
+}
+@keyframes roy-audio-visualizer-circle-ring {
+  0%   { transform: scale(1); opacity: 0.8; border-width: 3px; }
+  100% { transform: scale(2); opacity: 0; border-width: 1px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-audio-visualizer-circle,
+  .roycss-audio-visualizer-circle::before,
+  .roycss-audio-visualizer-circle::after { animation: none; }
+  .roycss-audio-visualizer-circle::before,
+  .roycss-audio-visualizer-circle::after { opacity: 0; }
+}`
+  },
+  {
+    id: "audio-beat-pulse",
+    name: "Beat Pulse",
+    category: "audio",
+    description: "Element pulses on a simulated musical beat with overshoot",
+    tags: ["audio", "beat", "pulse", "bass", "rhythm", "infinite"],
+    previewType: "box",
+    cssCode: `/* Audio: Beat Pulse */
+.roycss-audio-beat-pulse {
+  background: linear-gradient(135deg, oklch(0.6 0.22 25), oklch(0.55 0.22 320));
+  border-radius: 8px;
+  animation: roy-audio-beat-pulse 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+}
+@keyframes roy-audio-beat-pulse {
+  0%, 60%, 100% { transform: scale(1); box-shadow: 0 0 0 0 oklch(0.6 0.22 25 / 0.5); }
+  10%           { transform: scale(1.12); box-shadow: 0 0 0 16px oklch(0.6 0.22 25 / 0); }
+  20%           { transform: scale(1); }
+  35%           { transform: scale(1.06); box-shadow: 0 0 0 10px oklch(0.6 0.22 25 / 0); }
+  45%           { transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-audio-beat-pulse { animation: none; transform: none; box-shadow: none; }
+}`
+  },
+  {
+    id: "audio-frequency-bars",
+    name: "Frequency Spectrum",
+    category: "audio",
+    description: "Full frequency spectrum bars with mirrored top and bottom halves",
+    tags: ["audio", "frequency", "spectrum", "bars", "mirror", "infinite"],
+    previewType: "box",
+    childCount: 7,
+    cssCode: `/* Audio: Frequency Spectrum */
+.roycss-audio-frequency-bars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 100%;
+}
+.roycss-audio-frequency-bars > span {
+  width: 6px;
+  background: linear-gradient(to top,
+    oklch(0.6 0.22 25) 0%,
+    oklch(0.6 0.22 90) 40%,
+    oklch(0.7 0.2 0) 50%,
+    oklch(0.6 0.22 90) 60%,
+    oklch(0.6 0.22 25) 100%);
+  border-radius: 2px;
+  animation: roy-audio-frequency-bars 1.2s ease-in-out infinite;
+}
+.roycss-audio-frequency-bars > span:nth-child(1) { animation-delay: 0s;   animation-duration: 1.4s; }
+.roycss-audio-frequency-bars > span:nth-child(2) { animation-delay: 0.1s; animation-duration: 0.9s; }
+.roycss-audio-frequency-bars > span:nth-child(3) { animation-delay: 0.2s; animation-duration: 1.1s; }
+.roycss-audio-frequency-bars > span:nth-child(4) { animation-delay: 0.3s; animation-duration: 0.8s; }
+.roycss-audio-frequency-bars > span:nth-child(5) { animation-delay: 0.15s; animation-duration: 1.2s; }
+.roycss-audio-frequency-bars > span:nth-child(6) { animation-delay: 0.25s; animation-duration: 1s; }
+.roycss-audio-frequency-bars > span:nth-child(7) { animation-delay: 0.05s; animation-duration: 1.3s; }
+@keyframes roy-audio-frequency-bars {
+  0%, 100% { height: 20%; }
+  50%      { height: 90%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-audio-frequency-bars > span { animation: none; height: 50%; }
+}`
+  },
+  {
+    id: "audio-ripple-effect",
+    name: "Sound Ripple",
+    category: "audio",
+    description: "Ripple expanding from a sound source with multiple staggered rings",
+    tags: ["audio", "ripple", "sound", "source", "expanding", "infinite"],
+    previewType: "box",
+    cssCode: `/* Audio: Sound Ripple Effect */
+.roycss-audio-ripple-effect {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  margin: auto;
+  border-radius: 50%;
+  background: oklch(0.55 0.2 230);
+}
+.roycss-audio-ripple-effect::before,
+.roycss-audio-ripple-effect::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid oklch(0.55 0.2 230);
+  animation: roy-audio-ripple-effect 2.4s ease-out infinite;
+}
+.roycss-audio-ripple-effect::after { animation-delay: 0.8s; }
+@keyframes roy-audio-ripple-effect {
+  0%   { transform: scale(1); opacity: 0.7; border-width: 4px; }
+  50%  { opacity: 0.3; border-width: 2px; }
+  100% { transform: scale(4); opacity: 0; border-width: 1px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-audio-ripple-effect::before,
+  .roycss-audio-ripple-effect::after { animation: none; opacity: 0; }
+}`
+  },
+  {
+    id: "audio-vu-meter",
+    name: "VU Meter",
+    category: "audio",
+    description: "Classic VU meter with needle that sweeps across the scale",
+    tags: ["audio", "vu-meter", "needle", "gauge", "volume", "infinite"],
+    previewType: "box",
+    cssCode: `/* Audio: VU Meter */
+.roycss-audio-vu-meter {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right,
+    oklch(0.7 0.2 150) 0% 60%,
+    oklch(0.85 0.18 90) 60% 85%,
+    oklch(0.65 0.22 25) 85% 100%);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.roycss-audio-vu-meter::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: oklch(0.15 0 0);
+  transform-origin: top left;
+  animation: roy-audio-vu-meter 1.6s ease-in-out infinite;
+}
+.roycss-audio-vu-meter::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg,
+    oklch(0 0 0 / 0.1) 0 1px,
+    transparent 1px 12px);
+}
+@keyframes roy-audio-vu-meter {
+  0%   { transform: rotate(0deg); left: 5%; }
+  40%  { transform: rotate(0deg); left: 70%; }
+  55%  { transform: rotate(0deg); left: 92%; }
+  70%  { transform: rotate(0deg); left: 45%; }
+  100% { transform: rotate(0deg); left: 5%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-audio-vu-meter::before { animation: none; left: 50%; }
+}`
+  },
+  {
+    id: "audio-cassette-spin",
+    name: "Cassette Tape Spin",
+    category: "audio",
+    description: "Cassette tape with two reels rotating in opposite directions",
+    tags: ["audio", "cassette", "tape", "reel", "spin", "retro", "infinite"],
+    previewType: "box",
+    cssCode: `/* Audio: Cassette Tape Spin */
+.roycss-audio-cassette-spin {
+  position: relative;
+  width: 120px;
+  height: 70px;
+  margin: auto;
+  background: linear-gradient(135deg, oklch(0.3 0.04 230), oklch(0.22 0.04 230));
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.roycss-audio-cassette-spin::before,
+.roycss-audio-cassette-spin::after {
+  content: "";
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, oklch(0.85 0 0) 0 12%, transparent 12% 18%, oklch(0.5 0 0) 18% 70%, oklch(0.2 0 0) 70% 100%),
+    conic-gradient(from 0deg, oklch(0.7 0 0), oklch(0.4 0 0), oklch(0.7 0 0), oklch(0.4 0 0), oklch(0.7 0 0), oklch(0.4 0 0), oklch(0.7 0 0), oklch(0.4 0 0));
+  animation: roy-audio-cassette-spin 1.5s linear infinite;
+}
+.roycss-audio-cassette-spin::after { animation-direction: reverse; }
+@keyframes roy-audio-cassette-spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-audio-cassette-spin::before,
+  .roycss-audio-cassette-spin::after { animation: none; }
+}`
+  },
+  {
+    id: "audio-headphone-bounce",
+    name: "Headphone Bounce",
+    category: "audio",
+    description: "Headphone icon bouncing rhythmically on a simulated beat",
+    tags: ["audio", "headphone", "bounce", "beat", "rhythm", "icon", "infinite"],
+    previewType: "box",
+    cssCode: `/* Audio: Headphone Bounce */
+.roycss-audio-headphone-bounce {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  margin: auto;
+  border-radius: 50% 50% 0 0 / 80% 80% 0 0;
+  border: 5px solid oklch(0.4 0.04 230);
+  border-bottom: none;
+  background: transparent;
+  animation: roy-audio-headphone-bounce 0.8s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+.roycss-audio-headphone-bounce::before,
+.roycss-audio-headphone-bounce::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  width: 14px;
+  height: 22px;
+  background: oklch(0.4 0.04 230);
+  border-radius: 4px;
+}
+.roycss-audio-headphone-bounce::before { left: -5px; }
+.roycss-audio-headphone-bounce::after  { right: -5px; }
+@keyframes roy-audio-headphone-bounce {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  30%      { transform: translateY(-8px) scale(1.05, 0.95); }
+  60%      { transform: translateY(0) scale(0.95, 1.05); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-audio-headphone-bounce { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "audio-sound-icon-wave",
+    name: "Sound Icon Waves",
+    category: "audio",
+    description: "Speaker icon with animated concentric sound waves emanating outward",
+    tags: ["audio", "sound", "icon", "speaker", "waves", "volume", "infinite"],
+    previewType: "box",
+    cssCode: `/* Audio: Sound Icon Waves */
+.roycss-audio-sound-icon-wave {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.roycss-audio-sound-icon-wave::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 0 10px 18px;
+  border-color: transparent transparent transparent oklch(0.4 0.04 230);
+  flex-shrink: 0;
+}
+.roycss-audio-sound-icon-wave::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 3px solid oklch(0.55 0.2 230);
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  transform: translateY(-50%) rotate(45deg);
+  animation: roy-audio-sound-icon-wave 1.4s ease-in-out infinite;
+}
+@keyframes roy-audio-sound-icon-wave {
+  0%, 100% { opacity: 0; transform: translateY(-50%) rotate(45deg) scale(0.6); }
+  50%      { opacity: 1; transform: translateY(-50%) rotate(45deg) scale(1.1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-audio-sound-icon-wave::after { animation: none; opacity: 1; transform: translateY(-50%) rotate(45deg) scale(1); }
+}`
+  },
+  {
+    id: "audio-mic-pulse",
+    name: "Mic Pulse",
+    category: "audio",
+    description: "Microphone pulsing with a recording ring while in active recording",
+    tags: ["audio", "mic", "microphone", "pulse", "recording", "ring", "infinite"],
+    previewType: "box",
+    cssCode: `/* Audio: Mic Pulse */
+.roycss-audio-mic-pulse {
+  position: relative;
+  width: 40px;
+  height: 56px;
+  margin: auto;
+  background: oklch(0.6 0.22 25);
+  border-radius: 20px;
+  animation: roy-audio-mic-pulse-glow 1.2s ease-in-out infinite;
+}
+.roycss-audio-mic-pulse::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 24px;
+  height: 12px;
+  border: 3px solid oklch(0.6 0.22 25);
+  border-top: none;
+  border-radius: 0 0 24px 24px;
+  transform: translateX(-50%);
+}
+.roycss-audio-mic-pulse::after {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 28px;
+  border: 2px solid oklch(0.6 0.22 25);
+  animation: roy-audio-mic-pulse-ring 1.2s ease-out infinite;
+}
+@keyframes roy-audio-mic-pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 oklch(0.6 0.22 25 / 0.5); }
+  50%      { box-shadow: 0 0 12px 4px oklch(0.6 0.22 25 / 0.4); }
+}
+@keyframes roy-audio-mic-pulse-ring {
+  0%   { transform: scale(0.9); opacity: 0.7; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-audio-mic-pulse,
+  .roycss-audio-mic-pulse::after { animation: none; }
+  .roycss-audio-mic-pulse::after { opacity: 0; }
+}`
+  },
+  {
+    id: "audio-play-to-pause",
+    name: "Play to Pause Morph",
+    category: "audio",
+    description: "Play triangle that morphs into a pause bar and back",
+    tags: ["audio", "play", "pause", "morph", "media", "toggle", "infinite"],
+    previewType: "box",
+    cssCode: `/* Audio: Play to Pause Morph */
+.roycss-audio-play-to-pause {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  margin: auto;
+  background: oklch(0.55 0.2 230);
+  border-radius: 50%;
+  animation: roy-audio-play-to-pause-bg 2s ease-in-out infinite;
+}
+.roycss-audio-play-to-pause::before,
+.roycss-audio-play-to-pause::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 8px;
+  height: 26px;
+  background: oklch(1 0 0);
+  transform-origin: center;
+  animation: roy-audio-play-to-pause-bar 2s ease-in-out infinite;
+}
+.roycss-audio-play-to-pause::before { left: 22px; transform: translateY(-50%) scaleY(0); }
+.roycss-audio-play-to-pause::after  { left: 32px; transform: translateY(-50%) scaleY(0); animation-delay: 0s; }
+@keyframes roy-audio-play-to-pause-bg {
+  0%, 45%   { background: oklch(0.55 0.2 230); }
+  55%, 100% { background: oklch(0.55 0.2 230); }
+}
+@keyframes roy-audio-play-to-pause-bar {
+  0%, 45%   { transform: translateY(-50%) scaleY(0); }
+  50%       { transform: translateY(-50%) scaleY(0); }
+  55%, 95%  { transform: translateY(-50%) scaleY(1); }
+  100%      { transform: translateY(-50%) scaleY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-audio-play-to-pause,
+  .roycss-audio-play-to-pause::before,
+  .roycss-audio-play-to-pause::after { animation: none; }
+  .roycss-audio-play-to-pause::before,
+  .roycss-audio-play-to-pause::after { transform: translateY(-50%) scaleY(1); }
+}`
+  },
+  {
+    id: "audio-volume-knob",
+    name: "Volume Knob",
+    category: "audio",
+    description: "Volume knob that rotates back and forth like a user adjusting volume",
+    tags: ["audio", "volume", "knob", "rotate", "dial", "infinite"],
+    previewType: "box",
+    cssCode: `/* Audio: Volume Knob */
+.roycss-audio-volume-knob {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  margin: auto;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, oklch(0.45 0.04 230), oklch(0.25 0.02 230));
+  box-shadow: inset 0 -3px 6px oklch(0 0 0 / 0.3), 0 4px 10px oklch(0 0 0 / 0.2);
+  animation: roy-audio-volume-knob 2.4s ease-in-out infinite;
+}
+.roycss-audio-volume-knob::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 4px;
+  height: 18px;
+  background: oklch(0.95 0 0);
+  border-radius: 2px;
+  transform: translateX(-50%);
+}
+@keyframes roy-audio-volume-knob {
+  0%, 100% { transform: rotate(-120deg); }
+  50%      { transform: rotate(120deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-audio-volume-knob { animation: none; transform: rotate(0deg); }
+}`
+  },
+  {
+    id: "audio-spectrum-gradient",
+    name: "Spectrum Gradient",
+    category: "audio",
+    description: "Spectrum analyzer with gradient bars that shift through the rainbow",
+    tags: ["audio", "spectrum", "gradient", "analyzer", "bars", "rainbow", "infinite"],
+    previewType: "box",
+    childCount: 8,
+    cssCode: `/* Audio: Spectrum Gradient */
+.roycss-audio-spectrum-gradient {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 3px;
+  height: 100%;
+}
+.roycss-audio-spectrum-gradient > span {
+  width: 7px;
+  background: linear-gradient(to top,
+    oklch(0.6 0.22 25),
+    oklch(0.7 0.22 90),
+    oklch(0.65 0.22 145),
+    oklch(0.6 0.22 200),
+    oklch(0.65 0.22 280));
+  border-radius: 2px;
+  animation: roy-audio-spectrum-gradient 1.4s ease-in-out infinite;
+}
+.roycss-audio-spectrum-gradient > span:nth-child(1) { animation-delay: 0s;    animation-duration: 1.2s; }
+.roycss-audio-spectrum-gradient > span:nth-child(2) { animation-delay: 0.1s;  animation-duration: 0.9s; }
+.roycss-audio-spectrum-gradient > span:nth-child(3) { animation-delay: 0.2s;  animation-duration: 1.1s; }
+.roycss-audio-spectrum-gradient > span:nth-child(4) { animation-delay: 0.05s; animation-duration: 1.3s; }
+.roycss-audio-spectrum-gradient > span:nth-child(5) { animation-delay: 0.15s; animation-duration: 1s; }
+.roycss-audio-spectrum-gradient > span:nth-child(6) { animation-delay: 0.25s; animation-duration: 1.4s; }
+.roycss-audio-spectrum-gradient > span:nth-child(7) { animation-delay: 0.1s;  animation-duration: 0.95s; }
+.roycss-audio-spectrum-gradient > span:nth-child(8) { animation-delay: 0.2s;  animation-duration: 1.15s; }
+@keyframes roy-audio-spectrum-gradient {
+  0%, 100% { height: 20%; }
+  50%      { height: 95%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-audio-spectrum-gradient > span { animation: none; height: 50%; }
+}`
+  },
+  {
+    id: "audio-bass-drop",
+    name: "Bass Drop Impact",
+    category: "audio",
+    description: "Element implodes then explodes outward simulating a bass drop impact",
+    tags: ["audio", "bass", "drop", "impact", "explode", "implode", "infinite"],
+    previewType: "box",
+    cssCode: `/* Audio: Bass Drop Impact */
+.roycss-audio-bass-drop {
+  position: relative;
+  background: radial-gradient(circle, oklch(0.55 0.22 25), oklch(0.3 0.04 320));
+  border-radius: 50%;
+  animation: roy-audio-bass-drop 2s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+}
+.roycss-audio-bass-drop::before,
+.roycss-audio-bass-drop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid oklch(0.6 0.22 25);
+  animation: roy-audio-bass-drop-ring 2s ease-out infinite;
+}
+.roycss-audio-bass-drop::after { animation-delay: 0.1s; }
+@keyframes roy-audio-bass-drop {
+  0%, 100% { transform: scale(1); }
+  20%      { transform: scale(0.7); }
+  40%      { transform: scale(1.25); }
+  60%      { transform: scale(0.95); }
+  80%      { transform: scale(1.05); }
+}
+@keyframes roy-audio-bass-drop-ring {
+  0%, 30%  { transform: scale(0.6); opacity: 0; }
+  40%      { opacity: 0.8; }
+  100%     { transform: scale(2.2); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-audio-bass-drop,
+  .roycss-audio-bass-drop::before,
+  .roycss-audio-bass-drop::after { animation: none; }
+  .roycss-audio-bass-drop::before,
+  .roycss-audio-bass-drop::after { opacity: 0; }
+}`
+  }
+];
+
+// src/lib/effects-batch-44.ts
+var effectsBatch44 = [
+  {
+    id: "haptics-pressure-press",
+    name: "Pressure Press",
+    category: "microinteractions",
+    description: "Element deforms with deepening inset shadow and scale as if physically pressed",
+    tags: ["haptics", "press", "tactile", "physical", "deform"],
+    previewType: "box",
+    cssCode: `/* Haptics: Pressure Press */
+.roycss-haptics-pressure-press {
+  background: linear-gradient(145deg, oklch(0.85 0.05 220), oklch(0.75 0.06 220));
+  border-radius: 14px;
+  box-shadow: 0 10px 24px oklch(0 0 0 / 0.18), inset 0 0 0 oklch(0 0 0 / 0);
+  transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 220ms ease;
+  cursor: pointer;
+}
+.roycss-haptics-pressure-press:hover {
+  transform: scale(0.94);
+  box-shadow: 0 4px 8px oklch(0 0 0 / 0.12), inset 0 6px 14px oklch(0 0 0 / 0.28);
+}
+.roycss-haptics-pressure-press:active {
+  transform: scale(0.9);
+  box-shadow: 0 1px 2px oklch(0 0 0 / 0.1), inset 0 10px 22px oklch(0 0 0 / 0.42);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-haptics-pressure-press,
+  .roycss-haptics-pressure-press:hover,
+  .roycss-haptics-pressure-press:active {
+    transform: none;
+    box-shadow: 0 10px 24px oklch(0 0 0 / 0.18);
+  }
+}`
+  },
+  {
+    id: "haptics-surface-tension",
+    name: "Surface Tension",
+    category: "microinteractions",
+    description: "Liquid-like ripple with surface-tension behavior emanates on hover",
+    tags: ["haptics", "surface-tension", "ripple", "liquid", "hover"],
+    previewType: "box",
+    cssCode: `/* Haptics: Surface Tension */
+.roycss-haptics-surface-tension {
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, oklch(0.78 0.12 200), oklch(0.6 0.18 220));
+  border-radius: 18px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.roycss-haptics-surface-tension::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(0.95 0.05 200 / 0.65), transparent 60%);
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1), opacity 600ms ease;
+}
+.roycss-haptics-surface-tension:hover::before {
+  transform: scale(2.4);
+  opacity: 1;
+  animation: roy-haptics-surface-tension 1.6s ease-out infinite;
+}
+@keyframes roy-haptics-surface-tension {
+  0%   { transform: scale(0.4); opacity: 0.85; border-radius: 50%; }
+  60%  { border-radius: 40% 60% 50% 50% / 50% 50% 40% 60%; }
+  100% { transform: scale(2.6); opacity: 0; border-radius: 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-haptics-surface-tension:hover::before {
+    animation: none;
+    transform: scale(1.6);
+    opacity: 0.5;
+  }
+}`
+  },
+  {
+    id: "haptics-rubber-stretch",
+    name: "Rubber Stretch",
+    category: "microinteractions",
+    description: "Element stretches like rubber when hovered and snaps back on release",
+    tags: ["haptics", "rubber", "stretch", "elastic", "snap"],
+    previewType: "box",
+    cssCode: `/* Haptics: Rubber Stretch */
+.roycss-haptics-rubber-stretch {
+  background: linear-gradient(135deg, oklch(0.82 0.13 12), oklch(0.72 0.16 28));
+  border-radius: 22px;
+  transition: transform 380ms cubic-bezier(0.68, -0.6, 0.32, 1.6),
+              border-radius 380ms cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  cursor: grab;
+}
+.roycss-haptics-rubber-stretch:hover {
+  transform: scaleX(1.18) scaleY(0.86);
+  border-radius: 36% 64% 36% 64% / 50% 50% 50% 50%;
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-radius 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.roycss-haptics-rubber-stretch:active {
+  transform: scaleX(1.32) scaleY(0.7);
+  border-radius: 50% 50% 30% 70% / 60% 40% 60% 40%;
+  transition: transform 120ms ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-haptics-rubber-stretch,
+  .roycss-haptics-rubber-stretch:hover,
+  .roycss-haptics-rubber-stretch:active {
+    transform: none;
+    border-radius: 22px;
+  }
+}`
+  },
+  {
+    id: "haptics-weight-settle",
+    name: "Weight Settle",
+    category: "microinteractions",
+    description: "Heavy element settles with bounce and squash on load, like a heavy weight",
+    tags: ["haptics", "weight", "settle", "bounce", "squash", "load"],
+    previewType: "box",
+    cssCode: `/* Haptics: Weight Settle */
+.roycss-haptics-weight-settle {
+  background: linear-gradient(160deg, oklch(0.42 0.02 240), oklch(0.28 0.03 240));
+  border-radius: 12px;
+  animation: roy-haptics-weight-settle 1.4s cubic-bezier(0.5, 1.4, 0.5, 1) both;
+}
+@keyframes roy-haptics-weight-settle {
+  0%   { transform: translateY(-340px) scaleY(1.1); opacity: 0; }
+  45%  { transform: translateY(0) scaleY(0.7); opacity: 1; }
+  55%  { transform: translateY(-44px) scaleY(1.08); }
+  72%  { transform: translateY(0) scaleY(0.9); }
+  85%  { transform: translateY(-12px) scaleY(1.02); }
+  100% { transform: translateY(0) scaleY(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-haptics-weight-settle { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "haptics-light-float",
+    name: "Light Float",
+    category: "microinteractions",
+    description: "Element gently floats up and down as if resting on water",
+    tags: ["haptics", "float", "buoyancy", "water", "ambient"],
+    previewType: "box",
+    cssCode: `/* Haptics: Light Float */
+.roycss-haptics-light-float {
+  background: radial-gradient(circle at 30% 30%, oklch(0.88 0.1 200), oklch(0.7 0.13 220));
+  border-radius: 50%;
+  box-shadow: 0 14px 32px oklch(0.4 0.15 220 / 0.3);
+  animation: roy-haptics-light-float 4.5s ease-in-out infinite;
+}
+@keyframes roy-haptics-light-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  30%      { transform: translateY(-12px) rotate(-2deg); }
+  65%      { transform: translateY(8px) rotate(1.5deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-haptics-light-float { animation: none; }
+}`
+  },
+  {
+    id: "haptics-texture-concrete",
+    name: "Concrete Texture",
+    category: "microinteractions",
+    description: "Directional grain and noise that shifts on hover, evoking raw concrete",
+    tags: ["haptics", "texture", "concrete", "grain", "noise"],
+    previewType: "box",
+    cssCode: `/* Haptics: Concrete Texture */
+.roycss-haptics-texture-concrete {
+  background:
+    repeating-linear-gradient(45deg, oklch(0.72 0.005 240 / 0.6) 0 2px, transparent 2px 5px),
+    repeating-linear-gradient(-45deg, oklch(0.6 0.01 240 / 0.5) 0 1.5px, transparent 1.5px 4px),
+    linear-gradient(145deg, oklch(0.74 0.005 240), oklch(0.62 0.008 240));
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.06), 0 8px 20px oklch(0 0 0 / 0.12);
+  position: relative;
+  overflow: hidden;
+  transition: background-position 700ms ease;
+}
+.roycss-haptics-texture-concrete::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 22% 18%, oklch(0.55 0.01 240 / 0.5) 0 1px, transparent 1px),
+    radial-gradient(circle at 70% 60%, oklch(0.55 0.01 240 / 0.45) 0 1.5px, transparent 1.5px),
+    radial-gradient(circle at 40% 88%, oklch(0.55 0.01 240 / 0.4) 0 1px, transparent 1px);
+  background-size: 22px 22px, 32px 32px, 26px 26px;
+  background-position: 0 0, 0 0, 0 0;
+  transition: background-position 700ms ease;
+  pointer-events: none;
+}
+.roycss-haptics-texture-concrete:hover::before {
+  background-position: 18px -10px, -14px 12px, 8px -8px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-haptics-texture-concrete::before { transition: none; }
+}`
+  },
+  {
+    id: "haptics-texture-metal",
+    name: "Brushed Metal",
+    category: "microinteractions",
+    description: "Brushed metal surface with a sweeping light reflection on hover",
+    tags: ["haptics", "texture", "metal", "brushed", "reflection"],
+    previewType: "box",
+    cssCode: `/* Haptics: Brushed Metal */
+.roycss-haptics-texture-metal {
+  position: relative;
+  background:
+    repeating-linear-gradient(90deg, oklch(0.7 0.005 250 / 0.18) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, oklch(0.78 0.005 250), oklch(0.58 0.008 250));
+  border-radius: 10px;
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.4), inset 0 -2px 6px oklch(0 0 0 / 0.2), 0 8px 20px oklch(0 0 0 / 0.18);
+  overflow: hidden;
+}
+.roycss-haptics-texture-metal::after {
+  content: "";
+  position: absolute;
+  top: 0; left: -60%;
+  width: 40%; height: 100%;
+  background: linear-gradient(110deg, transparent, oklch(1 0 0 / 0.6) 50%, transparent);
+  transform: skewX(-20deg);
+  transition: left 700ms ease;
+}
+.roycss-haptics-texture-metal:hover::after {
+  left: 120%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-haptics-texture-metal::after { transition: none; left: -60%; }
+}`
+  },
+  {
+    id: "haptics-texture-fabric",
+    name: "Fabric Weave",
+    category: "microinteractions",
+    description: "Fabric weave texture with subtle horizontal drift on hover",
+    tags: ["haptics", "texture", "fabric", "weave", "cloth"],
+    previewType: "box",
+    cssCode: `/* Haptics: Fabric Weave */
+.roycss-haptics-texture-fabric {
+  background:
+    repeating-linear-gradient(0deg, oklch(0.55 0.1 12 / 0.55) 0 2px, oklch(0.7 0.12 12 / 0.4) 2px 4px),
+    repeating-linear-gradient(90deg, oklch(0.55 0.1 12 / 0.55) 0 2px, oklch(0.7 0.12 12 / 0.4) 2px 4px),
+    linear-gradient(135deg, oklch(0.68 0.12 12), oklch(0.58 0.1 28));
+  border-radius: 8px;
+  background-size: 8px 8px;
+  transition: background-position 1.2s ease;
+  background-position: 0 0;
+}
+.roycss-haptics-texture-fabric:hover {
+  background-position: 8px 4px, 4px 8px, 0 0;
+  animation: roy-haptics-fabric-shimmer 3s linear infinite;
+}
+@keyframes roy-haptics-fabric-shimmer {
+  0%, 100% { filter: brightness(1); }
+  50%      { filter: brightness(1.08); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-haptics-texture-fabric:hover { animation: none; transition: none; }
+}`
+  },
+  {
+    id: "haptics-texture-leather",
+    name: "Leather Grain",
+    category: "microinteractions",
+    description: "Leather grain texture with pebbled surface and warm tone",
+    tags: ["haptics", "texture", "leather", "grain", "pebbled"],
+    previewType: "box",
+    cssCode: `/* Haptics: Leather Grain */
+.roycss-haptics-texture-leather {
+  background:
+    radial-gradient(circle at 25% 25%, oklch(0.45 0.05 35) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 75% 35%, oklch(0.4 0.05 35) 0 1.5px, transparent 2px),
+    radial-gradient(circle at 45% 75%, oklch(0.42 0.05 35) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 85% 80%, oklch(0.38 0.06 35) 0 1.5px, transparent 2px),
+    linear-gradient(135deg, oklch(0.5 0.06 30), oklch(0.36 0.06 35));
+  background-size: 18px 18px, 22px 22px, 16px 16px, 20px 20px, 100% 100%;
+  border-radius: 6px;
+  box-shadow: inset 0 0 8px oklch(0 0 0 / 0.3), 0 6px 14px oklch(0 0 0 / 0.2);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-haptics-texture-leather { /* static texture — no animation to disable */ }
+}`
+  },
+  {
+    id: "haptics-spring-loaded",
+    name: "Spring Loaded",
+    category: "microinteractions",
+    description: "Element springs in from the side with oscillating overshoot",
+    tags: ["haptics", "spring", "oscillate", "entrance", "load"],
+    previewType: "box",
+    cssCode: `/* Haptics: Spring Loaded */
+.roycss-haptics-spring-loaded {
+  background: linear-gradient(135deg, oklch(0.78 0.13 160), oklch(0.66 0.14 180));
+  border-radius: 14px;
+  animation: roy-haptics-spring-loaded 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes roy-haptics-spring-loaded {
+  0%   { transform: translateX(-360px); opacity: 0; }
+  55%  { transform: translateX(24px); opacity: 1; }
+  68%  { transform: translateX(-14px); }
+  80%  { transform: translateX(6px); }
+  90%  { transform: translateX(-2px); }
+  100% { transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-haptics-spring-loaded { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "haptics-elastic-recoil",
+    name: "Elastic Recoil",
+    category: "microinteractions",
+    description: "Element recoils back after being pushed, with elastic overshoot",
+    tags: ["haptics", "elastic", "recoil", "push", "spring-back"],
+    previewType: "box",
+    cssCode: `/* Haptics: Elastic Recoil */
+.roycss-haptics-elastic-recoil {
+  background: linear-gradient(135deg, oklch(0.82 0.12 280), oklch(0.7 0.16 320));
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 200ms cubic-bezier(0.5, 0, 0.75, 0);
+}
+.roycss-haptics-elastic-recoil:hover {
+  transform: translateX(40px) scale(0.9);
+  transition: transform 180ms cubic-bezier(0.5, 0, 0.75, 0);
+}
+.roycss-haptics-elastic-recoil:active {
+  animation: roy-haptics-elastic-recoil 700ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes roy-haptics-elastic-recoil {
+  0%   { transform: translateX(40px) scale(0.9); }
+  40%  { transform: translateX(-30px) scale(1.08); }
+  70%  { transform: translateX(10px) scale(0.96); }
+  100% { transform: translateX(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-haptics-elastic-recoil,
+  .roycss-haptics-elastic-recoil:hover,
+  .roycss-haptics-elastic-recoil:active { animation: none; transform: none; transition: none; }
+}`
+  },
+  {
+    id: "haptics-bounce-impact",
+    name: "Bounce Impact",
+    category: "microinteractions",
+    description: "Element bounces as if struck by an impact, with secondary decay",
+    tags: ["haptics", "bounce", "impact", "force", "decay"],
+    previewType: "box",
+    cssCode: `/* Haptics: Bounce Impact */
+.roycss-haptics-bounce-impact {
+  background: linear-gradient(135deg, oklch(0.78 0.15 50), oklch(0.66 0.18 30));
+  border-radius: 12px;
+  cursor: pointer;
+}
+.roycss-haptics-bounce-impact:hover {
+  animation: roy-haptics-bounce-impact 900ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes roy-haptics-bounce-impact {
+  0%   { transform: translateY(0) scale(1); }
+  20%  { transform: translateY(-50px) scaleY(1.1) scaleX(0.92); }
+  40%  { transform: translateY(0) scaleY(0.86) scaleX(1.12); }
+  55%  { transform: translateY(-22px) scaleY(1.05); }
+  70%  { transform: translateY(0) scaleY(0.95) scaleX(1.04); }
+  85%  { transform: translateY(-6px); }
+  100% { transform: translateY(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-haptics-bounce-impact:hover { animation: none; }
+}`
+  },
+  {
+    id: "haptics-mass-drop",
+    name: "Mass Drop",
+    category: "microinteractions",
+    description: "Element drops with weight — fast ease-in and squash on landing",
+    tags: ["haptics", "mass", "drop", "weight", "squash"],
+    previewType: "box",
+    cssCode: `/* Haptics: Mass Drop */
+.roycss-haptics-mass-drop {
+  background: linear-gradient(160deg, oklch(0.5 0.04 240), oklch(0.34 0.05 240));
+  border-radius: 14px;
+  animation: roy-haptics-mass-drop 1.1s cubic-bezier(0.55, 0, 1, 0.45) both;
+}
+@keyframes roy-haptics-mass-drop {
+  0%   { transform: translateY(-300px) scaleY(1.05); opacity: 0; }
+  60%  { opacity: 1; }
+  78%  { transform: translateY(0) scaleY(0.62) scaleX(1.18); }
+  86%  { transform: translateY(-26px) scaleY(1.04) scaleX(0.97); }
+  93%  { transform: translateY(0) scaleY(0.92) scaleX(1.04); }
+  100% { transform: translateY(0) scaleY(1) scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-haptics-mass-drop { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "haptics-vibration-hum",
+    name: "Vibration Hum",
+    category: "microinteractions",
+    description: "Subtle continuous vibration on hover, like a device buzzing",
+    tags: ["haptics", "vibration", "hum", "buzz", "hover"],
+    previewType: "box",
+    cssCode: `/* Haptics: Vibration Hum */
+.roycss-haptics-vibration-hum {
+  background: linear-gradient(135deg, oklch(0.82 0.12 280), oklch(0.7 0.14 320));
+  border-radius: 14px;
+  cursor: pointer;
+}
+.roycss-haptics-vibration-hum:hover {
+  animation: roy-haptics-vibration-hum 90ms linear infinite;
+}
+@keyframes roy-haptics-vibration-hum {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  20%  { transform: translate(-0.7px, 0.5px) rotate(-0.4deg); }
+  40%  { transform: translate(0.7px, -0.5px) rotate(0.4deg); }
+  60%  { transform: translate(-0.5px, -0.7px) rotate(-0.2deg); }
+  80%  { transform: translate(0.5px, 0.7px) rotate(0.3deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-haptics-vibration-hum:hover { animation: none; }
+}`
+  },
+  {
+    id: "haptics-friction-grip",
+    name: "Friction Grip",
+    category: "microinteractions",
+    description: "Element grips the surface on hover — slight scale down with shadow",
+    tags: ["haptics", "friction", "grip", "press", "hover"],
+    previewType: "box",
+    cssCode: `/* Haptics: Friction Grip */
+.roycss-haptics-friction-grip {
+  background: linear-gradient(145deg, oklch(0.78 0.1 200), oklch(0.66 0.12 210));
+  border-radius: 12px;
+  box-shadow: 0 8px 18px oklch(0 0 0 / 0.16);
+  transition: transform 320ms cubic-bezier(0.34, 1.2, 0.64, 1),
+              box-shadow 320ms ease,
+              filter 320ms ease;
+  cursor: pointer;
+}
+.roycss-haptics-friction-grip:hover {
+  transform: scale(0.96);
+  box-shadow: 0 2px 6px oklch(0 0 0 / 0.24), inset 0 3px 8px oklch(0 0 0 / 0.18);
+  filter: saturate(1.1) brightness(0.96);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-haptics-friction-grip,
+  .roycss-haptics-friction-grip:hover {
+    transition: none;
+    transform: none;
+    filter: none;
+    box-shadow: 0 8px 18px oklch(0 0 0 / 0.16);
+  }
+}`
+  },
+  {
+    id: "haptics-soft-press",
+    name: "Soft Press",
+    category: "microinteractions",
+    description: "Soft depress effect with shadow expansion, like pressing foam",
+    tags: ["haptics", "soft", "press", "depress", "foam"],
+    previewType: "box",
+    cssCode: `/* Haptics: Soft Press */
+.roycss-haptics-soft-press {
+  background: linear-gradient(145deg, oklch(0.86 0.04 220), oklch(0.74 0.05 220));
+  border-radius: 18px;
+  box-shadow: 0 14px 26px oklch(0 0 0 / 0.12), inset 0 -3px 8px oklch(0 0 0 / 0.08);
+  transition: transform 360ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 360ms ease,
+              border-radius 360ms ease;
+  cursor: pointer;
+}
+.roycss-haptics-soft-press:hover {
+  transform: scale(0.97) translateY(2px);
+  box-shadow: 0 20px 40px oklch(0 0 0 / 0.18), inset 0 -8px 18px oklch(0 0 0 / 0.18);
+  border-radius: 22px;
+}
+.roycss-haptics-soft-press:active {
+  transform: scale(0.92) translateY(4px);
+  box-shadow: 0 4px 10px oklch(0 0 0 / 0.18), inset 0 -14px 26px oklch(0 0 0 / 0.28);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-haptics-soft-press,
+  .roycss-haptics-soft-press:hover,
+  .roycss-haptics-soft-press:active {
+    transition: none;
+    transform: none;
+    border-radius: 18px;
+    box-shadow: 0 14px 26px oklch(0 0 0 / 0.12);
+  }
+}`
+  },
+  {
+    id: "haptics-snap-back",
+    name: "Snap Back",
+    category: "microinteractions",
+    description: "Element drifts away on hover then snaps back to origin on release",
+    tags: ["haptics", "snap", "drift", "spring-back", "release"],
+    previewType: "box",
+    cssCode: `/* Haptics: Snap Back */
+.roycss-haptics-snap-back {
+  background: linear-gradient(135deg, oklch(0.78 0.13 12), oklch(0.66 0.16 28));
+  border-radius: 14px;
+  transition: transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: grab;
+}
+.roycss-haptics-snap-back:hover {
+  transform: translate(28px, -22px) rotate(6deg);
+  transition: transform 380ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.roycss-haptics-snap-back:active {
+  cursor: grabbing;
+  animation: roy-haptics-snap-back 600ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes roy-haptics-snap-back {
+  0%   { transform: translate(28px, -22px) rotate(6deg); }
+  35%  { transform: translate(-14px, 12px) rotate(-4deg); }
+  65%  { transform: translate(6px, -4px) rotate(1.5deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-haptics-snap-back,
+  .roycss-haptics-snap-back:hover,
+  .roycss-haptics-snap-back:active { transition: none; animation: none; transform: none; }
+}`
+  },
+  {
+    id: "haptics-velvet-touch",
+    name: "Velvet Touch",
+    category: "microinteractions",
+    description: "Soft, luxurious hover with velvet-like deep shadow and warmth",
+    tags: ["haptics", "velvet", "soft", "luxury", "hover"],
+    previewType: "box",
+    cssCode: `/* Haptics: Velvet Touch */
+.roycss-haptics-velvet-touch {
+  background: linear-gradient(135deg, oklch(0.42 0.13 350), oklch(0.32 0.16 360));
+  border-radius: 16px;
+  box-shadow: 0 6px 14px oklch(0.3 0.12 350 / 0.4), inset 0 1px 0 oklch(1 0 0 / 0.12);
+  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 600ms ease,
+              filter 600ms ease;
+  cursor: pointer;
+}
+.roycss-haptics-velvet-touch:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 26px 50px oklch(0.34 0.16 350 / 0.6),
+              0 12px 20px oklch(0.4 0.18 360 / 0.5),
+              inset 0 1px 0 oklch(1 0 0 / 0.18);
+  filter: brightness(1.1) saturate(1.1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-haptics-velvet-touch,
+  .roycss-haptics-velvet-touch:hover { transition: none; transform: none; filter: none; }
+}`
+  },
+  {
+    id: "haptics-glass-tap",
+    name: "Glass Tap",
+    category: "microinteractions",
+    description: "Tap creates a glass-like concentric ripple that shimmers outward",
+    tags: ["haptics", "glass", "tap", "ripple", "shimmer"],
+    previewType: "box",
+    cssCode: `/* Haptics: Glass Tap */
+.roycss-haptics-glass-tap {
+  position: relative;
+  background: linear-gradient(145deg, oklch(0.92 0.02 220 / 0.7), oklch(0.78 0.04 220 / 0.6));
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.6), 0 10px 22px oklch(0 0 0 / 0.1);
+  overflow: hidden;
+  cursor: pointer;
+}
+.roycss-haptics-glass-tap::before,
+.roycss-haptics-glass-tap::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  border: 2px solid oklch(0.95 0.05 200 / 0.6);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  pointer-events: none;
+}
+.roycss-haptics-glass-tap:hover::before {
+  animation: roy-haptics-glass-tap 900ms ease-out infinite;
+}
+.roycss-haptics-glass-tap:hover::after {
+  animation: roy-haptics-glass-tap 900ms ease-out 300ms infinite;
+}
+@keyframes roy-haptics-glass-tap {
+  0%   { transform: translate(-50%, -50%) scale(0); opacity: 0.9; border-width: 3px; }
+  100% { transform: translate(-50%, -50%) scale(20); opacity: 0; border-width: 0.5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-haptics-glass-tap:hover::before,
+  .roycss-haptics-glass-tap:hover::after { animation: none; opacity: 0; }
+}`
+  },
+  {
+    id: "haptics-magnetic-pull",
+    name: "Magnetic Pull",
+    category: "microinteractions",
+    description: "Element subtly shifts toward the cursor direction with a magnetic feel",
+    tags: ["haptics", "magnetic", "pull", "cursor", "hover"],
+    previewType: "box",
+    cssCode: `/* Haptics: Magnetic Pull */
+.roycss-haptics-magnetic-pull {
+  background: linear-gradient(135deg, oklch(0.78 0.13 200), oklch(0.66 0.16 220));
+  border-radius: 50%;
+  box-shadow: 0 8px 22px oklch(0 0 0 / 0.16);
+  transition: transform 280ms cubic-bezier(0.34, 1.2, 0.64, 1),
+              box-shadow 280ms ease;
+  animation: roy-haptics-magnetic-idle 4s ease-in-out infinite;
+  cursor: pointer;
+}
+.roycss-haptics-magnetic-pull:hover {
+  transform: translate(10px, -8px) scale(1.05);
+  box-shadow: 0 14px 32px oklch(0 0 0 / 0.22);
+  animation: roy-haptics-magnetic-pull 2.4s ease-in-out infinite;
+}
+@keyframes roy-haptics-magnetic-pull {
+  0%, 100% { transform: translate(10px, -8px) scale(1.05); }
+  25%      { transform: translate(14px, -10px) scale(1.06); }
+  50%      { transform: translate(6px, -4px) scale(1.04); }
+  75%      { transform: translate(12px, -8px) scale(1.05); }
+}
+@keyframes roy-haptics-magnetic-idle {
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(2px, -2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-haptics-magnetic-pull,
+  .roycss-haptics-magnetic-pull:hover { animation: none; transition: none; transform: none; }
+}`
+  }
+];
+
+// src/lib/effects-batch-45.ts
+var effectsBatch45 = [
+  {
+    id: "structural-brick-reveal",
+    name: "Brick Reveal",
+    category: "misc",
+    description: "Bricks appear one by one in staggered rows to form a wall on hover",
+    tags: ["structural", "brick", "wall", "reveal", "stagger"],
+    previewType: "box",
+    cssCode: `/* Structural: Brick Reveal */
+.roycss-structural-brick-reveal {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 2px;
+  width: 100%; height: 100%;
+  background: oklch(0.4 0.01 30);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.roycss-structural-brick-reveal > span {
+  background: linear-gradient(135deg, oklch(0.55 0.04 30), oklch(0.46 0.05 35));
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.18), inset 0 -2px 4px oklch(0 0 0 / 0.2);
+  border-radius: 2px;
+  opacity: 0;
+  transform: scale(0.3) rotate(-12deg);
+  transition: opacity 360ms ease, transform 360ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.roycss-structural-brick-reveal:hover > span { opacity: 1; transform: scale(1) rotate(0deg); }
+.roycss-structural-brick-reveal > span:nth-child(1)  { transition-delay: 0ms; }
+.roycss-structural-brick-reveal > span:nth-child(2)  { transition-delay: 80ms; }
+.roycss-structural-brick-reveal > span:nth-child(3)  { transition-delay: 160ms; }
+.roycss-structural-brick-reveal > span:nth-child(4)  { transition-delay: 240ms; }
+.roycss-structural-brick-reveal > span:nth-child(5)  { transition-delay: 40ms; }
+.roycss-structural-brick-reveal > span:nth-child(6)  { transition-delay: 120ms; }
+.roycss-structural-brick-reveal > span:nth-child(7)  { transition-delay: 200ms; }
+.roycss-structural-brick-reveal > span:nth-child(8)  { transition-delay: 280ms; }
+.roycss-structural-brick-reveal > span:nth-child(9)  { transition-delay: 80ms; }
+.roycss-structural-brick-reveal > span:nth-child(10) { transition-delay: 160ms; }
+.roycss-structural-brick-reveal > span:nth-child(11) { transition-delay: 240ms; }
+.roycss-structural-brick-reveal > span:nth-child(12) { transition-delay: 320ms; }
+@media (prefers-reduced-motion: reduce) {
+  .roycss-structural-brick-reveal > span { opacity: 1; transform: none; transition: none; }
+}`,
+    childCount: 12
+  },
+  {
+    id: "structural-fold-paper",
+    name: "Fold Paper",
+    category: "misc",
+    description: "Element folds like a sheet of paper using CSS 3D transforms on hover",
+    tags: ["structural", "paper", "fold", "3d", "transform"],
+    previewType: "box",
+    cssCode: `/* Structural: Fold Paper */
+.roycss-structural-fold-paper {
+  perspective: 900px;
+  background: linear-gradient(135deg, oklch(0.92 0.02 80), oklch(0.82 0.04 80));
+  border-radius: 8px;
+  box-shadow: 0 8px 18px oklch(0 0 0 / 0.12);
+  transform-style: preserve-3d;
+  transition: transform 800ms cubic-bezier(0.34, 1.2, 0.64, 1);
+}
+.roycss-structural-fold-paper:hover {
+  animation: roy-structural-fold-paper 1.4s cubic-bezier(0.6, 0, 0.4, 1) both;
+}
+@keyframes roy-structural-fold-paper {
+  0%   { transform: perspective(900px) rotateY(0deg); }
+  30%  { transform: perspective(900px) rotateY(-30deg) rotateX(15deg); }
+  60%  { transform: perspective(900px) rotateY(60deg) rotateX(-10deg); }
+  100% { transform: perspective(900px) rotateY(0deg) rotateX(0deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-structural-fold-paper:hover { animation: none; }
+}`
+  },
+  {
+    id: "structural-page-curl",
+    name: "Page Curl",
+    category: "misc",
+    description: "Corner curls upward on hover, revealing content beneath the page",
+    tags: ["structural", "page", "curl", "corner", "reveal"],
+    previewType: "box",
+    cssCode: `/* Structural: Page Curl */
+.roycss-structural-page-curl {
+  position: relative;
+  background: linear-gradient(135deg, oklch(0.96 0.01 80), oklch(0.86 0.02 80));
+  border-radius: 8px;
+  box-shadow: 0 8px 18px oklch(0 0 0 / 0.12);
+  overflow: hidden;
+}
+.roycss-structural-page-curl::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 0; height: 0;
+  background: linear-gradient(225deg, oklch(0.7 0.01 80) 50%, oklch(0.55 0.01 80) 50%);
+  box-shadow: 0 4px 8px oklch(0 0 0 / 0.2);
+  border-bottom-left-radius: 12px;
+  transition: width 500ms cubic-bezier(0.34, 1.2, 0.64, 1),
+              height 500ms cubic-bezier(0.34, 1.2, 0.64, 1);
+}
+.roycss-structural-page-curl::after {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 0 0 0 0;
+  border-color: transparent transparent oklch(0.4 0.01 80) oklch(0.6 0.01 80);
+  transition: border-width 500ms cubic-bezier(0.34, 1.2, 0.64, 1);
+}
+.roycss-structural-page-curl:hover::before {
+  width: 50px; height: 50px;
+}
+.roycss-structural-page-curl:hover::after {
+  border-width: 0 0 50px 50px;
+  border-bottom-right-radius: 8px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-structural-page-curl::before,
+  .roycss-structural-page-curl::after { transition: none; }
+  .roycss-structural-page-curl:hover::before { width: 50px; height: 50px; }
+}`
+  },
+  {
+    id: "structural-shatter-break",
+    name: "Shatter Break",
+    category: "misc",
+    description: "Element appears to shatter into pieces on hover using clip-path",
+    tags: ["structural", "shatter", "break", "clip-path", "crack"],
+    previewType: "box",
+    cssCode: `/* Structural: Shatter Break */
+.roycss-structural-shatter-break {
+  background: linear-gradient(135deg, oklch(0.7 0.12 220), oklch(0.56 0.14 240));
+  border-radius: 12px;
+  cursor: pointer;
+  transition: clip-path 600ms cubic-bezier(0.6, -0.28, 0.74, 0.05),
+              filter 600ms ease,
+              opacity 600ms ease;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+.roycss-structural-shatter-break:hover {
+  clip-path: polygon(
+    0% 12%, 18% 4%, 32% 14%, 46% 6%, 62% 16%, 78% 8%, 92% 18%, 100% 6%,
+    96% 30%, 88% 48%, 96% 64%, 90% 80%, 98% 96%, 76% 88%, 60% 96%, 44% 86%, 28% 96%, 12% 88%, 4% 96%,
+    8% 78%, 2% 60%, 10% 44%, 4% 28%
+  );
+  filter: brightness(1.1) saturate(1.2);
+  animation: roy-structural-shatter-shake 400ms ease-in-out;
+}
+@keyframes roy-structural-shatter-shake {
+  0%, 100% { transform: translate(0, 0); }
+  25%  { transform: translate(-2px, 1px); }
+  50%  { transform: translate(2px, -1px); }
+  75%  { transform: translate(-1px, -1px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-structural-shatter-break:hover { animation: none; transition: none; clip-path: none; }
+}`
+  },
+  {
+    id: "structural-dissolve",
+    name: "Dissolve",
+    category: "misc",
+    description: "Element dissolves into particles and noise on hover",
+    tags: ["structural", "dissolve", "particles", "noise", "fade"],
+    previewType: "box",
+    cssCode: `/* Structural: Dissolve */
+.roycss-structural-dissolve {
+  background: linear-gradient(135deg, oklch(0.78 0.13 280), oklch(0.66 0.14 320));
+  border-radius: 14px;
+  cursor: pointer;
+  transition: filter 700ms ease, opacity 700ms ease, transform 700ms ease;
+}
+.roycss-structural-dissolve:hover {
+  animation: roy-structural-dissolve 1s ease-out both;
+}
+@keyframes roy-structural-dissolve {
+  0%   { filter: blur(0) contrast(1); opacity: 1; transform: scale(1); }
+  40%  { filter: blur(2px) contrast(1.3); opacity: 0.85; transform: scale(1.02); }
+  70%  { filter: blur(8px) contrast(0.5) saturate(0.4); opacity: 0.4; transform: scale(1.04); }
+  100% { filter: blur(14px) contrast(0.2) saturate(0.1); opacity: 0.1; transform: scale(1.08); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-structural-dissolve:hover { animation: none; opacity: 0.5; }
+}`
+  },
+  {
+    id: "structural-assemble",
+    name: "Assemble",
+    category: "misc",
+    description: "Pieces fly in from different directions to assemble the element",
+    tags: ["structural", "assemble", "fly-in", "pieces", "construction"],
+    previewType: "box",
+    cssCode: `/* Structural: Assemble */
+.roycss-structural-assemble {
+  position: relative;
+  background: transparent;
+  overflow: hidden;
+  border-radius: 12px;
+}
+.roycss-structural-assemble::before,
+.roycss-structural-assemble::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, oklch(0.78 0.13 200), oklch(0.66 0.14 220));
+  border-radius: 12px;
+  animation: roy-structural-assemble 1.4s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+}
+.roycss-structural-assemble::after {
+  background: linear-gradient(135deg, oklch(0.86 0.04 200 / 0.5), oklch(0.74 0.06 220 / 0.4));
+  animation-delay: 0ms;
+  clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+}
+.roycss-structural-assemble::before {
+  clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+  animation-direction: reverse;
+}
+@keyframes roy-structural-assemble {
+  0%   { transform: translateX(-120%) skewX(-20deg); opacity: 0; }
+  60%  { transform: translateX(8%) skewX(4deg); opacity: 1; }
+  100% { transform: translateX(0) skewX(0deg); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-structural-assemble::before,
+  .roycss-structural-assemble::after { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "structural-origami-fold",
+    name: "Origami Fold",
+    category: "misc",
+    description: "Origami-style fold animation that pleats the element on hover",
+    tags: ["structural", "origami", "fold", "pleat", "3d"],
+    previewType: "box",
+    cssCode: `/* Structural: Origami Fold */
+.roycss-structural-origami-fold {
+  perspective: 700px;
+  background: linear-gradient(135deg, oklch(0.9 0.02 80), oklch(0.8 0.04 80));
+  border-radius: 8px;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+.roycss-structural-origami-fold:hover {
+  animation: roy-structural-origami-fold 1.6s cubic-bezier(0.6, 0.05, 0.4, 1) both;
+}
+@keyframes roy-structural-origami-fold {
+  0%   { transform: rotateY(0deg) rotateX(0deg); }
+  25%  { transform: rotateY(-25deg) rotateX(20deg) scaleY(0.9); }
+  50%  { transform: rotateY(40deg) rotateX(-15deg) scaleY(1.05); }
+  75%  { transform: rotateY(-15deg) rotateX(10deg) scaleY(0.95); }
+  100% { transform: rotateY(0deg) rotateX(0deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-structural-origami-fold:hover { animation: none; }
+}`
+  },
+  {
+    id: "structural-glass-shatter",
+    name: "Glass Shatter",
+    category: "misc",
+    description: "Glass crack pattern animates across the surface on hover",
+    tags: ["structural", "glass", "shatter", "crack", "fracture"],
+    previewType: "box",
+    cssCode: `/* Structural: Glass Shatter */
+.roycss-structural-glass-shatter {
+  position: relative;
+  background: linear-gradient(135deg, oklch(0.92 0.02 220 / 0.6), oklch(0.78 0.04 220 / 0.5));
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.6);
+}
+.roycss-structural-glass-shatter::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(45deg, transparent 49.5%, oklch(0.95 0 0 / 0.5) 49.7%, transparent 50.5%),
+    linear-gradient(-45deg, transparent 49.5%, oklch(0.95 0 0 / 0.5) 49.7%, transparent 50.5%),
+    linear-gradient(90deg, transparent 49.5%, oklch(0.95 0 0 / 0.4) 49.7%, transparent 50.5%),
+    linear-gradient(15deg, transparent 49.5%, oklch(0.95 0 0 / 0.4) 49.7%, transparent 50.5%),
+    linear-gradient(-15deg, transparent 49.5%, oklch(0.95 0 0 / 0.4) 49.7%, transparent 50.5%),
+    linear-gradient(75deg, transparent 49.5%, oklch(0.95 0 0 / 0.3) 49.7%, transparent 50.5%);
+  background-size: 60% 60%, 50% 50%, 70% 70%, 40% 40%, 55% 55%, 45% 45%;
+  background-position: 30% 40%, 60% 70%, 20% 80%, 70% 20%, 40% 60%, 80% 50%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transform: scale(0.3);
+  transition: opacity 500ms ease, transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.roycss-structural-glass-shatter:hover::before {
+  opacity: 1;
+  transform: scale(1);
+  animation: roy-structural-glass-shatter 600ms ease-out;
+}
+@keyframes roy-structural-glass-shatter {
+  0%   { clip-path: polygon(50% 50%, 50% 50%, 50% 50%); }
+  100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-structural-glass-shatter:hover::before { animation: none; transition: none; opacity: 1; transform: scale(1); }
+}`
+  },
+  {
+    id: "structural-stone-crack",
+    name: "Stone Crack",
+    category: "misc",
+    description: "Stone cracking effect that progressively reveals fissures on hover",
+    tags: ["structural", "stone", "crack", "fissure", "rock"],
+    previewType: "box",
+    cssCode: `/* Structural: Stone Crack */
+.roycss-structural-stone-crack {
+  position: relative;
+  background:
+    radial-gradient(circle at 20% 30%, oklch(0.6 0.01 30) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 70% 60%, oklch(0.55 0.01 30) 0 1.5px, transparent 2px),
+    radial-gradient(circle at 45% 80%, oklch(0.58 0.01 30) 0 1px, transparent 1.5px),
+    linear-gradient(135deg, oklch(0.62 0.005 30), oklch(0.5 0.008 35));
+  background-size: 30px 30px, 22px 22px, 26px 26px, 100% 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.roycss-structural-stone-crack::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(105deg, transparent 48%, oklch(0.2 0 0 / 0.6) 49%, oklch(0.2 0 0 / 0.6) 51%, transparent 52%),
+    linear-gradient(50deg, transparent 60%, oklch(0.2 0 0 / 0.5) 61%, oklch(0.2 0 0 / 0.5) 63%, transparent 64%),
+    linear-gradient(-20deg, transparent 70%, oklch(0.2 0 0 / 0.4) 71%, oklch(0.2 0 0 / 0.4) 73%, transparent 74%);
+  background-size: 100% 100%;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: opacity 600ms ease, transform 600ms cubic-bezier(0.34, 1.2, 0.64, 1);
+}
+.roycss-structural-stone-crack:hover::before {
+  opacity: 1;
+  transform: scaleY(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-structural-stone-crack:hover::before { transition: none; opacity: 1; transform: none; }
+}`
+  },
+  {
+    id: "structural-metal-bend",
+    name: "Metal Bend",
+    category: "misc",
+    description: "Sheet metal bending effect with flexed perspective on hover",
+    tags: ["structural", "metal", "bend", "sheet", "flex"],
+    previewType: "box",
+    cssCode: `/* Structural: Metal Bend */
+.roycss-structural-metal-bend {
+  perspective: 900px;
+  background:
+    repeating-linear-gradient(90deg, oklch(0.7 0.005 250 / 0.2) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, oklch(0.74 0.005 250), oklch(0.56 0.008 250));
+  border-radius: 10px;
+  box-shadow: 0 8px 18px oklch(0 0 0 / 0.18), inset 0 1px 0 oklch(1 0 0 / 0.3);
+  transform-style: preserve-3d;
+  transition: transform 600ms cubic-bezier(0.34, 1.2, 0.64, 1),
+              border-radius 600ms ease,
+              box-shadow 600ms ease;
+  cursor: pointer;
+}
+.roycss-structural-metal-bend:hover {
+  transform: perspective(900px) rotateX(20deg) rotateY(-8deg) scale(1.02);
+  border-radius: 30% 70% 30% 70% / 50% 50% 50% 50%;
+  box-shadow: 0 16px 32px oklch(0 0 0 / 0.28), inset 0 1px 0 oklch(1 0 0 / 0.5);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-structural-metal-bend,
+  .roycss-structural-metal-bend:hover { transition: none; transform: none; }
+}`
+  },
+  {
+    id: "structural-wood-grain",
+    name: "Wood Grain",
+    category: "misc",
+    description: "Wood grain texture with flowing grain lines on hover",
+    tags: ["structural", "wood", "grain", "timber", "texture"],
+    previewType: "box",
+    cssCode: `/* Structural: Wood Grain */
+.roycss-structural-wood-grain {
+  background:
+    repeating-linear-gradient(90deg,
+      oklch(0.5 0.04 35) 0 4px,
+      oklch(0.62 0.05 35) 4px 9px,
+      oklch(0.42 0.05 35) 9px 14px,
+      oklch(0.58 0.04 35) 14px 22px),
+    linear-gradient(135deg, oklch(0.55 0.04 35), oklch(0.42 0.05 40));
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.08), 0 6px 14px oklch(0 0 0 / 0.18);
+  position: relative;
+  overflow: hidden;
+  transition: background-position 800ms ease;
+}
+.roycss-structural-wood-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 100% at 30% 50%, oklch(0.4 0.05 35 / 0.4) 0 1px, transparent 2px),
+    radial-gradient(ellipse 50% 90% at 70% 30%, oklch(0.4 0.05 35 / 0.3) 0 1.5px, transparent 2px);
+  background-size: 80px 80px, 60px 60px;
+  background-position: 0 0;
+  transition: background-position 800ms ease;
+  pointer-events: none;
+}
+.roycss-structural-wood-grain:hover::before {
+  background-position: 14px 0, -8px 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-structural-wood-grain::before { transition: none; }
+}`
+  },
+  {
+    id: "structural-marble-vein",
+    name: "Marble Vein",
+    category: "misc",
+    description: "Marble surface with flowing veins that subtly shift on hover",
+    tags: ["structural", "marble", "vein", "stone", "luxury"],
+    previewType: "box",
+    cssCode: `/* Structural: Marble Vein */
+.roycss-structural-marble-vein {
+  background:
+    linear-gradient(135deg, oklch(0.4 0.01 240 / 0.5) 49%, transparent 50%, transparent 51%, oklch(0.4 0.01 240 / 0.4) 52%),
+    linear-gradient(85deg, transparent 45%, oklch(0.3 0.01 240 / 0.4) 46%, oklch(0.3 0.01 240 / 0.4) 47%, transparent 48%),
+    linear-gradient(-50deg, transparent 60%, oklch(0.35 0.01 240 / 0.4) 61%, transparent 62%),
+    radial-gradient(ellipse 30% 60% at 40% 50%, oklch(0.3 0.01 240 / 0.3) 0 1px, transparent 2px),
+    linear-gradient(180deg, oklch(0.92 0.002 240), oklch(0.84 0.004 240));
+  background-size: 70% 70%, 50% 50%, 60% 60%, 30px 30px, 100% 100%;
+  background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
+  border-radius: 8px;
+  transition: background-position 800ms ease;
+}
+.roycss-structural-marble-vein:hover {
+  background-position: 8px 4px, -6px 6px, 4px -4px, 8px 0, 0 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-structural-marble-vein { transition: none; }
+}`
+  },
+  {
+    id: "structural-concrete-texture",
+    name: "Concrete Surface",
+    category: "misc",
+    description: "Raw concrete surface with mottled stains and aggregate speckles",
+    tags: ["structural", "concrete", "surface", "aggregate", "texture"],
+    previewType: "box",
+    cssCode: `/* Structural: Concrete Surface */
+.roycss-structural-concrete-texture {
+  background:
+    radial-gradient(circle at 22% 28%, oklch(0.55 0.005 240 / 0.5) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 70% 45%, oklch(0.5 0.005 240 / 0.45) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 38% 78%, oklch(0.55 0.005 240 / 0.4) 0 1px, transparent 1.5px),
+    radial-gradient(ellipse 60% 40% at 50% 30%, oklch(0.62 0.005 240 / 0.4), transparent 70%),
+    radial-gradient(ellipse 50% 30% at 30% 70%, oklch(0.6 0.005 240 / 0.3), transparent 70%),
+    linear-gradient(145deg, oklch(0.72 0.005 240), oklch(0.6 0.008 240));
+  background-size: 24px 24px, 32px 32px, 28px 28px, 100% 100%, 100% 100%, 100% 100%;
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.06), 0 8px 18px oklch(0 0 0 / 0.14);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-structural-concrete-texture { /* static texture */ }
+}`
+  },
+  {
+    id: "structural-water-ripple-surface",
+    name: "Water Ripple Surface",
+    category: "misc",
+    description: "Water surface ripple that expands across the surface on hover",
+    tags: ["structural", "water", "ripple", "surface", "wave"],
+    previewType: "box",
+    cssCode: `/* Structural: Water Ripple Surface */
+.roycss-structural-water-ripple-surface {
+  position: relative;
+  background:
+    radial-gradient(circle at 30% 30%, oklch(0.6 0.12 220 / 0.4), transparent 40%),
+    radial-gradient(circle at 70% 60%, oklch(0.5 0.12 220 / 0.4), transparent 40%),
+    linear-gradient(135deg, oklch(0.7 0.1 220), oklch(0.5 0.12 240));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-structural-water-ripple-surface::before,
+.roycss-structural-water-ripple-surface::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 2px solid oklch(0.95 0.05 220 / 0.6);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+}
+.roycss-structural-water-ripple-surface:hover::before {
+  animation: roy-structural-water-ripple 1.8s ease-out infinite;
+}
+.roycss-structural-water-ripple-surface:hover::after {
+  animation: roy-structural-water-ripple 1.8s ease-out 600ms infinite;
+}
+@keyframes roy-structural-water-ripple {
+  0%   { transform: translate(-50%, -50%) scale(0); opacity: 0.9; border-width: 3px; }
+  100% { transform: translate(-50%, -50%) scale(18); opacity: 0; border-width: 0.5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-structural-water-ripple-surface:hover::before,
+  .roycss-structural-water-ripple-surface:hover::after { animation: none; opacity: 0; }
+}`
+  },
+  {
+    id: "structural-fabric-weave",
+    name: "Fabric Weave Pattern",
+    category: "misc",
+    description: "Tightly woven fabric pattern with warp and weft interlacing",
+    tags: ["structural", "fabric", "weave", "warp", "weft"],
+    previewType: "box",
+    cssCode: `/* Structural: Fabric Weave Pattern */
+.roycss-structural-fabric-weave {
+  background:
+    repeating-linear-gradient(0deg, oklch(0.55 0.1 12 / 0.55) 0 1.5px, oklch(0.75 0.1 12 / 0.4) 1.5px 3px),
+    repeating-linear-gradient(90deg, oklch(0.55 0.1 12 / 0.55) 0 1.5px, oklch(0.75 0.1 12 / 0.4) 1.5px 3px),
+    linear-gradient(135deg, oklch(0.65 0.12 12), oklch(0.55 0.1 28));
+  background-size: 6px 6px;
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.08), 0 6px 14px oklch(0 0 0 / 0.16);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-structural-fabric-weave { /* static pattern */ }
+}`
+  },
+  {
+    id: "structural-carbon-fiber",
+    name: "Carbon Fiber",
+    category: "misc",
+    description: "Carbon fiber weave pattern with the characteristic twill sheen",
+    tags: ["structural", "carbon", "fiber", "twill", "weave"],
+    previewType: "box",
+    cssCode: `/* Structural: Carbon Fiber */
+.roycss-structural-carbon-fiber {
+  background:
+    linear-gradient(45deg, oklch(0.18 0 0) 25%, transparent 25%, transparent 75%, oklch(0.18 0 0) 75%),
+    linear-gradient(45deg, oklch(0.18 0 0) 25%, oklch(0.3 0 0) 25%, oklch(0.3 0 0) 75%, oklch(0.18 0 0) 75%),
+    linear-gradient(135deg, oklch(0.22 0 0), oklch(0.14 0 0));
+  background-size: 16px 16px, 16px 16px, 100% 100%;
+  background-position: 0 0, 8px 8px, 0 0;
+  border-radius: 6px;
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.08), 0 8px 18px oklch(0 0 0 / 0.4);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-structural-carbon-fiber { /* static pattern */ }
+}`
+  },
+  {
+    id: "structural-honeycomb-structure",
+    name: "Honeycomb Structure",
+    category: "misc",
+    description: "Hexagonal honeycomb pattern with cells that warm up on hover",
+    tags: ["structural", "honeycomb", "hexagon", "pattern", "cells"],
+    previewType: "box",
+    cssCode: `/* Structural: Honeycomb Structure */
+.roycss-structural-honeycomb-structure {
+  background:
+    radial-gradient(circle at 50% 50%, oklch(0.7 0.13 80) 0 8px, transparent 9px),
+    radial-gradient(circle at 0% 25%, oklch(0.7 0.13 80) 0 8px, transparent 9px),
+    radial-gradient(circle at 100% 25%, oklch(0.7 0.13 80) 0 8px, transparent 9px),
+    radial-gradient(circle at 0% 75%, oklch(0.7 0.13 80) 0 8px, transparent 9px),
+    radial-gradient(circle at 100% 75%, oklch(0.7 0.13 80) 0 8px, transparent 9px),
+    radial-gradient(circle at 25% 0%, oklch(0.7 0.13 80) 0 8px, transparent 9px),
+    radial-gradient(circle at 75% 0%, oklch(0.7 0.13 80) 0 8px, transparent 9px),
+    radial-gradient(circle at 25% 100%, oklch(0.7 0.13 80) 0 8px, transparent 9px),
+    radial-gradient(circle at 75% 100%, oklch(0.7 0.13 80) 0 8px, transparent 9px),
+    linear-gradient(135deg, oklch(0.78 0.13 75), oklch(0.6 0.13 60));
+  background-size: 32px 56px;
+  background-position: 0 0;
+  border-radius: 6px;
+  transition: filter 600ms ease;
+}
+.roycss-structural-honeycomb-structure:hover {
+  filter: brightness(1.15) saturate(1.2);
+  animation: roy-structural-honeycomb 3s linear infinite;
+}
+@keyframes roy-structural-honeycomb {
+  0%   { background-position: 0 0; }
+  100% { background-position: 32px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-structural-honeycomb-structure:hover { animation: none; filter: none; }
+}`
+  },
+  {
+    id: "structural-crystal-facet",
+    name: "Crystal Facet",
+    category: "misc",
+    description: "Crystal facets reflect shifting light across geometric planes",
+    tags: ["structural", "crystal", "facet", "light", "reflection"],
+    previewType: "box",
+    cssCode: `/* Structural: Crystal Facet */
+.roycss-structural-crystal-facet {
+  background:
+    linear-gradient(45deg, oklch(0.92 0.05 220 / 0.6) 25%, transparent 25%, transparent 50%, oklch(0.92 0.05 220 / 0.4) 50%, oklch(0.92 0.05 220 / 0.4) 75%, transparent 75%),
+    linear-gradient(-45deg, oklch(0.85 0.08 280 / 0.4) 25%, transparent 25%, transparent 50%, oklch(0.85 0.08 280 / 0.4) 50%, oklch(0.85 0.08 280 / 0.4) 75%, transparent 75%),
+    linear-gradient(90deg, oklch(0.88 0.08 200 / 0.3), oklch(0.78 0.12 220 / 0.4)),
+    linear-gradient(135deg, oklch(0.82 0.1 200), oklch(0.7 0.12 280));
+  background-size: 40px 40px, 40px 40px, 100% 100%, 100% 100%;
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 1px oklch(1 0 0 / 0.3), 0 8px 18px oklch(0 0 0 / 0.18);
+  animation: roy-structural-crystal-facet 4s ease-in-out infinite;
+}
+@keyframes roy-structural-crystal-facet {
+  0%, 100% { background-position: 0 0, 0 0, 0 0, 0 0; filter: hue-rotate(0deg) brightness(1); }
+  50%      { background-position: 20px 0, -20px 0, 0 0, 0 0; filter: hue-rotate(20deg) brightness(1.1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-structural-crystal-facet { animation: none; }
+}`
+  },
+  {
+    id: "structural-ice-melt",
+    name: "Ice Melt",
+    category: "misc",
+    description: "Ice melts with opacity and blur transition on hover, revealing what's beneath",
+    tags: ["structural", "ice", "melt", "blur", "fade"],
+    previewType: "box",
+    cssCode: `/* Structural: Ice Melt */
+.roycss-structural-ice-melt {
+  position: relative;
+  background: linear-gradient(135deg, oklch(0.85 0.04 220 / 0.8), oklch(0.7 0.06 220 / 0.7));
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.5), inset 0 -2px 8px oklch(0 0 0 / 0.1);
+  transition: opacity 800ms ease, filter 800ms ease, backdrop-filter 800ms ease,
+              transform 800ms cubic-bezier(0.34, 1.2, 0.64, 1);
+  cursor: pointer;
+}
+.roycss-structural-ice-melt:hover {
+  opacity: 0.3;
+  filter: blur(2px);
+  backdrop-filter: blur(1px);
+  transform: scale(1.04) translateY(2px);
+  animation: roy-structural-ice-melt-drip 1.2s ease-out infinite;
+}
+@keyframes roy-structural-ice-melt-drip {
+  0%, 100% { box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.5), 0 0 0 oklch(0.6 0.1 220 / 0); }
+  50%      { box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.5), 0 4px 12px oklch(0.6 0.1 220 / 0.4); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-structural-ice-melt,
+  .roycss-structural-ice-melt:hover { animation: none; transition: none; opacity: 0.6; filter: none; backdrop-filter: blur(2px); transform: none; }
+}`
+  },
+  {
+    id: "structural-rust-texture",
+    name: "Rust Texture",
+    category: "misc",
+    description: "Rust texture with progressive reveal of oxidation on hover",
+    tags: ["structural", "rust", "oxidation", "metal", "texture"],
+    previewType: "box",
+    cssCode: `/* Structural: Rust Texture */
+.roycss-structural-rust-texture {
+  position: relative;
+  background: linear-gradient(135deg, oklch(0.5 0.02 30), oklch(0.36 0.02 30));
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.1), 0 6px 14px oklch(0 0 0 / 0.18);
+}
+.roycss-structural-rust-texture::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 30% 40% at 25% 30%, oklch(0.42 0.13 30), transparent 70%),
+    radial-gradient(ellipse 40% 30% at 70% 60%, oklch(0.4 0.14 25), transparent 70%),
+    radial-gradient(ellipse 25% 35% at 45% 80%, oklch(0.45 0.12 35), transparent 70%),
+    radial-gradient(ellipse 35% 25% at 85% 20%, oklch(0.38 0.14 18), transparent 70%),
+    radial-gradient(circle at 22% 18%, oklch(0.3 0.04 30 / 0.5) 0 1.5px, transparent 2px),
+    radial-gradient(circle at 70% 60%, oklch(0.32 0.04 30 / 0.5) 0 2px, transparent 2.5px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 26px 26px, 32px 32px;
+  opacity: 0;
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  transition: opacity 800ms ease, clip-path 800ms cubic-bezier(0.34, 1.2, 0.64, 1);
+}
+.roycss-structural-rust-texture:hover::before {
+  opacity: 1;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-structural-rust-texture:hover::before { transition: none; opacity: 1; clip-path: none; }
+}`
+  }
+];
+
+// src/lib/effects-batch-46.ts
+var effectsBatch46 = [
+  {
+    id: "nature-day-night",
+    name: "Day to Night",
+    category: "backgrounds",
+    description: "Background transitions from a blue day sky to a starry night",
+    tags: ["nature", "day-night", "sky", "stars", "cycle"],
+    previewType: "background",
+    cssCode: `/* Nature: Day to Night */
+.roycss-nature-day-night {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.7 0.15 240), oklch(0.55 0.18 220) 60%, oklch(0.45 0.12 200));
+  border-radius: 12px;
+  overflow: hidden;
+  animation: roy-nature-day-night 12s ease-in-out infinite;
+}
+.roycss-nature-day-night::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 25% 30%, oklch(1 0 0 / 0.9) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 60% 50%, oklch(1 0 0 / 0.7) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 80% 20%, oklch(1 0 0 / 0.8) 0 1.5px, transparent 2px),
+    radial-gradient(circle at 45% 70%, oklch(1 0 0 / 0.7) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 15% 80%, oklch(1 0 0 / 0.6) 0 1px, transparent 1.5px);
+  background-size: 100% 100%;
+  opacity: 0;
+  animation: roy-nature-day-night-stars 12s ease-in-out infinite;
+}
+@keyframes roy-nature-day-night {
+  0%, 100% { background: linear-gradient(180deg, oklch(0.7 0.15 240), oklch(0.55 0.18 220) 60%, oklch(0.45 0.12 200)); }
+  50%      { background: linear-gradient(180deg, oklch(0.12 0.04 250), oklch(0.16 0.06 260) 50%, oklch(0.08 0.02 240)); }
+}
+@keyframes roy-nature-day-night-stars {
+  0%, 100% { opacity: 0; }
+  50%      { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-day-night,
+  .roycss-nature-day-night::before { animation: none; }
+}`
+  },
+  {
+    id: "nature-cloud-drift",
+    name: "Cloud Drift",
+    category: "backgrounds",
+    description: "Realistic cloud shapes drift slowly across a sky background",
+    tags: ["nature", "cloud", "drift", "sky", "weather"],
+    previewType: "background",
+    cssCode: `/* Nature: Cloud Drift */
+.roycss-nature-cloud-drift {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.65 0.12 230), oklch(0.85 0.05 220) 60%, oklch(0.78 0.04 200));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-cloud-drift::before,
+.roycss-nature-cloud-drift::after {
+  content: "";
+  position: absolute;
+  width: 60%; height: 30%;
+  background:
+    radial-gradient(ellipse 50% 100% at 30% 50%, oklch(1 0 0 / 0.95) 0 50%, transparent 70%),
+    radial-gradient(ellipse 40% 90% at 60% 40%, oklch(1 0 0 / 0.9) 0 50%, transparent 70%),
+    radial-gradient(ellipse 35% 80% at 80% 60%, oklch(1 0 0 / 0.85) 0 50%, transparent 70%);
+  filter: blur(2px);
+  top: 20%;
+  left: -60%;
+  animation: roy-nature-cloud-drift 18s linear infinite;
+}
+.roycss-nature-cloud-drift::after {
+  width: 45%; height: 22%;
+  top: 55%;
+  opacity: 0.7;
+  animation-duration: 26s;
+  animation-delay: -8s;
+}
+@keyframes roy-nature-cloud-drift {
+  0%   { left: -60%; }
+  100% { left: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-cloud-drift::before,
+  .roycss-nature-cloud-drift::after { animation: none; left: 10%; }
+}`
+  },
+  {
+    id: "nature-sunrise-gradient",
+    name: "Sunrise Gradient",
+    category: "backgrounds",
+    description: "Animated sky gradient mimicking the warm hues of a sunrise",
+    tags: ["nature", "sunrise", "sky", "gradient", "warm"],
+    previewType: "background",
+    cssCode: `/* Nature: Sunrise Gradient */
+.roycss-nature-sunrise-gradient {
+  background: linear-gradient(180deg,
+    oklch(0.78 0.16 30) 0%,
+    oklch(0.82 0.18 50) 25%,
+    oklch(0.88 0.13 70) 50%,
+    oklch(0.85 0.08 200) 75%,
+    oklch(0.7 0.12 230) 100%);
+  background-size: 100% 200%;
+  border-radius: 12px;
+  animation: roy-nature-sunrise-gradient 8s ease-in-out infinite;
+}
+@keyframes roy-nature-sunrise-gradient {
+  0%, 100% { background-position: 0% 0%; }
+  50%      { background-position: 0% 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-sunrise-gradient { animation: none; }
+}`
+  },
+  {
+    id: "nature-plant-growth",
+    name: "Plant Growth",
+    category: "backgrounds",
+    description: "Element grows upward like a sprouting plant from the bottom",
+    tags: ["nature", "plant", "growth", "sprout", "organic"],
+    previewType: "box",
+    cssCode: `/* Nature: Plant Growth */
+.roycss-nature-plant-growth {
+  background: linear-gradient(180deg, oklch(0.7 0.16 140), oklch(0.55 0.18 150));
+  border-radius: 14px 14px 8px 8px;
+  transform-origin: bottom center;
+  animation: roy-nature-plant-growth 2.4s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+}
+@keyframes roy-nature-plant-growth {
+  0%   { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+  40%  { transform: scaleY(0.4); opacity: 0.6; }
+  70%  { transform: scaleY(1.05); opacity: 1; }
+  85%  { transform: scaleY(0.97); }
+  100% { transform: scaleY(1); transform-origin: bottom; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-plant-growth { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "nature-water-reflection",
+    name: "Water Reflection",
+    category: "backgrounds",
+    description: "Mirrored element below with subtle wave distortion on the surface",
+    tags: ["nature", "water", "reflection", "mirror", "wave"],
+    previewType: "box",
+    cssCode: `/* Nature: Water Reflection */
+.roycss-nature-water-reflection {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.7 0.12 220) 50%, oklch(0.4 0.1 240) 50%);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-water-reflection::before {
+  content: "";
+  position: absolute;
+  top: 50%; left: 0; right: 0; height: 50%;
+  background: linear-gradient(180deg, oklch(0.85 0.08 220 / 0.4), oklch(0.3 0.1 240 / 0.6));
+  filter: blur(0.5px);
+  transform: scaleY(-1);
+  opacity: 0.6;
+}
+.roycss-nature-water-reflection::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 0; right: 0; height: 50%;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 12px, oklch(1 0 0 / 0.12) 12px 14px);
+  animation: roy-nature-water-reflection 4s linear infinite;
+}
+@keyframes roy-nature-water-reflection {
+  0%   { background-position: 0 0; transform: scaleX(1); }
+  50%  { transform: scaleX(1.02); }
+  100% { background-position: 30px 0; transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-water-reflection::after { animation: none; }
+}`
+  },
+  {
+    id: "nature-firefly-ambient",
+    name: "Firefly Ambient",
+    category: "backgrounds",
+    description: "Small dots randomly glow and float, simulating fireflies at dusk",
+    tags: ["nature", "firefly", "ambient", "glow", "particles"],
+    previewType: "background",
+    cssCode: `/* Nature: Firefly Ambient */
+.roycss-nature-firefly-ambient {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.1 0.05 250), oklch(0.18 0.08 280));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-firefly-ambient::before,
+.roycss-nature-firefly-ambient::after {
+  content: "";
+  position: absolute;
+  width: 100%; height: 100%;
+  background:
+    radial-gradient(circle at 15% 30%, oklch(0.9 0.18 100) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 70% 20%, oklch(0.9 0.18 100) 0 1px, transparent 2px),
+    radial-gradient(circle at 40% 70%, oklch(0.9 0.18 100) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 85% 80%, oklch(0.9 0.18 100) 0 1px, transparent 2px),
+    radial-gradient(circle at 25% 85%, oklch(0.9 0.18 100) 0 1.2px, transparent 2.2px),
+    radial-gradient(circle at 60% 50%, oklch(0.9 0.18 100) 0 1px, transparent 2px);
+  animation: roy-nature-firefly-glow 3s ease-in-out infinite alternate;
+}
+.roycss-nature-firefly-ambient::after {
+  background:
+    radial-gradient(circle at 35% 40%, oklch(0.95 0.16 90) 0 1px, transparent 2px),
+    radial-gradient(circle at 80% 60%, oklch(0.95 0.16 90) 0 1.2px, transparent 2.2px),
+    radial-gradient(circle at 20% 70%, oklch(0.95 0.16 90) 0 1px, transparent 2px),
+    radial-gradient(circle at 55% 25%, oklch(0.95 0.16 90) 0 1.5px, transparent 2.5px);
+  animation: roy-nature-firefly-float 6s ease-in-out infinite alternate;
+}
+@keyframes roy-nature-firefly-glow {
+  0%   { opacity: 0.3; transform: translate(0, 0); }
+  50%  { opacity: 1; }
+  100% { opacity: 0.5; transform: translate(8px, -10px); }
+}
+@keyframes roy-nature-firefly-float {
+  0%   { opacity: 0.4; transform: translate(0, 0); }
+  100% { opacity: 0.9; transform: translate(-12px, 8px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-firefly-ambient::before,
+  .roycss-nature-firefly-ambient::after { animation: none; opacity: 0.8; }
+}`
+  },
+  {
+    id: "nature-seasons-switcher",
+    name: "Seasons Switcher",
+    category: "backgrounds",
+    description: "Component cycles through spring, summer, autumn, and winter themes",
+    tags: ["nature", "seasons", "spring", "summer", "autumn", "winter", "cycle"],
+    previewType: "background",
+    cssCode: `/* Nature: Seasons Switcher */
+.roycss-nature-seasons-switcher {
+  background: linear-gradient(135deg, oklch(0.78 0.13 140), oklch(0.65 0.12 160));
+  background-size: 400% 400%;
+  border-radius: 12px;
+  animation: roy-nature-seasons-switcher 16s ease-in-out infinite;
+}
+@keyframes roy-nature-seasons-switcher {
+  0%      { background: linear-gradient(135deg, oklch(0.78 0.13 140), oklch(0.65 0.12 160)); }
+  25%     { background: linear-gradient(135deg, oklch(0.85 0.14 220), oklch(0.72 0.16 240)); }
+  50%     { background: linear-gradient(135deg, oklch(0.7 0.16 40), oklch(0.55 0.18 30)); }
+  75%     { background: linear-gradient(135deg, oklch(0.92 0.02 240), oklch(0.82 0.04 220)); }
+  100%    { background: linear-gradient(135deg, oklch(0.78 0.13 140), oklch(0.65 0.12 160)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-seasons-switcher { animation: none; }
+}`
+  },
+  {
+    id: "nature-rain-drops",
+    name: "Rain Drops",
+    category: "backgrounds",
+    description: "Rain drops falling on a surface with subtle streaking motion",
+    tags: ["nature", "rain", "drops", "falling", "weather"],
+    previewType: "background",
+    cssCode: `/* Nature: Rain Drops */
+.roycss-nature-rain-drops {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.4 0.06 240), oklch(0.3 0.06 250));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-rain-drops::before,
+.roycss-nature-rain-drops::after {
+  content: "";
+  position: absolute;
+  inset: -10% 0;
+  background:
+    repeating-linear-gradient(80deg, transparent 0 14px, oklch(0.8 0.04 220 / 0.45) 14px 15px, transparent 15px 28px),
+    repeating-linear-gradient(80deg, transparent 0 36px, oklch(0.85 0.04 220 / 0.35) 36px 36.5px, transparent 36.5px 60px);
+  background-size: 60px 60px, 80px 80px;
+  animation: roy-nature-rain-drops 0.7s linear infinite;
+}
+.roycss-nature-rain-drops::after {
+  background:
+    repeating-linear-gradient(80deg, transparent 0 22px, oklch(0.85 0.04 220 / 0.4) 22px 22.5px, transparent 22.5px 44px);
+  background-size: 70px 70px;
+  animation-duration: 0.5s;
+  animation-delay: -0.2s;
+}
+@keyframes roy-nature-rain-drops {
+  0%   { transform: translateY(-60px); }
+  100% { transform: translateY(60px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-rain-drops::before,
+  .roycss-nature-rain-drops::after { animation: none; opacity: 0.3; }
+}`
+  },
+  {
+    id: "nature-snow-falling",
+    name: "Snow Falling",
+    category: "backgrounds",
+    description: "Gentle snowfall with multiple snowflake layers drifting down",
+    tags: ["nature", "snow", "snowfall", "winter", "weather"],
+    previewType: "background",
+    cssCode: `/* Nature: Snow Falling */
+.roycss-nature-snow-falling {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.7 0.04 230), oklch(0.85 0.02 220));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-snow-falling::before,
+.roycss-nature-snow-falling::after {
+  content: "";
+  position: absolute;
+  inset: -10% 0;
+  background:
+    radial-gradient(circle at 10% 0%, oklch(1 0 0 / 0.95) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 35% 0%, oklch(1 0 0 / 0.85) 0 1.5px, transparent 2px),
+    radial-gradient(circle at 60% 0%, oklch(1 0 0 / 0.9) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 85% 0%, oklch(1 0 0 / 0.8) 0 1.5px, transparent 2px),
+    radial-gradient(circle at 22% 0%, oklch(1 0 0 / 0.85) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 72% 0%, oklch(1 0 0 / 0.9) 0 1px, transparent 1.5px);
+  background-size: 80px 80px, 100px 100px, 90px 90px, 110px 110px, 60px 60px, 70px 70px;
+  background-repeat: repeat;
+  animation: roy-nature-snow-falling 6s linear infinite;
+}
+.roycss-nature-snow-falling::after {
+  background-size: 60px 60px, 80px 80px, 70px 70px, 90px 90px, 50px 50px, 60px 60px;
+  animation-duration: 9s;
+  animation-delay: -3s;
+  opacity: 0.7;
+}
+@keyframes roy-nature-snow-falling {
+  0%   { transform: translateY(-60px); background-position: 0 0; }
+  100% { transform: translateY(60px); background-position: 14px 60px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-snow-falling::before,
+  .roycss-nature-snow-falling::after { animation: none; opacity: 0.5; }
+}`
+  },
+  {
+    id: "nature-autumn-leaves",
+    name: "Autumn Leaves",
+    category: "backgrounds",
+    description: "Falling autumn leaves with swaying motion and warm colors",
+    tags: ["nature", "autumn", "leaves", "fall", "season"],
+    previewType: "background",
+    cssCode: `/* Nature: Autumn Leaves */
+.roycss-nature-autumn-leaves {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.7 0.08 60), oklch(0.55 0.1 40));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-autumn-leaves::before,
+.roycss-nature-autumn-leaves::after {
+  content: "";
+  position: absolute;
+  inset: -20% 0;
+  background:
+    radial-gradient(ellipse 8px 12px at 10% 0%, oklch(0.6 0.18 35) 0 6px, transparent 7px),
+    radial-gradient(ellipse 6px 10px at 30% 0%, oklch(0.65 0.18 25) 0 5px, transparent 6px),
+    radial-gradient(ellipse 10px 14px at 50% 0%, oklch(0.55 0.17 45) 0 7px, transparent 8px),
+    radial-gradient(ellipse 7px 11px at 75% 0%, oklch(0.62 0.18 30) 0 6px, transparent 7px),
+    radial-gradient(ellipse 9px 13px at 90% 0%, oklch(0.58 0.18 40) 0 7px, transparent 8px);
+  background-size: 110px 110px, 130px 130px, 120px 120px, 100px 100px, 115px 115px;
+  animation: roy-nature-autumn-leaves 7s linear infinite;
+}
+.roycss-nature-autumn-leaves::after {
+  background-size: 90px 90px, 110px 110px, 100px 100px, 80px 80px, 95px 95px;
+  animation-duration: 9s;
+  animation-delay: -3s;
+  opacity: 0.7;
+}
+@keyframes roy-nature-autumn-leaves {
+  0%   { transform: translate(0, -80px) rotate(0deg); }
+  50%  { transform: translate(20px, 30px) rotate(180deg); }
+  100% { transform: translate(-10px, 80px) rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-autumn-leaves::before,
+  .roycss-nature-autumn-leaves::after { animation: none; opacity: 0.5; }
+}`
+  },
+  {
+    id: "nature-thunder-flash",
+    name: "Thunder Flash",
+    category: "backgrounds",
+    description: "Occasional lightning flash with brightening sky on a stormy backdrop",
+    tags: ["nature", "thunder", "lightning", "flash", "storm"],
+    previewType: "background",
+    cssCode: `/* Nature: Thunder Flash */
+.roycss-nature-thunder-flash {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.2 0.06 250), oklch(0.12 0.04 240));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-thunder-flash::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, oklch(0.85 0.04 220 / 0.9), transparent 60%);
+  opacity: 0;
+  animation: roy-nature-thunder-flash 4s ease-out infinite;
+}
+.roycss-nature-thunder-flash::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 50%;
+  width: 2px; height: 60%;
+  background: linear-gradient(180deg, oklch(0.95 0.02 220 / 0.9), transparent);
+  transform: translateX(-50%) scaleY(0);
+  transform-origin: top;
+  animation: roy-nature-thunder-bolt 4s ease-out infinite;
+  filter: drop-shadow(0 0 8px oklch(0.85 0.04 220 / 0.9));
+}
+@keyframes roy-nature-thunder-flash {
+  0%, 88%, 92%, 100% { opacity: 0; }
+  90%                { opacity: 1; }
+  91%                { opacity: 0.4; }
+}
+@keyframes roy-nature-thunder-bolt {
+  0%, 88%, 100% { transform: translateX(-50%) scaleY(0); }
+  90%           { transform: translateX(-50%) scaleY(1); }
+  92%           { transform: translateX(-50%) scaleY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-thunder-flash::before,
+  .roycss-nature-thunder-flash::after { animation: none; opacity: 0; }
+}`
+  },
+  {
+    id: "nature-fog-drift",
+    name: "Fog Drift",
+    category: "backgrounds",
+    description: "Drifting fog layers that slowly move across the surface",
+    tags: ["nature", "fog", "mist", "drift", "weather"],
+    previewType: "background",
+    cssCode: `/* Nature: Fog Drift */
+.roycss-nature-fog-drift {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.55 0.05 220), oklch(0.45 0.06 240));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-fog-drift::before,
+.roycss-nature-fog-drift::after {
+  content: "";
+  position: absolute;
+  inset: -10% -20%;
+  background:
+    radial-gradient(ellipse 40% 25% at 30% 60%, oklch(0.85 0.02 220 / 0.4), transparent 70%),
+    radial-gradient(ellipse 35% 22% at 70% 40%, oklch(0.85 0.02 220 / 0.45), transparent 70%),
+    radial-gradient(ellipse 45% 28% at 50% 80%, oklch(0.85 0.02 220 / 0.4), transparent 70%);
+  filter: blur(8px);
+  animation: roy-nature-fog-drift 12s linear infinite;
+}
+.roycss-nature-fog-drift::after {
+  animation-duration: 18s;
+  animation-direction: reverse;
+  opacity: 0.7;
+}
+@keyframes roy-nature-fog-drift {
+  0%   { transform: translateX(-20%); }
+  100% { transform: translateX(20%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-fog-drift::before,
+  .roycss-nature-fog-drift::after { animation: none; opacity: 0.5; }
+}`
+  },
+  {
+    id: "nature-spring-bloom",
+    name: "Spring Bloom",
+    category: "backgrounds",
+    description: "Flowers bloom into full petals with a soft scaling animation",
+    tags: ["nature", "spring", "bloom", "flower", "petals"],
+    previewType: "box",
+    cssCode: `/* Nature: Spring Bloom */
+.roycss-nature-spring-bloom {
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, oklch(0.9 0.1 350), oklch(0.78 0.13 140));
+  border-radius: 50%;
+  animation: roy-nature-spring-bloom 2.4s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+}
+.roycss-nature-spring-bloom::before,
+.roycss-nature-spring-bloom::after {
+  content: "";
+  position: absolute;
+  inset: 20%;
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(0.85 0.16 60), oklch(0.7 0.18 30));
+  animation: roy-nature-spring-bloom-petals 2.4s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+}
+.roycss-nature-spring-bloom::after {
+  inset: 35%;
+  background: radial-gradient(circle, oklch(0.95 0.18 50), oklch(0.78 0.16 80));
+  animation-delay: 200ms;
+}
+@keyframes roy-nature-spring-bloom {
+  0%   { transform: scale(0); opacity: 0; }
+  60%  { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); }
+}
+@keyframes roy-nature-spring-bloom-petals {
+  0%   { transform: scale(0) rotate(0deg); opacity: 0; }
+  60%  { transform: scale(1.15) rotate(40deg); opacity: 1; }
+  100% { transform: scale(1) rotate(30deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-spring-bloom,
+  .roycss-nature-spring-bloom::before,
+  .roycss-nature-spring-bloom::after { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "nature-ocean-tide",
+    name: "Ocean Tide",
+    category: "backgrounds",
+    description: "Tide coming in and out with a wave cresting motion",
+    tags: ["nature", "ocean", "tide", "wave", "water"],
+    previewType: "background",
+    cssCode: `/* Nature: Ocean Tide */
+.roycss-nature-ocean-tide {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.7 0.14 220), oklch(0.4 0.12 240));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-ocean-tide::before,
+.roycss-nature-ocean-tide::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: -10%; right: -10%;
+  height: 50%;
+  background:
+    radial-gradient(ellipse 30% 100% at 30% 100%, oklch(0.78 0.1 200 / 0.8), transparent 70%),
+    radial-gradient(ellipse 35% 100% at 70% 100%, oklch(0.85 0.08 200 / 0.7), transparent 70%),
+    linear-gradient(180deg, transparent, oklch(0.45 0.14 220 / 0.8));
+  animation: roy-nature-ocean-tide 5s ease-in-out infinite;
+}
+.roycss-nature-ocean-tide::after {
+  height: 35%;
+  animation-duration: 7s;
+  animation-delay: -2s;
+  opacity: 0.7;
+}
+@keyframes roy-nature-ocean-tide {
+  0%, 100% { transform: translateY(20%) scaleX(1); }
+  50%      { transform: translateY(-8%) scaleX(1.05); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-ocean-tide::before,
+  .roycss-nature-ocean-tide::after { animation: none; }
+}`
+  },
+  {
+    id: "nature-desert-dune",
+    name: "Desert Dune",
+    category: "backgrounds",
+    description: "Sand dune shifting effect with warm gradient layers sliding",
+    tags: ["nature", "desert", "dune", "sand", "warm"],
+    previewType: "background",
+    cssCode: `/* Nature: Desert Dune */
+.roycss-nature-desert-dune {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.85 0.13 60), oklch(0.7 0.14 50) 50%, oklch(0.55 0.15 40));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-desert-dune::before,
+.roycss-nature-desert-dune::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: -10%; right: -10%;
+  height: 50%;
+  background:
+    radial-gradient(ellipse 50% 100% at 50% 100%, oklch(0.6 0.16 40), transparent 70%),
+    radial-gradient(ellipse 40% 100% at 80% 100%, oklch(0.55 0.16 35), transparent 70%);
+  animation: roy-nature-desert-dune 8s ease-in-out infinite;
+}
+.roycss-nature-desert-dune::after {
+  height: 35%;
+  animation-duration: 12s;
+  animation-delay: -3s;
+  opacity: 0.6;
+}
+@keyframes roy-nature-desert-dune {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(-8%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-desert-dune::before,
+  .roycss-nature-desert-dune::after { animation: none; }
+}`
+  },
+  {
+    id: "nature-aurora-sky",
+    name: "Aurora Sky",
+    category: "backgrounds",
+    description: "Aurora borealis with shifting green and violet ribbons in the sky",
+    tags: ["nature", "aurora", "borealis", "sky", "northern-lights"],
+    previewType: "background",
+    cssCode: `/* Nature: Aurora Sky */
+.roycss-nature-aurora-sky {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.08 0.04 250), oklch(0.16 0.06 240));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-aurora-sky::before,
+.roycss-nature-aurora-sky::after {
+  content: "";
+  position: absolute;
+  inset: -20% -10%;
+  background:
+    radial-gradient(ellipse 50% 30% at 30% 30%, oklch(0.7 0.22 150 / 0.6), transparent 70%),
+    radial-gradient(ellipse 40% 25% at 70% 50%, oklch(0.6 0.25 280 / 0.5), transparent 70%),
+    radial-gradient(ellipse 45% 28% at 50% 70%, oklch(0.65 0.22 170 / 0.55), transparent 70%);
+  filter: blur(12px);
+  animation: roy-nature-aurora-sky 10s ease-in-out infinite;
+}
+.roycss-nature-aurora-sky::after {
+  animation-duration: 14s;
+  animation-direction: reverse;
+  opacity: 0.7;
+}
+@keyframes roy-nature-aurora-sky {
+  0%, 100% { transform: translate(0, 0) skewX(0deg); }
+  50%      { transform: translate(8%, -4%) skewX(6deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-aurora-sky::before,
+  .roycss-nature-aurora-sky::after { animation: none; opacity: 0.6; }
+}`
+  },
+  {
+    id: "nature-mist-morning",
+    name: "Morning Mist",
+    category: "backgrounds",
+    description: "Morning mist rising slowly with warm dawn light behind it",
+    tags: ["nature", "mist", "morning", "dawn", "warm"],
+    previewType: "background",
+    cssCode: `/* Nature: Morning Mist */
+.roycss-nature-mist-morning {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.85 0.1 60), oklch(0.7 0.08 80) 50%, oklch(0.55 0.06 200));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-mist-morning::before,
+.roycss-nature-mist-morning::after {
+  content: "";
+  position: absolute;
+  inset: -10% -20%;
+  background:
+    radial-gradient(ellipse 50% 20% at 30% 70%, oklch(0.95 0.02 60 / 0.55), transparent 70%),
+    radial-gradient(ellipse 40% 18% at 70% 80%, oklch(0.92 0.04 80 / 0.5), transparent 70%),
+    radial-gradient(ellipse 55% 22% at 50% 60%, oklch(0.9 0.03 60 / 0.45), transparent 70%);
+  filter: blur(10px);
+  animation: roy-nature-mist-morning 14s ease-in-out infinite;
+}
+.roycss-nature-mist-morning::after {
+  animation-duration: 18s;
+  animation-direction: reverse;
+  opacity: 0.7;
+}
+@keyframes roy-nature-mist-morning {
+  0%, 100% { transform: translateY(10%); }
+  50%      { transform: translateY(-6%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-mist-morning::before,
+  .roycss-nature-mist-morning::after { animation: none; }
+}`
+  },
+  {
+    id: "nature-rainbow-arc",
+    name: "Rainbow Arc",
+    category: "backgrounds",
+    description: "Rainbow arc appears on hover with a sweeping multi-color reveal",
+    tags: ["nature", "rainbow", "arc", "color", "hover"],
+    previewType: "box",
+    cssCode: `/* Nature: Rainbow Arc */
+.roycss-nature-rainbow-arc {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.75 0.1 220), oklch(0.6 0.12 240));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-rainbow-arc::before {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 50%;
+  width: 0; height: 0;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  background:
+    radial-gradient(ellipse at center,
+      transparent 60%,
+      oklch(0.7 0.25 0 / 0.7) 62% 66%,
+      oklch(0.75 0.23 40 / 0.7) 66% 70%,
+      oklch(0.78 0.22 80 / 0.7) 70% 74%,
+      oklch(0.72 0.2 140 / 0.7) 74% 78%,
+      oklch(0.7 0.22 200 / 0.7) 78% 82%,
+      oklch(0.68 0.24 280 / 0.7) 82% 86%,
+      oklch(0.65 0.22 320 / 0.7) 86% 90%,
+      transparent 92%);
+  transform: translateX(-50%) scale(0);
+  transform-origin: bottom center;
+  transition: transform 800ms cubic-bezier(0.34, 1.2, 0.64, 1);
+  opacity: 0;
+}
+.roycss-nature-rainbow-arc:hover::before {
+  width: 140%; height: 140%;
+  transform: translateX(-50%) scale(1);
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-rainbow-arc:hover::before { transition: none; opacity: 1; transform: translateX(-50%) scale(1); width: 140%; height: 140%; }
+}`
+  },
+  {
+    id: "nature-tornado-spin",
+    name: "Tornado Spin",
+    category: "backgrounds",
+    description: "Spinning vortex effect with rotating layers and a tapering shape",
+    tags: ["nature", "tornado", "vortex", "spin", "storm"],
+    previewType: "background",
+    cssCode: `/* Nature: Tornado Spin */
+.roycss-nature-tornado-spin {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.4 0.06 240), oklch(0.3 0.05 250));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-tornado-spin::before,
+.roycss-nature-tornado-spin::after {
+  content: "";
+  position: absolute;
+  top: 10%; left: 50%;
+  width: 60%; height: 80%;
+  background:
+    repeating-conic-gradient(from 0deg at 50% 50%,
+      oklch(0.7 0.06 220 / 0.6) 0deg 12deg,
+      transparent 12deg 30deg);
+  clip-path: polygon(20% 0, 80% 0, 100% 100%, 0% 100%);
+  transform: translateX(-50%);
+  animation: roy-nature-tornado-spin 1.5s linear infinite;
+  filter: blur(1px);
+}
+.roycss-nature-tornado-spin::after {
+  width: 40%;
+  background:
+    repeating-conic-gradient(from 0deg at 50% 50%,
+      oklch(0.85 0.04 220 / 0.5) 0deg 15deg,
+      transparent 15deg 30deg);
+  animation-duration: 0.9s;
+  animation-direction: reverse;
+  opacity: 0.7;
+}
+@keyframes roy-nature-tornado-spin {
+  0%   { transform: translateX(-50%) rotate(0deg); }
+  100% { transform: translateX(-50%) rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-tornado-spin::before,
+  .roycss-nature-tornado-spin::after { animation: none; opacity: 0.4; }
+}`
+  },
+  {
+    id: "nature-volcano-erupt",
+    name: "Volcano Erupt",
+    category: "backgrounds",
+    description: "Volcanic eruption with rising particles and a glowing crater",
+    tags: ["nature", "volcano", "eruption", "lava", "particles"],
+    previewType: "background",
+    cssCode: `/* Nature: Volcano Erupt */
+.roycss-nature-volcano-erupt {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.1 0.04 30), oklch(0.2 0.06 30) 50%, oklch(0.05 0.02 30));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-volcano-erupt::before {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 50%;
+  width: 40%; height: 30%;
+  background: radial-gradient(ellipse at top, oklch(0.7 0.22 30), oklch(0.4 0.2 20));
+  border-radius: 50% 50% 0 0;
+  transform: translateX(-50%);
+  box-shadow: 0 -8px 24px oklch(0.7 0.22 30 / 0.6);
+}
+.roycss-nature-volcano-erupt::after {
+  content: "";
+  position: absolute;
+  bottom: 30%; left: 50%;
+  width: 80%; height: 70%;
+  background:
+    radial-gradient(circle at 30% 100%, oklch(0.8 0.22 40) 0 3px, transparent 4px),
+    radial-gradient(circle at 50% 90%, oklch(0.7 0.22 30) 0 4px, transparent 5px),
+    radial-gradient(circle at 70% 95%, oklch(0.75 0.22 35) 0 3px, transparent 4px),
+    radial-gradient(circle at 40% 80%, oklch(0.8 0.22 50) 0 2px, transparent 3px),
+    radial-gradient(circle at 60% 75%, oklch(0.7 0.22 30) 0 2.5px, transparent 3.5px);
+  background-size: 100% 100%;
+  transform: translateX(-50%);
+  animation: roy-nature-volcano-erupt 1.6s ease-out infinite;
+  filter: drop-shadow(0 0 4px oklch(0.7 0.22 40 / 0.7));
+}
+@keyframes roy-nature-volcano-erupt {
+  0%   { transform: translate(-50%, 0) scale(0.6); opacity: 0.9; }
+  60%  { opacity: 1; }
+  100% { transform: translate(-50%, -60%) scale(1.2); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-volcano-erupt::before,
+  .roycss-nature-volcano-erupt::after { animation: none; }
+  .roycss-nature-volcano-erupt::after { opacity: 0.5; }
+}`
+  }
+];
+
+// src/lib/effects-batch-47.ts
+var effectsBatch47 = [
+  {
+    id: "scroll-intelligence-parallax-depth",
+    name: "Parallax Depth",
+    category: "scroll",
+    description: "Multi-layer parallax creating 3D depth illusion on scroll",
+    tags: ["scroll", "parallax", "depth", "3d", "scroll-intelligence"],
+    previewType: "background",
+    cssCode: `/* Scroll-Intelligence: Parallax Depth */
+.roycss-scroll-intelligence-parallax-depth {
+  position: relative;
+  width: 100%; height: 100%;
+  background: linear-gradient(180deg, oklch(0.85 0.05 230), oklch(0.6 0.18 250));
+  border-radius: 14px;
+  overflow: hidden;
+}
+.roycss-scroll-intelligence-parallax-depth::before,
+.roycss-scroll-intelligence-parallax-depth::after,
+.roycss-scroll-intelligence-parallax-depth > span {
+  content: "";
+  position: absolute;
+  display: block;
+}
+.roycss-scroll-intelligence-parallax-depth::before {
+  inset: 30% 20% 30% 20%;
+  background: radial-gradient(ellipse at center, oklch(0.9 0.12 350) 0 60%, transparent 70%);
+  filter: blur(8px);
+  animation: roy-scroll-parallax-depth-far 18s linear infinite;
+}
+.roycss-scroll-intelligence-parallax-depth::after {
+  inset: 50% 35% 15% 35%;
+  background: radial-gradient(circle at center, oklch(0.85 0.18 140) 0 60%, transparent 70%);
+  filter: blur(4px);
+  animation: roy-scroll-parallax-depth-mid 12s linear infinite;
+}
+.roycss-scroll-intelligence-parallax-depth > span {
+  inset: 70% 45% 5% 45%;
+  background: radial-gradient(circle at center, oklch(0.95 0.1 60) 0 50%, transparent 70%);
+  animation: roy-scroll-parallax-depth-near 7s linear infinite;
+}
+@keyframes roy-scroll-parallax-depth-far  { 0%,100% { transform: translateX(-12%); } 50% { transform: translateX(12%); } }
+@keyframes roy-scroll-parallax-depth-mid  { 0%,100% { transform: translateX(-22%); } 50% { transform: translateX(22%); } }
+@keyframes roy-scroll-parallax-depth-near { 0%,100% { transform: translateX(-40%); } 50% { transform: translateX(40%); } }
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-intelligence-parallax-depth::before,
+  .roycss-scroll-intelligence-parallax-depth::after,
+  .roycss-scroll-intelligence-parallax-depth > span { animation: none; }
+}`
+  },
+  {
+    id: "scroll-intelligence-speed-morph",
+    name: "Speed Morph",
+    category: "scroll",
+    description: "Text morphs shape and skew based on simulated scroll velocity",
+    tags: ["scroll", "velocity", "morph", "text", "scroll-intelligence"],
+    previewType: "text",
+    previewText: "Velocity",
+    cssCode: `/* Scroll-Intelligence: Speed Morph */
+.roycss-scroll-intelligence-speed-morph {
+  display: inline-block;
+  font: 900 36px/1 system-ui, sans-serif;
+  letter-spacing: -0.03em;
+  background: linear-gradient(90deg, oklch(0.9 0.18 35), oklch(0.7 0.22 280));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transform-origin: left center;
+  animation: roy-scroll-speed-morph 4s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+}
+@keyframes roy-scroll-speed-morph {
+  0%   { transform: scaleX(1) skewX(0deg);   filter: blur(0); }
+  20%  { transform: scaleX(1.6) skewX(-12deg); filter: blur(2.5px); }
+  40%  { transform: scaleX(0.85) skewX(8deg); filter: blur(1px); }
+  60%  { transform: scaleX(1.25) skewX(-4deg); filter: blur(1.5px); }
+  80%  { transform: scaleX(0.95) skewX(2deg); filter: blur(0.4px); }
+  100% { transform: scaleX(1) skewX(0deg);   filter: blur(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-intelligence-speed-morph { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "scroll-intelligence-horizontal-section",
+    name: "Horizontal Section",
+    category: "scroll",
+    description: "Full-width section scrolls horizontally while page scrolls vertically",
+    tags: ["scroll", "horizontal", "section", "scroll-intelligence"],
+    previewType: "background",
+    cssCode: `/* Scroll-Intelligence: Horizontal Section */
+.roycss-scroll-intelligence-horizontal-section {
+  position: relative;
+  width: 100%; height: 100%;
+  background: oklch(0.18 0.04 260);
+  border-radius: 14px;
+  overflow: hidden;
+  perspective: 800px;
+}
+.roycss-scroll-intelligence-horizontal-section > .track {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  gap: 8%;
+  padding: 0 5%;
+  align-items: center;
+  animation: roy-scroll-horizontal-section 9s linear infinite;
+}
+.roycss-scroll-intelligence-horizontal-section > .track > span {
+  flex: 0 0 22%;
+  height: 60%;
+  background: linear-gradient(135deg, oklch(0.7 0.18 280), oklch(0.6 0.22 320));
+  border-radius: 12px;
+  box-shadow: 0 10px 30px oklch(0 0 0 / 0.4);
+}
+@keyframes roy-scroll-horizontal-section {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-intelligence-horizontal-section > .track { animation: none; }
+}`
+  },
+  {
+    id: "scroll-intelligence-color-shift",
+    name: "Color Spectrum Shift",
+    category: "scroll",
+    description: "Background hue rotates through full spectrum as you scroll",
+    tags: ["scroll", "color", "hue", "spectrum", "scroll-intelligence"],
+    previewType: "background",
+    cssCode: `/* Scroll-Intelligence: Color Spectrum Shift */
+.roycss-scroll-intelligence-color-shift {
+  position: relative;
+  width: 100%; height: 100%;
+  border-radius: 14px;
+  background: linear-gradient(135deg, oklch(0.7 0.2 0), oklch(0.65 0.22 90), oklch(0.7 0.2 180), oklch(0.65 0.22 270), oklch(0.7 0.2 360));
+  background-size: 300% 300%;
+  animation: roy-scroll-color-shift 12s linear infinite;
+}
+.roycss-scroll-intelligence-color-shift::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 40%, oklch(0 0 0 / 0.3) 100%);
+  border-radius: inherit;
+}
+@keyframes roy-scroll-color-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-intelligence-color-shift { animation: none; }
+}`
+  },
+  {
+    id: "scroll-intelligence-cinematic-fade",
+    name: "Cinematic Fade",
+    category: "scroll",
+    description: "Elements fade and blur in/out at specific scroll positions",
+    tags: ["scroll", "fade", "cinematic", "blur", "scroll-intelligence"],
+    previewType: "box",
+    cssCode: `/* Scroll-Intelligence: Cinematic Fade */
+.roycss-scroll-intelligence-cinematic-fade {
+  position: relative;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, oklch(0.2 0.03 250), oklch(0.35 0.05 280));
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.roycss-scroll-intelligence-cinematic-fade::before {
+  content: "";
+  position: absolute;
+  width: 70%; height: 70%;
+  background: radial-gradient(circle at center, oklch(0.95 0.12 60), oklch(0.65 0.2 320));
+  border-radius: 50%;
+  filter: blur(6px);
+  animation: roy-scroll-cinematic-fade 6s ease-in-out infinite;
+}
+.roycss-scroll-intelligence-cinematic-fade::after {
+  content: "Cinematic";
+  position: relative;
+  color: oklch(0.98 0 0);
+  font: 800 24px/1 system-ui, sans-serif;
+  letter-spacing: 0.05em;
+  animation: roy-scroll-cinematic-fade-text 6s ease-in-out infinite;
+}
+@keyframes roy-scroll-cinematic-fade {
+  0%, 100% { opacity: 0; transform: scale(0.7); filter: blur(20px); }
+  50%      { opacity: 1; transform: scale(1);   filter: blur(0); }
+}
+@keyframes roy-scroll-cinematic-fade-text {
+  0%, 100% { opacity: 0; filter: blur(8px); transform: translateY(20px); }
+  50%      { opacity: 1; filter: blur(0);  transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-intelligence-cinematic-fade::before,
+  .roycss-scroll-intelligence-cinematic-fade::after { animation: none; opacity: 1; transform: none; filter: none; }
+}`
+  },
+  {
+    id: "scroll-intelligence-text-reveal",
+    name: "Text Reveal",
+    category: "scroll",
+    description: "Characters appear one by one as they enter the viewport",
+    tags: ["scroll", "text", "reveal", "stagger", "scroll-intelligence"],
+    previewType: "text",
+    previewText: "Reveal",
+    childCount: 6,
+    cssCode: `/* Scroll-Intelligence: Text Reveal */
+.roycss-scroll-intelligence-text-reveal {
+  display: inline-flex;
+  font: 800 36px/1 system-ui, sans-serif;
+  color: oklch(0.95 0.1 220);
+  letter-spacing: 0.02em;
+}
+.roycss-scroll-intelligence-text-reveal > span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(40%) rotateX(-90deg);
+  transform-origin: bottom;
+  animation: roy-scroll-text-reveal 3s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+.roycss-scroll-intelligence-text-reveal > span:nth-child(1) { animation-delay: 0s; }
+.roycss-scroll-intelligence-text-reveal > span:nth-child(2) { animation-delay: 0.1s; }
+.roycss-scroll-intelligence-text-reveal > span:nth-child(3) { animation-delay: 0.2s; }
+.roycss-scroll-intelligence-text-reveal > span:nth-child(4) { animation-delay: 0.3s; }
+.roycss-scroll-intelligence-text-reveal > span:nth-child(5) { animation-delay: 0.4s; }
+.roycss-scroll-intelligence-text-reveal > span:nth-child(6) { animation-delay: 0.5s; }
+@keyframes roy-scroll-text-reveal {
+  0%       { opacity: 0; transform: translateY(40%) rotateX(-90deg); }
+  20%, 80% { opacity: 1; transform: translateY(0)    rotateX(0); }
+  100%     { opacity: 0; transform: translateY(-40%) rotateX(90deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-intelligence-text-reveal > span { animation: none; opacity: 1; transform: none; }
+}`
+  },
+  {
+    id: "scroll-intelligence-progress-morph",
+    name: "Progress Morph",
+    category: "scroll",
+    description: "Shape morphs from circle to square based on scroll progress",
+    tags: ["scroll", "morph", "progress", "shape", "scroll-intelligence"],
+    previewType: "box",
+    cssCode: `/* Scroll-Intelligence: Progress Morph */
+.roycss-scroll-intelligence-progress-morph {
+  width: 120px; height: 120px;
+  background: linear-gradient(135deg, oklch(0.72 0.22 175), oklch(0.6 0.24 220));
+  animation: roy-scroll-progress-morph 6s ease-in-out infinite;
+  box-shadow: 0 12px 30px oklch(0 0 0 / 0.25);
+}
+@keyframes roy-scroll-progress-morph {
+  0%   { border-radius: 50%; transform: rotate(0deg) scale(1); }
+  25%  { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; transform: rotate(90deg) scale(1.1); }
+  50%  { border-radius: 0; transform: rotate(180deg) scale(1.2); }
+  75%  { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; transform: rotate(270deg) scale(1.1); }
+  100% { border-radius: 50%; transform: rotate(360deg) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-intelligence-progress-morph { animation: none; border-radius: 50%; transform: none; }
+}`
+  },
+  {
+    id: "scroll-intelligence-sticky-storytelling",
+    name: "Sticky Storytelling",
+    category: "scroll",
+    description: "Sticky element stays fixed while scene content scrolls past",
+    tags: ["scroll", "sticky", "storytelling", "scene", "scroll-intelligence"],
+    previewType: "background",
+    cssCode: `/* Scroll-Intelligence: Sticky Storytelling */
+.roycss-scroll-intelligence-sticky-storytelling {
+  position: relative;
+  width: 100%; height: 100%;
+  background: oklch(0.12 0.04 240);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.roycss-scroll-intelligence-sticky-storytelling::before {
+  content: "";
+  position: sticky;
+  top: 50%;
+  left: 50%;
+  width: 45%; height: 45%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 35% 30%, oklch(0.95 0.12 50) 0 50%, oklch(0.6 0.2 350) 50% 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 60px oklch(0.8 0.18 40 / 0.6);
+  animation: roy-scroll-sticky-storytelling 8s ease-in-out infinite;
+}
+.roycss-scroll-intelligence-sticky-storytelling::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(180deg, transparent 0 12%, oklch(0.9 0.05 200 / 0.06) 12% 14%);
+  animation: roy-scroll-sticky-storytelling-bg 6s linear infinite;
+}
+@keyframes roy-scroll-sticky-storytelling {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); filter: hue-rotate(0deg); }
+  50%      { transform: translate(-50%, -50%) scale(1.12); filter: hue-rotate(60deg); }
+}
+@keyframes roy-scroll-sticky-storytelling-bg {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-30%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-intelligence-sticky-storytelling::before,
+  .roycss-scroll-intelligence-sticky-storytelling::after { animation: none; }
+}`
+  },
+  {
+    id: "scroll-intelligence-image-transition",
+    name: "Image Transition",
+    category: "scroll",
+    description: "Cross-fade between scenes as you scroll between sections",
+    tags: ["scroll", "image", "transition", "crossfade", "scroll-intelligence"],
+    previewType: "background",
+    cssCode: `/* Scroll-Intelligence: Image Transition */
+.roycss-scroll-intelligence-image-transition {
+  position: relative;
+  width: 100%; height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background: oklch(0.1 0.04 230);
+}
+.roycss-scroll-intelligence-image-transition::before,
+.roycss-scroll-intelligence-image-transition::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+.roycss-scroll-intelligence-image-transition::before {
+  background: radial-gradient(circle at 30% 30%, oklch(0.85 0.18 30), oklch(0.4 0.2 0));
+  clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+  animation: roy-scroll-image-transition-a 7s ease-in-out infinite;
+}
+.roycss-scroll-intelligence-image-transition::after {
+  background: radial-gradient(circle at 70% 70%, oklch(0.7 0.18 200), oklch(0.35 0.22 260));
+  clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+  animation: roy-scroll-image-transition-b 7s ease-in-out infinite;
+}
+@keyframes roy-scroll-image-transition-a {
+  0%, 100% { clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); }
+  50%      { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+}
+@keyframes roy-scroll-image-transition-b {
+  0%, 100% { clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%); }
+  50%      { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-intelligence-image-transition::before,
+  .roycss-scroll-intelligence-image-transition::after { animation: none; }
+}`
+  },
+  {
+    id: "scroll-intelligence-text-choreography",
+    name: "Text Choreography",
+    category: "scroll",
+    description: "Words fly in and out in sequence on scroll rhythm",
+    tags: ["scroll", "text", "choreography", "kinetic", "scroll-intelligence"],
+    previewType: "text",
+    previewText: "Flow",
+    childCount: 4,
+    cssCode: `/* Scroll-Intelligence: Text Choreography */
+.roycss-scroll-intelligence-text-choreography {
+  position: relative;
+  display: inline-flex;
+  font: 800 36px/1 system-ui, sans-serif;
+  color: oklch(0.98 0.02 220);
+  letter-spacing: -0.02em;
+}
+.roycss-scroll-intelligence-text-choreography > span {
+  display: inline-block;
+  opacity: 0;
+  animation: roy-scroll-text-choreography 4s cubic-bezier(0.5, 0, 0.1, 1) infinite;
+}
+.roycss-scroll-intelligence-text-choreography > span:nth-child(1) { animation-delay: 0s;    color: oklch(0.9 0.2 30); }
+.roycss-scroll-intelligence-text-choreography > span:nth-child(2) { animation-delay: 0.25s; color: oklch(0.85 0.2 140); }
+.roycss-scroll-intelligence-text-choreography > span:nth-child(3) { animation-delay: 0.5s;  color: oklch(0.85 0.2 230); }
+.roycss-scroll-intelligence-text-choreography > span:nth-child(4) { animation-delay: 0.75s; color: oklch(0.85 0.2 320); }
+@keyframes roy-scroll-text-choreography {
+  0%   { opacity: 0; transform: translateX(-80px) rotate(-8deg); }
+  20%  { opacity: 1; transform: translateX(0) rotate(0); }
+  60%  { opacity: 1; transform: translateX(0) rotate(0); }
+  80%, 100% { opacity: 0; transform: translateX(80px) rotate(8deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-intelligence-text-choreography > span { animation: none; opacity: 1; transform: none; }
+}`
+  },
+  {
+    id: "scroll-intelligence-section-morph",
+    name: "Section Morph",
+    category: "scroll",
+    description: "Section container morphs shape and corners on scroll",
+    tags: ["scroll", "section", "morph", "container", "scroll-intelligence"],
+    previewType: "box",
+    cssCode: `/* Scroll-Intelligence: Section Morph */
+.roycss-scroll-intelligence-section-morph {
+  width: 100%; height: 100%;
+  background:
+    linear-gradient(135deg, oklch(0.72 0.2 200), oklch(0.55 0.24 280));
+  animation: roy-scroll-section-morph 8s ease-in-out infinite;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.roycss-scroll-intelligence-section-morph::before {
+  content: "MORPH";
+  color: oklch(1 0 0 / 0.92);
+  font: 900 28px/1 system-ui, sans-serif;
+  letter-spacing: 0.2em;
+}
+@keyframes roy-scroll-section-morph {
+  0%   { border-radius: 14px 14px 14px 14px; transform: scale(1) rotate(0deg); }
+  25%  { border-radius: 50% 14px 50% 14px; transform: scale(0.95) rotate(-2deg); }
+  50%  { border-radius: 14px 50% 14px 50%; transform: scale(1.02) rotate(2deg); }
+  75%  { border-radius: 50% 50% 14px 14px; transform: scale(0.98) rotate(-1deg); }
+  100% { border-radius: 14px 14px 14px 14px; transform: scale(1) rotate(0deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-intelligence-section-morph { animation: none; border-radius: 14px; }
+}`
+  },
+  {
+    id: "scroll-intelligence-progress-ring",
+    name: "Progress Ring",
+    category: "scroll",
+    description: "Circular SVG-free progress ring tracking scroll position",
+    tags: ["scroll", "progress", "ring", "circle", "scroll-intelligence"],
+    previewType: "box",
+    cssCode: `/* Scroll-Intelligence: Progress Ring */
+.roycss-scroll-intelligence-progress-ring {
+  position: relative;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background:
+    conic-gradient(from -90deg, oklch(0.75 0.22 175) 0deg, oklch(0.6 0.24 280) 270deg, oklch(0.2 0.04 260) 270deg 360deg);
+  display: grid;
+  place-items: center;
+  animation: roy-scroll-progress-ring 4s linear infinite;
+}
+.roycss-scroll-intelligence-progress-ring::before {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  background: oklch(0.16 0.03 250);
+  border-radius: 50%;
+  z-index: 1;
+}
+.roycss-scroll-intelligence-progress-ring::after {
+  content: "75%";
+  position: relative;
+  z-index: 2;
+  color: oklch(0.95 0.05 220);
+  font: 800 22px/1 system-ui, sans-serif;
+}
+@keyframes roy-scroll-progress-ring {
+  from { transform: rotate(-90deg); }
+  to   { transform: rotate(270deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-intelligence-progress-ring { animation: none; }
+}`
+  },
+  {
+    id: "scroll-intelligence-velocity-blur",
+    name: "Velocity Blur",
+    category: "scroll",
+    description: "Element blurs when scrolling fast, sharpens when slow",
+    tags: ["scroll", "velocity", "blur", "kinetic", "scroll-intelligence"],
+    previewType: "box",
+    cssCode: `/* Scroll-Intelligence: Velocity Blur */
+.roycss-scroll-intelligence-velocity-blur {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, oklch(0.65 0.2 280), oklch(0.85 0.16 320));
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: oklch(0.98 0 0);
+  font: 800 22px/1 system-ui, sans-serif;
+  letter-spacing: 0.1em;
+  animation: roy-scroll-velocity-blur 3s ease-in-out infinite;
+}
+.roycss-scroll-intelligence-velocity-blur::before {
+  content: "FAST";
+  display: block;
+  animation: roy-scroll-velocity-blur-content 3s ease-in-out infinite;
+}
+@keyframes roy-scroll-velocity-blur {
+  0%, 100% { filter: blur(0); transform: translateX(0) scale(1); }
+  25%      { filter: blur(6px); transform: translateX(-30px) scale(0.97); }
+  75%      { filter: blur(8px); transform: translateX(30px) scale(0.96); }
+}
+@keyframes roy-scroll-velocity-blur-content {
+  0%, 100% { content: "SLOW"; opacity: 1; }
+  25%, 75% { content: "FAST"; opacity: 0.85; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-intelligence-velocity-blur,
+  .roycss-scroll-intelligence-velocity-blur::before { animation: none; filter: none; transform: none; }
+}`
+  },
+  {
+    id: "scroll-intelligence-pinned-card",
+    name: "Pinned Card",
+    category: "scroll",
+    description: "Card pins to viewport and tilts, releases at section end",
+    tags: ["scroll", "pinned", "card", "sticky", "scroll-intelligence"],
+    previewType: "card",
+    cssCode: `/* Scroll-Intelligence: Pinned Card */
+.roycss-scroll-intelligence-pinned-card {
+  position: relative;
+  width: 220px; height: 280px;
+  background: linear-gradient(160deg, oklch(0.92 0.05 230), oklch(0.7 0.18 280));
+  border-radius: 18px;
+  box-shadow: 0 30px 60px oklch(0 0 0 / 0.35), inset 0 1px 0 oklch(1 0 0 / 0.6);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  animation: roy-scroll-pinned-card 6s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+.roycss-scroll-intelligence-pinned-card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, transparent 30%, oklch(1 0 0 / 0.4) 50%, transparent 70%);
+  background-size: 200% 200%;
+  animation: roy-scroll-pinned-card-shine 4s linear infinite;
+}
+.roycss-scroll-intelligence-pinned-card::after {
+  content: "PINNED";
+  position: relative;
+  z-index: 2;
+  color: oklch(0.98 0 0);
+  font: 900 18px/1 system-ui, sans-serif;
+  letter-spacing: 0.25em;
+}
+@keyframes roy-scroll-pinned-card {
+  0%   { transform: perspective(800px) rotateY(0) rotateX(0) scale(1); }
+  35%  { transform: perspective(800px) rotateY(12deg) rotateX(-6deg) scale(0.98); }
+  65%  { transform: perspective(800px) rotateY(-12deg) rotateX(6deg) scale(0.98); }
+  100% { transform: perspective(800px) rotateY(0) rotateX(0) scale(1); }
+}
+@keyframes roy-scroll-pinned-card-shine {
+  from { background-position: 0% 0%; }
+  to   { background-position: 200% 200%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-intelligence-pinned-card,
+  .roycss-scroll-intelligence-pinned-card::before { animation: none; }
+}`
+  },
+  {
+    id: "scroll-intelligence-gradient-shift",
+    name: "Gradient Shift",
+    category: "scroll",
+    description: "Gradient angle and position shift continuously with scroll",
+    tags: ["scroll", "gradient", "shift", "angle", "scroll-intelligence"],
+    previewType: "background",
+    cssCode: `/* Scroll-Intelligence: Gradient Shift */
+.roycss-scroll-intelligence-gradient-shift {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, oklch(0.75 0.22 200), oklch(0.65 0.24 320), oklch(0.7 0.22 40));
+  background-size: 200% 200%;
+  border-radius: 14px;
+  animation: roy-scroll-gradient-shift 10s ease-in-out infinite;
+}
+@keyframes roy-scroll-gradient-shift {
+  0%   { background-position: 0% 0%;   filter: hue-rotate(0deg); }
+  25%  { background-position: 100% 0%;  filter: hue-rotate(60deg); }
+  50%  { background-position: 100% 100%; filter: hue-rotate(120deg); }
+  75%  { background-position: 0% 100%;  filter: hue-rotate(180deg); }
+  100% { background-position: 0% 0%;   filter: hue-rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-intelligence-gradient-shift { animation: none; }
+}`
+  },
+  {
+    id: "scroll-intelligence-scale-reveal",
+    name: "Scale Reveal",
+    category: "scroll",
+    description: "Elements scale from 0 to full size as they enter viewport",
+    tags: ["scroll", "scale", "reveal", "entry", "scroll-intelligence"],
+    previewType: "box",
+    cssCode: `/* Scroll-Intelligence: Scale Reveal */
+.roycss-scroll-intelligence-scale-reveal {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, oklch(0.25 0.05 250), oklch(0.45 0.2 320));
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+.roycss-scroll-intelligence-scale-reveal::before,
+.roycss-scroll-intelligence-scale-reveal::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  animation: roy-scroll-scale-reveal 4s ease-in-out infinite;
+}
+.roycss-scroll-intelligence-scale-reveal::before {
+  width: 70%; height: 70%;
+  background: radial-gradient(circle at center, oklch(0.95 0.18 60), oklch(0.7 0.2 320));
+  animation-delay: 0s;
+}
+.roycss-scroll-intelligence-scale-reveal::after {
+  width: 30%; height: 30%;
+  background: radial-gradient(circle at center, oklch(1 0 0 / 0.95), oklch(0.95 0.1 220));
+  animation-delay: 0.3s;
+}
+@keyframes roy-scroll-scale-reveal {
+  0%   { transform: scale(0); opacity: 0; }
+  50%  { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.3); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-intelligence-scale-reveal::before,
+  .roycss-scroll-intelligence-scale-reveal::after { animation: none; transform: scale(1); opacity: 1; }
+}`
+  },
+  {
+    id: "scroll-intelligence-rotate-3d",
+    name: "Rotate 3D",
+    category: "scroll",
+    description: "Element rotates in full 3D space tied to scroll position",
+    tags: ["scroll", "3d", "rotate", "perspective", "scroll-intelligence"],
+    previewType: "box",
+    cssCode: `/* Scroll-Intelligence: Rotate 3D */
+.roycss-scroll-intelligence-rotate-3d {
+  width: 140px; height: 140px;
+  background: linear-gradient(135deg, oklch(0.78 0.18 180), oklch(0.55 0.22 280));
+  border-radius: 18px;
+  box-shadow: 0 18px 40px oklch(0 0 0 / 0.3);
+  transform-style: preserve-3d;
+  animation: roy-scroll-rotate-3d 6s linear infinite;
+}
+.roycss-scroll-intelligence-rotate-3d::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 40%, oklch(1 0 0 / 0.4) 50%, transparent 60%);
+  border-radius: inherit;
+}
+.roycss-scroll-intelligence-rotate-3d::after {
+  content: "3D";
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  color: oklch(0.98 0 0);
+  font: 900 22px/1 system-ui, sans-serif;
+  letter-spacing: 0.2em;
+}
+@keyframes roy-scroll-rotate-3d {
+  0%   { transform: perspective(700px) rotateX(0)    rotateY(0)    rotateZ(0); }
+  25%  { transform: perspective(700px) rotateX(90deg) rotateY(0)   rotateZ(0); }
+  50%  { transform: perspective(700px) rotateX(0)    rotateY(90deg) rotateZ(0); }
+  75%  { transform: perspective(700px) rotateX(0)    rotateY(0)    rotateZ(90deg); }
+  100% { transform: perspective(700px) rotateX(0)    rotateY(0)    rotateZ(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-intelligence-rotate-3d { animation: none; }
+}`
+  },
+  {
+    id: "scroll-intelligence-stagger-reveal",
+    name: "Stagger Reveal",
+    category: "scroll",
+    description: "Child elements reveal in a staggered cascade on scroll",
+    tags: ["scroll", "stagger", "reveal", "cascade", "scroll-intelligence"],
+    previewType: "box",
+    childCount: 5,
+    cssCode: `/* Scroll-Intelligence: Stagger Reveal */
+.roycss-scroll-intelligence-stagger-reveal {
+  width: 100%; height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(135deg, oklch(0.2 0.04 250), oklch(0.32 0.08 270));
+  border-radius: 14px;
+}
+.roycss-scroll-intelligence-stagger-reveal > span {
+  width: 24px; height: 80px;
+  background: linear-gradient(180deg, oklch(0.85 0.2 50), oklch(0.65 0.22 320));
+  border-radius: 8px;
+  opacity: 0;
+  transform: translateY(40px) scale(0.6);
+  animation: roy-scroll-stagger-reveal 3s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+}
+.roycss-scroll-intelligence-stagger-reveal > span:nth-child(1) { animation-delay: 0s; }
+.roycss-scroll-intelligence-stagger-reveal > span:nth-child(2) { animation-delay: 0.15s; }
+.roycss-scroll-intelligence-stagger-reveal > span:nth-child(3) { animation-delay: 0.3s; }
+.roycss-scroll-intelligence-stagger-reveal > span:nth-child(4) { animation-delay: 0.45s; }
+.roycss-scroll-intelligence-stagger-reveal > span:nth-child(5) { animation-delay: 0.6s; }
+@keyframes roy-scroll-stagger-reveal {
+  0%   { opacity: 0; transform: translateY(40px) scale(0.6); }
+  40%, 70% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-40px) scale(0.6); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-intelligence-stagger-reveal > span { animation: none; opacity: 1; transform: none; }
+}`
+  },
+  {
+    id: "scroll-intelligence-progress-bar-top",
+    name: "Progress Bar Top",
+    category: "scroll",
+    description: "Thin gradient progress bar pinned to top tracking scroll",
+    tags: ["scroll", "progress", "bar", "top", "scroll-intelligence"],
+    previewType: "background",
+    cssCode: `/* Scroll-Intelligence: Progress Bar Top */
+.roycss-scroll-intelligence-progress-bar-top {
+  position: relative;
+  width: 100%; height: 100%;
+  background: linear-gradient(180deg, oklch(0.18 0.04 250), oklch(0.35 0.08 270));
+  border-radius: 14px;
+  overflow: hidden;
+}
+.roycss-scroll-intelligence-progress-bar-top::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  height: 6px;
+  width: 100%;
+  transform-origin: left center;
+  background: linear-gradient(90deg, oklch(0.75 0.22 175), oklch(0.65 0.24 280), oklch(0.85 0.2 30));
+  box-shadow: 0 0 12px oklch(0.75 0.22 175 / 0.7);
+  animation: roy-scroll-progress-bar-top 4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+.roycss-scroll-intelligence-progress-bar-top::after {
+  content: "Scroll Position";
+  position: absolute;
+  bottom: 16px; left: 50%;
+  transform: translateX(-50%);
+  color: oklch(0.95 0.05 220);
+  font: 700 14px/1 system-ui, sans-serif;
+  letter-spacing: 0.15em;
+}
+@keyframes roy-scroll-progress-bar-top {
+  0%   { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-intelligence-progress-bar-top::before { animation: none; transform: scaleX(0.6); }
+}`
+  },
+  {
+    id: "scroll-intelligence-snap-sections",
+    name: "Snap Sections",
+    category: "scroll",
+    description: "Sections snap into place using scroll-snap on a vertical track",
+    tags: ["scroll", "snap", "sections", "scroll-snap", "scroll-intelligence"],
+    previewType: "background",
+    cssCode: `/* Scroll-Intelligence: Snap Sections */
+.roycss-scroll-intelligence-snap-sections {
+  width: 100%; height: 100%;
+  background: oklch(0.15 0.04 250);
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+}
+.roycss-scroll-intelligence-snap-sections::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, oklch(0.7 0.2 30) 0 33%, oklch(0.6 0.22 200) 33% 66%, oklch(0.55 0.24 320) 66% 100%);
+  background-size: 100% 300%;
+  animation: roy-scroll-snap-sections 9s steps(3, end) infinite;
+}
+.roycss-scroll-intelligence-snap-sections::after {
+  content: "SNAP";
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  color: oklch(1 0 0);
+  font: 900 28px/1 system-ui, sans-serif;
+  letter-spacing: 0.25em;
+  text-shadow: 0 4px 12px oklch(0 0 0 / 0.5);
+}
+@keyframes roy-scroll-snap-sections {
+  0%   { background-position: 0% 0%; }
+  33%  { background-position: 0% 50%; }
+  66%  { background-position: 0% 100%; }
+  100% { background-position: 0% 0%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-intelligence-snap-sections::before { animation: none; background-position: 0% 0%; }
+}`
+  }
+];
+
+// src/lib/effects-batch-48.ts
+var effectsBatch48 = [
+  {
+    id: "cursor-fx-glow-trail",
+    name: "Glow Trail",
+    category: "cursor",
+    description: "Glowing comet-like trail follows an animated cursor path",
+    tags: ["cursor", "glow", "trail", "comet", "cursor-fx"],
+    previewType: "background",
+    cssCode: `/* Cursor-FX: Glow Trail */
+.roycss-cursor-fx-glow-trail {
+  position: relative;
+  width: 100%; height: 100%;
+  background: oklch(0.1 0.04 250);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.roycss-cursor-fx-glow-trail::before,
+.roycss-cursor-fx-glow-trail::after {
+  content: "";
+  position: absolute;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(1 0 0 / 0.95), oklch(0.85 0.22 60 / 0.6) 40%, transparent 70%);
+  filter: blur(1px);
+}
+.roycss-cursor-fx-glow-trail::before {
+  offset-path: path("M 20 80 Q 120 -20 220 80 T 420 80");
+  animation: roy-cursor-fx-glow-trail 3s linear infinite;
+}
+.roycss-cursor-fx-glow-trail::after {
+  width: 60px; height: 60px;
+  background: radial-gradient(circle, oklch(0.9 0.22 60 / 0.5), transparent 60%);
+  filter: blur(8px);
+  offset-path: path("M 20 80 Q 120 -20 220 80 T 420 80");
+  animation: roy-cursor-fx-glow-trail 3s linear infinite;
+  animation-delay: -0.1s;
+}
+@keyframes roy-cursor-fx-glow-trail {
+  from { offset-distance: 0%;   opacity: 1; }
+  to   { offset-distance: 100%; opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-fx-glow-trail::before,
+  .roycss-cursor-fx-glow-trail::after { animation: none; opacity: 0.7; }
+}`
+  },
+  {
+    id: "cursor-fx-spotlight",
+    name: "Spotlight",
+    category: "cursor",
+    description: "Spotlight reveals hidden content near a moving cursor",
+    tags: ["cursor", "spotlight", "reveal", "mask", "cursor-fx"],
+    previewType: "background",
+    cssCode: `/* Cursor-FX: Spotlight */
+.roycss-cursor-fx-spotlight {
+  position: relative;
+  width: 100%; height: 100%;
+  background:
+    linear-gradient(135deg, oklch(0.18 0.04 250), oklch(0.32 0.06 270)),
+    radial-gradient(circle at center, oklch(0.85 0.22 60), oklch(0.65 0.24 320));
+  background-blend-mode: multiply;
+  border-radius: 14px;
+  overflow: hidden;
+  color: oklch(0.96 0 0);
+}
+.roycss-cursor-fx-spotlight::before {
+  content: "";
+  position: absolute;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, transparent 0 38%, oklch(0.2 0.04 250) 42%, oklch(0.2 0.04 250 / 0.9) 100%);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  animation: roy-cursor-fx-spotlight 4s ease-in-out infinite;
+}
+.roycss-cursor-fx-spotlight::after {
+  content: "Hidden Text";
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  color: oklch(1 0 0);
+  font: 800 24px/1 system-ui, sans-serif;
+  letter-spacing: 0.1em;
+  opacity: 0.4;
+}
+@keyframes roy-cursor-fx-spotlight {
+  0%   { transform: translate(10%, 80%); }
+  25%  { transform: translate(80%, 10%); }
+  50%  { transform: translate(60%, 90%); }
+  75%  { transform: translate(10%, 30%); }
+  100% { transform: translate(10%, 80%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-fx-spotlight::before { animation: none; transform: translate(40%, 40%); }
+}`
+  },
+  {
+    id: "cursor-fx-magnetic-attraction",
+    name: "Magnetic Attraction",
+    category: "cursor",
+    description: "Element magnetically attracts toward an orbiting cursor",
+    tags: ["cursor", "magnetic", "attraction", "pull", "cursor-fx"],
+    previewType: "box",
+    cssCode: `/* Cursor-FX: Magnetic Attraction */
+.roycss-cursor-fx-magnetic-attraction {
+  position: relative;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, oklch(0.25 0.05 250), oklch(0.4 0.08 270));
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.roycss-cursor-fx-magnetic-attraction::before {
+  content: "";
+  position: absolute;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: oklch(0.95 0.05 60);
+  box-shadow: 0 0 20px oklch(0.9 0.18 60 / 0.8);
+  animation: roy-cursor-fx-magnetic-attraction-cursor 5s linear infinite;
+}
+.roycss-cursor-fx-magnetic-attraction::after {
+  content: "";
+  width: 80px; height: 80px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, oklch(0.78 0.2 180), oklch(0.6 0.22 320));
+  box-shadow: 0 8px 24px oklch(0 0 0 / 0.3);
+  animation: roy-cursor-fx-magnetic-attraction-card 5s linear infinite;
+}
+@keyframes roy-cursor-fx-magnetic-attraction-cursor {
+  0%   { transform: translate(-60px, -40px); }
+  50%  { transform: translate(80px, 60px); }
+  100% { transform: translate(-60px, -40px); }
+}
+@keyframes roy-cursor-fx-magnetic-attraction-card {
+  0%, 100% { transform: translate(-20px, -15px); }
+  50%      { transform: translate(30px, 20px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-fx-magnetic-attraction::before,
+  .roycss-cursor-fx-magnetic-attraction::after { animation: none; }
+}`
+  },
+  {
+    id: "cursor-fx-distortion",
+    name: "Distortion",
+    category: "cursor",
+    description: "Background distorts and warps near the moving cursor",
+    tags: ["cursor", "distortion", "warp", "displace", "cursor-fx"],
+    previewType: "background",
+    cssCode: `/* Cursor-FX: Distortion */
+.roycss-cursor-fx-distortion {
+  position: relative;
+  width: 100%; height: 100%;
+  background:
+    repeating-linear-gradient(0deg, oklch(0.65 0.22 200) 0 14px, oklch(0.5 0.24 280) 14px 28px);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.roycss-cursor-fx-distortion::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 50%, transparent 0 60px, oklch(0.85 0.2 30 / 0.6) 65px, transparent 75px);
+  mix-blend-mode: screen;
+  animation: roy-cursor-fx-distortion 5s ease-in-out infinite;
+}
+.roycss-cursor-fx-distortion::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 50%, transparent 0 50px, oklch(0.7 0.22 320 / 0.4) 55px, transparent 70px);
+  filter: blur(4px);
+  mix-blend-mode: overlay;
+  animation: roy-cursor-fx-distortion 5s ease-in-out infinite;
+}
+@keyframes roy-cursor-fx-distortion {
+  0%, 100% { background-position: 30% 50%; transform: translateX(0); }
+  25%      { background-position: 70% 30%; transform: translateX(20px) scaleY(1.05); }
+  50%      { background-position: 60% 80%; transform: translateX(-15px) scaleY(0.95); }
+  75%      { background-position: 20% 60%; transform: translateX(10px) scaleY(1.02); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-fx-distortion::before,
+  .roycss-cursor-fx-distortion::after { animation: none; }
+}`
+  },
+  {
+    id: "cursor-fx-text-replacement",
+    name: "Text Replacement",
+    category: "cursor",
+    description: "Cursor swaps the displayed text on hover via ::before",
+    tags: ["cursor", "text", "replacement", "hover", "cursor-fx"],
+    previewType: "text",
+    previewText: "Hover",
+    cssCode: `/* Cursor-FX: Text Replacement */
+.roycss-cursor-fx-text-replacement {
+  display: inline-block;
+  position: relative;
+  font: 800 36px/1 system-ui, sans-serif;
+  color: oklch(0.95 0.1 220);
+  cursor: pointer;
+}
+.roycss-cursor-fx-text-replacement::before {
+  content: "Hover";
+  display: block;
+}
+.roycss-cursor-fx-text-replacement::after {
+  content: "Clicked!";
+  position: absolute;
+  inset: 0;
+  display: block;
+  color: oklch(0.85 0.22 30);
+  opacity: 0;
+  transform: translateY(0);
+  transition: opacity 0.4s, transform 0.4s;
+}
+.roycss-cursor-fx-text-replacement:hover::before {
+  opacity: 0;
+  transform: translateY(-12px);
+  transition: opacity 0.4s, transform 0.4s;
+}
+.roycss-cursor-fx-text-replacement:hover::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-fx-text-replacement::before,
+  .roycss-cursor-fx-text-replacement::after,
+  .roycss-cursor-fx-text-replacement:hover::before,
+  .roycss-cursor-fx-text-replacement:hover::after { transition: none; transform: none; }
+}`
+  },
+  {
+    id: "cursor-fx-image-preview",
+    name: "Image Preview",
+    category: "cursor",
+    description: "Floating image preview follows an animated cursor path",
+    tags: ["cursor", "image", "preview", "follow", "cursor-fx"],
+    previewType: "background",
+    cssCode: `/* Cursor-FX: Image Preview */
+.roycss-cursor-fx-image-preview {
+  position: relative;
+  width: 100%; height: 100%;
+  background:
+    repeating-linear-gradient(45deg, oklch(0.3 0.05 250) 0 12px, oklch(0.22 0.04 260) 12px 24px);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.roycss-cursor-fx-image-preview::before {
+  content: "";
+  position: absolute;
+  width: 90px; height: 90px;
+  border-radius: 10px;
+  background:
+    linear-gradient(135deg, oklch(0.85 0.22 30), oklch(0.65 0.24 320));
+  box-shadow: 0 12px 30px oklch(0 0 0 / 0.45), 0 0 0 3px oklch(1 0 0 / 0.6);
+  animation: roy-cursor-fx-image-preview 5s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+.roycss-cursor-fx-image-preview::after {
+  content: "";
+  position: absolute;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: oklch(1 0 0);
+  box-shadow: 0 0 0 4px oklch(1 0 0 / 0.4);
+  animation: roy-cursor-fx-image-preview-dot 5s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+@keyframes roy-cursor-fx-image-preview {
+  0%, 100% { transform: translate(-180px, -60px) rotate(-6deg); }
+  50%      { transform: translate(60px, 40px)   rotate(6deg); }
+}
+@keyframes roy-cursor-fx-image-preview-dot {
+  0%, 100% { transform: translate(-100px, -90px); }
+  50%      { transform: translate(140px, 10px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-fx-image-preview::before,
+  .roycss-cursor-fx-image-preview::after { animation: none; }
+}`
+  },
+  {
+    id: "cursor-fx-gradient-follow",
+    name: "Gradient Follow",
+    category: "cursor",
+    description: "Soft gradient highlight follows the cursor position",
+    tags: ["cursor", "gradient", "follow", "highlight", "cursor-fx"],
+    previewType: "background",
+    cssCode: `/* Cursor-FX: Gradient Follow */
+.roycss-cursor-fx-gradient-follow {
+  position: relative;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, oklch(0.18 0.04 250), oklch(0.32 0.08 270));
+  border-radius: 14px;
+  overflow: hidden;
+}
+.roycss-cursor-fx-gradient-follow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 50%, oklch(0.95 0.18 60 / 0.55), oklch(0.7 0.22 320 / 0.3) 30%, transparent 60%);
+  animation: roy-cursor-fx-gradient-follow 5s ease-in-out infinite;
+}
+.roycss-cursor-fx-gradient-follow::after {
+  content: "FOLLOW";
+  position: absolute;
+  bottom: 16px; left: 50%;
+  transform: translateX(-50%);
+  color: oklch(0.96 0.05 220);
+  font: 800 18px/1 system-ui, sans-serif;
+  letter-spacing: 0.3em;
+}
+@keyframes roy-cursor-fx-gradient-follow {
+  0%   { background: radial-gradient(circle at 10% 20%, oklch(0.95 0.18 60 / 0.55), oklch(0.7 0.22 320 / 0.3) 30%, transparent 60%); }
+  33%  { background: radial-gradient(circle at 80% 30%, oklch(0.85 0.22 140 / 0.55), oklch(0.6 0.24 220 / 0.3) 30%, transparent 60%); }
+  66%  { background: radial-gradient(circle at 50% 80%, oklch(0.95 0.18 320 / 0.55), oklch(0.7 0.22 30 / 0.3) 30%, transparent 60%); }
+  100% { background: radial-gradient(circle at 10% 20%, oklch(0.95 0.18 60 / 0.55), oklch(0.7 0.22 320 / 0.3) 30%, transparent 60%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-fx-gradient-follow::before { animation: none; }
+}`
+  },
+  {
+    id: "cursor-fx-border-follow",
+    name: "Border Follow",
+    category: "cursor",
+    description: "Highlighted border segment travels around the perimeter",
+    tags: ["cursor", "border", "follow", "highlight", "cursor-fx"],
+    previewType: "box",
+    cssCode: `/* Cursor-FX: Border Follow */
+.roycss-cursor-fx-border-follow {
+  position: relative;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, oklch(0.25 0.05 250), oklch(0.4 0.08 270));
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: oklch(0.95 0.1 220);
+  font: 800 18px/1 system-ui, sans-serif;
+  letter-spacing: 0.2em;
+  overflow: hidden;
+}
+.roycss-cursor-fx-border-follow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background:
+    conic-gradient(from 0deg,
+      transparent 0deg 80deg,
+      oklch(0.85 0.22 60) 90deg,
+      transparent 100deg 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: roy-cursor-fx-border-follow 4s linear infinite;
+}
+@keyframes roy-cursor-fx-border-follow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-fx-border-follow::before { animation: none; }
+}`
+  },
+  {
+    id: "cursor-fx-hover-lens",
+    name: "Hover Lens",
+    category: "cursor",
+    description: "Magnifying lens zooms content where the cursor hovers",
+    tags: ["cursor", "lens", "magnify", "zoom", "cursor-fx"],
+    previewType: "background",
+    cssCode: `/* Cursor-FX: Hover Lens */
+.roycss-cursor-fx-hover-lens {
+  position: relative;
+  width: 100%; height: 100%;
+  background:
+    repeating-linear-gradient(45deg, oklch(0.85 0.18 30) 0 10px, oklch(0.65 0.2 200) 10px 20px);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.roycss-cursor-fx-hover-lens::before {
+  content: "";
+  position: absolute;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background:
+    repeating-linear-gradient(45deg, oklch(0.85 0.18 30) 0 5px, oklch(0.65 0.2 200) 5px 10px);
+  background-size: 200% 200%;
+  border: 4px solid oklch(1 0 0 / 0.6);
+  box-shadow: 0 0 0 6px oklch(0 0 0 / 0.3), inset 0 0 20px oklch(0 0 0 / 0.4);
+  animation: roy-cursor-fx-hover-lens 4s ease-in-out infinite;
+}
+.roycss-cursor-fx-hover-lens::after {
+  content: "";
+  position: absolute;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: oklch(1 0 0);
+  box-shadow: 0 0 0 4px oklch(1 0 0 / 0.3);
+  animation: roy-cursor-fx-hover-lens-dot 4s ease-in-out infinite;
+}
+@keyframes roy-cursor-fx-hover-lens {
+  0%, 100% { transform: translate(-50%, -30%) scale(1); }
+  50%      { transform: translate(30%, 40%)  scale(1.1); }
+}
+@keyframes roy-cursor-fx-hover-lens-dot {
+  0%, 100% { transform: translate(20%, 30%); }
+  50%      { transform: translate(140%, 130%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-fx-hover-lens::before,
+  .roycss-cursor-fx-hover-lens::after { animation: none; }
+}`
+  },
+  {
+    id: "cursor-fx-spotlight-card",
+    name: "Spotlight Card",
+    category: "cursor",
+    description: "Card with radial spotlight that tracks the cursor position",
+    tags: ["cursor", "spotlight", "card", "radial", "cursor-fx"],
+    previewType: "card",
+    cssCode: `/* Cursor-FX: Spotlight Card */
+.roycss-cursor-fx-spotlight-card {
+  position: relative;
+  width: 220px; height: 280px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, oklch(0.22 0.04 250), oklch(0.4 0.08 270));
+  box-shadow: 0 18px 40px oklch(0 0 0 / 0.4), inset 0 1px 0 oklch(1 0 0 / 0.15);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  color: oklch(0.95 0.05 220);
+  font: 800 18px/1 system-ui, sans-serif;
+  letter-spacing: 0.15em;
+}
+.roycss-cursor-fx-spotlight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 30%, oklch(0.95 0.18 60 / 0.35), transparent 50%);
+  animation: roy-cursor-fx-spotlight-card 5s ease-in-out infinite;
+}
+.roycss-cursor-fx-spotlight-card::after {
+  content: "CARD";
+  position: relative;
+  z-index: 2;
+}
+@keyframes roy-cursor-fx-spotlight-card {
+  0%   { background: radial-gradient(circle at 15% 25%, oklch(0.95 0.18 60 / 0.45), transparent 50%); }
+  33%  { background: radial-gradient(circle at 80% 20%, oklch(0.85 0.22 140 / 0.45), transparent 50%); }
+  66%  { background: radial-gradient(circle at 50% 80%, oklch(0.95 0.18 320 / 0.45), transparent 50%); }
+  100% { background: radial-gradient(circle at 15% 25%, oklch(0.95 0.18 60 / 0.45), transparent 50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-fx-spotlight-card::before { animation: none; }
+}`
+  },
+  {
+    id: "cursor-fx-ripple-click",
+    name: "Ripple Click",
+    category: "cursor",
+    description: "Ripple emanates outward from each simulated click position",
+    tags: ["cursor", "ripple", "click", "wave", "cursor-fx"],
+    previewType: "background",
+    cssCode: `/* Cursor-FX: Ripple Click */
+.roycss-cursor-fx-ripple-click {
+  position: relative;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, oklch(0.2 0.04 250), oklch(0.32 0.06 270));
+  border-radius: 14px;
+  overflow: hidden;
+}
+.roycss-cursor-fx-ripple-click::before,
+.roycss-cursor-fx-ripple-click::after {
+  content: "";
+  position: absolute;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 3px solid oklch(0.95 0.18 60);
+  box-shadow: 0 0 18px oklch(0.95 0.18 60 / 0.5);
+  animation: roy-cursor-fx-ripple-click 3s ease-out infinite;
+}
+.roycss-cursor-fx-ripple-click::after {
+  border-color: oklch(0.85 0.22 320);
+  box-shadow: 0 0 18px oklch(0.85 0.22 320 / 0.5);
+  animation-delay: 1.5s;
+}
+@keyframes roy-cursor-fx-ripple-click {
+  0%   { transform: scale(0);   opacity: 1; top: 50%; left: 50%; }
+  100% { transform: scale(8);   opacity: 0; top: 50%; left: 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-fx-ripple-click::before,
+  .roycss-cursor-fx-ripple-click::after { animation: none; opacity: 0.5; }
+}`
+  },
+  {
+    id: "cursor-fx-tilt-3d",
+    name: "Tilt 3D",
+    category: "cursor",
+    description: "Card tilts in 3D space following cursor position",
+    tags: ["cursor", "tilt", "3d", "perspective", "cursor-fx"],
+    previewType: "card",
+    cssCode: `/* Cursor-FX: Tilt 3D */
+.roycss-cursor-fx-tilt-3d {
+  width: 200px; height: 240px;
+  background: linear-gradient(135deg, oklch(0.78 0.2 180), oklch(0.55 0.22 320));
+  border-radius: 18px;
+  box-shadow: 0 18px 40px oklch(0 0 0 / 0.35);
+  display: grid;
+  place-items: center;
+  color: oklch(0.98 0 0);
+  font: 900 20px/1 system-ui, sans-serif;
+  letter-spacing: 0.2em;
+  transform-style: preserve-3d;
+  animation: roy-cursor-fx-tilt-3d 5s ease-in-out infinite;
+}
+.roycss-cursor-fx-tilt-3d::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, transparent 40%, oklch(1 0 0 / 0.4) 50%, transparent 60%);
+  background-size: 200% 200%;
+  animation: roy-cursor-fx-tilt-3d-shine 5s ease-in-out infinite;
+}
+@keyframes roy-cursor-fx-tilt-3d {
+  0%   { transform: perspective(800px) rotateX(-15deg) rotateY(15deg); }
+  25%  { transform: perspective(800px) rotateX(15deg)  rotateY(-15deg); }
+  50%  { transform: perspective(800px) rotateX(-10deg) rotateY(-20deg); }
+  75%  { transform: perspective(800px) rotateX(20deg)  rotateY(10deg); }
+  100% { transform: perspective(800px) rotateX(-15deg) rotateY(15deg); }
+}
+@keyframes roy-cursor-fx-tilt-3d-shine {
+  0%, 100% { background-position: 0% 0%; }
+  50%      { background-position: 100% 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-fx-tilt-3d,
+  .roycss-cursor-fx-tilt-3d::before { animation: none; }
+}`
+  },
+  {
+    id: "cursor-fx-particle-emit",
+    name: "Particle Emit",
+    category: "cursor",
+    description: "Particles emit and scatter from a moving cursor point",
+    tags: ["cursor", "particle", "emit", "scatter", "cursor-fx"],
+    previewType: "background",
+    childCount: 6,
+    cssCode: `/* Cursor-FX: Particle Emit */
+.roycss-cursor-fx-particle-emit {
+  position: relative;
+  width: 100%; height: 100%;
+  background: radial-gradient(circle at center, oklch(0.18 0.05 250), oklch(0.1 0.04 230));
+  border-radius: 14px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+.roycss-cursor-fx-particle-emit > span {
+  position: absolute;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: oklch(0.95 0.2 60);
+  box-shadow: 0 0 10px oklch(0.95 0.2 60 / 0.8);
+  animation: roy-cursor-fx-particle-emit 2s ease-out infinite;
+}
+.roycss-cursor-fx-particle-emit > span:nth-child(1) { animation-delay: 0s;   --tx: 60px;  --ty: -40px; }
+.roycss-cursor-fx-particle-emit > span:nth-child(2) { animation-delay: 0.25s; --tx: -50px; --ty: -60px; }
+.roycss-cursor-fx-particle-emit > span:nth-child(3) { animation-delay: 0.5s;  --tx: 70px;  --ty: 50px;  }
+.roycss-cursor-fx-particle-emit > span:nth-child(4) { animation-delay: 0.75s; --tx: -60px; --ty: 30px;  }
+.roycss-cursor-fx-particle-emit > span:nth-child(5) { animation-delay: 1s;    --tx: 10px;  --ty: -80px; }
+.roycss-cursor-fx-particle-emit > span:nth-child(6) { animation-delay: 1.25s; --tx: -30px; --ty: 70px;  }
+@keyframes roy-cursor-fx-particle-emit {
+  0%   { transform: translate(0, 0) scale(1);   opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-fx-particle-emit > span { animation: none; opacity: 0.4; }
+}`
+  },
+  {
+    id: "cursor-fx-blur-background",
+    name: "Blur Background",
+    category: "cursor",
+    description: "Background blurs under a sharp cursor region",
+    tags: ["cursor", "blur", "background", "region", "cursor-fx"],
+    previewType: "background",
+    cssCode: `/* Cursor-FX: Blur Background */
+.roycss-cursor-fx-blur-background {
+  position: relative;
+  width: 100%; height: 100%;
+  background:
+    repeating-linear-gradient(45deg, oklch(0.8 0.22 30) 0 12px, oklch(0.6 0.24 320) 12px 24px);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.roycss-cursor-fx-blur-background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  filter: blur(8px);
+  opacity: 0.6;
+  animation: roy-cursor-fx-blur-background 4s ease-in-out infinite;
+}
+.roycss-cursor-fx-blur-background::after {
+  content: "";
+  position: absolute;
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  border: 3px solid oklch(1 0 0 / 0.7);
+  box-shadow: 0 0 0 6px oklch(0 0 0 / 0.3);
+  background:
+    repeating-linear-gradient(45deg, oklch(0.8 0.22 30) 0 12px, oklch(0.6 0.24 320) 12px 24px);
+  animation: roy-cursor-fx-blur-background-ring 4s ease-in-out infinite;
+}
+@keyframes roy-cursor-fx-blur-background {
+  0%, 100% { opacity: 0.6; }
+  50%      { opacity: 0.4; }
+}
+@keyframes roy-cursor-fx-blur-background-ring {
+  0%, 100% { transform: translate(-30%, -20%); }
+  50%      { transform: translate(30%, 30%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-fx-blur-background::before,
+  .roycss-cursor-fx-blur-background::after { animation: none; }
+}`
+  },
+  {
+    id: "cursor-fx-color-picker",
+    name: "Color Picker",
+    category: "cursor",
+    description: "Element samples and shows color from a moving cursor position",
+    tags: ["cursor", "color", "picker", "sample", "cursor-fx"],
+    previewType: "box",
+    cssCode: `/* Cursor-FX: Color Picker */
+.roycss-cursor-fx-color-picker {
+  position: relative;
+  width: 100%; height: 100%;
+  background:
+    conic-gradient(from 0deg,
+      oklch(0.75 0.25 0), oklch(0.75 0.25 60),
+      oklch(0.75 0.25 120), oklch(0.75 0.25 180),
+      oklch(0.75 0.25 240), oklch(0.75 0.25 300),
+      oklch(0.75 0.25 360));
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.roycss-cursor-fx-color-picker::before {
+  content: "";
+  position: absolute;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 4px solid oklch(1 0 0);
+  box-shadow: 0 0 0 4px oklch(0 0 0 / 0.4), 0 0 20px oklch(0 0 0 / 0.3);
+  animation: roy-cursor-fx-color-picker-cursor 6s linear infinite;
+}
+.roycss-cursor-fx-color-picker::after {
+  content: "#FF9500";
+  position: relative;
+  z-index: 2;
+  padding: 6px 14px;
+  background: oklch(0 0 0 / 0.7);
+  color: oklch(1 0 0);
+  font: 700 14px/1.2 ui-monospace, monospace;
+  border-radius: 8px;
+  animation: roy-cursor-fx-color-picker-label 6s steps(6, end) infinite;
+}
+@keyframes roy-cursor-fx-color-picker-cursor {
+  0%   { transform: translate(-160%, -80%); }
+  16%  { transform: translate(120%, -100%); }
+  33%  { transform: translate(180%, 20%); }
+  50%  { transform: translate(60%, 120%); }
+  66%  { transform: translate(-120%, 100%); }
+  83%  { transform: translate(-180%, -20%); }
+  100% { transform: translate(-160%, -80%); }
+}
+@keyframes roy-cursor-fx-color-picker-label {
+  0%   { content: "#FF3030"; }
+  16%  { content: "#FFD030"; }
+  33%  { content: "#30FF30"; }
+  50%  { content: "#30C0FF"; }
+  66%  { content: "#6030FF"; }
+  83%  { content: "#FF30C0"; }
+  100% { content: "#FF3030"; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-fx-color-picker::before,
+  .roycss-cursor-fx-color-picker::after { animation: none; }
+}`
+  },
+  {
+    id: "cursor-fx-zoom-region",
+    name: "Zoom Region",
+    category: "cursor",
+    description: "Circular region zooms content where the cursor hovers",
+    tags: ["cursor", "zoom", "region", "magnify", "cursor-fx"],
+    previewType: "background",
+    cssCode: `/* Cursor-FX: Zoom Region */
+.roycss-cursor-fx-zoom-region {
+  position: relative;
+  width: 100%; height: 100%;
+  background:
+    repeating-linear-gradient(0deg, oklch(0.7 0.22 200) 0 8px, oklch(0.55 0.24 280) 8px 16px);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.roycss-cursor-fx-zoom-region::before {
+  content: "";
+  position: absolute;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background:
+    repeating-linear-gradient(0deg, oklch(0.7 0.22 200) 0 4px, oklch(0.55 0.24 280) 4px 8px);
+  background-size: 200% 200%;
+  border: 4px solid oklch(1 0 0 / 0.7);
+  box-shadow: 0 0 0 6px oklch(0 0 0 / 0.3), inset 0 0 30px oklch(0 0 0 / 0.4);
+  animation: roy-cursor-fx-zoom-region 5s ease-in-out infinite;
+}
+.roycss-cursor-fx-zoom-region::after {
+  content: "ZOOM";
+  position: absolute;
+  bottom: 16px; right: 20px;
+  color: oklch(1 0 0);
+  font: 800 16px/1 system-ui, sans-serif;
+  letter-spacing: 0.25em;
+  text-shadow: 0 2px 6px oklch(0 0 0 / 0.5);
+}
+@keyframes roy-cursor-fx-zoom-region {
+  0%, 100% { transform: translate(-30%, -10%) scale(1); background-position: 0% 0%; }
+  50%      { transform: translate(30%, 30%) scale(1.05); background-position: 100% 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-fx-zoom-region::before { animation: none; }
+}`
+  },
+  {
+    id: "cursor-fx-tooltip-follow",
+    name: "Tooltip Follow",
+    category: "cursor",
+    description: "Tooltip smoothly follows an animated cursor with delay",
+    tags: ["cursor", "tooltip", "follow", "smooth", "cursor-fx"],
+    previewType: "background",
+    cssCode: `/* Cursor-FX: Tooltip Follow */
+.roycss-cursor-fx-tooltip-follow {
+  position: relative;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, oklch(0.25 0.05 250), oklch(0.4 0.08 270));
+  border-radius: 14px;
+  overflow: hidden;
+}
+.roycss-cursor-fx-tooltip-follow::before {
+  content: "";
+  position: absolute;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: oklch(1 0 0);
+  box-shadow: 0 0 0 4px oklch(1 0 0 / 0.4);
+  animation: roy-cursor-fx-tooltip-follow-cursor 4s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+}
+.roycss-cursor-fx-tooltip-follow::after {
+  content: "Tooltip";
+  position: absolute;
+  padding: 4px 10px;
+  background: oklch(0.1 0.04 250);
+  color: oklch(0.98 0 0);
+  font: 700 12px/1.4 system-ui, sans-serif;
+  border-radius: 6px;
+  box-shadow: 0 6px 14px oklch(0 0 0 / 0.4);
+  animation: roy-cursor-fx-tooltip-follow-tip 4s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+  animation-delay: 0.15s;
+}
+@keyframes roy-cursor-fx-tooltip-follow-cursor {
+  0%   { transform: translate(-180px, -60px); }
+  50%  { transform: translate(60px, 60px); }
+  100% { transform: translate(-180px, -60px); }
+}
+@keyframes roy-cursor-fx-tooltip-follow-tip {
+  0%   { transform: translate(-180px, -90px); }
+  50%  { transform: translate(60px, 30px); }
+  100% { transform: translate(-180px, -90px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-fx-tooltip-follow::before,
+  .roycss-cursor-fx-tooltip-follow::after { animation: none; }
+}`
+  },
+  {
+    id: "cursor-fx-glow-ring",
+    name: "Glow Ring",
+    category: "cursor",
+    description: "Pulsing glow ring sits at the cursor position",
+    tags: ["cursor", "glow", "ring", "pulse", "cursor-fx"],
+    previewType: "background",
+    cssCode: `/* Cursor-FX: Glow Ring */
+.roycss-cursor-fx-glow-ring {
+  position: relative;
+  width: 100%; height: 100%;
+  background: oklch(0.1 0.04 250);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.roycss-cursor-fx-glow-ring::before {
+  content: "";
+  position: absolute;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 3px solid oklch(0.95 0.18 60);
+  box-shadow:
+    0 0 0 6px oklch(0.95 0.18 60 / 0.3),
+    0 0 30px oklch(0.95 0.18 60 / 0.6);
+  animation: roy-cursor-fx-glow-ring-move 5s ease-in-out infinite,
+             roy-cursor-fx-glow-ring-pulse 1.5s ease-in-out infinite;
+}
+@keyframes roy-cursor-fx-glow-ring-move {
+  0%, 100% { transform: translate(-180px, -60px); }
+  50%      { transform: translate(60px, 60px); }
+}
+@keyframes roy-cursor-fx-glow-ring-pulse {
+  0%, 100% { width: 40px; height: 40px; opacity: 1; }
+  50%      { width: 60px; height: 60px; opacity: 0.7; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-fx-glow-ring::before { animation: none; }
+}`
+  },
+  {
+    id: "cursor-fx-invert-region",
+    name: "Invert Region",
+    category: "cursor",
+    description: "Color inversion circular region follows the cursor",
+    tags: ["cursor", "invert", "region", "color", "cursor-fx"],
+    previewType: "background",
+    cssCode: `/* Cursor-FX: Invert Region */
+.roycss-cursor-fx-invert-region {
+  position: relative;
+  width: 100%; height: 100%;
+  background:
+    repeating-conic-gradient(from 0deg at 50% 50%, oklch(0.85 0.22 30) 0deg 30deg, oklch(0.65 0.24 320) 30deg 60deg);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.roycss-cursor-fx-invert-region::before {
+  content: "";
+  position: absolute;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: inherit;
+  filter: invert(1) hue-rotate(180deg);
+  border: 3px solid oklch(1 0 0 / 0.7);
+  box-shadow: 0 0 0 6px oklch(0 0 0 / 0.3);
+  animation: roy-cursor-fx-invert-region 5s ease-in-out infinite;
+}
+.roycss-cursor-fx-invert-region::after {
+  content: "INVERT";
+  position: absolute;
+  bottom: 16px; left: 50%;
+  transform: translateX(-50%);
+  color: oklch(0.95 0 0);
+  font: 800 16px/1 system-ui, sans-serif;
+  letter-spacing: 0.3em;
+  text-shadow: 0 2px 6px oklch(0 0 0 / 0.6);
+  filter: invert(0);
+}
+@keyframes roy-cursor-fx-invert-region {
+  0%, 100% { transform: translate(-30%, -10%); }
+  50%      { transform: translate(30%, 30%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-fx-invert-region::before { animation: none; }
+}`
+  },
+  {
+    id: "cursor-fx-elastic-snap",
+    name: "Elastic Snap",
+    category: "cursor",
+    description: "Elements elastically snap toward the cursor and bounce back",
+    tags: ["cursor", "elastic", "snap", "spring", "cursor-fx"],
+    previewType: "box",
+    childCount: 5,
+    cssCode: `/* Cursor-FX: Elastic Snap */
+.roycss-cursor-fx-elastic-snap {
+  position: relative;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, oklch(0.2 0.04 250), oklch(0.35 0.08 270));
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  overflow: hidden;
+}
+.roycss-cursor-fx-elastic-snap > span {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, oklch(0.85 0.18 60), oklch(0.65 0.22 320));
+  box-shadow: 0 6px 14px oklch(0 0 0 / 0.3);
+  animation: roy-cursor-fx-elastic-snap 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+}
+.roycss-cursor-fx-elastic-snap > span:nth-child(1) { animation-delay: 0s; }
+.roycss-cursor-fx-elastic-snap > span:nth-child(2) { animation-delay: 0.1s; }
+.roycss-cursor-fx-elastic-snap > span:nth-child(3) { animation-delay: 0.2s; }
+.roycss-cursor-fx-elastic-snap > span:nth-child(4) { animation-delay: 0.3s; }
+.roycss-cursor-fx-elastic-snap > span:nth-child(5) { animation-delay: 0.4s; }
+@keyframes roy-cursor-fx-elastic-snap {
+  0%   { transform: translateY(0) scale(1); }
+  30%  { transform: translateY(-30px) scale(1.25); }
+  55%  { transform: translateY(8px) scale(0.9); }
+  80%  { transform: translateY(-4px) scale(1.05); }
+  100% { transform: translateY(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-fx-elastic-snap > span { animation: none; }
+}`
+  }
+];
+
+// src/lib/effects-batch-49.ts
+var effectsBatch49 = [
+  {
+    id: "glass2-dynamic",
+    name: "Dynamic Glass",
+    category: "glass-ui",
+    description: "Glass surface that shimmers and shifts hues dynamically",
+    tags: ["glass", "dynamic", "shimmer", "backdrop", "glass-2"],
+    previewType: "card",
+    cssCode: `/* Glass 2.0: Dynamic Glass */
+.roycss-glass2-dynamic {
+  position: relative;
+  width: 100%; height: 100%;
+  background:
+    linear-gradient(135deg, oklch(0.95 0.05 220 / 0.35), oklch(0.85 0.12 280 / 0.25));
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border: 1px solid oklch(1 0 0 / 0.4);
+  border-radius: 18px;
+  box-shadow: 0 12px 36px oklch(0 0 0 / 0.25), inset 0 1px 0 oklch(1 0 0 / 0.6);
+  overflow: hidden;
+  animation: roy-glass2-dynamic 8s ease-in-out infinite;
+}
+.roycss-glass2-dynamic::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 30%, oklch(1 0 0 / 0.25) 50%, transparent 70%);
+  background-size: 200% 200%;
+  animation: roy-glass2-dynamic-shimmer 4s linear infinite;
+}
+@keyframes roy-glass2-dynamic {
+  0%, 100% { filter: hue-rotate(0deg); }
+  50%      { filter: hue-rotate(40deg); }
+}
+@keyframes roy-glass2-dynamic-shimmer {
+  from { background-position: 0% 0%; }
+  to   { background-position: 200% 200%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass2-dynamic,
+  .roycss-glass2-dynamic::before { animation: none; }
+}`
+  },
+  {
+    id: "glass2-frosted",
+    name: "Frosted Slab",
+    category: "glass-ui",
+    description: "Thick frosted glass with heavy blur and snow-crystal edge",
+    tags: ["glass", "frosted", "blur", "thick", "glass-2"],
+    previewType: "card",
+    cssCode: `/* Glass 2.0: Frosted Slab */
+.roycss-glass2-frosted {
+  position: relative;
+  width: 100%; height: 100%;
+  background: oklch(0.96 0.02 220 / 0.5);
+  backdrop-filter: blur(28px) saturate(160%) brightness(110%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%) brightness(110%);
+  border: 1px solid oklch(1 0 0 / 0.6);
+  border-radius: 16px;
+  box-shadow:
+    0 16px 40px oklch(0 0 0 / 0.3),
+    inset 0 2px 4px oklch(1 0 0 / 0.7),
+    inset 0 -1px 2px oklch(0 0 0 / 0.1);
+}
+.roycss-glass2-frosted::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 15% 15%, oklch(1 0 0 / 0.5) 0 3px, transparent 4px),
+    radial-gradient(circle at 80% 20%, oklch(1 0 0 / 0.4) 0 2px, transparent 3px),
+    radial-gradient(circle at 30% 70%, oklch(1 0 0 / 0.35) 0 2px, transparent 3px),
+    radial-gradient(circle at 90% 85%, oklch(1 0 0 / 0.4) 0 3px, transparent 4px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass2-frosted::before { display: none; }
+}`
+  },
+  {
+    id: "glass2-edge-lit",
+    name: "Edge Lit",
+    category: "glass-ui",
+    description: "Glass with luminous edge lighting that pulses around border",
+    tags: ["glass", "edge", "lit", "neon", "glass-2"],
+    previewType: "box",
+    cssCode: `/* Glass 2.0: Edge Lit */
+.roycss-glass2-edge-lit {
+  position: relative;
+  width: 100%; height: 100%;
+  background: oklch(0.18 0.04 250 / 0.5);
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  color: oklch(0.98 0.05 220);
+  font: 800 18px/1 system-ui, sans-serif;
+  letter-spacing: 0.2em;
+  overflow: hidden;
+}
+.roycss-glass2-edge-lit::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(from 0deg,
+    oklch(0.85 0.22 60), oklch(0.7 0.24 280), oklch(0.85 0.22 60));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  filter: drop-shadow(0 0 8px oklch(0.85 0.22 60 / 0.7));
+  animation: roy-glass2-edge-lit 4s linear infinite;
+}
+@keyframes roy-glass2-edge-lit {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass2-edge-lit::before { animation: none; }
+}`
+  },
+  {
+    id: "glass2-refraction",
+    name: "Refraction",
+    category: "glass-ui",
+    description: "Light refracts through glass creating a prismatic spectrum",
+    tags: ["glass", "refraction", "prism", "spectrum", "glass-2"],
+    previewType: "box",
+    cssCode: `/* Glass 2.0: Refraction */
+.roycss-glass2-refraction {
+  position: relative;
+  width: 100%; height: 100%;
+  background:
+    linear-gradient(135deg, oklch(0.96 0.02 220 / 0.35), oklch(0.88 0.05 280 / 0.3));
+  backdrop-filter: blur(8px) saturate(200%) hue-rotate(10deg);
+  -webkit-backdrop-filter: blur(8px) saturate(200%) hue-rotate(10deg);
+  border-radius: 18px;
+  border: 1px solid oklch(1 0 0 / 0.4);
+  box-shadow: 0 12px 30px oklch(0 0 0 / 0.25), inset 0 1px 0 oklch(1 0 0 / 0.5);
+  overflow: hidden;
+}
+.roycss-glass2-refraction::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(115deg,
+      transparent 40%,
+      oklch(0.85 0.25 0 / 0.4) 50%,
+      oklch(0.85 0.25 60 / 0.4) 55%,
+      oklch(0.85 0.25 120 / 0.4) 60%,
+      oklch(0.85 0.25 180 / 0.4) 65%,
+      oklch(0.85 0.25 240 / 0.4) 70%,
+      oklch(0.85 0.25 300 / 0.4) 75%,
+      transparent 85%);
+  mix-blend-mode: screen;
+  animation: roy-glass2-refraction 6s ease-in-out infinite;
+}
+@keyframes roy-glass2-refraction {
+  0%, 100% { transform: translateX(-20%); }
+  50%      { transform: translateX(20%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass2-refraction::before { animation: none; }
+}`
+  },
+  {
+    id: "glass2-distortion",
+    name: "Distortion Glass",
+    category: "glass-ui",
+    description: "Glass with subtle wavy distortion across its surface",
+    tags: ["glass", "distortion", "wavy", "ripple", "glass-2"],
+    previewType: "box",
+    cssCode: `/* Glass 2.0: Distortion Glass */
+.roycss-glass2-distortion {
+  position: relative;
+  width: 100%; height: 100%;
+  background: oklch(0.92 0.04 220 / 0.4);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  border-radius: 18px;
+  border: 1px solid oklch(1 0 0 / 0.45);
+  box-shadow: 0 10px 30px oklch(0 0 0 / 0.25);
+  overflow: hidden;
+}
+.roycss-glass2-distortion::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-radial-gradient(circle at 50% 50%, transparent 0 18px, oklch(1 0 0 / 0.05) 18px 20px);
+  animation: roy-glass2-distortion 5s linear infinite;
+}
+.roycss-glass2-distortion::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, oklch(1 0 0 / 0.2), transparent 50%);
+  border-radius: inherit;
+}
+@keyframes roy-glass2-distortion {
+  from { transform: scale(1) rotate(0deg); }
+  to   { transform: scale(1.05) rotate(8deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass2-distortion::before { animation: none; }
+}`
+  },
+  {
+    id: "glass2-layered",
+    name: "Layered Glass",
+    category: "glass-ui",
+    description: "Multiple stacked glass layers creating depth of field",
+    tags: ["glass", "layered", "stack", "depth", "glass-2"],
+    previewType: "card",
+    cssCode: `/* Glass 2.0: Layered Glass */
+.roycss-glass2-layered {
+  position: relative;
+  width: 100%; height: 100%;
+  background: oklch(0.95 0.04 220 / 0.3);
+  backdrop-filter: blur(6px) saturate(160%);
+  -webkit-backdrop-filter: blur(6px) saturate(160%);
+  border-radius: 18px;
+  border: 1px solid oklch(1 0 0 / 0.4);
+  box-shadow: 0 8px 24px oklch(0 0 0 / 0.2);
+  overflow: hidden;
+}
+.roycss-glass2-layered::before {
+  content: "";
+  position: absolute;
+  inset: 8%;
+  background: oklch(0.85 0.1 280 / 0.35);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  border-radius: 14px;
+  border: 1px solid oklch(1 0 0 / 0.45);
+  box-shadow: 0 6px 16px oklch(0 0 0 / 0.25);
+}
+.roycss-glass2-layered::after {
+  content: "";
+  position: absolute;
+  inset: 20%;
+  background: oklch(0.75 0.15 320 / 0.4);
+  backdrop-filter: blur(14px) saturate(200%);
+  -webkit-backdrop-filter: blur(14px) saturate(200%);
+  border-radius: 10px;
+  border: 1px solid oklch(1 0 0 / 0.5);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass2-layered::before,
+  .roycss-glass2-layered::after { display: none; }
+}`
+  },
+  {
+    id: "glass2-adaptive",
+    name: "Adaptive Glass",
+    category: "glass-ui",
+    description: "Glass adapts opacity and blur based on a simulated background",
+    tags: ["glass", "adaptive", "opacity", "contextual", "glass-2"],
+    previewType: "box",
+    cssCode: `/* Glass 2.0: Adaptive Glass */
+.roycss-glass2-adaptive {
+  position: relative;
+  width: 100%; height: 100%;
+  background:
+    linear-gradient(135deg, oklch(0.95 0.05 220 / 0.45), oklch(0.85 0.08 280 / 0.35));
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border-radius: 16px;
+  border: 1px solid oklch(1 0 0 / 0.45);
+  box-shadow: 0 8px 24px oklch(0 0 0 / 0.25), inset 0 1px 0 oklch(1 0 0 / 0.55);
+  animation: roy-glass2-adaptive 6s ease-in-out infinite;
+}
+@keyframes roy-glass2-adaptive {
+  0%, 100% {
+    background: linear-gradient(135deg, oklch(0.95 0.05 220 / 0.45), oklch(0.85 0.08 280 / 0.35));
+    backdrop-filter: blur(12px) saturate(180%);
+  }
+  50% {
+    background: linear-gradient(135deg, oklch(0.85 0.08 280 / 0.6), oklch(0.7 0.15 320 / 0.5));
+    backdrop-filter: blur(18px) saturate(220%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass2-adaptive { animation: none; }
+}`
+  },
+  {
+    id: "glass2-depth",
+    name: "Depth Glass",
+    category: "glass-ui",
+    description: "Glass with perceived depth from layered inner shadows",
+    tags: ["glass", "depth", "shadow", "inset", "glass-2"],
+    previewType: "card",
+    cssCode: `/* Glass 2.0: Depth Glass */
+.roycss-glass2-depth {
+  position: relative;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, oklch(0.95 0.04 220 / 0.4), oklch(0.85 0.08 280 / 0.3));
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border-radius: 18px;
+  border: 1px solid oklch(1 0 0 / 0.45);
+  box-shadow:
+    0 30px 60px oklch(0 0 0 / 0.35),
+    0 12px 24px oklch(0 0 0 / 0.25),
+    inset 0 2px 4px oklch(1 0 0 / 0.7),
+    inset 0 -2px 6px oklch(0 0 0 / 0.15),
+    inset 0 0 60px oklch(0.7 0.1 280 / 0.15);
+}
+.roycss-glass2-depth::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse at 30% 0%, oklch(1 0 0 / 0.4), transparent 50%),
+    radial-gradient(ellipse at 70% 100%, oklch(0 0 0 / 0.2), transparent 50%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass2-depth::before { display: none; }
+}`
+  },
+  {
+    id: "glass2-navigation",
+    name: "Glass Navigation",
+    category: "glass-ui",
+    description: "Glass navbar with strong blur and animated indicator",
+    tags: ["glass", "navigation", "navbar", "blur", "glass-2"],
+    previewType: "card",
+    cssCode: `/* Glass 2.0: Glass Navigation */
+.roycss-glass2-navigation {
+  position: relative;
+  width: 100%; height: 56px;
+  background: oklch(0.96 0.03 220 / 0.55);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 14px;
+  border: 1px solid oklch(1 0 0 / 0.5);
+  box-shadow: 0 8px 24px oklch(0 0 0 / 0.25), inset 0 1px 0 oklch(1 0 0 / 0.6);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 14px;
+  overflow: hidden;
+}
+.roycss-glass2-navigation::before {
+  content: "";
+  position: absolute;
+  width: 60px;
+  height: calc(100% - 16px);
+  top: 8px; left: 16px;
+  background: linear-gradient(135deg, oklch(0.85 0.18 280 / 0.6), oklch(0.7 0.22 320 / 0.6));
+  border-radius: 10px;
+  box-shadow: 0 4px 10px oklch(0 0 0 / 0.3), inset 0 1px 0 oklch(1 0 0 / 0.4);
+  animation: roy-glass2-navigation 4s ease-in-out infinite;
+}
+.roycss-glass2-navigation::after {
+  content: "Home   Docs   Pricing   Blog";
+  position: relative;
+  color: oklch(0.18 0.04 250);
+  font: 700 14px/1 system-ui, sans-serif;
+  letter-spacing: 0.04em;
+}
+@keyframes roy-glass2-navigation {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(80px); }
+  50%      { transform: translateX(160px); }
+  75%      { transform: translateX(80px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass2-navigation::before { animation: none; }
+}`
+  },
+  {
+    id: "glass2-modal",
+    name: "Glass Modal",
+    category: "glass-ui",
+    description: "Glass modal with deep backdrop blur and rim lighting",
+    tags: ["glass", "modal", "dialog", "backdrop", "glass-2"],
+    previewType: "card",
+    cssCode: `/* Glass 2.0: Glass Modal */
+.roycss-glass2-modal {
+  position: relative;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, oklch(0.18 0.04 250 / 0.4), oklch(0.35 0.06 270 / 0.3));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+}
+.roycss-glass2-modal::before {
+  content: "";
+  position: absolute;
+  width: 70%; height: 65%;
+  background:
+    linear-gradient(135deg, oklch(0.96 0.04 220 / 0.6), oklch(0.88 0.06 280 / 0.55));
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 14px;
+  border: 1px solid oklch(1 0 0 / 0.55);
+  box-shadow:
+    0 30px 60px oklch(0 0 0 / 0.5),
+    0 0 0 1px oklch(0 0 0 / 0.1),
+    inset 0 1px 0 oklch(1 0 0 / 0.7);
+}
+.roycss-glass2-modal::after {
+  content: "Modal";
+  position: relative;
+  z-index: 2;
+  color: oklch(0.95 0.05 220);
+  font: 800 24px/1 system-ui, sans-serif;
+  letter-spacing: 0.2em;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass2-modal::before { box-shadow: 0 12px 24px oklch(0 0 0 / 0.4); }
+}`
+  },
+  {
+    id: "glass2-card-glow",
+    name: "Glow Card",
+    category: "glass-ui",
+    description: "Glass card with an outer animated glow halo",
+    tags: ["glass", "card", "glow", "halo", "glass-2"],
+    previewType: "card",
+    cssCode: `/* Glass 2.0: Glow Card */
+.roycss-glass2-card-glow {
+  position: relative;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, oklch(0.96 0.04 220 / 0.45), oklch(0.88 0.06 280 / 0.35));
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border-radius: 18px;
+  border: 1px solid oklch(1 0 0 / 0.5);
+  box-shadow: 0 0 0 1px oklch(0 0 0 / 0.05), 0 12px 30px oklch(0 0 0 / 0.25);
+  display: grid;
+  place-items: center;
+  color: oklch(0.18 0.04 250);
+  font: 800 18px/1 system-ui, sans-serif;
+  letter-spacing: 0.2em;
+  animation: roy-glass2-card-glow 4s ease-in-out infinite;
+}
+@keyframes roy-glass2-card-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 0 1px oklch(0 0 0 / 0.05),
+      0 12px 30px oklch(0 0 0 / 0.25),
+      0 0 20px oklch(0.85 0.22 280 / 0.5);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px oklch(0 0 0 / 0.05),
+      0 12px 30px oklch(0 0 0 / 0.25),
+      0 0 40px oklch(0.85 0.22 320 / 0.7);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass2-card-glow { animation: none; }
+}`
+  },
+  {
+    id: "glass2-button-press",
+    name: "Press Button",
+    category: "glass-ui",
+    description: "Glass button with deep tactile press feedback",
+    tags: ["glass", "button", "press", "tactile", "glass-2"],
+    previewType: "button",
+    previewText: "Press",
+    cssCode: `/* Glass 2.0: Press Button */
+.roycss-glass2-button-press {
+  display: inline-grid;
+  place-items: center;
+  width: 160px; height: 56px;
+  background: linear-gradient(135deg, oklch(0.85 0.18 280 / 0.7), oklch(0.7 0.22 320 / 0.7));
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  border: 1px solid oklch(1 0 0 / 0.55);
+  border-radius: 14px;
+  color: oklch(0.98 0 0);
+  font: 800 18px/1 system-ui, sans-serif;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  box-shadow:
+    0 8px 18px oklch(0 0 0 / 0.25),
+    inset 0 1px 0 oklch(1 0 0 / 0.6),
+    inset 0 -2px 4px oklch(0 0 0 / 0.15);
+  transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 180ms ease;
+}
+.roycss-glass2-button-press:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 14px 28px oklch(0 0 0 / 0.3),
+    inset 0 1px 0 oklch(1 0 0 / 0.7),
+    inset 0 -2px 4px oklch(0 0 0 / 0.15);
+}
+.roycss-glass2-button-press:active {
+  transform: translateY(2px) scale(0.97);
+  box-shadow:
+    0 2px 6px oklch(0 0 0 / 0.2),
+    inset 0 4px 8px oklch(0 0 0 / 0.25),
+    inset 0 -1px 1px oklch(1 0 0 / 0.4);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass2-button-press,
+  .roycss-glass2-button-press:hover,
+  .roycss-glass2-button-press:active { transition: none; transform: none; }
+}`
+  },
+  {
+    id: "glass2-input-focus",
+    name: "Focus Input",
+    category: "glass-ui",
+    description: "Glass input field that lights up on focus with rim glow",
+    tags: ["glass", "input", "focus", "form", "glass-2"],
+    previewType: "button",
+    previewText: "Type here",
+    cssCode: `/* Glass 2.0: Focus Input */
+.roycss-glass2-input-focus {
+  display: inline-grid;
+  align-items: center;
+  width: 240px; height: 48px;
+  padding: 0 16px;
+  background: oklch(0.96 0.03 220 / 0.4);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  border: 1px solid oklch(1 0 0 / 0.5);
+  border-radius: 12px;
+  color: oklch(0.18 0.04 250);
+  font: 600 15px/1 system-ui, sans-serif;
+  box-shadow: inset 0 2px 4px oklch(0 0 0 / 0.1), 0 4px 10px oklch(0 0 0 / 0.15);
+  transition: box-shadow 250ms ease, border-color 250ms ease, background 250ms ease;
+}
+.roycss-glass2-input-focus:hover {
+  border-color: oklch(0.7 0.18 280 / 0.7);
+  box-shadow: inset 0 2px 4px oklch(0 0 0 / 0.1), 0 4px 10px oklch(0 0 0 / 0.15),
+              0 0 0 4px oklch(0.7 0.18 280 / 0.25);
+}
+.roycss-glass2-input-focus:focus,
+.roycss-glass2-input-focus:focus-within {
+  background: oklch(0.98 0.03 220 / 0.55);
+  border-color: oklch(0.7 0.22 280);
+  box-shadow: inset 0 2px 4px oklch(0 0 0 / 0.08),
+              0 4px 12px oklch(0 0 0 / 0.2),
+              0 0 0 4px oklch(0.7 0.22 280 / 0.4),
+              0 0 24px oklch(0.75 0.22 280 / 0.5);
+  outline: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass2-input-focus,
+  .roycss-glass2-input-focus:hover,
+  .roycss-glass2-input-focus:focus { transition: none; }
+}`
+  },
+  {
+    id: "glass2-dropdown",
+    name: "Glass Dropdown",
+    category: "glass-ui",
+    description: "Glass dropdown menu with cascading blurred items",
+    tags: ["glass", "dropdown", "menu", "blur", "glass-2"],
+    previewType: "card",
+    cssCode: `/* Glass 2.0: Glass Dropdown */
+.roycss-glass2-dropdown {
+  position: relative;
+  width: 220px;
+  height: 240px;
+  background: linear-gradient(135deg, oklch(0.96 0.04 220 / 0.55), oklch(0.88 0.06 280 / 0.45));
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border-radius: 14px;
+  border: 1px solid oklch(1 0 0 / 0.55);
+  box-shadow: 0 18px 40px oklch(0 0 0 / 0.3), inset 0 1px 0 oklch(1 0 0 / 0.7);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.roycss-glass2-dropdown::before,
+.roycss-glass2-dropdown::after {
+  content: "";
+  height: 36px;
+  border-radius: 8px;
+}
+.roycss-glass2-dropdown::before {
+  background: oklch(0.7 0.18 280 / 0.4);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.5), 0 2px 6px oklch(0 0 0 / 0.15);
+  animation: roy-glass2-dropdown 3s ease-in-out infinite;
+}
+.roycss-glass2-dropdown::after {
+  background: oklch(0 0 0 / 0.06);
+  margin-top: auto;
+}
+@keyframes roy-glass2-dropdown {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(36px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass2-dropdown::before { animation: none; }
+}`
+  },
+  {
+    id: "glass2-tooltip",
+    name: "Glass Tooltip",
+    category: "glass-ui",
+    description: "Floating glass tooltip with backdrop blur and pointer",
+    tags: ["glass", "tooltip", "popover", "blur", "glass-2"],
+    previewType: "box",
+    cssCode: `/* Glass 2.0: Glass Tooltip */
+.roycss-glass2-tooltip {
+  position: relative;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, oklch(0.25 0.05 250), oklch(0.4 0.08 270));
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.roycss-glass2-tooltip::before {
+  content: "Tooltip";
+  position: absolute;
+  padding: 8px 14px;
+  background: linear-gradient(135deg, oklch(0.96 0.04 220 / 0.7), oklch(0.88 0.06 280 / 0.6));
+  backdrop-filter: blur(16px) saturate(200%);
+  -webkit-backdrop-filter: blur(16px) saturate(200%);
+  border: 1px solid oklch(1 0 0 / 0.55);
+  border-radius: 10px;
+  color: oklch(0.18 0.04 250);
+  font: 700 13px/1.3 system-ui, sans-serif;
+  box-shadow: 0 8px 20px oklch(0 0 0 / 0.35), inset 0 1px 0 oklch(1 0 0 / 0.6);
+  animation: roy-glass2-tooltip 4s ease-in-out infinite;
+}
+.roycss-glass2-tooltip::after {
+  content: "";
+  position: absolute;
+  width: 12px; height: 12px;
+  background: linear-gradient(135deg, oklch(0.96 0.04 220 / 0.7), oklch(0.88 0.06 280 / 0.6));
+  border: 1px solid oklch(1 0 0 / 0.55);
+  border-right: none;
+  border-bottom: none;
+  transform: rotate(225deg);
+  border-radius: 2px 0 0 0;
+  animation: roy-glass2-tooltip-arrow 4s ease-in-out infinite;
+}
+@keyframes roy-glass2-tooltip {
+  0%, 100% { transform: translate(-30%, -20%); }
+  50%      { transform: translate(20%, 30%); }
+}
+@keyframes roy-glass2-tooltip-arrow {
+  0%, 100% { transform: translate(20%, -20%) rotate(225deg); }
+  50%      { transform: translate(60%, 30%) rotate(225deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass2-tooltip::before,
+  .roycss-glass2-tooltip::after { animation: none; }
+}`
+  },
+  {
+    id: "glass2-sidebar",
+    name: "Glass Sidebar",
+    category: "glass-ui",
+    description: "Glass sidebar panel with nav items and indicator pill",
+    tags: ["glass", "sidebar", "panel", "nav", "glass-2"],
+    previewType: "card",
+    cssCode: `/* Glass 2.0: Glass Sidebar */
+.roycss-glass2-sidebar {
+  position: relative;
+  width: 100%; height: 100%;
+  background: linear-gradient(180deg, oklch(0.96 0.04 220 / 0.55), oklch(0.88 0.06 280 / 0.4));
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border-radius: 18px;
+  border: 1px solid oklch(1 0 0 / 0.5);
+  box-shadow: 0 18px 40px oklch(0 0 0 / 0.3), inset 0 1px 0 oklch(1 0 0 / 0.65);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.roycss-glass2-sidebar::before {
+  content: "";
+  position: absolute;
+  top: 16px; left: 16px;
+  width: calc(100% - 32px);
+  height: 36px;
+  background: linear-gradient(135deg, oklch(0.7 0.18 280 / 0.55), oklch(0.55 0.22 320 / 0.55));
+  border-radius: 10px;
+  box-shadow: 0 4px 10px oklch(0 0 0 / 0.25), inset 0 1px 0 oklch(1 0 0 / 0.5);
+  animation: roy-glass2-sidebar 4s ease-in-out infinite;
+}
+.roycss-glass2-sidebar::after {
+  content: "";
+  position: absolute;
+  top: 60px; left: 16px;
+  width: calc(100% - 32px);
+  height: 36px;
+  background: oklch(0 0 0 / 0.08);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px oklch(0 0 0 / 0.15);
+}
+@keyframes roy-glass2-sidebar {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(44px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass2-sidebar::before { animation: none; }
+}`
+  },
+  {
+    id: "glass2-tab-bar",
+    name: "Tab Bar",
+    category: "glass-ui",
+    description: "Glass tab bar with sliding indicator pill across tabs",
+    tags: ["glass", "tab", "bar", "indicator", "glass-2"],
+    previewType: "card",
+    cssCode: `/* Glass 2.0: Tab Bar */
+.roycss-glass2-tab-bar {
+  position: relative;
+  width: 100%; height: 56px;
+  background: oklch(0.96 0.04 220 / 0.55);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border-radius: 14px;
+  border: 1px solid oklch(1 0 0 / 0.5);
+  box-shadow: 0 8px 24px oklch(0 0 0 / 0.25), inset 0 1px 0 oklch(1 0 0 / 0.6);
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  overflow: hidden;
+}
+.roycss-glass2-tab-bar::before {
+  content: "";
+  position: absolute;
+  width: calc(33.33% - 8px);
+  height: calc(100% - 16px);
+  background: linear-gradient(135deg, oklch(0.85 0.18 280 / 0.7), oklch(0.7 0.22 320 / 0.7));
+  border-radius: 10px;
+  box-shadow: 0 4px 12px oklch(0 0 0 / 0.3), inset 0 1px 0 oklch(1 0 0 / 0.5);
+  animation: roy-glass2-tab-bar 5s ease-in-out infinite;
+}
+.roycss-glass2-tab-bar::after {
+  content: "Home  Docs  Pricing";
+  position: relative;
+  flex: 1;
+  text-align: center;
+  color: oklch(0.18 0.04 250);
+  font: 700 14px/1 system-ui, sans-serif;
+  letter-spacing: 0.08em;
+}
+@keyframes roy-glass2-tab-bar {
+  0%, 100% { transform: translateX(0); }
+  33%      { transform: translateX(100%); }
+  66%      { transform: translateX(200%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass2-tab-bar::before { animation: none; }
+}`
+  },
+  {
+    id: "glass2-hero-overlay",
+    name: "Hero Overlay",
+    category: "glass-ui",
+    description: "Glass overlay panel on a hero with cinematic shimmer",
+    tags: ["glass", "hero", "overlay", "cinematic", "glass-2"],
+    previewType: "card",
+    cssCode: `/* Glass 2.0: Hero Overlay */
+.roycss-glass2-hero-overlay {
+  position: relative;
+  width: 100%; height: 100%;
+  background:
+    radial-gradient(circle at 30% 30%, oklch(0.7 0.22 30), oklch(0.4 0.24 320) 60%, oklch(0.2 0.05 250));
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.roycss-glass2-hero-overlay::before {
+  content: "";
+  position: absolute;
+  width: 70%; height: 50%;
+  background: linear-gradient(135deg, oklch(0.98 0.04 220 / 0.5), oklch(0.92 0.06 280 / 0.35));
+  backdrop-filter: blur(20px) saturate(200%);
+  -webkit-backdrop-filter: blur(20px) saturate(200%);
+  border-radius: 14px;
+  border: 1px solid oklch(1 0 0 / 0.5);
+  box-shadow: 0 20px 50px oklch(0 0 0 / 0.35), inset 0 1px 0 oklch(1 0 0 / 0.65);
+  background-size: 200% 200%;
+  background-image:
+    linear-gradient(135deg, oklch(0.98 0.04 220 / 0.5), oklch(0.92 0.06 280 / 0.35)),
+    linear-gradient(135deg, transparent 30%, oklch(1 0 0 / 0.4) 50%, transparent 70%);
+  animation: roy-glass2-hero-overlay 5s ease-in-out infinite;
+}
+.roycss-glass2-hero-overlay::after {
+  content: "Hero";
+  position: relative;
+  z-index: 2;
+  color: oklch(0.98 0 0);
+  font: 900 32px/1 system-ui, sans-serif;
+  letter-spacing: 0.15em;
+  text-shadow: 0 4px 12px oklch(0 0 0 / 0.4);
+}
+@keyframes roy-glass2-hero-overlay {
+  0%, 100% { background-position: 0% 0%, 0% 0%; }
+  50%      { background-position: 0% 0%, 200% 200%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass2-hero-overlay::before { animation: none; }
+}`
+  },
+  {
+    id: "glass2-notification",
+    name: "Notification Toast",
+    category: "glass-ui",
+    description: "Glass notification toast with sliding entrance and glow",
+    tags: ["glass", "notification", "toast", "alert", "glass-2"],
+    previewType: "card",
+    cssCode: `/* Glass 2.0: Notification Toast */
+.roycss-glass2-notification {
+  position: relative;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, oklch(0.2 0.05 250), oklch(0.35 0.08 270));
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.roycss-glass2-notification::before {
+  content: "";
+  position: absolute;
+  width: 80%; height: 60px;
+  background: linear-gradient(135deg, oklch(0.96 0.04 220 / 0.55), oklch(0.88 0.06 280 / 0.45));
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid oklch(1 0 0 / 0.5);
+  border-radius: 12px;
+  box-shadow: 0 12px 30px oklch(0 0 0 / 0.4), inset 0 1px 0 oklch(1 0 0 / 0.6),
+              0 0 30px oklch(0.75 0.22 140 / 0.4);
+  animation: roy-glass2-notification 4s ease-in-out infinite;
+}
+.roycss-glass2-notification::after {
+  content: "● New message";
+  position: relative;
+  z-index: 2;
+  color: oklch(0.18 0.04 250);
+  font: 700 14px/1 system-ui, sans-serif;
+  letter-spacing: 0.05em;
+}
+@keyframes roy-glass2-notification {
+  0%   { transform: translateY(-150%) scale(0.9); opacity: 0; }
+  15%, 85% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-150%) scale(0.9); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass2-notification::before { animation: none; opacity: 1; transform: none; }
+}`
+  },
+  {
+    id: "glass2-pricing-card",
+    name: "Pricing Card",
+    category: "glass-ui",
+    description: "Glass pricing card with CTA button and featured glow",
+    tags: ["glass", "pricing", "card", "cta", "glass-2"],
+    previewType: "card",
+    cssCode: `/* Glass 2.0: Pricing Card */
+.roycss-glass2-pricing-card {
+  position: relative;
+  width: 100%; height: 100%;
+  background: linear-gradient(160deg, oklch(0.96 0.04 220 / 0.55), oklch(0.88 0.06 280 / 0.4));
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border-radius: 18px;
+  border: 1px solid oklch(1 0 0 / 0.55);
+  box-shadow: 0 24px 50px oklch(0 0 0 / 0.35), inset 0 1px 0 oklch(1 0 0 / 0.65);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+.roycss-glass2-pricing-card::before {
+  content: "";
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 60px; height: 22px;
+  background: linear-gradient(135deg, oklch(0.85 0.22 30), oklch(0.65 0.24 320));
+  border-radius: 6px;
+  box-shadow: 0 4px 10px oklch(0 0 0 / 0.3);
+}
+.roycss-glass2-pricing-card::after {
+  content: "";
+  position: absolute;
+  bottom: 16px; left: 16px;
+  width: calc(100% - 32px);
+  height: 40px;
+  background: linear-gradient(135deg, oklch(0.7 0.18 280 / 0.8), oklch(0.55 0.22 320 / 0.8));
+  border-radius: 10px;
+  box-shadow: 0 6px 14px oklch(0 0 0 / 0.3), inset 0 1px 0 oklch(1 0 0 / 0.5),
+              0 0 24px oklch(0.75 0.22 280 / 0.45);
+  animation: roy-glass2-pricing-card 3s ease-in-out infinite;
+}
+@keyframes roy-glass2-pricing-card {
+  0%, 100% { box-shadow: 0 6px 14px oklch(0 0 0 / 0.3), inset 0 1px 0 oklch(1 0 0 / 0.5), 0 0 24px oklch(0.75 0.22 280 / 0.45); }
+  50%      { box-shadow: 0 6px 14px oklch(0 0 0 / 0.3), inset 0 1px 0 oklch(1 0 0 / 0.5), 0 0 36px oklch(0.85 0.22 320 / 0.65); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass2-pricing-card::after { animation: none; }
+}`
+  }
+];
+
+// src/lib/effects-batch-40.ts
+var effectsBatch40 = [
+  {
+    id: "immersive-starfield",
+    name: "Parallax Starfield",
+    category: "immersive",
+    description: "Three parallax star layers drift at different speeds across a deep-space gradient",
+    tags: ["immersive", "background", "stars", "space", "parallax"],
+    previewType: "background",
+    cssCode: `/* Immersive: Parallax Starfield */
+.roycss-immersive-starfield {
+  position: relative;
+  background: radial-gradient(ellipse at top, #1b2735 0%, #090a0f 100%);
+  overflow: hidden;
+}
+.roycss-immersive-starfield::before,
+.roycss-immersive-starfield::after {
+  content: "";
+  position: absolute;
+  inset: -50% 0 0 0;
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, #fff, transparent),
+    radial-gradient(1px 1px at 80px 120px, #fff, transparent),
+    radial-gradient(1px 1px at 160px 80px, #cfe, transparent),
+    radial-gradient(2px 2px at 240px 200px, #fff, transparent),
+    radial-gradient(1px 1px at 320px 60px, #ffd, transparent),
+    radial-gradient(1px 1px at 60px 220px, #fff, transparent),
+    radial-gradient(2px 2px at 200px 300px, #cff, transparent);
+  background-size: 400px 400px;
+  background-repeat: repeat;
+  animation: roy-immersive-star-drift 60s linear infinite;
+  opacity: 0.85;
+}
+.roycss-immersive-starfield::after {
+  background-size: 700px 700px;
+  animation-duration: 120s;
+  animation-direction: reverse;
+  opacity: 0.55;
+  filter: blur(0.4px);
+}
+@keyframes roy-immersive-star-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-400px, -400px, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-immersive-starfield::before,
+  .roycss-immersive-starfield::after { animation: none; }
+}`
+  },
+  {
+    id: "immersive-rain",
+    name: "Falling Rain",
+    category: "immersive",
+    description: "Thin diagonal rain streaks fall endlessly with a faint splash glow at the base",
+    tags: ["immersive", "background", "rain", "weather", "water"],
+    previewType: "background",
+    cssCode: `/* Immersive: Falling Rain */
+.roycss-immersive-rain {
+  position: relative;
+  background: linear-gradient(#0a0f14, #1a2a35);
+  overflow: hidden;
+}
+.roycss-immersive-rain::before {
+  content: "";
+  position: absolute;
+  inset: -10% 0 0 0;
+  background-image:
+    linear-gradient(transparent 0%, rgba(180, 220, 255, 0.55) 50%, transparent 100%);
+  background-size: 2px 80px;
+  background-repeat: repeat;
+  background-position: 0 0, 30px 0, 60px 0, 90px 0, 120px 0, 150px 0;
+  transform: skewX(-12deg);
+  animation: roy-immersive-rain-fall 0.6s linear infinite;
+  opacity: 0.6;
+}
+.roycss-immersive-rain::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 30%;
+  background: radial-gradient(ellipse at bottom, rgba(180, 220, 255, 0.25), transparent 70%);
+  animation: roy-immersive-rain-splash 0.9s ease-in-out infinite alternate;
+}
+@keyframes roy-immersive-rain-fall {
+  from { background-position: 0 -80px, 30px -40px, 60px -10px, 90px -60px, 120px -20px, 150px -70px; }
+  to   { background-position: 0 200px, 30px 240px, 60px 210px, 90px 260px, 120px 220px, 150px 270px; }
+}
+@keyframes roy-immersive-rain-splash {
+  from { opacity: 0.15; transform: scaleY(0.9); }
+  to   { opacity: 0.45; transform: scaleY(1.1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-immersive-rain::before,
+  .roycss-immersive-rain::after { animation: none; }
+}`
+  },
+  {
+    id: "immersive-snow-drift",
+    name: "Snow Drift",
+    category: "immersive",
+    description: "Two layers of snowflakes drift downward with gentle horizontal wind sway",
+    tags: ["immersive", "background", "snow", "weather", "winter"],
+    previewType: "background",
+    cssCode: `/* Immersive: Snow Drift */
+.roycss-immersive-snow-drift {
+  position: relative;
+  background: linear-gradient(#1c2530, #2a3744);
+  overflow: hidden;
+}
+.roycss-immersive-snow-drift::before,
+.roycss-immersive-snow-drift::after {
+  content: "";
+  position: absolute;
+  inset: -20% 0 0 0;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+    radial-gradient(2px 2px at 90px 110px, #fff, transparent),
+    radial-gradient(3px 3px at 180px 60px, #fff, transparent),
+    radial-gradient(2px 2px at 250px 180px, #fff, transparent),
+    radial-gradient(3px 3px at 320px 90px, #fff, transparent),
+    radial-gradient(2px 2px at 50px 240px, #fff, transparent);
+  background-size: 400px 300px;
+  background-repeat: repeat;
+  animation: roy-immersive-snow-fall 8s linear infinite;
+  opacity: 0.9;
+}
+.roycss-immersive-snow-drift::after {
+  background-size: 600px 500px;
+  animation-duration: 14s;
+  animation-direction: reverse;
+  opacity: 0.5;
+  filter: blur(0.6px);
+}
+@keyframes roy-immersive-snow-fall {
+  0%   { transform: translate3d(0, 0, 0); }
+  50%  { transform: translate3d(40px, 150px, 0); }
+  100% { transform: translate3d(-20px, 300px, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-immersive-snow-drift::before,
+  .roycss-immersive-snow-drift::after { animation: none; }
+}`
+  },
+  {
+    id: "immersive-fire-flame",
+    name: "Layered Flame",
+    category: "immersive",
+    description: "CSS-only flame built from layered gradients that flicker and rise from the base",
+    tags: ["immersive", "background", "fire", "flame", "heat"],
+    previewType: "background",
+    cssCode: `/* Immersive: Layered Flame */
+.roycss-immersive-fire-flame {
+  position: relative;
+  background: radial-gradient(ellipse at bottom, #2a0a00 0%, #000 80%);
+  overflow: hidden;
+}
+.roycss-immersive-fire-flame::before,
+.roycss-immersive-fire-flame::after {
+  content: "";
+  position: absolute;
+  left: 50%; bottom: 0;
+  width: 60%;
+  height: 80%;
+  transform: translateX(-50%);
+  background:
+    radial-gradient(ellipse at 50% 100%, #fff 0%, #ffe66d 12%, #ff8c1a 35%, #ff3d00 60%, transparent 80%);
+  border-radius: 50% 50% 20% 20% / 80% 80% 20% 20%;
+  filter: blur(6px);
+  animation: roy-immersive-fire-flicker 0.9s ease-in-out infinite alternate;
+  transform-origin: 50% 100%;
+}
+.roycss-immersive-fire-flame::after {
+  width: 35%; height: 55%;
+  background: radial-gradient(ellipse at 50% 100%, #fff 0%, #ffe066 20%, #ff5e1a 50%, transparent 75%);
+  filter: blur(3px);
+  animation-duration: 0.6s;
+  animation-direction: alternate-reverse;
+  opacity: 0.9;
+}
+@keyframes roy-immersive-fire-flicker {
+  0%   { transform: translateX(-50%) scaleY(1) scaleX(1) skewX(-2deg); opacity: 0.85; }
+  25%  { transform: translateX(-52%) scaleY(1.08) scaleX(0.95) skewX(3deg); opacity: 0.95; }
+  50%  { transform: translateX(-48%) scaleY(0.94) scaleX(1.05) skewX(-4deg); opacity: 1; }
+  75%  { transform: translateX(-51%) scaleY(1.05) scaleX(0.97) skewX(2deg); opacity: 0.9; }
+  100% { transform: translateX(-50%) scaleY(0.98) scaleX(1.02) skewX(-1deg); opacity: 0.88; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-immersive-fire-flame::before,
+  .roycss-immersive-fire-flame::after { animation: none; }
+}`
+  },
+  {
+    id: "immersive-smoke-fog",
+    name: "Drifting Smoke & Fog",
+    category: "immersive",
+    description: "Three blurred radial-gradient plumes drift and rotate to suggest drifting fog",
+    tags: ["immersive", "background", "smoke", "fog", "atmosphere"],
+    previewType: "background",
+    cssCode: `/* Immersive: Drifting Smoke & Fog */
+.roycss-immersive-smoke-fog {
+  position: relative;
+  background: linear-gradient(#22252a, #3a3f47);
+  overflow: hidden;
+}
+.roycss-immersive-smoke-fog::before,
+.roycss-immersive-smoke-fog::after {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(220, 220, 230, 0.35), transparent 30%),
+    radial-gradient(circle at 70% 60%, rgba(200, 200, 210, 0.3), transparent 35%),
+    radial-gradient(circle at 50% 80%, rgba(180, 180, 200, 0.25), transparent 30%);
+  filter: blur(18px);
+  animation: roy-immersive-smoke-drift 18s ease-in-out infinite alternate;
+  opacity: 0.7;
+}
+.roycss-immersive-smoke-fog::after {
+  inset: -50%;
+  background:
+    radial-gradient(circle at 60% 20%, rgba(230, 230, 240, 0.3), transparent 40%),
+    radial-gradient(circle at 30% 70%, rgba(190, 190, 210, 0.25), transparent 40%);
+  animation-duration: 26s;
+  animation-direction: alternate-reverse;
+  opacity: 0.5;
+}
+@keyframes roy-immersive-smoke-drift {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50%  { transform: translate3d(30px, -20px, 0) rotate(8deg); }
+  100% { transform: translate3d(-20px, 25px, 0) rotate(-6deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-immersive-smoke-fog::before,
+  .roycss-immersive-smoke-fog::after { animation: none; }
+}`
+  },
+  {
+    id: "immersive-ocean-waves",
+    name: "Ocean Waves",
+    category: "immersive",
+    description: "Three stacked wave layers ripple across a deep-blue gradient at staggered speeds",
+    tags: ["immersive", "background", "ocean", "waves", "water"],
+    previewType: "background",
+    cssCode: `/* Immersive: Ocean Waves */
+.roycss-immersive-ocean-waves {
+  position: relative;
+  background: linear-gradient(#0a3a5c 0%, #072a44 60%, #04192c 100%);
+  overflow: hidden;
+}
+.roycss-immersive-ocean-waves::before,
+.roycss-immersive-ocean-waves::after {
+  content: "";
+  position: absolute;
+  left: -50%; right: -50%;
+  bottom: 0;
+  height: 45%;
+  background:
+    radial-gradient(circle at 25% 50%, rgba(150, 210, 240, 0.4) 0%, transparent 40%),
+    radial-gradient(circle at 75% 50%, rgba(120, 190, 230, 0.4) 0%, transparent 40%);
+  background-size: 200px 100px;
+  background-repeat: repeat-x;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  animation: roy-immersive-wave-roll 12s linear infinite;
+  opacity: 0.7;
+}
+.roycss-immersive-ocean-waves::after {
+  height: 30%;
+  background-size: 150px 80px;
+  animation-duration: 8s;
+  animation-direction: reverse;
+  opacity: 0.55;
+  filter: blur(1px);
+}
+@keyframes roy-immersive-wave-roll {
+  from { background-position: 0 0; transform: translateX(0); }
+  to   { background-position: 200px 0; transform: translateX(-50px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-immersive-ocean-waves::before,
+  .roycss-immersive-ocean-waves::after { animation: none; }
+}`
+  },
+  {
+    id: "immersive-matrix-rain",
+    name: "Matrix Rain",
+    category: "immersive",
+    description: "Falling green character columns evoke the iconic Matrix digital rain",
+    tags: ["immersive", "background", "matrix", "rain", "retro"],
+    previewType: "background",
+    cssCode: `/* Immersive: Matrix Rain */
+.roycss-immersive-matrix-rain {
+  position: relative;
+  background: #000;
+  overflow: hidden;
+}
+.roycss-immersive-matrix-rain::before,
+.roycss-immersive-matrix-rain::after {
+  content: "";
+  position: absolute;
+  inset: -10% 0 0 0;
+  background-image:
+    linear-gradient(180deg, transparent 0%, rgba(0, 255, 65, 0.05) 70%, rgba(0, 255, 65, 0.8) 95%, rgba(180, 255, 200, 0.9) 100%),
+    repeating-linear-gradient(0deg, rgba(0, 255, 65, 0.7) 0 1px, transparent 1px 18px);
+  background-size: 30px 100%, 30px 18px;
+  background-repeat: repeat-x;
+  animation: roy-immersive-matrix-fall 1.2s steps(8) infinite;
+  mix-blend-mode: screen;
+  opacity: 0.85;
+}
+.roycss-immersive-matrix-rain::after {
+  background-size: 60px 100%, 60px 22px;
+  animation-duration: 2s;
+  animation-direction: reverse;
+  opacity: 0.4;
+  filter: blur(0.5px);
+}
+@keyframes roy-immersive-matrix-fall {
+  from { background-position: 0 0, 0 0; }
+  to   { background-position: 0 144px, 0 144px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-immersive-matrix-rain::before,
+  .roycss-immersive-matrix-rain::after { animation: none; }
+}`
+  },
+  {
+    id: "immersive-geometric-hex",
+    name: "Hexagon Tessellation",
+    category: "immersive",
+    description: "Animated hexagon grid pulses with shifting gradient light across the surface",
+    tags: ["immersive", "background", "hexagon", "geometric", "pattern"],
+    previewType: "background",
+    cssCode: `/* Immersive: Hexagon Tessellation */
+.roycss-immersive-geometric-hex {
+  position: relative;
+  background: #0d1117;
+  overflow: hidden;
+}
+.roycss-immersive-geometric-hex::before {
+  content: "";
+  position: absolute;
+  inset: -10%;
+  background:
+    radial-gradient(circle at 0 0, transparent 40%, rgba(56, 189, 248, 0.25) 41%, rgba(56, 189, 248, 0.25) 44%, transparent 45%),
+    radial-gradient(circle at 60px 35px, transparent 40%, rgba(168, 85, 247, 0.25) 41%, rgba(168, 85, 247, 0.25) 44%, transparent 45%);
+  background-size: 120px 70px, 120px 70px;
+  animation: roy-immersive-hex-shift 16s linear infinite;
+  opacity: 0.9;
+}
+.roycss-immersive-geometric-hex::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(34, 211, 238, 0.2), transparent 50%, rgba(236, 72, 153, 0.2));
+  mix-blend-mode: overlay;
+  animation: roy-immersive-hex-glow 8s ease-in-out infinite alternate;
+}
+@keyframes roy-immersive-hex-shift {
+  from { background-position: 0 0, 0 0; }
+  to   { background-position: 120px 70px, 120px 70px; }
+}
+@keyframes roy-immersive-hex-glow {
+  from { opacity: 0.4; }
+  to   { opacity: 0.9; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-immersive-geometric-hex::before,
+  .roycss-immersive-geometric-hex::after { animation: none; }
+}`
+  },
+  {
+    id: "immersive-topographic",
+    name: "Topographic Contours",
+    category: "immersive",
+    description: "Concentric contour lines flow across the surface like an animated topographic map",
+    tags: ["immersive", "background", "topographic", "contour", "map"],
+    previewType: "background",
+    cssCode: `/* Immersive: Topographic Contours */
+.roycss-immersive-topographic {
+  position: relative;
+  background: #0f1b14;
+  overflow: hidden;
+}
+.roycss-immersive-topographic::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background:
+    repeating-radial-gradient(circle at 30% 40%, rgba(134, 239, 172, 0.5) 0 1px, transparent 1px 14px),
+    repeating-radial-gradient(circle at 70% 60%, rgba(94, 234, 212, 0.4) 0 1px, transparent 1px 20px),
+    repeating-radial-gradient(circle at 50% 80%, rgba(168, 247, 196, 0.3) 0 1px, transparent 1px 26px);
+  filter: blur(0.3px);
+  animation: roy-immersive-topo-flow 30s linear infinite;
+  opacity: 0.6;
+}
+.roycss-immersive-topographic::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0, 0, 0, 0.6) 100%);
+}
+@keyframes roy-immersive-topo-flow {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(-20px, 15px, 0) scale(1.05); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-immersive-topographic::before { animation: none; }
+}`
+  },
+  {
+    id: "immersive-aurora-bg",
+    name: "Aurora Borealis",
+    category: "immersive",
+    description: "Flowing bands of green and violet light ripple like the northern lights",
+    tags: ["immersive", "background", "aurora", "northern-lights", "gradient"],
+    previewType: "background",
+    cssCode: `/* Immersive: Aurora Borealis */
+.roycss-immersive-aurora-bg {
+  position: relative;
+  background: linear-gradient(#020617 0%, #0c1d3a 50%, #021024 100%);
+  overflow: hidden;
+}
+.roycss-immersive-aurora-bg::before,
+.roycss-immersive-aurora-bg::after {
+  content: "";
+  position: absolute;
+  inset: -20% 0 30% 0;
+  background:
+    linear-gradient(90deg, transparent, rgba(74, 222, 128, 0.55), rgba(168, 85, 247, 0.5), transparent),
+    linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.4), transparent);
+  filter: blur(40px);
+  animation: roy-immersive-aurora-flow 14s ease-in-out infinite alternate;
+  mix-blend-mode: screen;
+  opacity: 0.7;
+}
+.roycss-immersive-aurora-bg::after {
+  inset: -10% 0 50% 0;
+  filter: blur(60px);
+  animation-duration: 22s;
+  animation-direction: alternate-reverse;
+  opacity: 0.5;
+}
+@keyframes roy-immersive-aurora-flow {
+  0%   { transform: translate3d(-10%, 0, 0) skewX(-12deg) scaleY(1); }
+  50%  { transform: translate3d(10%, 20px, 0) skewX(8deg) scaleY(1.1); }
+  100% { transform: translate3d(-5%, -10px, 0) skewX(-6deg) scaleY(0.95); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-immersive-aurora-bg::before,
+  .roycss-immersive-aurora-bg::after { animation: none; }
+}`
+  },
+  {
+    id: "immersive-nebula",
+    name: "Space Nebula",
+    category: "immersive",
+    description: "Colorful gas-cloud gradients swirl over a starfield to evoke a deep-space nebula",
+    tags: ["immersive", "background", "nebula", "space", "cosmic"],
+    previewType: "background",
+    cssCode: `/* Immersive: Space Nebula */
+.roycss-immersive-nebula {
+  position: relative;
+  background:
+    radial-gradient(1px 1px at 50px 50px, #fff, transparent),
+    radial-gradient(1px 1px at 150px 200px, #fff, transparent),
+    radial-gradient(1px 1px at 250px 80px, #cfe, transparent),
+    radial-gradient(2px 2px at 320px 320px, #fff, transparent),
+    radial-gradient(1px 1px at 90px 280px, #ffd, transparent),
+    #050414;
+  background-size: 400px 400px, 400px 400px, 400px 400px, 400px 400px, 400px 400px, 100% 100%;
+  background-repeat: repeat;
+  overflow: hidden;
+}
+.roycss-immersive-nebula::before,
+.roycss-immersive-nebula::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(236, 72, 153, 0.55), transparent 40%),
+    radial-gradient(circle at 70% 60%, rgba(34, 211, 238, 0.45), transparent 40%),
+    radial-gradient(circle at 50% 80%, rgba(168, 85, 247, 0.4), transparent 40%);
+  filter: blur(50px);
+  mix-blend-mode: screen;
+  animation: roy-immersive-nebula-swirl 24s ease-in-out infinite alternate;
+  opacity: 0.85;
+}
+.roycss-immersive-nebula::after {
+  animation-duration: 36s;
+  animation-direction: alternate-reverse;
+  opacity: 0.6;
+}
+@keyframes roy-immersive-nebula-swirl {
+  0%   { transform: rotate(0deg) scale(1); }
+  50%  { transform: rotate(20deg) scale(1.15); }
+  100% { transform: rotate(-15deg) scale(0.95); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-immersive-nebula::before,
+  .roycss-immersive-nebula::after { animation: none; }
+}`
+  },
+  {
+    id: "immersive-underwater",
+    name: "Underwater Caustics",
+    category: "immersive",
+    description: "Animated light caustics ripple across a deep teal underwater backdrop",
+    tags: ["immersive", "background", "underwater", "caustics", "water"],
+    previewType: "background",
+    cssCode: `/* Immersive: Underwater Caustics */
+.roycss-immersive-underwater {
+  position: relative;
+  background: linear-gradient(#0d4a5c 0%, #072430 80%, #04161f 100%);
+  overflow: hidden;
+}
+.roycss-immersive-underwater::before,
+.roycss-immersive-underwater::after {
+  content: "";
+  position: absolute;
+  inset: -10%;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(180, 240, 255, 0.4), transparent 25%),
+    radial-gradient(circle at 80% 70%, rgba(140, 220, 250, 0.35), transparent 25%),
+    radial-gradient(circle at 50% 50%, rgba(200, 250, 255, 0.3), transparent 30%);
+  background-size: 200px 200px, 240px 240px, 300px 300px;
+  background-repeat: repeat;
+  filter: blur(2px);
+  mix-blend-mode: screen;
+  animation: roy-immersive-caustics 9s ease-in-out infinite alternate;
+  opacity: 0.7;
+}
+.roycss-immersive-underwater::after {
+  background-size: 300px 300px, 360px 360px, 400px 400px;
+  animation-duration: 14s;
+  animation-direction: alternate-reverse;
+  opacity: 0.4;
+  filter: blur(6px);
+}
+@keyframes roy-immersive-caustics {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50%  { transform: translate3d(20px, -10px, 0) rotate(8deg); }
+  100% { transform: translate3d(-15px, 15px, 0) rotate(-6deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-immersive-underwater::before,
+  .roycss-immersive-underwater::after { animation: none; }
+}`
+  },
+  {
+    id: "immersive-fireflies",
+    name: "Glowing Fireflies",
+    category: "immersive",
+    description: "Tiny glowing dots flicker and drift like fireflies in a warm summer night",
+    tags: ["immersive", "background", "fireflies", "glow", "particles"],
+    previewType: "background",
+    cssCode: `/* Immersive: Glowing Fireflies */
+.roycss-immersive-fireflies {
+  position: relative;
+  background: linear-gradient(#0a1410 0%, #1a2a20 100%);
+  overflow: hidden;
+}
+.roycss-immersive-fireflies::before,
+.roycss-immersive-fireflies::after {
+  content: "";
+  position: absolute;
+  inset: -10% 0 0 0;
+  background-image:
+    radial-gradient(2px 2px at 40px 60px, rgba(255, 245, 150, 1), transparent 70%),
+    radial-gradient(2px 2px at 120px 200px, rgba(255, 235, 120, 1), transparent 70%),
+    radial-gradient(3px 3px at 220px 120px, rgba(255, 250, 180, 1), transparent 70%),
+    radial-gradient(2px 2px at 300px 250px, rgba(255, 240, 140, 1), transparent 70%),
+    radial-gradient(2px 2px at 80px 320px, rgba(255, 245, 160, 1), transparent 70%),
+    radial-gradient(3px 3px at 360px 80px, rgba(255, 255, 200, 1), transparent 70%);
+  background-size: 400px 400px;
+  background-repeat: repeat;
+  animation: roy-immersive-fireflies-glow 4s ease-in-out infinite alternate,
+             roy-immersive-fireflies-float 18s linear infinite;
+  filter: blur(0.4px) drop-shadow(0 0 4px rgba(255, 240, 150, 0.8));
+}
+.roycss-immersive-fireflies::after {
+  background-size: 600px 600px;
+  animation-duration: 6s, 28s;
+  animation-direction: alternate-reverse, normal;
+  opacity: 0.6;
+  filter: blur(1.2px) drop-shadow(0 0 8px rgba(255, 240, 150, 0.6));
+}
+@keyframes roy-immersive-fireflies-glow {
+  0%, 100% { opacity: 0.3; }
+  50%      { opacity: 1; }
+}
+@keyframes roy-immersive-fireflies-float {
+  0%   { transform: translate3d(0, 0, 0); }
+  50%  { transform: translate3d(30px, -40px, 0); }
+  100% { transform: translate3d(-20px, 20px, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-immersive-fireflies::before,
+  .roycss-immersive-fireflies::after { animation: none; }
+}`
+  },
+  {
+    id: "immersive-cloud-drift",
+    name: "Drifting Clouds",
+    category: "immersive",
+    description: "Soft cloud shapes drift horizontally across a calm sky gradient",
+    tags: ["immersive", "background", "clouds", "sky", "weather"],
+    previewType: "background",
+    cssCode: `/* Immersive: Drifting Clouds */
+.roycss-immersive-cloud-drift {
+  position: relative;
+  background: linear-gradient(#7cb9e8 0%, #c3e0f0 60%, #e8f4fb 100%);
+  overflow: hidden;
+}
+.roycss-immersive-cloud-drift::before,
+.roycss-immersive-cloud-drift::after {
+  content: "";
+  position: absolute;
+  left: -30%; right: -30%;
+  top: 15%;
+  height: 50%;
+  background:
+    radial-gradient(ellipse at 30% 50%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.6) 20%, transparent 35%),
+    radial-gradient(ellipse at 60% 60%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.5) 25%, transparent 40%),
+    radial-gradient(ellipse at 80% 40%, rgba(255, 255, 255, 0.85) 0%, transparent 30%);
+  background-size: 320px 120px, 380px 140px, 280px 100px;
+  background-repeat: repeat-x;
+  filter: blur(4px);
+  animation: roy-immersive-cloud-drift 40s linear infinite;
+  opacity: 0.9;
+}
+.roycss-immersive-cloud-drift::after {
+  top: 45%;
+  height: 40%;
+  filter: blur(8px);
+  animation-duration: 70s;
+  animation-direction: reverse;
+  opacity: 0.5;
+}
+@keyframes roy-immersive-cloud-drift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-320px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-immersive-cloud-drift::before,
+  .roycss-immersive-cloud-drift::after { animation: none; }
+}`
+  },
+  {
+    id: "immersive-rain-bokeh",
+    name: "Rain Bokeh",
+    category: "immersive",
+    description: "Raindrops fall behind soft blurred bokeh circles on a moody nocturnal backdrop",
+    tags: ["immersive", "background", "rain", "bokeh", "night"],
+    previewType: "background",
+    cssCode: `/* Immersive: Rain Bokeh */
+.roycss-immersive-rain-bokeh {
+  position: relative;
+  background: linear-gradient(#0e1116 0%, #1a2533 100%);
+  overflow: hidden;
+}
+.roycss-immersive-rain-bokeh::before {
+  content: "";
+  position: absolute;
+  inset: -10% 0 0 0;
+  background-image:
+    linear-gradient(transparent 0%, rgba(200, 220, 255, 0.4) 50%, transparent 100%);
+  background-size: 1px 60px;
+  background-repeat: repeat;
+  transform: skewX(-10deg);
+  animation: roy-immersive-rb-fall 0.5s linear infinite;
+  opacity: 0.55;
+}
+.roycss-immersive-rain-bokeh::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255, 220, 180, 0.35) 0%, transparent 8%),
+    radial-gradient(circle at 75% 60%, rgba(180, 220, 255, 0.4) 0%, transparent 10%),
+    radial-gradient(circle at 50% 80%, rgba(255, 180, 220, 0.3) 0%, transparent 7%),
+    radial-gradient(circle at 90% 20%, rgba(200, 255, 220, 0.35) 0%, transparent 9%);
+  background-size: 100% 100%;
+  filter: blur(8px);
+  animation: roy-immersive-rb-bokeh 6s ease-in-out infinite alternate;
+}
+@keyframes roy-immersive-rb-fall {
+  from { background-position: 0 -60px; }
+  to   { background-position: 0 120px; }
+}
+@keyframes roy-immersive-rb-bokeh {
+  from { opacity: 0.5; transform: scale(1); }
+  to   { opacity: 0.9; transform: scale(1.05); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-immersive-rain-bokeh::before,
+  .roycss-immersive-rain-bokeh::after { animation: none; }
+}`
+  },
+  {
+    id: "immersive-lightning",
+    name: "Lightning Flash",
+    category: "immersive",
+    description: "Occasional lightning bolts flare across a stormy night sky with afterglow",
+    tags: ["immersive", "background", "lightning", "storm", "flash"],
+    previewType: "background",
+    cssCode: `/* Immersive: Lightning Flash */
+.roycss-immersive-lightning {
+  position: relative;
+  background: linear-gradient(#0a0e1a 0%, #1a2238 60%, #0a0e1a 100%);
+  overflow: hidden;
+}
+.roycss-immersive-lightning::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(220, 235, 255, 0.9), transparent 50%);
+  clip-path: polygon(48% 0, 52% 0, 54% 25%, 50% 30%, 56% 60%, 49% 65%, 53% 100%, 47% 100%, 44% 65%, 50% 60%, 42% 30%, 46% 25%);
+  animation: roy-immersive-lightning-bolt 6s steps(1) infinite;
+  opacity: 0;
+  filter: drop-shadow(0 0 12px rgba(220, 235, 255, 0.9));
+}
+.roycss-immersive-lightning::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(200, 220, 255, 0.5);
+  animation: roy-immersive-lightning-glow 6s steps(1) infinite;
+  opacity: 0;
+}
+@keyframes roy-immersive-lightning-bolt {
+  0%, 4%, 8%, 100% { opacity: 0; }
+  5%               { opacity: 1; }
+  6%               { opacity: 0; }
+  7%               { opacity: 0.7; }
+}
+@keyframes roy-immersive-lightning-glow {
+  0%, 4%, 8%, 100% { opacity: 0; }
+  5%               { opacity: 0.6; }
+  6%               { opacity: 0.2; }
+  7%               { opacity: 0.4; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-immersive-lightning::before,
+  .roycss-immersive-lightning::after { animation: none; }
+}`
+  },
+  {
+    id: "immersive-dust-particles",
+    name: "Dust in Light Beam",
+    category: "immersive",
+    description: "Tiny dust motes drift through a diagonal sunbeam against a dark backdrop",
+    tags: ["immersive", "background", "dust", "light", "particles"],
+    previewType: "background",
+    cssCode: `/* Immersive: Dust in Light Beam */
+.roycss-immersive-dust-particles {
+  position: relative;
+  background: linear-gradient(#0a0a0a 0%, #1a1612 100%);
+  overflow: hidden;
+}
+.roycss-immersive-dust-particles::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 230, 170, 0.18) 0%, rgba(255, 220, 150, 0.08) 30%, transparent 55%);
+  filter: blur(2px);
+}
+.roycss-immersive-dust-particles::after {
+  content: "";
+  position: absolute;
+  inset: -10% 0 0 0;
+  background-image:
+    radial-gradient(1px 1px at 40px 60px, rgba(255, 235, 180, 0.9), transparent 70%),
+    radial-gradient(1px 1px at 120px 180px, rgba(255, 230, 170, 0.8), transparent 70%),
+    radial-gradient(1px 1px at 220px 100px, rgba(255, 240, 200, 0.9), transparent 70%),
+    radial-gradient(1px 1px at 300px 240px, rgba(255, 235, 180, 0.7), transparent 70%),
+    radial-gradient(1px 1px at 80px 320px, rgba(255, 230, 170, 0.8), transparent 70%),
+    radial-gradient(1px 1px at 360px 80px, rgba(255, 240, 200, 0.9), transparent 70%);
+  background-size: 400px 400px;
+  background-repeat: repeat;
+  animation: roy-immersive-dust-float 22s linear infinite;
+  opacity: 0.85;
+}
+@keyframes roy-immersive-dust-float {
+  0%   { transform: translate3d(0, 0, 0); }
+  50%  { transform: translate3d(20px, -30px, 0); }
+  100% { transform: translate3d(-15px, 25px, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-immersive-dust-particles::after { animation: none; }
+}`
+  },
+  {
+    id: "immersive-gradient-mesh-bg",
+    name: "Animated Mesh Gradient",
+    category: "immersive",
+    description: "Four-color mesh gradient blobs slowly orbit each other to form a living backdrop",
+    tags: ["immersive", "background", "gradient", "mesh", "colorful"],
+    previewType: "background",
+    cssCode: `/* Immersive: Animated Mesh Gradient */
+.roycss-immersive-gradient-mesh-bg {
+  position: relative;
+  background: #0f0f1a;
+  overflow: hidden;
+}
+.roycss-immersive-gradient-mesh-bg::before,
+.roycss-immersive-gradient-mesh-bg::after {
+  content: "";
+  position: absolute;
+  inset: -25%;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(236, 72, 153, 0.7), transparent 35%),
+    radial-gradient(circle at 80% 30%, rgba(34, 211, 238, 0.6), transparent 35%),
+    radial-gradient(circle at 30% 80%, rgba(168, 85, 247, 0.6), transparent 35%),
+    radial-gradient(circle at 70% 75%, rgba(251, 191, 36, 0.5), transparent 35%);
+  filter: blur(40px);
+  mix-blend-mode: screen;
+  animation: roy-immersive-mesh-orbit 18s ease-in-out infinite alternate;
+}
+.roycss-immersive-gradient-mesh-bg::after {
+  animation-duration: 26s;
+  animation-direction: alternate-reverse;
+  opacity: 0.6;
+  filter: blur(60px);
+}
+@keyframes roy-immersive-mesh-orbit {
+  0%   { transform: rotate(0deg) translateX(0) scale(1); }
+  50%  { transform: rotate(180deg) translateX(20px) scale(1.1); }
+  100% { transform: rotate(360deg) translateX(-15px) scale(0.95); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-immersive-gradient-mesh-bg::before,
+  .roycss-immersive-gradient-mesh-bg::after { animation: none; }
+}`
+  },
+  {
+    id: "immersive-confetti-bg",
+    name: "Falling Confetti",
+    category: "immersive",
+    description: "Colorful confetti pieces rotate and fall across a festive backdrop",
+    tags: ["immersive", "background", "confetti", "celebration", "party"],
+    previewType: "background",
+    cssCode: `/* Immersive: Falling Confetti */
+.roycss-immersive-confetti-bg {
+  position: relative;
+  background: linear-gradient(#1a0d2e 0%, #2a1a4a 60%, #1a0d2e 100%);
+  overflow: hidden;
+}
+.roycss-immersive-confetti-bg::before,
+.roycss-immersive-confetti-bg::after {
+  content: "";
+  position: absolute;
+  inset: -10% 0 0 0;
+  background-image:
+    linear-gradient(45deg, #f43f5e 0 8px, transparent 8px),
+    linear-gradient(-45deg, #22d3ee 0 10px, transparent 10px),
+    linear-gradient(90deg, #facc15 0 6px, transparent 6px),
+    linear-gradient(0deg, #a855f7 0 12px, transparent 12px),
+    linear-gradient(45deg, #34d399 0 7px, transparent 7px);
+  background-size: 80px 80px, 120px 120px, 100px 100px, 90px 90px, 110px 110px;
+  background-position: 0 0, 40px 60px, 80px 30px, 20px 90px, 60px 20px;
+  background-repeat: repeat;
+  animation: roy-immersive-confetti-fall 4s linear infinite;
+  opacity: 0.85;
+}
+.roycss-immersive-confetti-bg::after {
+  animation-duration: 6s;
+  animation-direction: reverse;
+  opacity: 0.55;
+  filter: blur(0.4px);
+}
+@keyframes roy-immersive-confetti-fall {
+  0%   { background-position: 0 0, 40px 60px, 80px 30px, 20px 90px, 60px 20px; transform: rotate(0deg); }
+  100% { background-position: -80px 320px, 40px 380px, 80px 350px, 20px 410px, 60px 340px; transform: rotate(180deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-immersive-confetti-bg::before,
+  .roycss-immersive-confetti-bg::after { animation: none; }
+}`
+  },
+  {
+    id: "immersive-bubble-rise",
+    name: "Rising Bubbles",
+    category: "immersive",
+    description: "Translucent bubbles rise from the bottom of an aquatic backdrop with sway",
+    tags: ["immersive", "background", "bubbles", "water", "rise"],
+    previewType: "background",
+    cssCode: `/* Immersive: Rising Bubbles */
+.roycss-immersive-bubble-rise {
+  position: relative;
+  background: linear-gradient(#0a4a6e 0%, #072e48 60%, #04192c 100%);
+  overflow: hidden;
+}
+.roycss-immersive-bubble-rise::before,
+.roycss-immersive-bubble-rise::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  bottom: -10%;
+  height: 110%;
+  background-image:
+    radial-gradient(circle at 20px 80px, rgba(255, 255, 255, 0.5) 0 4px, transparent 5px),
+    radial-gradient(circle at 90px 200px, rgba(255, 255, 255, 0.45) 0 6px, transparent 7px),
+    radial-gradient(circle at 180px 320px, rgba(255, 255, 255, 0.55) 0 5px, transparent 6px),
+    radial-gradient(circle at 260px 100px, rgba(255, 255, 255, 0.5) 0 7px, transparent 8px),
+    radial-gradient(circle at 340px 280px, rgba(255, 255, 255, 0.4) 0 4px, transparent 5px);
+  background-size: 400px 400px;
+  background-repeat: repeat;
+  animation: roy-immersive-bubble-rise 10s linear infinite;
+  filter: blur(0.3px);
+}
+.roycss-immersive-bubble-rise::after {
+  background-size: 600px 600px;
+  animation-duration: 16s;
+  animation-direction: reverse;
+  opacity: 0.5;
+  filter: blur(1.5px);
+}
+@keyframes roy-immersive-bubble-rise {
+  0%   { transform: translate3d(0, 0, 0); }
+  50%  { transform: translate3d(15px, -200px, 0); }
+  100% { transform: translate3d(-10px, -400px, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-immersive-bubble-rise::before,
+  .roycss-immersive-bubble-rise::after { animation: none; }
+}`
+  }
+];
+
+// src/lib/effects-batch-41.ts
+var effectsBatch41 = [
+  {
+    id: "advtext-typewriter-cursor",
+    name: "Typewriter Cursor",
+    category: "advanced-text",
+    description: "Text reveals one character at a time with a blinking caret at the end",
+    tags: ["advanced-text", "typewriter", "cursor", "reveal", "typing"],
+    previewType: "text",
+    previewText: "RoyCSS",
+    cssCode: `/* Advanced Text: Typewriter Cursor */
+.roycss-advtext-typewriter-cursor {
+  display: inline-block;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: #e2e8f0;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #38bdf8;
+  width: 0;
+  animation: roy-advtext-typewriter 2.4s steps(6, end) 0.3s both,
+             roy-advtext-caret 0.7s step-end infinite;
+}
+@keyframes roy-advtext-typewriter {
+  from { width: 0; }
+  to   { width: 6ch; }
+}
+@keyframes roy-advtext-caret {
+  50% { border-color: transparent; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-advtext-typewriter-cursor {
+    width: auto;
+    animation: none;
+    border-right-color: #38bdf8;
+  }
+}`
+  },
+  {
+    id: "advtext-scramble-decrypt",
+    name: "Scramble Decrypt",
+    category: "advanced-text",
+    description: "Hacker-style decode: characters blur through random values before settling",
+    tags: ["advanced-text", "scramble", "decrypt", "hacker", "glitch"],
+    previewType: "text",
+    previewText: "RoyCSS",
+    cssCode: `/* Advanced Text: Scramble Decrypt */
+.roycss-advtext-scramble-decrypt {
+  display: inline-block;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: #34d399;
+  position: relative;
+  letter-spacing: 0.05em;
+  animation: roy-advtext-scramble-settle 2.4s steps(8, end) infinite;
+  filter: blur(0.4px);
+  text-shadow: 0 0 6px rgba(52, 211, 153, 0.6);
+}
+@keyframes roy-advtext-scramble-settle {
+  0%   { letter-spacing: 0.18em; filter: blur(1.6px); opacity: 0.4; transform: skewX(-3deg); }
+  35%  { letter-spacing: 0.12em; filter: blur(0.9px); opacity: 0.7; transform: skewX(2deg); }
+  65%  { letter-spacing: 0.07em; filter: blur(0.4px); opacity: 0.9; transform: skewX(-1deg); }
+  85%  { letter-spacing: 0.05em; filter: blur(0.2px); opacity: 1; transform: skewX(0deg); }
+  100% { letter-spacing: 0.05em; filter: blur(0); opacity: 1; transform: skewX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-advtext-scramble-decrypt { animation: none; filter: none; }
+}`
+  },
+  {
+    id: "advtext-on-path",
+    name: "Text On Path",
+    category: "advanced-text",
+    description: "Text rides along a curved SVG-like offset-path, orbiting a closed loop",
+    tags: ["advanced-text", "offset-path", "path", "curve", "orbit"],
+    previewType: "text",
+    previewText: "RoyCSS",
+    cssCode: `/* Advanced Text: Text On Path */
+.roycss-advtext-on-path {
+  display: inline-block;
+  font-weight: 700;
+  color: #f0abfc;
+  offset-path: path("M -90,40 C -60,-30 60,-30 90,40 C 60,110 -60,110 -90,40 Z");
+  offset-rotate: 0deg;
+  animation: roy-advtext-on-path 9s linear infinite;
+  text-shadow: 0 0 10px rgba(240, 171, 252, 0.6);
+}
+@keyframes roy-advtext-on-path {
+  from { offset-distance: 0%; }
+  to   { offset-distance: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-advtext-on-path { animation: none; offset-path: none; }
+}`
+  },
+  {
+    id: "advtext-kinetic-fly",
+    name: "Kinetic Fly-In",
+    category: "advanced-text",
+    description: "Each letter of the word flies in from below with a staggered kinetic cascade",
+    tags: ["advanced-text", "kinetic", "fly", "stagger", "entrance"],
+    previewType: "loader",
+    childCount: 6,
+    cssCode: `/* Advanced Text: Kinetic Fly-In */
+.roycss-advtext-kinetic-fly {
+  display: inline-flex;
+  gap: 0.04em;
+  font-weight: 800;
+  font-size: 2rem;
+  color: #fbbf24;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  perspective: 600px;
+}
+.roycss-advtext-kinetic-fly > span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(80px) rotateX(-90deg);
+  animation: roy-advtext-kinetic-fly 1s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.roycss-advtext-kinetic-fly > span::before {
+  content: attr(data-letter);
+}
+.roycss-advtext-kinetic-fly > span:nth-child(1)::before { content: "R"; }
+.roycss-advtext-kinetic-fly > span:nth-child(2)::before { content: "o"; }
+.roycss-advtext-kinetic-fly > span:nth-child(3)::before { content: "y"; }
+.roycss-advtext-kinetic-fly > span:nth-child(4)::before { content: "C"; }
+.roycss-advtext-kinetic-fly > span:nth-child(5)::before { content: "S"; }
+.roycss-advtext-kinetic-fly > span:nth-child(6)::before { content: "S"; }
+.roycss-advtext-kinetic-fly > span:nth-child(1) { animation-delay: 0.00s; }
+.roycss-advtext-kinetic-fly > span:nth-child(2) { animation-delay: 0.08s; }
+.roycss-advtext-kinetic-fly > span:nth-child(3) { animation-delay: 0.16s; }
+.roycss-advtext-kinetic-fly > span:nth-child(4) { animation-delay: 0.24s; }
+.roycss-advtext-kinetic-fly > span:nth-child(5) { animation-delay: 0.32s; }
+.roycss-advtext-kinetic-fly > span:nth-child(6) { animation-delay: 0.40s; }
+@keyframes roy-advtext-kinetic-fly {
+  0%   { opacity: 0; transform: translateY(80px) rotateX(-90deg); }
+  60%  { opacity: 1; transform: translateY(-10px) rotateX(15deg); }
+  100% { opacity: 1; transform: translateY(0) rotateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-advtext-kinetic-fly > span { animation: none; opacity: 1; transform: none; }
+}`
+  },
+  {
+    id: "advtext-fill-gradient",
+    name: "Gradient Fill Sweep",
+    category: "advanced-text",
+    description: "Transparent text fills left-to-right with a colorful gradient sweep on load",
+    tags: ["advanced-text", "gradient", "fill", "sweep", "background-clip"],
+    previewType: "text",
+    previewText: "RoyCSS",
+    cssCode: `/* Advanced Text: Gradient Fill Sweep */
+.roycss-advtext-fill-gradient {
+  display: inline-block;
+  font-weight: 800;
+  font-size: 2rem;
+  background: linear-gradient(90deg, #f43f5e 0%, #f59e0b 25%, #10b981 50%, #06b6d4 75%, #8b5cf6 100%);
+  background-size: 300% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  background-repeat: no-repeat;
+  animation: roy-advtext-fill-sweep 2.6s cubic-bezier(0.65, 0, 0.35, 1) 0.2s both;
+}
+@keyframes roy-advtext-fill-sweep {
+  from { background-position: 200% 0; -webkit-text-fill-color: transparent; }
+  to   { background-position: 0% 0; -webkit-text-fill-color: transparent; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-advtext-fill-gradient { animation: none; background-position: 0 0; }
+}`
+  },
+  {
+    id: "advtext-3d-extruded",
+    name: "3D Extruded Text",
+    category: "advanced-text",
+    description: "Text extruded into 3D using stacked text-shadows with subtle breathing depth",
+    tags: ["advanced-text", "3d", "extruded", "depth", "text-shadow"],
+    previewType: "text",
+    previewText: "RoyCSS",
+    cssCode: `/* Advanced Text: 3D Extruded */
+.roycss-advtext-3d-extruded {
+  display: inline-block;
+  font-weight: 900;
+  font-size: 2.4rem;
+  letter-spacing: 0.02em;
+  color: #fbbf24;
+  text-shadow:
+    1px 1px 0 #d97706,
+    2px 2px 0 #b45309,
+    3px 3px 0 #92400e,
+    4px 4px 0 #78350f,
+    5px 5px 0 #5b2a0c,
+    6px 6px 0 #42200a,
+    7px 7px 0 #2a1407,
+    8px 8px 12px rgba(0, 0, 0, 0.45);
+  animation: roy-advtext-3d-breath 4s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+@keyframes roy-advtext-3d-breath {
+  0%, 100% { transform: perspective(400px) rotateX(0deg) scale(1); }
+  50%      { transform: perspective(400px) rotateX(8deg) scale(1.04); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-advtext-3d-extruded { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "advtext-glitch-rgb",
+    name: "RGB Split Glitch",
+    category: "advanced-text",
+    description: "Cyan and magenta color channels split and shift around the text on a loop",
+    tags: ["advanced-text", "glitch", "rgb", "split", "chromatic"],
+    previewType: "text",
+    previewText: "RoyCSS",
+    cssCode: `/* Advanced Text: RGB Split Glitch */
+.roycss-advtext-glitch-rgb {
+  display: inline-block;
+  position: relative;
+  font-weight: 800;
+  font-size: 2.2rem;
+  color: #f8fafc;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.roycss-advtext-glitch-rgb::before,
+.roycss-advtext-glitch-rgb::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+.roycss-advtext-glitch-rgb::before {
+  color: #22d3ee;
+  animation: roy-advtext-glitch-r 2.6s steps(2, end) infinite;
+}
+.roycss-advtext-glitch-rgb::after {
+  color: #f43f5e;
+  animation: roy-advtext-glitch-b 2.6s steps(2, end) infinite;
+}
+/* Fall back to attr() passthrough via text content when data-text missing */
+.roycss-advtext-glitch-rgb::before { content: "RoyCSS"; }
+.roycss-advtext-glitch-rgb::after  { content: "RoyCSS"; }
+@keyframes roy-advtext-glitch-r {
+  0%, 100% { transform: translate(0, 0); }
+  20%      { transform: translate(-3px, 1px); }
+  40%      { transform: translate(2px, -1px); }
+  60%      { transform: translate(-2px, 2px); }
+  80%      { transform: translate(1px, -2px); }
+}
+@keyframes roy-advtext-glitch-b {
+  0%, 100% { transform: translate(0, 0); }
+  20%      { transform: translate(3px, -1px); }
+  40%      { transform: translate(-2px, 1px); }
+  60%      { transform: translate(2px, -2px); }
+  80%      { transform: translate(-1px, 2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-advtext-glitch-rgb::before,
+  .roycss-advtext-glitch-rgb::after { animation: none; }
+}`
+  },
+  {
+    id: "advtext-glitch-scanline",
+    name: "Scanline Glitch",
+    category: "advanced-text",
+    description: "Horizontal scan tear slices across the text while a scanline rolls vertically",
+    tags: ["advanced-text", "glitch", "scanline", "tear", "tv"],
+    previewType: "text",
+    previewText: "RoyCSS",
+    cssCode: `/* Advanced Text: Scanline Glitch */
+.roycss-advtext-glitch-scanline {
+  display: inline-block;
+  position: relative;
+  font-weight: 800;
+  font-size: 2.2rem;
+  color: #e2e8f0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  clip-path: inset(0 0 0 0);
+  animation: roy-advtext-scan-tear 2.4s steps(2, end) infinite;
+}
+.roycss-advtext-glitch-scanline::after {
+  content: "";
+  position: absolute;
+  left: -10%; right: -10%;
+  top: 0;
+  height: 8%;
+  background: linear-gradient(180deg, rgba(34, 211, 238, 0.45), transparent);
+  mix-blend-mode: screen;
+  animation: roy-advtext-scan-roll 2.4s linear infinite;
+  pointer-events: none;
+}
+@keyframes roy-advtext-scan-tear {
+  0%, 100% { clip-path: inset(0 0 0 0); transform: translateX(0); }
+  25%      { clip-path: inset(20% 0 60% 0); transform: translateX(-3px); }
+  50%      { clip-path: inset(60% 0 10% 0); transform: translateX(2px); }
+  75%      { clip-path: inset(40% 0 35% 0); transform: translateX(-1px); }
+}
+@keyframes roy-advtext-scan-roll {
+  from { top: -10%; }
+  to   { top: 110%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-advtext-glitch-scanline,
+  .roycss-advtext-glitch-scanline::after { animation: none; }
+}`
+  },
+  {
+    id: "advtext-glitch-vhs",
+    name: "VHS Tracking Glitch",
+    category: "advanced-text",
+    description: "VHS tracking distortion: text wobbles with hue-shifted ghosting and noise bars",
+    tags: ["advanced-text", "glitch", "vhs", "tracking", "retro"],
+    previewType: "text",
+    previewText: "RoyCSS",
+    cssCode: `/* Advanced Text: VHS Tracking Glitch */
+.roycss-advtext-glitch-vhs {
+  display: inline-block;
+  position: relative;
+  font-weight: 700;
+  font-size: 2.2rem;
+  color: #f1f5f9;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  animation: roy-advtext-vhs-wobble 3s ease-in-out infinite;
+  filter: saturate(1.3) contrast(1.05);
+  text-shadow: 1px 0 0 rgba(255, 0, 80, 0.6), -1px 0 0 rgba(0, 200, 255, 0.6);
+}
+.roycss-advtext-glitch-vhs::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+  background-size: 100% 3px, 100% 200%;
+  mix-blend-mode: overlay;
+  animation: roy-advtext-vhs-track 3s linear infinite;
+  pointer-events: none;
+}
+@keyframes roy-advtext-vhs-wobble {
+  0%, 100% { transform: translateX(0) skewX(0deg); filter: hue-rotate(0deg) saturate(1.3); }
+  20%      { transform: translateX(-2px) skewX(-1deg); filter: hue-rotate(-12deg) saturate(1.4); }
+  40%      { transform: translateX(2px) skewX(1deg); filter: hue-rotate(10deg) saturate(1.2); }
+  60%      { transform: translateX(-1px) skewX(0deg); filter: hue-rotate(-6deg) saturate(1.3); }
+  80%      { transform: translateX(1px) skewX(0.5deg); filter: hue-rotate(8deg) saturate(1.4); }
+}
+@keyframes roy-advtext-vhs-track {
+  from { background-position: 0 0, 0 0%; }
+  to   { background-position: 0 3px, 0 200%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-advtext-glitch-vhs,
+  .roycss-advtext-glitch-vhs::before { animation: none; }
+}`
+  },
+  {
+    id: "advtext-split-flap",
+    name: "Split-Flap Board",
+    category: "advanced-text",
+    description: "Airport departure-board flip: each letter tumbles into place on its own axis",
+    tags: ["advanced-text", "split-flap", "flip", "departure", "stagger"],
+    previewType: "loader",
+    childCount: 6,
+    cssCode: `/* Advanced Text: Split-Flap Board */
+.roycss-advtext-split-flap {
+  display: inline-flex;
+  gap: 0.15em;
+  font-weight: 800;
+  font-size: 2rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: #1f2937;
+  padding: 0.25em 0.4em;
+  background: #0f172a;
+  border-radius: 0.4em;
+}
+.roycss-advtext-split-flap > span {
+  display: inline-block;
+  width: 1.1em;
+  text-align: center;
+  background: linear-gradient(#fbbf24, #d97706);
+  border-radius: 0.15em;
+  transform-origin: center top;
+  backface-visibility: hidden;
+  animation: roy-advtext-flip 2.4s ease-in-out infinite;
+}
+.roycss-advtext-split-flap > span::before { display: block; }
+.roycss-advtext-split-flap > span:nth-child(1)::before { content: "R"; }
+.roycss-advtext-split-flap > span:nth-child(2)::before { content: "o"; }
+.roycss-advtext-split-flap > span:nth-child(3)::before { content: "y"; }
+.roycss-advtext-split-flap > span:nth-child(4)::before { content: "C"; }
+.roycss-advtext-split-flap > span:nth-child(5)::before { content: "S"; }
+.roycss-advtext-split-flap > span:nth-child(6)::before { content: "S"; }
+.roycss-advtext-split-flap > span:nth-child(1) { animation-delay: 0s; }
+.roycss-advtext-split-flap > span:nth-child(2) { animation-delay: 0.18s; }
+.roycss-advtext-split-flap > span:nth-child(3) { animation-delay: 0.36s; }
+.roycss-advtext-split-flap > span:nth-child(4) { animation-delay: 0.54s; }
+.roycss-advtext-split-flap > span:nth-child(5) { animation-delay: 0.72s; }
+.roycss-advtext-split-flap > span:nth-child(6) { animation-delay: 0.90s; }
+@keyframes roy-advtext-flip {
+  0%, 30%   { transform: rotateX(0deg); }
+  45%       { transform: rotateX(-90deg); }
+  60%, 100% { transform: rotateX(0deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-advtext-split-flap > span { animation: none; }
+}`
+  },
+  {
+    id: "advtext-marquee-modern",
+    name: "Modern Marquee",
+    category: "advanced-text",
+    description: "Smooth horizontal marquee with fade edges and pause-on-hover for readability",
+    tags: ["advanced-text", "marquee", "scroll", "fade", "hover"],
+    previewType: "text",
+    previewText: "RoyCSS  ✦  Pure CSS Effects  ✦  ",
+    cssCode: `/* Advanced Text: Modern Marquee */
+.roycss-advtext-marquee-modern {
+  display: inline-block;
+  position: relative;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #f0abfc;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  padding-block: 0.25em;
+}
+.roycss-advtext-marquee-modern::after {
+  content: attr(data-text);
+  display: inline-block;
+  padding-left: 2ch;
+  animation: roy-advtext-marquee 9s linear infinite;
+}
+.roycss-advtext-marquee-modern:hover::after {
+  animation-play-state: paused;
+}
+@keyframes roy-advtext-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-advtext-marquee-modern::after { animation: none; }
+}`
+  },
+  {
+    id: "advtext-outline-draw",
+    name: "Outline Draw",
+    category: "advanced-text",
+    description: "Hollow text outline that progressively draws itself with a sweeping gradient mask",
+    tags: ["advanced-text", "outline", "draw", "stroke", "mask"],
+    previewType: "text",
+    previewText: "RoyCSS",
+    cssCode: `/* Advanced Text: Outline Draw */
+.roycss-advtext-outline-draw {
+  display: inline-block;
+  font-weight: 900;
+  font-size: 2.6rem;
+  letter-spacing: 0.04em;
+  color: transparent;
+  -webkit-text-stroke: 2px #5eead4;
+  background: linear-gradient(90deg, #14b8a6 0%, #5eead4 50%, #a7f3d0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 var(--p, 0%), transparent var(--p, 0%));
+  mask-image: linear-gradient(90deg, #000 0%, #000 var(--p, 0%), transparent var(--p, 0%));
+  animation: roy-advtext-outline-draw 2.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+@keyframes roy-advtext-outline-draw {
+  0%   { --p: 0%;   -webkit-text-fill-color: transparent; }
+  70%  { --p: 100%; -webkit-text-fill-color: transparent; }
+  85%  { --p: 100%; -webkit-text-fill-color: #5eead4; }
+  100% { --p: 100%; -webkit-text-fill-color: #5eead4; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-advtext-outline-draw {
+    animation: none;
+    --p: 100%;
+    -webkit-text-fill-color: #5eead4;
+  }
+}`
+  },
+  {
+    id: "advtext-neon-sign",
+    name: "Neon Sign Flicker",
+    category: "advanced-text",
+    description: "Glowing neon-tube text that flickers irregularly like an aging bar sign",
+    tags: ["advanced-text", "neon", "glow", "flicker", "sign"],
+    previewType: "text",
+    previewText: "RoyCSS",
+    cssCode: `/* Advanced Text: Neon Sign Flicker */
+.roycss-advtext-neon-sign {
+  display: inline-block;
+  font-weight: 800;
+  font-size: 2.6rem;
+  letter-spacing: 0.06em;
+  color: #fff;
+  text-shadow:
+    0 0 4px #fff,
+    0 0 10px #fff,
+    0 0 20px #ff2d95,
+    0 0 38px #ff2d95,
+    0 0 60px #ff2d95,
+    0 0 90px #ff2d95;
+  animation: roy-advtext-neon-flicker 3.2s linear infinite;
+}
+@keyframes roy-advtext-neon-flicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    text-shadow:
+      0 0 4px #fff,
+      0 0 10px #fff,
+      0 0 20px #ff2d95,
+      0 0 38px #ff2d95,
+      0 0 60px #ff2d95,
+      0 0 90px #ff2d95;
+    opacity: 1;
+  }
+  20%, 24%, 55% {
+    text-shadow: none;
+    opacity: 0.4;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-advtext-neon-sign { animation: none; opacity: 1; }
+}`
+  },
+  {
+    id: "advtext-gradient-animated",
+    name: "Animated Gradient Text",
+    category: "advanced-text",
+    description: "Text fill animated by a multi-stop gradient that continuously shifts hue",
+    tags: ["advanced-text", "gradient", "animated", "rainbow", "background-clip"],
+    previewType: "text",
+    previewText: "RoyCSS",
+    cssCode: `/* Advanced Text: Animated Gradient Text */
+.roycss-advtext-gradient-animated {
+  display: inline-block;
+  font-weight: 900;
+  font-size: 2.4rem;
+  background: linear-gradient(90deg, #f43f5e, #f59e0b, #10b981, #06b6d4, #8b5cf6, #f43f5e);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: roy-advtext-gradient-shift 6s linear infinite;
+}
+@keyframes roy-advtext-gradient-shift {
+  from { background-position: 0% 0; }
+  to   { background-position: 300% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-advtext-gradient-animated { animation: none; background-position: 0 0; }
+}`
+  },
+  {
+    id: "advtext-shadow-layered",
+    name: "Layered Long Shadow",
+    category: "advanced-text",
+    description: "Many stacked text-shadows create a soft, layered long shadow with breathing depth",
+    tags: ["advanced-text", "shadow", "long-shadow", "layered", "depth"],
+    previewType: "text",
+    previewText: "RoyCSS",
+    cssCode: `/* Advanced Text: Layered Long Shadow */
+.roycss-advtext-shadow-layered {
+  display: inline-block;
+  font-weight: 900;
+  font-size: 2.4rem;
+  letter-spacing: 0.04em;
+  color: #fff;
+  background: linear-gradient(135deg, #fb7185, #f59e0b);
+  text-shadow:
+    1px 1px 0 rgba(251, 113, 133, 0.85),
+    2px 2px 0 rgba(245, 158, 11, 0.8),
+    3px 3px 0 rgba(251, 113, 133, 0.75),
+    4px 4px 0 rgba(245, 158, 11, 0.7),
+    5px 5px 0 rgba(251, 113, 133, 0.65),
+    6px 6px 0 rgba(245, 158, 11, 0.6),
+    7px 7px 0 rgba(251, 113, 133, 0.55),
+    8px 8px 0 rgba(245, 158, 11, 0.5),
+    9px 9px 0 rgba(251, 113, 133, 0.45),
+    10px 10px 14px rgba(0, 0, 0, 0.4);
+  animation: roy-advtext-shadow-breathe 4.5s ease-in-out infinite;
+}
+@keyframes roy-advtext-shadow-breathe {
+  0%, 100% { transform: translateY(0); filter: brightness(1); }
+  50%      { transform: translateY(-4px); filter: brightness(1.1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-advtext-shadow-layered { animation: none; }
+}`
+  },
+  {
+    id: "advtext-mask-reveal",
+    name: "Mask Reveal",
+    category: "advanced-text",
+    description: "Text is revealed left-to-right by an animated clip-path mask wipe on loop",
+    tags: ["advanced-text", "mask", "reveal", "wipe", "clip-path"],
+    previewType: "text",
+    previewText: "RoyCSS",
+    cssCode: `/* Advanced Text: Mask Reveal */
+.roycss-advtext-mask-reveal {
+  display: inline-block;
+  position: relative;
+  font-weight: 800;
+  font-size: 2.4rem;
+  color: #94a3b8;
+  letter-spacing: 0.04em;
+}
+.roycss-advtext-mask-reveal::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: #38bdf8;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+  clip-path: inset(0 100% 0 0);
+  animation: roy-advtext-mask-wipe 3s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+.roycss-advtext-mask-reveal::before { content: "RoyCSS"; }
+@keyframes roy-advtext-mask-wipe {
+  0%      { clip-path: inset(0 100% 0 0); }
+  55%, 70% { clip-path: inset(0 0 0 0); }
+  100%    { clip-path: inset(0 0 0 100%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-advtext-mask-reveal::before { animation: none; clip-path: inset(0 0 0 0); }
+}`
+  },
+  {
+    id: "advtext-stretch-bounce",
+    name: "Stretch Bounce",
+    category: "advanced-text",
+    description: "Text stretches vertically and snaps back with an elastic bounce on load",
+    tags: ["advanced-text", "stretch", "bounce", "elastic", "entrance"],
+    previewType: "text",
+    previewText: "RoyCSS",
+    cssCode: `/* Advanced Text: Stretch Bounce */
+.roycss-advtext-stretch-bounce {
+  display: inline-block;
+  font-weight: 900;
+  font-size: 2.4rem;
+  color: #f472b6;
+  transform-origin: center bottom;
+  animation: roy-advtext-stretch-bounce 1.8s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+}
+@keyframes roy-advtext-stretch-bounce {
+  0%   { transform: scaleY(0.2) scaleX(1.8); opacity: 0; }
+  40%  { transform: scaleY(1.4) scaleX(0.8); opacity: 1; }
+  55%  { transform: scaleY(0.85) scaleX(1.1); }
+  70%  { transform: scaleY(1.08) scaleX(0.97); }
+  85%  { transform: scaleY(0.98) scaleX(1.01); }
+  100% { transform: scaleY(1) scaleX(1); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-advtext-stretch-bounce { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "advtext-typewriter-multi",
+    name: "Multi-Line Typewriter",
+    category: "advanced-text",
+    description: "Two-line typewriter reveals character by character with a soft blinking caret",
+    tags: ["advanced-text", "typewriter", "multi-line", "cursor", "typing"],
+    previewType: "text",
+    previewText: "Hello\\nWorld",
+    cssCode: `/* Advanced Text: Multi-Line Typewriter */
+.roycss-advtext-typewriter-multi {
+  display: inline-block;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 1.5rem;
+  color: #e2e8f0;
+  white-space: pre;
+  overflow: hidden;
+  border-right: 2px solid #4ade80;
+  width: 0;
+  max-width: 12ch;
+  animation: roy-advtext-tw-multi 4s steps(12, end) 0.3s infinite alternate,
+             roy-advtext-tw-caret 0.7s step-end infinite;
+}
+@keyframes roy-advtext-tw-multi {
+  0%   { width: 0; }
+  60%  { width: 12ch; }
+  90%  { width: 12ch; }
+  100% { width: 12ch; }
+}
+@keyframes roy-advtext-tw-caret {
+  50% { border-color: transparent; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-advtext-typewriter-multi {
+    width: 12ch;
+    animation: none;
+    border-right-color: #4ade80;
+  }
+}`
+  },
+  {
+    id: "advtext-wave-bounce",
+    name: "Wave Bounce",
+    category: "advanced-text",
+    description: "Each letter bounces in a sequential wave pattern across the word",
+    tags: ["advanced-text", "wave", "bounce", "stagger", "rhythm"],
+    previewType: "loader",
+    childCount: 6,
+    cssCode: `/* Advanced Text: Wave Bounce */
+.roycss-advtext-wave-bounce {
+  display: inline-flex;
+  gap: 0.04em;
+  font-weight: 800;
+  font-size: 2.2rem;
+  color: #22d3ee;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  perspective: 500px;
+}
+.roycss-advtext-wave-bounce > span {
+  display: inline-block;
+  transform-origin: center bottom;
+  animation: roy-advtext-wave-bounce 1.4s ease-in-out infinite;
+}
+.roycss-advtext-wave-bounce > span::before { display: inline-block; }
+.roycss-advtext-wave-bounce > span:nth-child(1)::before { content: "R"; }
+.roycss-advtext-wave-bounce > span:nth-child(2)::before { content: "o"; }
+.roycss-advtext-wave-bounce > span:nth-child(3)::before { content: "y"; }
+.roycss-advtext-wave-bounce > span:nth-child(4)::before { content: "C"; }
+.roycss-advtext-wave-bounce > span:nth-child(5)::before { content: "S"; }
+.roycss-advtext-wave-bounce > span:nth-child(6)::before { content: "S"; }
+.roycss-advtext-wave-bounce > span:nth-child(1) { animation-delay: 0.00s; }
+.roycss-advtext-wave-bounce > span:nth-child(2) { animation-delay: 0.10s; }
+.roycss-advtext-wave-bounce > span:nth-child(3) { animation-delay: 0.20s; }
+.roycss-advtext-wave-bounce > span:nth-child(4) { animation-delay: 0.30s; }
+.roycss-advtext-wave-bounce > span:nth-child(5) { animation-delay: 0.40s; }
+.roycss-advtext-wave-bounce > span:nth-child(6) { animation-delay: 0.50s; }
+@keyframes roy-advtext-wave-bounce {
+  0%, 60%, 100% { transform: translateY(0) scale(1, 1); }
+  30%           { transform: translateY(-22px) scale(0.9, 1.15); }
+  45%           { transform: translateY(0) scale(1.12, 0.88); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-advtext-wave-bounce > span { animation: none; }
+}`
+  },
+  {
+    id: "advtext-clip-image",
+    name: "Image Clip Text",
+    category: "advanced-text",
+    description: "Text is clipped to show an image fill that pans slowly across the letters",
+    tags: ["advanced-text", "clip", "image", "background-clip", "pan"],
+    previewType: "text",
+    previewText: "RoyCSS",
+    cssCode: `/* Advanced Text: Image Clip Text */
+.roycss-advtext-clip-image {
+  display: inline-block;
+  font-weight: 900;
+  font-size: 2.6rem;
+  letter-spacing: 0.04em;
+  background-image:
+    linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent),
+    linear-gradient(135deg, #f97316 0%, #ec4899 35%, #8b5cf6 70%, #06b6d4 100%);
+  background-size: 40px 40px, 250% 250%;
+  background-position: 0 0, 0% 0%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+  animation: roy-advtext-clip-pan 8s ease-in-out infinite alternate;
+}
+@keyframes roy-advtext-clip-pan {
+  0%   { background-position: 0 0, 0% 0%; }
+  100% { background-position: 80px 80px, 100% 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-advtext-clip-image { animation: none; }
+}`
+  }
+];
+
+// src/lib/effects-batch-50.ts
+var effectsBatch50 = [
+  {
+    id: "vfx-glitch-text",
+    name: "VFX Glitch Text",
+    category: "text",
+    description: "Glitch text with clip-path slices and RGB channel split. Set data-text on the element to enable the chromatic duplicates.",
+    tags: ["text", "glitch", "rgb", "split", "clip-path", "vfx"],
+    previewType: "text",
+    previewText: "RoyCSS",
+    cssCode: `/* VFX Glitch Text */
+.roycss-vfx-glitch-text {
+  position: relative;
+  display: inline-block;
+  font-weight: 800;
+  color: oklch(0.96 0.02 240);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.06em;
+  text-shadow: 0 0 1px oklch(0.96 0.02 240);
+}
+.roycss-vfx-glitch-text::before,
+.roycss-vfx-glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.roycss-vfx-glitch-text::before {
+  color: oklch(0.65 0.28 25);
+  animation: roy-vfx-glitch-r 2.4s steps(2, end) infinite;
+  clip-path: inset(0 0 60% 0);
+}
+.roycss-vfx-glitch-text::after {
+  color: oklch(0.65 0.28 200);
+  animation: roy-vfx-glitch-b 2.4s steps(2, end) infinite;
+  clip-path: inset(60% 0 0 0);
+}
+/* Fallback content so the chromatic split shows even without data-text */
+.roycss-vfx-glitch-text::before { content: "RoyCSS"; }
+.roycss-vfx-glitch-text::after  { content: "RoyCSS"; }
+@keyframes roy-vfx-glitch-r {
+  0%, 100% { transform: translate(0, 0); }
+  20%      { transform: translate(-3px, 1px); }
+  40%      { transform: translate(2px, -1px); }
+  60%      { transform: translate(-2px, 2px); }
+  80%      { transform: translate(1px, -2px); }
+}
+@keyframes roy-vfx-glitch-b {
+  0%, 100% { transform: translate(0, 0); }
+  20%      { transform: translate(3px, -1px); }
+  40%      { transform: translate(-2px, 1px); }
+  60%      { transform: translate(2px, -2px); }
+  80%      { transform: translate(-1px, 2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-glitch-text::before,
+  .roycss-vfx-glitch-text::after { animation: none; opacity: 0; }
+}`
+  },
+  {
+    id: "vfx-neon-glow-text",
+    name: "VFX Neon Glow Text",
+    category: "text",
+    description: "Neon-sign text with a pulsing layered glow. Pure OKLCH light-shadows flicker like glass tubes.",
+    tags: ["text", "neon", "glow", "sign", "pulse", "vfx"],
+    previewType: "text",
+    previewText: "NEON",
+    cssCode: `/* VFX Neon Glow Text */
+.roycss-vfx-neon-glow-text {
+  display: inline-block;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: oklch(0.95 0.18 195);
+  text-transform: uppercase;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  animation: roy-vfx-neon-glow 2.5s ease-in-out infinite;
+}
+@keyframes roy-vfx-neon-glow {
+  0%, 100% {
+    text-shadow:
+      0 0 4px oklch(0.95 0.18 195),
+      0 0 12px oklch(0.85 0.22 195 / 0.7),
+      0 0 28px oklch(0.78 0.24 195 / 0.45),
+      0 0 48px oklch(0.72 0.26 195 / 0.25);
+  }
+  50% {
+    text-shadow:
+      0 0 2px oklch(0.95 0.18 195),
+      0 0 6px oklch(0.85 0.22 195 / 0.5),
+      0 0 14px oklch(0.78 0.24 195 / 0.3),
+      0 0 24px oklch(0.72 0.26 195 / 0.15);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-neon-glow-text { animation: none; }
+}`
+  },
+  {
+    id: "vfx-gradient-text-animated",
+    name: "VFX Animated Gradient Text",
+    category: "text",
+    description: "Text filled with a flowing OKLCH gradient that sweeps continuously across the letters.",
+    tags: ["text", "gradient", "animated", "background-clip", "vfx"],
+    previewType: "text",
+    previewText: "Gradient",
+    cssCode: `/* VFX Animated Gradient Text */
+.roycss-vfx-gradient-text-animated {
+  display: inline-block;
+  font-weight: 800;
+  background: linear-gradient(
+    90deg,
+    oklch(0.72 0.22 35) 0%,
+    oklch(0.78 0.20 290) 25%,
+    oklch(0.78 0.18 195) 50%,
+    oklch(0.78 0.22 145) 75%,
+    oklch(0.72 0.22 35) 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: roy-vfx-gradient-sweep 4s linear infinite;
+}
+@keyframes roy-vfx-gradient-sweep {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 250% 0%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-gradient-text-animated { animation: none; }
+}`
+  },
+  {
+    id: "vfx-text-distortion",
+    name: "VFX Text Distortion",
+    category: "text",
+    description: "Text skews and stretches rhythmically using GPU-friendly transforms — no layout thrash.",
+    tags: ["text", "distortion", "skew", "stretch", "vfx"],
+    previewType: "text",
+    previewText: "DISTORT",
+    cssCode: `/* VFX Text Distortion */
+.roycss-vfx-text-distortion {
+  display: inline-block;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: oklch(0.92 0.10 290);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  transform-origin: center;
+  animation: roy-vfx-distort 2.6s ease-in-out infinite;
+}
+@keyframes roy-vfx-distort {
+  0%, 100% { transform: skewX(0deg)  scaleX(1)    scaleY(1); }
+  20%      { transform: skewX(-12deg) scaleX(1.08) scaleY(0.92); }
+  40%      { transform: skewX(8deg)   scaleX(0.94) scaleY(1.06); }
+  60%      { transform: skewX(-6deg)  scaleX(1.04) scaleY(0.97); }
+  80%      { transform: skewX(10deg)  scaleX(0.98) scaleY(1.03); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-text-distortion { animation: none; }
+}`
+  },
+  {
+    id: "vfx-wave-text",
+    name: "VFX Wave Text",
+    category: "text",
+    description: "Per-letter wave. Wrap each character in a <span> and they ride up and down in a sine wave.",
+    tags: ["text", "wave", "sine", "per-letter", "stagger", "vfx"],
+    previewType: "text",
+    previewText: "Wave",
+    cssCode: `/* VFX Wave Text — wrap each character in a <span> */
+.roycss-vfx-wave-text {
+  display: inline-flex;
+  font-weight: 800;
+  color: oklch(0.78 0.18 195);
+  letter-spacing: 0.05em;
+}
+.roycss-vfx-wave-text > span {
+  display: inline-block;
+  animation: roy-vfx-wave 1.6s ease-in-out infinite;
+}
+.roycss-vfx-wave-text > span:nth-child(1) { animation-delay: 0s;    }
+.roycss-vfx-wave-text > span:nth-child(2) { animation-delay: 0.08s; }
+.roycss-vfx-wave-text > span:nth-child(3) { animation-delay: 0.16s; }
+.roycss-vfx-wave-text > span:nth-child(4) { animation-delay: 0.24s; }
+.roycss-vfx-wave-text > span:nth-child(5) { animation-delay: 0.32s; }
+.roycss-vfx-wave-text > span:nth-child(6) { animation-delay: 0.40s; }
+.roycss-vfx-wave-text > span:nth-child(7) { animation-delay: 0.48s; }
+.roycss-vfx-wave-text > span:nth-child(8) { animation-delay: 0.56s; }
+@keyframes roy-vfx-wave {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-0.35em); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-wave-text > span { animation: none; }
+}`
+  },
+  {
+    id: "vfx-text-shadow-anim",
+    name: "VFX Layered Text Shadow",
+    category: "text",
+    description: "Layered text-shadows drift and breathe in OKLCH — a soft cinematic depth without pseudo-elements.",
+    tags: ["text", "shadow", "layered", "depth", "vfx"],
+    previewType: "text",
+    previewText: "Shadows",
+    cssCode: `/* VFX Layered Text Shadow */
+.roycss-vfx-text-shadow-anim {
+  display: inline-block;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: oklch(0.96 0.02 240);
+  animation: roy-vfx-shadow-drift 3.6s ease-in-out infinite;
+}
+@keyframes roy-vfx-shadow-drift {
+  0% {
+    text-shadow:
+      1px 1px 0 oklch(0.65 0.20 35),
+      2px 2px 0 oklch(0.65 0.20 35 / 0.8),
+      3px 3px 0 oklch(0.65 0.20 35 / 0.6),
+      4px 4px 8px oklch(0.65 0.20 35 / 0.4);
+  }
+  50% {
+    text-shadow:
+      -1px -1px 0 oklch(0.70 0.18 250),
+      -2px -2px 0 oklch(0.70 0.18 250 / 0.8),
+      -3px -3px 0 oklch(0.70 0.18 250 / 0.6),
+      -4px -4px 12px oklch(0.70 0.18 250 / 0.4);
+  }
+  100% {
+    text-shadow:
+      1px 1px 0 oklch(0.65 0.20 35),
+      2px 2px 0 oklch(0.65 0.20 35 / 0.8),
+      3px 3px 0 oklch(0.65 0.20 35 / 0.6),
+      4px 4px 8px oklch(0.65 0.20 35 / 0.4);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-text-shadow-anim { animation: none; }
+}`
+  },
+  {
+    id: "vfx-fire-text",
+    name: "VFX Fire Text",
+    category: "text",
+    description: "Text filled with a fire gradient that flickers via background-position, plus a soft ember glow.",
+    tags: ["text", "fire", "flame", "gradient", "flicker", "vfx"],
+    previewType: "text",
+    previewText: "FIRE",
+    cssCode: `/* VFX Fire Text */
+.roycss-vfx-fire-text {
+  display: inline-block;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: linear-gradient(
+    0deg,
+    oklch(0.55 0.25 30) 0%,
+    oklch(0.75 0.28 50) 35%,
+    oklch(0.85 0.20 75) 65%,
+    oklch(0.95 0.10 90) 100%
+  );
+  background-size: 100% 220%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 6px oklch(0.75 0.28 50 / 0.55))
+          drop-shadow(0 0 14px oklch(0.65 0.28 30 / 0.35));
+  animation: roy-vfx-fire-flicker 1.2s ease-in-out infinite;
+}
+@keyframes roy-vfx-fire-flicker {
+  0%, 100% { background-position: 0% 100%; opacity: 1; }
+  25%      { background-position: 0% 70%;  opacity: 0.92; }
+  50%      { background-position: 0% 95%;  opacity: 1; }
+  75%      { background-position: 0% 65%;  opacity: 0.88; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-fire-text { animation: none; }
+}`
+  },
+  {
+    id: "vfx-liquid-text",
+    name: "VFX Liquid Text",
+    category: "text",
+    description: "Text filled with a rippling aqua gradient and a wobble transform — looks wet, like ink in water.",
+    tags: ["text", "liquid", "water", "ripple", "wobble", "vfx"],
+    previewType: "text",
+    previewText: "liquid",
+    cssCode: `/* VFX Liquid Text */
+.roycss-vfx-liquid-text {
+  display: inline-block;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: linear-gradient(
+    45deg,
+    oklch(0.78 0.18 195) 0%,
+    oklch(0.85 0.16 230) 35%,
+    oklch(0.82 0.20 175) 65%,
+    oklch(0.78 0.18 195) 100%
+  );
+  background-size: 280% 280%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: blur(0.4px);
+  transform-origin: center;
+  animation: roy-vfx-liquid-ripple 4.5s ease-in-out infinite;
+}
+@keyframes roy-vfx-liquid-ripple {
+  0%, 100% {
+    background-position: 0% 50%;
+    transform: skewX(0deg) translateY(0);
+  }
+  25% {
+    background-position: 50% 100%;
+    transform: skewX(-3deg) translateY(-2px);
+  }
+  50% {
+    background-position: 100% 50%;
+    transform: skewX(2deg) translateY(0);
+  }
+  75% {
+    background-position: 50% 0%;
+    transform: skewX(-2deg) translateY(2px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-liquid-text { animation: none; filter: none; }
+}`
+  },
+  {
+    id: "vfx-shimmer-text",
+    name: "VFX Shimmer Text",
+    category: "text",
+    description: "A bright diagonal gradient sweeps across the text on a loop — perfect for placeholders or loaders.",
+    tags: ["text", "shimmer", "sweep", "gradient", "loading", "vfx"],
+    previewType: "text",
+    previewText: "Shimmer",
+    cssCode: `/* VFX Shimmer Text */
+.roycss-vfx-shimmer-text {
+  display: inline-block;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  background: linear-gradient(
+    100deg,
+    oklch(0.70 0.04 240) 30%,
+    oklch(0.95 0.04 240) 50%,
+    oklch(0.70 0.04 240) 70%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: roy-vfx-shimmer-sweep 2.4s linear infinite;
+}
+@keyframes roy-vfx-shimmer-sweep {
+  0%   { background-position: 130% 0%; }
+  100% { background-position: -130% 0%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-shimmer-text { animation: none; }
+}`
+  },
+  {
+    id: "vfx-3d-text-extrude",
+    name: "VFX 3D Extruded Text",
+    category: "text",
+    description: "Multi-layer text-shadow stack creates a chunky 3D extrusion, with a subtle parallax breathe on hover.",
+    tags: ["text", "3d", "extrude", "shadow", "depth", "vfx"],
+    previewType: "text",
+    previewText: "3D",
+    cssCode: `/* VFX 3D Extruded Text */
+.roycss-vfx-3d-text-extrude {
+  display: inline-block;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: oklch(0.92 0.18 35);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  text-shadow:
+    1px 1px 0 oklch(0.78 0.20 35),
+    2px 2px 0 oklch(0.70 0.22 35),
+    3px 3px 0 oklch(0.62 0.22 35),
+    4px 4px 0 oklch(0.54 0.22 35),
+    5px 5px 0 oklch(0.46 0.22 35),
+    6px 6px 0 oklch(0.40 0.20 35),
+    7px 7px 0 oklch(0.34 0.18 35),
+    8px 8px 12px oklch(0.30 0.10 35 / 0.45);
+  transform: perspective(500px) rotateX(8deg);
+  transform-origin: center bottom;
+  transition: transform 0.3s ease;
+  animation: roy-vfx-3d-breathe 4s ease-in-out infinite;
+}
+.roycss-vfx-3d-text-extrude:hover {
+  transform: perspective(500px) rotateX(0deg) translateY(-2px);
+}
+@keyframes roy-vfx-3d-breathe {
+  0%, 100% { transform: perspective(500px) rotateX(8deg)  translateY(0); }
+  50%      { transform: perspective(500px) rotateX(12deg) translateY(-1px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-3d-text-extrude {
+    animation: none;
+    transform: perspective(500px) rotateX(8deg);
+  }
+}`
+  },
+  {
+    id: "vfx-magnetic-hover",
+    name: "VFX Magnetic Hover",
+    category: "hover",
+    description: "On hover the element glides toward the cursor with a slight scale-up — pure-CSS approximation of magnetic buttons.",
+    tags: ["hover", "magnetic", "pull", "interactive", "vfx"],
+    previewType: "button",
+    previewText: "Magnet",
+    cssCode: `/* VFX Magnetic Hover — pure CSS approximation */
+.roycss-vfx-magnetic-hover {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7em 1.6em;
+  border-radius: 12px;
+  font-weight: 700;
+  color: oklch(0.98 0.02 240);
+  background: linear-gradient(135deg, oklch(0.62 0.22 145), oklch(0.58 0.22 195));
+  box-shadow: 0 6px 18px oklch(0.58 0.22 175 / 0.35);
+  transform: translateZ(0);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.25s ease;
+  will-change: transform;
+}
+.roycss-vfx-magnetic-hover::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(circle at center, oklch(0.85 0.22 175 / 0.35), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.roycss-vfx-magnetic-hover:hover {
+  transform: translateY(-4px) scale(1.06);
+  box-shadow: 0 14px 28px oklch(0.58 0.22 175 / 0.5),
+              0 0 24px oklch(0.78 0.22 175 / 0.45);
+}
+.roycss-vfx-magnetic-hover:hover::before { opacity: 1; }
+.roycss-vfx-magnetic-hover:active {
+  transform: translateY(-1px) scale(1.02);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-magnetic-hover,
+  .roycss-vfx-magnetic-hover::before { transition: none; }
+}`
+  },
+  {
+    id: "vfx-shine-sweep",
+    name: "VFX Shine Sweep",
+    category: "hover",
+    description: "A bright diagonal sheen sweeps across the surface on hover. Pure CSS, GPU-friendly transform on the overlay.",
+    tags: ["hover", "shine", "sweep", "sheen", "interactive", "vfx"],
+    previewType: "button",
+    previewText: "Shine",
+    cssCode: `/* VFX Shine Sweep */
+.roycss-vfx-shine-sweep {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7em 1.6em;
+  border-radius: 10px;
+  font-weight: 700;
+  color: oklch(0.98 0.02 240);
+  background: linear-gradient(135deg, oklch(0.45 0.18 260), oklch(0.55 0.20 290));
+  overflow: hidden;
+  isolation: isolate;
+}
+.roycss-vfx-shine-sweep::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    oklch(0.98 0.04 240 / 0.65) 50%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+.roycss-vfx-shine-sweep:hover::before { transform: translateX(120%); }
+.roycss-vfx-shine-sweep > * { position: relative; z-index: 2; }
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-shine-sweep::before { transition: none; }
+}`
+  },
+  {
+    id: "vfx-glow-hover",
+    name: "VFX Glow Hover",
+    category: "hover",
+    description: "On hover, a layered OKLCH box-shadow blooms into a soft neon halo. Smooth, GPU-friendly.",
+    tags: ["hover", "glow", "neon", "halo", "box-shadow", "vfx"],
+    previewType: "button",
+    previewText: "Glow",
+    cssCode: `/* VFX Glow Hover */
+.roycss-vfx-glow-hover {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7em 1.6em;
+  border-radius: 12px;
+  font-weight: 700;
+  color: oklch(0.98 0.02 240);
+  background: oklch(0.30 0.10 240);
+  box-shadow: 0 0 0 oklch(0.85 0.22 195 / 0);
+  transition: box-shadow 0.35s ease, transform 0.25s ease, background 0.35s ease;
+  will-change: box-shadow, transform;
+}
+.roycss-vfx-glow-hover:hover {
+  background: oklch(0.40 0.16 195);
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 8px  oklch(0.85 0.22 195 / 0.75),
+    0 0 18px oklch(0.78 0.24 195 / 0.55),
+    0 0 32px oklch(0.72 0.24 195 / 0.35),
+    0 0 52px oklch(0.66 0.24 195 / 0.18);
+}
+.roycss-vfx-glow-hover:active { transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-glow-hover { transition: none; }
+}`
+  },
+  {
+    id: "vfx-border-anim",
+    name: "VFX Animated Gradient Border",
+    category: "hover",
+    description: "A conic gradient border that rotates around the element. Mask + ::before keep the inside clean.",
+    tags: ["hover", "border", "gradient", "conic", "animated", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Animated Gradient Border */
+.roycss-vfx-border-anim {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 120px;
+  block-size: 120px;
+  border-radius: 16px;
+  background: oklch(0.25 0.05 240);
+  isolation: isolate;
+  overflow: hidden;
+}
+.roycss-vfx-border-anim::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  z-index: -1;
+  background: conic-gradient(
+    oklch(0.78 0.22 35),
+    oklch(0.78 0.22 195),
+    oklch(0.78 0.22 290),
+    oklch(0.78 0.22 145),
+    oklch(0.78 0.22 35)
+  );
+  animation: roy-vfx-border-spin 4s linear infinite;
+  will-change: transform;
+}
+.roycss-vfx-border-anim::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 14px;
+  background: oklch(0.25 0.05 240);
+  z-index: -1;
+}
+.roycss-vfx-border-anim:hover::before { animation-duration: 1.2s; }
+@keyframes roy-vfx-border-spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-border-anim::before { animation: none; }
+}`
+  },
+  {
+    id: "vfx-image-zoom-hover",
+    name: "VFX Image Zoom Hover",
+    category: "hover",
+    description: "On hover the inner content scales up smoothly while a subtle vignette lifts — a clean gallery-card zoom.",
+    tags: ["hover", "image", "zoom", "scale", "gallery", "vfx"],
+    previewType: "card",
+    cssCode: `/* VFX Image Zoom Hover */
+.roycss-vfx-image-zoom-hover {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 144px;
+  block-size: 96px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: linear-gradient(135deg, oklch(0.55 0.20 145), oklch(0.45 0.22 195));
+  isolation: isolate;
+}
+.roycss-vfx-image-zoom-hover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 30%, oklch(0.85 0.18 75 / 0.6), transparent 60%),
+    radial-gradient(circle at 70% 80%, oklch(0.78 0.22 290 / 0.5), transparent 60%);
+  transform: scale(1);
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.roycss-vfx-image-zoom-hover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 60px oklch(0.20 0.05 240 / 0.6);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.roycss-vfx-image-zoom-hover:hover::before { transform: scale(1.18); }
+.roycss-vfx-image-zoom-hover:hover::after  { opacity: 1; }
+.roycss-vfx-image-zoom-hover > * {
+  position: relative;
+  z-index: 1;
+  color: oklch(0.98 0.02 240);
+  font-weight: 700;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-image-zoom-hover::before,
+  .roycss-vfx-image-zoom-hover::after { transition: none; }
+}`
+  },
+  {
+    id: "vfx-3d-tilt-hover",
+    name: "VFX 3D Tilt Hover",
+    category: "hover",
+    description: "On hover the element tilts back in 3D with perspective and lifts slightly — pure-CSS approximation of a tilt card.",
+    tags: ["hover", "3d", "tilt", "perspective", "card", "vfx"],
+    previewType: "card",
+    cssCode: `/* VFX 3D Tilt Hover */
+.roycss-vfx-3d-tilt-hover {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 144px;
+  block-size: 96px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, oklch(0.30 0.10 240), oklch(0.40 0.16 290));
+  color: oklch(0.95 0.02 240);
+  font-weight: 700;
+  border: 1px solid oklch(0.55 0.18 290 / 0.4);
+  transform: perspective(800px) rotateX(0deg) rotateY(0deg) translateZ(0);
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.4s ease;
+  will-change: transform;
+  box-shadow: 0 4px 12px oklch(0.20 0.05 240 / 0.4);
+}
+.roycss-vfx-3d-tilt-hover:hover {
+  transform: perspective(800px) rotateX(-12deg) rotateY(14deg) translateZ(10px);
+  box-shadow:
+    0 16px 28px oklch(0.20 0.05 240 / 0.5),
+    -8px 8px 0 oklch(0.65 0.22 290 / 0.25);
+}
+.roycss-vfx-3d-tilt-hover:active {
+  transform: perspective(800px) rotateX(-4deg) rotateY(4deg) translateZ(4px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-3d-tilt-hover { transition: none; }
+}`
+  },
+  {
+    id: "vfx-card-lift",
+    name: "VFX Card Lift",
+    category: "hover",
+    description: "On hover the card rises with a deepening shadow and a subtle border glow — the classic card hover.",
+    tags: ["hover", "card", "lift", "shadow", "interactive", "vfx"],
+    previewType: "card",
+    cssCode: `/* VFX Card Lift */
+.roycss-vfx-card-lift {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 144px;
+  block-size: 96px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, oklch(0.98 0.01 240), oklch(0.94 0.02 240));
+  color: oklch(0.25 0.05 240);
+  font-weight: 700;
+  border: 1px solid oklch(0.85 0.02 240);
+  box-shadow: 0 2px 8px oklch(0.20 0.05 240 / 0.12);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease;
+  will-change: transform;
+}
+.roycss-vfx-card-lift:hover {
+  transform: translateY(-8px);
+  border-color: oklch(0.65 0.22 195 / 0.5);
+  box-shadow:
+    0 18px 32px oklch(0.20 0.05 240 / 0.22),
+    0 0 0 1px oklch(0.65 0.22 195 / 0.15),
+    0 0 22px oklch(0.78 0.22 195 / 0.18);
+}
+.roycss-vfx-card-lift:active { transform: translateY(-3px); }
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-card-lift { transition: none; }
+}`
+  },
+  {
+    id: "vfx-spotlight-hover",
+    name: "VFX Spotlight Hover",
+    category: "hover",
+    description: "On hover a radial spotlight follows the element from top-left to bottom-right, illuminating the surface.",
+    tags: ["hover", "spotlight", "radial", "light", "interactive", "vfx"],
+    previewType: "card",
+    cssCode: `/* VFX Spotlight Hover */
+.roycss-vfx-spotlight-hover {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 144px;
+  block-size: 96px;
+  border-radius: 14px;
+  background: oklch(0.22 0.04 240);
+  color: oklch(0.95 0.02 240);
+  font-weight: 700;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid oklch(0.40 0.10 240 / 0.5);
+}
+.roycss-vfx-spotlight-hover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 70% 30%,
+    oklch(0.85 0.22 195 / 0.55),
+    oklch(0.78 0.22 290 / 0.25) 30%,
+    transparent 60%
+  );
+  opacity: 0;
+  transform: translate(-10%, 10%);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+.roycss-vfx-spotlight-hover:hover::before {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+.roycss-vfx-spotlight-hover > * { position: relative; z-index: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-spotlight-hover::before { transition: none; }
+}`
+  },
+  {
+    id: "vfx-liquid-hover",
+    name: "VFX Liquid Hover",
+    category: "hover",
+    description: "On hover the element morphs its border-radius through organic curves — a gooey, fluid shape change.",
+    tags: ["hover", "liquid", "morph", "border-radius", "organic", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Liquid Hover */
+.roycss-vfx-liquid-hover {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 120px;
+  block-size: 120px;
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  background: linear-gradient(135deg, oklch(0.62 0.22 195), oklch(0.58 0.22 145));
+  color: oklch(0.98 0.02 240);
+  font-weight: 700;
+  box-shadow: 0 8px 24px oklch(0.58 0.22 175 / 0.35);
+  transition: border-radius 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.6s ease;
+  will-change: border-radius, transform;
+}
+.roycss-vfx-liquid-hover:hover {
+  border-radius: 70% 30% 30% 70% / 60% 40% 60% 40%;
+  transform: rotate(-6deg) scale(1.05);
+  box-shadow: 0 12px 32px oklch(0.58 0.22 175 / 0.5);
+}
+.roycss-vfx-liquid-hover:active {
+  border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%;
+  transform: rotate(0deg) scale(0.98);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-liquid-hover { transition: none; }
+}`
+  },
+  {
+    id: "vfx-glitch-hover",
+    name: "VFX Glitch Hover",
+    category: "hover",
+    description: "On hover the element snaps into a glitchy position-offset and clip-path tear — a digital distortion burst.",
+    tags: ["hover", "glitch", "clip-path", "tear", "distortion", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Glitch Hover */
+.roycss-vfx-glitch-hover {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 120px;
+  block-size: 120px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, oklch(0.30 0.10 240), oklch(0.40 0.16 290));
+  color: oklch(0.95 0.02 240);
+  font-weight: 700;
+  isolation: isolate;
+  clip-path: inset(0 0 0 0);
+  transition: transform 0.18s steps(2, end), clip-path 0.18s steps(2, end);
+  will-change: transform, clip-path;
+}
+.roycss-vfx-glitch-hover::before,
+.roycss-vfx-glitch-hover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+}
+.roycss-vfx-glitch-hover::before {
+  background: linear-gradient(135deg, oklch(0.55 0.28 25 / 0.55), oklch(0.55 0.28 25 / 0.55));
+  clip-path: inset(0 0 60% 0);
+}
+.roycss-vfx-glitch-hover::after {
+  background: linear-gradient(135deg, oklch(0.55 0.28 200 / 0.55), oklch(0.55 0.28 200 / 0.55));
+  clip-path: inset(60% 0 0 0);
+}
+.roycss-vfx-glitch-hover:hover {
+  transform: translate(2px, -2px);
+  clip-path: inset(10% 0 12% 0);
+}
+.roycss-vfx-glitch-hover:hover::before {
+  opacity: 1;
+  transform: translate(-3px, 0);
+}
+.roycss-vfx-glitch-hover:hover::after {
+  opacity: 1;
+  transform: translate(3px, 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-glitch-hover,
+  .roycss-vfx-glitch-hover::before,
+  .roycss-vfx-glitch-hover::after { transition: none; }
+}`
+  },
+  {
+    id: "vfx-fade-up",
+    name: "VFX Fade Up",
+    category: "animations",
+    description: "Element fades in while translating upward. The classic entrance — runs once on load.",
+    tags: ["entrance", "fade", "up", "translate", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Fade Up */
+.roycss-vfx-fade-up {
+  animation: roy-vfx-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform, opacity;
+}
+@keyframes roy-vfx-fade-up {
+  0%   { opacity: 0; transform: translateY(28px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-fade-up { animation: none; opacity: 1; }
+}`
+  },
+  {
+    id: "vfx-fade-down",
+    name: "VFX Fade Down",
+    category: "animations",
+    description: "Element fades in while translating downward. Runs once on load.",
+    tags: ["entrance", "fade", "down", "translate", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Fade Down */
+.roycss-vfx-fade-down {
+  animation: roy-vfx-fade-down 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform, opacity;
+}
+@keyframes roy-vfx-fade-down {
+  0%   { opacity: 0; transform: translateY(-28px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-fade-down { animation: none; opacity: 1; }
+}`
+  },
+  {
+    id: "vfx-fade-left",
+    name: "VFX Fade Left",
+    category: "animations",
+    description: "Element fades in while sliding in from the right toward the left. Runs once on load.",
+    tags: ["entrance", "fade", "left", "slide", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Fade Left */
+.roycss-vfx-fade-left {
+  animation: roy-vfx-fade-left 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform, opacity;
+}
+@keyframes roy-vfx-fade-left {
+  0%   { opacity: 0; transform: translateX(36px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-fade-left { animation: none; opacity: 1; }
+}`
+  },
+  {
+    id: "vfx-fade-right",
+    name: "VFX Fade Right",
+    category: "animations",
+    description: "Element fades in while sliding in from the left toward the right. Runs once on load.",
+    tags: ["entrance", "fade", "right", "slide", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Fade Right */
+.roycss-vfx-fade-right {
+  animation: roy-vfx-fade-right 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform, opacity;
+}
+@keyframes roy-vfx-fade-right {
+  0%   { opacity: 0; transform: translateX(-36px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-fade-right { animation: none; opacity: 1; }
+}`
+  },
+  {
+    id: "vfx-scale-in",
+    name: "VFX Scale In",
+    category: "animations",
+    description: "Element fades in while scaling up from 80% — a soft zoom-in entrance. Runs once on load.",
+    tags: ["entrance", "scale", "zoom", "fade", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Scale In */
+.roycss-vfx-scale-in {
+  animation: roy-vfx-scale-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform, opacity;
+}
+@keyframes roy-vfx-scale-in {
+  0%   { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-scale-in { animation: none; opacity: 1; }
+}`
+  },
+  {
+    id: "vfx-slide-reveal",
+    name: "VFX Slide Reveal",
+    category: "animations",
+    description: "Element reveals via an animated clip-path wipe from left to right — a clean editorial slide-in.",
+    tags: ["entrance", "slide", "reveal", "clip-path", "wipe", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Slide Reveal */
+.roycss-vfx-slide-reveal {
+  animation: roy-vfx-slide-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: clip-path, transform;
+}
+@keyframes roy-vfx-slide-reveal {
+  0%   {
+    clip-path: inset(0 100% 0 0);
+    transform: translateX(-16px);
+    opacity: 0;
+  }
+  60%  { opacity: 1; }
+  100% {
+    clip-path: inset(0 0 0 0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-slide-reveal { animation: none; opacity: 1; clip-path: none; }
+}`
+  },
+  {
+    id: "vfx-clip-path-reveal",
+    name: "VFX Clip-Path Reveal",
+    category: "animations",
+    description: "Element appears via an expanding circular clip-path — a mask wipe from the center outward.",
+    tags: ["entrance", "clip-path", "circle", "reveal", "mask", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Clip-Path Reveal */
+.roycss-vfx-clip-path-reveal {
+  animation: roy-vfx-clip-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: clip-path, opacity;
+}
+@keyframes roy-vfx-clip-reveal {
+  0% {
+    clip-path: circle(0% at 50% 50%);
+    opacity: 0;
+  }
+  60% { opacity: 1; }
+  100% {
+    clip-path: circle(75% at 50% 50%);
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-clip-path-reveal { animation: none; opacity: 1; clip-path: none; }
+}`
+  },
+  {
+    id: "vfx-flip-in",
+    name: "VFX Flip In",
+    category: "animations",
+    description: "Element flips in along the Y axis with a fade — a 3D card-flip entrance.",
+    tags: ["entrance", "flip", "3d", "rotate-y", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Flip In */
+.roycss-vfx-flip-in {
+  transform-origin: center;
+  animation: roy-vfx-flip-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform, opacity;
+}
+@keyframes roy-vfx-flip-in {
+  0% {
+    opacity: 0;
+    transform: perspective(800px) rotateY(90deg) translateZ(-40px);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(800px) rotateY(0deg) translateZ(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-flip-in { animation: none; opacity: 1; }
+}`
+  },
+  {
+    id: "vfx-elastic-in",
+    name: "VFX Elastic In",
+    category: "animations",
+    description: "Element springs in with an elastic cubic-bezier overshoot, scaling from 0 to 1 with a bouncy settle.",
+    tags: ["entrance", "elastic", "spring", "bounce", "scale", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Elastic In */
+.roycss-vfx-elastic-in {
+  animation: roy-vfx-elastic-in 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) both;
+  will-change: transform, opacity;
+}
+@keyframes roy-vfx-elastic-in {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(-12deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.12) rotate(2deg);
+  }
+  80% {
+    transform: scale(0.96) rotate(-1deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-elastic-in { animation: none; opacity: 1; }
+}`
+  },
+  {
+    id: "vfx-stagger-fade",
+    name: "VFX Stagger Fade",
+    category: "animations",
+    description: "Parent fades up; up to 8 children fade in sequentially with animation-delay — a pure-CSS staggered list entrance.",
+    tags: ["entrance", "stagger", "fade", "list", "delay", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Stagger Fade — apply .roycss-vfx-stagger-fade to a container; up to 8 children stagger in */
+.roycss-vfx-stagger-fade {
+  animation: roy-vfx-stagger-fade 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.roycss-vfx-stagger-fade > * {
+  opacity: 0;
+  animation: roy-vfx-stagger-child 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform, opacity;
+}
+.roycss-vfx-stagger-fade > *:nth-child(1) { animation-delay: 0.10s; }
+.roycss-vfx-stagger-fade > *:nth-child(2) { animation-delay: 0.20s; }
+.roycss-vfx-stagger-fade > *:nth-child(3) { animation-delay: 0.30s; }
+.roycss-vfx-stagger-fade > *:nth-child(4) { animation-delay: 0.40s; }
+.roycss-vfx-stagger-fade > *:nth-child(5) { animation-delay: 0.50s; }
+.roycss-vfx-stagger-fade > *:nth-child(6) { animation-delay: 0.60s; }
+.roycss-vfx-stagger-fade > *:nth-child(7) { animation-delay: 0.70s; }
+.roycss-vfx-stagger-fade > *:nth-child(8) { animation-delay: 0.80s; }
+@keyframes roy-vfx-stagger-fade {
+  0%   { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes roy-vfx-stagger-child {
+  0%   { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-stagger-fade,
+  .roycss-vfx-stagger-fade > * { animation: none; opacity: 1; }
+}`
+  }
+];
+
+// src/lib/effects-batch-51.ts
+var effectsBatch51 = [
+  {
+    id: "vfx-animated-gradient-bg",
+    name: "VFX Animated Gradient Background",
+    category: "backgrounds",
+    description: "Flowing OKLCH gradient background that pans continuously via background-position. Sized at 200% so the sweep never seams.",
+    tags: ["background", "gradient", "animated", "oklch", "sweep", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX Animated Gradient Background */
+.roycss-vfx-animated-gradient-bg {
+  background:
+    linear-gradient(
+      135deg,
+      oklch(0.72 0.22 35) 0%,
+      oklch(0.70 0.20 290) 25%,
+      oklch(0.74 0.18 195) 50%,
+      oklch(0.72 0.22 145) 75%,
+      oklch(0.72 0.22 35) 100%
+    );
+  background-size: 200% 200%;
+  background-position: 0% 0%;
+  animation: roy-vfx-bg-gradient-shift 8s ease-in-out infinite;
+}
+@keyframes roy-vfx-bg-gradient-shift {
+  0%   { background-position: 0% 0%; }
+  25%  { background-position: 100% 0%; }
+  50%  { background-position: 100% 100%; }
+  75%  { background-position: 0% 100%; }
+  100% { background-position: 0% 0%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-animated-gradient-bg { animation: none; }
+}`
+  },
+  {
+    id: "vfx-aurora-bg",
+    name: "VFX Aurora Background",
+    category: "backgrounds",
+    description: "Aurora borealis with three blurred OKLCH gradient layers drifting at different speeds. Pure backdrop-filter-free blend.",
+    tags: ["background", "aurora", "blur", "gradient", "drift", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX Aurora Background */
+.roycss-vfx-aurora-bg {
+  position: relative;
+  background: oklch(0.10 0.04 250);
+  overflow: hidden;
+}
+.roycss-vfx-aurora-bg::before,
+.roycss-vfx-aurora-bg::after,
+.roycss-vfx-aurora-bg > .roycss-vfx-aurora-layer {
+  content: "";
+  position: absolute;
+  inset: -25%;
+  pointer-events: none;
+  filter: blur(48px);
+  opacity: 0.7;
+  mix-blend-mode: screen;
+}
+.roycss-vfx-aurora-bg::before {
+  background:
+    radial-gradient(closest-side, oklch(0.72 0.24 195), transparent 70%);
+  animation: roy-vfx-bg-aurora-1 14s ease-in-out infinite;
+}
+.roycss-vfx-aurora-bg::after {
+  background:
+    radial-gradient(closest-side, oklch(0.72 0.24 145), transparent 70%);
+  animation: roy-vfx-bg-aurora-2 18s ease-in-out infinite;
+}
+.roycss-vfx-aurora-bg > .roycss-vfx-aurora-layer {
+  background:
+    radial-gradient(closest-side, oklch(0.70 0.24 290), transparent 70%);
+  animation: roy-vfx-bg-aurora-3 22s ease-in-out infinite;
+}
+@keyframes roy-vfx-bg-aurora-1 {
+  0%, 100% { transform: translate(-12%, -8%) scale(1); }
+  50%      { transform: translate(20%, 18%)  scale(1.18); }
+}
+@keyframes roy-vfx-bg-aurora-2 {
+  0%, 100% { transform: translate(15%, 12%)  scale(1.1); }
+  50%      { transform: translate(-18%, -10%) scale(0.9); }
+}
+@keyframes roy-vfx-bg-aurora-3 {
+  0%, 100% { transform: translate(-6%, 14%)  scale(1.05); }
+  50%      { transform: translate(10%, -16%) scale(1.22); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-aurora-bg::before,
+  .roycss-vfx-aurora-bg::after,
+  .roycss-vfx-aurora-bg > .roycss-vfx-aurora-layer { animation: none; }
+}`
+  },
+  {
+    id: "vfx-mesh-gradient-bg",
+    name: "VFX Mesh Gradient Background",
+    category: "backgrounds",
+    description: "Mesh gradient built from 4 OKLCH radial gradients layered with screen blending. Soft, painterly, and GPU-friendly.",
+    tags: ["background", "mesh", "gradient", "radial", "screen-blend", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX Mesh Gradient Background */
+.roycss-vfx-mesh-gradient-bg {
+  background-color: oklch(0.18 0.06 290);
+  background-image:
+    radial-gradient(at 18% 22%, oklch(0.72 0.24 35)   0px, transparent 50%),
+    radial-gradient(at 82% 18%, oklch(0.72 0.24 195)  0px, transparent 50%),
+    radial-gradient(at 22% 82%, oklch(0.72 0.24 290)  0px, transparent 50%),
+    radial-gradient(at 80% 84%, oklch(0.72 0.24 145)  0px, transparent 50%);
+  background-blend-mode: screen, screen, screen, screen;
+  background-size: 200% 200%;
+  animation: roy-vfx-bg-mesh-shift 18s ease-in-out infinite;
+}
+@keyframes roy-vfx-bg-mesh-shift {
+  0%   { background-position: 0% 0%, 100% 0%, 0% 100%, 100% 100%; }
+  50%  { background-position: 20% 30%, 80% 20%, 30% 80%, 70% 70%; }
+  100% { background-position: 0% 0%, 100% 0%, 0% 100%, 100% 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-mesh-gradient-bg { animation: none; }
+}`
+  },
+  {
+    id: "vfx-gradient-blob-anim",
+    name: "VFX Gradient Blob Morph",
+    category: "backgrounds",
+    description: "Animated gradient blob that morphs its border-radius and translates softly — a liquid gradient that never sits still.",
+    tags: ["background", "blob", "gradient", "morph", "border-radius", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX Gradient Blob Morph */
+.roycss-vfx-gradient-blob-anim {
+  position: relative;
+  background:
+    linear-gradient(
+      135deg,
+      oklch(0.72 0.22 195) 0%,
+      oklch(0.72 0.24 290) 50%,
+      oklch(0.72 0.22 35) 100%
+    );
+  border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
+  filter: blur(2px);
+  animation: roy-vfx-bg-blob-morph 12s ease-in-out infinite;
+}
+@keyframes roy-vfx-bg-blob-morph {
+  0%, 100% {
+    border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    border-radius: 58% 42% 38% 62% / 63% 37% 63% 37%;
+    transform: translate(4%, -6%) rotate(120deg);
+  }
+  66% {
+    border-radius: 37% 63% 56% 44% / 47% 52% 48% 53%;
+    transform: translate(-4%, 5%) rotate(240deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-gradient-blob-anim { animation: none; }
+}`
+  },
+  {
+    id: "vfx-moving-blob",
+    name: "VFX Moving Blob",
+    category: "backgrounds",
+    description: "A solid OKLCH blob that travels along a figure-eight path with scale breathing. Great for hero sections behind content.",
+    tags: ["background", "blob", "moving", "transform", "path", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX Moving Blob */
+.roycss-vfx-moving-blob {
+  position: relative;
+  background: oklch(0.18 0.04 250);
+  overflow: hidden;
+}
+.roycss-vfx-moving-blob::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40%;
+  aspect-ratio: 1 / 1;
+  background:
+    radial-gradient(closest-side, oklch(0.78 0.22 35), transparent 70%);
+  border-radius: 50%;
+  filter: blur(20px);
+  transform: translate(-50%, -50%);
+  animation: roy-vfx-bg-blob-move 14s linear infinite;
+  pointer-events: none;
+}
+@keyframes roy-vfx-bg-blob-move {
+  0%   { transform: translate(-120%, -50%) scale(1); }
+  25%  { transform: translate(-20%, -150%) scale(1.15); }
+  50%  { transform: translate(80%, -50%)  scale(0.9); }
+  75%  { transform: translate(-20%, 50%)  scale(1.1); }
+  100% { transform: translate(-120%, -50%) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-moving-blob::before { animation: none; }
+}`
+  },
+  {
+    id: "vfx-noise-grain",
+    name: "VFX Noise Grain Overlay",
+    category: "backgrounds",
+    description: "Animated film-grain overlay using an inline SVG fractal-noise data URI. Adds organic texture without an external image asset.",
+    tags: ["background", "noise", "grain", "svg", "overlay", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX Noise Grain Overlay */
+.roycss-vfx-noise-grain {
+  position: relative;
+  background: oklch(0.18 0.04 250);
+}
+.roycss-vfx-noise-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.7'/></svg>");
+  background-repeat: repeat;
+  animation: roy-vfx-bg-grain 0.6s steps(6, end) infinite;
+}
+@keyframes roy-vfx-bg-grain {
+  0%   { transform: translate(0, 0); }
+  16%  { transform: translate(-5%, 3%); }
+  33%  { transform: translate(4%, -4%); }
+  50%  { transform: translate(-3%, 5%); }
+  66%  { transform: translate(5%, 2%); }
+  83%  { transform: translate(-4%, -3%); }
+  100% { transform: translate(0, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-noise-grain::after { animation: none; opacity: 0.12; }
+}`
+  },
+  {
+    id: "vfx-grid-bg-anim",
+    name: "VFX Animated Perspective Grid",
+    category: "backgrounds",
+    description: "Perspective grid that pans toward the viewer — synthwave horizon feel. Built from repeating-linear-gradient lines and a transform on a wrapper.",
+    tags: ["background", "grid", "perspective", "synthwave", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX Animated Perspective Grid */
+.roycss-vfx-grid-bg-anim {
+  position: relative;
+  background: oklch(0.10 0.06 290);
+  overflow: hidden;
+  perspective: 400px;
+}
+.roycss-vfx-grid-bg-anim::before {
+  content: "";
+  position: absolute;
+  inset: -50% 0 0 0;
+  background-image:
+    repeating-linear-gradient(0deg,
+      transparent 0,
+      transparent 38px,
+      oklch(0.78 0.20 195 / 0.55) 38px,
+      oklch(0.78 0.20 195 / 0.55) 40px),
+    repeating-linear-gradient(90deg,
+      transparent 0,
+      transparent 38px,
+      oklch(0.78 0.20 195 / 0.35) 38px,
+      oklch(0.78 0.20 195 / 0.35) 40px);
+  background-size: 100% 100%, 100% 100%;
+  transform-origin: 50% 0%;
+  transform: rotateX(72deg);
+  animation: roy-vfx-bg-grid-pan 4s linear infinite;
+}
+@keyframes roy-vfx-bg-grid-pan {
+  0%   { background-position: 0 0, 0 0; }
+  100% { background-position: 0 40px, 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-grid-bg-anim::before { animation: none; }
+}`
+  },
+  {
+    id: "vfx-dot-pattern-bg",
+    name: "VFX Dot Pattern Background",
+    category: "backgrounds",
+    description: "Crisp OKLCH dot matrix built from a single radial-gradient repeated across the surface. Lightweight and print-style.",
+    tags: ["background", "dots", "pattern", "radial-gradient", "matrix", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX Dot Pattern Background */
+.roycss-vfx-dot-pattern-bg {
+  background-color: oklch(0.16 0.04 250);
+  background-image:
+    radial-gradient(oklch(0.86 0.06 240) 1.4px, transparent 1.6px);
+  background-size: 22px 22px;
+  background-position: 0 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-dot-pattern-bg { /* static — no motion to disable */ }
+}`
+  },
+  {
+    id: "vfx-cyberpunk-bg",
+    name: "VFX Cyberpunk Grid Background",
+    category: "backgrounds",
+    description: "Cyberpunk neon grid with glowing OKLCH horizon lines and a pulsing magenta glow. Synthwave city under a static skyline.",
+    tags: ["background", "cyberpunk", "neon", "grid", "synthwave", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX Cyberpunk Grid Background */
+.roycss-vfx-cyberpunk-bg {
+  position: relative;
+  background:
+    linear-gradient(oklch(0.10 0.10 290) 0%, oklch(0.18 0.16 320) 70%, oklch(0.10 0.10 290) 100%);
+  overflow: hidden;
+}
+.roycss-vfx-cyberpunk-bg::before {
+  content: "";
+  position: absolute;
+  inset: 50% 0 0 0;
+  background-image:
+    repeating-linear-gradient(90deg,
+      transparent 0,
+      transparent 38px,
+      oklch(0.85 0.20 195 / 0.7) 38px,
+      oklch(0.85 0.20 195 / 0.7) 40px),
+    repeating-linear-gradient(0deg,
+      transparent 0,
+      transparent 38px,
+      oklch(0.85 0.20 320 / 0.5) 38px,
+      oklch(0.85 0.20 320 / 0.5) 40px);
+  background-size: 100% 100%, 100% 100%;
+  transform-origin: 50% 0%;
+  transform: perspective(420px) rotateX(70deg);
+  animation: roy-vfx-bg-cyber-grid 3.5s linear infinite;
+  filter: drop-shadow(0 0 6px oklch(0.85 0.20 195 / 0.6));
+}
+@keyframes roy-vfx-bg-cyber-grid {
+  0%   { background-position: 0 0, 0 0; }
+  100% { background-position: 0 40px, 0 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-cyberpunk-bg::before { animation: none; }
+}`
+  },
+  {
+    id: "vfx-spotlight-bg",
+    name: "VFX Spotlight Background",
+    category: "backgrounds",
+    description: "Soft OKLCH spotlight that breathes on a dark stage. Use as a hero backdrop — pure radial-gradient, no JS tracking required.",
+    tags: ["background", "spotlight", "radial", "glow", "hero", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX Spotlight Background */
+.roycss-vfx-spotlight-bg {
+  background:
+    radial-gradient(circle at 50% 40%,
+      oklch(0.92 0.08 240) 0%,
+      oklch(0.30 0.08 240) 28%,
+      oklch(0.12 0.04 250) 70%);
+  animation: roy-vfx-bg-spotlight-breathe 6s ease-in-out infinite;
+}
+@keyframes roy-vfx-bg-spotlight-breathe {
+  0%, 100% {
+    background-size: 100% 100%;
+    filter: brightness(1) saturate(1);
+  }
+  50% {
+    background-size: 130% 130%;
+    filter: brightness(1.15) saturate(1.18);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-spotlight-bg { animation: none; }
+}`
+  },
+  {
+    id: "vfx-radial-glow",
+    name: "VFX Radial Glow Pulse",
+    category: "backgrounds",
+    description: "Centered OKLCH radial glow that pulses outward — a soft halo that scales and brightens on a calm rhythm.",
+    tags: ["background", "radial", "glow", "pulse", "halo", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX Radial Glow Pulse */
+.roycss-vfx-radial-glow {
+  position: relative;
+  background: oklch(0.10 0.04 250);
+  overflow: hidden;
+}
+.roycss-vfx-radial-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 50%,
+      oklch(0.85 0.20 35 / 0.55) 0%,
+      oklch(0.70 0.20 35 / 0.18) 25%,
+      transparent 60%);
+  animation: roy-vfx-bg-glow-pulse 4s ease-in-out infinite;
+}
+@keyframes roy-vfx-bg-glow-pulse {
+  0%, 100% { transform: scale(0.85); opacity: 0.6; }
+  50%      { transform: scale(1.15); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-radial-glow::before { animation: none; }
+}`
+  },
+  {
+    id: "vfx-holographic-bg",
+    name: "VFX Holographic Background",
+    category: "backgrounds",
+    description: "Holographic conic-gradient that rotates its hue continuously — a sticker-foil shimmer on a dark base.",
+    tags: ["background", "holographic", "conic", "hue-rotate", "iridescent", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX Holographic Background */
+.roycss-vfx-holographic-bg {
+  background:
+    conic-gradient(
+      from 0deg,
+      oklch(0.80 0.18 35),
+      oklch(0.80 0.18 145),
+      oklch(0.80 0.18 195),
+      oklch(0.80 0.18 290),
+      oklch(0.80 0.18 35)
+    );
+  background-blend-mode: normal;
+  animation: roy-vfx-bg-holo-rotate 10s linear infinite;
+  filter: saturate(1.3) contrast(1.05);
+}
+@keyframes roy-vfx-bg-holo-rotate {
+  0%   { filter: saturate(1.3) contrast(1.05) hue-rotate(0deg); }
+  100% { filter: saturate(1.3) contrast(1.05) hue-rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-holographic-bg { animation: none; }
+}`
+  },
+  {
+    id: "vfx-frosted-glass-2",
+    name: "VFX Frosted Glass v2",
+    category: "glass-ui",
+    description: "Frosted glass panel with backdrop-filter blur and an OKLCH translucent tint. Lightweight, modern, no animation.",
+    tags: ["glass", "frosted", "backdrop-filter", "blur", "panel", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Frosted Glass v2 */
+.roycss-vfx-frosted-glass-2 {
+  background: oklch(0.95 0.02 240 / 0.18);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid oklch(0.95 0.02 240 / 0.28);
+  box-shadow:
+    0 1px 0 oklch(1 0 0 / 0.18) inset,
+    0 12px 40px oklch(0.10 0.04 250 / 0.35);
+  border-radius: 16px;
+  color: oklch(0.98 0.01 240);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-frosted-glass-2 { /* static */ }
+}`
+  },
+  {
+    id: "vfx-neon-glass-2",
+    name: "VFX Neon Glass v2",
+    category: "glass-ui",
+    description: "Glass panel with a pulsing neon rim glow and backdrop-filter frost. Magenta-cyan duotone that breathes.",
+    tags: ["glass", "neon", "glow", "backdrop-filter", "pulse", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Neon Glass v2 */
+.roycss-vfx-neon-glass-2 {
+  background: oklch(0.20 0.10 290 / 0.32);
+  backdrop-filter: blur(14px) saturate(1.6);
+  -webkit-backdrop-filter: blur(14px) saturate(1.6);
+  border: 1px solid oklch(0.80 0.22 320 / 0.6);
+  border-radius: 14px;
+  box-shadow:
+    0 0 8px oklch(0.80 0.22 320 / 0.55),
+    0 0 22px oklch(0.70 0.22 195 / 0.45),
+    0 0 50px oklch(0.70 0.22 320 / 0.25);
+  color: oklch(0.96 0.06 320);
+  animation: roy-vfx-glass-neon-pulse 2.6s ease-in-out infinite;
+}
+@keyframes roy-vfx-glass-neon-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 8px oklch(0.80 0.22 320 / 0.55),
+      0 0 22px oklch(0.70 0.22 195 / 0.45),
+      0 0 50px oklch(0.70 0.22 320 / 0.25);
+  }
+  50% {
+    box-shadow:
+      0 0 6px oklch(0.80 0.22 320 / 0.4),
+      0 0 14px oklch(0.70 0.22 195 / 0.3),
+      0 0 32px oklch(0.70 0.22 320 / 0.15);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-neon-glass-2 { animation: none; }
+}`
+  },
+  {
+    id: "vfx-holographic-card-2",
+    name: "VFX Holographic Card v2",
+    category: "glass-ui",
+    description: "Iridescent holographic card with an OKLCH conic sheen that drifts across the surface. Best on dark backgrounds.",
+    tags: ["glass", "holographic", "iridescent", "card", "sheen", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Holographic Card v2 */
+.roycss-vfx-holographic-card-2 {
+  position: relative;
+  background:
+    linear-gradient(135deg,
+      oklch(0.30 0.10 290 / 0.6),
+      oklch(0.30 0.10 195 / 0.5));
+  backdrop-filter: blur(12px) saturate(1.5);
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+  border: 1px solid oklch(0.90 0.08 240 / 0.25);
+  border-radius: 18px;
+  overflow: hidden;
+  color: oklch(0.98 0.02 240);
+  box-shadow: 0 18px 50px oklch(0.10 0.04 250 / 0.4);
+}
+.roycss-vfx-holographic-card-2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    conic-gradient(from 180deg at 50% 50%,
+      oklch(0.85 0.18 35 / 0.32),
+      oklch(0.85 0.18 145 / 0.32),
+      oklch(0.85 0.18 195 / 0.32),
+      oklch(0.85 0.18 290 / 0.32),
+      oklch(0.85 0.18 35 / 0.32));
+  mix-blend-mode: color-dodge;
+  animation: roy-vfx-glass-holo-shift 9s linear infinite;
+  pointer-events: none;
+}
+@keyframes roy-vfx-glass-holo-shift {
+  0%   { transform: translate(-10%, -10%) rotate(0deg); }
+  100% { transform: translate(10%, 10%)  rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-holographic-card-2::before { animation: none; }
+}`
+  },
+  {
+    id: "vfx-metallic-surface",
+    name: "VFX Metallic Surface",
+    category: "glass-ui",
+    description: "Brushed-metal surface with an OKLCH linear-gradient and a moving specular highlight. Stainless-steel feel.",
+    tags: ["glass", "metallic", "metal", "shine", "specular", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Metallic Surface */
+.roycss-vfx-metallic-surface {
+  position: relative;
+  background:
+    linear-gradient(180deg,
+      oklch(0.78 0.02 240) 0%,
+      oklch(0.55 0.02 240) 22%,
+      oklch(0.84 0.02 240) 50%,
+      oklch(0.42 0.02 240) 78%,
+      oklch(0.72 0.02 240) 100%);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 0.4),
+    inset 0 -1px 0 oklch(0 0 0 / 0.25),
+    0 8px 24px oklch(0.10 0.04 250 / 0.3);
+  color: oklch(0.10 0.04 250);
+}
+.roycss-vfx-metallic-surface::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(110deg,
+      transparent 30%,
+      oklch(1 0 0 / 0.35) 45%,
+      transparent 60%);
+  transform: translateX(-100%);
+  animation: roy-vfx-glass-metal-shine 5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes roy-vfx-glass-metal-shine {
+  0%, 60%   { transform: translateX(-100%); }
+  100%      { transform: translateX(100%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-metallic-surface::after { animation: none; opacity: 0; }
+}`
+  },
+  {
+    id: "vfx-chrome-effect",
+    name: "VFX Chrome Effect",
+    category: "glass-ui",
+    description: "Chrome reflection with a vertical OKLCH gradient that mimics a polished silver bar. Pure static gradient — no animation needed.",
+    tags: ["glass", "chrome", "metal", "reflection", "polished", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Chrome Effect */
+.roycss-vfx-chrome-effect {
+  background:
+    linear-gradient(180deg,
+      oklch(0.95 0.01 240) 0%,
+      oklch(0.50 0.02 240) 18%,
+      oklch(0.98 0.01 240) 38%,
+      oklch(0.40 0.02 240) 55%,
+      oklch(0.88 0.02 240) 72%,
+      oklch(0.30 0.02 240) 100%);
+  border-radius: 10px;
+  border: 1px solid oklch(0.80 0.02 240 / 0.4);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 0.5),
+    inset 0 -1px 0 oklch(0 0 0 / 0.3),
+    0 6px 18px oklch(0.10 0.04 250 / 0.25);
+  color: oklch(0.10 0.04 250);
+  text-shadow: 0 1px 0 oklch(1 0 0 / 0.45);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-chrome-effect { /* static */ }
+}`
+  },
+  {
+    id: "vfx-soft-shadow",
+    name: "VFX Soft Shadow",
+    category: "glass-ui",
+    description: "Layered soft shadows via multiple box-shadows in OKLCH — a calm elevated card with no harsh edges.",
+    tags: ["glass", "shadow", "soft", "elevation", "card", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Soft Shadow */
+.roycss-vfx-soft-shadow {
+  background: oklch(0.98 0.01 240);
+  border-radius: 14px;
+  border: 1px solid oklch(0.88 0.02 240 / 0.7);
+  box-shadow:
+    0 1px 2px oklch(0.20 0.04 250 / 0.04),
+    0 4px 8px oklch(0.20 0.04 250 / 0.06),
+    0 12px 24px oklch(0.20 0.04 250 / 0.08),
+    0 28px 56px oklch(0.20 0.04 250 / 0.10);
+  color: oklch(0.20 0.04 250);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-soft-shadow { /* static */ }
+}`
+  },
+  {
+    id: "vfx-inner-shadow",
+    name: "VFX Inner Shadow",
+    category: "glass-ui",
+    description: "Neumorphic-style inset shadow — a recessed OKLCH surface that looks pressed into the page. Pairs with soft-shadow siblings.",
+    tags: ["glass", "inner", "shadow", "inset", "neumorphic", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Inner Shadow */
+.roycss-vfx-inner-shadow {
+  background: oklch(0.92 0.02 240);
+  border-radius: 16px;
+  border: 1px solid oklch(0.85 0.02 240);
+  box-shadow:
+    inset 2px 2px 6px oklch(0.40 0.04 250 / 0.35),
+    inset -2px -2px 6px oklch(1 0 0 / 0.85);
+  color: oklch(0.25 0.04 250);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-inner-shadow { /* static */ }
+}`
+  },
+  {
+    id: "vfx-glow-border-anim",
+    name: "VFX Glow Border Animated",
+    category: "glass-ui",
+    description: "Border that glows with a rotating OKLCH conic-gradient mask. The hue cycles around the element's perimeter.",
+    tags: ["glass", "glow", "border", "animated", "conic", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Glow Border Animated */
+.roycss-vfx-glow-border-anim {
+  position: relative;
+  background: oklch(0.14 0.04 250);
+  border-radius: 14px;
+  color: oklch(0.96 0.02 240);
+  z-index: 0;
+}
+.roycss-vfx-glow-border-anim::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background:
+    conic-gradient(from 0deg,
+      oklch(0.80 0.22 35),
+      oklch(0.80 0.22 195),
+      oklch(0.80 0.22 290),
+      oklch(0.80 0.22 145),
+      oklch(0.80 0.22 35));
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: roy-vfx-glass-glow-rotate 6s linear infinite;
+  filter: drop-shadow(0 0 6px oklch(0.80 0.22 195 / 0.6));
+  pointer-events: none;
+}
+@keyframes roy-vfx-glass-glow-rotate {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-glow-border-anim::before { animation: none; }
+}`
+  },
+  {
+    id: "vfx-animated-border-2",
+    name: "VFX Animated Border v2",
+    category: "glass-ui",
+    description: "Conic-gradient border that spins around the element. Masked to a 2px rim, with a soft outer glow.",
+    tags: ["glass", "border", "animated", "conic", "spin", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Animated Border v2 */
+.roycss-vfx-animated-border-2 {
+  position: relative;
+  background: oklch(0.16 0.04 250);
+  border-radius: 12px;
+  color: oklch(0.96 0.02 240);
+}
+.roycss-vfx-animated-border-2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background:
+    conic-gradient(from 0deg,
+      oklch(0.85 0.22 35),
+      oklch(0.85 0.22 290),
+      oklch(0.85 0.22 195),
+      oklch(0.85 0.22 35));
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: roy-vfx-glass-border-spin 4s linear infinite;
+  pointer-events: none;
+}
+@keyframes roy-vfx-glass-border-spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-animated-border-2::before { animation: none; }
+}`
+  },
+  {
+    id: "vfx-iridescent-surface",
+    name: "VFX Iridescent Surface",
+    category: "glass-ui",
+    description: "Iridescent OKLCH gradient surface that shifts hue continuously. Soap-bubble rainbow that never repeats a frame.",
+    tags: ["glass", "iridescent", "rainbow", "hue-rotate", "soap", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Iridescent Surface */
+.roycss-vfx-iridescent-surface {
+  background:
+    linear-gradient(135deg,
+      oklch(0.78 0.20 35),
+      oklch(0.78 0.20 145),
+      oklch(0.78 0.20 195),
+      oklch(0.78 0.20 290));
+  background-size: 200% 200%;
+  border-radius: 14px;
+  border: 1px solid oklch(1 0 0 / 0.25);
+  box-shadow: 0 10px 30px oklch(0.20 0.04 250 / 0.25);
+  color: oklch(0.10 0.04 250);
+  animation: roy-vfx-glass-iridescent 8s linear infinite;
+}
+@keyframes roy-vfx-glass-iridescent {
+  0%   { background-position: 0% 0%;   filter: hue-rotate(0deg); }
+  50%  { background-position: 100% 100%; filter: hue-rotate(180deg); }
+  100% { background-position: 0% 0%;   filter: hue-rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-iridescent-surface { animation: none; }
+}`
+  },
+  {
+    id: "vfx-gradient-border-2",
+    name: "VFX Gradient Border v2",
+    category: "borders",
+    description: "Gradient border via border-image with an OKLCH linear-gradient slice. Crisp 3px rim, no pseudo-elements required.",
+    tags: ["border", "gradient", "border-image", "oklch", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Gradient Border v2 */
+.roycss-vfx-gradient-border-2 {
+  border: 3px solid transparent;
+  border-image:
+    linear-gradient(135deg,
+      oklch(0.80 0.22 35),
+      oklch(0.80 0.22 195),
+      oklch(0.80 0.22 290)) 1;
+  border-radius: 10px;
+  background: oklch(0.96 0.01 240);
+  color: oklch(0.20 0.04 250);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-gradient-border-2 { /* static */ }
+}`
+  },
+  {
+    id: "vfx-glow-border-2",
+    name: "VFX Glow Border v2",
+    category: "borders",
+    description: "Border with a soft pulsing OKLCH outer glow via box-shadow. Calm breathing rhythm, perfect for focus states.",
+    tags: ["border", "glow", "pulse", "box-shadow", "oklch", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Glow Border v2 */
+.roycss-vfx-glow-border-2 {
+  background: oklch(0.14 0.04 250);
+  color: oklch(0.96 0.02 240);
+  border: 2px solid oklch(0.80 0.22 195);
+  border-radius: 12px;
+  animation: roy-vfx-bd-glow-pulse 2.4s ease-in-out infinite;
+}
+@keyframes roy-vfx-bd-glow-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 6px oklch(0.80 0.22 195 / 0.5),
+      0 0 18px oklch(0.80 0.22 195 / 0.3);
+  }
+  50% {
+    box-shadow:
+      0 0 12px oklch(0.80 0.22 195 / 0.85),
+      0 0 36px oklch(0.80 0.22 195 / 0.55);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-glow-border-2 { animation: none; }
+}`
+  },
+  {
+    id: "vfx-neon-border",
+    name: "VFX Neon Border",
+    category: "borders",
+    description: "Neon-sign border that flickers like an old glass tube — a soft OKLCH magenta glow with subtle brightness jitter.",
+    tags: ["border", "neon", "flicker", "glow", "sign", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Neon Border */
+.roycss-vfx-neon-border {
+  background: oklch(0.10 0.04 250);
+  color: oklch(0.96 0.04 320);
+  border: 2px solid oklch(0.80 0.24 320);
+  border-radius: 10px;
+  animation: roy-vfx-bd-neon-flicker 3.6s linear infinite;
+}
+@keyframes roy-vfx-bd-neon-flicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    box-shadow:
+      0 0 4px oklch(0.85 0.24 320),
+      0 0 12px oklch(0.75 0.24 320 / 0.65),
+      0 0 30px oklch(0.70 0.24 320 / 0.4);
+    opacity: 1;
+  }
+  20%, 24%, 55% {
+    box-shadow: 0 0 2px oklch(0.85 0.24 320 / 0.6);
+    opacity: 0.85;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-neon-border { animation: none; }
+}`
+  },
+  {
+    id: "vfx-electric-border-2",
+    name: "VFX Electric Border v2",
+    category: "borders",
+    description: "Electric border with a flowing OKLCH gradient that races around the rim via conic-gradient rotation. High-voltage feel.",
+    tags: ["border", "electric", "flowing", "conic", "animated", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Electric Border v2 */
+.roycss-vfx-electric-border-2 {
+  position: relative;
+  background: oklch(0.12 0.04 250);
+  color: oklch(0.96 0.02 240);
+  border-radius: 12px;
+  z-index: 0;
+}
+.roycss-vfx-electric-border-2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background:
+    conic-gradient(from 0deg,
+      oklch(0.85 0.24 35),
+      oklch(0.85 0.24 195),
+      oklch(0.85 0.24 290),
+      oklch(0.85 0.24 35));
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: roy-vfx-bd-electric-flow 3s linear infinite;
+  filter: drop-shadow(0 0 4px oklch(0.85 0.24 35 / 0.7));
+  pointer-events: none;
+}
+@keyframes roy-vfx-bd-electric-flow {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-electric-border-2::before { animation: none; }
+}`
+  },
+  {
+    id: "vfx-laser-border-2",
+    name: "VFX Laser Border v2",
+    category: "borders",
+    description: "Thin glowing laser line that races around the perimeter in OKLCH cyan, leaving a brief afterglow trail.",
+    tags: ["border", "laser", "thin", "glow", "trace", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Laser Border v2 */
+.roycss-vfx-laser-border-2 {
+  position: relative;
+  background: oklch(0.10 0.04 250);
+  color: oklch(0.96 0.04 195);
+  border-radius: 10px;
+  border: 1px solid oklch(0.30 0.10 195 / 0.4);
+}
+.roycss-vfx-laser-border-2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background:
+    conic-gradient(from 0deg,
+      transparent 0deg,
+      oklch(0.95 0.18 195) 30deg,
+      oklch(0.95 0.18 195 / 0.6) 60deg,
+      transparent 90deg,
+      transparent 360deg);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: roy-vfx-bd-laser-spin 2.5s linear infinite;
+  filter: drop-shadow(0 0 3px oklch(0.95 0.18 195 / 0.8));
+  pointer-events: none;
+}
+@keyframes roy-vfx-bd-laser-spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-laser-border-2::before { animation: none; }
+}`
+  },
+  {
+    id: "vfx-dashed-anim",
+    name: "VFX Animated Dashed Border",
+    category: "borders",
+    description: "Marching-ants dashed border built from repeating-linear-gradient, animated via background-position. The CSS-only analog of SVG stroke-dashoffset animation.",
+    tags: ["border", "dashed", "marching-ants", "animated", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Animated Dashed Border */
+.roycss-vfx-dashed-anim {
+  --roy-dash-color: oklch(0.80 0.22 195);
+  --roy-dash-gap:   oklch(0.30 0.06 250);
+  position: relative;
+  background: oklch(0.96 0.01 240);
+  color: oklch(0.20 0.04 250);
+  border-radius: 10px;
+  padding: 14px;
+  background-image:
+    repeating-linear-gradient(0deg,
+      var(--roy-dash-color) 0,
+      var(--roy-dash-color) 8px,
+      var(--roy-dash-gap)   8px,
+      var(--roy-dash-gap)   16px),
+    repeating-linear-gradient(90deg,
+      var(--roy-dash-color) 0,
+      var(--roy-dash-color) 8px,
+      var(--roy-dash-gap)   8px,
+      var(--roy-dash-gap)   16px),
+    repeating-linear-gradient(180deg,
+      var(--roy-dash-color) 0,
+      var(--roy-dash-color) 8px,
+      var(--roy-dash-gap)   8px,
+      var(--roy-dash-gap)   16px),
+    repeating-linear-gradient(270deg,
+      var(--roy-dash-color) 0,
+      var(--roy-dash-color) 8px,
+      var(--roy-dash-gap)   8px,
+      var(--roy-dash-gap)   16px);
+  background-size: 16px 1px, 1px 16px, 16px 1px, 1px 16px;
+  background-position:
+    0 0,
+    100% 0,
+    0 100%,
+    0 0;
+  background-repeat: no-repeat;
+  animation: roy-vfx-bd-dash-march 0.8s linear infinite;
+}
+@keyframes roy-vfx-bd-dash-march {
+  0%   {
+    background-position:
+      0 0,
+      100% 0,
+      0 100%,
+      0 0;
+  }
+  100% {
+    background-position:
+      16px 0,
+      calc(100% - 16px) 0,
+      16px 100%,
+      0 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-dashed-anim { animation: none; }
+}`
+  },
+  {
+    id: "vfx-corner-border",
+    name: "VFX Corner Border",
+    category: "borders",
+    description: "Bracket-style corner border built with clip-path on two pseudo-elements. Sci-fi HUD framing with a soft OKLCH glow.",
+    tags: ["border", "corner", "bracket", "clip-path", "hud", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Corner Border */
+.roycss-vfx-corner-border {
+  position: relative;
+  background: oklch(0.10 0.04 250);
+  color: oklch(0.96 0.02 240);
+  border-radius: 6px;
+  padding: 18px;
+}
+.roycss-vfx-corner-border::before,
+.roycss-vfx-corner-border::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border: 2px solid oklch(0.80 0.22 195);
+  pointer-events: none;
+  filter: drop-shadow(0 0 4px oklch(0.80 0.22 195 / 0.6));
+}
+.roycss-vfx-corner-border::before {
+  top: 6px;
+  left: 6px;
+  border-right: 0;
+  border-bottom: 0;
+  border-top-left-radius: 4px;
+}
+.roycss-vfx-corner-border::after {
+  bottom: 6px;
+  right: 6px;
+  border-left: 0;
+  border-top: 0;
+  border-bottom-right-radius: 4px;
+  animation: roy-vfx-bd-corner-glow 3s ease-in-out infinite;
+}
+@keyframes roy-vfx-bd-corner-glow {
+  0%, 100% { opacity: 1; filter: drop-shadow(0 0 4px oklch(0.80 0.22 195 / 0.6)); }
+  50%      { opacity: 0.6; filter: drop-shadow(0 0 10px oklch(0.80 0.22 195 / 0.9)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-corner-border::after { animation: none; }
+}`
+  },
+  {
+    id: "vfx-double-border",
+    name: "VFX Double Border",
+    category: "borders",
+    description: "Double-border effect combining a 2px border with a 1px outline offset by 4px in OKLCH — a clean layered frame with no pseudo-elements.",
+    tags: ["border", "double", "outline", "layered", "frame", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX Double Border */
+.roycss-vfx-double-border {
+  background: oklch(0.96 0.01 240);
+  color: oklch(0.20 0.04 250);
+  border: 2px solid oklch(0.72 0.18 195);
+  border-radius: 12px;
+  outline: 1px solid oklch(0.72 0.18 290 / 0.6);
+  outline-offset: 4px;
+  box-shadow:
+    0 0 0 1px oklch(0.72 0.18 35 / 0.25),
+    0 8px 24px oklch(0.10 0.04 250 / 0.18);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-double-border { /* static */ }
+}`
+  }
+];
+
+// src/lib/effects-batch-52.ts
+var effectsBatch52 = [
+  {
+    id: "vfx-image-reveal-2",
+    name: "Image Reveal",
+    category: "filters",
+    description: "Image revealed left-to-right via an animated clip-path inset, with a bright sheen sweeping across the unmasking edge.",
+    tags: ["image", "reveal", "clip-path", "mask", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX-3: Image Reveal */
+.roycss-vfx-image-reveal-2 {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 30% 30%, oklch(0.72 0.18 35), oklch(0.55 0.22 350) 40%, oklch(0.30 0.14 280) 100%);
+  clip-path: inset(0 100% 0 0);
+  animation: roy-vfx-img-reveal 2.4s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+}
+.roycss-vfx-image-reveal-2::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, oklch(1 0 0 / 0.45), transparent);
+  transform: translateX(-160%);
+  animation: roy-vfx-img-reveal-sheen 2.4s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+}
+@keyframes roy-vfx-img-reveal {
+  0%   { clip-path: inset(0 100% 0 0); }
+  45%, 100% { clip-path: inset(0 0 0 0); }
+}
+@keyframes roy-vfx-img-reveal-sheen {
+  0%   { transform: translateX(-160%); }
+  55%, 100% { transform: translateX(320%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-image-reveal-2,
+  .roycss-vfx-image-reveal-2::after {
+    animation: none;
+    clip-path: inset(0 0 0 0);
+    transform: none;
+  }
+}`
+  },
+  {
+    id: "vfx-image-wipe-2",
+    name: "Image Wipe",
+    category: "filters",
+    description: "Image wiped clean by a sliding gradient panel using transform translateX, revealing a vibrant underlay.",
+    tags: ["image", "wipe", "transform", "reveal", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX-3: Image Wipe */
+.roycss-vfx-image-wipe-2 {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background: linear-gradient(135deg, oklch(0.65 0.20 145), oklch(0.55 0.22 200) 60%, oklch(0.40 0.18 260));
+}
+.roycss-vfx-image-wipe-2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, oklch(0.20 0.04 260), oklch(0.15 0.06 220));
+  transform: translateX(0%);
+  animation: roy-vfx-img-wipe 2.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+.roycss-vfx-image-wipe-2::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  left: 0;
+  background: linear-gradient(180deg, transparent, oklch(0.85 0.18 60), transparent);
+  box-shadow: 0 0 18px oklch(0.85 0.18 60 / 0.7);
+  transform: translateX(0%);
+  animation: roy-vfx-img-wipe-line 2.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+@keyframes roy-vfx-img-wipe {
+  0%   { transform: translateX(0%); }
+  50%  { transform: translateX(100%); }
+  50.01%, 100% { transform: translateX(0%); }
+}
+@keyframes roy-vfx-img-wipe-line {
+  0%   { transform: translateX(0%); opacity: 1; }
+  50%  { transform: translateX(calc(100% - 4px)); opacity: 1; }
+  50.01%, 100% { transform: translateX(0%); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-image-wipe-2::before,
+  .roycss-vfx-image-wipe-2::after {
+    animation: none;
+    transform: translateX(100%);
+  }
+}`
+  },
+  {
+    id: "vfx-image-blur-transition",
+    name: "Image Blur Transition",
+    category: "filters",
+    description: "Image (gradient) cross-fades between two scenes through a heavy blur filter pulse, mimicking a rack-focus transition.",
+    tags: ["image", "blur", "transition", "filter", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX-3: Image Blur Transition */
+.roycss-vfx-image-blur-transition {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background: linear-gradient(135deg, oklch(0.55 0.20 30), oklch(0.45 0.22 320));
+  animation: roy-vfx-img-blur 4s ease-in-out infinite;
+}
+.roycss-vfx-image-blur-transition::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, oklch(0.30 0.18 200), oklch(0.20 0.20 260));
+  opacity: 0;
+  animation: roy-vfx-img-blur-layer 4s ease-in-out infinite;
+}
+@keyframes roy-vfx-img-blur {
+  0%, 100% { filter: blur(0px) saturate(1); }
+  50%      { filter: blur(14px) saturate(1.4); }
+}
+@keyframes roy-vfx-img-blur-layer {
+  0%, 100% { opacity: 0; }
+  50%      { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-image-blur-transition,
+  .roycss-vfx-image-blur-transition::after {
+    animation: none;
+    filter: none;
+    opacity: 1;
+  }
+}`
+  },
+  {
+    id: "vfx-grayscale-hover-2",
+    name: "Grayscale to Color Hover",
+    category: "filters",
+    description: "Image is desaturated by default and snaps to full vibrant color on hover, with a smooth saturate transition.",
+    tags: ["image", "grayscale", "hover", "color", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX-3: Grayscale to Color Hover */
+.roycss-vfx-grayscale-hover-2 {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 25% 25%, oklch(0.72 0.20 35), oklch(0.55 0.22 350) 50%, oklch(0.35 0.18 260) 100%);
+  filter: grayscale(1) saturate(0.4);
+  transition: filter 0.6s ease;
+  cursor: pointer;
+}
+.roycss-vfx-grayscale-hover-2:hover {
+  filter: grayscale(0) saturate(1.25);
+}
+.roycss-vfx-grayscale-hover-2::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, oklch(1 0 0 / 0.35) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.6s ease;
+}
+.roycss-vfx-grayscale-hover-2:hover::after {
+  transform: translateX(120%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-grayscale-hover-2,
+  .roycss-vfx-grayscale-hover-2::after {
+    transition: none;
+  }
+}`
+  },
+  {
+    id: "vfx-color-reveal",
+    name: "Color Reveal",
+    category: "filters",
+    description: "A black-and-white mask wipes away to expose a vivid color gradient underneath, using mask-image animation.",
+    tags: ["image", "color", "reveal", "mask", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX-3: Color Reveal */
+.roycss-vfx-color-reveal {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background: linear-gradient(135deg, oklch(0.65 0.22 25), oklch(0.55 0.24 330) 60%, oklch(0.40 0.20 260));
+}
+.roycss-vfx-color-reveal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, oklch(0.95 0.01 250), oklch(0.88 0.02 220));
+  -webkit-mask-image: linear-gradient(90deg, #000 50%, transparent 50%);
+  mask-image: linear-gradient(90deg, #000 50%, transparent 50%);
+  -webkit-mask-size: 200% 100%;
+  mask-size: 200% 100%;
+  -webkit-mask-position: 0% 0%;
+  mask-position: 0% 0%;
+  animation: roy-vfx-img-color-reveal 3s ease-in-out infinite;
+}
+@keyframes roy-vfx-img-color-reveal {
+  0%, 100% { -webkit-mask-position: 0% 0%; mask-position: 0% 0%; }
+  50%      { -webkit-mask-position: 100% 0%; mask-position: 100% 0%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-color-reveal::before {
+    animation: none;
+    -webkit-mask-position: 100% 0%;
+    mask-position: 100% 0%;
+  }
+}`
+  },
+  {
+    id: "vfx-image-glitch",
+    name: "Image Glitch",
+    category: "filters",
+    description: "Image suffers periodic glitch bursts with clip-path slices shifting horizontally and a brief desaturation flash.",
+    tags: ["image", "glitch", "clip-path", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX-3: Image Glitch */
+.roycss-vfx-image-glitch {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background: linear-gradient(135deg, oklch(0.55 0.22 30), oklch(0.40 0.24 280));
+  animation: roy-vfx-img-glitch 2.6s steps(1, end) infinite;
+}
+.roycss-vfx-image-glitch::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, oklch(0.60 0.22 30), oklch(0.45 0.24 280));
+  clip-path: inset(20% 0 60% 0);
+  animation: roy-vfx-img-glitch-slice 2.6s steps(1, end) infinite;
+}
+.roycss-vfx-image-glitch::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, oklch(0.50 0.22 30), oklch(0.35 0.24 280));
+  clip-path: inset(70% 0 10% 0);
+  animation: roy-vfx-img-glitch-slice2 2.6s steps(1, end) infinite;
+}
+@keyframes roy-vfx-img-glitch {
+  0%, 88%, 100% { filter: none; }
+  90%, 94%      { filter: saturate(2) contrast(1.2); }
+  95%, 98%      { filter: hue-rotate(40deg) saturate(1.5); }
+}
+@keyframes roy-vfx-img-glitch-slice {
+  0%, 88%, 100% { transform: translateX(0); clip-path: inset(20% 0 60% 0); }
+  90%, 94%      { transform: translateX(-12%); clip-path: inset(18% 0 62% 0); }
+  95%, 98%      { transform: translateX(10%); clip-path: inset(22% 0 58% 0); }
+}
+@keyframes roy-vfx-img-glitch-slice2 {
+  0%, 88%, 100% { transform: translateX(0); clip-path: inset(70% 0 10% 0); }
+  90%, 94%      { transform: translateX(14%); clip-path: inset(72% 0 8% 0); }
+  95%, 98%      { transform: translateX(-10%); clip-path: inset(68% 0 12% 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-image-glitch,
+  .roycss-vfx-image-glitch::before,
+  .roycss-vfx-image-glitch::after {
+    animation: none;
+    transform: none;
+    filter: none;
+  }
+}`
+  },
+  {
+    id: "vfx-rgb-split-image",
+    name: "RGB Split Image",
+    category: "filters",
+    description: "Image channels split into red/cyan fringes via stacked blend modes, then snap back together on a slow loop.",
+    tags: ["image", "rgb", "split", "filter", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX-3: RGB Split Image */
+.roycss-vfx-rgb-split-image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background: linear-gradient(135deg, oklch(0.55 0.20 30), oklch(0.40 0.22 280));
+  isolation: isolate;
+}
+.roycss-vfx-rgb-split-image::before,
+.roycss-vfx-rgb-split-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  mix-blend-mode: screen;
+}
+.roycss-vfx-rgb-split-image::before {
+  background: linear-gradient(135deg, oklch(0.55 0.20 30), oklch(0.40 0.22 280));
+  filter: drop-shadow(6px 0 0 oklch(0.60 0.30 25));
+  animation: roy-vfx-img-rgb-r 3.2s ease-in-out infinite;
+}
+.roycss-vfx-rgb-split-image::after {
+  background: linear-gradient(135deg, oklch(0.55 0.20 30), oklch(0.40 0.22 280));
+  filter: drop-shadow(-6px 0 0 oklch(0.60 0.25 220));
+  animation: roy-vfx-img-rgb-c 3.2s ease-in-out infinite;
+}
+@keyframes roy-vfx-img-rgb-r {
+  0%, 100% { transform: translateX(0); opacity: 0; }
+  50%      { transform: translateX(8px); opacity: 0.85; }
+}
+@keyframes roy-vfx-img-rgb-c {
+  0%, 100% { transform: translateX(0); opacity: 0; }
+  50%      { transform: translateX(-8px); opacity: 0.85; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-rgb-split-image::before,
+  .roycss-vfx-rgb-split-image::after {
+    animation: none;
+    transform: none;
+    opacity: 0;
+  }
+}`
+  },
+  {
+    id: "vfx-crt-effect",
+    name: "CRT Effect",
+    category: "filters",
+    description: "Image (gradient) treated as a CRT display: fine scanlines, vignette darkening, and a slow flicker.",
+    tags: ["image", "crt", "scanlines", "vignette", "retro", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX-3: CRT Effect */
+.roycss-vfx-crt-effect {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 50%, oklch(0.30 0.18 145), oklch(0.15 0.12 200) 70%, oklch(0.08 0.04 220) 100%);
+  animation: roy-vfx-img-crt-flicker 4s ease-in-out infinite;
+}
+.roycss-vfx-crt-effect::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    oklch(0 0 0 / 0.25) 0px,
+    oklch(0 0 0 / 0.25) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+}
+.roycss-vfx-crt-effect::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 50%, oklch(0 0 0 / 0.65) 100%);
+  pointer-events: none;
+}
+@keyframes roy-vfx-img-crt-flicker {
+  0%, 100% { filter: brightness(1) contrast(1.05); }
+  20%      { filter: brightness(1.05) contrast(1.08); }
+  40%      { filter: brightness(0.92) contrast(1.1); }
+  60%      { filter: brightness(1.02) contrast(1.06); }
+  80%      { filter: brightness(0.96) contrast(1.05); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-crt-effect { animation: none; filter: none; }
+}`
+  },
+  {
+    id: "vfx-holographic-image",
+    name: "Holographic Image",
+    category: "filters",
+    description: "Image overlaid with a shifting iridescent gradient that drifts across the surface, mimicking a holographic foil.",
+    tags: ["image", "holographic", "iridescent", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX-3: Holographic Image */
+.roycss-vfx-holographic-image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, oklch(0.25 0.10 250), oklch(0.20 0.12 220));
+}
+.roycss-vfx-holographic-image::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: conic-gradient(
+    from 0deg,
+    oklch(0.75 0.28 0),
+    oklch(0.78 0.30 60),
+    oklch(0.80 0.28 140),
+    oklch(0.78 0.30 220),
+    oklch(0.75 0.30 300),
+    oklch(0.75 0.28 0)
+  );
+  mix-blend-mode: screen;
+  opacity: 0.65;
+  filter: blur(6px);
+  animation: roy-vfx-img-holo-rotate 8s linear infinite;
+}
+.roycss-vfx-holographic-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, oklch(1 0 0 / 0.30) 50%, transparent 70%);
+  background-size: 200% 100%;
+  animation: roy-vfx-img-holo-sheen 4s linear infinite;
+}
+@keyframes roy-vfx-img-holo-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes roy-vfx-img-holo-sheen {
+  from { background-position: -100% 0; }
+  to   { background-position: 200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-holographic-image::before,
+  .roycss-vfx-holographic-image::after { animation: none; }
+}`
+  },
+  {
+    id: "vfx-image-distort",
+    name: "Image Distort",
+    category: "filters",
+    description: "Image (gradient) gently warped via transform skew and perspective, simulating a heat-haze ripple.",
+    tags: ["image", "distort", "transform", "skew", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX-3: Image Distort */
+.roycss-vfx-image-distort {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 40% 40%, oklch(0.65 0.20 35), oklch(0.45 0.22 320) 50%, oklch(0.25 0.16 260) 100%);
+  animation: roy-vfx-img-distort 3.4s ease-in-out infinite;
+  transform-origin: 50% 50%;
+}
+.roycss-vfx-image-distort::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0%, oklch(0.85 0.10 180 / 0.18) 50%, transparent 100%);
+  background-size: 100% 24px;
+  animation: roy-vfx-img-distort-ripple 1.6s linear infinite;
+}
+@keyframes roy-vfx-img-distort {
+  0%, 100% { transform: skewX(0deg) skewY(0deg) scale(1); }
+  25%      { transform: skewX(1.6deg) skewY(-0.8deg) scale(1.02); }
+  50%      { transform: skewX(-1.2deg) skewY(1deg) scale(1.01); }
+  75%      { transform: skewX(0.8deg) skewY(-1.2deg) scale(1.02); }
+}
+@keyframes roy-vfx-img-distort-ripple {
+  from { background-position: 0 0; }
+  to   { background-position: 0 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-image-distort,
+  .roycss-vfx-image-distort::after {
+    animation: none;
+    transform: none;
+  }
+}`
+  },
+  {
+    id: "vfx-glitch-effect-2",
+    name: "Glitch Effect",
+    category: "visual",
+    description: "Text glitch with clip-path slices jumping in opposite directions and an RGB split shadow burst on a fast loop.",
+    tags: ["glitch", "text", "clip-path", "rgb", "vfx"],
+    previewType: "text",
+    cssCode: `/* VFX-3: Glitch Effect */
+.roycss-vfx-glitch-effect-2 {
+  position: relative;
+  display: inline-block;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: oklch(0.95 0.02 250);
+  text-shadow:
+    2px 0 oklch(0.65 0.30 25 / 0.9),
+    -2px 0 oklch(0.55 0.28 220 / 0.9);
+  animation: roy-vfx-adv-glitch 1.8s steps(1, end) infinite;
+}
+.roycss-vfx-glitch-effect-2::before,
+.roycss-vfx-glitch-effect-2::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: oklch(0.95 0.02 250);
+  clip-path: inset(0 0 0 0);
+}
+.roycss-vfx-glitch-effect-2::before {
+  text-shadow: 3px 0 oklch(0.65 0.30 25);
+  animation: roy-vfx-adv-glitch-top 1.8s steps(1, end) infinite;
+}
+.roycss-vfx-glitch-effect-2::after {
+  text-shadow: -3px 0 oklch(0.55 0.28 220);
+  animation: roy-vfx-adv-glitch-bot 1.8s steps(1, end) infinite;
+}
+@keyframes roy-vfx-adv-glitch {
+  0%, 86%, 100% { transform: translate(0); }
+  88%           { transform: translate(-3px, 1px); }
+  90%           { transform: translate(3px, -1px); }
+  92%           { transform: translate(-2px, 0); }
+  94%           { transform: translate(2px, 1px); }
+}
+@keyframes roy-vfx-adv-glitch-top {
+  0%, 86%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+  88%, 94%      { clip-path: inset(0 0 60% 0); transform: translate(-6px, -2px); }
+}
+@keyframes roy-vfx-adv-glitch-bot {
+  0%, 86%, 100% { clip-path: inset(100% 0 0 0); transform: translate(0); }
+  88%, 94%      { clip-path: inset(60% 0 0 0); transform: translate(6px, 2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-glitch-effect-2,
+  .roycss-vfx-glitch-effect-2::before,
+  .roycss-vfx-glitch-effect-2::after {
+    animation: none;
+    transform: none;
+  }
+}`
+  },
+  {
+    id: "vfx-scanlines-2",
+    name: "Scanlines Overlay",
+    category: "visual",
+    description: "Soft scanlines drifting vertically over a tinted backdrop, like an old analog monitor with a slow roll.",
+    tags: ["scanlines", "overlay", "retro", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX-3: Scanlines Overlay */
+.roycss-vfx-scanlines-2 {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background: linear-gradient(180deg, oklch(0.18 0.06 260), oklch(0.10 0.04 220));
+}
+.roycss-vfx-scanlines-2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    oklch(0.85 0.10 180 / 0.18) 0px,
+    oklch(0.85 0.10 180 / 0.18) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  background-size: 100% 24px;
+  animation: roy-vfx-adv-scanlines 3.6s linear infinite;
+}
+.roycss-vfx-scanlines-2::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, oklch(0 0 0 / 0.55) 100%);
+}
+@keyframes roy-vfx-adv-scanlines {
+  from { background-position: 0 0; }
+  to   { background-position: 0 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-scanlines-2::before { animation: none; }
+}`
+  },
+  {
+    id: "vfx-crt-vfx",
+    name: "CRT VFX",
+    category: "visual",
+    description: "CRT screen with curvature (border-radius + inset shadows), scanlines, and a soft flicker. Pure CSS — no JS.",
+    tags: ["crt", "vfx", "curvature", "scanlines", "flicker", "retro"],
+    previewType: "background",
+    cssCode: `/* VFX-3: CRT VFX */
+.roycss-vfx-crt-vfx {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 38% / 22%;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 40%, oklch(0.35 0.20 145), oklch(0.18 0.14 200) 65%, oklch(0.08 0.04 220) 100%);
+  box-shadow:
+    inset 0 0 60px oklch(0 0 0 / 0.8),
+    inset 0 0 18px oklch(0.65 0.20 145 / 0.4),
+    0 0 24px oklch(0.30 0.16 145 / 0.5);
+  animation: roy-vfx-adv-crt-vfx 3.4s ease-in-out infinite;
+}
+.roycss-vfx-crt-vfx::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    oklch(0 0 0 / 0.30) 0px,
+    oklch(0 0 0 / 0.30) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+.roycss-vfx-crt-vfx::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at center, transparent 55%, oklch(0 0 0 / 0.75) 100%),
+    linear-gradient(180deg, oklch(0.85 0.20 145 / 0.06) 0%, transparent 30%);
+  animation: roy-vfx-adv-crt-vfx-scan 6s linear infinite;
+}
+@keyframes roy-vfx-adv-crt-vfx {
+  0%, 100% { filter: brightness(1) contrast(1.05); }
+  20%      { filter: brightness(1.08) contrast(1.1); }
+  45%      { filter: brightness(0.88) contrast(1.12); }
+  70%      { filter: brightness(1.05) contrast(1.06); }
+}
+@keyframes roy-vfx-adv-crt-vfx-scan {
+  from { background-position: 0 -100%, 0 0; }
+  to   { background-position: 0 200%, 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-crt-vfx,
+  .roycss-vfx-crt-vfx::after { animation: none; filter: none; }
+}`
+  },
+  {
+    id: "vfx-rgb-split-vfx",
+    name: "RGB Split VFX",
+    category: "visual",
+    description: "Text splits into red, green, and blue channel copies that drift apart and snap back, evoking a bad video cable.",
+    tags: ["rgb", "split", "text", "filter", "vfx"],
+    previewType: "text",
+    cssCode: `/* VFX-3: RGB Split VFX */
+.roycss-vfx-rgb-split-vfx {
+  position: relative;
+  display: inline-block;
+  font-weight: 800;
+  color: oklch(0.95 0.02 250);
+  text-shadow:
+    3px 0 oklch(0.65 0.30 25),
+    -3px 0 oklch(0.55 0.28 220),
+    0 0 oklch(0.70 0.28 145);
+  animation: roy-vfx-adv-rgb-split 2.4s ease-in-out infinite;
+}
+@keyframes roy-vfx-adv-rgb-split {
+  0%, 100% {
+    text-shadow:
+      1px 0 oklch(0.65 0.30 25),
+      -1px 0 oklch(0.55 0.28 220),
+      0 0 oklch(0.70 0.28 145);
+  }
+  50% {
+    text-shadow:
+      6px 0 oklch(0.65 0.30 25 / 0.85),
+      -6px 0 oklch(0.55 0.28 220 / 0.85),
+      0 3px oklch(0.70 0.28 145 / 0.7);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-rgb-split-vfx { animation: none; }
+}`
+  },
+  {
+    id: "vfx-chromatic-aberration",
+    name: "Chromatic Aberration",
+    category: "visual",
+    description: "Text fringed with red and blue ghost edges via stacked text-shadows, with the fringes breathing in and out.",
+    tags: ["chromatic", "aberration", "text", "vfx"],
+    previewType: "text",
+    cssCode: `/* VFX-3: Chromatic Aberration */
+.roycss-vfx-chromatic-aberration {
+  display: inline-block;
+  font-weight: 800;
+  color: oklch(0.96 0.02 250);
+  text-shadow:
+    -1px 0 oklch(0.65 0.30 25),
+    1px 0 oklch(0.55 0.28 220),
+    -3px 0 oklch(0.65 0.30 25 / 0.5),
+    3px 0 oklch(0.55 0.28 220 / 0.5),
+    -6px 0 oklch(0.65 0.30 25 / 0.25),
+    6px 0 oklch(0.55 0.28 220 / 0.25);
+  animation: roy-vfx-adv-chromatic 3.6s ease-in-out infinite;
+}
+@keyframes roy-vfx-adv-chromatic {
+  0%, 100% {
+    text-shadow:
+      -1px 0 oklch(0.65 0.30 25),
+      1px 0 oklch(0.55 0.28 220),
+      -3px 0 oklch(0.65 0.30 25 / 0.5),
+      3px 0 oklch(0.55 0.28 220 / 0.5),
+      -6px 0 oklch(0.65 0.30 25 / 0.25),
+      6px 0 oklch(0.55 0.28 220 / 0.25);
+  }
+  50% {
+    text-shadow:
+      -2px 0 oklch(0.65 0.30 25),
+      2px 0 oklch(0.55 0.28 220),
+      -6px 0 oklch(0.65 0.30 25 / 0.7),
+      6px 0 oklch(0.55 0.28 220 / 0.7),
+      -12px 0 oklch(0.65 0.30 25 / 0.4),
+      12px 0 oklch(0.55 0.28 220 / 0.4);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-chromatic-aberration { animation: none; }
+}`
+  },
+  {
+    id: "vfx-distortion",
+    name: "Distortion",
+    category: "visual",
+    description: "Text warped via transform skew and rotate on a slow loop, like a signal struggling to stabilize.",
+    tags: ["distortion", "transform", "skew", "text", "vfx"],
+    previewType: "text",
+    cssCode: `/* VFX-3: Distortion */
+.roycss-vfx-distortion {
+  display: inline-block;
+  font-weight: 800;
+  color: oklch(0.95 0.04 250);
+  transform-origin: 50% 50%;
+  animation: roy-vfx-adv-distortion 3.2s ease-in-out infinite;
+}
+@keyframes roy-vfx-adv-distortion {
+  0%, 100% { transform: skewX(0deg) skewY(0deg) rotate(0deg) scale(1); }
+  20%      { transform: skewX(3deg) skewY(-1deg) rotate(0.6deg) scale(1.02); }
+  40%      { transform: skewX(-2deg) skewY(1deg) rotate(-0.4deg) scale(0.99); }
+  60%      { transform: skewX(2deg) skewY(-2deg) rotate(0.8deg) scale(1.01); }
+  80%      { transform: skewX(-3deg) skewY(1deg) rotate(-0.6deg) scale(1.02); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-distortion { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "vfx-noise-effect",
+    name: "Noise Effect",
+    category: "visual",
+    description: "Animated film-grain noise (inline SVG data URI) overlaid on a dark surface, gently shifting every frame.",
+    tags: ["noise", "grain", "overlay", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX-3: Noise Effect */
+.roycss-vfx-noise-effect {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background: linear-gradient(135deg, oklch(0.20 0.05 260), oklch(0.12 0.04 220));
+}
+.roycss-vfx-noise-effect::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+  opacity: 0.35;
+  mix-blend-mode: overlay;
+  animation: roy-vfx-adv-noise 0.8s steps(4, end) infinite;
+}
+.roycss-vfx-noise-effect::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 50%, oklch(0 0 0 / 0.5) 100%);
+}
+@keyframes roy-vfx-adv-noise {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(-6%, 4%); }
+  50%  { transform: translate(4%, -6%); }
+  75%  { transform: translate(-4%, -4%); }
+  100% { transform: translate(6%, 6%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-noise-effect::before { animation: none; transform: none; }
+}`
+  },
+  {
+    id: "vfx-scan-reveal",
+    name: "Scan Reveal",
+    category: "visual",
+    description: "Text revealed letter-by-letter via a horizontal clip-path sweep, with a glowing scan line at the reveal edge.",
+    tags: ["scan", "reveal", "clip-path", "text", "vfx"],
+    previewType: "text",
+    cssCode: `/* VFX-3: Scan Reveal */
+.roycss-vfx-scan-reveal {
+  position: relative;
+  display: inline-block;
+  font-weight: 800;
+  color: oklch(0.95 0.02 250);
+  clip-path: inset(0 100% 0 0);
+  animation: roy-vfx-adv-scan-reveal 3s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+.roycss-vfx-scan-reveal::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  left: 0;
+  background: linear-gradient(180deg, transparent, oklch(0.85 0.20 180), transparent);
+  box-shadow: 0 0 16px oklch(0.85 0.20 180 / 0.85);
+  transform: translateX(0%);
+  animation: roy-vfx-adv-scan-reveal-line 3s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+@keyframes roy-vfx-adv-scan-reveal {
+  0%   { clip-path: inset(0 100% 0 0); }
+  60%, 100% { clip-path: inset(0 0 0 0); }
+}
+@keyframes roy-vfx-adv-scan-reveal-line {
+  0%   { transform: translateX(0%); opacity: 1; }
+  60%  { transform: translateX(calc(100% - 3px)); opacity: 1; }
+  60.01%, 100% { transform: translateX(0%); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-scan-reveal,
+  .roycss-vfx-scan-reveal::after {
+    animation: none;
+    clip-path: inset(0 0 0 0);
+    transform: none;
+  }
+}`
+  },
+  {
+    id: "vfx-digital-interference-2",
+    name: "Digital Interference",
+    category: "visual",
+    description: "Text suffering digital interference: periodic horizontal clip-path tear with brief hue rotation, like a corrupted broadcast.",
+    tags: ["digital", "interference", "glitch", "text", "vfx"],
+    previewType: "text",
+    cssCode: `/* VFX-3: Digital Interference */
+.roycss-vfx-digital-interference-2 {
+  position: relative;
+  display: inline-block;
+  font-weight: 800;
+  color: oklch(0.95 0.02 250);
+  text-shadow: 0 0 12px oklch(0.70 0.20 180 / 0.45);
+  animation: roy-vfx-adv-digital 2.4s steps(1, end) infinite;
+}
+.roycss-vfx-digital-interference-2::before,
+.roycss-vfx-digital-interference-2::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: oklch(0.95 0.02 250);
+}
+.roycss-vfx-digital-interference-2::before {
+  clip-path: inset(40% 0 40% 0);
+  background: oklch(0.95 0.02 250);
+  color: oklch(0.20 0.06 220);
+  transform: translateX(0);
+  animation: roy-vfx-adv-digital-tear 2.4s steps(1, end) infinite;
+}
+.roycss-vfx-digital-interference-2::after {
+  clip-path: inset(0 0 100% 0);
+  text-shadow: 4px 0 oklch(0.65 0.30 25), -4px 0 oklch(0.55 0.28 220);
+  animation: roy-vfx-adv-digital-slice 2.4s steps(1, end) infinite;
+}
+@keyframes roy-vfx-adv-digital {
+  0%, 80%, 100% { filter: none; transform: translate(0); }
+  82%, 86%      { filter: hue-rotate(60deg) saturate(1.5); transform: translate(-2px, 0); }
+  88%, 92%      { filter: hue-rotate(-40deg) saturate(1.4); transform: translate(2px, 0); }
+}
+@keyframes roy-vfx-adv-digital-tear {
+  0%, 80%, 100% { transform: translateX(0); clip-path: inset(40% 0 40% 0); }
+  82%, 92%      { transform: translateX(-18px); clip-path: inset(38% 0 42% 0); }
+}
+@keyframes roy-vfx-adv-digital-slice {
+  0%, 80%, 100% { clip-path: inset(0 0 100% 0); }
+  82%, 92%      { clip-path: inset(20% 0 50% 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-digital-interference-2,
+  .roycss-vfx-digital-interference-2::before,
+  .roycss-vfx-digital-interference-2::after {
+    animation: none;
+    transform: none;
+    filter: none;
+    clip-path: inset(0 0 0 0);
+  }
+}`
+  },
+  {
+    id: "vfx-holographic-shimmer-2",
+    name: "Holographic Shimmer",
+    category: "visual",
+    description: "Text shimmering through a rotating conic-gradient hue cycle, with a sliding light streak for that iridescent foil look.",
+    tags: ["holographic", "shimmer", "conic", "text", "vfx"],
+    previewType: "text",
+    cssCode: `/* VFX-3: Holographic Shimmer */
+.roycss-vfx-holographic-shimmer-2 {
+  position: relative;
+  display: inline-block;
+  font-weight: 800;
+  background: conic-gradient(
+    from 0deg,
+    oklch(0.78 0.28 0),
+    oklch(0.82 0.30 60),
+    oklch(0.80 0.28 140),
+    oklch(0.82 0.30 220),
+    oklch(0.78 0.30 300),
+    oklch(0.78 0.28 0)
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: roy-vfx-adv-holo-shimmer 4s linear infinite;
+}
+.roycss-vfx-holographic-shimmer-2::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, oklch(1 0 0 / 0.7) 50%, transparent 70%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: roy-vfx-adv-holo-streak 3s linear infinite;
+}
+@keyframes roy-vfx-adv-holo-shimmer {
+  from { background-position: 0% 0; }
+  to   { background-position: 200% 0; }
+}
+@keyframes roy-vfx-adv-holo-streak {
+  from { background-position: -100% 0; }
+  to   { background-position: 200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-holographic-shimmer-2,
+  .roycss-vfx-holographic-shimmer-2::after { animation: none; }
+}`
+  },
+  {
+    id: "vfx-energy-glow",
+    name: "Energy Glow",
+    category: "visual",
+    description: "A box that pulses with a layered energy glow — inner core, mid aura, and outer halo — all driven by box-shadow.",
+    tags: ["energy", "glow", "pulse", "box-shadow", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX-3: Energy Glow */
+.roycss-vfx-energy-glow {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 50% 50%, oklch(0.30 0.18 160), oklch(0.20 0.10 200) 70%, oklch(0.10 0.04 220));
+  animation: roy-vfx-adv-energy 2.6s ease-in-out infinite;
+}
+@keyframes roy-vfx-adv-energy {
+  0%, 100% {
+    box-shadow:
+      0 0 12px oklch(0.70 0.22 160 / 0.55),
+      0 0 28px oklch(0.70 0.22 160 / 0.35),
+      0 0 60px oklch(0.70 0.22 160 / 0.18),
+      inset 0 0 18px oklch(0.78 0.22 160 / 0.4);
+  }
+  50% {
+    box-shadow:
+      0 0 24px oklch(0.78 0.26 160 / 0.85),
+      0 0 60px oklch(0.78 0.26 160 / 0.55),
+      0 0 110px oklch(0.78 0.26 160 / 0.30),
+      inset 0 0 32px oklch(0.85 0.26 160 / 0.6);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-energy-glow {
+    animation: none;
+    box-shadow:
+      0 0 18px oklch(0.70 0.22 160 / 0.6),
+      0 0 44px oklch(0.70 0.22 160 / 0.4);
+  }
+}`
+  },
+  {
+    id: "vfx-electric-border",
+    name: "Electric Border",
+    category: "visual",
+    description: "Border animated as a flowing electric gradient that races around the element via conic-gradient rotation.",
+    tags: ["electric", "border", "animated", "gradient", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX-3: Electric Border */
+.roycss-vfx-electric-border {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  background: oklch(0.14 0.05 260);
+  padding: 2px;
+  overflow: hidden;
+}
+.roycss-vfx-electric-border::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    oklch(0.78 0.30 60) 12%,
+    oklch(0.85 0.28 160) 22%,
+    transparent 35%,
+    transparent 50%,
+    oklch(0.78 0.30 220) 62%,
+    oklch(0.85 0.28 320) 72%,
+    transparent 85%
+  );
+  animation: roy-vfx-adv-electric 4s linear infinite;
+}
+.roycss-vfx-electric-border::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 14px;
+  background: oklch(0.16 0.06 260);
+}
+@keyframes roy-vfx-adv-electric {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-electric-border::before { animation: none; }
+}`
+  },
+  {
+    id: "vfx-laser-border",
+    name: "Laser Border",
+    category: "visual",
+    description: "Thin glowing laser line racing around the element's perimeter, leaving a brief afterglow trail.",
+    tags: ["laser", "border", "thin", "glow", "vfx"],
+    previewType: "box",
+    cssCode: `/* VFX-3: Laser Border */
+.roycss-vfx-laser-border {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  background:
+    linear-gradient(135deg, oklch(0.14 0.06 250), oklch(0.08 0.04 220));
+  overflow: hidden;
+}
+.roycss-vfx-laser-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 1px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    oklch(0.95 0.30 60) 30deg,
+    oklch(1 0 0) 45deg,
+    oklch(0.95 0.30 60) 60deg,
+    transparent 90deg,
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: roy-vfx-adv-laser 3s linear infinite;
+}
+.roycss-vfx-laser-border::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  box-shadow:
+    0 0 12px oklch(0.90 0.30 60 / 0.5),
+    inset 0 0 12px oklch(0.90 0.30 60 / 0.25);
+  animation: roy-vfx-adv-laser-pulse 3s ease-in-out infinite;
+}
+@keyframes roy-vfx-adv-laser {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes roy-vfx-adv-laser-pulse {
+  0%, 100% { box-shadow: 0 0 8px oklch(0.90 0.30 60 / 0.3), inset 0 0 8px oklch(0.90 0.30 60 / 0.15); }
+  50%      { box-shadow: 0 0 20px oklch(0.90 0.30 60 / 0.7), inset 0 0 18px oklch(0.90 0.30 60 / 0.4); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-laser-border::before,
+  .roycss-vfx-laser-border::after { animation: none; }
+}`
+  },
+  {
+    id: "vfx-plasma-gradient",
+    name: "Plasma Gradient",
+    category: "visual",
+    description: "A multi-stop conic-gradient background animated via continuous hue-rotate, producing a flowing plasma field.",
+    tags: ["plasma", "gradient", "hue-rotate", "background", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX-3: Plasma Gradient */
+.roycss-vfx-plasma-gradient {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background:
+    conic-gradient(
+      from 0deg,
+      oklch(0.65 0.30 0),
+      oklch(0.70 0.30 60),
+      oklch(0.75 0.30 140),
+      oklch(0.70 0.30 220),
+      oklch(0.65 0.30 300),
+      oklch(0.65 0.30 0)
+    ),
+    radial-gradient(circle at 30% 30%, oklch(0.78 0.28 180 / 0.4), transparent 60%);
+  background-blend-mode: screen;
+  animation: roy-vfx-adv-plasma 8s linear infinite;
+}
+.roycss-vfx-plasma-gradient::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 60%, oklch(0 0 0 / 0.4) 100%);
+}
+@keyframes roy-vfx-adv-plasma {
+  from { filter: hue-rotate(0deg); }
+  to   { filter: hue-rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-plasma-gradient { animation: none; filter: none; }
+}`
+  },
+  {
+    id: "vfx-cyberpunk-effect",
+    name: "Cyberpunk Effect",
+    category: "visual",
+    description: "Neon cyan/magenta text with periodic glitch bursts and a chromatic split, evoking a cyberpunk title card.",
+    tags: ["cyberpunk", "neon", "glitch", "text", "vfx"],
+    previewType: "text",
+    cssCode: `/* VFX-3: Cyberpunk Effect */
+.roycss-vfx-cyberpunk-effect {
+  position: relative;
+  display: inline-block;
+  font-weight: 800;
+  color: oklch(0.95 0.10 180);
+  text-shadow:
+    0 0 6px oklch(0.85 0.20 180),
+    0 0 14px oklch(0.80 0.26 180 / 0.7),
+    0 0 24px oklch(0.75 0.30 320 / 0.5),
+    2px 0 oklch(0.75 0.30 320),
+    -2px 0 oklch(0.75 0.30 180);
+  animation: roy-vfx-adv-cyberpunk 2.8s steps(1, end) infinite;
+}
+.roycss-vfx-cyberpunk-effect::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: oklch(0.95 0.10 180);
+  text-shadow: 4px 0 oklch(0.75 0.30 320);
+  clip-path: inset(0 0 100% 0);
+  animation: roy-vfx-adv-cyberpunk-glitch 2.8s steps(1, end) infinite;
+}
+@keyframes roy-vfx-adv-cyberpunk {
+  0%, 84%, 100% { transform: translate(0); filter: none; }
+  86%           { transform: translate(-3px, 1px); filter: hue-rotate(30deg); }
+  88%           { transform: translate(3px, -1px); filter: hue-rotate(-20deg); }
+  90%, 94%      { transform: translate(-2px, 0); }
+}
+@keyframes roy-vfx-adv-cyberpunk-glitch {
+  0%, 84%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+  86%, 94%      { clip-path: inset(20% 0 50% 0); transform: translate(-8px, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-cyberpunk-effect,
+  .roycss-vfx-cyberpunk-effect::before {
+    animation: none;
+    transform: none;
+    filter: none;
+  }
+}`
+  },
+  {
+    id: "vfx-retro-effect",
+    name: "Retro Effect",
+    category: "visual",
+    description: "Sepia/contrast-treated backdrop with a subtle warm hue drift and a slow vignette breathing, like an old photograph.",
+    tags: ["retro", "sepia", "contrast", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX-3: Retro Effect */
+.roycss-vfx-retro-effect {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, oklch(0.70 0.18 60), oklch(0.55 0.20 30) 60%, oklch(0.40 0.18 350));
+  filter: sepia(0.65) contrast(1.15) saturate(0.85);
+  animation: roy-vfx-adv-retro 6s ease-in-out infinite;
+}
+.roycss-vfx-retro-effect::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      oklch(0 0 0 / 0.12) 0px,
+      oklch(0 0 0 / 0.12) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+}
+.roycss-vfx-retro-effect::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 50%, oklch(0.20 0.04 40 / 0.7) 100%);
+  animation: roy-vfx-adv-retro-vignette 6s ease-in-out infinite;
+}
+@keyframes roy-vfx-adv-retro {
+  0%, 100% { filter: sepia(0.6) contrast(1.15) saturate(0.85) hue-rotate(0deg); }
+  50%      { filter: sepia(0.75) contrast(1.25) saturate(0.95) hue-rotate(10deg); }
+}
+@keyframes roy-vfx-adv-retro-vignette {
+  0%, 100% { opacity: 0.7; }
+  50%      { opacity: 0.85; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-retro-effect,
+  .roycss-vfx-retro-effect::after { animation: none; }
+}`
+  },
+  {
+    id: "vfx-sci-fi-hud",
+    name: "Sci-Fi HUD",
+    category: "visual",
+    description: "Sci-fi HUD panel with a faint grid, sweeping scanline, glow corners, and a tracking reticle in the center.",
+    tags: ["sci-fi", "hud", "grid", "scanline", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX-3: Sci-Fi HUD */
+.roycss-vfx-sci-fi-hud {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 50%, oklch(0.18 0.12 180 / 0.6), oklch(0.08 0.04 220) 80%);
+  border: 1px solid oklch(0.70 0.20 180 / 0.5);
+  box-shadow:
+    inset 0 0 30px oklch(0.60 0.20 180 / 0.25),
+    0 0 24px oklch(0.60 0.20 180 / 0.2);
+}
+.roycss-vfx-sci-fi-hud::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right, oklch(0.70 0.20 180 / 0.18) 1px, transparent 1px) 0 0 / 24px 24px,
+    linear-gradient(to bottom, oklch(0.70 0.20 180 / 0.18) 1px, transparent 1px) 0 0 / 24px 24px;
+  -webkit-mask: radial-gradient(circle at center, #000 60%, transparent 100%);
+  mask: radial-gradient(circle at center, #000 60%, transparent 100%);
+}
+.roycss-vfx-sci-fi-hud::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, oklch(0.85 0.20 180), transparent);
+  box-shadow: 0 0 14px oklch(0.85 0.20 180 / 0.7);
+  animation: roy-vfx-adv-hud-scan 4s linear infinite;
+}
+@keyframes roy-vfx-adv-hud-scan {
+  0%   { transform: translateY(0); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(calc(100% - 3px)); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-sci-fi-hud::after { animation: none; top: 50%; }
+}`
+  },
+  {
+    id: "vfx-liquid-distortion",
+    name: "Liquid Distortion",
+    category: "visual",
+    description: "Text wobbles as if submerged in water, with a slow vertical ripple filter pulsing on a loop.",
+    tags: ["liquid", "distortion", "ripple", "text", "vfx"],
+    previewType: "text",
+    cssCode: `/* VFX-3: Liquid Distortion */
+.roycss-vfx-liquid-distortion {
+  display: inline-block;
+  font-weight: 800;
+  color: oklch(0.95 0.10 200);
+  text-shadow: 0 0 12px oklch(0.70 0.22 200 / 0.5);
+  transform-origin: 50% 50%;
+  animation: roy-vfx-adv-liquid 3s ease-in-out infinite;
+}
+@keyframes roy-vfx-adv-liquid {
+  0%, 100% {
+    transform: skewX(0deg) scaleY(1) translateY(0);
+    filter: blur(0px) hue-rotate(0deg);
+  }
+  25% {
+    transform: skewX(2deg) scaleY(1.03) translateY(-2px);
+    filter: blur(0.4px) hue-rotate(15deg);
+  }
+  50% {
+    transform: skewX(-2deg) scaleY(0.98) translateY(1px);
+    filter: blur(0.6px) hue-rotate(-10deg);
+  }
+  75% {
+    transform: skewX(1.5deg) scaleY(1.02) translateY(-1px);
+    filter: blur(0.3px) hue-rotate(8deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-liquid-distortion { animation: none; transform: none; filter: none; }
+}`
+  },
+  {
+    id: "vfx-spotlight-tracking",
+    name: "Spotlight Tracking",
+    category: "visual",
+    description: "A bright spotlight (radial-gradient) sweeps across a dark surface, revealing the texture beneath as it passes.",
+    tags: ["spotlight", "tracking", "radial-gradient", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX-3: Spotlight Tracking */
+.roycss-vfx-spotlight-tracking {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 50%, oklch(0.30 0.10 220), oklch(0.10 0.04 220) 70%, oklch(0.05 0.02 220));
+}
+.roycss-vfx-spotlight-tracking::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(45deg, oklch(0.70 0.20 180 / 0.06) 0px, oklch(0.70 0.20 180 / 0.06) 8px, transparent 8px, transparent 18px);
+}
+.roycss-vfx-spotlight-tracking::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--x, 50%) var(--y, 50%),
+    oklch(0.95 0.18 60) 0%,
+    oklch(0.85 0.22 60 / 0.5) 12%,
+    transparent 35%
+  );
+  mix-blend-mode: screen;
+  animation: roy-vfx-adv-spotlight 5s ease-in-out infinite;
+}
+@keyframes roy-vfx-adv-spotlight {
+  0%   { background-position: 0% 50%; --x: 10%; --y: 50%; }
+  25%  { --x: 80%; --y: 20%; }
+  50%  { --x: 30%; --y: 80%; }
+  75%  { --x: 70%; --y: 60%; }
+  100% { --x: 10%; --y: 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-spotlight-tracking::after { animation: none; }
+}`
+  },
+  {
+    id: "vfx-mouse-glow",
+    name: "Mouse Glow",
+    category: "visual",
+    description: "A soft glow blob orbits the surface, simulating a cursor-follow light. Pure CSS — uses a :hover proxy and animated offset.",
+    tags: ["mouse", "glow", "cursor", "follow", "vfx"],
+    previewType: "background",
+    cssCode: `/* VFX-3: Mouse Glow */
+.roycss-vfx-mouse-glow {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 50%, oklch(0.18 0.06 260), oklch(0.10 0.04 220) 80%);
+  cursor: crosshair;
+  transition: background 0.4s ease;
+}
+.roycss-vfx-mouse-glow:hover {
+  background:
+    radial-gradient(circle at 50% 50%, oklch(0.24 0.08 260), oklch(0.10 0.04 220) 80%);
+}
+.roycss-vfx-mouse-glow::before {
+  content: "";
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(0.90 0.22 60 / 0.55), oklch(0.85 0.24 320 / 0.25) 40%, transparent 70%);
+  filter: blur(8px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+  pointer-events: none;
+  animation: roy-vfx-adv-mouse-glow 6s ease-in-out infinite;
+}
+.roycss-vfx-mouse-glow:hover::before {
+  opacity: 1;
+  animation: roy-vfx-adv-mouse-glow 4s ease-in-out infinite;
+}
+.roycss-vfx-mouse-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 30%, oklch(0.70 0.20 180 / 0.08), transparent 30%),
+    radial-gradient(circle at 70% 70%, oklch(0.70 0.20 320 / 0.08), transparent 30%);
+  pointer-events: none;
+}
+@keyframes roy-vfx-adv-mouse-glow {
+  0%   { top: 30%; left: 30%; }
+  25%  { top: 60%; left: 70%; }
+  50%  { top: 40%; left: 80%; }
+  75%  { top: 70%; left: 35%; }
+  100% { top: 30%; left: 30%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-mouse-glow::before { animation: none; opacity: 0.7; top: 50%; left: 50%; }
+}`
+  }
+];
+
 // src/lib/roycss-types.ts
 var categoryMeta = {
   animations: {
@@ -49213,6 +64515,60 @@ var categoryMeta = {
     icon: "Sparkle",
     color: "yellow",
     description: "Unique effects that defy categorization"
+  },
+  physics: {
+    label: "Physics Motion",
+    icon: "Atom",
+    color: "emerald",
+    description: "Physics-based motion: springs, elasticity, gravity, and inertia"
+  },
+  liquid: {
+    label: "Liquid & Fluid",
+    icon: "Droplets",
+    color: "sky",
+    description: "Liquid and fluid effects: waves, blobs, drips, and flowing fills"
+  },
+  morphing: {
+    label: "Shape Morphing",
+    icon: "Shapes",
+    color: "fuchsia",
+    description: "Shape-shifting effects: clip-path, border-radius, and form transitions"
+  },
+  "status-state": {
+    label: "Status & State",
+    icon: "Activity",
+    color: "emerald",
+    description: "Status indicators and state transitions: skeletons, success, error, loading, toggles"
+  },
+  audio: {
+    label: "Audio-Reactive",
+    icon: "Music",
+    color: "violet",
+    description: "Pure-CSS simulations of audio visuals: equalizers, waveforms, vinyl, ripples, VU meters"
+  },
+  retro: {
+    label: "Retro & Nostalgic",
+    icon: "Tv",
+    color: "amber",
+    description: "Retro effects: CRT, VHS, arcade neon, synthwave, cassette, and 8-bit aesthetics"
+  },
+  "data-viz": {
+    label: "Data Visualization",
+    icon: "BarChart3",
+    color: "teal",
+    description: "Data viz: rings, gauges, sparklines, bars, counters, and shimmer skeletons"
+  },
+  immersive: {
+    label: "Immersive Backgrounds",
+    icon: "Cloud",
+    color: "cyan",
+    description: "Ambient scene backgrounds: starfields, weather, fire, water, and particle fields"
+  },
+  "advanced-text": {
+    label: "Advanced Text",
+    icon: "TextCursorInput",
+    color: "amber",
+    description: "Cinematic text treatments: typewriters, glitches, neon, kinetic motion, and gradient fills"
   }
 };
 var categoryOrder = [
@@ -49235,6 +64591,15 @@ var categoryOrder = [
   "particles",
   "microinteractions",
   "visual",
+  "physics",
+  "liquid",
+  "morphing",
+  "status-state",
+  "audio",
+  "retro",
+  "data-viz",
+  "immersive",
+  "advanced-text",
   "misc"
 ];
 
@@ -49273,7 +64638,25 @@ var effects = [
   ...effectsBatch31,
   ...effectsBatch32,
   ...effectsBatch33,
-  ...effectsBatch34
+  ...effectsBatch34,
+  ...effectsBatch35,
+  ...effectsBatch36,
+  ...effectsBatch37,
+  ...effectsBatch38,
+  ...effectsBatch39,
+  ...effectsBatch42,
+  ...effectsBatch43,
+  ...effectsBatch44,
+  ...effectsBatch45,
+  ...effectsBatch46,
+  ...effectsBatch47,
+  ...effectsBatch48,
+  ...effectsBatch49,
+  ...effectsBatch40,
+  ...effectsBatch41,
+  ...effectsBatch50,
+  ...effectsBatch51,
+  ...effectsBatch52
 ];
 var allEffectCSS = effects.map((e) => e.cssCode).join(`
 
@@ -49281,16 +64664,1162 @@ var allEffectCSS = effects.map((e) => e.cssCode).join(`
 
 // src/cli/index.ts
 import {
-  writeFileSync,
-  readFileSync,
-  existsSync,
+  writeFileSync as writeFileSync2,
+  readFileSync as readFileSync2,
+  existsSync as existsSync2,
   mkdirSync,
-  readdirSync,
-  statSync,
+  readdirSync as readdirSync2,
+  statSync as statSync2,
   renameSync
 } from "fs";
-import { join, resolve, extname, relative } from "path";
+import { join as join2, resolve as resolve2, extname, relative as relative2 } from "path";
 import * as readline from "readline";
+
+// scripts/codemods/lib/class-scanner.ts
+var CLASS_ATTR_RE = /\b(?:className|class)(\s*)=(\s*)(["'])([\s\S]*?)\3/g;
+function tokenizeAttributeValue(value, offset = 0) {
+  const tokens = [];
+  const len = value.length;
+  let i = 0;
+  while (i < len) {
+    while (i < len && /\s/.test(value[i]))
+      i++;
+    if (i >= len)
+      break;
+    const start = i;
+    while (i < len && !/\s/.test(value[i]))
+      i++;
+    tokens.push({ value: value.slice(start, i), start: offset + start, end: offset + i });
+  }
+  return tokens;
+}
+function isAttrBoundary(source, i) {
+  if (i === 0)
+    return true;
+  return /[\s"'`]/.test(source[i - 1]);
+}
+function scanClassAttributes(source) {
+  const attrs = [];
+  CLASS_ATTR_RE.lastIndex = 0;
+  let m;
+  while ((m = CLASS_ATTR_RE.exec(source)) !== null) {
+    if (!isAttrBoundary(source, m.index))
+      continue;
+    const nameMatch = /^(className|class)/.exec(m[0]);
+    if (!nameMatch)
+      continue;
+    const quote = m[3];
+    const valueStart = m.index + m[0].indexOf(quote) + 1;
+    const valueEnd = valueStart + m[4].length;
+    attrs.push({
+      name: nameMatch[1],
+      quote,
+      start: m.index,
+      end: valueEnd + 1,
+      valueStart,
+      valueEnd,
+      tokens: tokenizeAttributeValue(m[4], valueStart)
+    });
+  }
+  return attrs;
+}
+function isRoycssClass(token) {
+  return /^(roycss|roymotion)-[A-Za-z0-9_-]+$/.test(token);
+}
+
+// scripts/codemods/lib/mapper.ts
+function classify(token, table, options, buckets) {
+  const push = (list, value) => {
+    if (!list.includes(value))
+      list.push(value);
+  };
+  if (options.skipRoycss && isRoycssClass(token)) {
+    push(buckets.alreadyRoycss, token);
+    return null;
+  }
+  if (token in table) {
+    const target = table[token];
+    if (target === null || target === undefined) {
+      push(buckets.kept, token);
+      return null;
+    }
+    return target;
+  }
+  if (options.ignore.some((re) => re.test(token))) {
+    push(buckets.ignored, token);
+    return null;
+  }
+  push(buckets.unknown, token);
+  return null;
+}
+function applyMapping(source, table, options = {}) {
+  const resolved = {
+    skipRoycss: options.skipRoycss ?? true,
+    ignore: options.ignore ?? []
+  };
+  const buckets = { unknown: [], kept: [], ignored: [], alreadyRoycss: [] };
+  const replaced = [];
+  const edits = [];
+  for (const attr of scanClassAttributes(source)) {
+    for (const token of attr.tokens) {
+      const target = classify(token.value, table, resolved, buckets);
+      if (target !== null) {
+        edits.push({ token, target });
+        if (!replaced.some((r) => r.from === token.value && r.to === target)) {
+          replaced.push({ from: token.value, to: target });
+        }
+      }
+    }
+  }
+  let output = source;
+  for (let i = edits.length - 1;i >= 0; i--) {
+    const { token, target } = edits[i];
+    output = output.slice(0, token.start) + target + output.slice(token.end);
+  }
+  return { output, replaced, ...buckets };
+}
+
+// scripts/codemods/lib/reporter.ts
+function summarize(codemodId, reports, wrote) {
+  const unknown = new Set;
+  const kept = new Set;
+  const ignored = new Set;
+  const already = new Set;
+  const approximate = new Set;
+  let filesChanged = 0;
+  let classesReplaced = 0;
+  for (const r of reports) {
+    if (r.changed)
+      filesChanged++;
+    classesReplaced += r.replaced.length;
+    r.unknown.forEach((c) => unknown.add(c));
+    r.kept.forEach((c) => kept.add(c));
+    r.ignored.forEach((c) => ignored.add(c));
+    r.alreadyRoycss.forEach((c) => already.add(c));
+    r.approximate.forEach((c) => approximate.add(c));
+  }
+  return {
+    codemod: codemodId,
+    files: reports.length,
+    filesChanged,
+    classesReplaced,
+    unknownClasses: [...unknown],
+    keptClasses: [...kept],
+    ignoredClasses: [...ignored],
+    alreadyRoycssClasses: [...already],
+    approximateClasses: [...approximate],
+    wrote
+  };
+}
+
+// scripts/codemods/lib/engine.ts
+function defineTableCodemod(config) {
+  const approximateSet = new Set(config.approximate ?? []);
+  return {
+    id: config.id,
+    kind: config.kind,
+    label: config.label,
+    description: config.description,
+    reportOnly: config.reportOnly,
+    reportOnlyReason: config.reportOnlyReason,
+    mappingCount: () => Object.values(config.mappings).filter((v) => v !== null && v !== undefined).length,
+    transform: (source) => {
+      const result = applyMapping(source, config.mappings, {
+        ignore: config.ignore,
+        skipRoycss: config.skipRoycss
+      });
+      const approximate = result.replaced.map((r) => r.from).filter((from) => approximateSet.has(from));
+      return { ...result, approximate };
+    }
+  };
+}
+var MIGRATE_EXTENSIONS = new Set([
+  ".html",
+  ".htm",
+  ".jsx",
+  ".tsx",
+  ".ts",
+  ".js",
+  ".mjs",
+  ".cjs",
+  ".vue",
+  ".svelte",
+  ".astro",
+  ".md",
+  ".mdx"
+]);
+var SKIP_DIRS = new Set(["node_modules", ".git", ".next", "dist", "build", ".cache", "coverage", ".turbo"]);
+
+// scripts/codemods/from-tailwind.ts
+var IGNORED_TAILWIND_UTILITIES = [
+  /^[pm][trblxy]?-(?!roycss)[\w.[\]/%-]+$/,
+  /^gap(-[xyz])?-(?!roycss)[\w.[\]/%-]+$/,
+  /^(flex|grid|block|inline|hidden|contents)$/,
+  /^(flex|grid)-(col|row|wrap|nowrap|cols|rows|flow|auto|grow|shrink)[\w-]*$/,
+  /^(items|justify|justify-items|justify-self|self|place|content)-[\w-]+$/,
+  /^(relative|absolute|fixed|sticky|static)$/,
+  /^(top|bottom|left|right|inset)-(?!roycss)[\w.[\]/%-]+$/,
+  /^z-(?!roycss)[\w.[\]/%-]+$/,
+  /^[wh]-(?!roycss)(min-|max-)?[\w.[\]/%-]+$/,
+  /^[wh]-(min|max)-(?!roycss)[\w.[\]/%-]+$/,
+  /^min-[wh]-(?!roycss)[\w.[\]/%-]+$/,
+  /^max-[wh]-(?!roycss)[\w.[\]/%-]+$/,
+  /^size-(?!roycss)[\w.[\]/%-]+$/,
+  /^(text|font|leading|tracking|line-clamp|list|decoration|underline|uppercase|lowercase|capitalize|truncate|antialiased)[\w-]*$/,
+  /^(bg|from|via|to|border|divide|outline|ring-offset|fill|stroke|text|opacity)-[\w.[\]/%()-]+$/,
+  /^(rounded|border|divide|outline)[\w-]*$/,
+  /^(container|isolate|aspect|object|overflow|overscroll|scroll|snap)[\w-]*$/,
+  /^(transition|duration|ease|delay)[\w-]*$/,
+  /^(select|resize|cursor|appearance|pointer-events|whitespace|break|sr-only|not-sr-only)$/,
+  /^(col|row|order)-[\w-]+$/
+];
+var MAPPINGS = {
+  "animate-pulse": "roycss-pulse-soft",
+  "animate-spin": "roycss-rotate-spin",
+  "animate-ping": null,
+  "animate-bounce": null,
+  "shadow-sm": "roycss-material-elevation-1",
+  shadow: "roycss-material-elevation-1",
+  "shadow-md": "roycss-material-elevation-3",
+  "shadow-lg": "roycss-material-elevation-3",
+  "shadow-xl": "roycss-material-elevation-5",
+  "shadow-2xl": "roycss-material-elevation-5",
+  "shadow-none": null,
+  "backdrop-blur": "roycss-glass-frosted",
+  "backdrop-blur-sm": "roycss-glass-frosted",
+  "backdrop-blur-md": "roycss-glass-frosted",
+  "backdrop-blur-lg": "roycss-glass-frosted",
+  "backdrop-blur-xl": "roycss-glass-frosted",
+  "backdrop-blur-2xl": "roycss-glass-frosted",
+  "backdrop-blur-3xl": "roycss-glass-frosted",
+  blur: null,
+  "blur-sm": null,
+  "blur-md": null,
+  "blur-lg": null,
+  "blur-xl": null,
+  "blur-2xl": null,
+  "blur-3xl": null,
+  ring: null,
+  "ring-0": null,
+  "ring-1": null,
+  "ring-2": null,
+  "ring-4": null,
+  "ring-8": null
+};
+var codemod = defineTableCodemod({
+  id: "from-tailwind",
+  kind: "inbound",
+  label: "Tailwind CSS → RoyCSS",
+  description: "Map Tailwind animate-*/shadow-*/backdrop-blur-* utilities to RoyCSS animation, elevation and glass families; layout utilities stay as-is; unknown classes are reported.",
+  mappings: MAPPINGS,
+  ignore: IGNORED_TAILWIND_UTILITIES
+});
+if (false) {}
+var from_tailwind_default = codemod;
+
+// scripts/codemods/from-bootstrap.ts
+var MAPPINGS2 = {
+  "btn-primary": "roycss-btn-glow",
+  "btn-secondary": "roycss-btn-outline-fill",
+  "btn-success": "roycss-btn-pulse",
+  "btn-danger": "roycss-btn-neon",
+  "btn-warning": "roycss-btn-lift",
+  "btn-info": "roycss-btn-gradient",
+  "btn-light": "roycss-btn-glass-press-b18",
+  "btn-dark": "roycss-btn-3d-push",
+  "btn-outline-primary": "roycss-btn-outline-fill",
+  "btn-outline-secondary": "roycss-btn-outline-fill",
+  "btn-outline-success": "roycss-btn-outline-fill",
+  "btn-outline-danger": "roycss-btn-outline-fill",
+  "btn-outline-warning": "roycss-btn-outline-fill",
+  "btn-outline-info": "roycss-btn-outline-fill",
+  "btn-outline-light": "roycss-btn-outline-fill",
+  "btn-outline-dark": "roycss-btn-outline-fill",
+  btn: null,
+  "btn-lg": null,
+  "btn-sm": null,
+  "btn-group": null,
+  "btn-close": null,
+  "btn-link": null,
+  "btn-toolbar": null,
+  card: "roycss-card-glassmorphism",
+  "card-hover": "roycss-card-hover-lift",
+  "card-body": null,
+  "card-title": null,
+  "card-text": null,
+  "card-header": null,
+  "card-footer": null,
+  "card-img-top": null,
+  "card-group": null,
+  alert: null,
+  "alert-success": "roycss-card-success-state",
+  "alert-danger": "roycss-card-error-state",
+  "alert-warning": "roycss-card-notification",
+  "alert-info": "roycss-card-notification",
+  "alert-primary": null,
+  "alert-secondary": null,
+  "alert-light": null,
+  "alert-dark": null,
+  "alert-heading": null,
+  "alert-link": null,
+  "alert-dismissible": null,
+  badge: "roycss-glass-badge-pill-b18",
+  "badge-pill": "roycss-glass-badge-pill-b18",
+  "badge-primary": "roycss-glass-badge-pill-b18",
+  "badge-secondary": "roycss-glass-badge-pill-b18",
+  "badge-success": "roycss-glass-badge-pill-b18",
+  "badge-danger": "roycss-glass-badge-pill-b18",
+  "badge-warning": "roycss-glass-badge-pill-b18",
+  "badge-info": "roycss-glass-badge-pill-b18",
+  "badge-light": "roycss-glass-badge-pill-b18",
+  "badge-dark": "roycss-glass-badge-pill-b18",
+  "modal-content": "roycss-card-glassmorphism",
+  "modal-backdrop": "roycss-modal-backdrop-blur",
+  modal: null,
+  "modal-dialog": null,
+  "modal-header": null,
+  "modal-body": null,
+  "modal-footer": null,
+  "modal-title": null,
+  fade: null,
+  show: null,
+  "spinner-border": "roycss-loader-spinner",
+  "spinner-border-sm": "roycss-loader-spinner",
+  "spinner-grow": "roycss-loader-pulse-circle",
+  "spinner-grow-sm": "roycss-loader-pulse-circle",
+  "progress-bar": "roycss-loader-progress-bar",
+  "progress-bar-striped": "roycss-loader-progress-bar",
+  "progress-bar-animated": "roycss-loader-indeterminate",
+  progress: null,
+  placeholder: "roycss-loader-skeleton",
+  "placeholder-glow": "roycss-state-skeleton-pulse",
+  "placeholder-wave": "roycss-state-skeleton-wave",
+  navbar: "roycss-glass-nav-bar-b18",
+  "nav-tabs": "roycss-nav-tabs-underline",
+  "nav-pills": "roycss-nav-tabs-underline",
+  breadcrumb: "roycss-nav-breadcrumb",
+  pagination: "roycss-nav-pagination",
+  accordion: "roycss-nav-accordion",
+  "dropdown-menu": "roycss-nav-dropdown",
+  "navbar-brand": null,
+  "navbar-nav": null,
+  "navbar-expand": null,
+  nav: null,
+  "nav-item": null,
+  "nav-link": null,
+  "breadcrumb-item": null,
+  "page-item": null,
+  "page-link": null,
+  "accordion-item": null,
+  "accordion-button": null,
+  "accordion-body": null,
+  "accordion-collapse": null,
+  dropdown: null,
+  "dropdown-item": null,
+  "dropdown-toggle": null,
+  "form-switch": "roycss-form-toggle-switch",
+  "form-floating": "roycss-form-label-float",
+  "is-invalid": "roycss-form-error-shake",
+  "is-valid": "roycss-form-success-check",
+  "form-control": null,
+  "form-control-lg": null,
+  "form-control-sm": null,
+  "form-label": null,
+  "form-select": null,
+  "form-check": null,
+  "form-check-input": null,
+  "form-check-label": null,
+  "form-range": null,
+  "form-text": null,
+  "input-group": null,
+  "input-group-text": null,
+  "was-validated": null,
+  "invalid-feedback": null,
+  "valid-feedback": null,
+  toast: "roycss-state-toast-slide",
+  "toast-body": null,
+  "toast-header": null,
+  table: null,
+  "table-striped": null,
+  "table-bordered": null,
+  "table-hover": null,
+  "table-sm": null,
+  "table-responsive": null,
+  carousel: null,
+  "carousel-inner": null,
+  "carousel-item": null,
+  "list-group": null,
+  "list-group-item": null,
+  offcanvas: null,
+  "offcanvas-body": null,
+  tooltip: null,
+  "tooltip-inner": null,
+  popover: null,
+  "popover-body": null,
+  collapse: null,
+  "visually-hidden": null
+};
+var codemod2 = defineTableCodemod({
+  id: "from-bootstrap",
+  kind: "inbound",
+  label: "Bootstrap 5 → RoyCSS",
+  description: "Map Bootstrap buttons, cards, alerts, badges, spinners, nav and form classes to RoyCSS effect classes; shells and unmatched components are kept and reported.",
+  mappings: MAPPINGS2
+});
+if (false) {}
+var from_bootstrap_default = codemod2;
+
+// scripts/codemods/from-animate-css.ts
+var MAPPINGS3 = {
+  animate__fadeIn: "roycss-fade-in",
+  animate__fadeOut: "roycss-fade-out",
+  animate__fadeInUp: "roycss-fade-in-up",
+  animate__fadeInDown: "roycss-fade-in-down",
+  animate__fadeInLeft: "roycss-fade-in-left",
+  animate__fadeInRight: "roycss-fade-in-right",
+  animate__fadeInUpBig: "roycss-fade-in-up",
+  animate__fadeInDownBig: "roycss-fade-in-down",
+  animate__fadeInLeftBig: "roycss-fade-in-left",
+  animate__fadeInRightBig: "roycss-fade-in-right",
+  animate__fadeOutUp: "roycss-fade-out-up",
+  animate__fadeOutDown: "roycss-fade-out-down",
+  animate__fadeOutLeft: "roycss-fade-out-left",
+  animate__fadeOutRight: "roycss-fade-out-right",
+  animate__fadeOutUpBig: "roycss-fade-out-up",
+  animate__fadeOutDownBig: "roycss-fade-out-down",
+  animate__fadeOutLeftBig: "roycss-fade-out-left",
+  animate__fadeOutRightBig: "roycss-fade-out-right",
+  animate__bounceIn: "roycss-bounce-in",
+  animate__bounceInDown: "roycss-bounce-in-down",
+  animate__bounceInLeft: "roycss-bounce-in-left",
+  animate__bounceInRight: "roycss-bounce-in-right",
+  animate__bounceInUp: "roycss-bounce-in-up",
+  animate__bounceOut: "roycss-bounce-out",
+  animate__slideInUp: "roycss-slide-in-bottom",
+  animate__slideInDown: "roycss-slide-in-top",
+  animate__slideInLeft: "roycss-slide-in-left",
+  animate__slideInRight: "roycss-slide-in-right",
+  animate__slideOutUp: "roycss-slide-out-top",
+  animate__slideOutDown: "roycss-slide-out-bottom",
+  animate__slideOutLeft: "roycss-slide-out-left",
+  animate__slideOutRight: "roycss-slide-out-right",
+  animate__zoomIn: "roycss-zoom-in",
+  animate__zoomInDown: "roycss-zoom-in-down",
+  animate__zoomInLeft: "roycss-zoom-in-left",
+  animate__zoomInRight: "roycss-zoom-in-right",
+  animate__zoomInUp: "roycss-zoom-in-up",
+  animate__zoomOut: "roycss-zoom-out",
+  animate__zoomOutLeft: "roycss-zoom-out-left",
+  animate__zoomOutUp: "roycss-zoom-out-up",
+  animate__zoomOutDown: null,
+  animate__zoomOutRight: null,
+  animate__flipInX: "roycss-flip-in-x",
+  animate__flipInY: "roycss-flip-in-y",
+  animate__lightSpeedIn: "roycss-light-speed-in",
+  animate__lightSpeedInLeft: "roycss-light-speed-in",
+  animate__lightSpeedInRight: "roycss-light-speed-in",
+  animate__rollIn: "roycss-roll-in",
+  animate__rollOut: "roycss-roll-out",
+  animate__jackInTheBox: "roycss-jack-in-box",
+  animate__pulse: "roycss-pulse-soft",
+  animate__heartBeat: "roycss-heartbeat",
+  animate__flash: "roycss-flash",
+  animate__shake: "roycss-shake",
+  animate__headShake: "roycss-shake",
+  animate__swing: "roycss-swing",
+  animate__tada: "roycss-tada",
+  animate__wobble: "roycss-wobble",
+  animate__jello: "roycss-jello",
+  animate__rubberBand: "roycss-rubber-band",
+  animate__animated: null,
+  animate__flip: null,
+  animate__flipOutX: null,
+  animate__flipOutY: null,
+  animate__lightSpeedOut: null,
+  animate__lightSpeedOutRight: null,
+  animate__lightSpeedOutLeft: null,
+  animate__hinge: null,
+  animate__bounce: null,
+  animate__faster: null,
+  animate__fast: null,
+  animate__slow: null,
+  animate__slower: null,
+  animate__repeat_1: null,
+  animate__repeat_2: null,
+  animate__repeat_3: null,
+  animate__infinite: null
+};
+var codemod3 = defineTableCodemod({
+  id: "from-animate-css",
+  kind: "inbound",
+  label: "Animate.css → RoyCSS",
+  description: "Map animate__* entrance/exit/attention animations to RoyCSS animation classes; unmapped variants and speed modifiers stay untouched and are reported.",
+  mappings: MAPPINGS3
+});
+if (false) {}
+var from_animate_css_default = codemod3;
+
+// scripts/codemods/from-mui.ts
+var MAPPINGS4 = {
+  "MuiButton-contained": "roycss-btn-gradient",
+  "MuiButton-containedPrimary": "roycss-btn-glow",
+  "MuiButton-containedSecondary": "roycss-btn-outline-fill",
+  "MuiButton-outlined": "roycss-btn-outline-fill",
+  "MuiButton-outlinedPrimary": "roycss-btn-outline-fill",
+  "MuiButton-outlinedSecondary": "roycss-btn-outline-fill",
+  "MuiButton-text": null,
+  "MuiButton-textPrimary": null,
+  "MuiButton-textSecondary": null,
+  "MuiButton-root": null,
+  "MuiIconButton-root": null,
+  "MuiFab-root": "roycss-btn-pulse",
+  "MuiToggleButton-root": null,
+  "MuiButtonGroup-root": null,
+  "MuiCard-root": "roycss-card-glassmorphism",
+  "MuiCardMedia-root": null,
+  "MuiCardContent-root": null,
+  "MuiCardActions-root": null,
+  "MuiPaper-root": "roycss-card-glassmorphism",
+  "MuiAppBar-root": "roycss-glass-nav-bar-b18",
+  "MuiToolbar-root": null,
+  "MuiDrawer-paper": null,
+  "MuiAccordion-root": "roycss-nav-accordion",
+  "MuiAccordionSummary-root": null,
+  "MuiExpansionPanel-root": null,
+  "MuiDialog-paper": "roycss-card-glassmorphism",
+  "MuiDialogBackdrop-root": "roycss-modal-backdrop-blur",
+  "MuiBackdrop-root": "roycss-modal-backdrop-blur",
+  "MuiModal-root": null,
+  "MuiSnackbarContent-root": "roycss-card-notification",
+  "MuiMenu-paper": "roycss-nav-dropdown",
+  "MuiMenuItem-root": null,
+  "MuiTooltip-tooltip": null,
+  "MuiPopper-root": null,
+  "MuiAlert-root": "roycss-card-notification",
+  "MuiAlert-standardSuccess": "roycss-card-success-state",
+  "MuiAlert-standardError": "roycss-card-error-state",
+  "MuiAlert-standardWarning": "roycss-card-notification",
+  "MuiAlert-standardInfo": "roycss-card-notification",
+  "MuiAlert-filledSuccess": "roycss-card-success-state",
+  "MuiAlert-filledError": "roycss-card-error-state",
+  "MuiAlert-filledWarning": "roycss-card-notification",
+  "MuiAlert-filledInfo": "roycss-card-notification",
+  "MuiSnackbar-root": "roycss-state-toast-slide",
+  "MuiChip-root": "roycss-glass-badge-pill-b18",
+  "MuiChip-filled": "roycss-glass-badge-pill-b18",
+  "MuiChip-outlined": "roycss-glass-badge-pill-b18",
+  "MuiBadge-badge": "roycss-glass-badge-pill-b18",
+  "MuiAvatar-root": "roycss-card-profile-avatar",
+  "MuiAvatar-img": null,
+  "MuiCircularProgress-root": "roycss-loader-spinner",
+  "MuiCircularProgress-indeterminate": "roycss-loader-circle-notch",
+  "MuiLinearProgress-root": "roycss-loader-progress-bar",
+  "MuiLinearProgress-bar": "roycss-loader-indeterminate",
+  "MuiSkeleton-root": "roycss-loader-skeleton",
+  "MuiSkeleton-wave": "roycss-state-skeleton-wave",
+  "MuiSkeleton-pulse": "roycss-state-skeleton-pulse",
+  "MuiSwitch-root": "roycss-form-toggle-switch",
+  "MuiSwitch-track": "roycss-form-toggle-switch",
+  "MuiSwitch-thumb": "roycss-form-toggle-switch",
+  "MuiCheckbox-root": "roycss-form-checkbox-custom",
+  "MuiRadio-root": "roycss-form-radio-custom",
+  "MuiInputBase-root": "roycss-form-focus-glow",
+  "MuiOutlinedInput-root": "roycss-form-focus-glow",
+  "MuiFilledInput-root": "roycss-form-underline-draw",
+  "MuiInputLabel-root": "roycss-form-label-float",
+  "MuiFormLabel-root": "roycss-form-label-float",
+  "MuiFormHelperText-root": null,
+  "MuiSelect-root": null,
+  "MuiNativeSelect-root": null,
+  "MuiSlider-root": null,
+  "MuiAutocomplete-root": null,
+  "MuiTabs-root": null,
+  "MuiTab-root": "roycss-nav-tabs-underline",
+  "MuiTabs-indicator": "roycss-nav-tabs-underline",
+  "MuiBreadcrumbs-root": "roycss-nav-breadcrumb",
+  "MuiBreadcrumbs-li": null,
+  "MuiPagination-root": "roycss-nav-pagination",
+  "MuiPaginationItem-root": "roycss-nav-pagination",
+  "MuiStepper-root": "roycss-nav-stepper",
+  "MuiStep-root": null,
+  "MuiStepLabel-root": null,
+  "MuiTable-root": null,
+  "MuiTableCell-root": null,
+  "MuiTableContainer-root": null,
+  "MuiTableHead-root": null,
+  "MuiTableBody-root": null
+};
+var codemod4 = defineTableCodemod({
+  id: "from-mui",
+  kind: "inbound",
+  label: "Material UI → RoyCSS",
+  description: "Map the top Mui* global class fragments to closest RoyCSS effect classes; shells and emotion hashes are kept untouched and reported.",
+  mappings: MAPPINGS4
+});
+if (false) {}
+var from_mui_default = codemod4;
+
+// scripts/codemods/from-chakra.ts
+var MAPPINGS5 = {
+  "chakra-button": "roycss-btn-glow",
+  "chakra-button__icon": null,
+  "chakra-iconbutton": "roycss-btn-press",
+  "chakra-close-button": "roycss-btn-press",
+  "chakra-input": "roycss-form-focus-glow",
+  "chakra-input__addon": null,
+  "chakra-textarea": "roycss-form-underline-draw",
+  "chakra-select": null,
+  "chakra-form-control": null,
+  "chakra-form-label": "roycss-form-label-float",
+  "chakra-form__helper-text": null,
+  "chakra-form__error-text": null,
+  "chakra-form__required-indicator": null,
+  "chakra-pin-input": null,
+  "chakra-switch__track": "roycss-form-toggle-switch",
+  "chakra-switch__thumb": "roycss-form-toggle-switch",
+  "chakra-switch__container": null,
+  "chakra-checkbox__control": "roycss-form-checkbox-custom",
+  "chakra-checkbox__label": null,
+  "chakra-radio__control": "roycss-form-radio-custom",
+  "chakra-radio__label": null,
+  "chakra-card": "roycss-card-glassmorphism",
+  "chakra-card__body": null,
+  "chakra-card__header": null,
+  "chakra-card__footer": null,
+  "chakra-stack": null,
+  "chakra-flex": null,
+  "chakra-grid": null,
+  "chakra-box": null,
+  "chakra-text": null,
+  "chakra-heading": null,
+  "chakra-container": null,
+  "chakra-wrap": null,
+  "chakra-divider": null,
+  "chakra-alert": "roycss-card-notification",
+  "chakra-alert__title": null,
+  "chakra-alert__desc": null,
+  "chakra-alert__icon": null,
+  "chakra-spinner": "roycss-loader-spinner",
+  "chakra-progress": "roycss-loader-progress-bar",
+  "chakra-progress__track": "roycss-loader-progress-bar",
+  "chakra-progress__bar": "roycss-loader-indeterminate",
+  "chakra-skeleton": "roycss-loader-skeleton",
+  "chakra-skeleton__text": "roycss-skeleton-text-lines",
+  "chakra-toast": "roycss-state-toast-slide",
+  "chakra-modal__content": "roycss-card-glassmorphism",
+  "chakra-modal__overlay": "roycss-modal-backdrop-blur",
+  "chakra-modal__header": null,
+  "chakra-modal__body": null,
+  "chakra-modal__footer": null,
+  "chakra-modal__close-button": null,
+  "chakra-drawer__content": null,
+  "chakra-drawer__overlay": "roycss-modal-backdrop-blur",
+  "chakra-popper": null,
+  "chakra-tooltip": null,
+  "chakra-badge": "roycss-glass-badge-pill-b18",
+  "chakra-tag": "roycss-glass-badge-pill-b18",
+  "chakra-tag__label": null,
+  "chakra-avatar": "roycss-card-profile-avatar",
+  "chakra-avatar__name": null,
+  "chakra-code": null,
+  "chakra-kbd": null,
+  "chakra-table": null,
+  "chakra-tabs__tab": "roycss-nav-tabs-underline",
+  "chakra-tabs__tablist": null,
+  "chakra-tabs__tabpanel": null,
+  "chakra-breadcrumb": "roycss-nav-breadcrumb",
+  "chakra-breadcrumb__link": null,
+  "chakra-accordion": "roycss-nav-accordion",
+  "chakra-accordion__item": null,
+  "chakra-accordion__button": null,
+  "chakra-accordion__panel": null,
+  "chakra-pagination": "roycss-nav-pagination",
+  "chakra-stepper": "roycss-nav-stepper",
+  "chakra-steps": "roycss-nav-stepper",
+  "chakra-menu__list": "roycss-nav-dropdown",
+  "chakra-menu__item": null,
+  "chakra-menu__button": null
+};
+var codemod5 = defineTableCodemod({
+  id: "from-chakra",
+  kind: "inbound",
+  label: "Chakra UI → RoyCSS",
+  description: "Map the top chakra-* class fragments to closest RoyCSS effect classes; layout primitives and emotion hashes are kept untouched and reported.",
+  mappings: MAPPINGS5
+});
+if (false) {}
+var from_chakra_default = codemod5;
+
+// src/lib/roycss-effects.ts
+var effects2 = [
+  ...effectsBatch1,
+  ...effectsBatch2,
+  ...effectsBatch3,
+  ...effectsBatch4,
+  ...effectsBatch5,
+  ...effectsBatch6,
+  ...effectsBatch7,
+  ...effectsBatch8,
+  ...effectsBatch9,
+  ...effectsBatch10,
+  ...effectsBatch11,
+  ...effectsBatch12,
+  ...effectsBatch13,
+  ...effectsBatch14,
+  ...effectsBatch15,
+  ...effectsBatch16,
+  ...effectsBatch17,
+  ...effectsBatch18,
+  ...effectsBatch19,
+  ...effectsBatch20,
+  ...effectsBatch21,
+  ...effectsBatch22,
+  ...effectsBatch23,
+  ...effectsBatch24,
+  ...effectsBatch25,
+  ...effectsBatch26,
+  ...effectsBatch27,
+  ...effectsBatch28,
+  ...effectsBatch29,
+  ...effectsBatch30,
+  ...effectsBatch31,
+  ...effectsBatch32,
+  ...effectsBatch33,
+  ...effectsBatch34,
+  ...effectsBatch35,
+  ...effectsBatch36,
+  ...effectsBatch37,
+  ...effectsBatch38,
+  ...effectsBatch39,
+  ...effectsBatch42,
+  ...effectsBatch43,
+  ...effectsBatch44,
+  ...effectsBatch45,
+  ...effectsBatch46,
+  ...effectsBatch47,
+  ...effectsBatch48,
+  ...effectsBatch49,
+  ...effectsBatch40,
+  ...effectsBatch41,
+  ...effectsBatch50,
+  ...effectsBatch51,
+  ...effectsBatch52
+];
+var allEffectCSS2 = effects2.map((e) => e.cssCode).join(`
+
+`);
+
+// scripts/codemods/lib/catalog.ts
+var cachedClasses = null;
+function getCatalogClasses() {
+  if (cachedClasses)
+    return cachedClasses;
+  const classes = new Set;
+  const selectorRe = /\.((?:roycss|roymotion)-[A-Za-z0-9_-]+)/g;
+  for (const effect of effects2) {
+    for (const m of effect.cssCode.matchAll(selectorRe)) {
+      classes.add(m[1]);
+    }
+  }
+  cachedClasses = classes;
+  return classes;
+}
+function getEffectCssForClass(cls) {
+  const re = new RegExp(`\\.${cls.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![A-Za-z0-9_-])`);
+  for (const effect of effects2) {
+    if (re.test(effect.cssCode))
+      return effect.cssCode;
+  }
+  return null;
+}
+
+// scripts/codemods/to-vanilla-css.ts
+function stripPrefix(cls) {
+  return cls.replace(/^(?:roycss|roymotion)-/, "");
+}
+function rewriteSelectors(css) {
+  return css.replace(/\.((?:roycss|roymotion)-[A-Za-z0-9_-]+)/g, (_m, cls) => `.${stripPrefix(cls)}`);
+}
+function buildVanillaTable() {
+  const table = {};
+  for (const cls of getCatalogClasses())
+    table[cls] = stripPrefix(cls);
+  return table;
+}
+var VANILLA_TABLE = buildVanillaTable();
+var NOT_ROYCSS = /^(?!(?:roycss|roymotion)-)/;
+function transformToVanilla(source) {
+  const result = applyMapping(source, VANILLA_TABLE, {
+    skipRoycss: false,
+    ignore: [NOT_ROYCSS]
+  });
+  const cssBlocks = [];
+  const seenTargets = new Set;
+  const seenBlocks = new Set;
+  for (const r of result.replaced) {
+    if (seenTargets.has(r.to))
+      continue;
+    seenTargets.add(r.to);
+    const css = getEffectCssForClass(r.from);
+    if (css === null)
+      continue;
+    const block = rewriteSelectors(css);
+    if (!seenBlocks.has(block)) {
+      seenBlocks.add(block);
+      cssBlocks.push(block);
+    }
+  }
+  return { ...result, approximate: [], cssBlocks, css: cssBlocks.join(`
+
+`) };
+}
+var codemod6 = {
+  id: "to-vanilla-css",
+  kind: "outbound",
+  label: "RoyCSS → plain CSS (framework-free)",
+  description: "Rewrite roycss-* classes to prefix-stripped plain classes and emit a self-contained CSS block with the rewritten selectors — the lock-in prevention path.",
+  mappingCount: () => Object.keys(VANILLA_TABLE).length,
+  transform: transformToVanilla
+};
+if (false) {}
+var to_vanilla_css_default = codemod6;
+
+// scripts/codemods/to-tailwind.ts
+var MAPPINGS6 = {
+  "roycss-rotate-spin": "animate-spin",
+  "roycss-pulse-soft": "animate-pulse",
+  "roycss-pulse-glow": "animate-pulse",
+  "roycss-float": "animate-bounce",
+  "roycss-heartbeat": "animate-pulse",
+  "roycss-flash": "animate-pulse",
+  "roycss-bounce-in": "animate-bounce",
+  "roycss-fade-in": null,
+  "roycss-fade-out": null,
+  "roycss-zoom-in": null,
+  "roycss-zoom-out": null,
+  "roycss-slide-in-left": null,
+  "roycss-slide-in-right": null,
+  "roycss-flip-in-x": null,
+  "roycss-light-speed-in": null,
+  "roycss-roll-in": null,
+  "roycss-jack-in-box": null,
+  "roycss-shake": null,
+  "roycss-wobble": null,
+  "roycss-jello": null,
+  "roycss-tada": null,
+  "roycss-swing": null,
+  "roycss-rubber-band": null,
+  "roycss-material-elevation-1": "shadow-sm",
+  "roycss-material-elevation-3": "shadow-md",
+  "roycss-material-elevation-5": "shadow-lg",
+  "roycss-glass-frosted": "backdrop-blur",
+  "roycss-glass-frosted-dark": "backdrop-blur",
+  "roycss-btn-glow": null,
+  "roycss-btn-outline-fill": null,
+  "roycss-btn-neon": null,
+  "roycss-card-glassmorphism": null,
+  "roycss-card-hover-lift": null,
+  "roycss-modal-backdrop-blur": null,
+  "roycss-loader-spinner": null,
+  "roycss-loader-skeleton": null,
+  "roycss-glass-nav-bar-b18": null,
+  "roycss-nav-tabs-underline": null,
+  "roycss-form-toggle-switch": null
+};
+var APPROXIMATE = [
+  "roycss-pulse-soft",
+  "roycss-pulse-glow",
+  "roycss-float",
+  "roycss-heartbeat",
+  "roycss-flash",
+  "roycss-bounce-in",
+  "roycss-material-elevation-1",
+  "roycss-material-elevation-3",
+  "roycss-material-elevation-5",
+  "roycss-glass-frosted",
+  "roycss-glass-frosted-dark"
+];
+var NOT_ROYCSS2 = /^(?!(?:roycss|roymotion)-)/;
+var codemod7 = defineTableCodemod({
+  id: "to-tailwind",
+  kind: "outbound",
+  label: "RoyCSS → Tailwind CSS (closest utilities)",
+  description: "Rewrite roycss-* classes to the closest core Tailwind utilities (spin/pulse/bounce, shadow scale, backdrop-blur); approximate mappings are flagged and classes without an equivalent are kept and reported.",
+  mappings: MAPPINGS6,
+  ignore: [NOT_ROYCSS2],
+  approximate: APPROXIMATE,
+  skipRoycss: false
+});
+if (false) {}
+var to_tailwind_default = codemod7;
+
+// scripts/codemods/v1-to-v2.ts
+var V2_GUARD_REASON = "V1→V2 transformation requires the V2 @roycss/* packages (PF-042), which are not published yet — run in report-only mode to size your migration";
+var V1_IMPORT_RE = /(?:@import\s+|from\s+|import\s*\(?\s*|require\s*\(\s*)["'][^"']*roycss[^"']*["']/g;
+function transformV1toV2(source) {
+  const alreadyRoycss = [];
+  const kept = [];
+  for (const attr of scanClassAttributes(source)) {
+    for (const token of attr.tokens) {
+      if (/^(?:roycss|roymotion)-/.test(token.value) && !alreadyRoycss.includes(token.value)) {
+        alreadyRoycss.push(token.value);
+      }
+    }
+  }
+  for (const m of source.matchAll(V1_IMPORT_RE)) {
+    const marker = m[0].trim();
+    if (!kept.includes(marker))
+      kept.push(marker);
+  }
+  return { output: source, replaced: [], unknown: [], kept, ignored: [], alreadyRoycss, approximate: [] };
+}
+var codemod8 = {
+  id: "v1-to-v2",
+  kind: "scaffold",
+  label: "RoyCSS V1 → V2 (report-only)",
+  description: "Inventory V1 usage (roycss-* classes and V1 package imports) to size a future V2 migration; transformation is blocked until the V2 packages ship (PF-042).",
+  reportOnly: true,
+  reportOnlyReason: V2_GUARD_REASON,
+  transform: transformV1toV2
+};
+if (false) {}
+var v1_to_v2_default = codemod8;
+
+// scripts/codemods/index.ts
+var codemods = [
+  from_tailwind_default,
+  from_bootstrap_default,
+  from_animate_css_default,
+  from_mui_default,
+  from_chakra_default,
+  to_vanilla_css_default,
+  to_tailwind_default,
+  v1_to_v2_default
+];
+var codemodIds = codemods.map((c) => c.id);
+function getCodemod(id) {
+  return codemods.find((c) => c.id === id);
+}
+
+// scripts/codemods/lib/engine.ts
+import { readFileSync, writeFileSync, readdirSync, statSync, existsSync } from "fs";
+import { join, resolve, relative, sep } from "path";
+var MIGRATE_EXTENSIONS2 = new Set([
+  ".html",
+  ".htm",
+  ".jsx",
+  ".tsx",
+  ".ts",
+  ".js",
+  ".mjs",
+  ".cjs",
+  ".vue",
+  ".svelte",
+  ".astro",
+  ".md",
+  ".mdx"
+]);
+var SKIP_DIRS2 = new Set(["node_modules", ".git", ".next", "dist", "build", ".cache", "coverage", ".turbo"]);
+function hasMagic(pattern) {
+  return /[*?]/.test(pattern);
+}
+function globToRegexSource(pattern) {
+  let out = "";
+  for (let i = 0;i < pattern.length; i++) {
+    const ch = pattern[i];
+    if (ch === "*") {
+      if (pattern[i + 1] === "*") {
+        i++;
+        if (pattern[i + 1] === "/") {
+          i++;
+          out += "(?:.*/)?";
+        } else {
+          out += ".*";
+        }
+      } else {
+        out += "[^/]*";
+      }
+    } else if (ch === "?") {
+      out += "[^/]";
+    } else if (/[.*+?^${}()|[\]\\]/.test(ch)) {
+      out += "\\" + ch;
+    } else {
+      out += ch;
+    }
+  }
+  return out;
+}
+function walkFiles(dir, base, out) {
+  let entries;
+  try {
+    entries = readdirSync(dir, { withFileTypes: true });
+  } catch {
+    return;
+  }
+  for (const entry of entries) {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      if (entry.name.startsWith(".") || SKIP_DIRS2.has(entry.name))
+        continue;
+      walkFiles(full, base, out);
+    } else if (entry.isFile()) {
+      const ext = entry.name.slice(entry.name.lastIndexOf(".")).toLowerCase();
+      if (MIGRATE_EXTENSIONS2.has(ext))
+        out.push(full);
+    }
+  }
+}
+function globToFiles(glob, cwd) {
+  const pattern = glob.replace(/^\.\//, "").replace(/\/+$/, "");
+  if (!hasMagic(pattern)) {
+    const literal = resolve(cwd, pattern);
+    if (!existsSync(literal))
+      return [];
+    const st = statSync(literal);
+    if (st.isFile())
+      return [literal];
+    if (st.isDirectory()) {
+      const out = [];
+      walkFiles(literal, literal, out);
+      return out;
+    }
+    return [];
+  }
+  const segments = pattern.split("/");
+  let prefix = "";
+  let i = 0;
+  while (i < segments.length && !hasMagic(segments[i])) {
+    prefix = prefix ? `${prefix}/${segments[i]}` : segments[i];
+    i++;
+  }
+  const baseDir = prefix ? resolve(cwd, prefix) : resolve(cwd);
+  if (!existsSync(baseDir) || !statSync(baseDir).isDirectory())
+    return [];
+  const re = new RegExp(`^${globToRegexSource(pattern)}$`);
+  const collected = [];
+  const walkDir = (dir) => {
+    let entries;
+    try {
+      entries = readdirSync(dir, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const entry of entries) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) {
+        if (entry.name.startsWith(".") || SKIP_DIRS2.has(entry.name))
+          continue;
+        walkDir(full);
+      } else if (entry.isFile()) {
+        const rel = relative(resolve(cwd), full).split(sep).join("/");
+        if (re.test(rel))
+          collected.push(full);
+      }
+    }
+  };
+  walkDir(baseDir);
+  return collected.sort();
+}
+function runCodemodOnFiles(def, files, options = {}) {
+  const write = options.write === true && !def.reportOnly;
+  const reports = [];
+  const cssBlocks = [];
+  for (const file of files) {
+    let source;
+    try {
+      source = readFileSync(file, "utf-8");
+    } catch (err) {
+      process.stderr.write(`⚠ skipping unreadable file ${file}: ${err instanceof Error ? err.message : String(err)}
+`);
+      continue;
+    }
+    const result = def.transform(source);
+    const changed = result.output !== source;
+    reports.push({
+      file,
+      changed,
+      replaced: result.replaced,
+      unknown: result.unknown,
+      kept: result.kept,
+      ignored: result.ignored,
+      alreadyRoycss: result.alreadyRoycss,
+      approximate: result.approximate ?? [],
+      css: result.css
+    });
+    for (const block of result.cssBlocks ?? []) {
+      if (!cssBlocks.includes(block))
+        cssBlocks.push(block);
+    }
+    if (write && changed) {
+      writeFileSync(file, result.output, "utf-8");
+    }
+  }
+  const css = cssBlocks.length ? `/* RoyCSS → plain CSS — generated by \`roycss migrate ${def.id}\`
+ * Self-contained: no RoyCSS package required beyond this file.
+ */
+
+${cssBlocks.join(`
+
+`)}
+` : undefined;
+  let cssPath;
+  if (css && write) {
+    cssPath = resolve(options.cwd ?? process.cwd(), options.cssOut ?? "roycss-vanilla.css");
+    writeFileSync(cssPath, css, "utf-8");
+  } else if (css) {
+    cssPath = resolve(options.cwd ?? process.cwd(), options.cssOut ?? "roycss-vanilla.css");
+  }
+  return { reports, summary: summarize(def.id, reports, write), cssPath, css };
+}
+
+// scripts/codemods/lib/reporter.ts
+function joinList(classes, max = 12) {
+  const shown = classes.slice(0, max).join(", ");
+  const extra = classes.length - Math.min(classes.length, max);
+  return extra > 0 ? `${shown}, … +${extra} more` : shown;
+}
+function formatFileReport2(report, detail = false) {
+  const status = report.changed ? "changed" : "unchanged";
+  const parts = [
+    `${report.replaced.length} replaced`,
+    `${report.kept.length} kept (no equivalent)`,
+    `${report.ignored.length} kept as-is`,
+    `${report.unknown.length} unknown`,
+    `${report.alreadyRoycss.length} already roycss`
+  ];
+  const head = `${report.file} — ${status}: ${parts.join(", ")}`;
+  if (!detail)
+    return head;
+  const lines = [head];
+  for (const r of report.replaced)
+    lines.push(`  ✓ ${r.from} → ${r.to}`);
+  for (const cls of report.approximate)
+    lines.push(`  ~ ${cls} → approximate mapping (review)`);
+  for (const cls of report.kept)
+    lines.push(`  = ${cls} kept — no RoyCSS equivalent`);
+  for (const cls of report.unknown)
+    lines.push(`  ? ${cls} unknown — left untouched`);
+  return lines.join(`
+`);
+}
+function formatSummary2(summary) {
+  const lines = [
+    `migrate ${summary.codemod}: ${summary.files} file${summary.files === 1 ? "" : "s"} scanned, ${summary.filesChanged} changed`,
+    `  classes replaced:      ${summary.classesReplaced}`,
+    `  kept (no equivalent):  ${summary.keptClasses.length}${summary.keptClasses.length ? ` — ${joinList(summary.keptClasses)}` : ""}`,
+    `  kept as-is:            ${summary.ignoredClasses.length}${summary.ignoredClasses.length ? ` — ${joinList(summary.ignoredClasses)}` : ""}`,
+    `  unknown:               ${summary.unknownClasses.length}${summary.unknownClasses.length ? ` — ${joinList(summary.unknownClasses)}` : ""}`,
+    `  already roycss:        ${summary.alreadyRoycssClasses.length}${summary.alreadyRoycssClasses.length ? ` — ${joinList(summary.alreadyRoycssClasses)}` : ""}`
+  ];
+  if (summary.approximateClasses.length) {
+    lines.push(`  approximate (review):  ${summary.approximateClasses.length} — ${joinList(summary.approximateClasses)}`);
+  }
+  lines.push(summary.wrote ? "  mode: applied (--write)" : "  mode: dry-run (use --write to apply)");
+  return lines.join(`
+`);
+}
+
+// src/cli/index.ts
 var c = {
   reset: "\x1B[0m",
   bold: "\x1B[1m",
@@ -49372,20 +65901,20 @@ function resolveCategory(arg) {
   return categoryOrder.find((cat) => cat === arg || categoryMeta[cat].label.toLowerCase() === arg.toLowerCase());
 }
 var SOURCE_EXTENSIONS = new Set([".html", ".tsx", ".jsx", ".vue", ".svelte", ".ts", ".js", ".css", ".htm"]);
-var SKIP_DIRS = new Set(["node_modules", ".git", ".next", "dist", "build", ".cache", "coverage", ".turbo"]);
+var SKIP_DIRS3 = new Set(["node_modules", ".git", ".next", "dist", "build", ".cache", "coverage", ".turbo"]);
 function scanSourceFiles(dirs) {
   const results = [];
   function walk(dir) {
     let entries;
     try {
-      entries = readdirSync(dir, { withFileTypes: true });
+      entries = readdirSync2(dir, { withFileTypes: true });
     } catch {
       return;
     }
     for (const entry of entries) {
-      const fullPath = join(dir, entry.name);
+      const fullPath = join2(dir, entry.name);
       if (entry.isDirectory()) {
-        if (entry.name.startsWith(".") || SKIP_DIRS.has(entry.name))
+        if (entry.name.startsWith(".") || SKIP_DIRS3.has(entry.name))
           continue;
         walk(fullPath);
       } else if (entry.isFile()) {
@@ -49396,7 +65925,7 @@ function scanSourceFiles(dirs) {
     }
   }
   for (const dir of dirs) {
-    if (existsSync(dir))
+    if (existsSync2(dir))
       walk(dir);
   }
   return results;
@@ -49407,7 +65936,7 @@ function cmdInit(flags) {
   log(`${c.dim}Initializing RoyCSS in your project...${c.reset}
 `);
   const cssPath = "roycss.css";
-  if (existsSync(cssPath) && !flags.force) {
+  if (existsSync2(cssPath) && !flags.force) {
     info(`roycss.css already exists. Use ${c.cyan}--force${c.reset} to overwrite.`);
   } else {
     const allCSS = effects.map((e) => e.cssCode).join(`
@@ -49420,7 +65949,7 @@ function cmdInit(flags) {
  */
 
 `;
-    writeFileSync(cssPath, header + allCSS);
+    writeFileSync2(cssPath, header + allCSS);
     success(`Created ${c.bold}roycss.css${c.reset} with ${effects.length}+ effects`);
   }
   const frameworkInstructions = {
@@ -49493,7 +66022,7 @@ async function cmdAdd(effectId, flags) {
     return;
   }
   const fileName = `roycss-${effectId}.css`;
-  writeFileSync(fileName, effect.cssCode);
+  writeFileSync2(fileName, effect.cssCode);
   success(`Created ${c.bold}${fileName}${c.reset}`);
   log(`
 ${c.dim}Usage:${c.reset}`);
@@ -49671,9 +66200,9 @@ function cmdDoctor() {
 `);
   let issues = 0;
   let warnings = 0;
-  if (existsSync("roycss.css")) {
+  if (existsSync2("roycss.css")) {
     success(`${c.bold}roycss.css${c.reset} found`);
-    const stat = readFileSync("roycss.css");
+    const stat = readFileSync2("roycss.css");
     if (stat.length > 1000) {
       success(`CSS file size: ${(stat.length / 1024).toFixed(1)}KB`);
       if (stat.length > 1024 * 1024) {
@@ -49685,16 +66214,16 @@ function cmdDoctor() {
       issues++;
     }
   } else {
-    if (existsSync("node_modules/roycss")) {
+    if (existsSync2("node_modules/roycss")) {
       success(`${c.bold}roycss${c.reset} package found in node_modules`);
     } else {
       warn(`${c.bold}roycss.css${c.reset} not found \u2014 run ${c.cyan}roycss init${c.reset} to create it`);
       issues++;
     }
   }
-  if (existsSync("package.json")) {
+  if (existsSync2("package.json")) {
     try {
-      const pkg = JSON.parse(readFileSync("package.json", "utf-8"));
+      const pkg = JSON.parse(readFileSync2("package.json", "utf-8"));
       const deps = { ...pkg.dependencies, ...pkg.devDependencies };
       if (deps.roycss) {
         success(`${c.bold}roycss${c.reset} found in package.json (${deps.roycss})`);
@@ -49714,8 +66243,8 @@ function cmdDoctor() {
   ];
   let foundImport = false;
   for (const ep of entryPoints) {
-    if (existsSync(ep)) {
-      const content = readFileSync(ep, "utf-8");
+    if (existsSync2(ep)) {
+      const content = readFileSync2(ep, "utf-8");
       if (content.includes("roycss")) {
         success(`RoyCSS import found in ${c.bold}${ep}${c.reset}`);
         foundImport = true;
@@ -49723,7 +66252,7 @@ function cmdDoctor() {
       }
     }
   }
-  if (!foundImport && existsSync("roycss.css")) {
+  if (!foundImport && existsSync2("roycss.css")) {
     warn(`No RoyCSS import found in common entry points`);
     log(`  ${c.dim}Add to your entry file:${c.reset}`);
     log(`  ${c.cyan}import "./roycss.css";${c.reset}`);
@@ -49733,7 +66262,7 @@ function cmdDoctor() {
   const srcFiles = scanSourceFiles(["src", "app", "pages", "components"]);
   for (const file of srcFiles) {
     try {
-      const content = readFileSync(file, "utf-8");
+      const content = readFileSync2(file, "utf-8");
       const matches = content.match(/roycss-[a-z0-9-]+/g);
       if (matches) {
         for (const m of matches) {
@@ -49768,10 +66297,10 @@ function cmdDoctor() {
   let oklchViolations = 0;
   const userCssFiles = ["roycss.css", "src/app/globals.css", "src/index.css", "src/styles.css", "styles.css"];
   for (const cssFile of userCssFiles) {
-    if (!existsSync(cssFile))
+    if (!existsSync2(cssFile))
       continue;
     try {
-      const content = readFileSync(cssFile, "utf-8");
+      const content = readFileSync2(cssFile, "utf-8");
       if (content.includes("Generated by: roycss init"))
         continue;
       const hexMatches = content.match(/#[0-9a-fA-F]{3,8}\b/g);
@@ -49791,10 +66320,10 @@ function cmdDoctor() {
   }
   let hasReducedMotion = false;
   for (const cssFile of userCssFiles) {
-    if (!existsSync(cssFile))
+    if (!existsSync2(cssFile))
       continue;
     try {
-      const content = readFileSync(cssFile, "utf-8");
+      const content = readFileSync2(cssFile, "utf-8");
       if (content.includes("prefers-reduced-motion")) {
         hasReducedMotion = true;
         break;
@@ -49830,14 +66359,14 @@ function cmdCreate(projectName, flags) {
     error(`Invalid template "${template}". Valid: ${validTemplates.join(", ")}`);
     process.exit(1);
   }
-  const projectDir = resolve(projectName);
+  const projectDir = resolve2(projectName);
   const cwd = process.cwd();
-  const rel = relative(cwd, projectDir);
+  const rel = relative2(cwd, projectDir);
   if (rel.startsWith("..") && !flags.force) {
     error(`Project path "${projectName}" is outside the current directory. Use --force to allow.`);
     process.exit(1);
   }
-  if (existsSync(projectDir)) {
+  if (existsSync2(projectDir)) {
     if (!flags.force) {
       error(`Directory "${projectName}" already exists. Use --force to overwrite.`);
       process.exit(1);
@@ -49861,7 +66390,7 @@ function cmdCreate(projectName, flags) {
  */
 
 `;
-  writeFileSync(join(projectDir, "roycss.css"), cssHeader + initialEffect.cssCode + `
+  writeFileSync2(join2(projectDir, "roycss.css"), cssHeader + initialEffect.cssCode + `
 `);
   success(`Created ${c.bold}roycss.css${c.reset} with initial effect: ${c.cyan}roycss-${initialEffect.id}${c.reset}`);
   const templates = {
@@ -49873,7 +66402,7 @@ function cmdCreate(projectName, flags) {
     nextjs: () => writeNextjsTemplate(projectDir, initialEffect, projectName)
   };
   templates[template]();
-  writeFileSync(join(projectDir, "README.md"), `# ${projectName}
+  writeFileSync2(join2(projectDir, "README.md"), `# ${projectName}
 
 Generated by \`roycss create\` (RoyCSS CLI v${VERSION}).
 
@@ -49924,7 +66453,7 @@ ${c.bold}RoyCSS commands:${c.reset}`);
 ${c.dim}Docs: https://github.com/Roy-Wanyoike/roycss${c.reset}`);
 }
 function writeVanillaTemplate(projectDir, effect) {
-  writeFileSync(join(projectDir, "package.json"), JSON.stringify({
+  writeFileSync2(join2(projectDir, "package.json"), JSON.stringify({
     name: projectDir.split("/").pop() || "roycss-project",
     version: "0.1.0",
     private: true,
@@ -49934,7 +66463,7 @@ function writeVanillaTemplate(projectDir, effect) {
     }
   }, null, 2) + `
 `);
-  writeFileSync(join(projectDir, "index.html"), `<!DOCTYPE html>
+  writeFileSync2(join2(projectDir, "index.html"), `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -49953,13 +66482,13 @@ function writeVanillaTemplate(projectDir, effect) {
 </body>
 </html>
 `);
-  writeFileSync(join(projectDir, "main.js"), `// Entry point \u2014 add your JavaScript here
+  writeFileSync2(join2(projectDir, "main.js"), `// Entry point \u2014 add your JavaScript here
 console.log("RoyCSS project ready");
 `);
   success(`Created ${c.bold}package.json${c.reset}, ${c.bold}index.html${c.reset}, ${c.bold}main.js${c.reset}`);
 }
 function writeHtmlTemplate(projectDir, effect) {
-  writeFileSync(join(projectDir, "package.json"), JSON.stringify({
+  writeFileSync2(join2(projectDir, "package.json"), JSON.stringify({
     name: projectDir.split("/").pop() || "roycss-html",
     version: "0.1.0",
     private: true,
@@ -49968,7 +66497,7 @@ function writeHtmlTemplate(projectDir, effect) {
     }
   }, null, 2) + `
 `);
-  writeFileSync(join(projectDir, "index.html"), `<!DOCTYPE html>
+  writeFileSync2(join2(projectDir, "index.html"), `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -49990,8 +66519,8 @@ function writeHtmlTemplate(projectDir, effect) {
   success(`Created ${c.bold}package.json${c.reset}, ${c.bold}index.html${c.reset}`);
 }
 function writeReactTemplate(projectDir, effect, projectName) {
-  mkdirSync(join(projectDir, "src"), { recursive: true });
-  writeFileSync(join(projectDir, "package.json"), JSON.stringify({
+  mkdirSync(join2(projectDir, "src"), { recursive: true });
+  writeFileSync2(join2(projectDir, "package.json"), JSON.stringify({
     name: projectName,
     version: "0.1.0",
     private: true,
@@ -50015,7 +66544,7 @@ function writeReactTemplate(projectDir, effect, projectName) {
     }
   }, null, 2) + `
 `);
-  writeFileSync(join(projectDir, "index.html"), `<!DOCTYPE html>
+  writeFileSync2(join2(projectDir, "index.html"), `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -50028,7 +66557,7 @@ function writeReactTemplate(projectDir, effect, projectName) {
   </body>
 </html>
 `);
-  writeFileSync(join(projectDir, "src", "main.tsx"), `import { StrictMode } from "react";
+  writeFileSync2(join2(projectDir, "src", "main.tsx"), `import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./roycss.css";
@@ -50039,7 +66568,7 @@ createRoot(document.getElementById("root")!).render(
   </StrictMode>,
 );
 `);
-  writeFileSync(join(projectDir, "src", "App.tsx"), `export default function App() {
+  writeFileSync2(join2(projectDir, "src", "App.tsx"), `export default function App() {
   return (
     <main style={{ padding: "2rem", fontFamily: "system-ui, sans-serif" }}>
       <h1>Hello, RoyCSS</h1>
@@ -50049,7 +66578,7 @@ createRoot(document.getElementById("root")!).render(
   );
 }
 `);
-  writeFileSync(join(projectDir, "tsconfig.json"), JSON.stringify({
+  writeFileSync2(join2(projectDir, "tsconfig.json"), JSON.stringify({
     compilerOptions: {
       target: "ES2022",
       lib: ["ES2022", "DOM", "DOM.Iterable"],
@@ -50062,7 +66591,7 @@ createRoot(document.getElementById("root")!).render(
     include: ["src"]
   }, null, 2) + `
 `);
-  writeFileSync(join(projectDir, "vite.config.ts"), `import { defineConfig } from "vite";
+  writeFileSync2(join2(projectDir, "vite.config.ts"), `import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
 export default defineConfig({
@@ -50072,8 +66601,8 @@ export default defineConfig({
   success(`Created ${c.bold}package.json${c.reset}, ${c.bold}index.html${c.reset}, ${c.bold}src/main.tsx${c.reset}, ${c.bold}src/App.tsx${c.reset}, ${c.bold}tsconfig.json${c.reset}, ${c.bold}vite.config.ts${c.reset}`);
 }
 function writeVueTemplate(projectDir, effect, projectName) {
-  mkdirSync(join(projectDir, "src"), { recursive: true });
-  writeFileSync(join(projectDir, "package.json"), JSON.stringify({
+  mkdirSync(join2(projectDir, "src"), { recursive: true });
+  writeFileSync2(join2(projectDir, "package.json"), JSON.stringify({
     name: projectName,
     version: "0.1.0",
     private: true,
@@ -50094,7 +66623,7 @@ function writeVueTemplate(projectDir, effect, projectName) {
     }
   }, null, 2) + `
 `);
-  writeFileSync(join(projectDir, "index.html"), `<!DOCTYPE html>
+  writeFileSync2(join2(projectDir, "index.html"), `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -50107,13 +66636,13 @@ function writeVueTemplate(projectDir, effect, projectName) {
   </body>
 </html>
 `);
-  writeFileSync(join(projectDir, "src", "main.ts"), `import { createApp } from "vue";
+  writeFileSync2(join2(projectDir, "src", "main.ts"), `import { createApp } from "vue";
 import App from "./App.vue";
 import "./roycss.css";
 
 createApp(App).mount("#app");
 `);
-  writeFileSync(join(projectDir, "src", "App.vue"), `<script setup lang="ts"></script>
+  writeFileSync2(join2(projectDir, "src", "App.vue"), `<script setup lang="ts"></script>
 
 <template>
   <main style="padding: 2rem; font-family: system-ui, sans-serif;">
@@ -50125,7 +66654,7 @@ createApp(App).mount("#app");
   </main>
 </template>
 `);
-  writeFileSync(join(projectDir, "tsconfig.json"), JSON.stringify({
+  writeFileSync2(join2(projectDir, "tsconfig.json"), JSON.stringify({
     compilerOptions: {
       target: "ES2022",
       module: "ESNext",
@@ -50136,7 +66665,7 @@ createApp(App).mount("#app");
     include: ["src"]
   }, null, 2) + `
 `);
-  writeFileSync(join(projectDir, "vite.config.ts"), `import { defineConfig } from "vite";
+  writeFileSync2(join2(projectDir, "vite.config.ts"), `import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 
 export default defineConfig({
@@ -50146,8 +66675,8 @@ export default defineConfig({
   success(`Created ${c.bold}package.json${c.reset}, ${c.bold}index.html${c.reset}, ${c.bold}src/main.ts${c.reset}, ${c.bold}src/App.vue${c.reset}, ${c.bold}tsconfig.json${c.reset}, ${c.bold}vite.config.ts${c.reset}`);
 }
 function writeSvelteTemplate(projectDir, effect, projectName) {
-  mkdirSync(join(projectDir, "src"), { recursive: true });
-  writeFileSync(join(projectDir, "package.json"), JSON.stringify({
+  mkdirSync(join2(projectDir, "src"), { recursive: true });
+  writeFileSync2(join2(projectDir, "package.json"), JSON.stringify({
     name: projectName,
     version: "0.1.0",
     private: true,
@@ -50168,7 +66697,7 @@ function writeSvelteTemplate(projectDir, effect, projectName) {
     }
   }, null, 2) + `
 `);
-  writeFileSync(join(projectDir, "index.html"), `<!DOCTYPE html>
+  writeFileSync2(join2(projectDir, "index.html"), `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -50181,7 +66710,7 @@ function writeSvelteTemplate(projectDir, effect, projectName) {
   </body>
 </html>
 `);
-  writeFileSync(join(projectDir, "src", "main.ts"), `import App from "./App.svelte";
+  writeFileSync2(join2(projectDir, "src", "main.ts"), `import App from "./App.svelte";
 import "./roycss.css";
 
 const app = new App({
@@ -50190,7 +66719,7 @@ const app = new App({
 
 export default app;
 `);
-  writeFileSync(join(projectDir, "src", "App.svelte"), `<script lang="ts"></script>
+  writeFileSync2(join2(projectDir, "src", "App.svelte"), `<script lang="ts"></script>
 
 <main style="padding: 2rem; font-family: system-ui, sans-serif;">
   <h1>Hello, RoyCSS</h1>
@@ -50200,7 +66729,7 @@ export default app;
   </div>
 </main>
 `);
-  writeFileSync(join(projectDir, "tsconfig.json"), JSON.stringify({
+  writeFileSync2(join2(projectDir, "tsconfig.json"), JSON.stringify({
     compilerOptions: {
       target: "ES2022",
       module: "ESNext",
@@ -50211,7 +66740,7 @@ export default app;
     include: ["src"]
   }, null, 2) + `
 `);
-  writeFileSync(join(projectDir, "vite.config.ts"), `import { defineConfig } from "vite";
+  writeFileSync2(join2(projectDir, "vite.config.ts"), `import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 
 export default defineConfig({
@@ -50221,8 +66750,8 @@ export default defineConfig({
   success(`Created ${c.bold}package.json${c.reset}, ${c.bold}index.html${c.reset}, ${c.bold}src/main.ts${c.reset}, ${c.bold}src/App.svelte${c.reset}, ${c.bold}tsconfig.json${c.reset}, ${c.bold}vite.config.ts${c.reset}`);
 }
 function writeNextjsTemplate(projectDir, effect, projectName) {
-  mkdirSync(join(projectDir, "src", "app"), { recursive: true });
-  writeFileSync(join(projectDir, "package.json"), JSON.stringify({
+  mkdirSync(join2(projectDir, "src", "app"), { recursive: true });
+  writeFileSync2(join2(projectDir, "package.json"), JSON.stringify({
     name: projectName,
     version: "0.1.0",
     private: true,
@@ -50246,7 +66775,7 @@ function writeNextjsTemplate(projectDir, effect, projectName) {
     }
   }, null, 2) + `
 `);
-  writeFileSync(join(projectDir, "src", "app", "layout.tsx"), `import type { Metadata } from "next";
+  writeFileSync2(join2(projectDir, "src", "app", "layout.tsx"), `import type { Metadata } from "next";
 import "../roycss.css";
 
 export const metadata: Metadata = {
@@ -50266,7 +66795,7 @@ export default function RootLayout({
   );
 }
 `);
-  writeFileSync(join(projectDir, "src", "app", "page.tsx"), `export default function Home() {
+  writeFileSync2(join2(projectDir, "src", "app", "page.tsx"), `export default function Home() {
   return (
     <main style={{ padding: "2rem", fontFamily: "system-ui, sans-serif" }}>
       <h1>Hello, RoyCSS</h1>
@@ -50278,7 +66807,7 @@ export default function RootLayout({
   );
 }
 `);
-  writeFileSync(join(projectDir, "tsconfig.json"), JSON.stringify({
+  writeFileSync2(join2(projectDir, "tsconfig.json"), JSON.stringify({
     compilerOptions: {
       target: "ES2022",
       lib: ["dom", "dom.iterable", "esnext"],
@@ -50300,7 +66829,7 @@ export default function RootLayout({
     exclude: ["node_modules"]
   }, null, 2) + `
 `);
-  writeFileSync(join(projectDir, "next.config.ts"), `import type { NextConfig } from "next";
+  writeFileSync2(join2(projectDir, "next.config.ts"), `import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {};
 export default nextConfig;
@@ -50313,9 +66842,9 @@ function cmdUpgrade() {
 `);
   let issues = 0;
   let warnings = 0;
-  if (existsSync("package.json")) {
+  if (existsSync2("package.json")) {
     try {
-      const pkg = JSON.parse(readFileSync("package.json", "utf-8"));
+      const pkg = JSON.parse(readFileSync2("package.json", "utf-8"));
       const deps = { ...pkg.dependencies, ...pkg.devDependencies };
       if (deps.roycss) {
         const versionSpec = deps.roycss;
@@ -50341,9 +66870,9 @@ function cmdUpgrade() {
   } else {
     info(`No package.json found \u2014 skipping version check`);
   }
-  if (existsSync("roycss.css")) {
+  if (existsSync2("roycss.css")) {
     try {
-      const css = readFileSync("roycss.css", "utf-8");
+      const css = readFileSync2("roycss.css", "utf-8");
       const hexCount = (css.match(/#[0-9a-fA-F]{3,8}\b/g) || []).length;
       const rgbaCount = (css.match(/\brgba?\(/g) || []).length;
       if (hexCount + rgbaCount > 0) {
@@ -50360,7 +66889,7 @@ function cmdUpgrade() {
   const knownEffectIds = new Set(effects.map((e) => e.id));
   for (const file of srcFiles) {
     try {
-      const content = readFileSync(file, "utf-8");
+      const content = readFileSync2(file, "utf-8");
       const classMatches = content.match(/class(?:Name)?=["'`{]([^"'`}]+)/g) || [];
       for (const match of classMatches) {
         const tokens = match.replace(/class(?:Name)?=["'`{]/, "").split(/\s+/);
@@ -50382,10 +66911,10 @@ function cmdUpgrade() {
   let hasReducedMotion = false;
   const userCssFiles = ["roycss.css", "src/app/globals.css", "src/index.css", "src/styles.css", "styles.css"];
   for (const cssFile of userCssFiles) {
-    if (!existsSync(cssFile))
+    if (!existsSync2(cssFile))
       continue;
     try {
-      const content = readFileSync(cssFile, "utf-8");
+      const content = readFileSync2(cssFile, "utf-8");
       if (content.includes("prefers-reduced-motion")) {
         hasReducedMotion = true;
         break;
@@ -50423,7 +66952,7 @@ function cmdStats(flags) {
   const fileUsage = new Map;
   for (const file of srcFiles) {
     try {
-      const content = readFileSync(file, "utf-8");
+      const content = readFileSync2(file, "utf-8");
       const matches = content.match(/roycss-([a-z0-9-]+)/g);
       if (matches) {
         const fileEffects = new Set;
@@ -50715,9 +67244,9 @@ function cmdExport(effectIds, flags) {
   const cssBody = toExport.map((e) => e.cssCode).join(`
 
 `);
-  writeFileSync(outFile, header + cssBody + `
+  writeFileSync2(outFile, header + cssBody + `
 `);
-  const sizeKB = (statSync(outFile).size / 1024).toFixed(1);
+  const sizeKB = (statSync2(outFile).size / 1024).toFixed(1);
   success(`Exported ${c.bold}${toExport.length}${c.reset} effect${toExport.length === 1 ? "" : "s"} to ${c.bold}${outFile}${c.reset} (${sizeKB}KB)`);
   log(`
 ${c.dim}Effects:${c.reset}`);
@@ -50791,14 +67320,14 @@ function cmdPlugin(positional, flags) {
     case "list": {
       log(`${c.dim}Scanning ${PLUGINS_DIR}/...${c.reset}
 `);
-      if (!existsSync(PLUGINS_DIR)) {
+      if (!existsSync2(PLUGINS_DIR)) {
         info(`No plugins directory found at ${c.cyan}${PLUGINS_DIR}${c.reset}`);
         log(`  ${c.dim}Scaffold a sample plugin:${c.reset} ${c.cyan}roycss plugin init${c.reset}`);
         return;
       }
       let entries = [];
       try {
-        entries = readdirSync(PLUGINS_DIR).filter((f) => f.endsWith(".js") || f.endsWith(".disabled.js"));
+        entries = readdirSync2(PLUGINS_DIR).filter((f) => f.endsWith(".js") || f.endsWith(".disabled.js"));
       } catch {}
       if (entries.length === 0) {
         info(`No plugins found in ${c.cyan}${PLUGINS_DIR}${c.reset}`);
@@ -50826,11 +67355,11 @@ ${c.dim}Plugins are NOT auto-executed. They run only when explicitly invoked.${c
         error(`Usage: roycss plugin enable --name <plugin-name>`);
         process.exit(1);
       }
-      const disabledPath = join(PLUGINS_DIR, `${name}.disabled.js`);
-      const enabledPath = join(PLUGINS_DIR, `${name}.js`);
-      if (!existsSync(disabledPath)) {
+      const disabledPath = join2(PLUGINS_DIR, `${name}.disabled.js`);
+      const enabledPath = join2(PLUGINS_DIR, `${name}.js`);
+      if (!existsSync2(disabledPath)) {
         error(`No disabled plugin found at ${c.cyan}${disabledPath}${c.reset}`);
-        if (existsSync(enabledPath)) {
+        if (existsSync2(enabledPath)) {
           info(`Plugin "${name}" is already enabled.`);
         }
         process.exit(1);
@@ -50851,11 +67380,11 @@ ${c.dim}Plugins are NOT auto-executed. They run only when explicitly invoked.${c
         error(`Usage: roycss plugin disable --name <plugin-name>`);
         process.exit(1);
       }
-      const enabledPath = join(PLUGINS_DIR, `${name}.js`);
-      const disabledPath = join(PLUGINS_DIR, `${name}.disabled.js`);
-      if (!existsSync(enabledPath)) {
+      const enabledPath = join2(PLUGINS_DIR, `${name}.js`);
+      const disabledPath = join2(PLUGINS_DIR, `${name}.disabled.js`);
+      if (!existsSync2(enabledPath)) {
         error(`No enabled plugin found at ${c.cyan}${enabledPath}${c.reset}`);
-        if (existsSync(disabledPath)) {
+        if (existsSync2(disabledPath)) {
           info(`Plugin "${name}" is already disabled.`);
         }
         process.exit(1);
@@ -50872,13 +67401,13 @@ ${c.dim}Plugins are NOT auto-executed. They run only when explicitly invoked.${c
     }
     case "init": {
       mkdirSync(PLUGINS_DIR, { recursive: true });
-      const samplePath = join(PLUGINS_DIR, "sample.js");
-      if (existsSync(samplePath) && !flags.force) {
+      const samplePath = join2(PLUGINS_DIR, "sample.js");
+      if (existsSync2(samplePath) && !flags.force) {
         warn(`${c.bold}sample.js${c.reset} already exists at ${c.cyan}${samplePath}${c.reset}`);
         log(`  ${c.dim}Use ${c.reset}${c.cyan}--force${c.reset}${c.dim} to overwrite.${c.reset}`);
         return;
       }
-      writeFileSync(samplePath, SAMPLE_PLUGIN_SOURCE);
+      writeFileSync2(samplePath, SAMPLE_PLUGIN_SOURCE);
       success(`Created sample plugin at ${c.bold}${samplePath}${c.reset}`);
       log(`
 ${c.dim}Edit the file to add your custom logic.${c.reset}`);
@@ -50898,6 +67427,80 @@ ${c.dim}Plugin contract & safety: ${c.reset}${c.cyan}docs/adr/cli-platform-v2/TH
       process.exit(1);
   }
 }
+function cmdMigrate(positional, flags) {
+  const codemodId = positional[0];
+  const def = codemodId ? getCodemod(codemodId) : undefined;
+  if (flags.help === true && def) {
+    log(`${c.bold}${c.cyan}roycss migrate ${def.id}${c.reset} \u2014 ${def.label}
+`);
+    log(`  ${def.description}
+`);
+    log(`${c.bold}Usage:${c.reset}`);
+    log(`  ${c.cyan}roycss migrate${c.reset} ${def.id} ${c.magenta}<glob>${c.reset} ${c.gray}[--write]${c.reset}` + `${def.id === "to-vanilla-css" ? ` ${c.gray}[--out <file>]${c.reset}` : ""}`);
+    if (def.mappingCount)
+      log(`
+  mappings: ${def.mappingCount()}`);
+    log(`
+${c.dim}Dry-run by default \u2014 --write applies the rewrite in place.${c.reset}`);
+    if (def.reportOnly) {
+      warn(`report-only: ${def.reportOnlyReason}`);
+    }
+    return;
+  }
+  if (!def) {
+    if (codemodId)
+      error(`Unknown codemod: ${codemodId}`);
+    log(`${c.bold}${c.cyan}roycss migrate${c.reset} \u2014 migration codemods (inbound + outbound)
+`);
+    log(`${c.bold}Usage:${c.reset} roycss migrate ${c.magenta}<codemod>${c.reset} ${c.magenta}<glob>${c.reset} ${c.gray}[--write]${c.reset}
+`);
+    log(`${c.bold}Codemods:${c.reset}`);
+    for (const cd of codemods) {
+      const meta = `${cd.kind}` + (cd.mappingCount ? `, ${cd.mappingCount()} mappings` : "") + (cd.reportOnly ? ", report-only" : "");
+      log(`  ${c.cyan}${cd.id.padEnd(17)}${c.reset} ${cd.label} ${c.gray}(${meta})${c.reset}`);
+    }
+    log(`
+${c.dim}Dry-run by default; unknown classes are never transformed, always reported.${c.reset}`);
+    log(`${c.dim}See docs/codemods.md for the full guide.${c.reset}`);
+    if (codemodId || flags.help !== true)
+      process.exit(1);
+    return;
+  }
+  const glob = positional[1];
+  if (!glob) {
+    error(`Usage: roycss migrate ${def.id} <glob> [--write]`);
+    process.exit(1);
+  }
+  const write = flags.write === true;
+  if (write && def.reportOnly) {
+    error(`${def.id} is report-only: ${def.reportOnlyReason}`);
+    process.exit(1);
+  }
+  const files = globToFiles(glob, process.cwd());
+  if (files.length === 0) {
+    error(`No files matched: ${glob}`);
+    process.exit(1);
+  }
+  if (def.reportOnly) {
+    warn(`${def.id} is report-only: ${def.reportOnlyReason}
+`);
+  }
+  log(`migrate ${def.id} \u2014 ${def.label} ` + `(${files.length} file${files.length === 1 ? "" : "s"}, ${write ? "write" : "dry-run"})
+`);
+  const cssOut = typeof flags.out === "string" ? flags.out : undefined;
+  const result = runCodemodOnFiles(def, files, { cwd: process.cwd(), write, cssOut });
+  for (const report of result.reports) {
+    log(formatFileReport2(report, true));
+  }
+  log(`
+${formatSummary2(result.summary)}`);
+  if (result.cssPath) {
+    log(`
+  css artifact: ${result.cssPath}${write ? "" : " (dry-run \u2014 written with --write)"}`);
+  }
+  if (write)
+    success(`Applied changes to ${result.summary.filesChanged} file(s).`);
+}
 function cmdHelp() {
   log(`${c.bold}${c.cyan}RoyCSS CLI${c.reset} ${c.gray}v${VERSION}${c.reset}`);
   log(`${c.dim}${effects.length}+ production-ready CSS effects across ${categoryOrder.length} categories${c.reset}
@@ -50916,6 +67519,7 @@ function cmdHelp() {
   log(`  ${c.cyan}browse${c.reset} [category]         Interactive TUI browser for effects`);
   log(`  ${c.cyan}export${c.reset} <id> [id...]       Export a subset of effects to a CSS file`);
   log(`  ${c.cyan}plugin${c.reset} <action>           Manage plugins (list/enable/disable/init)`);
+  log(`  ${c.cyan}migrate${c.reset} <codemod> <glob>    Run a migration codemod \u2014 dry-run by default (see docs/codemods.md)`);
   log(`  ${c.cyan}version${c.reset}                   Show CLI version`);
   log(`  ${c.cyan}help${c.reset}                      Show this help message`);
   log(`
@@ -50930,6 +67534,7 @@ ${c.bold}Flags:${c.reset}`);
   log(`  ${c.cyan}--category${c.reset} <cat>          Export all effects in category (use with ${c.dim}export${c.reset})`);
   log(`  ${c.cyan}--out${c.reset} <file>              Output file path (use with ${c.dim}export${c.reset})`);
   log(`  ${c.cyan}--name${c.reset} <plugin-name>      Plugin name (use with ${c.dim}plugin enable/disable${c.reset})`);
+  log(`  ${c.cyan}--write${c.reset}                    Apply a migration codemod in place (use with ${c.dim}migrate${c.reset})`);
   log(`
 ${c.bold}Examples:${c.reset}`);
   log(`  ${c.gray}roycss init${c.reset}`);
@@ -50954,6 +67559,9 @@ ${c.bold}Examples:${c.reset}`);
   log(`  ${c.gray}roycss plugin list${c.reset}`);
   log(`  ${c.gray}roycss plugin init${c.reset}`);
   log(`  ${c.gray}roycss plugin enable --name my-plugin${c.reset}`);
+  log(`  ${c.gray}roycss migrate from-bootstrap "src/**/*.html"${c.reset}`);
+  log(`  ${c.gray}roycss migrate from-tailwind src/ --write${c.reset}`);
+  log(`  ${c.gray}roycss migrate to-vanilla-css src/ --write --out roycss-vanilla.css${c.reset}`);
   log(`
 ${c.dim}Learn more: https://github.com/Roy-Wanyoike/roycss${c.reset}`);
   log(`${c.dim}Docs: docs/adr/cli-platform-v2/${c.reset}`);
@@ -51020,6 +67628,9 @@ async function main() {
       break;
     case "plugin":
       cmdPlugin(positional, flags);
+      break;
+    case "migrate":
+      cmdMigrate(positional, flags);
       break;
     case "version":
     case "--version":

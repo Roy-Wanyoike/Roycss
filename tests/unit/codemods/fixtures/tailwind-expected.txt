@@ -1,0 +1,7 @@
+export function Card({ title }: { title: string }) {
+  return (
+    <div className="flex items-center gap-4 p-4 roycss-material-elevation-3 roycss-glass-frosted roycss-pulse-soft">
+      <span className="roycss-pulse-glow badge-unknown-class">{title}</span>
+    </div>
+  );
+}

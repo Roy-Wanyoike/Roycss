@@ -1,0 +1,10 @@
+export function Demo() {
+  return (
+    <div>
+      <button className="chakra-button chakra-button__icon">OK</button>
+      <input className="chakra-input css-hash-99" />
+      <div className="chakra-card chakra-card__body chakra-stack">x</div>
+      <span className="chakra-spinner">…</span>
+    </div>
+  );
+}

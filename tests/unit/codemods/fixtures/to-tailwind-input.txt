@@ -1,0 +1,7 @@
+export function Demo() {
+  return (
+    <div className="roycss-rotate-spin roycss-material-elevation-3 roycss-fade-in my-own">
+      <span className="roycss-glass-frosted">glass</span>
+    </div>
+  );
+}

@@ -1,0 +1,10 @@
+export function Demo() {
+  return (
+    <div>
+      <button className="roycss-btn-glow MuiButton-root css-1a2b3c">Go</button>
+      <Paper className="roycss-card-glassmorphism my-shadow">doc</Paper>
+      <div className="roycss-loader-spinner" />
+      <div className="roycss-loader-skeleton roycss-state-skeleton-wave">loading…</div>
+    </div>
+  );
+}

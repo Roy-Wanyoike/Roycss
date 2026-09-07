@@ -17,6 +17,7 @@
  *   roycss browse [category]       Interactive TUI browser for effects
  *   roycss export <id> [id...]     Export a subset of effects to a CSS file
  *   roycss plugin <action>         List/enable/disable/init plugins in .roycss/plugins/
+ *   roycss migrate <codemod> <glob> Run a migration codemod (dry-run by default)
  *   roycss version                 Show CLI version
  *   roycss help                    Show help
  *
@@ -31,6 +32,7 @@
  *   --category <cat>               Export all effects in category (use with export)
  *   --out <file>                   Output file path (use with export)
  *   --name <plugin-name>           Plugin name (use with plugin enable/disable)
+ *   --write                        Apply a migration codemod in place (use with migrate)
  */
 
 import { effects, categoryMeta, categoryOrder } from "../lib/roycss-effects";
@@ -46,6 +48,11 @@ import {
 } from "fs";
 import { join, dirname, resolve, extname, relative } from "path";
 import * as readline from "readline";
+
+// Migration codemods (PF-015, issue #95) — registry + shared engine
+import { codemods, getCodemod } from "../../scripts/codemods/index";
+import { globToFiles, runCodemodOnFiles } from "../../scripts/codemods/lib/engine";
+import { formatFileReport, formatSummary } from "../../scripts/codemods/lib/reporter";
 
 // ═══════════════════════════════════════════════════════════════
 // Terminal colors
@@ -1975,6 +1982,91 @@ function cmdPlugin(positional: string[], flags: Record<string, string | boolean>
 }
 
 // ═══════════════════════════════════════════════════════════════
+// Migration codemods (PF-015, issue #95)
+// ═══════════════════════════════════════════════════════════════
+
+/**
+ * `roycss migrate <codemod> <glob> [--write]`
+ *
+ * Dry-run by default; `--write` applies the rewrite in place. Unknown
+ * classes are never transformed, always reported. `to-vanilla-css` also
+ * accepts `--out <file>` for the emitted plain-CSS artifact.
+ */
+function cmdMigrate(positional: string[], flags: Record<string, string | boolean>) {
+  const codemodId = positional[0];
+  const def = codemodId ? getCodemod(codemodId) : undefined;
+
+  // `roycss migrate <id> --help` — per-codemod help
+  if (flags.help === true && def) {
+    log(`${c.bold}${c.cyan}roycss migrate ${def.id}${c.reset} — ${def.label}\n`);
+    log(`  ${def.description}\n`);
+    log(`${c.bold}Usage:${c.reset}`);
+    log(
+      `  ${c.cyan}roycss migrate${c.reset} ${def.id} ${c.magenta}<glob>${c.reset} ${c.gray}[--write]${c.reset}` +
+        `${def.id === "to-vanilla-css" ? ` ${c.gray}[--out <file>]${c.reset}` : ""}`,
+    );
+    if (def.mappingCount) log(`\n  mappings: ${def.mappingCount()}`);
+    log(`\n${c.dim}Dry-run by default — --write applies the rewrite in place.${c.reset}`);
+    if (def.reportOnly) {
+      warn(`report-only: ${def.reportOnlyReason}`);
+    }
+    return;
+  }
+
+  // `roycss migrate [--help]` — list every codemod
+  if (!def) {
+    if (codemodId) error(`Unknown codemod: ${codemodId}`);
+    log(`${c.bold}${c.cyan}roycss migrate${c.reset} — migration codemods (inbound + outbound)\n`);
+    log(`${c.bold}Usage:${c.reset} roycss migrate ${c.magenta}<codemod>${c.reset} ${c.magenta}<glob>${c.reset} ${c.gray}[--write]${c.reset}\n`);
+    log(`${c.bold}Codemods:${c.reset}`);
+    for (const cd of codemods) {
+      const meta =
+        `${cd.kind}` +
+        (cd.mappingCount ? `, ${cd.mappingCount()} mappings` : "") +
+        (cd.reportOnly ? ", report-only" : "");
+      log(`  ${c.cyan}${cd.id.padEnd(17)}${c.reset} ${cd.label} ${c.gray}(${meta})${c.reset}`);
+    }
+    log(`\n${c.dim}Dry-run by default; unknown classes are never transformed, always reported.${c.reset}`);
+    log(`${c.dim}See docs/codemods.md for the full guide.${c.reset}`);
+    if (codemodId || flags.help !== true) process.exit(1);
+    return;
+  }
+
+  const glob = positional[1];
+  if (!glob) {
+    error(`Usage: roycss migrate ${def.id} <glob> [--write]`);
+    process.exit(1);
+  }
+  const write = flags.write === true;
+  if (write && def.reportOnly) {
+    error(`${def.id} is report-only: ${def.reportOnlyReason}`);
+    process.exit(1);
+  }
+  const files = globToFiles(glob, process.cwd());
+  if (files.length === 0) {
+    error(`No files matched: ${glob}`);
+    process.exit(1);
+  }
+  if (def.reportOnly) {
+    warn(`${def.id} is report-only: ${def.reportOnlyReason}\n`);
+  }
+  log(
+    `migrate ${def.id} — ${def.label} ` +
+      `(${files.length} file${files.length === 1 ? "" : "s"}, ${write ? "write" : "dry-run"})\n`,
+  );
+  const cssOut = typeof flags.out === "string" ? flags.out : undefined;
+  const result = runCodemodOnFiles(def, files, { cwd: process.cwd(), write, cssOut });
+  for (const report of result.reports) {
+    log(formatFileReport(report, true));
+  }
+  log(`\n${formatSummary(result.summary)}`);
+  if (result.cssPath) {
+    log(`\n  css artifact: ${result.cssPath}${write ? "" : " (dry-run — written with --write)"}`);
+  }
+  if (write) success(`Applied changes to ${result.summary.filesChanged} file(s).`);
+}
+
+// ═══════════════════════════════════════════════════════════════
 // Help
 // ═══════════════════════════════════════════════════════════════
 
@@ -1996,6 +2088,7 @@ function cmdHelp() {
   log(`  ${c.cyan}browse${c.reset} [category]         Interactive TUI browser for effects`);
   log(`  ${c.cyan}export${c.reset} <id> [id...]       Export a subset of effects to a CSS file`);
   log(`  ${c.cyan}plugin${c.reset} <action>           Manage plugins (list/enable/disable/init)`);
+  log(`  ${c.cyan}migrate${c.reset} <codemod> <glob>    Run a migration codemod — dry-run by default (see docs/codemods.md)`);
   log(`  ${c.cyan}version${c.reset}                   Show CLI version`);
   log(`  ${c.cyan}help${c.reset}                      Show this help message`);
 
@@ -2010,6 +2103,7 @@ function cmdHelp() {
   log(`  ${c.cyan}--category${c.reset} <cat>          Export all effects in category (use with ${c.dim}export${c.reset})`);
   log(`  ${c.cyan}--out${c.reset} <file>              Output file path (use with ${c.dim}export${c.reset})`);
   log(`  ${c.cyan}--name${c.reset} <plugin-name>      Plugin name (use with ${c.dim}plugin enable/disable${c.reset})`);
+  log(`  ${c.cyan}--write${c.reset}                    Apply a migration codemod in place (use with ${c.dim}migrate${c.reset})`);
 
   log(`\n${c.bold}Examples:${c.reset}`);
   log(`  ${c.gray}roycss init${c.reset}`);
@@ -2034,6 +2128,9 @@ function cmdHelp() {
   log(`  ${c.gray}roycss plugin list${c.reset}`);
   log(`  ${c.gray}roycss plugin init${c.reset}`);
   log(`  ${c.gray}roycss plugin enable --name my-plugin${c.reset}`);
+  log(`  ${c.gray}roycss migrate from-bootstrap "src/**/*.html"${c.reset}`);
+  log(`  ${c.gray}roycss migrate from-tailwind src/ --write${c.reset}`);
+  log(`  ${c.gray}roycss migrate to-vanilla-css src/ --write --out roycss-vanilla.css${c.reset}`);
 
   log(`\n${c.dim}Learn more: https://github.com/Roy-Wanyoike/roycss${c.reset}`);
   log(`${c.dim}Docs: docs/adr/cli-platform-v2/${c.reset}`);
@@ -2107,6 +2204,9 @@ async function main() {
       break;
     case "plugin":
       cmdPlugin(positional, flags);
+      break;
+    case "migrate":
+      cmdMigrate(positional, flags);
       break;
     case "version":
     case "--version":

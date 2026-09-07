@@ -539,9 +539,17 @@ if scope expands.
 
 ### PF-015: Codemod library — inbound (Tailwind / Bootstrap / Animate.css / MUI / Chakra → RoyCSS) + outbound + V1→V2
 - **Area:** tooling
-- **State:** partial. `scripts/migrate-colors.ts` and
-  `scripts/migrate-logical.ts` exist for self only. No V1→V2 codemod,
-  no inbound from competitors, no outbound to vanilla CSS. (V2 §14,
+- **State:** shipped (issue #95, PR #98). Inbound codemods
+  `scripts/codemods/from-{tailwind,bootstrap,animate-css,mui,chakra}.ts`
+  (215 catalog-validated semantic mappings), outbound
+  `scripts/codemods/to-{vanilla-css,tailwind}.ts` (lock-in prevention;
+  to-vanilla-css emits a self-contained plain-CSS artifact), report-only
+  `scripts/codemods/v1-to-v2.ts` scaffold (guarded on PF-042 packages),
+  `roycss migrate <codemod> <glob> [--write]` CLI subcommand (dry-run
+  default; unknown classes never transformed, always reported),
+  `docs/codemods.md` usage guide, and a fixture + golden-output corpus in
+  `tests/unit/codemods/` (136 tests, incl. catalog-validation pinning
+  every mapping target against the live `src/lib` class set). (V2 §14,
   COMPETITIVE-ANALYSIS R3, LABS-34 §5.5, LABS-35 §9, ENTERPRISE-REVIEW R11.)
 - **Acceptance:**
   1. `scripts/codemods/v1-to-v2.ts` — V1 → V2 (depends on V2 packages

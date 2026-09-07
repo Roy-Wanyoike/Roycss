@@ -1,0 +1,10 @@
+export function Demo() {
+  return (
+    <div>
+      <button className="MuiButton-containedPrimary MuiButton-root css-1a2b3c">Go</button>
+      <Paper className="MuiPaper-root my-shadow">doc</Paper>
+      <div className="MuiCircularProgress-root" />
+      <div className="MuiSkeleton-root MuiSkeleton-wave">loading…</div>
+    </div>
+  );
+}

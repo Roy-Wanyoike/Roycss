@@ -106,12 +106,12 @@ describe("buildDocument (issue #94 A4)", () => {
     expect(keys).toEqual(sorted);
     // The generator's own endpoint is added manually (dot in mount path
     // hides it from the static walker).
-    expect(doc.paths["/api/v1/openapi.json"].get).toBeTruthy();
+    expect(doc.paths["/api/v1/openapi.json"]?.get).toBeTruthy();
     // Envelope + error schemas exist.
     expect(doc.components.schemas.EnvelopeDataMeta).toBeTruthy();
     expect(doc.components.schemas.ErrorEnvelope).toBeTruthy();
     // Every operation references the error envelope on 429.
-    const effectsGet = doc.paths["/api/v1/effects"].get;
+    const effectsGet = doc.paths["/api/v1/effects"]!.get!;
     expect(effectsGet.responses["429"]).toBeTruthy();
   });
 });

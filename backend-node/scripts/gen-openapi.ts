@@ -282,9 +282,14 @@ function buildOperation(route: BackendRouteInfo): Operation {
   };
 
   // Path parameters.
-  const params = pathParams(route.path).map((name) => ({
+  const params: {
+    name: string;
+    in: "path" | "query";
+    required: boolean;
+    schema: Record<string, unknown>;
+  }[] = pathParams(route.path).map((name) => ({
     name,
-    in: "path",
+    in: "path" as const,
     required: true,
     schema: { type: "string" },
   }));

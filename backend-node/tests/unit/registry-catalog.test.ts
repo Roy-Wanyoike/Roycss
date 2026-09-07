@@ -29,6 +29,7 @@ import {
 interface Widget {
   id: string;
   name: string;
+  description: string;
 }
 
 beforeEach(() => {

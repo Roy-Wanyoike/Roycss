@@ -43,7 +43,8 @@ import {
   createApiKey,
   listApiKeys,
   revokeApiKey,
-} from "../api-keys/service.js";
+} from "../api-keys/service.js";import { recordAuditEvent } from "../audit/service.js";
+
 import {
   ApiKeyParamsSchema,
   CreateApiKeySchema,
@@ -58,6 +59,14 @@ authRouter.post(
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<typeof RegisterInputSchema>;
     const result = await registerUser(input);
+    await recordAuditEvent({
+      actor: result.user.id,
+      action: "auth.user.register",
+      resourceType: "user",
+      resourceId: result.user.id,
+      requestId: req.requestId,
+      metadata: { email: result.user.email },
+    });
     res.status(201).json({
       data: {
         user: result.user,
@@ -76,6 +85,14 @@ authRouter.post(
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<typeof LoginInputSchema>;
     const result = await loginUser(input);
+    await recordAuditEvent({
+      actor: result.user.id,
+      action: "auth.user.login",
+      resourceType: "user",
+      resourceId: result.user.id,
+      requestId: req.requestId,
+      metadata: { email: result.user.email },
+    });
     res.json({
       data: {
         user: result.user,
@@ -94,6 +111,13 @@ authRouter.post(
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<typeof RefreshInputSchema>;
     const result = await refreshTokens(input.refreshToken);
+    await recordAuditEvent({
+      actor: result.user.id,
+      action: "auth.token.refresh",
+      resourceType: "user",
+      resourceId: result.user.id,
+      requestId: req.requestId,
+    });
     res.json({
       data: {
         user: result.user,
@@ -132,6 +156,13 @@ authRouter.post(
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<typeof CreateApiKeySchema>;
     const result = await createApiKey({ ...input, ownerId: req.user!.sub });
+    await recordAuditEvent({
+      actor: req.user!.sub,
+      action: "auth.api_key.create",
+      resourceType: "api_key",
+      resourceId: result.apiKey.id,
+      requestId: req.requestId,
+    });
     res.status(201).json({
       data: {
         apiKey: result.apiKey,
@@ -163,6 +194,13 @@ authRouter.delete(
   asyncHandler(async (req, res) => {
     const { id } = req.params as unknown as z.infer<typeof ApiKeyParamsSchema>;
     const revoked = await revokeApiKey(req.user!.sub, id);
+    await recordAuditEvent({
+      actor: req.user!.sub,
+      action: "auth.api_key.revoke",
+      resourceType: "api_key",
+      resourceId: id,
+      requestId: req.requestId,
+    });
     res.json({ data: revoked });
   }),
 );

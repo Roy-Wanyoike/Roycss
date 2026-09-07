@@ -361,11 +361,32 @@ if scope expands.
 
 ### PF-009: backend-node hardening batch (TODO A1, A4, A5, A6, A7, A9)
 - **Area:** backend-node
-- **State:** partial — registry module is npm-backed; OpenAPI is inline
-  in `routes.ts` files; rate-limit is in-memory sliding window; audit
-  module exists but coverage is sparse; workers are in-process;
-  observability has structured logs but no per-route metrics. (ROYCSS_BACKEND_TODO
+- **State:** DONE (issue #94, PR #97). (ROYCSS_BACKEND_TODO
   A1/A4/A5/A6/A7/A9, ROYCSS_OBSERVABILITY §7, ROYCSS_API_SPECIFICATION §2.)
+- **Shipped:** the hardening batch landed in PR #97
+  (branch `feat/backend-hardening`, issue #94) — registry catalog is the
+  single source of truth for framework content
+  (`GET /api/v1/registry/resolve/:slug`; effects/patterns/themes/icons/
+  motion/pro-components/tokens services delegate reads through
+  `modules/registry/catalog.ts`; items carry `version` + `latestVersion`),
+  OpenAPI 3.1 generated from routes + Zod schemas
+  (`npm run gen:openapi` → `api/openapi.json`, 254 paths / 271
+  operations; drift gate `npm run gen:openapi:check`; served at
+  `GET /api/v1/openapi.json`), rate limiting moved behind a swappable
+  `RateLimiter` interface with the five tiers
+  (`general|auth|contact|ai|search`; `setRateLimiter()` is the PF-003
+  Redis hook), audit coverage on every mutating route of the modules
+  that exist in backend-node (auth 5/5, marketplace, enterprise,
+  governance, workspace — billing/favorites/collections/settings have
+  no backend-node module yet, audit-center is read-only) plus the admin
+  query `GET /api/v1/audit?actor=&action=&since=`, in-process job queue
+  (`JobQueue` interface, `POST /api/v1/{accessibility,analytics,architect}/jobs`
+  → `{jobId}` + `GET .../jobs/:id`), and readiness + observability
+  (`GET /api/v1/health/ready` with `{checks:{db,registry,search}}`,
+  503 on critical degradation; per-route p50/p95/p99 latency histograms
+  at admin `GET /api/v1/metrics/routes`; requestId propagated
+  end-to-end). Verified: 130/130 vitest tests green, `tsc --noEmit`
+  0 errors, OpenAPI drift check green, `api:check` in sync.
 - **Acceptance:**
   1. **A1 — Registry single source of truth:** `GET /api/v1/registry/resolve/:slug`
      returns the canonical effect/component/pattern regardless of

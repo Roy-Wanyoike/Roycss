@@ -41,6 +41,9 @@ const EnvSchema = z.object({
   RATE_LIMIT_MAX_GENERAL: z.coerce.number().int().positive().default(100),
   RATE_LIMIT_MAX_AUTH: z.coerce.number().int().positive().default(10),
   RATE_LIMIT_MAX_CONTACT: z.coerce.number().int().positive().default(5),
+  // ─── Per-route rate-limit tiers (PF-009 / issue #94 A5) ───────────
+  RATE_LIMIT_MAX_AI: z.coerce.number().int().positive().default(20),
+  RATE_LIMIT_MAX_SEARCH: z.coerce.number().int().positive().default(60),
 
   // ─── Per-API-key rate limiting (issue #65) ──────────────────────
   API_KEY_RATE_LIMIT_MAX: z.coerce.number().int().positive().default(120),

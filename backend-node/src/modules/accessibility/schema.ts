@@ -41,3 +41,10 @@ export const ContrastParamsSchema = z.object({
     .min(1, "bg is required")
     .regex(HEX_RE, "bg must be a 3- or 6-digit hex color (e.g. #fff or #ffffff)"),
 });
+
+// ─── PF-009 / issue #94 (A7) — job queue endpoints ────────────────────────
+
+/** Params for GET /accessibility/jobs/:id. */
+export const JobParamsSchema = z.object({
+  id: z.string().min(1),
+});

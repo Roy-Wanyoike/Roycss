@@ -32,7 +32,6 @@ export interface RouteEntry {
   module: string;
 }
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 interface LayerKey {
   name: string;
 }

@@ -277,22 +277,23 @@ export function parseMounts(): MountInfo[] {
   for (const m of appSrc.matchAll(mountRe)) {
     // Both groups are non-optional in mountRe — safe on a match.
     const routerVar = m[2]!;
-    const module = routerToModule.get(routerVar);
-    if (!module) {
+    // Named `moduleName` (not `module`) — `no-assign-module-variable`.
+    const moduleName = routerToModule.get(routerVar);
+    if (!moduleName) {
       throw new Error(
         `app.ts mounts router "${routerVar}" at /${m[1]} but no matching ` +
           `import from ../modules/<name>/routes.js was found`,
       );
     }
-    mounts.push({ mount: m[1]!, module, routerVar });
+    mounts.push({ mount: m[1]!, module: moduleName, routerVar });
   }
   return mounts;
 }
 
 /** True when the module touches Prisma (imports lib/db.js). */
-function modulePersisted(module: string): boolean {
+function modulePersisted(moduleName: string): boolean {
   for (const f of ["service.ts", "routes.ts"]) {
-    const p = join(BACKEND_ROOT, `src/modules/${module}/${f}`);
+    const p = join(BACKEND_ROOT, `src/modules/${moduleName}/${f}`);
     if (existsSync(p) && /from\s*"\.\.\/\.\.\/lib\/db\.js"/.test(read(p))) {
       return true;
     }
@@ -320,11 +321,14 @@ export function walkBackendRoutes(): BackendRouteInfo[] {
     });
   }
 
-  for (const { mount, module } of mounts) {
-    const routesFile = join(BACKEND_ROOT, `src/modules/${module}/routes.ts`);
+  for (const { mount, module: moduleName } of mounts) {
+    const routesFile = join(
+      BACKEND_ROOT,
+      `src/modules/${moduleName}/routes.ts`,
+    );
     const raw = read(routesFile);
     const src = stripComments(raw);
-    const persisted = modulePersisted(module);
+    const persisted = modulePersisted(moduleName);
 
     const routerVar = /(?:const|let|var)\s+(\w+)\s*=\s*Router\(\s*\)/.exec(
       src,
@@ -418,7 +422,7 @@ export function walkBackendRoutes(): BackendRouteInfo[] {
       routes.push({
         method,
         path: fullPath,
-        module,
+        module: moduleName,
         auth,
         bodySchema,
         querySchema,

@@ -21,7 +21,6 @@ import type { Express } from "express";
 import request from "supertest";
 import { expect } from "vitest";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 let ipCounter = 0;
 

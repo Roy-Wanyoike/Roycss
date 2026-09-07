@@ -148,7 +148,6 @@ export function errorHandler(
   res: Response,
   // NextFunction must be present in the signature even if unused —
   // Express uses arity to decide this is an error handler.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction,
 ): void {
   const requestId = (req.headers["x-request-id"] as string | undefined) ??

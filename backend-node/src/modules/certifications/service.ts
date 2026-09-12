@@ -358,6 +358,12 @@ export async function verifyCertification(
  * Submit an exam for a certification — returns the score and, if
  * passed, a new `EarnedCertification` entry with a verification code.
  * Persists a `CertificationAttempt` row for record-keeping.
+ *
+ * Attribution (audit F-07): `userId` is the verified Bearer-JWT `sub`
+ * passed down from the route — never a client-supplied body field
+ * (attempts can no longer be filed under someone else's account).
+ * `userName` stays client-supplied display metadata for the credential
+ * card; the `userId` join key is what identifies the holder.
  */
 export async function submitExam(input: {
   certificationId: string;

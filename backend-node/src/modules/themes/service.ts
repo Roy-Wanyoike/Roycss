@@ -6,6 +6,20 @@
  * list, 10min detail); every mutation invalidates the list cache and
  * any affected detail cache entry so subsequent reads see the new state.
  *
+ * ─── Ownership (audit F-06, api-keys convention) ─────────────────────
+ * Themes created through the API are attributed to the authenticated
+ * caller (`userId` = the Bearer-JWT `sub`) and only that caller may
+ * update or delete them — every mutation query filters by `userId`,
+ * so a foreign (or unknown) id reads as a flat 404 and never leaks
+ * whether the row exists.
+ *
+ * The 10 seeded presets are written with `userId: null` (they predate
+ * per-user attribution — the legacy createTheme hardcoded null, so
+ * every theme row was an orphaned platform row). Null-owner rows are
+ * treated as READ-ONLY platform themes: reads stay public, but no
+ * authenticated caller ever matches `{ id, userId }` against them,
+ * so updates/deletes return the same flat 404.
+ *
  * PF-009 / issue #94 (A1): the theme dataset is REGISTERED with the
  * registry catalog (`listThemes` is the registered source) and the
  * detail read path resolves through the catalog. Mutations invalidate
@@ -173,7 +187,15 @@ interface ThemeWrapper {
   seedCreatedAt: string;
 }
 
-function toDbRow(t: Theme) {
+/**
+ * Serialize a domain theme to a Prisma row.
+ *
+ * `userId` is the OWNER attribution: the authenticated creator's `sub`
+ * for API-created themes, or `null` for the seeded platform presets
+ * (read-only — see the ownership note in the file header). It is never
+ * client-supplied (audit F-07): routes pass `req.user.sub`.
+ */
+function toDbRow(t: Theme, userId: string | null) {
   const wrapper: ThemeWrapper = {
     primary: t.primary,
     secondary: t.secondary,
@@ -189,8 +211,25 @@ function toDbRow(t: Theme) {
     description: JSON.stringify(wrapper),
     tokensJson: JSON.stringify(t.tokens),
     isPublic: true,
-    userId: null,
+    userId,
   };
+}
+
+/**
+ * Fetch one theme the caller owns, or throw the flat 404.
+ *
+ * Ownership filter (audit F-06): the query includes `userId`, so a
+ * foreign id — or a seeded platform preset (owner `null`, which no
+ * authenticated caller matches) — is indistinguishable from an
+ * unknown id. This is the api-keys/favorites/collections convention.
+ */
+async function getOwnedTheme(
+  userId: string,
+  id: string,
+): Promise<NonNullable<Awaited<ReturnType<typeof db.theme.findFirst>>>> {
+  const row = await db.theme.findFirst({ where: { id, userId } });
+  if (!row) throw AppError.notFound(`Theme '${id}' not found`);
+  return row;
 }
 
 function toDomain(row: {
@@ -238,7 +277,10 @@ async function seedIfEmpty(): Promise<void> {
   seedPromise = (async () => {
     const count = await db.theme.count();
     if (count === 0) {
-      await db.theme.createMany({ data: SEED_THEMES.map(toDbRow) });
+      // Platform presets: owner `null` → read-only for every caller.
+      await db.theme.createMany({
+        data: SEED_THEMES.map((t) => toDbRow(t, null)),
+      });
       log.info("Themes seeded", { count: SEED_THEMES.length });
     }
   })().catch((err) => {
@@ -292,8 +334,12 @@ export async function getThemeById(id: string): Promise<Theme> {
   );
 }
 
-/** Create a new theme. Invalidates list cache. */
-export async function createTheme(input: CreateThemeInput): Promise<Theme> {
+/** Create a new theme, owned by the authenticated caller (audit F-06).
+ *  Invalidates list cache. */
+export async function createTheme(
+  input: CreateThemeInput,
+  userId: string,
+): Promise<Theme> {
   await seedIfEmpty();
   const theme: Theme = {
     id: `theme-${randomUUID()}`,
@@ -306,20 +352,22 @@ export async function createTheme(input: CreateThemeInput): Promise<Theme> {
     tokens: input.tokens,
     createdAt: new Date().toISOString(),
   };
-  await db.theme.create({ data: toDbRow(theme) });
+  await db.theme.create({ data: toDbRow(theme, userId) });
   invalidate();
-  log.info("Theme created", { id: theme.id, name: theme.name });
+  log.info("Theme created", { id: theme.id, name: theme.name, userId });
   return theme;
 }
 
-/** Update an existing theme (partial). Invalidates list + detail cache. */
+/** Update one of the caller's themes (partial). Foreign and seeded
+ *  platform themes read as a flat 404 (audit F-06). Invalidates list +
+ *  detail cache. */
 export async function updateTheme(
   id: string,
+  userId: string,
   input: UpdateThemeInput,
 ): Promise<Theme> {
   await seedIfEmpty();
-  const row = await db.theme.findUnique({ where: { id } });
-  if (!row) throw AppError.notFound(`Theme '${id}' not found`);
+  const row = await getOwnedTheme(userId, id);
 
   let wrapper: ThemeWrapper;
   try {
@@ -357,7 +405,7 @@ export async function updateTheme(
     },
   });
   invalidate(id);
-  log.info("Theme updated", { id });
+  log.info("Theme updated", { id, userId });
   return toDomain({
     ...row,
     name: updatedName,
@@ -366,14 +414,15 @@ export async function updateTheme(
   });
 }
 
-/** Delete a theme by id. Invalidates list + detail cache. */
-export async function deleteTheme(id: string): Promise<void> {
+/** Delete one of the caller's themes. Foreign and seeded platform
+ *  themes read as a flat 404 (audit F-06). Invalidates list + detail
+ *  cache. */
+export async function deleteTheme(id: string, userId: string): Promise<void> {
   await seedIfEmpty();
-  const row = await db.theme.findUnique({ where: { id } });
-  if (!row) throw AppError.notFound(`Theme '${id}' not found`);
-  await db.theme.delete({ where: { id } });
+  const row = await getOwnedTheme(userId, id);
+  await db.theme.delete({ where: { id: row.id } });
   invalidate(id);
-  log.info("Theme deleted", { id });
+  log.info("Theme deleted", { id, userId });
 }
 
 /** Number of themes in the store — useful for the health/info endpoint. */

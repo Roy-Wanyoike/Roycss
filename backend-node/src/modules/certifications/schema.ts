@@ -2,9 +2,15 @@
  * Zod schemas for the certifications module.
  *
  * Defines the exam-payload shape and the route params for /:id and
- * /verify/:id.
- * The `Certification`/`EarnedCertification`/`ExamQuestion` domain types
- * live in `../../types/index.ts`.
+ * /verify/:id. The `Certification`/`EarnedCertification`/`ExamQuestion`
+ * domain types live in `../../types/index.ts`.
+ *
+ * Attribution (audit F-07): exam attempts are attributed to the
+ * Bearer-JWT `sub` server-side — there is NO client-supplied `userId`
+ * field. A legacy body containing one is silently stripped by Zod
+ * and ignored. `userName` remains client-supplied display metadata
+ * (it only names the credential card / verify code; the `userId` join
+ * key is the verified token subject).
  */
 import { z } from "zod";
 
@@ -15,11 +21,8 @@ export const CertificationParamsSchema = z.object({
 
 /** Body for POST /certifications/:id/exam — submit exam answers. */
 export const CertificationExamSchema = z.object({
-  userId: z
-    .string()
-    .trim()
-    .min(1, "userId is required")
-    .max(80, "userId must be at most 80 characters"),
+  /** Display name for the earned credential (unverified metadata —
+   *  attribution is the token `sub`, not this field). */
   userName: z
     .string()
     .trim()

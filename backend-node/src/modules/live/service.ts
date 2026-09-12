@@ -7,12 +7,14 @@
  *
  * Field-mapping: the Prisma `LiveSession` model exposes (slug, name,
  * ownerId, roomId, isPublic, maxUsers). The domain shape's `id ← slug`,
- * `title ← name`, `hostId ← ownerId` map directly; the extra fields
+ * `title ← name`, `hostId ← ownerId` map directly (the host is the
+ * authenticated creator's `sub` — audit F-07); the extra fields
  * (active, cursors) are looked up from the static seed (keyed by id),
  * falling back to defaults for newly created sessions. The Prisma
  * `LiveMessage` model exposes (sessionId, userId, content, type,
  * createdAt). The domain shape's `id`, `sessionId`, `userId`, `content`
- * map directly; `ts ← createdAt.toISOString()`; `type` defaults to
+ * map directly (the author is the authenticated caller's `sub` —
+ * audit F-07); `ts ← createdAt.toISOString()`; `type` defaults to
  * "message".
  */
 import { randomUUID } from "node:crypto";
@@ -221,9 +223,12 @@ export async function listSessions(): Promise<LiveSession[]> {
   );
 }
 
-/** Create a new live session. */
+/** Create a new live session, hosted by the authenticated caller
+ *  (audit F-07: the host `sub` is the verified token subject, never a
+ *  client-supplied `hostId`). */
 export async function createLiveSession(
   input: CreateSessionInput,
+  hostId: string,
 ): Promise<LiveSession> {
   await seedIfEmpty();
   const id = `live-sess-${randomUUID()}`;
@@ -231,7 +236,7 @@ export async function createLiveSession(
   const session: LiveSession = {
     id,
     title: input.title,
-    hostId: input.hostId,
+    hostId,
     active: true,
     createdAt: now,
     updatedAt: now,
@@ -246,16 +251,16 @@ export async function createLiveSession(
   });
   USERS_LOOKUP.set(id, [
     {
-      id: input.hostId,
-      name: input.hostName ?? input.hostId,
-      handle: `@${input.hostId}`,
+      id: hostId,
+      name: input.hostName ?? hostId,
+      handle: `@${hostId}`,
       color: "#10b981",
       role: "host",
       joinedAt: now,
     },
   ]);
   invalidateSession(id);
-  log.info("Live session created", { id, title: input.title });
+  log.info("Live session created", { id, title: input.title, hostId });
   return session;
 }
 
@@ -299,16 +304,19 @@ export async function getSessionMessages(
   );
 }
 
-/** Post a message into a live session. */
+/** Post a message into a live session, authored by the authenticated
+ *  caller (audit F-07: the author `sub` is the verified token
+ *  subject, never a client-supplied `userId`). */
 export async function postSessionMessage(
   id: string,
   input: PostMessageInput,
+  userId: string,
 ): Promise<LiveMessage> {
   await requireSessionRow(id);
   const message: LiveMessage = {
     id: `msg-${randomUUID()}`,
     sessionId: id,
-    userId: input.userId,
+    userId,
     content: input.content,
     ts: new Date().toISOString(),
   };
@@ -319,7 +327,7 @@ export async function postSessionMessage(
     extras.updatedAt = message.ts;
   }
   invalidateSession(id);
-  log.info("Live message posted", { sessionId: id, userId: input.userId });
+  log.info("Live message posted", { sessionId: id, userId });
   return message;
 }
 

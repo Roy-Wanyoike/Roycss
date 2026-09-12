@@ -7,7 +7,9 @@
  *   POST /:id/submit          submit a solution   (auth: Bearer token)
  *
  * Mutating routes require authentication (issue #64) — submissions
- * persist to the `ChallengeSubmission` Prisma model.
+ * persist to the `ChallengeSubmission` Prisma model and are
+ * attributed to the verified token subject (audit F-07: no
+ * client-supplied `userId`).
  *
  * Order matters: static routes (`/leaderboard`) are declared before
  * `/:id` so the literal path isn't captured as an id.
@@ -69,9 +71,10 @@ challengesRouter.post(
       typeof ChallengeParamsSchema
     >;
     const input = req.body as unknown as z.infer<typeof ChallengeSubmitSchema>;
+    // Attribution = the verified token subject, never a body field (F-07).
     const result = await submitSolution({
       challengeId: id,
-      userId: input.userId,
+      userId: req.user!.sub,
       code: input.code,
       passed: input.passed,
       timeMs: input.timeMs,

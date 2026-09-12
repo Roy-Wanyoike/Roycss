@@ -3707,9 +3707,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "userId": {
-                    "type": "string"
-                  },
                   "userName": {
                     "type": "string"
                   },
@@ -3719,7 +3716,6 @@
                   }
                 },
                 "required": [
-                  "userId",
                   "userName",
                   "answers"
                 ]
@@ -3956,9 +3952,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "userId": {
-                    "type": "string"
-                  },
                   "code": {
                     "type": "string"
                   },
@@ -3970,7 +3963,6 @@
                   }
                 },
                 "required": [
-                  "userId",
                   "code",
                   "passed"
                 ]
@@ -9040,16 +9032,12 @@
                   "title": {
                     "type": "string"
                   },
-                  "hostId": {
-                    "type": "string"
-                  },
                   "hostName": {
                     "type": "string"
                   }
                 },
                 "required": [
-                  "title",
-                  "hostId"
+                  "title"
                 ]
               }
             }
@@ -9202,15 +9190,11 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "userId": {
-                    "type": "string"
-                  },
                   "content": {
                     "type": "string"
                   }
                 },
                 "required": [
-                  "userId",
                   "content"
                 ]
               }

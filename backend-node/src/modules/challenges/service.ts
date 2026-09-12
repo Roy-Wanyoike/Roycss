@@ -264,6 +264,21 @@ export async function getLeaderboard(): Promise<ChallengeLeaderboardEntry[]> {
  * Submit a solution for a challenge — persists a ChallengeSubmission
  * row and returns the computed score; invalidates the leaderboard
  * cache so the next read reflects the updated rankings.
+ *
+ * Attribution (audit F-07): `userId` is the verified Bearer-JWT `sub`
+ * passed down from the route — never a client-supplied body field.
+ *
+ * Grading (audit F-07) — two tiers, honestly distinguished:
+ *   1. Server-graded: when the challenge row carries a non-empty
+ *      `solutionCode`, the server compares the submitted code and the
+ *      client's `passed` claim is IGNORED. Only these verified passes
+ *      award score and touch the leaderboard.
+ *   2. Self-graded (demo-integrity-limited): the seeded catalog ships
+ *      free-form challenges with `solutionCode: ""` — there is no
+ *      checkable answer, so the client's `passed` claim is accepted
+ *      for the submission RECORD only. It can never award score or
+ *      enter the leaderboard (the response reports `verified: false`
+ *      so honest clients can label it).
  */
 export async function submitSolution(input: {
   challengeId: string;
@@ -275,13 +290,28 @@ export async function submitSolution(input: {
   challengeId: string;
   userId: string;
   passed: boolean;
+  /** True only when the server itself graded this submission
+   *  (challenge had a checkable answer). */
+  verified: boolean;
   score: number;
   submittedAt: string;
 }> {
   const challenge = await getChallengeById(input.challengeId);
+  // Pull the raw row for the (never-exposed) solution column.
+  const row = await db.challenge.findUnique({
+    where: { id: challenge.id },
+    select: { solutionCode: true },
+  });
+  const solution = (row?.solutionCode ?? "").trim();
+  const verified = solution.length > 0;
+  const passed = verified ? input.code.trim() === solution : input.passed;
+
   const submittedAt = new Date().toISOString();
-  const baseScore = input.passed ? challenge.xpReward : 0;
-  const timeBonus = input.passed && input.timeMs
+  // Score is reserved for server-verified passes — a self-claimed pass
+  // records score 0 so it can never masquerade as an achievement
+  // (leaderboard or otherwise).
+  const baseScore = passed && verified ? challenge.xpReward : 0;
+  const timeBonus = passed && verified && input.timeMs
     ? Math.max(0, Math.round((challenge.timeLimit * 60_000 - input.timeMs) / 1_000))
     : 0;
   const score = baseScore + timeBonus;
@@ -291,13 +321,14 @@ export async function submitSolution(input: {
       userId: input.userId,
       challengeId: input.challengeId,
       code: input.code,
-      passed: input.passed,
+      passed,
       score,
     },
   });
 
-  if (input.passed) {
-    // Insert/merge into the leaderboard (mock: bump the user's score).
+  if (passed && verified) {
+    // Insert/merge into the leaderboard (mock: bump the user's score) —
+    // SERVER-VERIFIED passes only; self-claimed passes never enter.
     const existing = leaderboard.find((e) => e.userId === input.userId);
     if (existing) {
       existing.score += score;
@@ -324,13 +355,15 @@ export async function submitSolution(input: {
   log.info("Challenge solution submitted", {
     challengeId: input.challengeId,
     userId: input.userId,
-    passed: input.passed,
+    passed,
+    verified,
     score,
   });
   return {
     challengeId: input.challengeId,
     userId: input.userId,
-    passed: input.passed,
+    passed,
+    verified,
     score,
     submittedAt,
   };

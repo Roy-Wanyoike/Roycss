@@ -37,7 +37,7 @@ the document is designed so that day is a one-line edit, not a rewrite.
 | **frontend** | Project maintainer (acting) | `src/app/`, `src/components/`, `src/lib/` (catalog, registry, tokens, API client), Next.js build | — open |
 | **backend-node** | Project maintainer (acting) | `backend-node/` — Express + Prisma + Zod, 72 modules, route surface documented in [`API.md`](API.md) | — open |
 | **backend-go** | Project maintainer (acting) | `backend-go/` — Go port of the `/api/v1` contract (production target) | — open |
-| **infra** | Project maintainer (acting) | `vercel.json`, `render.yaml`, `infrastructure/`, CI workflows in `.github/workflows/`, deploy runbooks | — open |
+| **infra** | Project maintainer (acting) | `vercel.json`, Railway deploy job in `.github/workflows/deploy.yml`, `infrastructure/`, CI workflows, deploy runbooks | — open |
 | **docs** | Project maintainer (acting) | `README.md`, `docs/`, [`docs/PENDING-FEATURES.md`](docs/PENDING-FEATURES.md), `API.md`, release notes | — open |
 | **a11y** | Project maintainer (acting) | WCAG AA conformance: `a11y/`, `tests/a11y/`, reduced-motion and keyboard contracts across effects | — open |
 | **security** | Project maintainer (acting) | `security/`, [`docs/SECURITY-SLA.md`](docs/SECURITY-SLA.md), advisory response, key custody | — open |
@@ -113,7 +113,9 @@ area". All commands assume the repo root; the general contribution workflow
 ### 3.4 infra (deploy + CI)
 
 - Frontend deploys on Vercel ([`vercel.json`](vercel.json)); backend deploys
-  on Render ([`render.yaml`](render.yaml), `rootDir: backend-node`).
+  on Railway via the "Deploy backend-node to Railway + migrate + smoke" job
+  in [`deploy.yml`](.github/workflows/deploy.yml) (the Render blueprint was
+  removed — that service has been dead since the first audit).
 - CI lives in `.github/workflows/` (lint, typecheck, unit + integration
   tests, package build, deploy, release, Lighthouse) plus Dependabot config.
 - The known live-site deploy gap is tracked publicly in issue #75; infra

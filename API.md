@@ -26,7 +26,7 @@ The public HTTP surface of the platform: the Express backend (`/api/v1/*`, `back
 |------------|----------|-------|
 | Local backend (direct) | `http://localhost:4000/api/v1` | Express, port from `PORT` |
 | Local via Next proxy | `http://localhost:3000/api/v1` | same-origin proxy → backend |
-| Production | `https://<backend-host>/api/v1` | Render blueprint (`render.yaml`) |
+| Production | `https://<backend-host>/api/v1` | Railway — deployed by `.github/workflows/deploy.yml` |
 
 ### Response envelope
 

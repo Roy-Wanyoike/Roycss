@@ -62,8 +62,9 @@ const DOMAINS: Domain[] = [
   {
     title: "Auth & messaging",
     anchor: "domain-auth",
-    blurb: "Account lifecycle (JWT) and the contact intake form.",
-    modules: ["auth", "contact"],
+    blurb:
+      "Account lifecycle (JWT), the caller's saved content (favorites + collections), and the contact intake form.",
+    modules: ["auth", "contact", "favorites", "collections"],
   },
   {
     title: "Modern-CSS devtools",
@@ -170,6 +171,10 @@ const MODULE_BLURBS: Record<string, string> = {
   fallback: "`@supports` fallback recipes for modern CSS features.",
   auth: "JWT account lifecycle + API key management (register / login / refresh / me; mint / list / revoke CLI–SDK–MCP keys).",
   contact: "Contact form intake (Prisma `ContactMessage`; 5 submissions/min/IP).",
+  favorites:
+    "Saved effects (`EffectFavorite` Prisma model) — list/add/remove, owner-scoped (PF-048).",
+  collections:
+    "Curated effect bundles (`Collection` Prisma model) — CRUD + membership edits, owner-scoped (PF-048).",
   devtools: "CSS introspection — class inspection, design tokens, utilities, CSS analysis.",
   inspector: "CSS lint — 8 correctness/a11y rules with line-precise findings (read-only).",
   "color-space": "Color conversion + gamut mapping (OKLCH, sRGB, Display P3).",
@@ -241,6 +246,8 @@ const MODULE_MODELS: Record<string, string> = {
   cloud: "CloudProject, Deployment",
   compliance: "ComplianceStandard, ComplianceScan",
   contact: "ContactMessage",
+  favorites: "EffectFavorite",
+  collections: "Collection",
   deploy: "Deployment",
   enterprise: "Organization, Team, License, EnterpriseAuditLog",
   fleet: "FleetProject",
@@ -312,6 +319,10 @@ const ERROR_OVERRIDES: Record<string, string> = {
   "GET /api/v1/effects/categories": "401 · 403 · 429",
   "GET /api/v1/effects/tags": "401 · 403 · 429",
   "GET /api/v1/effects/:id": "400 · 401 · 403 · 404 · 429",
+  // PF-048 — favorites + collections (owner-scoped; duplicates are 409).
+  "POST /api/v1/favorites/:effectId": "400 · 401 · 404 · 409",
+  "POST /api/v1/collections": "400 · 401 · 404",
+  "POST /api/v1/collections/:id/effects": "400 · 401 · 404 · 409",
 };
 
 /** Hand-curated request cells (manual validation / composed schemas). */
@@ -364,6 +375,23 @@ const MODULE_NOTE_OVERRIDES: Record<string, string> = {
     "> Prisma-backed (User (read-only)). `POST /jobs` is a **public query " +
     "endpoint** — it enqueues a read-only aggregation job on the in-process " +
     "queue (rate-limited), so it is intentionally unauthenticated.",
+  // PF-048 — owner-scoped personal content (reads included are
+  // authenticated, unlike the default Prisma-backed note which only
+  // calls out mutating routes).
+  favorites:
+    "> Prisma-backed (`EffectFavorite`, @@unique([userId, effectId])). " +
+    "**Owner-scoped** — every route (reads included) requires a Bearer " +
+    "JWT and only ever returns the caller's own favorites; foreign rows " +
+    "read as flat 404s. Effect ids resolve through the registry catalog " +
+    "(PF-009 A1); every mutation writes an `EnterpriseAuditLog` row " +
+    "(PF-009 A6).",
+  collections:
+    "> Prisma-backed (`Collection`; `effectIds` is a JSON-string array — " +
+    "the Theme.tokensJson convention). **Owner-scoped** — every route " +
+    "(reads included) requires a Bearer JWT and only ever returns the " +
+    "caller's own collections; foreign ids read as flat 404s. Effect ids " +
+    "resolve through the registry catalog (PF-009 A1); every mutation " +
+    "writes an `EnterpriseAuditLog` row (PF-009 A6).",
 };
 
 // ─── Row rendering ────────────────────────────────────────────────────────

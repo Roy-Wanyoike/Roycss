@@ -2,7 +2,7 @@
 
 The public HTTP surface of the platform: the Express backend (`/api/v1/*`, `backend-node/`) and the Next.js frontend routes (`/api/*`, `src/app/api/`).
 
-**Coverage:** 70 backend modules · 271 backend routes (GET 199, POST 64, PUT 2, DELETE 6) · 15 frontend endpoints.
+**Coverage:** 72 backend modules · 281 backend routes (GET 202, POST 67, PUT 2, DELETE 9) · 15 frontend endpoints.
 
 > **Drift gate:** `cd backend-node && bun run api:check` walks `src/server/app.ts`, every module's `routes.ts` and `src/app/api/**` and fails when a route here is missing or stale. Regenerate the tables with `bun run api:gen` (curated prose lives in `backend-node/scripts/gen-api-md.ts` — edit there, not in API.md).
 
@@ -260,7 +260,7 @@ Catalog + registry reads that power the docs site, the package, and the integrat
 
 ### Auth & messaging
 
-Account lifecycle (JWT) and the contact intake form.
+Account lifecycle (JWT), the caller's saved content (favorites + collections), and the contact intake form.
 
 #### `auth` — JWT account lifecycle + API key management (register / login / refresh / me; mint / list / revoke CLI–SDK–MCP keys).
 
@@ -285,6 +285,30 @@ Account lifecycle (JWT) and the contact intake form.
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
 | POST | `/api/v1/contact` | Public | body: { `name`, `email`, `subject?`, `message` } | `{ ok, message, id }` · 201 — non-envelope | 400 · 429 · 503 |
+
+#### `favorites` — Saved effects (`EffectFavorite` Prisma model) — list/add/remove, owner-scoped (PF-048).
+
+> Prisma-backed (`EffectFavorite`, @@unique([userId, effectId])). **Owner-scoped** — every route (reads included) requires a Bearer JWT and only ever returns the caller's own favorites; foreign rows read as flat 404s. Effect ids resolve through the registry catalog (PF-009 A1); every mutation writes an `EnterpriseAuditLog` row (PF-009 A6).
+
+| Method | Path | Auth | Request | Response | Errors |
+|--------|------|------|---------|----------|--------|
+| GET | `/api/v1/favorites` | Bearer JWT | query: { `page?`, `limit?` } | `{ data, meta }` · 200 | 400 · 401 |
+| POST | `/api/v1/favorites/:effectId` | Bearer JWT | path: `:effectId` | `{ data }` · 201 | 400 · 401 · 404 · 409 |
+| DELETE | `/api/v1/favorites/:effectId` | Bearer JWT | path: `:effectId` | 204 — no body | 400 · 404 · 401 |
+
+#### `collections` — Curated effect bundles (`Collection` Prisma model) — CRUD + membership edits, owner-scoped (PF-048).
+
+> Prisma-backed (`Collection`; `effectIds` is a JSON-string array — the Theme.tokensJson convention). **Owner-scoped** — every route (reads included) requires a Bearer JWT and only ever returns the caller's own collections; foreign ids read as flat 404s. Effect ids resolve through the registry catalog (PF-009 A1); every mutation writes an `EnterpriseAuditLog` row (PF-009 A6).
+
+| Method | Path | Auth | Request | Response | Errors |
+|--------|------|------|---------|----------|--------|
+| GET | `/api/v1/collections` | Bearer JWT | query: { `page?`, `limit?` } | `{ data, meta }` · 200 | 400 · 401 |
+| POST | `/api/v1/collections` | Bearer JWT | body: { `name`, `description?`, `effectIds?` } | `{ data }` · 201 | 400 · 401 · 404 |
+| GET | `/api/v1/collections/:id` | Bearer JWT | path: `:id` | `{ data }` · 200 | 400 · 404 · 401 |
+| PATCH | `/api/v1/collections/:id` | Bearer JWT | body: { `name?`, `description?`, `effectIds?` } · path: `:id` | `{ data }` · 200 | 400 · 404 · 401 |
+| DELETE | `/api/v1/collections/:id` | Bearer JWT | path: `:id` | 204 — no body | 400 · 404 · 401 |
+| POST | `/api/v1/collections/:id/effects` | Bearer JWT | body: { `effectId` } · path: `:id` | `{ data }` · 200 | 400 · 401 · 404 · 409 |
+| DELETE | `/api/v1/collections/:id/effects/:effectId` | Bearer JWT | path: `:id` `:effectId` | `{ data }` · 200 | 400 · 404 · 401 |
 
 ### Modern-CSS devtools
 

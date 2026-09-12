@@ -22,6 +22,7 @@ import { cdnRouter } from "../modules/cdn/routes.js";
 import { certificationsRouter } from "../modules/certifications/routes.js";
 import { challengesRouter } from "../modules/challenges/routes.js";
 import { cloudRouter } from "../modules/cloud/routes.js";
+import { collectionsRouter } from "../modules/collections/routes.js";
 import { colorSpaceRouter } from "../modules/color-space/routes.js";
 import { complianceRouter } from "../modules/compliance/routes.js";
 import { contactRouter } from "../modules/contact/routes.js";
@@ -33,6 +34,7 @@ import { edgeRouter } from "../modules/edge/routes.js";
 import { effectsRouter } from "../modules/effects/routes.js";
 import { enterpriseRouter } from "../modules/enterprise/routes.js";
 import { fallbackRouter } from "../modules/fallback/routes.js";
+import { favoritesRouter } from "../modules/favorites/routes.js";
 import { fleetRouter } from "../modules/fleet/routes.js";
 import { generatorRouter } from "../modules/generator/routes.js";
 import { governanceRouter } from "../modules/governance/routes.js";
@@ -197,6 +199,9 @@ export function createApp(): Express {
   // ── PF-009 / issue #94 — audit trail + route metrics (admin) ─────────
   app.use(`${API_PREFIX}/audit`, auditRouter);
   app.use(`${API_PREFIX}/metrics`, metricsRouter);
+  // ── PF-048 — user favorites + collections (owner-scoped) ─────────────
+  app.use(`${API_PREFIX}/favorites`, favoritesRouter);
+  app.use(`${API_PREFIX}/collections`, collectionsRouter);
 
   // ─── Route metrics pattern table (must run after all mounts) ──────────
   buildRouteTable(app);

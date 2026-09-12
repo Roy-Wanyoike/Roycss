@@ -270,7 +270,15 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
                 <span className="flex items-center gap-1"><kbd className="px-1 py-0.5 rounded bg-muted border border-border/50">↵</kbd>Select</span>
                 <span className="flex items-center gap-1"><kbd className="px-1 py-0.5 rounded bg-muted border border-border/50">Esc</kbd>Close</span>
               </div>
-              <span className="text-[10px] text-muted-foreground">{totalResults > 0 && `${totalResults} results`}</span>
+              <div className="flex items-center gap-3">
+                <span className="text-[10px] text-muted-foreground">{totalResults > 0 && `${totalResults} results`}</span>
+                <a
+                  href="/effects"
+                  className="text-[10px] font-medium text-primary hover:text-primary/80 transition-colors"
+                >
+                  Browse all {EFFECT_COUNT_FORMATTED} effects →
+                </a>
+              </div>
             </div>
           </motion.div>
         </motion.div>

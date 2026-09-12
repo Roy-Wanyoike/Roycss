@@ -22,9 +22,9 @@ export default function NotFound() {
             Page Not Found
           </h1>
           <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-md mx-auto">
-            The page you&apos;re looking for doesn&apos;t exist. RoyCSS is a
-            single-page platform — everything lives on the homepage. Try
-            searching or exploring below.
+            The page you&apos;re looking for doesn&apos;t exist. Browse the
+            full effect catalog, dig into the docs, or head back to
+            the homepage below.
           </p>
         </div>
 
@@ -38,11 +38,18 @@ export default function NotFound() {
             Back to RoyCSS
           </Link>
           <Link
-            href="/#effects"
+            href="/effects"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border text-foreground text-sm font-medium hover:bg-muted/50 transition-colors cursor-pointer h-11"
           >
             <Search className="size-4" />
             Browse Effects
+          </Link>
+          <Link
+            href="/docs/getting-started"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border text-foreground text-sm font-medium hover:bg-muted/50 transition-colors cursor-pointer h-11"
+          >
+            <BookOpen className="size-4" />
+            Search the Docs
           </Link>
         </div>
 

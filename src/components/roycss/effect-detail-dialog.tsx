@@ -365,18 +365,18 @@ function RelatedEffects({
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   Share Button — copies shareable URL with #effect=<id> hash
+   Share Button — copies the effect's real static-page URL
+   (/effects/<id>, prerendered for all 1,959 effects)
    ═══════════════════════════════════════════════════════════════ */
 
 function ShareButton({ effectId }: { effectId: string }) {
   const [copied, setCopied] = useState(false);
 
   const handleShare = useCallback(async () => {
-    const url = `${window.location.origin}${window.location.pathname}#effect=${effectId}`;
+    const url = `${window.location.origin}/effects/${effectId}`;
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
-      window.history.replaceState(null, "", `#effect=${effectId}`);
       setTimeout(() => setCopied(false), 2000);
     } catch { /* noop */ }
   }, [effectId]);

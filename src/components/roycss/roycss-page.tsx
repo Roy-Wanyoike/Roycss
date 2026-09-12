@@ -4,6 +4,7 @@ import { useEffect, useState, useRef, useMemo, useCallback, useSyncExternalStore
 import dynamic from "next/dynamic";
 import {
   Search,
+  ExternalLink,
   Sun,
   Moon,
   Sparkles,
@@ -84,6 +85,7 @@ import {
   Award,
   Tv,
 } from "lucide-react";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -349,6 +351,7 @@ type MegaMenuGroup = {
 
 const EXPLORE_ITEMS: MegaMenuItem[] = [
   { label: "Effects", description: `Browse ${effects.length.toLocaleString("en-US")} CSS effects`, icon: Zap, href: "#effects" },
+  { label: "Full catalog", description: `All ${effects.length.toLocaleString("en-US")} effect pages — searchable & shareable`, icon: Search, href: "/effects" },
   { label: "Recipes", description: "Pre-built effect combinations", icon: BookOpen, href: "#recipes" },
   { label: "Patterns", description: "Layout & component patterns", icon: LayoutGrid, href: "#patterns" },
   { label: "Collections", description: "Curated effect bundles", icon: Layers, href: "#collections" },
@@ -1637,17 +1640,27 @@ export default function RoyCSSPage() {
                   </div>
                 </NavMegaMenu>
 
-                <button
-                  onClick={() => setDocsOpen(true)}
-                  className={cn(
-                    "px-4 py-2 min-h-[44px] rounded-lg text-sm font-semibold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
-                    docsOpen
-                      ? "text-primary bg-primary/10"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/60",
-                  )}
-                >
-                  Docs
-                </button>
+                <div className="flex items-center">
+                  <button
+                    onClick={() => setDocsOpen(true)}
+                    className={cn(
+                      "px-4 py-2 min-h-[44px] rounded-lg text-sm font-semibold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
+                      docsOpen
+                        ? "text-primary bg-primary/10"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted/60",
+                    )}
+                  >
+                    Docs
+                  </button>
+                  <Link
+                    href="/docs/getting-started"
+                    aria-label="Open the full docs site"
+                    title="Open the full docs site"
+                    className="ml-0.5 flex items-center justify-center size-8 min-h-[36px] rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                  >
+                    <ExternalLink className="size-3.5" />
+                  </Link>
+                </div>
                 <button
                   onClick={() => scrollToSection("#faq")}
                   className={cn(

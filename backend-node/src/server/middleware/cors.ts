@@ -34,6 +34,10 @@ const options: CorsOptions = {
     "Accept",
     "Authorization",
     "X-Request-Id",
+    // Browser-based API-key consumers authenticate with this header
+    // (src/server/middleware/api-key.ts) — it must be in allowedHeaders
+    // or the preflight OPTIONS request fails (audit F-17).
+    "X-API-Key",
   ],
   exposedHeaders: ["X-Request-Id"],
   credentials: true,

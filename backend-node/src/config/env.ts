@@ -78,6 +78,55 @@ const EnvSchema = z.object({
   NPM_TOKEN: z.string().optional(),
 });
 
+// ─── Production-only JWT secret hardening (audit F-15) ─────────────────────
+// The 16-char floor above invites weak prod secrets. When NODE_ENV=production
+// we additionally require ≥48 chars and reject known placeholder values
+// (the ones shipped in .env.example / test fixtures). Dev and test keep the
+// lenient floor so local setups and the 32-char test secrets keep working.
+const KNOWN_PLACEHOLDER_SECRETS = new Set([
+  "change-me",
+  "jwt-secret",
+  "super-secret",
+  "your-secret-key",
+  "your-256-bit-secret",
+  // .env.example values (long enough to pass the length check on purpose —
+  // they must still be rejected):
+  "change-me-in-production-please-use-a-64-char-random-string",
+  "change-me-too-different-from-jwt-secret-64-chars",
+]);
+
+function looksLikePlaceholderSecret(value: string): boolean {
+  const v = value.trim().toLowerCase();
+  if (KNOWN_PLACEHOLDER_SECRETS.has(v)) return true;
+  // Heuristics for placeholder-ish prefixes: "change-me*", "test*",
+  // "dev*", "dummy*", "example*", "placeholder*", "your*secret*", …
+  return /^(change[-_ ]?me|test|dev|dummy|example|placeholder|your|my)([-_ ]|$)/.test(
+    v,
+  );
+}
+
+const EnvSchemaWithProdRules = EnvSchema.superRefine((env, ctx) => {
+  if (env.NODE_ENV !== "production") return;
+  for (const key of ["JWT_SECRET", "JWT_REFRESH_SECRET"] as const) {
+    const value = env[key];
+    if (value.length < 48) {
+      ctx.addIssue({
+        code: "custom",
+        path: [key],
+        message: `${key} must be at least 48 characters in production (got ${value.length}) — generate one with \`openssl rand -base64 48\``,
+      });
+      continue;
+    }
+    if (looksLikePlaceholderSecret(value)) {
+      ctx.addIssue({
+        code: "custom",
+        path: [key],
+        message: `${key} looks like a placeholder value — set a real random secret for production (e.g. \`openssl rand -base64 48\`)`,
+      });
+    }
+  }
+});
+
 export type Env = z.infer<typeof EnvSchema>;
 
 let cachedEnv: Env | null = null;
@@ -89,7 +138,7 @@ let cachedEnv: Env | null = null;
 export function loadEnv(): Env {
   if (cachedEnv) return cachedEnv;
 
-  const parsed = EnvSchema.safeParse(process.env);
+  const parsed = EnvSchemaWithProdRules.safeParse(process.env);
   if (!parsed.success) {
     const issues = parsed.error.issues
       .map((i) => `  • ${i.path.join(".")}: ${i.message}`)

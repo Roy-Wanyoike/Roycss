@@ -11,6 +11,12 @@ name: Deploy
 #      secrets context would be unavailable in a `workflow_call` reuse).
 #   2. It allows CI to be re-run independently without re-deploying.
 #   3. It keeps the deploy graph explicit: CI green → deploy.
+#
+# Pipeline (audit F-03 / F-04):
+#   guard → deploy-backend-node (migrate deploy BEFORE the Railway deploy,
+#           so the schema exists before the new revision boots; then
+#           health + auth smoke) → deploy-frontend (wires BACKEND_URL /
+#           API_MODE into the Vercel project, then deploys).
 # ─────────────────────────────────────────────────────────────────────────
 on:
   workflow_run:
@@ -63,50 +69,23 @@ jobs:
             }
 
   # ─────────────────────────────────────────────────────────────────────
-  # Vercel — deploy the Next.js frontend. Uses amondnet/vercel-action
-  # which wraps the Vercel CLI and surfaces the deployment URL.
-  # ─────────────────────────────────────────────────────────────────────
-  deploy-frontend:
-    name: Deploy frontend to Vercel
-    needs: guard
-    if: needs.guard.outputs.should-deploy == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 1
-
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
-
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
-
-      - name: Deploy to Vercel (production)
-        uses: amondnet/vercel-action@v42
-        id: vercel
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: "--prod"
-          working-directory: .
-
-      - name: Print deployment URL
-        run: |
-          echo "Vercel deployment URL: ${{ steps.vercel.outputs.preview-url }}"
-          echo "::notice title=Frontend deployed::${{ steps.vercel.outputs.preview-url }}"
-
-  # ─────────────────────────────────────────────────────────────────────
-  # Railway — deploy the Express backend + run `prisma migrate deploy`
-  # + hit /api/v1/health to confirm the new revision answers 200.
+  # Railway — deploy the Express backend.
+  #
+  # ORDER MATTERS (audit F-03): `prisma migrate deploy` runs BEFORE
+  # `railway up` so the schema is fully initialized before the new
+  # revision starts serving traffic. The committed baseline migration
+  # (backend-node/prisma/migrations/) makes this step real — previously
+  # it exited 0 with "No migration found" and Railway booted an empty
+  # database.
   # ─────────────────────────────────────────────────────────────────────
   deploy-backend-node:
     name: Deploy backend-node to Railway + migrate + smoke
     needs: guard
     if: needs.guard.outputs.should-deploy == 'true'
     runs-on: ubuntu-latest
+    outputs:
+      # Consumed by deploy-frontend to wire BACKEND_URL into Vercel.
+      backend_url: ${{ steps.url.outputs.value }}
     env:
       # Railway sets DATABASE_URL on the deployed service; the migration
       # step pulls it back locally via the Railway CLI's `variable` command.
@@ -123,24 +102,21 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
 
+      # The Railway CLI is needed BEFORE the deploy step (migrations run
+      # first). bervProject/railway-deploy@v2 also installs it, but that
+      # runs later now — install it explicitly up-front.
+      - name: Install Railway CLI
+        run: bun add --global @railway/cli
+
       - name: Install backend-node dependencies
         working-directory: backend-node
         run: bun install --frozen-lockfile
-
-      - name: Deploy to Railway
-        uses: bervProject/railway-deploy@v2
-        with:
-          service: ${{ secrets.RAILWAY_SERVICE_ID }}
-          environment: production
-          token: ${{ secrets.RAILWAY_TOKEN }}
-          project: ${{ secrets.RAILWAY_PROJECT_ID }}
 
       - name: Fetch production DATABASE_URL from Railway
         id: dburl
         working-directory: backend-node
         run: |
           # `railway variables` requires the Railway CLI to be on PATH.
-          # bervProject/railway-deploy@v2 installs it as a side-effect.
           DB_URL="$(railway variables --service "$RAILWAY_SERVICE_ID" --environment production | grep '^DATABASE_URL=' | cut -d= -f2-)"
           if [ -z "$DB_URL" ]; then
             echo "::error::Could not retrieve DATABASE_URL from Railway"
@@ -149,11 +125,22 @@ jobs:
           echo "::add-mask::$DB_URL"
           echo "value=$DB_URL" >> "$GITHUB_OUTPUT"
 
-      - name: Run prisma migrate deploy
+      # Migrations are applied to the production database BEFORE the new
+      # revision is deployed. The baseline migration only CREATEs tables,
+      # so it is safe to run while the previous revision is still live.
+      - name: Run prisma migrate deploy (before app start)
         working-directory: backend-node
         run: bunx prisma migrate deploy
         env:
           DATABASE_URL: ${{ steps.dburl.outputs.value }}
+
+      - name: Deploy to Railway
+        uses: bervProject/railway-deploy@v2
+        with:
+          service: ${{ secrets.RAILWAY_SERVICE_ID }}
+          environment: production
+          token: ${{ secrets.RAILWAY_TOKEN }}
+          project: ${{ secrets.RAILWAY_PROJECT_ID }}
 
       - name: Discover backend-node public URL
         id: url
@@ -183,3 +170,149 @@ jobs:
           done
           echo "::error::Health check failed after 10 retries"
           exit 1
+
+      # Post-deploy auth round-trip (audit F-04): proves the deployed
+      # backend can actually register + authenticate users against the
+      # migrated database — not just answer /health. The email embeds the
+      # run id + attempt so re-runs never collide with an existing 409.
+      # NOTE: each deploy leaves one smoke user row (no account deletion
+      # route exists yet — audit F-13); acceptable at launch scale.
+      - name: Auth smoke — register + login round-trip
+        run: |
+          set -euo pipefail
+          BASE="${{ steps.url.outputs.value }}"
+          EMAIL="deploy-smoke-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}@example.com"
+          PASSWORD="Smoke1-${GITHUB_RUN_ID}x"
+
+          echo "Registering $EMAIL against $BASE/api/v1/auth/register"
+          REG_CODE=$(curl -s -o /tmp/reg.json -w '%{http_code}' -X POST \
+            "$BASE/api/v1/auth/register" \
+            -H 'Content-Type: application/json' \
+            -d "{\"email\":\"$EMAIL\",\"password\":\"$PASSWORD\",\"name\":\"Deploy Smoke\"}")
+          echo "register → HTTP $REG_CODE"
+          if [ "$REG_CODE" != "201" ]; then
+            echo "::error::register failed"
+            cat /tmp/reg.json || true
+            exit 1
+          fi
+
+          LOGIN_CODE=$(curl -s -o /tmp/login.json -w '%{http_code}' -X POST \
+            "$BASE/api/v1/auth/login" \
+            -H 'Content-Type: application/json' \
+            -d "{\"email\":\"$EMAIL\",\"password\":\"$PASSWORD\"}")
+          echo "login → HTTP $LOGIN_CODE"
+          if [ "$LOGIN_CODE" != "200" ]; then
+            echo "::error::login failed"
+            cat /tmp/login.json || true
+            exit 1
+          fi
+
+          TOKEN=$(jq -r '.data.accessToken // empty' /tmp/login.json)
+          if [ -z "$TOKEN" ]; then
+            echo "::error::login returned 200 but no .data.accessToken — auth wiring is broken"
+            cat /tmp/login.json || true
+            exit 1
+          fi
+          echo "✓ Auth round-trip OK (register 201 → login 200 → token issued)"
+
+  # ─────────────────────────────────────────────────────────────────────
+  # Vercel — wire the freshly-deployed backend URL into the Vercel
+  # project's production env (audit F-04: BACKEND_URL was never set, so
+  # auth routes fetched http://localhost:4000 and 500'd in prod), then
+  # deploy the Next.js frontend. Runs AFTER the backend job so the URL
+  # exists; env changes only apply to deployments created afterwards.
+  #
+  # The two vars are set programmatically via the Vercel REST API using
+  # the same token/org/project secrets the deploy action uses:
+  #   BACKEND_URL = <railway public url>  — consumed by src/lib/auth-client.ts
+  #   API_MODE    = proxy                 — kills the silent embedded-catalog
+  #                                         fallback (src/lib/api-gateway.ts)
+  #
+  # ── OWNER RUNBOOK (one-time, NOT scriptable from CI) ──────────────────
+  # CORS_ORIGINS lives on the RAILWAY service (backend-side allowlist,
+  # backend-node/src/server/middleware/cors.ts) and must include the
+  # frontend's public origin — CI cannot know it (custom domain):
+  #
+  #   railway login
+  #   railway variables --service "$RAILWAY_SERVICE_ID" --environment production
+  #   # then set in the Railway dashboard (or CLI if supported):
+  #   #   CORS_ORIGINS=https://<your-frontend-domain>
+  #   #   (comma-separated; localhost defaults are dev-only)
+  #   # and verify: curl -i -H "Origin: https://<your-frontend-domain>" \
+  #   #   https://<backend-host>/api/v1/health   → must NOT be a CORS error
+  #
+  # SQLite durability: Railway deploys must mount a volume and point
+  # DATABASE_URL at it (e.g. file:/data/roycss.db) — see
+  # backend-node/README.md "Deploying to Railway".
+  # ─────────────────────────────────────────────────────────────────────
+  deploy-frontend:
+    name: Deploy frontend to Vercel (with backend env wiring)
+    needs: [guard, deploy-backend-node]
+    if: needs.guard.outputs.should-deploy == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Wire BACKEND_URL + API_MODE into Vercel production env
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          BACKEND_URL: ${{ needs.deploy-backend-node.outputs.backend_url }}
+        run: |
+          set -euo pipefail
+          if [ -z "$BACKEND_URL" ]; then
+            echo "::error::backend job produced no URL — refusing to deploy frontend against a missing BACKEND_URL"
+            exit 1
+          fi
+          echo "Wiring BACKEND_URL=$BACKEND_URL and API_MODE=proxy (production)"
+
+          # v10 env upsert: creates or updates in one call — idempotent.
+          BODY=$(jq -n \
+            --arg url "$BACKEND_URL" \
+            '[
+               {key: "BACKEND_URL", value: $url,  type: "encrypted", target: ["production"]},
+               {key: "API_MODE",    value: "proxy", type: "encrypted", target: ["production"]}
+             ]')
+
+          # Team-scoped orgs need teamId; personal accounts do not —
+          # try with, fall back to without.
+          if ! curl -sf -X POST \
+              "https://api.vercel.com/v10/projects/${VERCEL_PROJECT_ID}/env?upsert=true&teamId=${VERCEL_ORG_ID}" \
+              -H "Authorization: Bearer ${VERCEL_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d "$BODY" > /tmp/env-upsert.json; then
+            echo "team-scoped upsert failed — retrying without teamId"
+            curl -sf -X POST \
+              "https://api.vercel.com/v10/projects/${VERCEL_PROJECT_ID}/env?upsert=true" \
+              -H "Authorization: Bearer ${VERCEL_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d "$BODY" > /tmp/env-upsert.json
+          fi
+          jq -r '.[] | "✓ \(.key) → \(.type) (target: \(.target | join(",")))"' /tmp/env-upsert.json \
+            || cat /tmp/env-upsert.json
+
+      - name: Deploy to Vercel (production)
+        uses: amondnet/vercel-action@v42
+        id: vercel
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: "--prod"
+          working-directory: .
+
+      - name: Print deployment URL
+        run: |
+          echo "Vercel deployment URL: ${{ steps.vercel.outputs.preview-url }}"
+          echo "::notice title=Frontend deployed::${{ steps.vercel.outputs.preview-url }}"
+          echo "::notice title=Backend deployed::${{ needs.deploy-backend-node.outputs.backend_url }}"

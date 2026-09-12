@@ -191,44 +191,76 @@ Server starts on `http://localhost:4000`. Visit
 `http://localhost:4000/api/v1` for an endpoint listing, or
 `http://localhost:4000/api/v1/health` for the health check.
 
-### Deploying to Render (blueprint)
+### Deploying to Railway (production)
 
-The repo root ships `render.yaml`, a Render Blueprint that deploys this
-directory as a web service (`https://<service>.onrender.com`). In the
-Render dashboard: **New → Blueprint → select this repo** — Render reads
-`render.yaml` and prompts for the required secrets.
+The backend deploys to Railway via `.github/workflows/deploy.yml`
+(triggered by CI green on `main`), which builds this directory's
+`Dockerfile` and then runs the post-deploy smoke checks. Render is dead
+(the old `render.yaml` blueprint was removed).
 
-What the blueprint does:
+Pipeline order (audit F-03 / F-04):
 
-- `rootDir: backend-node` — builds from this directory.
-- `buildCommand: bun install && bunx prisma generate && bunx prisma db push`
-  — installs deps, generates the Prisma client, applies the schema to the
-  database.
-- `startCommand: bunx tsx src/index.ts` — runs the server in production
-  (no dev watch script, no `.env` file; env vars come from Render).
-- `healthCheckPath: /api/v1/health` — deploy is green only when this
-  returns 200 (503 = database unreachable).
+1. **`prisma migrate deploy` runs BEFORE `railway up`** — the schema is
+   fully initialized (or advanced) before the new revision boots. The
+   committed baseline lives in `prisma/migrations/` (see
+   `prisma/migrations/README.md` for how to create + verify migrations).
+2. **Deploy** the Docker image (multi-stage: builder compiles `tsc` +
+   generates the Prisma client; runtime installs production deps only,
+   runs `bun dist/index.js` as the non-root `bun` user under
+   `NODE_ENV=production` — no `tsx watch`, no `.env` file; env comes
+   from Railway variables).
+3. **Health smoke** — `GET /api/v1/health` must answer 200.
+4. **Auth smoke** — a register+login round-trip against the public URL
+   must return 201/200 + an access token (proves DB + auth wiring, not
+   just liveness).
+5. **Vercel env wiring** — the discovered backend URL is upserted as
+   `BACKEND_URL` (plus `API_MODE=proxy`) on the Vercel project before
+   the frontend deploys, so `/api/auth/*` never falls back to
+   `http://localhost:4000`.
 
-Required environment variables (prompted by Render, `sync: false`):
+Railway service settings:
+
+| Setting          | Value                                        |
+|------------------|----------------------------------------------|
+| Root directory   | `backend-node` (the Docker build context)    |
+| Healthcheck path | `/api/v1/health`                             |
+| Start command    | from the Dockerfile (`bun dist/index.js`)    |
+
+Required Railway environment variables:
 
 | Variable              | Value                                          |
 |-----------------------|------------------------------------------------|
 | `DATABASE_URL`        | SQLite path or Postgres URL (see caveat below) |
-| `JWT_SECRET`          | Random string, ≥ 16 chars (32+ recommended)    |
-| `JWT_REFRESH_SECRET`  | Different random string, ≥ 16 chars            |
+| `JWT_SECRET`          | Random string, **≥ 48 chars** in production   |
+| `JWT_REFRESH_SECRET`  | Different random string, **≥ 48 chars**        |
+| `CORS_ORIGINS`        | The site origin, e.g. `https://roycss.vercel.app` |
 
-The blueprint also pins `NODE_ENV=production`, `PORT=4000`, `BUN_VERSION`,
-and `CORS_ORIGINS=https://roycss.vercel.app` (comma-separated allowlist —
-production CORS rejects any origin not on the list). All other vars in
-`src/config/env.ts` are optional with sane defaults.
+`NODE_ENV=production` and `PORT=4000` are set by the Dockerfile / Railway.
+Production boot **refuses** short or placeholder JWT secrets (see
+`src/config/env.ts`). All other vars in `src/config/env.ts` are optional
+with sane defaults.
 
-> **SQLite persistence caveat**: Render's free tier has an ephemeral
-> filesystem — the schema is applied at build time and the service boots
-> healthy, but user data written at runtime (accounts, contact messages,
-> favorites) is wiped on every deploy/restart. For durable data, mount a
-> persistent disk at `/data` and set `DATABASE_URL=file:/data/roycss.db`
-> (move `bunx prisma db push` to `preDeployCommand`), or switch to Postgres
-> (see "Switch to Postgres" below) — recommended for real production use.
+> **SQLite persistence caveat**: without a volume, Railway's filesystem
+> is ephemeral — the service boots healthy but user data (accounts,
+> contact messages, favorites) is wiped on every deploy. For durable
+> data, attach a Railway volume and set `DATABASE_URL=file:/data/roycss.db`,
+> or switch to Postgres (see "Switch to Postgres" below) — recommended
+> for real production use. If you run as the image's non-root user and
+> SQLite lives on a volume, make sure the volume path is writable by
+> that user (Railway mounts volumes owned by root; either pre-create the
+> file with the right owner or run an init that chowns it).
+
+> **CORS note**: `CORS_ORIGINS` is the backend-side allowlist
+> (`src/server/middleware/cors.ts`). It must contain the frontend's
+> public origin or credentialed browser calls fail preflight in
+> production. This is a one-time Railway dashboard setting — CI can't
+> know your custom domain.
+
+> **Effects data note**: the effects catalog is read from
+> `EFFECTS_DATA_PATH` (default `../dist/effects.json`, produced by the
+> parent project's build). The production image does not bundle it —
+> effects endpoints return empty results with a logged warning unless
+> you mount the file and point `EFFECTS_DATA_PATH` at it.
 
 Generate secrets locally with `openssl rand -base64 48`.
 
@@ -262,13 +294,15 @@ See `.env.example` for the full list with defaults. Required for prod:
 | `PORT`                | `4000`                           | HTTP port                                         |
 | `NODE_ENV`            | `development`                    | `production` enables strict CORS                 |
 | `DATABASE_URL`        | `file:./dev.db`                  | Swap to `postgresql://...` for prod              |
-| `JWT_SECRET`          | (16+ char dev default)           | Use `openssl rand -base64 64` in prod            |
-| `JWT_REFRESH_SECRET`  | (16+ char dev default)           | Must differ from `JWT_SECRET`                    |
+| `JWT_SECRET`          | (16+ char dev default)           | **Prod: ≥48 chars + not a placeholder** — `openssl rand -base64 48` |
+| `JWT_REFRESH_SECRET`  | (16+ char dev default)           | Must differ from `JWT_SECRET`; same prod rule     |
 | `JWT_EXPIRES_IN`      | `15m`                            | Access token lifetime                            |
 | `JWT_REFRESH_EXPIRES_IN` | `7d`                          | Refresh token lifetime                           |
 | `CORS_ORIGINS`        | `http://localhost:3000,...`      | Comma-separated allowed origins                  |
 | `RATE_LIMIT_MAX_AUTH`     | `10`                        | Auth attempts per minute per IP              |
 | `RATE_LIMIT_MAX_CONTACT`  | `5`                         | Contact submissions per minute per IP       |
+| `RATE_LIMIT_MAX_AI`       | `20`                        | AI-generation requests per minute per IP    |
+| `RATE_LIMIT_MAX_SEARCH`   | `60`                        | Search requests per minute per IP           |
 | `API_KEY_RATE_LIMIT_MAX` | `120`                      | Requests per minute **per API key** (issue #65) |
 | `API_KEY_RATE_LIMIT_WINDOW_MS` | `60000`             | Per-API-key rate limit window (ms)         |
 | `EFFECTS_DATA_PATH`   | `../dist/effects.json`           | Path to the parent project's effects JSON        |
@@ -333,7 +367,10 @@ implements the same interface (get/set/delete/has/clear).
    }
    ```
 2. Update `.env`: `DATABASE_URL="postgresql://user:pass@host:5432/roycss"`
-3. `bun run db:push`
+3. Create a fresh baseline migration for the new provider:
+   `DATABASE_URL=... bunx prisma migrate dev --name init-postgres`
+   (the committed baseline is SQLite-specific — `migration_lock.toml`
+   pins `provider = "sqlite"`; Postgres needs its own baseline)
 
 ### Add a protected route
 
@@ -357,7 +394,8 @@ router.get("/favorites", requireAuth, asyncHandler(async (req, res) => {
 | `bun run build`| tsc → dist/                                  |
 | `bun run start`| Run the compiled dist/index.js               |
 | `bun run db:generate` | `prisma generate`                     |
-| `bun run db:push`     | `prisma db push` (create/apply schema)|
+| `bun run db:push`     | `prisma db push` (dev-only schema sync) |
+| `bunx prisma migrate deploy` | apply committed migrations (what CI runs against Railway) |
 | `bun run typecheck`   | `tsc --noEmit` (no output, just check)|
 
 ---

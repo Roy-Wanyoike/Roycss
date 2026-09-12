@@ -6,6 +6,34 @@
  *   POST  /refresh      refresh token → new token pair
  *   GET   /me           current user (requires Authorization: Bearer)
  *
+ *   ─── Email lifecycle (PF-011 / audit F-02) ───────────────────────
+ *   POST  /verify-email          (re)send a verification email    [public]
+ *   POST  /verify-email/confirm  redeem the emailed token         [public]
+ *   POST  /forgot-password       request a reset email            [public, always 200]
+ *   POST  /reset-password         redeem token + new password      [public]
+ *
+ *   ─── Session lifecycle (audit F-05) ───────────────────────────
+ *   POST  /logout        revoke the presented refresh token     [public, idempotent]
+ *   POST  /logout-all    revoke every session for the caller    [Bearer JWT only]
+ *
+ *   ─── Account lifecycle (audit F-13) ──────────────────────
+ *   GET   /export        JSON dump of the caller's own data    [auth]
+ *   DELETE /account      soft-delete with password confirmation [Bearer JWT only]
+ *
+ *   ─── LOGIN POLICY (grace mode) ───────────────────────────────────
+ *   An UNVERIFIED email still logs in — the response carries
+ *   `user.emailVerified: false` so the UI shows a verify banner.
+ *   Rationale: while the mailer runs on the mock transport (no
+ *   RESEND_API_KEY), locking users out would brick every dev/test
+ *   account. When real email ships, flip `requireVerifiedEmail`
+ *   below to reject with 403 instead of flagging.
+ *
+ *   ─── No user enumeration (audit F-02) ───────────────────────────
+ *   /verify-email + /forgot-password return the SAME 200 shape
+ *   whether or not the address has an account; only the emailed
+ *   link's existence differs. /reset-password + /verify-email/confirm
+ *   fail with a uniform "Invalid or expired token" 400.
+ *
  *   POST  /api-keys     mint an API key (issue #65)      [Bearer JWT only]
  *   GET   /api-keys     list the caller's keys, masked   [Bearer JWT only]
  *   DELETE /api-keys/:id revoke (soft-delete) a key      [Bearer JWT only]
@@ -29,16 +57,30 @@ import { jwtOnly } from "../../server/middleware/api-key.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import { validateBody, validateParams } from "../../server/middleware/validate.js";
 import {
-  getCurrentUser,
-  loginUser,
-  refreshTokens,
-  registerUser,
-} from "./service.js";
-import {
+  DeleteAccountSchema,
+  ForgotPasswordSchema,
   LoginInputSchema,
+  LogoutInputSchema,
   RefreshInputSchema,
   RegisterInputSchema,
+  ResetPasswordSchema,
+  VerifyEmailConfirmSchema,
+  VerifyEmailRequestSchema,
 } from "./schema.js";
+import {
+  confirmEmailVerification,
+  deleteAccount,
+  exportAccount,
+  getCurrentUser,
+  loginUser,
+  logoutAll,
+  logoutUser,
+  refreshTokens,
+  registerUser,
+  requestEmailVerification,
+  requestPasswordReset,
+  resetPassword,
+} from "./service.js";
 import {
   createApiKey,
   listApiKeys,
@@ -136,6 +178,220 @@ authRouter.get(
     const userId = req.user!.sub;
     const user = await getCurrentUser(userId);
     res.json({ data: user });
+  }),
+);
+
+// ─── Session lifecycle (audit F-05) ─────────────────────────────────
+
+/**
+ * Logout: revoke the presented refresh token server-side. Public +
+ * IDEMPOTENT — a garbage/unknown/expired token is still a 200 (logout
+ * must never leak token validity, and a stale cookie shouldn't error).
+ * The client clears its cookies; the row death is what matters.
+ */
+authRouter.post(
+  "/logout",
+  authRateLimit,
+  validateBody(LogoutInputSchema),
+  asyncHandler(async (req, res) => {
+    const input = req.body as unknown as z.infer<typeof LogoutInputSchema>;
+    await logoutUser(input);
+    res.json({ data: { ok: true } });
+  }),
+);
+
+/**
+ * Logout everywhere: revoke every live refresh token for the caller.
+ * Bearer-JWT-ONLY (jwtOnly, like the API-key management routes): a
+ * leaked X-API-Key must not be usable to sign the owner out of all
+ * their sessions — that's a lockout DoS / cover-your-tracks vector.
+ */
+authRouter.post(
+  "/logout-all",
+  authRateLimit,
+  jwtOnly,
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const result = await logoutAll(req.user!.sub);
+    await recordAuditEvent({
+      actor: req.user!.sub,
+      action: "auth.session.logout_all",
+      resourceType: "user",
+      resourceId: req.user!.sub,
+      requestId: req.requestId,
+      metadata: { revoked: result.revoked },
+    });
+    res.json({ data: result });
+  }),
+);
+
+// ─── Account lifecycle: export + delete (audit F-13) ─────────────────────
+
+/**
+ * Export the caller's own data (GDPR portability): profile,
+ * favorites, collections and API-key metadata — no secrets ever
+ * (passwordHash stays in the DB; key plaintext is unrecoverable).
+ * Dual credential (Bearer JWT or wildcard X-API-Key) like /me — it
+ * is a read of data those credentials can already read one route at
+ * a time (favorites/collections/api-keys lists).
+ */
+authRouter.get(
+  "/export",
+  authRateLimit,
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const dump = await exportAccount(req.user!.sub);
+    await recordAuditEvent({
+      actor: req.user!.sub,
+      action: "auth.account.export",
+      resourceType: "user",
+      resourceId: req.user!.sub,
+      requestId: req.requestId,
+      // No counts either — the audit row says an export HAPPENED, not
+      // what was in it (PII minimization, audit F-13).
+    });
+    res.json({ data: dump });
+  }),
+);
+
+/**
+ * Delete the caller's account. Bearer-JWT-ONLY (a leaked X-API-Key
+ * must not be able to delete the owner's account) + password
+ * re-confirmation — deletion is the one mutation a stolen session
+ * alone must never trigger. Soft-delete with a 30-day grace: all
+ * sessions/keys die immediately, the row is hard-purged (with
+ * cascades) after the grace period (see service.ts).
+ */
+authRouter.delete(
+  "/account",
+  authRateLimit,
+  jwtOnly,
+  requireAuth,
+  validateBody(DeleteAccountSchema),
+  asyncHandler(async (req, res) => {
+    const input = req.body as unknown as z.infer<typeof DeleteAccountSchema>;
+    const result = await deleteAccount(req.user!.sub, input.password);
+    await recordAuditEvent({
+      actor: req.user!.sub,
+      action: "auth.account.delete",
+      resourceType: "user",
+      resourceId: req.user!.sub,
+      requestId: req.requestId,
+      metadata: { purgeAfterDays: result.purgeAfterDays },
+    });
+    res.json({
+      data: {
+        ok: true,
+        deletedAt: result.deletedAt,
+        purgeAfterDays: result.purgeAfterDays,
+        message:
+          "Your account is deactivated and sign-in is disabled. Your " +
+          "personal data is purged (with favorites, collections and API " +
+          `keys) within ${result.purgeAfterDays} days. Download an export ` +
+          "first if you want to keep a copy — it is unavailable after " +
+          "deletion.",
+      },
+    });
+  }),
+);
+
+// ─── Email lifecycle (PF-011 / audit F-02) ─────────────────────────────
+// All four stay public: the token in the body/URL IS the credential
+// (someone clicking an email link has no Bearer token yet). Each is
+// rate-limited under the auth tier (10/min/IP) like the other public
+// auth routes.
+
+/**
+ * (Re)send a verification email. Always 200 with the same shape —
+ * unknown addresses and already-verified accounts are silent no-ops
+ * so this route can't be used to enumerate registered emails.
+ */
+authRouter.post(
+  "/verify-email",
+  authRateLimit,
+  validateBody(VerifyEmailRequestSchema),
+  asyncHandler(async (req, res) => {
+    const input = req.body as unknown as z.infer<typeof VerifyEmailRequestSchema>;
+    await requestEmailVerification(input);
+    res.json({
+      data: {
+        sent: true,
+        message:
+          "If that address has an unverified RoyCSS account, a verification link is on its way.",
+      },
+    });
+  }),
+);
+
+/** Redeem the emailed verification token — sets emailVerifiedAt. */
+authRouter.post(
+  "/verify-email/confirm",
+  authRateLimit,
+  validateBody(VerifyEmailConfirmSchema),
+  asyncHandler(async (req, res) => {
+    const input = req.body as unknown as z.infer<typeof VerifyEmailConfirmSchema>;
+    const user = await confirmEmailVerification(input);
+    await recordAuditEvent({
+      actor: user.id,
+      action: "auth.email.verify",
+      resourceType: "user",
+      resourceId: user.id,
+      requestId: req.requestId,
+    });
+    res.json({ data: user });
+  }),
+);
+
+/**
+ * Request a password-reset email. ALWAYS 200 — identical response for
+ * known and unknown addresses (no enumeration; audit F-02). The
+ * actual reset requires the single-use token from the email.
+ */
+authRouter.post(
+  "/forgot-password",
+  authRateLimit,
+  validateBody(ForgotPasswordSchema),
+  asyncHandler(async (req, res) => {
+    const input = req.body as unknown as z.infer<typeof ForgotPasswordSchema>;
+    await requestPasswordReset(input);
+    res.json({
+      data: {
+        sent: true,
+        message:
+          "If that address has a RoyCSS account, a password-reset link is on its way.",
+      },
+    });
+  }),
+);
+
+/**
+ * Redeem a reset token + set the new password. Invalid/expired/reused
+ * tokens → 400 with a uniform message. A successful reset
+ * invalidates every issued refresh token (session kill-switch — see
+ * revokeAllUserRefreshTokens in service.ts).
+ */
+authRouter.post(
+  "/reset-password",
+  authRateLimit,
+  validateBody(ResetPasswordSchema),
+  asyncHandler(async (req, res) => {
+    const input = req.body as unknown as z.infer<typeof ResetPasswordSchema>;
+    const result = await resetPassword(input);
+    await recordAuditEvent({
+      // Actor is resolved from the token inside the service — the route
+      // never sees it; audit without email (PII minimization, audit F-13).
+      actor: result.userId,
+      action: "auth.password.reset",
+      resourceType: "user",
+      resourceId: result.userId,
+      requestId: req.requestId,
+    });
+    res.json({
+      data: {
+        reset: true,
+        message: "Password updated. Sign in with your new password.",
+      },
+    });
   }),
 );
 

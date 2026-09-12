@@ -94,9 +94,12 @@ describe("security/secret-exposure", () => {
     expect(me.status).toBe(200);
     expectSuccessEnvelope(me);
     scanForSecrets(me.body, "GET /auth/me");
+    // emailVerified (PF-011 grace-mode flag) is the one deliberate
+    // addition — still no hash/secret material crosses the wire.
     expect(Object.keys(me.body.data).sort()).toEqual([
       "createdAt",
       "email",
+      "emailVerified",
       "id",
       "name",
     ]);

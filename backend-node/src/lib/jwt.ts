@@ -8,7 +8,16 @@
  *
  * Both are signed with HS256. Refresh uses a *different* secret so that
  * an access-token leak cannot mint refresh tokens.
+ *
+ * Refresh tokens carry a random `jti` (JWT ID) claim: HS256 signing is
+ * deterministic, so without it two token pairs issued for the same user
+ * within the same second are byte-identical strings — which would
+ * collide on the RefreshToken.tokenHash unique index (audit F-05) and
+ * silently make same-session re-issues interchangeable. The jti makes
+ * every issued refresh JWT distinct.
  */
+import { randomUUID } from "node:crypto";
+
 import jwt, { type SignOptions, type VerifyOptions } from "jsonwebtoken";
 
 import { JWT_CONFIG } from "../config/constants.js";
@@ -23,6 +32,8 @@ export interface AccessTokenPayload {
 export interface RefreshTokenPayload {
   sub: string; // user id
   email: string;
+  /** Unique token id — guarantees distinct refresh JWTs (see header). */
+  jti: string;
   type: "refresh";
 }
 
@@ -44,7 +55,7 @@ const BASE_VERIFY_OPTS: VerifyOptions = {
 };
 
 /** Convert a human-readable duration string ("15m", "7d") to seconds. */
-function durationToSeconds(input: string): number {
+export function durationToSeconds(input: string): number {
   const match = /^(\d+)\s*([smhd])$/.exec(input.trim());
   if (!match) return 900; // default 15m if malformed
   const n = Number.parseInt(match[1]!, 10);
@@ -72,10 +83,16 @@ export function signAccessToken(payload: Omit<AccessTokenPayload, "type">): stri
   );
 }
 
-/** Sign a new refresh token. */
-export function signRefreshToken(payload: Omit<RefreshTokenPayload, "type">): string {
+/** Sign a new refresh token. Generates a unique `jti` internally. */
+export function signRefreshToken(
+  payload: Omit<RefreshTokenPayload, "type" | "jti">,
+): string {
   return jwt.sign(
-    { ...payload, type: "refresh" } satisfies RefreshTokenPayload,
+    {
+      ...payload,
+      jti: randomUUID(), // every issued refresh JWT is distinct (audit F-05)
+      type: "refresh",
+    } satisfies RefreshTokenPayload,
     JWT_CONFIG.refreshSecret,
     { ...BASE_SIGN_OPTS, expiresIn: durationToSeconds(JWT_CONFIG.refreshExpiresIn) },
   );
@@ -92,6 +109,10 @@ export function signTokenPair(payload: {
     expiresIn: durationToSeconds(JWT_CONFIG.expiresIn),
   };
 }
+
+/** Refresh-token lifetime in ms — the RefreshToken row expiry (audit F-05). */
+export const REFRESH_TOKEN_TTL_MS =
+  durationToSeconds(JWT_CONFIG.refreshExpiresIn) * 1000;
 
 /** Verify an access token. Throws AppError on failure. */
 export function verifyAccessToken(token: string): AccessTokenPayload {

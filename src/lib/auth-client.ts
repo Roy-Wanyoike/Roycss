@@ -10,6 +10,11 @@ export interface AuthUser {
   id: string;
   email: string;
   name: string | null;
+  /**
+   * Grace-mode verification flag (backend PF-011): false until the user
+   * clicks the emailed verification link. Drives the user-menu banner.
+   */
+  emailVerified?: boolean;
   createdAt: string;
 }
 

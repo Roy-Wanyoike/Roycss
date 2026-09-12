@@ -141,6 +141,10 @@ const TABLES_IN_FK_SAFE_ORDER = [
   "membership",
   // ── Tier 1.2 — API keys (enforced FK to User; issue #65) ─────────
   "apiKey",
+  // ── Tier 1.3 — auth lifecycle tokens (enforced FK to User; PF-011) ─
+  "verificationToken",
+  // ── Tier 1.4 — refresh sessions (enforced FK to User; audit F-05) ─
+  "refreshToken",
   // ── Tier 2 — dependent tables (logical *Id, no enforced FK) ──────
   "pathProgress",
   "challengeSubmission",

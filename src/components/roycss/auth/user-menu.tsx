@@ -1,6 +1,7 @@
 "use client";
 
-import { LogOut, User as UserIcon, UserPlus, LogIn } from "lucide-react";
+import { useCallback, useState } from "react";
+import { LogOut, MailWarning, User as UserIcon, UserPlus, LogIn, X } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,10 +16,52 @@ import { useAuth } from "./auth-context";
 import { useAuthSheetStore } from "./auth-sheet-store";
 import { toast } from "sonner";
 
-/** Desktop navbar cluster — Sign in / Create account OR avatar menu. */
+/**
+ * sessionStorage key for the dismissible verify-email banner. Keyed by
+ * user id so switching accounts re-shows it; session-scoped so it comes
+ * back on the next visit (verification still pending, still worth a
+ * nudge) instead of being suppressed forever.
+ */
+const verifyBannerKey = (userId: string) => `roycss-verify-banner:${userId}`;
+
+/**
+ * Resend the verification email (PF-011 grace-mode banner action).
+ * Same no-enumeration toast for every outcome — the endpoint answers
+ * 200 whether or not the address is registered/unverified.
+ */
+async function resendVerification(email: string): Promise<void> {
+  try {
+    const res = await fetch("/api/auth/verify-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+    if (!res.ok) {
+      toast.error("Couldn't send the email right now — please try again later.");
+      return;
+    }
+    toast.info("If that address has an unverified RoyCSS account, a verification link is on its way.");
+  } catch {
+    toast.error("Couldn't send the email right now — please try again later.");
+  }
+}
+
+/** Desktop navbar cluster — Sign in / Create account OR avatar menu (+ verify banner). */
 export function UserMenu() {
-  const { user, loading, logout } = useAuth();
+  const { user, loading, logout, refreshUser } = useAuth();
   const { openLogin, openRegister } = useAuthSheetStore();
+  const [resending, setResending] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+
+  const unverified =
+    user !== null && user.emailVerified === false && !dismissed &&
+    !(typeof window !== "undefined" &&
+      window.sessionStorage.getItem(verifyBannerKey(user.id)) === "1");
+
+  const dismissBanner = useCallback(() => {
+    if (user) window.sessionStorage.setItem(verifyBannerKey(user.id), "1");
+    setDismissed(true);
+  }, [user]);
 
   if (loading) {
     return <div className="size-9 rounded-full bg-muted animate-pulse" aria-hidden />;
@@ -49,7 +92,39 @@ export function UserMenu() {
   }
   const initials = (user.name ?? user.email).slice(0, 2).toUpperCase();
   return (
-    <div className="hidden xl:flex">
+    <div className="hidden xl:flex items-center gap-2">
+      {/* Verify-email banner (PF-011 / audit F-08) — dismissible, with a
+          resend action. Only shows while the account is unverified. */}
+      {unverified && (
+        <div className="flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary/10 py-1 pl-2.5 pr-1.5 text-xs text-primary">
+          <MailWarning className="size-3.5 shrink-0" aria-hidden />
+          <span className="whitespace-nowrap font-medium">Verify your email</span>
+          <button
+            type="button"
+            disabled={resending}
+            onClick={async () => {
+              setResending(true);
+              try {
+                await resendVerification(user.email);
+                await refreshUser().catch(() => null);
+              } finally {
+                setResending(false);
+              }
+            }}
+            className="font-medium underline underline-offset-2 hover:decoration-2 disabled:opacity-60 cursor-pointer"
+          >
+            {resending ? "Sending…" : "Resend link"}
+          </button>
+          <button
+            type="button"
+            onClick={dismissBanner}
+            aria-label="Dismiss verify-email reminder"
+            className="rounded-full p-0.5 hover:bg-primary/15 transition-colors cursor-pointer"
+          >
+            <X className="size-3.5" aria-hidden />
+          </button>
+        </div>
+      )}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button
@@ -67,6 +142,11 @@ export function UserMenu() {
           <DropdownMenuLabel className="flex flex-col gap-0.5">
             <span className="text-sm font-medium truncate">{user.name ?? "RoyCSS user"}</span>
             <span className="text-xs text-muted-foreground font-normal truncate">{user.email}</span>
+            {user.emailVerified === false && (
+              <span className="text-xs font-medium text-primary">
+                Email not verified — check your inbox
+              </span>
+            )}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem
@@ -85,7 +165,7 @@ export function UserMenu() {
   );
 }
 
-/** Mobile hamburger menu item — single button that opens LoginSheet or signs out. */
+/** Mobile hamburger menu item — single button that opens LoginSheet or signs out (+ verify nudge). */
 export function MobileAuthMenuItem() {
   const { user, loading, logout } = useAuth();
   const { openLogin } = useAuthSheetStore();
@@ -102,12 +182,23 @@ export function MobileAuthMenuItem() {
     );
   }
   return (
-    <button
-      onClick={async () => { await logout(); toast.success("Signed out"); }}
-      className="flex items-center justify-between w-full px-4 py-3 rounded-xl text-sm font-medium text-destructive hover:bg-destructive/5 transition-all cursor-pointer min-h-[44px]"
-    >
-      Sign out ({user.email})
-      <LogOut className="size-3.5" />
-    </button>
+    <div className="space-y-1">
+      {user.emailVerified === false && (
+        <button
+          onClick={() => void resendVerification(user.email)}
+          className="flex items-center justify-between w-full px-4 py-3 rounded-xl text-sm font-medium text-primary hover:bg-primary/5 transition-all cursor-pointer min-h-[44px]"
+        >
+          Verify your email — resend link
+          <MailWarning className="size-3.5" />
+        </button>
+      )}
+      <button
+        onClick={async () => { await logout(); toast.success("Signed out"); }}
+        className="flex items-center justify-between w-full px-4 py-3 rounded-xl text-sm font-medium text-destructive hover:bg-destructive/5 transition-all cursor-pointer min-h-[44px]"
+      >
+        Sign out ({user.email})
+        <LogOut className="size-3.5" />
+      </button>
+    </div>
   );
 }

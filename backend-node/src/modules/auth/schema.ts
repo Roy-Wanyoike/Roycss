@@ -76,6 +76,14 @@ export const ResetPasswordSchema = z.object({
 });
 export type ResetPasswordInput = z.infer<typeof ResetPasswordSchema>;
 
+// ─── Session lifecycle (audit F-05) ───────────────────────────────────
+
+/** POST /auth/logout — revoke the presented refresh token. */
+export const LogoutInputSchema = z.object({
+  refreshToken: z.string().min(1, "refreshToken is required"),
+});
+export type LogoutInput = z.infer<typeof LogoutInputSchema>;
+
 /** Public user shape returned in API responses (never includes passwordHash). */
 export interface PublicUser {
   id: string;

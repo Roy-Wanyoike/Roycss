@@ -2,7 +2,7 @@
 
 The public HTTP surface of the platform: the Express backend (`/api/v1/*`, `backend-node/`) and the Next.js frontend routes (`/api/*`, `src/app/api/`).
 
-**Coverage:** 72 backend modules · 285 backend routes (GET 202, POST 71, PUT 2, DELETE 9) · 15 frontend endpoints.
+**Coverage:** 72 backend modules · 287 backend routes (GET 202, POST 73, PUT 2, DELETE 9) · 15 frontend endpoints.
 
 > **Drift gate:** `cd backend-node && bun run api:check` walks `src/server/app.ts`, every module's `routes.ts` and `src/app/api/**` and fails when a route here is missing or stale. Regenerate the tables with `bun run api:gen` (curated prose lives in `backend-node/scripts/gen-api-md.ts` — edit there, not in API.md).
 
@@ -262,9 +262,9 @@ Catalog + registry reads that power the docs site, the package, and the integrat
 
 Account lifecycle (JWT), the caller's saved content (favorites + collections), and the contact intake form.
 
-#### `auth` — JWT account lifecycle + API key management (register / login / refresh / me; email verification + password reset — PF-011; mint / list / revoke CLI–SDK–MCP keys).
+#### `auth` — JWT account lifecycle + API key management (register / login / refresh / me; email verification + password reset — PF-011; refresh-token rotation + revocation — audit F-05; mint / list / revoke CLI–SDK–MCP keys).
 
-> Prisma-backed (`User`, `ApiKey`, `VerificationToken`). register/login/refresh stay public by design (token bootstrap, 10/min/IP). `GET /me` requires a Bearer token (an X-API-Key with `*` also works). The API-key management routes are **Bearer-JWT-only** — X-API-Key credentials are rejected there so a leaked key can never mint, enumerate, or revive keys. The email-lifecycle routes (verify-email, forgot/reset-password — PF-011) are public too: the single-use 30-min token in the body IS the credential. verify-email/forgot-password always answer 200 with the same shape (no user enumeration); token redemption fails with a uniform 400. Login is **grace mode**: unverified accounts still log in, flagged `user.emailVerified: false` for the UI banner. Emails go out via the mailer (mock transport logs the link in dev; set `RESEND_API_KEY` for real delivery).
+> Prisma-backed (`User`, `ApiKey`, `VerificationToken`, `RefreshToken`). register/login/refresh stay public by design (token bootstrap, 10/min/IP). `GET /me` requires a Bearer token (an X-API-Key with `*` also works). The API-key management routes are **Bearer-JWT-only** — X-API-Key credentials are rejected there so a leaked key can never mint, enumerate, or revive keys. The email-lifecycle routes (verify-email, forgot/reset-password — PF-011) are public too: the single-use 30-min token in the body IS the credential. verify-email/forgot-password always answer 200 with the same shape (no user enumeration); token redemption fails with a uniform 400. Login is **grace mode**: unverified accounts still log in, flagged `user.emailVerified: false` for the UI banner. Emails go out via the mailer (mock transport logs the link in dev; set `RESEND_API_KEY` for real delivery). Session lifecycle (audit F-05): every refresh token has a DB row (SHA-256 hashed at rest) — `/refresh` verifies the JWT AND the row, then rotates (single use); replaying a rotated token revokes EVERY session for that user (reuse detection); `/logout` revokes the presented token (idempotent 200 for any input); `/logout-all` (Bearer-JWT-only) and a successful password reset revoke every session.
 > Extra rate limit: **auth 10/min/IP** on the public credential routes (register/login/refresh + the email-lifecycle endpoints).
 
 | Method | Path | Auth | Request | Response | Errors |
@@ -273,6 +273,8 @@ Account lifecycle (JWT), the caller's saved content (favorites + collections), a
 | POST | `/api/v1/auth/login` | Public | body: { `email`, `password` } | `{ data: { user, accessToken, refreshToken, expiresIn } }` · 200 | 400 · 401 · 429 |
 | POST | `/api/v1/auth/refresh` | Public | body: { `refreshToken` } | `{ data: { user, accessToken, refreshToken, expiresIn } }` · 200 | 400 · 401 · 429 |
 | GET | `/api/v1/auth/me` | Bearer JWT | — | `{ data: user }` · 200 | 401 |
+| POST | `/api/v1/auth/logout` | Public | body: { `refreshToken` } | `{ data: { ok: true } }` · 200 — idempotent | 400 · 429 |
+| POST | `/api/v1/auth/logout-all` | Bearer JWT | — | `{ data: { ok: true, revoked } }` · 200 | 401 · 429 |
 | POST | `/api/v1/auth/verify-email` | Public | body: { `email` } | `{ data: { sent: true, message } }` · 200 — always, even for unknown emails | 400 · 429 |
 | POST | `/api/v1/auth/verify-email/confirm` | Public | body: { `token` } | `{ data: user (emailVerified: true) }` · 200 | 400 · 429 |
 | POST | `/api/v1/auth/forgot-password` | Public | body: { `email` } | `{ data: { sent: true, message } }` · 200 — always, even for unknown emails | 400 · 429 |

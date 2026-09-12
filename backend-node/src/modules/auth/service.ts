@@ -15,10 +15,6 @@ import bcrypt from "bcryptjs";
 
 import { env } from "../../config/env.js";
 import { db } from "../../lib/db.js";
-import {
-  signTokenPair,
-  verifyRefreshToken,
-} from "../../lib/jwt.js";
 import { createLogger } from "../../lib/logger.js";
 import { AppError } from "../../server/middleware/error.js";
 import { getMailer } from "../email/mailer.js";
@@ -26,6 +22,12 @@ import {
   resetPasswordTemplate,
   verifyEmailTemplate,
 } from "../email/templates.js";
+import {
+  issueSession,
+  revokeAllUserSessions,
+  revokeSession,
+  rotateSession,
+} from "./sessions.js";
 import {
   TOKEN_PURPOSES,
   TOKEN_TTL_LABEL,
@@ -35,6 +37,7 @@ import {
 import type {
   ForgotPasswordInput,
   LoginInput,
+  LogoutInput,
   PublicUser,
   RegisterInput,
   ResetPasswordInput,
@@ -114,7 +117,8 @@ export async function registerUser(
     select: { id: true, email: true, name: true, emailVerifiedAt: true, createdAt: true },
   });
 
-  const tokens = signTokenPair({ sub: user.id, email: user.email });
+  // Session = token pair + its revocable RefreshToken row (audit F-05).
+  const tokens = await issueSession(user);
 
   log.info("User registered", { userId: user.id, email: user.email });
 
@@ -159,7 +163,7 @@ export async function loginUser(
     throw AppError.unauthorized("Invalid email or password");
   }
 
-  const tokens = signTokenPair({ sub: user.id, email: user.email });
+  const tokens = await issueSession(user);
 
   log.info("User logged in", {
     userId: user.id,
@@ -177,23 +181,28 @@ export async function loginUser(
 
 /**
  * Exchange a refresh token for a new access + refresh token pair.
- * Throws 401 if the refresh token is invalid or the user no longer exists.
+ *
+ * ROTATION (audit F-05): the presented refresh token is verified against
+ * BOTH its JWT signature AND its RefreshToken row (exists · not revoked ·
+ * not expired), the old row is revoked (chained to its successor), and a
+ * new row is issued — a refresh token is single-use. Presenting an
+ * already-rotated token is treated as theft and revokes every session
+ * for the user (see sessions.ts for the compromise story).
  */
 export async function refreshTokens(
   refreshToken: string,
 ): Promise<{ user: PublicUser; accessToken: string; refreshToken: string; expiresIn: number }> {
-  const payload = verifyRefreshToken(refreshToken);
+  const { userId, tokens } = await rotateSession(refreshToken);
 
   const user = await db.user.findUnique({
-    where: { id: payload.sub },
+    where: { id: userId },
     select: { id: true, email: true, name: true, emailVerifiedAt: true, createdAt: true },
   });
   if (!user) {
+    // User deleted between rotation and read — revoke what we just made.
+    await revokeAllUserSessions(userId);
     throw AppError.unauthorized("User no longer exists");
   }
-  // Re-issue with the current email so refresh tokens stay in sync
-  // after an email change.
-  const tokens = signTokenPair({ sub: user.id, email: user.email });
 
   return {
     user: toPublicUser(user),
@@ -314,6 +323,33 @@ export async function resetPassword(
     data: { passwordHash },
   });
 
+  // SESSION KILL-SWITCH (audit F-05): every issued refresh token for
+  // this account dies with the old password. Whoever requested the
+  // reset keeps no borrowed session.
+  await revokeAllUserSessions(userId);
+
   log.info("Password reset via emailed token", { userId });
   return { reset: true, userId };
+}
+
+// ─── Session lifecycle (audit F-05) ───────────────────────────────────
+
+/**
+ * Logout: revoke the presented refresh token (not just cookie
+ * clearing — the server-side row dies too). Idempotent: a garbage or
+ * unknown token is still a successful logout.
+ */
+export async function logoutUser(
+  input: LogoutInput,
+): Promise<{ ok: true }> {
+  await revokeSession(input.refreshToken);
+  return { ok: true };
+}
+
+/** Logout everywhere: revoke every live refresh token for the user. */
+export async function logoutAll(
+  userId: string,
+): Promise<{ ok: true; revoked: number }> {
+  const revoked = await revokeAllUserSessions(userId);
+  return { ok: true, revoked };
 }

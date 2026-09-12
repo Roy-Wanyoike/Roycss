@@ -12,6 +12,10 @@
  *   POST  /forgot-password       request a reset email            [public, always 200]
  *   POST  /reset-password         redeem token + new password      [public]
  *
+ *   ─── Session lifecycle (audit F-05) ───────────────────────────
+ *   POST  /logout        revoke the presented refresh token     [public, idempotent]
+ *   POST  /logout-all    revoke every session for the caller    [Bearer JWT only]
+ *
  *   ─── LOGIN POLICY (grace mode) ───────────────────────────────────
  *   An UNVERIFIED email still logs in — the response carries
  *   `user.emailVerified: false` so the UI shows a verify banner.
@@ -51,6 +55,7 @@ import { validateBody, validateParams } from "../../server/middleware/validate.j
 import {
   ForgotPasswordSchema,
   LoginInputSchema,
+  LogoutInputSchema,
   RefreshInputSchema,
   RegisterInputSchema,
   ResetPasswordSchema,
@@ -61,6 +66,8 @@ import {
   confirmEmailVerification,
   getCurrentUser,
   loginUser,
+  logoutAll,
+  logoutUser,
   refreshTokens,
   registerUser,
   requestEmailVerification,
@@ -164,6 +171,50 @@ authRouter.get(
     const userId = req.user!.sub;
     const user = await getCurrentUser(userId);
     res.json({ data: user });
+  }),
+);
+
+// ─── Session lifecycle (audit F-05) ─────────────────────────────────
+
+/**
+ * Logout: revoke the presented refresh token server-side. Public +
+ * IDEMPOTENT — a garbage/unknown/expired token is still a 200 (logout
+ * must never leak token validity, and a stale cookie shouldn't error).
+ * The client clears its cookies; the row death is what matters.
+ */
+authRouter.post(
+  "/logout",
+  authRateLimit,
+  validateBody(LogoutInputSchema),
+  asyncHandler(async (req, res) => {
+    const input = req.body as unknown as z.infer<typeof LogoutInputSchema>;
+    await logoutUser(input);
+    res.json({ data: { ok: true } });
+  }),
+);
+
+/**
+ * Logout everywhere: revoke every live refresh token for the caller.
+ * Bearer-JWT-ONLY (jwtOnly, like the API-key management routes): a
+ * leaked X-API-Key must not be usable to sign the owner out of all
+ * their sessions — that's a lockout DoS / cover-your-tracks vector.
+ */
+authRouter.post(
+  "/logout-all",
+  authRateLimit,
+  jwtOnly,
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const result = await logoutAll(req.user!.sub);
+    await recordAuditEvent({
+      actor: req.user!.sub,
+      action: "auth.session.logout_all",
+      resourceType: "user",
+      resourceId: req.user!.sub,
+      requestId: req.requestId,
+      metadata: { revoked: result.revoked },
+    });
+    res.json({ data: result });
   }),
 );
 

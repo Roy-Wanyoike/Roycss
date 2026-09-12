@@ -23,6 +23,7 @@ model User {
   memberships     Membership[]
   apiKeys         ApiKey[]
   verificationTokens VerificationToken[]
+  refreshTokens   RefreshToken[]
   @@index([email])
 }
 
@@ -49,6 +50,32 @@ model VerificationToken {
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, purpose])
+  @@index([expiresAt])
+}
+
+// ─── Refresh-token rotation + revocation (audit F-05) ────────────────────
+// Stateful companion to the stateless refresh JWT: every issued refresh
+// token gets a row here, keyed by SHA-256 of the full JWT string. A DB leak
+// yields only hashes — reconstructing a usable JWT needs the signing key.
+//
+// Lifecycle: create on register/login → on every /auth/refresh the old row
+// is revoked (revokedAt + replacedByHash chain) and a new row is issued
+// (rotation). Presenting a REVOKED token is treated as theft: every session
+// for that user is revoked (reuse detection — the compromise kill-switch).
+// /auth/logout revokes the presented token; /auth/logout-all revokes every
+// row; password reset revokes every row.
+model RefreshToken {
+  id             String    @id @default(cuid())
+  userId         String
+  tokenHash      String    @unique
+  expiresAt      DateTime
+  revokedAt      DateTime?
+  /** Hash of the successor token — rotation chain for forensics. */
+  replacedByHash String?
+  createdAt      DateTime  @default(now())
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
   @@index([expiresAt])
 }
 

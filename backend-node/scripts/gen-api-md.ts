@@ -169,7 +169,7 @@ const MODULE_BLURBS: Record<string, string> = {
   version: "Release metadata — current, latest, changelog, breaking changes, upgrade check.",
   search: "Cross-resource search over effects/recipes/patterns (Prisma `SearchIndex`).",
   fallback: "`@supports` fallback recipes for modern CSS features.",
-  auth: "JWT account lifecycle + API key management (register / login / refresh / me; email verification + password reset — PF-011; mint / list / revoke CLI–SDK–MCP keys).",
+  auth: "JWT account lifecycle + API key management (register / login / refresh / me; email verification + password reset — PF-011; refresh-token rotation + revocation — audit F-05; mint / list / revoke CLI–SDK–MCP keys).",
   contact: "Contact form intake (Prisma `ContactMessage`; 5 submissions/min/IP).",
   favorites:
     "Saved effects (`EffectFavorite` Prisma model) — list/add/remove, owner-scoped (PF-048).",
@@ -236,7 +236,7 @@ const MODULE_MODELS: Record<string, string> = {
   academy: "LearningPath, PathProgress",
   analytics: "User (read-only)",
   "audit-center": "AuditProject, AuditResult",
-  auth: "User, ApiKey, VerificationToken",
+  auth: "User, ApiKey, VerificationToken, RefreshToken",
   benchmark: "BenchmarkResult",
   blocks: "Block",
   blueprints: "Blueprint",
@@ -281,6 +281,9 @@ const PUBLIC_MUTATIONS = new Set<string>([
   "POST /api/v1/auth/verify-email/confirm",
   "POST /api/v1/auth/forgot-password",
   "POST /api/v1/auth/reset-password",
+  // Audit F-05 — logout is public + IDEMPOTENT: a garbage/unknown/
+  // expired token is still a 200 (logout must never leak token state).
+  "POST /api/v1/auth/logout",
   "POST /api/v1/contact",
 ]);
 
@@ -305,6 +308,9 @@ const RESPONSE_OVERRIDES: Record<string, string> = {
     "`{ data: { sent: true, message } }` · 200 — always, even for unknown emails",
   "POST /api/v1/auth/reset-password":
     "`{ data: { reset: true, message } }` · 200",
+  // Audit F-05 — session lifecycle
+  "POST /api/v1/auth/logout": "`{ data: { ok: true } }` · 200 — idempotent",
+  "POST /api/v1/auth/logout-all": "`{ data: { ok: true, revoked } }` · 200",
   "GET /api/v1/auth/me": "`{ data: user }` · 200",
   "POST /api/v1/auth/api-keys":
     "`{ data: { apiKey (masked), key (plaintext — shown ONCE), warning } }` · 201",
@@ -327,6 +333,10 @@ const ERROR_OVERRIDES: Record<string, string> = {
   "POST /api/v1/auth/verify-email/confirm": "400 · 429",
   "POST /api/v1/auth/forgot-password": "400 · 429",
   "POST /api/v1/auth/reset-password": "400 · 429",
+  // Audit F-05 — logout never errors on bad tokens; logout-all is
+  // Bearer-JWT-only (X-API-Key rejected → 401).
+  "POST /api/v1/auth/logout": "400 · 429",
+  "POST /api/v1/auth/logout-all": "401 · 429",
   "POST /api/v1/auth/api-keys": "400 · 401 · 404 · 409 · 429",
   "GET /api/v1/auth/api-keys": "401",
   "DELETE /api/v1/auth/api-keys/:id": "400 · 401 · 404 · 409",
@@ -376,7 +386,7 @@ const MODULE_NOTE_OVERRIDES: Record<string, string> = {
     "`effects:read` (or `*`) and stay within its per-key rate budget " +
     "(401 invalid/revoked · 403 missing scope · 429 over budget).",
   auth:
-    "> Prisma-backed (`User`, `ApiKey`, `VerificationToken`). " +
+    "> Prisma-backed (`User`, `ApiKey`, `VerificationToken`, `RefreshToken`). " +
     "register/login/refresh stay public by design (token bootstrap, " +
     "10/min/IP). `GET /me` requires a Bearer token (an X-API-Key with " +
     "`*` also works). The API-key management routes are " +
@@ -389,7 +399,14 @@ const MODULE_NOTE_OVERRIDES: Record<string, string> = {
     "with a uniform 400. Login is **grace mode**: unverified accounts " +
     "still log in, flagged `user.emailVerified: false` for the UI " +
     "banner. Emails go out via the mailer (mock transport logs the " +
-    "link in dev; set `RESEND_API_KEY` for real delivery).",
+    "link in dev; set `RESEND_API_KEY` for real delivery). " +
+    "Session lifecycle (audit F-05): every refresh token has a DB row " +
+    "(SHA-256 hashed at rest) — `/refresh` verifies the JWT AND the " +
+    "row, then rotates (single use); replaying a rotated token revokes " +
+    "EVERY session for that user (reuse detection); `/logout` revokes " +
+    "the presented token (idempotent 200 for any input); `/logout-all` " +
+    "(Bearer-JWT-only) and a successful password reset revoke every " +
+    "session.",
   contact:
     "> Prisma-backed (`ContactMessage`). The POST stays public by design — " +
     "anonymous form intake (rate-limited 5/min/IP).",

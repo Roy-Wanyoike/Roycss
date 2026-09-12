@@ -6,6 +6,10 @@ dev.db
 dev.db-journal
 prisma/dev.db
 prisma/dev.db-journal
-prisma/migrations/
+# Migrations ARE source — they must be committed (audit F-03: ignoring
+# them made `prisma migrate deploy` a no-op and shipped an empty schema).
+# Only ignore scratch SQLite files that could land in the migrations dir.
+prisma/migrations/*.db
+prisma/migrations/*.db-journal
 coverage/
 .DS_Store

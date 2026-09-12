@@ -614,7 +614,7 @@ function generate(): string {
   out.push("|------------|----------|-------|");
   out.push("| Local backend (direct) | `http://localhost:4000/api/v1` | Express, port from \`PORT\` |");
   out.push("| Local via Next proxy | `http://localhost:3000/api/v1` | same-origin proxy → backend |");
-  out.push("| Production | `https://<backend-host>/api/v1` | Render blueprint (\`render.yaml\`) |");
+  out.push("| Production | `https://<backend-host>/api/v1` | Railway — deployed by \`.github/workflows/deploy.yml\` |");
   out.push("");
   out.push("### Response envelope");
   out.push("");

@@ -65,6 +65,7 @@
     "build": "prisma generate && next build",
     "build:standalone": "next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
     "build:package": "bun run scripts/build-package.ts",
+    "gen:a11y": "bun run scripts/generate-effect-a11y.ts",
     "build:cli": "bun build src/cli/index.ts --outdir cli --target node --outfile index.js",
     "prepublishOnly": "bun run build:package",
     "publish:validate": "bun run scripts/publish/validate.ts",

@@ -22,6 +22,17 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/components/ui/sheet";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface FavoritesSheetProps {
   open: boolean;
@@ -99,9 +110,41 @@ export function FavoritesSheet({
                 <><Copy className="size-3.5" />Copy all</>
               )}
             </Button>
-            <Button size="sm" variant="ghost" onClick={onClearAll} className="h-8 text-xs text-muted-foreground hover:text-destructive">
-              <Trash2 className="size-3.5" />
-            </Button>
+            {/* Clear-all is a destructive, irreversible bulk action —
+                confirm first (audit UI/UX F-13). */}
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="h-8 text-xs text-muted-foreground hover:text-destructive"
+                  aria-label={`Clear all ${favoriteEffects.length} favorite${
+                    favoriteEffects.length === 1 ? "" : "s"
+                  }`}
+                >
+                  <Trash2 className="size-3.5" />
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Clear all favorites?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This will remove all {favoriteEffects.length}{" "}
+                    effect{favoriteEffects.length === 1 ? "" : "s"} from your
+                    collection. This action cannot be undone.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={onClearAll}
+                    className="bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:bg-destructive/60"
+                  >
+                    Clear all
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         )}
 

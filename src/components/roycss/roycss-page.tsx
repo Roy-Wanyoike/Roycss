@@ -105,6 +105,8 @@ import {
   type EffectCategory,
   type CSSEffect,
 } from "@/lib/roycss-effects";
+import { effectA11yStats } from "@/lib/effect-a11y";
+import { isMotionSafeEffect } from "@/lib/effect-a11y-badges";
 import { toast } from "sonner";
 import { EffectCard, LivePreview } from "@/components/roycss/effect-card";
 import { EffectDetailDialog } from "@/components/roycss/effect-detail-dialog";
@@ -1307,6 +1309,8 @@ function FeaturedCard({
 export default function RoyCSSPage() {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState<EffectCategory | "all">("all");
+  // PF-004 — a11y filter: only effects that ship their own reduced-motion guard
+  const [motionSafeOnly, setMotionSafeOnly] = useState(false);
   const [selectedEffect, setSelectedEffect] = useState<CSSEffect | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [favoritesOpen, setFavoritesOpen] = useState(false);
@@ -1474,10 +1478,10 @@ export default function RoyCSSPage() {
   // Memoize the search/category-filtered list. Without this, the filter
   // runs across all 1569 effects on every parent re-render (any of the
   // ~40 useState hooks flipping causes it) — including ones unrelated
-  // to search/category. `search` and `activeCategory` are the only
-  // relevant deps; the `effects` import is module-constant.
+  // to search/category. `search`, `activeCategory` and `motionSafeOnly` are
+  // the only relevant deps; the `effects` import is module-constant.
   const filteredEffects = useMemo(() => {
-    if (search === "" && activeCategory === "all") return effects;
+    if (search === "" && activeCategory === "all" && !motionSafeOnly) return effects;
     const q = search.toLowerCase();
     return effects.filter((e) => {
       const matchesSearch =
@@ -1486,9 +1490,12 @@ export default function RoyCSSPage() {
         e.description.toLowerCase().includes(q) ||
         e.tags.some((t) => t.toLowerCase().includes(q));
       const matchesCategory = activeCategory === "all" || e.category === activeCategory;
-      return matchesSearch && matchesCategory;
+      // PF-004 — unknown ids deliberately fail the filter (stale generated
+      // tags can't silently widen the motion-safe set).
+      const matchesMotionSafe = !motionSafeOnly || isMotionSafeEffect(e.id);
+      return matchesSearch && matchesCategory && matchesMotionSafe;
     });
-  }, [search, activeCategory]);
+  }, [search, activeCategory, motionSafeOnly]);
 
   // Pre-compute per-category counts ONCE. Without this, every category
   // pill calls `getCategoryCount(cat)` on each render, each filtering
@@ -2186,6 +2193,31 @@ export default function RoyCSSPage() {
             </div>
           </ScrollReveal>
 
+          {/* Motion-safe filter chip (PF-004) — count is live from the generated tags */}
+          <ScrollReveal delay={0.12} className="mb-6">
+            <button
+              type="button"
+              onClick={() => setMotionSafeOnly((on) => !on)}
+              aria-pressed={motionSafeOnly}
+              title="Only effects whose CSS ships its own prefers-reduced-motion guard (the global kill-switch in roycss.css covers the rest)"
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all cursor-pointer min-h-[44px] whitespace-nowrap ${
+                motionSafeOnly
+                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+                  : "glass text-muted-foreground hover:text-foreground hover:border-primary/30"
+              }`}
+            >
+              <Accessibility className="size-3.5" />
+              Motion-safe only
+              <span
+                className={`text-xs px-1.5 py-0.5 rounded-md ${
+                  motionSafeOnly ? "bg-primary-foreground/20" : "bg-muted"
+                }`}
+              >
+                {effectA11yStats.motionSafe}
+              </span>
+            </button>
+          </ScrollReveal>
+
           {/* Results count */}
           <ScrollReveal delay={0.15} className="mb-6 flex items-center justify-between">
             <p className="text-sm text-muted-foreground">
@@ -2206,6 +2238,13 @@ export default function RoyCSSPage() {
                   {" "}
                   matching &ldquo;
                   <span className="text-primary font-medium">{search}</span>&rdquo;
+                </span>
+              )}
+              {motionSafeOnly && (
+                <span>
+                  {" "}
+                  that are{" "}
+                  <span className="text-primary font-medium">motion-safe</span>
                 </span>
               )}
             </p>
@@ -2244,6 +2283,7 @@ export default function RoyCSSPage() {
                 onClick={() => {
                   setSearch("");
                   setActiveCategory("all");
+                  setMotionSafeOnly(false);
                 }}
               >
                 Clear filters

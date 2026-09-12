@@ -4,7 +4,9 @@ import { useState, useRef, useCallback, memo } from "react";
 import { motion, useInView } from "framer-motion";
 import { ChevronDown, ChevronUp, Code2, Eye, Heart } from "lucide-react";
 import type { CSSEffect } from "@/lib/roycss-types";
+import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { getEffectA11yBadges } from "@/lib/effect-a11y-badges";
 import { CopyAsDropdown } from "@/components/roycss/copy-as-dropdown";
 
 /* ═══════════════════════════════════════════════════════════════
@@ -280,6 +282,8 @@ export const EffectCard = memo(function EffectCard({
   const [showCode, setShowCode] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-40px" });
+  // PF-004 — derived a11y pills (pure lookup on generated data; unknown ids → none)
+  const a11yBadges = getEffectA11yBadges(effect.id);
 
   return (
     <motion.div
@@ -358,7 +362,7 @@ export const EffectCard = memo(function EffectCard({
           </div>
         </div>
 
-        {/* Tags */}
+        {/* Tags + a11y pills (PF-004 — derived, hover for guidance) */}
         <div className="mt-3 flex flex-wrap gap-1.5">
           {effect.tags.slice(0, 3).map((tag) => (
             <Badge
@@ -367,6 +371,24 @@ export const EffectCard = memo(function EffectCard({
               className="text-xs px-1.5 py-0 bg-muted/80 text-muted-foreground"
             >
               {tag}
+            </Badge>
+          ))}
+          {a11yBadges.map((badge) => (
+            <Badge
+              key={badge.key}
+              variant="outline"
+              title={badge.title}
+              className={cn(
+                "text-xs px-1.5 py-0",
+                badge.tone === "amber" &&
+                  "border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400",
+                badge.tone === "muted" &&
+                  "border-border/60 bg-muted/50 text-muted-foreground",
+                badge.tone === "violet" &&
+                  "border-violet-500/30 bg-violet-500/10 text-violet-600 dark:text-violet-400",
+              )}
+            >
+              {badge.label}
             </Badge>
           ))}
         </div>

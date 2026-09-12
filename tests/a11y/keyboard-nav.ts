@@ -366,8 +366,9 @@ const dialogTest = await testOverlay(
   "Effect Detail dialog",
   `(() => {
     // The FeaturedEffectCard uses <div role="button" aria-label="View details for ...">.
-    // The main grid EffectCard is click-only (not keyboard-accessible) — documented
-    // as a known issue in WCAG-REPORT.md. We test the featured card here.
+    // The main grid EffectCard is click-only (not keyboard-accessible) — recorded
+    // as a known issue in this harness's results/keyboard-nav.json report. We
+    // test the featured card here.
     const btn = document.querySelector('[role="button"][aria-label^="View details for"]');
     if (btn) btn.click();
     return '';

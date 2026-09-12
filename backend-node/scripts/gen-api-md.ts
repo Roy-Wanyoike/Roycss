@@ -618,9 +618,13 @@ ${TABLE_HEADER}
 | POST | \`/api/contact\` | Public | body: { \`name\`, \`email\`, \`subject?\`, \`message\` } (message ≥ 10 chars; truncated to 120/160/160/5000) | \`{ ok, message }\` · 200 | 400 · 503 (DB write) · 500 |
 | POST | \`/api/auth/register\` | Public | body: { \`email\`, \`password\`, \`name?\` } | \`{ data: user }\` · 200 + sets httpOnly cookies | 400 · 409 · 429 · 500 |
 | POST | \`/api/auth/login\` | Public | body: { \`email\`, \`password\` } | \`{ data: user }\` · 200 + sets httpOnly cookies | 400 · 401 · 429 · 500 |
-| POST | \`/api/auth/logout\` | Public | — | \`{ data: { ok: true } }\` · 200 (clears cookies) | — |
+| POST | \`/api/auth/logout\` | cookie | reads refresh cookie | \`{ data: { ok: true } }\` · 200 — revokes the backend session, then clears cookies | 500 |
 | POST | \`/api/auth/refresh\` | cookie | reads refresh cookie | \`{ data: { ok: true } }\` · 200 + rotated cookies | 401 · 500 |
 | GET | \`/api/auth/me\` | cookie | reads access cookie (one refresh+retry on 401) | \`{ data: user }\` · 200 | 401 |
+| POST | \`/api/auth/forgot-password\` | Public | body: { \`email\` } | \`{ data: { sent: true, message } }\` · 200 — always (no enumeration) | 400 · 429 · 500 |
+| POST | \`/api/auth/reset-password\` | Public | body: { \`token\`, \`password\` } | \`{ data: { reset: true, message } }\` · 200 | 400 · 429 · 500 |
+| POST | \`/api/auth/verify-email\` | Public | body: { \`email\` } | \`{ data: { sent: true, message } }\` · 200 — always (no enumeration) | 400 · 429 · 500 |
+| POST | \`/api/auth/verify-email/confirm\` | Public | body: { \`token\` } | \`{ data: user (emailVerified: true) }\` · 200 | 400 · 429 · 500 |
 | POST | \`/api/ai-playground\` | Public | body: { \`prompt\` } (≤ 500 chars) | \`{ css, prompt }\` · 200 | 400 · 500 |
 | POST | \`/api/ai-migration\` | Public | body: { \`css\` (≤ 10 000 chars), \`framework?\` } | \`{ css, framework }\` · 200 | 400 · 500 |
 | POST | \`/api/css-doctor\` | Public | body: { \`css\` (≤ 10 000 chars) } | \`{ score, issues[], summary }\` · 200 | 400 · 500 |
@@ -639,7 +643,11 @@ Notes:
 - **Auth cookies**: \`roycss-access\` (15 min) and \`roycss-refresh\`
   (30 days) — httpOnly, \`sameSite=lax\`, \`secure\` in production. The
   register/login/refresh/logout/me routes are a cookie shim over the
-  backend's JWT endpoints (\`src/lib/auth-client.ts\`).
+  backend's JWT endpoints (\`src/lib/auth-client.ts\`). The
+  email-lifecycle proxies (forgot/reset/verify-email + confirm) stay
+  public: the token in the body IS the credential. \`/logout\` revokes
+  the backend \`RefreshToken\` row before clearing cookies, so signing
+  out is real (audit F-05).
 - **\`/api/contact\`** writes to the *frontend* Prisma
   (\`ContactMessage\` model, root \`prisma/schema.prisma\`) — distinct from
   the backend's \`POST /api/v1/contact\`. No rate limiter on the frontend

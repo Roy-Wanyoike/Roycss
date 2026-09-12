@@ -190,15 +190,20 @@ export default function PrivacyPage() {
           </li>
         </ul>
         <p>
-          Self-serve account deletion and data export are on our roadmap
-          but not built yet. Until they are, email{" "}
+          Self-serve export and deletion are available through the API:
+          <code className="mx-1 rounded bg-muted px-1 py-0.5 text-xs">GET /api/v1/auth/export</code>
+          downloads a JSON copy of your data, and
+          <code className="mx-1 rounded bg-muted px-1 py-0.5 text-xs">DELETE /api/v1/auth/account</code>
+          deactivates your account immediately (sign-in and API keys stop
+          working on the spot) and purges your personal data within 30
+          days. Prefer email?{" "}
           <a
             href={`mailto:${PRIVACY_EMAIL}`}
             className="text-primary underline underline-offset-2"
           >
             {PRIVACY_EMAIL}
           </a>{" "}
-          and a human will handle your request.
+          works too.
         </p>
       </LegalSection>
 

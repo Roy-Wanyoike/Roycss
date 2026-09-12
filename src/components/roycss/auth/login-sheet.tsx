@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Loader2 } from "lucide-react";
+import { Loader2, MailCheck } from "lucide-react";
 import { toast } from "sonner";
 import {
   Sheet,
@@ -11,11 +11,124 @@ import {
   SheetDescription,
   SheetFooter,
 } from "@/components/ui/sheet";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "./auth-context";
 import { useAuthSheetStore } from "./auth-sheet-store";
+
+/**
+ * Forgot-password dialog — opened from the login sheet's "Forgot
+ * password?" link (audit F-08). Collects an email, POSTs
+ * /api/auth/forgot-password, and shows the SAME honest confirmation for
+ * any address (no user enumeration): "If that address has a RoyCSS
+ * account, a password-reset link is on its way."
+ */
+function ForgotPasswordDialog({
+  open,
+  onOpenChange,
+  prefillEmail,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  prefillEmail: string;
+}) {
+  const [email, setEmail] = useState(prefillEmail);
+  const [submitting, setSubmitting] = useState(false);
+  const [sent, setSent] = useState(false);
+
+  const close = () => {
+    onOpenChange(false);
+    // Reset for the next open (the confirmation state is one-shot).
+    setTimeout(() => setSent(false), 150);
+  };
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim()) return;
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/auth/forgot-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+      // The endpoint answers 200 for ANY address (no enumeration) —
+      // only transport errors can make it throw here.
+      if (!res.ok) {
+        const json = (await res.json().catch(() => null)) as { error?: string } | null;
+        throw new Error(json?.error ?? "Something went wrong — please try again.");
+      }
+      setSent(true);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Something went wrong — please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={(o) => { if (!o) close(); }}>
+      <DialogContent className="w-full sm:max-w-md">
+        {sent ? (
+          <>
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <MailCheck className="size-4 text-primary" />
+                Check your inbox
+              </DialogTitle>
+              <DialogDescription>
+                If that address has a RoyCSS account, a password-reset link
+                is on its way. It expires in 30 minutes and can be used
+                only once.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button onClick={close} className="w-full">Done</Button>
+            </DialogFooter>
+          </>
+        ) : (
+          <form onSubmit={onSubmit} className="space-y-4">
+            <DialogHeader>
+              <DialogTitle>Reset your password</DialogTitle>
+              <DialogDescription>
+                Enter the email you signed up with and we&apos;ll send a
+                reset link. The link expires in 30 minutes.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-2">
+              <Label htmlFor="forgot-email">Email</Label>
+              <Input
+                id="forgot-email"
+                type="email"
+                required
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={submitting}
+                autoFocus
+              />
+            </div>
+            <DialogFooter>
+              <Button type="submit" className="w-full" disabled={submitting || !email.trim()}>
+                {submitting && <Loader2 className="size-4 mr-2 animate-spin" />}
+                {submitting ? "Sending..." : "Send reset link"}
+              </Button>
+            </DialogFooter>
+          </form>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+}
 
 export function LoginSheet() {
   const { login } = useAuth();
@@ -24,6 +137,7 @@ export function LoginSheet() {
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [forgotOpen, setForgotOpen] = useState(false);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -81,7 +195,7 @@ export function LoginSheet() {
           )}
           <button
             type="button"
-            onClick={() => toast.info("Password reset is coming soon — email hi@roycss.com for now.")}
+            onClick={() => setForgotOpen(true)}
             className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer"
           >
             Forgot password?
@@ -104,6 +218,11 @@ export function LoginSheet() {
           </SheetFooter>
         </form>
       </SheetContent>
+      <ForgotPasswordDialog
+        open={forgotOpen}
+        onOpenChange={setForgotOpen}
+        prefillEmail={email}
+      />
     </Sheet>
   );
 }

@@ -14,22 +14,27 @@
     "utility-first",
     "roycss"
   ],
-  "homepage": "https://github.com/Roy-Wanyoike/roycss",
+  "homepage": "https://github.com/Roy-Wanyoike/Roycss",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Roy-Wanyoike/roycss.git"
+    "url": "https://github.com/Roy-Wanyoike/Roycss.git"
   },
   "bugs": {
-    "url": "https://github.com/Roy-Wanyoike/roycss/issues"
+    "url": "https://github.com/Roy-Wanyoike/Roycss/issues"
   },
   "author": "Royford Wanyoike Wamaitha <roywanyoike328@gmail.com>",
   "license": "MIT",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "funding": {
     "type": "github",
     "url": "https://github.com/sponsors/Roy-Wanyoike"
   },
   "files": [
     "dist",
+    "!dist/pro-components.json",
     "README.md",
     "LICENSE"
   ],
@@ -38,13 +43,18 @@
   "types": "dist/effects.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/effects.d.ts",
       "import": "./dist/effects.js",
       "require": "./dist/effects.cjs",
-      "types": "./dist/effects.d.ts"
+      "default": "./dist/effects.js"
     },
     "./css": "./dist/roycss.css",
     "./css/min": "./dist/roycss.min.css",
     "./effects.json": "./dist/effects.json",
+    "./class-index": "./dist/class-index.json",
+    "./motion-library": "./dist/motion-library.json",
+    "./critical.css": "./dist/roycss-critical.css",
+    "./fallbacks": "./dist/roycss-fallbacks.css",
     "./package.json": "./package.json"
   },
   "sideEffects": [
@@ -54,10 +64,15 @@
     "dev": "next dev -p 3000 2>&1 | tee dev.log",
     "build": "prisma generate && next build",
     "build:standalone": "next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
-    "postinstall": "prisma generate",
     "build:package": "bun run scripts/build-package.ts",
     "build:cli": "bun build src/cli/index.ts --outdir cli --target node --outfile index.js",
-    "prepublishOnly": "bun run build:package && bun run build:cli",
+    "prepublishOnly": "bun run build:package",
+    "publish:validate": "bun run scripts/publish/validate.ts",
+    "publish:prepare": "bun run scripts/publish/prepare.ts",
+    "publish:release": "bun run scripts/publish/release.ts",
+    "publish:ci": "npm publish --provenance --access public",
+    "changeset": "changeset",
+    "version": "changeset version",
     "start": "next start",
     "lint": "eslint .",
     "db:push": "prisma db push",
@@ -68,12 +83,10 @@
     "perf:benchmark": "bun run perf/benchmark.ts",
     "size": "size-limit"
   },
-  "dependencies": {
-    "socket.io-client": "^4.8.3",
-    "three": "^0.185.1"
-  },
+  "dependencies": {},
   "peerDependencies": {},
   "devDependencies": {
+    "@changesets/cli": "^3.0.2",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
@@ -145,10 +158,12 @@
     "recharts": "^3.10.1",
     "sharp": "^0.35.4",
     "size-limit": "^13.0.3",
+    "socket.io-client": "^4.8.3",
     "sonner": "^2.0.8",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4",
     "tailwindcss-animate": "^1.0.7",
+    "three": "^0.185.1",
     "tw-animate-css": "^1.3.5",
     "typescript": "^5",
     "uuid": "^14.0.2",
@@ -159,7 +174,6 @@
     "zustand": "^5.0.15"
   },
   "engines": {
-    "node": ">=18.18.0",
-    "bun": ">=1.0.0"
+    "node": ">=18.18.0"
   }
 }

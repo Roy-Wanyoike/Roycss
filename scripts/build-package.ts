@@ -4,7 +4,6 @@
  * Compiles all CSS effects from the TypeScript source files into:
  *   dist/roycss.css       — full source (with comments, formatted)
  *   dist/roycss.min.css   — minified production build
- *   dist/roycss.min.css.map — source map
  *   dist/effects.json     — metadata for tooling (id, name, category, tags)
  *   dist/effects.js       — ES module exporting the effects array
  *   dist/effects.cjs      — CommonJS module
@@ -14,7 +13,7 @@
 
 import { effects } from "../src/lib/roycss-effects";
 import { categoryMeta, categoryOrder } from "../src/lib/roycss-types";
-import { writeFileSync, mkdirSync } from "fs";
+import { writeFileSync, mkdirSync, readFileSync } from "fs";
 import { join } from "path";
 import { spawnSync } from "node:child_process";
 
@@ -23,11 +22,18 @@ const DIST_DIR = join(import.meta.dir, "..", "dist");
 // Ensure dist/ exists
 mkdirSync(DIST_DIR, { recursive: true });
 
+// Version is read from package.json at build time so the shipped banner
+// always matches the manifest (previously hardcoded "v1.0.0 / 1569+" while
+// the package was v2.0.0 / 1,959 effects).
+const pkg = JSON.parse(readFileSync(join(import.meta.dir, "..", "package.json"), "utf-8")) as {
+  version: string;
+};
+
 // Header banner
 const HEADER = `/*!
- * RoyCSS v1.0.0
- * 1569+ production-ready CSS effects. Zero JavaScript runtime.
- * https://github.com/Roy-Wanyoike/roycss
+ * RoyCSS v${pkg.version}
+ * ${effects.length} production-ready CSS effects. Zero JavaScript runtime.
+ * https://github.com/Roy-Wanyoike/Roycss
  *
  * Author: Royford Wanyoike Wamaitha
  * License: MIT
@@ -111,10 +117,10 @@ const minified = minifyCSS(fullCSS);
 writeFileSync(join(DIST_DIR, "roycss.min.css"), minified, "utf-8");
 console.log(`  ✓ dist/roycss.min.css (${(minified.length / 1024).toFixed(1)}KB)`);
 
-// Source map
-const map = { version: 3, file: "roycss.min.css", sources: ["roycss.css"], mappings: "" };
-writeFileSync(join(DIST_DIR, "roycss.min.css.map"), JSON.stringify(map), "utf-8");
-console.log(`  ✓ dist/roycss.min.css.map`);
+// No source map is emitted: we have no real per-rule mappings (the old
+// dist/roycss.min.css.map was a 76-byte empty-mappings stub) and the
+// stylesheet is generated, not hand-written — shipping a fake map only
+// misleads browser devtools.
 
 // Effects metadata JSON
 const metadata = effects.map((e) => ({
@@ -181,12 +187,12 @@ console.log("✅ RoyCSS build complete!");
 console.log(`   ${effects.length} effects across ${categoryOrder.length} categories`);
 console.log(`   Full: ${(fullCSS.length / 1024).toFixed(1)}KB | Minified: ${(minified.length / 1024).toFixed(1)}KB`);
 
-// ─── Generate derived build artifacts (inspector / motion /
-//     pro-components / version-manifest JSON files) ─────────────────
+// ─── Generate derived build artifacts (class-index / motion /
+//     pro-components JSON files) ─────────────────────────────────
 // Run the generate-build-artifacts script as a child process so this
 // script stays single-purpose and the artifact script stays testable
-// in isolation. The artifact script reads from src/ + package.json +
-// CHANGELOG.md and writes 4 JSON files into dist/.
+// in isolation. The artifact script reads from src/ and writes 3 JSON
+// files into dist/.
 console.log("");
 console.log("Generating derived build artifacts...");
 try {

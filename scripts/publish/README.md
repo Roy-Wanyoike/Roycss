@@ -2,12 +2,19 @@
 
 CI/CD-ready pipeline for publishing the `roycss` npm package with changeset-driven versioning, SLSA Level 3 provenance, automated changelog generation, and a safe dry-run mode.
 
+The **root `package.json` IS the published manifest** (there is no separate
+`package.roycss.json` — that indirection was removed). Publishing is
+**tag-triggered and test-gated**: pushing a `v*` git tag runs
+`.github/workflows/release.yml`, which lints, builds, runs the unit tests,
+verifies the tag matches `package.json`, then runs
+`npm publish --provenance --access public`.
+
 ## Quick reference
 
 | Command                                | What it does                                                                  | Publishes? |
 | -------------------------------------- | ------------------------------------------------------------------------------ | ---------- |
 | `bun run publish:validate`             | Validate file list, sizes, tarball contents.                                  | ❌ No      |
-| `bun run publish:prepare`              | Lint → build → validate dist/ → validate `package.roycss.json` → tarball gate. | ❌ No      |
+| `bun run publish:prepare`              | Lint → build → validate dist/ → validate root `package.json` → tarball gate.    | ❌ No      |
 | `bun run publish:release`              | `prepare` → `changeset version` → `changeset tag` → **prints** `npm publish`. | ❌ No (dry run) |
 | `bun run publish:ci`                   | Actually run `npm publish --provenance --access public` with `$NPM_TOKEN`.    | ✅ Yes (CI only) |
 | `bun run changeset`                    | Interactively add a new changeset file (`.changeset/*.md`).                   | ❌ No      |
@@ -32,8 +39,9 @@ bun run changeset
 ```
 
 This launches an interactive prompt:
+
 - Select the package (`roycss`).
-- Choose bump type (`minor` for new features, `patch` for bug fixes, `major` for breaking changes).
+- Choose bump type (`minor` for new effects, `patch` for bug fixes, `major` for breaking changes).
 - Write a short summary — this becomes the `CHANGELOG.md` entry.
 
 The output is a new file under `.changeset/` like `.changeset/quick-lions-grin.md`:
@@ -51,6 +59,7 @@ Commit the changeset file alongside your feature code.
 ### 2. Merge the PR to `main`
 
 The PR review should verify:
+
 - [ ] The changeset's bump type matches the actual change (`patch` vs `minor` vs `major`).
 - [ ] The changelog entry reads well — it will be public.
 - [ ] `bun run publish:prepare` exits 0 locally.
@@ -62,31 +71,34 @@ bun run publish:release
 ```
 
 This will:
+
 1. Run `prepare.ts` (lint + build + validate + tarball size gate).
-2. Run `bunx changeset version` — applies pending changesets, bumps `package.roycss.json` version, regenerates `CHANGELOG.md`.
-3. Run `bunx changeset tag` — creates the git tag (e.g. `roycss@1.0.1`).
+2. Run `bunx changeset version` — applies pending changesets, bumps the root `package.json` version, regenerates `CHANGELOG.md`.
+3. Run `bunx changeset tag` — creates the version git tag.
 4. **Print** the final publish command (`npm publish --provenance --access public`) — does NOT execute it.
 
 If anything fails, fix it and re-run. The dry run is idempotent.
 
-### 4. Push the version bump + tag
+### 4. Commit the version bump + push the tag
 
 ```bash
-git add package.roycss.json CHANGELOG.md .changeset/
+git add package.json CHANGELOG.md .changeset/
 git commit -m "chore(release): roycss@<version>"
-git push origin main --tags
+git push origin main --follow-tags   # or: git push origin main --tags
 ```
 
 ### 5. Let CI publish
 
-The push to `main` triggers `.github/workflows/release.yml`:
+Pushing the `v<version>` tag triggers `.github/workflows/release.yml`:
 
-1. `actions/checkout@v4` (with `fetch-depth: 0`).
-2. `oven-sh/setup-bun@v1`.
-3. `bun install` (lockfile-frozen).
+1. `actions/checkout@v7` (with `fetch-depth: 0`).
+2. `oven-sh/setup-bun@v2` + `actions/setup-node@v7`.
+3. `bun install --frozen-lockfile`.
 4. `bun run lint`.
-5. `bun run build`.
-6. `bun run publish:ci` — runs `npm publish --provenance --access public` with `NPM_TOKEN` from GitHub secrets.
+5. `bun run scripts/build-package.ts`.
+6. `bunx vitest run tests/unit` — **unit tests gate the publish**.
+7. Verify the tag matches the version in `package.json`.
+8. `npm publish --provenance --access public` with `NPM_TOKEN` from GitHub secrets.
 
 The `--provenance` flag tells npm to attach an SLSA Level 3 attestation linking the tarball to the specific commit + workflow run. Consumers see a "Provenance" badge on the npm package page.
 
@@ -101,7 +113,7 @@ In a fresh temp dir:
 
 ```bash
 npm install roycss
-node -e "console.log(require('roycss').length)"  # should print 1569
+node -e "console.log(require('roycss').length)"  # should print 1959
 ```
 
 ## How to publish manually (emergency only)
@@ -117,7 +129,7 @@ bun run version
 bunx changeset tag
 
 # 3. Commit the bump
-git add package.roycss.json CHANGELOG.md .changeset/
+git add package.json CHANGELOG.md .changeset/
 git commit -m "chore(release): roycss@<version>"
 git push origin main --tags
 
@@ -132,22 +144,30 @@ NPM_TOKEN=xxxx-xxxx-xxxx npm publish --provenance --access public
 1. **Reserve the `roycss` name** on npmjs.com (if not already owned).
 2. **Enable 2FA** on the npm account → Account Settings → Two-Factor Authentication → "auth-and-writes" (requires 2FA on login AND publish).
 3. **Create an automation-scoped granular access token**: Account Settings → Access Tokens → "Granular Access Token" → package `roycss` → permission `Read and write` → expiry 90 days. **Do not** create a "Classic Automation Token" — granular tokens are scoped and revocable.
-4. **Add the token as a GitHub Actions secret** on `Roy-Wanyoike/roycss` → Settings → Secrets and variables → Actions → New repository secret → name `NPM_TOKEN` → paste token.
+4. **Add the token as a GitHub Actions secret** on `Roy-Wanyoike/Roycss` → Settings → Secrets and variables → Actions → New repository secret → name `NPM_TOKEN` → paste token.
 5. **Add a backup maintainer** on npm (in case the primary account is lost).
 
 ## Benchmark targets
 
-See `docs/benchmarks/04-npm-publish-pipeline.md` for the full table. Quick reference:
+See `docs/benchmarks/04-npm-publish-pipeline.md` for the full table. Quick reference
+(measured on v2.0.0 — `bun run publish:validate` dry-run numbers; a real
+`npm pack` lands ~970 KB / 13 files):
 
-| Metric                      | Target      | Current (v1.0.0) |
+| Metric                      | Target      | Current (v2.0.0) |
 | --------------------------- | ----------- | ---------------- |
-| Build time                  | < 30 s      | ~2 s ✅           |
-| Tarball size (compressed)   | < 500 KB    | ~498 KB ✅        |
+| Build time                  | < 30 s      | ~6 s ✅           |
+| Tarball size (compressed)   | < 1.2 MB    | ~947 KB ✅        |
 | Install time                | < 5 s       | ~1.5 s ✅         |
-| Unpacked size               | < 2 MB      | ~3.5 MB ⚠️       |
-| Number of files in tarball  | < 15        | 10 ✅             |
+| Unpacked size               | < 2 MB      | ~6.5 MB ⚠️       |
+| Number of files in tarball  | ≤ 15        | 13 ✅             |
 
-The unpacked size target is currently exceeded — see `docs/benchmarks/04-npm-publish-pipeline.md` §3 for the mitigation plan (drop the un-minified `roycss.css` from the tarball in v1.1).
+The unpacked size target is exceeded because the tarball deliberately
+ships both the full and the minified stylesheet plus the class-index and
+motion-library JSON exports — see
+`docs/benchmarks/04-npm-publish-pipeline.md` §3. The internal
+`dist/pro-components.json` (backend catalog) is excluded from the
+tarball via a `!dist/pro-components.json` negation in `package.json`
+`files`.
 
 ## Security
 
@@ -156,8 +176,8 @@ See `docs/threat-models/04-npm-publish-pipeline.md` for the full threat model. Q
 - **`NPM_TOKEN`** is publish-only, scoped to `roycss`, expires in 90 days, stored only in GitHub Actions secrets.
 - **2FA** is enforced on the npm account (auth-and-writes).
 - **Provenance** (SLSA Level 3) is attached to every publish — consumers can verify the tarball matches a commit on `main`.
-- **`release.yml`** only runs on `push` to `main` — never on PRs. PR builds cannot access the token.
-- **`files` array** in `package.roycss.json` is explicit — `.env`, `.npmrc`, `.git/`, `node_modules/`, `prisma/`, `src/`, `next.config.ts` are physically excluded from the tarball.
+- **`release.yml`** only runs on `v*` tag pushes — never on PRs or plain branch pushes. Tag builds cannot access the token.
+- **`files` array** in `package.json` is explicit — `.env`, `.npmrc`, `.git/`, `node_modules/`, `prisma/`, `src/`, `next.config.ts` are physically excluded from the tarball (plus the `!dist/pro-components.json` negation).
 - **`prepare.ts`** runs after `bun run build` and before any publish — catches runner-side tampering that would change file sizes.
 
 ## Emergency: unpublish / deprecate

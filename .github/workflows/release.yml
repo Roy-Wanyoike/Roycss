@@ -54,16 +54,19 @@ jobs:
       - name: Build package
         run: bun run scripts/build-package.ts
 
+      - name: Unit tests
+        run: bunx vitest run tests/unit
+
       - name: Verify tag matches version
         run: |
           set -euo pipefail
           TAG="${GITHUB_REF#refs/tags/}"
-          VERSION=$(node -e "console.log(require('./package.roycss.json').version)")
+          VERSION=$(node -e "console.log(require('./package.json').version)")
           if [ "v${VERSION}" != "${TAG}" ]; then
-            echo "::error::Tag '${TAG}' does not match version 'v${VERSION}' in package.roycss.json"
+            echo "::error::Tag '${TAG}' does not match version 'v${VERSION}' in package.json"
             exit 1
           fi
-          echo "✓ Tag ${TAG} matches package.roycss.json version ${VERSION}"
+          echo "✓ Tag ${TAG} matches package.json version ${VERSION}"
 
       - name: Publish to npm (with provenance)
         run: npm publish --provenance --access public

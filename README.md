@@ -100,7 +100,7 @@ Every number below is verified — most are pinned by tests, so stale docs fail 
 | **Runtime** | Bun (install + scripts, `>=1.0`) — Node `>=18.18` compatible (`.nvmrc`: 20) |
 | **Data** | SQLite (dev) → PostgreSQL-ready (Supabase in the prod blueprints) · 46 Prisma models |
 | **Quality** | Vitest (141 tests) · Playwright E2E + axe-core a11y audits · `tsc` strict-clean · API drift gate |
-| **Deploy** | Vercel ([`vercel.json`](vercel.json)) + Render blueprint ([`render.yaml`](render.yaml)) |
+| **Deploy** | Vercel ([`vercel.json`](vercel.json)) + Railway ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) |
 | **Ecosystem** | npm package artifacts ([`dist/`](dist)) · RoyCLI · MCP server · VS Code extension |
 | **Realtime** | Socket.io (Roy Live, port 3003) |
 | **PWA** | Service worker v2.1.0 + manifest, install prompt, offline support |
@@ -173,8 +173,7 @@ Roycss/
 ├── prisma/                 # Root schema (frontend build) — backend schema lives in backend-node/
 ├── scripts/                # Build, release, validation scripts
 ├── .github/                # CI (lint · typecheck · unit + integration tests · package build), deploy + release workflows, Dependabot
-├── vercel.json             # Frontend deploy (Vercel)
-└── render.yaml             # Backend deploy (Render blueprint)
+└── vercel.json             # Frontend deploy (Vercel)
 ```
 
 ### Dual-backend architecture
@@ -182,7 +181,7 @@ Roycss/
 ```
 Frontend (Next.js 16, Vercel)
     ↕  REST via same-origin catch-all proxy (/api/v1/*)
-Backend-node (Express + Prisma, Render)  ⇄  Backend-go (Go, Cloud Run — production target)
+Backend-node (Express + Prisma, Railway)  ⇄  Backend-go (Go, Cloud Run — production target)
     ↕  Database (SQLite dev → Supabase Postgres prod)
 Live Service (Socket.io, port 3003)
 ```
@@ -234,7 +233,7 @@ Top categories by count (all 29 are rendered live on the homepage):
 
 **Frontend → Vercel.** Import the repo on [vercel.com](https://vercel.com) — Next.js is auto-detected, [`vercel.json`](vercel.json) applies. Set `BACKEND_URL` (your backend URL) and optionally `LIVE_URL` (WebSocket service). A same-origin catch-all proxy (`src/app/api/v1/[...path]/route.ts`) forwards all `/api/v1/*` traffic to the backend.
 
-**Backend → Render.** New → Blueprint → select this repo; [`render.yaml`](render.yaml) (with `rootDir: backend-node`) provisions the service. Required secrets: `DATABASE_URL` (Postgres), `JWT_SECRET`, `JWT_REFRESH_SECRET` — everything else has safe defaults or mock fallbacks (see [`backend-node/.env.example`](backend-node/.env.example)).
+**Backend → Railway.** Pushes to `main` deploy `backend-node/` automatically via the "Deploy backend-node to Railway + migrate + smoke" job in [`deploy.yml`](.github/workflows/deploy.yml) (secrets: `RAILWAY_TOKEN`, `RAILWAY_PROJECT_ID`, `RAILWAY_SERVICE_ID`; Railway sets `DATABASE_URL` on the service and the migration step pulls it back via the Railway CLI). Required runtime secrets: `DATABASE_URL` (Postgres), `JWT_SECRET`, `JWT_REFRESH_SECRET` — everything else has safe defaults or mock fallbacks (see [`backend-node/.env.example`](backend-node/.env.example)). The old Render blueprint (`render.yaml`) was removed — the Render service has been dead since it was first audited.
 
 One repo, two deploys: the frontend deploys from the root, the backend from the `backend-node/` subdirectory — no repo splitting needed. Production target for the backend is the Go port (Cloud Run + Postgres + Redis).
 

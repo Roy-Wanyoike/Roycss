@@ -44,6 +44,18 @@ jobs:
           # was verified against (issue #59 verification protocol).
           bun-version: "1.3.14"
 
+      # Malformed-trigger guard (audit F-09 remediation). A mangled
+      # `branches:` value still parses as valid YAML, so GitHub Actions
+      # never surfaces an error — the workflow just silently never runs
+      # on the intended refs. Dependency-free, so it runs before install
+      # for fast signal. (Verification note, task 7-d: the audit's
+      # lighthouse.yml `branches: ain]` reading was a terminal-rendering
+      # artifact — the committed bytes are a proper flow list, confirmed
+      # by hex dump + YAML parse of the blob. This guard now catches that
+      # typo class for real; see scripts/check-workflows.ts.)
+      - name: Workflow trigger lint (F-09 guard)
+        run: bun run scripts/check-workflows.ts
+
       - name: Install dependencies (frozen lockfile)
         run: bun install --frozen-lockfile
 
@@ -173,6 +185,22 @@ jobs:
         run: bun run test:integration
         env:
           DATABASE_URL: "file:./test.db"
+
+      # Audit F-22a: this job previously ran ONLY the integration project
+      # (`bun run test:integration` path-filters to tests/integration/**),
+      # so the suites a local `bun run test` runs — 460 tests across
+      # tests/unit, tests/contract and tests/security — never executed in
+      # CI. The contract + security files belong to the `integration`
+      # vitest project (see vitest.config.ts), so selecting them here
+      # picks up the same single-worker + shared-module-registry +
+      # globalSetup DB-push isolation contract; the unit files run in
+      # their own project with per-file isolation. Job-level env already
+      # provides DATABASE_URL / JWT secrets; setup-env.ts forces the
+      # throwaway test.db regardless of ambient values. No --coverage: the
+      # coverage floor is enforced by the local test:coverage run.
+      - name: Unit + contract + security suites (vitest)
+        if: ${{ !cancelled() }}
+        run: bunx vitest run tests/unit tests/contract tests/security
 
       - name: Upload test coverage
         if: always()

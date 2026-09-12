@@ -4,6 +4,7 @@ import { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, X, ArrowRight, Boxes, SearchX } from "lucide-react";
 import { effects, categoryMeta } from "@/lib/roycss-effects";
+import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 import { recipes } from "@/lib/roycss-recipes";
 import { patterns } from "@/lib/roycss-patterns";
 import { collections } from "@/lib/roycss-collections";
@@ -71,7 +72,7 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
     return [
       { id: "what-is-roycss", label: "What is RoyCSS?", desc: "Platform overview — what RoyCSS is and who it's for" },
       { id: "get-started", label: "Get Started", desc: "Installation guide" },
-      { id: "effects", label: "Effects", desc: "Browse all 1749+ effects" },
+      { id: "effects", label: "Effects", desc: `Browse all ${EFFECT_COUNT_FORMATTED} effects` },
       { id: "recipes", label: "Recipes", desc: "Curated UI patterns" },
       { id: "patterns", label: "Patterns", desc: "UI state patterns" },
       { id: "collections", label: "Collections", desc: "Curated themed effect bundles" },
@@ -269,7 +270,15 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
                 <span className="flex items-center gap-1"><kbd className="px-1 py-0.5 rounded bg-muted border border-border/50">↵</kbd>Select</span>
                 <span className="flex items-center gap-1"><kbd className="px-1 py-0.5 rounded bg-muted border border-border/50">Esc</kbd>Close</span>
               </div>
-              <span className="text-[10px] text-muted-foreground">{totalResults > 0 && `${totalResults} results`}</span>
+              <div className="flex items-center gap-3">
+                <span className="text-[10px] text-muted-foreground">{totalResults > 0 && `${totalResults} results`}</span>
+                <a
+                  href="/effects"
+                  className="text-[10px] font-medium text-primary hover:text-primary/80 transition-colors"
+                >
+                  Browse all {EFFECT_COUNT_FORMATTED} effects →
+                </a>
+              </div>
             </div>
           </motion.div>
         </motion.div>

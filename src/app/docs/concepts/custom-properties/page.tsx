@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Custom Properties — RoyCSS Docs",
-  description: "RoyCSS exposes every themeable value as a CSS custom property. Retheme without touching effect files.",
+  description: "How RoyCSS actually uses CSS custom properties: registered --roy-* @property values that effects animate, and what that means for you.",
 };
 
 export default function CustomPropertiesPage() {
@@ -10,117 +10,111 @@ export default function CustomPropertiesPage() {
     <>
       <h1>Custom Properties</h1>
       <p className="text-lg text-muted-foreground">
-        Every themeable value in RoyCSS is a CSS custom property —
-        colors, distances, durations, easing curves. You override
-        them on any container, no SCSS, no build step.
+        RoyCSS does not use custom properties as a global theming
+        layer — colors and sizes are written directly into each
+        effect so every class is drop-in. What the library{" "}
+        <em>does</em> use custom properties for is animation: a
+        small set of per-effect <code>--roy-*</code> properties,
+        registered with <code>@property</code> so the browser can
+        interpolate them.
       </p>
 
-      <h2 id="naming">Naming convention</h2>
+      <h2 id="naming">The --roy-* family</h2>
       <p>
-        All RoyCSS custom properties start with{" "}
-        <code>--r-</code>, followed by the category, then the value:
+        Registered custom properties are named{" "}
+        <code>--roy-&lt;effect&gt;-&lt;value&gt;</code> — they belong
+        to one effect, not to a theme:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`--r-accent              color   primary accent
---r-accent-strong       color   stronger accent (hovers)
---r-bg                  color   background
---r-fg                  color   foreground
---r-hover-lift          length  how far hover lifts (4px default)
---r-duration            time    default transition (180ms)
---r-easing              curve   default cubic-bezier
---r-radius              length  default border radius`}</code>
+        <code>{`--roy-gb-angle       angle   .roycss-card-gradient-border sweep
+--roy-bg-angle       angle   .roycss-border-gradient-animated sweep
+--roy-holo-angle     angle   hologram scan rotation
+--roy-b16-tilt       angle   batch-16 tilt effect
+--roy-b12-rating-fill length rating bar fill
+--roy-dash-color     color   marching-dash color`}</code>
+      </pre>
+      <p>
+        For the full list, grep the stylesheet — every registration
+        sits next to the effect that uses it:
+      </p>
+      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
+        <code>{`$ grep -n "@property" node_modules/roycss/dist/roycss.css`}</code>
       </pre>
 
-      <h2 id="overrides">Overriding from CSS</h2>
+      <h2 id="why-at-property">Why @property</h2>
       <p>
-        Set the variables on <code>:root</code> to retheme globally,
-        or on a container to scope a theme:
+        An unregistered custom property is treated as an opaque
+        string — it cannot be transitioned or animated. Registering
+        it with a <code>syntax</code> gives the browser a type to
+        interpolate, which is how RoyCSS animates things CSS has no
+        keyframe syntax for, like gradient angles:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`/* Global retheme — teal instead of emerald */
-:root {
-  --r-accent: oklch(70% 0.11 195);
-  --r-accent-strong: oklch(56% 0.13 195);
+        <code>{`/* Real code from dist/roycss.css */
+@property --roy-gb-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
 }
 
-/* Scoped theme — only this section is amber */
-.marketing-amber {
-  --r-accent: oklch(80% 0.16 75);
-  --r-accent-strong: oklch(65% 0.18 75);
+.roycss-card-gradient-border::before {
+  background: linear-gradient(var(--roy-gb-angle), …);
+  animation: roy-card-gb-rotate 4s linear infinite;
+}
+
+@keyframes roy-card-gb-rotate {
+  to { --roy-gb-angle: 360deg; }
 }`}</code>
       </pre>
-
-      <h2 id="typed-properties">Typed properties with @property</h2>
       <p>
-        RoyCSS registers typed custom properties via{" "}
-        <code>@property</code> so they can be animated by the browser
-        directly. You don’t need to do anything — but if you define
-        your own, follow the same pattern:
+        If you author your own effects, follow the same pattern —
+        register the property, animate it in keyframes. That is the
+        entire trick behind the rotating rims and sweeping borders.
+      </p>
+
+      <h2 id="overriding">Overriding a registered value</h2>
+      <p>
+        Because <code>@property</code> rules are plain CSS, you can
+        re-declare one to change an effect&apos;s starting point —
+        for example, begin the gradient sweep at 90° instead of 0°:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`@property --r-hover-lift {
-  syntax: "<length>";
-  inherits: true;
-  initial-value: 4px;
-}
-
-/* Now the browser can interpolate the lift */
-.r-hover-lift {
-  transition: --r-hover-lift 200ms ease-out;
-}
-.r-hover-lift:hover { --r-hover-lift: 12px; }`}</code>
-      </pre>
-
-      <h2 id="dark-mode">Dark mode</h2>
-      <p>
-        RoyCSS dark mode is just a different set of custom properties
-        inside <code>prefers-color-scheme</code>. No JS, no flash:
-      </p>
-      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`:root {
-  --r-bg: oklch(99% 0.01 200);
-  --r-fg: oklch(15% 0.02 200);
-  --r-accent: oklch(58% 0.20 165);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --r-bg: oklch(15% 0.02 200);
-    --r-fg: oklch(96% 0.01 200);
-    --r-accent: oklch(72% 0.18 165);
-  }
+        <code>{`@property --roy-gb-angle {
+  syntax: '<angle>';
+  initial-value: 90deg;   /* was 0deg */
+  inherits: false;
 }`}</code>
+      </pre>
+      <p>
+        Note <code>inherits: false</code> on the real declarations:
+        the value is scoped to the elements using the effect, so an
+        override on a container does not leak to unrelated
+        elements.
+      </p>
+
+      <h2 id="no-theme-layer">What about theming?</h2>
+      <p>
+        There is no <code>:root</code> token set to override —
+        retheming an effect means copying its CSS and editing the
+        values. The CLI gets you the copy in one command, and the{" "}
+        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/api/customization">
+          Customization page
+        </a>{" "}
+        walks through the workflow:
+      </p>
+      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
+        <code>{`$ npx roycss add btn-glow --copy   # CSS on your clipboard`}</code>
       </pre>
 
       <h2 id="runtime-tweaks">Runtime tweaks</h2>
       <p>
-        Because custom properties are live, you can swap themes at
-        runtime from JS without a reload — useful for theme pickers
-        and A/B tests:
+        Your own custom properties remain live of course — set them
+        from JS and anything referencing them updates without a
+        reload. A common pattern: your JS drives positional
+        properties while a RoyCSS class provides the visual:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`document.documentElement.style.setProperty(
-  "--r-accent",
-  "oklch(70% 0.15 35)"  // amber
-);`}</code>
-      </pre>
-
-      <h2 id="specificity">Specificity</h2>
-      <p>
-        Custom properties are subject to the cascade — the most
-        specific declaration wins. If your override doesn’t apply,
-        check that you aren’t being beaten by a more specific rule.
-        A common gotcha is overriding on <code>:root</code> while
-        RoyCSS is loaded later in the cascade.
-      </p>
-      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`/* Wrong — RoyCSS @import below this rule wins */
-:root { --r-accent: oklch(80% 0.16 75); }
-@import "roycss/effects.css";
-
-/* Right — load RoyCSS first, override after */
-@import "roycss/effects.css";
-:root { --r-accent: oklch(80% 0.16 75); }`}</code>
+        <code>{`el.style.setProperty("--my-x", e.clientX);`}</code>
       </pre>
     </>
   );

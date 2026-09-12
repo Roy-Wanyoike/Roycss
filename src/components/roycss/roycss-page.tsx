@@ -4,6 +4,7 @@ import { useEffect, useState, useRef, useMemo, useCallback, useSyncExternalStore
 import dynamic from "next/dynamic";
 import {
   Search,
+  ExternalLink,
   Sun,
   Moon,
   Sparkles,
@@ -84,6 +85,7 @@ import {
   Award,
   Tv,
 } from "lucide-react";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -107,6 +109,13 @@ import {
 } from "@/lib/roycss-effects";
 import { effectA11yStats } from "@/lib/effect-a11y";
 import { isMotionSafeEffect } from "@/lib/effect-a11y-badges";
+import {
+  EFFECT_COUNT_FORMATTED,
+  PRODUCT_COUNT,
+  TOOL_COUNT,
+  VERSION,
+  VERSION_BADGE,
+} from "@/lib/site-stats";
 import { toast } from "sonner";
 import { EffectCard, LivePreview } from "@/components/roycss/effect-card";
 import { EffectDetailDialog } from "@/components/roycss/effect-detail-dialog";
@@ -344,6 +353,7 @@ type MegaMenuGroup = {
 
 const EXPLORE_ITEMS: MegaMenuItem[] = [
   { label: "Effects", description: `Browse ${effects.length.toLocaleString("en-US")} CSS effects`, icon: Zap, href: "#effects" },
+  { label: "Full catalog", description: `All ${effects.length.toLocaleString("en-US")} effect pages — searchable & shareable`, icon: Search, href: "/effects" },
   { label: "Recipes", description: "Pre-built effect combinations", icon: BookOpen, href: "#recipes" },
   { label: "Patterns", description: "Layout & component patterns", icon: LayoutGrid, href: "#patterns" },
   { label: "Collections", description: "Curated effect bundles", icon: Layers, href: "#collections" },
@@ -1561,7 +1571,7 @@ export default function RoyCSSPage() {
               {/* hideTextOnMobile keeps the logo icon on-screen at 320px; wordmark reappears at ≥sm */}
               <RoyCSSLogo size="md" animated={true} hideTextOnMobile />
               <Badge variant="secondary" className="hidden sm:inline-flex text-xs px-1.5 py-0 bg-primary/10 text-primary border-primary/20 font-semibold">
-                v1.0
+                {VERSION_BADGE}
               </Badge>
             </motion.button>
 
@@ -1637,17 +1647,27 @@ export default function RoyCSSPage() {
                   </div>
                 </NavMegaMenu>
 
-                <button
-                  onClick={() => setDocsOpen(true)}
-                  className={cn(
-                    "px-4 py-2 min-h-[44px] rounded-lg text-sm font-semibold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
-                    docsOpen
-                      ? "text-primary bg-primary/10"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/60",
-                  )}
-                >
-                  Docs
-                </button>
+                <div className="flex items-center">
+                  <button
+                    onClick={() => setDocsOpen(true)}
+                    className={cn(
+                      "px-4 py-2 min-h-[44px] rounded-lg text-sm font-semibold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
+                      docsOpen
+                        ? "text-primary bg-primary/10"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted/60",
+                    )}
+                  >
+                    Docs
+                  </button>
+                  <Link
+                    href="/docs/getting-started"
+                    aria-label="Open the full docs site"
+                    title="Open the full docs site"
+                    className="ml-0.5 flex items-center justify-center size-8 min-h-[36px] rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                  >
+                    <ExternalLink className="size-3.5" />
+                  </Link>
+                </div>
                 <button
                   onClick={() => scrollToSection("#faq")}
                   className={cn(
@@ -1975,7 +1995,7 @@ export default function RoyCSSPage() {
 
             <ScrollReveal delay={0.3}>
               <p className="mt-2 max-w-xl mx-auto text-base sm:text-lg text-muted-foreground leading-relaxed">
-                {effects.length.toLocaleString("en-US")} CSS effects, 62 platform products, 64 developer tools, and AI assistance —
+                {EFFECT_COUNT_FORMATTED} CSS effects, {PRODUCT_COUNT} platform products, {TOOL_COUNT} developer tools, and AI assistance —
                 design, build, customize, and ship modern interfaces in one cohesive ecosystem.
               </p>
             </ScrollReveal>
@@ -2491,9 +2511,9 @@ export default function RoyCSSPage() {
               icon={History}
               title="Changelog"
               description="Track every release — new effects, breaking changes, deprecations, and bug fixes."
-              items={[`v1.0 — ${effects.length.toLocaleString("en-US")}+ effects launch`, `${categoryOrder.length}+ categories`, "OKLCH color system", "RoyMotion animation system"]}
+              items={[`${VERSION_BADGE} — ${EFFECT_COUNT_FORMATTED}+ effects launch`, `${categoryOrder.length}+ categories`, "OKLCH color system", "RoyMotion animation system"]}
               details={[
-                { label: "v1.0.0", content: `${effects.length.toLocaleString("en-US")}+ CSS effects across ${categoryOrder.length} categories. OKLCH color space with color-mix() throughout. CSS logical properties for RTL/I18n. @property, container queries, :has(), light-dark(). MCP Server for AI assistants. 5-tier sponsorship system.` },
+                { label: VERSION, content: `${EFFECT_COUNT_FORMATTED} CSS effects across ${categoryOrder.length} categories. OKLCH color space with color-mix() throughout. CSS logical properties for RTL/I18n. @property, container queries, :has(), light-dark(). MCP Server for AI assistants. 5-tier sponsorship system.` },
               ]}
             />
             <DocCard
@@ -2538,7 +2558,7 @@ export default function RoyCSSPage() {
                 <RoyCSSLogo size="sm" animated={false} />
               </button>
               <p className="text-xs text-muted-foreground leading-relaxed mb-4 max-w-xs">
-                AI-Native Frontend Engineering Platform — 1,629 CSS effects, 62 platform products, 64 developer tools.
+                AI-Native Frontend Engineering Platform — {EFFECT_COUNT_FORMATTED} CSS effects, {PRODUCT_COUNT} platform products, {TOOL_COUNT} developer tools.
               </p>
               <div className="flex items-center gap-2">
                 <a
@@ -2663,7 +2683,7 @@ export default function RoyCSSPage() {
             </p>
             <div className="flex items-center gap-4 text-xs text-muted-foreground">
               <EngineStatus />
-              <span>v2.1</span>
+              <span>v{VERSION}</span>
             </div>
           </div>
         </div>

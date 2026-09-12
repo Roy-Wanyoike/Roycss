@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Home, Search, Sparkles, Box, Zap, BookOpen } from "lucide-react";
+import { EFFECT_COUNT_FORMATTED, PRODUCT_COUNT } from "@/lib/site-stats";
 
 export default function NotFound() {
   return (
@@ -21,9 +22,9 @@ export default function NotFound() {
             Page Not Found
           </h1>
           <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-md mx-auto">
-            The page you&apos;re looking for doesn&apos;t exist. RoyCSS is a
-            single-page platform — everything lives on the homepage. Try
-            searching or exploring below.
+            The page you&apos;re looking for doesn&apos;t exist. Browse the
+            full effect catalog, dig into the docs, or head back to
+            the homepage below.
           </p>
         </div>
 
@@ -37,11 +38,18 @@ export default function NotFound() {
             Back to RoyCSS
           </Link>
           <Link
-            href="/#effects"
+            href="/effects"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border text-foreground text-sm font-medium hover:bg-muted/50 transition-colors cursor-pointer h-11"
           >
             <Search className="size-4" />
             Browse Effects
+          </Link>
+          <Link
+            href="/docs/getting-started"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border text-foreground text-sm font-medium hover:bg-muted/50 transition-colors cursor-pointer h-11"
+          >
+            <BookOpen className="size-4" />
+            Search the Docs
           </Link>
         </div>
 
@@ -56,14 +64,14 @@ export default function NotFound() {
               className="flex flex-col items-center gap-2 p-4 rounded-xl border border-border bg-card/50 hover:border-primary/40 hover:bg-muted/30 transition-all"
             >
               <Sparkles className="size-5 text-primary" />
-              <span className="text-xs font-medium text-foreground">1,629 Effects</span>
+              <span className="text-xs font-medium text-foreground">{EFFECT_COUNT_FORMATTED} Effects</span>
             </Link>
             <Link
               href="/#platform"
               className="flex flex-col items-center gap-2 p-4 rounded-xl border border-border bg-card/50 hover:border-primary/40 hover:bg-muted/30 transition-all"
             >
               <Box className="size-5 text-primary" />
-              <span className="text-xs font-medium text-foreground">62 Products</span>
+              <span className="text-xs font-medium text-foreground">{PRODUCT_COUNT} Products</span>
             </Link>
             <Link
               href="/#get-started"

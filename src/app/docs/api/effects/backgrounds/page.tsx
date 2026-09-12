@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 
 export const metadata: Metadata = {
   title: "Background Effects — RoyCSS Docs",
-  description: "RoyCSS background effect classes: aurora, mesh, gradient-sweep, stars. Pure CSS, GPU-composited.",
+  description: "RoyCSS background effect classes: aurora, mesh gradient, starfield, gradient sweep, grid lines. Pure CSS.",
 };
 
 export default function BackgroundsPage() {
@@ -12,152 +13,154 @@ export default function BackgroundsPage() {
       <p className="text-lg text-muted-foreground">
         Background effects paint the area behind an element — aurora
         gradients, mesh blobs, star fields, animated sweeps. RoyCSS
-        ships 247 of them under the{" "}
-        <code>r-bg-*</code> namespace.
+        ships 160 background-category effects out of the{" "}
+        {EFFECT_COUNT_FORMATTED}-effect catalog.
       </p>
 
       <h2 id="core-classes">Core classes</h2>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`r-bg-aurora              moving emerald/teal aurora
-r-bg-aurora-vertical     vertical aurora variant
-r-bg-mesh                4-blob mesh gradient
-r-bg-mesh-amber          amber+emerald mesh
-r-bg-stars               starfield (CSS-only, no JS)
-r-bg-stars-twinkle       twinkling variant
-r-bg-gradient-sweep      animated 180deg sweep
-r-bg-noise               subtle noise overlay
-r-bg-grid                animated grid lines`}</code>
+        <code>{`roycss-bg-aurora               rotating conic aurora (emerald/blue/violet)
+roycss-bg-aurora-borealis-2    multi-blob borealis with starfield
+roycss-bg-mesh-gradient        4-blob blurred mesh gradient
+roycss-bg-starfield            twinkling star tiles (CSS-only, no JS)
+roycss-bg-gradient-sweep       animated 90deg gradient sweep
+roycss-bg-noise                subtle SVG-noise overlay
+roycss-bg-grid-lines           48px grid lines
+roycss-bg-dot-pattern          dotted pattern
+roycss-bg-cyber-grid           synthwave grid
+roycss-bg-lava-lamp            morphing lava blobs`}</code>
       </pre>
 
-      <h2 id="aurora">r-bg-aurora</h2>
+      <h2 id="aurora">roycss-bg-aurora</h2>
       <p>
-        The signature RoyCSS hero background. Two emerald/teal blobs
-        drift across the surface using GPU-composited transforms:
+        The signature RoyCSS hero background. A giant conic gradient
+        with three color stops rotates behind the content via a{" "}
+        <code>::before</code> layer:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`<section class="r-bg-aurora">
+        <code>{`<section class="roycss-bg-aurora">
   <h1>Build faster with RoyCSS</h1>
-</section>`}</code>
-      </pre>
-      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`@keyframes r-aurora-1 {
-  0%, 100% { transform: translate3d(-10%, -10%, 0); }
-  50%      { transform: translate3d( 10%,  10%, 0); }
-}
-.r-bg-aurora {
+</section>
+
+/* The CSS that ships in dist/roycss.css */
+.roycss-bg-aurora {
+  background: linear-gradient(135deg, oklch(0.208 0.04 265.75) 0%, oklch(0.228 0.039 247.3) 100%);
   position: relative;
-  background: var(--r-bg);
-  isolation: isolate;
+  overflow: hidden;
 }
-.r-bg-aurora::before,
-.r-bg-aurora::after {
-  content: "";
+
+.roycss-bg-aurora::before {
+  content: '';
   position: absolute;
-  inset: -20%;
-  z-index: -1;
-  background: radial-gradient(
-    circle at 50% 50%,
-    oklch(72% 0.18 165 / 0.35),
-    transparent 60%
+  inset-block-start: -50%;
+  inset-inline-start: -50%;
+  inline-size: 200%;
+  block-size: 200%;
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    transparent 0deg,
+    color-mix(in oklch, oklch(0.696 0.149 162.48) 15%, transparent) 60deg,
+    transparent 120deg,
+    color-mix(in oklch, oklch(0.715 0.126 215.22) 10%, transparent) 180deg,
+    transparent 240deg,
+    color-mix(in oklch, oklch(0.606 0.219 292.72) 10%, transparent) 300deg,
+    transparent 360deg
   );
-  filter: blur(40px);
-  animation: r-aurora-1 16s ease-in-out infinite;
+  animation: roy-aurora 12s linear infinite;
 }
-.r-bg-aurora::after {
-  background: radial-gradient(
-    circle at 50% 50%,
-    oklch(70% 0.11 195 / 0.30),
-    transparent 60%
-  );
-  animation-direction: reverse;
-  animation-duration: 22s;
+
+@keyframes roy-aurora {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }`}</code>
       </pre>
 
-      <h2 id="mesh">r-bg-mesh</h2>
+      <h2 id="mesh">roycss-bg-mesh-gradient</h2>
       <p>
-        Four-blob mesh gradient. Each blob is a radial gradient at a
-        different corner with a different hue — combined they look
-        like a soft, blurry stain. Pairs with hero copy:
+        Four radial-gradient blobs blurred together into a soft
+        stain. Pairs with hero copy:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`<section class="r-bg-mesh">
-  <h1 class="r-text-gradient">RoyCSS</h1>
-</section>`}</code>
+        <code>{`<section class="roycss-bg-mesh-gradient">
+  <h1 class="roycss-text-gradient">RoyCSS</h1>
+</section>
+
+.roycss-bg-mesh-gradient {
+  background-color: oklch(0.208 0.04 265.75);
+  position: relative;
+  overflow: hidden;
+}
+
+.roycss-bg-mesh-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(at 20% 30%, color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent) 0, transparent 50%),
+    radial-gradient(at 80% 20%, color-mix(in oklch, oklch(0.715 0.126 215.22) 25%, transparent) 0, transparent 50%),
+    radial-gradient(at 50% 80%, color-mix(in oklch, oklch(0.606 0.219 292.72) 20%, transparent) 0, transparent 50%);
+  filter: blur(60px);
+}`}</code>
       </pre>
 
-      <h2 id="stars">r-bg-stars</h2>
+      <h2 id="stars">roycss-bg-starfield</h2>
       <p>
-        A pure-CSS starfield — no canvas, no JS. Uses a tiny radial
-        gradient tiled 100× and a slow drift keyframe. The "twinkle"
-        variant adds an opacity pulse on top:
+        A pure-CSS starfield — no canvas, no JS. Eight tiled radial
+        gradients paint the stars, and the twinkle is baked in via an
+        opacity keyframe:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`.r-bg-stars {
+        <code>{`.roycss-bg-starfield {
+  background-color: oklch(0.135 0.019 264.32);
   background-image:
-    radial-gradient(1px 1px at 25px 5px,  oklch(100% 0 0 / 0.6), transparent),
-    radial-gradient(1px 1px at 50px 25px, oklch(100% 0 0 / 0.4), transparent),
-    radial-gradient(1px 1px at 125px 50px, oklch(100% 0 0 / 0.5), transparent);
-  background-size: 200px 200px;
-  animation: r-stars-drift 60s linear infinite;
-}
-@keyframes r-stars-drift {
-  from { background-position: 0 0; }
-  to   { background-position: 200px 200px; }
-}`}</code>
+    radial-gradient(2px 2px at 20px 30px, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 40px 70px, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 90px 40px, oklch(1 0 89.88), transparent),
+    radial-gradient(2px 2px at 130px 80px, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 160px 30px, oklch(1 0 89.88), transparent);
+  background-size: 250px 150px;
+  animation: roy-starfield-twinkle 3s ease-in-out infinite alternate;`}</code>
       </pre>
 
-      <h2 id="gradient-sweep">r-bg-gradient-sweep</h2>
+      <h2 id="gradient-sweep">roycss-bg-gradient-sweep</h2>
       <p>
-        Animated 180-degree sweep that moves the gradient angle
-        continuously. Great for hero CTA sections:
+        An oversized gradient slides across the element by animating{" "}
+        <code>background-position</code>. Great for hero CTA
+        sections:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`<section class="r-bg-gradient-sweep">
+        <code>{`<section class="roycss-bg-gradient-sweep">
   <h1>Pricing</h1>
-</section>`}</code>
-      </pre>
-      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`@property --r-sweep-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-.r-bg-gradient-sweep {
-  background: linear-gradient(
-    var(--r-sweep-angle),
-    oklch(72% 0.18 165),
-    oklch(70% 0.11 195),
-    oklch(72% 0.18 165)
-  );
-  animation: r-sweep 8s linear infinite;
-}
-@keyframes r-sweep {
-  to { --r-sweep-angle: 360deg; }
-}`}</code>
-      </pre>
+</section>
 
-      <h2 id="customizing">Customizing</h2>
-      <p>
-        Backgrounds read <code>--r-bg</code> (page bg),{" "}
-        <code>--r-accent</code> (primary blob), and{" "}
-        <code>--r-accent-strong</code> (secondary). Override per
-        section:
-      </p>
-      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`section.hero-teal {
-  --r-accent: oklch(70% 0.11 195);
-  --r-accent-strong: oklch(72% 0.18 165);
+.roycss-bg-gradient-sweep {
+  background: linear-gradient(
+    90deg,
+    oklch(0.208 0.04 265.75) 0%,
+    oklch(0.696 0.149 162.48) 25%,
+    oklch(0.715 0.126 215.22) 50%,
+    oklch(0.696 0.149 162.48) 75%,
+    oklch(0.208 0.04 265.75) 100%
+  );
+  background-size: 200% 100%;
+  animation: roy-gradient-sweep 4s linear infinite;
+}
+
+@keyframes roy-gradient-sweep {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
 }`}</code>
       </pre>
 
       <h2 id="performance">Performance</h2>
       <p>
-        Backgrounds are heavy if they repaint. RoyCSS uses only
-        compositor-thread properties (transform, opacity, filter)
-        for animation, so they never trigger layout. For long-running
-        pages, prefer the static variants (no <code>-twinkle</code>,
-        no <code>-sweep</code>).
+        Animated backgrounds are heavy if they repaint. The shipped
+        effects animate compositor-friendly properties where possible
+        (transform, opacity, background-position) and keep overflow
+        clipped. For long-running pages, prefer the static variants —{" "}
+        <code>roycss-bg-grid-lines</code> and{" "}
+        <code>roycss-bg-dot-pattern</code> paint once and never
+        animate.
       </p>
     </>
   );

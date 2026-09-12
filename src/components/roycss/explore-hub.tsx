@@ -23,6 +23,7 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 import {
   SectionHeading,
   StaggerGroup,
@@ -40,7 +41,7 @@ const CARDS: ExploreCard[] = [
   {
     icon: Sparkles,
     title: "Effects",
-    description: "1,749+ production-ready CSS effects",
+    description: `${EFFECT_COUNT_FORMATTED} production-ready CSS effects`,
     target: "#effects",
   },
   {

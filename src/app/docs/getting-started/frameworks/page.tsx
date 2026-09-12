@@ -19,23 +19,20 @@ export default function FrameworksPage() {
 
       <h2 id="react-next">React / Next.js</h2>
       <p>
-        Import the categories you need in your root layout or global
-        stylesheet. With Turbopack and webpack both, unused categories
-        are tree-shaken automatically.
+        Import the stylesheet once in your root layout or global
+        stylesheet:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`// app/globals.css
-@import "roycss/effects/hover.css";
-@import "roycss/effects/buttons.css";
+@import "roycss/css/min";
 
 // Or, in app/layout.tsx
-import "roycss/effects/hover.css";
-import "roycss/effects/buttons.css";`}</code>
+import "roycss/css/min";`}</code>
       </pre>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`export function SaveButton() {
   return (
-    <button type="button" className="r-btn-glow-emerald r-hover-lift">
+    <button type="button" className="roycss-btn-glow">
       Save
     </button>
   );
@@ -50,10 +47,7 @@ import "roycss/effects/buttons.css";`}</code>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`// nuxt.config.ts
 export default defineNuxtConfig({
-  css: [
-    "roycss/effects/hover.css",
-    "roycss/effects/buttons.css",
-  ],
+  css: ["roycss/css/min"],
 });`}</code>
       </pre>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
@@ -62,7 +56,7 @@ export default defineNuxtConfig({
 </script>
 
 <template>
-  <button type="button" class="r-btn-glow-emerald">
+  <button type="button" class="roycss-btn-glow">
     Save
   </button>
 </template>`}</code>
@@ -76,8 +70,7 @@ export default defineNuxtConfig({
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`<!-- src/routes/+layout.svelte -->
 <script>
-  import "roycss/effects/hover.css";
-  import "roycss/effects/buttons.css";
+  import "roycss/css/min";
 </script>
 
 <slot />`}</code>
@@ -90,15 +83,14 @@ export default defineNuxtConfig({
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`/* styles.css */
-@import "roycss/effects/hover.css";
-@import "roycss/effects/buttons.css";`}</code>
+@import "roycss/css/min";`}</code>
       </pre>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`// save-button.component.ts
 @Component({
   selector: "app-save-button",
   template: \`
-    <button type="button" class="r-btn-glow-emerald">
+    <button type="button" class="roycss-btn-glow">
       Save
     </button>
   \`,
@@ -114,8 +106,7 @@ export class SaveButtonComponent {}`}</code>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`---
 // src/layouts/BaseLayout.astro
-import "roycss/effects/hover.css";
-import "roycss/effects/buttons.css";
+import "roycss/css/min";
 ---
 <html>
   <body>
@@ -134,11 +125,11 @@ import "roycss/effects/buttons.css";
       <h2 id="tailwind">Using alongside Tailwind</h2>
       <p>
         RoyCSS and Tailwind coexist cleanly. RoyCSS class names are
-        prefixed with <code>r-</code> and never collide with Tailwind
-        utilities. Compose them in any order:
+        prefixed with <code>roycss-</code> and never collide with
+        Tailwind utilities. Compose them in any order:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`<button className="px-4 py-2 rounded-md r-hover-lift r-btn-glow-emerald">
+        <code>{`<button className="roycss-btn-glow px-4 py-2 rounded-md">
   Save
 </button>`}</code>
       </pre>

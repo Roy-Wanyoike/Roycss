@@ -3,7 +3,7 @@
 /* ═══════════════════════════════════════════════════════════════
    FeaturedEffects — curated "best of" showcase
    ─────────────────────────────────────────────────────────────────
-   Showing all 1,749 effects on first scroll is overwhelming. This
+   Showing every effect on first scroll is overwhelming. This
    section surfaces 10 hand-picked effects across 10 categories, with
    a prominent CTA that scrolls to the full #effects gallery.
    ═══════════════════════════════════════════════════════════════ */
@@ -17,6 +17,7 @@ import {
 } from "@/components/roycss/motion-primitives";
 import { EffectCard } from "@/components/roycss/effect-card";
 import { effects } from "@/lib/roycss-effects";
+import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 import type { CSSEffect } from "@/lib/roycss-types";
 
 /* ─── Hand-picked featured effect IDs ─────────────────────────────
@@ -74,9 +75,9 @@ export function FeaturedEffects({
       <div className="mx-auto px-4 sm:px-6 max-w-7xl">
         {/* Heading */}
         <SectionHeading
-          eyebrow="Curated · 10 of 1,749"
+          eyebrow={`Curated · 10 of ${EFFECT_COUNT_FORMATTED}`}
           title="Featured Effects"
-          subtitle="A taste of what RoyCSS can do — 10 of our strongest effects, hand-picked from 1,749."
+          subtitle={`A taste of what RoyCSS can do — 10 of our strongest effects, hand-picked from ${EFFECT_COUNT_FORMATTED}.`}
         />
 
         {/* Responsive grid: 1 / 2 / 3 / 4 columns */}

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 
 export const metadata: Metadata = {
   title: "Theming — RoyCSS Docs",
-  description: "Complete theming guide: rebrand RoyCSS with your own OKLCH palette, dark mode, and design tokens.",
+  description: "A brand-color migration, done honestly: vendor the effects you use, convert your palette to OKLCH, and keep contrast in check.",
 };
 
 export default function ThemingPage() {
@@ -10,129 +11,136 @@ export default function ThemingPage() {
     <>
       <h1>Theming</h1>
       <p className="text-lg text-muted-foreground">
-        This guide walks through a full brand-color migration:
-        switch RoyCSS from emerald to your brand color, set up
-        dark mode, and bridge to your design-token file.
+        This guide walks through a full brand-color migration. One
+        thing to know up front: RoyCSS does not ship a theme-token
+        layer — the {EFFECT_COUNT_FORMATTED} effects carry their
+        OKLCH colors written directly in the CSS, which is what
+        keeps them drop-in. Theming therefore means vendoring the
+        effects you use and editing them, and the tooling below
+        makes that cheap.
       </p>
 
       <h2 id="step-1-pick">Step 1 — Pick your accent in OKLCH</h2>
       <p>
         Your brand probably ships as a hex or RGB color. Convert it
-        to OKLCH so it sits cleanly inside RoyCSS’s perceptual
-        ramp. You can use the CLI:
+        to OKLCH so it sits cleanly on the perceptual lightness
+        scale. The repo ships a migration script that converts hex
+        literals in your CSS files to OKLCH:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss palette from-color "#b91c1c"
+        <code>{`# from a clone of the repo — converts hex/rgba in place
+$ bun run scripts/migrate-colors.ts src/styles/brand.css
 
-oklch(50% 0.20 25)   ← your base
-
-# RoyCSS ramp (auto-generated, perceptual)
---r-accent-50:  oklch(96% 0.03 25);
---r-accent-100: oklch(90% 0.08 25);
---r-accent-300: oklch(70% 0.18 25);
---r-accent-500: oklch(50% 0.20 25);
---r-accent-700: oklch(40% 0.18 25);
---r-accent-900: oklch(28% 0.12 25);`}</code>
+# one-off conversion (any OKLCH color picker works too):
+#   #b91c1c  →  oklch(0.50 0.20 25)`}</code>
       </pre>
 
-      <h2 id="step-2-apply">Step 2 — Apply the override</h2>
+      <h2 id="step-2-apply">Step 2 — Vendor and recolor the effects</h2>
       <p>
-        Drop the variables into your global stylesheet, after the
-        RoyCSS import so they win the cascade:
+        Export the effects you use, then replace the shipped
+        emerald (<code>oklch(0.696 0.149 162.48)</code> and friends)
+        with your brand color:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`@import "roycss/effects.css";
+        <code>{`$ npx roycss export btn-glow hover-push-up text-shimmer \\
+    --out src/styles/roycss.css
 
-:root {
-  --r-accent:        oklch(50% 0.20 25);
-  --r-accent-strong: oklch(40% 0.18 25);
+/* then edit src/styles/roycss.css */
+.roycss-btn-glow {
+  background: oklch(0.50 0.20 25);   /* ← your brand red */
+  ...
+}
+
+.roycss-hover-push-up:hover {
+  box-shadow: 0 20px 40px -10px
+    color-mix(in oklch, oklch(0.50 0.20 25) 40%, transparent);
 }`}</code>
       </pre>
       <p>
-        Every effect that reads <code>--r-accent</code> — buttons,
-        glows, text gradients — now uses your brand color.
+        A find-and-replace across the vendored file is usually
+        enough — effects consistently use the same handful of
+        emerald OKLCH values.
       </p>
 
       <h2 id="step-3-dark">Step 3 — Add dark mode</h2>
       <p>
         Most brand colors look different on dark backgrounds.
-        Bump the L value up a few percentage points for dark mode
-        so contrast stays strong:
+        Bump the L value up a few points for dark mode so contrast
+        stays strong — in your vendored copy:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`@media (prefers-color-scheme: dark) {
-  :root {
-    --r-bg:        oklch(15% 0.02 200);
-    --r-card-bg:   oklch(18% 0.02 200);
-    --r-fg:        oklch(96% 0.01 200);
-    --r-accent:    oklch(65% 0.22 25);  /* lighter on dark */
-    --r-accent-strong: oklch(72% 0.20 25);
-  }
+        <code>{`.roycss-btn-glow { background: oklch(0.50 0.20 25); }
+
+@media (prefers-color-scheme: dark) {
+  .roycss-btn-glow { background: oklch(0.65 0.22 25); }  /* lighter on dark */
 }`}</code>
       </pre>
 
       <h2 id="step-4-tokens">Step 4 — Bridge to your design tokens</h2>
       <p>
-        If you have a design-token file, point RoyCSS at it so the
-        library tracks your brand system:
+        If you have a design-token file, point the vendored
+        effects at your variables so they track the brand system:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`:root {
-  --r-accent:        var(--brand-primary);
-  --r-accent-strong: var(--brand-primary-hover);
-  --r-bg:            var(--surface-base);
-  --r-card-bg:       var(--surface-raised);
-  --r-fg:            var(--text-primary);
-  --r-muted:         var(--text-muted);
-  --r-radius:        var(--radius-md);
-  --r-duration:      var(--motion-fast);
-  --r-easing:        var(--motion-ease-out);
+        <code>{`/* in your vendored roycss.css */
+.roycss-btn-glow {
+  background: var(--brand-primary);
+  color: var(--text-on-primary);
+  border-radius: var(--radius-md);
 }`}</code>
       </pre>
       <p>
-        Now every brand change propagates to RoyCSS automatically.
+        Now every brand change propagates to the effects you
+        bridged — anything still loaded from{" "}
+        <code>dist/roycss.css</code> keeps its shipped colors, so
+        bridge everything you use.
       </p>
 
       <h2 id="step-5-sections">Step 5 — Section-scoped themes</h2>
       <p>
         For marketing sections that need a different palette
-        (holiday campaign, sale event), override on a container:
+        (holiday campaign, sale event), vendor a second copy of
+        the effect with the alternate colors and scope both to
+        their sections:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`<section class="r-bg-aurora holiday-amber">
-  <h1 class="r-text-gradient">Holiday sale</h1>
+        <code>{`<section class="holiday">
+  <h1 class="roycss-text-gradient holiday-text">Holiday sale</h1>
 </section>
 
-.holiday-amber {
-  --r-accent: oklch(80% 0.16 75);
-  --r-accent-strong: oklch(65% 0.18 75);
+/* your override, after the effect's own rule */
+.holiday-text.roycss-text-gradient {
+  background: linear-gradient(90deg, oklch(0.80 0.16 75), oklch(0.65 0.18 75));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }`}</code>
       </pre>
 
       <h2 id="step-6-test">Step 6 — Verify contrast</h2>
       <p>
-        The CLI ships a contrast checker that flags variables that
-        fall below WCAG AA:
+        Check your recolored values with your browser devtools
+        (both Chromium and Firefox compute contrast for a selected
+        color pair). Rules of thumb in OKLCH: against white stay{" "}
+        <code>L ≤ 0.65</code> for 4.5:1 text contrast; against
+        near-black stay <code>L ≥ 0.55</code>. The CLI can also
+        keep you honest about color format:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss palette check
+        <code>{`$ npx roycss doctor
 
---r-accent on --r-bg:    7.6:1   ✅ AAA
---r-accent on --r-card: 7.4:1   ✅ AAA
---r-accent on white:    4.2:1   ⚠️  below AA (4.5:1)`}</code>
+⚠ Found 6 hex/rgba color literals in user CSS — RoyCSS v2 recommends oklch()
+  Run: bun run scripts/migrate-colors.ts`}</code>
       </pre>
-      <p>
-        Fix below-AA values by raising <code>--r-accent-strong</code>{" "}
-        lightness until the checker is happy.
-      </p>
 
       <h2 id="checklist">Theming checklist</h2>
       <ul className="list-disc pl-6 space-y-1">
-        <li>Override <code>--r-accent</code> and <code>--r-accent-strong</code> on <code>:root</code>.</li>
-        <li>Set <code>--r-bg</code> and <code>--r-fg</code> if you change surfaces.</li>
-        <li>Add a <code>prefers-color-scheme: dark</code> block.</li>
+        <li>Convert your brand color to OKLCH.</li>
+        <li>Export the effects you use (<code>roycss export … --out</code>) and edit them.</li>
+        <li>Replace the shipped emerald values with your accent.</li>
+        <li>Add a <code>prefers-color-scheme: dark</code> variant for your copies.</li>
         <li>Bridge to design tokens if you have them.</li>
-        <li>Run <code>roycss palette check</code> for contrast.</li>
+        <li>Verify contrast in devtools; run <code>roycss doctor</code> for format drift.</li>
       </ul>
     </>
   );

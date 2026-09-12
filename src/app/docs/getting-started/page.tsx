@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT, FULL_CSS_MIN_GZ_KB } from "@/lib/site-stats";
 import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Overview — RoyCSS Docs",
-  description: "What is RoyCSS and how to get started — 1,869 production-ready CSS effects with zero JS runtime and OKLCH colors.",
+  description: `What is RoyCSS and how to get started — ${EFFECT_COUNT_FORMATTED} production-ready CSS effects with zero JS runtime and OKLCH colors.`,
 };
 
 export default function OverviewPage() {
@@ -11,27 +12,30 @@ export default function OverviewPage() {
     <>
       <h1>Overview</h1>
       <p className="text-lg text-muted-foreground">
-        RoyCSS is a CSS-first effects library: 1,869 production-ready
+        RoyCSS is a CSS-first effects library: {EFFECT_COUNT_FORMATTED} production-ready
         effects, <strong>zero JavaScript runtime</strong>, perceptual
         OKLCH colors, and full keyboard/reduced-motion support baked in.
       </p>
 
       <h2 id="what-is-roycss">What is RoyCSS?</h2>
       <p>
-        RoyCSS is a utility-style library of effect classes — hover,
-        text, background, loader, button, card, and border effects —
-        shipped as plain CSS files. You add a class to an element, you
-        get the effect. There is no JavaScript bundle, no runtime
-        observer, no React/Vue/Svelte dependency. The whole library
-        weighs under 80 KB gzipped if you import everything, and far
-        less if you only import the categories you need.
+        RoyCSS is a library of self-contained effect classes —
+        hover, text, background, loader, button, card, and border
+        effects — shipped as one plain stylesheet. You add a class
+        to an element, you get the effect. There is no JavaScript
+        bundle, no runtime observer, no React/Vue/Svelte
+        dependency. The full stylesheet is ~{FULL_CSS_MIN_GZ_KB} KB
+        gzipped minified, ~3.6 KB if you only need the curated
+        critical subset, and far less when you export a hand-picked
+        few with the CLI.
       </p>
       <p>
-        Effects are authored in OKLCH — the perceptual color space —
-        so lightness ramps actually <em>look</em> linear, and color
-        schemes are accessible by construction. The library uses CSS
-        custom properties for every themeable value, so you can
-        override a single variable to repaint an entire category.
+        Effects are authored in OKLCH — the perceptual color
+        space — so lightness ramps actually <em>look</em> linear,
+        and color schemes are accessible by construction. Each
+        effect&apos;s CSS is self-contained and visible on its
+        catalog page, so customization is always a copy-and-edit
+        away.
       </p>
 
       <h2 id="quick-start">Quick start</h2>
@@ -43,24 +47,25 @@ export default function OverviewPage() {
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`<link
   rel="stylesheet"
-  href="https://cdn.roycss.org/2.0.0/effects.min.css"
+  href="https://unpkg.com/roycss@2/dist/roycss.min.css"
   crossorigin
 />`}</code>
       </pre>
       <p>Then add a class to any element:</p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`<button class="r-hover-lift r-btn-glow-emerald">Save</button>`}</code>
+        <code>{`<button class="roycss-btn-glow">Save</button>`}</code>
       </pre>
       <p>
-        That single button now lifts on hover (GPU-accelerated
-        transform, no layout cost) and glows with an emerald halo
-        that respects your color-scheme.
+        That single button now carries its own emerald styling and
+        gains a two-layer glow halo on hover — GPU-accelerated
+        box-shadow, no layout cost, no JS.
       </p>
 
       <h2 id="install-via-package-manager">Install via package manager</h2>
       <p>
-        For production builds you almost certainly want the npm
-        package so your bundler can tree-shake unused categories:
+        For production builds you want the npm package so you can
+        import the stylesheet through your bundler, and export
+        hand-picked subsets when bundle size matters:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`npm install roycss
@@ -70,9 +75,11 @@ pnpm add roycss
 bun add roycss`}</code>
       </pre>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`/* Import only what you need — tree-shaken at build time */
-import "roycss/effects/hover.css";
-import "roycss/effects/buttons.css";`}</code>
+        <code>{`/* The whole library */
+import "roycss/css/min";
+
+/* Or a hand-picked subset, via the CLI */
+$ npx roycss export btn-glow hover-push-up --out src/styles/roycss.css`}</code>
       </pre>
 
       <h2 id="philosophy">Philosophy</h2>

@@ -33,55 +33,60 @@ IE 11              ❌ no RoyCSS`}</code>
 
       <h2 id="progressive-enhancement">Progressive enhancement</h2>
       <p>
-        RoyCSS effects are layered with <code>@supports</code> so
-        older engines gracefully skip them. The base element is
-        always styled; the effect is the bonus:
+        Effects that rely on cutting-edge features ship with{" "}
+        <code>@supports not (…)</code> fallbacks directly in{" "}
+        <code>dist/roycss.css</code> — 37 of them. The base element
+        is always styled; the enhanced behavior is the bonus:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`/* Base style — always applied */
-.r-btn-glow-emerald {
-  background: #0d9488;  /* teal fallback */
-  color: #fff;
-  padding: 0.5rem 1rem;
-}
-
-/* OKLCH enhancement — newer engines */
-@supports (background: oklch(72% 0.18 165)) {
-  .r-btn-glow-emerald {
-    background: oklch(58% 0.20 165);
+        <code>{`/* Real fallback from dist/roycss.css */
+@supports not (animation-timeline: scroll(root block)) {
+  .roycss-scroll-timeline-spin {
+    animation: roy-b10-sts-spin 3s linear infinite;  /* auto-spin instead */
   }
 }
 
-/* Hover glow — only if transitions work */
-@supports (transition: transform 180ms) {
-  .r-btn-glow-emerald:hover { /* … */ }
+@supports not (background: hsl(from red h s l)) {
+  .roycss-property-hue-cycle {
+    background: linear-gradient(135deg, oklch(0.656 0.212 354.31), …);
+  }
 }`}</code>
       </pre>
 
-      <h2 id="oklch-fallback">OKLCH fallbacks</h2>
+      <h2 id="oklch-fallback">OKLCH fallbacks — the optional layer</h2>
       <p>
-        OKLCH is the RoyCSS lingua franca. Browsers that don’t
-        understand it get an sRGB <code>rgb()</code> fallback
-        automatically generated at build time. The CLI’s{" "}
-        <code>bundle</code> command emits both:
+        OKLCH is the RoyCSS lingua franca (1,369 unique OKLCH
+        colors, 718 <code>color-mix()</code> values in the
+        stylesheet). The package ships an optional fallback
+        layer — <code>roycss/fallbacks</code> — that maps them to
+        sRGB equivalents for older engines. Every fallback is
+        gated by <code>@supports not (…)</code>, so modern
+        browsers pay zero matching cost. Include it after the
+        main stylesheet only if you need it:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss bundle --out dist/effects.css --fallback
+        <code>{`/* Only in browsers that need broader support: */
+<link rel="stylesheet" href="roycss.css">
+<link rel="stylesheet" href="roycss-fallbacks.css">
 
-Wrote dist/effects.css       (4.2 KB OKLCH)
-Wrote dist/effects.fallback.css (5.1 KB rgb fallback)`}</code>
+/* Or from a bundler: */
+import "roycss/css";
+import "roycss/fallbacks";`}</code>
       </pre>
 
-      <h2 id="prefix-free">No vendor prefixes</h2>
+      <h2 id="prefix-free">Vendor prefixes, only where needed</h2>
       <p>
-        RoyCSS ships zero vendor prefixes. Modern browsers no longer
-        need them for the features the library uses. If you support
-        Safari below 15.4 or older, run the bundle through Autoprefixer:
+        The stylesheet ships ~266 <code>-webkit-</code> prefixed
+        declarations — precisely the ones Safari still requires
+        (mask compositing, backdrop filters) — and no{" "}
+        <code>-moz-</code> prefixes. If you support browsers older
+        than the matrix above, run your exported subset through
+        Autoprefixer:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`npx postcss dist/effects.css \\
+        <code>{`npx postcss roycss-custom.css \\
   --use autoprefixer \\
-  --output dist/effects.prefixed.css`}</code>
+  --output roycss-custom.prefixed.css`}</code>
       </pre>
 
       <h2 id="reduced-motion">Reduced motion everywhere</h2>

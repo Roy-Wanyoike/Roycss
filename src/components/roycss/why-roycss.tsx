@@ -20,6 +20,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 import {
   SectionHeading,
   StaggerGroup,
@@ -61,7 +62,7 @@ const VALUE_PROPS: ValueProp[] = [
   {
     icon: ShieldCheck,
     title: "Production-Ready",
-    description: "MIT licensed, tree-shakeable, battle-tested across 1,749 effects.",
+    description: `MIT licensed, copy-what-you-need, battle-tested across ${EFFECT_COUNT_FORMATTED} effects.`,
   },
 ];
 

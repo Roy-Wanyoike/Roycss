@@ -7,6 +7,11 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 import { ServiceWorkerRegistration } from "@/components/roycss/sw-register";
 import { AuthProvider } from "@/components/roycss/auth/auth-context";
+import {
+  EFFECT_COUNT_FORMATTED,
+  PRODUCT_COUNT,
+  TOOL_COUNT,
+} from "@/lib/site-stats";
 
 /**
  * Pre-hydration theme script.
@@ -31,8 +36,7 @@ const jsonLd = {
   name: "RoyCSS",
   applicationCategory: "DeveloperApplication",
   operatingSystem: "Web",
-  description:
-    "RoyCSS is a modern, AI-native frontend engineering platform — 1,749 CSS effects, 62 platform products, 68 developer tools, design systems, and AI assistance.",
+  description: `RoyCSS is a modern, AI-native frontend engineering platform — ${EFFECT_COUNT_FORMATTED} CSS effects, ${PRODUCT_COUNT} platform products, ${TOOL_COUNT} developer tools, design systems, and AI assistance.`,
   url: "https://roycss.com",
   offers: {
     "@type": "Offer",
@@ -44,9 +48,9 @@ const jsonLd = {
     name: "Royford Wanyoike Wamaitha",
   },
   featureList: [
-    "1,749 CSS effects with live demos",
-    "62 platform products (components, AI, dev tools, enterprise)",
-    "68 developer tools (CSS generators, visualizers, analyzers)",
+    `${EFFECT_COUNT_FORMATTED} CSS effects with live demos`,
+    `${PRODUCT_COUNT} platform products (components, AI, dev tools, enterprise)`,
+    `${TOOL_COUNT} developer tools (CSS generators, visualizers, analyzers)`,
     "AI-native development (RoyAI, Roy Architect, Roy MCP)",
     "Design system (OKLCH tokens, 10 theme presets)",
     "Accessibility-first (WCAG 2.2 AA)",
@@ -72,8 +76,7 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: "RoyCSS — AI-Native Frontend Engineering Platform",
-  description:
-    "RoyCSS is a modern, AI-native frontend engineering platform — 1,749 CSS effects, 62 platform products, 64 developer tools, design systems, and AI assistance. Design, build, customize, and ship modern interfaces in one cohesive ecosystem.",
+  description: `RoyCSS is a modern, AI-native frontend engineering platform — ${EFFECT_COUNT_FORMATTED} CSS effects, ${PRODUCT_COUNT} platform products, ${TOOL_COUNT} developer tools, design systems, and AI assistance. Design, build, customize, and ship modern interfaces in one cohesive ecosystem.`,
   icons: {
     icon: [
       { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
@@ -113,8 +116,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "RoyCSS — AI-Native Frontend Engineering Platform",
-    description:
-      "1,749 CSS effects, 62 platform products, 68 developer tools, and AI assistance — design, build, customize, and ship modern interfaces in one cohesive ecosystem.",
+    description: `${EFFECT_COUNT_FORMATTED} CSS effects, ${PRODUCT_COUNT} platform products, ${TOOL_COUNT} developer tools, and AI assistance — design, build, customize, and ship modern interfaces in one cohesive ecosystem.`,
     type: "website",
     url: "https://roycss.space-z.ai",
     siteName: "RoyCSS",
@@ -132,8 +134,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "RoyCSS — AI-Native Frontend Engineering Platform",
-    description:
-      "1,749 CSS effects, 62 platform products, 64 developer tools, and AI assistance — design, build, and ship modern interfaces.",
+    description: `${EFFECT_COUNT_FORMATTED} CSS effects, ${PRODUCT_COUNT} platform products, ${TOOL_COUNT} developer tools, and AI assistance — design, build, and ship modern interfaces.`,
     creator: "@wanyoikeroy",
     images: ["/api/og"],
   },

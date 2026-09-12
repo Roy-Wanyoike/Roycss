@@ -42,50 +42,48 @@ export default function CssFirstPage() {
         JavaScript; none of them do anymore:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`/* @property — typed custom properties, animatable */
-@property --r-accent {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: oklch(72% 0.18 165);
+        <code>{`/* @property — typed custom properties, animatable.
+   Real registration from dist/roycss.css: */
+@property --roy-gb-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
 }
 
-/* Scroll-driven animation — no JS observer */
-@keyframes r-reveal {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-section { animation: r-reveal; animation-timeline: view(); }
-
-/* Container queries — responsive without JS */
-@container (min-width: 480px) {
-  .r-card { grid-template-columns: 1fr 1fr; }
+/* Scroll-driven animation — no JS observer.
+   Real pattern from the scroll category: */
+.roycss-scroll-timeline-spin {
+  animation: roy-b10-sts-spin 1s linear;
+  animation-timeline: scroll(root block);
 }
 
-/* color-mix() — runtime color blending */
-.r-hover-tint:hover {
-  background: color-mix(in oklch, var(--r-accent) 12%, transparent);
-}`}</code>
+/* color-mix() — runtime color blending.
+   Real declaration from .roycss-hover-push-up: */
+box-shadow: 0 20px 40px -10px
+  color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent);`}</code>
       </pre>
 
       <h2 id="what-still-needs-js">What still needs JS</h2>
       <p>
-        A small set of effects cannot be expressed in CSS alone and
-        RoyCSS is honest about it. These live in the optional{" "}
-        <code>roycss/roymotion</code> package, which adds ~3 KB of JS
-        only when imported:
+        A small set of interactions cannot be expressed in CSS
+        today and RoyCSS is honest about it — the library simply
+        does not ship them. When you hit one of these, write the
+        few lines of JS yourself and let a RoyCSS class provide
+        the visual layer:
       </p>
       <ul className="list-disc pl-6 space-y-1">
-        <li>Mouse-tracked 3D tilt (no pointer event without JS).</li>
-        <li>Canvas/WebGL effects (neon tunnels, particle networks).</li>
-        <li>Multi-step scroll-scrubbing beyond <code>animation-timeline</code>.</li>
+        <li>Mouse-position-tracked 3D tilt (hover state is not pointer position).</li>
+        <li>Canvas/WebGL scenes (neon tunnels, particle networks).</li>
+        <li>Multi-element scroll choreography beyond <code>animation-timeline</code>.</li>
         <li>Audio-reactive visualizers.</li>
       </ul>
       <p>
-        See the{" "}
+        The catalog&apos;s motion subset is documented on the{" "}
         <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/api/roymotion">
           RoyMotion
         </a>{" "}
-        page for those opt-in JS-powered effects.
+        page — including the pattern for bridging your own JS to a
+        RoyCSS effect via custom properties.
       </p>
 
       <h2 id="progressive-enhancement">Progressive enhancement</h2>
@@ -97,10 +95,10 @@ section { animation: r-reveal; animation-timeline: view(); }
         you want stricter behavior:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`@supports (animation-timeline: view()) {
-  .r-reveal-on-scroll {
-    animation: r-reveal linear;
-    animation-timeline: view();
+        <code>{`/* Real fallback shipped for .roycss-scroll-timeline-spin */
+@supports not (animation-timeline: scroll(root block)) {
+  .roycss-scroll-timeline-spin {
+    animation: roy-b10-sts-spin 3s linear infinite;
   }
 }`}</code>
       </pre>

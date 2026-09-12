@@ -14,6 +14,7 @@ import { Box, Loader2, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SectionHeading, ScrollReveal } from "@/components/roycss/motion-primitives";
+import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 
 // Lazy-load all WebGL/canvas effects — they're heavy (Three.js)
 const ThreeTubesCursor = lazy(() =>
@@ -216,7 +217,7 @@ export function WebGLShowcase() {
             }}
           >
             <Sparkles className="size-4 mr-2" />
-            Explore 1,569 CSS Effects
+            Explore {EFFECT_COUNT_FORMATTED} CSS Effects
           </Button>
         </ScrollReveal>
       </div>

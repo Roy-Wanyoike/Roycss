@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
+import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Store,
@@ -435,7 +436,7 @@ const DIFFERENTIATORS: Differentiator[] = [
   {
     id: "similarity",
     name: "Effect Similarity Finder",
-    description: "Pick any of 1,569 effects → instantly surface the most similar ones by tag, category, and CSS-property overlap. Explore the library by feel.",
+    description: `Pick any of ${EFFECT_COUNT_FORMATTED} effects → instantly surface the most similar ones by tag, category, and CSS-property overlap. Explore the library by feel.`,
     icon: Radar,
   },
   {

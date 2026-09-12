@@ -1,0 +1,29 @@
+{
+  "name": "@roycss/plugin-esbuild",
+  "version": "0.1.0",
+  "description": "esbuild plugin for RoyCSS — scans source for r-* / roycss-* usage and swaps the stylesheet import for only the CSS you actually use (AOT extraction), with watchFiles wiring for watch mode.",
+  "license": "MIT",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "esbuild": ">=0.16.0"
+  },
+  "keywords": [
+    "roycss",
+    "esbuild",
+    "esbuild-plugin",
+    "css",
+    "aot"
+  ]
+}

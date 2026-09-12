@@ -1,0 +1,29 @@
+{
+  "name": "@roycss/plugin-rollup",
+  "version": "0.1.0",
+  "description": "Rollup plugin for RoyCSS — scans source for r-* / roycss-* usage and ships only the CSS you actually use via the virtual:roycss/css module or an in-place stylesheet swap (AOT extraction).",
+  "license": "MIT",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "rollup": ">=2.0.0"
+  },
+  "keywords": [
+    "roycss",
+    "rollup",
+    "rollup-plugin",
+    "css",
+    "aot"
+  ]
+}

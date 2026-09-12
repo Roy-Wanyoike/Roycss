@@ -1,0 +1,29 @@
+{
+  "name": "@roycss/plugin-rspack",
+  "version": "0.1.0",
+  "description": "Rspack plugin for RoyCSS — the webpack-engine adapter (Rspack implements the webpack 5 plugin API), scanning source for r-* / roycss-* usage and shipping only the CSS you actually use. Typechecked structurally, not against a live Rspack build.",
+  "license": "MIT",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "rspack": ">=0.7.0"
+  },
+  "keywords": [
+    "roycss",
+    "rspack",
+    "webpack",
+    "css",
+    "aot"
+  ]
+}

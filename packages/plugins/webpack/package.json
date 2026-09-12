@@ -1,0 +1,29 @@
+{
+  "name": "@roycss/plugin-webpack",
+  "version": "0.1.0",
+  "description": "webpack 5 plugin for RoyCSS — scans source for r-* / roycss-* usage and replaces the shipped stylesheet asset with only the CSS you actually use (AOT extraction).",
+  "license": "MIT",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "webpack": ">=5.0.0"
+  },
+  "keywords": [
+    "roycss",
+    "webpack",
+    "webpack-plugin",
+    "css",
+    "aot"
+  ]
+}

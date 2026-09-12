@@ -186,7 +186,9 @@ next-env.d.ts
 /compat/
 /examples/
 /skills/
-/.changeset/
+# NOTE: /.changeset/ is NOT ignored — the changesets config + pending
+# changeset files must be committed so `changeset version` works for
+# everyone (this entry previously kept the directory from ever existing).
 
 # ─── Root-level dev screenshots (agent-browser captures) ─────
 roycss-*.png

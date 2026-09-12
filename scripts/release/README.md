@@ -5,6 +5,12 @@ lockstep companions: `roycss-cli`, `@roycss/mcp-server`, and the VS Code
 extension). Manual version bumping, Keep a Changelog generation, dry-run
 verification, and a Sigstore-provenance CI publish.
 
+The **root `package.json` IS the published manifest** (there is no separate
+`package.roycss.json`). Publishing is **tag-triggered and test-gated**: push
+a `v<version>` git tag and `.github/workflows/release.yml` lints, builds,
+runs the unit tests, verifies the tag matches `package.json`, then runs
+`npm publish --provenance --access public`.
+
 ## Quick reference
 
 | Command                                         | What it does                                                       | Publishes? |
@@ -49,6 +55,7 @@ Added 12 new glassmorphism effects to the glass-ui category.
 Commit it with your feature code. Open the PR.
 
 **PR review checklist:**
+
 - [ ] The entry's `type` matches the actual change (Added vs Changed vs Fixed).
 - [ ] The PR number in the frontmatter is correct.
 - [ ] The entry reads well — it will be public in `CHANGELOG.md`.
@@ -66,7 +73,7 @@ git checkout main && git pull
 #   --major  removed effects, renamed classes, breaking changes
 
 bun run scripts/release/bump-version.ts --minor
-# → all 4 manifests updated: 1.0.0 → 1.1.0
+# → all 4 manifests updated: 2.0.0 → 2.1.0
 
 bun run scripts/release/generate-changelog.ts
 # → assembles [Unreleased] section in CHANGELOG.md from entry files
@@ -76,14 +83,14 @@ bun run scripts/release/generate-changelog.ts
 # version + date — open CHANGELOG.md and change:
 #   ## [Unreleased]
 # to:
-#   ## [1.1.0] — 2026-08-15
+#   ## [2.1.0] — 2026-09-14
 # (and add a fresh empty `## [Unreleased]` above it for the next cycle)
 
 # Commit the bump + changelog
-git add package.roycss.json cli/package.json mcp-server/package.json \
+git add package.json cli/package.json mcp-server/package.json \
         vscode-extension/package.json CHANGELOG.md \
         scripts/release/changelog-entries/
-git commit -m "chore(release): v1.1.0"
+git commit -m "chore(release): v2.1.0"
 ```
 
 ### 3. Dry-run the publish
@@ -93,6 +100,7 @@ bun run scripts/release/publish.ts
 ```
 
 This runs:
+
 1. `bun run lint` — must pass (exit 0).
 2. `bun run scripts/build-package.ts` — rebuilds `dist/`.
 3. `npm publish --dry-run` — verifies the tarball.
@@ -100,10 +108,10 @@ This runs:
 You'll see a summary:
 ```
   Tarball summary
-    filename:    roycss-1.1.0.tgz
-    compressed:  498.3 KB
-    unpacked:    3.5 MB
-    file count:  10
+    filename:    roycss-2.1.0.tgz
+    compressed:  ~947 KB
+    unpacked:    ~6.5 MB
+    file count:  13
 ```
 
 If anything looks wrong (missing files, oversized tarball, lint errors),
@@ -112,21 +120,23 @@ If anything looks wrong (missing files, oversized tarball, lint errors),
 ### 4. Tag and push (this triggers CI to publish)
 
 ```bash
-# Create the git tag (matches the version in package.roycss.json)
-git tag -a v1.1.0 -m "Release v1.1.0"
+# Create the git tag (matches the version in package.json)
+git tag -a v2.1.0 -m "Release v2.1.0"
 
 # Push the commit and the tag
 git push origin main
-git push origin v1.1.0
+git push origin v2.1.0
 ```
 
 The tag push triggers `.github/workflows/release.yml`, which:
+
 1. Checks out at the tagged commit.
 2. Runs `bun install --frozen-lockfile`.
 3. Runs `bun run lint`.
 4. Runs `bun run scripts/build-package.ts`.
-5. Verifies the tag matches the version in `package.roycss.json`.
-6. Runs `npm publish --provenance --access public` with `NPM_TOKEN` from
+5. Runs `bunx vitest run tests/unit` — **unit tests gate the publish**.
+6. Verifies the tag matches the version in `package.json`.
+7. Runs `npm publish --provenance --access public` with `NPM_TOKEN` from
    GitHub secrets. The `--provenance` flag attaches a Sigstore SLSA
    Level 3 attestation linking the tarball to the workflow run.
 
@@ -139,18 +149,18 @@ Within 5 minutes of the workflow completing:
 npm view roycss
 
 # Confirm the provenance attestation is attached
-npm view roycss@1.1.0 --json | jq '.dist.attestations'
+npm view roycss@2.1.0 --json | jq '.dist.attestations'
 
 # Install in a fresh temp dir
 cd $(mktemp -d)
 npm install roycss
-node -e "console.log(require('roycss').length)"   # should print 1569
+node -e "console.log(require('roycss').length)"   # should print 1959
 ```
 
 ### 6. Create the GitHub Release
 
 The CI workflow does not auto-create a GitHub Release. The maintainer
-creates one manually from the `v1.1.0` tag, copying the relevant section
+creates one manually from the `v2.1.0` tag, copying the relevant section
 of `CHANGELOG.md` as the release notes.
 
 ## Emergency: publish from laptop
@@ -167,7 +177,7 @@ NPM_TOKEN=xxxx-xxxx-xxxx bun run scripts/release/publish.ts --execute
 
 # 3. Push the tag so CI can re-verify (the next CI publish of a newer
 #    version will include provenance; the local one stays unattested)
-git push origin v1.1.0
+git push origin v2.1.0
 ```
 
 **Note:** Local publishes lack Sigstore provenance. Security scanners
@@ -180,10 +190,10 @@ If a bad version slipped through:
 
 ```bash
 # Within 72 hours of publish (and no dependents):
-npm unpublish roycss@1.1.0
+npm unpublish roycss@2.1.0
 
 # After 72 hours, or has dependents:
-npm deprecate roycss@1.1.0 "Security issue — use roycss@1.1.1"
+npm deprecate roycss@2.1.0 "Security issue — please use roycss@2.1.1"
 ```
 
 Then immediately rotate `NPM_TOKEN` and publish a fixed version. See
@@ -206,7 +216,7 @@ response procedure.
 
 | Manifest | Public name | Path |
 |---|---|---|
-| RoyCSS library | `roycss` | `/package.roycss.json` |
+| RoyCSS library | `roycss` | `/package.json` (root) |
 | CLI | `roycss-cli` | `/cli/package.json` |
 | MCP server | `@roycss/mcp-server` | `/mcp-server/package.json` |
 | VS Code extension | `roycss` (Marketplace) | `/vscode-extension/package.json` |

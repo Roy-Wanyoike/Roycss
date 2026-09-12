@@ -4,7 +4,7 @@
  *
  * Bumps the version field across all four lockstep manifests:
  *
- *   1. package.roycss.json        (main library — source of truth)
+ *   1. package.json               (main library — source of truth)
  *   2. cli/package.json           (roycss-cli)
  *   3. mcp-server/package.json    (@roycss/mcp-server)
  *   4. vscode-extension/package.json (VS Code extension)
@@ -23,7 +23,7 @@
  *   --patch   : 1.2.3 → 1.2.4
  *   --version : use the exact string (must match X.Y.Z or X.Y.Z-<pre>)
  *
- * The script reads the current version from package.roycss.json (the
+ * The script reads the current version from the root package.json (the
  * first entry in LOCKSTEP_MANIFESTS) and writes the new version to all
  * four manifests atomically — if any one is missing or unwritable,
  * nothing is written.
@@ -214,7 +214,7 @@ function main(): void {
   }
 
   // Step 2: determine the current + new version from the source manifest
-  // (the first entry — package.roycss.json).
+  // (the first entry — the root package.json).
   const source = manifests[0];
   const currentStr = String(source.json.version ?? "");
   const current = parseSemver(currentStr);

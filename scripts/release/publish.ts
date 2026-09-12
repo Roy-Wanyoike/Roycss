@@ -223,25 +223,30 @@ function main(): void {
   }
 
   // ── Step 3: npm publish --dry-run ─────────────────────────────────
-  // npm reads `package.json` from cwd — but our project root has the
-  // Next.js app's package.json, not the publishable package. We mirror
-  // the prepare.ts pattern: copy package.roycss.json + the `files`
-  // array entries to a temp dir, run `npm publish --dry-run` there.
+  // npm reads `package.json` from cwd. The repo root package.json IS
+  // the publish manifest now, but we still mirror the prepare.ts
+  // pattern (temp dir + files array copy) to keep the dry-run isolated
+  // from the dev environment.
   console.log(`\n${C.cyan}${C.bold}[3/3]${C.reset} Running \`npm publish --dry-run\`…`);
-  console.log(`${C.dim}  (running in an isolated temp dir — npm reads package.roycss.json as package.json)${C.reset}`);
+  console.log(`${C.dim}  (running in an isolated temp dir — staged from the root package.json)${C.reset}`);
 
   const pkg = JSON.parse(readFileSync(MANIFEST_PATH, "utf-8")) as {
     files?: string[];
     version: string;
   };
-  const filesArray: string[] = Array.isArray(pkg.files) ? pkg.files : [];
+  // `!`-prefixed entries are npm tarball negations (e.g.
+  // "!dist/pro-components.json") — they exclude paths from the tarball,
+  // so they never need to exist on disk and are skipped when copying.
+  const filesArray: string[] = (Array.isArray(pkg.files) ? pkg.files : []).filter(
+    (f: string) => !f.startsWith("!"),
+  );
 
   const TMP = join(tmpdir(), `roycss-publish-${Date.now()}`);
   mkdirSync(TMP, { recursive: true });
 
   let packInfo: PackInfo | null = null;
   try {
-    // Copy package.roycss.json → temp/package.json
+    // Copy the root package.json → temp/package.json
     writeFileSync(join(TMP, "package.json"), JSON.stringify(pkg, null, 2), "utf-8");
 
     // Copy every entry in the `files` array from project root → temp dir.
@@ -324,11 +329,9 @@ function main(): void {
     process.exit(0);
   }
 
-  // Real publish path. We re-use the temp-dir pattern: npm publish must
-  // read package.roycss.json (not the Next.js package.json at the root),
-  // so we run it from an isolated temp dir with package.roycss.json copied
-  // to package.json. This is the same pattern used by the dry-run step
-  // and by scripts/publish/prepare.ts.
+  // Real publish path. We re-use the temp-dir pattern so `npm publish`
+  // runs against a clean staged copy of the manifest + files (same as
+  // the dry-run step and scripts/publish/prepare.ts).
   console.log(`\n${C.magenta}${C.bold}═══ EXECUTE: npm publish ═══${C.reset}`);
   console.log(`  ${C.dim}package:  ${PACKAGE_NAME}@${version}${C.reset}`);
   console.log(`  ${C.dim}access:   ${ACCESS}${C.reset}`);

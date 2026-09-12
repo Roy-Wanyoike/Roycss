@@ -20,6 +20,8 @@
     "typecheck:tests": "tsc --noEmit -p tsconfig.test.json",
     "api:check": "tsx scripts/check-api-docs.ts",
     "api:gen": "tsx scripts/gen-api-md.ts",
+    "api:surface": "tsx scripts/check-api-stability.ts",
+    "api:surface:update": "tsx scripts/check-api-stability.ts --update",
     "gen:openapi": "tsx scripts/gen-openapi.ts",
     "gen:openapi:check": "tsx scripts/gen-openapi.ts --check"
   },

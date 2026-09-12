@@ -1,0 +1,75 @@
+name: API Gate
+
+# PF-013 acceptance #2 — "fails the build if a stable name is removed or
+# renamed without a major-version bump in package.json".
+#
+# `backend-node/scripts/check-api-stability.ts` rebuilds the CURRENT route
+# inventory with the same static walkers `bun run api:check` uses
+# (scripts/lib/walk-routes.ts — no DB, no server boot, no env vars) and
+# compares it against the committed snapshot backend-node/api-surface.json:
+#
+#   - a snapshot route that DISAPPEARS, or whose auth requirement weakens
+#     (required → optional → none)                      → FAIL the build
+#   - additions / auth hardening                        → always allowed
+#   - breaking changes ARE allowed when backend-node/package.json's MAJOR
+#     version moved past the snapshot's recorded version (the documented
+#     escape hatch for intentional breaks).
+#
+# Intentional breaking change (the escape hatch):
+#   1. bump "version" in backend-node/package.json to the next major
+#   2. cd backend-node && bun run api:surface:update
+#   3. commit backend-node/api-surface.json together with the change
+#
+# Lean on purpose: path-filtered to the files that can move the API
+# surface — module route files, the app.ts router mounts, the snapshot
+# itself, the walker/checker scripts, the version field and API.md.
+# Pure static analysis, so there are no Prisma/DB/build steps here;
+# the snapshot comparison itself is the whole job. Route-level maturity
+# tags (stable/experimental) remain PF-042 acceptance #7.
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "API.md"
+      - "backend-node/package.json"
+      - "backend-node/api-surface.json"
+      - "backend-node/src/server/app.ts"
+      - "backend-node/src/modules/**"
+      - "backend-node/scripts/check-api-stability.ts"
+      - "backend-node/scripts/lib/walk-routes.ts"
+
+concurrency:
+  group: api-gate-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  api-stability:
+    name: API stability — stable-name removal gate (PF-013)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend-node
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          # Pinned like every other workflow in this repo (ci.yml
+          # verification protocol) for reproducible installs.
+          bun-version: "1.3.14"
+
+      - name: Install dependencies (frozen lockfile)
+        run: bun install --frozen-lockfile
+
+      # Exit 1 with the offending route(s) when a stable API name was
+      # removed or its auth weakened without a major-version bump.
+      - name: API surface stability check (PF-013)
+        run: bun run api:surface

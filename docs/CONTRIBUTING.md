@@ -9,33 +9,36 @@ Thank you for your interest in contributing to RoyCSS!
    git clone https://github.com/Roy-Wanyoike/roycss.git
    cd roycss
    ```
-2. **Install dependencies**
+2. **Install dependencies and generate the Prisma client**
    ```bash
    bun install
+   bun run db:generate   # generates the Prisma client — kept as an
+                         # explicit step so the npm package needs no
+                         # install scripts
    ```
 3. **Start the dev server**
    ```bash
    bun run dev
    ```
-4. The app runs on port 3000. Open it in the **Preview Panel** on the right side of the sandbox interface (use **"Open in New Tab"** for a separate browser tab).
+4. The app runs on port 3000 — open <http://localhost:3000> in your browser.
 
 ## Development
 
 | Command | Description | Port |
 | --- | --- | --- |
 | `bun run dev` | Frontend (Next.js) | 3000 |
-| `cd backend && bun run dev` | Backend (Express API) | 4000 |
+| `cd backend-node && bun run dev` | Backend (Express API) | 4000 |
 | `cd mini-services/live-service && bun run dev` | WebSocket (Roy Live) | 3003 |
 | `bun run lint` | ESLint + Next.js rules | — |
 | `npx tsc --noEmit` | TypeScript type check | — |
 | `bun run db:push` | Push Prisma schema to SQLite | — |
 
-> **Note**: In the cloud sandbox, `bun run dev` is auto-restarted by the system — do not start it manually. Use `bun run lint` to check code quality.
+> **Note**: `prisma generate` is kept as the explicit `bun run db:generate` step above, so the published `roycss` package needs no install scripts.
 
 ## Adding a New CSS Effect
 
-1. **Determine the category** — see `src/lib/effect-taxonomy.ts` for the 31 category definitions and their boundaries.
-2. **Find the appropriate batch file** in `src/lib/effects-batch-XX.ts` (effects are split across 46 batch files; add to the lowest-numbered batch that still has room, or create a new batch file and register it in `src/lib/roycss-effects.ts`).
+1. **Determine the category** — see `src/lib/effect-taxonomy.ts` for the 29 category definitions and their boundaries.
+2. **Find the appropriate batch file** in `src/lib/effects-batch-XX.ts` (effects are split across 52 batch files; add to the lowest-numbered batch that still has room, or create a new batch file and register it in `src/lib/roycss-effects.ts`).
 3. **Add the effect** following the `CSSEffect` interface (`src/lib/roycss-types.ts`):
    ```typescript
    {

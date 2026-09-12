@@ -543,8 +543,8 @@ echo '{"jsonrpc":"2.0","method":"tools/list","id":1}' | bun index.ts
                           │                   │                   │
                    ┌──────▼──────┐    ┌───────▼───────┐   ┌───────▼───────┐
                    │ effects.json│    │ patterns.json │   │ embedded      │
-                   │  1,569      │    │  10 patterns  │   │ tables        │
-                   │  20 cats    │    │               │   │ (tokens,      │
+                   │  1,959      │    │  10 patterns  │   │ tables        │
+                   │  29 cats    │    │               │   │ (tokens,      │
                    └─────────────┘    └───────────────┘   │  features,    │
                                                           │  a11y,        │
                                                           │  prompts)     │

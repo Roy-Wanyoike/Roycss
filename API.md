@@ -64,7 +64,7 @@ Errors always use one shape (see the [error codes](#error-codes) table):
 
 ### Auth
 
-- **Bearer JWT:** `Authorization: Bearer <accessToken>` on every protected route (`requireAuth`, issue #64 rollout). Register/login/refresh are public (rate-limited) token-bootstrap endpoints.
+- **Bearer JWT:** `Authorization: Bearer <accessToken>` on every protected route (`requireAuth` — the rollout landed in PR #76, closing issue #64). Register/login/refresh are public (rate-limited) token-bootstrap endpoints.
 - **API keys (issue #65):** an `X-API-Key: rk_live_…` header is accepted IN PLACE OF the Bearer token on every protected route (for keys holding the `*` scope). Keys with narrow scopes (e.g. `effects:read`) are accepted only on routes that enforce their scope (the effects module today). Manage keys via `POST/GET/DELETE /auth/api-keys` — those routes are **Bearer-JWT-only**, so a leaked key can never mint or revive keys.
 - **Tokens:** `POST /auth/register|login|refresh` return `{ user, accessToken (15 min), refreshToken (7 days), expiresIn }` (JWT, HS256, issuer `roycss-backend`, audience `roycss-client`). API keys are long-lived, bcrypt-hashed at rest, revocable, and the plaintext is shown exactly once at creation.
 - **Browser flow:** the frontend wraps these in httpOnly cookies (`roycss-access` / `roycss-refresh`) via `/api/auth/*` — see [Frontend routes](#frontend-routes-nextjs).
@@ -181,7 +181,7 @@ Catalog + registry reads that power the docs site, the package, and the integrat
 
 #### `blocks` — Layout block library (Prisma-backed catalog + create).
 
-> Prisma-backed (Block). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (Block). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
@@ -203,7 +203,7 @@ Catalog + registry reads that power the docs site, the package, and the integrat
 
 #### `themes` — Theme token store — Prisma CRUD, 10 seeded presets.
 
-> Prisma-backed (Theme). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (Theme). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
@@ -239,14 +239,14 @@ Catalog + registry reads that power the docs site, the package, and the integrat
 
 #### `search` — Cross-resource search over effects/recipes/patterns (Prisma `SearchIndex`).
 
-> Prisma-backed (SearchIndex). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (SearchIndex). `POST /` is a **public query endpoint** — it runs the same read-only search as `GET /` (search-tier rate limit), so it is intentionally unauthenticated.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
 | GET | `/api/v1/search/recent` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/search/suggestions` | Public | query: { `q` } | `{ data, meta }` · 200 | 400 |
 | GET | `/api/v1/search` | Public | query: { `q` (required), `limit?`, `types?` } — manually validated | `{ data, meta }` · 200 | 400 |
-| POST | `/api/v1/search` | Public → Bearer JWT *(#64)* | body: { `query`, `types?`, `limit?` } | `{ data, meta }` · 200 | 400 |
+| POST | `/api/v1/search` | Public | body: { `query`, `types?`, `limit?` } | `{ data, meta }` · 200 | 400 |
 
 #### `fallback` — `@supports` fallback recipes for modern CSS features.
 
@@ -517,7 +517,7 @@ AI-assisted generation, review, auditing, profiling and simulation surfaces (LLM
 
 #### `preview` — Preview branches — create, list, detail, delete (Prisma).
 
-> Prisma-backed (PreviewBranch). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (PreviewBranch). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
@@ -528,7 +528,7 @@ AI-assisted generation, review, auditing, profiling and simulation surfaces (LLM
 
 #### `studio` — Project studio — projects CRUD + templates (Prisma).
 
-> Prisma-backed (StudioProject). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (StudioProject). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
@@ -553,7 +553,7 @@ AI-assisted generation, review, auditing, profiling and simulation surfaces (LLM
 
 #### `profiler` — Performance profiler — start runs, results, metrics.
 
-> Prisma-backed (ProfilerResult). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (ProfilerResult). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
@@ -564,7 +564,7 @@ AI-assisted generation, review, auditing, profiling and simulation surfaces (LLM
 
 #### `benchmark` — Runtime benchmarks — run, results, comparisons.
 
-> Prisma-backed (BenchmarkResult). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (BenchmarkResult). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
@@ -574,7 +574,7 @@ AI-assisted generation, review, auditing, profiling and simulation surfaces (LLM
 
 #### `bundle` — CSS bundle analysis — duplicates, dead CSS, results.
 
-> Prisma-backed (BundleResult). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (BundleResult). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
@@ -596,7 +596,7 @@ AI-assisted generation, review, auditing, profiling and simulation surfaces (LLM
 
 #### `compliance` — Standards compliance scans — standards, results, reports.
 
-> Prisma-backed (ComplianceStandard, ComplianceScan). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (ComplianceStandard, ComplianceScan). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
@@ -624,7 +624,7 @@ Academy, challenges, certifications, open-source program, showcase, marketplace 
 
 #### `academy` — Learning paths + lesson progress (Prisma).
 
-> Prisma-backed (LearningPath, PathProgress). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (LearningPath, PathProgress). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
@@ -635,7 +635,7 @@ Academy, challenges, certifications, open-source program, showcase, marketplace 
 
 #### `challenges` — Coding challenges, submissions, leaderboard.
 
-> Prisma-backed (Challenge, ChallengeSubmission). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (Challenge, ChallengeSubmission). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
@@ -646,7 +646,7 @@ Academy, challenges, certifications, open-source program, showcase, marketplace 
 
 #### `certifications` — Certification exams + credential verification.
 
-> Prisma-backed (Certification, CertificationAttempt). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (Certification, CertificationAttempt). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
@@ -657,7 +657,7 @@ Academy, challenges, certifications, open-source program, showcase, marketplace 
 
 #### `open` — Open-source program — issues, RFCs (+ voting), roadmap, contributors.
 
-> Prisma-backed (GoodFirstIssue, RFC, Roadmap, Contributor). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (GoodFirstIssue, RFC, Roadmap, Contributor). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
@@ -671,7 +671,7 @@ Academy, challenges, certifications, open-source program, showcase, marketplace 
 
 #### `spotlight` — Community showcase — featured, items, submit, weekly.
 
-> Prisma-backed (SpotlightItem). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (SpotlightItem). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
@@ -683,7 +683,7 @@ Academy, challenges, certifications, open-source program, showcase, marketplace 
 
 #### `marketplace` — Template marketplace — list, detail, publish, reviews.
 
-> Prisma-backed (Template, TemplateReview). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (Template, TemplateReview). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
@@ -710,7 +710,7 @@ Cloud, deploys, CDN/edge/storage, fleet, workspace, enterprise, governance, anal
 
 #### `cloud` — Roy Cloud projects + deployments (Prisma).
 
-> Prisma-backed (CloudProject, Deployment). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (CloudProject, Deployment). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
@@ -724,7 +724,7 @@ Cloud, deploys, CDN/edge/storage, fleet, workspace, enterprise, governance, anal
 
 #### `deploy` — Deployment orchestration — create, history, platforms, environments.
 
-> Prisma-backed (Deployment). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (Deployment). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
@@ -770,7 +770,7 @@ Cloud, deploys, CDN/edge/storage, fleet, workspace, enterprise, governance, anal
 
 #### `fleet` — Project fleet health + scanning.
 
-> Prisma-backed (FleetProject). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (FleetProject). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
@@ -781,7 +781,7 @@ Cloud, deploys, CDN/edge/storage, fleet, workspace, enterprise, governance, anal
 
 #### `workspace` — Team workspace — resources, team, invites.
 
-> Prisma-backed (WorkspaceResource). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (WorkspaceResource). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
@@ -792,7 +792,7 @@ Cloud, deploys, CDN/edge/storage, fleet, workspace, enterprise, governance, anal
 
 #### `enterprise` — Organizations, teams, licenses, audit log.
 
-> Prisma-backed (Organization, Team, License, EnterpriseAuditLog). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (Organization, Team, License, EnterpriseAuditLog). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
@@ -805,7 +805,7 @@ Cloud, deploys, CDN/edge/storage, fleet, workspace, enterprise, governance, anal
 
 #### `governance` — Approval workflow — approve/reject, policies, audit log.
 
-> Prisma-backed (GovernancePolicy, GovernanceApproval). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (GovernancePolicy, GovernanceApproval). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
@@ -817,11 +817,11 @@ Cloud, deploys, CDN/edge/storage, fleet, workspace, enterprise, governance, anal
 
 #### `analytics` — Platform analytics — overview, effects, traffic, devices.
 
-> Prisma-backed (User (read-only)). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (User (read-only)). `POST /jobs` is a **public query endpoint** — it enqueues a read-only aggregation job on the in-process queue (rate-limited), so it is intentionally unauthenticated.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
-| POST | `/api/v1/analytics/jobs` | Public → Bearer JWT *(#64)* | body: { `days?` } | `{ data }` · 201 | 400 |
+| POST | `/api/v1/analytics/jobs` | Public | body: { `days?` } | `{ data }` · 201 | 400 |
 | GET | `/api/v1/analytics/jobs/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
 | GET | `/api/v1/analytics/overview` | Public | — | `{ data }` · 200 | — |
 | GET | `/api/v1/analytics/effects` | Public | — | `{ data, meta }` · 200 | — |
@@ -852,7 +852,7 @@ Cloud, deploys, CDN/edge/storage, fleet, workspace, enterprise, governance, anal
 
 #### `live` — Live collaboration sessions + messages (Prisma).
 
-> Prisma-backed (LiveSession, LiveMessage). Mutating routes are annotated "Public → Bearer JWT *(#64)*" — they become authenticated when issue #64 (requireAuth rollout) lands.
+> Prisma-backed (LiveSession, LiveMessage). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|

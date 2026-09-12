@@ -35,7 +35,7 @@ the document is designed so that day is a one-line edit, not a rewrite.
 | Area | Owner | Scope (representative paths) | Backup |
 |---|---|---|---|
 | **frontend** | Project maintainer (acting) | `src/app/`, `src/components/`, `src/lib/` (catalog, registry, tokens, API client), Next.js build | — open |
-| **backend-node** | Project maintainer (acting) | `backend-node/` — Express + Prisma + Zod, 68 modules, route surface documented in [`API.md`](API.md) | — open |
+| **backend-node** | Project maintainer (acting) | `backend-node/` — Express + Prisma + Zod, 72 modules, route surface documented in [`API.md`](API.md) | — open |
 | **backend-go** | Project maintainer (acting) | `backend-go/` — Go port of the `/api/v1` contract (production target) | — open |
 | **infra** | Project maintainer (acting) | `vercel.json`, `render.yaml`, `infrastructure/`, CI workflows in `.github/workflows/`, deploy runbooks | — open |
 | **docs** | Project maintainer (acting) | `README.md`, `docs/`, [`docs/PENDING-FEATURES.md`](docs/PENDING-FEATURES.md), `API.md`, release notes | — open |
@@ -89,7 +89,7 @@ area". All commands assume the repo root; the general contribution workflow
   rules in [`backend-node/.env.example`](backend-node/.env.example). The
   server validates its environment at boot and exits fast with a readable
   error list.
-- The route surface (all 68 modules) is documented in [`API.md`](API.md) and
+- The route surface (all 72 modules) is documented in [`API.md`](API.md) and
   enforced by the drift gate: `bun run api:check` fails if code and docs
   disagree in either direction.
 - Mutating routes require Bearer JWT (401 envelope, 403 role-gating) — new
@@ -135,8 +135,9 @@ area". All commands assume the repo root; the general contribution workflow
 ### 3.6 a11y (WCAG AA)
 
 - The bar: WCAG 2.2 AA. Automated audit target is zero axe-core violations;
-  the current report lives at [`tests/a11y/WCAG-REPORT.md`](tests/a11y/WCAG-REPORT.md),
-  harness in `a11y/`.
+  the harness lives in [`tests/a11y/`](tests/a11y) (axe audit, keyboard
+  navigation, visual checks) with supporting scripts in [`a11y/`](a11y) —
+  outputs are regenerated on demand and gitignored.
 - Effect-level rules (see [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md)):
   every effect must ship a `prefers-reduced-motion: reduce` block; animate
   only `transform`/`opacity`; maintain AA contrast for overlaid text.
@@ -183,7 +184,7 @@ Critical risk. The plan to retire it, in priority order:
 2. **Second: security area.** Named second responder for
    `security@roycss.dev` and a second PGP key custodian — the two
    single-person dependencies the security SLA currently rests on.
-3. **Third: backend-node.** Largest surface by module count (68 modules);
+3. **Third: backend-node.** Largest surface by module count (72 modules);
    shares reviewers with backend-go (PF-008 port work benefits directly).
 4. **Then: frontend, infra, docs, a11y** in whatever order contributors
    actually appear — the ladder (§4.2) fills areas from demonstrated

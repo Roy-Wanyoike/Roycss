@@ -1,0 +1,1195 @@
+{
+  "comment": "PF-013 API surface snapshot. Regenerate after an INTENTIONAL breaking change (major bump first): cd backend-node && bun run api:surface:update",
+  "snapshotFormat": 1,
+  "packageVersion": "1.0.0",
+  "counts": {
+    "backend": 281,
+    "frontend": 20
+  },
+  "routes": {
+    "DELETE /api/v1/*": {
+      "origin": "frontend"
+    },
+    "DELETE /api/v1/auth/api-keys/:id": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "DELETE /api/v1/cloud/projects/:id": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "DELETE /api/v1/collections/:id": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "DELETE /api/v1/collections/:id/effects/:effectId": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "DELETE /api/v1/favorites/:effectId": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "DELETE /api/v1/preview/:id": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "DELETE /api/v1/storage/files/:id": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "DELETE /api/v1/studio/projects/:id": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "DELETE /api/v1/themes/:id": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "GET /api/auth/me": {
+      "origin": "frontend"
+    },
+    "GET /api/contact": {
+      "origin": "frontend"
+    },
+    "GET /api/effects/:id/css": {
+      "origin": "frontend"
+    },
+    "GET /api/effects/manifest": {
+      "origin": "frontend"
+    },
+    "GET /api/health": {
+      "origin": "frontend"
+    },
+    "GET /api/og": {
+      "origin": "frontend"
+    },
+    "GET /api/v1": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/*": {
+      "origin": "frontend"
+    },
+    "GET /api/v1/academy/paths": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/academy/paths/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/academy/paths/:id/lessons": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/accessibility/audit/:url": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/accessibility/contrast/:fg/:bg": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/accessibility/jobs/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/accessibility/rules": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/analytics/devices": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/analytics/effects": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/analytics/jobs/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/analytics/overview": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/analytics/traffic": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/architect/jobs/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/architect/results/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/architect/templates": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/architect/templates/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/audit": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "GET /api/v1/audit-center/issues": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/audit-center/projects": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/audit-center/projects/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/audit-center/trends": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/auth/api-keys": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "GET /api/v1/auth/me": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "GET /api/v1/benchmark/comparisons": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/benchmark/results/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/blocks": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/blocks/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/blocks/categories": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/blueprints": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/blueprints/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/blueprints/:id/architecture": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/blueprints/industries": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/bundle/dead-css": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/bundle/duplicates": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/bundle/results/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/cdn/edges": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/cdn/resources": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/cdn/stats": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/certifications": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/certifications/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/certifications/verify/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/challenges": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/challenges/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/challenges/leaderboard": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/cloud/deployments": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/cloud/projects": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/cloud/projects/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/cloud/status": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/cloud/storage": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/collections": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "GET /api/v1/collections/:id": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "GET /api/v1/color-space/gamut/:hex": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/color-space/presets": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/compliance/reports": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/compliance/results/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/compliance/standards": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/deploy/environments": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/deploy/history": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/deploy/history/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/deploy/platforms": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/designer/presets": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/designer/results/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/devtools/inspect": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/devtools/tokens": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/devtools/utilities": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/digital-twin/results/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/digital-twin/simulations": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/edge/config": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/edge/performance": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/edge/regions": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/effects": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/effects/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/effects/categories": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/effects/search": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/effects/tags": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/enterprise/audit-log": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/enterprise/licenses": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/enterprise/organizations": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/enterprise/organizations/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/enterprise/teams": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/fallback/presets": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/fallback/properties": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/fallback/properties/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/favorites": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "GET /api/v1/fleet/health": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/fleet/projects": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/fleet/projects/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/generator/templates/:type": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/generator/types": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/governance/approvals": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/governance/audit-log": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/governance/policies": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/health": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/health/ready": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/icons": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/icons/:name": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/icons/categories": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/initial-letter/presets": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/inspector/analyze": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/inspector/checks": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/inspector/health": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/light-dark/presets": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/live/sessions": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/live/sessions/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/live/sessions/:id/users": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/logical-properties/mapping": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/logical-properties/presets": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/marketplace/templates": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/marketplace/templates/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/marketplace/templates/:id/reviews": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/mcp/prompts": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/mcp/resources": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/mcp/tools": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/mcp/tools/:name": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/mentor/levels": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/mentor/progress": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/mentor/topics": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/metrics/routes": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "GET /api/v1/motion/categories": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/motion/effects": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/motion/effects/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/motion/presets": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/observatory/alerts": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/observatory/sites": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/observatory/sites/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/observatory/trends/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/open/contributors": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/open/issues": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/open/issues/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/open/rfcs": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/open/rfcs/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/open/roadmap": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/os/activity": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/os/dashboard": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/os/products": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/os/quick-actions": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/pair/history": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/pair/suggestions": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/patterns": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/patterns/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/plugins": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/plugins/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/plugins/:id/changelog": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/plugins/categories": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/preview/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/preview/list": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/pro-components": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/pro-components/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/pro-components/:id/code": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/pro-components/categories": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/profiler/metrics": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/profiler/results": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/profiler/results/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/property-registrar/presets": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/property-registrar/syntaxes": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/recipes": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/recipes/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/refactor/frameworks": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/refactor/patterns": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/refactor/results/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/registry/packages": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/registry/packages/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/registry/packages/:id/versions": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/registry/resolve/:slug": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/relative-color/channels": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/relative-color/presets": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/review/history": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/review/results/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/review/rules": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/scaffold/frameworks": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/scaffold/types": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/scaffold/types/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/scope/presets": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/search": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/search/recent": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/search/suggestions": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/spotlight/featured": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/spotlight/items": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/spotlight/items/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/spotlight/weekly": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/starting-style/presets": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/storage/files": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/storage/files/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/storage/usage": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/studio/projects": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/studio/projects/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/studio/templates": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/style-query/presets": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/subgrid/presets": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/sync/history": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/sync/status": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/text-wrap/presets": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/themes": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/themes/:id": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/version/breaking-changes": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/version/changelog": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/version/current": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/version/latest": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/workspace/resources": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/workspace/resources/:type": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "GET /api/v1/workspace/team": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "OPTIONS /api/v1/*": {
+      "origin": "frontend"
+    },
+    "PATCH /api/v1/*": {
+      "origin": "frontend"
+    },
+    "PATCH /api/v1/collections/:id": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/ai-migration": {
+      "origin": "frontend"
+    },
+    "POST /api/ai-playground": {
+      "origin": "frontend"
+    },
+    "POST /api/auth/login": {
+      "origin": "frontend"
+    },
+    "POST /api/auth/logout": {
+      "origin": "frontend"
+    },
+    "POST /api/auth/refresh": {
+      "origin": "frontend"
+    },
+    "POST /api/auth/register": {
+      "origin": "frontend"
+    },
+    "POST /api/contact": {
+      "origin": "frontend"
+    },
+    "POST /api/css-doctor": {
+      "origin": "frontend"
+    },
+    "POST /api/v1/*": {
+      "origin": "frontend"
+    },
+    "POST /api/v1/academy/paths/:id/progress": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/accessibility/jobs": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/accessibility/scan": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/analytics/jobs": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/architect/generate": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/architect/jobs": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/auth/api-keys": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/auth/login": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/auth/refresh": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/auth/register": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/benchmark/run": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/blocks": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/bundle/analyze": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/cdn/purge": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/certifications/:id/exam": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/challenges/:id/submit": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/cloud/projects": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/collections": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/collections/:id/effects": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/color-space/convert": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/compliance/scan": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/contact": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/deploy/create": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/designer/generate": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/devtools/analyze": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/digital-twin/create": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/edge/deploy": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/enterprise/organizations": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/favorites/:effectId": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/fleet/scan": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/generator/generate": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/governance/approvals/:id/approve": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/governance/approvals/:id/reject": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/initial-letter/generate": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/light-dark/generate": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/live/sessions": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/live/sessions/:id/message": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/logical-properties/convert": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/marketplace/templates": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/mcp/execute": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/mentor/chat": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/open/rfcs/:id/vote": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/pair/chat": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/plugins": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/preview/create": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/profiler/start": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/property-registrar/generate": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/refactor/transform": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/registry/packages": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/relative-color/derive": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/review/code": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/scaffold/generate": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/scope/analyze": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/search": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/spotlight/submit": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/starting-style/generate": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/storage/upload": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/studio/projects": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/style-query/generate": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/subgrid/generate": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/sync/figma": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/sync/github": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/sync/tokens": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/text-wrap/analyze": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/themes": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "POST /api/v1/version/check-upgrade": {
+      "origin": "backend",
+      "auth": "none"
+    },
+    "POST /api/v1/workspace/invite": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "PUT /api/v1/*": {
+      "origin": "frontend"
+    },
+    "PUT /api/v1/studio/projects/:id": {
+      "origin": "backend",
+      "auth": "required"
+    },
+    "PUT /api/v1/themes/:id": {
+      "origin": "backend",
+      "auth": "required"
+    }
+  }
+}

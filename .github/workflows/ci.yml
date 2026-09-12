@@ -44,6 +44,18 @@ jobs:
           # was verified against (issue #59 verification protocol).
           bun-version: "1.3.14"
 
+      # Malformed-trigger guard (audit F-09 remediation). A mangled
+      # `branches:` value still parses as valid YAML, so GitHub Actions
+      # never surfaces an error — the workflow just silently never runs
+      # on the intended refs. Dependency-free, so it runs before install
+      # for fast signal. (Verification note, task 7-d: the audit's
+      # lighthouse.yml `branches: ain]` reading was a terminal-rendering
+      # artifact — the committed bytes are a proper flow list, confirmed
+      # by hex dump + YAML parse of the blob. This guard now catches that
+      # typo class for real; see scripts/check-workflows.ts.)
+      - name: Workflow trigger lint (F-09 guard)
+        run: bun run scripts/check-workflows.ts
+
       - name: Install dependencies (frozen lockfile)
         run: bun install --frozen-lockfile
 
@@ -174,12 +186,159 @@ jobs:
         env:
           DATABASE_URL: "file:./test.db"
 
+      # Audit F-22a: this job previously ran ONLY the integration project
+      # (`bun run test:integration` path-filters to tests/integration/**),
+      # so the suites a local `bun run test` runs — 460 tests across
+      # tests/unit, tests/contract and tests/security — never executed in
+      # CI. The contract + security files belong to the `integration`
+      # vitest project (see vitest.config.ts), so selecting them here
+      # picks up the same single-worker + shared-module-registry +
+      # globalSetup DB-push isolation contract; the unit files run in
+      # their own project with per-file isolation. Job-level env already
+      # provides DATABASE_URL / JWT secrets; setup-env.ts forces the
+      # throwaway test.db regardless of ambient values. No --coverage: the
+      # coverage floor is enforced by the local test:coverage run.
+      - name: Unit + contract + security suites (vitest)
+        if: ${{ !cancelled() }}
+        run: bunx vitest run tests/unit tests/contract tests/security
+
       - name: Upload test coverage
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: backend-node-coverage
           path: backend-node/coverage/
+          if-no-files-found: warn
+          retention-days: 7
+
+  # ─────────────────────────────────────────────────────────────────────
+  # E2E (audit F-22b) — the 10 Playwright specs in tests/e2e/* against a
+  # production frontend build + a live backend.
+  #
+  # Pushes to main ONLY (`if: github.event_name == 'push'` — the
+  # workflow's `on:` also fires on pull_request, where lint + typecheck +
+  # unit + integration + the PR Lighthouse gate already run): e2e would
+  # roughly double PR wall-clock for signal PRs already get. Same gating
+  # pattern as the perf-gate job below.
+  #
+  # Stack wiring (mirrors the proven backend-node job env pattern):
+  #   1. `bun run build:package` → dist/effects.json — the backend's
+  #      EFFECTS_DATA_PATH catalog (backend reads ../dist/effects.json).
+  #   2. Backend: frozen install → prisma generate → schema push to the
+  #      same throwaway `file:./test.db` the integration setup uses, then
+  #      `bun run dev` (the repo's documented serve command — tsx watch
+  #      src/index.ts; matches today's deployed reality, see audit F-03)
+  #      on :4000, health-gated on /api/v1/health before anything runs.
+  #   3. Frontend: `bun run build` (prisma generate + next build), then
+  #      `bun run start` (next start) on :3000 with BACKEND_URL pointing
+  #      at the local backend. API_MODE stays `auto` (default): the
+  #      gateway probes BACKEND_URL and falls back to the embedded
+  #      read-only catalog if the backend is slow to boot, so a backend
+  #      race can never flake UI specs (src/lib/api-mode.ts).
+  #   4. `bunx playwright test` with PLAYWRIGHT_NO_SERVER=1 (the config
+  #      otherwise auto-starts `next dev`) + PLAYWRIGHT_BASE_URL=:3000.
+  #
+  # Current specs are UI-level and hermetic (the contact-form spec mocks
+  # its POST via page.route) — the backend is wired so future specs can
+  # exercise real auth/effect endpoints without CI changes.
+  # ─────────────────────────────────────────────────────────────────────
+  e2e:
+    name: E2E — Playwright (prod build + live backend)
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      # Frontend runtime wiring only — the backend-only vars (DATABASE_URL,
+      # JWT secrets, EFFECTS_DATA_PATH) are scoped to the backend steps below
+      # so the root `next build` sees exactly the env the proven perf-gate
+      # build sees (no ambient DATABASE_URL changing build-time behavior).
+      BACKEND_URL: "http://localhost:4000"
+      # Playwright config: don't auto-start `next dev` — this job runs a
+      # production `next start` instead.
+      PLAYWRIGHT_NO_SERVER: "1"
+      PLAYWRIGHT_BASE_URL: "http://localhost:3000"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.3.14"
+
+      - name: Install dependencies (frozen lockfile)
+        run: bun install --frozen-lockfile
+
+      - name: Install Chromium for Playwright
+        run: bunx playwright install chromium --with-deps
+
+      # Backend data dependency: the API serves the effects catalog from
+      # the parent project's dist/effects.json.
+      - name: Build dist/effects.json (backend catalog dependency)
+        run: bun run build:package
+
+      - name: Install backend-node dependencies (frozen lockfile)
+        working-directory: backend-node
+        run: bun install --frozen-lockfile
+
+      - name: Prisma generate
+        working-directory: backend-node
+        run: bun run db:generate
+
+      - name: Prisma db push (throwaway test DB)
+        working-directory: backend-node
+        run: bun run db:push
+        env:
+          DATABASE_URL: "file:./test.db"
+
+      # Detached with nohup so the server survives across steps (the
+      # runner reaps it at job teardown). Health-gated below: if the
+      # backend never comes up, print its log and fail honestly.
+      # Env = the same throwaway-DB + throwaway-secret pattern as the
+      # backend-node job above (never the production dev.db; ≥16-char
+      # JWT floor; catalog from the dist/effects.json built earlier).
+      - name: Start backend (tsx on :4000)
+        working-directory: backend-node
+        run: nohup bun run dev > ../backend-e2e.log 2>&1 &
+        env:
+          DATABASE_URL: "file:./test.db"
+          JWT_SECRET: "ci-e2e-jwt-secret-not-for-production-use-64chars"
+          JWT_REFRESH_SECRET: "ci-e2e-jwt-refresh-secret-different-64chars"
+          EFFECTS_DATA_PATH: "../dist/effects.json"
+
+      - name: Wait for backend health (/api/v1/health)
+        run: |
+          timeout 120 bash -c 'until curl -sf --max-time 2 http://localhost:4000/api/v1/health > /dev/null; do sleep 2; done' \
+            || { echo "::error::backend did not become healthy on :4000"; cat backend-e2e.log; exit 1; }
+          echo "backend healthy: $(curl -sf http://localhost:4000/api/v1/health)"
+
+      - name: Production build (next build)
+        run: bun run build
+
+      - name: Start frontend (next start on :3000)
+        run: nohup bun run start > frontend-e2e.log 2>&1 &
+
+      - name: Wait for frontend (:3000)
+        run: |
+          timeout 180 bash -c 'until curl -sf --max-time 2 http://localhost:3000 > /dev/null; do sleep 2; done' \
+            || { echo "::error::frontend did not become healthy on :3000"; cat frontend-e2e.log; cat backend-e2e.log; exit 1; }
+
+      - name: E2E tests (Playwright, chromium)
+        run: bunx playwright test
+
+      - name: Upload Playwright artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-e2e
+          path: |
+            playwright-report/
+            test-results/
+            backend-e2e.log
+            frontend-e2e.log
           if-no-files-found: warn
           retention-days: 7
 

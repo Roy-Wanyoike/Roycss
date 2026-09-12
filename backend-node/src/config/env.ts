@@ -55,6 +55,17 @@ const EnvSchema = z.object({
 
   EFFECTS_DATA_PATH: z.string().default("../dist/effects.json"),
 
+  // ─── Transactional email (PF-011 / audit F-02) ─────────────────────
+  // APP_URL is the canonical frontend origin used to build emailed
+  // action links (verify-email, reset-password). MAIL_FROM is the
+  // Resend sender identity (must be a verified Resend domain in prod).
+  APP_URL: z
+    .string()
+    .url()
+    .default("http://localhost:3000")
+    .transform((s) => s.replace(/\/$/, "")),
+  MAIL_FROM: z.string().default("RoyCSS <onboarding@resend.dev>"),
+
   // ─── Supabase (production) ────────────────────────────────────────
   SUPABASE_URL: z.string().url().optional(),
   SUPABASE_PUBLISHABLE_KEY: z.string().optional(),

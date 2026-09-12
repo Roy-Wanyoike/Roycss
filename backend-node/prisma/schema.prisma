@@ -8,17 +8,48 @@ datasource db {
 }
 
 model User {
-  id           String           @id @default(cuid())
-  email        String           @unique
-  passwordHash String
-  name         String?
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime @updatedAt
-  favorites    EffectFavorite[]
-  collections  Collection[]
-  memberships  Membership[]
-  apiKeys      ApiKey[]
+  id              String              @id @default(cuid())
+  email           String              @unique
+  passwordHash    String
+  name            String?
+  // Email verification (PF-011 / audit F-02): null = not yet verified.
+  // Login stays permissive in grace mode (see auth routes.ts), but the
+  // flag is surfaced on every auth response so the UI can nag.
+  emailVerifiedAt DateTime?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+  favorites       EffectFavorite[]
+  collections     Collection[]
+  memberships     Membership[]
+  apiKeys         ApiKey[]
+  verificationTokens VerificationToken[]
   @@index([email])
+}
+
+// ─── Email verification + password reset tokens (PF-011 / audit F-02) ────
+// Single-use, 30-minute, 32-byte-random opaque tokens for the verify-email
+// and forgot/reset-password flows. SECURITY properties (mirrors ApiKey):
+//   - `tokenHash` : SHA-256 of the raw token — the ONLY thing stored. A DB
+//     leak does not let an attacker use or brute-force tokens (they'd need
+//     the 256-bit random original, stored only inside the emailed link).
+//   - single-use  : `usedAt` is set on redemption; replay → 400.
+//   - `expiresAt` : 30 minutes from issuance; stale rows are lazy-deleted
+//     on next issuance for the same user+purpose.
+//   - `purpose`   : plain string (SQLite has no enums) — application-side
+//     validated: "VERIFY_EMAIL" | "PASSWORD_RESET". A verify token can
+//     never be replayed against the reset endpoint (checked on consume).
+model VerificationToken {
+  id        String    @id @default(cuid())
+  userId    String
+  tokenHash String    @unique
+  purpose   String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, purpose])
+  @@index([expiresAt])
 }
 
 model EffectFavorite {

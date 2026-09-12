@@ -6,6 +6,26 @@
  *   POST  /refresh      refresh token → new token pair
  *   GET   /me           current user (requires Authorization: Bearer)
  *
+ *   ─── Email lifecycle (PF-011 / audit F-02) ───────────────────────
+ *   POST  /verify-email          (re)send a verification email    [public]
+ *   POST  /verify-email/confirm  redeem the emailed token         [public]
+ *   POST  /forgot-password       request a reset email            [public, always 200]
+ *   POST  /reset-password         redeem token + new password      [public]
+ *
+ *   ─── LOGIN POLICY (grace mode) ───────────────────────────────────
+ *   An UNVERIFIED email still logs in — the response carries
+ *   `user.emailVerified: false` so the UI shows a verify banner.
+ *   Rationale: while the mailer runs on the mock transport (no
+ *   RESEND_API_KEY), locking users out would brick every dev/test
+ *   account. When real email ships, flip `requireVerifiedEmail`
+ *   below to reject with 403 instead of flagging.
+ *
+ *   ─── No user enumeration (audit F-02) ───────────────────────────
+ *   /verify-email + /forgot-password return the SAME 200 shape
+ *   whether or not the address has an account; only the emailed
+ *   link's existence differs. /reset-password + /verify-email/confirm
+ *   fail with a uniform "Invalid or expired token" 400.
+ *
  *   POST  /api-keys     mint an API key (issue #65)      [Bearer JWT only]
  *   GET   /api-keys     list the caller's keys, masked   [Bearer JWT only]
  *   DELETE /api-keys/:id revoke (soft-delete) a key      [Bearer JWT only]
@@ -29,16 +49,24 @@ import { jwtOnly } from "../../server/middleware/api-key.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import { validateBody, validateParams } from "../../server/middleware/validate.js";
 import {
+  ForgotPasswordSchema,
+  LoginInputSchema,
+  RefreshInputSchema,
+  RegisterInputSchema,
+  ResetPasswordSchema,
+  VerifyEmailConfirmSchema,
+  VerifyEmailRequestSchema,
+} from "./schema.js";
+import {
+  confirmEmailVerification,
   getCurrentUser,
   loginUser,
   refreshTokens,
   registerUser,
+  requestEmailVerification,
+  requestPasswordReset,
+  resetPassword,
 } from "./service.js";
-import {
-  LoginInputSchema,
-  RefreshInputSchema,
-  RegisterInputSchema,
-} from "./schema.js";
 import {
   createApiKey,
   listApiKeys,
@@ -136,6 +164,106 @@ authRouter.get(
     const userId = req.user!.sub;
     const user = await getCurrentUser(userId);
     res.json({ data: user });
+  }),
+);
+
+// ─── Email lifecycle (PF-011 / audit F-02) ─────────────────────────────
+// All four stay public: the token in the body/URL IS the credential
+// (someone clicking an email link has no Bearer token yet). Each is
+// rate-limited under the auth tier (10/min/IP) like the other public
+// auth routes.
+
+/**
+ * (Re)send a verification email. Always 200 with the same shape —
+ * unknown addresses and already-verified accounts are silent no-ops
+ * so this route can't be used to enumerate registered emails.
+ */
+authRouter.post(
+  "/verify-email",
+  authRateLimit,
+  validateBody(VerifyEmailRequestSchema),
+  asyncHandler(async (req, res) => {
+    const input = req.body as unknown as z.infer<typeof VerifyEmailRequestSchema>;
+    await requestEmailVerification(input);
+    res.json({
+      data: {
+        sent: true,
+        message:
+          "If that address has an unverified RoyCSS account, a verification link is on its way.",
+      },
+    });
+  }),
+);
+
+/** Redeem the emailed verification token — sets emailVerifiedAt. */
+authRouter.post(
+  "/verify-email/confirm",
+  authRateLimit,
+  validateBody(VerifyEmailConfirmSchema),
+  asyncHandler(async (req, res) => {
+    const input = req.body as unknown as z.infer<typeof VerifyEmailConfirmSchema>;
+    const user = await confirmEmailVerification(input);
+    await recordAuditEvent({
+      actor: user.id,
+      action: "auth.email.verify",
+      resourceType: "user",
+      resourceId: user.id,
+      requestId: req.requestId,
+    });
+    res.json({ data: user });
+  }),
+);
+
+/**
+ * Request a password-reset email. ALWAYS 200 — identical response for
+ * known and unknown addresses (no enumeration; audit F-02). The
+ * actual reset requires the single-use token from the email.
+ */
+authRouter.post(
+  "/forgot-password",
+  authRateLimit,
+  validateBody(ForgotPasswordSchema),
+  asyncHandler(async (req, res) => {
+    const input = req.body as unknown as z.infer<typeof ForgotPasswordSchema>;
+    await requestPasswordReset(input);
+    res.json({
+      data: {
+        sent: true,
+        message:
+          "If that address has a RoyCSS account, a password-reset link is on its way.",
+      },
+    });
+  }),
+);
+
+/**
+ * Redeem a reset token + set the new password. Invalid/expired/reused
+ * tokens → 400 with a uniform message. A successful reset
+ * invalidates every issued refresh token (session kill-switch — see
+ * revokeAllUserRefreshTokens in service.ts).
+ */
+authRouter.post(
+  "/reset-password",
+  authRateLimit,
+  validateBody(ResetPasswordSchema),
+  asyncHandler(async (req, res) => {
+    const input = req.body as unknown as z.infer<typeof ResetPasswordSchema>;
+    const result = await resetPassword(input);
+    await recordAuditEvent({
+      // Actor is resolved from the token inside the service — the route
+      // never sees it; audit without email (PII minimization, audit F-13).
+      actor: result.userId,
+      action: "auth.password.reset",
+      resourceType: "user",
+      resourceId: result.userId,
+      requestId: req.requestId,
+    });
+    res.json({
+      data: {
+        reset: true,
+        message: "Password updated. Sign in with your new password.",
+      },
+    });
   }),
 );
 

@@ -1,5 +1,6 @@
 /**
- * Auth service — registration, login, refresh, current user.
+ * Auth service — registration, login, refresh, current user,
+ * email verification + password reset (PF-011 / audit F-02).
  *
  * Uses:
  *   - bcryptjs for password hashing (10 rounds — fast enough on a
@@ -12,6 +13,7 @@
  */
 import bcrypt from "bcryptjs";
 
+import { env } from "../../config/env.js";
 import { db } from "../../lib/db.js";
 import {
   signTokenPair,
@@ -19,10 +21,25 @@ import {
 } from "../../lib/jwt.js";
 import { createLogger } from "../../lib/logger.js";
 import { AppError } from "../../server/middleware/error.js";
+import { getMailer } from "../email/mailer.js";
+import {
+  resetPasswordTemplate,
+  verifyEmailTemplate,
+} from "../email/templates.js";
+import {
+  TOKEN_PURPOSES,
+  TOKEN_TTL_LABEL,
+  consumeToken,
+  issueToken,
+} from "./tokens.js";
 import type {
+  ForgotPasswordInput,
   LoginInput,
   PublicUser,
   RegisterInput,
+  ResetPasswordInput,
+  VerifyEmailConfirm,
+  VerifyEmailRequest,
 } from "./schema.js";
 
 const log = createLogger("auth");
@@ -33,9 +50,41 @@ function toPublicUser(u: {
   id: string;
   email: string;
   name: string | null;
+  emailVerifiedAt: Date | null;
   createdAt: Date;
 }): PublicUser {
-  return { id: u.id, email: u.email, name: u.name, createdAt: u.createdAt };
+  return {
+    id: u.id,
+    email: u.email,
+    name: u.name,
+    emailVerified: u.emailVerifiedAt !== null,
+    createdAt: u.createdAt,
+  };
+}
+
+/** Send the verification email (best-effort — never throws). */
+async function sendVerificationEmail(user: {
+  id: string;
+  email: string;
+  name: string | null;
+}): Promise<void> {
+  try {
+    const raw = await issueToken(user.id, TOKEN_PURPOSES.verifyEmail);
+    await getMailer().send(
+      verifyEmailTemplate({
+        to: user.email,
+        name: user.name,
+        verifyUrl: `${env.APP_URL}/verify-email?token=${raw}`,
+        expiresInLabel: TOKEN_TTL_LABEL,
+      }),
+    );
+  } catch (err) {
+    // Email delivery must never fail registration — log and move on.
+    log.error("Verification email failed (user still registered)", {
+      userId: user.id,
+      err: err instanceof Error ? err.message : String(err),
+    });
+  }
 }
 
 /** Register a new user. Throws 409 if email already exists. */
@@ -62,12 +111,16 @@ export async function registerUser(
       passwordHash,
       name: input.name ?? null,
     },
-    select: { id: true, email: true, name: true, createdAt: true },
+    select: { id: true, email: true, name: true, emailVerifiedAt: true, createdAt: true },
   });
 
   const tokens = signTokenPair({ sub: user.id, email: user.email });
 
   log.info("User registered", { userId: user.id, email: user.email });
+
+  // Kick off the verification email (PF-011). Grace mode: the account is
+  // usable immediately; the email just clears the "unverified" banner.
+  await sendVerificationEmail(user);
 
   return {
     user: toPublicUser(user),
@@ -87,6 +140,7 @@ export async function loginUser(
       id: true,
       email: true,
       name: true,
+      emailVerifiedAt: true,
       createdAt: true,
       passwordHash: true,
     },
@@ -107,7 +161,11 @@ export async function loginUser(
 
   const tokens = signTokenPair({ sub: user.id, email: user.email });
 
-  log.info("User logged in", { userId: user.id, email: user.email });
+  log.info("User logged in", {
+    userId: user.id,
+    email: user.email,
+    emailVerified: user.emailVerifiedAt !== null,
+  });
 
   return {
     user: toPublicUser(user),
@@ -128,7 +186,7 @@ export async function refreshTokens(
 
   const user = await db.user.findUnique({
     where: { id: payload.sub },
-    select: { id: true, email: true, name: true, createdAt: true },
+    select: { id: true, email: true, name: true, emailVerifiedAt: true, createdAt: true },
   });
   if (!user) {
     throw AppError.unauthorized("User no longer exists");
@@ -149,10 +207,113 @@ export async function refreshTokens(
 export async function getCurrentUser(userId: string): Promise<PublicUser> {
   const user = await db.user.findUnique({
     where: { id: userId },
-    select: { id: true, email: true, name: true, createdAt: true },
+    select: { id: true, email: true, name: true, emailVerifiedAt: true, createdAt: true },
   });
   if (!user) {
     throw AppError.notFound("User not found");
   }
   return toPublicUser(user);
+}
+
+// ─── Email verification (PF-011 / audit F-02) ─────────────────────────────
+
+/**
+ * (Re)send a verification email. NEVER reveals whether the address has
+ * an account — the same `{ sent: true }` comes back either way (the
+ * register endpoint's 409 already makes email enumeration possible;
+ * this route just refuses to make it cheaper).
+ */
+export async function requestEmailVerification(
+  input: VerifyEmailRequest,
+): Promise<{ sent: boolean }> {
+  const user = await db.user.findUnique({
+    where: { email: input.email },
+    select: { id: true, email: true, name: true, emailVerifiedAt: true },
+  });
+
+  // Unknown email OR already verified → identical silent success.
+  if (!user || user.emailVerifiedAt !== null) return { sent: false };
+
+  await sendVerificationEmail(user);
+  return { sent: true };
+}
+
+/** Redeem a verification token — sets User.emailVerifiedAt. */
+export async function confirmEmailVerification(
+  input: VerifyEmailConfirm,
+): Promise<PublicUser> {
+  const userId = await consumeToken(input.token, TOKEN_PURPOSES.verifyEmail);
+
+  // Conditional update: keep the FIRST verification timestamp if a race
+  // or a stale resend already verified the address.
+  await db.user.updateMany({
+    where: { id: userId, emailVerifiedAt: null },
+    data: { emailVerifiedAt: new Date() },
+  });
+
+  const user = await db.user.findUniqueOrThrow({
+    where: { id: userId },
+    select: { id: true, email: true, name: true, emailVerifiedAt: true, createdAt: true },
+  });
+
+  log.info("Email verified", { userId });
+  return toPublicUser(user);
+}
+
+// ─── Password reset (PF-011 / audit F-02) ─────────────────────────────────
+
+/**
+ * Request a password-reset email. Always succeeds (200) — no user
+ * enumeration: unknown addresses get the exact same response and the
+ * same work (a bcrypt-ish no-op is skipped here because the response
+ * is uniform and the route is IP rate-limited at 10/min).
+ */
+export async function requestPasswordReset(
+  input: ForgotPasswordInput,
+): Promise<{ sent: boolean }> {
+  const user = await db.user.findUnique({
+    where: { email: input.email },
+    select: { id: true, email: true, name: true },
+  });
+
+  if (!user) return { sent: false };
+
+  try {
+    const raw = await issueToken(user.id, TOKEN_PURPOSES.passwordReset);
+    await getMailer().send(
+      resetPasswordTemplate({
+        to: user.email,
+        name: user.name,
+        resetUrl: `${env.APP_URL}/reset-password?token=${raw}`,
+        expiresInLabel: TOKEN_TTL_LABEL,
+      }),
+    );
+  } catch (err) {
+    log.error("Password-reset email failed", {
+      userId: user.id,
+      err: err instanceof Error ? err.message : String(err),
+    });
+  }
+  return { sent: true };
+}
+
+/**
+ * Redeem a reset token + set the new password. The token is consumed
+ * inside `consumeToken` (single-use, purpose-checked, 30-min expiry).
+ * Throws 400 on any token problem — uniform message, no oracle.
+ * Returns the userId so the route can audit without exposing it.
+ */
+export async function resetPassword(
+  input: ResetPasswordInput,
+): Promise<{ reset: true; userId: string }> {
+  const userId = await consumeToken(input.token, TOKEN_PURPOSES.passwordReset);
+
+  const passwordHash = await bcrypt.hash(input.password, BCRYPT_ROUNDS);
+  await db.user.update({
+    where: { id: userId },
+    data: { passwordHash },
+  });
+
+  log.info("Password reset via emailed token", { userId });
+  return { reset: true, userId };
 }

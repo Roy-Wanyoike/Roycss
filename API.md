@@ -2,7 +2,7 @@
 
 The public HTTP surface of the platform: the Express backend (`/api/v1/*`, `backend-node/`) and the Next.js frontend routes (`/api/*`, `src/app/api/`).
 
-**Coverage:** 72 backend modules · 281 backend routes (GET 202, POST 67, PUT 2, DELETE 9) · 15 frontend endpoints.
+**Coverage:** 72 backend modules · 285 backend routes (GET 202, POST 71, PUT 2, DELETE 9) · 15 frontend endpoints.
 
 > **Drift gate:** `cd backend-node && bun run api:check` walks `src/server/app.ts`, every module's `routes.ts` and `src/app/api/**` and fails when a route here is missing or stale. Regenerate the tables with `bun run api:gen` (curated prose lives in `backend-node/scripts/gen-api-md.ts` — edit there, not in API.md).
 
@@ -76,7 +76,7 @@ Per IP, sliding window:
 | Scope | Limit | Applies to | Env override |
 |-------|-------|------------|--------------|
 | general | 100 / min | every `/api/v1` route **except** `/health` | `RATE_LIMIT_MAX_GENERAL` |
-| auth | 10 / min | `/auth/register`, `/auth/login`, `/auth/refresh`, `POST /auth/api-keys` | `RATE_LIMIT_MAX_AUTH` |
+| auth | 10 / min | `/auth/register`, `/auth/login`, `/auth/refresh`, `POST /auth/api-keys`, and the PF-011 email-lifecycle routes (`verify-email`, `verify-email/confirm`, `forgot-password`, `reset-password`) | `RATE_LIMIT_MAX_AUTH` |
 | contact | 5 / min | `/api/v1/contact` | `RATE_LIMIT_MAX_CONTACT` |
 
 Per API key (issue #65), in addition to the per-IP limits, on requests authenticated with `X-API-Key`:
@@ -262,10 +262,10 @@ Catalog + registry reads that power the docs site, the package, and the integrat
 
 Account lifecycle (JWT), the caller's saved content (favorites + collections), and the contact intake form.
 
-#### `auth` — JWT account lifecycle + API key management (register / login / refresh / me; mint / list / revoke CLI–SDK–MCP keys).
+#### `auth` — JWT account lifecycle + API key management (register / login / refresh / me; email verification + password reset — PF-011; mint / list / revoke CLI–SDK–MCP keys).
 
-> Prisma-backed (`User`, `ApiKey`). register/login/refresh stay public by design (token bootstrap, 10/min/IP). `GET /me` requires a Bearer token (an X-API-Key with `*` also works). The API-key management routes are **Bearer-JWT-only** — X-API-Key credentials are rejected there so a leaked key can never mint, enumerate, or revive keys.
-> Extra rate limit: **auth 10/min/IP** on register/login/refresh.
+> Prisma-backed (`User`, `ApiKey`, `VerificationToken`). register/login/refresh stay public by design (token bootstrap, 10/min/IP). `GET /me` requires a Bearer token (an X-API-Key with `*` also works). The API-key management routes are **Bearer-JWT-only** — X-API-Key credentials are rejected there so a leaked key can never mint, enumerate, or revive keys. The email-lifecycle routes (verify-email, forgot/reset-password — PF-011) are public too: the single-use 30-min token in the body IS the credential. verify-email/forgot-password always answer 200 with the same shape (no user enumeration); token redemption fails with a uniform 400. Login is **grace mode**: unverified accounts still log in, flagged `user.emailVerified: false` for the UI banner. Emails go out via the mailer (mock transport logs the link in dev; set `RESEND_API_KEY` for real delivery).
+> Extra rate limit: **auth 10/min/IP** on the public credential routes (register/login/refresh + the email-lifecycle endpoints).
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
@@ -273,6 +273,10 @@ Account lifecycle (JWT), the caller's saved content (favorites + collections), a
 | POST | `/api/v1/auth/login` | Public | body: { `email`, `password` } | `{ data: { user, accessToken, refreshToken, expiresIn } }` · 200 | 400 · 401 · 429 |
 | POST | `/api/v1/auth/refresh` | Public | body: { `refreshToken` } | `{ data: { user, accessToken, refreshToken, expiresIn } }` · 200 | 400 · 401 · 429 |
 | GET | `/api/v1/auth/me` | Bearer JWT | — | `{ data: user }` · 200 | 401 |
+| POST | `/api/v1/auth/verify-email` | Public | body: { `email` } | `{ data: { sent: true, message } }` · 200 — always, even for unknown emails | 400 · 429 |
+| POST | `/api/v1/auth/verify-email/confirm` | Public | body: { `token` } | `{ data: user (emailVerified: true) }` · 200 | 400 · 429 |
+| POST | `/api/v1/auth/forgot-password` | Public | body: { `email` } | `{ data: { sent: true, message } }` · 200 — always, even for unknown emails | 400 · 429 |
+| POST | `/api/v1/auth/reset-password` | Public | body: { `token`, `password` } | `{ data: { reset: true, message } }` · 200 | 400 · 429 |
 | POST | `/api/v1/auth/api-keys` | Bearer JWT | body: { `name`, `scopes?` (default [`effects:read`]), `orgId?` } — plaintext key minted server-side | `{ data: { apiKey (masked), key (plaintext — shown ONCE), warning } }` · 201 | 400 · 401 · 404 · 409 · 429 |
 | GET | `/api/v1/auth/api-keys` | Bearer JWT | — | `{ data: apiKey[] (masked), meta }` · 200 | 401 |
 | DELETE | `/api/v1/auth/api-keys/:id` | Bearer JWT | path: `:id` (the key record id, not the key itself) | `{ data: apiKey (masked, revokedAt set) }` · 200 | 400 · 401 · 404 · 409 |

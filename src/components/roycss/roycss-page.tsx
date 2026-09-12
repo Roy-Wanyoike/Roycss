@@ -126,7 +126,6 @@ import { FeaturedCompanies, SponsorModal } from "@/components/roycss/featured-co
 import { ComparisonPanel } from "@/components/roycss/comparison-panel";
 import { PlaygroundPanel } from "@/components/roycss/playground-panel";
 import { SearchOverlay } from "@/components/roycss/search-overlay";
-import { DocsViewer } from "@/components/roycss/docs-viewer";
 import { StickyMiniNav } from "@/components/roycss/sticky-mini-nav";
 import { FloatingSponsorButton } from "@/components/roycss/floating-sponsor-button";
 import { UserMenu, MobileAuthMenuItem } from "@/components/roycss/auth/user-menu";
@@ -243,6 +242,18 @@ const PricingSection = dynamic(
    only fetches when a tool is actually opened. */
 const PlatformTools = dynamic(
   () => import("@/components/roycss/platform-tools").then(m => ({ default: m.PlatformTools })),
+  { ssr: false },
+);
+
+/* ─── DocsViewer Sheet — lazy-loaded ───────────────────────────
+   Same always-mounted pattern as PlatformTools above. The Sheet
+   only opens when a user clicks a "Docs" button (navbar / footer /
+   mobile menu), and it statically imports the 820 KB docs-data
+   blob (19 full architecture documents as markdown strings).
+   Loading it via dynamic() keeps that payload out of the initial
+   page-load JS; the chunk fetches on demand. */
+const DocsViewer = dynamic(
+  () => import("@/components/roycss/docs-viewer").then(m => ({ default: m.DocsViewer })),
   { ssr: false },
 );
 

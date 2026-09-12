@@ -59,7 +59,7 @@ if scope expands.
   production redeploy is pending the owner-side account/billing action
   (issue #75). Everything on `main` is verified locally: **1,959 effects /
   29 categories / 62 platform products / 68 dev tools**, `tsc` 0 errors,
-  950/950 tests (384 frontend unit + 566 backend).
+  1,143/1,143 tests (529 frontend unit + 614 backend).
 - The three original go-live blockers from AUDIT-1 — **F1** (37 product
   cards discarded `useBackendData`), **F2** (`BackendLiveBadge` dead
   imports), **F8** (sync/tokens 10% failure injection) — are **DONE** per
@@ -239,10 +239,14 @@ if scope expands.
 
 ### PF-004: Third-party WCAG 2.2 AA audit + VPAT 2.4 + per-effect a11y tags
 - **Area:** docs / a11y / frontend
-- **State:** partial — `tests/a11y/{axe-audit,keyboard-nav,visual-checks}.ts`
-  run build-time audits; no third-party audit, no VPAT, no per-effect
-  a11y tag in catalog UI. (ENTERPRISE-REVIEW R2/R3 Critical, LABS-30 §7.10,
-  V2 §16.10, AUDIT-REPORT §11.)
+- **State:** partial — **code half DONE (2026-09-13)**: derived per-effect
+  a11y tags for all 1,959 effects (motionSafe 431 / motion-caution 1,528 /
+  decorative 1,692 / aria-required 90) via `scripts/generate-effect-a11y.ts`
+  → generated `src/lib/effect-a11y.ts` + `effect-a11y-badges.ts`; surfaced
+  as pills on effect cards + "Motion-safe only" grid filter; tiers
+  documented in `docs/EFFECT-A11Y-TIERS.md`; drift-gated by 25 tests.
+  Remaining = the external half: third-party WCAG 2.2 AA audit + VPAT 2.4
+  (owner action — contract an auditor).
 - **Acceptance:**
   1. `docs/ACCESSIBILITY-AUDIT.md` published — third-party WCAG 2.2 AA
      audit report signed by an external auditor (scope: live
@@ -718,8 +722,13 @@ if scope expands.
 
 ### PF-048: Favorites + Collections backend HTTP surface
 - **Area:** backend-node
-- **State:** not started — the Prisma models exist and are enforced
-  (`backend-node/prisma/schema.prisma:24` `EffectFavorite` with
+- **State:** **DONE (2026-09-13)** — 10 routes shipped (favorites
+  GET/POST/DELETE /:effectId; collections GET/POST/PATCH/DELETE +
+  GET /:id + POST/DELETE /:id/effects/:effectId), requireAuth, Zod,
+  owner-scoped, audit-logged, registry-SOT, 48 tests; API.md + OpenAPI
+  regenerated (281 routes / 74 modules). Residual: frontend switch from
+  localStorage to these endpoints (acceptance 6). Previous state: Prisma
+  models existed with
   `@@unique([userId, effectId])`; `Collection` with an `effectIds`
   array), but there are **zero HTTP routes**: the frontend persists
   favorites/collections to localStorage only. The absence is honestly
@@ -786,8 +795,12 @@ if scope expands.
 
 ### PF-016: First-party build plugins (Vite, Next.js, Astro, webpack, Turbopack, esbuild, Rollup, Rspack)
 - **Area:** tooling
-- **State:** partial — **2 of 8 bundler plugins shipped (PR #90)**:
-  `packages/plugins/{core,vite,next}` (shared scan/extract engine +
+- **State:** **DONE (code) — 8 of 8 bundler plugins shipped (2026-09-13)**:
+  `packages/plugins/{core,vite,next}` (PR #90) + the remaining six —
+  astro, webpack, esbuild, rollup, rspack, turbopack — on one shared
+  scan/extract engine (rspack/turbopack carry documented honesty notes;
+  85 tests). Remaining = publish the 9 packages to npm (owner) +
+  compiled-dist build-out.
   adapters) with 7 plugin test files under `tests/unit/plugins-*.test.ts`.
   Remaining: astro, webpack, esbuild, rollup, rspack, turbopack.
   (R6.)

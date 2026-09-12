@@ -169,7 +169,7 @@ const MODULE_BLURBS: Record<string, string> = {
   version: "Release metadata — current, latest, changelog, breaking changes, upgrade check.",
   search: "Cross-resource search over effects/recipes/patterns (Prisma `SearchIndex`).",
   fallback: "`@supports` fallback recipes for modern CSS features.",
-  auth: "JWT account lifecycle + API key management (register / login / refresh / me; email verification + password reset — PF-011; refresh-token rotation + revocation — audit F-05; mint / list / revoke CLI–SDK–MCP keys).",
+  auth: "JWT account lifecycle + API key management (register / login / refresh / me; email verification + password reset — PF-011; refresh-token rotation + revocation — audit F-05; account export + delete — audit F-13; mint / list / revoke CLI–SDK–MCP keys).",
   contact: "Contact form intake (Prisma `ContactMessage`; 5 submissions/min/IP).",
   favorites:
     "Saved effects (`EffectFavorite` Prisma model) — list/add/remove, owner-scoped (PF-048).",
@@ -311,6 +311,10 @@ const RESPONSE_OVERRIDES: Record<string, string> = {
   // Audit F-05 — session lifecycle
   "POST /api/v1/auth/logout": "`{ data: { ok: true } }` · 200 — idempotent",
   "POST /api/v1/auth/logout-all": "`{ data: { ok: true, revoked } }` · 200",
+  // Audit F-13 — account lifecycle
+  "GET /api/v1/auth/export": "`{ data: account-export }` · 200 — own data only (profile, favorites, collections, masked key metadata)",
+  "DELETE /api/v1/auth/account":
+    "`{ data: { ok, deletedAt, purgeAfterDays, message } }` · 200 — soft delete",
   "GET /api/v1/auth/me": "`{ data: user }` · 200",
   "POST /api/v1/auth/api-keys":
     "`{ data: { apiKey (masked), key (plaintext — shown ONCE), warning } }` · 201",
@@ -337,6 +341,9 @@ const ERROR_OVERRIDES: Record<string, string> = {
   // Bearer-JWT-only (X-API-Key rejected → 401).
   "POST /api/v1/auth/logout": "400 · 429",
   "POST /api/v1/auth/logout-all": "401 · 429",
+  // Audit F-13 — account lifecycle
+  "GET /api/v1/auth/export": "401 · 404 · 429",
+  "DELETE /api/v1/auth/account": "400 · 401 · 429",
   "POST /api/v1/auth/api-keys": "400 · 401 · 404 · 409 · 429",
   "GET /api/v1/auth/api-keys": "401",
   "DELETE /api/v1/auth/api-keys/:id": "400 · 401 · 404 · 409",
@@ -406,7 +413,13 @@ const MODULE_NOTE_OVERRIDES: Record<string, string> = {
     "EVERY session for that user (reuse detection); `/logout` revokes " +
     "the presented token (idempotent 200 for any input); `/logout-all` " +
     "(Bearer-JWT-only) and a successful password reset revoke every " +
-    "session.",
+    "session. Account lifecycle (audit F-13): `GET /export` dumps the " +
+    "caller's own data (profile, favorites, collections, masked key " +
+    "metadata — no secrets); `DELETE /account` requires password " +
+    "re-confirmation (Bearer-JWT-only), soft-deletes for a 30-day grace " +
+    "— sessions and API keys die immediately, the row is hard-purged " +
+    "with cascades afterwards — and the email stays reserved until " +
+    "then.",
   contact:
     "> Prisma-backed (`ContactMessage`). The POST stays public by design — " +
     "anonymous form intake (rate-limited 5/min/IP).",

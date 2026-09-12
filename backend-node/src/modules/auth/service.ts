@@ -1,6 +1,8 @@
 /**
  * Auth service — registration, login, refresh, current user,
- * email verification + password reset (PF-011 / audit F-02).
+ * email verification + password reset (PF-011 / audit F-02), session
+ * rotation + revocation (audit F-05), and account export + delete
+ * (audit F-13).
  *
  * Uses:
  *   - bcryptjs for password hashing (10 rounds — fast enough on a
@@ -15,6 +17,10 @@ import bcrypt from "bcryptjs";
 
 import { env } from "../../config/env.js";
 import { db } from "../../lib/db.js";
+import {
+  maskApiKey,
+  parseApiKeyScopes,
+} from "../../lib/api-key.js";
 import { createLogger } from "../../lib/logger.js";
 import { AppError } from "../../server/middleware/error.js";
 import { getMailer } from "../email/mailer.js";
@@ -35,6 +41,7 @@ import {
   issueToken,
 } from "./tokens.js";
 import type {
+  AccountExport,
   ForgotPasswordInput,
   LoginInput,
   LogoutInput,
@@ -147,6 +154,9 @@ export async function loginUser(
       emailVerifiedAt: true,
       createdAt: true,
       passwordHash: true,
+      // Grace-period deletes read as "no such account" (audit F-13) —
+      // a deleted account must fail exactly like an unknown one.
+      deletedAt: true,
     },
   });
 
@@ -155,24 +165,25 @@ export async function loginUser(
   // The dummy hash below is just a valid bcrypt hash of garbage.
   const DUMMY_HASH =
     "$2a$10$CwTycUXWue0Thq9StjUM0uJ8eVjP3wW6PvWQXnXnqE2KkGOa2GnS.";
-  const passwordMatch = user
-    ? await bcrypt.compare(input.password, user.passwordHash)
+  const live = user !== null && user.deletedAt === null ? user : null;
+  const passwordMatch = live
+    ? await bcrypt.compare(input.password, live.passwordHash)
     : await bcrypt.compare(input.password, DUMMY_HASH);
 
-  if (!user || !passwordMatch) {
+  if (!live || !passwordMatch) {
     throw AppError.unauthorized("Invalid email or password");
   }
 
-  const tokens = await issueSession(user);
+  const tokens = await issueSession(live);
 
   log.info("User logged in", {
-    userId: user.id,
-    email: user.email,
-    emailVerified: user.emailVerifiedAt !== null,
+    userId: live.id,
+    email: live.email,
+    emailVerified: live.emailVerifiedAt !== null,
   });
 
   return {
-    user: toPublicUser(user),
+    user: toPublicUser(live),
     accessToken: tokens.accessToken,
     refreshToken: tokens.refreshToken,
     expiresIn: tokens.expiresIn,
@@ -196,10 +207,11 @@ export async function refreshTokens(
 
   const user = await db.user.findUnique({
     where: { id: userId },
-    select: { id: true, email: true, name: true, emailVerifiedAt: true, createdAt: true },
+    select: { id: true, email: true, name: true, emailVerifiedAt: true, createdAt: true, deletedAt: true },
   });
-  if (!user) {
-    // User deleted between rotation and read — revoke what we just made.
+  if (!user || user.deletedAt !== null) {
+    // User deleted between rotation and read (or in the grace period —
+    // audit F-13) — revoke what we just made and refuse.
     await revokeAllUserSessions(userId);
     throw AppError.unauthorized("User no longer exists");
   }
@@ -216,9 +228,12 @@ export async function refreshTokens(
 export async function getCurrentUser(userId: string): Promise<PublicUser> {
   const user = await db.user.findUnique({
     where: { id: userId },
-    select: { id: true, email: true, name: true, emailVerifiedAt: true, createdAt: true },
+    select: { id: true, email: true, name: true, emailVerifiedAt: true, createdAt: true, deletedAt: true },
   });
-  if (!user) {
+  // Grace-period rows (deletedAt set — audit F-13) read as gone: the
+  // stateless 15-min access token can't be revoked, but it must not
+  // resurrect a deleted account either.
+  if (!user || user.deletedAt !== null) {
     throw AppError.notFound("User not found");
   }
   return toPublicUser(user);
@@ -237,11 +252,15 @@ export async function requestEmailVerification(
 ): Promise<{ sent: boolean }> {
   const user = await db.user.findUnique({
     where: { email: input.email },
-    select: { id: true, email: true, name: true, emailVerifiedAt: true },
+    select: { id: true, email: true, name: true, emailVerifiedAt: true, deletedAt: true },
   });
 
-  // Unknown email OR already verified → identical silent success.
-  if (!user || user.emailVerifiedAt !== null) return { sent: false };
+  // Unknown email, deleted account OR already verified → identical
+  // silent success (deleted accounts must not receive more email —
+  // audit F-13).
+  if (!user || user.deletedAt !== null || user.emailVerifiedAt !== null) {
+    return { sent: false };
+  }
 
   await sendVerificationEmail(user);
   return { sent: true };
@@ -282,10 +301,12 @@ export async function requestPasswordReset(
 ): Promise<{ sent: boolean }> {
   const user = await db.user.findUnique({
     where: { email: input.email },
-    select: { id: true, email: true, name: true },
+    select: { id: true, email: true, name: true, deletedAt: true },
   });
 
-  if (!user) return { sent: false };
+  // Deleted accounts get the same silent 200 as unknown ones — no
+  // email is sent to a grace-period address (audit F-13).
+  if (!user || user.deletedAt !== null) return { sent: false };
 
   try {
     const raw = await issueToken(user.id, TOKEN_PURPOSES.passwordReset);
@@ -352,4 +373,217 @@ export async function logoutAll(
 ): Promise<{ ok: true; revoked: number }> {
   const revoked = await revokeAllUserSessions(userId);
   return { ok: true, revoked };
+}
+
+// ─── Account lifecycle: export + delete (audit F-13) ──────────────────────
+
+/** Grace period a soft-deleted account is kept before the hard purge. */
+export const ACCOUNT_PURGE_GRACE_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
+
+/**
+ * Export the caller's OWN data as JSON (audit F-13): profile,
+ * favorites, collections, and API-key METADATA (masked — the plaintext
+ * of a key is unrecoverable by design, and passwordHash never leaves
+ * the DB). Throws 404 when the account is gone or in the grace period.
+ */
+export async function exportAccount(userId: string): Promise<AccountExport> {
+  const user = await db.user.findUnique({
+    where: { id: userId },
+    select: { id: true, email: true, name: true, emailVerifiedAt: true, createdAt: true, updatedAt: true, deletedAt: true },
+  });
+  if (!user || user.deletedAt !== null) {
+    throw AppError.notFound("User not found");
+  }
+
+  const [favorites, collections, apiKeys] = await Promise.all([
+    db.effectFavorite.findMany({
+      where: { userId },
+      orderBy: { createdAt: "asc" },
+      select: { id: true, effectId: true, createdAt: true },
+    }),
+    db.collection.findMany({
+      where: { userId },
+      orderBy: { createdAt: "asc" },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        effectIds: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    }),
+    db.apiKey.findMany({
+      where: { ownerId: userId },
+      orderBy: { createdAt: "asc" },
+      // PUBLIC_SELECT conventions (modules/api-keys/service.ts) — never
+      // hash / lookupHash.
+      select: {
+        id: true,
+        name: true,
+        prefix: true,
+        last4: true,
+        scopesJson: true,
+        orgId: true,
+        createdAt: true,
+        lastUsedAt: true,
+        revokedAt: true,
+      },
+    }),
+  ]);
+
+  log.info("Account data exported", { userId, favorites: favorites.length });
+
+  return {
+    format: "roycss-account-export/v1",
+    exportedAt: new Date().toISOString(),
+    user: {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      emailVerified: user.emailVerifiedAt !== null,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    },
+    favorites,
+    collections: collections.map((c) => ({
+      id: c.id,
+      name: c.name,
+      description: c.description,
+      // Stored as a JSON-string array (Theme.tokensJson convention) —
+      // parse for the dump; a corrupt row degrades to an empty list
+      // rather than failing the whole export.
+      effectIds: safeParseStringArray(c.effectIds),
+      createdAt: c.createdAt,
+      updatedAt: c.updatedAt,
+    })),
+    apiKeys: apiKeys.map((k) => ({
+      id: k.id,
+      name: k.name,
+      masked: maskApiKey(k.prefix, k.last4),
+      scopes: parseApiKeyScopes(k.scopesJson),
+      orgId: k.orgId,
+      createdAt: k.createdAt,
+      lastUsedAt: k.lastUsedAt,
+      revokedAt: k.revokedAt,
+    })),
+  };
+}
+
+/**
+ * Delete the caller's account (audit F-13).
+ *
+ * Password re-confirmation first — deletion is the one mutation a
+ * stolen session (or a borrowed device) must not be able to trigger
+ * alone. On confirmation:
+ *   1. every refresh token is revoked (sessions die NOW, not in 15 min),
+ *   2. every API key is revoked (CLI/SDK access dies NOW too),
+ *   3. the row is SOFT-deleted (`deletedAt`) — login, refresh, email
+ *      flows and /me all read the account as gone from this instant,
+ *      but the data survives a grace period (30 days) before the
+ *      operator-run purge hard-deletes it (Prisma cascades wipe
+ *      favorites, collections, keys, tokens and memberships).
+ *
+ * The grace window is a safety net for a wrong-button click and for
+ * the platform's incident/abuse forensics — it is NOT a retention
+ * loophole: no endpoint serves grace-period data, and the email stays
+ * reserved (re-registration 409) until the purge frees it.
+ */
+export async function deleteAccount(
+  userId: string,
+  password: string,
+): Promise<{ ok: true; deletedAt: Date; purgeAfterDays: number }> {
+  const user = await db.user.findUnique({
+    where: { id: userId },
+    select: { id: true, passwordHash: true, deletedAt: true },
+  });
+
+  // Unknown OR already deleted → same 401 as a wrong password: the
+  // route is authenticated, so this is an idempotent no-op response
+  // that never reveals grace-period state.
+  const passwordMatch = user
+    ? await bcrypt.compare(password, user.passwordHash)
+    : // Timing decoy — same shape as the login handler.
+      await bcrypt.compare(password, DUMMY_BCRYPT_HASH);
+  if (!user || user.deletedAt !== null || !passwordMatch) {
+    throw AppError.unauthorized("Password confirmation failed");
+  }
+
+  const deletedAt = new Date();
+
+  // 1 + 2 — kill every credential and session the account still has.
+  await revokeAllUserSessions(userId);
+  await db.apiKey.updateMany({
+    where: { ownerId: userId, revokedAt: null },
+    data: { revokedAt: deletedAt },
+  });
+
+  // 3 — soft delete.
+  await db.user.update({
+    where: { id: userId },
+    data: { deletedAt },
+  });
+
+  log.warn("Account deleted (soft — grace period started)", {
+    userId,
+    purgeAfterDays: ACCOUNT_PURGE_GRACE_MS / (24 * 60 * 60 * 1000),
+  });
+
+  return {
+    ok: true,
+    deletedAt,
+    purgeAfterDays: ACCOUNT_PURGE_GRACE_MS / (24 * 60 * 60 * 1000),
+  };
+}
+
+/**
+ * Hard-purge soft-deleted accounts whose grace period has elapsed
+ * (audit F-13). The Prisma schema cascades the delete through every
+ * user-scoped table (favorites, collections, memberships, API keys,
+ * verification + refresh tokens).
+ *
+ * NOT mounted on a route and not on a timer: this codebase has no
+ * scheduler, so the purge runs as an operator task (see the runbook)
+ * and is exercised by the integration tests via a tiny cutoff. When a
+ * cron/worker lands, this is the function to call daily.
+ *
+ * Returns the number of accounts purged.
+ */
+export async function purgeDeletedUsers(
+  olderThanMs: number = ACCOUNT_PURGE_GRACE_MS,
+): Promise<number> {
+  const cutoff = new Date(Date.now() - olderThanMs);
+  const stale = await db.user.findMany({
+    where: { deletedAt: { not: null, lt: cutoff } },
+    select: { id: true },
+  });
+  for (const user of stale) {
+    // One-by-one so the cascade (verified by auth-account.test.ts) is
+    // exercised exactly as it will be in production.
+    await db.user.delete({ where: { id: user.id } });
+  }
+  if (stale.length > 0) {
+    log.warn("Purged grace-expired accounts (hard delete + cascades)", {
+      count: stale.length,
+    });
+  }
+  return stale.length;
+}
+
+// ─── Local helpers ────────────────────────────────────────────────────────
+
+/** Timing decoy for deleteAccount (same pattern as login). */
+const DUMMY_BCRYPT_HASH =
+  "$2a$10$CwTycUXWue0Thq9StjUM0uJ8eVjP3wW6PvWQXnXnqE2KkGOa2GnS.";
+
+/** Parse a JSON-string array column; corrupt input degrades to []. */
+function safeParseStringArray(raw: string): string[] {
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    return Array.isArray(parsed)
+      ? parsed.filter((v): v is string => typeof v === "string")
+      : [];
+  } catch {
+    return [];
+  }
 }

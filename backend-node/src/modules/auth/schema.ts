@@ -84,6 +84,17 @@ export const LogoutInputSchema = z.object({
 });
 export type LogoutInput = z.infer<typeof LogoutInputSchema>;
 
+// ─── Account lifecycle: export + delete (audit F-13) ──────────────────
+
+/**
+ * DELETE /auth/account — password re-confirmation. Deletion is the one
+ * mutation that must not be triggerable by a stolen session alone.
+ */
+export const DeleteAccountSchema = z.object({
+  password: z.string().min(1, "Password is required"),
+});
+export type DeleteAccountInput = z.infer<typeof DeleteAccountSchema>;
+
 /** Public user shape returned in API responses (never includes passwordHash). */
 export interface PublicUser {
   id: string;
@@ -92,4 +103,48 @@ export interface PublicUser {
   /** Grace-mode verification flag (audit F-02): false until emailVerifiedAt. */
   emailVerified: boolean;
   createdAt: Date;
+}
+
+/**
+ * GET /auth/export response — the caller's OWN data only (audit F-13).
+ * No secrets ride along: passwordHash never, API keys only in masked
+ * metadata form (the plaintext is unrecoverable by design).
+ */
+export interface AccountExport {
+  /** Stable shape tag so client tooling can branch on format changes. */
+  format: "roycss-account-export/v1";
+  exportedAt: string;
+  user: {
+    id: string;
+    email: string;
+    name: string | null;
+    emailVerified: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+  };
+  favorites: Array<{
+    id: string;
+    effectId: string;
+    createdAt: Date;
+  }>;
+  collections: Array<{
+    id: string;
+    name: string;
+    description: string | null;
+    /** Parsed from the stored JSON-string column for a usable dump. */
+    effectIds: string[];
+    createdAt: Date;
+    updatedAt: Date;
+  }>;
+  /** Masked metadata only (id, name, masked, scopes, timestamps). */
+  apiKeys: Array<{
+    id: string;
+    name: string;
+    masked: string;
+    scopes: string[];
+    orgId: string | null;
+    createdAt: Date;
+    lastUsedAt: Date | null;
+    revokedAt: Date | null;
+  }>;
 }

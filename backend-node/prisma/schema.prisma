@@ -16,6 +16,12 @@ model User {
   // Login stays permissive in grace mode (see auth routes.ts), but the
   // flag is surfaced on every auth response so the UI can nag.
   emailVerifiedAt DateTime?
+  // Account deletion grace (audit F-13): set by DELETE /auth/account.
+  // Sign-in, refresh and API keys die IMMEDIATELY; the row survives for
+  // the grace period (hard purge via purgeDeletedUsers in
+  // modules/auth/service.ts — cascades wipe favorites/collections/keys/
+  // tokens/memberships) so deletion is deliberate, not a keypress.
+  deletedAt       DateTime?
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
   favorites       EffectFavorite[]

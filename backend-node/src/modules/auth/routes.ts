@@ -16,6 +16,10 @@
  *   POST  /logout        revoke the presented refresh token     [public, idempotent]
  *   POST  /logout-all    revoke every session for the caller    [Bearer JWT only]
  *
+ *   ─── Account lifecycle (audit F-13) ──────────────────────
+ *   GET   /export        JSON dump of the caller's own data    [auth]
+ *   DELETE /account      soft-delete with password confirmation [Bearer JWT only]
+ *
  *   ─── LOGIN POLICY (grace mode) ───────────────────────────────────
  *   An UNVERIFIED email still logs in — the response carries
  *   `user.emailVerified: false` so the UI shows a verify banner.
@@ -53,6 +57,7 @@ import { jwtOnly } from "../../server/middleware/api-key.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import { validateBody, validateParams } from "../../server/middleware/validate.js";
 import {
+  DeleteAccountSchema,
   ForgotPasswordSchema,
   LoginInputSchema,
   LogoutInputSchema,
@@ -64,6 +69,8 @@ import {
 } from "./schema.js";
 import {
   confirmEmailVerification,
+  deleteAccount,
+  exportAccount,
   getCurrentUser,
   loginUser,
   logoutAll,
@@ -215,6 +222,76 @@ authRouter.post(
       metadata: { revoked: result.revoked },
     });
     res.json({ data: result });
+  }),
+);
+
+// ─── Account lifecycle: export + delete (audit F-13) ─────────────────────
+
+/**
+ * Export the caller's own data (GDPR portability): profile,
+ * favorites, collections and API-key metadata — no secrets ever
+ * (passwordHash stays in the DB; key plaintext is unrecoverable).
+ * Dual credential (Bearer JWT or wildcard X-API-Key) like /me — it
+ * is a read of data those credentials can already read one route at
+ * a time (favorites/collections/api-keys lists).
+ */
+authRouter.get(
+  "/export",
+  authRateLimit,
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const dump = await exportAccount(req.user!.sub);
+    await recordAuditEvent({
+      actor: req.user!.sub,
+      action: "auth.account.export",
+      resourceType: "user",
+      resourceId: req.user!.sub,
+      requestId: req.requestId,
+      // No counts either — the audit row says an export HAPPENED, not
+      // what was in it (PII minimization, audit F-13).
+    });
+    res.json({ data: dump });
+  }),
+);
+
+/**
+ * Delete the caller's account. Bearer-JWT-ONLY (a leaked X-API-Key
+ * must not be able to delete the owner's account) + password
+ * re-confirmation — deletion is the one mutation a stolen session
+ * alone must never trigger. Soft-delete with a 30-day grace: all
+ * sessions/keys die immediately, the row is hard-purged (with
+ * cascades) after the grace period (see service.ts).
+ */
+authRouter.delete(
+  "/account",
+  authRateLimit,
+  jwtOnly,
+  requireAuth,
+  validateBody(DeleteAccountSchema),
+  asyncHandler(async (req, res) => {
+    const input = req.body as unknown as z.infer<typeof DeleteAccountSchema>;
+    const result = await deleteAccount(req.user!.sub, input.password);
+    await recordAuditEvent({
+      actor: req.user!.sub,
+      action: "auth.account.delete",
+      resourceType: "user",
+      resourceId: req.user!.sub,
+      requestId: req.requestId,
+      metadata: { purgeAfterDays: result.purgeAfterDays },
+    });
+    res.json({
+      data: {
+        ok: true,
+        deletedAt: result.deletedAt,
+        purgeAfterDays: result.purgeAfterDays,
+        message:
+          "Your account is deactivated and sign-in is disabled. Your " +
+          "personal data is purged (with favorites, collections and API " +
+          `keys) within ${result.purgeAfterDays} days. Download an export ` +
+          "first if you want to keep a copy — it is unavailable after " +
+          "deletion.",
+      },
+    });
   }),
 );
 

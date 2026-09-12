@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Send,
@@ -305,7 +306,14 @@ export function ContactForm({ open, onOpenChange }: ContactFormProps) {
 
                 <p className="text-[10px] text-muted-foreground text-center leading-relaxed">
                   By submitting, you agree to be contacted regarding your
-                  inquiry. We never share your email.
+                  inquiry, as described in our{" "}
+                  <Link
+                    href="/privacy"
+                    className="text-primary underline underline-offset-2"
+                  >
+                    Privacy Policy
+                  </Link>
+                  . We never share your email.
                 </p>
               </motion.form>
             )}

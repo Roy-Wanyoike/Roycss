@@ -2652,6 +2652,14 @@ export default function RoyCSSPage() {
               </a>
               {" "}&middot;{" "}
               MIT License
+              {" "}&middot;{" "}
+              <a href="/privacy" className="hover:text-primary transition-colors">
+                Privacy
+              </a>
+              {" "}&middot;{" "}
+              <a href="/terms" className="hover:text-primary transition-colors">
+                Terms
+              </a>
             </p>
             <div className="flex items-center gap-4 text-xs text-muted-foreground">
               <EngineStatus />

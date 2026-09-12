@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -128,6 +129,23 @@ export function RegisterSheet() {
             {fieldErr("confirm")}
           </div>
           {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            By creating an account, you agree to our{" "}
+            <Link
+              href="/terms"
+              className="text-primary underline underline-offset-2 hover:decoration-2"
+            >
+              Terms of Service
+            </Link>{" "}
+            and{" "}
+            <Link
+              href="/privacy"
+              className="text-primary underline underline-offset-2 hover:decoration-2"
+            >
+              Privacy Policy
+            </Link>
+            .
+          </p>
           <SheetFooter className="flex flex-col gap-2">
             <Button type="submit" className="w-full" disabled={submitting}>
               {submitting && <Loader2 className="size-4 mr-2 animate-spin" />}

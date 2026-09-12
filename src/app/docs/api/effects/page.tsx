@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT } from "@/lib/site-stats";
 
 export const metadata: Metadata = {
   title: "Effects API — RoyCSS Docs",
@@ -99,7 +100,7 @@ export default function EffectsApiPage() {
 
       <h2 id="categories-list">The seven categories</h2>
       <p>
-        RoyCSS groups its 1,869 effects into seven categories. Each
+        RoyCSS groups its {EFFECT_COUNT_FORMATTED} effects into {CATEGORY_COUNT} categories. Each
         has its own API page with the full class list:
       </p>
       <ul className="list-disc pl-6 space-y-1">

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT } from "@/lib/site-stats";
 
 export const metadata: Metadata = {
   title: "Changelog — RoyCSS Docs",
@@ -21,12 +22,12 @@ export default function ChangelogPage() {
 
       <h2 id="2-0-0">2.0.0 — 2025-01</h2>
       <p>
-        The CSS-first rewrite. 1,869 effects across seven categories,
+        The CSS-first rewrite. {EFFECT_COUNT_FORMATTED} effects across {CATEGORY_COUNT} categories,
         zero JavaScript runtime in the base library.
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`BREAKING: drops IE11 + Safari < 14 support
-feat: 1,869 effects, up from 312 in v1
+feat: ${EFFECT_COUNT_FORMATTED} effects
 feat: full OKLCH palette (was HSL)
 feat: scroll-driven animations via animation-timeline
 feat: container-query-aware card variants

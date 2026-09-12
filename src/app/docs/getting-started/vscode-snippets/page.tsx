@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT } from "@/lib/site-stats";
 
 export const metadata: Metadata = {
   title: "VS Code Snippets — RoyCSS Docs",
@@ -31,7 +32,7 @@ export default function VscodeSnippetsPage() {
       <h2 id="features">Features</h2>
       <ul className="list-disc pl-6 space-y-1">
         <li>
-          <strong>Class autocompletion</strong> for all 1,869 effects
+          <strong>Class autocompletion</strong> for all {EFFECT_COUNT_FORMATTED} effects
           with inline descriptions and OKLCH previews.
         </li>
         <li>

@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { type Metadata } from "next";
+import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT } from "@/lib/site-stats";
 
 export const metadata: Metadata = {
   title: "API Reference — RoyCSS Docs",
   description:
-    "The RoyCSS class system: the .roycss-{category}-{name} pattern, OKLCH CSS variables, and zero-JS conventions across 1,749 effects in 28 categories.",
+    `The RoyCSS class system: the .roycss-{category}-{name} pattern, OKLCH CSS variables, and zero-JS conventions across ${EFFECT_COUNT_FORMATTED} effects in ${CATEGORY_COUNT} categories.`,
 };
 
 export default function Page() {
@@ -17,7 +18,7 @@ export default function Page() {
         RoyCSS API Overview
       </h1>
       <p className="text-lg text-muted-foreground mb-8 leading-7">
-        RoyCSS is a zero-JavaScript effect library that ships 1,749
+        RoyCSS is a zero-JavaScript effect library that ships {EFFECT_COUNT_FORMATTED}
         production-ready effects across 28 categories. Every effect is a plain
         CSS class you can drop onto any element — no runtime, no virtual DOM
         diffing, no framework lock-in.

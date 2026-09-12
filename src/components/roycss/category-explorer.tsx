@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Grid3x3, ChevronRight, X } from "lucide-react";
 import { effects, categoryMeta, categoryOrder } from "@/lib/roycss-effects";
+import { CATEGORY_COUNT } from "@/lib/site-stats";
 import type { EffectCategory } from "@/lib/roycss-types";
 import { LivePreview } from "@/components/roycss/effect-card";
 import { ScrollReveal } from "@/components/roycss/motion-primitives";
@@ -17,7 +18,7 @@ const CATEGORY_ICONS: Record<string, string> = {
 };
 
 /**
- * CategoryExplorer — a visual grid of all 20 categories, each showing
+ * CategoryExplorer — a visual grid of every category, each showing
  * a live mini-preview of a representative effect. Clicking a category
  * scrolls to the effects grid and filters by that category.
  *
@@ -57,7 +58,7 @@ export function CategoryExplorer({ onCategorySelect }: { onCategorySelect: (cat:
           <h3 className="font-display text-base font-semibold text-foreground">Explore by Category</h3>
         </div>
         <p className="text-xs text-muted-foreground mb-4">
-          20 categories · {effects.length} effects — hover to preview, click to filter
+          {CATEGORY_COUNT} categories · {effects.length} effects — hover to preview, click to filter
         </p>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">

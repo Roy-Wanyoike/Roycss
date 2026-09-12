@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT } from "@/lib/site-stats";
 
 export const metadata: Metadata = {
   title: "Performance — RoyCSS Docs",
@@ -89,7 +90,7 @@ buttons         2.7 KB
 cards           3.1 KB
 borders         1.6 KB
 ─────────────────────────
-All 1,869      ~80.0 KB`}</code>
+All ${EFFECT_COUNT_FORMATTED}  ~201 KB gz (min)`}</code>
       </pre>
 
       <h2 id="measure">Measure it yourself</h2>

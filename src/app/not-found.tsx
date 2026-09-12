@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Home, Search, Sparkles, Box, Zap, BookOpen } from "lucide-react";
+import { EFFECT_COUNT_FORMATTED, PRODUCT_COUNT } from "@/lib/site-stats";
 
 export default function NotFound() {
   return (
@@ -56,14 +57,14 @@ export default function NotFound() {
               className="flex flex-col items-center gap-2 p-4 rounded-xl border border-border bg-card/50 hover:border-primary/40 hover:bg-muted/30 transition-all"
             >
               <Sparkles className="size-5 text-primary" />
-              <span className="text-xs font-medium text-foreground">1,629 Effects</span>
+              <span className="text-xs font-medium text-foreground">{EFFECT_COUNT_FORMATTED} Effects</span>
             </Link>
             <Link
               href="/#platform"
               className="flex flex-col items-center gap-2 p-4 rounded-xl border border-border bg-card/50 hover:border-primary/40 hover:bg-muted/30 transition-all"
             >
               <Box className="size-5 text-primary" />
-              <span className="text-xs font-medium text-foreground">62 Products</span>
+              <span className="text-xs font-medium text-foreground">{PRODUCT_COUNT} Products</span>
             </Link>
             <Link
               href="/#get-started"

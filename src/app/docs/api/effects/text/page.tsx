@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT } from "@/lib/site-stats";
 
 export const metadata: Metadata = {
   title: "Text Effects — RoyCSS Docs",
@@ -126,7 +127,7 @@ r-text-strike        strike-through on hover`}</code>
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`<p class="r-text-reveal">
-  RoyCSS gives you 1,869 production-ready effects, zero JS.
+  RoyCSS gives you {EFFECT_COUNT_FORMATTED} production-ready effects, zero JS.
 </p>`}</code>
       </pre>
 

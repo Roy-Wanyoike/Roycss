@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT } from "@/lib/site-stats";
 
 export const metadata: Metadata = {
   title: "CLI — RoyCSS Docs",
@@ -38,7 +39,7 @@ roycss --version`}</code>
 
 Commands:
   init [template]     Scaffold a new project with RoyCSS preinstalled
-  classes [opts]      Dump all 1,869 class names as JSON (for editors)
+  classes [opts]      Dump all ${EFFECT_COUNT_FORMATTED} class names as JSON (for editors)
   inspect <class>     Show the CSS + custom properties for one effect
   search <query>      Full-text search across all effects
   palette [name]      Print the OKLCH palette for a theme

@@ -105,6 +105,13 @@ import {
   type EffectCategory,
   type CSSEffect,
 } from "@/lib/roycss-effects";
+import {
+  EFFECT_COUNT_FORMATTED,
+  PRODUCT_COUNT,
+  TOOL_COUNT,
+  VERSION,
+  VERSION_BADGE,
+} from "@/lib/site-stats";
 import { toast } from "sonner";
 import { EffectCard, LivePreview } from "@/components/roycss/effect-card";
 import { EffectDetailDialog } from "@/components/roycss/effect-detail-dialog";
@@ -1554,7 +1561,7 @@ export default function RoyCSSPage() {
               {/* hideTextOnMobile keeps the logo icon on-screen at 320px; wordmark reappears at ≥sm */}
               <RoyCSSLogo size="md" animated={true} hideTextOnMobile />
               <Badge variant="secondary" className="hidden sm:inline-flex text-xs px-1.5 py-0 bg-primary/10 text-primary border-primary/20 font-semibold">
-                v1.0
+                {VERSION_BADGE}
               </Badge>
             </motion.button>
 
@@ -1968,7 +1975,7 @@ export default function RoyCSSPage() {
 
             <ScrollReveal delay={0.3}>
               <p className="mt-2 max-w-xl mx-auto text-base sm:text-lg text-muted-foreground leading-relaxed">
-                {effects.length.toLocaleString("en-US")} CSS effects, 62 platform products, 64 developer tools, and AI assistance —
+                {EFFECT_COUNT_FORMATTED} CSS effects, {PRODUCT_COUNT} platform products, {TOOL_COUNT} developer tools, and AI assistance —
                 design, build, customize, and ship modern interfaces in one cohesive ecosystem.
               </p>
             </ScrollReveal>
@@ -2451,9 +2458,9 @@ export default function RoyCSSPage() {
               icon={History}
               title="Changelog"
               description="Track every release — new effects, breaking changes, deprecations, and bug fixes."
-              items={[`v1.0 — ${effects.length.toLocaleString("en-US")}+ effects launch`, `${categoryOrder.length}+ categories`, "OKLCH color system", "RoyMotion animation system"]}
+              items={[`${VERSION_BADGE} — ${EFFECT_COUNT_FORMATTED}+ effects launch`, `${categoryOrder.length}+ categories`, "OKLCH color system", "RoyMotion animation system"]}
               details={[
-                { label: "v1.0.0", content: `${effects.length.toLocaleString("en-US")}+ CSS effects across ${categoryOrder.length} categories. OKLCH color space with color-mix() throughout. CSS logical properties for RTL/I18n. @property, container queries, :has(), light-dark(). MCP Server for AI assistants. 5-tier sponsorship system.` },
+                { label: VERSION, content: `${EFFECT_COUNT_FORMATTED} CSS effects across ${categoryOrder.length} categories. OKLCH color space with color-mix() throughout. CSS logical properties for RTL/I18n. @property, container queries, :has(), light-dark(). MCP Server for AI assistants. 5-tier sponsorship system.` },
               ]}
             />
             <DocCard
@@ -2498,7 +2505,7 @@ export default function RoyCSSPage() {
                 <RoyCSSLogo size="sm" animated={false} />
               </button>
               <p className="text-xs text-muted-foreground leading-relaxed mb-4 max-w-xs">
-                AI-Native Frontend Engineering Platform — 1,629 CSS effects, 62 platform products, 64 developer tools.
+                AI-Native Frontend Engineering Platform — {EFFECT_COUNT_FORMATTED} CSS effects, {PRODUCT_COUNT} platform products, {TOOL_COUNT} developer tools.
               </p>
               <div className="flex items-center gap-2">
                 <a
@@ -2615,7 +2622,7 @@ export default function RoyCSSPage() {
             </p>
             <div className="flex items-center gap-4 text-xs text-muted-foreground">
               <EngineStatus />
-              <span>v2.1</span>
+              <span>v{VERSION}</span>
             </div>
           </div>
         </div>

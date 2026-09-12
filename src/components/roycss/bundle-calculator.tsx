@@ -3,6 +3,7 @@
 import { useState, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calculator, Plus, Minus, Trash2, Copy, Check, Download, X } from "lucide-react";
+import { FULL_CSS_MIN_BYTES, FULL_CSS_MIN_GZ_KB } from "@/lib/site-stats";
 import { effects } from "@/lib/roycss-effects";
 import type { CSSEffect } from "@/lib/roycss-types";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
@@ -31,7 +32,7 @@ export function BundleCalculator({ open, onOpenChange }: { open: boolean; onOpen
   const stats = useMemo(() => {
     const totalBytes = selectedEffects.reduce((sum, e) => sum + new Blob([e.cssCode]).size, 0);
     const gzipEstimate = Math.round(totalBytes * 0.15); // CSS gzips to ~15% of original
-    const fullBundle = 990000; // ~990KB full minified
+    const fullBundle = FULL_CSS_MIN_BYTES; // dist/roycss.min.css (pinned by site-stats test)
     const savings = Math.round((1 - totalBytes / fullBundle) * 100);
     return { totalBytes, gzipEstimate, savings, fullBundle };
   }, [selectedEffects]);
@@ -71,7 +72,7 @@ export function BundleCalculator({ open, onOpenChange }: { open: boolean; onOpen
             Bundle Calculator
           </SheetTitle>
           <SheetDescription>
-            Select effects to calculate your CSS bundle size. Compare with the full 990KB library.
+            Select effects to calculate your CSS bundle size. Compare with the full library (~1.35 MB min, ~201 KB gzipped).
           </SheetDescription>
         </SheetHeader>
 

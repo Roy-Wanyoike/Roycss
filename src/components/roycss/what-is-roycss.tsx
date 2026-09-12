@@ -40,6 +40,7 @@ import {
   staggerItem,
 } from "@/components/roycss/motion-primitives";
 import { cn } from "@/lib/utils";
+import { EFFECT_COUNT_FORMATTED, PRODUCT_COUNT } from "@/lib/site-stats";
 
 /* ─── Accent palette ───────────────────────────────────────────────
    Deliberately AVOIDS indigo/blue. Uses emerald / amber / rose / teal
@@ -103,8 +104,8 @@ const PILLARS: Pillar[] = [
     icon: Sparkles,
     title: "CSS-First",
     description:
-      "1,749 production-ready effects, animations, and interactions. Copy-paste CSS, zero dependencies.",
-    stat: "1,749 effects",
+      `${EFFECT_COUNT_FORMATTED} production-ready effects, animations, and interactions. Copy-paste CSS, zero dependencies.`,
+    stat: `${EFFECT_COUNT_FORMATTED} effects`,
     accent: "emerald",
   },
   {
@@ -146,7 +147,7 @@ const STEPS: Step[] = [
     icon: Search,
     index: "01",
     title: "Discover",
-    description: "Browse 1,749 effects + 62 products",
+    description: `Browse ${EFFECT_COUNT_FORMATTED} effects + ${PRODUCT_COUNT} products`,
     accent: "emerald",
   },
   {
@@ -222,7 +223,7 @@ const AUDIENCES: Audience[] = [
 
 /* ─── Local formatted counter ──────────────────────────────────────
    Mirrors AnimatedCounter from motion-primitives but adds optional
-   toLocaleString() formatting so "22,000+" and "1,749" render with
+   toLocaleString() formatting so "22,000+" and formatted counts render with
    thousands separators exactly as the brief specifies. Kept local so
    we don't widen the shared component's API for a single use-case.
    ─────────────────────────────────────────────────────────────────── */
@@ -582,7 +583,7 @@ export function WhatIsRoyCSS() {
               onClick={() => scrollToSection("#effects")}
               className="h-11 px-6 w-full sm:w-auto"
             >
-              Browse 1,749 effects
+              Browse {EFFECT_COUNT_FORMATTED} effects
             </Button>
             <Button
               size="lg"

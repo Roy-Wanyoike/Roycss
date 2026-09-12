@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT } from "@/lib/site-stats";
 
 export const metadata: Metadata = {
   title: "MCP Server — RoyCSS Docs",
@@ -23,7 +24,7 @@ export default function McpServerPage() {
         exposes three read-only tools:
       </p>
       <ul className="list-disc pl-6 space-y-1">
-        <li><code>roycss_search_effects</code> — full-text search across all 1,869 effects.</li>
+        <li><code>roycss_search_effects</code> — full-text search across all {EFFECT_COUNT_FORMATTED} effects.</li>
         <li><code>roycss_get_effect</code> — fetch the exact CSS for a single effect.</li>
         <li><code>roycss_get_palette</code> — read the OKLCH palette values.</li>
       </ul>

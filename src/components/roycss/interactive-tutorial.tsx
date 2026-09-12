@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
@@ -53,7 +54,7 @@ const STEPS: TourStep[] = [
   {
     title: "Welcome to RoyCSS",
     description:
-      "1,749+ production-ready CSS effects — copy, paste, ship. Let's take a 60-second tour of the platform.",
+      `${EFFECT_COUNT_FORMATTED} production-ready CSS effects — copy, paste, ship. Let's take a 60-second tour of the platform.`,
     selector: "[data-roycss-tour='hero'], h1",
     placement: "bottom",
     icon: Sparkles,

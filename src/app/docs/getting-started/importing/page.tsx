@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT } from "@/lib/site-stats";
 
 export const metadata: Metadata = {
   title: "Importing — RoyCSS Docs",
@@ -17,7 +18,7 @@ export default function ImportingPage() {
 
       <h2 id="global-stylesheet">1. Global stylesheet</h2>
       <p>
-        The simplest option. Imports every one of the 1,869 effects
+        The simplest option. Imports every one of the {EFFECT_COUNT_FORMATTED} effects
         in a single file. Best for prototyping or for sites where
         bundle size is not a concern.
       </p>

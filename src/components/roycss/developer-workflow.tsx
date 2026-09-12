@@ -24,6 +24,7 @@ import {
   ScrollReveal,
 } from "@/components/roycss/motion-primitives";
 import { cn } from "@/lib/utils";
+import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 
 interface Step {
   icon: LucideIcon;
@@ -37,7 +38,7 @@ const STEPS: Step[] = [
     icon: Search,
     number: 1,
     title: "Discover",
-    description: "Browse 1,749 effects, docs, and tools",
+    description: `Browse ${EFFECT_COUNT_FORMATTED} effects, docs, and tools`,
   },
   {
     icon: Package,

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT } from "@/lib/site-stats";
 
 export const metadata: Metadata = {
   title: "Your First Effect — RoyCSS Docs",
@@ -123,7 +124,7 @@ import "roycss/effects/buttons.css";`}</code>
         <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/api/effects">
           Effects API
         </a>{" "}
-        reference to browse all 1,869 effects, or read about the{" "}
+        reference to browse all {EFFECT_COUNT_FORMATTED} effects, or read about the{" "}
         <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/concepts/css-first">
           CSS-first architecture
         </a>{" "}

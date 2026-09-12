@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT } from "@/lib/site-stats";
 
 export const metadata: Metadata = {
   title: "Class Naming — RoyCSS Docs",
@@ -12,7 +13,7 @@ export default function ClassNamingPage() {
       <p className="text-lg text-muted-foreground">
         RoyCSS class names follow one pattern:{" "}
         <code>r-&lt;category&gt;-&lt;action&gt;-&lt;modifier?&gt;</code>.
-        Once you know the pattern you can guess any of the 1,869
+        Once you know the pattern you can guess any of the {EFFECT_COUNT_FORMATTED}
         class names without looking them up.
       </p>
 
@@ -35,7 +36,7 @@ export default function ClassNamingPage() {
 
       <h2 id="categories">Categories</h2>
       <p>
-        RoyCSS groups its 1,869 effects into seven categories, each
+        RoyCSS groups its {EFFECT_COUNT_FORMATTED} effects into {CATEGORY_COUNT} categories, each
         with its own class namespace:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">

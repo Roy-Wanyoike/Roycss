@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT } from "@/lib/site-stats";
 import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Overview — RoyCSS Docs",
-  description: "What is RoyCSS and how to get started — 1,869 production-ready CSS effects with zero JS runtime and OKLCH colors.",
+  description: `What is RoyCSS and how to get started — ${EFFECT_COUNT_FORMATTED} production-ready CSS effects with zero JS runtime and OKLCH colors.`,
 };
 
 export default function OverviewPage() {
@@ -11,7 +12,7 @@ export default function OverviewPage() {
     <>
       <h1>Overview</h1>
       <p className="text-lg text-muted-foreground">
-        RoyCSS is a CSS-first effects library: 1,869 production-ready
+        RoyCSS is a CSS-first effects library: {EFFECT_COUNT_FORMATTED} production-ready
         effects, <strong>zero JavaScript runtime</strong>, perceptual
         OKLCH colors, and full keyboard/reduced-motion support baked in.
       </p>

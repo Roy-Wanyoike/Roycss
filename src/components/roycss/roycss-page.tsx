@@ -2640,10 +2640,43 @@ export default function RoyCSSPage() {
               <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
                 Get notified about new effects, tools, and platform updates.
               </p>
-              <form onSubmit={(e) => { e.preventDefault(); toast.success("Subscribed! We'll keep you updated."); (e.target as HTMLFormElement).reset(); }} className="flex gap-2">
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  const form = e.target as HTMLFormElement;
+                  const email = (form.elements.namedItem("newsletter-email") as HTMLInputElement).value.trim();
+                  if (!email) return;
+                  try {
+                    /* Audit F-10: the old handler faked success — no API call,
+                     * no persistence. Persist for real via /api/contact
+                     * (ContactMessage rows), same pattern as the pricing
+                     * waitlist dialog. */
+                    const res = await fetch("/api/contact", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        name: email.split("@")[0] || "Newsletter signup",
+                        email,
+                        subject: "Newsletter Signup",
+                        message: "Subscribed to the newsletter from the site footer.",
+                      }),
+                    });
+                    const data = await res.json().catch(() => null);
+                    if (!res.ok || (data && data.ok === false)) {
+                      throw new Error("failed");
+                    }
+                    toast.success("Subscribed! We'll keep you updated.");
+                    form.reset();
+                  } catch {
+                    toast.error("Couldn't subscribe right now. Please try again.");
+                  }
+                }}
+                className="flex gap-2"
+              >
                 <input
                   type="email"
                   required
+                  name="newsletter-email"
                   placeholder="you@example.com"
                   aria-label="Email address for newsletter"
                   className="flex-1 min-w-0 px-3 py-2 rounded-lg bg-background border border-border text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40"

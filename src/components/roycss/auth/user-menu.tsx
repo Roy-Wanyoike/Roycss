@@ -68,15 +68,18 @@ export function UserMenu() {
   }
   if (!user) {
     return (
-      <div className="hidden xl:flex items-center gap-2">
+      /* Audit F-07: was `hidden xl:flex` — at 1024–1279px the hamburger is
+       * gone (lg:) but sign-in was still invisible (xl:) → no way to create
+       * an account on common laptops. Render from lg; icon-only under xl. */
+      <div className="hidden lg:flex items-center gap-2">
         <Button
           variant="ghost"
           size="sm"
           className="h-9 px-3 text-xs"
           onClick={openLogin}
         >
-          <LogIn className="size-3.5 mr-1.5" />
-          Sign in
+          <LogIn className="size-3.5" />
+          <span className="hidden xl:inline">Sign in</span>
         </Button>
         <Button
           variant="outline"
@@ -84,15 +87,15 @@ export function UserMenu() {
           className="h-9 px-3 text-xs"
           onClick={openRegister}
         >
-          <UserPlus className="size-3.5 mr-1.5" />
-          Create account
+          <UserPlus className="size-3.5" />
+          <span className="hidden xl:inline">Create account</span>
         </Button>
       </div>
     );
   }
   const initials = (user.name ?? user.email).slice(0, 2).toUpperCase();
   return (
-    <div className="hidden xl:flex items-center gap-2">
+    <div className="hidden lg:flex items-center gap-2">
       {/* Verify-email banner (PF-011 / audit F-08) — dismissible, with a
           resend action. Only shows while the account is unverified. */}
       {unverified && (

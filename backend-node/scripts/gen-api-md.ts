@@ -451,6 +451,37 @@ const MODULE_NOTE_OVERRIDES: Record<string, string> = {
     "caller's own collections; foreign ids read as flat 404s. Effect ids " +
     "resolve through the registry catalog (PF-009 A1); every mutation " +
     "writes an `EnterpriseAuditLog` row (PF-009 A6).",
+  // Audit F-06/F-07 hardening (Task 7-c): ownership + server-side
+  // attribution for the four IDOR/spoofing-flagged modules.
+  themes:
+    "> Prisma-backed (`Theme`). Reads stay public (marketing surface). " +
+    "**Writes are owner-scoped (audit F-06)**: POST attributes the row to " +
+    "the Bearer-JWT `sub`, and PUT/DELETE only ever touch the caller's OWN " +
+    "themes — foreign ids read as flat 404s. The 10 seeded presets are " +
+    "owner-`null` **read-only platform themes**: updates/deletes by any " +
+    "authenticated caller return the same flat 404.",
+  challenges:
+    "> Prisma-backed (`Challenge`, `ChallengeSubmission`). Reads stay " +
+    "public. Submissions are **attributed to the Bearer-JWT `sub`** (audit " +
+    "F-07 — no client-supplied `userId`). Grading is honest about its " +
+    "limits: the seeded catalog ships free-form challenges with no " +
+    "checkable answer, so a client `passed` claim is **self-graded, " +
+    "demo-integrity-limited** — recorded on the submission row with score 0 " +
+    "and never on the leaderboard. When a challenge carries a `solutionCode` " +
+    "the server grades the code itself (client claim ignored, response " +
+    "`verified: true`) and only those verified passes award score or enter " +
+    "the leaderboard.",
+  certifications:
+    "> Prisma-backed (`Certification`, `CertificationAttempt`). Reads and " +
+    "verify stay public. Exam attempts are **attributed to the Bearer-JWT " +
+    "`sub`** (audit F-07 — no client-supplied `userId`); `userName` is " +
+    "unverified display metadata for the credential card. The exam is " +
+    "server-scored against the seeded answer key.",
+  live:
+    "> Prisma-backed (`LiveSession`, `LiveMessage`). Reads stay public. " +
+    "The session host and every message author are **the Bearer-JWT `sub`** " +
+    "(audit F-07 — no client-supplied `hostId`/`userId`); `hostName` is " +
+    "unverified display metadata.",
 };
 
 // ─── Row rendering ────────────────────────────────────────────────────────

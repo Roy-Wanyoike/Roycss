@@ -11,6 +11,14 @@
  *   5. PUT /:id         → 200 updated single envelope
  *   6. DELETE /:id      → 204 no content; subsequent GET → 404
  *   7. POST / invalid hex color → 400 VALIDATION_ERROR with field details
+ *
+ * Ownership hardening (audit F-06 — api-keys flat-404 convention):
+ *
+ *   8. POST attributes the row to the token subject (a spoofed body
+ *      `userId` is stripped by Zod and ignored)
+ *   9. PUT/DELETE by a foreign user → flat 404, row untouched
+ *  10. Seeded platform presets (owner `null`) are read-only — PUT/DELETE
+ *      by ANY authenticated user → 404, row untouched
  */
 import { describe, it, expect } from "vitest";
 
@@ -133,5 +141,133 @@ describe("themes CRUD lifecycle", () => {
     expect(res.status).toBe(404);
     expectErrorEnvelope(res);
     expect(res.body.error.code).toBe("NOT_FOUND");
+  });
+});
+
+describe("themes ownership hardening (audit F-06)", () => {
+  it("POST attributes the theme to the token subject — a spoofed body userId is stripped and ignored", async () => {
+    const user = await registerUser(app, "themes-attr");
+    const res = await hit(app, "post", "/api/v1/themes", {
+      // Legacy/spoofed shape: a client-supplied userId must be ignored.
+      body: { ...NEW_THEME, name: "Attributed Theme", userId: "victim-user-id" },
+      headers: bearer(user),
+    });
+
+    expect(res.status).toBe(201);
+    expectSuccessEnvelope(res);
+    const id = res.body.data.id as string;
+
+    const row = await db.theme.findUnique({ where: { id } });
+    expect(row).not.toBeNull();
+    // Attribution = the verified token subject, never the body field.
+    expect(row!.userId).toBe(user.id);
+    expect(row!.userId).not.toBe("victim-user-id");
+  });
+
+  it("PUT/DELETE by a foreign user → flat 404s, the owner's row is untouched (both directions)", async () => {
+    const alice = await registerUser(app, "themes-alice");
+    const bob = await registerUser(app, "themes-bob");
+
+    const created = await hit(app, "post", "/api/v1/themes", {
+      body: { ...NEW_THEME, name: "Alice's Theme" },
+      headers: bearer(alice),
+    });
+    expect(created.status).toBe(201);
+    const id = created.body.data.id as string;
+
+    // Bob cannot update Alice's theme — flat 404, no id-existence leak.
+    const bobPut = await hit(app, "put", `/api/v1/themes/${id}`, {
+      body: { name: "Stolen Theme" },
+      headers: bearer(bob),
+    });
+    expect(bobPut.status).toBe(404);
+    expectErrorEnvelope(bobPut);
+    expect(bobPut.body.error.code).toBe("NOT_FOUND");
+
+    // Bob cannot delete it either.
+    const bobDelete = await hit(app, "delete", `/api/v1/themes/${id}`, {
+      headers: bearer(bob),
+    });
+    expect(bobDelete.status).toBe(404);
+    expectErrorEnvelope(bobDelete);
+
+    // Alice's row survived both attempts, name unchanged.
+    const row = await db.theme.findUnique({ where: { id } });
+    expect(row).not.toBeNull();
+    expect(row!.name).toBe("Alice's Theme");
+    expect(row!.userId).toBe(alice.id);
+
+    // …and Alice can still update it herself (owner path).
+    const alicePut = await hit(app, "put", `/api/v1/themes/${id}`, {
+      body: { name: "Alice's Theme v2" },
+      headers: bearer(alice),
+    });
+    expect(alicePut.status).toBe(200);
+    expect(alicePut.body.data.name).toBe("Alice's Theme v2");
+  });
+
+  it("an unknown id PUT/DELETE is the same flat 404 (indistinguishable from foreign)", async () => {
+    const user = await registerUser(app, "themes-unknown");
+    const put = await hit(app, "put", "/api/v1/themes/no-such-theme", {
+      body: { name: "Ghost" },
+      headers: bearer(user),
+    });
+    expect(put.status).toBe(404);
+    expect(put.body.error.code).toBe("NOT_FOUND");
+
+    const del = await hit(app, "delete", "/api/v1/themes/no-such-theme", {
+      headers: bearer(user),
+    });
+    expect(del.status).toBe(404);
+    expectErrorEnvelope(del);
+  });
+
+  it("seeded platform presets (owner null) are read-only — PUT/DELETE by any authenticated user → 404", async () => {
+    const user = await registerUser(app, "themes-platform");
+
+    // Public read of a seeded preset still works (marketing surface).
+    const before = await hit(app, "get", "/api/v1/themes/theme-emerald-default");
+    expect(before.status).toBe(200);
+    expect(before.body.data.name).toBe("Emerald Default");
+
+    // No authenticated caller matches a null-owner row: mutations 404.
+    const put = await hit(app, "put", "/api/v1/themes/theme-emerald-default", {
+      body: { name: "Hacked Platform Theme" },
+      headers: bearer(user),
+    });
+    expect(put.status).toBe(404);
+    expectErrorEnvelope(put);
+    expect(put.body.error.code).toBe("NOT_FOUND");
+
+    const del = await hit(app, "delete", "/api/v1/themes/theme-emerald-default", {
+      headers: bearer(user),
+    });
+    expect(del.status).toBe(404);
+    expectErrorEnvelope(del);
+
+    // The preset survived, name unchanged (public read is uncached truth).
+    const row = await db.theme.findUnique({
+      where: { id: "theme-emerald-default" },
+    });
+    expect(row).not.toBeNull();
+    expect(row!.userId).toBeNull();
+    expect(row!.name).toBe("Emerald Default");
+  });
+
+  it("DELETE by the owner still works after the hardening (204 + row gone)", async () => {
+    const user = await registerUser(app, "themes-owner-del");
+    const created = await hit(app, "post", "/api/v1/themes", {
+      body: { ...NEW_THEME, name: "Doomed Theme" },
+      headers: bearer(user),
+    });
+    const id = created.body.data.id as string;
+
+    const del = await hit(app, "delete", `/api/v1/themes/${id}`, {
+      headers: bearer(user),
+    });
+    expect(del.status).toBe(204);
+
+    const row = await db.theme.findUnique({ where: { id } });
+    expect(row).toBeNull();
   });
 });

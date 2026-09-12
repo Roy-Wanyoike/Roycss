@@ -203,7 +203,7 @@ Catalog + registry reads that power the docs site, the package, and the integrat
 
 #### `themes` — Theme token store — Prisma CRUD, 10 seeded presets.
 
-> Prisma-backed (Theme). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
+> Prisma-backed (`Theme`). Reads stay public (marketing surface). **Writes are owner-scoped (audit F-06)**: POST attributes the row to the Bearer-JWT `sub`, and PUT/DELETE only ever touch the caller's OWN themes — foreign ids read as flat 404s. The 10 seeded presets are owner-`null` **read-only platform themes**: updates/deletes by any authenticated caller return the same flat 404.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
@@ -667,25 +667,25 @@ Academy, challenges, certifications, open-source program, showcase, marketplace 
 
 #### `challenges` — Coding challenges, submissions, leaderboard.
 
-> Prisma-backed (Challenge, ChallengeSubmission). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
+> Prisma-backed (`Challenge`, `ChallengeSubmission`). Reads stay public. Submissions are **attributed to the Bearer-JWT `sub`** (audit F-07 — no client-supplied `userId`). Grading is honest about its limits: the seeded catalog ships free-form challenges with no checkable answer, so a client `passed` claim is **self-graded, demo-integrity-limited** — recorded on the submission row with score 0 and never on the leaderboard. When a challenge carries a `solutionCode` the server grades the code itself (client claim ignored, response `verified: true`) and only those verified passes award score or enter the leaderboard.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
 | GET | `/api/v1/challenges` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/challenges/leaderboard` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/challenges/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
-| POST | `/api/v1/challenges/:id/submit` | Bearer JWT | body: { `userId`, `code`, `passed`, `timeMs?` } · path: `:id` | `{ data }` · 201 | 400 · 404 · 401 |
+| POST | `/api/v1/challenges/:id/submit` | Bearer JWT | body: { `code`, `passed`, `timeMs?` } · path: `:id` | `{ data }` · 201 | 400 · 404 · 401 |
 
 #### `certifications` — Certification exams + credential verification.
 
-> Prisma-backed (Certification, CertificationAttempt). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
+> Prisma-backed (`Certification`, `CertificationAttempt`). Reads and verify stay public. Exam attempts are **attributed to the Bearer-JWT `sub`** (audit F-07 — no client-supplied `userId`); `userName` is unverified display metadata for the credential card. The exam is server-scored against the seeded answer key.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
 | GET | `/api/v1/certifications` | Public | — | `{ data, meta }` · 200 | — |
 | GET | `/api/v1/certifications/verify/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
 | GET | `/api/v1/certifications/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
-| POST | `/api/v1/certifications/:id/exam` | Bearer JWT | body: { `userId`, `userName`, `answers` } · path: `:id` | `{ data }` · 201 | 400 · 404 · 401 |
+| POST | `/api/v1/certifications/:id/exam` | Bearer JWT | body: { `userName`, `answers` } · path: `:id` | `{ data }` · 201 | 400 · 404 · 401 |
 
 #### `open` — Open-source program — issues, RFCs (+ voting), roadmap, contributors.
 
@@ -884,15 +884,15 @@ Cloud, deploys, CDN/edge/storage, fleet, workspace, enterprise, governance, anal
 
 #### `live` — Live collaboration sessions + messages (Prisma).
 
-> Prisma-backed (LiveSession, LiveMessage). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
+> Prisma-backed (`LiveSession`, `LiveMessage`). Reads stay public. The session host and every message author are **the Bearer-JWT `sub`** (audit F-07 — no client-supplied `hostId`/`userId`); `hostName` is unverified display metadata.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
 | GET | `/api/v1/live/sessions` | Public | — | `{ data, meta }` · 200 | — |
-| POST | `/api/v1/live/sessions` | Bearer JWT | body: { `title`, `hostId`, `hostName?` } | `{ data }` · 201 | 400 · 401 |
+| POST | `/api/v1/live/sessions` | Bearer JWT | body: { `title`, `hostName?` } | `{ data }` · 201 | 400 · 401 |
 | GET | `/api/v1/live/sessions/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
 | GET | `/api/v1/live/sessions/:id/users` | Public | path: `:id` | `{ data, meta }` · 200 | 400 · 404 |
-| POST | `/api/v1/live/sessions/:id/message` | Bearer JWT | body: { `userId`, `content` } · path: `:id` | `{ data }` · 201 | 400 · 404 · 401 |
+| POST | `/api/v1/live/sessions/:id/message` | Bearer JWT | body: { `content` } · path: `:id` | `{ data }` · 201 | 400 · 404 · 401 |
 
 #### `mcp` — MCP tool hub — tools, execute, resources, prompts.
 

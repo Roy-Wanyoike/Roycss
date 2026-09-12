@@ -11,6 +11,11 @@
  * to the `Theme` Prisma model. Read routes stay public for the
  * marketing/demo site.
  *
+ * Ownership (audit F-06): POST attributes the new theme to the
+ * authenticated caller (`req.user.sub`); PUT/DELETE only ever touch
+ * the caller's OWN themes — foreign and seeded platform presets
+ * (owner `null`, read-only) read as a flat 404.
+ *
  * Order matters: static routes (`/`) are declared before param routes
  * so `/foo` isn't captured as an id.
  */
@@ -52,7 +57,8 @@ themesRouter.post(
   validateBody(CreateThemeSchema),
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<typeof CreateThemeSchema>;
-    const theme = await createTheme(input);
+    // Attribution = the verified token subject, never a body field (F-07).
+    const theme = await createTheme(input, req.user!.sub);
     res.status(201).json({ data: theme });
   }),
 );
@@ -75,7 +81,9 @@ themesRouter.put(
   asyncHandler(async (req, res) => {
     const { id } = req.params as unknown as z.infer<typeof ThemeParamsSchema>;
     const input = req.body as unknown as z.infer<typeof UpdateThemeSchema>;
-    const theme = await updateTheme(id, input);
+    // Ownership is enforced server-side against the token subject (F-06):
+    // foreign ids and read-only platform presets read as flat 404s.
+    const theme = await updateTheme(id, req.user!.sub, input);
     res.json({ data: theme });
   }),
 );
@@ -86,7 +94,7 @@ themesRouter.delete(
   validateParams(ThemeParamsSchema),
   asyncHandler(async (req, res) => {
     const { id } = req.params as unknown as z.infer<typeof ThemeParamsSchema>;
-    await deleteTheme(id);
+    await deleteTheme(id, req.user!.sub);
     res.status(204).end();
   }),
 );

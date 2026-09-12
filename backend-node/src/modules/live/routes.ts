@@ -8,6 +8,8 @@
  *
  * Mutating routes require authentication (issue #64) — sessions and
  * messages persist to the `LiveSession`/`LiveMessage` Prisma models.
+ * The session host and every message author are the verified token
+ * subject (audit F-07: no client-supplied `hostId`/`userId`).
  *
  * Order matters: static collection routes are declared before /:id.
  */
@@ -50,7 +52,9 @@ liveRouter.post(
   validateBody(CreateSessionSchema),
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<typeof CreateSessionSchema>;
-    const session = await createLiveSession(input);
+    // Host attribution = the verified token subject, never a body
+    // field (F-07).
+    const session = await createLiveSession(input, req.user!.sub);
     res.status(201).json({ data: session });
   }),
 );
@@ -83,7 +87,9 @@ liveRouter.post(
   asyncHandler(async (req, res) => {
     const { id } = req.params as unknown as z.infer<typeof IdParamsSchema>;
     const input = req.body as unknown as z.infer<typeof PostMessageSchema>;
-    const message = await postSessionMessage(id, input);
+    // Author attribution = the verified token subject, never a body
+    // field (F-07).
+    const message = await postSessionMessage(id, input, req.user!.sub);
     res.status(201).json({ data: message });
   }),
 );

@@ -7,7 +7,9 @@
  *   POST /:id/exam         submit exam answers    (auth: Bearer token)
  *
  * Mutating routes require authentication (issue #64) — exam attempts
- * persist to the `CertificationAttempt` Prisma model.
+ * persist to the `CertificationAttempt` Prisma model and are
+ * attributed to the verified token subject (audit F-07: no
+ * client-supplied `userId`).
  *
  * Order matters: `/verify/:id` is declared before `/:id` so the literal
  * "verify" path segment isn't captured as a certification id.
@@ -75,9 +77,10 @@ certificationsRouter.post(
     const input = req.body as unknown as z.infer<
       typeof CertificationExamSchema
     >;
+    // Attribution = the verified token subject, never a body field (F-07).
     const result = await submitExam({
       certificationId: id,
-      userId: input.userId,
+      userId: req.user!.sub,
       userName: input.userName,
       answers: input.answers,
     });

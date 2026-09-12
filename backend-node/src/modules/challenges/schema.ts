@@ -4,6 +4,11 @@
  * Defines the submit-payload shape and the route params for /:id.
  * The `Challenge`/`ChallengeLeaderboardEntry` domain types live in
  * `../../types/index.ts`.
+ *
+ * Attribution (audit F-07): submissions are attributed to the
+ * Bearer-JWT `sub` server-side — there is NO client-supplied
+ * `userId` field. A legacy body containing one is silently stripped
+ * by Zod and ignored.
  */
 import { z } from "zod";
 
@@ -12,13 +17,16 @@ export const ChallengeParamsSchema = z.object({
   id: z.string().min(1),
 });
 
-/** Body for POST /challenges/:id/submit — submit a challenge solution. */
+/** Body for POST /challenges/:id/submit — submit a challenge solution.
+ *
+ * `passed` is the caller's SELF-GRADE claim (demo-integrity-limited):
+ * the seeded catalog ships free-form challenges with no checkable
+ * answer, so the server cannot grade them itself. The claim is
+ * recorded on the submission row ONLY — it can never award score or
+ * touch the leaderboard (see service.ts `submitSolution`). When a
+ * challenge DOES carry a checkable `solutionCode`, the server grades
+ * the submission and the client claim is ignored entirely. */
 export const ChallengeSubmitSchema = z.object({
-  userId: z
-    .string()
-    .trim()
-    .min(1, "userId is required")
-    .max(80, "userId must be at most 80 characters"),
   code: z
     .string()
     .min(1, "code is required")

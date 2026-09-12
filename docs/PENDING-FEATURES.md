@@ -1,14 +1,18 @@
 # RoyCSS — Pending Features & Implementation Backlog
 
-> ⚠️ **Banner (2026-09-04, audit AUDIT-2026-09):** stale counts and states in this file are
-> superseded by [`docs/AUDIT-2026-09.md`](./AUDIT-2026-09.md) — the verified current
-> numbers are **1,959 effects / 29 categories / 62 products / 68 backend modules /
-> 46 Prisma models / 111 + 30 tests green** (the "Current state" section and older
-> per-item counts below predate the September 2026 engagement). Also per that audit:
-> **PF-001 is DONE** (PR #76), **PF-013 is DONE** (PR #78), **PF-014 is DONE**
-> (PR #77), and issue #75 tracks the owner-action deploy runbook. This file remains the
-> backlog source of truth for item scope and acceptance criteria — update item `State`
-> fields at triage rather than trusting the stale header prose.
+> ⚠️ **Banner (2026-09-12, triage PF-051):** every `State` field and header
+> count in this file was re-verified against the tree at `main` @ `ab667f1`
+> and corrected — in **both** directions: done-but-marked-open items
+> (PF-002, PF-006, PF-012, PF-016) flipped to their real state, and
+> PF-008's overstated Go-port claims scaled back to counted reality. The
+> superseding audit document (`docs/AUDIT-2026-09.md`, pinned to an older
+> repo state) was **deleted** on 2026-09-12 — its durable findings are
+> folded into the items below (see the audit-fold notes on PF-021/PF-042
+> and PF-048..PF-051); the verified current numbers live in "Current
+> state" and "Summary counts". Issue #75 still tracks the owner-action
+> deploy runbook. This file remains the backlog source of truth — update
+> item `State` fields in place as work lands, and re-run the state-count
+> arithmetic in "Summary counts" whenever an item flips.
 
 > Consolidated from all audit reports. This is the single source of truth
 > for pending work. The old report docs will be removed after this list
@@ -33,33 +37,65 @@ if scope expands.
 
 ## Priority legend
 - **P0** — go-live blocker (blocks the next production / paid-tier launch;
-  the current public marketing/demo site at `/` is already live — see
+  the current public marketing/demo site at `/` is live but stale — see
   "Current state" below)
 - **P1** — ship within 1 week of go-live (cleanup + hardening)
 - **P2** — v1.1 (compounds the platform, ecosystem expansion)
 - **P3** — v2 roadmap (monorepo, compiler, language, vertical products)
 
+## Sequencing principles (preserved from the deleted 2026-09 audit)
+
+1. **Deploy before build.** Nothing earns (SEO, trust, sales) until `main`
+   reaches production — issue #75 is the only hard gate.
+2. **Label before sell.** PF-012's demo labels and PF-004's a11y tags are
+   trust infrastructure — they must land before monetization marketing.
+3. **Keys unlock revenue.** API keys (PF-002, done) before marketplace
+   payments (PF-010): developers are the cheaper first customer.
+4. **The moat compounds last.** AI retrieval (PF-021) is sequenced after
+   the surfaces it indexes are deployed, paid, and labeled.
+
 ## Current state (read before dispatching)
-- The **public marketing/demo site at `/` is live** (verified end-to-end by
-  worklog Tasks 1–2 and AUDIT-1: 1,749 effects, 62 platform products, 68
-  backend-node modules, 13/13 Next.js API routes, 34 Live badges, 0 Demo).
+- The **public marketing/demo site at `/`** serves a pre-fix build — the
+  production redeploy is pending the owner-side account/billing action
+  (issue #75). Everything on `main` is verified locally: **1,959 effects /
+  29 categories / 62 platform products / 68 dev tools**, `tsc` 0 errors,
+  950/950 tests (384 frontend unit + 566 backend).
 - The three original go-live blockers from AUDIT-1 — **F1** (37 product
   cards discarded `useBackendData`), **F2** (`BackendLiveBadge` dead
   imports), **F8** (sync/tokens 10% failure injection) — are **DONE** per
   worklog FIX-F1-F2 and Task 5. They are NOT re-listed here.
 - `backend-node/` (Express + Prisma + SQLite) is the running source of
-  truth: 68 modules, 45 Prisma models, `/api/v1`, all modules return real
-  JSON envelopes (29 with real DB persistence, 7 reading build artifacts,
-  10 real CSS reference implementations, 5 LLM with mock fallback, 3
-  Playwright with mock fallback, 4 external-service with mock fallback,
-  3 fully real, 6 intentional static snapshots, 4 catalog/scaffold
-  mocks, 1 live socket.io).
-- `backend-go/` is the production target: 70 .go files, **3 real modules**
-  (auth, effects, health) + **66 stub modules returning 501** (honest
-  failover design) + complete `pkg/` platform layer + `cmd/{api,migrate,
-  worker}` + `Dockerfile` + `docker-compose.yml` + `terraform/main.tf`.
-  Per task instructions, the 66 stubs are ONE batched P1 item (PF-008),
-  NOT 66 separate items.
+  truth: **72 module directories** (70 mounted per the API.md header —
+  `api-keys` nests under `/auth/api-keys`), **47 Prisma models**, **271
+  routes**, all modules return real JSON envelopes (30 with Prisma
+  persistence, 7 reading build artifacts, 10 real CSS reference
+  implementations, 5 LLM with mock fallback, 3 Playwright with mock
+  fallback, 4 external-service with mock fallback, 3 fully real, 6
+  intentional static snapshots, 4 catalog/scaffold mocks, 1 live
+  socket.io — classification per the authz inventory, PR #76).
+  `requireAuth` is imported in the `routes.ts` of 30 modules (PF-001);
+  module honesty is registry-driven (`src/lib/module-status.ts`: 30 live
+  / 10 demo / 2 catalog-only — PF-012). Modules added since the
+  2026-09-04 audit pin: `api-keys`, `audit`, `metrics`, `openapi`
+  (route count 258 → 271).
+- `backend-go/` is the production target: **3 real handlers** (`internal/`
+  auth, effects, health) + **64 stub handlers returning 501** (honest
+  failover — frontend's `useBackendData` gets 501 → falls back to demo
+  data → shows "Demo" badge). That gives Go coverage of 67 of the 72
+  module dirs — `api-keys`, `audit`, `inspector`, `metrics`, and
+  `openapi` have no Go counterpart yet. The `pkg/` layer has **7 real
+  packages** (`config`, `logger`, `database`, `cache`, `auth`, `http`,
+  `response` — the previously-claimed `storage`, `validator`, `redis`
+  packages do **not** exist); `cmd/{api,migrate,worker}` wired;
+  `Dockerfile` + `infrastructure/docker/docker-compose.yml` +
+  `infrastructure/terraform/main.tf` + `api/openapi/openapi.yaml` present;
+  **77 `.go` files** total. **Cannot compile in sandbox — no Go
+  toolchain.** Per task instructions, the 64 stubs are ONE batched P1
+  item (PF-008), NOT 64 separate items.
+- **Snapshot freshness:** `dist/effects.json` and `mcp-server/effects.json`
+  serve the current 1,959-effect catalog (MCP was fixed in PR #82);
+  `cli/effects.json` still serves the stale 1,569-entry snapshot
+  (PF-049).
 - The 96 HIGH-priority NOT-STARTED items from
   `PENDING-FEATURES-AUDIT.md` Tier 1 (V2 vision) are grouped into ~16
   themed P3 items below, not 96 separate dispatches.
@@ -68,8 +104,8 @@ if scope expands.
     cards don't fetch from backend" — **stale**; 37 cards now use
     `useBackendData` (per AUDIT-1 F1/FIX-F1-F2). Replaced by this file.
   - `docs/plans/BACKEND-COMPLETION-REQUIREMENTS.md` §2.1 says "current
-    schema has 4 models" — **stale**; schema now has 45 Prisma models
-    (per AUDIT-1). Replaced by this file.
+    schema has 4 models" — **stale**; schema now has 47 Prisma models
+    (45 at the AUDIT-1 pin, 46 at the 2026-09-04 audit, 47 now).
   - `docs/reports/AUDIT-REPORT.md` and `docs/reports/FINAL-VERIFICATION.md`
     claim "all 68 backend modules with real implementations" —
     **overstated**; per AUDIT-1, 6 modules are intentional static
@@ -81,11 +117,22 @@ if scope expands.
     this file supersedes.
 
 ## Summary counts
-- **P0: 7**
-- **P1: 8**
-- **P2: 16**
-- **P3: 16**
-- **Total: 47**
+- **P0: 8** · **P1: 10** · **P2: 16** · **P3: 17** — **Total: 51**
+  (47 existing + 4 new: PF-048..PF-051, added 2026-09-12)
+- **State distribution (recounted at the 2026-09-12 triage, arithmetic
+  shown so the next recount can be checked the same way):**
+  - **11 done** — PF-001, PF-002, PF-005, PF-006, PF-007, PF-009, PF-012,
+    PF-013, PF-015, PF-049, PF-051
+  - **29 partial** — PF-004, PF-008, PF-010, PF-011, PF-014, PF-016,
+    PF-017, PF-018, PF-019, PF-020, PF-021, PF-022, PF-023, PF-024,
+    PF-025, PF-026, PF-027, PF-029, PF-030, PF-031, PF-035, PF-036,
+    PF-037, PF-040, PF-041, PF-042, PF-043, PF-044, PF-045
+  - **9 not started** — PF-003, PF-028, PF-032, PF-033, PF-034, PF-038,
+    PF-039, PF-046, PF-048
+  - **1 decision** — PF-047
+  - **1 proposed** — PF-050
+  - Check: 11 + 29 + 9 + 1 + 1 = **51** ✓ ("Done" here means the item's
+    core acceptance is met; several carry explicit residual bullets.)
 
 ---
 
@@ -100,13 +147,16 @@ if scope expands.
 
 ### PF-001: Apply `requireAuth` + per-org/team role checks to all mutating endpoints
 - **Area:** backend-node
-- **State:** partial — `requireAuth` middleware exists in
-  `backend-node/src/server/middleware/auth.ts` but is only used in
-  `auth/routes.ts`. All 67 other modules expose unauthenticated mutating
-  endpoints (POST/PUT/DELETE) for favorites, collections, dashboards,
-  workspace, marketplace, enterprise, governance, audit-center, billing,
-  subscriptions, usage, etc. (AUDIT-1 F3, ROYCSS_BACKEND_TODO A2,
-  ROYCSS_SECURITY_REPORT §3, ROYCSS_API_SPECIFICATION §3.)
+- **State:** **DONE (core, PR #76 / issue #64)** — `requireAuth` is
+  imported in the `routes.ts` of **30 of the 72 modules** (audit-era: 28);
+  37+ mutating endpoints return `401` without a Bearer token, verified by
+  a dedicated integration sweep. **Residual (acceptance #2):** per-org
+  role checks via `requireRole` are applied only on `governance`
+  approve/reject — org-role gating on `projects`, `studio`, `marketplace`,
+  `cloud`, `enterprise`, `billing` resources is still open (tracked as
+  the open half of acceptance #2; do not re-dispatch the authn half).
+  (AUDIT-1 F3, ROYCSS_BACKEND_TODO A2, ROYCSS_SECURITY_REPORT §3,
+  ROYCSS_API_SPECIFICATION §3.)
 - **Acceptance:**
   1. Every mutating endpoint (POST/PUT/DELETE) on every non-auth module
      requires a valid JWT (401 when absent).
@@ -125,8 +175,18 @@ if scope expands.
 
 ### PF-002: API key management (CLI / SDK / MCP authentication)
 - **Area:** backend-node
-- **State:** not started (ROYCSS_BACKEND_TODO A3, ROYCSS_API_SPECIFICATION
-  §3, ROYCSS_SECURITY_REPORT §10.)
+- **State:** **DONE (issue #65, PR #89)** — `ApiKey` Prisma model
+  (`backend-node/prisma/schema.prisma:264`: id, bcrypt hash at rest,
+  name, scopes, ownerId, orgId?, createdAt, lastUsedAt, revokedAt);
+  `apiKeyAuth` `X-API-Key` middleware alternating with Bearer JWT
+  (`backend-node/src/server/middleware/auth.ts` — keys holding the `*`
+  scope work on every protected route, narrow scopes like
+  `effects:read` are enforced on the effects module); `modules/api-keys/`
+  with routes mounted under `/api/v1/auth/api-keys` (create shows the
+  plaintext ONCE, masked listing, revoke sets `revokedAt`; management is
+  Bearer-JWT-only so a leaked key cannot mint keys); per-key rate
+  limiting; tests: 3 unit files + 1 integration file. (ROYCSS_BACKEND_TODO
+  A3, ROYCSS_API_SPECIFICATION §3, ROYCSS_SECURITY_REPORT §10.)
 - **Acceptance:**
   1. `POST /api/v1/auth/api-keys` (Bearer) creates a key — hash at rest
      with bcrypt, plaintext shown ONCE in the response, scoped to
@@ -155,7 +215,7 @@ if scope expands.
   ROYCSS_DEPLOYMENT, ROYCSS_PERFORMANCE_REPORT §3, BACKEND-COMPLETION-REQUIREMENTS §2.5.)
 - **Acceptance:**
   1. PostgreSQL 15+ provisioned; all 14 `database/sql/*.sql` migrations
-     applied; `psql roycss -c "SELECT count(*) FROM effects;"` returns 1749
+     applied; `psql roycss -c "SELECT count(*) FROM effects;"` returns 1959
      after `999_seed.sql`.
   2. Redis 7+ provisioned; cache + rate-limit + job queue wired through
      it; TTL + invalidation rules per ROYCSS_DATABASE_ARCHITECTURE §4.
@@ -186,7 +246,7 @@ if scope expands.
 - **Acceptance:**
   1. `docs/ACCESSIBILITY-AUDIT.md` published — third-party WCAG 2.2 AA
      audit report signed by an external auditor (scope: live
-     `roycss.dev`, all 1,749 effects, 62 product cards, docs site).
+     `roycss.dev`, all 1,959 effects, 62 product cards, docs site).
   2. `docs/VPAT-2.4.md` published — VPAT 2.4 EU edition, fully populated
      against the live site (per-criterion: Supports / Partially Supports
      / Does Not Support / Not Applicable, with remarks).
@@ -227,7 +287,8 @@ if scope expands.
   `rfcs/README.md` + `rfcs/0000-template.md` +
   `rfcs/0001-versioned-effects.md` (retrospective RFC documenting the
   shipped versioned-effects design in `src/lib/`). Docs-only change —
-  `tsc` 0 errors and the 248-test unit suite unaffected.
+  `tsc` 0 errors and the then-current 248-test unit suite unaffected
+  (the frontend suite has since grown to 384 tests).
 - **Acceptance:**
   1. `docs/LTS.md` — one major LTS at all times, 18 months after
      successor ships, critical patches backported, breaking changes
@@ -258,9 +319,14 @@ if scope expands.
 
 ### PF-006: CI performance + bundle-size gate (Lighthouse CI + size-limit + budget.json)
 - **Area:** infra / CI
-- **State:** partial — `perf/regression.test.ts` + `perf/benchmarks/*`
-  measure but no CI gate; no Lighthouse CI; no size-limit; no budget.json.
-  (LABS-33 §9, V2 §11.5, ENTERPRISE-REVIEW R5, LABS-30 §7.7.)
+- **State:** **DONE (issue #84, PR #91)** — `perf/budget.json` (12
+  metrics) committed; `.github/workflows/ci.yml` carries the budget
+  gate + coverage floor (80% statements / 70% branches enforced in
+  `vitest.config.ts`) + a perf-gate job; `lighthouserc.json` + the
+  `lighthouse.yml` PR workflow run Lighthouse CI on every PR;
+  `.size-limit.json` gates the shipped npm artifacts in `dist/` (runs
+  as `bunx size-limit` in CI). All 5 acceptance criteria met. (LABS-33
+  §9, V2 §11.5, ENTERPRISE-REVIEW R5, LABS-30 §7.7.)
 - **Acceptance:**
   1. `perf/budget.json` committed with 12 metrics (CSS gzip ≤ 28KB, raw
      ≤ 280KB, DOM ≤ 8000, animations ≤ 60 active, `backdrop-filter` ≤ 50,
@@ -278,7 +344,7 @@ if scope expands.
   `package.json` (add `size-limit`, `@lhci/cli` deps).
 - **Agent:** general-purpose
 
-### PF-007: Backend integration + contract test coverage (all 68 modules)
+### PF-007: Backend integration + contract test coverage (all 72 modules)
 - **Area:** backend-node / tests
 - **State:** **shipped (issue #93, PR #99)** — registry-driven contract
   harness (envelope + mutating + single-resource sweeps walking the live
@@ -292,7 +358,7 @@ if scope expands.
   to reach the 80% statements goal.
 - **Acceptance:**
   1. At least one integration test per `backend-node/src/modules/*`
-     module (68 total) using `supertest` against a test SQLite DB.
+     module (72 total) using `supertest` against a test SQLite DB.
   2. Contract test harness in `backend-node/tests/contract/` pinning the
      `/api/v1` response shape for every `GET list`, `GET single`,
      `POST`, `PATCH`, `DELETE` — these become the acceptance tests for
@@ -312,30 +378,65 @@ if scope expands.
   `.github/workflows/ci.yml` (add jobs).
 - **Agent:** general-purpose
 
+### PF-051: Backlog + docs state-field triage (the meta-item)
+- **Area:** docs
+- **Priority:** P0 — truthful states are the precondition for every
+  other dispatch.
+- **State:** **DONE by the 2026-09-12 triage (this rewrite).** State
+  fields corrected in **both** directions — flipped to done: PF-002
+  (API keys, PR #89), PF-006 (CI perf gates, PR #91), PF-012 (label
+  path, PR #88), PF-013 (DONE core, PR #78), PF-001 (DONE core, PR #76,
+  role-check residual noted); overstated claims scaled back: PF-008
+  (64 stub handlers, not 66; `pkg/` = 7 packages — no
+  storage/validator/redis; docker-compose lives at
+  `infrastructure/docker/`; 77 `.go` files); stale counts fixed
+  (1,749 → 1,959 effects; 45 → 47 Prisma models; 68 → 72 module dirs);
+  the header state-distribution was recounted with the arithmetic shown
+  (11 + 29 + 9 + 1 + 1 = 51); new items PF-048..PF-050 authored; the
+  deleted audit's durable knowledge folded into the relevant items.
+- **Acceptance:**
+  1. Every `State` field verified against the tree (artifacts grep'd
+     and counted, not trusted from PR titles).
+  2. Header counts recomputed with arithmetic shown inline, so the
+     next triage can diff rather than re-derive.
+  3. Deleted audit docs (`docs/AUDIT-2026-09.md`,
+     `security/DEPENDENCY-AUDIT.md`, `security/SBOM.json`) leave no
+     dangling references; their knowledge is folded or explicitly
+     re-homed (PF-050 for the market content).
+- **Files:** `docs/PENDING-FEATURES.md` (this file), the doc tree
+  swept for dangling references.
+- **Agent:** general-purpose (repeat after each major wave — the honest
+  cadence is per-wave, not per-quarter)
+
 ---
 
 ## P1 — Ship within 1 week of go-live (cleanup + hardening)
 
-### PF-008: backend-go batched production port (66 stub modules → real, single batch)
+### PF-008: backend-go batched production port (64 stub handlers → real, single batch)
 - **Area:** backend-go
-- **State:** 3 of 68 modules real (`internal/auth`, `internal/effects`,
-  `internal/health`); 66 stub modules return 501 with a stable JSON
-  envelope (honest failover — frontend's `useBackendData` gets 501 →
-  falls back to demo data → shows "Demo" badge). `pkg/` platform layer
-  complete (`config`, `logger`, `database`, `cache`, `auth`, `http`,
-  `response`, `storage`, `validator`, `redis`); `cmd/{api,migrate,worker}`
-  wired; `Dockerfile` + `docker-compose.yml` + `terraform/main.tf` +
-  `api/openapi/openapi.yaml` present. **Cannot compile in sandbox — no
-  Go toolchain.** (ROYCSS_BACKEND_TODO §B, ROYCSS_MIGRATION_GUIDE §5,
-  worklog Task 5.)
+- **State:** partial — 3 real handlers of 72 module dirs (`internal/auth`,
+  `internal/effects`, `internal/health`); **64 stub handlers** return
+  501 with a stable JSON envelope (honest failover — frontend's
+  `useBackendData` gets 501 → falls back to demo data → shows "Demo"
+  badge). Go covers 67 of the 72 module dirs — `api-keys`, `audit`,
+  `inspector`, `metrics`, and `openapi` (all added after the port
+  scaffold) have no Go counterpart yet. The `pkg/` platform layer has
+  7 packages (`config`, `logger`, `database`, `cache`, `auth`, `http`,
+  `response` — `storage`, `validator`, `redis` do not exist);
+  `cmd/{api,migrate,worker}` wired; `Dockerfile` +
+  `infrastructure/docker/docker-compose.yml` +
+  `infrastructure/terraform/main.tf` + `api/openapi/openapi.yaml` present;
+  77 `.go` files total. **Cannot compile in sandbox — no Go toolchain.**
+  (ROYCSS_BACKEND_TODO §B, ROYCSS_MIGRATION_GUIDE §5, worklog Task 5.)
 - **Acceptance (single batched engagement; `ROYCSS_MIGRATION_GUIDE.md` is the playbook):**
-  1. Port the 66 stub modules to real Go implementations following the
+  1. Port the 64 stub handlers to real Go implementations (and add Go
+     counterparts for the 5 modules that have none yet), following the
      migration guide order: Phase 2 (users, organizations, teams) →
      Phase 3 (registry: effects/components/patterns/collections/recipes/
      themes/tokens/icons/motion) → Phase 4 (projects, playground, studio,
      marketplace, ai, mcp, cli, inspector, devtools, accessibility,
      analytics, cloud, billing, subscriptions, usage, search,
-     notifications, audit) → Phase 5 (remaining 28 modules).
+     notifications, audit) → Phase 5 (remaining modules).
   2. Per-module Go shape: `handler.go` (HTTP only) + `service.go` +
      `repository.go` + `models.go` + `dto.go` + `routes.go` +
      `<module>_test.go`. Dependency direction enforced:
@@ -351,19 +452,20 @@ if scope expands.
      flag the route, compare responses (contract test from PF-007),
      flip 100%, watch error rate for 24h, then remove the TS module's
      routes (keep code for one release as rollback).
-  6. Definition-of-done: all 68 modules serving `/api/v1` from Go;
+  6. Definition-of-done: all 72 modules serving `/api/v1` from Go;
      PostgreSQL authoritative (SQLite retired); Redis handles cache +
      rate-limit + job queue; the live `/` page renders identically
      (same title, body length, Live-badge count); no data lost (row
      counts match before/after); no existing feature/route/effect/
      component removed.
-- **Files:** `backend-go/internal/*/handler.go` (66 files upgraded from
-  501 stub to real impl); new `service.go`, `repository.go`, `models.go`,
-  `dto.go`, `routes.go`, `<module>_test.go` per module; `backend-go/cmd/worker/main.go`
+- **Files:** `backend-go/internal/*/handler.go` (64 stubs upgraded from
+  501 to real impl + 5 new module dirs); new `service.go`,
+  `repository.go`, `models.go`, `dto.go`, `routes.go`,
+  `<module>_test.go` per module; `backend-go/cmd/worker/main.go`
   (extend existing).
 - **Agent:** Plan (single batched engagement — needs a Go 1.23+ host
   outside this sandbox; PF-007 contract tests are the acceptance
-  criteria). Dispatch as ONE ticket, not 66.
+  criteria). Dispatch as ONE ticket, not one per module.
 
 ### PF-009: backend-node hardening batch (TODO A1, A4, A5, A6, A7, A9)
 - **Area:** backend-node
@@ -462,7 +564,7 @@ if scope expands.
 
 ### PF-011: Email service (Resend) + contact form transactional email + notifications
 - **Area:** backend-node
-- **State:** contact form persists to DB but does not send email;
+- **State:** partial — contact form persists to DB but does not send email;
   `notifications` module exists but no email transport; `RESEND_API_KEY`
   not configured. (ROYCSS_BACKEND_TODO §B, AUDIT-REPORT §11,
   API_KEYS_REQUIRED row 7.)
@@ -486,11 +588,17 @@ if scope expands.
 
 ### PF-012: Convert documented mock limitations to real impl OR label as "demo" in UI
 - **Area:** backend-node / frontend
-- **State:** AUDIT-1 F4/F5/F6/F7/F9–F12/F14/F15/F16 — six intentional
-  static-snapshot modules (analytics, edge, plugin-hub, mcp, scaffold,
-  refactor) and four catalog/scaffold mocks. Each module has a
-  `Future:` comment. The marketing site shows them as "Live" badges
-  even though they return mock data.
+- **State:** **Label path DONE (PR #88)** — `src/lib/module-status.ts`
+  is the single registry (30 live / 10 demo / 2 catalog-only), product
+  cards read their badge from the registry only (never from a
+  component-local constant), `tests/unit/module-status.test.ts` guards
+  the mapping, and `src/app/api/health/route.ts` sources `effectsCount`
+  from the embedded catalog instead of a hardcoded number. Per the
+  EITHER/OR acceptance below, this item is **MET via labels** — the
+  "make real" upgrades remain open as optional follow-ups (e.g.
+  persisting `live` chat to the existing `LiveMessage` model, wiring
+  `analytics` `apiCalls` from a request-log table) and should be
+  re-tracked as their own items if pursued. (AUDIT-1 F4–F16.)
 - **Acceptance:**
   1. For each module below, EITHER implement real functionality OR add
      an explicit "Demo" UI label (so users are not misled):
@@ -525,9 +633,15 @@ if scope expands.
 
 ### PF-013: Public API surface in `API.md` + CI gate
 - **Area:** docs / CI
-- **State:** not started. ROYCSS_API_SPECIFICATION is the inline
-  reference but no generated `API.md` and no CI gate that prevents
-  removing a `stable` name without a major bump. (LABS-30 §7.1, LABS-35
+- **State:** **DONE core (issue #66, PR #78)** — `API.md` (942 lines:
+  271 backend routes + 15 frontend endpoints, grouped by domain with
+  curated per-module notes) generated by
+  `backend-node/scripts/gen-api-md.ts`, with the `bun run api:check`
+  drift gate failing in both directions (missing or stale rows).
+  **Residual (acceptance #2):** `.github/workflows/api-gate.yml` (the
+  stable-name removal gate) does not exist — the natural home for it is
+  PF-042 acceptance #7 (manifest + maturity tags), which is where the
+  `stable`/`experimental` marking also lives. (LABS-30 §7.1, LABS-35
   §2, FIRST-PRINCIPLES-REDESIGN F1.)
 - **Acceptance:**
   1. `API.md` at repo root — every class / property / keyframe / token
@@ -542,9 +656,13 @@ if scope expands.
 
 ### PF-014: Per-effect static page (`/effects/<id>`) + versioned docs + tested docs samples
 - **Area:** frontend / docs
-- **State:** partial. Effects live in the unified single-page catalog
-  at `/`, not at `/effects/<id>`. Docs site is single-version. Docs
-  code samples are not tested in CI. (V2 §8, LABS-30 §1.3/§7.5,
+- **State:** partial — **per-effect pages SHIPPED (PR #77)**: every
+  effect has a statically prerendered `/effects/<id>` page with live
+  preview, copyable CSS, framework tabs, prev/next, JSON-LD
+  (`SoftwareSourceCode` + `BreadcrumbList`) + OG tags; the sitemap lists
+  all 1,959 URLs. **Residuals:** versioned docs routing (acceptance #3),
+  "Edit on GitHub" link (4), per-page feedback widget + last-updated
+  stamp (5), docs-code-sample CI test (6). (V2 §8, LABS-30 §1.3/§7.5,
   COMPETITIVE-ANALYSIS R1, LABS-29 §9.2.)
 - **Acceptance:**
   1. `src/app/effects/[id]/page.tsx` — per-effect static page with rich
@@ -598,6 +716,64 @@ if scope expands.
   `migrate` subcommands), `scripts/codemods/__tests__/*` (new).
 - **Agent:** general-purpose
 
+### PF-048: Favorites + Collections backend HTTP surface
+- **Area:** backend-node
+- **State:** not started — the Prisma models exist and are enforced
+  (`backend-node/prisma/schema.prisma:24` `EffectFavorite` with
+  `@@unique([userId, effectId])`; `Collection` with an `effectIds`
+  array), but there are **zero HTTP routes**: the frontend persists
+  favorites/collections to localStorage only. The absence is honestly
+  pinned by
+  `backend-node/tests/integration/favorites-collections.test.ts`
+  (a planned-routes pin). (Audit-fold from the deleted 2026-09 audit:
+  "models without routes".)
+- **Acceptance:**
+  1. `backend-node/src/modules/{favorites,collections}/` following
+     the repo's module conventions: `requireAuth` on ALL routes, Zod
+     `validateBody/Query/Params`, owner-scoped queries (foreign ids →
+     flat 404, the api-keys convention), `AppError` envelopes, module
+     loggers.
+  2. Favorites surface: `GET /api/v1/favorites`, `POST/DELETE
+     /api/v1/favorites/:effectId` (list/add/remove).
+  3. Collections surface: `GET/POST/PATCH/DELETE
+     /api/v1/collections` + `POST /api/v1/collections/:id/effects` +
+     `DELETE /api/v1/collections/:id/effects/:effectId`.
+  4. Effect ids resolved through the registry catalog SOT (PF-009 A1
+     single code path); audit rows on every mutation (PF-009 A6).
+  5. The pinning test flips to live coverage; `API.md` regenerated
+     (`api:gen`) and drift gate green.
+  6. Optional follow-up: frontend swaps localStorage for these
+     endpoints behind a backend-live check.
+- **Files:** `backend-node/src/modules/{favorites,collections}/{routes,schema,service}.ts`,
+  `backend-node/src/server/app.ts` (mount),
+  `backend-node/tests/integration/favorites-collections.test.ts`
+  (flip pin → live coverage), `API.md` (regen).
+- **Agent:** general-purpose
+
+### PF-049: Data-snapshot freshness gate (`cli/effects.json` stale at 1,569)
+- **Area:** tooling / CI
+- **State:** **DONE — the artifacts live on the sibling
+  `chore/repo-cleanup` branch** (2026-09-12), which merges with this
+  docs wave: `cli/effects.json` regenerated from the 1,959-effect
+  catalog and snapshot-freshness tests asserting that the `dist`,
+  `mcp-server`, and `cli` snapshot counts equal the test-pinned
+  catalog count. On `main` alone the CLI snapshot is still stale —
+  count this item done only after that branch merges. (Audit-fold:
+  the deleted 2026-09 audit's "CLI stale snapshot" finding; the MCP
+  half was fixed earlier in PR #82, and the mcp-server README diagram
+  count was fixed by this triage.)
+- **Acceptance:**
+  1. `cli/effects.json` regenerated from `dist/effects.json` — all
+     snapshot files agree with the catalog (1,959).
+  2. Tests (or a CI job) asserting that `dist/effects.json`,
+     `mcp-server/effects.json`, and `cli/effects.json` counts equal
+     the `src/lib` catalog count pinned by `tests/unit/effects.test.ts`.
+  3. Stale-count sweep of consumer-facing docs (README,
+     mcp-server/README) — the doc half landed with the PF-051 triage.
+- **Files:** `cli/effects.json` (regen), snapshot-freshness tests
+  under `tests/unit/` (on the sibling branch).
+- **Agent:** general-purpose
+
 ---
 
 ## P2 — v1.1 (compounds the platform, ecosystem expansion)
@@ -610,7 +786,11 @@ if scope expands.
 
 ### PF-016: First-party build plugins (Vite, Next.js, Astro, webpack, Turbopack, esbuild, Rollup, Rspack)
 - **Area:** tooling
-- **State:** not started — manual `@import "roycss.css"` only. (R6.)
+- **State:** partial — **2 of 8 bundler plugins shipped (PR #90)**:
+  `packages/plugins/{core,vite,next}` (shared scan/extract engine +
+  adapters) with 7 plugin test files under `tests/unit/plugins-*.test.ts`.
+  Remaining: astro, webpack, esbuild, rollup, rspack, turbopack.
+  (R6.)
 - **Acceptance:** Each plugin published as `@roycss/<bundler>-plugin`,
   zero-config, scans consumer source for `r-*` / `roycss-*` class usage,
   extracts only used CSS, supports HMR + JIT in dev + AOT in prod,
@@ -710,7 +890,11 @@ if scope expands.
   `review`) with mock fallback. No vector index of effects, no hybrid
   retrieval, no fine-tuned RoyCSS model, no `roycss.rules.md`, no
   `@roycss/ai` package, no AI conformance suite. (PLATFORM-VISION §1.6,
-  V2 §8.3, LABS-32 §7-9, F11, Tier 2 #17.)
+  V2 §8.3, LABS-32 §7-9, F11, Tier 2 #17.) **Audit-fold note
+  (2026-09):** the content half — `dist/roycss.rules.md`, training
+  pairs, grammar, system-prompt — is pure content generation from the
+  catalog (no keys, no vector store) and is dispatchable now; the
+  vector-index/LLM halves stay external-key-dependent.
 - **Acceptance:**
   1. Vector index of every effect's CSS + description + tags + visual
      screenshot; cosine similarity + structured token lookup + LLM
@@ -1158,7 +1342,7 @@ if scope expands.
   3. Token editor — visual OKLCH palette generation, contrast checking
      against WCAG 2.2 AA/AAA in real time, automatic tint/shade via
      `color-mix()`.
-  4. Effect picker — drag any of the 1,749 RoyCSS effects onto an
+  4. Effect picker — drag any of the 1,959 RoyCSS effects onto an
      element; tune duration/easing/delay/iteration via sliders.
   5. Component composer — compose Pro Components visually; Studio
      writes framework-specific bindings (React/JSX, Vue/SFC, Svelte,
@@ -1198,7 +1382,7 @@ if scope expands.
 
 ### PF-041: Roy AI hybrid retrieval + `@roycss/ai` + `roycss.rules.md` + training pairs + AI conformance suite (V2 consolidation)
 - **Area:** AI / tooling
-- **State:** see PF-021 (V1 on-ramp). This item is the V2
+- **State:** partial — see PF-021 (V1 on-ramp). This item is the V2
   consolidation: integrated AI layer across CLI, Studio, Cloud,
   Marketplace, DevTools, Inspector. (PLATFORM-VISION §1.6, V2 §8.3,
   LABS-32 §8, LABS-27 §7.2, F11, Tier 1 #17.)
@@ -1217,9 +1401,15 @@ if scope expands.
 - **Area:** data / docs / CI
 - **State:** partial — `dist/effects.json`, `dist/class-index.json`,
   `dist/pro-components.json`, `dist/version-manifest.json` exist but
-  are not unified; no maturity tags; no `API.md` (per PF-013 V1
-  stopgap). (PLATFORM-VISION §4.3, LABS-30 §4.1/§7.1/§3.2, LABS-35
-  §2/§4.4, Tier 1 #6/19/21.)
+  are not unified; no maturity tags; `API.md` shipped via PF-013 (the
+  per-effect/class `stable` marking is this item's half). (PLATFORM-VISION
+  §4.3, LABS-30 §4.1/§7.1/§3.2, LABS-35 §2/§4.4, Tier 1 #6/19/21.)
+  **Audit-fold notes (2026-09):** (a) the per-effect quality score
+  (`src/lib/effect-quality.ts` exists but is not populated per effect)
+  belongs here; (b) per-effect semver + diff — registry version stamping
+  shipped with PF-009 A1, the per-effect diff surface is this item's
+  remainder; (c) the `api-gate.yml` stable-name workflow (PF-013's
+  residual) pairs with this item's maturity tags.
 - **Acceptance:**
   1. `public/roycss.manifest.json` — unified machine-readable manifest
      (every effect, category, custom props, preview type, maturity,
@@ -1348,8 +1538,11 @@ if scope expands.
   fork, deleting the CLI, deleting the color customizer UI, deleting
   the favorites system, deleting framework adapters, deleting VS Code
   snippets, deleting the section scrollbar, deleting the scroll-to-top
-  button. The current codebase ships 1,569+ effects across 20+
-  categories (grew, not shrunk). (LABS-28, Tier 3 #45.)
+  button. The current codebase ships 1,959 effects across 29
+  categories (grew, not shrunk). (LABS-28, Tier 3 #45.) Note:
+  `docs/LABS-28-DELETE-HALF.md` and the strategic docs it referenced
+  were **already deleted from the repo** (pre-2026-09) — the decision
+  doc, if pursued, starts fresh as `docs/PRODUCT-DIRECTION.md`.
 - **Acceptance:**
   1. Product decision documented: pursue the V2 accretive path (per
      PLATFORM-VISION / V2-BLUEPRINT) OR the LABS-28 amputation path.
@@ -1359,10 +1552,36 @@ if scope expands.
      the codemods (PF-015) for users who depend on removed items.
   4. Either way: this decision must be made before further V2
      investment (per PENDING-FEATURES-AUDIT §22 final note #5).
-- **Files:** `docs/LABS-28-DELETE-HALF.md` (decision annotation),
-  `docs/PRODUCT-DIRECTION.md` (new — the decision doc).
+- **Files:** `docs/LABS-28-DELETE-HALF.md` (already deleted — see
+  State note), `docs/PRODUCT-DIRECTION.md` (new — the decision doc).
 - **Agent:** general-purpose (product owner decision; engineering
   implements whichever path is chosen)
+
+### PF-050: (optional) Investor / market positioning companion doc
+- **Area:** docs / product
+- **State:** proposed — decision required. The deleted 2026-09 audit
+  carried a market/competitor analysis that is **not backlog
+  material** and was deliberately NOT folded into the items above:
+  competitor read (Animate.css ~80 effects vs this catalog's 1,959;
+  GSAP/Motion are JS runtimes where this is a zero-JS catalog;
+  Tailwind complementarity via copy formats; shadcn as the layer
+  above), four theses (AI-native retrieval, zero-JS, completeness
+  moat, OKLCH modernity), risks R1–R7 (bus factor 1, deploy
+  reliability, monetization unwired, …), and business-model lanes
+  (npm Pro split, hosted API/MCP keys, marketplace 85/15, Roy Cloud
+  SaaS, enterprise compliance). Decide: preserve as
+  `docs/POSITIONING.md`, distill a paragraph into the README/company
+  blurb, or let it go. (Audit-fold decision item.)
+- **Acceptance:**
+  1. Product decision recorded: preserve (new `docs/POSITIONING.md`
+     or README distillation) OR explicitly let it go.
+  2. If preserved: authored under the same evidence conventions as
+     the rest of the repo (repo claims marked, market claims
+     qualitative and conservative) and linked from the README.
+- **Files:** `docs/POSITIONING.md` (new, only if "preserve"),
+  `README.md` (optional blurb).
+- **Agent:** product owner decision; general-purpose to author if
+  "preserve" is chosen.
 
 ---
 
@@ -1502,8 +1721,9 @@ this consolidated list:
 
 1. `docs/plans/BACKEND-COMPLETION-REQUIREMENTS.md` — claims "62 product
    cards don't fetch from backend" (stale: 37 now use `useBackendData`
-   per FIX-F1-F2) and "current schema has 4 models" (stale: 45 now
-   exist per AUDIT-1). Replaced by this file.
+   per FIX-F1-F2) and "current schema has 4 models" (stale: 47 now
+   exist — 45 at the AUDIT-1 pin, 46 at the 2026-09-04 audit, 47 now).
+   Replaced by this file.
 
 2. `docs/reports/AUDIT-REPORT.md` and `docs/reports/FINAL-VERIFICATION.md`
    — claim "all 68 backend modules with real implementations"
@@ -1532,7 +1752,19 @@ this consolidated list:
    companion reports themselves remain useful as architectural context
    (not pending-features trackers).
 
+6. `docs/AUDIT-2026-09.md`, `security/DEPENDENCY-AUDIT.md` and
+   `security/SBOM.json` — **deleted 2026-09-12**: snapshots pinned to
+   older repo states (and, for the dependency audit, a sandbox path
+   predating the September dependabot wave). Their durable findings are
+   folded into this file (see the audit-fold notes on PF-021/PF-042
+   and items PF-048..PF-051); the security harnesses regenerate fresh
+   SBOM/audit outputs on demand (gitignored). The standing
+   recommendation from the dependency audit survives in the pre-release
+   checklist: re-run `bun audit` quarterly and after every dependency
+   change.
+
 ---
 
-**End of consolidated pending-features list.** Report version: 2.0.
+**End of consolidated pending-features list.** Report version: 3.0.
+Triage: PF-051, 2026-09-12.
 Generated by task PENDING-AUDIT.

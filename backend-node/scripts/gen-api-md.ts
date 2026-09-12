@@ -62,8 +62,9 @@ const DOMAINS: Domain[] = [
   {
     title: "Auth & messaging",
     anchor: "domain-auth",
-    blurb: "Account lifecycle (JWT) and the contact intake form.",
-    modules: ["auth", "contact"],
+    blurb:
+      "Account lifecycle (JWT), the caller's saved content (favorites + collections), and the contact intake form.",
+    modules: ["auth", "contact", "favorites", "collections"],
   },
   {
     title: "Modern-CSS devtools",
@@ -170,6 +171,10 @@ const MODULE_BLURBS: Record<string, string> = {
   fallback: "`@supports` fallback recipes for modern CSS features.",
   auth: "JWT account lifecycle + API key management (register / login / refresh / me; mint / list / revoke CLI–SDK–MCP keys).",
   contact: "Contact form intake (Prisma `ContactMessage`; 5 submissions/min/IP).",
+  favorites:
+    "Saved effects (`EffectFavorite` Prisma model) — list/add/remove, owner-scoped (PF-048).",
+  collections:
+    "Curated effect bundles (`Collection` Prisma model) — CRUD + membership edits, owner-scoped (PF-048).",
   devtools: "CSS introspection — class inspection, design tokens, utilities, CSS analysis.",
   inspector: "CSS lint — 8 correctness/a11y rules with line-precise findings (read-only).",
   "color-space": "Color conversion + gamut mapping (OKLCH, sRGB, Display P3).",
@@ -241,6 +246,8 @@ const MODULE_MODELS: Record<string, string> = {
   cloud: "CloudProject, Deployment",
   compliance: "ComplianceStandard, ComplianceScan",
   contact: "ContactMessage",
+  favorites: "EffectFavorite",
+  collections: "Collection",
   deploy: "Deployment",
   enterprise: "Organization, Team, License, EnterpriseAuditLog",
   fleet: "FleetProject",
@@ -312,6 +319,10 @@ const ERROR_OVERRIDES: Record<string, string> = {
   "GET /api/v1/effects/categories": "401 · 403 · 429",
   "GET /api/v1/effects/tags": "401 · 403 · 429",
   "GET /api/v1/effects/:id": "400 · 401 · 403 · 404 · 429",
+  // PF-048 — favorites + collections (owner-scoped; duplicates are 409).
+  "POST /api/v1/favorites/:effectId": "400 · 401 · 404 · 409",
+  "POST /api/v1/collections": "400 · 401 · 404",
+  "POST /api/v1/collections/:id/effects": "400 · 401 · 404 · 409",
 };
 
 /** Hand-curated request cells (manual validation / composed schemas). */
@@ -353,6 +364,34 @@ const MODULE_NOTE_OVERRIDES: Record<string, string> = {
   contact:
     "> Prisma-backed (`ContactMessage`). The POST stays public by design — " +
     "anonymous form intake (rate-limited 5/min/IP).",
+  // #76-landed requireAuth rollout: these two POSTs are intentionally
+  // unauthenticated READ-ONLY query endpoints (no user-state mutation),
+  // not protected routes that lost their guard.
+  search:
+    "> Prisma-backed (SearchIndex). `POST /` is a **public query " +
+    "endpoint** — it runs the same read-only search as `GET /` " +
+    "(search-tier rate limit), so it is intentionally unauthenticated.",
+  analytics:
+    "> Prisma-backed (User (read-only)). `POST /jobs` is a **public query " +
+    "endpoint** — it enqueues a read-only aggregation job on the in-process " +
+    "queue (rate-limited), so it is intentionally unauthenticated.",
+  // PF-048 — owner-scoped personal content (reads included are
+  // authenticated, unlike the default Prisma-backed note which only
+  // calls out mutating routes).
+  favorites:
+    "> Prisma-backed (`EffectFavorite`, @@unique([userId, effectId])). " +
+    "**Owner-scoped** — every route (reads included) requires a Bearer " +
+    "JWT and only ever returns the caller's own favorites; foreign rows " +
+    "read as flat 404s. Effect ids resolve through the registry catalog " +
+    "(PF-009 A1); every mutation writes an `EnterpriseAuditLog` row " +
+    "(PF-009 A6).",
+  collections:
+    "> Prisma-backed (`Collection`; `effectIds` is a JSON-string array — " +
+    "the Theme.tokensJson convention). **Owner-scoped** — every route " +
+    "(reads included) requires a Bearer JWT and only ever returns the " +
+    "caller's own collections; foreign ids read as flat 404s. Effect ids " +
+    "resolve through the registry catalog (PF-009 A1); every mutation " +
+    "writes an `EnterpriseAuditLog` row (PF-009 A6).",
 };
 
 // ─── Row rendering ────────────────────────────────────────────────────────
@@ -410,8 +449,10 @@ function authCell(r: BackendRouteInfo): string {
   if (r.auth === "required") return "Bearer JWT";
   if (r.auth === "optional") return "Public (Bearer optional)";
   if (PUBLIC_MUTATIONS.has(key)) return "Public";
-  const mutating = ["POST", "PUT", "PATCH", "DELETE"].includes(r.method);
-  if (mutating && r.persisted) return "Public → Bearer JWT *(#64)*";
+  // Issue #64 (requireAuth rollout) landed in PR #76 — the planned
+  // "Public → Bearer JWT" transition annotation is retired. A mutating
+  // route without requireAuth today (search/analytics public query
+  // endpoints) is documented as intentionally public via its module note.
   return "Public";
 }
 
@@ -460,9 +501,9 @@ function moduleSection(routes: BackendRouteInfo[], mount: string): string {
   } else if (models) {
     if (hasMutations) {
       lines.push(
-        `> Prisma-backed (${models}). Mutating routes are annotated ` +
-          `"Public → Bearer JWT *(#64)*" — they become authenticated when ` +
-          "issue #64 (requireAuth rollout) lands.",
+        `> Prisma-backed (${models}). Mutating routes require a Bearer JWT ` +
+          "(`requireAuth` — landed in PR #76, closing issue #64); " +
+          "unauthenticated calls get the 401 envelope.",
       );
     } else {
       lines.push(
@@ -653,9 +694,9 @@ function generate(): string {
   out.push("### Auth");
   out.push("");
   out.push("- **Bearer JWT:** \`Authorization: Bearer <accessToken>\` on " +
-      "every protected route (\`requireAuth\`, issue #64 rollout). " +
-      "Register/login/refresh are public (rate-limited) token-bootstrap " +
-      "endpoints.");
+      "every protected route (\`requireAuth\` — the rollout landed in " +
+      "PR #76, closing issue #64). Register/login/refresh are public " +
+      "(rate-limited) token-bootstrap endpoints.");
   out.push(
     "- **API keys (issue #65):** an \`X-API-Key: rk_live_…\` header is " +
       "accepted IN PLACE OF the Bearer token on every protected route " +

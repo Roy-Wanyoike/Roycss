@@ -147,8 +147,9 @@ describe("contract: module coverage guard (fail-on-missing)", () => {
   it("every module dir with routes.ts is mounted in the live router", () => {
     const liveModules = new Set(routes.map((r) => normalizeModule(r.module)));
     const onDisk = moduleDirsDeclaringGetRoutes();
-    // 71 of 72 (api-keys is service-only) — audit, metrics, openapi added by PR #97.
-    expect(onDisk.size, "module dirs with routes.ts").toBe(71);
+    // 73 of 74 (api-keys is service-only) — audit, metrics, openapi added
+    // by PR #97; favorites + collections by PF-048.
+    expect(onDisk.size, "module dirs with routes.ts").toBe(73);
     for (const [mount] of onDisk) {
       expect(
         liveModules.has(mount),

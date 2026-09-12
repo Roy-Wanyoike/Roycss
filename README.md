@@ -18,7 +18,7 @@
 
 **Live demo: <https://roycss.vercel.app>**
 
-<sub><b>Status:</b> the live site currently serves a build from before the latest wave of fixes — the production redeploy is pending an owner-side account/billing action ([#75](https://github.com/Roy-Wanyoike/Roycss/issues/75)). Everything merged to `main` is verified locally: build ✓ · `tsc` 0 errors · 1,143/1,143 tests ✓.</sub>
+<sub><b>Status:</b> the live site currently serves a build from before the latest wave of fixes — the production redeploy is pending an owner-side account/billing action ([#75](https://github.com/Roy-Wanyoike/Roycss/issues/75)). Everything merged to `main` is verified locally: build ✓ · `tsc` 0 errors · 1,268/1,268 tests ✓.</sub>
 
 </div>
 
@@ -99,7 +99,7 @@ Every number below is verified — most are pinned by tests, so stale docs fail 
 | **Backend** | Node: Express 4 + Prisma 6 + Zod 4 (72 modules, 271 routes) — the running source of truth · Go 1.23 (`chi`) port in progress for production |
 | **Runtime** | Bun (install + scripts, `>=1.0`) — Node `>=18.18` compatible (`.nvmrc`: 20) |
 | **Data** | SQLite (dev) → PostgreSQL-ready (Supabase in the prod blueprints) · 47 Prisma models |
-| **Quality** | Vitest (1,143 tests) · Playwright E2E + axe-core a11y audits · `tsc` strict-clean · API drift gate |
+| **Quality** | Vitest (1,268 tests) · Playwright E2E + axe-core a11y audits · `tsc` strict-clean · API drift gate |
 | **Deploy** | Vercel ([`vercel.json`](vercel.json)) + Railway ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) |
 | **Ecosystem** | npm package artifacts ([`dist/`](dist)) · RoyCLI · MCP server · VS Code extension |
 | **Realtime** | Socket.io (Roy Live, port 3003) |

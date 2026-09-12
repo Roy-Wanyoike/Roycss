@@ -1,0 +1,30 @@
+{
+  "name": "@roycss/plugin-astro",
+  "version": "0.1.0",
+  "description": "Astro integration for RoyCSS — injects the zero-config Vite plugin into Astro's Vite pipeline, scanning source for r-* / roycss-* usage and shipping only the CSS you actually use (AOT extraction).",
+  "license": "MIT",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "astro": ">=2.0.0"
+  },
+  "keywords": [
+    "roycss",
+    "astro",
+    "astro-integration",
+    "vite",
+    "css",
+    "aot"
+  ]
+}

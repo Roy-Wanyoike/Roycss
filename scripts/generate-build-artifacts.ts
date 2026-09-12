@@ -1,9 +1,8 @@
 /**
  * Generate build artifacts.
  *
- * Reads the RoyCSS effects source (from `src/lib/roycss-effects`) plus
- * `package.json` + `CHANGELOG.md` and produces four derived JSON
- * artifacts in `dist/`:
+ * Reads the RoyCSS effects source (from `src/lib/roycss-effects`)
+ * and produces three derived JSON artifacts in `dist/`:
  *
  *   1. dist/class-index.json
  *      Array of `{ className, category, effectId, properties }`. Each
@@ -12,23 +11,25 @@
  *
  *   2. dist/motion-library.json
  *      Array of effects whose `category` is in the motion-related set
- *      `["animations", "hover", "scroll", "page-transitions",
- *      "particles", "microinteractions", "status-state", "cursor"]`.
+ *      `"animations", "hover", "scroll", "page-transitions",
+ *      "particles", "microinteractions", "status-state", "cursor"`.
  *      The output shape matches `dist/effects.json`'s metadata format.
  *
  *   3. dist/pro-components.json
  *      Array of `{ id, name, path }` rows derived from listing
- *      `src/components/roycss/pro/*.tsx`.
+ *      `src/components/roycss/pro/*.tsx`. INTERNAL — read at runtime by
+ *      the backend-node pro-components service; excluded from the npm
+ *      tarball via the `!dist/pro-components.json` negation in
+ *      package.json `files`.
  *
- *   4. dist/version-manifest.json
- *      `{ version, releasedAt, changelog }` read from `package.json`
- *      (version) and `CHANGELOG.md` (latest released section's body
- *      as `changelog`, header date as `releasedAt`).
+ * (dist/version-manifest.json is intentionally NOT generated anymore:
+ * nothing reads it — the backend version service degrades gracefully
+ * to its defaults when the artifact is absent.)
  *
  * Usage: `bun run scripts/generate-build-artifacts.ts` — typically
  * invoked at the end of `scripts/build-package.ts`.
  */
-import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
+import { writeFileSync, readdirSync, existsSync } from "node:fs";
 import { join, basename, extname } from "node:path";
 
 import { effects } from "../src/lib/roycss-effects";
@@ -60,12 +61,6 @@ interface ProComponentEntry {
   id: string;
   name: string;
   path: string;
-}
-
-interface VersionManifest {
-  version: string;
-  releasedAt: string;
-  changelog: string;
 }
 
 /** Parse `\.([\w-]+)\s*\{([^}]*)\}` from a CSS string. */
@@ -133,38 +128,6 @@ function buildProComponents(): ProComponentEntry[] {
   });
 }
 
-function buildVersionManifest(): VersionManifest {
-  const pkgPath = join(ROOT, "package.json");
-  const pkgRaw = readFileSync(pkgPath, "utf-8");
-  const pkg = JSON.parse(pkgRaw) as { version: string };
-  const version = pkg.version ?? "0.0.0";
-
-  let releasedAt = new Date().toISOString();
-  let changelog = "";
-  const changelogPath = join(ROOT, "CHANGELOG.md");
-  if (existsSync(changelogPath)) {
-    const md = readFileSync(changelogPath, "utf-8");
-    // Find the first released section: a `## [x.y.z] — YYYY-MM-DD` heading
-    // (skipping the `[Unreleased]` placeholder).
-    const sectionRe = /##\s+\[([^\]]+)\]\s*(?:—\s*([0-9]{4}-[0-9]{2}-[0-9]{2}))?\s*\n([\s\S]*?)(?=\n##\s+\[|\n*$)/g;
-    let m: RegExpExecArray | null;
-    while ((m = sectionRe.exec(md)) !== null) {
-      const ver = m[1]!;
-      if (ver.toLowerCase() === "unreleased") continue;
-      const date = m[2] ?? new Date().toISOString().split("T")[0]!;
-      releasedAt = new Date(`${date}T00:00:00.000Z`).toISOString();
-      changelog = m[3]!.trim();
-      break;
-    }
-    // Fallback: if no released section found, use the whole CHANGELOG body.
-    if (!changelog) {
-      changelog = md.trim();
-    }
-  }
-
-  return { version, releasedAt, changelog };
-}
-
 function writeJson(filename: string, data: unknown): void {
   const path = join(DIST_DIR, filename);
   writeFileSync(path, JSON.stringify(data, null, 2), "utf-8");
@@ -184,9 +147,6 @@ function main(): void {
 
   const proComponents = buildProComponents();
   writeJson("pro-components.json", proComponents);
-
-  const versionManifest = buildVersionManifest();
-  writeJson("version-manifest.json", versionManifest);
 
   console.log("");
   console.log("✅ Build artifacts generated!");

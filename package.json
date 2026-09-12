@@ -34,6 +34,7 @@
   },
   "files": [
     "dist",
+    "!dist/pro-components.json",
     "README.md",
     "LICENSE"
   ],

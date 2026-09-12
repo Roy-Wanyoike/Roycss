@@ -353,6 +353,17 @@ const MODULE_NOTE_OVERRIDES: Record<string, string> = {
   contact:
     "> Prisma-backed (`ContactMessage`). The POST stays public by design — " +
     "anonymous form intake (rate-limited 5/min/IP).",
+  // #76-landed requireAuth rollout: these two POSTs are intentionally
+  // unauthenticated READ-ONLY query endpoints (no user-state mutation),
+  // not protected routes that lost their guard.
+  search:
+    "> Prisma-backed (SearchIndex). `POST /` is a **public query " +
+    "endpoint** — it runs the same read-only search as `GET /` " +
+    "(search-tier rate limit), so it is intentionally unauthenticated.",
+  analytics:
+    "> Prisma-backed (User (read-only)). `POST /jobs` is a **public query " +
+    "endpoint** — it enqueues a read-only aggregation job on the in-process " +
+    "queue (rate-limited), so it is intentionally unauthenticated.",
 };
 
 // ─── Row rendering ────────────────────────────────────────────────────────
@@ -410,8 +421,10 @@ function authCell(r: BackendRouteInfo): string {
   if (r.auth === "required") return "Bearer JWT";
   if (r.auth === "optional") return "Public (Bearer optional)";
   if (PUBLIC_MUTATIONS.has(key)) return "Public";
-  const mutating = ["POST", "PUT", "PATCH", "DELETE"].includes(r.method);
-  if (mutating && r.persisted) return "Public → Bearer JWT *(#64)*";
+  // Issue #64 (requireAuth rollout) landed in PR #76 — the planned
+  // "Public → Bearer JWT" transition annotation is retired. A mutating
+  // route without requireAuth today (search/analytics public query
+  // endpoints) is documented as intentionally public via its module note.
   return "Public";
 }
 
@@ -460,9 +473,9 @@ function moduleSection(routes: BackendRouteInfo[], mount: string): string {
   } else if (models) {
     if (hasMutations) {
       lines.push(
-        `> Prisma-backed (${models}). Mutating routes are annotated ` +
-          `"Public → Bearer JWT *(#64)*" — they become authenticated when ` +
-          "issue #64 (requireAuth rollout) lands.",
+        `> Prisma-backed (${models}). Mutating routes require a Bearer JWT ` +
+          "(`requireAuth` — landed in PR #76, closing issue #64); " +
+          "unauthenticated calls get the 401 envelope.",
       );
     } else {
       lines.push(
@@ -653,9 +666,9 @@ function generate(): string {
   out.push("### Auth");
   out.push("");
   out.push("- **Bearer JWT:** \`Authorization: Bearer <accessToken>\` on " +
-      "every protected route (\`requireAuth\`, issue #64 rollout). " +
-      "Register/login/refresh are public (rate-limited) token-bootstrap " +
-      "endpoints.");
+      "every protected route (\`requireAuth\` — the rollout landed in " +
+      "PR #76, closing issue #64). Register/login/refresh are public " +
+      "(rate-limited) token-bootstrap endpoints.");
   out.push(
     "- **API keys (issue #65):** an \`X-API-Key: rk_live_…\` header is " +
       "accepted IN PLACE OF the Bearer token on every protected route " +

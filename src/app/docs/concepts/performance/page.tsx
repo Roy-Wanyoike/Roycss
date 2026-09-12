@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT } from "@/lib/site-stats";
+import { EFFECT_COUNT_FORMATTED, FULL_CSS_MIN_GZ_KB } from "@/lib/site-stats";
 
 export const metadata: Metadata = {
   title: "Performance — RoyCSS Docs",
-  description: "How RoyCSS stays fast: GPU compositing, no layout thrash, lazy custom properties, and per-category tree-shaking.",
+  description: "How RoyCSS stays fast: GPU-composited transforms, no layout thrash, registered properties that animate, and subset exports.",
 };
 
 export default function PerformancePage() {
@@ -12,114 +12,110 @@ export default function PerformancePage() {
       <h1>Performance</h1>
       <p className="text-lg text-muted-foreground">
         RoyCSS effects are designed to run at 60 fps on a mid-range
-        phone. The library achieves this by animating only
-        GPU-composited properties and never triggering layout.
+        phone. The library achieves this by animating mostly
+        GPU-composited properties and by keeping the runtime at
+        exactly zero — there is no JavaScript to profile.
       </p>
 
-      <h2 id="composited-props">Only composited properties</h2>
+      <h2 id="composited-props">Composited properties first</h2>
       <p>
-        RoyCSS animates <code>transform</code> and{" "}
+        Most RoyCSS effects animate <code>transform</code> and{" "}
         <code>opacity</code> — the two properties the browser can
-        move on the compositor thread without re-laying out the page.
-        Anything else (<code>top</code>, <code>left</code>,{" "}
-        <code>width</code>, <code>margin</code>) is forbidden in
-        transitions.
+        move on the compositor thread without re-laying out the
+        page. A few effects deliberately animate other properties
+        where the visual demands it (a dashed border marching, a
+        background-position slide, a registered custom property) —
+        those are the trade-offs the effect&apos;s own page is
+        honest about:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`/* Good — both composited */
-.r-hover-lift {
-  transition: transform 180ms, opacity 180ms;
-}
-.r-hover-lift:hover {
-  transform: translateY(4px);
-  opacity: 0.92;
+        <code>{`/* Real code from dist/roycss.css — pure compositor work */
+.roycss-hover-push-up {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease;
 }
 
-/* Forbidden in RoyCSS — triggers layout */
-.bad-hover:hover {
-  top: 4px;        /* layout! */
-  width: 110%;     /* layout! */
+.roycss-hover-push-up:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px -10px color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent);
 }`}</code>
       </pre>
 
       <h2 id="will-change">will-change, sparingly</h2>
       <p>
-        RoyCSS uses <code>will-change: transform</code> only on
-        elements that actually animate — never on the entire page.
-        Over-using <code>will-change</code> forces the browser to
-        allocate a GPU layer for every element, which exhausts
-        memory on low-end devices.
+        The stylesheet uses <code>will-change</code> on only ~33
+        rules — the elements that genuinely animate — never
+        blanket-applied. Over-using <code>will-change</code> forces
+        the browser to allocate a GPU layer for every element,
+        which exhausts memory on low-end devices. 37 effects also
+        promote a layer with <code>translateZ(0)</code> (loaders,
+        full-screen mesh backgrounds) where a guaranteed compositor
+        layer matters.
       </p>
 
       <h2 id="no-layout-thrash">No layout thrash</h2>
       <p>
-        Because nothing animates layout, RoyCSS never causes the
-        browser to recalculate styles mid-frame. Hover effects on
-        a long list — even 1,000 items — stay buttery because the
-        only thing changing is the GPU layer’s transform.
+        Because the hot paths animate transform and opacity, hover
+        effects on a long list — even 1,000 items — stay buttery:
+        the only thing changing is the GPU layer&apos;s transform.
+        And since there is no runtime at all, there is no JS on
+        your main thread to cause style recalculation storms.
       </p>
 
-      <h2 id="lazy-cascade">Lazy custom properties</h2>
+      <h2 id="registered-props">Properties the browser can animate</h2>
       <p>
-        RoyCSS uses <code>var(--r-…, fallback)</code> with sensible
-        fallbacks everywhere. Custom properties resolve lazily —
-        they don’t trigger layout until they’re read by a property
-        that does layout. RoyCSS exploits this so unused variables
-        cost nothing.
+        Effects that need to animate something CSS has no keyframe
+        syntax for (a gradient angle, a rating fill) register a
+        typed custom property with <code>@property</code> — the
+        browser interpolates it natively, still on the compositor
+        where possible:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`/* The default 4px is used unless you override --r-hover-lift */
-.r-hover-lift:hover {
-  transform: translateY(var(--r-hover-lift, 4px));
+        <code>{`@property --roy-gb-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes roy-card-gb-rotate {
+  to { --roy-gb-angle: 360deg; }
 }`}</code>
       </pre>
 
-      <h2 id="bundle-size">Bundle size</h2>
+      <h2 id="bundle-size">Bundle size, honestly</h2>
       <p>
-        The full RoyCSS stylesheet is ~80 KB gzipped. Per-category
-        imports drop that dramatically:
+        The full minified stylesheet — all{" "}
+        {EFFECT_COUNT_FORMATTED} effects — is{" "}
+        {FULL_CSS_MIN_GZ_KB}&nbsp;KB gzipped. There are no
+        per-category files to import; when bundle size matters,
+        export a hand-picked subset instead:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`Category        Gzipped
-─────────────────────────
-hover           2.1 KB
-text            3.4 KB
-backgrounds     4.8 KB
-loaders         1.9 KB
-buttons         2.7 KB
-cards           3.1 KB
-borders         1.6 KB
-─────────────────────────
-All ${EFFECT_COUNT_FORMATTED}  ~201 KB gz (min)`}</code>
+        <code>{`Full stylesheet (roycss/css/min)   ~${FULL_CSS_MIN_GZ_KB} KB gz   all ${EFFECT_COUNT_FORMATTED} effects
+Critical subset (critical.css)    ~3.6 KB gz    curated above-the-fold effects
+Hand-picked via roycss export      ~0.7 KB gz    3 effects (see below)`}</code>
       </pre>
 
       <h2 id="measure">Measure it yourself</h2>
       <p>
-        RoyCSS ships a CLI bundle analyzer:
+        The CLI reports the exact size of any subset you export:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss bundle --analyze --include r-hover-lift --include r-btn-glow-emerald
+        <code>{`$ npx roycss export btn-glow hover-push-up text-shimmer --out src/styles/roycss.css
 
-Bundle:
-  r-hover-lift         412 B  (112 B gz)
-  r-btn-glow-emerald   298 B  (89 B gz)
-  shared vars          612 B  (148 B gz)
-─────────────────────────────────────────
-  Total              1.32 KB  (349 B gz)`}</code>
+✓ Exported 3 effects to src/styles/roycss.css (1.6KB)
+
+Effects:
+  roycss-btn-glow        — Glow Button   (Button Effects)
+  roycss-hover-push-up   — Push Up       (Hover Effects)
+  roycss-text-shimmer    — Shimmer Text  (Text Effects)`}</code>
       </pre>
-
-      <h2 id="gpu-flags">GPU-friendly defaults</h2>
-      <p>
-        RoyCSS uses <code>transform: translateZ(0)</code> on the
-        handful of effects that need a guaranteed compositor layer
-        (loaders, full-screen mesh backgrounds). The flag is opt-in
-        per effect, never blanket-applied.
-      </p>
 
       <h2 id="reduced-motion">Reduced motion, for free</h2>
       <p>
-        RoyCSS ships a single <code>@media (prefers-reduced-motion: reduce)</code>{" "}
-        block that disables every animation. Performance for users
+        432 effect rules ship a{" "}
+        <code>prefers-reduced-motion: reduce</code> block that
+        disables or freezes their animation. Performance for users
         who request it is, by definition, the cost of the underlying
         element — no transitions, no GPU work, no rAF.
       </p>

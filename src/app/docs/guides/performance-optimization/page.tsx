@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { FULL_CSS_MIN_GZ_KB } from "@/lib/site-stats";
 
 export const metadata: Metadata = {
   title: "Performance Optimization — RoyCSS Docs",
-  description: "Advanced optimization: lazy-loading, content-visibility, GPU hints, and Lighthouse audits.",
+  description: "Advanced optimization: critical-CSS layering, content-visibility, GPU layer budget, and the benchmark harness.",
 };
 
 export default function PerformanceOptimizationPage() {
@@ -10,81 +11,87 @@ export default function PerformanceOptimizationPage() {
     <>
       <h1>Performance Optimization</h1>
       <p className="text-lg text-muted-foreground">
-        RoyCSS is fast by default. This guide covers the advanced
-        techniques that squeeze the last bit of performance out of
-        large apps — lazy-loading, content-visibility, GPU layer
-        management, and Lighthouse audits.
+        RoyCSS is fast by default — zero runtime, composited
+        transforms. This guide covers the techniques that squeeze
+        the last bit of performance out of large apps: critical
+        CSS, content-visibility, GPU layer management, and
+        measuring with the repo&apos;s benchmark harness.
       </p>
 
-      <h2 id="lazy-load">Lazy-load below-the-fold effects</h2>
+      <h2 id="lazy-load">Layer critical CSS below the fold</h2>
       <p>
-        Split your CSS so above-the-fold effects load inline and the
-        rest loads lazily. The CLI can split for you:
+        The package ships a curated critical subset —{" "}
+        <code>roycss/critical.css</code>, ~3.6 KB gzipped, the top
+        effects for above-the-fold use, extracted by the repo&apos;s{" "}
+        <code>perf/optimize/extract-critical-css.ts</code>. Inline
+        it, then load the full ~{FULL_CSS_MIN_GZ_KB} KB stylesheet
+        normally:
       </p>
-      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss bundle --split --out dist/
-Wrote dist/critical.css   (4 KB gz, ship inline)
-Wrote dist/lazy.css       (8 KB gz, prefetch)`}</code>
-      </pre>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`<head>
   <style>
-    /* Inline dist/critical.css here */
+    /* Inline dist/roycss-critical.css here (~3.6 KB gz) */
   </style>
-</head>
-<body>
-  …
-  <link rel="prefetch" as="style" href="/lazy.css">
-</body>`}</code>
+  <link rel="stylesheet" href="/roycss.min.css">
+</head>`}</code>
+      </pre>
+      <p>
+        For a page that uses a handful of known effects, a CLI
+        export is even smaller:
+      </p>
+      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
+        <code>{`$ npx roycss export btn-glow hover-push-up text-shimmer --out critical-site.css
+✓ Exported 3 effects to critical-site.css (1.6KB)  /* ~0.7 KB gz */`}</code>
       </pre>
 
-      <h2 id="content-visibility">Use content-visibility</h2>
+      <h2 id="content-visibility">Use content-visibility yourself</h2>
       <p>
         Long lists of effect cards benefit from{" "}
         <code>content-visibility: auto</code> — the browser skips
-        rendering for off-screen items entirely. RoyCSS exposes a
-        utility:
+        rendering off-screen items entirely. RoyCSS does not ship
+        a utility for this (it is page-layout, not an effect), but
+        two lines of your own CSS do it:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`<ul class="r-list-cv-auto">
-  <li class="r-card-base r-hover-lift">Card 1</li>
-  <li class="r-card-base r-hover-lift">Card 2</li>
+        <code>{`<ul class="long-list">
+  <li class="roycss-card-glassmorphism">Card 1</li>
+  <li class="roycss-card-glassmorphism">Card 2</li>
   ...
 </ul>
 
-.r-list-cv-auto > * {
+.long-list > * {
   content-visibility: auto;
   contain-intrinsic-size: 200px;
 }`}</code>
       </pre>
-      <p>
-        On a 1,000-card list this drops paint time from 80 ms to
-        under 5 ms.
-      </p>
 
       <h2 id="gpu-layers">GPU layer budget</h2>
       <p>
         <code>will-change: transform</code> creates a GPU layer.
         Layers are cheap individually but expensive in aggregate —
         browsers cap at ~30 layers before they start evicting. The
-        RoyCSS rule: only the effects that are <em>currently
-        animating</em> get a layer.
+        shipped stylesheet uses <code>will-change</code> on only
+        ~33 rules and promotes layers with{" "}
+        <code>translateZ(0)</code> on 37 effects — the rule: only
+        what actually animates gets a layer. Follow it in your own
+        effects:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`/* Good — layer only on hover */
-.r-hover-lift { transition: transform 180ms; }
-.r-hover-lift:hover { will-change: transform; }
+.my-hover-lift { transition: transform 180ms; }
+.my-hover-lift:hover { will-change: transform; }
 
 /* Bad — every card has a layer always */
-.r-hover-lift { will-change: transform; }`}</code>
+.my-hover-lift { will-change: transform; }`}</code>
       </pre>
 
       <h2 id="avoid-layout">Avoid layout-triggering properties</h2>
       <p>
-        RoyCSS never animates <code>top</code>, <code>left</code>,
-        <code>width</code>, <code>height</code>, <code>margin</code>,
-        or <code>padding</code>. Don’t add your own overrides that
-        do — they cause layout thrash on every frame:
+        The shipped effects avoid animating <code>top</code>,{" "}
+        <code>left</code>, <code>width</code>, <code>height</code>,{" "}
+        <code>margin</code>, or <code>padding</code>. Don&apos;t add
+        your own overrides that do — they cause layout thrash on
+        every frame:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`/* Bad — animates layout */
@@ -94,48 +101,52 @@ Wrote dist/lazy.css       (8 KB gz, prefetch)`}</code>
 .card:hover { transform: translateY(-4px); }`}</code>
       </pre>
 
-      <h2 id="reduced-motion-bundle">Bundle a no-motion variant</h2>
+      <h2 id="reduced-motion">Respect reduced motion</h2>
       <p>
-        If most of your users request reduced motion, ship a
-        statically-reduced bundle. The CLI flags the{" "}
-        <code>--no-motion</code> variant:
+        There is no &quot;no-motion build&quot; — the mechanism is
+        the media query, and 432 shipped effect rules already carry
+        their guard. Users who request reduced motion pay nothing
+        for your effects, and the browser handles it with zero JS:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss bundle --no-motion --out dist/effects-static.css
-# Disables all animation/transition, keeps visual styling.`}</code>
+        <code>{`@media (prefers-reduced-motion: reduce) {
+  .your-motion { animation: none; }
+}`}</code>
       </pre>
 
       <h2 id="lighthouse">Lighthouse audits</h2>
       <p>
-        Run Lighthouse and check the Performance tab. RoyCSS sites
-        typically score 95-100 on Performance with these targets:
+        Run Lighthouse and check the Performance tab. Sensible
+        targets for a RoyCSS-powered page (the CSS adds no JS to
+        the critical path):
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`Metric                       Target   Typical RoyCSS site
-───────────────────────────────────────────────────────────
-LCP (Largest Content Paint)  < 2.5s    1.1–1.8s
-FID (First Input Delay)       < 100ms    4–12ms
-CLS (Cumulative Layout Shift) < 0.1     0.00–0.02
-TBT (Total Blocking Time)     < 200ms   0–40ms`}</code>
+        <code>{`Metric                        Target
+──────────────────────────────────────
+LCP (Largest Content Paint)    < 2.5s
+INP (Interaction to Next Paint) < 200ms
+CLS (Cumulative Layout Shift)   < 0.1
+TBT (Total Blocking Time)       < 200ms`}</code>
       </pre>
 
-      <h2 id="measure">Measure with the CLI</h2>
+      <h2 id="measure">Measure with the benchmark harness</h2>
       <p>
-        The RoyCSS CLI has a built-in Performance timeline recorder
-        that surfaces the heaviest effects in your page:
+        The RoyCSS repo ships a performance harness that measures
+        bundle sizes, catalog counts, CSS-injection timing,
+        virtual-scroll cost, animation jank, and per-effect heap
+        cost — with regression tests against budgets:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss perf --url https://localhost:3000
-
-Top GPU layer consumers:
-  1. r-bg-aurora              3 layers  280 KB
-  2. r-card-spotlight         1 layer    64 KB
-  3. r-hover-lift (×24 items) 1 layer    48 KB
-
-Suggestions:
-  • Replace r-bg-aurora with static variant for below-the-fold
-  • Use r-list-cv-auto on the 24-item grid`}</code>
+        <code>{`# from a clone of the repo
+$ bun run perf/benchmark.ts          # full suite → results/benchmark-report.json
+$ bun test perf/regression.test.ts  # fail if budgets regress
+$ bun run scripts/perf-budget.ts    # bundle budgets from perf/budget.json`}</code>
       </pre>
+      <p>
+        For usage inside your own app,{" "}
+        <code>npx roycss stats</code> tells you which effects you
+        actually use (and which to stop shipping).
+      </p>
     </>
   );
 }

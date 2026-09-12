@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 
 export const metadata: Metadata = {
   title: "Customization — RoyCSS Docs",
-  description: "Customize RoyCSS: theme variables, color overrides, dark mode, design-token integration.",
+  description: "Customize RoyCSS honestly: copy an effect's CSS and edit it, override registered @property values, bridge to your design tokens, and disable motion.",
 };
 
 export default function CustomizationPage() {
@@ -10,130 +11,134 @@ export default function CustomizationPage() {
     <>
       <h1>Customization</h1>
       <p className="text-lg text-muted-foreground">
-        RoyCSS is themed entirely with CSS custom properties. There
-        is no config file, no build step — set the variables you
-        want to change on any container and the cascade does the
-        rest.
+        RoyCSS effects ship with their colors, sizes, and curves
+        written directly in the CSS — there is deliberately no theme
+        token layer, because that is what keeps all{" "}
+        {EFFECT_COUNT_FORMATTED} classes drop-in with zero setup.
+        Customization therefore means: copy the effect, own the
+        copy. The CLI makes that a one-liner.
       </p>
 
-      <h2 id="global-theme">Global theme override</h2>
+      <h2 id="copy-and-edit">Copy and edit (the main path)</h2>
       <p>
-        Set the four primary variables on <code>:root</code> and
-        you’ve rethemed the whole library:
+        Every effect&apos;s CSS is small and self-contained, so the
+        intended workflow is to vendor the effects you use and edit
+        them freely:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`:root {
-  --r-accent:        oklch(70% 0.11 195);  /* teal */
-  --r-accent-strong: oklch(56% 0.13 195);
-  --r-bg:            oklch(99% 0.005 200);
-  --r-fg:            oklch(15% 0.02 200);
-}`}</code>
+        <code>{`# Copy one effect's CSS to your clipboard
+$ npx roycss add hover-push-up --copy
+
+# Or write it to a file next to your styles
+$ npx roycss add hover-push-up
+Created roycss-hover-push-up.css
+
+# Or export a hand-picked set into one stylesheet
+$ npx roycss export btn-glow hover-push-up text-shimmer --out src/styles/roycss.css`}</code>
       </pre>
       <p>
-        Every effect that reads <code>--r-accent</code> now uses teal.
-        No effect file edits, no rebuild.
+        Then edit your copy — swap the OKLCH values, resize, or
+        change the easing. The copy is yours; nothing in the package
+        fights you:
       </p>
-
-      <h2 id="full-palette">Full palette variables</h2>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`:root {
-  /* Accent ramp — perceptual 50…900 */
-  --r-accent-50:  oklch(96% 0.02 165);
-  --r-accent-100: oklch(90% 0.06 165);
-  --r-accent-300: oklch(80% 0.14 165);
-  --r-accent-500: oklch(72% 0.18 165);
-  --r-accent-700: oklch(58% 0.20 165);
-  --r-accent-900: oklch(38% 0.12 165);
-
-  /* Surfaces */
-  --r-bg:               oklch(99% 0.005 200);
-  --r-card-bg:          oklch(99% 0.005 200);
-  --r-fg:               oklch(15% 0.02 200);
-  --r-muted:            oklch(45% 0.02 200);
-
-  /* Sizing & motion */
-  --r-radius:    12px;
-  --r-hover-lift: 4px;
-  --r-duration:  180ms;
-  --r-easing:    cubic-bezier(0.2, 0.8, 0.2, 1);
+        <code>{`/* Your vendored + edited copy of .roycss-btn-glow */
+.roycss-btn-glow {
+  background: oklch(0.55 0.22 25);   /* ← was emerald; now red */
+  color: oklch(1 0 89.88);
+  border: none;
+  padding: 12px 28px;               /* ← your sizing */
+  border-radius: 999px;             /* ← pill instead of 12px */
+  ...
 }`}</code>
       </pre>
 
-      <h2 id="scoped-theme">Scoped theme overrides</h2>
+      <h2 id="property-overrides">Registered @property overrides</h2>
       <p>
-        Custom properties cascade. Setting them on a container
-        scopes the override to that subtree only:
+        A handful of effects animate registered custom properties
+        (the <code>--roy-*</code> family) with{" "}
+        <code>@property</code>. Because they are registered, you can
+        re-declare them — for example, start the gradient-border
+        card&apos;s sweep from a different angle:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`<section class="marketing-amber">
-  <h1 class="r-text-gradient">Limited time</h1>
-  <button class="r-btn-base r-btn-glow-emerald">Subscribe</button>
-</section>
-
-<style>
-  .marketing-amber {
-    --r-accent: oklch(80% 0.16 75);
-    --r-accent-strong: oklch(65% 0.18 75);
-  }
-</style>`}</code>
-      </pre>
-
-      <h2 id="dark-mode">Dark mode</h2>
-      <p>
-        RoyCSS dark mode is a different set of variables inside the
-        user-agent media query. No JS, no flash:
-      </p>
-      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`@media (prefers-color-scheme: dark) {
-  :root {
-    --r-bg:       oklch(15% 0.02 200);
-    --r-card-bg:  oklch(18% 0.02 200);
-    --r-fg:       oklch(96% 0.01 200);
-    --r-muted:    oklch(70% 0.02 200);
-    --r-accent:   oklch(72% 0.18 165);
-  }
+        <code>{`/* Ships as initial-value: 0deg; keyframed to 360deg */
+@property --roy-gb-angle {
+  syntax: '<angle>';
+  initial-value: 90deg;   /* ← your override */
+  inherits: false;
 }`}</code>
       </pre>
 
       <h2 id="design-tokens">Design-token integration</h2>
       <p>
-        If your project uses a design-token file (Style Dictionary,
-        W3C Design Tokens, or Tailwind theme), you can wire RoyCSS
-        variables to your tokens with a single bridge:
+        Because your copy is plain CSS, bridging to a design-token
+        file (Style Dictionary, W3C Design Tokens, Tailwind theme)
+        is just editing the copy to reference your variables:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`:root {
-  /* Bridge RoyCSS to your design tokens */
-  --r-accent: var(--my-brand-primary);
-  --r-accent-strong: var(--my-brand-primary-active);
-  --r-bg: var(--my-surface-base);
-  --r-fg: var(--my-text-primary);
+        <code>{`/* Your vendored copy, bridged to your tokens */
+.roycss-btn-glow {
+  background: var(--my-brand-primary);
+  color: var(--my-text-on-primary);
+  border-radius: var(--my-radius-md);
+}`}</code>
+      </pre>
+      <p>
+        The flip side is honest to state: overriding a token later
+        re-themes only the copies you bridged, not effects still
+        loaded from <code>dist/roycss.css</code>. For full brand
+        control, vendor everything you use.
+      </p>
+
+      <h2 id="dark-mode">Dark mode</h2>
+      <p>
+        Effects are not tokenized, so there is no automatic light /
+        dark switch. In practice this matters less than it sounds:
+        most effects were authored against dark surfaces (the
+        catalog previews use a dark theme), and effects that need a
+        specific backdrop ship it — for example the neon effects
+        carry their own dark background. For your vendored copies,
+        use the media query directly:
+      </p>
+      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
+        <code>{`@media (prefers-color-scheme: dark) {
+  .roycss-btn-glow {          /* your copy */
+    background: oklch(0.75 0.15 160);
+    color: oklch(0.15 0.02 160);
+  }
 }`}</code>
       </pre>
 
-      <h2 id="runtime-swap">Runtime theme swap</h2>
+      <h2 id="sizing">Sizing overrides</h2>
       <p>
-        Custom properties are live — change them at runtime and the
-        page re-themes instantly, no reload:
+        Many effects ship demo sizing ({" "}
+        <code>inline-size: 140px</code> and friends) so they preview
+        well in the catalog. Override the size in your own CSS —
+        specificity of a second class in your stylesheet is enough:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`function setTheme(accent) {
-  document.documentElement.style.setProperty("--r-accent", accent);
-}
-
-// Example: amber for a holiday campaign
-setTheme("oklch(80% 0.16 75)");`}</code>
+        <code>{`.my-panel.roycss-border-gradient-animated {
+  inline-size: auto;
+  block-size: auto;
+  padding: 24px;
+}`}</code>
       </pre>
 
-      <h2 id="disable-effects">Disabling effects entirely</h2>
+      <h2 id="disable-effects">Disabling motion</h2>
       <p>
-        If you need a one-off static page, drop RoyCSS effects for a
-        section by overriding the duration to 0:
+        432 effect rules already ship a{" "}
+        <code>prefers-reduced-motion: reduce</code> block that
+        freezes or disables their animation. For your vendored
+        copies and any page-level motion, keep the same contract:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`.no-motion {
-  --r-duration: 0ms;
-  --r-hover-lift: 0px;
+        <code>{`@media (prefers-reduced-motion: reduce) {
+  .roycss-btn-glow,        /* your copies */
+  .roycss-hover-push-up {
+    animation: none;
+    transition-duration: 0.01ms;
+  }
 }`}</code>
       </pre>
 
@@ -144,7 +149,11 @@ setTheme("oklch(80% 0.16 75)");`}</code>
           Theming guide
         </a>{" "}
         walks through a full brand-color migration with a runnable
-        example.
+        example, and{" "}
+        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/guides/creating-custom-effects">
+          Creating custom effects
+        </a>{" "}
+        shows how to build your own effects in the same style.
       </p>
     </>
   );

@@ -1,11 +1,15 @@
 import Link from "next/link";
 import { type Metadata } from "next";
-import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT } from "@/lib/site-stats";
+import {
+  EFFECT_COUNT_FORMATTED,
+  CATEGORY_COUNT,
+  FULL_CSS_MIN_GZ_KB,
+} from "@/lib/site-stats";
 
 export const metadata: Metadata = {
   title: "API Reference — RoyCSS Docs",
   description:
-    `The RoyCSS class system: the .roycss-{category}-{name} pattern, OKLCH CSS variables, and zero-JS conventions across ${EFFECT_COUNT_FORMATTED} effects in ${CATEGORY_COUNT} categories.`,
+    `The RoyCSS class system: the .roycss-* namespace, OKLCH colors, and zero-runtime conventions across ${EFFECT_COUNT_FORMATTED} effects in ${CATEGORY_COUNT} categories.`,
 };
 
 export default function Page() {
@@ -18,79 +22,95 @@ export default function Page() {
         RoyCSS API Overview
       </h1>
       <p className="text-lg text-muted-foreground mb-8 leading-7">
-        RoyCSS is a zero-JavaScript effect library that ships {EFFECT_COUNT_FORMATTED}
-        production-ready effects across 28 categories. Every effect is a plain
-        CSS class you can drop onto any element — no runtime, no virtual DOM
-        diffing, no framework lock-in.
+        RoyCSS is a zero-runtime effect library that ships{" "}
+        {EFFECT_COUNT_FORMATTED} production-ready effects across{" "}
+        {CATEGORY_COUNT} categories. Every effect is one plain CSS
+        class in the <code>.roycss-*</code> namespace — drop it onto
+        any element and you are done. No client runtime, no virtual
+        DOM diffing, no framework lock-in.
       </p>
 
       <h2 className="text-2xl font-semibold mt-10 mb-3">The class system</h2>
       <p className="mb-4 leading-7">
-        All RoyCSS utility classes follow a single, predictable naming pattern.
-        This makes them easy to memorize, easy to grep, and easy for AI
-        assistants to suggest:
+        All RoyCSS classes live under a single{" "}
+        <code className="text-emerald-600 dark:text-emerald-400">roycss-</code>{" "}
+        prefix, and most names lead with the category they belong
+        to. This makes them easy to memorize, easy to grep, and easy
+        for AI assistants to suggest:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm mb-6">
-        <code>{`.roycss-{category}-{name}
-.roycss-{category}-{name}--{modifier}
+        <code>{`.roycss-{name}
+/* name usually starts with its category prefix */
 
-/* Examples */
-.roycss-hover-lift
-.roycss-hover-glow--amber
-.roycss-anim-fade-in-up
-.roycss-loader-spinner--lg`}</code>
+/* Real examples from dist/roycss.css */
+.roycss-hover-push-up        /* hover category */
+.roycss-btn-glow             /* buttons category */
+.roycss-text-shimmer         /* text category */
+.roycss-bg-aurora            /* backgrounds category */
+.roycss-loader-ring-spin     /* loaders category */`}</code>
       </pre>
       <p className="mb-4 leading-7">
         The <code className="text-emerald-600 dark:text-emerald-400">category</code>{" "}
-        segment maps directly to one of the 28 effect categories (hover, text,
-        backgrounds, loaders, buttons, cards, animations, and so on). The{" "}
-        <code className="text-emerald-600 dark:text-emerald-400">name</code>{" "}
-        segment is the effect slug. Modifiers are optional and use a double-dash
-        separator, mirroring BEM conventions.
+        prefix maps to one of the {CATEGORY_COUNT} categories (hover,
+        text, backgrounds, loaders, buttons, cards, animations, and
+        so on); the rest of the name is the effect slug. Variant
+        takes append a suffix (<code>-2</code>, <code>-v2</code>, or
+        a batch tag like <code>-b18</code>) — there are no{" "}
+        <code>--modifier</code> classes and no <code>-base</code>{" "}
+        classes: every class is self-contained, carrying its own
+        padding, radius, colors, and hover state.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-10 mb-3">CSS variables</h2>
+      <h2 className="text-2xl font-semibold mt-10 mb-3">Colors: OKLCH, hardcoded per effect</h2>
       <p className="mb-4 leading-7">
-        Every effect reads its colors, durations, and motion curves from CSS
-        custom properties. Colors use the modern OKLCH color space for
-        perceptually uniform lightness, which makes theming and accessibility
-        adjustments trivial.
+        Every effect ships with its own OKLCH colors written
+        directly in the rule — that is what keeps each class
+        drop-in: no token layer to install, no cascade surprises.
+        The modern OKLCH color space keeps lightness perceptually
+        uniform, which is what lets {EFFECT_COUNT_FORMATTED} effects
+        ship with consistent-looking colors:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm mb-6">
-        <code>{`:root {
-  /* OKLCH design tokens */
-  --roy-accent: oklch(0.72 0.19 152);
-  --roy-accent-fg: oklch(0.98 0.01 152);
+        <code>{`/* From .roycss-btn-glow in dist/roycss.css */
+.roycss-btn-glow {
+  background: oklch(0.696 0.149 162.48);
+  color: oklch(1 0 89.88);
+  ...
+}
 
-  /* Motion tokens */
-  --roy-duration: 280ms;
-  --roy-ease: cubic-bezier(0.22, 1, 0.36, 1);
-
-  /* Surface tokens */
-  --roy-surface: oklch(0.18 0.01 250);
-  --roy-surface-fg: oklch(0.96 0.01 250);
+/* A few effects animate a registered custom property instead —
+   e.g. the gradient-border card keyframes --roy-gb-angle: */
+@keyframes roy-card-gb-rotate {
+  to { --roy-gb-angle: 360deg; }
 }`}</code>
       </pre>
       <p className="mb-4 leading-7">
-        Override any token at the document, section, or component level. Effects
-        automatically pick up the new values — no recompilation, no build step.
+        To retheme an effect, copy its CSS (every effect page shows
+        the full source) and edit the values — see the{" "}
+        <Link
+          href="/docs/api/customization"
+          className="text-emerald-600 dark:text-emerald-400 hover:underline"
+        >
+          Customization API
+        </Link>
+        .
       </p>
 
-      <h2 className="text-2xl font-semibold mt-10 mb-3">Zero-JS contract</h2>
+      <h2 className="text-2xl font-semibold mt-10 mb-3">Zero-runtime contract</h2>
       <p className="mb-4 leading-7">
-        RoyCSS ships a single CSS file. There is no client runtime, no
-        JavaScript entry point, and no polyfills. The library weighs roughly
-        18&nbsp;KB minified and gzipped for the full bundle, and tree-shakes to
-        under 2&nbsp;KB when you import only the categories you use.
+        RoyCSS ships a single CSS file. There is no client runtime
+        and no polyfill: import the stylesheet and the classes just
+        work. The full minified stylesheet is{" "}
+        {FULL_CSS_MIN_GZ_KB}&nbsp;KB gzipped — when you only need a
+        handful of effects, export a subset with the CLI instead of
+        shipping the whole file:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm mb-6">
-        <code>{`/* Import everything */
-@import "roycss/css";
+        <code>{`/* Everything (app entry or globals.css) */
+@import "roycss/css/min";
 
-/* Or import only what you need */
-@import "roycss/css/hover";
-@import "roycss/css/text";
-@import "roycss/css/loaders";`}</code>
+/* Or a hand-picked subset, via the CLI */
+$ npx roycss export btn-glow hover-push-up text-shimmer --out src/styles/roycss.css`}</code>
       </pre>
 
       <h2 className="text-2xl font-semibold mt-10 mb-3">Where to go next</h2>
@@ -111,7 +131,7 @@ export default function Page() {
           >
             RoyMotion API
           </Link>{" "}
-          — spring easing and animation tokens.
+          — the motion subset of the catalog.
         </li>
         <li>
           <Link
@@ -120,7 +140,7 @@ export default function Page() {
           >
             Customization API
           </Link>{" "}
-          — overriding variables and creating themes.
+          — retheming effects and creating your own.
         </li>
       </ul>
     </div>

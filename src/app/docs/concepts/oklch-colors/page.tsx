@@ -55,24 +55,28 @@ background: oklch(72% 0.18 265);  /* violet    */`}</code>
 
       <h2 id="roycss-palette">The RoyCSS palette</h2>
       <p>
-        The default RoyCSS accent is emerald <code>oklch(72% 0.18 165)</code>{" "}
-        — perceptually matched to a 4.5:1 contrast ratio against a
-        near-black background. The full accent ramp:
+        The signature RoyCSS accent is emerald{" "}
+        <code>oklch(0.696 0.149 162.48)</code> — you will see it
+        (and its siblings below) written directly in the shipped
+        effect rules, not behind variables. The recurring cast:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`:root {
-  --r-accent-50:  oklch(96% 0.02 165);  /* subtle tint    */
-  --r-accent-100: oklch(90% 0.06 165);
-  --r-accent-300: oklch(80% 0.14 165);
-  --r-accent-500: oklch(72% 0.18 165);  /* primary        */
-  --r-accent-700: oklch(58% 0.20 165);  /* strong/active  */
-  --r-accent-900: oklch(38% 0.12 165);  /* deep footer bg  */
-}`}</code>
+        <code>{`/* Real values from dist/roycss.css */
+oklch(0.696 0.149 162.48)   emerald   — the accent
+oklch(0.704 0.123 182.5)   teal
+oklch(0.715 0.126 215.22)  sky blue
+oklch(0.606 0.219 292.72)  violet
+oklch(0.769 0.165 70.08)  amber
+oklch(0.656 0.212 354.31)  pink/red
+
+/* e.g. .roycss-text-gradient sweeps four of them:
+   emerald 0% → teal 40% → sky 70% → violet 100% */`}</code>
       </pre>
       <p>
-        Notice that each step is a real perceptual step — no hue
-        shifting between 50 and 900. That keeps your theme looking
-        coherent.
+        Notice the near-identical <code>L</code> values across
+        hues — that is the perceptual evenness in action, and it
+        is why the multi-hue gradients look balanced rather than
+        blotchy.
       </p>
 
       <h2 id="contrast">Contrast and accessibility</h2>
@@ -91,18 +95,18 @@ background: oklch(72% 0.18 265);  /* violet    */`}</code>
         directly, so the result is always perceptually interpolated:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`.r-btn:hover {
-  /* Lighten the accent by 8% perceptually */
-  background: color-mix(in oklch, var(--r-accent) 92%, white 8%);
-}`}</code>
+        <code>{`/* Real declaration from .roycss-hover-push-up */
+box-shadow: 0 20px 40px -10px
+  color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent);`}</code>
       </pre>
 
       <h2 id="browser-support">Browser support</h2>
       <p>
         OKLCH is supported in every current browser (Chrome 111+,
-        Safari 15.4+, Firefox 113+). RoyCSS ships an automatic
-        <code>rgb()</code> fallback for the rare legacy engine —
-        see the{" "}
+        Safari 15.4+, Firefox 113+). For the rare legacy engine,
+        the package ships an optional fallback layer ({" "}
+        <code>roycss/fallbacks</code>) that maps the OKLCH values
+        to sRGB — see the{" "}
         <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/concepts/browser-support">
           Browser Support
         </a>{" "}

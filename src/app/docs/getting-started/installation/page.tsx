@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { EFFECT_COUNT_FORMATTED, FULL_CSS_MIN_GZ_KB } from "@/lib/site-stats";
 
 export const metadata: Metadata = {
   title: "Installation — RoyCSS Docs",
-  description: "Install RoyCSS via npm, pnpm, yarn, bun, or CDN. Tree-shakeable imports per category.",
+  description: "Install RoyCSS via npm, pnpm, yarn, bun, or CDN. One global stylesheet, a minified variant, and data subpath exports.",
 };
 
 export default function InstallationPage() {
@@ -34,77 +35,71 @@ yarn add roycss
 # bun
 bun add roycss`}</code>
       </pre>
-      <p>
-        The package is <strong>side-effect free</strong> from a
-        bundler’s point of view, so any CSS file you do not import
-        is dropped from your final bundle.
-      </p>
 
       <h2 id="cdn">CDN</h2>
       <p>
-        For prototyping, demos, or sites without a build step, use
-        the global stylesheet from the RoyCSS CDN:
+        For prototyping, demos, or sites without a build step, load
+        the minified stylesheet from a public CDN:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`<link
   rel="stylesheet"
-  href="https://cdn.roycss.org/2.0.0/effects.min.css"
-  crossorigin
-/>
-
-<!-- Optional: per-category stylesheet (smaller payload) -->
-<link
-  rel="stylesheet"
-  href="https://cdn.roycss.org/2.0.0/effects/hover.min.css"
+  href="https://unpkg.com/roycss@2/dist/roycss.min.css"
   crossorigin
 />`}</code>
       </pre>
 
       <h2 id="import-styles">Importing the styles</h2>
       <p>
-        Three import styles are supported. Pick the smallest one
-        that covers your needs — see the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/getting-started/importing">
-          Importing
-        </a>{" "}
-        page for a deep dive.
+        The package exposes two stylesheet entry points — the full
+        stylesheet and its minified twin. Both contain the exact same{" "}
+        {EFFECT_COUNT_FORMATTED} effect classes:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`/* 1. Everything (≈80 KB gzipped) */
-import "roycss/effects.css";
+        <code>{`/* 1. Full stylesheet (readable, with comments) */
+import "roycss/css";
 
-/* 2. Per category (tree-shaken automatically) */
-import "roycss/effects/hover.css";
-import "roycss/effects/text.css";
+/* 2. Minified — same rules, ~${FULL_CSS_MIN_GZ_KB} KB gzipped */
+import "roycss/css/min";
 
-/* 3. Single effect (smallest possible payload) */
-import "roycss/effects/hover/lift.css";`}</code>
+/* Or in CSS via @import */
+@import "roycss/css/min";`}</code>
       </pre>
+      <p>
+        Alongside the stylesheets, the package exports machine-readable
+        data for tooling: <code>roycss/effects.json</code> (the full
+        effect catalog), <code>roycss/class-index</code> (every class
+        name), <code>roycss/motion-library</code> (the motion subset),
+        <code>roycss/critical.css</code> (a curated critical-effects
+        subset), and <code>roycss/fallbacks</code> (an optional
+        progressive-enhancement layer for older browsers).
+      </p>
 
       <h2 id="verify-install">Verify the install</h2>
       <p>
         After installing, drop a single class on an element to confirm
-        everything wired up. You should see a 4px lift with an emerald
-        glow on hover — pure CSS, zero JS in your devtools Network tab.
+        everything wired up. You should see an emerald button with a
+        glow halo on hover — pure CSS, zero JS in your devtools
+        Network tab:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`<button class="r-hover-lift r-btn-glow-emerald">
+        <code>{`<button class="roycss-btn-glow">
   RoyCSS is installed ✓
 </button>`}</code>
       </pre>
 
       <h2 id="version-pinning">Version pinning</h2>
       <p>
-        Every major release is published on a versioned CDN path. Pin
-        to a major to receive patch and minor fixes automatically, or
-        pin to an exact version for full reproducibility:
+        Pin to a major on the CDN to receive patch and minor fixes
+        automatically, or pin to an exact version for full
+        reproducibility:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`# Major pin — auto patch + minor
-https://cdn.roycss.org/2/effects.min.css
+https://unpkg.com/roycss@2/dist/roycss.min.css
 
 # Exact pin — fully reproducible
-https://cdn.roycss.org/2.0.0/effects.min.css`}</code>
+https://unpkg.com/roycss@2.0.0/dist/roycss.min.css`}</code>
       </pre>
 
       <h2 id="next">Next steps</h2>
@@ -113,7 +108,7 @@ https://cdn.roycss.org/2.0.0/effects.min.css`}</code>
         <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/getting-started/importing">
           Importing
         </a>{" "}
-        page to learn the three import modes, or jump straight to the{" "}
+        page to see everything the package exports, or jump straight to the{" "}
         <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/getting-started/first-effect">
           first effect tutorial
         </a>

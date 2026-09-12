@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { EFFECT_COUNT_FORMATTED, FULL_CSS_MIN_GZ_KB } from "@/lib/site-stats";
 
 export const metadata: Metadata = {
   title: "Tree Shaking — RoyCSS Docs",
-  description: "Bundle optimization: per-category and per-effect imports, custom bundles, measured gzip savings.",
+  description: "CSS doesn't tree-shake — RoyCSS subsets explicitly instead: export hand-picked effects or categories with the CLI, and measure the result.",
 };
 
 export default function TreeShakingPage() {
@@ -10,114 +11,130 @@ export default function TreeShakingPage() {
     <>
       <h1>Tree Shaking</h1>
       <p className="text-lg text-muted-foreground">
-        RoyCSS is structured so bundlers can tree-shake down to
-        individual effects. This guide shows the three import
-        modes, when to use each, and how to verify the savings.
+        Let&apos;s be precise about what is possible: CSS files
+        cannot be tree-shaken by bundlers the way JS modules can.
+        RoyCSS ships one stylesheet — all{" "}
+        {EFFECT_COUNT_FORMATTED} effects, ~{FULL_CSS_MIN_GZ_KB} KB
+        gzipped minified — and subsetting is an explicit step you
+        run when you need it. This guide shows the three honest
+        options and how to verify the savings.
       </p>
 
-      <h2 id="three-modes">Three import modes</h2>
+      <h2 id="three-modes">The three options</h2>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`/* 1. Everything — ~80 KB gzipped */
-import "roycss/effects.css";
+        <code>{`/* 1. Everything — one import, ~${FULL_CSS_MIN_GZ_KB} KB gzipped */
+import "roycss/css/min";
 
-/* 2. Per category — only the categories you use */
-import "roycss/effects/hover.css";
-import "roycss/effects/buttons.css";
+/* 2. Curated critical subset — ~3.6 KB gzipped (above-the-fold effects) */
+import "roycss/critical.css";
 
-/* 3. Per effect — individual effects */
-import "roycss/effects/hover/lift.css";
-import "roycss/effects/buttons/glow-emerald.css";`}</code>
+/* 3. Your own subset — export exactly what you use */
+/*    (one CLI command, see below) */
+$ npx roycss export btn-glow hover-push-up --out src/styles/roycss.css`}</code>
       </pre>
 
-      <h2 id="per-category">Per-category is usually enough</h2>
+      <h2 id="per-category">Whole categories</h2>
       <p>
-        Most production sites need two or three categories. At ~2 KB
-        per category, that’s 6 KB gzipped — a 13× savings over the
-        full stylesheet:
+        If a bundle-of-everything is too heavy but you use a
+        category heavily, export the whole category. Measured
+        with the real CLI:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`import "roycss/effects/hover.css";   // 2.1 KB gz
-import "roycss/effects/buttons.css"; // 2.7 KB gz
-import "roycss/effects/cards.css";   // 3.1 KB gz
-───────────────────────────────────────────
-Total:                                7.9 KB gz`}</code>
+        <code>{`$ npx roycss export --category buttons --out roycss-buttons.css
+✓ Exported 55 effects to roycss-buttons.css (27.2KB)
+                                          (~3.7 KB gzipped)
+
+$ npx roycss export --category hover --out roycss-hover.css
+✓ Exported 120 effects to roycss-hover.css (55.8KB)
+                                          (~8.7 KB gzipped)`}</code>
       </pre>
 
-      <h2 id="per-effect">Per-effect for marketing pages</h2>
+      <h2 id="per-effect">Hand-picked effects for landing pages</h2>
       <p>
-        Landing pages and one-off microsites often use exactly one
-        or two effects. Per-effect imports drop the payload to
-        hundreds of bytes:
+        Marketing pages and microsites often need exactly two or
+        three effects. A hand-picked export lands at hundreds of
+        bytes gzipped:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`import "roycss/effects/hover/lift.css";          // 112 B gz
-import "roycss/effects/buttons/glow-emerald.css"; // 89 B gz
-import "roycss/effects/shared.css";              // 148 B gz
-─────────────────────────────────────────────────────────────
-Total:                                            349 B gz`}</code>
-      </pre>
+        <code>{`$ npx roycss export btn-glow hover-push-up text-shimmer \\
+    --out src/styles/roycss.css
 
-      <h2 id="custom-bundle">Custom bundle via CLI</h2>
-      <p>
-        For static sites without a bundler, the RoyCSS CLI compiles
-        a single stylesheet with exactly the effects you specify:
-      </p>
-      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss bundle \\
-  --include r-hover-lift \\
-  --include r-btn-glow-emerald \\
-  --include r-card-base \\
-  --out dist/landing.css \\
-  --minify
+✓ Exported 3 effects to src/styles/roycss.css (1.6KB)
+                                            (~0.7 KB gzipped)
 
-Wrote dist/landing.css  (1.32 KB → 349 B gz)`}</code>
+Effects:
+  roycss-btn-glow        — Glow Button   (Button Effects)
+  roycss-hover-push-up   — Push Up       (Hover Effects)
+  roycss-text-shimmer    — Shimmer Text  (Text Effects)`}</code>
       </pre>
       <p>
-        Use this with a CDN or a static file server.
+        Tags work too — <code>--tag attention</code> pulls every
+        effect tagged for drawing attention.
       </p>
 
-      <h2 id="bundler-config">Bundler-specific notes</h2>
-      <h3 id="vite">Vite</h3>
-      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`// Vite handles CSS imports natively — no config needed
-import "roycss/effects/hover.css";`}</code>
-      </pre>
-      <h3 id="webpack">Webpack</h3>
-      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`// webpack 5 — needs css-loader + style-loader/MiniCssExtract
-import "roycss/effects/hover.css";`}</code>
-      </pre>
-      <h3 id="turbopack">Turbopack (Next.js 16)</h3>
-      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`// app/globals.css
-@import "roycss/effects/hover.css";
-@import "roycss/effects/buttons.css";`}</code>
-      </pre>
-
-      <h2 id="verify">Verify with the bundle analyzer</h2>
+      <h2 id="custom-bundle">How the export is built</h2>
       <p>
-        Always measure. The CLI prints exact sizes:
+        The CLI writes a plain CSS file with a header, the selected
+        effects&apos; full CSS, and nothing else — no shared
+        variables file, no runtime, no build step. It prints the
+        import line to use:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss bundle --analyze \\
-  --include r-hover-lift \\
-  --include r-btn-glow-emerald
+        <code>{`/* src/styles/roycss.css — generated */
+/* RoyCSS Custom Export
+ * Effects: 3
+ * Categories: Button Effects, Hover Effects, Text Effects
+ * Generated by: roycss export (CLI v2.0.0)
+ */
 
-Effect                Raw       Gz
-─────────────────────────────────────────
-r-hover-lift         412 B     112 B
-r-btn-glow-emerald   298 B      89 B
-shared vars           612 B     148 B
-─────────────────────────────────────────
-Total                1.32 KB    349 B`}</code>
+/* Glow Button */
+.roycss-btn-glow { … }
+/* Push Up */
+.roycss-hover-push-up { … }`}</code>
       </pre>
 
-      <h2 id="dont-over-optimize">Don’t over-optimize</h2>
+      <h2 id="bundler-config">Bundler notes</h2>
       <p>
-        Per-effect imports are for marketing pages. For apps, the
-        per-category level is the right balance — small enough to
-        beat the full stylesheet, big enough that you don’t have
-        to micro-manage every new component.
+        Whichever option you choose, the import is a single CSS
+        file, so every bundler handles it natively:
+      </p>
+      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
+        <code>{`// Vite / webpack 5 (css-loader) / Turbopack (Next.js) — all the same:
+import "roycss/css/min";
+import "./src/styles/roycss.css";   // your exported subset
+
+/* or in CSS: */
+@import "roycss/css/min";`}</code>
+      </pre>
+
+      <h2 id="verify">Verify what you actually use</h2>
+      <p>
+        Always measure. <code>roycss stats</code> scans your source
+        for <code>roycss-*</code> usage and reports coverage;
+        <code>roycss doctor</code> warns when your local{" "}
+        <code>roycss.css</code> exceeds 1 MB and suggests an
+        export:
+      </p>
+      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
+        <code>{`$ npx roycss stats
+
+Total usages: 14 across 6 unique effects in 12 source files
+Catalog coverage: 6/1959 effects (0.3%)
+
+Top 6 effects:
+   1. roycss-btn-glow           ×4  — Glow Button
+   2. roycss-hover-push-up      ×3  — Push Up
+   ...`}</code>
+      </pre>
+
+      <h2 id="dont-over-optimize">Don&apos;t over-optimize</h2>
+      <p>
+        A subset is a maintenance liability: every new effect you
+        adopt needs re-exporting. For apps under active
+        development, the full stylesheet (or the critical subset +
+        lazy-loaded full file) is the better default — save the
+        export step for shipping a landing page or a
+        size-budgeted widget.
       </p>
     </>
   );

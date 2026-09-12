@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 
 export const metadata: Metadata = {
   title: "Buttons — RoyCSS Docs",
-  description: "RoyCSS button effect classes: glow, pulse, shine sweep, fill-from-bottom. Composes with hover effects.",
+  description: "RoyCSS button effect classes: glow, pulse, shine sweep, fill slide, 3D push, neon. Each one self-contained.",
 };
 
 export default function ButtonsPage() {
@@ -12,151 +13,166 @@ export default function ButtonsPage() {
       <p className="text-lg text-muted-foreground">
         RoyCSS button classes layer on top of any element you call a
         button — <code>&lt;a&gt;</code>, <code>&lt;button&gt;</code>,
-        or any clickable div. They are designed to compose with
-        <code>r-hover-*</code> classes.
+        or any clickable div. Every class is self-contained: it ships
+        its own padding, radius, typography, and hover state, so
+        there is no base class to remember — pick one and go. RoyCSS
+        ships 55 button-category effects out of the{" "}
+        {EFFECT_COUNT_FORMATTED}-effect catalog.
       </p>
 
       <h2 id="core-classes">Core classes</h2>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`r-btn-base              base button reset + sizing
-r-btn-glow-emerald      emerald glow background
-r-btn-glow-teal         teal glow background
-r-btn-pulse             periodic emerald pulse
-r-btn-shine             diagonal shine sweep on hover
-r-btn-fill              fills from bottom on hover
-r-btn-3d                3D pop-out button
-r-btn-outline-emerald   emerald outlined variant`}</code>
+        <code>{`roycss-btn-glow           emerald background + glow halo on hover
+roycss-btn-shine-sweep     diagonal shine sweeps across on hover
+roycss-btn-fill-slide      background fills from the bottom
+roycss-btn-pulse           warm pulsing scale
+roycss-btn-3d-push         3D pop-out with :active press
+roycss-btn-outline-fill    radial fill from center
+roycss-btn-lift            lifts with teal shadow
+roycss-btn-neon            cyberpunk neon outline
+roycss-btn-ripple          ripple from click point
+roycss-btn-morph           morphing border-radius`}</code>
       </pre>
 
-      <h2 id="base">r-btn-base</h2>
+      <h2 id="glow">roycss-btn-glow</h2>
       <p>
-        The reset layer: sensible padding, border-radius, font-weight,
-        touch-target minimum (44×44 px), focus ring. Always apply it
-        first, then layer a visual variant:
+        The signature RoyCSS button. Emerald background that gains a
+        two-layer glow halo on hover:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`<button type="button" class="r-btn-base r-btn-glow-emerald">
+        <code>{`<button type="button" class="roycss-btn-glow">
   Save
-</button>`}</code>
-      </pre>
-      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`.r-btn-base {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  min-height: 44px;
-  min-width: 44px;
-  border: 1px solid transparent;
-  border-radius: var(--r-radius, 6px);
-  font-weight: 600;
+</button>
+
+/* The CSS that ships in dist/roycss.css */
+.roycss-btn-glow {
+  background: oklch(0.696 0.149 162.48);
+  color: oklch(1 0 89.88);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
   cursor: pointer;
-  user-select: none;
-  transition:
-    transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow 180ms ease-out,
-    background 180ms ease-out;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
 }
-.r-btn-base:focus-visible {
-  outline: 2px solid var(--r-accent);
-  outline-offset: 2px;
+
+.roycss-btn-glow:hover {
+  box-shadow: 0 0 20px color-mix(in oklch, oklch(0.696 0.149 162.48) 60%, transparent), 0 0 40px color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent);
 }`}</code>
       </pre>
 
-      <h2 id="glow-emerald">r-btn-glow-emerald</h2>
+      <h2 id="shine">roycss-btn-shine-sweep</h2>
       <p>
-        Emerald-tinted background with a soft halo that intensifies
-        on hover. The signature RoyCSS button.
+        A diagonal highlight sweeps across the button on hover. It is
+        a skewed pseudo-element that slides from edge to edge — stays
+        fully composited:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`.r-btn-glow-emerald {
-  background: oklch(58% 0.20 165);
-  color: oklch(98% 0.01 165);
-  box-shadow: 0 0 0 0 oklch(72% 0.18 165 / 0.0);
-}
-.r-btn-glow-emerald:hover {
-  background: oklch(52% 0.20 165);
-  box-shadow:
-    0 8px 24px -8px oklch(72% 0.18 165 / 0.55),
-    0 0 0 4px oklch(72% 0.18 165 / 0.15);
-}`}</code>
-      </pre>
+        <code>{`<button class="roycss-btn-shine-sweep">Save</button>
 
-      <h2 id="shine">r-btn-shine</h2>
-      <p>
-        A diagonal white highlight sweeps across the button on hover.
-        Uses a pseudo-element + transform so it stays composited:
-      </p>
-      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`<button class="r-btn-base r-btn-shine">Save</button>`}</code>
-      </pre>
-      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`.r-btn-shine { position: relative; overflow: hidden; }
-.r-btn-shine::after {
-  content: "";
+.roycss-btn-shine-sweep {
+  position: relative;
+  overflow: hidden;
+  background: oklch(0.696 0.149 162.48);
+  color: oklch(1 0 89.88);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.roycss-btn-shine-sweep::after {
+  content: '';
   position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    100deg,
-    transparent 30%,
-    oklch(100% 0 0 / 0.30) 50%,
-    transparent 70%
-  );
-  transform: translateX(-100%);
-  transition: transform 480ms ease-out;
+  inset-block-start: -50%;
+  inset-inline-start: -60%;
+  inline-size: 40%;
+  block-size: 200%;
+  background: linear-gradient(90deg, transparent, color-mix(in oklch, oklch(1 0 89.88) 45%, transparent), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
 }
-.r-btn-shine:hover::after { transform: translateX(100%); }`}</code>
-      </pre>
 
-      <h2 id="fill">r-btn-fill</h2>
-      <p>
-        On hover, the background fills from the bottom up. Uses a{" "}
-        <code>background-size</code> trick to avoid painting a second
-        layer:
-      </p>
-      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`.r-btn-fill {
-  background:
-    linear-gradient(
-      to top,
-      oklch(72% 0.18 165) 0%,
-      oklch(72% 0.18 165) 100%
-    ) no-repeat 0 100% / 100% 0%;
-}
-.r-btn-fill:hover {
-  background-size: 100% 100%;
-  color: oklch(98% 0.01 165);
+.roycss-btn-shine-sweep:hover::after {
+  inset-inline-start: 120%;
 }`}</code>
       </pre>
 
-      <h2 id="pulse">r-btn-pulse</h2>
+      <h2 id="fill">roycss-btn-fill-slide</h2>
       <p>
-        A periodic emerald pulse — good for primary CTAs. Pairs
-        nicely with <code>r-btn-glow-emerald</code>:
+        On hover, the background fills from the bottom up via a{" "}
+        <code>::before</code> layer whose height animates:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`<button class="r-btn-base r-btn-glow-emerald r-btn-pulse">
-  Subscribe
-</button>`}</code>
-      </pre>
-      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`@keyframes r-btn-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 oklch(72% 0.18 165 / 0.45); }
-  50%      { box-shadow: 0 0 0 8px oklch(72% 0.18 165 / 0); }
+        <code>{`.roycss-btn-fill-slide {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  background: transparent;
+  color: oklch(0.696 0.149 162.48);
+  border: 2px solid oklch(0.696 0.149 162.48);
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: color 0.4s ease;
 }
-.r-btn-pulse { animation: r-btn-pulse 1.8s ease-out infinite; }`}</code>
+
+.roycss-btn-fill-slide::before {
+  content: '';
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 0%;
+  background: oklch(0.696 0.149 162.48);
+  z-index: -1;
+  transition: height 0.4s ease;
+}
+
+.roycss-btn-fill-slide:hover {
+  color: oklch(1 0 89.88);
+  /* …and the ::before grows to 100% height */`}</code>
+      </pre>
+
+      <h2 id="pulse">roycss-btn-pulse</h2>
+      <p>
+        A periodic warm pulse — good for primary CTAs:
+      </p>
+      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
+        <code>{`<button class="roycss-btn-pulse">
+  Subscribe
+</button>
+
+.roycss-btn-pulse:hover {
+  background: oklch(0.577 0.215 27.33);
+  animation: roy-btn-pulse 0.8s ease-in-out infinite;
+}
+
+@keyframes roy-btn-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}`}</code>
       </pre>
 
       <h2 id="composing">Composing with hover effects</h2>
       <p>
-        Button classes target background and box-shadow; hover effects
-        target transform. They never collide:
+        Button classes own <code>background</code>,{" "}
+        <code>box-shadow</code>, and sometimes <code>transform</code>{" "}
+        (pulse, 3D push). Pick one button class per element, and pair
+        it with a hover effect from a different family when you want
+        an extra layer:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`<button class="r-btn-base r-btn-glow-emerald r-hover-lift r-hover-scale-soft">
-  Save
-</button>`}</code>
+        <code>{`<article class="roycss-card-hover-lift">
+  <h3>Pricing — Starter</h3>
+  <button class="roycss-btn-glow">Start trial</button>
+</article>`}</code>
       </pre>
     </>
   );

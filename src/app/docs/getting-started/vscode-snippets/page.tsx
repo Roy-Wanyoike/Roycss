@@ -12,8 +12,8 @@ export default function VscodeSnippetsPage() {
       <h1>VS Code Snippets</h1>
       <p className="text-lg text-muted-foreground">
         The official RoyCSS VS Code extension gives you class
-        autocompletion, hover documentation, and 40+ snippets for
-        the most common effect combinations.
+        autocompletion, hover documentation, and a snippet for every
+        one of the {EFFECT_COUNT_FORMATTED} effects.
       </p>
 
       <h2 id="install-extension">Install the extension</h2>
@@ -51,15 +51,17 @@ export default function VscodeSnippetsPage() {
 
       <h2 id="snippets">Built-in snippets</h2>
       <p>
-        Snippets trigger on the prefix <code>r-</code> in HTML, JSX,
-        TSX, Vue, Svelte, and Astro files. The most-used ones:
+        Every one of the {EFFECT_COUNT_FORMATTED} effects ships an editor
+        snippet that triggers on its full class name (without the leading
+        dot) in HTML, JSX, TSX, Vue, Svelte, and Astro files. The most-used
+        ones:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`r-button-glow   → <button class="r-btn-glow-emerald">…</button>
-r-card-lift     → <article class="r-card-base r-hover-lift">…</article>
-r-loader-ring   → <div class="r-loader-ring" role="status">…</div>
-r-text-shimmer  → <h1 class="r-text-shimmer">…</h1>
-r-hero-fade     → <section class="r-bg-aurora">…</section>`}</code>
+        <code>{`roycss-pulse-glow  → <div class="roycss-pulse-glow">…</div>
+roycss-bounce-in   → <div class="roycss-bounce-in">…</div>
+roycss-fade-in-up  → <div class="roycss-fade-in-up">…</div>
+roycss-rotate-spin → <div class="roycss-rotate-spin">…</div>
+roycss-shake       → <div class="roycss-shake">…</div>`}</code>
       </pre>
 
       <h2 id="custom-snippets">Define your own snippets</h2>
@@ -71,9 +73,9 @@ r-hero-fade     → <section class="r-bg-aurora">…</section>`}</code>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`{
   "CTA Button": {
-    "prefix": "r-cta",
+    "prefix": "roycss-cta",
     "body": [
-      "<a href=\"\${1:#}\" class=\"r-btn-glow-emerald r-hover-lift r-text-shadow-soft\">",
+      "<a href=\"\${1:#}\" class=\"roycss-btn-border-glow roycss-fade-in-up\">",
       "  \${2:Click me}",
       "</a>"
     ],

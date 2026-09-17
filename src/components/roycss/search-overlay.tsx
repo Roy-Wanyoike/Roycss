@@ -1,14 +1,17 @@
 "use client";
 
 import { useState, useMemo, useCallback, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, X, ArrowRight, Boxes, SearchX } from "lucide-react";
+import { Search, X, ArrowRight, Boxes, SearchX, BookOpen } from "lucide-react";
 import { effects, categoryMeta } from "@/lib/roycss-effects";
 import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 import { recipes } from "@/lib/roycss-recipes";
 import { patterns } from "@/lib/roycss-patterns";
 import { collections } from "@/lib/roycss-collections";
 import { PRODUCTS_CATALOG, PRODUCT_TIER_META, type ProductMeta } from "@/lib/products-catalog";
+import { searchDocs, type DocsIndexEntry } from "@/lib/docs-index";
 import { Badge } from "@/components/ui/badge";
 import type { CSSEffect } from "@/lib/roycss-types";
 
@@ -23,6 +26,7 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
   const [prevOpen, setPrevOpen] = useState(false);
   if (open !== prevOpen) {
@@ -66,6 +70,15 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
       .slice(0, 6);
   }, [query]);
 
+  /* Docs results — slim /docs route index (issue #112). The retired
+     DocsViewer sheet's full-text search is honestly scoped to
+     title / description / keywords here; results navigate to the
+     real /docs routes. */
+  const docsResults = useMemo<DocsIndexEntry[]>(() => {
+    if (!query.trim()) return [];
+    return searchDocs(query, 5);
+  }, [query]);
+
   const sectionResults = useMemo(() => {
     if (!query.trim()) return [];
     const q = query.toLowerCase();
@@ -82,7 +95,7 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
     ].filter(s => s.label.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q));
   }, [query]);
 
-  const totalResults = sectionResults.length + effectResults.length + recipeResults.length + patternResults.length + collectionResults.length + productResults.length;
+  const totalResults = sectionResults.length + effectResults.length + recipeResults.length + patternResults.length + collectionResults.length + productResults.length + docsResults.length;
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === "ArrowDown") { e.preventDefault(); setSelectedIndex(i => Math.min(i + 1, totalResults - 1)); }
@@ -102,8 +115,10 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
       if (idx < collectionResults.length && collectionResults[idx]) { onJumpToSection("#collections"); onOpenChange(false); return; }
       idx -= collectionResults.length;
       if (idx < productResults.length && productResults[idx]) { onJumpToSection("#platform"); onOpenChange(false); return; }
+      idx -= productResults.length;
+      if (idx < docsResults.length && docsResults[idx]) { router.push(docsResults[idx].route); onOpenChange(false); return; }
     }
-  }, [selectedIndex, totalResults, sectionResults, effectResults, recipeResults, patternResults, collectionResults, productResults, onJumpToSection, onSelectEffect, onOpenChange]);
+  }, [selectedIndex, totalResults, sectionResults, effectResults, recipeResults, patternResults, collectionResults, productResults, docsResults, onJumpToSection, onSelectEffect, onOpenChange, router]);
 
   return (
     <AnimatePresence>
@@ -134,8 +149,8 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
               <Search className="size-5 text-muted-foreground shrink-0" />
               <input ref={inputRef} type="search" value={query} onChange={(e) => { setQuery(e.target.value); setSelectedIndex(0); }}
                 onKeyDown={handleKeyDown}
-                aria-label="Search effects, recipes, patterns, products, and sections"
-                placeholder="Search effects, recipes, patterns, products, sections... (⌘K)"
+                aria-label="Search effects, recipes, patterns, products, docs, and sections"
+                placeholder="Search effects, recipes, patterns, products, docs, sections... (⌘K)"
                 className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none" autoComplete="off" spellCheck={false} />
               <button onClick={() => onOpenChange(false)} className="flex items-center justify-center size-7 rounded-md bg-muted text-muted-foreground hover:text-foreground transition-colors cursor-pointer shrink-0" aria-label="Close search">
                 <X className="size-3.5" />
@@ -143,8 +158,8 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
             </div>
             <div className="max-h-[50vh] overflow-y-auto scrollbar-thin">
               {query.trim() === "" ? (
-                <div className="p-8 text-center"><p className="text-sm text-muted-foreground">Search effects, recipes, patterns, products, or sections.</p>
-                <p className="text-xs text-muted-foreground/60 mt-2">Try: "glass", "loader", "neon", "kanban", "hero", "loading"</p></div>
+                <div className="p-8 text-center"><p className="text-sm text-muted-foreground">Search effects, recipes, patterns, products, docs, or sections.</p>
+                <p className="text-xs text-muted-foreground/60 mt-2">Try: "glass", "loader", "neon", "kanban", "hero", "oklch", "loading"</p></div>
               ) : totalResults === 0 ? (
                 <div className="p-8 text-center">
                   <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full glass">
@@ -257,6 +272,25 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
                               <p className="text-xs text-muted-foreground truncate">{p.description}</p>
                             </div>
                           </button>
+                        );
+                      })}
+                    </>
+                  )}
+                  {docsResults.length > 0 && (
+                    <>
+                      {(sectionResults.length > 0 || effectResults.length > 0 || recipeResults.length > 0 || patternResults.length > 0 || collectionResults.length > 0 || productResults.length > 0) && <div className="h-px bg-border/50 my-1" />}
+                      {docsResults.map((d, i) => {
+                        const index = i + sectionResults.length + effectResults.length + recipeResults.length + patternResults.length + collectionResults.length + productResults.length;
+                        return (
+                          <Link key={d.route} href={d.route} onClick={() => onOpenChange(false)}
+                            onMouseEnter={() => setSelectedIndex(index)}
+                            className={`w-full flex items-center gap-3 p-2.5 rounded-lg transition-all cursor-pointer text-left ${selectedIndex === index ? "bg-primary/10" : "hover:bg-muted/50"}`}>
+                            <div className="flex items-center justify-center size-8 rounded-lg bg-sky-500/10 text-sky-500 shrink-0"><BookOpen className="size-4" /></div>
+                            <div className="min-w-0 flex-1">
+                              <p className="text-sm font-medium text-foreground truncate">{d.title}</p>
+                              <p className="text-xs text-muted-foreground truncate">Docs · {d.sectionLabel} — {d.description}</p>
+                            </div>
+                          </Link>
                         );
                       })}
                     </>

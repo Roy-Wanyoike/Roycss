@@ -106,14 +106,15 @@ describe("site-stats — manifest.json stays pinned to the catalog", () => {
 describe("site-stats — stale count literals are gone from user-visible copy", () => {
   /**
    * Files where these numbers are allowed to appear:
-   *  - docs-data.ts / docs-content.json — compiled from repo /docs markdown;
-   *    historical narrative ("v1.0 shipped 312 effects"), not site claims.
    *  - pricing-section.tsx — owned by the legal/pricing workstream;
    *    tracked there, out of scope here.
+   *
+   * The retired docs blobs (src/lib/docs-data.ts and
+   * src/components/docs/docs-content.json) used to be excluded here
+   * for historical narrative; they were deleted by issue #112 (the
+   * /docs routes are the single docs source of truth now).
    */
   const EXCLUDED = new Set([
-    "src/lib/docs-data.ts",
-    "src/components/docs/docs-content.json",
     "src/components/roycss/pricing-section.tsx",
   ]);
 

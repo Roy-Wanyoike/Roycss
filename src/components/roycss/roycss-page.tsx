@@ -4,7 +4,6 @@ import { useEffect, useState, useRef, useMemo, useCallback, useSyncExternalStore
 import dynamic from "next/dynamic";
 import {
   Search,
-  ExternalLink,
   Sun,
   Moon,
   Sparkles,
@@ -86,6 +85,7 @@ import {
   Tv,
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -253,18 +253,6 @@ const PricingSection = dynamic(
    only fetches when a tool is actually opened. */
 const PlatformTools = dynamic(
   () => import("@/components/roycss/platform-tools").then(m => ({ default: m.PlatformTools })),
-  { ssr: false },
-);
-
-/* ─── DocsViewer Sheet — lazy-loaded ───────────────────────────
-   Same always-mounted pattern as PlatformTools above. The Sheet
-   only opens when a user clicks a "Docs" button (navbar / footer /
-   mobile menu), and it statically imports the 820 KB docs-data
-   blob (19 full architecture documents as markdown strings).
-   Loading it via dynamic() keeps that payload out of the initial
-   page-load JS; the chunk fetches on demand. */
-const DocsViewer = dynamic(
-  () => import("@/components/roycss/docs-viewer").then(m => ({ default: m.DocsViewer })),
   { ssr: false },
 );
 
@@ -1317,6 +1305,9 @@ function FeaturedCard({
    MAIN PAGE
    ═══════════════════════════════════════════════════════════════ */
 export default function RoyCSSPage() {
+  /* Router — used for real route navigation (Docs → /docs/getting-started,
+     issue #112: the /docs routes are the single docs source of truth). */
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState<EffectCategory | "all">("all");
   // PF-004 — a11y filter: only effects that ship their own reduced-motion guard
@@ -1328,7 +1319,6 @@ export default function RoyCSSPage() {
   const [contactOpen, setContactOpen] = useState(false);
   const [playgroundOpen, setPlaygroundOpen] = useState(false);
   const [searchOverlayOpen, setSearchOverlayOpen] = useState(false);
-  const [docsOpen, setDocsOpen] = useState(false);
   const [compareOpen, setCompareOpen] = useState(false);
   const [compareEffects, setCompareEffects] = useState<CSSEffect[]>([]);
   const [platformTool, setPlatformTool] = useState<"ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | "gap-spacing" | "writing-mode" | "object-fit" | "positioning" | "property-inspector" | "animation-timeline" | "sprite-sheet" | "text-shadow" | "filter-studio" | "conic-gradient" | "motion-path" | "view-transition" | "mask-studio" | "gradient-mesh" | "table-styler" | "aspect-ratio" | "shape-generator" | "scroll-snap" | "keyframes-studio" | "theming-engine" | "has-selector-tester" | "css-layers" | "input-mode" | "cascade-specificity" | "color-space" | "style-query" | "scope" | "subgrid" | "fallback" | "logical-properties" | "initial-letter" | "text-wrap" | "property-registrar" | "relative-color" | "starting-style" | "light-dark" | null>(null);
@@ -1648,24 +1638,16 @@ export default function RoyCSSPage() {
                 </NavMegaMenu>
 
                 <div className="flex items-center">
-                  <button
-                    onClick={() => setDocsOpen(true)}
-                    className={cn(
-                      "px-4 py-2 min-h-[44px] rounded-lg text-sm font-semibold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
-                      docsOpen
-                        ? "text-primary bg-primary/10"
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted/60",
-                    )}
-                  >
-                    Docs
-                  </button>
+                  {/* Docs — real route link to the docs site (issue #112:
+                      /docs/** is the single source of truth; the in-app
+                      docs sheet was retired). Same nav-link styling as
+                      Get Started / FAQ, minus the homepage active state
+                      (it navigates off-page). */}
                   <Link
                     href="/docs/getting-started"
-                    aria-label="Open the full docs site"
-                    title="Open the full docs site"
-                    className="ml-0.5 flex items-center justify-center size-8 min-h-[36px] rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                    className="px-4 py-2 min-h-[44px] rounded-lg text-sm font-semibold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 text-muted-foreground hover:text-foreground hover:bg-muted/60"
                   >
-                    <ExternalLink className="size-3.5" />
+                    Docs
                   </Link>
                 </div>
                 <button
@@ -1905,16 +1887,14 @@ export default function RoyCSSPage() {
                       <ChevronRight className="size-3.5" />
                     </button>
                   ))}
-                  <button
-                    onClick={() => {
-                      setDocsOpen(true);
-                      setMobileMenuOpen(false);
-                    }}
+                  <Link
+                    href="/docs/getting-started"
+                    onClick={() => setMobileMenuOpen(false)}
                     className="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer min-h-[44px]"
                   >
                     Docs
                     <BookOpen className="size-3.5" />
-                  </button>
+                  </Link>
                   <button
                     onClick={() => {
                       setPlaygroundOpen(true);
@@ -2627,7 +2607,7 @@ export default function RoyCSSPage() {
               <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">Resources</h3>
               <ul className="space-y-2">
                 <li><button onClick={() => scrollToSection("#get-started")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Get Started</button></li>
-                <li><button onClick={() => setDocsOpen(true)} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Documentation</button></li>
+                <li><Link href="/docs/getting-started" className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Documentation</Link></li>
                 <li><button onClick={() => scrollToSection("#faq")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">FAQ</button></li>
                 <li><button onClick={() => setContactOpen(true)} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Contact</button></li>
                 <li><button onClick={() => setSponsorModalOpen(true)} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Sponsor</button></li>
@@ -2764,7 +2744,7 @@ export default function RoyCSSPage() {
           destinations (Home · Effects · Platform · Docs · Search). */}
       <MobileBottomNav
         activeSection={activeSection}
-        onOpenDocs={() => setDocsOpen(true)}
+        onOpenDocs={() => router.push("/docs/getting-started")}
         onOpenSearch={() => setSearchOverlayOpen(true)}
       />
 
@@ -3125,9 +3105,6 @@ export default function RoyCSSPage() {
           }
         }}
       />
-
-      {/* Documentation Viewer Sheet (opens from navbar "Docs" button) */}
-      <DocsViewer open={docsOpen} onOpenChange={setDocsOpen} />
 
       {/* Interactive Tutorial Overlay (first-time user onboarding) */}
       <InteractiveTutorial />

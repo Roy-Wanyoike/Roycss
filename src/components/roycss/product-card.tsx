@@ -146,7 +146,7 @@ export function ProductCard({ product, onOpen }: ProductCardProps) {
             </div>
           </div>
         </div>
-        <Badge variant="outline" className={cn("shrink-0 text-[10px] font-semibold px-1.5 py-0", tierBadge.className)}>
+        <Badge variant="outline" className={cn("shrink-0 text-[11px] font-semibold px-1.5 py-0", tierBadge.className)}>
           {tierBadge.label}
         </Badge>
       </div>
@@ -158,7 +158,7 @@ export function ProductCard({ product, onOpen }: ProductCardProps) {
       <div className="flex items-center justify-between mt-1">
         <div className="flex flex-wrap gap-1">
           {product.tags.slice(0, 3).map((tag) => (
-            <span key={tag} className="text-[10px] text-muted-foreground/80 px-1.5 py-0.5 rounded-md bg-muted/60">
+            <span key={tag} className="text-[11px] text-muted-foreground/80 px-1.5 py-0.5 rounded-md bg-muted/60">
               {tag}
             </span>
           ))}

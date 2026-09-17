@@ -820,7 +820,7 @@ export function RoyLive() {
                 <div>
                   <CardTitle className="flex items-center gap-2">
                     Join a Roy Live room
-                    <Badge variant="secondary" className="text-[10px]">beta</Badge>
+                    <Badge variant="secondary" className="text-[11px]">beta</Badge>
                     {/* PF-012 F9 — sessions/cursors/chat live in service memory; nothing is persisted */}
                     <DemoBadge module="live" />
                   </CardTitle>
@@ -1096,7 +1096,7 @@ export function RoyLive() {
                       >
                         {/* Name tag (above the cursor bar) */}
                         <div
-                          className="absolute -top-4 left-0 whitespace-nowrap rounded px-1 py-0.5 text-[9px] font-semibold leading-none text-white shadow-sm"
+                          className="absolute -top-4 left-0 whitespace-nowrap rounded px-1 py-0.5 text-[11px] font-semibold leading-none text-white shadow-sm"
                           style={{ backgroundColor: c.color }}
                         >
                           {c.username}
@@ -1143,7 +1143,7 @@ export function RoyLive() {
             <CardTitle className="flex items-center gap-2 text-base">
               <Users className="text-primary size-4" />
               Active users
-              <Badge variant="secondary" className="ml-auto text-[10px]">
+              <Badge variant="secondary" className="ml-auto text-[11px]">
                 {users.length}
               </Badge>
             </CardTitle>
@@ -1171,7 +1171,7 @@ export function RoyLive() {
                       <p className="truncate text-sm font-medium">
                         {u.username}
                         {isMe && (
-                          <span className="text-muted-foreground ml-1 text-[10px] font-normal">
+                          <span className="text-muted-foreground ml-1 text-[11px] font-normal">
                             (you)
                           </span>
                         )}
@@ -1235,7 +1235,7 @@ export function RoyLive() {
                       >
                         {!isMine && (
                           <p
-                            className="mb-0.5 text-[10px] font-semibold"
+                            className="mb-0.5 text-[11px] font-semibold"
                             style={{ color: senderColor }}
                           >
                             {m.username}
@@ -1243,7 +1243,7 @@ export function RoyLive() {
                         )}
                         <p className="whitespace-pre-wrap break-words">{m.message}</p>
                       </div>
-                      <span className="text-muted-foreground px-1 text-[9px] tabular-nums">
+                      <span className="text-muted-foreground px-1 text-[11px] tabular-nums">
                         {formatTime(m.timestamp)}
                       </span>
                     </motion.div>

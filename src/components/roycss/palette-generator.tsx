@@ -57,7 +57,7 @@ export function ColorPaletteGenerator() {
             style={{ background: color.oklch }}
             title={color.oklch}
           >
-            <span className="text-[9px] font-mono font-bold opacity-0 group-hover:opacity-100 transition-opacity"
+            <span className="text-[11px] font-mono font-bold opacity-0 group-hover:opacity-100 transition-opacity"
               style={{ color: color.lightness > 0.6 ? "oklch(0.15 0.02 250)" : "oklch(0.98 0.01 250)" }}>
               {copiedIdx === i ? "Copied!" : `L${Math.round(color.lightness * 100)}`}
             </span>

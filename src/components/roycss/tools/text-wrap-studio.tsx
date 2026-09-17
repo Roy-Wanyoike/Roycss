@@ -378,11 +378,11 @@ function SelectRow<T extends string>({
   return (
     <div className="space-y-1">
       <div className="flex items-center justify-between gap-2">
-        <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+        <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
           {label}
         </Label>
         {badge ? (
-          <Badge variant="outline" className="font-mono text-[9px] text-muted-foreground">
+          <Badge variant="outline" className="font-mono text-[11px] text-muted-foreground">
             {badge}
           </Badge>
         ) : null}
@@ -566,11 +566,11 @@ export function TextWrapStudio() {
         />
         <div className="space-y-1">
           <div className="flex items-center justify-between">
-            <Label className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-muted-foreground">
+            <Label className="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-muted-foreground">
               <Ruler className="size-3.5" />
               Container width
             </Label>
-            <span className="font-mono text-[10px] text-muted-foreground">
+            <span className="font-mono text-[11px] text-muted-foreground">
               {width}px
             </span>
           </div>
@@ -592,7 +592,7 @@ export function TextWrapStudio() {
             <AlignLeft className="size-3.5" />
             Before / After
           </span>
-          <div className="flex items-center gap-3 text-[10px] text-muted-foreground">
+          <div className="flex items-center gap-3 text-[11px] text-muted-foreground">
             <span>
               Before:{" "}
               <span className="font-mono text-foreground">
@@ -614,11 +614,11 @@ export function TextWrapStudio() {
           {/* Before */}
           <figure className="space-y-2 rounded-lg border border-border bg-background p-3">
             <figcaption className="flex items-center justify-between gap-2">
-              <span className="flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+              <span className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                 <span className="size-1.5 rounded-full bg-muted-foreground" />
                 Before (default)
               </span>
-              <Badge variant="outline" className="font-mono text-[9px]">
+              <Badge variant="outline" className="font-mono text-[11px]">
                 balance:{" "}
                 <span className={balanceColor(beforeLines.balance)}>
                   {beforeLines.balance}
@@ -649,11 +649,11 @@ export function TextWrapStudio() {
           {/* After */}
           <figure className="space-y-2 rounded-lg border border-primary/30 bg-background p-3">
             <figcaption className="flex items-center justify-between gap-2">
-              <span className="flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-primary">
+              <span className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-primary">
                 <span className="size-1.5 rounded-full bg-primary" />
                 After (with properties)
               </span>
-              <Badge variant="outline" className="font-mono text-[9px]">
+              <Badge variant="outline" className="font-mono text-[11px]">
                 balance:{" "}
                 <span className={balanceColor(afterLines.balance)}>
                   {afterLines.balance}
@@ -683,7 +683,7 @@ export function TextWrapStudio() {
           </figure>
         </div>
 
-        <p className="text-[10px] text-muted-foreground">
+        <p className="text-[11px] text-muted-foreground">
           Balance score: ratio of the narrowest full line to the widest
           (excluding the final line, which is normally short). Higher = more
           even line widths.
@@ -698,7 +698,7 @@ export function TextWrapStudio() {
 
         {/* text-wrap radio group */}
         <div className="space-y-2">
-          <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+          <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
             text-wrap
           </Label>
           <RadioGroup
@@ -726,7 +726,7 @@ export function TextWrapStudio() {
                   <span className="font-mono text-xs">{opt.label}</span>
                 </div>
                 {opt.baseline ? (
-                  <span className="text-[9px] text-muted-foreground">
+                  <span className="text-[11px] text-muted-foreground">
                     {opt.baseline}
                   </span>
                 ) : null}
@@ -740,10 +740,10 @@ export function TextWrapStudio() {
           {/* text-wrap-mode as a switch (only wrap/nowrap) */}
           <div className="space-y-1">
             <div className="flex items-center justify-between gap-2">
-              <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+              <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
                 text-wrap-mode
               </Label>
-              <Badge variant="outline" className="font-mono text-[9px] text-muted-foreground">
+              <Badge variant="outline" className="font-mono text-[11px] text-muted-foreground">
                 longhand
               </Badge>
             </div>
@@ -833,7 +833,7 @@ export function TextWrapStudio() {
                 <span className="text-[11px] font-semibold text-foreground">
                   {preset.name}
                 </span>
-                <span className="text-[9px] text-muted-foreground">
+                <span className="text-[11px] text-muted-foreground">
                   {preset.description}
                 </span>
               </button>
@@ -884,10 +884,10 @@ export function TextWrapStudio() {
           <div className="flex items-center justify-between gap-2 rounded-md bg-muted/40 px-2.5 py-1.5">
             <code className="font-mono text-[11px]">text-wrap: balance</code>
             <div className="flex gap-1">
-              <Badge className="bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[9px]">
+              <Badge className="bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[11px]">
                 Baseline 2024
               </Badge>
-              <Badge variant="secondary" className="font-mono text-[9px]">
+              <Badge variant="secondary" className="font-mono text-[11px]">
                 C 114+
               </Badge>
             </div>
@@ -895,10 +895,10 @@ export function TextWrapStudio() {
           <div className="flex items-center justify-between gap-2 rounded-md bg-muted/40 px-2.5 py-1.5">
             <code className="font-mono text-[11px]">text-wrap: pretty</code>
             <div className="flex gap-1">
-              <Badge variant="secondary" className="font-mono text-[9px]">
+              <Badge variant="secondary" className="font-mono text-[11px]">
                 C 117+
               </Badge>
-              <Badge variant="secondary" className="font-mono text-[9px]">
+              <Badge variant="secondary" className="font-mono text-[11px]">
                 S 17.4+
               </Badge>
             </div>
@@ -906,10 +906,10 @@ export function TextWrapStudio() {
           <div className="flex items-center justify-between gap-2 rounded-md bg-muted/40 px-2.5 py-1.5">
             <code className="font-mono text-[11px]">text-wrap: stable</code>
             <div className="flex gap-1">
-              <Badge variant="secondary" className="font-mono text-[9px]">
+              <Badge variant="secondary" className="font-mono text-[11px]">
                 C 130+
               </Badge>
-              <Badge variant="secondary" className="font-mono text-[9px]">
+              <Badge variant="secondary" className="font-mono text-[11px]">
                 F 130+
               </Badge>
             </div>
@@ -917,10 +917,10 @@ export function TextWrapStudio() {
           <div className="flex items-center justify-between gap-2 rounded-md bg-muted/40 px-2.5 py-1.5">
             <code className="font-mono text-[11px]">hyphens: auto</code>
             <div className="flex gap-1">
-              <Badge className="bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[9px]">
+              <Badge className="bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[11px]">
                 Baseline 2023
               </Badge>
-              <Badge variant="secondary" className="font-mono text-[9px]">
+              <Badge variant="secondary" className="font-mono text-[11px]">
                 All
               </Badge>
             </div>
@@ -928,10 +928,10 @@ export function TextWrapStudio() {
           <div className="flex items-center justify-between gap-2 rounded-md bg-muted/40 px-2.5 py-1.5">
             <code className="font-mono text-[11px]">word-break</code>
             <div className="flex gap-1">
-              <Badge className="bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[9px]">
+              <Badge className="bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[11px]">
                 Baseline
               </Badge>
-              <Badge variant="secondary" className="font-mono text-[9px]">
+              <Badge variant="secondary" className="font-mono text-[11px]">
                 All
               </Badge>
             </div>
@@ -939,16 +939,16 @@ export function TextWrapStudio() {
           <div className="flex items-center justify-between gap-2 rounded-md bg-muted/40 px-2.5 py-1.5">
             <code className="font-mono text-[11px]">hanging-punctuation</code>
             <div className="flex gap-1">
-              <Badge className="bg-amber-500/15 text-amber-600 dark:text-amber-400 text-[9px]">
+              <Badge className="bg-amber-500/15 text-amber-600 dark:text-amber-400 text-[11px]">
                 Limited
               </Badge>
-              <Badge variant="secondary" className="font-mono text-[9px]">
+              <Badge variant="secondary" className="font-mono text-[11px]">
                 S only
               </Badge>
             </div>
           </div>
         </div>
-        <p className="text-[10px] text-muted-foreground">
+        <p className="text-[11px] text-muted-foreground">
           <code className="font-mono">C</code> = Chrome / Edge ·{" "}
           <code className="font-mono">S</code> = Safari ·{" "}
           <code className="font-mono">F</code> = Firefox. Version numbers are

@@ -821,11 +821,11 @@ export function GridAreasBuilder() {
             )}
             aria-pressed={brush === DOT}
           >
-            <span className="flex size-4 items-center justify-center rounded-sm border border-border bg-muted/60 text-[10px] text-muted-foreground">
+            <span className="flex size-4 items-center justify-center rounded-sm border border-border bg-muted/60 text-[11px] text-muted-foreground">
               <Eraser className="size-3" />
             </span>
             <span className="flex-1 font-medium">Eraser (.)</span>
-            <span className="font-mono text-[10px] text-muted-foreground">.</span>
+            <span className="font-mono text-[11px] text-muted-foreground">.</span>
           </button>
 
           {uniqueNames.length === 0 ? (
@@ -887,7 +887,7 @@ export function GridAreasBuilder() {
                         {invalid && (
                           <Badge
                             variant="outline"
-                            className="border-amber-500/40 bg-amber-500/10 px-1 py-0 text-[9px] font-medium text-amber-700 dark:text-amber-300"
+                            className="border-amber-500/40 bg-amber-500/10 px-1 py-0 text-[11px] font-medium text-amber-700 dark:text-amber-300"
                           >
                             <AlertTriangle className="mr-0.5 size-2.5" />
                             Invalid name
@@ -896,7 +896,7 @@ export function GridAreasBuilder() {
                         {nonRect && (
                           <Badge
                             variant="outline"
-                            className="border-amber-500/40 bg-amber-500/10 px-1 py-0 text-[9px] font-medium text-amber-700 dark:text-amber-300"
+                            className="border-amber-500/40 bg-amber-500/10 px-1 py-0 text-[11px] font-medium text-amber-700 dark:text-amber-300"
                           >
                             <AlertTriangle className="mr-0.5 size-2.5" />
                             Non-rectangular

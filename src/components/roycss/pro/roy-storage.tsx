@@ -234,7 +234,7 @@ export function RoyStorage() {
                       </span>
                     </TableCell>
                     <TableCell>
-                      <Badge variant="outline" className="text-[10px]">
+                      <Badge variant="outline" className="text-[11px]">
                         {meta.label}
                       </Badge>
                     </TableCell>

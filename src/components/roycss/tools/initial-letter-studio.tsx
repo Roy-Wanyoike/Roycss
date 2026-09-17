@@ -522,7 +522,7 @@ export function InitialLetterStudio() {
             <AlignLeft className="size-3.5" />
             Live Preview
           </span>
-          <Badge variant="secondary" className="font-mono text-[10px]">
+          <Badge variant="secondary" className="font-mono text-[11px]">
             initial-letter: {buildInitialLetterValue(state)}
           </Badge>
         </div>
@@ -530,7 +530,7 @@ export function InitialLetterStudio() {
         <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
           {/* Column 1: With initial-letter (user settings) */}
           <figure className="space-y-2 rounded-lg border border-primary/30 bg-background p-3">
-            <figcaption className="flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-primary">
+            <figcaption className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-primary">
               <span className="size-1.5 rounded-full bg-primary" />
               With initial-letter
             </figcaption>
@@ -555,7 +555,7 @@ export function InitialLetterStudio() {
 
           {/* Column 2: Raised cap (size 1, sink 0) */}
           <figure className="space-y-2 rounded-lg border border-border bg-background p-3">
-            <figcaption className="flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+            <figcaption className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
               <span className="size-1.5 rounded-full bg-amber-500" />
               Raised cap (2 0)
             </figcaption>
@@ -580,7 +580,7 @@ export function InitialLetterStudio() {
 
           {/* Column 3: Traditional float hack */}
           <figure className="space-y-2 rounded-lg border border-border bg-background p-3">
-            <figcaption className="flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+            <figcaption className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
               <span className="size-1.5 rounded-full bg-rose-500" />
               Traditional float
             </figcaption>
@@ -605,7 +605,7 @@ export function InitialLetterStudio() {
           </figure>
         </div>
 
-        <p className="text-[10px] text-muted-foreground">
+        <p className="text-[11px] text-muted-foreground">
           The first paragraph of each column carries the drop cap; the second
           flows normally. Resize the window to see how the cap reflows with the
           text.
@@ -622,7 +622,7 @@ export function InitialLetterStudio() {
         <div className="flex items-center justify-between gap-3">
           <div className="space-y-0.5">
             <Label className="text-xs">Use <code className="font-mono">drop</code> keyword</Label>
-            <p className="text-[10px] text-muted-foreground">
+            <p className="text-[11px] text-muted-foreground">
               Browser picks natural metrics; ignores size & sink sliders.
             </p>
           </div>
@@ -649,10 +649,10 @@ export function InitialLetterStudio() {
         >
           <div className="space-y-1">
             <div className="flex items-center justify-between">
-              <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+              <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
                 Size (rows the cap spans)
               </Label>
-              <span className="font-mono text-[10px] text-muted-foreground">
+              <span className="font-mono text-[11px] text-muted-foreground">
                 {state.size}
               </span>
             </div>
@@ -668,10 +668,10 @@ export function InitialLetterStudio() {
           </div>
           <div className="space-y-1">
             <div className="flex items-center justify-between">
-              <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+              <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
                 Sink (lines sunk below baseline)
               </Label>
-              <span className="font-mono text-[10px] text-muted-foreground">
+              <span className="font-mono text-[11px] text-muted-foreground">
                 {state.sink}
                 {state.sink === 0 && " · raised"}
               </span>
@@ -691,7 +691,7 @@ export function InitialLetterStudio() {
         {/* Font family + weight */}
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1">
-            <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+            <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
               Font family
             </Label>
             <Select
@@ -711,7 +711,7 @@ export function InitialLetterStudio() {
             </Select>
           </div>
           <div className="space-y-1">
-            <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+            <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
               Font weight
             </Label>
             <Select
@@ -735,7 +735,7 @@ export function InitialLetterStudio() {
         {/* Color + size multiplier */}
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <div className="space-y-1">
-            <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+            <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
               Cap colour
             </Label>
             <div className="flex items-center gap-2">
@@ -756,16 +756,16 @@ export function InitialLetterStudio() {
                 aria-label="Drop cap colour value"
               />
             </div>
-            <p className="font-mono text-[10px] text-muted-foreground">
+            <p className="font-mono text-[11px] text-muted-foreground">
               {hexToOklch(state.color) ?? "non-hex value"}
             </p>
           </div>
           <div className="space-y-1">
             <div className="flex items-center justify-between">
-              <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+              <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
                 First-letter size multiplier
               </Label>
-              <span className="font-mono text-[10px] text-muted-foreground">
+              <span className="font-mono text-[11px] text-muted-foreground">
                 {state.fontSizeMultiplier.toFixed(2)}em
               </span>
             </div>
@@ -782,7 +782,7 @@ export function InitialLetterStudio() {
 
         {/* initial-letter-align */}
         <div className="space-y-1">
-          <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+          <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
             initial-letter-align
           </Label>
           <Select
@@ -837,10 +837,10 @@ export function InitialLetterStudio() {
                 >
                   A
                 </span>
-                <span className="text-[10px] font-medium text-foreground">
+                <span className="text-[11px] font-medium text-foreground">
                   {preset.name}
                 </span>
-                <span className="font-mono text-[9px] text-muted-foreground">
+                <span className="font-mono text-[11px] text-muted-foreground">
                   {buildInitialLetterValue(preset.state)}
                 </span>
               </button>
@@ -892,17 +892,17 @@ export function InitialLetterStudio() {
             <span className="size-1.5 rounded-full bg-emerald-500" />
             Baseline 2024
           </Badge>
-          <Badge variant="secondary" className="font-mono text-[10px]">
+          <Badge variant="secondary" className="font-mono text-[11px]">
             Chrome 110+
           </Badge>
-          <Badge variant="secondary" className="font-mono text-[10px]">
+          <Badge variant="secondary" className="font-mono text-[11px]">
             Safari 9+
           </Badge>
-          <Badge variant="secondary" className="font-mono text-[10px]">
+          <Badge variant="secondary" className="font-mono text-[11px]">
             Firefox 131+
           </Badge>
         </div>
-        <p className="text-[10px] text-muted-foreground">
+        <p className="text-[11px] text-muted-foreground">
           Safari shipped <code className="font-mono">initial-letter</code> behind
           a <code className="font-mono">-webkit-</code> prefix as early as v9;
           Firefox landed unprefixed support in v131 (Oct 2024), completing

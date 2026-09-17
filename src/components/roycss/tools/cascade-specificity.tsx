@@ -622,7 +622,7 @@ export function CascadeSpecificityExplorer() {
             className="font-mono text-xs"
             aria-label="Inline style declarations"
           />
-          <p className="text-[10px] text-muted-foreground">
+          <p className="text-[11px] text-muted-foreground">
             Treated as specificity (1, 0, 0, 0). Add{" "}
             <code className="font-mono">!important</code> to beat external{" "}
             <code className="font-mono">!important</code>.
@@ -650,7 +650,7 @@ export function CascadeSpecificityExplorer() {
               ))}
             </SelectContent>
           </Select>
-          <p className="text-[10px] text-muted-foreground">
+          <p className="text-[11px] text-muted-foreground">
             Shows rules whose selector contains the picked target as a
             substring (heuristic for &quot;could apply to the same element&quot;).
           </p>
@@ -675,7 +675,7 @@ export function CascadeSpecificityExplorer() {
             </code>
             <Badge
               variant="outline"
-              className="ml-auto font-mono text-[10px] tabular-nums"
+              className="ml-auto font-mono text-[11px] tabular-nums"
             >
               {winnerTuple}
             </Badge>
@@ -756,7 +756,7 @@ export function CascadeSpecificityExplorer() {
           <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             All rules ranked by specificity
           </div>
-          <Badge variant="secondary" className="font-mono text-[10px]">
+          <Badge variant="secondary" className="font-mono text-[11px]">
             {parsed.length} rule{parsed.length === 1 ? "" : "s"}
           </Badge>
         </div>
@@ -795,14 +795,14 @@ export function CascadeSpecificityExplorer() {
                     </code>
                     <Badge
                       variant="outline"
-                      className="font-mono text-[10px] tabular-nums shrink-0"
+                      className="font-mono text-[11px] tabular-nums shrink-0"
                     >
                       {specTuple(r.specificity)}
                     </Badge>
                     {r.hasImportant && (
                       <Badge
                         variant="outline"
-                        className="border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 text-[10px] shrink-0"
+                        className="border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 text-[11px] shrink-0"
                       >
                         !important
                       </Badge>
@@ -859,14 +859,14 @@ export function CascadeSpecificityExplorer() {
                 </code>
                 <Badge
                   variant="outline"
-                  className="ml-auto font-mono text-[10px] tabular-nums"
+                  className="ml-auto font-mono text-[11px] tabular-nums"
                 >
                   {specTuple(c.specificity)}
                 </Badge>
                 {c.important && (
                   <Badge
                     variant="outline"
-                    className="border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 text-[10px]"
+                    className="border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 text-[11px]"
                   >
                     !imp
                   </Badge>
@@ -874,7 +874,7 @@ export function CascadeSpecificityExplorer() {
                 {c.isInline && (
                   <Badge
                     variant="outline"
-                    className="border-primary/30 bg-primary/10 text-primary text-[10px]"
+                    className="border-primary/30 bg-primary/10 text-primary text-[11px]"
                   >
                     inline
                   </Badge>
@@ -882,7 +882,7 @@ export function CascadeSpecificityExplorer() {
               </li>
             ))}
           </ol>
-          <p className="text-[10px] text-muted-foreground">
+          <p className="text-[11px] text-muted-foreground">
             Resolved for the first property appearing in any candidate (
             <code className="font-mono">
               {resolution.sorted[0]?.property}
@@ -907,7 +907,7 @@ export function CascadeSpecificityExplorer() {
               <Info className="size-3.5" />
               Educational notes
             </span>
-            <span className="text-[10px] text-muted-foreground">
+            <span className="text-[11px] text-muted-foreground">
               {notesOpen ? "Hide" : "Show"}
             </span>
           </button>
@@ -993,7 +993,7 @@ function CascadeFactor({
     >
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
-          <span className="grid size-5 place-items-center rounded-full bg-primary/15 text-[10px] font-bold text-primary tabular-nums">
+          <span className="grid size-5 place-items-center rounded-full bg-primary/15 text-[11px] font-bold text-primary tabular-nums">
             {step}
           </span>
           {icon}
@@ -1002,7 +1002,7 @@ function CascadeFactor({
         {value && (
           <Badge
             variant="outline"
-            className="font-mono text-[10px] tabular-nums"
+            className="font-mono text-[11px] tabular-nums"
           >
             {value}
           </Badge>

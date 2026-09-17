@@ -141,7 +141,7 @@ export function BundleCalculator({ open, onOpenChange }: { open: boolean; onOpen
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="text-xs font-medium text-foreground truncate">{e.name}</p>
-                    <p className="text-[10px] text-muted-foreground">{e.category} · {formatSize(size)}</p>
+                    <p className="text-[11px] text-muted-foreground">{e.category} · {formatSize(size)}</p>
                   </div>
                   <div className={`flex items-center justify-center size-6 rounded-full shrink-0 ${isSelected ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}>
                     {isSelected ? <Minus className="size-3" /> : <Plus className="size-3" />}
@@ -164,7 +164,7 @@ export function BundleCalculator({ open, onOpenChange }: { open: boolean; onOpen
                 transition={{ duration: 0.3 }}
               />
             </div>
-            <p className="text-[10px] text-muted-foreground mt-1.5">
+            <p className="text-[11px] text-muted-foreground mt-1.5">
               {selectedEffects.length === 0 ? "Select effects to see your savings" : `Tree-shaking saves ${formatSize(stats.fullBundle - stats.totalBytes)} (${stats.savings}%)`}
             </p>
           </div>

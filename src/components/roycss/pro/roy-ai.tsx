@@ -443,7 +443,7 @@ export function RoyAI() {
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
             <span className="truncate font-semibold">RoyAI</span>
-            <span className="bg-primary/10 text-primary inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide">
+            <span className="bg-primary/10 text-primary inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide">
               <Sparkles className="size-3" />
               CSS Assistant
             </span>

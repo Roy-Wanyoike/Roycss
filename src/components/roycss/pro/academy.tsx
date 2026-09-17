@@ -1004,7 +1004,7 @@ function LessonTypeTag({ type }: { type: LessonType }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded-md border border-border/60 bg-muted/40 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide",
+        "inline-flex items-center gap-1 rounded-md border border-border/60 bg-muted/40 px-1.5 py-0.5 text-[11px] font-medium uppercase tracking-wide",
         LESSON_TYPE_TONE[type],
       )}
     >

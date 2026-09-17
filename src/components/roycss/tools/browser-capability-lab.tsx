@@ -771,7 +771,7 @@ function FeatureCard({ feature }: { feature: Feature }): ReactNode {
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between gap-2">
           <CardTitle className="text-base">{feature.name}</CardTitle>
-          <Badge variant="outline" className="shrink-0 text-[10px]">
+          <Badge variant="outline" className="shrink-0 text-[11px]">
             {feature.baseline}
           </Badge>
         </div>

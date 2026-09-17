@@ -322,7 +322,7 @@ export function RoyBenchmark() {
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
                     <p className="text-sm font-medium">{r.title}</p>
-                    <Badge className={cn("text-[10px] capitalize", meta.tone)}>
+                    <Badge className={cn("text-[11px] capitalize", meta.tone)}>
                       {r.severity}
                     </Badge>
                   </div>

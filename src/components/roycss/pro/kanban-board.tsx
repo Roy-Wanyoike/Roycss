@@ -303,7 +303,7 @@ const selectClass =
 function PriorityBadge({ priority }: { priority: Priority }) {
   const meta = PRIORITY_META[priority];
   return (
-    <Badge variant="outline" className={cn("gap-1 px-1.5 text-[10px] font-medium", meta.badge)}>
+    <Badge variant="outline" className={cn("gap-1 px-1.5 text-[11px] font-medium", meta.badge)}>
       <Flag className="size-2.5" />
       {meta.label}
     </Badge>
@@ -417,7 +417,7 @@ function KanbanCardView({
             <div className="flex items-center gap-2">
               <span
                 className={cn(
-                  "flex items-center gap-1 text-[10px]",
+                  "flex items-center gap-1 text-[11px]",
                   overdue
                     ? "font-medium text-rose-600 dark:text-rose-400"
                     : "text-muted-foreground",
@@ -427,7 +427,7 @@ function KanbanCardView({
                 {formatDue(card.dueDate)}
               </span>
               <Avatar className="size-6" aria-hidden>
-                <AvatarFallback className="bg-primary/15 text-[10px] font-medium text-primary">
+                <AvatarFallback className="bg-primary/15 text-[11px] font-medium text-primary">
                   {initialsOf(card.assignee)}
                 </AvatarFallback>
               </Avatar>
@@ -590,7 +590,7 @@ function KanbanCardView({
                 </dt>
                 <dd className="flex items-center gap-2 font-medium">
                   <Avatar className="size-5">
-                    <AvatarFallback className="bg-primary/15 text-[9px] font-medium text-primary">
+                    <AvatarFallback className="bg-primary/15 text-[11px] font-medium text-primary">
                       {initialsOf(card.assignee)}
                     </AvatarFallback>
                   </Avatar>
@@ -756,7 +756,7 @@ function Column({
           <h2 className="truncate text-sm font-semibold">{column.title}</h2>
           <Badge
             variant="secondary"
-            className="h-4 min-w-4 justify-center rounded-full px-1.5 text-[10px]"
+            className="h-4 min-w-4 justify-center rounded-full px-1.5 text-[11px]"
           >
             {cards.length}
           </Badge>

@@ -1000,7 +1000,7 @@ function MigrationTable() {
                   <td className="roycss-arrow" aria-hidden="true">→</td>
                   <td><code className="text-primary">{row.to}</code></td>
                   <td>
-                    <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${
+                    <span className={`text-[11px] px-1.5 py-0.5 rounded-full font-medium ${
                       row.category === "Entrance" ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" :
                       row.category === "Exit" ? "bg-rose-500/10 text-rose-600 dark:text-rose-400" :
                       row.category === "Attention" ? "bg-amber-500/10 text-amber-600 dark:text-amber-400" :
@@ -1612,7 +1612,7 @@ export default function RoyCSSPage() {
                   }
                   contentClassName="w-72 p-2"
                 >
-                  <DropdownMenuLabel className="px-2 pb-2 pt-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  <DropdownMenuLabel className="px-2 pb-2 pt-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                     Explore
                   </DropdownMenuLabel>
                   <div className="space-y-0.5">
@@ -1636,7 +1636,7 @@ export default function RoyCSSPage() {
                   <div className="grid grid-cols-2 gap-x-6 gap-y-4">
                     {PLATFORM_GROUPS.map((group) => (
                       <div key={group.name} className="space-y-0.5">
-                        <DropdownMenuLabel className="px-2 pb-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                        <DropdownMenuLabel className="px-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                           {group.name}
                         </DropdownMenuLabel>
                         {group.items.map((item) => (
@@ -1840,7 +1840,7 @@ export default function RoyCSSPage() {
                   <motion.span
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="absolute -top-1 -right-1 flex items-center justify-center min-w-4 h-4 px-1 rounded-full bg-rose-500 text-white text-[9px] font-bold"
+                    className="absolute -top-1 -right-1 flex items-center justify-center min-w-4 h-4 px-1 rounded-full bg-rose-500 text-white text-[11px] font-bold"
                   >
                     {count}
                   </motion.span>
@@ -2173,7 +2173,7 @@ export default function RoyCSSPage() {
                   <X className="size-4" />
                 </button>
               ) : (
-                <kbd aria-hidden="true" className="absolute right-3 top-1/2 -translate-y-1/2 hidden sm:flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-muted/80 border border-border/50 text-[9px] font-medium text-muted-foreground">
+                <kbd aria-hidden="true" className="absolute right-3 top-1/2 -translate-y-1/2 hidden sm:flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-muted/80 border border-border/50 text-[11px] font-medium text-muted-foreground">
                   ⌘K
                 </kbd>
               )}

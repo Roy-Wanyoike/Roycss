@@ -780,7 +780,7 @@ export function ScopeRuleTester() {
             </h2>
             <span
               className={cn(
-                "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider",
+                "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider",
                 badgeTone,
               )}
             >
@@ -927,7 +927,7 @@ export function ScopeRuleTester() {
             ) : (
               tree.children.map((c) => renderDomNode(c))
             )}
-            <p className="pt-1 text-[10px] text-muted-foreground/70">
+            <p className="pt-1 text-[11px] text-muted-foreground/70">
               <span className="inline-block size-2 rounded-full bg-emerald-500 align-middle mr-1" />
               in scope &nbsp;·&nbsp;
               <span className="inline-block size-2 rounded-full bg-rose-500 align-middle mr-1" />
@@ -1049,7 +1049,7 @@ export function ScopeRuleTester() {
                 <Badge
                   variant="outline"
                   className={cn(
-                    "ml-auto gap-1 text-[10px]",
+                    "ml-auto gap-1 text-[11px]",
                     c.inScope
                       ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
                       : "border-rose-500/30 bg-rose-500/10 text-rose-600 dark:text-rose-400",

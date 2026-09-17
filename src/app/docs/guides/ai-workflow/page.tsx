@@ -22,7 +22,7 @@ export default function AiWorkflowPage() {
         exposes the catalog to your AI client — including{" "}
         <code>search_effects</code>, <code>get_effect</code>, and{" "}
         <code>validate_class_name</code>. See the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/getting-started/mcp-server">
+        <a className="text-primary hover:underline" href="/docs/getting-started/mcp-server">
           MCP server guide
         </a>{" "}
         for setup details — quick version:

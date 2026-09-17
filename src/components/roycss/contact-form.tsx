@@ -265,7 +265,7 @@ export function ContactForm({ open, onOpenChange }: ContactFormProps) {
                     disabled={isSubmitting}
                     className="min-h-[120px] resize-y"
                   />
-                  <p className="text-[10px] text-muted-foreground text-right tabular-nums">
+                  <p className="text-[11px] text-muted-foreground text-right tabular-nums">
                     {message.length}/5000
                   </p>
                 </div>
@@ -304,7 +304,7 @@ export function ContactForm({ open, onOpenChange }: ContactFormProps) {
                   )}
                 </Button>
 
-                <p className="text-[10px] text-muted-foreground text-center leading-relaxed">
+                <p className="text-[11px] text-muted-foreground text-center leading-relaxed">
                   By submitting, you agree to be contacted regarding your
                   inquiry, as described in our{" "}
                   <Link

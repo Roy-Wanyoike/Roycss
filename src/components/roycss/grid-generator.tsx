@@ -166,11 +166,11 @@ export function CSSGridGenerator() {
             <p className="text-xs font-semibold text-primary mb-1.5">Item {selectedItem.label} (selected)</p>
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="text-[10px] text-muted-foreground uppercase">Grid Column</label>
+                <label className="text-[11px] text-muted-foreground uppercase">Grid Column</label>
                 <input type="text" value={selectedItem.column} onChange={(e) => updateItem(selectedItem.id, "column", e.target.value)} placeholder="1 / 3" className="w-full h-7 px-2 rounded bg-background border border-border/40 text-xs font-mono" />
               </div>
               <div>
-                <label className="text-[10px] text-muted-foreground uppercase">Grid Row</label>
+                <label className="text-[11px] text-muted-foreground uppercase">Grid Row</label>
                 <input type="text" value={selectedItem.row} onChange={(e) => updateItem(selectedItem.id, "row", e.target.value)} placeholder="1" className="w-full h-7 px-2 rounded bg-background border border-border/40 text-xs font-mono" />
               </div>
             </div>

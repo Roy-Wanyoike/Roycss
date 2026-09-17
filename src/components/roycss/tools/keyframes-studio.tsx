@@ -598,7 +598,7 @@ export function KeyframesStudio() {
                       : "border-border bg-background hover:border-primary/60",
                   )}
                 />
-                <span className="text-[10px] font-mono text-muted-foreground">
+                <span className="text-[11px] font-mono text-muted-foreground">
                   {stop.offset}
                 </span>
               </button>

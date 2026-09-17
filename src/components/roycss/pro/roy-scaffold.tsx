@@ -912,13 +912,13 @@ export function RoyScaffold() {
                     Stack
                   </div>
                   <div className="text-foreground mt-1 flex flex-wrap gap-1 text-xs font-medium">
-                    <Badge variant="secondary" className="font-mono text-[10px]">
+                    <Badge variant="secondary" className="font-mono text-[11px]">
                       {FRAMEWORKS[framework].label}
                     </Badge>
-                    <Badge variant="secondary" className="font-mono text-[10px]">
+                    <Badge variant="secondary" className="font-mono text-[11px]">
                       {DATABASES[database].label}
                     </Badge>
-                    <Badge variant="secondary" className="font-mono text-[10px]">
+                    <Badge variant="secondary" className="font-mono text-[11px]">
                       {AUTHS[auth].label}
                     </Badge>
                   </div>

@@ -298,7 +298,7 @@ export function RoyAuditCenter() {
                       title={`${v}`}
                     />
                   </div>
-                  <span className="text-muted-foreground text-[10px]">M{i + 1}</span>
+                  <span className="text-muted-foreground text-[11px]">M{i + 1}</span>
                   <span className="text-xs font-semibold tabular-nums">{v}</span>
                 </div>
               ))}

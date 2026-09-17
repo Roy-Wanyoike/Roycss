@@ -404,7 +404,7 @@ export function ColorBlindnessSimulator() {
             >
               <label
                 htmlFor={`cbp-color-${i}`}
-                className="text-[10px] font-medium text-muted-foreground"
+                className="text-[11px] font-medium text-muted-foreground"
               >
                 {PALETTE_LABELS[i]}
               </label>
@@ -483,7 +483,7 @@ export function ColorBlindnessSimulator() {
                     aria-label={`Original ${PALETTE_LABELS[i]}: ${color}`}
                   />
                   <div className="flex flex-col">
-                    <span className="text-[10px] text-muted-foreground">
+                    <span className="text-[11px] text-muted-foreground">
                       Original
                     </span>
                     <span className="font-mono text-xs text-foreground">
@@ -499,7 +499,7 @@ export function ColorBlindnessSimulator() {
                     aria-label={`Simulated ${PALETTE_LABELS[i]}: ${simulatedPalette[i]}`}
                   />
                   <div className="flex flex-col">
-                    <span className="text-[10px] text-muted-foreground">
+                    <span className="text-[11px] text-muted-foreground">
                       Simulated
                     </span>
                     <span className="font-mono text-xs text-foreground">
@@ -517,14 +517,14 @@ export function ColorBlindnessSimulator() {
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {/* Original */}
             <div className="flex flex-col gap-2">
-              <span className="text-[10px] font-medium text-muted-foreground">
+              <span className="text-[11px] font-medium text-muted-foreground">
                 Original
               </span>
               <PreviewCard palette={palette} />
             </div>
             {/* Simulated */}
             <div className="flex flex-col gap-2">
-              <span className="text-[10px] font-medium text-muted-foreground">
+              <span className="text-[11px] font-medium text-muted-foreground">
                 Simulated ({activeDef.label})
               </span>
               <div style={filterStyle}>
@@ -545,7 +545,7 @@ export function ColorBlindnessSimulator() {
           <Badge
             variant={contrastResults.failing.length === 0 ? "secondary" : "destructive"}
             className={cn(
-              "text-[10px]",
+              "text-[11px]",
               contrastResults.failing.length === 0 &&
                 "border-emerald-500/40 text-emerald-600 dark:text-emerald-400",
             )}
@@ -588,7 +588,7 @@ export function ColorBlindnessSimulator() {
             threshold under {activeDef.label}.
           </p>
         )}
-        <p className="text-[10px] text-muted-foreground">
+        <p className="text-[11px] text-muted-foreground">
           Tested {contrastResults.failing.length + contrastResults.passing.length}{" "}
           unique color pairs. Threshold: WCAG 2.1 AA (4.5:1).
         </p>
@@ -678,28 +678,28 @@ function PreviewCard({ palette }: PreviewCardProps) {
       <div className="flex flex-wrap gap-1.5">
         <button
           type="button"
-          className="rounded-md px-2 py-1 text-[10px] font-medium"
+          className="rounded-md px-2 py-1 text-[11px] font-medium"
           style={btnPrimary}
         >
           Primary
         </button>
         <button
           type="button"
-          className="rounded-md px-2 py-1 text-[10px] font-medium"
+          className="rounded-md px-2 py-1 text-[11px] font-medium"
           style={btnAccent}
         >
           Accent
         </button>
         <button
           type="button"
-          className="rounded-md px-2 py-1 text-[10px] font-medium"
+          className="rounded-md px-2 py-1 text-[11px] font-medium"
           style={btnWarning}
         >
           Warning
         </button>
         <button
           type="button"
-          className="rounded-md px-2 py-1 text-[10px] font-medium"
+          className="rounded-md px-2 py-1 text-[11px] font-medium"
           style={btnDanger}
         >
           Danger

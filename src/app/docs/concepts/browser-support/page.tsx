@@ -111,7 +111,7 @@ import "roycss/fallbacks";`}</code>
         falls below 0.2% and it has been superseded by a version
         two years old or more. The current matrix is updated every
         quarter on the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/guides/changelog">
+        <a className="text-primary hover:underline" href="/docs/guides/changelog">
           changelog
         </a>
         .

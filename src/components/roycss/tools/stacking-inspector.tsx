@@ -313,7 +313,7 @@ function NodeRow({ node }: { node: StackNode }) {
       <Badge
         variant="outline"
         className={cn(
-          "font-mono text-[10px] py-0 h-4",
+          "font-mono text-[11px] py-0 h-4",
           node.zIndex !== "auto" && "border-primary/30 text-primary",
         )}
       >
@@ -322,7 +322,7 @@ function NodeRow({ node }: { node: StackNode }) {
 
       {node.isStackingContext && (
         <Badge
-          className="bg-primary/15 text-primary border-primary/20 font-mono text-[10px] py-0 h-4"
+          className="bg-primary/15 text-primary border-primary/20 font-mono text-[11px] py-0 h-4"
           title={`Effective z-index in parent context: ${effectiveZ}`}
         >
           <Layers className="size-2.5" /> context · eff.z:{effectiveZ}
@@ -330,7 +330,7 @@ function NodeRow({ node }: { node: StackNode }) {
       )}
 
       {node.triggers.length > 0 && (
-        <span className="text-[10px] text-muted-foreground font-mono">
+        <span className="text-[11px] text-muted-foreground font-mono">
           ← {node.triggers.join(" · ")}
         </span>
       )}
@@ -454,7 +454,7 @@ function InspectorMode() {
           <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             Stacking Context Tree
           </Label>
-          <span className="text-[10px] text-muted-foreground flex items-center gap-1">
+          <span className="text-[11px] text-muted-foreground flex items-center gap-1">
             <Eye className="size-3" /> live
           </span>
         </div>
@@ -572,7 +572,7 @@ function BoxVisual({
       aria-label={`Box ${box.letter}, z-index ${box.zIndex}, position ${box.position}${box.createContext ? ", forced context" : ""}`}
     >
       <span>{box.letter}</span>
-      <span className="text-white/85 text-[10px] font-mono">z:{box.zIndex}</span>
+      <span className="text-white/85 text-[11px] font-mono">z:{box.zIndex}</span>
     </div>
   );
 }
@@ -652,7 +652,7 @@ function PlaygroundMode() {
         style={{ transform: "translateZ(0)" }}
         aria-label="Stacking sandbox preview"
       >
-        <p className="absolute top-2 left-2 text-[10px] text-muted-foreground font-mono pointer-events-none">
+        <p className="absolute top-2 left-2 text-[11px] text-muted-foreground font-mono pointer-events-none">
           sandbox · position:relative · transform:translateZ(0)
         </p>
         {renderBoxes()}
@@ -691,7 +691,7 @@ function PlaygroundMode() {
           <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             Live Stacking Tree
           </Label>
-          <span className="text-[10px] text-muted-foreground flex items-center gap-1">
+          <span className="text-[11px] text-muted-foreground flex items-center gap-1">
             <Eye className="size-3" /> auto-updates
           </span>
         </div>
@@ -724,7 +724,7 @@ function BoxControls({
         </span>
         <span className="text-xs font-medium">Box {box.letter}</span>
         {box.createContext && (
-          <Badge className="bg-primary/15 text-primary border-primary/20 text-[9px] py-0 h-4 ml-auto">
+          <Badge className="bg-primary/15 text-primary border-primary/20 text-[11px] py-0 h-4 ml-auto">
             <Layers className="size-2.5" /> ctx
           </Badge>
         )}
@@ -733,7 +733,7 @@ function BoxControls({
         <div className="space-y-1">
           <Label
             htmlFor={`z-${box.letter}`}
-            className="text-[10px] text-muted-foreground uppercase"
+            className="text-[11px] text-muted-foreground uppercase"
           >
             z-index
           </Label>
@@ -755,7 +755,7 @@ function BoxControls({
         <div className="space-y-1">
           <Label
             htmlFor={`pos-${box.letter}`}
-            className="text-[10px] text-muted-foreground uppercase"
+            className="text-[11px] text-muted-foreground uppercase"
           >
             position
           </Label>
@@ -781,7 +781,7 @@ function BoxControls({
           onCheckedChange={(c) => onChange({ createContext: c })}
           aria-label={`Force stacking context on box ${box.letter} via opacity 0.99`}
         />
-        <span className="text-[10px] text-muted-foreground">
+        <span className="text-[11px] text-muted-foreground">
           force context (<code className="font-mono">opacity:0.99</code>)
         </span>
       </label>

@@ -344,7 +344,7 @@ export function RoyObservatory() {
                   </div>
                   <div className="text-right">
                     <p className="text-xs font-semibold tabular-nums">{s.uptime}%</p>
-                    <p className="text-muted-foreground text-[10px]">{s.errorRate}% err</p>
+                    <p className="text-muted-foreground text-[11px]">{s.errorRate}% err</p>
                   </div>
                 </button>
               );

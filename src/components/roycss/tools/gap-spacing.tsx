@@ -298,7 +298,7 @@ function SliderRow({
               onChange={(e) => onChange(parseNum(e.target.value, max))}
               className="h-7 w-20 pr-7 text-right font-mono text-xs"
             />
-            <span className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground">
+            <span className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 text-[11px] text-muted-foreground">
               {unit}
             </span>
           </div>
@@ -339,7 +339,7 @@ function SideTag({
   return (
     <span
       className={cn(
-        "pointer-events-none absolute z-10 rounded-md border border-border bg-background px-1.5 py-0.5 font-mono text-[10px] tabular-nums shadow-sm",
+        "pointer-events-none absolute z-10 rounded-md border border-border bg-background px-1.5 py-0.5 font-mono text-[11px] tabular-nums shadow-sm",
         SIDE_TAG_POS[side],
         className,
       )}
@@ -394,7 +394,7 @@ function BoxModelDiagram({ sides, kind }: { sides: Sides; kind: BoxKind }) {
       />
       {/* Center label */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="rounded bg-background/85 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+        <span className="rounded bg-background/85 px-1.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
           content
         </span>
       </div>
@@ -601,7 +601,7 @@ export function GapSpacingCalculator() {
                   }
                   className="h-9 pr-7 text-right font-mono text-sm"
                 />
-                <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground">
+                <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[11px] text-muted-foreground">
                   px
                 </span>
               </div>
@@ -680,7 +680,7 @@ export function GapSpacingCalculator() {
             <AlignHorizontalSpaceBetween className="size-3.5" />
             Gap calculator
           </span>
-          <Badge variant="secondary" className="font-mono text-[10px]">
+          <Badge variant="secondary" className="font-mono text-[11px]">
             {rowGap === colGap ? `${rowGap}px` : `${rowGap} × ${colGap}px`}
           </Badge>
         </div>
@@ -771,7 +771,7 @@ export function GapSpacingCalculator() {
         {/* Generated CSS */}
         <div className="mt-3 space-y-2 rounded-lg border border-border/60 bg-muted/30 p-3">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
               Generated CSS
             </span>
             <CopyButton copied={gapCopied} onCopy={() => gapCopy(gapCss)} />
@@ -823,7 +823,7 @@ export function GapSpacingCalculator() {
                 <div key={side} className="space-y-1">
                   <Label
                     htmlFor={`gs-${side}`}
-                    className="text-[10px] capitalize text-muted-foreground"
+                    className="text-[11px] capitalize text-muted-foreground"
                   >
                     {side}
                   </Label>
@@ -840,7 +840,7 @@ export function GapSpacingCalculator() {
                       }
                       className="h-8 pr-8 text-right font-mono text-xs"
                     />
-                    <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground">
+                    <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[11px] text-muted-foreground">
                       px
                     </span>
                   </div>
@@ -862,7 +862,7 @@ export function GapSpacingCalculator() {
                 aria-label="Link all four sides together"
               />
             </label>
-            <p className="text-[10px] leading-snug text-muted-foreground">
+            <p className="text-[11px] leading-snug text-muted-foreground">
               Shorthand collapses to 1 value (all equal), 2 values (vertical ·
               horizontal), 3 values (top · horizontal · bottom), or 4 values.
             </p>
@@ -872,7 +872,7 @@ export function GapSpacingCalculator() {
         {/* Generated CSS */}
         <div className="mt-3 space-y-2 rounded-lg border border-border/60 bg-muted/30 p-3">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
               Generated CSS
             </span>
             <CopyButton copied={boxCopied} onCopy={() => boxCopy(boxCss)} />
@@ -889,7 +889,7 @@ export function GapSpacingCalculator() {
           <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
             <TableIcon className="size-3.5" />
             Spacing scale
-            <span className="ml-1 text-[10px] font-normal text-muted-foreground">
+            <span className="ml-1 text-[11px] font-normal text-muted-foreground">
               {scale.length} steps
             </span>
           </span>
@@ -916,7 +916,7 @@ export function GapSpacingCalculator() {
 
         <div className="overflow-hidden rounded-lg border border-border/60">
           <table className="w-full text-left">
-            <thead className="bg-muted/40 text-[10px] uppercase tracking-wider text-muted-foreground">
+            <thead className="bg-muted/40 text-[11px] uppercase tracking-wider text-muted-foreground">
               <tr>
                 <th className="px-2.5 py-1.5 font-semibold">Step</th>
                 <th className="px-2.5 py-1.5 text-right font-semibold">px</th>
@@ -981,7 +981,7 @@ export function GapSpacingCalculator() {
             </tbody>
           </table>
         </div>
-        <p className="mt-2 text-[10px] text-muted-foreground">
+        <p className="mt-2 text-[11px] text-muted-foreground">
           Click any row to copy{" "}
           <code className="font-mono text-foreground/80">
             {copyKind}: Npx;

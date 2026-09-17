@@ -107,7 +107,7 @@ box-shadow: 0 20px 40px -10px
         the package ships an optional fallback layer ({" "}
         <code>roycss/fallbacks</code>) that maps the OKLCH values
         to sRGB — see the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/concepts/browser-support">
+        <a className="text-primary hover:underline" href="/docs/concepts/browser-support">
           Browser Support
         </a>{" "}
         page for the matrix.

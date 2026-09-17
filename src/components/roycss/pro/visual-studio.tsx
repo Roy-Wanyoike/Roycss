@@ -821,7 +821,7 @@ function CanvasComponentView({
         <ComponentPreview component={component} />
 
         {/* Type tag (top-left) */}
-        <span className="pointer-events-none absolute left-2 top-2 rounded bg-background/80 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100">
+        <span className="pointer-events-none absolute left-2 top-2 rounded bg-background/80 px-1.5 py-0.5 text-[11px] font-medium uppercase tracking-wide text-muted-foreground opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100">
           {component.type}
         </span>
       </div>

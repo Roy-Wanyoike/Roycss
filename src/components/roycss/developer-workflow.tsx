@@ -115,7 +115,7 @@ export function DeveloperWorkflow() {
                       <div className="relative flex size-11 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary ring-1 ring-primary/20 transition-transform group-hover:scale-110">
                         <Icon className="size-5" strokeWidth={1.75} aria-hidden="true" />
                         <span
-                          className="absolute -right-1 -top-1 flex size-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground"
+                          className="absolute -right-1 -top-1 flex size-5 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground"
                           aria-hidden="true"
                         >
                           {step.number}

@@ -316,7 +316,7 @@ function KeyboardMock({
         <p className="text-xs text-muted-foreground">
           No virtual keyboard shown.
         </p>
-        <p className="max-w-[220px] text-[10px] text-muted-foreground/70">
+        <p className="max-w-[220px] text-[11px] text-muted-foreground/70">
           The page is expected to provide its own input method.
         </p>
       </div>
@@ -681,7 +681,7 @@ export function InputModeExplorer() {
                   : "border-border/60 bg-card/30",
               )}
             >
-              <Badge variant="outline" className="font-mono text-[10px]">
+              <Badge variant="outline" className="font-mono text-[11px]">
                 {m.value}
               </Badge>
               <span className="text-[11px] text-muted-foreground">

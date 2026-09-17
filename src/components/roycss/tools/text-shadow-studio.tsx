@@ -246,7 +246,7 @@ function LayerCard({
     >
       {/* Row 1: index + enable + reorder + remove */}
       <div className="flex items-center gap-2">
-        <span className="shrink-0 font-mono text-[10px] text-muted-foreground">
+        <span className="shrink-0 font-mono text-[11px] text-muted-foreground">
           {String(index + 1).padStart(2, "0")}
         </span>
         <div className="flex items-center gap-1.5">
@@ -255,7 +255,7 @@ function LayerCard({
             onCheckedChange={(v) => update("enabled", v)}
             aria-label={`Toggle layer ${index + 1}`}
           />
-          <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
+          <span className="text-[11px] uppercase tracking-wider text-muted-foreground">
             {layer.enabled ? "on" : "off"}
           </span>
         </div>
@@ -310,10 +310,10 @@ function LayerCard({
         ).map(({ key, label, min, max, step, unit }) => (
           <div key={key} className="space-y-1">
             <div className="flex items-center justify-between">
-              <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+              <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
                 {label}
               </Label>
-              <span className="font-mono text-[10px] text-muted-foreground">
+              <span className="font-mono text-[11px] text-muted-foreground">
                 {layer[key]}
                 {unit}
               </span>
@@ -536,7 +536,7 @@ export function TextShadowStudio() {
           <div className="space-y-1">
             <Label
               htmlFor="tss-custom-bg"
-              className="text-[10px] uppercase tracking-wider text-muted-foreground"
+              className="text-[11px] uppercase tracking-wider text-muted-foreground"
             >
               Background
             </Label>
@@ -562,7 +562,7 @@ export function TextShadowStudio() {
           <div className="space-y-1">
             <Label
               htmlFor="tss-fg"
-              className="text-[10px] uppercase tracking-wider text-muted-foreground"
+              className="text-[11px] uppercase tracking-wider text-muted-foreground"
             >
               Text color
             </Label>
@@ -591,7 +591,7 @@ export function TextShadowStudio() {
           <div className="space-y-1">
             <Label
               htmlFor="tss-text"
-              className="text-[10px] uppercase tracking-wider text-muted-foreground"
+              className="text-[11px] uppercase tracking-wider text-muted-foreground"
             >
               Preview text
             </Label>
@@ -610,7 +610,7 @@ export function TextShadowStudio() {
           </div>
           <div className="grid grid-cols-2 gap-2">
             <div className="space-y-1">
-              <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+              <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
                 Weight
               </Label>
               <Select
@@ -630,7 +630,7 @@ export function TextShadowStudio() {
               </Select>
             </div>
             <div className="space-y-1">
-              <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+              <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
                 Family
               </Label>
               <Select
@@ -655,10 +655,10 @@ export function TextShadowStudio() {
         {/* Font size slider */}
         <div className="space-y-1">
           <div className="flex items-center justify-between">
-            <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+            <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
               Font size
             </Label>
-            <span className="font-mono text-[10px] text-muted-foreground">
+            <span className="font-mono text-[11px] text-muted-foreground">
               {fontSize}px
             </span>
           </div>
@@ -704,7 +704,7 @@ export function TextShadowStudio() {
                 >
                   Aa
                 </span>
-                <span className="text-[10px] text-muted-foreground">
+                <span className="text-[11px] text-muted-foreground">
                   {preset.name}
                 </span>
               </button>
@@ -719,7 +719,7 @@ export function TextShadowStudio() {
           <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             <Layers className="size-3.5" />
             Layers
-            <Badge variant="secondary" className="ml-1 font-mono text-[10px]">
+            <Badge variant="secondary" className="ml-1 font-mono text-[11px]">
               {layers.filter((l) => l.enabled).length}/{layers.length}
             </Badge>
           </span>
@@ -778,7 +778,7 @@ export function TextShadowStudio() {
           <code>{generatedCss}</code>
         </pre>
         {layers.filter((l) => l.enabled).length === 0 && (
-          <p className="text-[10px] text-muted-foreground">
+          <p className="text-[11px] text-muted-foreground">
             All layers disabled — the generated CSS uses <code className="font-mono">text-shadow: none</code>.
           </p>
         )}

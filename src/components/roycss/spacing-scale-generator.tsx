@@ -75,7 +75,7 @@ export function SpacingScaleGenerator() {
             <span className="text-xs font-mono text-muted-foreground w-12 text-right">--space-{v.step}</span>
             <div className="flex-1 h-6 rounded bg-muted/30 relative overflow-hidden">
               <div className="h-full bg-primary/40 rounded transition-all group-hover:bg-primary/60" style={{ width: `${Math.min(100, (v.px / values[values.length - 1].px) * 100)}%` }} />
-              <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-mono text-muted-foreground">{v.px}px ({v.rem}rem)</span>
+              <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] font-mono text-muted-foreground">{v.px}px ({v.rem}rem)</span>
             </div>
             {copiedIdx === idx ? <Check className="size-3.5 text-emerald-500 shrink-0" /> : <Copy className="size-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 shrink-0" />}
           </button>
@@ -90,10 +90,10 @@ export function SpacingScaleGenerator() {
 
       {/* Preview */}
       <div className="p-3 rounded-xl bg-muted/20 border border-border/50">
-        <p className="text-[10px] text-muted-foreground mb-2">Preview (padding uses the scale):</p>
+        <p className="text-[11px] text-muted-foreground mb-2">Preview (padding uses the scale):</p>
         <div className="flex flex-wrap gap-1">
           {values.slice(0, 6).map((v, i) => (
-            <div key={i} className="bg-primary/15 rounded text-primary text-[10px] font-bold flex items-center justify-center" style={{ padding: `${v.px}px` }}>
+            <div key={i} className="bg-primary/15 rounded text-primary text-[11px] font-bold flex items-center justify-center" style={{ padding: `${v.px}px` }}>
               {v.step}
             </div>
           ))}

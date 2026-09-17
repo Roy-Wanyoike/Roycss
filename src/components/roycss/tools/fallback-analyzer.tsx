@@ -854,7 +854,7 @@ function BrowserMatrix({ browsers }: BrowserMatrixProps) {
           {b.needsFallback ? (
             <Badge
               variant="outline"
-              className="gap-1 border-rose-500/30 bg-rose-500/10 px-1.5 py-0 text-[10px] font-medium text-rose-700 dark:text-rose-300"
+              className="gap-1 border-rose-500/30 bg-rose-500/10 px-1.5 py-0 text-[11px] font-medium text-rose-700 dark:text-rose-300"
             >
               <AlertCircle className="size-3" aria-hidden="true" />
               fallback
@@ -862,7 +862,7 @@ function BrowserMatrix({ browsers }: BrowserMatrixProps) {
           ) : (
             <Badge
               variant="outline"
-              className="gap-1 border-emerald-500/30 bg-emerald-500/10 px-1.5 py-0 text-[10px] font-medium text-emerald-700 dark:text-emerald-300"
+              className="gap-1 border-emerald-500/30 bg-emerald-500/10 px-1.5 py-0 text-[11px] font-medium text-emerald-700 dark:text-emerald-300"
             >
               <CircleCheck className="size-3" aria-hidden="true" />
               native
@@ -980,7 +980,7 @@ export function FallbackAnalyzer() {
             {activePreset ? (
               <Badge
                 variant="secondary"
-                className="ml-auto gap-1 font-mono text-[10px]"
+                className="ml-auto gap-1 font-mono text-[11px]"
               >
                 <Zap className="size-3" aria-hidden="true" />
                 {activePreset}
@@ -1003,7 +1003,7 @@ export function FallbackAnalyzer() {
                   <span className="font-mono text-[11px] font-semibold">
                     {preset.label}
                   </span>
-                  <span className="text-[10px] font-normal opacity-80">
+                  <span className="text-[11px] font-normal opacity-80">
                     {preset.description}
                   </span>
                 </Button>
@@ -1034,7 +1034,7 @@ export function FallbackAnalyzer() {
                     <span className="font-mono text-sm">{current.name}</span>
                     <Badge
                       variant="secondary"
-                      className="ml-1 text-[10px] font-normal"
+                      className="ml-1 text-[11px] font-normal"
                     >
                       {current.category}
                     </Badge>
@@ -1061,7 +1061,7 @@ export function FallbackAnalyzer() {
                     />
                   </div>
                 </div>
-                <DropdownMenuLabel className="text-[10px] uppercase tracking-wide text-muted-foreground">
+                <DropdownMenuLabel className="text-[11px] uppercase tracking-wide text-muted-foreground">
                   {filteredProperties.length} match
                   {filteredProperties.length === 1 ? "" : "es"}
                 </DropdownMenuLabel>
@@ -1082,12 +1082,12 @@ export function FallbackAnalyzer() {
                           <span className="font-mono text-xs">{p.name}</span>
                           <Badge
                             variant="outline"
-                            className="px-1 py-0 text-[9px] font-normal text-muted-foreground"
+                            className="px-1 py-0 text-[11px] font-normal text-muted-foreground"
                           >
                             {p.category}
                           </Badge>
                         </span>
-                        <span className="font-mono text-[10px] text-muted-foreground">
+                        <span className="font-mono text-[11px] text-muted-foreground">
                           {p.globalSupport}%
                         </span>
                       </DropdownMenuItem>

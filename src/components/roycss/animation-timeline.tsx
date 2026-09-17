@@ -107,7 +107,7 @@ export function AnimationTimeline() {
             <div key={f.id} className="absolute top-0 bottom-0 flex items-center" style={{ left: `${f.offset}%` }}>
               <div className="w-0.5 h-full bg-primary/40" />
               <div className="size-3 rounded-full bg-primary -ml-1.5 shadow-sm" />
-              <span className="absolute -top-4 text-[9px] font-mono text-primary">{f.offset}%</span>
+              <span className="absolute -top-4 text-[11px] font-mono text-primary">{f.offset}%</span>
             </div>
           ))}
         </div>

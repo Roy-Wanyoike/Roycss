@@ -626,7 +626,7 @@ export function BrowserSupportMatrix() {
                         <span className="mt-0.5 flex flex-wrap items-center gap-1">
                           <Badge
                             variant="outline"
-                            className={cn("px-1.5 py-0 text-[10px]", CATEGORY_BADGE_CLASS)}
+                            className={cn("px-1.5 py-0 text-[11px]", CATEGORY_BADGE_CLASS)}
                           >
                             {f.category}
                           </Badge>
@@ -634,7 +634,7 @@ export function BrowserSupportMatrix() {
                             <Badge
                               variant="outline"
                               className={cn(
-                                "px-1.5 py-0 text-[10px] font-medium",
+                                "px-1.5 py-0 text-[11px] font-medium",
                                 BASELINE_CLASS[f.baseline],
                               )}
                             >
@@ -709,7 +709,7 @@ export function BrowserSupportMatrix() {
                           title={`${b.label} — current stable v${b.current}`}
                         >
                           <span className="block leading-tight">{b.label}</span>
-                          <span className="block text-[10px] font-normal text-muted-foreground/70">
+                          <span className="block text-[11px] font-normal text-muted-foreground/70">
                             v{b.current}
                           </span>
                         </th>
@@ -746,7 +746,7 @@ export function BrowserSupportMatrix() {
                             <Badge
                               variant="outline"
                               className={cn(
-                                "w-fit px-1.5 py-0 text-[10px]",
+                                "w-fit px-1.5 py-0 text-[11px]",
                                 CATEGORY_BADGE_CLASS,
                               )}
                             >
@@ -761,7 +761,7 @@ export function BrowserSupportMatrix() {
                             <Badge
                               variant="outline"
                               className={cn(
-                                "px-1.5 py-0 text-[10px] font-medium",
+                                "px-1.5 py-0 text-[11px] font-medium",
                                 BASELINE_CLASS[f.baseline],
                               )}
                               title={BASELINE_LABEL[f.baseline]}
@@ -812,7 +812,7 @@ export function BrowserSupportMatrix() {
                           <div className="flex flex-col items-center gap-1">
                             <FeatureDots feature={f} />
                             {f.note && (
-                              <span className="block max-w-[140px] text-[10px] leading-tight text-muted-foreground">
+                              <span className="block max-w-[140px] text-[11px] leading-tight text-muted-foreground">
                                 {f.note}
                               </span>
                             )}

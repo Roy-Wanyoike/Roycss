@@ -250,7 +250,7 @@ function ModeGlyph({ mode }: { mode: WritingMode }) {
   return (
     <span
       aria-hidden="true"
-      className="inline-flex size-7 items-center justify-center overflow-hidden rounded-sm border border-border bg-background text-[10px] font-medium leading-none text-foreground"
+      className="inline-flex size-7 items-center justify-center overflow-hidden rounded-sm border border-border bg-background text-[11px] font-medium leading-none text-foreground"
       style={{ writingMode: mode, textOrientation: "mixed" }}
     >
       Aa文
@@ -330,10 +330,10 @@ function LogicalBox({ mapping, writingMode, direction }: LogicalBoxProps) {
       <div className="absolute inset-0 flex items-center justify-center p-8">
         <div className="text-center">
           <ArrowDown className="mx-auto size-4 text-primary/60" aria-hidden="true" />
-          <div className="mt-1 font-mono text-[10px] text-muted-foreground/70">
+          <div className="mt-1 font-mono text-[11px] text-muted-foreground/70">
             {writingMode}
           </div>
-          <div className="font-mono text-[10px] font-medium text-primary">
+          <div className="font-mono text-[11px] font-medium text-primary">
             {direction.toUpperCase()}
           </div>
         </div>
@@ -352,7 +352,7 @@ function LogicalBox({ mapping, writingMode, direction }: LogicalBoxProps) {
             <span
               key={label}
               className={cn(
-                "rounded-sm px-1 py-0.5 font-mono text-[9px] leading-none",
+                "rounded-sm px-1 py-0.5 font-mono text-[11px] leading-none",
                 label.startsWith("inline")
                   ? "bg-primary/15 text-primary"
                   : "bg-amber-500/15 text-amber-700 dark:text-amber-400"
@@ -425,7 +425,7 @@ function FlipCard({ dir, mode }: FlipCardProps) {
         <ArrowIcon className="size-4" aria-hidden="true" />
       </div>
 
-      <div className="pointer-events-none absolute bottom-0.5 left-1/2 -translate-x-1/2 font-mono text-[9px] text-muted-foreground/60">
+      <div className="pointer-events-none absolute bottom-0.5 left-1/2 -translate-x-1/2 font-mono text-[11px] text-muted-foreground/60">
         {dir.toUpperCase()} · {mode}
       </div>
     </div>
@@ -514,7 +514,7 @@ export function WritingModePlayground() {
             <h2 className="text-base font-semibold tracking-tight text-foreground">
               Writing Mode Playground
             </h2>
-            <Badge variant="secondary" className="text-[10px]">
+            <Badge variant="secondary" className="text-[11px]">
               CSS Writing Modes L3
             </Badge>
           </div>
@@ -583,7 +583,7 @@ export function WritingModePlayground() {
           <Label className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
             <Sparkles className="size-3.5" aria-hidden="true" /> Text orientation
             {isHorizontal && (
-              <span className="text-[10px] text-muted-foreground/70">
+              <span className="text-[11px] text-muted-foreground/70">
                 (no effect in horizontal-tb)
               </span>
             )}
@@ -664,14 +664,14 @@ export function WritingModePlayground() {
           </div>
         </motion.div>
         <div className="flex flex-wrap items-center gap-1.5">
-          <Badge variant="outline" className="font-mono text-[10px]">
+          <Badge variant="outline" className="font-mono text-[11px]">
             writing-mode: {config.writingMode}
           </Badge>
-          <Badge variant="outline" className="font-mono text-[10px]">
+          <Badge variant="outline" className="font-mono text-[11px]">
             direction: {config.direction}
           </Badge>
           {!isHorizontal && (
-            <Badge variant="outline" className="font-mono text-[10px]">
+            <Badge variant="outline" className="font-mono text-[11px]">
               text-orientation: {config.textOrientation}
             </Badge>
           )}

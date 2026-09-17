@@ -690,14 +690,14 @@ function PropertyRow({ property, onCopy }: PropertyRowProps) {
         </code>
         <Badge
           variant="secondary"
-          className={cn("font-mono text-[10px]", TYPE_STYLES[property.type])}
+          className={cn("font-mono text-[11px]", TYPE_STYLES[property.type])}
         >
           {property.type}
         </Badge>
         <Badge
           variant="secondary"
           className={cn(
-            "font-mono text-[10px]",
+            "font-mono text-[11px]",
             property.isRoot
               ? "bg-primary/10 text-primary"
               : "bg-muted text-muted-foreground",
@@ -705,14 +705,14 @@ function PropertyRow({ property, onCopy }: PropertyRowProps) {
         >
           {property.scope}
         </Badge>
-        <Badge variant="outline" className="gap-1 font-mono text-[10px]">
+        <Badge variant="outline" className="gap-1 font-mono text-[11px]">
           <Search className="size-2.5" />
           {property.usageCount} use{property.usageCount === 1 ? "" : "s"}
         </Badge>
         {property.overridden && (
           <Badge
             variant="secondary"
-            className="bg-amber-500/15 font-mono text-[10px] text-amber-600 dark:text-amber-400"
+            className="bg-amber-500/15 font-mono text-[11px] text-amber-600 dark:text-amber-400"
             title="This name is redefined by a later, more specific rule"
           >
             overridden
@@ -721,21 +721,21 @@ function PropertyRow({ property, onCopy }: PropertyRowProps) {
         {property.cycle && (
           <Badge
             variant="secondary"
-            className="bg-rose-500/15 font-mono text-[10px] text-rose-600 dark:text-rose-400"
+            className="bg-rose-500/15 font-mono text-[11px] text-rose-600 dark:text-rose-400"
             title="This variable's resolution hits a cycle"
           >
             <AlertCircle className="size-2.5" />
             cycle
           </Badge>
         )}
-        <span className="ml-auto font-mono text-[10px] text-muted-foreground">
+        <span className="ml-auto font-mono text-[11px] text-muted-foreground">
           line {property.line}
         </span>
       </div>
 
       {/* Raw value */}
       <div className="mt-2 flex items-center gap-2">
-        <span className="shrink-0 text-[10px] uppercase tracking-wider text-muted-foreground">
+        <span className="shrink-0 text-[11px] uppercase tracking-wider text-muted-foreground">
           raw
         </span>
         <code className="flex-1 overflow-x-auto rounded bg-muted/40 px-2 py-1 font-mono text-[11px] text-foreground/80">
@@ -767,7 +767,7 @@ function PropertyRow({ property, onCopy }: PropertyRowProps) {
           <button
             type="button"
             onClick={() => setShowResolved((s) => !s)}
-            className="flex cursor-pointer items-center gap-1 text-[10px] uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
+            className="flex cursor-pointer items-center gap-1 text-[11px] uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
             aria-expanded={showResolved}
           >
             <Eye className="size-3" />
@@ -797,7 +797,7 @@ function PropertyRow({ property, onCopy }: PropertyRowProps) {
 
       {/* Inheritance chain */}
       {property.chain.length > 0 && (
-        <div className="mt-1.5 flex flex-wrap items-center gap-1 text-[10px] text-muted-foreground">
+        <div className="mt-1.5 flex flex-wrap items-center gap-1 text-[11px] text-muted-foreground">
           <Link2 className="size-3" />
           <span>inherits:</span>
           {property.chain.map((name, i) => (
@@ -1022,16 +1022,16 @@ export function CustomPropertyInspector() {
         </Badge>
         {stats.total > 0 && (
           <>
-            <Badge variant="secondary" className="font-mono text-[10px]">
+            <Badge variant="secondary" className="font-mono text-[11px]">
               {stats.rootCount} :root
             </Badge>
-            <Badge variant="secondary" className="font-mono text-[10px]">
+            <Badge variant="secondary" className="font-mono text-[11px]">
               {stats.usedCount} used
             </Badge>
             {stats.overriddenCount > 0 && (
               <Badge
                 variant="secondary"
-                className="bg-amber-500/15 font-mono text-[10px] text-amber-600 dark:text-amber-400"
+                className="bg-amber-500/15 font-mono text-[11px] text-amber-600 dark:text-amber-400"
               >
                 {stats.overriddenCount} overridden
               </Badge>
@@ -1039,7 +1039,7 @@ export function CustomPropertyInspector() {
             {stats.cycleCount > 0 && (
               <Badge
                 variant="secondary"
-                className="bg-rose-500/15 font-mono text-[10px] text-rose-600 dark:text-rose-400"
+                className="bg-rose-500/15 font-mono text-[11px] text-rose-600 dark:text-rose-400"
               >
                 {stats.cycleCount} cycle{stats.cycleCount === 1 ? "" : "s"}
               </Badge>
@@ -1054,7 +1054,7 @@ export function CustomPropertyInspector() {
         <div className="space-y-1 sm:col-span-2">
           <Label
             htmlFor="cpi-search"
-            className="text-[10px] uppercase tracking-wider text-muted-foreground"
+            className="text-[11px] uppercase tracking-wider text-muted-foreground"
           >
             Search by name
           </Label>
@@ -1073,7 +1073,7 @@ export function CustomPropertyInspector() {
         </div>
         {/* Type filter */}
         <div className="space-y-1">
-          <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+          <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
             Type
           </Label>
           <Select
@@ -1094,7 +1094,7 @@ export function CustomPropertyInspector() {
         </div>
         {/* Scope filter */}
         <div className="space-y-1">
-          <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+          <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
             Scope
           </Label>
           <Select
@@ -1115,7 +1115,7 @@ export function CustomPropertyInspector() {
         </div>
         {/* Usage filter */}
         <div className="space-y-1">
-          <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+          <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
             Usage
           </Label>
           <Select
@@ -1136,7 +1136,7 @@ export function CustomPropertyInspector() {
         </div>
         {/* Result count */}
         <div className="flex items-end">
-          <span className="text-[10px] text-muted-foreground">
+          <span className="text-[11px] text-muted-foreground">
             {filtered.length} of {analysis.properties.length} shown
           </span>
         </div>
@@ -1187,7 +1187,7 @@ export function CustomPropertyInspector() {
           <pre className="overflow-x-auto rounded-lg bg-muted p-3 font-mono text-xs text-foreground/80">
             <code>{rootBlock}</code>
           </pre>
-          <p className="text-[10px] text-muted-foreground">
+          <p className="text-[11px] text-muted-foreground">
             Canonical definitions only — overridden scoped redefinitions are excluded. Resolved
             values (with all <code className="font-mono">var()</code> calls substituted) are used.
           </p>

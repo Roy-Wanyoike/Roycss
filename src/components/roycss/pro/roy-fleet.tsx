@@ -307,7 +307,7 @@ export function RoyFleet() {
                   {p.team.map((t) => (
                     <div
                       key={t}
-                      className="bg-primary/15 text-primary flex size-7 items-center justify-center rounded-full border-2 border-card text-[10px] font-semibold"
+                      className="bg-primary/15 text-primary flex size-7 items-center justify-center rounded-full border-2 border-card text-[11px] font-semibold"
                     >
                       {t}
                     </div>

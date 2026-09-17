@@ -77,7 +77,7 @@ function RecipeCard({ recipe }: { recipe: Recipe }) {
               {recipe.description}
             </p>
           </div>
-          <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full capitalize shrink-0 ${difficultyColor}`}>
+          <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full capitalize shrink-0 ${difficultyColor}`}>
             {recipe.difficulty}
           </span>
         </div>
@@ -145,7 +145,7 @@ function RecipeCard({ recipe }: { recipe: Recipe }) {
 
             {/* Effects used */}
             <div className="px-3 pb-3 pt-2 border-t border-border/30">
-              <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 flex items-center gap-1">
+              <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 flex items-center gap-1">
                 <Sparkles className="size-2.5" />
                 RoyCSS Effects Used
               </p>
@@ -153,7 +153,7 @@ function RecipeCard({ recipe }: { recipe: Recipe }) {
                 {recipe.effectIds.map((id) => (
                   <code
                     key={id}
-                    className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-primary/10 text-primary"
+                    className="text-[11px] font-mono px-1.5 py-0.5 rounded bg-primary/10 text-primary"
                   >
                     .roycss-{id}
                   </code>

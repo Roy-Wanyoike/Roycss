@@ -220,7 +220,7 @@ export function RoyPreview() {
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
                         <p className="truncate text-sm font-medium">{p.branch}</p>
-                        <Badge variant="outline" className="text-[10px]">
+                        <Badge variant="outline" className="text-[11px]">
                           #{p.pr}
                         </Badge>
                       </div>

@@ -1095,7 +1095,7 @@ function SidebarContent({
                             ))}
                             {doc.sizes && (
                               <li className="mt-1">
-                                <div className="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground/70">
+                                <div className="px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground/70">
                                   sizes
                                 </div>
                                 <ul>

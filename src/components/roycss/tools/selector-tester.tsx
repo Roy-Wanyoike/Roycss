@@ -464,7 +464,7 @@ export function SelectorTester() {
 
           {/* Quick-fill chips */}
           <div className="space-y-1.5 pt-1">
-            <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+            <div className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
               <Sparkles className="size-3" aria-hidden />
               Quick fill
             </div>
@@ -484,7 +484,7 @@ export function SelectorTester() {
                   <code className="font-mono text-xs text-primary">
                     {qf.selector}
                   </code>
-                  <span className="text-[10px] text-muted-foreground hidden sm:inline">
+                  <span className="text-[11px] text-muted-foreground hidden sm:inline">
                     · {qf.label}
                   </span>
                 </Button>
@@ -499,7 +499,7 @@ export function SelectorTester() {
             <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Live Preview
             </Label>
-            <span className="text-[10px] text-muted-foreground inline-flex items-center gap-1">
+            <span className="text-[11px] text-muted-foreground inline-flex items-center gap-1">
               <MousePointerClick className="size-3" aria-hidden />
               highlights update live
             </span>
@@ -557,7 +557,7 @@ export function SelectorTester() {
                 <ListChecks className="inline size-3 mr-1 align-text-bottom" />
                 Matches
               </Label>
-              <Badge variant="secondary" className="font-mono text-[10px] h-5">
+              <Badge variant="secondary" className="font-mono text-[11px] h-5">
                 {matches.length}
               </Badge>
             </div>
@@ -595,7 +595,7 @@ export function SelectorTester() {
                       }}
                       className="h-6 px-2"
                     >
-                      <code className="font-mono text-[10px]">
+                      <code className="font-mono text-[11px]">
                         {qf.selector}
                       </code>
                     </Button>
@@ -641,7 +641,7 @@ export function SelectorTester() {
                             .{c}
                           </span>
                         ))}
-                        <span className="ml-auto text-[10px] text-muted-foreground">
+                        <span className="ml-auto text-[11px] text-muted-foreground">
                           {idx + 1}
                         </span>
                       </div>

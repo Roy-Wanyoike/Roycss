@@ -100,21 +100,21 @@ export function CSSMinifier() {
         {stats && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-4 gap-2">
             <div className="p-2.5 rounded-lg bg-muted/30 text-center">
-              <p className="text-[10px] text-muted-foreground">Before</p>
+              <p className="text-[11px] text-muted-foreground">Before</p>
               <p className="font-mono font-bold text-foreground text-sm">{formatSize(stats.inputBytes)}</p>
             </div>
             <div className="p-2.5 rounded-lg bg-muted/30 text-center">
-              <p className="text-[10px] text-muted-foreground">After</p>
+              <p className="text-[11px] text-muted-foreground">After</p>
               <p className="font-mono font-bold text-foreground text-sm">{formatSize(stats.outputBytes)}</p>
             </div>
             <div className="p-2.5 rounded-lg bg-emerald-500/10 text-center">
-              <p className="text-[10px] text-emerald-600 dark:text-emerald-400">Saved</p>
+              <p className="text-[11px] text-emerald-600 dark:text-emerald-400">Saved</p>
               <p className="font-mono font-bold text-emerald-500 text-sm flex items-center justify-center gap-1">
                 <TrendingDown className="size-3" />{stats.savings}%
               </p>
             </div>
             <div className="p-2.5 rounded-lg bg-muted/30 text-center">
-              <p className="text-[10px] text-muted-foreground">Gzip est.</p>
+              <p className="text-[11px] text-muted-foreground">Gzip est.</p>
               <p className="font-mono font-bold text-primary text-sm">{formatSize(stats.gzipEstimate)}</p>
             </div>
           </motion.div>

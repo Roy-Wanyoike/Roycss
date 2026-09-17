@@ -79,7 +79,7 @@ export function StarRating({ effectId, size = "sm" }: StarRatingProps) {
         </button>
       ))}
       {rating > 0 && (
-        <span className="text-[10px] text-muted-foreground ml-1">{rating}/5</span>
+        <span className="text-[11px] text-muted-foreground ml-1">{rating}/5</span>
       )}
     </div>
   );

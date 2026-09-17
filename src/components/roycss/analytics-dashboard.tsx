@@ -162,7 +162,7 @@ function StatCard({ icon: Icon, label, value, color }: { icon: React.ComponentTy
         <Icon className="size-4" />
       </div>
       <p className="font-display text-xl font-bold text-foreground">{value}</p>
-      <p className="text-[10px] text-muted-foreground uppercase tracking-wide">{label}</p>
+      <p className="text-[11px] text-muted-foreground uppercase tracking-wide">{label}</p>
     </div>
   );
 }

@@ -140,9 +140,9 @@ function Donut({ segments }: { segments: BundleType[] }) {
         ))}
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-muted-foreground text-[10px] uppercase tracking-wide">Total</span>
+        <span className="text-muted-foreground text-[11px] uppercase tracking-wide">Total</span>
         <span className="text-2xl font-bold tabular-nums">{(total / 1024).toFixed(2)}MB</span>
-        <span className="text-muted-foreground text-[10px]">{total}KB</span>
+        <span className="text-muted-foreground text-[11px]">{total}KB</span>
       </div>
     </div>
   );

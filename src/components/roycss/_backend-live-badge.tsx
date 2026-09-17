@@ -41,7 +41,7 @@ export function BackendLiveBadge({ module, loading, error, className }: BackendL
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider",
+        "inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider",
         isLive
           ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/25"
           : "bg-muted text-muted-foreground border border-border",

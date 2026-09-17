@@ -1000,7 +1000,7 @@ function ScoreGauge({ score }: { score: number }) {
         >
           {score}
         </span>
-        <span className="mt-1 text-[10px] uppercase tracking-wider text-muted-foreground">
+        <span className="mt-1 text-[11px] uppercase tracking-wider text-muted-foreground">
           / 100
         </span>
       </div>
@@ -1034,14 +1034,14 @@ function FindingCard({ finding }: { finding: Finding }) {
             </h4>
             <Badge
               variant="secondary"
-              className="text-[10px] px-1.5 h-4 tabular-nums"
+              className="text-[11px] px-1.5 h-4 tabular-nums"
             >
               ×{finding.count}
             </Badge>
             {finding.points < 0 && (
               <Badge
                 variant="outline"
-                className="text-[10px] px-1.5 h-4 text-muted-foreground tabular-nums"
+                className="text-[11px] px-1.5 h-4 text-muted-foreground tabular-nums"
               >
                 {finding.points} pts
               </Badge>
@@ -1316,7 +1316,7 @@ export function PerfAnalyzer() {
                   {chip.label}
                   <span
                     className={cn(
-                      "rounded-full px-1.5 text-[10px] tabular-nums",
+                      "rounded-full px-1.5 text-[11px] tabular-nums",
                       active
                         ? "bg-primary/20 text-primary"
                         : "bg-muted text-muted-foreground",

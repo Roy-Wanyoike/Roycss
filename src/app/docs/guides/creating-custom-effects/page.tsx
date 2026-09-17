@@ -142,7 +142,7 @@ $ npx roycss add btn-glow`}</code>
         back to the RoyCSS library — the catalog itself grew by
         authoring batches (you&apos;ll see <code>-b18</code> /{" "}
         <code>-b19</code> suffixes from that process). See the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/guides/contributing">
+        <a className="text-primary hover:underline" href="/docs/guides/contributing">
           Contributing
         </a>{" "}
         guide for the submission checklist.

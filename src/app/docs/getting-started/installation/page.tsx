@@ -105,11 +105,11 @@ https://unpkg.com/roycss@2.0.0/dist/roycss.min.css`}</code>
       <h2 id="next">Next steps</h2>
       <p>
         With RoyCSS installed, head to the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/getting-started/importing">
+        <a className="text-primary hover:underline" href="/docs/getting-started/importing">
           Importing
         </a>{" "}
         page to see everything the package exports, or jump straight to the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/getting-started/first-effect">
+        <a className="text-primary hover:underline" href="/docs/getting-started/first-effect">
           first effect tutorial
         </a>
         .

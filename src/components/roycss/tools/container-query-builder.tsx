@@ -507,7 +507,7 @@ export function ContainerQueryBuilder() {
         <span className="text-[11px] text-muted-foreground">
           Chrome 105+ · Firefox 110+ · Safari 16+ · Edge 105+ (Baseline 2023)
         </span>
-        <span className="ml-auto text-[10px] text-muted-foreground">
+        <span className="ml-auto text-[11px] text-muted-foreground">
           See: Browser Support Matrix
         </span>
       </div>
@@ -546,7 +546,7 @@ export function ContainerQueryBuilder() {
                 ))}
               </SelectContent>
             </Select>
-            <p className="text-[10px] leading-snug text-muted-foreground">
+            <p className="text-[11px] leading-snug text-muted-foreground">
               {CONTAINER_TYPES.find((t) => t.value === config.type)?.hint}
             </p>
           </div>
@@ -568,7 +568,7 @@ export function ContainerQueryBuilder() {
               spellCheck={false}
               autoComplete="off"
             />
-            <p className="text-[10px] leading-snug text-muted-foreground">
+            <p className="text-[11px] leading-snug text-muted-foreground">
               {sanitizeContainerName(config.name) ? (
                 <>
                   Queries become{" "}
@@ -625,7 +625,7 @@ export function ContainerQueryBuilder() {
                   <div className="min-w-[120px] flex-1 space-y-1">
                     <Label
                       htmlFor={`cqb-label-${rule.id}`}
-                      className="text-[10px] text-muted-foreground"
+                      className="text-[11px] text-muted-foreground"
                     >
                       Label
                     </Label>
@@ -645,7 +645,7 @@ export function ContainerQueryBuilder() {
                   <div className="space-y-1">
                     <Label
                       htmlFor={`cqb-op-${rule.id}`}
-                      className="text-[10px] text-muted-foreground"
+                      className="text-[11px] text-muted-foreground"
                     >
                       Condition
                     </Label>
@@ -676,7 +676,7 @@ export function ContainerQueryBuilder() {
                     <div className="space-y-1">
                       <Label
                         htmlFor={`cqb-min-${rule.id}`}
-                        className="text-[10px] text-muted-foreground"
+                        className="text-[11px] text-muted-foreground"
                       >
                         {rule.operator === "range" ? "Min (px)" : "Value (px)"}
                       </Label>
@@ -702,7 +702,7 @@ export function ContainerQueryBuilder() {
                     <div className="space-y-1">
                       <Label
                         htmlFor={`cqb-max-${rule.id}`}
-                        className="text-[10px] text-muted-foreground"
+                        className="text-[11px] text-muted-foreground"
                       >
                         {rule.operator === "range" ? "Max (px)" : "Value (px)"}
                       </Label>
@@ -740,7 +740,7 @@ export function ContainerQueryBuilder() {
                 <div className="mt-2 space-y-1">
                   <Label
                     htmlFor={`cqb-decls-${rule.id}`}
-                    className="text-[10px] text-muted-foreground"
+                    className="text-[11px] text-muted-foreground"
                   >
                     CSS declarations (applied to{" "}
                     <code className="font-mono">.cqb-card</code> when query
@@ -760,28 +760,28 @@ export function ContainerQueryBuilder() {
 
                 {/* Row 3: generated @container line + match status */}
                 <div className="mt-2 flex flex-wrap items-center gap-1.5">
-                  <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[10px] text-foreground/80">
+                  <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[11px] text-foreground/80">
                     {sanitizeContainerName(config.name)
                       ? `@container ${sanitizeContainerName(config.name)}`
                       : "@container"}{" "}
                     {ruleCondition(rule)}
                   </code>
                   {rangeInvalid ? (
-                    <span className="text-[10px] font-medium text-destructive">
+                    <span className="text-[11px] font-medium text-destructive">
                       min &gt; max — rule never matches
                     </span>
                   ) : isWinner ? (
-                    <span className="flex items-center gap-1 text-[10px] font-medium text-emerald-500">
+                    <span className="flex items-center gap-1 text-[11px] font-medium text-emerald-500">
                       <span className="size-1.5 rounded-full bg-emerald-500" />
                       active (cascade winner)
                     </span>
                   ) : matches ? (
-                    <span className="flex items-center gap-1 text-[10px] font-medium text-primary">
+                    <span className="flex items-center gap-1 text-[11px] font-medium text-primary">
                       <span className="size-1.5 rounded-full bg-primary" />
                       matching
                     </span>
                   ) : (
-                    <span className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                    <span className="flex items-center gap-1 text-[11px] text-muted-foreground">
                       <span className="size-1.5 rounded-full bg-muted-foreground/40" />
                       not matching
                     </span>
@@ -821,7 +821,7 @@ export function ContainerQueryBuilder() {
         <pre className="max-h-48 overflow-x-auto overflow-y-auto rounded-lg bg-muted p-3 font-mono text-xs leading-relaxed text-foreground/80">
           <code>{generatedCSS}</code>
         </pre>
-        <p className="text-[10px] text-muted-foreground">
+        <p className="text-[11px] text-muted-foreground">
           Apply{" "}
           <code className="font-mono text-foreground/70">.cqb-container</code>{" "}
           to a wrapper and{" "}
@@ -956,7 +956,7 @@ export function ContainerQueryBuilder() {
                   />
                   <span
                     className={cn(
-                      "mt-0.5 font-mono text-[9px]",
+                      "mt-0.5 font-mono text-[11px]",
                       containerWidth >= v
                         ? "text-primary"
                         : "text-muted-foreground",
@@ -982,11 +982,11 @@ export function ContainerQueryBuilder() {
             <div className="flex items-center justify-between">
               <Label
                 htmlFor="cqb-width-slider"
-                className="text-[10px] text-muted-foreground"
+                className="text-[11px] text-muted-foreground"
               >
                 Precise width control
               </Label>
-              <span className="font-mono text-[10px] text-muted-foreground">
+              <span className="font-mono text-[11px] text-muted-foreground">
                 {MIN_CONTAINER_WIDTH}px – {MAX_CONTAINER_WIDTH}px
               </span>
             </div>
@@ -1004,7 +1004,7 @@ export function ContainerQueryBuilder() {
 
         {/* Matching rules summary */}
         <div className="flex flex-wrap items-center gap-1.5 rounded-lg border border-border bg-card p-2">
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
             Matching:
           </span>
           {matchingRules.length === 0 ? (
@@ -1018,7 +1018,7 @@ export function ContainerQueryBuilder() {
                 <span
                   key={rule.id}
                   className={cn(
-                    "inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 font-mono text-[10px]",
+                    "inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 font-mono text-[11px]",
                     isWinner
                       ? "bg-emerald-500/15 text-emerald-500"
                       : "bg-primary/10 text-primary",
@@ -1029,7 +1029,7 @@ export function ContainerQueryBuilder() {
                   )}
                   {ruleCondition(rule)}
                   {rule.label.trim() ? (
-                    <span className="font-sans text-[9px] opacity-70">
+                    <span className="font-sans text-[11px] opacity-70">
                       · {rule.label.trim()}
                     </span>
                   ) : null}
@@ -1037,7 +1037,7 @@ export function ContainerQueryBuilder() {
               );
             })
           )}
-          <span className="ml-auto text-[10px] text-muted-foreground">
+          <span className="ml-auto text-[11px] text-muted-foreground">
             Last match wins (CSS cascade)
           </span>
         </div>
@@ -1046,14 +1046,14 @@ export function ContainerQueryBuilder() {
           <MoveHorizontal className="mt-0.5 size-3.5 shrink-0" />
           <span>
             Drag the handle, use the slider, or focus the handle and press{" "}
-            <kbd className="rounded border border-border bg-muted px-1 font-mono text-[10px]">
+            <kbd className="rounded border border-border bg-muted px-1 font-mono text-[11px]">
               ←
             </kbd>{" "}
-            <kbd className="rounded border border-border bg-muted px-1 font-mono text-[10px]">
+            <kbd className="rounded border border-border bg-muted px-1 font-mono text-[11px]">
               →
             </kbd>{" "}
             (hold{" "}
-            <kbd className="rounded border border-border bg-muted px-1 font-mono text-[10px]">
+            <kbd className="rounded border border-border bg-muted px-1 font-mono text-[11px]">
               Shift
             </kbd>{" "}
             for 50px steps). The card visibly changes layout and typography as

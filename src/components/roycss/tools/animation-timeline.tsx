@@ -280,7 +280,7 @@ function TrackCard({
           style={{ backgroundColor: track.color }}
           aria-hidden
         />
-        <span className="shrink-0 font-mono text-[10px] text-muted-foreground">
+        <span className="shrink-0 font-mono text-[11px] text-muted-foreground">
           {String(index + 1).padStart(2, "0")}
         </span>
         <Input
@@ -294,7 +294,7 @@ function TrackCard({
         {overlaps && (
           <Badge
             variant="secondary"
-            className="gap-1 bg-amber-500/15 text-[10px] text-amber-600 dark:text-amber-400"
+            className="gap-1 bg-amber-500/15 text-[11px] text-amber-600 dark:text-amber-400"
             title="This track's active window overlaps another track's"
           >
             <AlertTriangle className="size-3" />
@@ -333,10 +333,10 @@ function TrackCard({
         ).map(({ key, label, min, max, step, unit }) => (
           <div key={key} className="space-y-1">
             <div className="flex items-center justify-between">
-              <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+              <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
                 {label}
               </Label>
-              <span className="font-mono text-[10px] text-muted-foreground">
+              <span className="font-mono text-[11px] text-muted-foreground">
                 {track[key]}
                 {unit}
               </span>
@@ -355,7 +355,7 @@ function TrackCard({
 
       {/* Timing function */}
       <div className="space-y-1">
-        <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+        <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
           Timing function
         </Label>
         <Select
@@ -377,7 +377,7 @@ function TrackCard({
 
       {/* Inline summary */}
       <div className="rounded-md border border-border/50 bg-muted/40 px-2.5 py-1.5">
-        <code className="block overflow-x-auto font-mono text-[10px] text-foreground/80">
+        <code className="block overflow-x-auto font-mono text-[11px] text-foreground/80">
           {track.name}: {track.duration}s {track.timingFunction} {track.delay}s {track.iterations}
           {total > 0 && (
             <span className="text-muted-foreground">
@@ -666,7 +666,7 @@ export function AnimationTimelineVisualizer() {
           {overlapCount > 0 && (
             <Badge
               variant="secondary"
-              className="gap-1 bg-amber-500/15 text-[10px] text-amber-600 dark:text-amber-400"
+              className="gap-1 bg-amber-500/15 text-[11px] text-amber-600 dark:text-amber-400"
               title={`${overlapCount} tracks have overlapping active windows`}
             >
               <AlertTriangle className="size-3" />
@@ -682,7 +682,7 @@ export function AnimationTimelineVisualizer() {
             {ticks.map((t, i) => (
               <div
                 key={i}
-                className="absolute -translate-x-1/2 font-mono text-[10px] text-muted-foreground"
+                className="absolute -translate-x-1/2 font-mono text-[11px] text-muted-foreground"
                 style={{ left: `${t.pct}%` }}
               >
                 {t.label}
@@ -740,7 +740,7 @@ export function AnimationTimelineVisualizer() {
           <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             <Film className="size-3.5" />
             Tracks
-            <Badge variant="secondary" className="ml-1 font-mono text-[10px]">
+            <Badge variant="secondary" className="ml-1 font-mono text-[11px]">
               {tracks.length}
             </Badge>
           </span>
@@ -817,7 +817,7 @@ export function AnimationTimelineVisualizer() {
             <pre className="overflow-x-auto rounded-lg bg-muted p-3 font-mono text-xs text-foreground/80">
               <code>{generatedCss}</code>
             </pre>
-            <p className="mt-2 text-[10px] text-muted-foreground">
+            <p className="mt-2 text-[11px] text-muted-foreground">
               Each track&apos;s <code className="font-mono">animation</code> shorthand is{" "}
               <code className="font-mono">name duration timing-function delay iteration-count</code>.
               Define the matching <code className="font-mono">@keyframes</code> rule separately.

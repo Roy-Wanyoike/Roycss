@@ -493,7 +493,7 @@ function ThemeCard({
         <SwatchRow palette={theme.palette} />
         <span
           className={cn(
-            "rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide",
+            "rounded-full px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide",
             selected
               ? "bg-primary text-primary-foreground"
               : "bg-muted text-muted-foreground",
@@ -974,7 +974,7 @@ export function ThemeSystem(): React.JSX.Element {
                   CSS variables
                 </span>
               </div>
-              <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+              <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
                 :root
               </span>
             </div>
@@ -992,7 +992,7 @@ export function ThemeSystem(): React.JSX.Element {
             <div className="mb-2 flex items-center gap-2">
               <span
                 className={cn(
-                  "rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide transition-colors",
+                  "rounded-full px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide transition-colors",
                   compareTarget === "a"
                     ? "bg-primary text-primary-foreground"
                     : "bg-muted text-muted-foreground",
@@ -1004,7 +1004,7 @@ export function ThemeSystem(): React.JSX.Element {
                 {selectedTheme.name}
               </span>
               {compareTarget === "a" ? (
-                <span className="text-[10px] uppercase tracking-wide text-muted-foreground">
+                <span className="text-[11px] uppercase tracking-wide text-muted-foreground">
                   editing
                 </span>
               ) : null}
@@ -1018,7 +1018,7 @@ export function ThemeSystem(): React.JSX.Element {
             <div className="mb-2 flex items-center gap-2">
               <span
                 className={cn(
-                  "rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide transition-colors",
+                  "rounded-full px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide transition-colors",
                   compareTarget === "b"
                     ? "bg-primary text-primary-foreground"
                     : "bg-muted text-muted-foreground",
@@ -1030,7 +1030,7 @@ export function ThemeSystem(): React.JSX.Element {
                 {compareTheme.name}
               </span>
               {compareTarget === "b" ? (
-                <span className="text-[10px] uppercase tracking-wide text-muted-foreground">
+                <span className="text-[11px] uppercase tracking-wide text-muted-foreground">
                   editing
                 </span>
               ) : null}

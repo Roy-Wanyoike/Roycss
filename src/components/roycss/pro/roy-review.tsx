@@ -443,21 +443,21 @@ function ScorePanel({ review }: { review: Review }) {
           <div className="flex flex-wrap gap-1.5">
             <Badge
               variant="outline"
-              className="border-destructive/30 bg-destructive/10 text-destructive gap-1 text-[10px]"
+              className="border-destructive/30 bg-destructive/10 text-destructive gap-1 text-[11px]"
             >
               <AlertOctagon className="size-3" aria-hidden />
               {counts.critical} critical
             </Badge>
             <Badge
               variant="outline"
-              className="border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 gap-1 text-[10px]"
+              className="border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 gap-1 text-[11px]"
             >
               <AlertTriangle className="size-3" aria-hidden />
               {counts.warning} warning
             </Badge>
             <Badge
               variant="outline"
-              className="border-primary/30 bg-primary/10 text-primary gap-1 text-[10px]"
+              className="border-primary/30 bg-primary/10 text-primary gap-1 text-[11px]"
             >
               <Info className="size-3" aria-hidden />
               {counts.info} info
@@ -491,20 +491,20 @@ function FindingCard({ finding }: { finding: Finding }) {
           <div className="flex flex-wrap items-center gap-2">
             <Badge
               variant="outline"
-              className={cn("text-[10px] uppercase tracking-wide", SEVERITY_BADGE[finding.severity])}
+              className={cn("text-[11px] uppercase tracking-wide", SEVERITY_BADGE[finding.severity])}
             >
               {finding.severity}
             </Badge>
             <Badge
               variant="outline"
-              className="text-muted-foreground border-border gap-1 text-[10px]"
+              className="text-muted-foreground border-border gap-1 text-[11px]"
             >
               <CategoryIcon className="size-3" aria-hidden />
               {CATEGORY_LABEL[finding.category]}
             </Badge>
             <Badge
               variant="outline"
-              className="text-muted-foreground border-border font-mono text-[10px] tabular-nums"
+              className="text-muted-foreground border-border font-mono text-[11px] tabular-nums"
             >
               line {finding.line}
             </Badge>
@@ -514,7 +514,7 @@ function FindingCard({ finding }: { finding: Finding }) {
             {finding.description}
           </p>
           <div className="bg-background mt-1.5 rounded-md border border-dashed p-2.5">
-            <p className="text-muted-foreground mb-0.5 flex items-center gap-1 text-[10px] font-medium uppercase tracking-wide">
+            <p className="text-muted-foreground mb-0.5 flex items-center gap-1 text-[11px] font-medium uppercase tracking-wide">
               <Wrench className="size-3" aria-hidden />
               Recommended fix
             </p>
@@ -673,7 +673,7 @@ export function RoyReview() {
             <span className="truncate font-semibold">RoyReview</span>
             <Badge
               variant="outline"
-              className="border-primary/30 bg-primary/10 text-primary shrink-0 gap-1 text-[10px]"
+              className="border-primary/30 bg-primary/10 text-primary shrink-0 gap-1 text-[11px]"
             >
               <Code2 className="size-3" aria-hidden />
               AI Code Reviewer

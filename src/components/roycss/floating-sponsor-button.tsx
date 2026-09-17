@@ -25,7 +25,7 @@ export function FloatingSponsorButton({ onClick }: { onClick: () => void }) {
           <motion.button onClick={onClick} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }} className="group relative flex flex-col items-center justify-center gap-1 size-14 sm:size-16 rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 cursor-pointer" aria-label="Sponsor RoyCSS" title="Sponsor RoyCSS">
             <motion.span className="absolute inset-0 rounded-full bg-primary/30" animate={{ scale: [1, 1.4, 1], opacity: [0.5, 0, 0.5] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} />
             <Heart className="size-5 sm:size-6 fill-primary-foreground relative z-10" />
-            <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-wide relative z-10 leading-none">Sponsor</span>
+            <span className="text-[8px] sm:text-[11px] font-bold uppercase tracking-wide relative z-10 leading-none">Sponsor</span>
           </motion.button>
         </motion.div>
       )}

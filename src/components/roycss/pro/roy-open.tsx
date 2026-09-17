@@ -183,14 +183,14 @@ export function RoyOpen() {
                   <p className="truncate text-sm font-medium">{i.title}</p>
                   <div className="mt-1 flex flex-wrap items-center gap-1">
                     {i.labels.map((l) => (
-                      <Badge key={l} variant="outline" className="text-[10px]">
+                      <Badge key={l} variant="outline" className="text-[11px]">
                         {l}
                       </Badge>
                     ))}
                   </div>
                 </div>
                 <div className="flex shrink-0 items-center gap-2">
-                  <Badge className={cn("text-[10px]", DIFFICULTY_TONE[i.difficulty])}>
+                  <Badge className={cn("text-[11px]", DIFFICULTY_TONE[i.difficulty])}>
                     {i.difficulty}
                   </Badge>
                   <span className="text-muted-foreground flex items-center gap-1 text-xs tabular-nums">
@@ -217,7 +217,7 @@ export function RoyOpen() {
                 <div key={r.id} className="flex items-center gap-3 rounded-lg border p-3">
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium">{r.title}</p>
-                    <Badge className={cn("mt-1 text-[10px]", RFC_TONE[r.status])}>
+                    <Badge className={cn("mt-1 text-[11px]", RFC_TONE[r.status])}>
                       {r.status}
                     </Badge>
                   </div>
@@ -244,7 +244,7 @@ export function RoyOpen() {
                     {m.quarter}
                   </div>
                   <p className="min-w-0 flex-1 truncate text-sm font-medium">{m.title}</p>
-                  <Badge className={cn("text-[10px] capitalize", STATE_TONE[m.state])}>
+                  <Badge className={cn("text-[11px] capitalize", STATE_TONE[m.state])}>
                     {m.state}
                   </Badge>
                 </div>
@@ -276,7 +276,7 @@ export function RoyOpen() {
                   <span className="text-muted-foreground">commits</span>
                 </div>
                 {i === 0 && (
-                  <Badge className="mt-2 bg-amber-500/15 text-amber-600 dark:text-amber-400 gap-1 text-[10px]">
+                  <Badge className="mt-2 bg-amber-500/15 text-amber-600 dark:text-amber-400 gap-1 text-[11px]">
                     <Calendar className="size-3" /> Maintainer
                   </Badge>
                 )}

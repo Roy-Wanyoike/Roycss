@@ -355,7 +355,7 @@ function LayerCard({
       <div className="flex flex-wrap items-center gap-2">
         <Badge
           variant="outline"
-          className="font-mono text-[10px] tabular-nums"
+          className="font-mono text-[11px] tabular-nums"
         >
           #{index + 1}
         </Badge>
@@ -398,7 +398,7 @@ function LayerCard({
           </Button>
         </div>
       </div>
-      <div className="mt-1 text-[10px] uppercase tracking-wider text-muted-foreground">
+      <div className="mt-1 text-[11px] uppercase tracking-wider text-muted-foreground">
         {priorityLabel}
       </div>
 
@@ -639,7 +639,7 @@ export function CSSLayersVisualizer() {
           <div className="text-xs font-semibold uppercase tracking-wider text-primary">
             Priority order
           </div>
-          <div className="text-[10px] uppercase tracking-wider text-muted-foreground">
+          <div className="text-[11px] uppercase tracking-wider text-muted-foreground">
             top = lowest · bottom = highest
           </div>
         </div>
@@ -653,7 +653,7 @@ export function CSSLayersVisualizer() {
               }}
             >
               <span className="font-mono text-foreground">{l.name}</span>
-              <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
+              <span className="text-[11px] uppercase tracking-wider text-muted-foreground">
                 {l.rules.length} rule{l.rules.length === 1 ? "" : "s"}
               </span>
             </div>
@@ -661,7 +661,7 @@ export function CSSLayersVisualizer() {
           {/* Unlayered row — highest priority */}
           <div className="flex items-center justify-between rounded-md border border-primary/40 bg-primary/10 px-2.5 py-1.5 text-xs">
             <span className="font-mono text-primary">unlayered</span>
-            <span className="text-[10px] uppercase tracking-wider text-primary/80">
+            <span className="text-[11px] uppercase tracking-wider text-primary/80">
               {unlayered.length} rule{unlayered.length === 1 ? "" : "s"} · wins
               over all
             </span>

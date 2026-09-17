@@ -125,7 +125,7 @@ export function EffectRecommendationEngine({ onSelectEffect }: RecommendationEng
                   <div className="scale-[0.5] origin-center"><LivePreview effect={effect} /></div>
                 </div>
                 <p className="text-xs font-medium text-foreground truncate w-full text-center">{effect.name}</p>
-                <Badge variant="secondary" className="text-[9px] px-1 py-0 capitalize">{effect.category.replace("-", " ")}</Badge>
+                <Badge variant="secondary" className="text-[11px] px-1 py-0 capitalize">{effect.category.replace("-", " ")}</Badge>
               </motion.button>
             ))}
           </div>

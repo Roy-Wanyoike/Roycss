@@ -318,7 +318,7 @@ export function RoySandbox() {
                 );
               })}
             </div>
-            <Badge variant="secondary" className="text-[10px]">{lineCount} lines</Badge>
+            <Badge variant="secondary" className="text-[11px]">{lineCount} lines</Badge>
           </div>
           <textarea
             value={files[activeTab]}
@@ -338,7 +338,7 @@ export function RoySandbox() {
               <span className="bg-rose-500 size-2 rounded-full" />
               <span className="ml-2">localhost:3000</span>
             </div>
-            <Badge variant="outline" className="text-[10px]">Live Preview</Badge>
+            <Badge variant="outline" className="text-[11px]">Live Preview</Badge>
           </div>
           <iframe
             ref={iframeRef}

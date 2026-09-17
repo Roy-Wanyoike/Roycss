@@ -442,7 +442,7 @@ function LabeledSelect<T extends string>({
     <div className="space-y-1.5">
       <Label
         htmlFor={id}
-        className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide"
+        className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide"
       >
         {label}
       </Label>
@@ -575,7 +575,7 @@ export function FlexPlayground() {
 
       {/* Presets */}
       <div className="flex flex-wrap items-center gap-1.5">
-        <span className="mr-1 flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+        <span className="mr-1 flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
           <Sparkles className="size-3" />
           Presets
         </span>
@@ -641,7 +641,7 @@ export function FlexPlayground() {
             <div className="flex items-center justify-between">
               <Label
                 htmlFor="flex-gap"
-                className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground"
+                className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground"
               >
                 gap
               </Label>
@@ -707,11 +707,11 @@ export function FlexPlayground() {
                         )}
                       >
                         <span className="text-lg leading-none">{num}</span>
-                        <span className="font-mono text-[10px] opacity-80">
+                        <span className="font-mono text-[11px] opacity-80">
                           flex: {shorthand}
                         </span>
                         {item.order !== 0 && (
-                          <span className="font-mono text-[10px] opacity-70">
+                          <span className="font-mono text-[11px] opacity-70">
                             order: {item.order}
                           </span>
                         )}
@@ -754,7 +754,7 @@ export function FlexPlayground() {
                           <div className="space-y-1">
                             <Label
                               htmlFor={`order-${item.id}`}
-                              className="text-[10px] font-medium uppercase text-muted-foreground"
+                              className="text-[11px] font-medium uppercase text-muted-foreground"
                             >
                               order
                             </Label>
@@ -773,7 +773,7 @@ export function FlexPlayground() {
                           <div className="space-y-1">
                             <Label
                               htmlFor={`grow-${item.id}`}
-                              className="text-[10px] font-medium uppercase text-muted-foreground"
+                              className="text-[11px] font-medium uppercase text-muted-foreground"
                             >
                               flex-grow
                             </Label>
@@ -793,7 +793,7 @@ export function FlexPlayground() {
                           <div className="space-y-1">
                             <Label
                               htmlFor={`shrink-${item.id}`}
-                              className="text-[10px] font-medium uppercase text-muted-foreground"
+                              className="text-[11px] font-medium uppercase text-muted-foreground"
                             >
                               flex-shrink
                             </Label>
@@ -813,7 +813,7 @@ export function FlexPlayground() {
                           <div className="space-y-1">
                             <Label
                               htmlFor={`basis-${item.id}`}
-                              className="text-[10px] font-medium uppercase text-muted-foreground"
+                              className="text-[11px] font-medium uppercase text-muted-foreground"
                             >
                               flex-basis
                             </Label>
@@ -833,7 +833,7 @@ export function FlexPlayground() {
                           <div className="space-y-1">
                             <Label
                               htmlFor={`w-${item.id}`}
-                              className="text-[10px] font-medium uppercase text-muted-foreground"
+                              className="text-[11px] font-medium uppercase text-muted-foreground"
                             >
                               width (px)
                             </Label>
@@ -858,7 +858,7 @@ export function FlexPlayground() {
                           <div className="space-y-1">
                             <Label
                               htmlFor={`h-${item.id}`}
-                              className="text-[10px] font-medium uppercase text-muted-foreground"
+                              className="text-[11px] font-medium uppercase text-muted-foreground"
                             >
                               height (px)
                             </Label>
@@ -884,7 +884,7 @@ export function FlexPlayground() {
                         <div className="space-y-1">
                           <Label
                             htmlFor={`self-${item.id}`}
-                            className="text-[10px] font-medium uppercase text-muted-foreground"
+                            className="text-[11px] font-medium uppercase text-muted-foreground"
                           >
                             align-self
                           </Label>

@@ -1123,7 +1123,7 @@ export function RoyAgents() {
               </h2>
               <Badge
                 variant="outline"
-                className="border-primary/30 bg-primary/10 text-primary gap-1 text-[10px] uppercase tracking-wide"
+                className="border-primary/30 bg-primary/10 text-primary gap-1 text-[11px] uppercase tracking-wide"
               >
                 <Zap className="size-3" aria-hidden />
                 {AGENTS.length} agents

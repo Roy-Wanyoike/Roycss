@@ -75,7 +75,7 @@ export function CodeBlock({
             {label}
           </span>
           {language && filename && (
-            <span className="text-[10px] uppercase tracking-wider text-zinc-500 shrink-0">
+            <span className="text-[11px] uppercase tracking-wider text-zinc-500 shrink-0">
               {language}
             </span>
           )}

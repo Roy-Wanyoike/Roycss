@@ -242,13 +242,13 @@ function CursorCard({ entry, copied, onCopy }: CursorCardProps) {
         aria-label={`Preview area for cursor: ${entry.value}. Hover to see the cursor.`}
         role="img"
       >
-        <span className="pointer-events-none select-none text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+        <span className="pointer-events-none select-none text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
           hover me
         </span>
         <Badge
           variant="outline"
           className={cn(
-            "pointer-events-none absolute left-1.5 top-1.5 px-1.5 py-0 text-[9px] font-medium",
+            "pointer-events-none absolute left-1.5 top-1.5 px-1.5 py-0 text-[11px] font-medium",
             meta.badgeClass,
           )}
         >
@@ -266,7 +266,7 @@ function CursorCard({ entry, copied, onCopy }: CursorCardProps) {
           variant="ghost"
           size="sm"
           onClick={() => onCopy(entry.value)}
-          className="h-7 shrink-0 gap-1 px-1.5 text-[10px] text-muted-foreground hover:text-foreground"
+          className="h-7 shrink-0 gap-1 px-1.5 text-[11px] text-muted-foreground hover:text-foreground"
           aria-label={`Copy "cursor: ${entry.value};"`}
         >
           {copied ? (
@@ -311,7 +311,7 @@ function CategoryChip({ meta, active, count, onToggle }: CategoryChipProps) {
       {meta.label}
       <span
         className={cn(
-          "rounded-full px-1 text-[9px] tabular-nums",
+          "rounded-full px-1 text-[11px] tabular-nums",
           active
             ? "bg-primary/20 text-primary"
             : "bg-muted text-muted-foreground",
@@ -487,7 +487,7 @@ function CustomCursorBuilder() {
             Live preview
           </Label>
           <div
-            className="flex h-24 items-center justify-center rounded-lg border border-dashed border-border bg-muted/30 text-[10px] uppercase tracking-wider text-muted-foreground"
+            className="flex h-24 items-center justify-center rounded-lg border border-dashed border-border bg-muted/30 text-[11px] uppercase tracking-wider text-muted-foreground"
             style={{
               cursor: activeUrl
                 ? `url('${activeUrl}') ${state.hotspotX} ${state.hotspotY}, ${state.fallback}`
@@ -498,7 +498,7 @@ function CustomCursorBuilder() {
           </div>
           {activeUrl && (
             <div className="flex items-center justify-between">
-              <span className="truncate text-[10px] text-muted-foreground">
+              <span className="truncate text-[11px] text-muted-foreground">
                 {state.source === "upload"
                   ? state.fileName || "uploaded image"
                   : "remote image"}
@@ -506,7 +506,7 @@ function CustomCursorBuilder() {
               <button
                 type="button"
                 onClick={clearImage}
-                className="inline-flex items-center gap-1 text-[10px] text-muted-foreground transition-colors hover:text-rose-500"
+                className="inline-flex items-center gap-1 text-[11px] text-muted-foreground transition-colors hover:text-rose-500"
               >
                 <X className="size-3" />
                 Clear
@@ -522,7 +522,7 @@ function CustomCursorBuilder() {
               <Label className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
                 Hotspot X
               </Label>
-              <span className="font-mono text-[10px] tabular-nums text-foreground">
+              <span className="font-mono text-[11px] tabular-nums text-foreground">
                 {state.hotspotX}px
               </span>
             </div>
@@ -542,7 +542,7 @@ function CustomCursorBuilder() {
               <Label className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
                 Hotspot Y
               </Label>
-              <span className="font-mono text-[10px] tabular-nums text-foreground">
+              <span className="font-mono text-[11px] tabular-nums text-foreground">
                 {state.hotspotY}px
               </span>
             </div>
@@ -828,7 +828,7 @@ export function CursorPreviewGallery() {
               </span>
               <Badge
                 variant="outline"
-                className="border-border bg-muted/50 text-[9px] text-muted-foreground"
+                className="border-border bg-muted/50 text-[11px] text-muted-foreground"
               >
                 url() + hotspot
               </Badge>

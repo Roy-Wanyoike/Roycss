@@ -767,7 +767,7 @@ function MeshEditor({
                   onClick={() => handlePatch(p.id, { blend: b })}
                   aria-pressed={p.blend === b}
                   className={cn(
-                    "inline-flex h-6 items-center rounded border px-1.5 text-[10px] font-medium transition-colors",
+                    "inline-flex h-6 items-center rounded border px-1.5 text-[11px] font-medium transition-colors",
                     p.blend === b
                       ? "border-primary bg-primary text-primary-foreground"
                       : "border-border bg-background text-muted-foreground hover:bg-accent hover:text-foreground",
@@ -804,10 +804,10 @@ function LabeledRange({
   return (
     <div className="space-y-1">
       <div className="flex items-center justify-between">
-        <span className="text-[10px] uppercase tracking-wide text-muted-foreground">
+        <span className="text-[11px] uppercase tracking-wide text-muted-foreground">
           {label}
         </span>
-        <span className="font-mono text-[10px] text-foreground">{value}</span>
+        <span className="font-mono text-[11px] text-foreground">{value}</span>
       </div>
       <Slider
         min={min}

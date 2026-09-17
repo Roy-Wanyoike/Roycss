@@ -266,7 +266,7 @@ function CodeBlock({ code }: { code: string }) {
     <div className="bg-background group/code relative overflow-hidden rounded-lg border">
       <div className="border-b px-3 py-1.5">
         <div className="flex items-center justify-between">
-          <span className="text-muted-foreground inline-flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-wide">
+          <span className="text-muted-foreground inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wide">
             <Code2 className="size-3" aria-hidden />
             CSS suggestion
           </span>
@@ -508,7 +508,7 @@ export function RoyPair() {
             <span className="truncate font-semibold">RoyPair</span>
             <Badge
               variant="outline"
-              className="border-primary/30 bg-primary/10 text-primary inline-flex shrink-0 items-center gap-1 text-[10px] font-medium uppercase tracking-wide"
+              className="border-primary/30 bg-primary/10 text-primary inline-flex shrink-0 items-center gap-1 text-[11px] font-medium uppercase tracking-wide"
             >
               <Sparkles className="size-3" />
               Pair Programmer

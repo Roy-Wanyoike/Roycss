@@ -547,7 +547,7 @@ export function ResetBuilder() {
                       <span className="text-xs font-semibold text-foreground">
                         {cat.label}
                       </span>
-                      <Badge variant="secondary" className="ml-auto text-[10px]">
+                      <Badge variant="secondary" className="ml-auto text-[11px]">
                         {state.selected}/{state.total}
                       </Badge>
                     </button>
@@ -569,14 +569,14 @@ export function ResetBuilder() {
                         />
                         <span className="flex flex-1 flex-col gap-0.5">
                           <span className="flex items-center gap-1.5 text-xs font-medium text-foreground">
-                            <code className="font-mono text-[10px] text-primary">
+                            <code className="font-mono text-[11px] text-primary">
                               {rule.name}
                             </code>
                           </span>
-                          <span className="text-[10px] text-muted-foreground">
+                          <span className="text-[11px] text-muted-foreground">
                             {rule.description}
                           </span>
-                          <code className="mt-1 block rounded bg-muted/60 p-1.5 font-mono text-[10px] leading-relaxed text-foreground">
+                          <code className="mt-1 block rounded bg-muted/60 p-1.5 font-mono text-[11px] leading-relaxed text-foreground">
                             {rule.css}
                           </code>
                         </span>
@@ -642,11 +642,11 @@ export function ResetBuilder() {
 
       {/* Stats */}
       <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
-        <Badge variant="secondary" className="text-[10px]">
+        <Badge variant="secondary" className="text-[11px]">
           {stats.count} rules
         </Badge>
         <span>·</span>
-        <Badge variant="secondary" className="text-[10px]">
+        <Badge variant="secondary" className="text-[11px]">
           ~{stats.bytes} bytes
         </Badge>
       </div>

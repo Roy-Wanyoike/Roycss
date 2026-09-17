@@ -693,7 +693,7 @@ function PricingPreview(): ReactNode {
             )}
           >
             {featured && (
-              <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary-foreground">
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-primary-foreground">
                 Most popular
               </span>
             )}
@@ -1253,7 +1253,7 @@ function TemplateCard({ template, onOpen }: TemplateCardProps): ReactNode {
           </h3>
           <Badge
             variant="outline"
-            className={cn("shrink-0 text-[10px]", meta.badge)}
+            className={cn("shrink-0 text-[11px]", meta.badge)}
           >
             {meta.label}
           </Badge>
@@ -1299,7 +1299,7 @@ function TemplateDialog({
         <DialogHeader className="border-b px-6 py-4 text-left">
           <div className="flex flex-wrap items-center gap-2">
             <DialogTitle className="text-lg">{template.name}</DialogTitle>
-            <Badge variant="outline" className={cn("text-[10px]", meta.badge)}>
+            <Badge variant="outline" className={cn("text-[11px]", meta.badge)}>
               {meta.label}
             </Badge>
           </div>
@@ -1325,7 +1325,7 @@ function TemplateDialog({
                   Code
                 </TabsTrigger>
               </TabsList>
-              <span className="font-mono text-[10px] text-muted-foreground">
+              <span className="font-mono text-[11px] text-muted-foreground">
                 #{template.id}
               </span>
             </div>

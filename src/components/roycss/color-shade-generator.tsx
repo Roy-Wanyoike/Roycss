@@ -107,7 +107,7 @@ export function ColorShadeGenerator() {
               style={{ background: shade.hex }}>
               <div className="min-w-0 flex-1 z-10">
                 <p className="text-xs font-bold" style={{ color: textColor }}>{shade.label}</p>
-                <p className="text-[10px] font-mono truncate" style={{ color: textColor, opacity: 0.8 }}>
+                <p className="text-[11px] font-mono truncate" style={{ color: textColor, opacity: 0.8 }}>
                   {format === "hex" ? shade.hex : shade.oklch.length > 24 ? shade.oklch.substring(0, 22) + "…" : shade.oklch}
                 </p>
               </div>

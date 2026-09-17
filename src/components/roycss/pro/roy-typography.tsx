@@ -531,7 +531,7 @@ export function RoyTypography(): React.JSX.Element {
 
           {/* Scale table */}
           <div className="mb-5 overflow-hidden rounded-xl border border-border bg-card">
-            <div className="grid grid-cols-12 gap-2 border-b border-border bg-muted/40 px-3 py-2 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+            <div className="grid grid-cols-12 gap-2 border-b border-border bg-muted/40 px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
               <div className="col-span-3 sm:col-span-2">Step</div>
               <div className="col-span-3 hidden sm:block">Pixels</div>
               <div className="col-span-3 hidden sm:block">REM</div>

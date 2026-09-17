@@ -687,7 +687,7 @@ function GridEditor({ grid, onChange }: GridEditorProps): React.JSX.Element {
                   type="button"
                   onClick={() => paintCell(r, c)}
                   className={cn(
-                    "flex items-center justify-center rounded text-[10px] font-semibold transition-transform hover:scale-[1.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                    "flex items-center justify-center rounded text-[11px] font-semibold transition-transform hover:scale-[1.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                     tint,
                     textCls,
                   )}
@@ -865,7 +865,7 @@ function ContainerPreview({
               <span className="text-xs font-semibold text-foreground">
                 {bp.name} breakpoint
               </span>
-              <span className="font-mono text-[10px] text-muted-foreground">
+              <span className="font-mono text-[11px] text-muted-foreground">
                 ≥{bp.width}px → {bp.cols} col
                 {bp.cols === 1 ? "" : "s"}
               </span>
@@ -894,7 +894,7 @@ function ContainerPreview({
                 ))}
               </div>
             </div>
-            <p className="mt-2 text-[10px] text-muted-foreground">
+            <p className="mt-2 text-[11px] text-muted-foreground">
               Width: {bp.width}px–{nextWidth}px
             </p>
           </div>

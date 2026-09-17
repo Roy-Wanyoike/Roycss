@@ -467,7 +467,7 @@ const PackageRow = React.memo(function PackageRow({
         </div>
         <Badge
           variant="outline"
-          className={cn("shrink-0 text-[10px] uppercase tracking-wide", visMeta.badge)}
+          className={cn("shrink-0 text-[11px] uppercase tracking-wide", visMeta.badge)}
         >
           {visMeta.label}
         </Badge>
@@ -491,7 +491,7 @@ const PackageRow = React.memo(function PackageRow({
         </span>
         <Badge
           variant="outline"
-          className={cn("ml-auto text-[10px]", typeMeta.badge)}
+          className={cn("ml-auto text-[11px]", typeMeta.badge)}
         >
           {typeMeta.label}
         </Badge>
@@ -571,17 +571,17 @@ function PackageDetailDialog({
           <div className="mt-2 flex flex-wrap items-center gap-2">
             <Badge
               variant="outline"
-              className={cn("text-[10px] uppercase tracking-wide", typeMeta.badge)}
+              className={cn("text-[11px] uppercase tracking-wide", typeMeta.badge)}
             >
               {typeMeta.label}
             </Badge>
             <Badge
               variant="outline"
-              className={cn("text-[10px] uppercase tracking-wide", visMeta.badge)}
+              className={cn("text-[11px] uppercase tracking-wide", visMeta.badge)}
             >
               {visMeta.label}
             </Badge>
-            <Badge variant="outline" className="text-[10px] font-mono">
+            <Badge variant="outline" className="text-[11px] font-mono">
               v{pkg.version}
             </Badge>
             <span className="text-muted-foreground ml-auto inline-flex items-center gap-1 text-[11px]">

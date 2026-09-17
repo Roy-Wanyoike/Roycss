@@ -110,10 +110,10 @@ $ npx roycss export btn-glow hover-push-up --out src/styles/roycss.css`}</code>
         are the canonical first stops:
       </p>
       <ul className="list-disc pl-6 space-y-1">
-        <li><Link className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/getting-started/installation">Installation</Link> — npm/pnpm/yarn/bun/CDN</li>
-        <li><Link className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/getting-started/first-effect">Your first effect</Link> — end-to-end tutorial</li>
-        <li><Link className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/concepts/css-first">CSS-first architecture</Link> — why no JS</li>
-        <li><Link className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/api/effects">Effects API</Link> — class reference</li>
+        <li><Link className="text-primary hover:underline" href="/docs/getting-started/installation">Installation</Link> — npm/pnpm/yarn/bun/CDN</li>
+        <li><Link className="text-primary hover:underline" href="/docs/getting-started/first-effect">Your first effect</Link> — end-to-end tutorial</li>
+        <li><Link className="text-primary hover:underline" href="/docs/concepts/css-first">CSS-first architecture</Link> — why no JS</li>
+        <li><Link className="text-primary hover:underline" href="/docs/api/effects">Effects API</Link> — class reference</li>
       </ul>
     </>
   );

@@ -97,7 +97,7 @@ export function CategoryExplorer({ onCategorySelect }: { onCategorySelect: (cat:
                   </span>
                   <div className="text-center">
                     <p className="text-xs font-semibold text-foreground leading-tight">{meta.label}</p>
-                    <p className="text-[10px] text-muted-foreground mt-0.5">{count} effects</p>
+                    <p className="text-[11px] text-muted-foreground mt-0.5">{count} effects</p>
                   </div>
                 </div>
 

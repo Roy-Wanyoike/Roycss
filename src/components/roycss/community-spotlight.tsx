@@ -298,13 +298,13 @@ function ContributorCard({ contributor, index }: { contributor: Contributor; ind
           <p className={`font-display text-lg font-bold ${a.text}`}>
             {formatCount(contributor.effectsCount)}
           </p>
-          <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Effects</p>
+          <p className="text-[11px] uppercase tracking-wider text-muted-foreground">Effects</p>
         </div>
         <div>
           <p className="font-display text-lg font-bold text-amber-500">
             {formatCount(contributor.stars)}
           </p>
-          <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Stars</p>
+          <p className="text-[11px] uppercase tracking-wider text-muted-foreground">Stars</p>
         </div>
       </div>
     </motion.article>
@@ -375,7 +375,7 @@ function ActivityRow({ item, index }: { item: ActivityItem; index: number }) {
         to{" "}
         <span className="font-medium text-foreground/80">{item.collection}</span>
       </p>
-      <span className="shrink-0 text-[10px] tabular-nums text-muted-foreground">{item.time}</span>
+      <span className="shrink-0 text-[11px] tabular-nums text-muted-foreground">{item.time}</span>
     </motion.li>
   );
 }
@@ -411,7 +411,7 @@ export function CommunitySpotlight() {
             <h3 className="font-display text-lg font-bold text-foreground">
               Featured Contributors
             </h3>
-            <Badge variant="secondary" className="ml-1 text-[10px]">
+            <Badge variant="secondary" className="ml-1 text-[11px]">
               {CONTRIBUTORS.length} this month
             </Badge>
           </div>

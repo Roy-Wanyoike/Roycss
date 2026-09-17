@@ -1315,7 +1315,7 @@ export function PlatformEcosystem({ onLaunchTool, onLearnMore }: { onLaunchTool?
                   >
                     <TierIcon className="size-3" />
                     {meta.label}
-                    <span className={`text-[10px] tabular-nums ${isActive ? "text-primary-foreground/70" : "text-muted-foreground/60"}`}>
+                    <span className={`text-[11px] tabular-nums ${isActive ? "text-primary-foreground/70" : "text-muted-foreground/60"}`}>
                       {count}
                     </span>
                   </button>
@@ -1417,13 +1417,13 @@ export function PlatformEcosystem({ onLaunchTool, onLearnMore }: { onLaunchTool?
                               <p className="font-display font-bold text-xs text-foreground leading-tight whitespace-nowrap">
                                 {company.name}
                               </p>
-                              <span className={`inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[9px] font-semibold ${meta.bg} ${meta.color} whitespace-nowrap`}>
+                              <span className={`inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[11px] font-semibold ${meta.bg} ${meta.color} whitespace-nowrap`}>
                                 <Check className="size-2" />
                                 <TierIcon className="size-2" />
                                 {meta.label}
                               </span>
                             </div>
-                            <p className="text-[10px] text-muted-foreground leading-tight mt-0.5 whitespace-nowrap">
+                            <p className="text-[11px] text-muted-foreground leading-tight mt-0.5 whitespace-nowrap">
                               {company.amount
                                 ? `$${company.amount.toLocaleString()}+ contributed`
                                 : meta.suggestedAmount}

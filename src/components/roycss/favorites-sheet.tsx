@@ -88,7 +88,7 @@ export function FavoritesSheet({
           <SheetTitle className="flex items-center gap-2 font-display">
             <Heart className="size-4 text-rose-500 fill-rose-500" />
             My Collection
-            <Badge variant="secondary" className="text-[10px] bg-rose-500/10 text-rose-500 border-rose-500/20">
+            <Badge variant="secondary" className="text-[11px] bg-rose-500/10 text-rose-500 border-rose-500/20">
               {favoriteEffects.length}
             </Badge>
           </SheetTitle>
@@ -183,7 +183,7 @@ export function FavoritesSheet({
                       className="flex-1 min-w-0 text-left cursor-pointer"
                     >
                       <p className="text-sm font-medium text-foreground truncate">{effect.name}</p>
-                      <p className="text-[10px] text-muted-foreground truncate">{categoryMeta[effect.category].label}</p>
+                      <p className="text-[11px] text-muted-foreground truncate">{categoryMeta[effect.category].label}</p>
                     </button>
                     <button
                       onClick={() => onToggleFavorite(effect.id)}
@@ -201,7 +201,7 @@ export function FavoritesSheet({
 
         {favoriteEffects.length > 0 && (
           <div className="p-3 border-t border-border/50 shrink-0">
-            <div className="flex items-center justify-between text-[10px] text-muted-foreground">
+            <div className="flex items-center justify-between text-[11px] text-muted-foreground">
               <span className="flex items-center gap-1"><Package className="size-3" />{favoriteEffects.length} effect{favoriteEffects.length === 1 ? "" : "s"}</span>
               <span className="flex items-center gap-1"><Sparkles className="size-3" />{(combinedCSS.length / 1024).toFixed(1)} KB</span>
             </div>

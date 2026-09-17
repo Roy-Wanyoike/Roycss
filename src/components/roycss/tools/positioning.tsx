@@ -398,7 +398,7 @@ function InsetSlider({ side, control, onChange }: InsetSliderProps) {
             type="button"
             onClick={() => onChange({ unit: control.unit === "px" ? "%" : "px", value: 0 })}
             disabled={!control.enabled}
-            className="flex h-7 w-8 items-center justify-center rounded-md border border-border bg-background font-mono text-[10px] text-muted-foreground transition-colors hover:bg-muted disabled:opacity-50"
+            className="flex h-7 w-8 items-center justify-center rounded-md border border-border bg-background font-mono text-[11px] text-muted-foreground transition-colors hover:bg-muted disabled:opacity-50"
             title={`Switch to ${control.unit === "px" ? "%" : "px"}`}
             aria-label={`Switch ${side} unit to ${control.unit === "px" ? "%" : "px"}`}
           >
@@ -687,7 +687,7 @@ export function PositioningPlayground(): ReactNode {
               height: isSticky ? STICKY_PARENT_HEIGHT : undefined,
             }}
           >
-            <div className="pointer-events-none absolute left-2 top-1.5 flex items-center gap-1.5 text-[10px] font-mono text-muted-foreground">
+            <div className="pointer-events-none absolute left-2 top-1.5 flex items-center gap-1.5 text-[11px] font-mono text-muted-foreground">
               <span className="rounded bg-background/80 px-1 py-px">parent</span>
               <span className="rounded bg-background/80 px-1 py-px">position: relative</span>
             </div>
@@ -723,7 +723,7 @@ export function PositioningPlayground(): ReactNode {
                   target
                 </span>
               </div>
-              <div className="mt-1 font-mono text-[10px] leading-tight text-muted-foreground">
+              <div className="mt-1 font-mono text-[11px] leading-tight text-muted-foreground">
                 position: {state.position}
                 <br />
                 z: {state.zIndex}
@@ -738,7 +738,7 @@ export function PositioningPlayground(): ReactNode {
                   sibling
                 </span>
               </div>
-              <div className="mt-1 font-mono text-[10px] leading-tight text-muted-foreground">
+              <div className="mt-1 font-mono text-[11px] leading-tight text-muted-foreground">
                 in normal flow — slides up when target leaves flow
               </div>
             </div>
@@ -764,7 +764,7 @@ export function PositioningPlayground(): ReactNode {
             <span>insets &amp; z-index</span>
           </div>
           {!isInsetRelevant && (
-            <Badge variant="outline" className="font-mono text-[10px]">
+            <Badge variant="outline" className="font-mono text-[11px]">
               inset / z-index ignored for position: static
             </Badge>
           )}
@@ -807,7 +807,7 @@ export function PositioningPlayground(): ReactNode {
             className="w-full"
             aria-label="z-index"
           />
-          <div className="mt-1 flex justify-between font-mono text-[9px] text-muted-foreground">
+          <div className="mt-1 flex justify-between font-mono text-[11px] text-muted-foreground">
             <span>{Z_MIN}</span>
             <span>0 = auto</span>
             <span>{Z_MAX}</span>

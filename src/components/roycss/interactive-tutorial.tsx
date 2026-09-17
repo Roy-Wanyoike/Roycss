@@ -471,7 +471,7 @@ export function InteractiveTutorial() {
                 <StepIcon className="size-4" />
               </span>
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                   Step {stepIndex + 1} of {STEPS.length}
                 </p>
                 <h3 className="font-display text-base font-bold leading-tight text-foreground">

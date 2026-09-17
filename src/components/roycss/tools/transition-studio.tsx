@@ -446,7 +446,7 @@ function RuleCard({ rule, index, onChange, onRemove, canRemove }: RuleCardProps)
     <div className="space-y-3 rounded-lg border border-border bg-card p-3">
       {/* Row 1: property select + curve + remove */}
       <div className="flex items-center gap-2">
-        <span className="shrink-0 font-mono text-[10px] text-muted-foreground">
+        <span className="shrink-0 font-mono text-[11px] text-muted-foreground">
           {String(index + 1).padStart(2, "0")}
         </span>
         <Select
@@ -489,7 +489,7 @@ function RuleCard({ rule, index, onChange, onRemove, canRemove }: RuleCardProps)
         <div className="space-y-1">
           <Label
             htmlFor={`rule-${rule.id}-custom`}
-            className="text-[10px] uppercase tracking-wider text-muted-foreground"
+            className="text-[11px] uppercase tracking-wider text-muted-foreground"
           >
             Custom property
           </Label>
@@ -506,7 +506,7 @@ function RuleCard({ rule, index, onChange, onRemove, canRemove }: RuleCardProps)
       {/* Row 2: duration */}
       <div className="space-y-1">
         <div className="flex items-center justify-between">
-          <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+          <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
             Duration
           </Label>
           <div className="flex items-center gap-1">
@@ -523,7 +523,7 @@ function RuleCard({ rule, index, onChange, onRemove, canRemove }: RuleCardProps)
               className="h-7 w-20 text-right font-mono text-xs"
               aria-label={`Rule ${index + 1} duration in milliseconds`}
             />
-            <span className="font-mono text-[10px] text-muted-foreground">ms</span>
+            <span className="font-mono text-[11px] text-muted-foreground">ms</span>
           </div>
         </div>
         <Slider
@@ -538,7 +538,7 @@ function RuleCard({ rule, index, onChange, onRemove, canRemove }: RuleCardProps)
 
       {/* Row 3: timing-function */}
       <div className="space-y-1">
-        <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+        <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
           Timing function
         </Label>
         <Select
@@ -572,7 +572,7 @@ function RuleCard({ rule, index, onChange, onRemove, canRemove }: RuleCardProps)
             <div key={key} className="space-y-0.5">
               <Label
                 htmlFor={`rule-${rule.id}-${key}`}
-                className="font-mono text-[9px] text-muted-foreground"
+                className="font-mono text-[11px] text-muted-foreground"
               >
                 {label}
               </Label>
@@ -600,7 +600,7 @@ function RuleCard({ rule, index, onChange, onRemove, canRemove }: RuleCardProps)
           <div className="space-y-0.5">
             <Label
               htmlFor={`rule-${rule.id}-steps-count`}
-              className="text-[9px] uppercase tracking-wider text-muted-foreground"
+              className="text-[11px] uppercase tracking-wider text-muted-foreground"
             >
               Count
             </Label>
@@ -619,7 +619,7 @@ function RuleCard({ rule, index, onChange, onRemove, canRemove }: RuleCardProps)
             />
           </div>
           <div className="space-y-0.5">
-            <Label className="text-[9px] uppercase tracking-wider text-muted-foreground">
+            <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
               Position
             </Label>
             <Select
@@ -644,7 +644,7 @@ function RuleCard({ rule, index, onChange, onRemove, canRemove }: RuleCardProps)
       {/* Row 4: delay */}
       <div className="space-y-1">
         <div className="flex items-center justify-between">
-          <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+          <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
             Delay
           </Label>
           <div className="flex items-center gap-1">
@@ -661,7 +661,7 @@ function RuleCard({ rule, index, onChange, onRemove, canRemove }: RuleCardProps)
               className="h-7 w-20 text-right font-mono text-xs"
               aria-label={`Rule ${index + 1} delay in milliseconds`}
             />
-            <span className="font-mono text-[10px] text-muted-foreground">ms</span>
+            <span className="font-mono text-[11px] text-muted-foreground">ms</span>
           </div>
         </div>
         <Slider
@@ -1083,7 +1083,7 @@ ${toDecls.join("\n")}
           <div className="space-y-3 rounded-lg border border-border bg-card p-3">
             {/* Transform */}
             <div className="space-y-1">
-              <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+              <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
                 Transform
               </Label>
               <Select
@@ -1109,7 +1109,7 @@ ${toDecls.join("\n")}
             <div className="space-y-1">
               <Label
                 htmlFor="ts-bg-color"
-                className="text-[10px] uppercase tracking-wider text-muted-foreground"
+                className="text-[11px] uppercase tracking-wider text-muted-foreground"
               >
                 Background color
               </Label>
@@ -1139,10 +1139,10 @@ ${toDecls.join("\n")}
             {/* Border radius */}
             <div className="space-y-1">
               <div className="flex items-center justify-between">
-                <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
                   Border radius
                 </Label>
-                <span className="font-mono text-[10px] text-muted-foreground">
+                <span className="font-mono text-[11px] text-muted-foreground">
                   {hoverState.borderRadius}px
                 </span>
               </div>
@@ -1160,7 +1160,7 @@ ${toDecls.join("\n")}
 
             {/* Box shadow */}
             <div className="space-y-1">
-              <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+              <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
                 Box shadow
               </Label>
               <Select
@@ -1229,7 +1229,7 @@ ${toDecls.join("\n")}
           <code>{generatedCss}</code>
         </pre>
         {triggerMode === "click" && (
-          <p className="text-[10px] text-muted-foreground">
+          <p className="text-[11px] text-muted-foreground">
             For the click mode, toggle the <code className="font-mono">.is-active</code> class
             (e.g. via <code className="font-mono">element.classList.toggle(&apos;is-active&apos;)</code>).
           </p>
@@ -1270,7 +1270,7 @@ ${toDecls.join("\n")}
             </p>
             <div className="overflow-hidden rounded-lg border border-border/60">
               <table className="w-full text-left text-xs">
-                <thead className="bg-muted/50 text-[10px] uppercase tracking-wider text-muted-foreground">
+                <thead className="bg-muted/50 text-[11px] uppercase tracking-wider text-muted-foreground">
                   <tr>
                     <th className="px-2.5 py-1.5 font-medium">Property</th>
                     <th className="px-2.5 py-1.5 font-medium">Animatable?</th>
@@ -1287,7 +1287,7 @@ ${toDecls.join("\n")}
                         <Badge
                           variant="secondary"
                           className={cn(
-                            "font-mono text-[10px]",
+                            "font-mono text-[11px]",
                             row.animatable
                               ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400"
                               : "bg-amber-500/15 text-amber-600 dark:text-amber-400",

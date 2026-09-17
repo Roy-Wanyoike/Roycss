@@ -105,7 +105,7 @@ export function MobileBottomNav({
                 aria-current={isActive ? "page" : undefined}
               >
                 <Icon className="size-5" aria-hidden="true" />
-                <span className="text-[10px] font-medium leading-none">
+                <span className="text-[11px] font-medium leading-none">
                   {item.label}
                 </span>
               </button>

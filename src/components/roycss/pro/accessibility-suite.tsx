@@ -1163,7 +1163,7 @@ export function AccessibilitySuite() {
                   numbered badge on every focusable element on the page
                   (links, buttons, inputs, <code>[tabindex]</code>, etc.).
                   Numbers reflect the order a keyboard user will encounter
-                  them when pressing <kbd className="rounded bg-background px-1 py-0.5 font-mono text-[10px] border">Tab</kbd>.
+                  them when pressing <kbd className="rounded bg-background px-1 py-0.5 font-mono text-[11px] border">Tab</kbd>.
                 </p>
                 <p className="mt-2 text-xs text-muted-foreground">
                   Elements with <code>tabindex &lt; 0</code>, hidden
@@ -1230,7 +1230,7 @@ function FindingRow({ finding }: { finding: Finding }) {
       <div className="flex flex-wrap items-center gap-2">
         <span
           className={cn(
-            "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide",
+            "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide",
             meta.badge,
           )}
         >
@@ -1336,7 +1336,7 @@ function WCAGBadge({
         >
           {label}
         </p>
-        <p className="text-[10px] text-muted-foreground">{threshold}</p>
+        <p className="text-[11px] text-muted-foreground">{threshold}</p>
       </div>
     </div>
   );

@@ -39,10 +39,10 @@ function PatternCard({ pattern }: { pattern: typeof patterns[0] }) {
               <pre className="p-3 overflow-x-auto text-xs leading-relaxed scrollbar-thin max-h-64 overflow-y-auto"><code className="font-mono text-foreground/80 whitespace-pre">{pattern.html}</code></pre>
             </div>
             <div className="px-3 pb-3 pt-2 border-t border-border/30">
-              <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1">When to use</p>
+              <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1">When to use</p>
               <p className="text-xs text-muted-foreground leading-relaxed mb-2">{pattern.whenToUse}</p>
-              <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 flex items-center gap-1"><Layers className="size-2.5" />Effects Used</p>
-              <div className="flex flex-wrap gap-1">{pattern.effectIds.map(id => <code key={id} className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-primary/10 text-primary">.roycss-{id}</code>)}</div>
+              <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 flex items-center gap-1"><Layers className="size-2.5" />Effects Used</p>
+              <div className="flex flex-wrap gap-1">{pattern.effectIds.map(id => <code key={id} className="text-[11px] font-mono px-1.5 py-0.5 rounded bg-primary/10 text-primary">.roycss-{id}</code>)}</div>
             </div>
           </motion.div>
         )}

@@ -186,13 +186,13 @@ export function RoyOS() {
               </div>
               <div>
                 <p className="text-sm font-bold">RoyOS</p>
-                <p className="text-muted-foreground text-[10px]">Workspace v2.4.1</p>
+                <p className="text-muted-foreground text-[11px]">Workspace v2.4.1</p>
                 <BackendLiveBadge module="os" loading={loading} error={error} className="mt-1" />
               </div>
             </div>
           </CardHeader>
           <CardContent className="flex flex-col gap-1 px-2">
-            <p className="text-muted-foreground px-2 py-1 text-[10px] font-semibold uppercase tracking-wide">
+            <p className="text-muted-foreground px-2 py-1 text-[11px] font-semibold uppercase tracking-wide">
               Quick Actions
             </p>
             {QUICK_ACTIONS.map((a) => {
@@ -207,7 +207,7 @@ export function RoyOS() {
                   <Icon className="text-muted-foreground size-4" />
                   <span className="flex-1 text-left">{a.label}</span>
                   {a.shortcut && (
-                    <kbd className="bg-muted text-muted-foreground rounded px-1.5 py-0.5 font-mono text-[10px]">
+                    <kbd className="bg-muted text-muted-foreground rounded px-1.5 py-0.5 font-mono text-[11px]">
                       {a.shortcut}
                     </kbd>
                   )}
@@ -245,7 +245,7 @@ export function RoyOS() {
                     <p className="truncate text-xs font-medium">{a.text}</p>
                     <p className="text-muted-foreground truncate text-[11px]">{a.meta}</p>
                   </div>
-                  <span className="text-muted-foreground shrink-0 text-[10px]">{a.at}</span>
+                  <span className="text-muted-foreground shrink-0 text-[11px]">{a.at}</span>
                 </div>
               );
             })}
@@ -279,7 +279,7 @@ export function RoyOS() {
                   className="h-9 pl-9"
                   aria-label="Search products"
                 />
-                <kbd className="bg-muted text-muted-foreground absolute right-2 top-1/2 -translate-y-1/2 rounded px-1.5 py-0.5 font-mono text-[10px]">
+                <kbd className="bg-muted text-muted-foreground absolute right-2 top-1/2 -translate-y-1/2 rounded px-1.5 py-0.5 font-mono text-[11px]">
                   ⌘K
                 </kbd>
               </div>
@@ -313,7 +313,7 @@ export function RoyOS() {
                   <p className="font-semibold">{tile.name}</p>
                   <p className="text-muted-foreground mt-0.5 text-xs">{tile.description}</p>
                 </div>
-                <div className="text-muted-foreground flex items-center gap-2 text-[10px]">
+                <div className="text-muted-foreground flex items-center gap-2 text-[11px]">
                   <span className="rounded-full bg-muted px-2 py-0.5">{tile.category}</span>
                   <span className="ml-auto inline-flex items-center gap-1 opacity-0 transition group-hover:opacity-100">
                     Open <Terminal className="size-3" />

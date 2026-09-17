@@ -46,7 +46,7 @@ export default function AccessibilityPage() {
         Every effect&apos;s full CSS (including its guard, or its
         deliberate lack of one) is shown on the effect&apos;s
         page in the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/effects">
+        <a className="text-primary hover:underline" href="/effects">
           catalog
         </a>
         , so you can check before you commit.

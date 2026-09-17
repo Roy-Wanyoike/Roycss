@@ -745,7 +745,7 @@ export function ConicGradientGenerator() {
               x={DIAL_C}
               y={DIAL_C - DIAL_R + 22}
               textAnchor="middle"
-              className="fill-muted-foreground text-[10px]"
+              className="fill-muted-foreground text-[11px]"
               style={{ fontSize: 10 }}
             >
               0°

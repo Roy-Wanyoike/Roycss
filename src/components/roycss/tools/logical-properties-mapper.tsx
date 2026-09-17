@@ -362,7 +362,7 @@ function PreviewBox({ mode, direction, writingMode }: PreviewBoxProps) {
         <Badge
           variant="outline"
           className={cn(
-            "px-1.5 py-0 text-[10px] font-medium",
+            "px-1.5 py-0 text-[11px] font-medium",
             isLogical
               ? "border-primary/30 bg-primary/10 text-primary"
               : "border-rose-500/30 bg-rose-500/10 text-rose-700 dark:text-rose-300",
@@ -653,7 +653,7 @@ export function LogicalPropertiesMapper() {
                       <td className="px-3 py-1.5 font-mono text-[11px] text-primary">
                         {row.logical}
                       </td>
-                      <td className="px-3 py-1.5 text-[10px] text-muted-foreground">
+                      <td className="px-3 py-1.5 text-[11px] text-muted-foreground">
                         {row.note ?? "—"}
                       </td>
                     </tr>
@@ -751,10 +751,10 @@ export function LogicalPropertiesMapper() {
                   onClick={() => applyPreset(preset)}
                   aria-pressed={active}
                 >
-                  <span className="font-mono text-[10px] font-semibold">
+                  <span className="font-mono text-[11px] font-semibold">
                     {preset.label}
                   </span>
-                  <span className="text-[9px] font-normal opacity-80">
+                  <span className="text-[11px] font-normal opacity-80">
                     {preset.description}
                   </span>
                 </Button>
@@ -764,7 +764,7 @@ export function LogicalPropertiesMapper() {
 
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             <div className="flex flex-col gap-1">
-              <span className="text-[10px] uppercase tracking-wide text-muted-foreground">
+              <span className="text-[11px] uppercase tracking-wide text-muted-foreground">
                 Physical input
               </span>
               <Textarea
@@ -777,7 +777,7 @@ export function LogicalPropertiesMapper() {
               />
             </div>
             <div className="flex flex-col gap-1">
-              <span className="text-[10px] uppercase tracking-wide text-muted-foreground">
+              <span className="text-[11px] uppercase tracking-wide text-muted-foreground">
                 Logical output
               </span>
               <pre className="min-h-[12rem] overflow-auto rounded-md border border-border bg-muted/40 p-3 font-mono text-xs leading-relaxed text-foreground">

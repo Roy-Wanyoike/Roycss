@@ -1,7 +1,7 @@
 {
   "name": "roycss-backend",
   "version": "1.0.0",
-  "description": "RoyCSS backend infrastructure \u2014 Express + Prisma + JWT + Zod. REST API for effects, recipes, patterns, contact, and auth.",
+  "description": "RoyCSS backend infrastructure — Express + Prisma + JWT + Zod. REST API for effects, recipes, patterns, contact, and auth.",
   "type": "module",
   "private": true,
   "engines": {
@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@prisma/client": "^6.11.1",
+    "@sentry/node": "^10.75.0",
     "@supabase/supabase-js": "^2.112.3",
     "@types/semver": "^7.8.0",
     "bcryptjs": "^2.4.3",

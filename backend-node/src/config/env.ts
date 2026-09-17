@@ -171,3 +171,13 @@ export const env: Env = new Proxy({} as Env, {
     return (loadEnv() as Record<string, unknown>)[prop];
   },
 });
+
+/**
+ * Test seam (same convention as `_resetRateLimitersForTest` /
+ * `_resetMailerForTest`) — drops the cached env so the next access
+ * re-parses `process.env`. Needed by tests that flip an OPTIONAL var
+ * (e.g. SENTRY_DSN) between cases; production code never calls this.
+ */
+export function _resetEnvCacheForTest(): void {
+  cachedEnv = null;
+}

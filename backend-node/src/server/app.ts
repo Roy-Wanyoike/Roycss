@@ -79,6 +79,7 @@ import { themesRouter } from "../modules/themes/routes.js";
 import { versionRouter } from "../modules/version/routes.js";
 import { workspaceRouter } from "../modules/workspace/routes.js";
 import { createLogger } from "../lib/logger.js";
+import { sentryErrorHandler } from "../lib/sentry.js";
 import { corsMiddleware } from "./middleware/cors.js";
 import { asyncHandler, errorHandler, notFoundHandler } from "./middleware/error.js";
 import {
@@ -533,6 +534,12 @@ export function createApp(): Express {
 
   // ─── 404 + centralized error handler ───────────────────────────────────
   app.use(notFoundHandler);
+  // Sentry error reporting (issue #119 / PRD-F11) — per the @sentry/node
+  // Express docs the error handler sits after all controllers and BEFORE
+  // any other error middleware, so it sees the error first and forwards it
+  // to the JSON handler below. Pure pass-through while SENTRY_DSN is unset
+  // (initSentry() in src/index.ts is the only activator).
+  app.use(sentryErrorHandler);
   app.use(errorHandler);
 
   log.info("Express app configured");

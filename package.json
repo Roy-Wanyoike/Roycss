@@ -41,6 +41,7 @@
     "dist/roycss.system-prompt.md",
     "dist/roycss.grammar.json",
     "dist/roycss.training-pairs.jsonl",
+    "dist/roycss.manifest.json",
     "README.md",
     "LICENSE"
   ],
@@ -76,6 +77,8 @@
     "gen:a11y": "bun run scripts/generate-effect-a11y.ts",
     "tokens:emit": "bun run scripts/emit-tokens.ts",
     "tokens:check": "bun run scripts/emit-tokens.ts --check",
+    "gen:manifest": "bun run scripts/generate-manifest.ts",
+    "gen:manifest:check": "bun run scripts/generate-manifest.ts --check",
     "build:cli": "bun build src/cli/index.ts --outdir cli --target node --outfile index.js",
     "prepublishOnly": "bun run build:package",
     "publish:validate": "bun run scripts/publish/validate.ts",

@@ -7,6 +7,9 @@
  *   dist/effects.json     — metadata for tooling (id, name, category, tags)
  *   dist/effects.js       — ES module exporting the effects array
  *   dist/effects.cjs      — CommonJS module
+ *   dist/roycss.manifest.json — unified lean index (PF-042): per-effect
+ *                           maturity, quality score, a11y tier, browser
+ *                           support + the naming-convention gate
  *
  * Usage:  bun run scripts/build-package.ts
  */
@@ -245,4 +248,22 @@ try {
   }
 } catch (err) {
   console.warn("  ⚠ generate-ai-artifacts failed:", err instanceof Error ? err.message : String(err));
+
+// ─── Unified manifest (PF-042 — dist/roycss.manifest.json) ──────
+// The lean per-effect index (maturity, quality score, a11y tier,
+// browser support) + the naming-convention gate. Unlike
+// generate-build-artifacts.ts above (warn-and-continue), a manifest
+// failure ABORTS the build: its naming gate is a policy gate, and the
+// generator's ratchet baseline only lets it fail on NEW violations or
+// a stale baseline — both demand human attention before publishing.
+console.log("");
+console.log("Generating unified manifest...");
+const manifestResult = spawnSync("bun", ["run", "scripts/generate-manifest.ts"], {
+  cwd: join(import.meta.dir, ".."),
+  stdio: "inherit",
+});
+if (manifestResult.status !== 0) {
+  console.error("  ✗ generate-manifest failed (naming gate / catalog mismatch) — aborting build.");
+  process.exit(1);
+}
 }

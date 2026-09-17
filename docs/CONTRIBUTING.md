@@ -117,6 +117,55 @@ Open an issue with:
 - Expected vs actual behavior
 - A reduced test case (CodePen / StackBlitz) if possible
 
+## Contributor Ladder
+
+RoyCSS grows contributors through four rungs. The authoritative role
+definitions (including the appointed helper roles and the steering
+committee) live in [`docs/GOVERNANCE.md`](GOVERNANCE.md) §2; this section
+restates them as concrete, checkable criteria so you always know where
+you stand and what the next rung requires.
+
+| Rung | How you get it | What you can do |
+| --- | --- | --- |
+| **Contributor** | Any one merged PR that passed the gates below. You are one from then on — no re-qualification. | Propose PRs, comment on RFCs and issues. |
+| **Active contributor** | At least 5 merged PRs across at least 2 areas within a quarter, plus at least 2 substantive reviews of other people's PRs. A module owner or maintainer may additionally appoint you **Triager** (label and triage issues, close duplicates, set severities). | Everything above, plus issue triage (if appointed Triager) and review sign-offs that owners count toward the "real look" requirement of lazy consensus. |
+| **Module owner** | Sustained contribution in one area (the `MAINTAINERS.md` area table) with demonstrated judgment — your PRs there have needed no rework beyond normal review, and you have reviewed others' work in that area. Appointed by a maintainer per the [`docs/GOVERNANCE.md`](GOVERNANCE.md) §3 decision tiers. | Merge PRs **within your area** (docs fast-lane included), own that area's SLA and onboarding, appoint collaborators, act as a **core approver** on RFCs touching your area. |
+| **Maintainer** | Sustained contribution and demonstrated judgment across areas — typically an existing module owner who has also shipped cross-area work (e.g. a backend module + its frontend surface) and led at least one contract-level change through the RFC process. Appointed by consensus per [`docs/GOVERNANCE.md`](GOVERNANCE.md) §3.1. | Merge across the repo, appoint module owners, hold release authority, decide steering questions. The steering committee (3–5 seats) is elected from this rung once ≥3 voters exist. |
+
+### What every rung is measured against
+
+The bar is the same at every level — the ladder only changes *scope*, never
+*standards*:
+
+1. **Gates before review.** `bun run lint`, `npx tsc --noEmit`, and the
+   test suite pass locally before you ask for review. CI re-runs them;
+   a red gate is never a judgment call ([`docs/GOVERNANCE.md`](GOVERNANCE.md)
+   §3.2 item 4: the pinned catalog invariants, `tsc` clean, and the API
+   drift gate are *never* lazy).
+2. **The PR checklist** above is part of the bar: focused commits, the
+   three viewports (375 / 768 / 1920), the `prefers-reduced-motion`
+   check, and screenshots for visual changes.
+3. **Backend work follows the module conventions:** `requireAuth` on all
+   routes, Zod validation, `AppError` envelopes, owner-scoped queries
+   (foreign ids → flat 404), module loggers, and tests per module.
+4. **Contract changes go through the RFC process**
+   ([`docs/RFC-PROCESS.md`](RFC-PROCESS.md)): schema changes, removals of
+   `stable` names, and policy changes need the 14-day window and
+   2 core + 3 community approvals. Everything else is lazy consensus —
+   but "lazy" means *no one objected after a real look*, never *nobody
+   looked*.
+5. **Honesty discipline:** claims in docs match the tree. If you ship
+   half a feature, the backlog entry says half
+   ([`docs/PENDING-FEATURES.md`](PENDING-FEATURES.md) state fields) —
+   overstated states are treated as bugs.
+
+Progression is reviewed at the quarterly architecture review
+([`docs/GOVERNANCE.md`](GOVERNANCE.md) §5); anyone can self-nominate by
+posting an issue listing their merged PRs against the criteria above.
+While the maintainer table is single-owner, appointments above
+Contributor are made by the project maintainer and recorded in
+[`MAINTAINERS.md`](../MAINTAINERS.md).
+
 ## License
 
 By contributing, you agree that your contributions will be licensed under the MIT License — see [LICENSE](./LICENSE).

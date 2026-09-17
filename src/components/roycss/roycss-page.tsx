@@ -2713,6 +2713,10 @@ export default function RoyCSSPage() {
               <a href="/terms" className="hover:text-primary transition-colors">
                 Terms
               </a>
+              {" "}&middot;{" "}
+              <a href="/roadmap" className="hover:text-primary transition-colors">
+                Roadmap
+              </a>
             </p>
             <div className="flex items-center gap-4 text-xs text-muted-foreground">
               <EngineStatus />

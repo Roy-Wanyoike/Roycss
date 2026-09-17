@@ -163,7 +163,9 @@ function ruleSelectorsOf(css: string): string[] {
 /** Mirror of the naming gate: effectId → violation count (all rules). */
 function namingViolations(): Map<string, number> {
   const found = new Map<string, number>();
-  const add = (id: string): void => found.set(id, (found.get(id) ?? 0) + 1);
+  const add = (id: string): void => {
+    found.set(id, (found.get(id) ?? 0) + 1);
+  };
 
   for (const effect of effects) {
     const css = stripComments(effect.cssCode);

@@ -3,10 +3,15 @@
  *
  * Responsibilities:
  *   - Load + validate env (fails fast on bad config)
+ *   - Initialize Sentry when SENTRY_DSN is set
+ *   - Install Redis-backed rate limiters when REDIS_URL is set
+ *     (issue #118 / PRD-F10; logs + falls back to in-memory on any
+ *     connection failure — the API never fails to boot because of Redis)
  *   - Create the Express app via createApp()
  *   - Start listening on PORT
  *   - Hook SIGINT / SIGTERM for graceful shutdown
- *     (closes the HTTP server, then the Prisma connection pool)
+ *     (closes the HTTP server, the Redis rate-limiter client if any,
+ *     then the Prisma connection pool)
  */
 import { createServer } from "node:http";
 
@@ -16,15 +21,22 @@ import { closeDatabase } from "./lib/db.js";
 import { logger } from "./lib/logger.js";
 import { initSentry } from "./lib/sentry.js";
 import { createApp } from "./server/app.js";
+import { initRedisRateLimiting } from "./server/rate-limit-redis.js";
 import { loadEffects } from "./modules/effects/service.js";
 
-function main(): void {
+async function main(): Promise<void> {
   // Validate env up-front (loadEnv() exits on failure).
   const config = env;
 
   // Sentry error tracking (issue #119 / PRD-F11) — only activates when
   // SENTRY_DSN is set; logs once and no-ops otherwise.
   initSentry();
+
+  // Redis rate limiting (issue #118 / PRD-F10) — installs Redis-backed
+  // adapters for the five route tiers + the per-API-key limiter when
+  // REDIS_URL is set, BEFORE the server accepts traffic. Unset var or a
+  // failed connection leaves the in-memory default in place.
+  const redisRateLimit = await initRedisRateLimiting();
 
   // Pre-load effects data so the first request isn't slow and so any
   // file/read errors surface at boot rather than mid-request.
@@ -57,6 +69,9 @@ function main(): void {
 
     server.close(async () => {
       await closeDatabase();
+      // Quit the Redis rate-limiter client, if one was installed —
+      // never rejects, so shutdown can't hang on a dead Redis.
+      await redisRateLimit?.quit();
       logger.info("Shutdown complete");
       process.exit(0);
     });

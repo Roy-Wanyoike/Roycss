@@ -51,7 +51,7 @@ import {
 import { createLogger } from "../../lib/logger.js";
 import {
   DEFAULT_API_KEY_TIER,
-  enforceApiKeyRateLimit,
+  enforceApiKeyRateLimitAsync,
   type RateLimitTier,
 } from "../api-key-rate-limit.js";
 import { AppError, asyncHandler } from "./error.js";
@@ -208,7 +208,10 @@ export async function authenticateApiKey(
   // Per-key rate limit — AFTER the credential check so the bucket is
   // keyed by the real key id, not by attacker-chosen bytes. Anonymous
   // abuse remains covered by the global per-IP limiters.
-  enforceApiKeyRateLimit(res, row.id, tier);
+  // Async form (issue #118): the installed limiter may be Redis-backed,
+  // so the decision can be a Promise — for the in-memory default it
+  // resolves on the microtask queue and behaves identically.
+  await enforceApiKeyRateLimitAsync(res, row.id, tier);
 
   touchLastUsedAt(row.id, row.lastUsedAt);
 

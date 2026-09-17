@@ -72,6 +72,20 @@ const EnvSchema = z.object({
   SUPABASE_SECRET_KEY: z.string().optional(),
   SUPABASE_JWKS_URL: z.string().url().optional(),
 
+  // ─── Redis rate limiting (issue #118 / PRD-F10) ───────────────────
+  // Optional. Unset (or blank) = the default in-process sliding-window
+  // limiters — byte-identical to pre-#118 behavior, fine for a single
+  // backend replica. Set (redis:// or rediss:// URL) = all five route
+  // tiers + the per-API-key limiter become Redis-backed so counters are
+  // shared across replicas and survive deploys; a connection failure at
+  // boot logs and falls back to the in-memory limiter (never crashes).
+  // The preprocess maps a blank value to undefined so a copied
+  // `.env.example` (`REDIS_URL=`) boots instead of failing `.url()`.
+  REDIS_URL: z.preprocess(
+    (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
+    z.string().url("REDIS_URL must be a valid redis:// or rediss:// URL").optional(),
+  ),
+
   // ─── External service keys ────────────────────────────────────────
   OPENAI_API_KEY: z.string().optional(),
   ANTHROPIC_API_KEY: z.string().optional(),

@@ -44,12 +44,19 @@ export interface ApiKeyRateLimitDecision {
 }
 
 /**
- * A per-key rate limiter. Implementations must be synchronous (or
- * internally non-blocking) — the express hook runs inline in the request
- * path and must never await external I/O.
+ * A per-API-key rate limiter. The default in-memory implementation is
+ * synchronous; the Redis adapter (issue #118 / PRD-F10, installed when
+ * REDIS_URL is set) returns a Promise — hence the union. Request-path
+ * callers must use the async enforcement hook below (`authenticateApiKey`
+ * already does); the plain sync `ApiKeyRateLimitDecision` return of the
+ * in-memory limiter satisfies the union unchanged, so existing
+ * implementations and tests keep working byte-identically.
  */
 export interface ApiKeyRateLimiter {
-  consume(keyId: string, tier: RateLimitTier): ApiKeyRateLimitDecision;
+  consume(
+    keyId: string,
+    tier: RateLimitTier,
+  ): ApiKeyRateLimitDecision | Promise<ApiKeyRateLimitDecision>;
   /** Optional: forget a key's bucket (used by tests / key revocation). */
   reset?(keyId: string): void;
 }
@@ -140,22 +147,14 @@ export const DEFAULT_API_KEY_TIER: RateLimitTier = {
   windowMs: API_KEY_RATE_LIMIT.windowMs,
 };
 
-// ─── Express hook ─────────────────────────────────────────────────────────
+// ─── Express hooks ─────────────────────────────────────────────────────────
 
-/**
- * Consume one request of `keyId`'s quota and, when the quota is exceeded,
- * set the standard rate-limit response headers and throw a 429 AppError
- * (the centralized errorHandler turns it into the JSON error envelope).
- *
- * Always attaches X-RateLimit-* headers so well-behaved clients can back
- * off before hitting the 429.
- */
-export function enforceApiKeyRateLimit(
+/** Apply a limiter decision: X-RateLimit-* headers + 429 AppError when blocked. */
+function applyApiKeyRateLimitDecision(
   res: Response,
-  keyId: string,
-  tier: RateLimitTier = DEFAULT_API_KEY_TIER,
+  decision: ApiKeyRateLimitDecision,
+  tier: RateLimitTier,
 ): void {
-  const decision = getApiKeyRateLimiter().consume(keyId, tier);
   res.setHeader("X-RateLimit-Limit", String(decision.limit));
   res.setHeader("X-RateLimit-Remaining", String(decision.remaining));
   if (!decision.allowed) {
@@ -169,4 +168,61 @@ export function enforceApiKeyRateLimit(
       },
     );
   }
+}
+
+/** True when the limiter outcome is Promise-like (async store, e.g. Redis). */
+function isThenable(
+  value: ApiKeyRateLimitDecision | Promise<ApiKeyRateLimitDecision>,
+): value is Promise<ApiKeyRateLimitDecision> {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    typeof (value as { then?: unknown }).then === "function"
+  );
+}
+
+/**
+ * Consume one request of `keyId`'s quota and, when the quota is exceeded,
+ * set the standard rate-limit response headers and throw a 429 AppError
+ * (the centralized errorHandler turns it into the JSON error envelope).
+ *
+ * Always attaches X-RateLimit-* headers so well-behaved clients can back
+ * off before hitting the 429.
+ *
+ * Synchronous form — for sync limiters (the in-memory default and test
+ * stubs). If an async (Redis-backed, issue #118) limiter is installed this
+ * throws a loud developer error rather than silently allowing the request;
+ * async callers must use `enforceApiKeyRateLimitAsync` (the production
+ * call site in middleware/api-key.ts does).
+ */
+export function enforceApiKeyRateLimit(
+  res: Response,
+  keyId: string,
+  tier: RateLimitTier = DEFAULT_API_KEY_TIER,
+): void {
+  const outcome = getApiKeyRateLimiter().consume(keyId, tier);
+  if (isThenable(outcome)) {
+    throw new Error(
+      "enforceApiKeyRateLimit() cannot block on the installed async (Redis) " +
+        "limiter — await enforceApiKeyRateLimitAsync() instead " +
+        "(src/server/api-key-rate-limit.ts, issue #118)",
+    );
+  }
+  applyApiKeyRateLimitDecision(res, outcome, tier);
+}
+
+/**
+ * Async twin of `enforceApiKeyRateLimit` — the request-path form. Awaits
+ * both sync (in-memory) and Redis-backed limiter outcomes, then applies
+ * the exact same headers / 429 semantics. For the in-memory default the
+ * behavior is identical to the sync hook (a sync decision resolves on the
+ * microtask queue; `authenticateApiKey` already runs async).
+ */
+export async function enforceApiKeyRateLimitAsync(
+  res: Response,
+  keyId: string,
+  tier: RateLimitTier = DEFAULT_API_KEY_TIER,
+): Promise<void> {
+  const decision = await getApiKeyRateLimiter().consume(keyId, tier);
+  applyApiKeyRateLimitDecision(res, decision, tier);
 }

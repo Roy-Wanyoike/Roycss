@@ -103,7 +103,7 @@ describe("InMemoryApiKeyRateLimiter", () => {
 });
 
 describe("limiter injection seam", () => {
-  it("setApiKeyRateLimiter swaps the active limiter; round-trips back", () => {
+  it("setApiKeyRateLimiter swaps the active limiter; round-trips back", async () => {
     const original = getApiKeyRateLimiter();
     const custom: ApiKeyRateLimiter = {
       consume: (keyId, tier) => ({
@@ -116,7 +116,10 @@ describe("limiter injection seam", () => {
     try {
       setApiKeyRateLimiter(custom);
       expect(getApiKeyRateLimiter()).toBe(custom);
-      const decision = getApiKeyRateLimiter().consume("k", TIER);
+      // `await` narrows the union the interface allows since #118 (Redis
+      // adapters return a Promise; sync stubs resolve on the microtask
+      // queue — the assertions are unchanged).
+      const decision = await getApiKeyRateLimiter().consume("k", TIER);
       expect(decision.allowed).toBe(false);
       expect(decision.retryAfterSec).toBe(42);
     } finally {

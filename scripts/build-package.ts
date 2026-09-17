@@ -206,3 +206,23 @@ try {
 } catch (err) {
   console.warn("  ⚠ generate-build-artifacts failed:", err instanceof Error ? err.message : String(err));
 }
+
+// ─── Emit the design-token type system (PF-030 / issue #123) ──────
+// dist/tokens.d.ts (typed CSS custom-property constants) +
+// dist/tokens.dtcg.json (W3C DTCG interchange). Chained here so
+// `bun run build:package` / prepublishOnly can never ship a stale
+// token artifact; staleness of the COMMITTED copies is additionally
+// gated by `bun run tokens:check` and tests/unit/tokens-emission.test.ts.
+console.log("");
+console.log("Emitting design-token artifacts...");
+try {
+  const result = spawnSync("bun", ["run", "scripts/emit-tokens.ts"], {
+    cwd: join(import.meta.dir, ".."),
+    stdio: "inherit",
+  });
+  if (result.status !== 0) {
+    console.warn("  ⚠ emit-tokens exited non-zero — continuing.");
+  }
+} catch (err) {
+  console.warn("  ⚠ emit-tokens failed:", err instanceof Error ? err.message : String(err));
+}

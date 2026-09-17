@@ -1,0 +1,660 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "RoyCSS design tokens (124 tokens, 12 categories). Generated from src/lib/design-tokens.ts by scripts/emit-tokens.ts — do not edit by hand.",
+  "color": {
+    "$description": "Color — OKLCH-based perceptual color palette.",
+    "primary": {
+      "$value": "oklch(0.69 0.17 162.48)",
+      "$type": "color",
+      "$description": "CSS custom property --roy-color-primary."
+    },
+    "primary-soft": {
+      "$value": "oklch(0.85 0.12 162.48)",
+      "$type": "color",
+      "$description": "CSS custom property --roy-color-primary-soft."
+    },
+    "primary-contrast": {
+      "$value": "oklch(0.18 0.02 162.48)",
+      "$type": "color",
+      "$description": "CSS custom property --roy-color-primary-contrast."
+    },
+    "accent": {
+      "$value": "oklch(0.72 0.15 200)",
+      "$type": "color",
+      "$description": "CSS custom property --roy-color-accent."
+    },
+    "accent-soft": {
+      "$value": "oklch(0.86 0.10 200)",
+      "$type": "color",
+      "$description": "CSS custom property --roy-color-accent-soft."
+    },
+    "success": {
+      "$value": "oklch(0.72 0.18 150)",
+      "$type": "color",
+      "$description": "CSS custom property --roy-color-success."
+    },
+    "warning": {
+      "$value": "oklch(0.80 0.17 75)",
+      "$type": "color",
+      "$description": "CSS custom property --roy-color-warning."
+    },
+    "danger": {
+      "$value": "oklch(0.62 0.22 25)",
+      "$type": "color",
+      "$description": "CSS custom property --roy-color-danger."
+    },
+    "info": {
+      "$value": "oklch(0.70 0.14 240)",
+      "$type": "color",
+      "$description": "CSS custom property --roy-color-info."
+    },
+    "background": {
+      "$value": "oklch(0.16 0.01 240)",
+      "$type": "color",
+      "$description": "CSS custom property --roy-color-background."
+    },
+    "surface": {
+      "$value": "oklch(0.20 0.02 240)",
+      "$type": "color",
+      "$description": "CSS custom property --roy-color-surface."
+    },
+    "surface-raised": {
+      "$value": "oklch(0.24 0.02 240)",
+      "$type": "color",
+      "$description": "CSS custom property --roy-color-surface-raised."
+    },
+    "foreground": {
+      "$value": "oklch(0.96 0.01 240)",
+      "$type": "color",
+      "$description": "CSS custom property --roy-color-foreground."
+    },
+    "muted": {
+      "$value": "oklch(0.65 0.02 240)",
+      "$type": "color",
+      "$description": "CSS custom property --roy-color-muted."
+    },
+    "border": {
+      "$value": "oklch(0.30 0.02 240)",
+      "$type": "color",
+      "$description": "CSS custom property --roy-color-border."
+    }
+  },
+  "typography": {
+    "$description": "Typography — Fluid type scale using clamp() for responsive sizing.",
+    "font-sans": {
+      "$value": "var(--font-geist-sans), system-ui, sans-serif",
+      "$type": "fontFamily",
+      "$description": "CSS custom property --roy-typography-font-sans."
+    },
+    "font-mono": {
+      "$value": "var(--font-geist-mono), monospace",
+      "$type": "fontFamily",
+      "$description": "CSS custom property --roy-typography-font-mono."
+    },
+    "font-display": {
+      "$value": "var(--font-display), system-ui, sans-serif",
+      "$type": "fontFamily",
+      "$description": "CSS custom property --roy-typography-font-display."
+    },
+    "text-xs": {
+      "$value": "clamp(0.69rem, 0.66rem + 0.15vw, 0.75rem)",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-typography-text-xs."
+    },
+    "text-sm": {
+      "$value": "clamp(0.83rem, 0.80rem + 0.15vw, 0.88rem)",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-typography-text-sm."
+    },
+    "text-base": {
+      "$value": "clamp(0.95rem, 0.90rem + 0.25vw, 1rem)",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-typography-text-base."
+    },
+    "text-lg": {
+      "$value": "clamp(1.08rem, 1.02rem + 0.30vw, 1.13rem)",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-typography-text-lg."
+    },
+    "text-xl": {
+      "$value": "clamp(1.20rem, 1.10rem + 0.50vw, 1.30rem)",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-typography-text-xl."
+    },
+    "text-2xl": {
+      "$value": "clamp(1.40rem, 1.25rem + 0.75vw, 1.60rem)",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-typography-text-2xl."
+    },
+    "text-3xl": {
+      "$value": "clamp(1.70rem, 1.50rem + 1.00vw, 2.05rem)",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-typography-text-3xl."
+    },
+    "text-4xl": {
+      "$value": "clamp(2.10rem, 1.80rem + 1.50vw, 2.60rem)",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-typography-text-4xl."
+    },
+    "text-5xl": {
+      "$value": "clamp(2.60rem, 2.20rem + 2.00vw, 3.30rem)",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-typography-text-5xl."
+    },
+    "leading-tight": {
+      "$value": "1.15",
+      "$type": "number",
+      "$description": "CSS custom property --roy-typography-leading-tight."
+    },
+    "leading-normal": {
+      "$value": "1.55",
+      "$type": "number",
+      "$description": "CSS custom property --roy-typography-leading-normal."
+    },
+    "leading-relaxed": {
+      "$value": "1.75",
+      "$type": "number",
+      "$description": "CSS custom property --roy-typography-leading-relaxed."
+    },
+    "tracking-tight": {
+      "$value": "-0.02em",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-typography-tracking-tight."
+    },
+    "tracking-normal": {
+      "$value": "0",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-typography-tracking-normal."
+    },
+    "tracking-wide": {
+      "$value": "0.05em",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-typography-tracking-wide."
+    }
+  },
+  "spacing": {
+    "$description": "Spacing — 4px-based spacing scale.",
+    "space-0": {
+      "$value": "0",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-spacing-space-0."
+    },
+    "space-1": {
+      "$value": "0.25rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-spacing-space-1."
+    },
+    "space-2": {
+      "$value": "0.5rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-spacing-space-2."
+    },
+    "space-3": {
+      "$value": "0.75rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-spacing-space-3."
+    },
+    "space-4": {
+      "$value": "1rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-spacing-space-4."
+    },
+    "space-5": {
+      "$value": "1.25rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-spacing-space-5."
+    },
+    "space-6": {
+      "$value": "1.5rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-spacing-space-6."
+    },
+    "space-8": {
+      "$value": "2rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-spacing-space-8."
+    },
+    "space-10": {
+      "$value": "2.5rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-spacing-space-10."
+    },
+    "space-12": {
+      "$value": "3rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-spacing-space-12."
+    },
+    "space-16": {
+      "$value": "4rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-spacing-space-16."
+    },
+    "space-20": {
+      "$value": "5rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-spacing-space-20."
+    },
+    "space-24": {
+      "$value": "6rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-spacing-space-24."
+    },
+    "space-32": {
+      "$value": "8rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-spacing-space-32."
+    }
+  },
+  "radius": {
+    "$description": "Radius — Corner radii from sharp to pill.",
+    "radius-none": {
+      "$value": "0",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-radius-radius-none."
+    },
+    "radius-sm": {
+      "$value": "0.25rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-radius-radius-sm."
+    },
+    "radius-md": {
+      "$value": "0.5rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-radius-radius-md."
+    },
+    "radius-lg": {
+      "$value": "0.75rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-radius-radius-lg."
+    },
+    "radius-xl": {
+      "$value": "1rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-radius-radius-xl."
+    },
+    "radius-2xl": {
+      "$value": "1.5rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-radius-radius-2xl."
+    },
+    "radius-3xl": {
+      "$value": "2rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-radius-radius-3xl."
+    },
+    "radius-full": {
+      "$value": "9999px",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-radius-radius-full."
+    }
+  },
+  "shadow": {
+    "$description": "Shadow — Layered shadows using color-mix() for tinted ambient light.",
+    "shadow-none": {
+      "$value": "none",
+      "$type": "shadow",
+      "$description": "CSS custom property --roy-shadow-shadow-none."
+    },
+    "shadow-sm": {
+      "$value": "0 1px 2px color-mix(in oklch, var(--roy-color-primary) 8%, transparent)",
+      "$type": "shadow",
+      "$description": "CSS custom property --roy-shadow-shadow-sm."
+    },
+    "shadow-md": {
+      "$value": "0 4px 12px color-mix(in oklch, var(--roy-color-primary) 12%, transparent), 0 1px 2px color-mix(in oklch, var(--roy-color-primary) 8%, transparent)",
+      "$type": "shadow",
+      "$description": "CSS custom property --roy-shadow-shadow-md."
+    },
+    "shadow-lg": {
+      "$value": "0 12px 28px color-mix(in oklch, var(--roy-color-primary) 18%, transparent), 0 4px 8px color-mix(in oklch, var(--roy-color-primary) 12%, transparent)",
+      "$type": "shadow",
+      "$description": "CSS custom property --roy-shadow-shadow-lg."
+    },
+    "shadow-xl": {
+      "$value": "0 24px 48px color-mix(in oklch, var(--roy-color-primary) 22%, transparent), 0 8px 16px color-mix(in oklch, var(--roy-color-primary) 14%, transparent)",
+      "$type": "shadow",
+      "$description": "CSS custom property --roy-shadow-shadow-xl."
+    },
+    "shadow-2xl": {
+      "$value": "0 40px 80px color-mix(in oklch, var(--roy-color-primary) 28%, transparent), 0 12px 24px color-mix(in oklch, var(--roy-color-primary) 16%, transparent)",
+      "$type": "shadow",
+      "$description": "CSS custom property --roy-shadow-shadow-2xl."
+    },
+    "shadow-inner": {
+      "$value": "inset 0 2px 6px color-mix(in oklch, var(--roy-color-primary) 10%, transparent)",
+      "$type": "shadow",
+      "$description": "CSS custom property --roy-shadow-shadow-inner."
+    }
+  },
+  "border": {
+    "$description": "Border — Border widths and styles.",
+    "border-width-0": {
+      "$value": "0",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-border-border-width-0."
+    },
+    "border-width-1": {
+      "$value": "1px",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-border-border-width-1."
+    },
+    "border-width-2": {
+      "$value": "2px",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-border-border-width-2."
+    },
+    "border-width-4": {
+      "$value": "4px",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-border-border-width-4."
+    },
+    "border-width-8": {
+      "$value": "8px",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-border-border-width-8."
+    },
+    "border-style-solid": {
+      "$value": "solid",
+      "$type": "strokeStyle",
+      "$description": "CSS custom property --roy-border-border-style-solid."
+    },
+    "border-style-dashed": {
+      "$value": "dashed",
+      "$type": "strokeStyle",
+      "$description": "CSS custom property --roy-border-border-style-dashed."
+    },
+    "border-style-dotted": {
+      "$value": "dotted",
+      "$type": "strokeStyle",
+      "$description": "CSS custom property --roy-border-border-style-dotted."
+    },
+    "border-style-none": {
+      "$value": "none",
+      "$type": "strokeStyle",
+      "$description": "CSS custom property --roy-border-border-style-none."
+    }
+  },
+  "opacity": {
+    "$description": "Opacity — Discrete opacity steps.",
+    "opacity-0": {
+      "$value": "0",
+      "$type": "number",
+      "$description": "CSS custom property --roy-opacity-opacity-0."
+    },
+    "opacity-25": {
+      "$value": "0.25",
+      "$type": "number",
+      "$description": "CSS custom property --roy-opacity-opacity-25."
+    },
+    "opacity-50": {
+      "$value": "0.5",
+      "$type": "number",
+      "$description": "CSS custom property --roy-opacity-opacity-50."
+    },
+    "opacity-75": {
+      "$value": "0.75",
+      "$type": "number",
+      "$description": "CSS custom property --roy-opacity-opacity-75."
+    },
+    "opacity-90": {
+      "$value": "0.9",
+      "$type": "number",
+      "$description": "CSS custom property --roy-opacity-opacity-90."
+    },
+    "opacity-100": {
+      "$value": "1",
+      "$type": "number",
+      "$description": "CSS custom property --roy-opacity-opacity-100."
+    }
+  },
+  "elevation": {
+    "$description": "Elevation — Semantic surface elevation tiers (z + shadow combo).",
+    "elevation-flat": {
+      "$value": "0",
+      "$type": "number",
+      "$description": "CSS custom property --roy-elevation-elevation-flat."
+    },
+    "elevation-raised": {
+      "$value": "1",
+      "$type": "number",
+      "$description": "CSS custom property --roy-elevation-elevation-raised."
+    },
+    "elevation-overlay": {
+      "$value": "2",
+      "$type": "number",
+      "$description": "CSS custom property --roy-elevation-elevation-overlay."
+    },
+    "elevation-sticky": {
+      "$value": "3",
+      "$type": "number",
+      "$description": "CSS custom property --roy-elevation-elevation-sticky."
+    },
+    "elevation-fixed": {
+      "$value": "4",
+      "$type": "number",
+      "$description": "CSS custom property --roy-elevation-elevation-fixed."
+    },
+    "elevation-modal": {
+      "$value": "5",
+      "$type": "number",
+      "$description": "CSS custom property --roy-elevation-elevation-modal."
+    },
+    "elevation-popover": {
+      "$value": "6",
+      "$type": "number",
+      "$description": "CSS custom property --roy-elevation-elevation-popover."
+    }
+  },
+  "motion": {
+    "$description": "Motion — Spring easing curves + duration scale (mirrors RoyMotion).",
+    "ease-spring": {
+      "$value": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+      "$type": "cubicBezier",
+      "$description": "CSS custom property --roy-motion-ease-spring."
+    },
+    "ease-spring-soft": {
+      "$value": "cubic-bezier(0.25, 1.2, 0.5, 1)",
+      "$type": "cubicBezier",
+      "$description": "CSS custom property --roy-motion-ease-spring-soft."
+    },
+    "ease-spring-snappy": {
+      "$value": "cubic-bezier(0.5, 1.65, 0.5, 1)",
+      "$type": "cubicBezier",
+      "$description": "CSS custom property --roy-motion-ease-spring-snappy."
+    },
+    "ease-out-expo": {
+      "$value": "cubic-bezier(0.16, 1, 0.3, 1)",
+      "$type": "cubicBezier",
+      "$description": "CSS custom property --roy-motion-ease-out-expo."
+    },
+    "ease-in-out": {
+      "$value": "cubic-bezier(0.65, 0, 0.35, 1)",
+      "$type": "cubicBezier",
+      "$description": "CSS custom property --roy-motion-ease-in-out."
+    },
+    "ease-linear": {
+      "$value": "linear",
+      "$type": "cubicBezier",
+      "$description": "CSS custom property --roy-motion-ease-linear."
+    },
+    "dur-instant": {
+      "$value": "120ms",
+      "$type": "duration",
+      "$description": "CSS custom property --roy-motion-dur-instant."
+    },
+    "dur-fast": {
+      "$value": "200ms",
+      "$type": "duration",
+      "$description": "CSS custom property --roy-motion-dur-fast."
+    },
+    "dur-normal": {
+      "$value": "400ms",
+      "$type": "duration",
+      "$description": "CSS custom property --roy-motion-dur-normal."
+    },
+    "dur-slow": {
+      "$value": "700ms",
+      "$type": "duration",
+      "$description": "CSS custom property --roy-motion-dur-slow."
+    },
+    "dur-slower": {
+      "$value": "1100ms",
+      "$type": "duration",
+      "$description": "CSS custom property --roy-motion-dur-slower."
+    }
+  },
+  "breakpoint": {
+    "$description": "Breakpoint — Mobile-first responsive breakpoints.",
+    "bp-xs": {
+      "$value": "30rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-breakpoint-bp-xs."
+    },
+    "bp-sm": {
+      "$value": "40rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-breakpoint-bp-sm."
+    },
+    "bp-md": {
+      "$value": "48rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-breakpoint-bp-md."
+    },
+    "bp-lg": {
+      "$value": "64rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-breakpoint-bp-lg."
+    },
+    "bp-xl": {
+      "$value": "80rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-breakpoint-bp-xl."
+    },
+    "bp-2xl": {
+      "$value": "96rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-breakpoint-bp-2xl."
+    }
+  },
+  "container": {
+    "$description": "Container — Max-widths for content containers.",
+    "container-xs": {
+      "$value": "20rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-container-container-xs."
+    },
+    "container-sm": {
+      "$value": "24rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-container-container-sm."
+    },
+    "container-md": {
+      "$value": "28rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-container-container-md."
+    },
+    "container-lg": {
+      "$value": "32rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-container-container-lg."
+    },
+    "container-xl": {
+      "$value": "36rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-container-container-xl."
+    },
+    "container-2xl": {
+      "$value": "42rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-container-container-2xl."
+    },
+    "container-3xl": {
+      "$value": "48rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-container-container-3xl."
+    },
+    "container-4xl": {
+      "$value": "56rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-container-container-4xl."
+    },
+    "container-5xl": {
+      "$value": "64rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-container-container-5xl."
+    },
+    "container-6xl": {
+      "$value": "72rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-container-container-6xl."
+    },
+    "container-7xl": {
+      "$value": "80rem",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-container-container-7xl."
+    },
+    "container-prose": {
+      "$value": "65ch",
+      "$type": "dimension",
+      "$description": "CSS custom property --roy-container-container-prose."
+    }
+  },
+  "zIndex": {
+    "$description": "Z-index — Semantic stacking order.",
+    "z-base": {
+      "$value": "0",
+      "$type": "number",
+      "$description": "CSS custom property --roy-zIndex-z-base."
+    },
+    "z-decor": {
+      "$value": "10",
+      "$type": "number",
+      "$description": "CSS custom property --roy-zIndex-z-decor."
+    },
+    "z-dropdown": {
+      "$value": "1000",
+      "$type": "number",
+      "$description": "CSS custom property --roy-zIndex-z-dropdown."
+    },
+    "z-sticky": {
+      "$value": "1100",
+      "$type": "number",
+      "$description": "CSS custom property --roy-zIndex-z-sticky."
+    },
+    "z-banner": {
+      "$value": "1200",
+      "$type": "number",
+      "$description": "CSS custom property --roy-zIndex-z-banner."
+    },
+    "z-overlay": {
+      "$value": "1300",
+      "$type": "number",
+      "$description": "CSS custom property --roy-zIndex-z-overlay."
+    },
+    "z-modal": {
+      "$value": "1400",
+      "$type": "number",
+      "$description": "CSS custom property --roy-zIndex-z-modal."
+    },
+    "z-popover": {
+      "$value": "1500",
+      "$type": "number",
+      "$description": "CSS custom property --roy-zIndex-z-popover."
+    },
+    "z-tooltip": {
+      "$value": "1600",
+      "$type": "number",
+      "$description": "CSS custom property --roy-zIndex-z-tooltip."
+    },
+    "z-toast": {
+      "$value": "1700",
+      "$type": "number",
+      "$description": "CSS custom property --roy-zIndex-z-toast."
+    },
+    "z-max": {
+      "$value": "2147483647",
+      "$type": "number",
+      "$description": "CSS custom property --roy-zIndex-z-max."
+    }
+  }
+}

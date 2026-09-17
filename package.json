@@ -35,6 +35,8 @@
   "files": [
     "dist",
     "!dist/pro-components.json",
+    "dist/tokens.d.ts",
+    "dist/tokens.dtcg.json",
     "README.md",
     "LICENSE"
   ],
@@ -66,6 +68,8 @@
     "build:standalone": "next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
     "build:package": "bun run scripts/build-package.ts",
     "gen:a11y": "bun run scripts/generate-effect-a11y.ts",
+    "tokens:emit": "bun run scripts/emit-tokens.ts",
+    "tokens:check": "bun run scripts/emit-tokens.ts --check",
     "build:cli": "bun build src/cli/index.ts --outdir cli --target node --outfile index.js",
     "prepublishOnly": "bun run build:package",
     "publish:validate": "bun run scripts/publish/validate.ts",

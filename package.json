@@ -35,6 +35,10 @@
   "files": [
     "dist",
     "!dist/pro-components.json",
+    "dist/roycss.rules.md",
+    "dist/roycss.system-prompt.md",
+    "dist/roycss.grammar.json",
+    "dist/roycss.training-pairs.jsonl",
     "README.md",
     "LICENSE"
   ],
@@ -65,6 +69,8 @@
     "build": "prisma generate && next build",
     "build:standalone": "next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
     "build:package": "bun run scripts/build-package.ts",
+    "gen:ai": "bun run scripts/generate-ai-artifacts.ts",
+    "ai:check": "bun run scripts/generate-ai-artifacts.ts --check",
     "gen:a11y": "bun run scripts/generate-effect-a11y.ts",
     "build:cli": "bun build src/cli/index.ts --outdir cli --target node --outfile index.js",
     "prepublishOnly": "bun run build:package",

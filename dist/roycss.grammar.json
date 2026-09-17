@@ -1,0 +1,402 @@
+{
+  "name": "roycss",
+  "version": "2.0.0",
+  "description": "Machine-readable class grammar for the RoyCSS effects framework, derived from the live catalog (1,959 effects / 29 categories).",
+  "generator": "scripts/generate-ai-artifacts.ts",
+  "regenerate": "bun run gen:ai",
+  "driftGate": "bun run ai:check (and tests/unit/ai-artifacts.test.ts)",
+  "classNamePattern": {
+    "pattern": "^roycss-[a-z0-9]+(?:-[a-z0-9]+)*$",
+    "flags": "",
+    "description": "One class namespace: roycss- + lowercase kebab-case effect id. Digits allowed (catalog ids may start with a digit).",
+    "roundTrip": "validated against all 1,977 real class names at generation time",
+    "examples": [
+      "roycss-btn-glow",
+      "roycss-text-wave",
+      "roycss-loader-dots"
+    ],
+    "counterExamples": [
+      "r-btn-glow",
+      "roycss-Btn-Glow",
+      "roycss-btn-glow--lg"
+    ]
+  },
+  "categories": [
+    {
+      "id": "animations",
+      "label": "Animations",
+      "description": "Keyframe animations that bring elements to life",
+      "count": 322,
+      "commonIdStems": [
+        "ferrum- (131)",
+        "fade- (12)",
+        "anim- (11)"
+      ]
+    },
+    {
+      "id": "hover",
+      "label": "Hover Effects",
+      "description": "Interactive effects triggered on mouse hover",
+      "count": 120,
+      "commonIdStems": [
+        "ferrum- (62)",
+        "hover- (38)",
+        "linear- (10)"
+      ]
+    },
+    {
+      "id": "text",
+      "label": "Text Effects",
+      "description": "Stunning text transformations and decorations",
+      "count": 111,
+      "commonIdStems": [
+        "text- (62)",
+        "ferrum- (39)",
+        "vfx- (10)"
+      ]
+    },
+    {
+      "id": "backgrounds",
+      "label": "Backgrounds",
+      "description": "Dynamic background patterns and gradients",
+      "count": 160,
+      "commonIdStems": [
+        "bg- (43)",
+        "ferrum- (35)",
+        "nature- (20)"
+      ]
+    },
+    {
+      "id": "loaders",
+      "label": "Loaders",
+      "description": "Loading indicators and spinners",
+      "count": 66,
+      "commonIdStems": [
+        "ferrum- (36)",
+        "loader- (30)"
+      ]
+    },
+    {
+      "id": "3d-transforms",
+      "label": "3D & Transforms",
+      "description": "Three-dimensional transformations and perspective effects",
+      "count": 31,
+      "commonIdStems": [
+        "ferrum- (11)",
+        "3d- (3)",
+        "rotate- (3)"
+      ]
+    },
+    {
+      "id": "buttons",
+      "label": "Button Effects",
+      "description": "Interactive button animations and feedback",
+      "count": 55,
+      "commonIdStems": [
+        "btn- (30)",
+        "ferrum- (25)"
+      ]
+    },
+    {
+      "id": "cards",
+      "label": "Card Effects",
+      "description": "Card components with glass, borders, and reveals",
+      "count": 56,
+      "commonIdStems": [
+        "card- (32)",
+        "ferrum- (24)"
+      ]
+    },
+    {
+      "id": "borders",
+      "label": "Borders",
+      "description": "Creative border styles and animated outlines",
+      "count": 38,
+      "commonIdStems": [
+        "border- (15)",
+        "ferrum- (15)",
+        "vfx- (8)"
+      ]
+    },
+    {
+      "id": "filters",
+      "label": "Filters",
+      "description": "CSS filter effects for images and elements",
+      "count": 25,
+      "commonIdStems": [
+        "filter- (15)",
+        "vfx- (10)"
+      ]
+    },
+    {
+      "id": "forms",
+      "label": "Forms & Inputs",
+      "description": "Form input effects and validations",
+      "count": 45,
+      "commonIdStems": [
+        "ferrum- (35)",
+        "form- (10)"
+      ]
+    },
+    {
+      "id": "navigation",
+      "label": "Navigation",
+      "description": "Menu, tab, and navigation animations",
+      "count": 30,
+      "commonIdStems": [
+        "ferrum- (20)",
+        "nav- (10)"
+      ]
+    },
+    {
+      "id": "scroll",
+      "label": "Scroll Effects",
+      "description": "Scroll-triggered and scroll-linked animations",
+      "count": 71,
+      "commonIdStems": [
+        "scroll- (41)",
+        "ferrum- (30)"
+      ]
+    },
+    {
+      "id": "cursor",
+      "label": "Cursor Effects",
+      "description": "Custom cursor and cursor-following effects",
+      "count": 44,
+      "commonIdStems": [
+        "cursor- (32)",
+        "ferrum- (12)"
+      ]
+    },
+    {
+      "id": "page-transitions",
+      "label": "Page Transitions",
+      "description": "Full-page transition animations",
+      "count": 39,
+      "commonIdStems": [
+        "ferrum- (27)",
+        "page- (12)"
+      ]
+    },
+    {
+      "id": "glass-ui",
+      "label": "Glass & Modern UI",
+      "description": "Glassmorphism, neumorphism, and modern surface effects",
+      "count": 80,
+      "commonIdStems": [
+        "ferrum- (26)",
+        "glass2- (20)",
+        "glass- (19)"
+      ]
+    },
+    {
+      "id": "particles",
+      "label": "Particles",
+      "description": "Particle systems and environmental effects",
+      "count": 52,
+      "commonIdStems": [
+        "ferrum- (30)",
+        "particles- (12)",
+        "seasonal- (10)"
+      ]
+    },
+    {
+      "id": "microinteractions",
+      "label": "Microinteractions",
+      "description": "Small interactive component animations",
+      "count": 107,
+      "commonIdStems": [
+        "ferrum- (40)",
+        "micro- (25)",
+        "haptics- (20)"
+      ]
+    },
+    {
+      "id": "visual",
+      "label": "Visual Effects",
+      "description": "Holographic, metallic, chrome, and advanced visual styles",
+      "count": 278,
+      "commonIdStems": [
+        "ferrum- (117)",
+        "visual- (28)",
+        "vfx- (20)"
+      ]
+    },
+    {
+      "id": "physics",
+      "label": "Physics Motion",
+      "description": "Physics-based motion: springs, elasticity, gravity, and inertia",
+      "count": 20,
+      "commonIdStems": [
+        "physics- (20)"
+      ]
+    },
+    {
+      "id": "liquid",
+      "label": "Liquid & Fluid",
+      "description": "Liquid and fluid effects: waves, blobs, drips, and flowing fills",
+      "count": 20,
+      "commonIdStems": [
+        "liquid- (20)"
+      ]
+    },
+    {
+      "id": "morphing",
+      "label": "Shape Morphing",
+      "description": "Shape-shifting effects: clip-path, border-radius, and form transitions",
+      "count": 20,
+      "commonIdStems": [
+        "morph- (20)"
+      ]
+    },
+    {
+      "id": "status-state",
+      "label": "Status & State",
+      "description": "Status indicators and state transitions: skeletons, success, error, loading, toggles",
+      "count": 20,
+      "commonIdStems": [
+        "state- (20)"
+      ]
+    },
+    {
+      "id": "audio",
+      "label": "Audio-Reactive",
+      "description": "Pure-CSS simulations of audio visuals: equalizers, waveforms, vinyl, ripples, VU meters",
+      "count": 20,
+      "commonIdStems": [
+        "audio- (20)"
+      ]
+    },
+    {
+      "id": "retro",
+      "label": "Retro & Nostalgic",
+      "description": "Retro effects: CRT, VHS, arcade neon, synthwave, cassette, and 8-bit aesthetics",
+      "count": 20,
+      "commonIdStems": [
+        "retro- (20)"
+      ]
+    },
+    {
+      "id": "data-viz",
+      "label": "Data Visualization",
+      "description": "Data viz: rings, gauges, sparklines, bars, counters, and shimmer skeletons",
+      "count": 20,
+      "commonIdStems": [
+        "dataviz- (20)"
+      ]
+    },
+    {
+      "id": "immersive",
+      "label": "Immersive Backgrounds",
+      "description": "Ambient scene backgrounds: starfields, weather, fire, water, and particle fields",
+      "count": 20,
+      "commonIdStems": [
+        "immersive- (20)"
+      ]
+    },
+    {
+      "id": "advanced-text",
+      "label": "Advanced Text",
+      "description": "Cinematic text treatments: typewriters, glitches, neon, kinetic motion, and gradient fills",
+      "count": 20,
+      "commonIdStems": [
+        "advtext- (20)"
+      ]
+    },
+    {
+      "id": "misc",
+      "label": "Miscellaneous",
+      "description": "Unique effects that defy categorization",
+      "count": 49,
+      "commonIdStems": [
+        "structural- (20)",
+        "misc- (15)",
+        "ferrum- (14)"
+      ]
+    }
+  ],
+  "modifiers": {
+    "exists": false,
+    "count": 0,
+    "description": "No class in the stylesheet contains '--'. There are no --lg/--sm style variants; customize via the effect's own CSS/custom properties."
+  },
+  "baseUtilityClasses": [
+    "roycss-sr-only"
+  ],
+  "auxiliaryClasses": [
+    "roycss-card-flip-back",
+    "roycss-card-flip-front",
+    "roycss-card-flip-inner",
+    "roycss-cube-face",
+    "roycss-ferrum-active",
+    "roycss-ferrum-animated",
+    "roycss-ferrum-exit",
+    "roycss-ferrum-focus-visible-ring",
+    "roycss-ferrum-hover-shake",
+    "roycss-ferrum-open",
+    "roycss-ferrum-text-bounce",
+    "roycss-ferrum-text-scramble",
+    "roycss-ferrum-text-slide-up",
+    "roycss-ferrum-text-wave",
+    "roycss-hover-slide-inset-inline-end",
+    "roycss-page-slide-inset-inline-start",
+    "roycss-vfx-aurora-layer"
+  ],
+  "auxiliaryClassNote": "17 selectors that only appear inside their parent effect's own CSS/marker markup — not standalone utilities.",
+  "idToClassRule": {
+    "rule": "className = 'roycss-' + effectId",
+    "exceptions": [
+      {
+        "effectId": "card-gradient-border-b19",
+        "className": "roycss-card-gradient-border-b19-v2"
+      }
+    ]
+  },
+  "namingFamilies": {
+    "description": "Curated id sub-families present in the catalog (computed).",
+    "ferrum": 729,
+    "vfx": 90,
+    "batchSuffix": 44
+  },
+  "forbidden": {
+    "classPrefixes": [
+      "r-"
+    ],
+    "modifierSuffixes": true,
+    "importPaths": [
+      "roycss/effects.css"
+    ],
+    "cdnHosts": [
+      "cdn.roycss.org"
+    ],
+    "note": "Each entry is a documented failure mode (docs-vs-package drift, audit F-01/F-02). See roycss.training-pairs.jsonl anti-pairs."
+  },
+  "imports": {
+    "install": "npm install roycss",
+    "stylesheet": [
+      "roycss/css",
+      "roycss/css/min"
+    ],
+    "data": [
+      "roycss/effects.json",
+      "roycss/class-index",
+      "roycss/motion-library"
+    ],
+    "auxiliaryStylesheets": [
+      "roycss/critical.css",
+      "roycss/fallbacks"
+    ],
+    "cdn": "https://unpkg.com/roycss@2/dist/roycss.min.css"
+  },
+  "counts": {
+    "totalEffects": 1959,
+    "totalCategories": 29,
+    "primaryClasses": 1959,
+    "auxiliaryClasses": 17,
+    "baseUtilityClasses": 1,
+    "totalClasses": 1977,
+    "modifierClasses": 0,
+    "trainingPairs": 383,
+    "digitLeadingIds": 3
+  }
+}

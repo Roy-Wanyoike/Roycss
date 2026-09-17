@@ -206,3 +206,23 @@ try {
 } catch (err) {
   console.warn("  ⚠ generate-build-artifacts failed:", err instanceof Error ? err.message : String(err));
 }
+
+// ─── Generate AI-conformance artifacts (rules / system prompt /
+//     grammar / training pairs — issue #124) ─────────────────────
+// Same child-process pattern as above: the generator reads the catalog
+// from src/ plus package.json surfaces and writes 4 files into dist/,
+// self-validating that every class token it emits exists in the
+// catalog. Drift gates: `bun run ai:check` and
+// tests/unit/ai-artifacts.test.ts.
+console.log("");
+try {
+  const result = spawnSync("bun", ["run", "scripts/generate-ai-artifacts.ts"], {
+    cwd: join(import.meta.dir, ".."),
+    stdio: "inherit",
+  });
+  if (result.status !== 0) {
+    console.warn("  ⚠ generate-ai-artifacts exited non-zero — continuing.");
+  }
+} catch (err) {
+  console.warn("  ⚠ generate-ai-artifacts failed:", err instanceof Error ? err.message : String(err));
+}

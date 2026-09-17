@@ -62,6 +62,7 @@
 
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { isUnknownEffectPath } from "./app/effects/_lib/effect-id-set";
 
 /**
  * Build the production CSP.
@@ -94,7 +95,54 @@ function buildProductionCsp(): string {
   );
 }
 
+/**
+ * Minimal branded hard-404 body for unknown /effects/<id> slugs.
+ *
+ * Served directly by the proxy (router level) because ISR-on-demand
+ * rendering streams the app shell with HTTP 200 before the page's
+ * notFound() can throw — see effect-id-set.ts for the full rationale.
+ * A real 404 status with a small, brand-consistent body keeps the UX
+ * acceptable for junk URLs while preserving the SEO contract.
+ */
+function unknownEffect404(): NextResponse {
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Effect not found — RoyCSS</title>
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0a0a0a;color:#fafafa;font-family:system-ui,sans-serif}
+.card{text-align:center;padding:2rem}
+h1{font-size:1.5rem;margin:0 0 .5rem}
+p{color:#a1a1aa;margin:0 0 1.5rem}
+a{color:#10b981;text-decoration:none;font-weight:600}
+a:hover{text-decoration:underline}
+</style>
+</head>
+<body><div class="card">
+<h1>Effect not found</h1>
+<p>The effect you're looking for doesn't exist in the RoyCSS catalog.</p>
+<a href="/effects">Browse all effects</a>
+</div></body>
+</html>`;
+  return new NextResponse(html, {
+    status: 404,
+    headers: {
+      "Content-Type": "text/html; charset=utf-8",
+      "Cache-Control": "public, max-age=300, s-maxage=3600",
+    },
+  });
+}
+
 export function proxy(request: NextRequest): NextResponse {
+  // Router-level hard 404 for unknown effect slugs (ISR guarantee — see
+  // effect-id-set.ts). Runs BEFORE routing/streaming so the status is a
+  // real 404, identical to the pre-ISR dynamicParams=false behavior.
+  if (isUnknownEffectPath(request.nextUrl.pathname)) {
+    return unknownEffect404();
+  }
+
   // In dev, do nothing — the dev CSP from next.config.ts applies.
   // Next.js sets NODE_ENV based on the script: `next dev` → "development",
   // `next build && next start` → "production".

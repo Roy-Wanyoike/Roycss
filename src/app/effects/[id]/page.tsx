@@ -16,41 +16,56 @@ import {
   SITE_URL,
   EFFECT_COUNT,
   getEffect,
-  getEffectPageIds,
+  getFeaturedEffectPageIds,
 } from "../_lib/static-effects";
 
 /* ═══════════════════════════════════════════════════════════════
-   Route segment config (issue #67 — per-effect pages for SEO)
+   Route segment config — ISR-ON-DEMAND (deployment-size fix)
 
-   • dynamic = "force-static" — the app's root layout reads headers()
-     (a leftover from the removed CSP-nonce machinery — the header it
-     reads, x-nonce, no longer exists), which forces EVERY route to
-     dynamic streaming app-wide. force-static opts these pages back
-     into build-time prerendering (headers() returns empty values,
-     which is exactly the dead code's runtime behavior). Static HTML
-     is the best-case outcome for the SEO/shareability goal of #67.
-   • dynamicParams = false — unknown ids are rejected at the ROUTER
-     level with a hard 404. This matters: with dynamicParams = true,
-     on-demand renders stream the shell as HTTP 200 before notFound()
-     can throw, producing soft-404s (verified empirically in this
-     repo). Router-level rejection was verified to return 404.
+   • dynamicParams = true + generateStaticParams() → [] (see
+     _lib/static-effects.ts): effect pages render ON DEMAND at request
+     time, then are ISR-cached. This replaces the previous build-time
+     enumeration of ALL 1,959 ids, which emitted 1,959 prerendered
+     page bundles (~210 KB each: HTML + RSC + meta + segments ≈
+     370 MB of .next/server/app/effects — over half of the entire
+     build output) into every deployment. Same URLs, same canonicals,
+     same revalidate semantics — only the build artifact shrinks.
+   • 404 GUARANTEE (unchanged in status, changed in mechanism):
+     unknown ids resolve to nothing in the bundled catalog and both
+     generateMetadata and the page call notFound() → HTTP 404.
+     Two preconditions make that hold, both verified empirically here:
+       1. The root layout must not read dynamic APIs. The historical
+          soft-404 (200 shell streamed before notFound() could throw)
+          was caused by the layout's dead headers() read, removed in
+          #54 — src/app/layout.tsx is static again.
+       2. This route must NOT set dynamic = "force-static". With
+          force-static, Next treats the request-time render as static
+          generation and bakes the notFound() fallback into a CACHED
+          200 RESPONSE (verified: unknown id → 200 + "Page Not Found"
+          body). Without it, the default 'auto' mode keeps on-demand
+          renders cacheable ISR output while letting notFound() set
+          the real status: unknown id → 404.
    • revalidate = 86400 — effect CSS is immutable per id and the
      catalog only changes on deploy (which rebuilds anyway); a daily
-     revalidation window is plenty.
+     revalidation window is plenty. TRADE-OFF: the FIRST visit to each
+     effect id pays one server render (~0.1–0.8 s measured); every
+     visit for the next 24 h is a cache hit. The sitemap still lists
+     all 1,959 ids, so crawlers discover and index exactly the same
+     URLs as before.
    ═══════════════════════════════════════════════════════════════ */
-export const dynamic = "force-static";
-export const dynamicParams = false;
+export const dynamicParams = true;
 export const revalidate = 86400;
 
 /**
- * Enumerate ALL 1,959 effect ids — with dynamicParams = false only
- * enumerated ids are reachable, and the issue demands a page for every
- * effect. MEASURED build cost: ~3s per 256 pages → ~25s for the whole
- * catalog (total build ≈ 1.5 min on this 1-worker setup, far under the
- * 4-minute budget). See _lib/static-effects.ts for the full rationale.
+ * ISR-on-demand: prerender NOTHING at build time — the catalog marks
+ * no featured set (see _lib/static-effects.ts getFeaturedEffectPageIds,
+ * which documents why [] is the right value today). Every
+ * /effects/<id> page renders once on first request and is then cached
+ * for `revalidate` seconds. Effect ids still resolve from the bundled
+ * batches (the getEffect Map) — no fs at request time.
  */
 export function generateStaticParams(): { id: string }[] {
-  return getEffectPageIds().map((id) => ({ id }));
+  return getFeaturedEffectPageIds().map((id) => ({ id }));
 }
 
 /* ── Metadata ──────────────────────────────────────────────── */
@@ -62,9 +77,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const effect = getEffect(id);
-  // Safety net: with dynamicParams = false unknown ids never reach the
-  // page (router-level 404), but notFound() here keeps the guard correct
-  // if segment config ever changes.
+  // 404 guarantee (ISR): with dynamicParams = true unknown ids DO
+  // reach the page — this explicit miss path is what keeps them at
+  // HTTP 404. Verified empirically (the root layout no longer reads
+  // headers(), and the route must not set dynamic = "force-static",
+  // which would bake this fallback into a cached 200).
   if (!effect) notFound();
 
   const url = `${SITE_URL}/effects/${effect.id}`;
@@ -84,8 +101,11 @@ export async function generateMetadata({
       siteName: "RoyCSS",
       images: [
         {
-          // The existing OG image route (static 1200×630 PNG).
-          url: `${SITE_URL}/api/og`,
+          // Per-effect OG card (#116): /api/og renders this effect's
+          // name, category badge and a demo element styled by its own
+          // CSS via ImageResponse. Absolute URL via SITE_URL (same
+          // origin as the canonical above).
+          url: `${SITE_URL}/api/og?effect=${effect.id}`,
           width: 1200,
           height: 630,
           alt: `${effect.name} — RoyCSS CSS effect`,
@@ -97,7 +117,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: [`${SITE_URL}/api/og`],
+      images: [`${SITE_URL}/api/og?effect=${effect.id}`],
     },
   };
 }
@@ -160,6 +180,8 @@ export default async function EffectPage({
 }) {
   const { id } = await params;
   const effect = getEffect(id);
+  // 404 guarantee (ISR): unknown ids reach the page under
+  // dynamicParams = true — this miss path is the hard-404 contract.
   if (!effect) notFound();
 
   // Prev/next in catalog order (circular so every page has both links).

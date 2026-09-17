@@ -55,7 +55,7 @@ ensure_label() {
 
 file_issue() {
   local title="$1" labels="$2" body="$3"
-  if issue_exists "${title%% —*}"; then
+  if issue_exists "${title:0:40}"; then
     echo "SKIP (exists): $title"
     return
   fi
@@ -253,20 +253,20 @@ S–M"
 # 3. OWNER ACTIONS (cannot be delegated to agents)
 # ════════════════════════════════════════════════════════════════════════════
 
-file_issue "OWNER — Push session-4 main (43 commits, history-slimmed) to GitHub" owner-action "## What
-Local main @ c270826 (session 4) is fully verified: tsc 0, eslint 0, 1,268/1,268 tests (548 frontend + 720 backend), api:check + OpenAPI + api-surface gates in sync, npm tarball empirically verified (installs WITHOUT --ignore-scripts, zero runtime deps).
+file_issue "OWNER — Verify the 2026-09-18 push: main @ 7dfdd5e, slimmed history, single-branch remote" owner-action "## Status
+The push EXECUTED on 2026-09-18 by the engineering agent (token provided by owner via upload):
 
-The history was REWRITTEN to strip ~600MB of committed zip artifacts (public/RoyCSS.zip ×37, public/roycss.zip ×19, roycss.zip ×10, roycss-source.zip ×4, RoyCSS.zip, 2 × .vsix). The CURRENT TREE is byte-identical (tree hash 01184c5); .git shrank 107MB → 34MB.
+- main force-updated ab667f1 → 7dfdd5e with --force-with-lease (53 session-4 commits on top; tsc 0, eslint 0, 1,268/1,268 tests, api:check + OpenAPI + api-surface gates green, npm tarball empirically verified).
+- History rewrite stripped ~600MB of committed zip artifacts; current tree byte-identical; .git 107MB → 34MB.
+- All 43 stale remote branches deleted after containment verification; remote now single-branch (main).
+- 5 Dependabot PRs (#107–#111) closed with explanation — they will be re-proposed against the new base.
+- Fresh-clone measurement: 4.5s, 69MB working copy (previously >143MB history, extremely slow).
+- Full pre-rewrite history preserved locally: work/roycss-old-history-backup-2026-09-18.bundle (106MB, 62 refs).
 
-## Commands (from /home/z/my-project/work/roycss)
-    export GITHUB_TOKEN=ghp_...
-    git remote set-url origin https://\$GITHUB_TOKEN@github.com/Roy-Wanyoike/Roycss.git
-    git push --force-with-lease origin main
-
-## Aftermath
-- Dependabot PRs will need rebase/refresh (history divergence is total).
-- 38 stale branches + ~14 stale duplicate issues (#39–#52, #62/#63, #65) are safe to delete/close (Agent A audit: all ancestry-merged or content-identical; see session worklog).
-- The pre-rewrite history is preserved locally at work/roycss-full (backup until you confirm the push)."
+## Verification checklist (close this issue once confirmed)
+- [ ] GitHub repo page loads fast; main @ 7dfdd5e
+- [ ] CI runs on the new main (watch the Actions tab; missing secrets are tracked in a separate issue)
+- [ ] Vercel picks up the deployment (reclaim runbook in docs/OWNER-RUNBOOK.md if the project is detached)"
 
 file_issue "OWNER — npm publish roycss v2.0.0 (blockers all fixed + empirically verified)" owner-action "## What
 The package is publish-ready: tarball 969.8 KB / 13 files; consumer install WITHOUT --ignore-scripts proven (exit 0, zero runtime deps, require 1959 / import 1959, all subpaths resolve); release.yml reads the real manifest and test-gates before publishing; changesets operational.
@@ -292,6 +292,12 @@ file_issue "OWNER — Vercel storage reclaim runbook (~11GB)" owner-action "## R
 file_issue "OWNER — Issue #75 remains: Actions billing + Vercel deploy protection + domain assignment" owner-action "Unchanged from session 3 (issue #75 has the ~15-min runbook): Actions account-level spending-limit fix + Vercel deployment-protection off + domain assignment. The production redeploy is blocked on this."
 
 file_issue "OWNER — security@roycss.dev mailbox + PGP key" owner-action "security/SECURITY-POLICY.md (v1.1) points at security@roycss.dev with GitHub Security Advisories as the interim live channel. Provision the real mailbox and publish the PGP key (SECURITY-POLICY has the TBD slot)."
+
+file_issue "OWNER — Deploy-platform decision: Fly.io launch files archived (fly.toml/Dockerfile/docker-entrypoint)" owner-action "## Context
+The branch flyio-new-files (Aug 30 experiment: root Dockerfile + fly.toml + docker-entrypoint.js + .dockerignore, 320 lines) was removed during the 2026-09-18 branch cleanup — its content is archived locally at work/archive/flyio-launch/ (all 5 files + the package.json diff). The Vercel Web Analytics install patch from the early lineage is archived at work/archive/0001-Install-Vercel-Web-Analytics.patch.
+
+## Decision needed
+If Fly.io is part of the hosting roadmap, port those files into infrastructure/ (they are trivially re-addable); otherwise Vercel (current) + Railway backend stands. Also decide whether to install Vercel Web Analytics on the new main (one-line layout mount + package entry)."
 
 file_issue "OWNER — PF-004 external half: contract a WCAG 2.2 AA auditor + VPAT 2.4" owner-action "The code half shipped (per-effect a11y tags: 431 motion-safe / 1,692 decorative / 90 aria-noted; tiers documented in docs/EFFECT-A11Y-TIERS.md; 25 drift-gate tests). The external audit + VPAT 2.4 are third-party deliverables — contract an auditor."
 

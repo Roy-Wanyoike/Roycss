@@ -24,7 +24,7 @@ export const WEBGL_EFFECT_COUNT = 7;
 export const LICENSE = "MIT";
 export const AUTHOR = "Royford Wanyoike Wamaitha";
 export const REPO_URL = "https://github.com/Roy-Wanyoike/roycss";
-export const SITE_URL = "https://roycss.space-z.ai";
+export const SITE_URL = "https://roycss.com";
 
 // Tier counts for platform section (matches product-registry categories:
 // components 12 · design 10 · ai 10 · devtools 14 · enterprise 13 · integrations 3)

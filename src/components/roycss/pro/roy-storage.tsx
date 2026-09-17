@@ -55,7 +55,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 // ─── Types ───────────────────────────────────────────────────────────────
@@ -115,7 +115,6 @@ export function RoyStorage() {
   void data;
 
   const [query, setQuery] = useState("");
-  const { toast } = useToast();
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -124,8 +123,7 @@ export function RoyStorage() {
   }, [query]);
 
   const upload = () =>
-    toast({
-      title: "Upload started",
+    toast("Upload started", {
       description: "Drop files anywhere to upload (mock).",
     });
 

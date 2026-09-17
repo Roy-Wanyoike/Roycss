@@ -77,7 +77,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { DemoBadge } from "@/components/roycss/demo-badge";
 
@@ -340,7 +340,6 @@ function ConnectionBadge({ status }: { status: ConnectionStatus }) {
 }
 
 export function RoyLive() {
-  const { toast } = useToast();
 
   // Connection + identity
   const [status, setStatus] = useState<ConnectionStatus>("disconnected");
@@ -539,8 +538,7 @@ export function RoyLive() {
         });
       }
 
-      toast({
-        title: "Joined room",
+      toast("Joined room", {
         description: `${payload.users?.length ?? 0} user(s) online.`,
       });
     });
@@ -551,8 +549,7 @@ export function RoyLive() {
         if (prev.some((x) => x.socketId === u.socketId)) return prev;
         return [...prev, u];
       });
-      toast({
-        title: `${u.username} joined`,
+      toast(`${u.username} joined`, {
         description: "Say hi in the chat!",
       });
     });
@@ -565,7 +562,7 @@ export function RoyLive() {
         delete next[u.socketId];
         return next;
       });
-      toast({ title: `${u.username} left` });
+      toast(`${u.username} left`);
     });
 
     // Remote code change (broadcast to others — never the sender).
@@ -619,13 +616,11 @@ export function RoyLive() {
 
     // Server-side error.
     socket.on("error-msg", (e: ErrorMsgPayload) => {
-      toast({
-        title: `Error: ${e.event}`,
+      toast.error(`Error: ${e.event}`, {
         description: e.message,
-        variant: "destructive",
       });
     });
-  }, [toast]);
+  }, []);
 
   // ─── Cleanup on unmount ────────────────────────────────────────────────
   useEffect(() => {
@@ -665,11 +660,11 @@ export function RoyLive() {
     const rid = roomId.trim();
     const name = username.trim();
     if (!rid) {
-      toast({ title: "Room ID required", variant: "destructive" });
+      toast.error("Room ID required");
       return;
     }
     if (!name) {
-      toast({ title: "Username required", variant: "destructive" });
+      toast.error("Username required");
       return;
     }
     try {
@@ -680,7 +675,7 @@ export function RoyLive() {
     joinedRoomRef.current = rid;
     setJoinedRoomId(rid);
     connect(rid, name, color);
-  }, [roomId, username, color, connect, toast]);
+  }, [roomId, username, color, connect]);
 
   const handleLeave = useCallback(() => {
     const socket = socketRef.current;
@@ -706,8 +701,8 @@ export function RoyLive() {
       clearTimeout(pendingCodeTimerRef.current);
       pendingCodeTimerRef.current = null;
     }
-    toast({ title: "Left room" });
-  }, [toast]);
+    toast("Left room");
+  }, []);
 
   const handleGenerateRoom = useCallback(() => {
     setRoomId(randomRoomId());
@@ -719,9 +714,9 @@ export function RoyLive() {
       setCopiedRoom(true);
       setTimeout(() => setCopiedRoom(false), 2000);
     } catch {
-      toast({ title: "Copy failed", variant: "destructive" });
+      toast.error("Copy failed");
     }
-  }, [toast]);
+  }, []);
 
   const handleShareLink = useCallback(async () => {
     const link = buildShareLink(joinedRoomRef.current);
@@ -729,11 +724,11 @@ export function RoyLive() {
       await navigator.clipboard.writeText(link);
       setCopiedLink(true);
       setTimeout(() => setCopiedLink(false), 2000);
-      toast({ title: "Share link copied", description: link });
+      toast("Share link copied", { description: link });
     } catch {
-      toast({ title: "Copy failed", variant: "destructive" });
+      toast.error("Copy failed");
     }
-  }, [toast]);
+  }, []);
 
   const handleHtmlChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
     if (isRemoteUpdateRef.current) return;
@@ -765,15 +760,15 @@ export function RoyLive() {
     const next = { html: DEFAULT_HTML, css: DEFAULT_CSS };
     setCode(next);
     emitCodeChange(next);
-    toast({ title: "Editor reset to defaults" });
-  }, [emitCodeChange, toast]);
+    toast("Editor reset to defaults");
+  }, [emitCodeChange]);
 
   const handleFormat = useCallback(() => {
     const next = { ...code, css: formatCss(code.css) };
     setCode(next);
     emitCodeChange(next);
-    toast({ title: "CSS formatted" });
-  }, [code, emitCodeChange, toast]);
+    toast("CSS formatted");
+  }, [code, emitCodeChange]);
 
   const handleSendChat = useCallback(() => {
     const msg = chatInput.trim();

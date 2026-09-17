@@ -53,7 +53,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 // ─── Types ───────────────────────────────────────────────────────────────
@@ -150,7 +150,6 @@ export function RoyAuditCenter() {
   const { data, loading, error } = useBackendData<unknown>("audit-center/projects");
   void data;
 
-  const { toast } = useToast();
   const [selectedId, setSelectedId] = useState<string>(PROJECTS[0].id);
   const [filter, setFilter] = useState<IssueSeverity | "all">("all");
   const [auditing, setAuditing] = useState(false);
@@ -166,12 +165,11 @@ export function RoyAuditCenter() {
     setAuditing(true);
     window.setTimeout(() => {
       setAuditing(false);
-      toast({
-        title: "Audit complete",
+      toast("Audit complete", {
         description: `Re-audited ${PROJECTS.length} projects. ${ISSUES.length} issues found.`,
       });
     }, 1500);
-  }, [toast]);
+  }, []);
 
   return (
     <div className="flex flex-col gap-6">

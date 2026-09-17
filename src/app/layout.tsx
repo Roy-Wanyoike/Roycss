@@ -3,8 +3,7 @@ import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import "./roycss.css";
 import "./roymotion.css";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as SonnerToaster } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/sonner";
 import { ServiceWorkerRegistration } from "@/components/roycss/sw-register";
 import { AuthProvider } from "@/components/roycss/auth/auth-context";
 import {
@@ -197,8 +196,10 @@ export default async function RootLayout({
         <AuthProvider>
           {children}
         </AuthProvider>
-        <Toaster />
-        <SonnerToaster position="bottom-right" richColors closeButton />
+        {/* Single toast system (issue #114): sonner only — theme-aware via
+            next-themes, bottom-right, richColors + closeButton to match the
+            previous sonner call sites (auth flows, copy actions, newsletter). */}
+        <Toaster position="bottom-right" richColors closeButton />
         <ServiceWorkerRegistration />
       </body>
     </html>

@@ -52,7 +52,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 // ─── Types ───────────────────────────────────────────────────────────────
@@ -105,7 +105,6 @@ export function RoySpotlight() {
   void data;
 
   const [filter, setFilter] = useState<ItemType | "all">("all");
-  const { toast } = useToast();
 
   const weekly = ITEMS.find((i) => i.weekly) ?? ITEMS[0];
   const rest = ITEMS.filter((i) => !i.weekly);
@@ -113,14 +112,12 @@ export function RoySpotlight() {
     filter === "all" ? rest : rest.filter((i) => i.type === filter);
 
   const submit = () =>
-    toast({
-      title: "Submission received",
+    toast("Submission received", {
       description: "Your item will be reviewed within 48 hours (mock).",
     });
 
   const view = (item: SpotlightItem) =>
-    toast({
-      title: item.title,
+    toast(item.title, {
       description: `Opening "${item.title}" by ${item.author} (mock).`,
     });
 

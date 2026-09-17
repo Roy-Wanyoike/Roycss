@@ -47,7 +47,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 // ─── Types ───────────────────────────────────────────────────────────────
@@ -138,18 +138,15 @@ export function RoyCertifications() {
   void data;
 
   const [credentialId, setCredentialId] = useState("");
-  const { toast } = useToast();
 
   const schedule = (name: string) =>
-    toast({
-      title: "Exam scheduled",
+    toast("Exam scheduled", {
       description: `${name} — a calendar invite will arrive shortly (mock).`,
     });
 
   const verify = () => {
     if (!credentialId.trim()) return;
-    toast({
-      title: "Credential verified",
+    toast("Credential verified", {
       description: `Lookup for "${credentialId}" returned a valid cert (mock).`,
     });
     setCredentialId("");

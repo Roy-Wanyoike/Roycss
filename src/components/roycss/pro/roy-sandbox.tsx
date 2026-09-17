@@ -42,7 +42,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 // ─── Types ───────────────────────────────────────────────────────────────
@@ -195,7 +195,6 @@ const FILE_TABS: { key: FileKey; label: string; icon: typeof FileCode }[] = [
 // ─── Component ───────────────────────────────────────────────────────────
 
 export function RoySandbox() {
-  const { toast } = useToast();
   const [files, setFiles] = useState<FileState>(TEMPLATES[1].files);
   const [activeTab, setActiveTab] = useState<FileKey>("html");
   const [templateId, setTemplateId] = useState<TemplateId>("dashboard");
@@ -221,8 +220,8 @@ export function RoySandbox() {
 
   const run = useCallback(() => {
     setPreview(files);
-    toast({ title: "Preview updated", description: "Editor output rendered." });
-  }, [files, toast]);
+    toast("Preview updated", { description: "Editor output rendered." });
+  }, [files]);
 
   const applyTemplate = useCallback((id: string) => {
     const tpl = TEMPLATES.find((t) => t.id === id);
@@ -234,12 +233,12 @@ export function RoySandbox() {
   }, []);
 
   const share = useCallback(() => {
-    toast({ title: "Shareable link copied", description: "https://sandbox.roycss.dev/p/4f7a-9c2b" });
-  }, [toast]);
+    toast("Shareable link copied", { description: "https://sandbox.roycss.dev/p/4f7a-9c2b" });
+  }, []);
 
   const fork = useCallback(() => {
-    toast({ title: "Project forked", description: "A copy is now in your workspace." });
-  }, [toast]);
+    toast("Project forked", { description: "A copy is now in your workspace." });
+  }, []);
 
   const updateFile = useCallback((key: FileKey, value: string) => {
     setFiles((prev) => ({ ...prev, [key]: value }));

@@ -42,7 +42,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 // ─── Types ───────────────────────────────────────────────────────────────
@@ -132,11 +132,9 @@ const STATE_TONE: Record<Milestone["state"], string> = {
 // ─── Component ───────────────────────────────────────────────────────────
 
 export function RoyOpen() {
-  const { toast } = useToast();
 
   const contribute = () =>
-    toast({
-      title: "Welcome, contributor!",
+    toast("Welcome, contributor!", {
       description: "Opening the contributing guide (mock).",
     });
 

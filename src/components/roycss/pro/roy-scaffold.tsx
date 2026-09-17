@@ -74,7 +74,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -642,7 +642,6 @@ export function RoyScaffold() {
   const { data, loading, error } = useBackendData<unknown>("scaffold/types");
   void data;
 
-  const { toast } = useToast();
   const [projectType, setProjectType] = useState<ProjectType>("saas");
   const [framework, setFramework] = useState<Framework>("nextjs");
   const [database, setDatabase] = useState<Database>("postgresql");
@@ -712,18 +711,15 @@ export function RoyScaffold() {
     const ok = await copyToClipboard(text);
     if (ok) {
       setCopied(true);
-      toast({
-        title: "Copied scaffold command",
+      toast("Copied scaffold command", {
         description: "Paste it into your terminal to scaffold this project.",
       });
     } else {
-      toast({
-        title: "Copy failed",
+      toast.error("Copy failed", {
         description: "Clipboard is unavailable in this context.",
-        variant: "destructive",
       });
     }
-  }, [generated, previewCommand, toast]);
+  }, [generated, previewCommand]);
 
   const handleSelectProject = useCallback((id: ProjectType) => {
     setProjectType(id);

@@ -42,7 +42,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 // ─── Types ───────────────────────────────────────────────────────────────
@@ -150,19 +150,16 @@ function QrPlaceholder({ value }: { value: string }) {
 
 export function RoyPreview() {
   const [selectedId, setSelectedId] = useState<string>(PREVIEWS[0].id);
-  const { toast } = useToast();
 
   const selected = PREVIEWS.find((p) => p.id === selectedId) ?? PREVIEWS[0];
 
   const createPreview = () =>
-    toast({
-      title: "Preview queued",
+    toast("Preview queued", {
       description: "A new preview environment will build shortly (mock).",
     });
 
   const open = (url: string) =>
-    toast({
-      title: "Opening preview",
+    toast("Opening preview", {
       description: `https://${url}`,
     });
 

@@ -30,7 +30,7 @@ import {
   Text,
   Caption,
   Code,
-  useToast,
+  useNotifications,
   ToastContainer,
 } from "@/components/ui-library";
 import {
@@ -47,7 +47,7 @@ export function ComponentShowcase() {
   const [toggleOn, setToggleOn] = useState(true);
   const [checkbox, setCheckbox] = useState(false);
   const [page, setPage] = useState(3);
-  const { toasts, dismiss, toast } = useToast();
+  const { toasts, dismiss, toast } = useNotifications();
 
   return (
     <Container maxWidth="xl" className="py-12 space-y-16">

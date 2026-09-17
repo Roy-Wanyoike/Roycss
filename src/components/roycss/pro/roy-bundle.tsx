@@ -42,7 +42,7 @@ import {
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 // ─── Types ───────────────────────────────────────────────────────────────
@@ -155,7 +155,6 @@ export function RoyBundle() {
   const { data, loading, error } = useBackendData<unknown>("bundle/duplicates");
   void data;
 
-  const { toast } = useToast();
   const [analyzing, setAnalyzing] = useState(false);
   const [analyzed, setAnalyzed] = useState(false);
 
@@ -165,16 +164,15 @@ export function RoyBundle() {
     window.setTimeout(() => {
       setAnalyzing(false);
       setAnalyzed(true);
-      toast({ title: "Bundle analyzed", description: `${BEFORE_KB}KB across ${BUNDLE_TYPES.length} asset types.` });
+      toast("Bundle analyzed", { description: `${BEFORE_KB}KB across ${BUNDLE_TYPES.length} asset types.` });
     }, 1400);
-  }, [toast]);
+  }, []);
 
   const exportReport = useCallback(() => {
-    toast({
-      title: "Report exported",
+    toast("Report exported", {
       description: `roycss-bundle-report.json · ${BEFORE_KB}KB → ${AFTER_KB}KB (-${Math.round((1 - AFTER_KB / BEFORE_KB) * 100)}%)`,
     });
-  }, [toast]);
+  }, []);
 
   const savingsPct = Math.round((1 - AFTER_KB / BEFORE_KB) * 100);
   const duplicateKb = DUPLICATES.reduce((s, d) => s + d.kb, 0);

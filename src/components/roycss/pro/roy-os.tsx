@@ -53,7 +53,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 // ─── Types ───────────────────────────────────────────────────────────────
@@ -131,7 +131,6 @@ export function RoyOS() {
   const { data, loading, error } = useBackendData<unknown>("os/dashboard");
   void data;
 
-  const { toast } = useToast();
   const [search, setSearch] = useState("");
   const [openId, setOpenId] = useState<string | null>(null);
   // Synced-at timestamp is computed on the client only to avoid a hydration
@@ -158,20 +157,19 @@ export function RoyOS() {
 
   const fireAction = useCallback(
     (action: QuickAction) => {
-      toast({
-        title: action.label,
+      toast(action.label, {
         description: action.shortcut ? `Triggered via ${action.shortcut}` : "Action triggered.",
       });
     },
-    [toast],
+    [],
   );
 
   const openTile = useCallback(
     (tile: Tile) => {
       setOpenId(tile.id);
-      toast({ title: `Opening ${tile.name}`, description: tile.description });
+      toast(`Opening ${tile.name}`, { description: tile.description });
     },
-    [toast],
+    [],
   );
 
   return (
@@ -217,7 +215,7 @@ export function RoyOS() {
             <div className="mt-2 border-t pt-2">
               <button
                 type="button"
-                onClick={() => toast({ title: "Settings", description: "Workspace preferences." })}
+                onClick={() => toast("Settings", { description: "Workspace preferences." })}
                 className="hover:bg-accent flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-sm transition"
               >
                 <Settings className="text-muted-foreground size-4" />

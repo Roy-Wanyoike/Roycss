@@ -65,7 +65,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -586,7 +586,6 @@ export function RoySync() {
   const { data, loading, error } = useBackendData<unknown>("sync/status");
   void data;
 
-  const { toast } = useToast();
   const [syncStates, setSyncStates] = useState<
     Record<IntegrationId, SyncState | null>
   >({
@@ -678,37 +677,31 @@ export function RoySync() {
       const meta = INTEGRATIONS.find((i) => i.id === id);
       if (!meta) return;
       if (!meta.connected) {
-        toast({
-          title: "Cannot sync",
+        toast.error("Cannot sync", {
           description: `${meta.name} is not connected.`,
-          variant: "destructive",
         });
         return;
       }
       runSync(id);
-      toast({
-        title: `Syncing ${meta.name}…`,
+      toast(`Syncing ${meta.name}…`, {
         description: "This usually takes a couple of seconds.",
       });
     },
-    [runSync, toast],
+    [runSync],
   );
 
   const handleSyncAll = useCallback(() => {
     if (syncingAll) return;
     const connected = INTEGRATIONS.filter((i) => i.connected);
     if (connected.length === 0) {
-      toast({
-        title: "No connected integrations",
+      toast.error("No connected integrations", {
         description: "Connect at least one integration to sync.",
-        variant: "destructive",
       });
       return;
     }
 
     setSyncingAll(true);
-    toast({
-      title: "Syncing all integrations",
+    toast("Syncing all integrations", {
       description: `${connected.length} integrations queued.`,
     });
 
@@ -718,13 +711,12 @@ export function RoySync() {
     // After the longest sync resolves, flip syncingAll off.
     const t = setTimeout(() => {
       setSyncingAll(false);
-      toast({
-        title: "All syncs complete",
+      toast("All syncs complete", {
         description: `${connected.length} integrations synced successfully.`,
       });
     }, SYNC_DURATION_MS + 200);
     timeoutsRef.current.add(t);
-  }, [syncingAll, runSync, toast]);
+  }, [syncingAll, runSync]);
 
   const connectedCount = useMemo(
     () => INTEGRATIONS.filter((i) => i.connected).length,

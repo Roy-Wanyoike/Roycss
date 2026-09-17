@@ -95,7 +95,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 // ═══════════════════════════════════════════════════════════════════════
 // Types
@@ -1790,7 +1790,6 @@ function SegmentedControl<V extends string>({
 // ═══════════════════════════════════════════════════════════════════════
 
 export function RoyShowcase(): React.JSX.Element {
-  const { toast } = useToast();
 
   const [search, setSearch] = useState<string>("");
   const [industry, setIndustry] = useState<IndustryFilter>("All");
@@ -1871,22 +1870,20 @@ export function RoyShowcase(): React.JSX.Element {
 
   const handleVisit = useCallback(
     (project: Project) => {
-      toast({
-        title: "Opening project",
+      toast("Opening project", {
         description: `Loading ${project.name}…`,
       });
     },
-    [toast],
+    [],
   );
 
   const handleSubmit = useCallback(
     (form: SubmitFormState) => {
-      toast({
-        title: "Project submitted",
+      toast("Project submitted", {
         description: `"${form.name || "Untitled project"}" is now in the review queue.`,
       });
     },
-    [toast],
+    [],
   );
 
   const hasFilters =

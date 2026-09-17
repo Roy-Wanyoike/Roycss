@@ -49,7 +49,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 // ─── Types ───────────────────────────────────────────────────────────────
@@ -207,7 +207,6 @@ export function RoyChallenges() {
   const { data, loading, error } = useBackendData<unknown>("challenges");
   void data;
 
-  const { toast } = useToast();
   const [openId, setOpenId] = useState<string | null>(null);
   const [completed, setCompleted] = useState<Set<string>>(new Set());
   const [code, setCode] = useState<string>("");
@@ -239,11 +238,11 @@ export function RoyChallenges() {
     setResult({ pass });
     if (pass && !completed.has(active.id)) {
       setCompleted((prev) => new Set(prev).add(active.id));
-      toast({ title: "Challenge solved!", description: `+${active.xp} XP awarded.` });
+      toast("Challenge solved!", { description: `+${active.xp} XP awarded.` });
     } else if (!pass) {
-      toast({ title: "Not quite — try again", description: "Re-check the requirements and hints.", variant: "destructive" });
+      toast.error("Not quite — try again", { description: "Re-check the requirements and hints." });
     }
-  }, [active, code, completed, toast]);
+  }, [active, code, completed]);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();

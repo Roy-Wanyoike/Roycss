@@ -39,7 +39,7 @@ import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
  *     snippets are wrapped in `<mark class="bg-primary/25 rounded">`.
  *   • Detail panel — sticky right-hand pane showing the active result:
  *     title, type badge, full snippet, tags, "Open" + "Copy link"
- *     buttons (mock shadcn toasts via the app-wide `useToast` hook).
+ *     buttons (mock shadcn toasts via the app-wide sonner `toast` API).
  *
  * Color discipline: only the approved RoyCSS palette (emerald, teal,
  * cyan, amber, rose, violet, fuchsia, orange) plus semantic theme
@@ -76,7 +76,7 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 // ═══════════════════════════════════════════════════════════════════════
 // Types
@@ -1130,8 +1130,6 @@ export function RoySearch(): React.JSX.Element {
   const { data, loading, error } = useBackendData<unknown>("search/recent");
   void data;
 
-  const { toast } = useToast();
-
   // ─── Input state + 200ms debounce ───────────────────────────────────
   const [input, setInput] = useState<string>("");
   const [query, setQuery] = useState<string>("");
@@ -1408,12 +1406,11 @@ export function RoySearch(): React.JSX.Element {
 
   const handleOpen = useCallback(
     (result: SearchResult) => {
-      toast({
-        title: "Opening result",
+      toast("Opening result", {
         description: `Opening “${result.title}” (${TYPE_META[result.type].singular})…`,
       });
     },
-    [toast],
+    [],
   );
 
   const handleCopyLink = useCallback(
@@ -1422,23 +1419,21 @@ export function RoySearch(): React.JSX.Element {
       if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
         navigator.clipboard.writeText(link).then(
           () => {
-            toast({
-              title: "Link copied",
+            toast("Link copied", {
               description: link,
             });
           },
           () => {
-            toast({
-              title: "Link ready",
+            toast("Link ready", {
               description: link,
             });
           },
         );
       } else {
-        toast({ title: "Link ready", description: link });
+        toast("Link ready", { description: link });
       }
     },
-    [toast],
+    [],
   );
 
   // ─── Keyboard navigation (input-level) ─────────────────────────────

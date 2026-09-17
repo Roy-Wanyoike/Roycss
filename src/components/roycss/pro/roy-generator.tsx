@@ -75,7 +75,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -1199,7 +1199,6 @@ export function RoyGenerator() {
   const { data, loading, error } = useBackendData<unknown>("generator/types");
   void data;
 
-  const { toast } = useToast();
   const [genType, setGenType] = useState<GenType>("component");
   const [name, setName] = useState("MyButton");
   const [options, setOptions] = useState<Record<GenType, OptionValues>>(
@@ -1277,18 +1276,15 @@ export function RoyGenerator() {
     const ok = await copyToClipboard(file.code);
     if (ok) {
       setCopied(true);
-      toast({
-        title: "Code copied",
+      toast("Code copied", {
         description: `${file.filename} is on your clipboard.`,
       });
     } else {
-      toast({
-        title: "Copy failed",
+      toast.error("Copy failed", {
         description: "Clipboard is unavailable in this context.",
-        variant: "destructive",
       });
     }
-  }, [generated, activeFile, toast]);
+  }, [generated, activeFile]);
 
   const handleRegenerate = useCallback(() => {
     setGenerated(null);

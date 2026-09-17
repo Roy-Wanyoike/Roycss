@@ -56,7 +56,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 // ─── Types ───────────────────────────────────────────────────────────────
@@ -200,7 +200,6 @@ export function RoyObservatory() {
   const { data, loading, error } = useBackendData<unknown>("observatory/sites");
   void data;
 
-  const { toast } = useToast();
   const [selectedId, setSelectedId] = useState<string>(SITES[0].id);
   const [addOpen, setAddOpen] = useState(false);
   const [monitorName, setMonitorName] = useState("");
@@ -217,14 +216,13 @@ export function RoyObservatory() {
 
   const handleAdd = useCallback(() => {
     if (!monitorName.trim() || !monitorUrl.trim()) return;
-    toast({
-      title: "Monitor added",
+    toast("Monitor added", {
       description: `Now tracking ${monitorName} (${monitorUrl}) from ${monitorRegion}.`,
     });
     setAddOpen(false);
     setMonitorName("");
     setMonitorUrl("");
-  }, [monitorName, monitorUrl, monitorRegion, toast]);
+  }, [monitorName, monitorUrl, monitorRegion]);
 
   return (
     <div className="flex flex-col gap-6">

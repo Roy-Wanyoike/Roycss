@@ -83,7 +83,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 // ═══════════════════════════════════════════════════════════════════════
 // Types
@@ -2307,8 +2307,6 @@ export function RoyBlocks(): React.JSX.Element {
   const { data, loading, error } = useBackendData<unknown>("blocks");
   void data;
 
-  const { toast } = useToast();
-
   const [search, setSearch] = useState<string>("");
   const [category, setCategory] = useState<CategoryFilter>("All");
   const [codeBlock, setCodeBlock] = useState<Block | null>(null);
@@ -2362,18 +2360,16 @@ export function RoyBlocks(): React.JSX.Element {
     async (block: Block) => {
       try {
         await navigator.clipboard.writeText(block.code);
-        toast({
-          title: "Copied to clipboard",
+        toast("Copied to clipboard", {
           description: `${block.name} source code is ready to paste.`,
         });
       } catch {
-        toast({
-          title: "Copy failed",
+        toast("Copy failed", {
           description: "Clipboard access was denied by the browser.",
         });
       }
     },
-    [toast],
+    [],
   );
 
   const hasFilters = search.trim().length > 0 || category !== "All";

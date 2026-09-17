@@ -59,7 +59,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 // ─── Types ───────────────────────────────────────────────────────────────
@@ -131,14 +131,12 @@ export function RoyCDN() {
   void data;
 
   const [purging, setPurging] = useState(false);
-  const { toast } = useToast();
 
   const purge = () => {
     setPurging(true);
     setTimeout(() => {
       setPurging(false);
-      toast({
-        title: "Cache purged",
+      toast("Cache purged", {
         description: "Edge cache invalidated across all regions (mock).",
       });
     }, 1200);

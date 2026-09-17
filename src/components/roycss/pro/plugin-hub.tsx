@@ -114,7 +114,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 // ═══════════════════════════════════════════════════════════════════════
 // Types
@@ -1773,7 +1773,6 @@ function PluginDetailDialog({
 // ═══════════════════════════════════════════════════════════════════════
 
 export function PluginHub(): React.JSX.Element {
-  const { toast } = useToast();
   const [installCopiedId, setInstallCopiedId] = useState<string | null>(null);
 
   const [search, setSearch] = useState<string>("");
@@ -1864,19 +1863,17 @@ export function PluginHub(): React.JSX.Element {
             current === plugin.id ? null : current,
           );
         }, 2000);
-        toast({
-          title: "Install command copied",
+        toast("Install command copied", {
           description: command,
         });
       } else {
         // Clipboard write failed — still surface the command to the user.
-        toast({
-          title: "Install command",
+        toast("Install command", {
           description: command,
         });
       }
     },
-    [copyToClipboard, toast],
+    [copyToClipboard],
   );
 
   const hasFilters = search.trim().length > 0 || category !== "All";

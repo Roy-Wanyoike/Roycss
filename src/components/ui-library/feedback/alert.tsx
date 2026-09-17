@@ -234,9 +234,11 @@ export function ToastContainer({ toasts, onDismiss, position = "top-right" }: To
   );
 }
 
-// ─── useToast hook ───────────────────────────────────────────
+// ─── useNotifications hook ─────────────────────────────
+// (ui-library-internal demo hook — drives the <ToastContainer> demo in the
+// showcase; deliberately NOT the app-wide sonner toast system.)
 
-export function useToast() {
+export function useNotifications() {
   const [toasts, setToasts] = useState<ToastItem[]>([]);
 
   const dismiss = (id: string) => setToasts((t) => t.filter((x) => x.id !== id));

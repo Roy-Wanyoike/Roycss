@@ -46,7 +46,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 // ─── Types ───────────────────────────────────────────────────────────────
@@ -148,11 +148,9 @@ export function RoyWorkspace() {
   void data;
 
   const [tab, setTab] = useState<ResourceTab>("templates");
-  const { toast } = useToast();
 
   const invite = () =>
-    toast({
-      title: "Invite sent",
+    toast("Invite sent", {
       description: "An email invitation has been queued (mock).",
     });
 

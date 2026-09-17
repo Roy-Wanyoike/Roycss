@@ -77,7 +77,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -214,11 +214,11 @@ const BREAKING_CHANGES: readonly BreakingChange[] = [
   },
   {
     id: "bc-4",
-    title: "useToast() returns a stable `dismiss`",
+    title: "Toasts are imperative calls from sonner",
     severity: "low",
-    affectedFiles: ["src/hooks/use-toast.ts"],
+    affectedFiles: ["src/components/ui/sonner.tsx"],
     description:
-      "`dismiss` is now stable across renders. Existing code that wrapped `dismiss` in useCallback is unaffected; calling `dismiss()` directly inside effects no longer needs a dependency entry.",
+      "`toast()` is imported directly from sonner — no provider or hook. Object calls like `toast({ title, description })` become `toast(title, { description })`; `variant: \"destructive\"` becomes `toast.error(...)`.",
     migrationGuide: "https://roycss.dev/migrate/v2-4-toast",
   },
   {
@@ -581,7 +581,6 @@ export function RoyVersion() {
   const { data, loading, error } = useBackendData<unknown>("version/current");
   void data;
 
-  const { toast } = useToast();
   const [checking, setChecking] = useState(false);
   const [checked, setChecked] = useState(false);
   const [targetVersion, setTargetVersion] = useState<string>(LATEST_VERSION);
@@ -618,32 +617,28 @@ export function RoyVersion() {
     const t = setTimeout(() => {
       setChecking(false);
       setChecked(true);
-      toast({
-        title: isUpToDate ? "You're up to date" : "Update available",
+      toast(isUpToDate ? "You're up to date" : "Update available", {
         description: isUpToDate
           ? `RoyCSS ${CURRENT_VERSION} is the latest version.`
           : `RoyCSS ${LATEST_VERSION} is ready to install.`,
       });
     }, 1200);
     timersRef.current.add(t);
-  }, [isUpToDate, toast]);
+  }, [isUpToDate]);
 
   const handleCopyTree = useCallback(async () => {
     const ok = await copyToClipboard(DEPENDENCY_TREE);
     if (ok) {
       setCopied(true);
-      toast({
-        title: "Dependency graph copied",
+      toast("Dependency graph copied", {
         description: "Paste it anywhere as plain text.",
       });
     } else {
-      toast({
-        title: "Copy failed",
+      toast.error("Copy failed", {
         description: "Clipboard is unavailable in this context.",
-        variant: "destructive",
       });
     }
-  }, [toast]);
+  }, []);
 
   const selectedTarget = useMemo(
     () =>
@@ -972,8 +967,7 @@ export function RoyVersion() {
                   disabled={!isUpgrade}
                   className="gap-1.5"
                   onClick={() =>
-                    toast({
-                      title: "Upgrade simulated",
+                    toast("Upgrade simulated", {
                       description: `${CURRENT_VERSION} → ${selectedTarget.version} would complete in ${selectedTarget.estimatedTime}.`,
                     })
                   }

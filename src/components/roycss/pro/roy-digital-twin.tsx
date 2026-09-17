@@ -50,7 +50,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 // ─── Types ───────────────────────────────────────────────────────────────
@@ -148,7 +148,6 @@ export function RoyDigitalTwin() {
   const [hasTwin, setHasTwin] = useState(true);
   const [view, setView] = useState<"before" | "after">("after");
   const timers = useRef<Set<ReturnType<typeof setInterval>>>(new Set());
-  const { toast } = useToast();
 
   useEffect(() => {
     const set = timers.current;
@@ -169,8 +168,7 @@ export function RoyDigitalTwin() {
           timers.current.delete(id);
           setBuilding(false);
           setHasTwin(true);
-          toast({
-            title: "Twin created",
+          toast("Twin created", {
             description: `Digital twin of ${url} is ready.`,
           });
           return 100;
@@ -179,11 +177,10 @@ export function RoyDigitalTwin() {
       });
     }, 90);
     timers.current.add(id);
-  }, [building, url, toast]);
+  }, [building, url]);
 
   const runSim = () =>
-    toast({
-      title: "Simulation queued",
+    toast("Simulation queued", {
       description: "All 4 simulations re-running on the current twin (mock).",
     });
 

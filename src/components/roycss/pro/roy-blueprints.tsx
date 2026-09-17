@@ -90,7 +90,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 // ═══════════════════════════════════════════════════════════════════════
 // Types
@@ -1683,8 +1683,6 @@ export function RoyBlueprints(): React.JSX.Element {
   const { data, loading, error } = useBackendData<unknown>("blueprints");
   void data;
 
-  const { toast } = useToast();
-
   const [search, setSearch] = useState<string>("");
   const [industry, setIndustry] = useState<IndustryFilter>("All");
   const [active, setActive] = useState<Blueprint | null>(null);
@@ -1734,31 +1732,27 @@ export function RoyBlueprints(): React.JSX.Element {
 
   const handleGenerate = useCallback(
     (bp: Blueprint) => {
-      toast({
-        title: "Scaffolding project…",
+      toast("Scaffolding project…", {
         description: `${bp.name} blueprint is being generated into a new monorepo.`,
       });
     },
-    [toast],
+    [],
   );
 
   const handleCopySuccess = useCallback(
     (label: string) => {
-      toast({
-        title: "Copied to clipboard",
+      toast("Copied to clipboard", {
         description: `The ${label} has been copied.`,
       });
     },
-    [toast],
+    [],
   );
 
   const handleCopyFail = useCallback(() => {
-    toast({
-      title: "Copy failed",
+    toast.error("Copy failed", {
       description: "Clipboard is unavailable in this context.",
-      variant: "destructive",
     });
-  }, [toast]);
+  }, []);
 
   const hasFilters = search.trim().length > 0 || industry !== "All";
 

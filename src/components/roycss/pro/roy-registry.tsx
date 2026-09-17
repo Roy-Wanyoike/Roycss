@@ -86,7 +86,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -849,7 +849,6 @@ export function RoyRegistry() {
   const { data, loading, error } = useBackendData<unknown>("registry/packages");
   void data;
 
-  const { toast } = useToast();
   const [packages, setPackages] = useState<readonly RegistryPackage[]>(PACKAGES);
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState<TypeFilter>("all");
@@ -899,31 +898,27 @@ export function RoyRegistry() {
   const handlePublish = useCallback(
     (pkg: RegistryPackage) => {
       setPackages((prev) => [pkg, ...prev]);
-      toast({
-        title: "Package published",
+      toast("Package published", {
         description: `${pkg.name} v${pkg.version} is now in the registry.`,
       });
     },
-    [toast],
+    [],
   );
 
   const handleCopySuccess = useCallback(
     (pkg: RegistryPackage) => {
-      toast({
-        title: "Install command copied",
+      toast("Install command copied", {
         description: `npm install ${pkg.name}`,
       });
     },
-    [toast],
+    [],
   );
 
   const handleCopyFail = useCallback(() => {
-    toast({
-      title: "Copy failed",
+    toast.error("Copy failed", {
       description: "Clipboard is unavailable in this context.",
-      variant: "destructive",
     });
-  }, [toast]);
+  }, []);
 
   const handleResetFilters = useCallback(() => {
     setSearch("");

@@ -18,8 +18,8 @@ import { BackendLiveBadge } from "@/components/roycss/_backend-live-badge";
  *   • Stats header — "N templates · M free · K paid · Avg rating X.X stars".
  *   • Card click — opens a Dialog detail view with description, full
  *     feature list, large preview thumbnail, and Install / Preview
- *     buttons. Install + Preview fire shadcn toasts ("Installing..." /
- *     "Opening preview...") via the app-wide `useToast` hook.
+ *     buttons. Install + Preview fire toasts ("Installing..." /
+ *     "Opening preview...") via the app-wide sonner `toast` API.
  *
  * Each template card shows:
  *   • A gradient thumbnail with the template name overlaid as the
@@ -75,7 +75,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 // ═══════════════════════════════════════════════════════════════════════
 // Types
@@ -831,8 +831,6 @@ export function Marketplace(): React.JSX.Element {
   const { data, loading, error } = useBackendData<unknown>("marketplace/templates");
   void data;
 
-  const { toast } = useToast();
-
   const [search, setSearch] = useState<string>("");
   const [category, setCategory] = useState<CategoryFilter>("All");
   const [price, setPrice] = useState<PriceFilter>("all");
@@ -903,22 +901,20 @@ export function Marketplace(): React.JSX.Element {
 
   const handleInstall = useCallback(
     (template: Template) => {
-      toast({
-        title: "Installing…",
+      toast("Installing…", {
         description: `${template.name} is being installed into your project.`,
       });
     },
-    [toast],
+    [],
   );
 
   const handlePreview = useCallback(
     (template: Template) => {
-      toast({
-        title: "Opening preview",
+      toast("Opening preview", {
         description: `Loading the live preview for ${template.name}.`,
       });
     },
-    [toast],
+    [],
   );
 
   const hasFilters =

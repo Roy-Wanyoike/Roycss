@@ -15,7 +15,7 @@ export { Input, Select, Checkbox, Toggle, FormField } from "./forms/input";
 export { Tabs, Breadcrumb, Pagination, Menu } from "./navigation/tabs";
 
 // Feedback
-export { Alert, Progress, Skeleton, Spinner, ToastContainer, useToast } from "./feedback/alert";
+export { Alert, Progress, Skeleton, Spinner, ToastContainer, useNotifications } from "./feedback/alert";
 
 // Data Display
 export { Card, Badge, Avatar, Table } from "./data-display/card";

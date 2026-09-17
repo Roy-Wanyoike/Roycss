@@ -48,7 +48,7 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Progress } from "@/components/ui/progress";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 // ─── Types ───────────────────────────────────────────────────────────────
@@ -139,7 +139,6 @@ export function RoyCompliance() {
   const { data, loading, error } = useBackendData<unknown>("compliance/standards");
   void data;
 
-  const { toast } = useToast();
   const [standard, setStandard] = useState<Standard>("WCAG 2.2 AA");
   const [scanning, setScanning] = useState(false);
   const [scanDone, setScanDone] = useState(false);
@@ -181,11 +180,10 @@ export function RoyCompliance() {
   };
 
   const handleDownload = useCallback(() => {
-    toast({
-      title: "Report generated",
+    toast("Report generated", {
       description: `${standard} compliance report (${overall}% overall) exported.`,
     });
-  }, [standard, overall, toast]);
+  }, [standard, overall]);
 
   return (
     <div className="flex flex-col gap-6">

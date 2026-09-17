@@ -2,7 +2,7 @@
  * RoyCSSCompletionProvider
  *
  * Returns `roycss-*` class completions for HTML, CSS, JSX, TSX, Vue, and
- * Svelte documents. Returns the full 1569-effect catalog when the user
+ * Svelte documents. Returns the full 1959-effect catalog when the user
  * types the `roycss-` prefix, sorted by:
  *   1. Recently-used classes (most-recent first)
  *   2. Alphabetical by class name

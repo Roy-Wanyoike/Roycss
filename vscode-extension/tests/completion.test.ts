@@ -25,7 +25,7 @@ const { RecentlyUsed } = require("../src/recently-used") as {
   };
 };
 
-const FAKE_EFFECTS_COUNT = 1569;
+const FAKE_EFFECTS_COUNT = 1959;
 
 // ───────────────────────────────────────────────────────────────────────
 // Minimal mocks for the vscode types the tests touch
@@ -271,13 +271,13 @@ runTest("returns [] when cursor is not in a class context", () => {
   }
 });
 
-// ─── Test 5: effects-data has 1569 entries (sanity check) ───
-runTest("effects-data has 1569 entries", () => {
+// ─── Test 5: effects-data has 1959 entries (sanity check) ───
+runTest("effects-data has 1959 entries", () => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { effects } = require("../src/effects-data") as {
     effects: Array<{ id: string; name: string }>;
   };
-  assert.strictEqual(effects.length, 1569, "effects must have exactly 1569 entries");
+  assert.strictEqual(effects.length, 1959, "effects must have exactly 1959 entries");
   // Verify no duplicate IDs.
   const ids = new Set(effects.map((e) => e.id));
   assert.strictEqual(ids.size, effects.length, "no duplicate IDs allowed");

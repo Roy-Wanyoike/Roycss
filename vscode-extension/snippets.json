@@ -15688,5 +15688,3905 @@
     ],
     "description": "A watercolor effect",
     "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Spring Bounce": {
+    "prefix": "roycss-physics-spring-bounce",
+    "body": [
+      "<div class=\"roycss-physics-spring-bounce\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element overshoots its target and springs back with damping",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Elastic Stretch": {
+    "prefix": "roycss-physics-elastic-stretch",
+    "body": [
+      "<div class=\"roycss-physics-elastic-stretch\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element stretches elastically when hovered, then snaps back",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Gravity Drop (physics-gravity-drop)": {
+    "prefix": "roycss-physics-gravity-drop",
+    "body": [
+      "<div class=\"roycss-physics-gravity-drop\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element falls with accelerating ease-in and squashes on landing",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Pendulum Swing": {
+    "prefix": "roycss-physics-pendulum-swing",
+    "body": [
+      "<div class=\"roycss-physics-pendulum-swing\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Realistic pendulum with progressively decreasing amplitude",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Magnetic Pull": {
+    "prefix": "roycss-physics-magnetic-pull",
+    "body": [
+      "<div class=\"roycss-physics-magnetic-pull\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element subtly shifts toward the cursor direction on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Rubber Band (physics-rubber-band)": {
+    "prefix": "roycss-physics-rubber-band",
+    "body": [
+      "<div class=\"roycss-physics-rubber-band\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element stretches like rubber when pulled and snaps back on release",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Bounce Chain": {
+    "prefix": "roycss-physics-bounce-chain",
+    "body": [
+      "<div class=\"roycss-physics-bounce-chain\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Sequential bounce animation cascading across child elements",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Inertia Slide": {
+    "prefix": "roycss-physics-inertia-slide",
+    "body": [
+      "<div class=\"roycss-physics-inertia-slide\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element slides and decelerates as if moving across a friction surface",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Weight Settle": {
+    "prefix": "roycss-physics-weight-settle",
+    "body": [
+      "<div class=\"roycss-physics-weight-settle\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Heavy element settles into place with a slight bounce and squash",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Float Buoyancy": {
+    "prefix": "roycss-physics-float-buoyancy",
+    "body": [
+      "<div class=\"roycss-physics-float-buoyancy\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element gently floats up and down as if bobbing on water",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Spring Loaded": {
+    "prefix": "roycss-physics-spring-loaded",
+    "body": [
+      "<div class=\"roycss-physics-spring-loaded\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element springs in from the side with damped oscillation",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Elastic Recoil": {
+    "prefix": "roycss-physics-elastic-recoil",
+    "body": [
+      "<div class=\"roycss-physics-elastic-recoil\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element recoils backward after being pushed, then springs forward",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Bounce Drop": {
+    "prefix": "roycss-physics-bounce-drop",
+    "body": [
+      "<div class=\"roycss-physics-bounce-drop\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element bounces like a rubber ball each time it is dropped",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Wobble Jelly": {
+    "prefix": "roycss-physics-wobble-jelly",
+    "body": [
+      "<div class=\"roycss-physics-wobble-jelly\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Jelly-like wobble deformation when the element is hovered",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Shake Impact": {
+    "prefix": "roycss-physics-shake-impact",
+    "body": [
+      "<div class=\"roycss-physics-shake-impact\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element shakes sharply as if struck by a sudden impact",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Spring Up": {
+    "prefix": "roycss-physics-spring-up",
+    "body": [
+      "<div class=\"roycss-physics-spring-up\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element springs upward from below and settles into place",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Elastic Fade": {
+    "prefix": "roycss-physics-elastic-fade",
+    "body": [
+      "<div class=\"roycss-physics-elastic-fade\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Fade-in combined with an elastic scale overshoot",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Gravity Tilt": {
+    "prefix": "roycss-physics-gravity-tilt",
+    "body": [
+      "<div class=\"roycss-physics-gravity-tilt\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element tilts slowly as if being pulled by gravity, then rights itself",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Momentum Spin": {
+    "prefix": "roycss-physics-momentum-spin",
+    "body": [
+      "<div class=\"roycss-physics-momentum-spin\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Spin that starts fast with momentum and gradually comes to a stop",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Bounce Settle": {
+    "prefix": "roycss-physics-bounce-settle",
+    "body": [
+      "<div class=\"roycss-physics-bounce-settle\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Multiple bounces with progressively decreasing bounce height",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Liquid Button Fill": {
+    "prefix": "roycss-liquid-button-fill",
+    "body": [
+      "<div class=\"roycss-liquid-button-fill\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Button fills with liquid color rising from the bottom on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Liquid Border Flow": {
+    "prefix": "roycss-liquid-border-flow",
+    "body": [
+      "<div class=\"roycss-liquid-border-flow\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Animated border that appears to flow like circulating liquid",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Liquid Card Wave": {
+    "prefix": "roycss-liquid-card-wave",
+    "body": [
+      "<div class=\"roycss-liquid-card-wave\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Card with a continuous wave undulating across its surface",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Liquid Gradient Shift": {
+    "prefix": "roycss-liquid-gradient-shift",
+    "body": [
+      "<div class=\"roycss-liquid-gradient-shift\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Background gradient that shifts and flows like moving liquid",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Liquid Blob Morph": {
+    "prefix": "roycss-liquid-blob-morph",
+    "body": [
+      "<div class=\"roycss-liquid-blob-morph\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Organic blob that continuously morphs via border-radius animation",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Liquid Reveal Mask": {
+    "prefix": "roycss-liquid-reveal-mask",
+    "body": [
+      "<div class=\"roycss-liquid-reveal-mask\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Content revealed by a liquid mask spreading outward",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Liquid Text Fill": {
+    "prefix": "roycss-liquid-text-fill",
+    "body": [
+      "<div class=\"roycss-liquid-text-fill\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Text fills with an animated liquid color gradient",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Liquid Drop Fall": {
+    "prefix": "roycss-liquid-drop-fall",
+    "body": [
+      "<div class=\"roycss-liquid-drop-fall\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Liquid drop repeatedly falls and splashes on impact",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Liquid Surface Ripple": {
+    "prefix": "roycss-liquid-surface-ripple",
+    "body": [
+      "<div class=\"roycss-liquid-surface-ripple\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Concentric ripple expands across the surface when hovered",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Liquid Wave Loader": {
+    "prefix": "roycss-liquid-wave-loader",
+    "body": [
+      "<div class=\"roycss-liquid-wave-loader\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Loading indicator with a wavy liquid surface rising and falling",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Liquid Gradient Pour": {
+    "prefix": "roycss-liquid-gradient-pour",
+    "body": [
+      "<div class=\"roycss-liquid-gradient-pour\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Gradient pours in from the top like liquid filling a container",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Liquid Circle Pulse": {
+    "prefix": "roycss-liquid-circle-pulse",
+    "body": [
+      "<div class=\"roycss-liquid-circle-pulse\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Circle pulses and distorts like a vibrating liquid droplet",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Liquid Menu Slide": {
+    "prefix": "roycss-liquid-menu-slide",
+    "body": [
+      "<div class=\"roycss-liquid-menu-slide\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Menu items slide in sequentially like drops of liquid",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Liquid Background Flow": {
+    "prefix": "roycss-liquid-background-flow",
+    "body": [
+      "<div class=\"roycss-liquid-background-flow\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Background with multiple liquid gradients flowing and blending",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Liquid Icon Drip": {
+    "prefix": "roycss-liquid-icon-drip",
+    "body": [
+      "<div class=\"roycss-liquid-icon-drip\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Icon appears to drip and melt downward like a liquid",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Liquid Progress Wave": {
+    "prefix": "roycss-liquid-progress-wave",
+    "body": [
+      "<div class=\"roycss-liquid-progress-wave\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Progress bar with a wavy liquid surface continually undulating",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Liquid Shape Transition": {
+    "prefix": "roycss-liquid-shape-transition",
+    "body": [
+      "<div class=\"roycss-liquid-shape-transition\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Shape continuously transitions through organic liquid forms",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Liquid Hover Splash": {
+    "prefix": "roycss-liquid-hover-splash",
+    "body": [
+      "<div class=\"roycss-liquid-hover-splash\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Splash of liquid color bursts outward on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Liquid Gradient Merge": {
+    "prefix": "roycss-liquid-gradient-merge",
+    "body": [
+      "<div class=\"roycss-liquid-gradient-merge\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Two gradients blend and merge like mixing liquids",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Liquid Underline Flow": {
+    "prefix": "roycss-liquid-underline-flow",
+    "body": [
+      "<div class=\"roycss-liquid-underline-flow\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Underline flows in from the left like a stream of liquid",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Polygon Cycle": {
+    "prefix": "roycss-morph-polygon-cycle",
+    "body": [
+      "<div class=\"roycss-morph-polygon-cycle\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element cycles through circle, triangle, square, and pentagon forms",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Organic Blob": {
+    "prefix": "roycss-morph-blob-organic",
+    "body": [
+      "<div class=\"roycss-morph-blob-organic\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Organic blob that continuously shifts through asymmetric shapes",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Button State Morph": {
+    "prefix": "roycss-morph-button-state",
+    "body": [
+      "<div class=\"roycss-morph-button-state\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Button morphs smoothly between idle, hover, and active states",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Card Expand": {
+    "prefix": "roycss-morph-card-expand",
+    "body": [
+      "<div class=\"roycss-morph-card-expand\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Card smoothly expands to a larger size with depth on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Icon Transform": {
+    "prefix": "roycss-morph-icon-transform",
+    "body": [
+      "<div class=\"roycss-morph-icon-transform\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Hamburger menu icon morphs into an X when hovered",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Circle Square Morph": {
+    "prefix": "roycss-morph-circle-square",
+    "body": [
+      "<div class=\"roycss-morph-circle-square\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Smooth continuous morph between a circle and a square",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Text Glow Morph": {
+    "prefix": "roycss-morph-text-glow",
+    "body": [
+      "<div class=\"roycss-morph-text-glow\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Text morphs through varying glow intensities continuously",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Border Radius Morph": {
+    "prefix": "roycss-morph-border-radius",
+    "body": [
+      "<div class=\"roycss-morph-border-radius\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Border-radius animates through a sequence of organic values",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "3D Flip Morph": {
+    "prefix": "roycss-morph-flip-3d",
+    "body": [
+      "<div class=\"roycss-morph-flip-3d\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element flips in 3D to reveal a contrasting back face on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Progress Shape Morph": {
+    "prefix": "roycss-morph-progress-shape",
+    "body": [
+      "<div class=\"roycss-morph-progress-shape\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Progress indicator morphs from circle to bar to checkmark",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Hover Grow Morph": {
+    "prefix": "roycss-morph-hover-grow",
+    "body": [
+      "<div class=\"roycss-morph-hover-grow\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element grows organically with shifting border-radius on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Rotate Scale Morph": {
+    "prefix": "roycss-morph-rotate-transform",
+    "body": [
+      "<div class=\"roycss-morph-rotate-transform\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Continuous rotation combined with pulsing scale morph",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Color Spectrum Shift": {
+    "prefix": "roycss-morph-color-shift",
+    "body": [
+      "<div class=\"roycss-morph-color-shift\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element smoothly morphs through the full color spectrum",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Size Pulse Morph": {
+    "prefix": "roycss-morph-size-pulse",
+    "body": [
+      "<div class=\"roycss-morph-size-pulse\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Size pulses rhythmically with a morphing border-radius",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Shape Reveal": {
+    "prefix": "roycss-morph-shape-reveal",
+    "body": [
+      "<div class=\"roycss-morph-shape-reveal\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Content revealed by a morphing clip-path expanding outward",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Card To Modal": {
+    "prefix": "roycss-morph-card-to-modal",
+    "body": [
+      "<div class=\"roycss-morph-card-to-modal\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Card morphs to a larger modal-like size with elevation on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Icon To Text": {
+    "prefix": "roycss-morph-icon-to-text",
+    "body": [
+      "<div class=\"roycss-morph-icon-to-text\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Icon morphs into a text label that slides out on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Gradient Morph": {
+    "prefix": "roycss-morph-gradient-morph",
+    "body": [
+      "<div class=\"roycss-morph-gradient-morph\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Background gradient morphs continuously between color stops",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Clip Path Morph": {
+    "prefix": "roycss-morph-clip-path",
+    "body": [
+      "<div class=\"roycss-morph-clip-path\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Clip-path morphs through star, hexagon, and arrow shapes",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Hover Distort": {
+    "prefix": "roycss-morph-hover-distort",
+    "body": [
+      "<div class=\"roycss-morph-hover-distort\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element distorts and morphs its shape dramatically on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "CRT Scanlines": {
+    "prefix": "roycss-retro-crt-scanlines",
+    "body": [
+      "<div class=\"roycss-retro-crt-scanlines\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Retro CRT monitor scanline overlay with subtle phosphor curvature and rolling bar",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VHS Tracking (retro-vhs-tracking)": {
+    "prefix": "roycss-retro-vhs-tracking",
+    "body": [
+      "<div class=\"roycss-retro-vhs-tracking\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "VHS horizontal tracking distortion lines with chromatic color bleed and jitter",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Pixel Art Transition": {
+    "prefix": "roycss-retro-pixel-art-transition",
+    "body": [
+      "<div class=\"roycss-retro-pixel-art-transition\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Pixelated in-and-out transition using image-rendering: pixelated and stepped scale",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "LCD Display": {
+    "prefix": "roycss-retro-lcd-display",
+    "body": [
+      "<div class=\"roycss-retro-lcd-display\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Segmented LCD display font effect with green-grey phosphor segments and ghost digits",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Typewriter Ribbon": {
+    "prefix": "roycss-retro-typewriter-ribbon",
+    "body": [
+      "<div class=\"roycss-retro-typewriter-ribbon\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Faded ribbon-worn typewriter text with uneven ink density and ghost impression",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Polaroid Frame (retro-polaroid-frame)": {
+    "prefix": "roycss-retro-polaroid-frame",
+    "body": [
+      "<div class=\"roycss-retro-polaroid-frame\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Polaroid photo card with thick white border, slight tilt, and soft shadow",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Film Grain (retro-film-grain)": {
+    "prefix": "roycss-retro-film-grain",
+    "body": [
+      "<div class=\"roycss-retro-film-grain\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Animated film grain noise overlay for cinematic retro footage aesthetic",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Neon Flicker (retro-neon-flicker)": {
+    "prefix": "roycss-retro-neon-flicker",
+    "body": [
+      "<div class=\"roycss-retro-neon-flicker\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Neon sign that flickers and buzzes intermittently like a faulty motel sign",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Cassette Reel": {
+    "prefix": "roycss-retro-cassette-reel",
+    "body": [
+      "<div class=\"roycss-retro-cassette-reel\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Spinning cassette tape reel with two counter-rotating hubs and tape window",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Game Boy UI": {
+    "prefix": "roycss-retro-gameboy-ui",
+    "body": [
+      "<div class=\"roycss-retro-gameboy-ui\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Four-color DMG Game Boy green palette with dithered border and A/B button styling",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Arcade Glow": {
+    "prefix": "roycss-retro-arcade-glow",
+    "body": [
+      "<div class=\"roycss-retro-arcade-glow\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "80s arcade cabinet marquee text with layered neon glow and pulsing intensity",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VHS Glitch (retro-vhs-glitch)": {
+    "prefix": "roycss-retro-vhs-glitch",
+    "body": [
+      "<div class=\"roycss-retro-vhs-glitch\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "VHS tape glitch distortion with horizontal slices and color channel split",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "8-Bit Border": {
+    "prefix": "roycss-retro-8bit-border",
+    "body": [
+      "<div class=\"roycss-retro-8bit-border\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Pixelated 8-bit style stepped border with corner notches and chunky shadow",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Synthwave Grid": {
+    "prefix": "roycss-retro-synthwave-grid",
+    "body": [
+      "<div class=\"roycss-retro-synthwave-grid\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Synthwave perspective grid background with horizon glow and animated floor lines",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Retrowave Sun": {
+    "prefix": "roycss-retro-retrowave-sun",
+    "body": [
+      "<div class=\"roycss-retro-retrowave-sun\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Retrowave sun with horizontal scanline cuts and gradient pink-to-yellow glow",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Dial-Up Loader": {
+    "prefix": "roycss-retro-dial-up-loader",
+    "body": [
+      "<div class=\"roycss-retro-dial-up-loader\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Dial-up modem loading animation with pulsing connection dots and handshake rhythm",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Floppy Disk Save": {
+    "prefix": "roycss-retro-floppy-disk-save",
+    "body": [
+      "<div class=\"roycss-retro-floppy-disk-save\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Floppy disk save icon that wiggles and reveals a saving state on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "TV Static": {
+    "prefix": "roycss-retro-tv-static",
+    "body": [
+      "<div class=\"roycss-retro-tv-static\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Old TV static noise effect with shifting grain and phosphor flicker",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Tape Deck Buttons": {
+    "prefix": "roycss-retro-tape-deck-buttons",
+    "body": [
+      "<div class=\"roycss-retro-tape-deck-buttons\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Tape deck transport buttons that depress on hover with mechanical feedback",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Coin Insert": {
+    "prefix": "roycss-retro-coin-insert",
+    "body": [
+      "<div class=\"roycss-retro-coin-insert\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Arcade coin insert animation that drops and spins into the slot with a shine",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Counter Roll": {
+    "prefix": "roycss-dataviz-counter-roll",
+    "body": [
+      "<div class=\"roycss-dataviz-counter-roll\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Odometer-style number that rolls vertical digits into place on load",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Progress Ring": {
+    "prefix": "roycss-dataviz-progress-ring",
+    "body": [
+      "<div class=\"roycss-dataviz-progress-ring\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Circular progress ring that animates its stroke-dashoffset fill from empty to full",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Semi-Circle Progress": {
+    "prefix": "roycss-dataviz-progress-semi",
+    "body": [
+      "<div class=\"roycss-dataviz-progress-semi\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Semi-circle progress gauge that sweeps its arc from left to right",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Bar Grow": {
+    "prefix": "roycss-dataviz-bar-grow",
+    "body": [
+      "<div class=\"roycss-dataviz-bar-grow\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Vertical bar chart columns that grow upward from zero baseline on load",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Horizontal Bars": {
+    "prefix": "roycss-dataviz-bar-horizontal",
+    "body": [
+      "<div class=\"roycss-dataviz-bar-horizontal\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Horizontal bars that grow from left to right with staggered easing",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Pie Reveal": {
+    "prefix": "roycss-dataviz-pie-reveal",
+    "body": [
+      "<div class=\"roycss-dataviz-pie-reveal\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Donut chart segments that sweep in sequentially using conic gradient rotation",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Sparkline Draw": {
+    "prefix": "roycss-dataviz-sparkline-draw",
+    "body": [
+      "<div class=\"roycss-dataviz-sparkline-draw\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Sparkline that draws itself along an SVG-like path using stroke-dashoffset",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Stat Pulse": {
+    "prefix": "roycss-dataviz-stat-pulse",
+    "body": [
+      "<div class=\"roycss-dataviz-stat-pulse\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Statistic number that pulses and glows when its value updates",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Data Flow": {
+    "prefix": "roycss-dataviz-data-flow",
+    "body": [
+      "<div class=\"roycss-dataviz-data-flow\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Animated dashed flow line connecting data points with marching ants",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Gauge Needle": {
+    "prefix": "roycss-dataviz-gauge-needle",
+    "body": [
+      "<div class=\"roycss-dataviz-gauge-needle\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Speedometer-style gauge with a needle that sweeps to its target value",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Heatmap Cell": {
+    "prefix": "roycss-dataviz-heatmap-cell",
+    "body": [
+      "<div class=\"roycss-dataviz-heatmap-cell\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Single heatmap cell that transitions from cool to warm color on load",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Timeline Progress": {
+    "prefix": "roycss-dataviz-timeline-progress",
+    "body": [
+      "<div class=\"roycss-dataviz-timeline-progress\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Horizontal timeline with a progress line that draws across milestones",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Count Up": {
+    "prefix": "roycss-dataviz-count-up",
+    "body": [
+      "<div class=\"roycss-dataviz-count-up\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Integer counter that animates from 0 to target using @property and CSS counter",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Percentage Bar": {
+    "prefix": "roycss-dataviz-percentage-bar",
+    "body": [
+      "<div class=\"roycss-dataviz-percentage-bar\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Indeterminate percentage bar with animated diagonal stripes scrolling",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Radial Progress (dataviz-radial-progress)": {
+    "prefix": "roycss-dataviz-radial-progress",
+    "body": [
+      "<div class=\"roycss-dataviz-radial-progress\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Radial progress with a rotating conic gradient sweep and center cutout",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Stacked Bar": {
+    "prefix": "roycss-dataviz-stacked-bar",
+    "body": [
+      "<div class=\"roycss-dataviz-stacked-bar\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Stacked bar chart segments that fill in sequence from bottom to top",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Line Chart Draw (dataviz-line-chart-draw)": {
+    "prefix": "roycss-dataviz-line-chart-draw",
+    "body": [
+      "<div class=\"roycss-dataviz-line-chart-draw\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Trending line chart that draws itself across the canvas with a moving dot",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Area Chart Fill": {
+    "prefix": "roycss-dataviz-area-chart-fill",
+    "body": [
+      "<div class=\"roycss-dataviz-area-chart-fill\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Area chart that fills from the bottom up with a clipped gradient sweep",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Bubble Pulse": {
+    "prefix": "roycss-dataviz-bubble-pulse",
+    "body": [
+      "<div class=\"roycss-dataviz-bubble-pulse\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Data bubble that pulses outward with concentric rings to indicate activity",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Loading Skeleton": {
+    "prefix": "roycss-dataviz-loading-skeleton",
+    "body": [
+      "<div class=\"roycss-dataviz-loading-skeleton\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Skeleton placeholder with shimmering diagonal highlight sweeping across",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Skeleton Shimmer Gradient": {
+    "prefix": "roycss-state-skeleton-shimmer-gradient",
+    "body": [
+      "<div class=\"roycss-state-skeleton-shimmer-gradient\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Gradient shimmer sweeping across a skeleton placeholder",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Skeleton Pulse": {
+    "prefix": "roycss-state-skeleton-pulse",
+    "body": [
+      "<div class=\"roycss-state-skeleton-pulse\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Skeleton placeholder that pulses opacity in a breathing rhythm",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Skeleton Wave": {
+    "prefix": "roycss-state-skeleton-wave",
+    "body": [
+      "<div class=\"roycss-state-skeleton-wave\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Skeleton with a diagonal wave shimmer sweeping across",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Skeleton Dot Pattern": {
+    "prefix": "roycss-state-skeleton-dot",
+    "body": [
+      "<div class=\"roycss-state-skeleton-dot\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Skeleton placeholder with animated dot pattern shimmer",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Success Checkmark Draw": {
+    "prefix": "roycss-state-success-checkmark",
+    "body": [
+      "<div class=\"roycss-state-success-checkmark\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Checkmark that draws itself with a subtle celebratory glow",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Success Confetti Burst": {
+    "prefix": "roycss-state-success-confetti",
+    "body": [
+      "<div class=\"roycss-state-success-confetti\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Confetti pieces burst outward from center on success",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Error Shake (state-error-shake)": {
+    "prefix": "roycss-state-error-shake",
+    "body": [
+      "<div class=\"roycss-state-error-shake\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Form field shakes horizontally to signal a validation error",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Error Flash": {
+    "prefix": "roycss-state-error-flash",
+    "body": [
+      "<div class=\"roycss-state-error-flash\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element briefly flashes red to signal an error state",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Offline Pulse": {
+    "prefix": "roycss-state-offline-pulse",
+    "body": [
+      "<div class=\"roycss-state-offline-pulse\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Red status dot with expanding ring indicating offline state",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Online Pulse": {
+    "prefix": "roycss-state-online-pulse",
+    "body": [
+      "<div class=\"roycss-state-online-pulse\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Green status dot with expanding ring indicating online state",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Sync Spin": {
+    "prefix": "roycss-state-sync-spin",
+    "body": [
+      "<div class=\"roycss-state-sync-spin\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Two curved arrows rotating to indicate data synchronization",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Upload Progress (state-upload-progress)": {
+    "prefix": "roycss-state-upload-progress",
+    "body": [
+      "<div class=\"roycss-state-upload-progress\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Indeterminate upload bar with a moving highlight stripe",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Connection Bars": {
+    "prefix": "roycss-state-connection-bars",
+    "body": [
+      "<div class=\"roycss-state-connection-bars\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "WiFi/signal strength bars that animate in sequence",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Loading Dots": {
+    "prefix": "roycss-state-loading-dots",
+    "body": [
+      "<div class=\"roycss-state-loading-dots\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Three classic bouncing dots loading animation",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Loading Spinner Fade": {
+    "prefix": "roycss-state-loading-spinner",
+    "body": [
+      "<div class=\"roycss-state-loading-spinner\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Clean spinner ring with a fading tail segment",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Indeterminate Loading Bar": {
+    "prefix": "roycss-state-loading-bar",
+    "body": [
+      "<div class=\"roycss-state-loading-bar\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Indeterminate progress bar that sweeps back and forth",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Toggle Switch (state-toggle-switch)": {
+    "prefix": "roycss-state-toggle-switch",
+    "body": [
+      "<div class=\"roycss-state-toggle-switch\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Smooth toggle switch that animates between on and off states",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Checkbox Check (state-checkbox-check)": {
+    "prefix": "roycss-state-checkbox-check",
+    "body": [
+      "<div class=\"roycss-state-checkbox-check\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Checkbox that animates the checkmark drawing on and off",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Radio Select (state-radio-select)": {
+    "prefix": "roycss-state-radio-select",
+    "body": [
+      "<div class=\"roycss-state-radio-select\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Radio button with inner dot that scales in on selection",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Toast Slide In": {
+    "prefix": "roycss-state-toast-slide",
+    "body": [
+      "<div class=\"roycss-state-toast-slide\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Toast notification that slides in, holds, and slides out",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Equalizer Bars (audio-equalizer-bars)": {
+    "prefix": "roycss-audio-equalizer-bars",
+    "body": [
+      "<div class=\"roycss-audio-equalizer-bars\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Vertical bars simulating frequency response with staggered heights",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Vinyl Spin": {
+    "prefix": "roycss-audio-vinyl-spin",
+    "body": [
+      "<div class=\"roycss-audio-vinyl-spin\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Rotating vinyl record with concentric grooves and a tone arm",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Sound Wave Pulse": {
+    "prefix": "roycss-audio-wave-pulse",
+    "body": [
+      "<div class=\"roycss-audio-wave-pulse\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Concentric circles expanding outward like sound waves from a source",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Speaker Vibrate": {
+    "prefix": "roycss-audio-speaker-vibrate",
+    "body": [
+      "<div class=\"roycss-audio-speaker-vibrate\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Speaker cone that pulses and vibrates as if emitting sound",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Sine Waveform": {
+    "prefix": "roycss-audio-waveform-sine",
+    "body": [
+      "<div class=\"roycss-audio-waveform-sine\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Animated sine wave that flows horizontally like an audio signal",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Square Waveform": {
+    "prefix": "roycss-audio-waveform-square",
+    "body": [
+      "<div class=\"roycss-audio-waveform-square\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Animated square wave that scrolls horizontally like a digital signal",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Floating Music Notes": {
+    "prefix": "roycss-audio-note-float",
+    "body": [
+      "<div class=\"roycss-audio-note-float\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Musical notes floating upward and fading like an audio visualization",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Circular Visualizer": {
+    "prefix": "roycss-audio-visualizer-circle",
+    "body": [
+      "<div class=\"roycss-audio-visualizer-circle\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Circular audio visualizer with pulsing concentric rings",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Beat Pulse": {
+    "prefix": "roycss-audio-beat-pulse",
+    "body": [
+      "<div class=\"roycss-audio-beat-pulse\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element pulses on a simulated musical beat with overshoot",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Frequency Spectrum": {
+    "prefix": "roycss-audio-frequency-bars",
+    "body": [
+      "<div class=\"roycss-audio-frequency-bars\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Full frequency spectrum bars with mirrored top and bottom halves",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Sound Ripple": {
+    "prefix": "roycss-audio-ripple-effect",
+    "body": [
+      "<div class=\"roycss-audio-ripple-effect\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Ripple expanding from a sound source with multiple staggered rings",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VU Meter": {
+    "prefix": "roycss-audio-vu-meter",
+    "body": [
+      "<div class=\"roycss-audio-vu-meter\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Classic VU meter with needle that sweeps across the scale",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Cassette Tape Spin": {
+    "prefix": "roycss-audio-cassette-spin",
+    "body": [
+      "<div class=\"roycss-audio-cassette-spin\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Cassette tape with two reels rotating in opposite directions",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Headphone Bounce": {
+    "prefix": "roycss-audio-headphone-bounce",
+    "body": [
+      "<div class=\"roycss-audio-headphone-bounce\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Headphone icon bouncing rhythmically on a simulated beat",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Sound Icon Waves": {
+    "prefix": "roycss-audio-sound-icon-wave",
+    "body": [
+      "<div class=\"roycss-audio-sound-icon-wave\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Speaker icon with animated concentric sound waves emanating outward",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Mic Pulse": {
+    "prefix": "roycss-audio-mic-pulse",
+    "body": [
+      "<div class=\"roycss-audio-mic-pulse\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Microphone pulsing with a recording ring while in active recording",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Play to Pause Morph": {
+    "prefix": "roycss-audio-play-to-pause",
+    "body": [
+      "<div class=\"roycss-audio-play-to-pause\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Play triangle that morphs into a pause bar and back",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Volume Knob": {
+    "prefix": "roycss-audio-volume-knob",
+    "body": [
+      "<div class=\"roycss-audio-volume-knob\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Volume knob that rotates back and forth like a user adjusting volume",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Spectrum Gradient": {
+    "prefix": "roycss-audio-spectrum-gradient",
+    "body": [
+      "<div class=\"roycss-audio-spectrum-gradient\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Spectrum analyzer with gradient bars that shift through the rainbow",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Bass Drop Impact": {
+    "prefix": "roycss-audio-bass-drop",
+    "body": [
+      "<div class=\"roycss-audio-bass-drop\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element implodes then explodes outward simulating a bass drop impact",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Pressure Press": {
+    "prefix": "roycss-haptics-pressure-press",
+    "body": [
+      "<div class=\"roycss-haptics-pressure-press\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element deforms with deepening inset shadow and scale as if physically pressed",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Surface Tension": {
+    "prefix": "roycss-haptics-surface-tension",
+    "body": [
+      "<div class=\"roycss-haptics-surface-tension\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Liquid-like ripple with surface-tension behavior emanates on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Rubber Stretch": {
+    "prefix": "roycss-haptics-rubber-stretch",
+    "body": [
+      "<div class=\"roycss-haptics-rubber-stretch\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element stretches like rubber when hovered and snaps back on release",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Weight Settle (haptics-weight-settle)": {
+    "prefix": "roycss-haptics-weight-settle",
+    "body": [
+      "<div class=\"roycss-haptics-weight-settle\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Heavy element settles with bounce and squash on load, like a heavy weight",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Light Float": {
+    "prefix": "roycss-haptics-light-float",
+    "body": [
+      "<div class=\"roycss-haptics-light-float\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element gently floats up and down as if resting on water",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Concrete Texture": {
+    "prefix": "roycss-haptics-texture-concrete",
+    "body": [
+      "<div class=\"roycss-haptics-texture-concrete\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Directional grain and noise that shifts on hover, evoking raw concrete",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Brushed Metal": {
+    "prefix": "roycss-haptics-texture-metal",
+    "body": [
+      "<div class=\"roycss-haptics-texture-metal\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Brushed metal surface with a sweeping light reflection on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Fabric Weave": {
+    "prefix": "roycss-haptics-texture-fabric",
+    "body": [
+      "<div class=\"roycss-haptics-texture-fabric\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Fabric weave texture with subtle horizontal drift on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Leather Grain": {
+    "prefix": "roycss-haptics-texture-leather",
+    "body": [
+      "<div class=\"roycss-haptics-texture-leather\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Leather grain texture with pebbled surface and warm tone",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Spring Loaded (haptics-spring-loaded)": {
+    "prefix": "roycss-haptics-spring-loaded",
+    "body": [
+      "<div class=\"roycss-haptics-spring-loaded\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element springs in from the side with oscillating overshoot",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Elastic Recoil (haptics-elastic-recoil)": {
+    "prefix": "roycss-haptics-elastic-recoil",
+    "body": [
+      "<div class=\"roycss-haptics-elastic-recoil\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element recoils back after being pushed, with elastic overshoot",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Bounce Impact": {
+    "prefix": "roycss-haptics-bounce-impact",
+    "body": [
+      "<div class=\"roycss-haptics-bounce-impact\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element bounces as if struck by an impact, with secondary decay",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Mass Drop": {
+    "prefix": "roycss-haptics-mass-drop",
+    "body": [
+      "<div class=\"roycss-haptics-mass-drop\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element drops with weight — fast ease-in and squash on landing",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Vibration Hum": {
+    "prefix": "roycss-haptics-vibration-hum",
+    "body": [
+      "<div class=\"roycss-haptics-vibration-hum\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Subtle continuous vibration on hover, like a device buzzing",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Friction Grip": {
+    "prefix": "roycss-haptics-friction-grip",
+    "body": [
+      "<div class=\"roycss-haptics-friction-grip\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element grips the surface on hover — slight scale down with shadow",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Soft Press": {
+    "prefix": "roycss-haptics-soft-press",
+    "body": [
+      "<div class=\"roycss-haptics-soft-press\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Soft depress effect with shadow expansion, like pressing foam",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Snap Back": {
+    "prefix": "roycss-haptics-snap-back",
+    "body": [
+      "<div class=\"roycss-haptics-snap-back\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element drifts away on hover then snaps back to origin on release",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Velvet Touch": {
+    "prefix": "roycss-haptics-velvet-touch",
+    "body": [
+      "<div class=\"roycss-haptics-velvet-touch\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Soft, luxurious hover with velvet-like deep shadow and warmth",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Glass Tap": {
+    "prefix": "roycss-haptics-glass-tap",
+    "body": [
+      "<div class=\"roycss-haptics-glass-tap\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Tap creates a glass-like concentric ripple that shimmers outward",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Magnetic Pull (haptics-magnetic-pull)": {
+    "prefix": "roycss-haptics-magnetic-pull",
+    "body": [
+      "<div class=\"roycss-haptics-magnetic-pull\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element subtly shifts toward the cursor direction with a magnetic feel",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Brick Reveal": {
+    "prefix": "roycss-structural-brick-reveal",
+    "body": [
+      "<div class=\"roycss-structural-brick-reveal\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Bricks appear one by one in staggered rows to form a wall on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Fold Paper": {
+    "prefix": "roycss-structural-fold-paper",
+    "body": [
+      "<div class=\"roycss-structural-fold-paper\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element folds like a sheet of paper using CSS 3D transforms on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Page Curl": {
+    "prefix": "roycss-structural-page-curl",
+    "body": [
+      "<div class=\"roycss-structural-page-curl\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Corner curls upward on hover, revealing content beneath the page",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Shatter Break": {
+    "prefix": "roycss-structural-shatter-break",
+    "body": [
+      "<div class=\"roycss-structural-shatter-break\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element appears to shatter into pieces on hover using clip-path",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Dissolve (structural-dissolve)": {
+    "prefix": "roycss-structural-dissolve",
+    "body": [
+      "<div class=\"roycss-structural-dissolve\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element dissolves into particles and noise on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Assemble": {
+    "prefix": "roycss-structural-assemble",
+    "body": [
+      "<div class=\"roycss-structural-assemble\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Pieces fly in from different directions to assemble the element",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Origami Fold (structural-origami-fold)": {
+    "prefix": "roycss-structural-origami-fold",
+    "body": [
+      "<div class=\"roycss-structural-origami-fold\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Origami-style fold animation that pleats the element on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Glass Shatter": {
+    "prefix": "roycss-structural-glass-shatter",
+    "body": [
+      "<div class=\"roycss-structural-glass-shatter\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Glass crack pattern animates across the surface on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Stone Crack": {
+    "prefix": "roycss-structural-stone-crack",
+    "body": [
+      "<div class=\"roycss-structural-stone-crack\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Stone cracking effect that progressively reveals fissures on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Metal Bend": {
+    "prefix": "roycss-structural-metal-bend",
+    "body": [
+      "<div class=\"roycss-structural-metal-bend\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Sheet metal bending effect with flexed perspective on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Wood Grain": {
+    "prefix": "roycss-structural-wood-grain",
+    "body": [
+      "<div class=\"roycss-structural-wood-grain\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Wood grain texture with flowing grain lines on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Marble Vein": {
+    "prefix": "roycss-structural-marble-vein",
+    "body": [
+      "<div class=\"roycss-structural-marble-vein\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Marble surface with flowing veins that subtly shift on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Concrete Surface": {
+    "prefix": "roycss-structural-concrete-texture",
+    "body": [
+      "<div class=\"roycss-structural-concrete-texture\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Raw concrete surface with mottled stains and aggregate speckles",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Water Ripple Surface": {
+    "prefix": "roycss-structural-water-ripple-surface",
+    "body": [
+      "<div class=\"roycss-structural-water-ripple-surface\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Water surface ripple that expands across the surface on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Fabric Weave Pattern": {
+    "prefix": "roycss-structural-fabric-weave",
+    "body": [
+      "<div class=\"roycss-structural-fabric-weave\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Tightly woven fabric pattern with warp and weft interlacing",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Carbon Fiber": {
+    "prefix": "roycss-structural-carbon-fiber",
+    "body": [
+      "<div class=\"roycss-structural-carbon-fiber\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Carbon fiber weave pattern with the characteristic twill sheen",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Honeycomb Structure": {
+    "prefix": "roycss-structural-honeycomb-structure",
+    "body": [
+      "<div class=\"roycss-structural-honeycomb-structure\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Hexagonal honeycomb pattern with cells that warm up on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Crystal Facet": {
+    "prefix": "roycss-structural-crystal-facet",
+    "body": [
+      "<div class=\"roycss-structural-crystal-facet\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Crystal facets reflect shifting light across geometric planes",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Ice Melt": {
+    "prefix": "roycss-structural-ice-melt",
+    "body": [
+      "<div class=\"roycss-structural-ice-melt\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Ice melts with opacity and blur transition on hover, revealing what's beneath",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Rust Texture": {
+    "prefix": "roycss-structural-rust-texture",
+    "body": [
+      "<div class=\"roycss-structural-rust-texture\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Rust texture with progressive reveal of oxidation on hover",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Day to Night": {
+    "prefix": "roycss-nature-day-night",
+    "body": [
+      "<div class=\"roycss-nature-day-night\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Background transitions from a blue day sky to a starry night",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Cloud Drift": {
+    "prefix": "roycss-nature-cloud-drift",
+    "body": [
+      "<div class=\"roycss-nature-cloud-drift\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Realistic cloud shapes drift slowly across a sky background",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Sunrise Gradient": {
+    "prefix": "roycss-nature-sunrise-gradient",
+    "body": [
+      "<div class=\"roycss-nature-sunrise-gradient\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Animated sky gradient mimicking the warm hues of a sunrise",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Plant Growth": {
+    "prefix": "roycss-nature-plant-growth",
+    "body": [
+      "<div class=\"roycss-nature-plant-growth\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element grows upward like a sprouting plant from the bottom",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Water Reflection": {
+    "prefix": "roycss-nature-water-reflection",
+    "body": [
+      "<div class=\"roycss-nature-water-reflection\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Mirrored element below with subtle wave distortion on the surface",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Firefly Ambient": {
+    "prefix": "roycss-nature-firefly-ambient",
+    "body": [
+      "<div class=\"roycss-nature-firefly-ambient\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Small dots randomly glow and float, simulating fireflies at dusk",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Seasons Switcher": {
+    "prefix": "roycss-nature-seasons-switcher",
+    "body": [
+      "<div class=\"roycss-nature-seasons-switcher\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Component cycles through spring, summer, autumn, and winter themes",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Rain Drops": {
+    "prefix": "roycss-nature-rain-drops",
+    "body": [
+      "<div class=\"roycss-nature-rain-drops\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Rain drops falling on a surface with subtle streaking motion",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Snow Falling": {
+    "prefix": "roycss-nature-snow-falling",
+    "body": [
+      "<div class=\"roycss-nature-snow-falling\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Gentle snowfall with multiple snowflake layers drifting down",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Autumn Leaves": {
+    "prefix": "roycss-nature-autumn-leaves",
+    "body": [
+      "<div class=\"roycss-nature-autumn-leaves\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Falling autumn leaves with swaying motion and warm colors",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Thunder Flash": {
+    "prefix": "roycss-nature-thunder-flash",
+    "body": [
+      "<div class=\"roycss-nature-thunder-flash\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Occasional lightning flash with brightening sky on a stormy backdrop",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Fog Drift": {
+    "prefix": "roycss-nature-fog-drift",
+    "body": [
+      "<div class=\"roycss-nature-fog-drift\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Drifting fog layers that slowly move across the surface",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Spring Bloom": {
+    "prefix": "roycss-nature-spring-bloom",
+    "body": [
+      "<div class=\"roycss-nature-spring-bloom\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Flowers bloom into full petals with a soft scaling animation",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Ocean Tide": {
+    "prefix": "roycss-nature-ocean-tide",
+    "body": [
+      "<div class=\"roycss-nature-ocean-tide\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Tide coming in and out with a wave cresting motion",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Desert Dune": {
+    "prefix": "roycss-nature-desert-dune",
+    "body": [
+      "<div class=\"roycss-nature-desert-dune\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Sand dune shifting effect with warm gradient layers sliding",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Aurora Sky": {
+    "prefix": "roycss-nature-aurora-sky",
+    "body": [
+      "<div class=\"roycss-nature-aurora-sky\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Aurora borealis with shifting green and violet ribbons in the sky",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Morning Mist": {
+    "prefix": "roycss-nature-mist-morning",
+    "body": [
+      "<div class=\"roycss-nature-mist-morning\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Morning mist rising slowly with warm dawn light behind it",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Rainbow Arc": {
+    "prefix": "roycss-nature-rainbow-arc",
+    "body": [
+      "<div class=\"roycss-nature-rainbow-arc\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Rainbow arc appears on hover with a sweeping multi-color reveal",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Tornado Spin": {
+    "prefix": "roycss-nature-tornado-spin",
+    "body": [
+      "<div class=\"roycss-nature-tornado-spin\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Spinning vortex effect with rotating layers and a tapering shape",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Volcano Erupt": {
+    "prefix": "roycss-nature-volcano-erupt",
+    "body": [
+      "<div class=\"roycss-nature-volcano-erupt\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Volcanic eruption with rising particles and a glowing crater",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Parallax Depth": {
+    "prefix": "roycss-scroll-intelligence-parallax-depth",
+    "body": [
+      "<div class=\"roycss-scroll-intelligence-parallax-depth\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Multi-layer parallax creating 3D depth illusion on scroll",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Speed Morph": {
+    "prefix": "roycss-scroll-intelligence-speed-morph",
+    "body": [
+      "<div class=\"roycss-scroll-intelligence-speed-morph\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Text morphs shape and skew based on simulated scroll velocity",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Horizontal Section": {
+    "prefix": "roycss-scroll-intelligence-horizontal-section",
+    "body": [
+      "<div class=\"roycss-scroll-intelligence-horizontal-section\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Full-width section scrolls horizontally while page scrolls vertically",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Color Spectrum Shift (scroll-intelligence-color-shift)": {
+    "prefix": "roycss-scroll-intelligence-color-shift",
+    "body": [
+      "<div class=\"roycss-scroll-intelligence-color-shift\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Background hue rotates through full spectrum as you scroll",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Cinematic Fade": {
+    "prefix": "roycss-scroll-intelligence-cinematic-fade",
+    "body": [
+      "<div class=\"roycss-scroll-intelligence-cinematic-fade\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Elements fade and blur in/out at specific scroll positions",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Text Reveal": {
+    "prefix": "roycss-scroll-intelligence-text-reveal",
+    "body": [
+      "<div class=\"roycss-scroll-intelligence-text-reveal\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Characters appear one by one as they enter the viewport",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Progress Morph": {
+    "prefix": "roycss-scroll-intelligence-progress-morph",
+    "body": [
+      "<div class=\"roycss-scroll-intelligence-progress-morph\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Shape morphs from circle to square based on scroll progress",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Sticky Storytelling": {
+    "prefix": "roycss-scroll-intelligence-sticky-storytelling",
+    "body": [
+      "<div class=\"roycss-scroll-intelligence-sticky-storytelling\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Sticky element stays fixed while scene content scrolls past",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Image Transition": {
+    "prefix": "roycss-scroll-intelligence-image-transition",
+    "body": [
+      "<div class=\"roycss-scroll-intelligence-image-transition\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Cross-fade between scenes as you scroll between sections",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Text Choreography": {
+    "prefix": "roycss-scroll-intelligence-text-choreography",
+    "body": [
+      "<div class=\"roycss-scroll-intelligence-text-choreography\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Words fly in and out in sequence on scroll rhythm",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Section Morph": {
+    "prefix": "roycss-scroll-intelligence-section-morph",
+    "body": [
+      "<div class=\"roycss-scroll-intelligence-section-morph\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Section container morphs shape and corners on scroll",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Progress Ring (scroll-intelligence-progress-ring)": {
+    "prefix": "roycss-scroll-intelligence-progress-ring",
+    "body": [
+      "<div class=\"roycss-scroll-intelligence-progress-ring\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Circular SVG-free progress ring tracking scroll position",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Velocity Blur": {
+    "prefix": "roycss-scroll-intelligence-velocity-blur",
+    "body": [
+      "<div class=\"roycss-scroll-intelligence-velocity-blur\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element blurs when scrolling fast, sharpens when slow",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Pinned Card": {
+    "prefix": "roycss-scroll-intelligence-pinned-card",
+    "body": [
+      "<div class=\"roycss-scroll-intelligence-pinned-card\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Card pins to viewport and tilts, releases at section end",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Gradient Shift (scroll-intelligence-gradient-shift)": {
+    "prefix": "roycss-scroll-intelligence-gradient-shift",
+    "body": [
+      "<div class=\"roycss-scroll-intelligence-gradient-shift\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Gradient angle and position shift continuously with scroll",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Scale Reveal": {
+    "prefix": "roycss-scroll-intelligence-scale-reveal",
+    "body": [
+      "<div class=\"roycss-scroll-intelligence-scale-reveal\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Elements scale from 0 to full size as they enter viewport",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Rotate 3D (scroll-intelligence-rotate-3d)": {
+    "prefix": "roycss-scroll-intelligence-rotate-3d",
+    "body": [
+      "<div class=\"roycss-scroll-intelligence-rotate-3d\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element rotates in full 3D space tied to scroll position",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Stagger Reveal": {
+    "prefix": "roycss-scroll-intelligence-stagger-reveal",
+    "body": [
+      "<div class=\"roycss-scroll-intelligence-stagger-reveal\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Child elements reveal in a staggered cascade on scroll",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Progress Bar Top": {
+    "prefix": "roycss-scroll-intelligence-progress-bar-top",
+    "body": [
+      "<div class=\"roycss-scroll-intelligence-progress-bar-top\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Thin gradient progress bar pinned to top tracking scroll",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Snap Sections": {
+    "prefix": "roycss-scroll-intelligence-snap-sections",
+    "body": [
+      "<div class=\"roycss-scroll-intelligence-snap-sections\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Sections snap into place using scroll-snap on a vertical track",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Glow Trail": {
+    "prefix": "roycss-cursor-fx-glow-trail",
+    "body": [
+      "<div class=\"roycss-cursor-fx-glow-trail\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Glowing comet-like trail follows an animated cursor path",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Spotlight (cursor-fx-spotlight)": {
+    "prefix": "roycss-cursor-fx-spotlight",
+    "body": [
+      "<div class=\"roycss-cursor-fx-spotlight\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Spotlight reveals hidden content near a moving cursor",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Magnetic Attraction": {
+    "prefix": "roycss-cursor-fx-magnetic-attraction",
+    "body": [
+      "<div class=\"roycss-cursor-fx-magnetic-attraction\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element magnetically attracts toward an orbiting cursor",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Distortion": {
+    "prefix": "roycss-cursor-fx-distortion",
+    "body": [
+      "<div class=\"roycss-cursor-fx-distortion\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Background distorts and warps near the moving cursor",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Text Replacement": {
+    "prefix": "roycss-cursor-fx-text-replacement",
+    "body": [
+      "<div class=\"roycss-cursor-fx-text-replacement\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Cursor swaps the displayed text on hover via ::before",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Image Preview": {
+    "prefix": "roycss-cursor-fx-image-preview",
+    "body": [
+      "<div class=\"roycss-cursor-fx-image-preview\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Floating image preview follows an animated cursor path",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Gradient Follow": {
+    "prefix": "roycss-cursor-fx-gradient-follow",
+    "body": [
+      "<div class=\"roycss-cursor-fx-gradient-follow\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Soft gradient highlight follows the cursor position",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Border Follow": {
+    "prefix": "roycss-cursor-fx-border-follow",
+    "body": [
+      "<div class=\"roycss-cursor-fx-border-follow\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Highlighted border segment travels around the perimeter",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Hover Lens": {
+    "prefix": "roycss-cursor-fx-hover-lens",
+    "body": [
+      "<div class=\"roycss-cursor-fx-hover-lens\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Magnifying lens zooms content where the cursor hovers",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Spotlight Card (cursor-fx-spotlight-card)": {
+    "prefix": "roycss-cursor-fx-spotlight-card",
+    "body": [
+      "<div class=\"roycss-cursor-fx-spotlight-card\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Card with radial spotlight that tracks the cursor position",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Ripple Click (cursor-fx-ripple-click)": {
+    "prefix": "roycss-cursor-fx-ripple-click",
+    "body": [
+      "<div class=\"roycss-cursor-fx-ripple-click\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Ripple emanates outward from each simulated click position",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Tilt 3D": {
+    "prefix": "roycss-cursor-fx-tilt-3d",
+    "body": [
+      "<div class=\"roycss-cursor-fx-tilt-3d\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Card tilts in 3D space following cursor position",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Particle Emit": {
+    "prefix": "roycss-cursor-fx-particle-emit",
+    "body": [
+      "<div class=\"roycss-cursor-fx-particle-emit\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Particles emit and scatter from a moving cursor point",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Blur Background": {
+    "prefix": "roycss-cursor-fx-blur-background",
+    "body": [
+      "<div class=\"roycss-cursor-fx-blur-background\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Background blurs under a sharp cursor region",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Color Picker": {
+    "prefix": "roycss-cursor-fx-color-picker",
+    "body": [
+      "<div class=\"roycss-cursor-fx-color-picker\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element samples and shows color from a moving cursor position",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Zoom Region": {
+    "prefix": "roycss-cursor-fx-zoom-region",
+    "body": [
+      "<div class=\"roycss-cursor-fx-zoom-region\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Circular region zooms content where the cursor hovers",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Tooltip Follow (cursor-fx-tooltip-follow)": {
+    "prefix": "roycss-cursor-fx-tooltip-follow",
+    "body": [
+      "<div class=\"roycss-cursor-fx-tooltip-follow\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Tooltip smoothly follows an animated cursor with delay",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Glow Ring": {
+    "prefix": "roycss-cursor-fx-glow-ring",
+    "body": [
+      "<div class=\"roycss-cursor-fx-glow-ring\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Pulsing glow ring sits at the cursor position",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Invert Region": {
+    "prefix": "roycss-cursor-fx-invert-region",
+    "body": [
+      "<div class=\"roycss-cursor-fx-invert-region\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Color inversion circular region follows the cursor",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Elastic Snap (cursor-fx-elastic-snap)": {
+    "prefix": "roycss-cursor-fx-elastic-snap",
+    "body": [
+      "<div class=\"roycss-cursor-fx-elastic-snap\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Elements elastically snap toward the cursor and bounce back",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Dynamic Glass": {
+    "prefix": "roycss-glass2-dynamic",
+    "body": [
+      "<div class=\"roycss-glass2-dynamic\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Glass surface that shimmers and shifts hues dynamically",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Frosted Slab": {
+    "prefix": "roycss-glass2-frosted",
+    "body": [
+      "<div class=\"roycss-glass2-frosted\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Thick frosted glass with heavy blur and snow-crystal edge",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Edge Lit": {
+    "prefix": "roycss-glass2-edge-lit",
+    "body": [
+      "<div class=\"roycss-glass2-edge-lit\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Glass with luminous edge lighting that pulses around border",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Refraction": {
+    "prefix": "roycss-glass2-refraction",
+    "body": [
+      "<div class=\"roycss-glass2-refraction\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Light refracts through glass creating a prismatic spectrum",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Distortion Glass": {
+    "prefix": "roycss-glass2-distortion",
+    "body": [
+      "<div class=\"roycss-glass2-distortion\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Glass with subtle wavy distortion across its surface",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Layered Glass": {
+    "prefix": "roycss-glass2-layered",
+    "body": [
+      "<div class=\"roycss-glass2-layered\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Multiple stacked glass layers creating depth of field",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Adaptive Glass": {
+    "prefix": "roycss-glass2-adaptive",
+    "body": [
+      "<div class=\"roycss-glass2-adaptive\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Glass adapts opacity and blur based on a simulated background",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Depth Glass": {
+    "prefix": "roycss-glass2-depth",
+    "body": [
+      "<div class=\"roycss-glass2-depth\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Glass with perceived depth from layered inner shadows",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Glass Navigation": {
+    "prefix": "roycss-glass2-navigation",
+    "body": [
+      "<div class=\"roycss-glass2-navigation\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Glass navbar with strong blur and animated indicator",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Glass Modal": {
+    "prefix": "roycss-glass2-modal",
+    "body": [
+      "<div class=\"roycss-glass2-modal\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Glass modal with deep backdrop blur and rim lighting",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Glow Card (glass2-card-glow)": {
+    "prefix": "roycss-glass2-card-glow",
+    "body": [
+      "<div class=\"roycss-glass2-card-glow\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Glass card with an outer animated glow halo",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Press Button": {
+    "prefix": "roycss-glass2-button-press",
+    "body": [
+      "<div class=\"roycss-glass2-button-press\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Glass button with deep tactile press feedback",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Focus Input": {
+    "prefix": "roycss-glass2-input-focus",
+    "body": [
+      "<div class=\"roycss-glass2-input-focus\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Glass input field that lights up on focus with rim glow",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Glass Dropdown": {
+    "prefix": "roycss-glass2-dropdown",
+    "body": [
+      "<div class=\"roycss-glass2-dropdown\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Glass dropdown menu with cascading blurred items",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Glass Tooltip": {
+    "prefix": "roycss-glass2-tooltip",
+    "body": [
+      "<div class=\"roycss-glass2-tooltip\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Floating glass tooltip with backdrop blur and pointer",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Glass Sidebar": {
+    "prefix": "roycss-glass2-sidebar",
+    "body": [
+      "<div class=\"roycss-glass2-sidebar\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Glass sidebar panel with nav items and indicator pill",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Tab Bar": {
+    "prefix": "roycss-glass2-tab-bar",
+    "body": [
+      "<div class=\"roycss-glass2-tab-bar\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Glass tab bar with sliding indicator pill across tabs",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Hero Overlay": {
+    "prefix": "roycss-glass2-hero-overlay",
+    "body": [
+      "<div class=\"roycss-glass2-hero-overlay\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Glass overlay panel on a hero with cinematic shimmer",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Notification Toast": {
+    "prefix": "roycss-glass2-notification",
+    "body": [
+      "<div class=\"roycss-glass2-notification\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Glass notification toast with sliding entrance and glow",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Pricing Card": {
+    "prefix": "roycss-glass2-pricing-card",
+    "body": [
+      "<div class=\"roycss-glass2-pricing-card\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Glass pricing card with CTA button and featured glow",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Parallax Starfield": {
+    "prefix": "roycss-immersive-starfield",
+    "body": [
+      "<div class=\"roycss-immersive-starfield\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Three parallax star layers drift at different speeds across a deep-space gradient",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Falling Rain": {
+    "prefix": "roycss-immersive-rain",
+    "body": [
+      "<div class=\"roycss-immersive-rain\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Thin diagonal rain streaks fall endlessly with a faint splash glow at the base",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Snow Drift": {
+    "prefix": "roycss-immersive-snow-drift",
+    "body": [
+      "<div class=\"roycss-immersive-snow-drift\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Two layers of snowflakes drift downward with gentle horizontal wind sway",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Layered Flame": {
+    "prefix": "roycss-immersive-fire-flame",
+    "body": [
+      "<div class=\"roycss-immersive-fire-flame\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "CSS-only flame built from layered gradients that flicker and rise from the base",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Drifting Smoke & Fog": {
+    "prefix": "roycss-immersive-smoke-fog",
+    "body": [
+      "<div class=\"roycss-immersive-smoke-fog\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Three blurred radial-gradient plumes drift and rotate to suggest drifting fog",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Ocean Waves (immersive-ocean-waves)": {
+    "prefix": "roycss-immersive-ocean-waves",
+    "body": [
+      "<div class=\"roycss-immersive-ocean-waves\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Three stacked wave layers ripple across a deep-blue gradient at staggered speeds",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Matrix Rain": {
+    "prefix": "roycss-immersive-matrix-rain",
+    "body": [
+      "<div class=\"roycss-immersive-matrix-rain\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Falling green character columns evoke the iconic Matrix digital rain",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Hexagon Tessellation": {
+    "prefix": "roycss-immersive-geometric-hex",
+    "body": [
+      "<div class=\"roycss-immersive-geometric-hex\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Animated hexagon grid pulses with shifting gradient light across the surface",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Topographic Contours": {
+    "prefix": "roycss-immersive-topographic",
+    "body": [
+      "<div class=\"roycss-immersive-topographic\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Concentric contour lines flow across the surface like an animated topographic map",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Aurora Borealis": {
+    "prefix": "roycss-immersive-aurora-bg",
+    "body": [
+      "<div class=\"roycss-immersive-aurora-bg\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Flowing bands of green and violet light ripple like the northern lights",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Space Nebula": {
+    "prefix": "roycss-immersive-nebula",
+    "body": [
+      "<div class=\"roycss-immersive-nebula\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Colorful gas-cloud gradients swirl over a starfield to evoke a deep-space nebula",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Underwater Caustics": {
+    "prefix": "roycss-immersive-underwater",
+    "body": [
+      "<div class=\"roycss-immersive-underwater\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Animated light caustics ripple across a deep teal underwater backdrop",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Glowing Fireflies": {
+    "prefix": "roycss-immersive-fireflies",
+    "body": [
+      "<div class=\"roycss-immersive-fireflies\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Tiny glowing dots flicker and drift like fireflies in a warm summer night",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Drifting Clouds": {
+    "prefix": "roycss-immersive-cloud-drift",
+    "body": [
+      "<div class=\"roycss-immersive-cloud-drift\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Soft cloud shapes drift horizontally across a calm sky gradient",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Rain Bokeh": {
+    "prefix": "roycss-immersive-rain-bokeh",
+    "body": [
+      "<div class=\"roycss-immersive-rain-bokeh\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Raindrops fall behind soft blurred bokeh circles on a moody nocturnal backdrop",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Lightning Flash": {
+    "prefix": "roycss-immersive-lightning",
+    "body": [
+      "<div class=\"roycss-immersive-lightning\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Occasional lightning bolts flare across a stormy night sky with afterglow",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Dust in Light Beam": {
+    "prefix": "roycss-immersive-dust-particles",
+    "body": [
+      "<div class=\"roycss-immersive-dust-particles\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Tiny dust motes drift through a diagonal sunbeam against a dark backdrop",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Animated Mesh Gradient (immersive-gradient-mesh-bg)": {
+    "prefix": "roycss-immersive-gradient-mesh-bg",
+    "body": [
+      "<div class=\"roycss-immersive-gradient-mesh-bg\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Four-color mesh gradient blobs slowly orbit each other to form a living backdrop",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Falling Confetti": {
+    "prefix": "roycss-immersive-confetti-bg",
+    "body": [
+      "<div class=\"roycss-immersive-confetti-bg\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Colorful confetti pieces rotate and fall across a festive backdrop",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Rising Bubbles (immersive-bubble-rise)": {
+    "prefix": "roycss-immersive-bubble-rise",
+    "body": [
+      "<div class=\"roycss-immersive-bubble-rise\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Translucent bubbles rise from the bottom of an aquatic backdrop with sway",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Typewriter Cursor (advtext-typewriter-cursor)": {
+    "prefix": "roycss-advtext-typewriter-cursor",
+    "body": [
+      "<div class=\"roycss-advtext-typewriter-cursor\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Text reveals one character at a time with a blinking caret at the end",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Scramble Decrypt": {
+    "prefix": "roycss-advtext-scramble-decrypt",
+    "body": [
+      "<div class=\"roycss-advtext-scramble-decrypt\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Hacker-style decode: characters blur through random values before settling",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Text On Path": {
+    "prefix": "roycss-advtext-on-path",
+    "body": [
+      "<div class=\"roycss-advtext-on-path\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Text rides along a curved SVG-like offset-path, orbiting a closed loop",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Kinetic Fly-In": {
+    "prefix": "roycss-advtext-kinetic-fly",
+    "body": [
+      "<div class=\"roycss-advtext-kinetic-fly\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Each letter of the word flies in from below with a staggered kinetic cascade",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Gradient Fill Sweep": {
+    "prefix": "roycss-advtext-fill-gradient",
+    "body": [
+      "<div class=\"roycss-advtext-fill-gradient\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Transparent text fills left-to-right with a colorful gradient sweep on load",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "3D Extruded Text": {
+    "prefix": "roycss-advtext-3d-extruded",
+    "body": [
+      "<div class=\"roycss-advtext-3d-extruded\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Text extruded into 3D using stacked text-shadows with subtle breathing depth",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "RGB Split Glitch": {
+    "prefix": "roycss-advtext-glitch-rgb",
+    "body": [
+      "<div class=\"roycss-advtext-glitch-rgb\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Cyan and magenta color channels split and shift around the text on a loop",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Scanline Glitch": {
+    "prefix": "roycss-advtext-glitch-scanline",
+    "body": [
+      "<div class=\"roycss-advtext-glitch-scanline\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Horizontal scan tear slices across the text while a scanline rolls vertically",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VHS Tracking Glitch": {
+    "prefix": "roycss-advtext-glitch-vhs",
+    "body": [
+      "<div class=\"roycss-advtext-glitch-vhs\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "VHS tracking distortion: text wobbles with hue-shifted ghosting and noise bars",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Split-Flap Board": {
+    "prefix": "roycss-advtext-split-flap",
+    "body": [
+      "<div class=\"roycss-advtext-split-flap\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Airport departure-board flip: each letter tumbles into place on its own axis",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Modern Marquee": {
+    "prefix": "roycss-advtext-marquee-modern",
+    "body": [
+      "<div class=\"roycss-advtext-marquee-modern\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Smooth horizontal marquee with fade edges and pause-on-hover for readability",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Outline Draw": {
+    "prefix": "roycss-advtext-outline-draw",
+    "body": [
+      "<div class=\"roycss-advtext-outline-draw\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Hollow text outline that progressively draws itself with a sweeping gradient mask",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Neon Sign Flicker": {
+    "prefix": "roycss-advtext-neon-sign",
+    "body": [
+      "<div class=\"roycss-advtext-neon-sign\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Glowing neon-tube text that flickers irregularly like an aging bar sign",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Animated Gradient Text (advtext-gradient-animated)": {
+    "prefix": "roycss-advtext-gradient-animated",
+    "body": [
+      "<div class=\"roycss-advtext-gradient-animated\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Text fill animated by a multi-stop gradient that continuously shifts hue",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Layered Long Shadow": {
+    "prefix": "roycss-advtext-shadow-layered",
+    "body": [
+      "<div class=\"roycss-advtext-shadow-layered\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Many stacked text-shadows create a soft, layered long shadow with breathing depth",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Mask Reveal (advtext-mask-reveal)": {
+    "prefix": "roycss-advtext-mask-reveal",
+    "body": [
+      "<div class=\"roycss-advtext-mask-reveal\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Text is revealed left-to-right by an animated clip-path mask wipe on loop",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Stretch Bounce": {
+    "prefix": "roycss-advtext-stretch-bounce",
+    "body": [
+      "<div class=\"roycss-advtext-stretch-bounce\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Text stretches vertically and snaps back with an elastic bounce on load",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Multi-Line Typewriter": {
+    "prefix": "roycss-advtext-typewriter-multi",
+    "body": [
+      "<div class=\"roycss-advtext-typewriter-multi\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Two-line typewriter reveals character by character with a soft blinking caret",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Wave Bounce": {
+    "prefix": "roycss-advtext-wave-bounce",
+    "body": [
+      "<div class=\"roycss-advtext-wave-bounce\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Each letter bounces in a sequential wave pattern across the word",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Image Clip Text": {
+    "prefix": "roycss-advtext-clip-image",
+    "body": [
+      "<div class=\"roycss-advtext-clip-image\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Text is clipped to show an image fill that pans slowly across the letters",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Glitch Text": {
+    "prefix": "roycss-vfx-glitch-text",
+    "body": [
+      "<div class=\"roycss-vfx-glitch-text\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Glitch text with clip-path slices and RGB channel split. Set data-text on the element to enable the chromatic duplicates.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Neon Glow Text": {
+    "prefix": "roycss-vfx-neon-glow-text",
+    "body": [
+      "<div class=\"roycss-vfx-neon-glow-text\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Neon-sign text with a pulsing layered glow. Pure OKLCH light-shadows flicker like glass tubes.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Animated Gradient Text": {
+    "prefix": "roycss-vfx-gradient-text-animated",
+    "body": [
+      "<div class=\"roycss-vfx-gradient-text-animated\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Text filled with a flowing OKLCH gradient that sweeps continuously across the letters.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Text Distortion": {
+    "prefix": "roycss-vfx-text-distortion",
+    "body": [
+      "<div class=\"roycss-vfx-text-distortion\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Text skews and stretches rhythmically using GPU-friendly transforms — no layout thrash.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Wave Text": {
+    "prefix": "roycss-vfx-wave-text",
+    "body": [
+      "<div class=\"roycss-vfx-wave-text\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Per-letter wave. Wrap each character in a <span> and they ride up and down in a sine wave.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Layered Text Shadow": {
+    "prefix": "roycss-vfx-text-shadow-anim",
+    "body": [
+      "<div class=\"roycss-vfx-text-shadow-anim\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Layered text-shadows drift and breathe in OKLCH — a soft cinematic depth without pseudo-elements.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Fire Text": {
+    "prefix": "roycss-vfx-fire-text",
+    "body": [
+      "<div class=\"roycss-vfx-fire-text\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Text filled with a fire gradient that flickers via background-position, plus a soft ember glow.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Liquid Text": {
+    "prefix": "roycss-vfx-liquid-text",
+    "body": [
+      "<div class=\"roycss-vfx-liquid-text\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Text filled with a rippling aqua gradient and a wobble transform — looks wet, like ink in water.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Shimmer Text": {
+    "prefix": "roycss-vfx-shimmer-text",
+    "body": [
+      "<div class=\"roycss-vfx-shimmer-text\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "A bright diagonal gradient sweeps across the text on a loop — perfect for placeholders or loaders.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX 3D Extruded Text": {
+    "prefix": "roycss-vfx-3d-text-extrude",
+    "body": [
+      "<div class=\"roycss-vfx-3d-text-extrude\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Multi-layer text-shadow stack creates a chunky 3D extrusion, with a subtle parallax breathe on hover.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Magnetic Hover": {
+    "prefix": "roycss-vfx-magnetic-hover",
+    "body": [
+      "<div class=\"roycss-vfx-magnetic-hover\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "On hover the element glides toward the cursor with a slight scale-up — pure-CSS approximation of magnetic buttons.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Shine Sweep": {
+    "prefix": "roycss-vfx-shine-sweep",
+    "body": [
+      "<div class=\"roycss-vfx-shine-sweep\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "A bright diagonal sheen sweeps across the surface on hover. Pure CSS, GPU-friendly transform on the overlay.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Glow Hover": {
+    "prefix": "roycss-vfx-glow-hover",
+    "body": [
+      "<div class=\"roycss-vfx-glow-hover\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "On hover, a layered OKLCH box-shadow blooms into a soft neon halo. Smooth, GPU-friendly.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Animated Gradient Border": {
+    "prefix": "roycss-vfx-border-anim",
+    "body": [
+      "<div class=\"roycss-vfx-border-anim\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "A conic gradient border that rotates around the element. Mask + ::before keep the inside clean.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Image Zoom Hover": {
+    "prefix": "roycss-vfx-image-zoom-hover",
+    "body": [
+      "<div class=\"roycss-vfx-image-zoom-hover\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "On hover the inner content scales up smoothly while a subtle vignette lifts — a clean gallery-card zoom.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX 3D Tilt Hover": {
+    "prefix": "roycss-vfx-3d-tilt-hover",
+    "body": [
+      "<div class=\"roycss-vfx-3d-tilt-hover\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "On hover the element tilts back in 3D with perspective and lifts slightly — pure-CSS approximation of a tilt card.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Card Lift": {
+    "prefix": "roycss-vfx-card-lift",
+    "body": [
+      "<div class=\"roycss-vfx-card-lift\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "On hover the card rises with a deepening shadow and a subtle border glow — the classic card hover.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Spotlight Hover": {
+    "prefix": "roycss-vfx-spotlight-hover",
+    "body": [
+      "<div class=\"roycss-vfx-spotlight-hover\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "On hover a radial spotlight follows the element from top-left to bottom-right, illuminating the surface.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Liquid Hover": {
+    "prefix": "roycss-vfx-liquid-hover",
+    "body": [
+      "<div class=\"roycss-vfx-liquid-hover\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "On hover the element morphs its border-radius through organic curves — a gooey, fluid shape change.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Glitch Hover": {
+    "prefix": "roycss-vfx-glitch-hover",
+    "body": [
+      "<div class=\"roycss-vfx-glitch-hover\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "On hover the element snaps into a glitchy position-offset and clip-path tear — a digital distortion burst.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Fade Up": {
+    "prefix": "roycss-vfx-fade-up",
+    "body": [
+      "<div class=\"roycss-vfx-fade-up\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element fades in while translating upward. The classic entrance — runs once on load.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Fade Down": {
+    "prefix": "roycss-vfx-fade-down",
+    "body": [
+      "<div class=\"roycss-vfx-fade-down\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element fades in while translating downward. Runs once on load.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Fade Left": {
+    "prefix": "roycss-vfx-fade-left",
+    "body": [
+      "<div class=\"roycss-vfx-fade-left\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element fades in while sliding in from the right toward the left. Runs once on load.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Fade Right": {
+    "prefix": "roycss-vfx-fade-right",
+    "body": [
+      "<div class=\"roycss-vfx-fade-right\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element fades in while sliding in from the left toward the right. Runs once on load.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Scale In": {
+    "prefix": "roycss-vfx-scale-in",
+    "body": [
+      "<div class=\"roycss-vfx-scale-in\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element fades in while scaling up from 80% — a soft zoom-in entrance. Runs once on load.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Slide Reveal": {
+    "prefix": "roycss-vfx-slide-reveal",
+    "body": [
+      "<div class=\"roycss-vfx-slide-reveal\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element reveals via an animated clip-path wipe from left to right — a clean editorial slide-in.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Clip-Path Reveal": {
+    "prefix": "roycss-vfx-clip-path-reveal",
+    "body": [
+      "<div class=\"roycss-vfx-clip-path-reveal\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element appears via an expanding circular clip-path — a mask wipe from the center outward.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Flip In": {
+    "prefix": "roycss-vfx-flip-in",
+    "body": [
+      "<div class=\"roycss-vfx-flip-in\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element flips in along the Y axis with a fade — a 3D card-flip entrance.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Elastic In": {
+    "prefix": "roycss-vfx-elastic-in",
+    "body": [
+      "<div class=\"roycss-vfx-elastic-in\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Element springs in with an elastic cubic-bezier overshoot, scaling from 0 to 1 with a bouncy settle.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Stagger Fade": {
+    "prefix": "roycss-vfx-stagger-fade",
+    "body": [
+      "<div class=\"roycss-vfx-stagger-fade\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Parent fades up; up to 8 children fade in sequentially with animation-delay — a pure-CSS staggered list entrance.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Animated Gradient Background": {
+    "prefix": "roycss-vfx-animated-gradient-bg",
+    "body": [
+      "<div class=\"roycss-vfx-animated-gradient-bg\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Flowing OKLCH gradient background that pans continuously via background-position. Sized at 200% so the sweep never seams.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Aurora Background": {
+    "prefix": "roycss-vfx-aurora-bg",
+    "body": [
+      "<div class=\"roycss-vfx-aurora-bg\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Aurora borealis with three blurred OKLCH gradient layers drifting at different speeds. Pure backdrop-filter-free blend.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Mesh Gradient Background": {
+    "prefix": "roycss-vfx-mesh-gradient-bg",
+    "body": [
+      "<div class=\"roycss-vfx-mesh-gradient-bg\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Mesh gradient built from 4 OKLCH radial gradients layered with screen blending. Soft, painterly, and GPU-friendly.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Gradient Blob Morph": {
+    "prefix": "roycss-vfx-gradient-blob-anim",
+    "body": [
+      "<div class=\"roycss-vfx-gradient-blob-anim\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Animated gradient blob that morphs its border-radius and translates softly — a liquid gradient that never sits still.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Moving Blob": {
+    "prefix": "roycss-vfx-moving-blob",
+    "body": [
+      "<div class=\"roycss-vfx-moving-blob\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "A solid OKLCH blob that travels along a figure-eight path with scale breathing. Great for hero sections behind content.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Noise Grain Overlay": {
+    "prefix": "roycss-vfx-noise-grain",
+    "body": [
+      "<div class=\"roycss-vfx-noise-grain\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Animated film-grain overlay using an inline SVG fractal-noise data URI. Adds organic texture without an external image asset.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Animated Perspective Grid": {
+    "prefix": "roycss-vfx-grid-bg-anim",
+    "body": [
+      "<div class=\"roycss-vfx-grid-bg-anim\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Perspective grid that pans toward the viewer — synthwave horizon feel. Built from repeating-linear-gradient lines and a transform on a wrapper.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Dot Pattern Background": {
+    "prefix": "roycss-vfx-dot-pattern-bg",
+    "body": [
+      "<div class=\"roycss-vfx-dot-pattern-bg\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Crisp OKLCH dot matrix built from a single radial-gradient repeated across the surface. Lightweight and print-style.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Cyberpunk Grid Background": {
+    "prefix": "roycss-vfx-cyberpunk-bg",
+    "body": [
+      "<div class=\"roycss-vfx-cyberpunk-bg\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Cyberpunk neon grid with glowing OKLCH horizon lines and a pulsing magenta glow. Synthwave city under a static skyline.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Spotlight Background": {
+    "prefix": "roycss-vfx-spotlight-bg",
+    "body": [
+      "<div class=\"roycss-vfx-spotlight-bg\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Soft OKLCH spotlight that breathes on a dark stage. Use as a hero backdrop — pure radial-gradient, no JS tracking required.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Radial Glow Pulse": {
+    "prefix": "roycss-vfx-radial-glow",
+    "body": [
+      "<div class=\"roycss-vfx-radial-glow\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Centered OKLCH radial glow that pulses outward — a soft halo that scales and brightens on a calm rhythm.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Holographic Background": {
+    "prefix": "roycss-vfx-holographic-bg",
+    "body": [
+      "<div class=\"roycss-vfx-holographic-bg\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Holographic conic-gradient that rotates its hue continuously — a sticker-foil shimmer on a dark base.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Frosted Glass v2": {
+    "prefix": "roycss-vfx-frosted-glass-2",
+    "body": [
+      "<div class=\"roycss-vfx-frosted-glass-2\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Frosted glass panel with backdrop-filter blur and an OKLCH translucent tint. Lightweight, modern, no animation.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Neon Glass v2": {
+    "prefix": "roycss-vfx-neon-glass-2",
+    "body": [
+      "<div class=\"roycss-vfx-neon-glass-2\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Glass panel with a pulsing neon rim glow and backdrop-filter frost. Magenta-cyan duotone that breathes.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Holographic Card v2": {
+    "prefix": "roycss-vfx-holographic-card-2",
+    "body": [
+      "<div class=\"roycss-vfx-holographic-card-2\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Iridescent holographic card with an OKLCH conic sheen that drifts across the surface. Best on dark backgrounds.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Metallic Surface": {
+    "prefix": "roycss-vfx-metallic-surface",
+    "body": [
+      "<div class=\"roycss-vfx-metallic-surface\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Brushed-metal surface with an OKLCH linear-gradient and a moving specular highlight. Stainless-steel feel.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Chrome Effect": {
+    "prefix": "roycss-vfx-chrome-effect",
+    "body": [
+      "<div class=\"roycss-vfx-chrome-effect\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Chrome reflection with a vertical OKLCH gradient that mimics a polished silver bar. Pure static gradient — no animation needed.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Soft Shadow": {
+    "prefix": "roycss-vfx-soft-shadow",
+    "body": [
+      "<div class=\"roycss-vfx-soft-shadow\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Layered soft shadows via multiple box-shadows in OKLCH — a calm elevated card with no harsh edges.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Inner Shadow": {
+    "prefix": "roycss-vfx-inner-shadow",
+    "body": [
+      "<div class=\"roycss-vfx-inner-shadow\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Neumorphic-style inset shadow — a recessed OKLCH surface that looks pressed into the page. Pairs with soft-shadow siblings.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Glow Border Animated": {
+    "prefix": "roycss-vfx-glow-border-anim",
+    "body": [
+      "<div class=\"roycss-vfx-glow-border-anim\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Border that glows with a rotating OKLCH conic-gradient mask. The hue cycles around the element's perimeter.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Animated Border v2": {
+    "prefix": "roycss-vfx-animated-border-2",
+    "body": [
+      "<div class=\"roycss-vfx-animated-border-2\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Conic-gradient border that spins around the element. Masked to a 2px rim, with a soft outer glow.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Iridescent Surface": {
+    "prefix": "roycss-vfx-iridescent-surface",
+    "body": [
+      "<div class=\"roycss-vfx-iridescent-surface\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Iridescent OKLCH gradient surface that shifts hue continuously. Soap-bubble rainbow that never repeats a frame.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Gradient Border v2": {
+    "prefix": "roycss-vfx-gradient-border-2",
+    "body": [
+      "<div class=\"roycss-vfx-gradient-border-2\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Gradient border via border-image with an OKLCH linear-gradient slice. Crisp 3px rim, no pseudo-elements required.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Glow Border v2": {
+    "prefix": "roycss-vfx-glow-border-2",
+    "body": [
+      "<div class=\"roycss-vfx-glow-border-2\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Border with a soft pulsing OKLCH outer glow via box-shadow. Calm breathing rhythm, perfect for focus states.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Neon Border": {
+    "prefix": "roycss-vfx-neon-border",
+    "body": [
+      "<div class=\"roycss-vfx-neon-border\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Neon-sign border that flickers like an old glass tube — a soft OKLCH magenta glow with subtle brightness jitter.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Electric Border v2": {
+    "prefix": "roycss-vfx-electric-border-2",
+    "body": [
+      "<div class=\"roycss-vfx-electric-border-2\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Electric border with a flowing OKLCH gradient that races around the rim via conic-gradient rotation. High-voltage feel.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Laser Border v2": {
+    "prefix": "roycss-vfx-laser-border-2",
+    "body": [
+      "<div class=\"roycss-vfx-laser-border-2\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Thin glowing laser line that races around the perimeter in OKLCH cyan, leaving a brief afterglow trail.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Animated Dashed Border": {
+    "prefix": "roycss-vfx-dashed-anim",
+    "body": [
+      "<div class=\"roycss-vfx-dashed-anim\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Marching-ants dashed border built from repeating-linear-gradient, animated via background-position. The CSS-only analog of SVG stroke-dashoffset animation.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Corner Border": {
+    "prefix": "roycss-vfx-corner-border",
+    "body": [
+      "<div class=\"roycss-vfx-corner-border\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Bracket-style corner border built with clip-path on two pseudo-elements. Sci-fi HUD framing with a soft OKLCH glow.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "VFX Double Border": {
+    "prefix": "roycss-vfx-double-border",
+    "body": [
+      "<div class=\"roycss-vfx-double-border\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Double-border effect combining a 2px border with a 1px outline offset by 4px in OKLCH — a clean layered frame with no pseudo-elements.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Image Reveal": {
+    "prefix": "roycss-vfx-image-reveal-2",
+    "body": [
+      "<div class=\"roycss-vfx-image-reveal-2\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Image revealed left-to-right via an animated clip-path inset, with a bright sheen sweeping across the unmasking edge.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Image Wipe": {
+    "prefix": "roycss-vfx-image-wipe-2",
+    "body": [
+      "<div class=\"roycss-vfx-image-wipe-2\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Image wiped clean by a sliding gradient panel using transform translateX, revealing a vibrant underlay.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Image Blur Transition": {
+    "prefix": "roycss-vfx-image-blur-transition",
+    "body": [
+      "<div class=\"roycss-vfx-image-blur-transition\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Image (gradient) cross-fades between two scenes through a heavy blur filter pulse, mimicking a rack-focus transition.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Grayscale to Color Hover": {
+    "prefix": "roycss-vfx-grayscale-hover-2",
+    "body": [
+      "<div class=\"roycss-vfx-grayscale-hover-2\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Image is desaturated by default and snaps to full vibrant color on hover, with a smooth saturate transition.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Color Reveal": {
+    "prefix": "roycss-vfx-color-reveal",
+    "body": [
+      "<div class=\"roycss-vfx-color-reveal\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "A black-and-white mask wipes away to expose a vivid color gradient underneath, using mask-image animation.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Image Glitch": {
+    "prefix": "roycss-vfx-image-glitch",
+    "body": [
+      "<div class=\"roycss-vfx-image-glitch\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Image suffers periodic glitch bursts with clip-path slices shifting horizontally and a brief desaturation flash.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "RGB Split Image": {
+    "prefix": "roycss-vfx-rgb-split-image",
+    "body": [
+      "<div class=\"roycss-vfx-rgb-split-image\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Image channels split into red/cyan fringes via stacked blend modes, then snap back together on a slow loop.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "CRT Effect": {
+    "prefix": "roycss-vfx-crt-effect",
+    "body": [
+      "<div class=\"roycss-vfx-crt-effect\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Image (gradient) treated as a CRT display: fine scanlines, vignette darkening, and a slow flicker.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Holographic Image": {
+    "prefix": "roycss-vfx-holographic-image",
+    "body": [
+      "<div class=\"roycss-vfx-holographic-image\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Image overlaid with a shifting iridescent gradient that drifts across the surface, mimicking a holographic foil.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Image Distort": {
+    "prefix": "roycss-vfx-image-distort",
+    "body": [
+      "<div class=\"roycss-vfx-image-distort\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Image (gradient) gently warped via transform skew and perspective, simulating a heat-haze ripple.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Glitch Effect": {
+    "prefix": "roycss-vfx-glitch-effect-2",
+    "body": [
+      "<div class=\"roycss-vfx-glitch-effect-2\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Text glitch with clip-path slices jumping in opposite directions and an RGB split shadow burst on a fast loop.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Scanlines Overlay": {
+    "prefix": "roycss-vfx-scanlines-2",
+    "body": [
+      "<div class=\"roycss-vfx-scanlines-2\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Soft scanlines drifting vertically over a tinted backdrop, like an old analog monitor with a slow roll.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "CRT VFX": {
+    "prefix": "roycss-vfx-crt-vfx",
+    "body": [
+      "<div class=\"roycss-vfx-crt-vfx\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "CRT screen with curvature (border-radius + inset shadows), scanlines, and a soft flicker. Pure CSS — no JS.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "RGB Split VFX": {
+    "prefix": "roycss-vfx-rgb-split-vfx",
+    "body": [
+      "<div class=\"roycss-vfx-rgb-split-vfx\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Text splits into red, green, and blue channel copies that drift apart and snap back, evoking a bad video cable.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Chromatic Aberration (vfx-chromatic-aberration)": {
+    "prefix": "roycss-vfx-chromatic-aberration",
+    "body": [
+      "<div class=\"roycss-vfx-chromatic-aberration\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Text fringed with red and blue ghost edges via stacked text-shadows, with the fringes breathing in and out.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Distortion (vfx-distortion)": {
+    "prefix": "roycss-vfx-distortion",
+    "body": [
+      "<div class=\"roycss-vfx-distortion\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Text warped via transform skew and rotate on a slow loop, like a signal struggling to stabilize.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Noise Effect": {
+    "prefix": "roycss-vfx-noise-effect",
+    "body": [
+      "<div class=\"roycss-vfx-noise-effect\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Animated film-grain noise (inline SVG data URI) overlaid on a dark surface, gently shifting every frame.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Scan Reveal": {
+    "prefix": "roycss-vfx-scan-reveal",
+    "body": [
+      "<div class=\"roycss-vfx-scan-reveal\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Text revealed letter-by-letter via a horizontal clip-path sweep, with a glowing scan line at the reveal edge.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Digital Interference": {
+    "prefix": "roycss-vfx-digital-interference-2",
+    "body": [
+      "<div class=\"roycss-vfx-digital-interference-2\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Text suffering digital interference: periodic horizontal clip-path tear with brief hue rotation, like a corrupted broadcast.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Holographic Shimmer": {
+    "prefix": "roycss-vfx-holographic-shimmer-2",
+    "body": [
+      "<div class=\"roycss-vfx-holographic-shimmer-2\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Text shimmering through a rotating conic-gradient hue cycle, with a sliding light streak for that iridescent foil look.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Energy Glow": {
+    "prefix": "roycss-vfx-energy-glow",
+    "body": [
+      "<div class=\"roycss-vfx-energy-glow\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "A box that pulses with a layered energy glow — inner core, mid aura, and outer halo — all driven by box-shadow.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Electric Border": {
+    "prefix": "roycss-vfx-electric-border",
+    "body": [
+      "<div class=\"roycss-vfx-electric-border\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Border animated as a flowing electric gradient that races around the element via conic-gradient rotation.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Laser Border": {
+    "prefix": "roycss-vfx-laser-border",
+    "body": [
+      "<div class=\"roycss-vfx-laser-border\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Thin glowing laser line racing around the element's perimeter, leaving a brief afterglow trail.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Plasma Gradient": {
+    "prefix": "roycss-vfx-plasma-gradient",
+    "body": [
+      "<div class=\"roycss-vfx-plasma-gradient\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "A multi-stop conic-gradient background animated via continuous hue-rotate, producing a flowing plasma field.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Cyberpunk Effect": {
+    "prefix": "roycss-vfx-cyberpunk-effect",
+    "body": [
+      "<div class=\"roycss-vfx-cyberpunk-effect\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Neon cyan/magenta text with periodic glitch bursts and a chromatic split, evoking a cyberpunk title card.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Retro Effect": {
+    "prefix": "roycss-vfx-retro-effect",
+    "body": [
+      "<div class=\"roycss-vfx-retro-effect\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Sepia/contrast-treated backdrop with a subtle warm hue drift and a slow vignette breathing, like an old photograph.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Sci-Fi HUD": {
+    "prefix": "roycss-vfx-sci-fi-hud",
+    "body": [
+      "<div class=\"roycss-vfx-sci-fi-hud\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Sci-fi HUD panel with a faint grid, sweeping scanline, glow corners, and a tracking reticle in the center.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Liquid Distortion": {
+    "prefix": "roycss-vfx-liquid-distortion",
+    "body": [
+      "<div class=\"roycss-vfx-liquid-distortion\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Text wobbles as if submerged in water, with a slow vertical ripple filter pulsing on a loop.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Spotlight Tracking": {
+    "prefix": "roycss-vfx-spotlight-tracking",
+    "body": [
+      "<div class=\"roycss-vfx-spotlight-tracking\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "A bright spotlight (radial-gradient) sweeps across a dark surface, revealing the texture beneath as it passes.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Mouse Glow": {
+    "prefix": "roycss-vfx-mouse-glow",
+    "body": [
+      "<div class=\"roycss-vfx-mouse-glow\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "A soft glow blob orbits the surface, simulating a cursor-follow light. Pure CSS — uses a :hover proxy and animated offset.",
+    "scope": "html,jsx,tsx,vue,svelte"
   }
 }

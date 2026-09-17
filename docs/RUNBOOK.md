@@ -21,10 +21,21 @@ duplicating.
 
 Two standing constraints to keep in mind during any operation:
 
-- **Railway must stay pinned to 1 replica** until the Redis rate-limiter
-  adapter ships (issue #118 / PRD-F10): all five rate-limit tiers live
-  in-process (`backend-node/src/server/middleware/rateLimit.ts`), so a second
-  replica halves every counter and resets them on every deploy.
+- **Railway must stay pinned to 1 replica *unless `REDIS_URL` is
+  configured*** (issue #118 / PRD-F10 — the Redis rate-limiter adapter has
+  shipped). Without `REDIS_URL` on the Railway service, all five rate-limit
+  tiers plus the per-API-key limiter live in-process
+  (`backend-node/src/server/middleware/rateLimit.ts`), so a second replica
+  halves every counter and resets them on every deploy. With `REDIS_URL`
+  set (any redis:// URL), the same limiters run Redis-backed through the
+  existing `setRateLimiter()` seams — counters are shared across replicas
+  and survive deploys, and the single-replica pin can be lifted. The
+  constraint degrades, never breaks: if Redis is unreachable at boot or
+  drops mid-flight, the backend logs it and falls back to the in-memory
+  limiter (`backend-node/src/server/rate-limit-redis.ts`) — requests keep
+  being limited per-process instead of failing, so the API never goes down
+  because of Redis; clear the variable and redeploy to return to the
+  pure in-memory default.
 - **CI/deploys may be blocked** by the Actions billing situation (issue #75,
   owner action tracked as #136). The manual deploy fallback is in §2.3.
 

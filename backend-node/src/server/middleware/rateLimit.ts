@@ -15,11 +15,14 @@
  *   every request and counts only those within the last `windowMs`,
  *   which gives accurate limiting at any moment.
  *
- * Why in-memory (not Redis):
+ * Why in-memory by default (not Redis):
  *   No external dependency for dev. Each backend process keeps its
  *   own counters — fine for a single-instance backend. For
- *   multi-instance prod, call `setRateLimiter(tier, adapter)` with a
- *   Redis-backed `RateLimiter`; the public API stays the same.
+ *   multi-instance prod, set REDIS_URL: the startup bootstrap in
+ *   `server/rate-limit-redis.ts` (issue #118 / PRD-F10) installs a
+ *   Redis-backed `RateLimiter` for every tier through this same seam
+ *   (`setRateLimiter`), falling back to the in-memory default when the
+ *   connection fails; the public API stays the same either way.
  *
  * ─── Tiers ────────────────────────────────────────────────────────────
  * Per-route tiers: `general | auth | contact | ai | search`, each with
@@ -227,6 +230,22 @@ export function rateLimitTiers(): RateLimitTier[] {
   return [...tierLimiters.keys()];
 }
 
+/**
+ * Resolved config for a tier (`max` + effective `windowMs`) — the single
+ * source of truth for adapters installed through the `setRateLimiter()`
+ * seam (e.g. the Redis bootstrap in `server/rate-limit-redis.ts`, issue
+ * #118 / PRD-F10), so a swapped limiter enforces the exact same limits
+ * as the in-memory default it replaces.
+ */
+export function rateLimitTierConfig(
+  tier: RateLimitTier,
+): { max: number; windowMs: number } {
+  return {
+    max: TIER_DEFAULTS[tier].max,
+    windowMs: TIER_DEFAULTS[tier].windowMs ?? RATE_LIMIT.windowMs,
+  };
+}
+
 /** Test-only: restore the in-memory default for every tier. */
 export function _resetRateLimitersForTest(): void {
   for (const tier of Object.keys(TIER_DEFAULTS) as RateLimitTier[]) {
@@ -261,9 +280,12 @@ export function rateLimit(
     (options as RateLimitOptions).keyFn ?? ((req) => req.ip ?? "anonymous");
   const message = (options as RateLimitOptions).message ?? options.message;
 
-  const limiter = isTier ? getRateLimiter(tier) : undefined;
   // Ad-hoc options get a private limiter; tier calls resolve the tier
-  // limiter per request so `setRateLimiter` swaps take effect immediately.
+  // limiter PER REQUEST so `setRateLimiter` swaps take effect immediately —
+  // including for the pre-built middlewares below, which are constructed at
+  // module-load time (before the Redis bootstrap in server/rate-limit-redis.ts
+  // runs at startup). Without the per-request lookup a startup swap would
+  // leave every route on the import-time in-memory instance.
   const adHoc = !isTier
     ? new InMemoryRateLimiter(tier, {
         windowMs: (options as RateLimitOptions).windowMs,
@@ -273,7 +295,9 @@ export function rateLimit(
 
   return (req: Request, res: Response, next: NextFunction): void => {
     const key = keyFn(req);
-    const active = limiter ?? adHoc ?? getRateLimiter(tier);
+    const active = isTier
+      ? getRateLimiter(tier)
+      : (adHoc ?? getRateLimiter(tier));
     void active
       .consume(key)
       .then((result) => {

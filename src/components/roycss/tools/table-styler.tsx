@@ -855,7 +855,7 @@ export function TableStyler() {
             <Eye className="size-3.5 text-primary" />
             Live preview
           </div>
-          <span className="flex items-center gap-1 text-[10px] text-muted-foreground">
+          <span className="flex items-center gap-1 text-[11px] text-muted-foreground">
             {config.stickyHeader ? (
               <>Scroll the table →</>
             ) : (

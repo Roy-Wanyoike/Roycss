@@ -50,7 +50,7 @@ export function BarChart({ data, height = 200, horizontal, showLabels = true, an
               title={`${item.label}: ${item.value}`}
             />
           </div>
-          {showLabels && <span className="text-[10px] text-muted-foreground truncate w-full text-center">{item.label}</span>}
+          {showLabels && <span className="text-[11px] text-muted-foreground truncate w-full text-center">{item.label}</span>}
         </div>
       ))}
     </div>
@@ -100,7 +100,7 @@ export function LineChart({ data, height = 200, color = "var(--primary)", fill =
       </svg>
       <div className="absolute bottom-0 left-0 right-0 flex justify-between px-1">
         {data.map((d, i) => (
-          <span key={i} className="text-[9px] text-muted-foreground">{d.label}</span>
+          <span key={i} className="text-[11px] text-muted-foreground">{d.label}</span>
         ))}
       </div>
     </div>

@@ -123,19 +123,19 @@ export function CSSBeautifier() {
         {stats && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-4 gap-2">
             <div className="p-2.5 rounded-lg bg-muted/30 text-center">
-              <p className="text-[10px] text-muted-foreground">Before</p>
+              <p className="text-[11px] text-muted-foreground">Before</p>
               <p className="font-mono font-bold text-foreground text-sm">{formatSize(stats.inputBytes)}</p>
             </div>
             <div className="p-2.5 rounded-lg bg-muted/30 text-center">
-              <p className="text-[10px] text-muted-foreground">After</p>
+              <p className="text-[11px] text-muted-foreground">After</p>
               <p className="font-mono font-bold text-foreground text-sm">{formatSize(stats.outputBytes)}</p>
             </div>
             <div className="p-2.5 rounded-lg bg-muted/30 text-center">
-              <p className="text-[10px] text-muted-foreground">Lines</p>
+              <p className="text-[11px] text-muted-foreground">Lines</p>
               <p className="font-mono font-bold text-foreground text-sm">{stats.lines}</p>
             </div>
             <div className="p-2.5 rounded-lg bg-muted/30 text-center">
-              <p className="text-[10px] text-muted-foreground">Gzip est.</p>
+              <p className="text-[11px] text-muted-foreground">Gzip est.</p>
               <p className="font-mono font-bold text-primary text-sm">{formatSize(stats.gzipEstimate)}</p>
             </div>
           </motion.div>

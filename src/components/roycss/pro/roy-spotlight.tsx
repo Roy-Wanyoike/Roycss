@@ -187,10 +187,10 @@ export function RoySpotlight() {
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-2">
-                <Badge className="bg-primary text-primary-foreground gap-1 text-[10px]">
+                <Badge className="bg-primary text-primary-foreground gap-1 text-[11px]">
                   <Sparkles className="size-3" /> Weekly Spotlight
                 </Badge>
-                <Badge className={cn("text-[10px]", TYPE_META[weekly.type].tone)}>
+                <Badge className={cn("text-[11px]", TYPE_META[weekly.type].tone)}>
                   {TYPE_META[weekly.type].label}
                 </Badge>
               </div>
@@ -242,7 +242,7 @@ export function RoySpotlight() {
                   <div className={cn("flex size-10 items-center justify-center rounded-xl", meta.tone)}>
                     <Icon className="size-5" />
                   </div>
-                  <Badge className={cn("text-[10px]", meta.tone)}>{meta.label}</Badge>
+                  <Badge className={cn("text-[11px]", meta.tone)}>{meta.label}</Badge>
                 </div>
                 <CardTitle className="mt-2 text-base">{item.title}</CardTitle>
                 <CardDescription className="text-xs">

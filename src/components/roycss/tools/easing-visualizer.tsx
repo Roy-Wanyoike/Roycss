@@ -646,7 +646,7 @@ export function EasingVisualizer() {
               </svg>
             </div>
 
-            <p className="mt-1 text-center text-[10px] text-muted-foreground">
+            <p className="mt-1 text-center text-[11px] text-muted-foreground">
               Drag P1/P2 · focus a point & use arrow keys (Shift = 0.1)
             </p>
           </div>
@@ -766,7 +766,7 @@ export function EasingVisualizer() {
               <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                 Presets
               </span>
-              <span className="text-[10px] text-muted-foreground">
+              <span className="text-[11px] text-muted-foreground">
                 {PRESETS.length} easings
               </span>
             </div>
@@ -797,7 +797,7 @@ export function EasingVisualizer() {
                       {p.name}
                     </span>
                     {p.approx ? (
-                      <span className="text-[9px] opacity-70">approx</span>
+                      <span className="text-[11px] opacity-70">approx</span>
                     ) : null}
                   </button>
                 );
@@ -832,7 +832,7 @@ export function EasingVisualizer() {
             <pre className="overflow-x-auto rounded-lg border border-border/40 bg-muted/30 p-3 font-mono text-xs text-foreground/80">
               <code>{cssString}</code>
             </pre>
-            <p className="text-[10px] text-muted-foreground">
+            <p className="text-[11px] text-muted-foreground">
               Use inline:{" "}
               <code className="font-mono text-foreground/70">
                 {cubicBezierString}

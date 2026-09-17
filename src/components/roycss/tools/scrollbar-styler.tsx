@@ -597,7 +597,7 @@ export function ScrollbarStyler() {
             <Eye className="size-3.5 text-primary" />
             Live preview
           </div>
-          <span className="flex items-center gap-1 text-[10px] text-muted-foreground">
+          <span className="flex items-center gap-1 text-[11px] text-muted-foreground">
             <ArrowUpDown className="size-3" />
             Scroll the box →
           </span>
@@ -615,7 +615,7 @@ export function ScrollbarStyler() {
             <div className="space-y-3">
               {PREVIEW_LINES.map((line, i) => (
                 <p key={i} className="text-sm leading-relaxed">
-                  <span className="mr-1.5 font-mono text-[10px] text-muted-foreground">
+                  <span className="mr-1.5 font-mono text-[11px] text-muted-foreground">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   {line}

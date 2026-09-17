@@ -47,7 +47,7 @@ export function ClipPathGenerator() {
             <button key={s.name} onClick={() => setClipPath(s.value)}
               className={`flex flex-col items-center gap-1.5 p-2 rounded-lg border transition-all cursor-pointer ${clipPath === s.value ? "border-primary bg-primary/5" : "border-border/40 hover:border-primary/30"}`}>
               <div className="size-8" style={{ background: bgColor, clipPath: s.value }} />
-              <span className="text-[10px] text-muted-foreground">{s.name}</span>
+              <span className="text-[11px] text-muted-foreground">{s.name}</span>
             </button>
           ))}
         </div>

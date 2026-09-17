@@ -1001,7 +1001,7 @@ export function UnitConverterPro() {
             <span className="flex items-center gap-2">
               <Table className="size-4 text-primary" />
               Unit reference
-              <Badge variant="secondary" className="text-[10px]">
+              <Badge variant="secondary" className="text-[11px]">
                 {UNITS.length}
               </Badge>
             </span>
@@ -1029,7 +1029,7 @@ export function UnitConverterPro() {
                   </span>
                   <Badge
                     variant="outline"
-                    className="ml-auto text-[10px] text-muted-foreground"
+                    className="ml-auto text-[11px] text-muted-foreground"
                   >
                     {u.category}
                   </Badge>

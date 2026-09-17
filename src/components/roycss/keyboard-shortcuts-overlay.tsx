@@ -123,7 +123,7 @@ export function KeyboardShortcutsOverlay({ open, onOpenChange }: { open: boolean
                 <h2 className="font-display text-lg font-bold text-foreground">Keyboard Shortcuts</h2>
               </div>
               <p className="text-xs text-muted-foreground">
-                Press <kbd className="px-1.5 py-0.5 rounded bg-muted border border-border/50 text-[10px] font-mono">?</kbd> anytime to toggle this panel.
+                Press <kbd className="px-1.5 py-0.5 rounded bg-muted border border-border/50 text-[11px] font-mono">?</kbd> anytime to toggle this panel.
               </p>
               {/* Visible close button — keyboard-accessible (Esc also closes) */}
               <button
@@ -168,7 +168,7 @@ export function KeyboardShortcutsOverlay({ open, onOpenChange }: { open: boolean
                     <div key={i} className="flex items-center gap-2 p-2 rounded-lg bg-muted/30">
                       <s.icon className="size-4 text-muted-foreground shrink-0" />
                       <span className="text-xs text-foreground/80 truncate">{s.label}</span>
-                      <span className="text-[10px] text-muted-foreground ml-auto">{s.hint}</span>
+                      <span className="text-[11px] text-muted-foreground ml-auto">{s.hint}</span>
                     </div>
                   ))}
                 </div>

@@ -510,7 +510,7 @@ export function RoyRefactor() {
             <span className="truncate font-semibold">RoyRefactor</span>
             <Badge
               variant="outline"
-              className="border-primary/30 bg-primary/10 text-primary shrink-0 gap-1 text-[10px]"
+              className="border-primary/30 bg-primary/10 text-primary shrink-0 gap-1 text-[11px]"
             >
               <Wand2 className="size-3" aria-hidden />
               Code Modernizer
@@ -701,21 +701,21 @@ export function RoyRefactor() {
             <div className="flex flex-wrap gap-1.5">
               <Badge
                 variant="outline"
-                className="border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 gap-1 text-[10px]"
+                className="border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 gap-1 text-[11px]"
               >
                 <Plus className="size-3" aria-hidden />
                 {diffStats.added} added
               </Badge>
               <Badge
                 variant="outline"
-                className="border-rose-500/30 bg-rose-500/10 text-rose-600 dark:text-rose-400 gap-1 text-[10px]"
+                className="border-rose-500/30 bg-rose-500/10 text-rose-600 dark:text-rose-400 gap-1 text-[11px]"
               >
                 <Minus className="size-3" aria-hidden />
                 {diffStats.removed} removed
               </Badge>
               <Badge
                 variant="outline"
-                className="text-muted-foreground border-border gap-1 text-[10px]"
+                className="text-muted-foreground border-border gap-1 text-[11px]"
               >
                 <Code2 className="size-3" aria-hidden />
                 {diffStats.unchanged} unchanged

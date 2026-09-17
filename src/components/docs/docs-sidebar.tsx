@@ -144,7 +144,7 @@ export function DocsSidebar({ docs, selectedSlug, onSelect }: DocsSidebarProps) 
                 )}
                 <Icon className="size-3.5 shrink-0 text-primary/70" />
                 <span className="truncate">{meta.label}</span>
-                <span className="ml-auto text-[10px] font-normal text-muted-foreground/70 tabular-nums">
+                <span className="ml-auto text-[11px] font-normal text-muted-foreground/70 tabular-nums">
                   {group.docs.length}
                 </span>
               </button>
@@ -165,7 +165,7 @@ export function DocsSidebar({ docs, selectedSlug, onSelect }: DocsSidebarProps) 
                           title={doc.title}
                         >
                           <span className="line-clamp-2">{doc.title}</span>
-                          <span className="flex items-center gap-1.5 mt-1 text-[10px] text-muted-foreground/70">
+                          <span className="flex items-center gap-1.5 mt-1 text-[11px] text-muted-foreground/70">
                             <FileText className="size-2.5" />
                             {doc.wordCount.toLocaleString()} words
                           </span>

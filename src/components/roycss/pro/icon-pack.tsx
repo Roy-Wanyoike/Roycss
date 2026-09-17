@@ -492,7 +492,7 @@ const IconCard = React.memo(function IconCard({
         </span>
         <span
           className={cn(
-            "text-[10px] font-mono text-muted-foreground transition-opacity",
+            "text-[11px] font-mono text-muted-foreground transition-opacity",
             isCopied ? "text-primary opacity-100" : "opacity-0 group-hover/card:opacity-100",
           )}
         >
@@ -560,7 +560,7 @@ const CategoryChip = React.memo(function CategoryChip({
       <span>{label}</span>
       <span
         className={cn(
-          "rounded-full px-1.5 py-0.5 text-[10px] tabular-nums",
+          "rounded-full px-1.5 py-0.5 text-[11px] tabular-nums",
           isActive ? "bg-primary-foreground/20" : "bg-muted text-muted-foreground",
         )}
       >

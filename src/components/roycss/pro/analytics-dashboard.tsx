@@ -577,7 +577,7 @@ function TopEffectsTable({
               className="inline-flex items-center gap-1 text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
               Usage
-              <span aria-hidden className="text-[10px]">
+              <span aria-hidden className="text-[11px]">
                 {sortDir === "desc" ? "▼" : "▲"}
               </span>
             </button>
@@ -855,7 +855,7 @@ export function AnalyticsDashboard(): React.JSX.Element {
                     <span className="text-[11px] font-medium text-foreground">
                       {slice.value}%
                     </span>
-                    <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                    <span className="text-[11px] uppercase tracking-wider text-muted-foreground">
                       {slice.name}
                     </span>
                   </li>

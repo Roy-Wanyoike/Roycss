@@ -966,7 +966,7 @@ const ResultRow = React.memo(function ResultRow({
               {result.tags.slice(0, 4).map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-sm bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground"
+                  className="rounded-sm bg-muted px-1.5 py-0.5 text-[11px] font-medium text-muted-foreground"
                 >
                   <Highlight text={tag} query={query} />
                 </span>
@@ -1556,7 +1556,7 @@ export function RoySearch(): React.JSX.Element {
             </Button>
           )}
           <kbd
-            className="hidden items-center gap-0.5 rounded border border-border bg-muted px-1.5 py-1 text-[10px] font-medium text-muted-foreground sm:inline-flex"
+            className="hidden items-center gap-0.5 rounded border border-border bg-muted px-1.5 py-1 text-[11px] font-medium text-muted-foreground sm:inline-flex"
             aria-hidden
           >
             <CornerDownLeft className="size-3" />
@@ -1707,7 +1707,7 @@ export function RoySearch(): React.JSX.Element {
                       </h3>
                       <Badge
                         variant="secondary"
-                        className="ml-1 px-1.5 py-0 text-[10px] tabular-nums"
+                        className="ml-1 px-1.5 py-0 text-[11px] tabular-nums"
                       >
                         {arr.length}
                       </Badge>
@@ -1760,20 +1760,20 @@ export function RoySearch(): React.JSX.Element {
       {/* ─── Footer hint ────────────────────────────────────────────── */}
       <footer className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-muted-foreground">
         <span className="inline-flex items-center gap-1">
-          <kbd className="rounded border border-border bg-muted px-1 py-0.5 font-mono text-[10px]">
+          <kbd className="rounded border border-border bg-muted px-1 py-0.5 font-mono text-[11px]">
             <ArrowUp className="inline size-2.5" />
             <ArrowDown className="inline size-2.5" />
           </kbd>
           navigate
         </span>
         <span className="inline-flex items-center gap-1">
-          <kbd className="rounded border border-border bg-muted px-1 py-0.5 font-mono text-[10px]">
+          <kbd className="rounded border border-border bg-muted px-1 py-0.5 font-mono text-[11px]">
             Enter
           </kbd>
           open
         </span>
         <span className="inline-flex items-center gap-1">
-          <kbd className="rounded border border-border bg-muted px-1 py-0.5 font-mono text-[10px]">
+          <kbd className="rounded border border-border bg-muted px-1 py-0.5 font-mono text-[11px]">
             Esc
           </kbd>
           clear
@@ -1869,7 +1869,7 @@ function EmptyState({
               <span className="text-xs font-semibold text-foreground">
                 {meta.label}
               </span>
-              <span className="text-[10px] text-muted-foreground">
+              <span className="text-[11px] text-muted-foreground">
                 {SEARCH_INDEX.filter((i) => i.type === type).length} items
               </span>
             </button>

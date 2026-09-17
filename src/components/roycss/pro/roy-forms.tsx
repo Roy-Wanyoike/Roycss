@@ -504,7 +504,7 @@ function FieldPalette({ onAdd }: FieldPaletteProps) {
                 <Icon className="size-3.5 text-muted-foreground group-hover:text-primary" aria-hidden />
                 {meta.label}
               </span>
-              <span className="text-[10px] leading-tight text-muted-foreground">
+              <span className="text-[11px] leading-tight text-muted-foreground">
                 {meta.hint}
               </span>
             </button>
@@ -588,18 +588,18 @@ function FieldCard({
         <div className="flex shrink-0 items-center gap-1">
           <Badge
             variant="outline"
-            className="h-4.5 rounded px-1.5 text-[10px] font-medium"
+            className="h-4.5 rounded px-1.5 text-[11px] font-medium"
           >
             {meta.label}
           </Badge>
           {stepLabel ? (
-            <Badge variant="secondary" className="h-4.5 rounded px-1.5 text-[10px]">
+            <Badge variant="secondary" className="h-4.5 rounded px-1.5 text-[11px]">
               {stepLabel}
             </Badge>
           ) : null}
           <Badge
             variant="outline"
-            className="h-4.5 rounded px-1.5 text-[10px] capitalize text-muted-foreground"
+            className="h-4.5 rounded px-1.5 text-[11px] capitalize text-muted-foreground"
           >
             {field.width}
           </Badge>
@@ -831,7 +831,7 @@ function PropertiesPanel({
             {selected.label || "Untitled"}
           </h3>
         </div>
-        <Badge variant="secondary" className="shrink-0 text-[10px]">
+        <Badge variant="secondary" className="shrink-0 text-[11px]">
           {meta.label}
         </Badge>
       </div>

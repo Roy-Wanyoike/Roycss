@@ -522,10 +522,10 @@ const PreviewArea = forwardRef<HTMLDivElement, PreviewAreaProps>(
                 <ArrowDown className="size-3 -rotate-90 text-foreground" />
               </div>
             </div>
-            <span className="pointer-events-none absolute left-2 top-2 z-10 rounded bg-background/80 px-1.5 py-0.5 text-[10px] font-medium text-foreground backdrop-blur">
+            <span className="pointer-events-none absolute left-2 top-2 z-10 rounded bg-background/80 px-1.5 py-0.5 text-[11px] font-medium text-foreground backdrop-blur">
               After
             </span>
-            <span className="pointer-events-none absolute right-2 top-2 z-10 rounded bg-background/80 px-1.5 py-0.5 text-[10px] font-medium text-foreground backdrop-blur">
+            <span className="pointer-events-none absolute right-2 top-2 z-10 rounded bg-background/80 px-1.5 py-0.5 text-[11px] font-medium text-foreground backdrop-blur">
               Before
             </span>
           </>

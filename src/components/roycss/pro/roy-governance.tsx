@@ -379,7 +379,7 @@ export function RoyGovernance() {
                   </div>
                   <div className="text-right">
                     <p className="text-sm font-semibold">{m.reviewsThisMonth}</p>
-                    <p className="text-muted-foreground text-[10px]">reviews</p>
+                    <p className="text-muted-foreground text-[11px]">reviews</p>
                   </div>
                 </div>
               ))}

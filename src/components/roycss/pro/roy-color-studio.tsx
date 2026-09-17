@@ -389,10 +389,10 @@ function ContrastBadge({
   const label = `${rounded}:1`;
   return (
     <div className="flex items-center gap-1">
-      <span className="font-mono text-[10px] text-foreground">{label}</span>
+      <span className="font-mono text-[11px] text-foreground">{label}</span>
       <span
         className={cn(
-          "rounded px-1 py-px text-[9px] font-bold",
+          "rounded px-1 py-px text-[11px] font-bold",
           aaNormal
             ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300"
             : aaLarge
@@ -483,7 +483,7 @@ function ThemeSwatch({
         <div className="truncate text-[11px] font-medium text-foreground">
           {label}
         </div>
-        <div className="truncate font-mono text-[10px] text-muted-foreground">
+        <div className="truncate font-mono text-[11px] text-muted-foreground">
           {value}
         </div>
       </div>
@@ -712,7 +712,7 @@ export function RoyColorStudio(): React.JSX.Element {
         {/* ─── Scale tab ─────────────────────────────────────────── */}
         <TabsContent value="scale">
           <div className="overflow-hidden rounded-xl border border-border bg-card">
-            <div className="grid grid-cols-12 gap-2 border-b border-border bg-muted/40 px-3 py-2 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+            <div className="grid grid-cols-12 gap-2 border-b border-border bg-muted/40 px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
               <div className="col-span-3 sm:col-span-2">Step</div>
               <div className="col-span-4 hidden sm:block">Hex</div>
               <div className="col-span-4 hidden lg:block">OKLCH</div>

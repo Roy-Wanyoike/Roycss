@@ -471,10 +471,10 @@ function TokenRow({
       <code className="min-w-0 flex-1 truncate font-mono text-xs text-zinc-800 dark:text-zinc-200">
         {token.value}
       </code>
-      <span className="shrink-0 text-[10px] text-muted-foreground">
+      <span className="shrink-0 text-[11px] text-muted-foreground">
         {token.properties.join(", ")}
       </span>
-      <Badge variant="outline" className="shrink-0 text-[10px] tabular-nums">
+      <Badge variant="outline" className="shrink-0 text-[11px] tabular-nums">
         ×{token.count}
       </Badge>
     </li>
@@ -616,7 +616,7 @@ export function DesignTokenExtractor() {
                         <Icon className={cn("size-3.5", b.accent)} />
                         {b.label}
                       </div>
-                      <Badge variant="secondary" className="text-[10px] tabular-nums">
+                      <Badge variant="secondary" className="text-[11px] tabular-nums">
                         {tokens.length}
                       </Badge>
                     </div>

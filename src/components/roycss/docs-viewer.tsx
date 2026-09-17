@@ -119,8 +119,8 @@ function renderCodeBlock(code: string, lang: string): string {
   return (
     `<div class="roycss-doc-code-wrap relative my-4 rounded-lg overflow-hidden border border-zinc-800 bg-zinc-950">` +
     `<div class="flex items-center justify-between px-3 py-1.5 border-b border-zinc-800 bg-zinc-900/60">` +
-    `<span class="text-[10px] font-mono uppercase tracking-wider text-zinc-400">${escapeHtml(langLabel)}</span>` +
-    `<button type="button" data-raw="${attrRaw}" class="roycss-doc-copy flex items-center gap-1 text-[10px] font-medium text-zinc-400 hover:text-zinc-100 transition-colors" aria-label="Copy code">` +
+    `<span class="text-[11px] font-mono uppercase tracking-wider text-zinc-400">${escapeHtml(langLabel)}</span>` +
+    `<button type="button" data-raw="${attrRaw}" class="roycss-doc-copy flex items-center gap-1 text-[11px] font-medium text-zinc-400 hover:text-zinc-100 transition-colors" aria-label="Copy code">` +
     `<svg class="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>` +
     `<span>Copy</span>` +
     `</button>` +
@@ -518,7 +518,7 @@ export function DocsViewer({ open, onOpenChange }: DocsViewerProps) {
           <SheetTitle className="flex items-center gap-2 font-display text-base">
             <FileText className="size-4 text-primary" />
             Documentation
-            <Badge variant="secondary" className="text-[10px] bg-primary/10 text-primary border-primary/20">
+            <Badge variant="secondary" className="text-[11px] bg-primary/10 text-primary border-primary/20">
               {docsIndex.length} docs
             </Badge>
           </SheetTitle>
@@ -584,8 +584,8 @@ export function DocsViewer({ open, onOpenChange }: DocsViewerProps) {
                 <ArrowLeft className="size-3.5" />
                 Back to list
               </button>
-              <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
-                <Badge variant="outline" className="text-[10px] font-normal">
+              <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
+                <Badge variant="outline" className="text-[11px] font-normal">
                   {selectedDoc.categoryLabel}
                 </Badge>
                 <span>{selectedDoc.wordCount.toLocaleString()} words</span>
@@ -598,7 +598,7 @@ export function DocsViewer({ open, onOpenChange }: DocsViewerProps) {
                   aria-label="Table of contents"
                   className="hidden sm:block w-44 shrink-0 border-r border-border/60 overflow-y-auto py-4 px-3"
                 >
-                  <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-2 px-1">
+                  <div className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-2 px-1">
                     <Hash className="size-3" />
                     On this page
                   </div>
@@ -627,7 +627,7 @@ export function DocsViewer({ open, onOpenChange }: DocsViewerProps) {
                   className="roycss-doc-prose max-w-none"
                   dangerouslySetInnerHTML={{ __html: renderedHtml }}
                 />
-                <div className="mt-8 pt-4 border-t border-border/40 text-[10px] text-muted-foreground">
+                <div className="mt-8 pt-4 border-t border-border/40 text-[11px] text-muted-foreground">
                   Source: <code className="font-mono">docs/{selectedDoc.slug}.md</code>
                 </div>
               </div>
@@ -668,7 +668,7 @@ export function DocsViewer({ open, onOpenChange }: DocsViewerProps) {
                         </span>
                         <Badge
                           variant="outline"
-                          className="text-[9px] font-normal shrink-0 px-1.5 py-0"
+                          className="text-[11px] font-normal shrink-0 px-1.5 py-0"
                         >
                           {doc.categoryLabel}
                         </Badge>
@@ -676,7 +676,7 @@ export function DocsViewer({ open, onOpenChange }: DocsViewerProps) {
                       <p className="text-xs text-muted-foreground line-clamp-2 leading-snug">
                         {doc.description}
                       </p>
-                      <div className="flex items-center gap-2 text-[10px] text-muted-foreground/70 mt-0.5">
+                      <div className="flex items-center gap-2 text-[11px] text-muted-foreground/70 mt-0.5">
                         <span>{doc.wordCount.toLocaleString()} words</span>
                         <span>·</span>
                         <code className="font-mono">{doc.slug}.md</code>
@@ -690,28 +690,28 @@ export function DocsViewer({ open, onOpenChange }: DocsViewerProps) {
         )}
 
         {/* Footer — keyboard hints */}
-        <div className="px-5 py-2 border-t border-border/60 shrink-0 flex items-center justify-between text-[10px] text-muted-foreground">
+        <div className="px-5 py-2 border-t border-border/60 shrink-0 flex items-center justify-between text-[11px] text-muted-foreground">
           <div className="flex items-center gap-3">
             {!selectedSlug && (
               <>
                 <span className="flex items-center gap-1">
-                  <kbd className="px-1 py-0.5 rounded bg-muted border border-border/60 font-mono text-[9px]">↑↓</kbd>
+                  <kbd className="px-1 py-0.5 rounded bg-muted border border-border/60 font-mono text-[11px]">↑↓</kbd>
                   navigate
                 </span>
                 <span className="flex items-center gap-1">
-                  <kbd className="px-1 py-0.5 rounded bg-muted border border-border/60 font-mono text-[9px]">Enter</kbd>
+                  <kbd className="px-1 py-0.5 rounded bg-muted border border-border/60 font-mono text-[11px]">Enter</kbd>
                   open
                 </span>
               </>
             )}
             {selectedSlug && (
               <span className="flex items-center gap-1">
-                <kbd className="px-1 py-0.5 rounded bg-muted border border-border/60 font-mono text-[9px]">⌫</kbd>
+                <kbd className="px-1 py-0.5 rounded bg-muted border border-border/60 font-mono text-[11px]">⌫</kbd>
                 back to list
               </span>
             )}
             <span className="flex items-center gap-1">
-              <kbd className="px-1 py-0.5 rounded bg-muted border border-border/60 font-mono text-[9px]">Esc</kbd>
+              <kbd className="px-1 py-0.5 rounded bg-muted border border-border/60 font-mono text-[11px]">Esc</kbd>
               close
             </span>
           </div>
@@ -754,7 +754,7 @@ function CategoryChip({
       {label}
       <span
         className={cn(
-          "text-[9px] font-normal tabular-nums",
+          "text-[11px] font-normal tabular-nums",
           active ? "text-primary-foreground/70" : "text-muted-foreground/60",
         )}
       >

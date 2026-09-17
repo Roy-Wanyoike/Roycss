@@ -260,7 +260,7 @@ export function DocsOverlay({ open, onOpenChange }: DocsOverlayProps) {
                   <h2 id="docs-overlay-title" className="text-sm font-semibold text-foreground leading-none">
                     RoyCSS Docs
                   </h2>
-                  <p className="text-[10px] text-muted-foreground mt-0.5">
+                  <p className="text-[11px] text-muted-foreground mt-0.5">
                     19 architecture documents
                   </p>
                 </div>
@@ -334,7 +334,7 @@ export function DocsOverlay({ open, onOpenChange }: DocsOverlayProps) {
           />
 
           {/* ─── Footer status bar ──────────────────────────── */}
-          <footer className="shrink-0 border-t border-border/40 bg-card/60 backdrop-blur-sm px-4 sm:px-6 h-8 flex items-center justify-between text-[10px] text-muted-foreground">
+          <footer className="shrink-0 border-t border-border/40 bg-card/60 backdrop-blur-sm px-4 sm:px-6 h-8 flex items-center justify-between text-[11px] text-muted-foreground">
             <div className="flex items-center gap-3">
               <span className="flex items-center gap-1">
                 <kbd className="px-1 py-0.5 rounded bg-muted border border-border/50">Esc</kbd>

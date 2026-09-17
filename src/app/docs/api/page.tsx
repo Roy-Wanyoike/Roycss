@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
-      <p className="text-sm font-medium text-emerald-600 dark:text-emerald-400 mb-3">
+      <p className="text-sm font-medium text-primary mb-3">
         API Reference
       </p>
       <h1 className="text-4xl font-bold tracking-tight mb-4">
@@ -33,7 +33,7 @@ export default function Page() {
       <h2 className="text-2xl font-semibold mt-10 mb-3">The class system</h2>
       <p className="mb-4 leading-7">
         All RoyCSS classes live under a single{" "}
-        <code className="text-emerald-600 dark:text-emerald-400">roycss-</code>{" "}
+        <code className="text-primary">roycss-</code>{" "}
         prefix, and most names lead with the category they belong
         to. This makes them easy to memorize, easy to grep, and easy
         for AI assistants to suggest:
@@ -50,7 +50,7 @@ export default function Page() {
 .roycss-loader-ring-spin     /* loaders category */`}</code>
       </pre>
       <p className="mb-4 leading-7">
-        The <code className="text-emerald-600 dark:text-emerald-400">category</code>{" "}
+        The <code className="text-primary">category</code>{" "}
         prefix maps to one of the {CATEGORY_COUNT} categories (hover,
         text, backgrounds, loaders, buttons, cards, animations, and
         so on); the rest of the name is the effect slug. Variant
@@ -89,7 +89,7 @@ export default function Page() {
         the full source) and edit the values — see the{" "}
         <Link
           href="/docs/api/customization"
-          className="text-emerald-600 dark:text-emerald-400 hover:underline"
+          className="text-primary hover:underline"
         >
           Customization API
         </Link>
@@ -118,7 +118,7 @@ $ npx roycss export btn-glow hover-push-up text-shimmer --out src/styles/roycss.
         <li>
           <Link
             href="/docs/api/effects"
-            className="text-emerald-600 dark:text-emerald-400 hover:underline"
+            className="text-primary hover:underline"
           >
             Effects API
           </Link>{" "}
@@ -127,7 +127,7 @@ $ npx roycss export btn-glow hover-push-up text-shimmer --out src/styles/roycss.
         <li>
           <Link
             href="/docs/api/roymotion"
-            className="text-emerald-600 dark:text-emerald-400 hover:underline"
+            className="text-primary hover:underline"
           >
             RoyMotion API
           </Link>{" "}
@@ -136,7 +136,7 @@ $ npx roycss export btn-glow hover-push-up text-shimmer --out src/styles/roycss.
         <li>
           <Link
             href="/docs/api/customization"
-            className="text-emerald-600 dark:text-emerald-400 hover:underline"
+            className="text-primary hover:underline"
           >
             Customization API
           </Link>{" "}

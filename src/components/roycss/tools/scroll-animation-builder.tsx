@@ -396,7 +396,7 @@ ${keyframesBlock}
             Not supported — try Chrome 115+
           </span>
         )}
-        <span className="ml-auto text-[10px] text-muted-foreground">
+        <span className="ml-auto text-[11px] text-muted-foreground">
           Chrome 115+ · Edge 115+ · Samsung 24+ · Firefox/Safari: flagged
         </span>
       </div>
@@ -595,7 +595,7 @@ ${keyframesBlock}
           </Select>
         </div>
       </div>
-      <p className="-mt-2 text-[10px] text-muted-foreground">
+      <p className="-mt-2 text-[11px] text-muted-foreground">
         <span className="font-medium">Duration</span> acts as a fallback for
         browsers without scroll-timeline support — the timeline itself drives
         progress when supported. For scroll-driven animations,{" "}
@@ -660,7 +660,7 @@ ${keyframesBlock}
             </div>
           ))}
         </div>
-        <p className="text-[10px] text-muted-foreground">
+        <p className="text-[11px] text-muted-foreground">
           Positions: <code className="font-mono">from</code>,{" "}
           <code className="font-mono">to</code>, or a percentage like{" "}
           <code className="font-mono">50%</code>. Declarations are raw CSS

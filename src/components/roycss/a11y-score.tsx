@@ -107,8 +107,8 @@ export function A11yScore({ effect, showLabel = false, size = "sm" }: A11yScoreP
       title={title}
     >
       <Icon className={iconSize} />
-      {showLabel && <span className="text-[10px] font-medium">{meta.label}</span>}
-      <span className="text-[10px] font-mono font-bold">{score}</span>
+      {showLabel && <span className="text-[11px] font-medium">{meta.label}</span>}
+      <span className="text-[11px] font-mono font-bold">{score}</span>
     </div>
   );
 }

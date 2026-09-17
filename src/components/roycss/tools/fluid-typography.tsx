@@ -266,7 +266,7 @@ function SliderInput({
         aria-label={label}
       />
       {hint ? (
-        <p id={hintId} className="text-[10px] text-destructive">
+        <p id={hintId} className="text-[11px] text-destructive">
           {hint}
         </p>
       ) : null}
@@ -340,7 +340,7 @@ function CurveChart({
         <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
           Font-size curve
         </span>
-        <span className="font-mono text-[10px] text-muted-foreground">
+        <span className="font-mono text-[11px] text-muted-foreground">
           px ↑ / px →
         </span>
       </div>
@@ -809,7 +809,7 @@ export function FluidTypographyCalculator() {
               />
               <p
                 id="ftc-root-help"
-                className="text-[10px] text-muted-foreground"
+                className="text-[11px] text-muted-foreground"
               >
                 px → rem divisor
               </p>
@@ -863,7 +863,7 @@ export function FluidTypographyCalculator() {
                 Generated CSS
               </span>
               {configInvalid ? (
-                <span className="text-[10px] font-medium text-destructive">
+                <span className="text-[11px] font-medium text-destructive">
                   invalid config
                 </span>
               ) : null}
@@ -985,7 +985,7 @@ export function FluidTypographyCalculator() {
             <Monitor className="size-3.5" />
             Live preview · {PREVIEW_VIEWPORTS.length} viewports
           </span>
-          <span className="flex items-center gap-0.5 text-[10px] text-muted-foreground">
+          <span className="flex items-center gap-0.5 text-[11px] text-muted-foreground">
             scroll
             <ChevronRight className="size-3" />
           </span>
@@ -1039,7 +1039,7 @@ export function FluidTypographyCalculator() {
             );
           })}
         </div>
-        <p className="text-[10px] text-muted-foreground">
+        <p className="text-[11px] text-muted-foreground">
           Each card is a real{" "}
           <code className="font-mono">&lt;iframe&gt;</code> at that exact
           pixel width, so <code className="font-mono">vw</code> resolves

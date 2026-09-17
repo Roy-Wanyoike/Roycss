@@ -68,7 +68,7 @@ export default function EffectsApiPage() {
       </pre>
       <p>
         There are no per-category files to import — see the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/guides/tree-shaking">
+        <a className="text-primary hover:underline" href="/docs/guides/tree-shaking">
           tree-shaking guide
         </a>{" "}
         for shipping a subset with the CLI.
@@ -132,7 +132,7 @@ Copy to clipboard: roycss add hover-push-up --copy`}</code>
       </pre>
       <p>
         Every effect page in the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/effects">
+        <a className="text-primary hover:underline" href="/effects">
           catalog
         </a>{" "}
         shows the same CSS with a copy button.
@@ -145,17 +145,17 @@ Copy to clipboard: roycss add hover-push-up --copy`}</code>
         API page with the full class list:
       </p>
       <ul className="list-disc pl-6 space-y-1">
-        <li><a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/api/effects/hover">Hover Effects</a> — roycss-hover-* push-up, scale, glow</li>
-        <li><a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/api/effects/text">Text Effects</a> — roycss-text-* shimmer, gradient</li>
-        <li><a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/api/effects/backgrounds">Backgrounds</a> — roycss-bg-* aurora, mesh</li>
-        <li><a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/api/effects/loaders">Loaders</a> — roycss-loader-* ring, dots</li>
-        <li><a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/api/effects/buttons">Buttons</a> — roycss-btn-* glow, pulse</li>
-        <li><a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/api/effects/cards">Cards</a> — roycss-card-* glass, gradient-border</li>
-        <li><a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/api/effects/borders">Borders</a> — roycss-border-* marching-ants, neon-pulse</li>
+        <li><a className="text-primary hover:underline" href="/docs/api/effects/hover">Hover Effects</a> — roycss-hover-* push-up, scale, glow</li>
+        <li><a className="text-primary hover:underline" href="/docs/api/effects/text">Text Effects</a> — roycss-text-* shimmer, gradient</li>
+        <li><a className="text-primary hover:underline" href="/docs/api/effects/backgrounds">Backgrounds</a> — roycss-bg-* aurora, mesh</li>
+        <li><a className="text-primary hover:underline" href="/docs/api/effects/loaders">Loaders</a> — roycss-loader-* ring, dots</li>
+        <li><a className="text-primary hover:underline" href="/docs/api/effects/buttons">Buttons</a> — roycss-btn-* glow, pulse</li>
+        <li><a className="text-primary hover:underline" href="/docs/api/effects/cards">Cards</a> — roycss-card-* glass, gradient-border</li>
+        <li><a className="text-primary hover:underline" href="/docs/api/effects/borders">Borders</a> — roycss-border-* marching-ants, neon-pulse</li>
       </ul>
       <p>
         For the remaining categories, browse the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/effects">
+        <a className="text-primary hover:underline" href="/effects">
           full effect catalog
         </a>{" "}
         — every category and effect has its own page.

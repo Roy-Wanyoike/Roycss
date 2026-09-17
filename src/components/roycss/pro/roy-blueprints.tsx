@@ -1343,7 +1343,7 @@ function MethodBadge({
     <Badge
       variant="outline"
       className={cn(
-        "w-16 justify-center font-mono text-[10px]",
+        "w-16 justify-center font-mono text-[11px]",
         meta.badge,
         className,
       )}
@@ -1544,7 +1544,7 @@ function ArchitectureDialog({
                 </h4>
                 <p className="text-xs text-muted-foreground">
                   REST surface — versioned under{" "}
-                  <code className="rounded bg-muted px-1 py-0.5 font-mono text-[10px]">
+                  <code className="rounded bg-muted px-1 py-0.5 font-mono text-[11px]">
                     /api/v1
                   </code>
                   .
@@ -1666,7 +1666,7 @@ function StackCell({
 }: StackCellProps): React.JSX.Element {
   return (
     <div className={cn("rounded-lg border bg-muted/30 px-3 py-2", className)}>
-      <p className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+      <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
         {label}
       </p>
       <p className="mt-0.5 text-xs font-medium text-foreground">{value}</p>

@@ -574,7 +574,7 @@ function MonthGrid({
                   {day.getDate()}
                 </span>
                 {dayEvents.length > 0 && (
-                  <span className="text-[10px] font-medium tabular-nums text-muted-foreground/70">
+                  <span className="text-[11px] font-medium tabular-nums text-muted-foreground/70">
                     {dayEvents.length}
                   </span>
                 )}
@@ -590,7 +590,7 @@ function MonthGrid({
                       onEventClick(ev);
                     }}
                     className={cn(
-                      "flex items-center gap-1 rounded border px-1 py-0.5 text-left text-[10px] font-medium transition-colors sm:text-[11px]",
+                      "flex items-center gap-1 rounded border px-1 py-0.5 text-left text-[11px] font-medium transition-colors sm:text-[11px]",
                       COLOR_STYLES[ev.color].badge,
                     )}
                   >
@@ -610,7 +610,7 @@ function MonthGrid({
                       e.stopPropagation();
                       onDayClick(day);
                     }}
-                    className="px-1 text-left text-[10px] font-medium text-muted-foreground transition-colors hover:text-foreground"
+                    className="px-1 text-left text-[11px] font-medium text-muted-foreground transition-colors hover:text-foreground"
                   >
                     +{overflow} more
                   </button>
@@ -667,7 +667,7 @@ function WeekGrid({
                   weekend && "bg-muted/15",
                 )}
               >
-                <div className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+                <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                   {WEEKDAY_LABELS[day.getDay()]}
                 </div>
                 <div
@@ -693,7 +693,7 @@ function WeekGrid({
               <div
                 key={hour}
                 className={cn(
-                  "border-r pr-1.5 pt-0.5 text-right text-[10px] font-medium tabular-nums text-muted-foreground/80",
+                  "border-r pr-1.5 pt-0.5 text-right text-[11px] font-medium tabular-nums text-muted-foreground/80",
                   hour < 23 && "border-b",
                 )}
                 style={{ height: HOUR_HEIGHT_PX }}

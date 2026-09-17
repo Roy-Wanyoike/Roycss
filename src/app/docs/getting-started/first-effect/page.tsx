@@ -20,7 +20,7 @@ export default function FirstEffectPage() {
       <h2 id="prereqs">Prerequisites</h2>
       <p>
         RoyCSS already installed in your project. If not, follow the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/getting-started/installation">
+        <a className="text-primary hover:underline" href="/docs/getting-started/installation">
           Installation
         </a>{" "}
         guide first.
@@ -132,11 +132,11 @@ export default function FirstEffectPage() {
       <h2 id="whats-next">What’s next</h2>
       <p>
         You now have the full RoyCSS workflow. Head to the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/api/effects">
+        <a className="text-primary hover:underline" href="/docs/api/effects">
           Effects API
         </a>{" "}
         reference to browse all {EFFECT_COUNT_FORMATTED} effects, or read about the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/concepts/css-first">
+        <a className="text-primary hover:underline" href="/docs/concepts/css-first">
           CSS-first architecture
         </a>{" "}
         to understand why no JavaScript is involved.

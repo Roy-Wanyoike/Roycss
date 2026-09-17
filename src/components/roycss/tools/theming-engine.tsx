@@ -456,7 +456,7 @@ function ContrastRow({ label, fg, bg }: ContrastRowProps) {
         </span>
         <Badge
           variant="outline"
-          className={cn("h-5 px-1.5 text-[10px] font-semibold", bandBadgeClass[band])}
+          className={cn("h-5 px-1.5 text-[11px] font-semibold", bandBadgeClass[band])}
         >
           {bandLabel[band]}
         </Badge>
@@ -706,7 +706,7 @@ export function ThemingEngine() {
                   <span className="truncate text-xs font-medium text-foreground">
                     {TOKEN_LABELS[k]}
                   </span>
-                  <span className="truncate font-mono text-[10px] text-muted-foreground">
+                  <span className="truncate font-mono text-[11px] text-muted-foreground">
                     {formatOklch(c)}
                   </span>
                 </div>

@@ -571,20 +571,20 @@ export function SpriteSheetGenerator() {
         {/* Sheet stats */}
         {frames.length > 0 && (
           <div className="flex flex-wrap items-center gap-2 text-[11px] text-muted-foreground">
-            <Badge variant="secondary" className="gap-1 font-mono text-[10px]">
+            <Badge variant="secondary" className="gap-1 font-mono text-[11px]">
               <Images className="size-3" />
               {frames.length} frame{frames.length === 1 ? "" : "s"}
             </Badge>
-            <Badge variant="secondary" className="gap-1 font-mono text-[10px]">
+            <Badge variant="secondary" className="gap-1 font-mono text-[11px]">
               {sheetWidth}×{sheetHeight}px
             </Badge>
-            <Badge variant="secondary" className="font-mono text-[10px]">
+            <Badge variant="secondary" className="font-mono text-[11px]">
               {grid.cols}×{grid.rows} grid
             </Badge>
             {supportsAnimation && (
               <Badge
                 variant="secondary"
-                className="bg-emerald-500/15 font-mono text-[10px] text-emerald-600 dark:text-emerald-400"
+                className="bg-emerald-500/15 font-mono text-[11px] text-emerald-600 dark:text-emerald-400"
               >
                 steps({frames.length}) ready
               </Badge>
@@ -622,10 +622,10 @@ export function SpriteSheetGenerator() {
         {/* Frame size */}
         <div className="space-y-1">
           <div className="flex items-center justify-between">
-            <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+            <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
               Frame size
             </Label>
-            <span className="font-mono text-[10px] text-muted-foreground">
+            <span className="font-mono text-[11px] text-muted-foreground">
               {frameSize}×{frameSize}px
             </span>
           </div>
@@ -642,10 +642,10 @@ export function SpriteSheetGenerator() {
         {/* Padding */}
         <div className="space-y-1">
           <div className="flex items-center justify-between">
-            <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+            <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
               Padding
             </Label>
-            <span className="font-mono text-[10px] text-muted-foreground">
+            <span className="font-mono text-[11px] text-muted-foreground">
               {padding}px
             </span>
           </div>
@@ -663,7 +663,7 @@ export function SpriteSheetGenerator() {
         <div className="flex items-center justify-between gap-2">
           <Label
             htmlFor="ssg-bg-transparent"
-            className="flex items-center gap-2 text-[10px] uppercase tracking-wider text-muted-foreground"
+            className="flex items-center gap-2 text-[11px] uppercase tracking-wider text-muted-foreground"
           >
             <Switch
               id="ssg-bg-transparent"
@@ -710,7 +710,7 @@ export function SpriteSheetGenerator() {
                 key={frame.id}
                 className="flex items-center gap-2 rounded-lg border border-border/60 bg-muted/20 p-2"
               >
-                <span className="shrink-0 font-mono text-[10px] text-muted-foreground">
+                <span className="shrink-0 font-mono text-[11px] text-muted-foreground">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 {/* <img> is intentional here: the src is a sandboxed dataURL
@@ -725,7 +725,7 @@ export function SpriteSheetGenerator() {
                 <span className="flex-1 truncate font-mono text-xs">
                   {frame.name}
                 </span>
-                <span className="shrink-0 font-mono text-[10px] text-muted-foreground">
+                <span className="shrink-0 font-mono text-[11px] text-muted-foreground">
                   {frame.originalWidth}×{frame.originalHeight}
                 </span>
                 <div className="flex shrink-0 items-center gap-0.5">
@@ -801,7 +801,7 @@ export function SpriteSheetGenerator() {
           <code>{generatedCss}</code>
         </pre>
         {frames.length > 0 && (
-          <p className="text-[10px] text-muted-foreground">
+          <p className="text-[11px] text-muted-foreground">
             Replace <code className="font-mono">url(&apos;sprite-sheet.png&apos;)</code> with your
             downloaded PNG path. The <code className="font-mono">.sprite.anim</code> rule plays the
             frames in sequence using <code className="font-mono">steps(N)</code>.

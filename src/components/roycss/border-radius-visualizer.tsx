@@ -135,7 +135,7 @@ export function BorderRadiusVisualizer() {
                 className="size-6 bg-primary/60"
                 style={{ borderRadius: preset.value.tl >= 999 ? "9999px" : `${preset.value.tl}px ${preset.value.tr}px ${preset.value.br}px ${preset.value.bl}px` }}
               />
-              <span className="text-[9px] text-muted-foreground">{preset.name}</span>
+              <span className="text-[11px] text-muted-foreground">{preset.name}</span>
             </button>
           ))}
         </div>

@@ -407,7 +407,7 @@ export function PlaygroundV2({ initialHtml, initialCss }: PlaygroundV2Props) {
                 <Terminal className="size-4 text-emerald-600" />
                 <span className="text-sm font-semibold">Console</span>
                 {messages.length > 0 && (
-                  <Badge variant="outline" className="text-[10px]">
+                  <Badge variant="outline" className="text-[11px]">
                     {messages.length}
                   </Badge>
                 )}

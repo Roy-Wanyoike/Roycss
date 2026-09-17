@@ -1081,7 +1081,7 @@ export function RoyMotionStudio(): React.JSX.Element {
               RoyCSS
             </span>
             <span className="text-lg font-bold">Motion</span>
-            <span className="mt-0.5 text-[10px] opacity-70">
+            <span className="mt-0.5 text-[11px] opacity-70">
               {(previewState.opacity * 100).toFixed(0)}% opacity
             </span>
           </motion.div>

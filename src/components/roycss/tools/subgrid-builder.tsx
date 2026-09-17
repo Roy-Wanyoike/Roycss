@@ -359,7 +359,7 @@ function ChildEditor({
     <div className="space-y-2 rounded-lg border border-border/60 bg-background/60 p-2.5">
       <div className="flex flex-wrap items-center gap-2">
         <span
-          className="grid size-6 shrink-0 place-items-center rounded-md text-[10px] font-mono font-bold text-white"
+          className="grid size-6 shrink-0 place-items-center rounded-md text-[11px] font-mono font-bold text-white"
           style={{ backgroundColor: child.color }}
           aria-hidden
         >
@@ -378,7 +378,7 @@ function ChildEditor({
             onCheckedChange={(v) => patch({ useSubgrid: v })}
             aria-label="Toggle subgrid"
           />
-          <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
+          <span className="text-[11px] uppercase tracking-wider text-muted-foreground">
             subgrid
           </span>
         </div>
@@ -396,7 +396,7 @@ function ChildEditor({
       <div className="grid grid-cols-2 gap-2">
         <div className="space-y-1">
           <div className="flex items-center justify-between">
-            <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+            <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
               Span
             </Label>
             <span className="font-mono text-[11px] text-foreground/80">
@@ -420,7 +420,7 @@ function ChildEditor({
         {child.useSubgrid && (
           <div className="space-y-1">
             <div className="flex items-center justify-between">
-              <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+              <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
                 Inner cells
               </Label>
               <span className="font-mono text-[11px] text-foreground/80">
@@ -549,7 +549,7 @@ export function SubgridBuilder() {
             </h2>
             <span
               className={cn(
-                "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider",
+                "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider",
                 badgeTone,
               )}
             >
@@ -722,7 +722,7 @@ export function SubgridBuilder() {
             {trackNumbers.map((n) => (
               <div
                 key={n}
-                className="text-center font-mono text-[10px] font-semibold text-muted-foreground"
+                className="text-center font-mono text-[11px] font-semibold text-muted-foreground"
               >
                 {n}
               </div>
@@ -769,7 +769,7 @@ export function SubgridBuilder() {
                           (_, ci) => (
                             <div
                               key={ci}
-                              className="rounded-md border px-2 py-1.5 text-center font-mono text-[10px]"
+                              className="rounded-md border px-2 py-1.5 text-center font-mono text-[11px]"
                               style={{
                                 backgroundColor: withAlpha(c.color, 0.35),
                                 borderColor: withAlpha(c.color, 0.7),
@@ -787,7 +787,7 @@ export function SubgridBuilder() {
               })}
             </div>
           )}
-          <p className="mt-2 text-[10px] text-muted-foreground">
+          <p className="mt-2 text-[11px] text-muted-foreground">
             Track lines (the gap) extend through subgrid children — that is the
             whole point of <code className="font-mono">subgrid</code>.
           </p>

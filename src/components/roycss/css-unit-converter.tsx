@@ -119,7 +119,7 @@ export function CSSUnitConverter() {
             className={`flex items-center justify-between gap-2 p-3 rounded-xl border transition-all cursor-pointer text-left ${copiedTo === unit ? "border-emerald-500/40 bg-emerald-500/5" : "border-border/50 bg-card hover:border-primary/30"}`}
           >
             <div>
-              <p className="text-[10px] text-muted-foreground uppercase tracking-wide">{label}</p>
+              <p className="text-[11px] text-muted-foreground uppercase tracking-wide">{label}</p>
               <p className="font-mono text-lg font-bold text-foreground">{formatted}<span className="text-muted-foreground text-sm">{unit}</span></p>
             </div>
             {copiedTo === unit ? <Check className="size-4 text-emerald-500" /> : <Copy className="size-4 text-muted-foreground" />}

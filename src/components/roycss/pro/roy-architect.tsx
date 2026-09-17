@@ -486,7 +486,7 @@ function EndpointRow({ ep }: { ep: ApiEndpoint }) {
     <li className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-3">
       <Badge
         variant="outline"
-        className={cn("w-fit shrink-0 font-mono text-[10px] tracking-wide", methodClass[ep.method])}
+        className={cn("w-fit shrink-0 font-mono text-[11px] tracking-wide", methodClass[ep.method])}
       >
         {ep.method}
       </Badge>
@@ -705,7 +705,7 @@ export function RoyArchitect() {
                   </span>
                   <Badge
                     variant="outline"
-                    className="border-primary/30 bg-primary/10 text-primary ml-auto text-[10px]"
+                    className="border-primary/30 bg-primary/10 text-primary ml-auto text-[11px]"
                   >
                     {tc.coverage}
                   </Badge>
@@ -766,7 +766,7 @@ export function RoyArchitect() {
             <span className="truncate font-semibold">RoyArchitect</span>
             <Badge
               variant="outline"
-              className="border-primary/30 bg-primary/10 text-primary shrink-0 gap-1 text-[10px]"
+              className="border-primary/30 bg-primary/10 text-primary shrink-0 gap-1 text-[11px]"
             >
               <Boxes className="size-3" aria-hidden />
               AI Architect

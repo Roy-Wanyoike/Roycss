@@ -962,7 +962,7 @@ function ProgressStepsDemo() {
                 </div>
                 <span
                   className={cn(
-                    "text-[10px] font-medium",
+                    "text-[11px] font-medium",
                     isActive ? "text-foreground" : "text-muted-foreground",
                   )}
                 >
@@ -1130,7 +1130,7 @@ function FileUploadDemo() {
             >
               <FileIcon className="size-4 shrink-0 text-muted-foreground" />
               <span className="flex-1 truncate text-xs">{f.name}</span>
-              <span className="font-mono text-[10px] text-muted-foreground">
+              <span className="font-mono text-[11px] text-muted-foreground">
                 {formatBytes(f.size)}
               </span>
               <button
@@ -1352,7 +1352,7 @@ function CommandMenuDemo() {
               autoFocus
               aria-label="Command search"
             />
-            <kbd className="rounded border bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
+            <kbd className="rounded border bg-muted px-1.5 py-0.5 font-mono text-[11px] text-muted-foreground">
               ESC
             </kbd>
           </div>
@@ -1517,7 +1517,7 @@ function PatternCard({ pattern }: { pattern: PatternMeta }) {
         <CardAction>
           <Badge
             variant="outline"
-            className={cn("text-[10px]", meta.badgeClass)}
+            className={cn("text-[11px]", meta.badgeClass)}
           >
             {meta.label}
           </Badge>
@@ -1544,7 +1544,7 @@ function PatternCard({ pattern }: { pattern: PatternMeta }) {
 
         {/* Footer: id + Copy JSX */}
         <div className="flex items-center justify-between">
-          <span className="font-mono text-[10px] text-muted-foreground">
+          <span className="font-mono text-[11px] text-muted-foreground">
             #{pattern.id}
           </span>
           <CopyJsxButton code={pattern.code} />
@@ -1615,7 +1615,7 @@ function Toolbar({
             </Button>
           ))}
         </div>
-        <span className="ml-1 text-[10px] text-muted-foreground">
+        <span className="ml-1 text-[11px] text-muted-foreground">
           {visibleCount} / {totalCount}
         </span>
       </div>

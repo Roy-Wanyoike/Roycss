@@ -1356,12 +1356,12 @@ export function VariableDependencyGraph() {
                             )}
                             <span className="truncate flex-1">{node.name}</span>
                             {node.isUnused && (
-                              <span className="ml-auto rounded bg-muted px-1 py-px text-[9px] text-muted-foreground uppercase tracking-wide">
+                              <span className="ml-auto rounded bg-muted px-1 py-px text-[11px] text-muted-foreground uppercase tracking-wide">
                                 unused
                               </span>
                             )}
                             {node.isUndefined && (
-                              <span className="ml-auto rounded bg-amber-500/15 px-1 py-px text-[9px] text-amber-600 uppercase tracking-wide">
+                              <span className="ml-auto rounded bg-amber-500/15 px-1 py-px text-[11px] text-amber-600 uppercase tracking-wide">
                                 undef
                               </span>
                             )}
@@ -1455,17 +1455,17 @@ function NodeDetail({ node }: { node: PositionedNode }) {
         </span>
         <div className="ml-auto flex items-center gap-1">
           {node.isCycle && (
-            <Badge className="bg-rose-500/15 text-rose-600 border-rose-500/30 text-[9px] px-1.5 py-0">
+            <Badge className="bg-rose-500/15 text-rose-600 border-rose-500/30 text-[11px] px-1.5 py-0">
               cycle
             </Badge>
           )}
           {node.isUndefined && (
-            <Badge className="bg-amber-500/15 text-amber-600 border-amber-500/30 text-[9px] px-1.5 py-0">
+            <Badge className="bg-amber-500/15 text-amber-600 border-amber-500/30 text-[11px] px-1.5 py-0">
               undefined
             </Badge>
           )}
           {node.isUnused && (
-            <Badge variant="secondary" className="text-[9px] px-1.5 py-0">
+            <Badge variant="secondary" className="text-[11px] px-1.5 py-0">
               unused
             </Badge>
           )}
@@ -1508,7 +1508,7 @@ function NodeDetail({ node }: { node: PositionedNode }) {
               <Badge
                 key={n}
                 variant="outline"
-                className="font-mono text-[10px] px-1.5 py-0"
+                className="font-mono text-[11px] px-1.5 py-0"
               >
                 {n}
               </Badge>
@@ -1528,7 +1528,7 @@ function NodeDetail({ node }: { node: PositionedNode }) {
               <Badge
                 key={n}
                 variant="outline"
-                className="font-mono text-[10px] px-1.5 py-0"
+                className="font-mono text-[11px] px-1.5 py-0"
               >
                 {n}
               </Badge>
@@ -1549,7 +1549,7 @@ function DetailRow({
 }) {
   return (
     <div>
-      <div className="text-muted-foreground uppercase text-[10px] tracking-wider mb-0.5">
+      <div className="text-muted-foreground uppercase text-[11px] tracking-wider mb-0.5">
         {label}
       </div>
       <div>{children}</div>
@@ -1644,7 +1644,7 @@ function FindingsPanel({ core }: { core: AnalysisCore }) {
                 </span>
               </div>
               {u.fallback && (
-                <div className="mt-0.5 text-[10px] text-muted-foreground font-mono break-all">
+                <div className="mt-0.5 text-[11px] text-muted-foreground font-mono break-all">
                   fallback: {u.fallback}
                 </div>
               )}
@@ -1666,7 +1666,7 @@ function FindingsPanel({ core }: { core: AnalysisCore }) {
               <Badge
                 key={name}
                 variant="outline"
-                className="font-mono text-[10px] px-1.5 py-0 text-muted-foreground border-dashed"
+                className="font-mono text-[11px] px-1.5 py-0 text-muted-foreground border-dashed"
               >
                 {name}
               </Badge>
@@ -1718,7 +1718,7 @@ function FindingSection({
         <span className={cn("text-xs font-semibold uppercase tracking-wider", accent)}>
           {title}
         </span>
-        <span className="ml-auto rounded-full bg-muted px-1.5 py-px text-[10px] text-muted-foreground tabular-nums">
+        <span className="ml-auto rounded-full bg-muted px-1.5 py-px text-[11px] text-muted-foreground tabular-nums">
           {count}
         </span>
       </div>

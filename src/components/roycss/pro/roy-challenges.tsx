@@ -276,7 +276,7 @@ export function RoyChallenges() {
               </div>
               <div className="bg-primary/10 text-primary rounded-lg px-3 py-2 text-right">
                 <p className="text-xs">{USER_XP} XP</p>
-                <p className="text-[10px] opacity-80">{completed.size}/{CHALLENGES.length} solved</p>
+                <p className="text-[11px] opacity-80">{completed.size}/{CHALLENGES.length} solved</p>
               </div>
             </div>
           </div>
@@ -358,7 +358,7 @@ export function RoyChallenges() {
                 )}>
                   {row.rank}
                 </span>
-                <div className="bg-primary/15 text-primary flex size-7 items-center justify-center rounded-full text-[10px] font-semibold">
+                <div className="bg-primary/15 text-primary flex size-7 items-center justify-center rounded-full text-[11px] font-semibold">
                   {row.avatar}
                 </div>
                 <p className="min-w-0 flex-1 truncate text-sm">{row.name}</p>
@@ -368,7 +368,7 @@ export function RoyChallenges() {
             <div className="border-t pt-2">
               <div className="bg-primary/5 flex items-center gap-3 rounded-md px-2 py-1.5">
                 <span className="text-muted-foreground w-6 text-center text-sm font-bold tabular-nums">#{USER_RANK}</span>
-                <div className="bg-primary text-primary-foreground flex size-7 items-center justify-center rounded-full text-[10px] font-semibold">
+                <div className="bg-primary text-primary-foreground flex size-7 items-center justify-center rounded-full text-[11px] font-semibold">
                   You
                 </div>
                 <p className="flex-1 text-sm font-medium">You</p>

@@ -451,7 +451,7 @@ const BreakingChangeRow = React.memo(function BreakingChangeRow({
         <span className="text-sm font-semibold">{change.title}</span>
         <Badge
           variant="outline"
-          className={cn("ml-auto text-[10px] uppercase tracking-wide", meta.badge)}
+          className={cn("ml-auto text-[11px] uppercase tracking-wide", meta.badge)}
         >
           {meta.label}
         </Badge>
@@ -466,7 +466,7 @@ const BreakingChangeRow = React.memo(function BreakingChangeRow({
         {change.affectedFiles.map((file) => (
           <code
             key={file}
-            className="bg-muted/60 rounded px-1.5 py-0.5 font-mono text-[10px]"
+            className="bg-muted/60 rounded px-1.5 py-0.5 font-mono text-[11px]"
           >
             {file}
           </code>
@@ -510,7 +510,7 @@ const ChangelogCard = React.memo(function ChangelogCard({
         {isLatest && (
           <Badge
             variant="outline"
-            className="border-primary/30 bg-primary/10 text-primary text-[10px] uppercase tracking-wide"
+            className="border-primary/30 bg-primary/10 text-primary text-[11px] uppercase tracking-wide"
           >
             Latest
           </Badge>
@@ -832,7 +832,7 @@ export function RoyVersion() {
               <AlertTriangle className="size-4 text-amber-600 dark:text-amber-400" aria-hidden />
               Breaking changes detector
             </h3>
-            <Badge variant="outline" className="text-[10px]">
+            <Badge variant="outline" className="text-[11px]">
               {BREAKING_CHANGES.length} detected
             </Badge>
           </div>
@@ -880,7 +880,7 @@ export function RoyVersion() {
               </p>
               <div className="grid grid-cols-2 gap-2">
                 <div className="bg-muted/40 rounded-md border p-2.5">
-                  <div className="text-[10px] uppercase tracking-wide text-muted-foreground">
+                  <div className="text-[11px] uppercase tracking-wide text-muted-foreground">
                     Features
                   </div>
                   <div className="text-foreground text-lg font-semibold tabular-nums">
@@ -888,7 +888,7 @@ export function RoyVersion() {
                   </div>
                 </div>
                 <div className="bg-muted/40 rounded-md border p-2.5">
-                  <div className="text-[10px] uppercase tracking-wide text-muted-foreground">
+                  <div className="text-[11px] uppercase tracking-wide text-muted-foreground">
                     Breaking
                   </div>
                   <div className="text-foreground text-lg font-semibold tabular-nums">
@@ -896,7 +896,7 @@ export function RoyVersion() {
                   </div>
                 </div>
                 <div className="bg-muted/40 rounded-md border p-2.5">
-                  <div className="text-[10px] uppercase tracking-wide text-muted-foreground">
+                  <div className="text-[11px] uppercase tracking-wide text-muted-foreground">
                     Deprecations
                   </div>
                   <div className="text-foreground text-lg font-semibold tabular-nums">
@@ -904,7 +904,7 @@ export function RoyVersion() {
                   </div>
                 </div>
                 <div className="bg-muted/40 rounded-md border p-2.5">
-                  <div className="text-[10px] uppercase tracking-wide text-muted-foreground">
+                  <div className="text-[11px] uppercase tracking-wide text-muted-foreground">
                     Est. time
                   </div>
                   <div className="text-foreground text-lg font-semibold tabular-nums">
@@ -926,7 +926,7 @@ export function RoyVersion() {
                 <Badge
                   variant="outline"
                   className={cn(
-                    "ml-auto text-[10px] uppercase tracking-wide",
+                    "ml-auto text-[11px] uppercase tracking-wide",
                     isUpgrade
                       ? "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950/60 dark:text-amber-300"
                       : "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950/60 dark:text-emerald-300",
@@ -948,7 +948,7 @@ export function RoyVersion() {
                     className="flex items-start gap-2 text-xs leading-snug"
                   >
                     <span
-                      className="bg-primary/15 text-primary mt-0.5 inline-flex size-4 shrink-0 items-center justify-center rounded-full text-[9px] font-bold"
+                      className="bg-primary/15 text-primary mt-0.5 inline-flex size-4 shrink-0 items-center justify-center rounded-full text-[11px] font-bold"
                       aria-hidden
                     >
                       {i + 1}
@@ -993,7 +993,7 @@ export function RoyVersion() {
               <Clock className="size-4 text-primary" aria-hidden />
               Changelog
             </h3>
-            <Badge variant="outline" className="text-[10px]">
+            <Badge variant="outline" className="text-[11px]">
               {CHANGELOG.length} recent releases
             </Badge>
           </div>

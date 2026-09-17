@@ -244,8 +244,8 @@ export function ProductGrid() {
               <DialogHeader className="px-5 py-4 border-b border-border shrink-0">
                 <DialogTitle className="flex items-center gap-2 text-base sm:text-lg">
                   {openProduct.name}
-                  <Badge variant="outline" className="text-[10px] capitalize">{openProduct.tier}</Badge>
-                  <Badge variant="secondary" className="text-[10px] capitalize">{openProduct.status}</Badge>
+                  <Badge variant="outline" className="text-[11px] capitalize">{openProduct.tier}</Badge>
+                  <Badge variant="secondary" className="text-[11px] capitalize">{openProduct.status}</Badge>
                 </DialogTitle>
                 <DialogDescription className="text-xs sm:text-sm">
                   {openProduct.longDescription}

@@ -484,7 +484,7 @@ function MatrixCellView({ cell, bgLabel, fgLabel }: MatrixCellViewProps) {
                 style={{ background: bg.normalized ?? "#888" }}
                 aria-hidden="true"
               />
-              <span className="font-mono text-[10px]">
+              <span className="font-mono text-[11px]">
                 bg: {bg.normalized ?? "?"} {bgLabel ? `(${bgLabel})` : ""}
               </span>
             </div>
@@ -494,13 +494,13 @@ function MatrixCellView({ cell, bgLabel, fgLabel }: MatrixCellViewProps) {
                 style={{ background: fg.normalized ?? "#888" }}
                 aria-hidden="true"
               />
-              <span className="font-mono text-[10px]">
+              <span className="font-mono text-[11px]">
                 fg: {fg.normalized ?? "?"} {fgLabel ? `(${fgLabel})` : ""}
               </span>
             </div>
             <div className="pt-1 border-t border-white/15">
               <span className="font-bold">{ratio.toFixed(2)}:1</span>
-              <span className="ml-2 text-[10px] uppercase tracking-wide opacity-80">
+              <span className="ml-2 text-[11px] uppercase tracking-wide opacity-80">
                 {BAND_BADGE_LABEL[band]}
               </span>
             </div>
@@ -811,7 +811,7 @@ export function ContrastMatrix() {
         </div>
 
         {/* Legend */}
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[10px] text-muted-foreground sm:ml-auto">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[11px] text-muted-foreground sm:ml-auto">
           <span className="font-semibold uppercase tracking-wider">Legend:</span>
           <LegendItem className="bg-emerald-500/30 border-emerald-500/40" label={`Pass (≥ ${TARGET_THRESHOLD[target]}:1)`} />
           <LegendItem className="bg-amber-500/30 border-amber-500/40" label="Close (≥ 3:1)" />
@@ -931,7 +931,7 @@ export function ContrastMatrix() {
                     </span>
                     <Badge
                       variant="outline"
-                      className="shrink-0 bg-rose-500/15 text-rose-700 dark:text-rose-300 border-rose-500/30 text-[9px] px-1 py-0"
+                      className="shrink-0 bg-rose-500/15 text-rose-700 dark:text-rose-300 border-rose-500/30 text-[11px] px-1 py-0"
                     >
                       Fail
                     </Badge>
@@ -963,7 +963,7 @@ export function ContrastMatrix() {
           <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             Contrast matrix
           </Label>
-          <span className="inline-flex items-center gap-1 text-[10px] text-muted-foreground">
+          <span className="inline-flex items-center gap-1 text-[11px] text-muted-foreground">
             <Info className="size-3" />
             Rows = background · Columns = foreground
           </span>
@@ -985,7 +985,7 @@ export function ContrastMatrix() {
                   scope="col"
                   className="sticky top-0 left-0 z-30 bg-card border border-border w-16 h-16 align-middle"
                 >
-                  <span className="flex flex-col items-center justify-center text-[9px] text-muted-foreground leading-tight gap-0.5">
+                  <span className="flex flex-col items-center justify-center text-[11px] text-muted-foreground leading-tight gap-0.5">
                     <span>bg ＼ fg</span>
                   </span>
                 </th>
@@ -1002,7 +1002,7 @@ export function ContrastMatrix() {
                         style={{ background: fg.normalized ?? "#e5e7eb" }}
                         aria-hidden="true"
                       />
-                      <span className="text-[9px] font-medium text-foreground truncate max-w-[58px] px-1 leading-tight">
+                      <span className="text-[11px] font-medium text-foreground truncate max-w-[58px] px-1 leading-tight">
                         {fg.color.label || `C${j + 1}`}
                       </span>
                       <span className="text-[8px] font-mono text-muted-foreground leading-none">
@@ -1029,7 +1029,7 @@ export function ContrastMatrix() {
                           style={{ background: bg.normalized ?? "#e5e7eb" }}
                           aria-hidden="true"
                         />
-                        <span className="text-[9px] font-medium text-foreground truncate max-w-[58px] leading-tight">
+                        <span className="text-[11px] font-medium text-foreground truncate max-w-[58px] leading-tight">
                           {bg.color.label || `C${i + 1}`}
                         </span>
                         <span className="text-[8px] font-mono text-muted-foreground leading-none">

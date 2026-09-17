@@ -361,7 +361,7 @@ export function WhatShouldIUse({ effects, onSelectEffect }: WhatShouldIUseProps)
           <div className="flex items-center justify-between gap-2">
             <p className="text-[11px] text-muted-foreground">
               Press{" "}
-              <kbd className="rounded border border-border bg-muted px-1 py-0.5 font-mono text-[10px]">
+              <kbd className="rounded border border-border bg-muted px-1 py-0.5 font-mono text-[11px]">
                 ⌘/Ctrl + ↵
               </kbd>{" "}
               to run
@@ -516,7 +516,7 @@ function ResultCard({ recommendation, rank, onSelect }: ResultCardProps) {
             {meta && (
               <Badge
                 variant="secondary"
-                className="shrink-0 bg-muted/70 px-1.5 py-0 text-[10px] font-normal capitalize text-muted-foreground"
+                className="shrink-0 bg-muted/70 px-1.5 py-0 text-[11px] font-normal capitalize text-muted-foreground"
               >
                 {meta.label}
               </Badge>

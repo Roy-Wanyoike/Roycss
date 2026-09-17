@@ -132,7 +132,7 @@ motionLibrary[0].cssCode;                  // full CSS source`}</code>
       <p>
         For everything else, the base RoyCSS stylesheet covers it —
         browse the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/effects">
+        <a className="text-primary hover:underline" href="/effects">
           motion categories in the catalog
         </a>
         .

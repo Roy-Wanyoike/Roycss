@@ -85,9 +85,9 @@ export default function GuidesOverviewPage() {
           <Link
             key={g.slug}
             href={g.slug}
-            className="group rounded-lg border bg-card p-5 transition-colors hover:border-emerald-500/40 hover:bg-emerald-500/5"
+            className="group rounded-lg border bg-card p-5 transition-colors hover:border-primary/40 hover:bg-primary/5"
           >
-            <div className="text-base font-semibold group-hover:text-emerald-700 dark:group-hover:text-emerald-300">
+            <div className="text-base font-semibold group-hover:text-primary">
               {g.title}
             </div>
             <p className="mt-1 text-sm text-muted-foreground">

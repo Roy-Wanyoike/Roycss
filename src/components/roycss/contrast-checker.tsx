@@ -169,7 +169,7 @@ function WCAGResult({ label, passed, threshold }: { label: string; passed: boole
       {passed ? <CheckCircle2 className="size-4 text-emerald-500 shrink-0" /> : <AlertTriangle className="size-4 text-rose-500 shrink-0" />}
       <div className="min-w-0">
         <p className={`text-xs font-medium ${passed ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}`}>{label}</p>
-        <p className="text-[10px] text-muted-foreground">{threshold}</p>
+        <p className="text-[11px] text-muted-foreground">{threshold}</p>
       </div>
     </div>
   );

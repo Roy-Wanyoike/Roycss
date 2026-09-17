@@ -756,7 +756,7 @@ export function ObjectFitVisualizer() {
               <div className="flex-1 space-y-1">
                 <Label
                   htmlFor="roycss-of-custom-w"
-                  className="text-[10px] uppercase tracking-wider text-muted-foreground"
+                  className="text-[11px] uppercase tracking-wider text-muted-foreground"
                 >
                   Width
                 </Label>
@@ -775,7 +775,7 @@ export function ObjectFitVisualizer() {
               <div className="flex-1 space-y-1">
                 <Label
                   htmlFor="roycss-of-custom-h"
-                  className="text-[10px] uppercase tracking-wider text-muted-foreground"
+                  className="text-[11px] uppercase tracking-wider text-muted-foreground"
                 >
                   Height
                 </Label>
@@ -835,7 +835,7 @@ export function ObjectFitVisualizer() {
             </div>
           )}
           {imageError && (
-            <p className="text-[10px] text-destructive">
+            <p className="text-[11px] text-destructive">
               Could not load that image — check the URL.
             </p>
           )}
@@ -851,7 +851,7 @@ export function ObjectFitVisualizer() {
           </div>
           <Badge
             variant="outline"
-            className="border-border bg-muted/50 font-mono text-[10px] text-muted-foreground"
+            className="border-border bg-muted/50 font-mono text-[11px] text-muted-foreground"
           >
             {aspectKey === "custom" ? containerRatioLabel : aspectKey}
             {" · "}
@@ -882,7 +882,7 @@ export function ObjectFitVisualizer() {
                 loading="eager"
               />
             ) : (
-              <div className="flex h-full w-full items-center justify-center text-[10px] text-muted-foreground">
+              <div className="flex h-full w-full items-center justify-center text-[11px] text-muted-foreground">
                 No image
               </div>
             )}
@@ -946,7 +946,7 @@ export function ObjectFitVisualizer() {
                 </div>
                 <span
                   className={cn(
-                    "font-mono text-[10px]",
+                    "font-mono text-[11px]",
                     isActive ? "text-primary" : "text-muted-foreground",
                   )}
                 >
@@ -965,7 +965,7 @@ export function ObjectFitVisualizer() {
           <span>object-position</span>
           <Badge
             variant="outline"
-            className="ml-auto border-border bg-muted/50 font-mono text-[10px] text-muted-foreground"
+            className="ml-auto border-border bg-muted/50 font-mono text-[11px] text-muted-foreground"
           >
             {positionCss}
           </Badge>
@@ -989,7 +989,7 @@ export function ObjectFitVisualizer() {
           </div>
           {/* Custom X / Y inputs */}
           <div className="flex-1 space-y-2">
-            <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-muted-foreground">
+            <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-muted-foreground">
               <span className={position === "custom" ? "text-primary" : ""}>
                 Custom
               </span>
@@ -999,7 +999,7 @@ export function ObjectFitVisualizer() {
               <div className="space-y-1">
                 <Label
                   htmlFor="roycss-of-pos-x"
-                  className="text-[10px] uppercase tracking-wider text-muted-foreground"
+                  className="text-[11px] uppercase tracking-wider text-muted-foreground"
                 >
                   X (horizontal)
                 </Label>
@@ -1036,7 +1036,7 @@ export function ObjectFitVisualizer() {
               <div className="space-y-1">
                 <Label
                   htmlFor="roycss-of-pos-y"
-                  className="text-[10px] uppercase tracking-wider text-muted-foreground"
+                  className="text-[11px] uppercase tracking-wider text-muted-foreground"
                 >
                   Y (vertical)
                 </Label>
@@ -1070,7 +1070,7 @@ export function ObjectFitVisualizer() {
                 </div>
               </div>
             </div>
-            <p className="text-[10px] text-muted-foreground">
+            <p className="text-[11px] text-muted-foreground">
               Tip: pick a 3×3 preset OR type custom values. The first value is
               horizontal, the second is vertical.
             </p>

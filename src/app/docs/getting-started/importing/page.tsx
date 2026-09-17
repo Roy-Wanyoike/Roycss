@@ -88,7 +88,7 @@ npx roycss export --category buttons --out src/styles/roycss.css`}</code>
       <p>
         You can also copy a single effect&apos;s CSS straight from its
         page in the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/effects">
+        <a className="text-primary hover:underline" href="/effects">
           effect catalog
         </a>{" "}
         (every effect page has a copy button), or with{" "}
@@ -139,7 +139,7 @@ npx roycss export --category buttons --out src/styles/roycss.css`}</code>
       <h2 id="next">Next steps</h2>
       <p>
         Now that your styles are imported, the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/getting-started/first-effect">
+        <a className="text-primary hover:underline" href="/docs/getting-started/first-effect">
           first effect tutorial
         </a>{" "}
         walks you through wiring up a button + hover effect end-to-end.

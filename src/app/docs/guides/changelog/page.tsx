@@ -15,7 +15,7 @@ export default function ChangelogPage() {
         format. This page mirrors the repository&apos;s{" "}
         <code>CHANGELOG.md</code> — that file is the source of
         truth, and per-release detail also lives on the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="https://github.com/Roy-Wanyoike/Roycss/releases">
+        <a className="text-primary hover:underline" href="https://github.com/Roy-Wanyoike/Roycss/releases">
           GitHub releases page
         </a>
         .
@@ -56,7 +56,7 @@ export default function ChangelogPage() {
         list. For the v1 → v2 class-name and import changes, see{" "}
         <code>docs/DEPRECATION.md</code> in the repository (it
         ships a codemod), and the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/guides/migration">
+        <a className="text-primary hover:underline" href="/docs/guides/migration">
           Migration guide
         </a>{" "}
         for moving between animation libraries.
@@ -65,7 +65,7 @@ export default function ChangelogPage() {
       <h2 id="upcoming">Upcoming changes</h2>
       <p>
         In-flight work is tracked with{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="https://github.com/Roy-Wanyoike/Roycss/blob/main/docs/PENDING-FEATURES.md">
+        <a className="text-primary hover:underline" href="https://github.com/Roy-Wanyoike/Roycss/blob/main/docs/PENDING-FEATURES.md">
           docs/PENDING-FEATURES.md
         </a>{" "}
         in the repository — an honest, audited list of what is

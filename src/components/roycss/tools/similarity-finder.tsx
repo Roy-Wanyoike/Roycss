@@ -412,7 +412,7 @@ export function SimilarityFinder() {
                         {meta && (
                           <Badge
                             variant="secondary"
-                            className="shrink-0 text-[10px] px-1.5 py-0 bg-muted/70 text-muted-foreground font-normal"
+                            className="shrink-0 text-[11px] px-1.5 py-0 bg-muted/70 text-muted-foreground font-normal"
                           >
                             {meta.label}
                           </Badge>
@@ -441,7 +441,7 @@ export function SimilarityFinder() {
           {seedMeta && (
             <Badge
               variant="outline"
-              className="text-[10px] px-1.5 py-0 border-primary/40 text-primary"
+              className="text-[11px] px-1.5 py-0 border-primary/40 text-primary"
             >
               {seedMeta.label}
             </Badge>
@@ -533,7 +533,7 @@ export function SimilarityFinder() {
                         {meta && (
                           <Badge
                             variant="secondary"
-                            className="shrink-0 text-[10px] px-1.5 py-0 bg-muted/70 text-muted-foreground font-normal"
+                            className="shrink-0 text-[11px] px-1.5 py-0 bg-muted/70 text-muted-foreground font-normal"
                           >
                             {meta.label}
                           </Badge>
@@ -587,7 +587,7 @@ export function SimilarityFinder() {
                         <Badge
                           key={`t-${tag}`}
                           variant="secondary"
-                          className="text-[10px] px-1.5 py-0 bg-primary/10 text-primary border border-primary/20 gap-0.5"
+                          className="text-[11px] px-1.5 py-0 bg-primary/10 text-primary border border-primary/20 gap-0.5"
                         >
                           <Tag className="size-2.5" aria-hidden="true" />
                           {tag}
@@ -597,7 +597,7 @@ export function SimilarityFinder() {
                         <Badge
                           key={`p-${prop}`}
                           variant="secondary"
-                          className="text-[10px] px-1.5 py-0 bg-muted/70 text-muted-foreground gap-0.5 font-mono"
+                          className="text-[11px] px-1.5 py-0 bg-muted/70 text-muted-foreground gap-0.5 font-mono"
                         >
                           <Code2 className="size-2.5" aria-hidden="true" />
                           {prop}

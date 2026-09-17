@@ -294,7 +294,7 @@ export function PlatformProductsShowcase() {
                 >
                   <TierIcon className="size-3" />
                   {meta.label}
-                  <span className={`text-[10px] tabular-nums ${activeTier === tier ? "text-primary-foreground/70" : "text-muted-foreground/60"}`}>
+                  <span className={`text-[11px] tabular-nums ${activeTier === tier ? "text-primary-foreground/70" : "text-muted-foreground/60"}`}>
                     {count}
                   </span>
                 </button>
@@ -331,7 +331,7 @@ export function PlatformProductsShowcase() {
                       <h3 className="font-display font-bold text-foreground text-sm leading-tight truncate">
                         {product.name}
                       </h3>
-                      <span className={`inline-flex items-center text-[9px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded-full mt-0.5 ${statusMeta.className}`}>
+                      <span className={`inline-flex items-center text-[11px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded-full mt-0.5 ${statusMeta.className}`}>
                         {statusMeta.label}
                       </span>
                     </div>
@@ -341,7 +341,7 @@ export function PlatformProductsShowcase() {
                 <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
                   {product.description}
                 </p>
-                <Badge variant="secondary" className="mt-3 text-[10px] bg-muted/60 text-muted-foreground">
+                <Badge variant="secondary" className="mt-3 text-[11px] bg-muted/60 text-muted-foreground">
                   {product.category}
                 </Badge>
               </motion.button>

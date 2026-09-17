@@ -65,7 +65,7 @@ function SidebarLink({
       className={
         "block w-full rounded-md px-3 py-1.5 text-sm transition-colors " +
         (active
-          ? "bg-emerald-500/10 font-medium text-emerald-700 dark:text-emerald-300"
+          ? "bg-primary/10 font-medium text-primary"
           : "text-muted-foreground hover:bg-muted hover:text-foreground")
       }
       aria-current={active ? "page" : undefined}
@@ -121,7 +121,7 @@ function TopBar({ onOpenSidebar }: { onOpenSidebar: () => void }) {
         href="/"
         className="flex items-center gap-2 text-sm font-semibold tracking-tight"
       >
-        <span className="inline-flex size-6 items-center justify-center rounded-md bg-emerald-600 text-white">
+        <span className="inline-flex size-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
           R
         </span>
         <span className="hidden sm:inline">RoyCSS Docs</span>
@@ -166,13 +166,13 @@ function PrevNextPager({ pathname }: { pathname: string }) {
       {prev ? (
         <Link
           href={prev.slug}
-          className="group rounded-lg border bg-card p-4 transition-colors hover:border-emerald-500/40 hover:bg-emerald-500/5"
+          className="group rounded-lg border bg-card p-4 transition-colors hover:border-primary/40 hover:bg-primary/5"
         >
           <div className="flex items-center gap-1 text-xs text-muted-foreground">
             <ChevronLeft className="size-3.5" />
             Previous
           </div>
-          <div className="mt-1 text-sm font-medium group-hover:text-emerald-700 dark:group-hover:text-emerald-300">
+          <div className="mt-1 text-sm font-medium group-hover:text-primary">
             {prev.title}
           </div>
         </Link>
@@ -182,13 +182,13 @@ function PrevNextPager({ pathname }: { pathname: string }) {
       {next ? (
         <Link
           href={next.slug}
-          className="group rounded-lg border bg-card p-4 text-right transition-colors hover:border-emerald-500/40 hover:bg-emerald-500/5 sm:col-start-2"
+          className="group rounded-lg border bg-card p-4 text-right transition-colors hover:border-primary/40 hover:bg-primary/5 sm:col-start-2"
         >
           <div className="flex items-center justify-end gap-1 text-xs text-muted-foreground">
             Next
             <ChevronRight className="size-3.5" />
           </div>
-          <div className="mt-1 text-sm font-medium group-hover:text-emerald-700 dark:group-hover:text-emerald-300">
+          <div className="mt-1 text-sm font-medium group-hover:text-primary">
             {next.title}
           </div>
         </Link>

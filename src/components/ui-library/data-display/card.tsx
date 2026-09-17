@@ -66,7 +66,7 @@ const badgeVariants = {
   outline: "border border-border text-foreground",
 };
 
-const badgeSizes = { sm: "text-[9px] px-1.5 py-0", md: "text-[10px] px-2 py-0.5", lg: "text-xs px-2.5 py-1" };
+const badgeSizes = { sm: "text-[11px] px-1.5 py-0", md: "text-[11px] px-2 py-0.5", lg: "text-xs px-2.5 py-1" };
 
 export function Badge({ variant = "default", size = "md", dot, pulse, className, children, ...props }: BadgeProps) {
   return (

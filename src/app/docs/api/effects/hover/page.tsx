@@ -165,7 +165,7 @@ roycss-hover-shadow-grow    soft shadow deepens on hover`}</code>
         The shipped effects are self-contained with hardcoded OKLCH
         colors — that is what makes a class drop-in. To customize one,
         copy its CSS from the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/effects">
+        <a className="text-primary hover:underline" href="/effects">
           effect catalog
         </a>{" "}
         and edit the values:

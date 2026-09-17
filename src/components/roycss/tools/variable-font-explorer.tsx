@@ -429,7 +429,7 @@ export function VariableFontExplorer() {
             {FONTS.map((f) => (
               <SelectItem key={f.id} value={f.id}>
                 {f.label}
-                <span className="ml-2 text-[10px] text-muted-foreground">
+                <span className="ml-2 text-[11px] text-muted-foreground">
                   ({f.axes.length} {f.axes.length === 1 ? "axis" : "axes"})
                 </span>
               </SelectItem>
@@ -523,7 +523,7 @@ export function VariableFontExplorer() {
             <div key={axis.tag} className="flex flex-col gap-1.5">
               <div className="flex items-center justify-between">
                 <span className="flex items-center gap-2 text-xs text-foreground">
-                  <Badge variant="secondary" className="font-mono text-[10px]">
+                  <Badge variant="secondary" className="font-mono text-[11px]">
                     {axis.tag}
                   </Badge>
                   <span>{axis.label}</span>
@@ -541,7 +541,7 @@ export function VariableFontExplorer() {
                 onValueChange={(v) => updateAxis(axis.tag, v[0])}
                 aria-label={`${axis.label} (${axis.tag})`}
               />
-              <div className="flex items-center justify-between text-[10px] text-muted-foreground">
+              <div className="flex items-center justify-between text-[11px] text-muted-foreground">
                 <span>{axis.min}</span>
                 <span>{axis.max}</span>
               </div>
@@ -572,12 +572,12 @@ export function VariableFontExplorer() {
               />
               <span className="flex flex-col">
                 <span className="flex items-center gap-1.5 text-xs font-medium text-foreground">
-                  <span className="font-mono text-[10px] text-muted-foreground">
+                  <span className="font-mono text-[11px] text-muted-foreground">
                     {feat.tag}
                   </span>
                   {feat.label}
                 </span>
-                <span className="text-[10px] text-muted-foreground">
+                <span className="text-[11px] text-muted-foreground">
                   {feat.description}
                 </span>
               </span>

@@ -237,8 +237,8 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
                     <>
                       {(sectionResults.length > 0 || effectResults.length > 0 || recipeResults.length > 0 || patternResults.length > 0 || collectionResults.length > 0) && <div className="h-px bg-border/50 my-1" />}
                       <div className="px-2 pt-1.5 pb-1 flex items-center gap-2">
-                        <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Products</span>
-                        <Badge variant="secondary" className="h-4 px-1.5 text-[9px] font-medium tabular-nums">{productResults.length}</Badge>
+                        <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Products</span>
+                        <Badge variant="secondary" className="h-4 px-1.5 text-[11px] font-medium tabular-nums">{productResults.length}</Badge>
                       </div>
                       {productResults.map((p, i) => {
                         const index = i + sectionResults.length + effectResults.length + recipeResults.length + patternResults.length + collectionResults.length;
@@ -251,8 +251,8 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
                             <div className="min-w-0 flex-1">
                               <div className="flex items-center gap-2">
                                 <p className="text-sm font-medium text-foreground truncate">{p.name}</p>
-                                <Badge variant="outline" className="h-4 px-1.5 text-[9px] font-medium shrink-0">{p.category}</Badge>
-                                <Badge className={`h-4 px-1.5 text-[9px] font-medium shrink-0 ${tier.className}`}>{tier.label}</Badge>
+                                <Badge variant="outline" className="h-4 px-1.5 text-[11px] font-medium shrink-0">{p.category}</Badge>
+                                <Badge className={`h-4 px-1.5 text-[11px] font-medium shrink-0 ${tier.className}`}>{tier.label}</Badge>
                               </div>
                               <p className="text-xs text-muted-foreground truncate">{p.description}</p>
                             </div>
@@ -265,16 +265,16 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
               )}
             </div>
             <div className="flex items-center justify-between px-4 py-2 border-t border-border/50 bg-muted/30">
-              <div className="flex items-center gap-3 text-[10px] text-muted-foreground">
+              <div className="flex items-center gap-3 text-[11px] text-muted-foreground">
                 <span className="flex items-center gap-1"><kbd className="px-1 py-0.5 rounded bg-muted border border-border/50">↑↓</kbd>Navigate</span>
                 <span className="flex items-center gap-1"><kbd className="px-1 py-0.5 rounded bg-muted border border-border/50">↵</kbd>Select</span>
                 <span className="flex items-center gap-1"><kbd className="px-1 py-0.5 rounded bg-muted border border-border/50">Esc</kbd>Close</span>
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-[10px] text-muted-foreground">{totalResults > 0 && `${totalResults} results`}</span>
+                <span className="text-[11px] text-muted-foreground">{totalResults > 0 && `${totalResults} results`}</span>
                 <a
                   href="/effects"
-                  className="text-[10px] font-medium text-primary hover:text-primary/80 transition-colors"
+                  className="text-[11px] font-medium text-primary hover:text-primary/80 transition-colors"
                 >
                   Browse all {EFFECT_COUNT_FORMATTED} effects →
                 </a>

@@ -209,7 +209,7 @@ function ShowcaseCard({ entry, effect }: { entry: ShowcaseEntry; effect: CSSEffe
       <div className="mb-2 flex items-center justify-between gap-2">
         <code className="truncate font-mono text-[11px] text-primary">{`.roycss-${effect.id}`}</code>
         {entry.flag && (
-          <Badge variant="secondary" className={`shrink-0 text-[10px] ${accent.bg} ${accent.text}`}>
+          <Badge variant="secondary" className={`shrink-0 text-[11px] ${accent.bg} ${accent.text}`}>
             {entry.flag}
           </Badge>
         )}

@@ -577,7 +577,7 @@ export function PrintSimulator() {
           <div className="flex items-center gap-2">
             <Badge
               variant={mode === "print" ? "default" : "secondary"}
-              className="font-mono text-[10px] uppercase tracking-wide"
+              className="font-mono text-[11px] uppercase tracking-wide"
             >
               {mode === "print" ? (
                 <Printer className="size-3" />

@@ -98,7 +98,7 @@ export function SectionScrollbar({
                 >
                   {/* Tooltip label */}
                   <span
-                    className={`absolute right-5 whitespace-nowrap text-[10px] font-medium px-2 py-0.5 rounded-md bg-card border border-border/50 shadow-sm transition-all opacity-0 group-hover:opacity-100 pointer-events-none`}
+                    className={`absolute right-5 whitespace-nowrap text-[11px] font-medium px-2 py-0.5 rounded-md bg-card border border-border/50 shadow-sm transition-all opacity-0 group-hover:opacity-100 pointer-events-none`}
                   >
                     {section.label} ({catCount})
                   </span>

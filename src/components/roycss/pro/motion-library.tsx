@@ -805,7 +805,7 @@ function PrimitiveCard({
         <CardAction>
           <Badge
             variant="outline"
-            className={cn("gap-1 text-[10px]", meta.badgeClass)}
+            className={cn("gap-1 text-[11px]", meta.badgeClass)}
           >
             {meta.label}
           </Badge>
@@ -840,7 +840,7 @@ function PrimitiveCard({
 
         {/* Footer actions */}
         <div className="flex items-center justify-between">
-          <span className="font-mono text-[10px] text-muted-foreground">
+          <span className="font-mono text-[11px] text-muted-foreground">
             #{primitive.id}
           </span>
           <Button
@@ -907,7 +907,7 @@ function Toolbar({
             </Button>
           ))}
         </div>
-        <span className="ml-1 text-[10px] text-muted-foreground">
+        <span className="ml-1 text-[11px] text-muted-foreground">
           {visibleCount} / {totalCount}
         </span>
       </div>

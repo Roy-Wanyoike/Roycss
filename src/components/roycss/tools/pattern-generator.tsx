@@ -699,7 +699,7 @@ export function BackgroundPatternGenerator() {
             <h3 className="text-sm font-semibold text-foreground">
               Background Pattern Generator
             </h3>
-            <Badge variant="secondary" className="text-[10px]">
+            <Badge variant="secondary" className="text-[11px]">
               pure CSS
             </Badge>
           </div>
@@ -741,7 +741,7 @@ export function BackgroundPatternGenerator() {
                 onClick={() => setPatternType(key)}
                 title={hint}
                 className={cn(
-                  "flex flex-col items-center gap-1 rounded-md border px-1.5 py-2 text-[10px] font-medium transition-colors",
+                  "flex flex-col items-center gap-1 rounded-md border px-1.5 py-2 text-[11px] font-medium transition-colors",
                   active
                     ? "border-primary bg-primary/10 text-primary"
                     : "border-border bg-card text-muted-foreground hover:bg-accent hover:text-accent-foreground",
@@ -753,7 +753,7 @@ export function BackgroundPatternGenerator() {
             );
           })}
         </div>
-        <p className="text-[10px] text-muted-foreground">
+        <p className="text-[11px] text-muted-foreground">
           <span className="font-medium text-foreground">{activePattern.label}</span> ·{" "}
           {activePattern.hint}
         </p>
@@ -884,7 +884,7 @@ export function BackgroundPatternGenerator() {
           <Label className="text-xs font-medium text-muted-foreground">
             Live preview
           </Label>
-          <span className="font-mono text-[10px] text-muted-foreground">
+          <span className="font-mono text-[11px] text-muted-foreground">
             {activePattern.label} · {size}px{usesAngle ? ` · ${angle}°` : ""}
             {opacity < 100 ? ` · ${opacity}%` : ""}
           </span>

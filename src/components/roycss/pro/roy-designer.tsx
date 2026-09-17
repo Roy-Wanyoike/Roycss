@@ -478,7 +478,7 @@ function SwatchRow({
         <p className="text-muted-foreground text-[11px] leading-snug">
           {color.role}
         </p>
-        <code className="text-foreground/80 font-mono text-[10px]">
+        <code className="text-foreground/80 font-mono text-[11px]">
           {color.oklch}
         </code>
       </div>
@@ -656,13 +656,13 @@ export function RoyDesigner() {
           <div className="space-y-3">
             <div className="grid gap-2 sm:grid-cols-2">
               <div className="bg-muted/30 rounded-md border p-2.5">
-                <p className="text-muted-foreground text-[10px] font-medium uppercase tracking-wide">
+                <p className="text-muted-foreground text-[11px] font-medium uppercase tracking-wide">
                   Heading
                 </p>
                 <p className="text-sm font-semibold">{design.typography.heading}</p>
               </div>
               <div className="bg-muted/30 rounded-md border p-2.5">
-                <p className="text-muted-foreground text-[10px] font-medium uppercase tracking-wide">
+                <p className="text-muted-foreground text-[11px] font-medium uppercase tracking-wide">
                   Body
                 </p>
                 <p className="text-sm font-semibold">{design.typography.body}</p>
@@ -737,7 +737,7 @@ export function RoyDesigner() {
             <span className="truncate font-semibold">RoyDesigner</span>
             <Badge
               variant="outline"
-              className="border-primary/30 bg-primary/10 text-primary shrink-0 gap-1 text-[10px]"
+              className="border-primary/30 bg-primary/10 text-primary shrink-0 gap-1 text-[11px]"
             >
               <Wand2 className="size-3" aria-hidden />
               AI UI Designer

@@ -206,7 +206,7 @@ roycss-border-frame             double-line frame`}</code>
       </pre>
       <p>
         See the full list on the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/effects">
+        <a className="text-primary hover:underline" href="/effects">
           border effects in the catalog
         </a>
         .

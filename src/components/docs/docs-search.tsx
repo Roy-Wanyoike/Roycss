@@ -198,9 +198,9 @@ export function DocsSearch({ docs, onSelect, onClearQuery, autoFocus }: DocsSear
                 : `Showing ${results.length}${totalMatches > results.length ? ` of ${totalMatches}` : ""} matches`}
             </span>
             <span className="flex items-center gap-1">
-              <kbd className="px-1 py-0.5 rounded bg-muted border border-border/50 text-[10px]">↑↓</kbd>
+              <kbd className="px-1 py-0.5 rounded bg-muted border border-border/50 text-[11px]">↑↓</kbd>
               navigate
-              <kbd className="ml-2 px-1 py-0.5 rounded bg-muted border border-border/50 text-[10px]">↵</kbd>
+              <kbd className="ml-2 px-1 py-0.5 rounded bg-muted border border-border/50 text-[11px]">↵</kbd>
               select
             </span>
           </div>
@@ -233,7 +233,7 @@ export function DocsSearch({ docs, onSelect, onClearQuery, autoFocus }: DocsSear
                         <span className="text-sm font-medium text-foreground truncate flex-1">
                           {result.doc.title}
                         </span>
-                        <span className="text-[10px] text-muted-foreground px-1.5 py-0.5 rounded bg-muted/60 shrink-0">
+                        <span className="text-[11px] text-muted-foreground px-1.5 py-0.5 rounded bg-muted/60 shrink-0">
                           {result.doc.categoryLabel}
                         </span>
                         {isActive && (

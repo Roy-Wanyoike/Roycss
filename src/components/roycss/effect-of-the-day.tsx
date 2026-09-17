@@ -111,7 +111,7 @@ export function EffectOfTheDay({ onSelectEffect }: EffectOfTheDayProps) {
                   {effect.description}
                 </p>
                 <div className="flex items-center gap-2 mt-2">
-                  <code className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-primary/10 text-primary">
+                  <code className="text-[11px] font-mono px-1.5 py-0.5 rounded bg-primary/10 text-primary">
                     .roycss-{effect.id}
                   </code>
                   <span className="text-xs text-muted-foreground">{effect.category}</span>

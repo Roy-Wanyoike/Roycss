@@ -230,7 +230,7 @@ function LayerTag({
   return (
     <span
       className={cn(
-        "pointer-events-none absolute z-20 rounded px-1 py-px text-[9px] font-mono leading-tight whitespace-nowrap shadow-sm",
+        "pointer-events-none absolute z-20 rounded px-1 py-px text-[11px] font-mono leading-tight whitespace-nowrap shadow-sm",
         SIDE_TAG_CLS[side],
         className,
       )}
@@ -304,7 +304,7 @@ function SideControlsSection({
           <div key={key} className="space-y-1">
             <Label
               htmlFor={`${idPrefix}-${key}`}
-              className="text-[10px] text-muted-foreground"
+              className="text-[11px] text-muted-foreground"
             >
               {label}
             </Label>
@@ -318,7 +318,7 @@ function SideControlsSection({
                 onChange={(e) => onUpdate(key, parseSideInput(e.target.value))}
                 className="h-7 pr-7 text-right font-mono text-xs"
               />
-              <span className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground">
+              <span className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 text-[11px] text-muted-foreground">
                 px
               </span>
             </div>
@@ -688,7 +688,7 @@ export function BoxModelVisualizer() {
                 >
                   box-sizing
                 </Label>
-                <p className="text-[10px] text-muted-foreground">
+                <p className="text-[11px] text-muted-foreground">
                   {boxSizing === "content-box"
                     ? "border+padding added outside content"
                     : "border+padding inside the fixed size"}
@@ -698,7 +698,7 @@ export function BoxModelVisualizer() {
             <div className="flex items-center gap-2">
               <span
                 className={cn(
-                  "font-mono text-[10px]",
+                  "font-mono text-[11px]",
                   boxSizing === "content-box"
                     ? "text-primary"
                     : "text-muted-foreground",
@@ -716,7 +716,7 @@ export function BoxModelVisualizer() {
               />
               <span
                 className={cn(
-                  "font-mono text-[10px]",
+                  "font-mono text-[11px]",
                   boxSizing === "border-box"
                     ? "text-primary"
                     : "text-muted-foreground",
@@ -733,7 +733,7 @@ export function BoxModelVisualizer() {
               <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                 Diagram
               </span>
-              <span className="font-mono text-[10px] text-muted-foreground tabular-nums">
+              <span className="font-mono text-[11px] text-muted-foreground tabular-nums">
                 scale {Math.round(scale * 100)}%
               </span>
             </div>
@@ -878,7 +878,7 @@ export function BoxModelVisualizer() {
 
                         {/* ───── CONTENT ───── */}
                         <div
-                          className="flex items-center justify-center text-center font-mono text-[10px] text-primary"
+                          className="flex items-center justify-center text-center font-mono text-[11px] text-primary"
                           style={{
                             width:
                               boxSizing === "border-box"
@@ -909,7 +909,7 @@ export function BoxModelVisualizer() {
             </div>
 
             {/* Legend */}
-            <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[10px]">
+            <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px]">
               <LegendDot className="bg-amber-500/40" label="margin" />
               <LegendDot className="bg-primary" label="border" />
               <LegendDot className="bg-cyan-500/40" label="padding" />
@@ -923,7 +923,7 @@ export function BoxModelVisualizer() {
               <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                 Live Preview
               </span>
-              <span className="font-mono text-[10px] text-muted-foreground">
+              <span className="font-mono text-[11px] text-muted-foreground">
                 real rendered box
               </span>
             </div>
@@ -939,7 +939,7 @@ export function BoxModelVisualizer() {
             >
               <div
                 style={previewStyle}
-                className="text-[10px] font-mono text-primary"
+                className="text-[11px] font-mono text-primary"
               >
                 <div className="flex items-center justify-center bg-primary/15 px-2 py-1">
                   {content.wAuto || content.hAuto
@@ -978,7 +978,7 @@ export function BoxModelVisualizer() {
                 <div className="space-y-1">
                   <Label
                     htmlFor="bm-border-style"
-                    className="text-[10px] text-muted-foreground"
+                    className="text-[11px] text-muted-foreground"
                   >
                     style
                   </Label>
@@ -1007,7 +1007,7 @@ export function BoxModelVisualizer() {
                 <div className="space-y-1">
                   <Label
                     htmlFor="bm-border-color"
-                    className="text-[10px] text-muted-foreground"
+                    className="text-[11px] text-muted-foreground"
                   >
                     color
                   </Label>
@@ -1058,7 +1058,7 @@ export function BoxModelVisualizer() {
               <div className="space-y-1">
                 <Label
                   htmlFor="bm-content-w"
-                  className="text-[10px] text-muted-foreground"
+                  className="text-[11px] text-muted-foreground"
                 >
                   Width
                 </Label>
@@ -1078,7 +1078,7 @@ export function BoxModelVisualizer() {
                     }
                     className="h-7 pr-7 text-right font-mono text-xs disabled:opacity-50"
                   />
-                  <span className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground">
+                  <span className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 text-[11px] text-muted-foreground">
                     px
                   </span>
                 </div>
@@ -1090,13 +1090,13 @@ export function BoxModelVisualizer() {
                     }
                     aria-label="Auto width"
                   />
-                  <span className="text-[10px] text-muted-foreground">auto</span>
+                  <span className="text-[11px] text-muted-foreground">auto</span>
                 </label>
               </div>
               <div className="space-y-1">
                 <Label
                   htmlFor="bm-content-h"
-                  className="text-[10px] text-muted-foreground"
+                  className="text-[11px] text-muted-foreground"
                 >
                   Height
                 </Label>
@@ -1116,7 +1116,7 @@ export function BoxModelVisualizer() {
                     }
                     className="h-7 pr-7 text-right font-mono text-xs disabled:opacity-50"
                   />
-                  <span className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground">
+                  <span className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 text-[11px] text-muted-foreground">
                     px
                   </span>
                 </div>
@@ -1128,7 +1128,7 @@ export function BoxModelVisualizer() {
                     }
                     aria-label="Auto height"
                   />
-                  <span className="text-[10px] text-muted-foreground">auto</span>
+                  <span className="text-[11px] text-muted-foreground">auto</span>
                 </label>
               </div>
             </div>
@@ -1144,7 +1144,7 @@ export function BoxModelVisualizer() {
             <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Computed Dimensions
             </span>
-            <span className="font-mono text-[10px] text-muted-foreground">
+            <span className="font-mono text-[11px] text-muted-foreground">
               {boxSizing}
             </span>
           </div>
@@ -1201,7 +1201,7 @@ export function BoxModelVisualizer() {
           <pre className="overflow-x-auto rounded-lg border border-border/40 bg-muted/30 p-3 font-mono text-xs leading-relaxed text-foreground/80">
             <code>{cssString}</code>
           </pre>
-          <p className="text-[10px] text-muted-foreground">
+          <p className="text-[11px] text-muted-foreground">
             Shorthand collapses automatically — equal sides become a single
             value, symmetric pairs become two values.
           </p>

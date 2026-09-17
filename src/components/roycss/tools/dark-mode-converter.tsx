@@ -837,7 +837,7 @@ export function DarkModeConverter() {
                     {invalid && (
                       <Badge
                         variant="outline"
-                        className="text-[10px] text-amber-600 dark:text-amber-400 border-amber-500/40 bg-amber-500/5 shrink-0"
+                        className="text-[11px] text-amber-600 dark:text-amber-400 border-amber-500/40 bg-amber-500/5 shrink-0"
                       >
                         Invalid
                       </Badge>
@@ -966,14 +966,14 @@ export function DarkModeConverter() {
                       {inputHex}
                     </div>
                     {inputOklch ? (
-                      <div className="font-mono text-[10px] text-muted-foreground">
+                      <div className="font-mono text-[11px] text-muted-foreground">
                         oklch({inputOklch.L.toFixed(3)} {inputOklch.C.toFixed(3)}{" "}
                         {inputOklch.H.toFixed(3)})
                       </div>
                     ) : (
                       <Badge
                         variant="outline"
-                        className="mt-0.5 text-[10px] text-amber-600 dark:text-amber-400 border-amber-500/40 bg-amber-500/5"
+                        className="mt-0.5 text-[11px] text-amber-600 dark:text-amber-400 border-amber-500/40 bg-amber-500/5"
                       >
                         Invalid hex
                       </Badge>
@@ -998,7 +998,7 @@ export function DarkModeConverter() {
                       {outputHex}
                     </div>
                     {outputOklch && (
-                      <div className="font-mono text-[10px] text-muted-foreground">
+                      <div className="font-mono text-[11px] text-muted-foreground">
                         oklch({outputOklch.L.toFixed(3)} {outputOklch.C.toFixed(3)}{" "}
                         {outputOklch.H.toFixed(3)})
                       </div>
@@ -1008,7 +1008,7 @@ export function DarkModeConverter() {
                     <Badge
                       variant="outline"
                       className={cn(
-                        "shrink-0 text-[10px] font-mono",
+                        "shrink-0 text-[11px] font-mono",
                         contrastClass,
                       )}
                     >

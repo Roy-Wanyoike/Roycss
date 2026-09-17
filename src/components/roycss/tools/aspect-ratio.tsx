@@ -242,7 +242,7 @@ function CopyButton({
 function SummaryStat({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-md border border-border/60 bg-background px-2.5 py-1.5">
-      <div className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+      <div className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
         {label}
       </div>
       <div className="mt-0.5 truncate font-mono text-sm tabular-nums text-foreground">
@@ -417,7 +417,7 @@ export function AspectRatioCalculator() {
                 }
                 className="h-9 pr-7 text-right font-mono text-sm"
               />
-              <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground">
+              <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-[11px] text-muted-foreground">
                 w
               </span>
             </div>
@@ -439,7 +439,7 @@ export function AspectRatioCalculator() {
                 }
                 className="h-9 pr-7 text-right font-mono text-sm"
               />
-              <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground">
+              <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-[11px] text-muted-foreground">
                 h
               </span>
             </div>
@@ -482,7 +482,7 @@ export function AspectRatioCalculator() {
             value={formatPct(derived.paddingPct)}
           />
         </div>
-        <p className="mt-2 text-[10px] leading-snug text-muted-foreground">
+        <p className="mt-2 text-[11px] leading-snug text-muted-foreground">
           GCD of <span className="font-mono">{rw}</span> and{" "}
           <span className="font-mono">{rh}</span> is{" "}
           <span className="font-mono">{derived.gcd}</span> · decimal = w ÷ h ·
@@ -555,7 +555,7 @@ export function AspectRatioCalculator() {
                   }
                   className="h-9 pr-9 text-right font-mono text-sm"
                 />
-                <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground">
+                <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-[11px] text-muted-foreground">
                   px
                 </span>
               </div>
@@ -563,13 +563,13 @@ export function AspectRatioCalculator() {
 
             {/* Computed other dimension */}
             <div className="rounded-lg border border-border/60 bg-muted/30 p-3">
-              <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+              <div className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                 {mode === "width" ? "Computed height" : "Computed width"}
               </div>
               <div className="mt-1 font-mono text-lg tabular-nums text-foreground">
                 {formatDim(mode === "width" ? dims.height : dims.width)} px
               </div>
-              <div className="mt-1 text-[10px] text-muted-foreground">
+              <div className="mt-1 text-[11px] text-muted-foreground">
                 {mode === "width"
                   ? "= width × (h ÷ w)"
                   : "= height × (w ÷ h)"}
@@ -619,16 +619,16 @@ export function AspectRatioCalculator() {
                   </span>
                 </div>
                 {/* Top: width */}
-                <div className="absolute -top-5 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] tabular-nums text-muted-foreground">
+                <div className="absolute -top-5 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[11px] tabular-nums text-muted-foreground">
                   {formatDim(dims.width)}px
                 </div>
                 {/* Right: height */}
-                <div className="absolute -right-1 top-1/2 -translate-y-1/2 translate-x-full whitespace-nowrap font-mono text-[10px] tabular-nums text-muted-foreground">
+                <div className="absolute -right-1 top-1/2 -translate-y-1/2 translate-x-full whitespace-nowrap font-mono text-[11px] tabular-nums text-muted-foreground">
                   {formatDim(dims.height)}px
                 </div>
               </div>
             </div>
-            <p className="text-[10px] leading-snug text-muted-foreground">
+            <p className="text-[11px] leading-snug text-muted-foreground">
               Box shape matches the aspect ratio exactly; visual size is scaled
               to fit the panel.
             </p>
@@ -665,7 +665,7 @@ export function AspectRatioCalculator() {
                   <div className="font-mono text-[11px] tabular-nums text-foreground">
                     {width} × {formatDim(height)} px
                   </div>
-                  <div className="text-[10px] text-muted-foreground">
+                  <div className="text-[11px] text-muted-foreground">
                     width: {width}px
                   </div>
                 </div>
@@ -673,7 +673,7 @@ export function AspectRatioCalculator() {
             );
           })}
         </div>
-        <p className="mt-2 text-[10px] leading-snug text-muted-foreground">
+        <p className="mt-2 text-[11px] leading-snug text-muted-foreground">
           At each viewport width, the box height is{" "}
           <code className="font-mono text-foreground/80">
             width × (h ÷ w)
@@ -716,7 +716,7 @@ export function AspectRatioCalculator() {
 
         <div className="space-y-2 rounded-lg border border-border/60 bg-muted/30 p-3">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
               {cssMode === "modern"
                 ? "Modern (aspect-ratio)"
                 : "Fallback (padding-top)"}
@@ -731,7 +731,7 @@ export function AspectRatioCalculator() {
             <code>{cssOutput}</code>
           </pre>
         </div>
-        <p className="mt-2 text-[10px] leading-snug text-muted-foreground">
+        <p className="mt-2 text-[11px] leading-snug text-muted-foreground">
           {cssMode === "modern"
             ? "Modern browsers (Chrome 88+, Firefox 89+, Safari 15+) compute the height automatically from aspect-ratio."
             : "The padding-top hack is the legacy technique for browsers without aspect-ratio support. The percentage is relative to the parent's content width."}
@@ -745,14 +745,14 @@ export function AspectRatioCalculator() {
             <TableIcon className="size-3.5" />
             Aspect ratio reference
           </span>
-          <span className="text-[10px] text-muted-foreground">
+          <span className="text-[11px] text-muted-foreground">
             Click to copy{" "}
             <code className="font-mono text-foreground/80">aspect-ratio</code>
           </span>
         </div>
         <div className="overflow-hidden rounded-lg border border-border/60">
           <table className="w-full text-left">
-            <thead className="bg-muted/40 text-[10px] uppercase tracking-wider text-muted-foreground">
+            <thead className="bg-muted/40 text-[11px] uppercase tracking-wider text-muted-foreground">
               <tr>
                 <th className="px-2.5 py-1.5 font-semibold">Ratio</th>
                 <th className="px-2.5 py-1.5 font-semibold">Name</th>
@@ -834,7 +834,7 @@ export function AspectRatioCalculator() {
             </tbody>
           </table>
         </div>
-        <p className="mt-2 text-[10px] text-muted-foreground">
+        <p className="mt-2 text-[11px] text-muted-foreground">
           Click any row to copy{" "}
           <code className="font-mono text-foreground/80">
             aspect-ratio: W / H;

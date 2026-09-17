@@ -143,7 +143,7 @@ export const COMPANIES: Company[] = [
 function TierBadge({ tier, size = "sm" }: { tier: SponsorTier; size?: "sm" | "md" }) {
   const meta = TIER_META[tier];
   const Icon = meta.icon;
-  const sizeClasses = size === "md" ? "px-2.5 py-1 text-xs gap-1" : "px-1.5 py-0.5 text-[10px] gap-0.5";
+  const sizeClasses = size === "md" ? "px-2.5 py-1 text-xs gap-1" : "px-1.5 py-0.5 text-[11px] gap-0.5";
 
   return (
     <span
@@ -296,7 +296,7 @@ function SponsorModal({ open, onOpenChange }: SponsorModalProps) {
                 Amount {frequency === "monthly" ? "/ month" : ""}
               </Label>
               <Info className="size-3 text-muted-foreground" />
-              <span className="text-[10px] text-muted-foreground italic">suggested</span>
+              <span className="text-[11px] text-muted-foreground italic">suggested</span>
             </div>
             <div className="grid grid-cols-5 gap-1.5 mb-2">
               {SPONSOR_AMOUNTS.map((amt) => (
@@ -340,7 +340,7 @@ function SponsorModal({ open, onOpenChange }: SponsorModalProps) {
                 <p className={`text-xs font-semibold ${tierMeta.color}`}>
                   {tierMeta.label} tier
                 </p>
-                <p className="text-[10px] text-muted-foreground leading-tight mt-0.5">
+                <p className="text-[11px] text-muted-foreground leading-tight mt-0.5">
                   {tierMeta.description}
                 </p>
               </div>
@@ -373,7 +373,7 @@ function SponsorModal({ open, onOpenChange }: SponsorModalProps) {
                       <p className="text-sm font-medium text-foreground">
                         {method.label}
                         {!method.available && (
-                          <span className="ml-2 text-[10px] text-muted-foreground">(coming soon)</span>
+                          <span className="ml-2 text-[11px] text-muted-foreground">(coming soon)</span>
                         )}
                       </p>
                       <p className="text-xs text-muted-foreground leading-tight mt-0.5">

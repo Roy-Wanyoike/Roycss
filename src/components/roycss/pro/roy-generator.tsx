@@ -1480,7 +1480,7 @@ export function RoyGenerator() {
                   <span className="text-muted-foreground font-mono text-[11px]">
                     {generated[activeFile]?.filename ?? generated[0].filename}
                   </span>
-                  <Badge variant="outline" className="ml-auto text-[10px]">
+                  <Badge variant="outline" className="ml-auto text-[11px]">
                     {generated[activeFile]?.language ?? "tsx"}
                   </Badge>
                 </div>

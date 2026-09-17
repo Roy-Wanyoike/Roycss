@@ -97,7 +97,7 @@ export default function CustomPropertiesPage() {
         There is no <code>:root</code> token set to override —
         retheming an effect means copying its CSS and editing the
         values. The CLI gets you the copy in one command, and the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/api/customization">
+        <a className="text-primary hover:underline" href="/docs/api/customization">
           Customization page
         </a>{" "}
         walks through the workflow:

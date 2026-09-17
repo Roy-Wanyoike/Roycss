@@ -708,7 +708,7 @@ export function ShapeGenerator() {
                   step={1}
                   aria-label={hint}
                 />
-                <p className="mt-1 text-[10px] text-muted-foreground">{hint}</p>
+                <p className="mt-1 text-[11px] text-muted-foreground">{hint}</p>
               </div>
             ))}
           </div>

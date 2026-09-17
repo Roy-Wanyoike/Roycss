@@ -87,7 +87,7 @@ export function PropertySearch({ onResults }: { onResults: (effectIds: string[])
                 aria-pressed={isSelected}
               >
                 <code className="font-mono">{prop}</code>
-                <span className="text-[9px] opacity-60">{count}</span>
+                <span className="text-[11px] opacity-60">{count}</span>
                 {isSelected && <X className="size-2.5" />}
               </motion.button>
             );

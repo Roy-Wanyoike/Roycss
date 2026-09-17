@@ -295,7 +295,7 @@ function AuthFlowPreview(): React.JSX.Element {
               ••••••
             </div>
           </div>
-          <p className="mt-1 text-[10px] text-rose-600 dark:text-rose-400">
+          <p className="mt-1 text-[11px] text-rose-600 dark:text-rose-400">
             Password must be at least 8 characters
           </p>
         </div>
@@ -317,7 +317,7 @@ function AuthFlowPreview(): React.JSX.Element {
       </div>
 
       {/* Divider */}
-      <div className="my-4 flex items-center gap-2 text-[10px] text-muted-foreground">
+      <div className="my-4 flex items-center gap-2 text-[11px] text-muted-foreground">
         <span className="h-px flex-1 bg-border" />
         OR CONTINUE WITH
         <span className="h-px flex-1 bg-border" />
@@ -374,14 +374,14 @@ function BillingPreview(): React.JSX.Element {
                 {plan.name}
               </span>
               {plan.featured && (
-                <Badge className="bg-primary px-1 py-0 text-[9px] text-primary-foreground">
+                <Badge className="bg-primary px-1 py-0 text-[11px] text-primary-foreground">
                   Popular
                 </Badge>
               )}
             </div>
             <p className="mt-1 text-base font-bold text-foreground">
               {plan.price}
-              <span className="text-[10px] font-normal text-muted-foreground">
+              <span className="text-[11px] font-normal text-muted-foreground">
                 /mo
               </span>
             </p>
@@ -389,7 +389,7 @@ function BillingPreview(): React.JSX.Element {
               {plan.features.map((f) => (
                 <li
                   key={f}
-                  className="flex items-center gap-1 text-[10px] text-muted-foreground"
+                  className="flex items-center gap-1 text-[11px] text-muted-foreground"
                 >
                   <Check className="size-2.5 text-emerald-600 dark:text-emerald-400" />
                   {f}
@@ -406,7 +406,7 @@ function BillingPreview(): React.JSX.Element {
           <span className="text-[11px] font-semibold text-foreground">
             Payment method
           </span>
-          <a className="text-[10px] font-medium text-primary">Manage</a>
+          <a className="text-[11px] font-medium text-primary">Manage</a>
         </div>
         <div className="flex items-center justify-between rounded-md border bg-background px-2.5 py-2">
           <div className="flex items-center gap-2">
@@ -417,10 +417,10 @@ function BillingPreview(): React.JSX.Element {
               <p className="text-[11px] font-medium text-foreground">
                 •••• 4242
               </p>
-              <p className="text-[9px] text-muted-foreground">Expires 08/27</p>
+              <p className="text-[11px] text-muted-foreground">Expires 08/27</p>
             </div>
           </div>
-          <Badge variant="outline" className="text-[9px] text-emerald-700">
+          <Badge variant="outline" className="text-[11px] text-emerald-700">
             Active
           </Badge>
         </div>
@@ -445,7 +445,7 @@ function BillingPreview(): React.JSX.Element {
               <span className="font-medium text-foreground">{row.amount}</span>
               <Badge
                 variant="outline"
-                className="border-emerald-200 bg-emerald-50 text-[9px] text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950/50 dark:text-emerald-300"
+                className="border-emerald-200 bg-emerald-50 text-[11px] text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950/50 dark:text-emerald-300"
               >
                 {row.status}
               </Badge>
@@ -495,7 +495,7 @@ function CRMPipelinePreview(): React.JSX.Element {
         <h3 className="text-xs font-semibold text-foreground">
           Sales Pipeline
         </h3>
-        <Badge variant="outline" className="text-[9px]">
+        <Badge variant="outline" className="text-[11px]">
           Q4 2024
         </Badge>
       </div>
@@ -505,11 +505,11 @@ function CRMPipelinePreview(): React.JSX.Element {
             <div className="mb-1.5 flex items-center justify-between px-0.5">
               <div className="flex items-center gap-1">
                 <span className={cn("size-1.5 rounded-full", col.dot)} />
-                <span className="text-[10px] font-semibold text-foreground">
+                <span className="text-[11px] font-semibold text-foreground">
                   {col.title}
                 </span>
               </div>
-              <span className="rounded-full bg-background px-1.5 text-[9px] font-medium text-muted-foreground">
+              <span className="rounded-full bg-background px-1.5 text-[11px] font-medium text-muted-foreground">
                 {col.count}
               </span>
             </div>
@@ -519,17 +519,17 @@ function CRMPipelinePreview(): React.JSX.Element {
                   key={deal.name}
                   className="rounded-md border bg-card p-1.5 shadow-sm"
                 >
-                  <p className="text-[10px] font-medium text-foreground">
+                  <p className="text-[11px] font-medium text-foreground">
                     {deal.name}
                   </p>
-                  <p className="mt-0.5 text-[9px] font-semibold text-emerald-600 dark:text-emerald-400">
+                  <p className="mt-0.5 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
                     {deal.value}
                   </p>
                 </div>
               ))}
               <button
                 type="button"
-                className="flex h-5 w-full items-center justify-center rounded-md border border-dashed text-[9px] text-muted-foreground transition hover:bg-accent"
+                className="flex h-5 w-full items-center justify-center rounded-md border border-dashed text-[11px] text-muted-foreground transition hover:bg-accent"
               >
                 + Add
               </button>
@@ -565,13 +565,13 @@ function HealthcarePreview(): React.JSX.Element {
         </div>
         <div className="flex-1">
           <p className="text-xs font-semibold text-foreground">Sarah Chen</p>
-          <p className="text-[10px] text-muted-foreground">
+          <p className="text-[11px] text-muted-foreground">
             34 yo · Female · ID #PT-4821
           </p>
         </div>
         <Badge
           variant="outline"
-          className="border-emerald-200 bg-emerald-50 text-[9px] text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950/50 dark:text-emerald-300"
+          className="border-emerald-200 bg-emerald-50 text-[11px] text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950/50 dark:text-emerald-300"
         >
           Stable
         </Badge>
@@ -579,7 +579,7 @@ function HealthcarePreview(): React.JSX.Element {
 
       {/* Vitals grid */}
       <div>
-        <p className="mb-1 px-0.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+        <p className="mb-1 px-0.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
           Vitals
         </p>
         <div className="grid grid-cols-4 gap-1.5">
@@ -600,7 +600,7 @@ function HealthcarePreview(): React.JSX.Element {
 
       {/* Medications */}
       <div className="overflow-hidden rounded-lg border bg-card">
-        <div className="border-b bg-muted/40 px-2.5 py-1.5 text-[10px] font-semibold text-foreground">
+        <div className="border-b bg-muted/40 px-2.5 py-1.5 text-[11px] font-semibold text-foreground">
           Medications
         </div>
         <div className="divide-y">
@@ -613,10 +613,10 @@ function HealthcarePreview(): React.JSX.Element {
               <span className="text-[11px] font-medium text-foreground">
                 {m.name}
               </span>
-              <span className="ml-auto text-[10px] text-muted-foreground">
+              <span className="ml-auto text-[11px] text-muted-foreground">
                 {m.dose}
               </span>
-              <span className="text-[9px] text-muted-foreground">{m.freq}</span>
+              <span className="text-[11px] text-muted-foreground">{m.freq}</span>
             </div>
           ))}
         </div>
@@ -641,11 +641,11 @@ function AnalyticsPreview(): React.JSX.Element {
       <div className="grid grid-cols-3 gap-2">
         {kpis.map((k) => (
           <div key={k.label} className="rounded-lg border bg-card p-2">
-            <p className="text-[9px] text-muted-foreground">{k.label}</p>
+            <p className="text-[11px] text-muted-foreground">{k.label}</p>
             <p className="mt-0.5 text-sm font-bold text-foreground">{k.value}</p>
             <p
               className={cn(
-                "text-[9px] font-medium",
+                "text-[11px] font-medium",
                 k.up
                   ? "text-emerald-600 dark:text-emerald-400"
                   : "text-rose-600 dark:text-rose-400",
@@ -660,10 +660,10 @@ function AnalyticsPreview(): React.JSX.Element {
       {/* Chart placeholder */}
       <div className="rounded-lg border bg-card p-2.5">
         <div className="mb-2 flex items-center justify-between">
-          <p className="text-[10px] font-semibold text-foreground">
+          <p className="text-[11px] font-semibold text-foreground">
             Weekly Sessions
           </p>
-          <span className="text-[9px] text-muted-foreground">Last 8 weeks</span>
+          <span className="text-[11px] text-muted-foreground">Last 8 weeks</span>
         </div>
         <div className="flex h-16 items-end gap-1">
           {bars.map((h, i) => (
@@ -678,7 +678,7 @@ function AnalyticsPreview(): React.JSX.Element {
 
       {/* Data table */}
       <div className="overflow-hidden rounded-lg border bg-card">
-        <div className="grid grid-cols-3 border-b bg-muted/40 px-2.5 py-1.5 text-[9px] font-semibold uppercase tracking-wide text-muted-foreground">
+        <div className="grid grid-cols-3 border-b bg-muted/40 px-2.5 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
           <span>Page</span>
           <span className="text-right">Views</span>
           <span className="text-right">Bounce</span>
@@ -689,7 +689,7 @@ function AnalyticsPreview(): React.JSX.Element {
         ].map((row) => (
           <div
             key={row.page}
-            className="grid grid-cols-3 px-2.5 py-1.5 text-[10px]"
+            className="grid grid-cols-3 px-2.5 py-1.5 text-[11px]"
           >
             <span className="font-medium text-foreground">{row.page}</span>
             <span className="text-right tabular-nums text-foreground">
@@ -733,7 +733,7 @@ function AdminSettingsPreview(): React.JSX.Element {
       <div className="space-y-2.5">
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <label className="mb-0.5 block text-[10px] font-medium text-foreground">
+            <label className="mb-0.5 block text-[11px] font-medium text-foreground">
               Full name
             </label>
             <div className="h-7 rounded-md border bg-background px-2 text-[11px] leading-7 text-foreground">
@@ -741,7 +741,7 @@ function AdminSettingsPreview(): React.JSX.Element {
             </div>
           </div>
           <div>
-            <label className="mb-0.5 block text-[10px] font-medium text-foreground">
+            <label className="mb-0.5 block text-[11px] font-medium text-foreground">
               Email
             </label>
             <div className="h-7 rounded-md border bg-background px-2 text-[11px] leading-7 text-muted-foreground">
@@ -750,7 +750,7 @@ function AdminSettingsPreview(): React.JSX.Element {
           </div>
         </div>
         <div>
-          <label className="mb-0.5 block text-[10px] font-medium text-foreground">
+          <label className="mb-0.5 block text-[11px] font-medium text-foreground">
             Bio
           </label>
           <div className="h-12 rounded-md border bg-background px-2 py-1.5 text-[11px] text-muted-foreground">
@@ -759,7 +759,7 @@ function AdminSettingsPreview(): React.JSX.Element {
         </div>
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <label className="mb-0.5 block text-[10px] font-medium text-foreground">
+            <label className="mb-0.5 block text-[11px] font-medium text-foreground">
               Role
             </label>
             <div className="h-7 rounded-md border bg-background px-2 text-[11px] leading-7 text-muted-foreground">
@@ -767,7 +767,7 @@ function AdminSettingsPreview(): React.JSX.Element {
             </div>
           </div>
           <div>
-            <label className="mb-0.5 block text-[10px] font-medium text-foreground">
+            <label className="mb-0.5 block text-[11px] font-medium text-foreground">
               Timezone
             </label>
             <div className="h-7 rounded-md border bg-background px-2 text-[11px] leading-7 text-muted-foreground">
@@ -779,13 +779,13 @@ function AdminSettingsPreview(): React.JSX.Element {
         <div className="flex justify-end gap-2 pt-1">
           <button
             type="button"
-            className="h-7 rounded-md border px-3 text-[10px] font-medium text-foreground"
+            className="h-7 rounded-md border px-3 text-[11px] font-medium text-foreground"
           >
             Cancel
           </button>
           <button
             type="button"
-            className="h-7 rounded-md bg-primary px-3 text-[10px] font-semibold text-primary-foreground"
+            className="h-7 rounded-md bg-primary px-3 text-[11px] font-semibold text-primary-foreground"
           >
             Save changes
           </button>
@@ -844,13 +844,13 @@ function TeamManagementPreview(): React.JSX.Element {
       <div className="mb-2.5 flex items-center justify-between">
         <div>
           <h3 className="text-xs font-semibold text-foreground">Team members</h3>
-          <p className="text-[10px] text-muted-foreground">
+          <p className="text-[11px] text-muted-foreground">
             {members.length} active · 1 seat remaining
           </p>
         </div>
         <button
           type="button"
-          className="inline-flex h-7 items-center gap-1 rounded-md bg-primary px-2.5 text-[10px] font-semibold text-primary-foreground"
+          className="inline-flex h-7 items-center gap-1 rounded-md bg-primary px-2.5 text-[11px] font-semibold text-primary-foreground"
         >
           <UserPlus className="size-3" />
           Invite
@@ -858,7 +858,7 @@ function TeamManagementPreview(): React.JSX.Element {
       </div>
 
       <div className="overflow-hidden rounded-lg border bg-card">
-        <div className="grid grid-cols-[1fr_auto_auto] gap-2 border-b bg-muted/40 px-2.5 py-1.5 text-[9px] font-semibold uppercase tracking-wide text-muted-foreground">
+        <div className="grid grid-cols-[1fr_auto_auto] gap-2 border-b bg-muted/40 px-2.5 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
           <span>Member</span>
           <span className="w-14 text-center">Role</span>
           <span className="w-12 text-right">Status</span>
@@ -872,7 +872,7 @@ function TeamManagementPreview(): React.JSX.Element {
               <div className="flex items-center gap-2">
                 <div
                   className={cn(
-                    "flex size-7 items-center justify-center rounded-full text-[9px] font-bold",
+                    "flex size-7 items-center justify-center rounded-full text-[11px] font-bold",
                     m.color,
                   )}
                 >
@@ -882,7 +882,7 @@ function TeamManagementPreview(): React.JSX.Element {
                   <p className="truncate text-[11px] font-medium text-foreground">
                     {m.name}
                   </p>
-                  <p className="truncate text-[9px] text-muted-foreground">
+                  <p className="truncate text-[11px] text-muted-foreground">
                     {m.email}
                   </p>
                 </div>
@@ -890,13 +890,13 @@ function TeamManagementPreview(): React.JSX.Element {
               <div className="w-14 text-center">
                 <Badge
                   variant="outline"
-                  className={cn("text-[9px]", roleBadge[m.role])}
+                  className={cn("text-[11px]", roleBadge[m.role])}
                 >
                   {m.role}
                 </Badge>
               </div>
               <div className="w-12 text-right">
-                <span className="inline-flex items-center gap-1 text-[9px] text-muted-foreground">
+                <span className="inline-flex items-center gap-1 text-[11px] text-muted-foreground">
                   <span className="size-1.5 rounded-full bg-emerald-500" />
                   Active
                 </span>
@@ -956,7 +956,7 @@ function NotificationCenterPreview(): React.JSX.Element {
     <div className="w-full">
       <div className="mb-2.5 flex items-center justify-between">
         <h3 className="text-xs font-semibold text-foreground">Notifications</h3>
-        <a className="text-[10px] font-medium text-primary">Mark all read</a>
+        <a className="text-[11px] font-medium text-primary">Mark all read</a>
       </div>
 
       {/* Filters */}
@@ -966,7 +966,7 @@ function NotificationCenterPreview(): React.JSX.Element {
             key={f.label}
             type="button"
             className={cn(
-              "inline-flex h-6 items-center gap-1 rounded-full border px-2 text-[10px] font-medium transition",
+              "inline-flex h-6 items-center gap-1 rounded-full border px-2 text-[11px] font-medium transition",
               f.active
                 ? "border-primary bg-primary/10 text-primary"
                 : "border-border text-muted-foreground hover:bg-accent",
@@ -1002,7 +1002,7 @@ function NotificationCenterPreview(): React.JSX.Element {
               <p className="text-[11px] font-medium text-foreground">
                 {n.title}
               </p>
-              <p className="truncate text-[9px] text-muted-foreground">
+              <p className="truncate text-[11px] text-muted-foreground">
                 {n.desc}
               </p>
             </div>
@@ -1036,7 +1036,7 @@ function OnboardingWizardPreview(): React.JSX.Element {
             <div className="flex flex-col items-center gap-1">
               <div
                 className={cn(
-                  "flex size-6 items-center justify-center rounded-full text-[10px] font-semibold",
+                  "flex size-6 items-center justify-center rounded-full text-[11px] font-semibold",
                   s.done && "bg-emerald-500 text-white",
                   s.active && "bg-primary text-primary-foreground ring-2 ring-primary/30",
                   !s.done && !s.active && "border border-border bg-background text-muted-foreground",
@@ -1046,7 +1046,7 @@ function OnboardingWizardPreview(): React.JSX.Element {
               </div>
               <span
                 className={cn(
-                  "text-[9px] font-medium",
+                  "text-[11px] font-medium",
                   s.active ? "text-foreground" : "text-muted-foreground",
                 )}
               >
@@ -1068,7 +1068,7 @@ function OnboardingWizardPreview(): React.JSX.Element {
       {/* Form */}
       <div className="space-y-2.5">
         <div>
-          <label className="mb-0.5 block text-[10px] font-medium text-foreground">
+          <label className="mb-0.5 block text-[11px] font-medium text-foreground">
             Workspace name
           </label>
           <div className="h-8 rounded-md border bg-background px-2 text-[11px] leading-8 text-foreground">
@@ -1076,18 +1076,18 @@ function OnboardingWizardPreview(): React.JSX.Element {
           </div>
         </div>
         <div>
-          <label className="mb-0.5 block text-[10px] font-medium text-foreground">
+          <label className="mb-0.5 block text-[11px] font-medium text-foreground">
             Workspace URL
           </label>
           <div className="flex h-8 items-center rounded-md border bg-background pr-2">
-            <span className="rounded-l-md bg-muted px-2 py-1 text-[10px] text-muted-foreground">
+            <span className="rounded-l-md bg-muted px-2 py-1 text-[11px] text-muted-foreground">
               roycss.app/
             </span>
             <span className="px-2 text-[11px] text-foreground">roycss-hq</span>
           </div>
         </div>
         <div>
-          <label className="mb-0.5 block text-[10px] font-medium text-foreground">
+          <label className="mb-0.5 block text-[11px] font-medium text-foreground">
             Team size
           </label>
           <div className="grid grid-cols-4 gap-1">
@@ -1096,7 +1096,7 @@ function OnboardingWizardPreview(): React.JSX.Element {
                 key={size}
                 type="button"
                 className={cn(
-                  "h-7 rounded-md border text-[10px] font-medium transition",
+                  "h-7 rounded-md border text-[11px] font-medium transition",
                   i === 1
                     ? "border-primary bg-primary/10 text-primary"
                     : "border-border text-muted-foreground hover:bg-accent",
@@ -1111,20 +1111,20 @@ function OnboardingWizardPreview(): React.JSX.Element {
         <div className="flex items-center justify-between pt-1">
           <button
             type="button"
-            className="text-[10px] font-medium text-muted-foreground hover:text-foreground"
+            className="text-[11px] font-medium text-muted-foreground hover:text-foreground"
           >
             Skip for now
           </button>
           <div className="flex gap-2">
             <button
               type="button"
-              className="h-7 rounded-md border px-3 text-[10px] font-medium text-foreground"
+              className="h-7 rounded-md border px-3 text-[11px] font-medium text-foreground"
             >
               Back
             </button>
             <button
               type="button"
-              className="inline-flex h-7 items-center gap-1 rounded-md bg-primary px-3 text-[10px] font-semibold text-primary-foreground"
+              className="inline-flex h-7 items-center gap-1 rounded-md bg-primary px-3 text-[11px] font-semibold text-primary-foreground"
             >
               Continue
               <ChevronRight className="size-3" />
@@ -1180,13 +1180,13 @@ function EmptyDashboardPreview(): React.JSX.Element {
       <div className="relative overflow-hidden rounded-xl border bg-gradient-to-br from-violet-50 via-card to-teal-50 p-3 dark:from-violet-950/30 dark:to-teal-950/30">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-[10px] font-medium text-muted-foreground">
+            <p className="text-[11px] font-medium text-muted-foreground">
               Good morning
             </p>
             <h3 className="text-sm font-bold text-foreground">
               Welcome back, Alex 👋
             </h3>
-            <p className="mt-0.5 text-[10px] text-muted-foreground">
+            <p className="mt-0.5 text-[11px] text-muted-foreground">
               You have 3 tasks waiting. Let&apos;s pick up where you left off.
             </p>
           </div>
@@ -1196,7 +1196,7 @@ function EmptyDashboardPreview(): React.JSX.Element {
 
       {/* Quick actions */}
       <div>
-        <p className="mb-1 px-0.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+        <p className="mb-1 px-0.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
           Quick actions
         </p>
         <div className="grid grid-cols-3 gap-1.5">
@@ -1214,7 +1214,7 @@ function EmptyDashboardPreview(): React.JSX.Element {
               >
                 <a.icon className="size-3" />
               </div>
-              <span className="text-[10px] font-medium text-foreground">
+              <span className="text-[11px] font-medium text-foreground">
                 {a.label}
               </span>
             </button>
@@ -1224,7 +1224,7 @@ function EmptyDashboardPreview(): React.JSX.Element {
 
       {/* Recent activity */}
       <div>
-        <p className="mb-1 px-0.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+        <p className="mb-1 px-0.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
           Recent activity
         </p>
         <div className="space-y-1">
@@ -1234,8 +1234,8 @@ function EmptyDashboardPreview(): React.JSX.Element {
               className="flex items-center gap-2 rounded-md border bg-card px-2 py-1.5"
             >
               <a.icon className="size-3 text-muted-foreground" />
-              <span className="flex-1 text-[10px] text-foreground">{a.text}</span>
-              <span className="text-[9px] text-muted-foreground">{a.time}</span>
+              <span className="flex-1 text-[11px] text-foreground">{a.text}</span>
+              <span className="text-[11px] text-muted-foreground">{a.time}</span>
             </div>
           ))}
         </div>

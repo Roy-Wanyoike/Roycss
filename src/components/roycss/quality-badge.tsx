@@ -104,7 +104,7 @@ export function QualityBadge({
           <Icon className="size-3.5" />
           Roy Verified™ · Grade {grade}
         </div>
-        <div className="text-[10px] opacity-80 mt-0.5 leading-snug">
+        <div className="text-[11px] opacity-80 mt-0.5 leading-snug">
           {GRADE_LABEL[grade]} — overall quality score {score}/100 based on
           status, tier, description length, tag count, and metrics presence.
         </div>

@@ -133,7 +133,7 @@ export function DocsSidebar({ activeSlug, onNavigate }: DocsSidebarProps) {
                 )}
                 <Icon className="size-3.5 shrink-0 text-primary/70" />
                 <span className="truncate">{category.label}</span>
-                <span className="ml-auto text-[10px] font-normal text-muted-foreground/70 tabular-nums">
+                <span className="ml-auto text-[11px] font-normal text-muted-foreground/70 tabular-nums">
                   {category.pages.length}
                 </span>
               </button>

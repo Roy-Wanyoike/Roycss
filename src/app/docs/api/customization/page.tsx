@@ -145,12 +145,12 @@ $ npx roycss export btn-glow hover-push-up text-shimmer --out src/styles/roycss.
       <h2 id="next-steps">Next steps</h2>
       <p>
         The{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/guides/theming">
+        <a className="text-primary hover:underline" href="/docs/guides/theming">
           Theming guide
         </a>{" "}
         walks through a full brand-color migration with a runnable
         example, and{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/guides/creating-custom-effects">
+        <a className="text-primary hover:underline" href="/docs/guides/creating-custom-effects">
           Creating custom effects
         </a>{" "}
         shows how to build your own effects in the same style.

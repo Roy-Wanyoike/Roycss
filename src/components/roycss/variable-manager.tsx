@@ -80,13 +80,13 @@ export function CSSVariableManager() {
       <div className="space-y-1.5 max-h-[40vh] overflow-y-auto scrollbar-thin">
         {filtered.map(token => (
           <div key={token.id} className="flex items-center gap-1.5 p-2 rounded-lg bg-muted/20 border border-border/40">
-            <span className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded ${CATEGORY_COLORS[token.category]}`}>{token.category.slice(0, 3)}</span>
+            <span className={`text-[11px] font-bold uppercase px-1.5 py-0.5 rounded ${CATEGORY_COLORS[token.category]}`}>{token.category.slice(0, 3)}</span>
             <input type="text" value={token.name} onChange={(e) => updateToken(token.id, "name", e.target.value)} className="w-32 h-7 px-2 rounded bg-background border border-border/40 text-xs font-mono focus:outline-none focus:border-primary/40" />
             <input type="text" value={token.value} onChange={(e) => updateToken(token.id, "value", e.target.value)} className="flex-1 h-7 px-2 rounded bg-background border border-border/40 text-xs font-mono focus:outline-none focus:border-primary/40" />
             {token.category === "color" && token.value && (
               <div className="size-6 rounded border border-border/40 shrink-0" style={{ background: token.value }} />
             )}
-            <select value={token.category} onChange={(e) => updateToken(token.id, "category", e.target.value)} className="h-7 px-1 rounded bg-background border border-border/40 text-[10px] cursor-pointer capitalize">
+            <select value={token.category} onChange={(e) => updateToken(token.id, "category", e.target.value)} className="h-7 px-1 rounded bg-background border border-border/40 text-[11px] cursor-pointer capitalize">
               {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
             <button onClick={() => removeToken(token.id)} className="text-muted-foreground hover:text-rose-500 cursor-pointer shrink-0"><Minus className="size-3.5" /></button>
@@ -106,7 +106,7 @@ export function CSSVariableManager() {
 
       {/* Preview */}
       <div className="p-3 rounded-xl border border-border/50" style={{ ["--primary" as string]: tokens.find(t => t.name === "--primary")?.value || "oklch(0.7 0.2 162)", ["--background" as string]: tokens.find(t => t.name === "--background")?.value || "#1a1a2e" }}>
-        <p className="text-[10px] text-muted-foreground mb-2">Live preview using your tokens:</p>
+        <p className="text-[11px] text-muted-foreground mb-2">Live preview using your tokens:</p>
         <div className="flex items-center gap-2">
           <div className="px-3 py-1.5 rounded-lg text-xs font-medium" style={{ background: "var(--primary)", color: "var(--background)", borderRadius: tokens.find(t => t.name === "--radius-md")?.value || "0.5rem" }}>
             Primary Button

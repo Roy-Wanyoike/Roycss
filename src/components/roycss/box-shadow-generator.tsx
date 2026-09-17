@@ -71,7 +71,7 @@ export function BoxShadowGenerator() {
           <button key={p.name} onClick={() => setLayers(p.layers.map(l => ({ ...l, id: `shadow-${layerId++}` })))}
             className="flex flex-col items-center gap-1 p-2 rounded-lg border border-border/40 hover:border-primary/40 transition-all cursor-pointer">
             <div className="size-8 rounded bg-card" style={{ boxShadow: p.layers.map(l => `${l.inset ? "inset " : ""}${l.x}px ${l.y}px ${l.blur}px ${l.spread}px ${l.color}`).join(", ") }} />
-            <span className="text-[10px] text-muted-foreground">{p.name}</span>
+            <span className="text-[11px] text-muted-foreground">{p.name}</span>
           </button>
         ))}
       </div>
@@ -90,10 +90,10 @@ export function BoxShadowGenerator() {
           {layers.map((layer, i) => (
             <div key={layer.id} className="p-2.5 rounded-lg bg-muted/20 border border-border/40 space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono text-muted-foreground">Layer {i + 1}</span>
+                <span className="text-[11px] font-mono text-muted-foreground">Layer {i + 1}</span>
                 <div className="flex items-center gap-1">
                   <button onClick={() => updateLayer(layer.id, "inset", !layer.inset)}
-                    className={`px-2 py-0.5 rounded text-[10px] font-medium transition-all cursor-pointer ${layer.inset ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}>
+                    className={`px-2 py-0.5 rounded text-[11px] font-medium transition-all cursor-pointer ${layer.inset ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}>
                     inset
                   </button>
                   <button onClick={() => removeLayer(layer.id)} disabled={layers.length <= 1} className="text-muted-foreground hover:text-rose-500 disabled:opacity-30 cursor-pointer">
@@ -104,7 +104,7 @@ export function BoxShadowGenerator() {
               <div className="grid grid-cols-4 gap-2">
                 {(["x", "y", "blur", "spread"] as const).map(prop => (
                   <div key={prop}>
-                    <label className="text-[9px] text-muted-foreground uppercase">{prop}</label>
+                    <label className="text-[11px] text-muted-foreground uppercase">{prop}</label>
                     <input type="number" value={layer[prop]} onChange={(e) => updateLayer(layer.id, prop, parseInt(e.target.value) || 0)}
                       className="w-full h-7 px-1.5 rounded bg-background border border-border/40 text-xs font-mono text-center focus:outline-none focus:border-primary/40" />
                   </div>

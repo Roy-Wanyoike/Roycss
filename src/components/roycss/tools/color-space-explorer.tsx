@@ -554,7 +554,7 @@ function ChromaLightnessPlane({
     >
       <canvas ref={canvasRef} width={PLANE_RES} height={PLANE_RES} style={planeStyle} className="block rounded-md" />
       {/* Out-of-gamut legend swatch */}
-      <div className="pointer-events-none absolute right-1 top-1 flex items-center gap-1 rounded bg-background/80 px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">
+      <div className="pointer-events-none absolute right-1 top-1 flex items-center gap-1 rounded bg-background/80 px-1.5 py-0.5 text-[11px] font-medium text-muted-foreground">
         <span
           className="inline-block h-2 w-2 rounded-sm"
           style={{

@@ -294,7 +294,7 @@ function ValueSlider({
   return (
     <div className="space-y-1">
       <div className="flex items-center justify-between">
-        <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+        <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
           {label}
         </Label>
         <div className="flex items-center gap-1">
@@ -311,7 +311,7 @@ function ValueSlider({
             className="h-7 w-16 text-right font-mono text-xs"
             aria-label={ariaLabel}
           />
-          <span className="w-6 font-mono text-[10px] text-muted-foreground">{unit}</span>
+          <span className="w-6 font-mono text-[11px] text-muted-foreground">{unit}</span>
         </div>
       </div>
       <Slider
@@ -426,7 +426,7 @@ function LayerCard({
           type="button"
           onClick={() => onChange(l.id, { ...l, uniform: !l.uniform })}
           className={cn(
-            "flex cursor-pointer items-center gap-1 rounded-md px-2 py-1 text-[10px] font-medium transition-colors",
+            "flex cursor-pointer items-center gap-1 rounded-md px-2 py-1 text-[11px] font-medium transition-colors",
             l.uniform
               ? "bg-primary/10 text-primary"
               : "bg-muted text-muted-foreground hover:text-foreground",
@@ -530,7 +530,7 @@ function LayerCard({
       {/* Row 1: index + type select + enable + reorder + delete */}
       <div className="flex items-center gap-1.5">
         <span
-          className="shrink-0 font-mono text-[10px] text-muted-foreground"
+          className="shrink-0 font-mono text-[11px] text-muted-foreground"
           aria-hidden
         >
           {String(index + 1).padStart(2, "0")}
@@ -600,7 +600,7 @@ function LayerCard({
       <div className="mt-2.5 flex items-center gap-2">
         <code
           className={cn(
-            "block flex-1 truncate rounded-md border border-border/50 bg-muted/40 px-2 py-1 font-mono text-[10px]",
+            "block flex-1 truncate rounded-md border border-border/50 bg-muted/40 px-2 py-1 font-mono text-[11px]",
             layer.enabled ? "text-foreground/80" : "text-muted-foreground/60",
           )}
         >
@@ -958,7 +958,7 @@ export function TransformStudio() {
             <div className="space-y-0.5">
               <Label
                 htmlFor="tf-origin-x"
-                className="text-[9px] uppercase tracking-wider text-muted-foreground"
+                className="text-[11px] uppercase tracking-wider text-muted-foreground"
               >
                 X
               </Label>
@@ -975,7 +975,7 @@ export function TransformStudio() {
             <div className="space-y-0.5">
               <Label
                 htmlFor="tf-origin-y"
-                className="text-[9px] uppercase tracking-wider text-muted-foreground"
+                className="text-[11px] uppercase tracking-wider text-muted-foreground"
               >
                 Y
               </Label>
@@ -1016,7 +1016,7 @@ export function TransformStudio() {
           <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             <Move3d className="size-3.5" />
             Layers
-            <Badge variant="secondary" className="ml-1 gap-1 font-mono text-[10px]">
+            <Badge variant="secondary" className="ml-1 gap-1 font-mono text-[11px]">
               {enabledCount}/{layers.length}
             </Badge>
           </span>

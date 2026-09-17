@@ -80,7 +80,7 @@ export function TagsCloud({ onTagSelect }: { onTagSelect: (tag: string) => void 
                 aria-pressed={isSelected}
               >
                 {tag}
-                <span className="text-[9px] opacity-60 font-normal">{count}</span>
+                <span className="text-[11px] opacity-60 font-normal">{count}</span>
                 {isSelected && <X className="size-2.5" />}
               </motion.button>
             );

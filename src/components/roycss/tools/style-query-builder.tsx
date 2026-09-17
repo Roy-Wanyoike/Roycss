@@ -722,7 +722,7 @@ export function StyleQueryBuilder() {
                     <Badge
                       variant="outline"
                       className={cn(
-                        "ml-auto h-5 px-1.5 text-[10px] font-semibold",
+                        "ml-auto h-5 px-1.5 text-[11px] font-semibold",
                         matched
                           ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
                           : "border-muted-foreground/30 bg-muted text-muted-foreground",

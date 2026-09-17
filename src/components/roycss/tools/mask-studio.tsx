@@ -504,12 +504,12 @@ function PreviewStage({ state }: PreviewStageProps) {
 
       {/* Stage label */}
       <div className="pointer-events-none absolute left-2 top-2 flex items-center gap-1.5">
-        <span className="rounded bg-background/80 px-1.5 py-0.5 text-[10px] font-medium text-foreground backdrop-blur">
+        <span className="rounded bg-background/80 px-1.5 py-0.5 text-[11px] font-medium text-foreground backdrop-blur">
           {isNone ? "No mask" : typeLabel}
         </span>
       </div>
       <div className="pointer-events-none absolute right-2 top-2">
-        <span className="rounded bg-background/80 px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground backdrop-blur">
+        <span className="rounded bg-background/80 px-1.5 py-0.5 text-[11px] font-medium text-muted-foreground backdrop-blur">
           masked-element
         </span>
       </div>
@@ -771,7 +771,7 @@ function ImageControls({ state, patch, onUpload }: ImageControlsProps) {
               )}
             >
               <Icon className="size-5" />
-              <span className="text-[9px] font-medium">{label}</span>
+              <span className="text-[11px] font-medium">{label}</span>
             </button>
           );
         })}
@@ -895,7 +895,7 @@ function CommonMaskProps({ state, patch }: CommonMaskPropsProps) {
         <span className="text-xs font-semibold text-foreground">
           Mask properties
         </span>
-        <Badge variant="outline" className="ml-auto text-[10px] font-mono">
+        <Badge variant="outline" className="ml-auto text-[11px] font-mono">
           {buildMaskSizeCss(state)} · {buildMaskPosCss(state)}
         </Badge>
       </div>

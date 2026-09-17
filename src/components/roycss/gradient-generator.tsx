@@ -200,7 +200,7 @@ export function CSSGradientGenerator() {
                 className="w-full h-8 rounded"
                 style={{ background: `${preset.type || "linear"}-gradient(${preset.angle}deg, ${preset.stops.map(s => `${s.c} ${s.p}%`).join(", ")})` }}
               />
-              <span className="text-[10px] text-muted-foreground group-hover:text-foreground">{preset.name}</span>
+              <span className="text-[11px] text-muted-foreground group-hover:text-foreground">{preset.name}</span>
             </button>
           ))}
         </div>

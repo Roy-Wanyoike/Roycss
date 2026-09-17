@@ -235,13 +235,13 @@ export function RoyEdge() {
                 </div>
                 <div className="mt-4 grid grid-cols-2 gap-2">
                   <div className="bg-muted/40 rounded-lg p-2">
-                    <div className="text-muted-foreground flex items-center gap-1 text-[10px]">
+                    <div className="text-muted-foreground flex items-center gap-1 text-[11px]">
                       <Gauge className="size-3" /> Latency
                     </div>
                     <p className="text-sm font-semibold tabular-nums">{r.latency}</p>
                   </div>
                   <div className="bg-muted/40 rounded-lg p-2">
-                    <div className="text-muted-foreground flex items-center gap-1 text-[10px]">
+                    <div className="text-muted-foreground flex items-center gap-1 text-[11px]">
                       <Activity className="size-3" /> Req/s
                     </div>
                     <p className="text-sm font-semibold tabular-nums">{r.rps}</p>

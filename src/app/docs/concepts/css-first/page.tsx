@@ -79,7 +79,7 @@ box-shadow: 0 20px 40px -10px
       </ul>
       <p>
         The catalog&apos;s motion subset is documented on the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/api/roymotion">
+        <a className="text-primary hover:underline" href="/docs/api/roymotion">
           RoyMotion
         </a>{" "}
         page — including the pattern for bridging your own JS to a
@@ -116,7 +116,7 @@ box-shadow: 0 20px 40px -10px
       <p>
         For those cases RoyCSS gives you a stable escape hatch — see
         the{" "}
-        <a className="text-emerald-700 dark:text-emerald-300 hover:underline" href="/docs/guides/creating-custom-effects">
+        <a className="text-primary hover:underline" href="/docs/guides/creating-custom-effects">
           Custom Effects
         </a>{" "}
         guide.

@@ -110,7 +110,14 @@ export const metadata: Metadata = {
   authors: [{ name: "Royford Wanyoike Wamaitha" }],
   creator: "Royford Wanyoike Wamaitha",
   publisher: "Royford Wanyoike Wamaitha",
-  metadataBase: new URL("https://roycss.space-z.ai"),
+  // Canonical origin (issue #113 / UIX-F12): every SEO signal is unified on
+  // https://roycss.com — metadataBase + OG url here, JSON-LD url above,
+  // SITE_URL in src/app/effects/_lib/static-effects.ts (sitemap + effect
+  // canonicals), and robots.ts. 301-redirecting the alternate domain to
+  // this origin is an owner-side Vercel-domains action tracked in
+  // issue #113 (see docs/OWNER-RUNBOOK.md §7). Vercel preview deployments
+  // still resolve relative metadata via Next's fallback.
+  metadataBase: new URL("https://roycss.com"),
   alternates: {
     canonical: "/",
   },
@@ -118,7 +125,7 @@ export const metadata: Metadata = {
     title: "RoyCSS — AI-Native Frontend Engineering Platform",
     description: `${EFFECT_COUNT_FORMATTED} CSS effects, ${PRODUCT_COUNT} platform products, ${TOOL_COUNT} developer tools, and AI assistance — design, build, customize, and ship modern interfaces in one cohesive ecosystem.`,
     type: "website",
-    url: "https://roycss.space-z.ai",
+    url: "https://roycss.com",
     siteName: "RoyCSS",
     locale: "en_US",
     images: [

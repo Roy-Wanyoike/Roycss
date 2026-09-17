@@ -15,13 +15,13 @@ import { effects } from "@/lib/roycss-effects";
 import type { CSSEffect } from "@/lib/roycss-types";
 
 /**
- * Canonical production origin. Matches the domain already used by
- * src/app/sitemap.ts and src/app/robots.ts (roycss.com) so canonical
- * URLs, OG URLs and sitemap URLs never disagree.
- *
- * NOTE: src/app/layout.tsx metadataBase is currently a different origin
- * (roycss.space-z.ai) — a pre-existing inconsistency that predates this
- * PR. Effect pages emit ABSOLUTE URLs so they are unaffected.
+ * Canonical production origin (issue #113 / UIX-F12): https://roycss.com,
+ * matching src/app/layout.tsx metadataBase + OG url, the JSON-LD url, and
+ * src/app/robots.ts — every indexing signal agrees, so canonical URLs, OG
+ * URLs and sitemap URLs never disagree. (The alternate domain is
+ * 301-redirected at the edge by the owner — see issue #113.) Effect pages
+ * emit ABSOLUTE URLs so they are unaffected by metadataBase fallback
+ * behavior on Vercel preview deployments.
  */
 export const SITE_URL = "https://roycss.com";
 

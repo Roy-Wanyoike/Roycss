@@ -14,12 +14,17 @@ import { env } from "./config/env.js";
 import { APP_NAME, APP_VERSION } from "./config/constants.js";
 import { closeDatabase } from "./lib/db.js";
 import { logger } from "./lib/logger.js";
+import { initSentry } from "./lib/sentry.js";
 import { createApp } from "./server/app.js";
 import { loadEffects } from "./modules/effects/service.js";
 
 function main(): void {
   // Validate env up-front (loadEnv() exits on failure).
   const config = env;
+
+  // Sentry error tracking (issue #119 / PRD-F11) — only activates when
+  // SENTRY_DSN is set; logs once and no-ops otherwise.
+  initSentry();
 
   // Pre-load effects data so the first request isn't slow and so any
   // file/read errors surface at boot rather than mid-request.

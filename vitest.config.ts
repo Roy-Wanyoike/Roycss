@@ -51,7 +51,6 @@ export default defineConfig({
         "src/lib/constants.ts",         // static app constants
         "src/lib/copy-formats.ts",      // clipboard formatters — UI-layer
         "src/lib/docs-sitemap.ts",      // auto-generated sitemap catalog
-        "src/lib/effect-quality.ts",    // quality scoring — ProductCard UI layer
         "src/lib/effect-runtime.ts",    // browser runtime helper — e2e scope
         "src/lib/product-registry.ts",  // auto-generated product catalog
         "src/lib/products-catalog.ts",  // auto-generated products catalog

@@ -185,7 +185,7 @@ type NamingRule = "id-kebab-case" | "primary-class" | "prefixed-compounds" | "cl
  * like `royTypingCursor`) after its legitimate rules — reported in the
  * gate's PR; fixing the catalog is deliberately out of scope here.
  */
-const KNOWN_NAMING_VIOLATIONS: Record<string, Record<NamingRule, number>> = {
+const KNOWN_NAMING_VIOLATIONS: Record<string, Partial<Record<NamingRule, number>>> = {
   "ferrum-loader-heartbeat": { "prefixed-compounds": 127 },
 };
 

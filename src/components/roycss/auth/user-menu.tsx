@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { LogOut, MailWarning, User as UserIcon, UserPlus, LogIn, X } from "lucide-react";
+import { KeyRound, LogOut, MailWarning, User as UserIcon, UserPlus, LogIn, X } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "./auth-context";
 import { useAuthSheetStore } from "./auth-sheet-store";
+import { useApiKeysSheetStore } from "@/components/roycss/api-keys/api-keys-sheet-store";
 import { toast } from "sonner";
 
 /**
@@ -50,6 +51,7 @@ async function resendVerification(email: string): Promise<void> {
 export function UserMenu() {
   const { user, loading, logout, refreshUser } = useAuth();
   const { openLogin, openRegister } = useAuthSheetStore();
+  const { openSheet: openApiKeysSheet } = useApiKeysSheetStore();
   const [resending, setResending] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
@@ -152,6 +154,12 @@ export function UserMenu() {
             )}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
+          {/* API-key management (issue #122 / PRD-F21) — authed sessions
+              only: this whole branch renders after the `if (!user)` return. */}
+          <DropdownMenuItem className="cursor-pointer" onClick={openApiKeysSheet}>
+            <KeyRound className="size-4 mr-2" />
+            API Keys
+          </DropdownMenuItem>
           <DropdownMenuItem
             className="cursor-pointer text-destructive focus:text-destructive"
             onClick={async () => {
@@ -172,6 +180,7 @@ export function UserMenu() {
 export function MobileAuthMenuItem() {
   const { user, loading, logout } = useAuth();
   const { openLogin } = useAuthSheetStore();
+  const { openSheet: openApiKeysSheet } = useApiKeysSheetStore();
   if (loading) return null;
   if (!user) {
     return (
@@ -195,6 +204,13 @@ export function MobileAuthMenuItem() {
           <MailWarning className="size-3.5" />
         </button>
       )}
+      <button
+        onClick={openApiKeysSheet}
+        className="flex items-center justify-between w-full px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer min-h-[44px]"
+      >
+        API Keys
+        <KeyRound className="size-3.5" />
+      </button>
       <button
         onClick={async () => { await logout(); toast.success("Signed out"); }}
         className="flex items-center justify-between w-full px-4 py-3 rounded-xl text-sm font-medium text-destructive hover:bg-destructive/5 transition-all cursor-pointer min-h-[44px]"

@@ -141,6 +141,7 @@ import { StickyMiniNav } from "@/components/roycss/sticky-mini-nav";
 import { FloatingSponsorButton } from "@/components/roycss/floating-sponsor-button";
 import { UserMenu, MobileAuthMenuItem } from "@/components/roycss/auth/user-menu";
 import { AuthSheets } from "@/components/roycss/auth/auth-sheets";
+import { ApiKeysSheet } from "@/components/roycss/api-keys/api-keys-sheet";
 import { RecentEffectsSheet, pushRecentEffect } from "@/components/roycss/recent-effects-sheet";
 import { KeyboardShortcutsOverlay } from "@/components/roycss/keyboard-shortcuts-overlay";
 import { EffectOfTheDay } from "@/components/roycss/effect-of-the-day";
@@ -1049,6 +1050,10 @@ function TiltStage({ children }: { children: React.ReactNode }) {
 /* ─── Featured Carousel — rotates through ALL effects ──────── */
 const FEATURED_BATCH_SIZE = 4;
 const FEATURED_INTERVAL_MS = 6000; // 6s per batch → full cycle ≈ 19 min for 1569+ effects
+
+/* Support contact shown in the footer (issue #122 / PRD-F21) — same
+   address the legal pages use for security/contact mail. */
+const SUPPORT_EMAIL = "security@roycss.dev";
 
 /* useSyncExternalStore helpers for prefers-reduced-motion.
    This is the React-idiomatic way to read an external system (the OS
@@ -2697,6 +2702,14 @@ export default function RoyCSSPage() {
               <a href="/roadmap" className="hover:text-primary transition-colors">
                 Roadmap
               </a>
+              {" "}&middot;{" "}
+              <a
+                href={`mailto:${SUPPORT_EMAIL}`}
+                className="hover:text-primary transition-colors"
+                aria-label={`Support — email ${SUPPORT_EMAIL}`}
+              >
+                Support
+              </a>
             </p>
             <div className="flex items-center gap-4 text-xs text-muted-foreground">
               <EngineStatus />
@@ -3062,6 +3075,10 @@ export default function RoyCSSPage() {
 
       {/* Auth Sheets — Login + Register, mounted at page root */}
       <AuthSheets />
+
+      {/* API-key account panel (issue #122) — mounted at page root; opened
+          from the account menus (user-menu) for authenticated sessions. */}
+      <ApiKeysSheet />
 
       {/* Animation Playground */}
       <PlaygroundPanel open={playgroundOpen} onOpenChange={setPlaygroundOpen} />

@@ -81,9 +81,9 @@ function loadClassData(context) {
       classNames.push(e.className);
     }
     // Defensive lower bound — if the data file is corrupt or partial, log.
-    if (effectsList.length < 1500) {
+    if (effectsList.length < 1959) {
       throw new Error(
-        `class-data.json has only ${effectsList.length} effects (expected ≥1500)`,
+        `class-data.json has only ${effectsList.length} effects (expected ≥1959)`,
       );
     }
   } catch (err) {
@@ -162,8 +162,8 @@ const DIAGNOSTICS_DEBOUNCE_MS = 300;
  */
 function getMaxCompletionItems() {
   const cfg = vscode.workspace.getConfiguration("roycss");
-  const n = typeof cfg.get === "function" ? cfg.get("maxCompletionItems", 1569) : 1569;
-  return Math.max(50, Math.min(1569, Number(n) || 1569));
+  const n = typeof cfg.get === "function" ? cfg.get("maxCompletionItems", 1959) : 1959;
+  return Math.max(50, Math.min(1959, Number(n) || 1959));
 }
 
 /**

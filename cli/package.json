@@ -1,7 +1,7 @@
 {
   "name": "roycss-cli",
   "version": "2.0.0",
-  "description": "CLI tool for RoyCSS — search, add, and manage 1569+ production-ready CSS effects.",
+  "description": "CLI tool for RoyCSS — search, add, and manage 1,959 production-ready CSS effects.",
   "type": "module",
   "bin": {
     "roycss": "./index.js"
@@ -30,11 +30,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Roy-Wanyoike/roycss"
+    "url": "https://github.com/Roy-Wanyoike/Roycss.git"
   },
-  "homepage": "https://github.com/Roy-Wanyoike/roycss",
+  "homepage": "https://github.com/Roy-Wanyoike/Roycss",
   "bugs": {
-    "url": "https://github.com/Roy-Wanyoike/roycss/issues"
+    "url": "https://github.com/Roy-Wanyoike/Roycss/issues"
   },
   "engines": {
     "node": ">=18"

@@ -3,7 +3,7 @@
   "displayName": "RoyCSS",
   "publisher": "roycss",
   "version": "1.0.0",
-  "description": "RoyCSS — completion, hover docs, snippets, diagnostics, and commands for all 1569 production-ready CSS effects. Zero runtime dependencies. Zero network calls.",
+  "description": "RoyCSS — completion, hover docs, snippets, diagnostics, and commands for all 1959 production-ready CSS effects. Zero runtime dependencies. Zero network calls.",
   "license": "MIT",
   "author": {
     "name": "Royford Wanyoike Wamaitha",
@@ -46,9 +46,9 @@
   },
   "badges": [
     {
-      "url": "https://img.shields.io/badge/effects-1569-emerald",
+      "url": "https://img.shields.io/badge/effects-1959-emerald",
       "href": "https://roycss.com",
-      "description": "1569 effects"
+      "description": "1959 effects"
     },
     {
       "url": "https://img.shields.io/badge/dependencies-0-success",
@@ -172,7 +172,7 @@
         "roycss.enableCompletion": {
           "type": "boolean",
           "default": true,
-          "markdownDescription": "Register the `CompletionItemProvider`. When enabled, typing `roycss-` surfaces all 1569 classes with documentation."
+          "markdownDescription": "Register the `CompletionItemProvider`. When enabled, typing `roycss-` surfaces all 1959 classes with documentation."
         },
         "roycss.enableHover": {
           "type": "boolean",
@@ -191,10 +191,10 @@
         },
         "roycss.maxCompletionItems": {
           "type": "number",
-          "default": 1569,
+          "default": 1959,
           "minimum": 50,
-          "maximum": 1569,
-          "markdownDescription": "Maximum number of completion items to return when typing `roycss-`. Lower values reduce memory and improve responsiveness on slower machines. Set to `1569` (default) to show the full catalog."
+          "maximum": 1959,
+          "markdownDescription": "Maximum number of completion items to return when typing `roycss-`. Lower values reduce memory and improve responsiveness on slower machines. Set to `1959` (default) to show the full catalog."
         },
         "roycss.diagnosticSeverity": {
           "type": "string",
@@ -224,7 +224,10 @@
     "test": "node test/smoke.test.js",
     "lint": "node -c extension.js"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0"
+  },
   "dependencies": {},
   "trustedDependencies": []
 }

@@ -1,5 +1,4 @@
-#!/usr/bin/env bun
-// @bun
+#!/usr/bin/env node
 
 // src/lib/effects-batch-1.ts
 var effectsBatch1 = [
@@ -65602,6 +65601,7 @@ function getCodemod(id) {
 }
 
 // scripts/codemods/lib/engine.ts
+import { spawnSync } from "child_process";
 import { readFileSync, writeFileSync, readdirSync, statSync, existsSync } from "fs";
 import { join, resolve, relative, sep } from "path";
 var MIGRATE_EXTENSIONS2 = new Set([
@@ -65872,25 +65872,21 @@ function parseFlags(args) {
 }
 async function copyToClipboard(text) {
   try {
-    const proc = Bun.spawn(["xclip", "-selection", "clipboard"], {
-      stdin: "pipe",
-      stdout: "ignore",
-      stderr: "ignore"
+    const result = spawnSync("xclip", ["-selection", "clipboard"], {
+      input: text,
+      stdio: ["pipe", "ignore", "ignore"]
     });
-    proc.stdin.write(text);
-    proc.stdin.end();
-    await proc.exited;
+    if (result.error)
+      throw result.error;
     return true;
   } catch {
     try {
-      const proc = Bun.spawn(["pbcopy"], {
-        stdin: "pipe",
-        stdout: "ignore",
-        stderr: "ignore"
+      const result = spawnSync("pbcopy", [], {
+        input: text,
+        stdio: ["pipe", "ignore", "ignore"]
       });
-      proc.stdin.write(text);
-      proc.stdin.end();
-      await proc.exited;
+      if (result.error)
+        throw result.error;
       return true;
     } catch {
       return false;

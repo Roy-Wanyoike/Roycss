@@ -2,7 +2,7 @@
  * RoyCSS Commands
  *
  * Registers three commands:
- *   - roycss.searchEffects  — QuickPick over 1569 effects, fuzzy search, on
+ *   - roycss.searchEffects  — QuickPick over 1959 effects, fuzzy search, on
  *                              select copies the class name to the clipboard
  *                              (or inserts at cursor if `editor` is focused).
  *   - roycss.insertEffect   — Same QuickPick, always inserts at cursor.
@@ -53,7 +53,7 @@ export function registerCommands(recentlyUsed: RecentlyUsed): vscode.Disposable 
 }
 
 // ───────────────────────────────────────────────────────────────────────
-// QuickPick — fuzzy search across all 1569 effects
+// QuickPick — fuzzy search across all 1959 effects
 // ───────────────────────────────────────────────────────────────────────
 
 interface SearchPickItem extends vscode.QuickPickItem {
@@ -62,7 +62,7 @@ interface SearchPickItem extends vscode.QuickPickItem {
 }
 
 /**
- * Builds the QuickPick items for all 1569 effects. Each item's `label` is
+ * Builds the QuickPick items for all 1959 effects. Each item's `label` is
  * the effect name, `description` is the category, and `detail` is the
  * description (truncated for the QuickPick UI).
  */

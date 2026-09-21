@@ -169,7 +169,7 @@
     "react-syntax-highlighter": "^15.6.6",
     "recharts": "^3.10.1",
     "sharp": "^0.35.4",
-    "size-limit": "^13.1.1",
+    "size-limit": "^14.0.0",
     "socket.io-client": "^4.8.3",
     "sonner": "^2.0.8",
     "tailwind-merge": "^3.7.0",

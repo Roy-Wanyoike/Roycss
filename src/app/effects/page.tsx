@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Command, Search } from "lucide-react";
 import { effects, categoryMeta, categoryOrder } from "@/lib/roycss-effects";
 import type { CSSEffect, EffectCategory } from "@/lib/roycss-types";
-import { explorerHref } from "@/lib/search-targets";
+import { explorerHref, categoryHref } from "@/lib/search-targets";
 import {
   SITE_URL,
   EFFECT_COUNT,
@@ -61,10 +61,10 @@ export const metadata: Metadata = {
 };
 
 /**
- * ItemList JSON-LD of the effect categories (issue #188 item 6).
- * URLs use the explorer deep-link pattern (/?category=<slug>#effects)
- * built by src/lib/search-targets.ts explorerHref() — the same targets
- * the "Browse all …" links on this page emit.
+ * ItemList JSON-LD of the effect categories (issue #188 item 6; URLs
+ * upgraded to the indexable category landing pages by issue #198 —
+ * previously the explorer deep-link form /?category=<slug>#effects,
+ * which is a UI state, not a document).
  */
 const categoryListJsonLd = {
   "@context": "https://schema.org",
@@ -75,7 +75,7 @@ const categoryListJsonLd = {
     "@type": "ListItem",
     position: index + 1,
     name: categoryMeta[category].label,
-    url: `${SITE_URL}/?category=${category}#effects`,
+    url: `${SITE_URL}${categoryHref(category)}`,
   })),
 };
 
@@ -159,7 +159,13 @@ export default function EffectsIndexPage() {
                     id={`cat-${category}`}
                     className="font-display text-lg font-semibold text-foreground"
                   >
-                    {meta.label}
+                    <Link
+                      href={categoryHref(category)}
+                      className="hover:text-primary transition-colors"
+                      title={`Browse all CSS ${meta.label.toLowerCase()} — ${list.length} effects`}
+                    >
+                      {meta.label}
+                    </Link>
                   </h2>
                   <Badge
                     variant="secondary"
@@ -185,21 +191,33 @@ export default function EffectsIndexPage() {
                     </li>
                   ))}
                   {list.length > samples.length && (
-                    <li aria-hidden="true">
-                      <span className="inline-flex items-center rounded-full px-2 py-1.5 text-xs text-muted-foreground">
+                    <li>
+                      <Link
+                        href={categoryHref(category)}
+                        className="inline-flex items-center rounded-full px-2 py-1.5 text-xs text-primary hover:text-primary/80 transition-colors"
+                      >
                         +{list.length - samples.length} more
-                      </span>
+                      </Link>
                     </li>
                   )}
                 </ul>
 
-                <Link
-                  href={explorerHref(category)}
-                  className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-primary hover:text-primary/80 transition-colors"
-                >
-                  Browse all {meta.label.toLowerCase()} in the explorer
-                  <ArrowRight className="size-3" aria-hidden="true" />
-                </Link>
+                <div className="mt-3 flex flex-wrap items-center gap-3">
+                  <Link
+                    href={categoryHref(category)}
+                    className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:text-primary/80 transition-colors"
+                  >
+                    Browse all {list.length} {meta.label.toLowerCase()}
+                    <ArrowRight className="size-3" aria-hidden="true" />
+                  </Link>
+                  <Link
+                    href={explorerHref(category)}
+                    className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Open in explorer
+                    <ArrowRight className="size-3" aria-hidden="true" />
+                  </Link>
+                </div>
               </section>
             );
           })}

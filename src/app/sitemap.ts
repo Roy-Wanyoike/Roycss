@@ -2,16 +2,17 @@ import type { MetadataRoute } from "next";
 import { readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { SITE_URL, getEffectPageIds } from "./effects/_lib/static-effects";
+import { categoryOrder } from "@/lib/roycss-effects";
 
 /**
- * Sitemap — homepage, /effects index, one URL per effect page, every
- * /docs route, and the standalone info pages (/roadmap, /privacy,
- * /terms — issue #188 item 1).
+ * Sitemap — homepage, /effects index, 29 category landing pages (issue
+ * #198), one URL per effect page, every /docs route, and the standalone
+ * info pages (/roadmap, /privacy, /terms — issue #188 item 1).
  *
  * /effects/<id> pages enumerate the entire catalog (1,959 routes,
  * statically prerendered — see src/app/effects/_lib/static-effects.ts),
  * and the /docs tree is walked at build time so new docs pages are
- * picked up automatically. Total URL count (~2,000) is far below the
+ * picked up automatically. Total URL count (~2,029) is far below the
  * 50k-per-sitemap limit — no chunking needed.
  *
  * lastModified is a MODULE-LEVEL deploy-date constant (issue #188 item 1):
@@ -57,6 +58,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.8,
     },
+    // Category landing pages (issue #198) — one indexable document per
+    // catalog category (29), the long-tail query targets.
+    ...categoryOrder.map((category) => ({
+      url: `${SITE_URL}/effects/category/${category}`,
+      lastModified: LAST_MODIFIED,
+      changeFrequency: "weekly" as const,
+      priority: 0.75,
+    })),
     // Standalone info pages (issue #188 item 1) — previously missing.
     {
       url: `${SITE_URL}/roadmap`,

@@ -31,6 +31,17 @@ export function explorerHref(category?: EffectCategory | null): string {
   return `/?category=${encodeURIComponent(category)}#effects`;
 }
 
+/**
+ * URL of a category's SEO landing page (issue #198) —
+ * `/effects/category/<slug>`, an indexable ISR route. This is the link
+ * surface for crawlers and humans landing from search; `explorerHref()`
+ * remains the deep-link into the interactive home-page explorer
+ * (`/?category=<slug>#effects`), which is a UI state, not a document.
+ */
+export function categoryHref(category: EffectCategory): string {
+  return `/effects/category/${encodeURIComponent(category)}`;
+}
+
 /** URL of an effect's detail page (the same shape as src/app/effects/[id]). */
 export function effectDetailHref(effectId: string): string {
   return `/effects/${encodeURIComponent(effectId)}`;

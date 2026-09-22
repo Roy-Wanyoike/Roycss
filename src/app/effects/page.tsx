@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Command, Search } from "lucide-react";
 import { effects, categoryMeta, categoryOrder } from "@/lib/roycss-effects";
 import type { CSSEffect, EffectCategory } from "@/lib/roycss-types";
+import { explorerHref } from "@/lib/search-targets";
 import {
   SITE_URL,
   EFFECT_COUNT,
@@ -103,7 +104,7 @@ export default function EffectsIndexPage() {
             to search the whole catalog.
           </p>
           <Link
-            href="/#effects"
+            href={explorerHref()}
             className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary/80 transition-colors shrink-0"
           >
             Open explorer
@@ -160,7 +161,7 @@ export default function EffectsIndexPage() {
                 </ul>
 
                 <Link
-                  href="/#effects"
+                  href={explorerHref(category)}
                   className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-primary hover:text-primary/80 transition-colors"
                 >
                   Browse all {meta.label.toLowerCase()} in the explorer

@@ -137,6 +137,7 @@ import { FeaturedCompanies, SponsorModal } from "@/components/roycss/featured-co
 import { ComparisonPanel } from "@/components/roycss/comparison-panel";
 import { PlaygroundPanel } from "@/components/roycss/playground-panel";
 import { SearchOverlay } from "@/components/roycss/search-overlay";
+import { parseExplorerCategory } from "@/lib/search-targets";
 import { StickyMiniNav } from "@/components/roycss/sticky-mini-nav";
 import { FloatingSponsorButton } from "@/components/roycss/floating-sponsor-button";
 import { UserMenu, MobileAuthMenuItem } from "@/components/roycss/auth/user-menu";
@@ -1361,8 +1362,14 @@ export default function RoyCSSPage() {
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
-    // Only scroll to top if there's no #effect= hash (deep link to a specific effect)
-    if (!window.location.hash.startsWith("#effect=")) {
+    // Only scroll to top when the URL doesn't target a section anchor:
+    // #effect=<id> (deep link to a specific effect) and #effects / ?category=
+    // (deep link to the explorer, issue #161) manage their own scrolling in
+    // the effect below.
+    const urlTargetsAnchor =
+      window.location.hash.startsWith("#effect") ||
+      new URLSearchParams(window.location.search).has("category");
+    if (!urlTargetsAnchor) {
       window.scrollTo(0, 0);
     }
   }, []);
@@ -1388,6 +1395,32 @@ export default function RoyCSSPage() {
         });
       }
     }
+  }, []);
+
+  // Deep-link to the effects explorer (issue #161): /?category=<slug>#effects
+  // (built by explorerHref() — used by the /effects catalog category links,
+  // effect-detail "browse more" links and the 404 recovery page) or the
+  // plain /#effects anchor. Pre-selects the category pill so the grid is
+  // already filtered on arrival, then scrolls the explorer into view.
+  // Mirrors the ?tool= / #effect= deep-link patterns above.
+  useEffect(() => {
+    const applyFromUrl = () => {
+      const category = parseExplorerCategory(window.location.search, window.location.hash);
+      if (category) {
+        // Use queueMicrotask to avoid synchronous setState in effect
+        queueMicrotask(() => setActiveCategory(category));
+      }
+      if (category || window.location.hash.startsWith("#effects")) {
+        // The explorer sits below several full-height sections — wait a beat
+        // for mount + (virtualized) grid render before scrolling.
+        setTimeout(() => {
+          document.querySelector("#effects")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 150);
+      }
+    };
+    applyFromUrl();
+    window.addEventListener("hashchange", applyFromUrl);
+    return () => window.removeEventListener("hashchange", applyFromUrl);
   }, []);
 
   // Deep-link to a developer tool via #tool=<id> hash (or ?tool=<id> query
@@ -3101,11 +3134,12 @@ export default function RoyCSSPage() {
         onSelectEffect={(e) => { setSelectedEffect(e); setDialogOpen(true); }}
       />
 
-      {/* Search Overlay (⌘K) */}
+      {/* Search Overlay (⌘K) — effect results navigate to their
+          /effects/<id> detail pages (issue #161); the home modal is left
+          for in-context browsing (featured cards, grid cards, sheets). */}
       <SearchOverlay
         open={searchOverlayOpen}
         onOpenChange={setSearchOverlayOpen}
-        onSelectEffect={(e) => { setSelectedEffect(e); setDialogOpen(true); }}
         onJumpToSection={(id) => scrollToSection(id)}
       />
 

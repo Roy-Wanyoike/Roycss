@@ -34,6 +34,8 @@ import {
   getDocPage,
   type DocCategory,
 } from "@/lib/docs-sitemap";
+import { DocsFeedback } from "@/components/docs/feedback";
+import { DocsPageMeta } from "@/components/docs/edit-link";
 
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   Rocket,
@@ -285,6 +287,14 @@ export default function DocsLayout({
           ) : null}
           <article className="prose-docs min-w-0">{children}</article>
           <PrevNextPager pathname={pathname} />
+          {/* Per-page meta + feedback (issue #127 / PF-014) — only on real
+              doc pages, not on the /docs landing or version snapshots. */}
+          {current ? (
+            <>
+              <DocsPageMeta />
+              <DocsFeedback slug={current.slug} />
+            </>
+          ) : null}
         </main>
 
         {/* TOC */}
@@ -315,6 +325,36 @@ export default function DocsLayout({
           </div>
         </div>
       ) : null}
+
+      {/* Docs footer — contentinfo landmark on every docs page (parity
+          with /effects + /roadmap; issue #164 follow-through). */}
+      <footer
+        aria-label="Site footer"
+        className="mt-16 border-t border-border/60 px-4 py-6 sm:px-6"
+      >
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3">
+          <p className="text-xs text-muted-foreground">
+            © {new Date().getFullYear()} RoyCSS — MIT License
+          </p>
+          <nav
+            aria-label="Footer"
+            className="flex items-center gap-4 text-xs text-muted-foreground"
+          >
+            <Link href="/docs" className="hover:text-foreground">
+              Docs
+            </Link>
+            <Link href="/roadmap" className="hover:text-foreground">
+              Roadmap
+            </Link>
+            <Link href="/privacy" className="hover:text-foreground">
+              Privacy
+            </Link>
+            <Link href="/terms" className="hover:text-foreground">
+              Terms
+            </Link>
+          </nav>
+        </div>
+      </footer>
     </div>
   );
 }

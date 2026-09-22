@@ -52,10 +52,15 @@ walkPages(DOCS_ROUTE_DIR, pageFiles);
 
 const routesWithMetadata = new Map<string, string>(); // route → source
 const redirectRoutes = new Map<string, string>(); // route → redirect target
+const dynamicRoutes = new Map<string, string>(); // route → source (issue #127)
 for (const abs of pageFiles) {
   const route = routeFromPath(abs);
   const source = readFileSync(abs, "utf8");
-  if (/export const metadata/.test(source)) {
+  if (/\[[^\]]+\]/.test(route.slice("/docs/".length))) {
+    // Dynamic docs routes (versioned snapshots) resolve their own
+    // params at request time — classified separately, see coverage.
+    dynamicRoutes.set(route, source);
+  } else if (/export const metadata/.test(source)) {
     routesWithMetadata.set(route, source);
   } else {
     const m = source.match(/redirect\(\s*"([^"]+)"\s*\)/);
@@ -68,10 +73,11 @@ const indexedRoutes = new Set(DOCS_INDEX.map((e) => e.route));
 /* ─── 1. Coverage ─────────────────────────────────────────────── */
 
 describe("docs-index: coverage of the real /docs routes", () => {
-  it("walks the 36 /docs route pages (35 content + the /docs redirect)", () => {
-    expect(pageFiles).toHaveLength(36);
+  it("walks the 37 /docs route pages (35 content + /docs redirect + [version])", () => {
+    expect(pageFiles).toHaveLength(37);
     expect(routesWithMetadata.size).toBe(35);
     expect(redirectRoutes.size).toBe(1);
+    expect(dynamicRoutes.size).toBe(1);
   });
 
   it("indexes every content route under src/app/docs", () => {
@@ -85,6 +91,16 @@ describe("docs-index: coverage of the real /docs routes", () => {
     expect(route).toBe("/docs");
     expect(target).toBe("/docs/getting-started");
     expect(indexedRoutes.has(target)).toBe(true);
+  });
+
+  it("the dynamic [version] route resolves versions (issue #127)", () => {
+    const [[route, source]] = [...dynamicRoutes.entries()];
+    expect(route).toBe("/docs/[version]");
+    // Resolves version slugs, redirects the current line to canonical
+    // /docs, and renders archived snapshots (never a silent 404).
+    expect(source).toContain("resolveDocsVersion");
+    expect(source).toContain("permanentRedirect(\"/docs\")");
+    expect(source).toContain("notFound()");
   });
 
   it("index titles/descriptions are sourced from the page metadata", () => {

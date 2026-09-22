@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/getting-started/first-effect",
   title: "Your First Effect — RoyCSS Docs",
   description: "Step-by-step tutorial: add a hover lift effect with an emerald glow, all in pure CSS with zero JS.",
-};
+});
 
 export default function FirstEffectPage() {
   return (

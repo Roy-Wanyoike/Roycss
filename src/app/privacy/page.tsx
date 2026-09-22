@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPageShell, LegalSection } from "@/components/roycss/legal-page-shell";
+import { pageMeta } from "@/lib/seo";
 
 /**
  * Static privacy policy — plain-language, and honest about what the
@@ -16,11 +17,12 @@ import { LegalPageShell, LegalSection } from "@/components/roycss/legal-page-she
  */
 export const dynamic = "force-static";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Privacy Policy — RoyCSS",
   description:
     "What RoyCSS collects (account email, hashed password, favorites, messages), why, where it's stored, how long we keep it, and how to exercise your data rights. No ads, no trackers, no data selling.",
-};
+  path: "/privacy",
+});
 
 const LAST_UPDATED = "September 12, 2026";
 

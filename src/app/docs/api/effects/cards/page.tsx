@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/api/effects/cards",
   title: "Cards — RoyCSS Docs",
   description: "RoyCSS card effect classes: gradient border, hover glow, spotlight, reveal, neumorphic, glassmorphism.",
-};
+});
 
 export default function CardsPage() {
   return (

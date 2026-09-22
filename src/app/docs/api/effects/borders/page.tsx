@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/api/effects/borders",
   title: "Borders — RoyCSS Docs",
   description: "RoyCSS border effect classes: marching ants, animated gradients, dashed draw, neon pulse, corner brackets.",
-};
+});
 
 export default function BordersPage() {
   return (

@@ -48,6 +48,11 @@ export async function generateMetadata({
         : `RoyCSS ${info.version} docs (archived) — RoyCSS Docs`,
     description: info.note,
     robots: info.status === "current" ? undefined : { index: false },
+    // Self-canonical (issue #187 mechanical pass): archived snapshots are
+    // noindex, but a self-referencing canonical keeps the signal neutral
+    // instead of inheriting any default. Current-line params 308 to /docs
+    // before render, so this only surfaces for archived pages.
+    alternates: { canonical: `/docs/${version}` },
   };
 }
 

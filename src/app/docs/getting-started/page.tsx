@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT, FULL_CSS_MIN_GZ_KB } from "@/lib/site-stats";
 import Link from "next/link";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/getting-started",
   title: "Overview — RoyCSS Docs",
   description: `What is RoyCSS and how to get started — ${EFFECT_COUNT_FORMATTED} production-ready CSS effects with zero JS runtime and OKLCH colors.`,
-};
+});
 
 export default function OverviewPage() {
   return (

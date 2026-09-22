@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/api/roymotion",
   title: "RoyMotion — RoyCSS Docs",
   description: "RoyMotion: the 775-effect motion subset of the RoyCSS catalog — keyframed, hover, scroll-driven, and transition effects. All pure CSS.",
-};
+});
 
 export default function RoyMotionPage() {
   return (

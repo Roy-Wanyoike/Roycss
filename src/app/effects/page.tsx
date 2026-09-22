@@ -50,6 +50,33 @@ export const metadata: Metadata = {
       },
     ],
   },
+  // Own Twitter card (issue #188 item 6) — without it the page inherited
+  // the HOME page's twitter title/description from the root layout.
+  twitter: {
+    card: "summary_large_image",
+    title: "CSS Effects Library — RoyCSS",
+    description: `All ${EFFECT_COUNT.toLocaleString("en-US")} RoyCSS CSS effects by category, each with a live preview and copyable CSS.`,
+    images: [`${SITE_URL}/api/og`],
+  },
+};
+
+/**
+ * ItemList JSON-LD of the effect categories (issue #188 item 6).
+ * URLs use the explorer deep-link pattern (/?category=<slug>#effects)
+ * built by src/lib/search-targets.ts explorerHref() — the same targets
+ * the "Browse all …" links on this page emit.
+ */
+const categoryListJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "RoyCSS CSS effect categories",
+  numberOfItems: categoryOrder.length,
+  itemListElement: categoryOrder.map((category, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: categoryMeta[category].label,
+    url: `${SITE_URL}/?category=${category}#effects`,
+  })),
 };
 
 /** Group the catalog by category once (catalog order preserved). */
@@ -63,6 +90,12 @@ for (const effect of effects) {
 export default function EffectsIndexPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(categoryListJsonLd),
+        }}
+      />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         {/* Breadcrumb */}
         <nav aria-label="Breadcrumb">

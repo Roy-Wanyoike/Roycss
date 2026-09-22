@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/api/effects/buttons",
   title: "Buttons — RoyCSS Docs",
   description: "RoyCSS button effect classes: glow, pulse, shine sweep, fill slide, 3D push, neon. Each one self-contained.",
-};
+});
 
 export default function ButtonsPage() {
   return (

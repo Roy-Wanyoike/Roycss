@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EFFECT_COUNT_FORMATTED, FULL_CSS_MIN_GZ_KB } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/concepts/performance",
   title: "Performance — RoyCSS Docs",
   description: "How RoyCSS stays fast: GPU-composited transforms, no layout thrash, registered properties that animate, and subset exports.",
-};
+});
 
 export default function PerformancePage() {
   return (

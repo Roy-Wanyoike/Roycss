@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/api/effects/loaders",
   title: "Loaders — RoyCSS Docs",
   description: "RoyCSS loader classes: ring-spin, dots, bars, equalizer, orbit, pulse ring. Accessible by composition.",
-};
+});
 
 export default function LoadersPage() {
   return (

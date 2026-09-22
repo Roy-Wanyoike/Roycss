@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/guides",
   title: "Guides Overview — RoyCSS Docs",
   description: "Browse all RoyCSS guides — custom effects, theming, migration, tree-shaking, performance, AI workflow, contributing, changelog.",
-};
+});
 
 export default function GuidesOverviewPage() {
   const guides = [

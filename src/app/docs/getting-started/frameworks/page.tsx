@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/getting-started/frameworks",
   title: "Framework Guides — RoyCSS Docs",
   description: "Use RoyCSS with React, Vue, Svelte, Angular, and Astro. Plain CSS — no framework adapter required.",
-};
+});
 
 export default function FrameworksPage() {
   return (

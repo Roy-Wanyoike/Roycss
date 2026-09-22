@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPageShell, LegalSection } from "@/components/roycss/legal-page-shell";
+import { pageMeta } from "@/lib/seo";
 
 /**
  * Static terms of service — plain-language and honest about what the
@@ -14,11 +15,12 @@ import { LegalPageShell, LegalSection } from "@/components/roycss/legal-page-she
  */
 export const dynamic = "force-static";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Terms of Service — RoyCSS",
   description:
     "The terms for using roycss.com and your RoyCSS account: what the service is, acceptable use, accounts and API keys, licensing (MIT for the library), paid-plan status, disclaimers, and how changes work.",
-};
+  path: "/terms",
+});
 
 const LAST_UPDATED = "September 12, 2026";
 

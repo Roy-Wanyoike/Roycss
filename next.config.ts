@@ -41,6 +41,21 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: false,
   },
   reactStrictMode: false,
+  async redirects() {
+    return [
+      // Issue #187: /docs used to serve a 200 meta-refresh shell (the
+      // static-page redirect() fallback) with the home title — a real
+      // indexing hazard. A config-level redirect answers BEFORE routing,
+      // so crawlers get a true permanent redirect. The page.tsx fallback
+      // at src/app/docs/page.tsx stays as a harmless second layer (it is
+      // unreachable once this rule is active).
+      {
+        source: "/docs",
+        destination: "/docs/getting-started",
+        permanent: true, // 308 — preserve method, cache at the edge
+      },
+    ];
+  },
   async headers() {
     return [
       {

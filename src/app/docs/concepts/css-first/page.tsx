@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/concepts/css-first",
   title: "CSS-First Architecture — RoyCSS Docs",
   description: "Why RoyCSS is built with zero JavaScript runtime. The CSS-first philosophy, tradeoffs, and when to break the rule.",
-};
+});
 
 export default function CssFirstPage() {
   return (

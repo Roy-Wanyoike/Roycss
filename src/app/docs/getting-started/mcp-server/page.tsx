@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/getting-started/mcp-server",
   title: "MCP Server — RoyCSS Docs",
   description: "Connect AI assistants (Claude, Cursor, Copilot) to RoyCSS via the Model Context Protocol server in the RoyCSS monorepo.",
-};
+});
 
 export default function McpServerPage() {
   return (

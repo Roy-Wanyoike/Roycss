@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/api/effects",
   title: "Effects API — RoyCSS Docs",
   description: "How RoyCSS effect classes work: the single stylesheet, class anatomy, self-contained classes, and the per-category API pages.",
-};
+});
 
 export default function EffectsApiPage() {
   return (

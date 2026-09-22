@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/concepts/custom-properties",
   title: "Custom Properties — RoyCSS Docs",
   description: "How RoyCSS actually uses CSS custom properties: registered --roy-* @property values that effects animate, and what that means for you.",
-};
+});
 
 export default function CustomPropertiesPage() {
   return (

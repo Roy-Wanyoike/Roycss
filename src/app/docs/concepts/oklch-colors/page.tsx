@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/concepts/oklch-colors",
   title: "OKLCH Colors — RoyCSS Docs",
   description: "Why RoyCSS uses OKLCH, the perceptual color space. Predictable lightness ramps, accessible contrasts.",
-};
+});
 
 export default function OcklchColorsPage() {
   return (

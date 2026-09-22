@@ -24,7 +24,15 @@ export const effectsBatch9: CSSEffect[] = [
   0% { opacity: 0; transform: translateY(40px) scale(0.8); }
   60% { opacity: 1; transform: translateY(-8px) scale(1.05); }
   100% { opacity: 1; transform: translateY(0) scale(1); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Material Spring Up */
+.roycss-material-spring-up {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "material-spring-down",
@@ -42,7 +50,15 @@ export const effectsBatch9: CSSEffect[] = [
   0% { opacity: 1; transform: translateY(0) scale(1); }
   40% { opacity: 1; transform: translateY(12px) scale(1.04, 0.96); }
   100% { opacity: 0; transform: translateY(80px) scale(0.7); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Material Spring Down */
+.roycss-material-spring-down {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "material-emphasized",
@@ -59,7 +75,15 @@ export const effectsBatch9: CSSEffect[] = [
 @keyframes roy-mat-emphasized {
   0% { opacity: 0; transform: scale(0.85); }
   100% { opacity: 1; transform: scale(1); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Material Emphasized */
+.roycss-material-emphasized {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "material-emphasized-decel",
@@ -76,7 +100,15 @@ export const effectsBatch9: CSSEffect[] = [
 @keyframes roy-mat-emph-decel {
   0% { opacity: 0; transform: translateY(24px) scale(0.92); }
   100% { opacity: 1; transform: translateY(0) scale(1); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Material Emphasized Decelerate */
+.roycss-material-emphasized-decel {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "material-container-transform",
@@ -95,7 +127,15 @@ export const effectsBatch9: CSSEffect[] = [
   0% { opacity: 0; transform: scaleX(0.2) scaleY(0.1); border-radius: 32px; }
   40% { opacity: 1; transform: scaleX(1.05) scaleY(0.7); border-radius: 18px; }
   100% { opacity: 1; transform: scale(1); border-radius: 8px; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Material Container Transform */
+.roycss-material-container-transform {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "apple-squish-in",
@@ -114,7 +154,15 @@ export const effectsBatch9: CSSEffect[] = [
   55% { opacity: 1; transform: translateY(0) scale(1.06, 0.94); }
   78% { transform: scale(0.98, 1.02); }
   100% { transform: scale(1); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Apple Squish In */
+.roycss-apple-squish-in {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "apple-squish-out",
@@ -132,7 +180,15 @@ export const effectsBatch9: CSSEffect[] = [
   0% { opacity: 1; transform: scale(1); }
   40% { opacity: 1; transform: scale(0.94, 1.05) translateY(8px); }
   100% { opacity: 0; transform: scale(0.85) translateY(60px); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Apple Squish Out */
+.roycss-apple-squish-out {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "apple-flip-spring",
@@ -152,7 +208,15 @@ export const effectsBatch9: CSSEffect[] = [
   0% { opacity: 0; transform: rotateY(-90deg) scale(0.85); }
   60% { opacity: 1; transform: rotateY(12deg) scale(1.04); }
   100% { transform: rotateY(0) scale(1); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Apple Flip Spring */
+.roycss-apple-flip-spring {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "apple-elastic-scale",
@@ -172,7 +236,15 @@ export const effectsBatch9: CSSEffect[] = [
   55% { transform: scale(0.88); }
   75% { transform: scale(1.08); }
   100% { transform: scale(1); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Apple Elastic Scale */
+.roycss-apple-elastic-scale {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "apple-bounce-settle",
@@ -195,7 +267,15 @@ export const effectsBatch9: CSSEffect[] = [
   75% { transform: translateY(0); }
   88% { transform: translateY(-2%); }
   100% { transform: translateY(0); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Apple Bounce Settle */
+.roycss-apple-bounce-settle {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "natural-drop",
@@ -217,7 +297,15 @@ export const effectsBatch9: CSSEffect[] = [
   80% { transform: translateY(0) scaleY(0.95); }
   90% { transform: translateY(-8%) scaleY(1.02); }
   100% { transform: translateY(0) scaleY(1); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Natural Drop */
+.roycss-natural-drop {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "pendulum-swing-spring",
@@ -241,7 +329,15 @@ export const effectsBatch9: CSSEffect[] = [
   75% { transform: rotate(8deg); }
   88% { transform: rotate(-3deg); }
   100% { transform: rotate(0deg); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Pendulum Swing Spring */
+.roycss-pendulum-swing-spring {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "rubber-snap-back",
@@ -262,7 +358,15 @@ export const effectsBatch9: CSSEffect[] = [
   65% { transform: scaleX(1.08) scaleY(0.95); }
   85% { transform: scaleX(0.98) scaleY(1.01); }
   100% { transform: scaleX(1) scaleY(1); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Rubber Snap Back */
+.roycss-rubber-snap-back {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "material-state-layer",
@@ -292,7 +396,14 @@ export const effectsBatch9: CSSEffect[] = [
   20% { opacity: 0.08; }
   50% { opacity: 0.12; }
   80% { opacity: 0.05; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-material-state-layer::after {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "material-fab-scale",
@@ -313,7 +424,15 @@ export const effectsBatch9: CSSEffect[] = [
   0% { opacity: 0; transform: scale(0) rotate(-45deg); }
   60% { opacity: 1; transform: scale(1.1) rotate(5deg); }
   100% { opacity: 1; transform: scale(1) rotate(0); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Material FAB Scale */
+.roycss-material-fab-scale {
+    animation: none;
+  }
+}
+`
   },
 
   // =========================================================================
@@ -350,9 +469,18 @@ export const effectsBatch9: CSSEffect[] = [
   transform: skewX(-20deg);
   transition: left 0.7s ease;
 }
-.roycss-linear-shimmer-hover:hover::before {
-  inset-inline-start: 150%;
-}`
+@media (hover: hover) {
+  .roycss-linear-shimmer-hover:hover::before {
+    inset-inline-start: 150%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-linear-shimmer-hover::before {
+    transition: none;
+  }
+}
+`
   },
   {
     id: "linear-glow-border",
@@ -385,15 +513,27 @@ export const effectsBatch9: CSSEffect[] = [
   animation: roy-linear-glow 3s linear infinite paused;
   z-index: -1;
 }
-.roycss-linear-glow-border:hover::before {
-  opacity: 1;
-  animation-play-state: running;
+@media (hover: hover) {
+  .roycss-linear-glow-border:hover::before {
+    opacity: 1;
+    animation-play-state: running;
+  }
 }
-
 @keyframes roy-linear-glow {
   0% { background-position: 0% 50%; }
   100% { background-position: 300% 50%; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-linear-glow-border::before {
+    animation: none;
+    transition: none;
+  }
+  .roycss-linear-glow-border:hover::before {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "linear-spotlight",
@@ -424,13 +564,27 @@ export const effectsBatch9: CSSEffect[] = [
   transition: opacity 0.3s ease;
   pointer-events: none;
 }
-.roycss-linear-spotlight:hover::before {
-  opacity: 1;
+@media (hover: hover) {
+  .roycss-linear-spotlight:hover::before {
+    opacity: 1;
+  }
 }
-.roycss-linear-spotlight:hover {
-  border-color: oklch(0.37 0.012 285.81);
-  transition: border-color 0.3s ease;
-}`
+@media (hover: hover) {
+  .roycss-linear-spotlight:hover {
+    border-color: oklch(0.37 0.012 285.81);
+    transition: border-color 0.3s ease;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-linear-spotlight::before {
+    transition: none;
+  }
+  .roycss-linear-spotlight:hover {
+    transition: none;
+  }
+}
+`
   },
   {
     id: "linear-magnetic-pull",
@@ -447,13 +601,26 @@ export const effectsBatch9: CSSEffect[] = [
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   will-change: transform;
 }
-.roycss-linear-magnetic-pull:hover {
-  transform: translateX(6px) translateY(-4px);
+@media (hover: hover) {
+  .roycss-linear-magnetic-pull:hover {
+    transform: translateX(6px) translateY(-4px);
+  }
 }
 .roycss-linear-magnetic-pull:active {
   transform: translateX(3px) translateY(-2px) scale(0.96);
   transition: transform 0.1s ease;
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Linear Magnetic Pull */
+.roycss-linear-magnetic-pull {
+    transition: none;
+  }
+  .roycss-linear-magnetic-pull:active {
+    transition: none;
+  }
+}
+`
   },
   {
     id: "linear-noise-overlay",
@@ -481,9 +648,18 @@ export const effectsBatch9: CSSEffect[] = [
   transition: opacity 0.4s ease;
   pointer-events: none;
 }
-.roycss-linear-noise-overlay:hover::after {
-  opacity: 0.35;
-}`
+@media (hover: hover) {
+  .roycss-linear-noise-overlay:hover::after {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-linear-noise-overlay::after {
+    transition: none;
+  }
+}
+`
   },
   {
     id: "linear-gradient-sweep",
@@ -511,12 +687,23 @@ export const effectsBatch9: CSSEffect[] = [
   transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: -1;
 }
-.roycss-linear-gradient-sweep:hover::before {
-  transform: translateY(0);
+@media (hover: hover) {
+  .roycss-linear-gradient-sweep:hover::before {
+    transform: translateY(0);
+  }
 }
-.roycss-linear-gradient-sweep:hover {
-  border-color: transparent;
-}`
+@media (hover: hover) {
+  .roycss-linear-gradient-sweep:hover {
+    border-color: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-linear-gradient-sweep::before {
+    transition: none;
+  }
+}
+`
   },
   {
     id: "linear-depth-shadow",
@@ -534,13 +721,23 @@ export const effectsBatch9: CSSEffect[] = [
   box-shadow: 0 1px 2px color-mix(in oklch, oklch(0 0 0) 40%, transparent);
   transition: box-shadow 0.4s ease, transform 0.4s ease;
 }
-.roycss-linear-depth-shadow:hover {
-  box-shadow:
-    0 2px 4px color-mix(in oklch, oklch(0 0 0) 30%, transparent),
-    0 8px 16px color-mix(in oklch, oklch(0 0 0) 40%, transparent),
-    0 16px 32px color-mix(in oklch, oklch(0.567 0.159 275.21) 15%, transparent);
-  transform: translateY(-2px);
-}`
+@media (hover: hover) {
+  .roycss-linear-depth-shadow:hover {
+    box-shadow:
+      0 2px 4px color-mix(in oklch, oklch(0 0 0) 30%, transparent),
+      0 8px 16px color-mix(in oklch, oklch(0 0 0) 40%, transparent),
+      0 16px 32px color-mix(in oklch, oklch(0.567 0.159 275.21) 15%, transparent);
+    transform: translateY(-2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Linear Depth Shadow */
+.roycss-linear-depth-shadow {
+    transition: none;
+  }
+}
+`
   },
   {
     id: "linear-card-lift",
@@ -560,11 +757,21 @@ export const effectsBatch9: CSSEffect[] = [
               box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
               border-color 0.35s ease;
 }
-.roycss-linear-card-lift:hover {
-  transform: translateY(-6px) scale(1.015);
-  box-shadow: 0 18px 40px -12px color-mix(in oklch, oklch(0.567 0.159 275.21) 40%, transparent);
-  border-color: oklch(0.37 0.012 285.81);
-}`
+@media (hover: hover) {
+  .roycss-linear-card-lift:hover {
+    transform: translateY(-6px) scale(1.015);
+    box-shadow: 0 18px 40px -12px color-mix(in oklch, oklch(0.567 0.159 275.21) 40%, transparent);
+    border-color: oklch(0.37 0.012 285.81);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Linear Card Lift */
+.roycss-linear-card-lift {
+    transition: none;
+  }
+}
+`
   },
   {
     id: "linear-text-glow",
@@ -581,12 +788,22 @@ export const effectsBatch9: CSSEffect[] = [
   letter-spacing: 0.02em;
   transition: color 0.3s ease, text-shadow 0.3s ease;
 }
-.roycss-linear-text-glow:hover {
-  color: oklch(0.985 0 89.88);
-  text-shadow:
-    0 0 14px color-mix(in oklch, oklch(0.567 0.159 275.21) 60%, transparent),
-    0 0 30px color-mix(in oklch, oklch(0.606 0.219 292.72) 30%, transparent);
-}`
+@media (hover: hover) {
+  .roycss-linear-text-glow:hover {
+    color: oklch(0.985 0 89.88);
+    text-shadow:
+      0 0 14px color-mix(in oklch, oklch(0.567 0.159 275.21) 60%, transparent),
+      0 0 30px color-mix(in oklch, oklch(0.606 0.219 292.72) 30%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Linear Text Glow */
+.roycss-linear-text-glow {
+    transition: none;
+  }
+}
+`
   },
   {
     id: "linear-icon-bounce",
@@ -609,13 +826,28 @@ export const effectsBatch9: CSSEffect[] = [
   margin-inline-end: 6px;
   transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.roycss-linear-icon-bounce:hover {
-  background: oklch(0.274 0.005 286.03);
-  border-color: oklch(0.37 0.012 285.81);
+@media (hover: hover) {
+  .roycss-linear-icon-bounce:hover {
+    background: oklch(0.274 0.005 286.03);
+    border-color: oklch(0.37 0.012 285.81);
+  }
 }
-.roycss-linear-icon-bounce:hover::before {
-  transform: translateX(6px) scale(1.2);
-}`
+@media (hover: hover) {
+  .roycss-linear-icon-bounce:hover::before {
+    transform: translateX(6px) scale(1.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Linear Icon Bounce */
+.roycss-linear-icon-bounce {
+    transition: none;
+  }
+  .roycss-linear-icon-bounce::before {
+    transition: none;
+  }
+}
+`
   },
 
   // =========================================================================
@@ -661,7 +893,18 @@ export const effectsBatch9: CSSEffect[] = [
   0%, 100% { transform: translate(0, 0) scale(1); }
   33% { transform: translate(20px, -30px) scale(1.1); }
   66% { transform: translate(-20px, 20px) scale(0.95); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-linear-aurora-glow::before,
+.roycss-linear-aurora-glow::after {
+    animation: none;
+  }
+  .roycss-linear-aurora-glow::after {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "linear-gradient-mesh-bg",
@@ -685,7 +928,15 @@ export const effectsBatch9: CSSEffect[] = [
 @keyframes roy-mesh-drift {
   0%, 100% { background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%; }
   50% { background-position: 30% 30%, 70% 20%, 60% 70%, 20% 80%; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Linear Gradient Mesh BG */
+.roycss-linear-gradient-mesh-bg {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "apple-frosted-vibrancy",
@@ -869,7 +1120,18 @@ export const effectsBatch9: CSSEffect[] = [
     0% { opacity: 0; }
     100% { opacity: 1; }
   }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scroll Driven Fade */
+.roycss-scroll-driven-fade {
+    animation: none;
+  }
+  .roycss-scroll-driven-fade {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "scroll-driven-scale",
@@ -898,7 +1160,18 @@ export const effectsBatch9: CSSEffect[] = [
     0% { transform: scale(0.6); opacity: 0.4; }
     100% { transform: scale(1); opacity: 1; }
   }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scroll Driven Scale */
+.roycss-scroll-driven-scale {
+    animation: none;
+  }
+  .roycss-scroll-driven-scale {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "scroll-driven-rotate",
@@ -927,7 +1200,18 @@ export const effectsBatch9: CSSEffect[] = [
     0% { transform: rotate(-45deg); }
     100% { transform: rotate(45deg); }
   }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scroll Driven Rotate */
+.roycss-scroll-driven-rotate {
+    animation: none;
+  }
+  .roycss-scroll-driven-rotate {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "scroll-driven-translate",
@@ -956,7 +1240,18 @@ export const effectsBatch9: CSSEffect[] = [
     0% { transform: translateX(-80px); opacity: 0.4; }
     100% { transform: translateX(0); opacity: 1; }
   }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scroll Driven Translate */
+.roycss-scroll-driven-translate {
+    animation: none;
+  }
+  .roycss-scroll-driven-translate {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "scroll-driven-blur",
@@ -985,7 +1280,18 @@ export const effectsBatch9: CSSEffect[] = [
     0% { filter: blur(12px); opacity: 0.4; transform: scale(1.05); }
     100% { filter: blur(0); opacity: 1; transform: scale(1); }
   }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scroll Driven Blur */
+.roycss-scroll-driven-blur {
+    animation: none;
+  }
+  .roycss-scroll-driven-blur {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "scroll-driven-color",
@@ -1016,7 +1322,18 @@ export const effectsBatch9: CSSEffect[] = [
     50% { background: oklch(0.606 0.219 292.72); color: oklch(1 0 89.88); }
     100% { background: oklch(0.656 0.212 354.31); color: oklch(1 0 89.88); }
   }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scroll Driven Color */
+.roycss-scroll-driven-color {
+    animation: none;
+  }
+  .roycss-scroll-driven-color {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "scroll-driven-sticky",
@@ -1051,7 +1368,18 @@ export const effectsBatch9: CSSEffect[] = [
     0% { box-shadow: 0 0 0 color-mix(in oklch, oklch(0 0 0) 0%, transparent); border-color: oklch(0.274 0.005 286.03); }
     100% { box-shadow: 0 8px 24px color-mix(in oklch, oklch(0 0 0) 40%, transparent); border-color: oklch(0.37 0.012 285.81); }
   }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scroll Driven Sticky */
+.roycss-scroll-driven-sticky {
+    animation: none;
+  }
+  .roycss-scroll-driven-sticky {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "scroll-driven-progress-ring",
@@ -1103,7 +1431,18 @@ export const effectsBatch9: CSSEffect[] = [
         conic-gradient(oklch(0.567 0.159 275.21) 0deg, oklch(0.567 0.159 275.21) 360deg, oklch(0.274 0.005 286.03) 360deg, oklch(0.274 0.005 286.03) 360deg);
     }
   }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scroll Driven Progress Ring */
+.roycss-scroll-driven-progress-ring {
+    animation: none;
+  }
+  .roycss-scroll-driven-progress-ring {
+    animation: none;
+  }
+}
+`
   },
 
   // =========================================================================
@@ -1252,7 +1591,14 @@ export const effectsBatch9: CSSEffect[] = [
 @keyframes roy-prism-shift {
   0% { background-position: 0% 50%; }
   100% { background-position: 300% 50%; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass-prism::before {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "glass-depth-layer",

@@ -87,7 +87,18 @@ export const effectsBatch12: CSSEffect[] = [
   0%, 33%  { content: "25%"; color: oklch(0.769 0.165 70.08); }
   34%, 66% { content: "75%"; color: oklch(0.696 0.149 162.48); }
   67%, 100%{ content: "100%"; color: oklch(0.723 0.192 149.58); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Radial Progress — conic-gradient ring with @property */
+.roycss-progress-radial-percentage {
+    animation: none;
+  }
+  .roycss-progress-radial-percentage::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 2 ─ Step Indicator ───────────────────────────────────────────────
@@ -132,7 +143,14 @@ export const effectsBatch12: CSSEffect[] = [
   0%, 10%   { inline-size: 0; }
   35%, 55%  { inline-size: 94px; }
   80%, 100% { inline-size: 194px; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-progress-step-indicator::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 3 ─ Rating Stars ─────────────────────────────────────────────────
@@ -179,7 +197,15 @@ export const effectsBatch12: CSSEffect[] = [
   45%  { --roy-b12-rating-fill: 60%; }
   70%  { --roy-b12-rating-fill: 80%; }
   90%, 100% { --roy-b12-rating-fill: 100%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Rating Stars — animated gradient fill across star glyphs */
+.roycss-rating-stars {
+    animation: none;
+  }
+}
+`,
   },
 
   // 4 ─ Like Button Particle ─────────────────────────────────────────
@@ -237,7 +263,17 @@ export const effectsBatch12: CSSEffect[] = [
   0%, 60%, 100% { transform: scale(0.4); opacity: 0; }
   20% { transform: scale(1.4); opacity: 1; }
   40% { transform: scale(2.2); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-like-button-particle::before {
+    animation: none;
+  }
+  .roycss-like-button-particle::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 5 ─ Copy Feedback ────────────────────────────────────────────────
@@ -294,7 +330,21 @@ export const effectsBatch12: CSSEffect[] = [
   0%, 30% { transform: scale(0.95); opacity: 0; }
   45% { opacity: 0.7; }
   70%, 100% { transform: scale(1.3); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Copy Feedback — checkmark pop with circle pulse */
+.roycss-copy-feedback {
+    animation: none;
+  }
+  .roycss-copy-feedback::before {
+    animation: none;
+  }
+  .roycss-copy-feedback::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 6 ─ Dark Mode Toggle ─────────────────────────────────────────────
@@ -365,7 +415,21 @@ export const effectsBatch12: CSSEffect[] = [
 @keyframes roy-b12-toggle-stars {
   0%, 45% { opacity: 0; transform: scale(0.5); }
   55%, 100% { opacity: 1; transform: scale(1); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Dark Mode Toggle — sun/moon morph switch */
+.roycss-toggle-dark-mode {
+    animation: none;
+  }
+  .roycss-toggle-dark-mode::before {
+    animation: none;
+  }
+  .roycss-toggle-dark-mode::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 7 ─ Password Strength ───────────────────────────────────────────
@@ -420,7 +484,18 @@ export const effectsBatch12: CSSEffect[] = [
   0%, 32%  { content: "Weak"; color: oklch(0.637 0.208 25.33); }
   33%, 65% { content: "Good"; color: oklch(0.769 0.165 70.08); }
   66%, 100%{ content: "Strong"; color: oklch(0.723 0.192 149.58); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-password-strength::before {
+    animation: none;
+    transition: none;
+  }
+  .roycss-password-strength::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 8 ─ Upload Progress ──────────────────────────────────────────────
@@ -471,7 +546,14 @@ export const effectsBatch12: CSSEffect[] = [
   80%  { background-size: 100% 100%; }
   90%  { background-size: 100% 100%; background-image: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.723 0.192 149.58)); }
   100% { background-size: 100% 100%; background-image: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.723 0.192 149.58)); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-upload-progress::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 9 ─ Notification Badge ───────────────────────────────────────────
@@ -521,7 +603,17 @@ export const effectsBatch12: CSSEffect[] = [
 @keyframes roy-b12-notif-ring {
   0% { transform: scale(0.95); opacity: 0.8; }
   100% { transform: scale(1.7); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-notification-badge::before {
+    animation: none;
+  }
+  .roycss-notification-badge::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 10 ─ Skeleton Card Shimmer ───────────────────────────────────────
@@ -563,7 +655,14 @@ export const effectsBatch12: CSSEffect[] = [
 @keyframes roy-b12-skel-shimmer {
   0%   { background-position: 200% 0; }
   100% { background-position: -50% 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-skeleton-card-shimmer::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 11 ─ Skeleton Text Lines ─────────────────────────────────────────
@@ -604,7 +703,14 @@ export const effectsBatch12: CSSEffect[] = [
 @keyframes roy-b12-text-shimmer {
   0%   { background-position: 200% 0; }
   100% { background-position: -50% 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-skeleton-text-lines::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 12 ─ Countdown Timer ─────────────────────────────────────────────
@@ -665,7 +771,18 @@ export const effectsBatch12: CSSEffect[] = [
   60%, 79%  { content: "2"; }
   80%, 99%  { content: "1"; }
   100%      { content: "0"; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Countdown Timer — circular arc depletion with number */
+.roycss-countdown-timer {
+    animation: none;
+  }
+  .roycss-countdown-timer::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // ═══════════════════════════════════════════════════════════════════
@@ -726,7 +843,15 @@ export const effectsBatch12: CSSEffect[] = [
   100% {
     background-size: 22px 70px, 22px 105px, 22px 80px, 22px 120px, 22px 90px;
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Bar Chart Grow — multi-bar chart with staggered growth */
+.roycss-chart-bar-grow {
+    animation: none;
+  }
+}
+`,
   },
 
   // 14 ─ Line Chart Draw ─────────────────────────────────────────────
@@ -787,7 +912,14 @@ export const effectsBatch12: CSSEffect[] = [
   0%   { --roy-b12-line-reveal: 0%; }
   70%  { --roy-b12-line-reveal: 100%; }
   100% { --roy-b12-line-reveal: 100%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-chart-line-draw::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 15 ─ Donut Chart ─────────────────────────────────────────────────
@@ -843,7 +975,18 @@ export const effectsBatch12: CSSEffect[] = [
 @keyframes roy-b12-donut-counter {
   from { transform: rotate(0deg); }
   to   { transform: rotate(-360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Donut Chart — rotating conic-gradient ring with centered label */
+.roycss-chart-donut {
+    animation: none;
+  }
+  .roycss-chart-donut::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 16 ─ Gauge Meter ─────────────────────────────────────────────────
@@ -895,7 +1038,14 @@ export const effectsBatch12: CSSEffect[] = [
   0%   { transform: translateX(-50%) rotate(-80deg); }
   50%  { transform: translateX(-50%) rotate(20deg); }
   100% { transform: translateX(-50%) rotate(75deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-gauge-meter::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 17 ─ Thermometer ─────────────────────────────────────────────────
@@ -948,7 +1098,14 @@ export const effectsBatch12: CSSEffect[] = [
   0%   { block-size: 8%; }
   50%  { block-size: 40%; background: linear-gradient(180deg, oklch(0.837 0.164 84.43), oklch(0.769 0.165 70.08)); }
   100% { block-size: 75%; background: linear-gradient(180deg, oklch(0.711 0.166 22.22), oklch(0.577 0.215 27.33)); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-thermometer::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 18 ─ Battery Level ───────────────────────────────────────────────
@@ -997,7 +1154,14 @@ export const effectsBatch12: CSSEffect[] = [
   40%, 55%  { inline-size: 50%; background: linear-gradient(180deg, oklch(0.861 0.173 91.94), oklch(0.681 0.142 75.83)); box-shadow: inset 0 -3px 6px color-mix(in oklch, oklch(0 0 0) 20%, transparent), 0 0 8px color-mix(in oklch, oklch(0.861 0.173 91.94) 50%, transparent); }
   75%, 90%  { inline-size: 20%; background: linear-gradient(180deg, oklch(0.711 0.166 22.22), oklch(0.577 0.215 27.33)); box-shadow: inset 0 -3px 6px color-mix(in oklch, oklch(0 0 0) 20%, transparent), 0 0 8px color-mix(in oklch, oklch(0.637 0.208 25.33) 50%, transparent); }
   100%      { inline-size: 85%; background: linear-gradient(180deg, oklch(0.8 0.182 151.71), oklch(0.627 0.17 149.21)); box-shadow: inset 0 -3px 6px color-mix(in oklch, oklch(0 0 0) 20%, transparent), 0 0 8px color-mix(in oklch, oklch(0.8 0.182 151.71) 50%, transparent); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-battery-level::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 19 ─ Signal Strength ─────────────────────────────────────────────
@@ -1038,7 +1202,15 @@ export const effectsBatch12: CSSEffect[] = [
     background-size: 12px 18px, 12px 28px, 12px 38px, 12px 50px;
     filter: drop-shadow(0 0 12px color-mix(in oklch, oklch(0.8 0.182 151.71) 80%, transparent));
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Signal Strength — ascending bars with pulse wave */
+.roycss-signal-strength {
+    animation: none;
+  }
+}
+`,
   },
 
   // 20 ─ Loading Skeleton Grid ───────────────────────────────────────
@@ -1095,7 +1267,14 @@ export const effectsBatch12: CSSEffect[] = [
 @keyframes roy-b12-grid-shimmer {
   0%   { background-position: 200% 0; }
   100% { background-position: -50% 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-loading-skeleton-grid::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 21 ─ Data Table Row Highlight ────────────────────────────────────
@@ -1148,7 +1327,14 @@ export const effectsBatch12: CSSEffect[] = [
 @keyframes roy-b12-table-scan {
   0%   { inset-block-start: 28px; }
   100% { inset-block-start: 134px; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-data-table-row-highlight::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 22 ─ Code Block Syntax ───────────────────────────────────────────
@@ -1213,7 +1399,14 @@ export const effectsBatch12: CSSEffect[] = [
 @keyframes roy-b12-code-blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.85; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-code-block-syntax::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // ═══════════════════════════════════════════════════════════════════
@@ -1276,7 +1469,15 @@ export const effectsBatch12: CSSEffect[] = [
   80% { transform: translateX(-4px); }
   82% { transform: translateX(4px); }
   84% { transform: translateX(0); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Shake Error Input — horizontal shake on validation error */
+.roycss-shake-error-input {
+    animation: none;
+  }
+}
+`,
   },
 
   // 24 ─ Pulse Attention ─────────────────────────────────────────────
@@ -1320,7 +1521,14 @@ export const effectsBatch12: CSSEffect[] = [
 @keyframes roy-b12-attention-pulse {
   0%   { transform: scale(1); opacity: 0.8; }
   100% { transform: scale(1.35); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-pulse-attention::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 25 ─ Bounce Notification ─────────────────────────────────────────
@@ -1377,7 +1585,15 @@ export const effectsBatch12: CSSEffect[] = [
   32%  { transform: translateX(0); }
   75%  { transform: translateX(0); }
   100% { transform: translateX(130%); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Bounce Notification — slides in and bounces to settle */
+.roycss-bounce-notification {
+    animation: none;
+  }
+}
+`,
   },
 
   // 26 ─ Flip Card Reveal ────────────────────────────────────────────
@@ -1425,7 +1641,17 @@ export const effectsBatch12: CSSEffect[] = [
   0%, 40%  { transform: rotateY(180deg); }
   50%, 90% { transform: rotateY(360deg); }
   100%     { transform: rotateY(540deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-flip-card-reveal::before {
+    animation: none;
+  }
+  .roycss-flip-card-reveal::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 27 ─ Expand Collapse ─────────────────────────────────────────────
@@ -1477,7 +1703,14 @@ export const effectsBatch12: CSSEffect[] = [
   0%, 30%   { block-size: 0; opacity: 0; }
   50%, 80%  { block-size: 56px; opacity: 1; }
   100%      { block-size: 0; opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-expand-collapse::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 28 ─ Slide In Panel ──────────────────────────────────────────────
@@ -1532,7 +1765,17 @@ export const effectsBatch12: CSSEffect[] = [
   0%, 25%   { transform: translateX(100%); }
   45%, 75%  { transform: translateX(0); }
   100%      { transform: translateX(100%); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-slide-in-panel::before {
+    animation: none;
+  }
+  .roycss-slide-in-panel::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 29 ─ Modal Backdrop Blur ─────────────────────────────────────────
@@ -1598,7 +1841,17 @@ export const effectsBatch12: CSSEffect[] = [
   0%, 25%   { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
   45%, 75%  { transform: translate(-50%, -50%) scale(1); opacity: 1; }
   100%      { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-modal-backdrop-blur::before {
+    animation: none;
+  }
+  .roycss-modal-backdrop-blur::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 30 ─ Tooltip Follow ──────────────────────────────────────────────
@@ -1651,7 +1904,14 @@ export const effectsBatch12: CSSEffect[] = [
   50%  { inset-block-start: 15px; inset-inline-start: 60%; }
   75%  { inset-block-start: 50px; inset-inline-start: 40%; }
   100% { inset-block-start: 8px;  inset-inline-start: 15%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-tooltip-follow::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 31 ─ Drag Handle Grip ────────────────────────────────────────────
@@ -1708,7 +1968,17 @@ export const effectsBatch12: CSSEffect[] = [
 @keyframes roy-b12-grip-hover {
   0%, 100% { background: color-mix(in oklch, oklch(0.623 0.188 259.81) 0%, transparent); }
   50% { background: color-mix(in oklch, oklch(0.623 0.188 259.81) 12%, transparent); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-drag-handle-grip::before {
+    animation: none;
+  }
+  .roycss-drag-handle-grip::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 32 ─ Context Menu ────────────────────────────────────────────────
@@ -1774,7 +2044,17 @@ export const effectsBatch12: CSSEffect[] = [
 @keyframes roy-b12-context-hint {
   0%, 25%   { opacity: 1; }
   40%, 100% { opacity: 0.3; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-context-menu::before {
+    animation: none;
+  }
+  .roycss-context-menu::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // ═══════════════════════════════════════════════════════════════════
@@ -1820,7 +2100,14 @@ export const effectsBatch12: CSSEffect[] = [
 @keyframes roy-b12-card-skel-shimmer {
   0%   { background-position: 200% 0; }
   100% { background-position: -50% 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-card-skeleton-loader::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 34 ─ Card Empty State ────────────────────────────────────────────
@@ -1880,7 +2167,14 @@ export const effectsBatch12: CSSEffect[] = [
 @keyframes roy-b12-empty-float {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(-6px) rotate(-2deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-card-empty-state::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 35 ─ Card Error State ────────────────────────────────────────────
@@ -1931,7 +2225,14 @@ export const effectsBatch12: CSSEffect[] = [
 @keyframes roy-b12-error-pulse {
   0%, 100% { box-shadow: 0 0 20px color-mix(in oklch, oklch(0.637 0.208 25.33) 40%, transparent); }
   50% { box-shadow: 0 0 35px color-mix(in oklch, oklch(0.637 0.208 25.33) 70%, transparent); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-card-error-state::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 36 ─ Card Success State ──────────────────────────────────────────
@@ -1988,7 +2289,17 @@ export const effectsBatch12: CSSEffect[] = [
 @keyframes roy-b12-check-draw {
   0%, 30%  { opacity: 0; transform: translate(-50%, calc(-50% - 18px)) rotate(-45deg) scale(0.4); }
   60%, 100%{ opacity: 1; transform: translate(-50%, calc(-50% - 18px)) rotate(-45deg) scale(1); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-card-success-state::before {
+    animation: none;
+  }
+  .roycss-card-success-state::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 37 ─ Card Pricing Highlight ──────────────────────────────────────
@@ -2053,7 +2364,14 @@ export const effectsBatch12: CSSEffect[] = [
 @keyframes roy-b12-pricing-border {
   0%   { background-position: 0% 50%; }
   100% { background-position: 300% 50%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-card-pricing-highlight::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 38 ─ Card Profile Avatar ─────────────────────────────────────────
@@ -2110,7 +2428,14 @@ export const effectsBatch12: CSSEffect[] = [
 @keyframes roy-b12-avatar-spin {
   from { transform: translateX(-50%) rotate(0deg); }
   to   { transform: translateX(-50%) rotate(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-card-profile-avatar::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 39 ─ Card Notification ───────────────────────────────────────────
@@ -2162,7 +2487,14 @@ export const effectsBatch12: CSSEffect[] = [
 @keyframes roy-b12-dismiss-pulse {
   0%, 100% { background: color-mix(in oklch, oklch(0.711 0.035 256.79) 0%, transparent); color: oklch(0.711 0.035 256.79); }
   50% { background: color-mix(in oklch, oklch(0.711 0.035 256.79) 18%, transparent); color: oklch(0.929 0.013 255.51); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-card-notification::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 40 ─ Card Search Result ──────────────────────────────────────────
@@ -2217,6 +2549,13 @@ export const effectsBatch12: CSSEffect[] = [
 @keyframes roy-b12-search-glow {
   0%, 100% { filter: brightness(1); }
   50% { filter: brightness(1.15); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-card-search-result::after {
+    animation: none;
+  }
+}
+`,
   },
 ];

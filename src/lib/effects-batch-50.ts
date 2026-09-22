@@ -500,12 +500,16 @@ export const effectsBatch50: CSSEffect[] = [
   transition: opacity 0.3s ease;
   pointer-events: none;
 }
-.roycss-vfx-magnetic-hover:hover {
-  transform: translateY(-4px) scale(1.06);
-  box-shadow: 0 14px 28px oklch(0.58 0.22 175 / 0.5),
-              0 0 24px oklch(0.78 0.22 175 / 0.45);
+@media (hover: hover) {
+  .roycss-vfx-magnetic-hover:hover {
+    transform: translateY(-4px) scale(1.06);
+    box-shadow: 0 14px 28px oklch(0.58 0.22 175 / 0.5),
+                0 0 24px oklch(0.78 0.22 175 / 0.45);
+  }
 }
-.roycss-vfx-magnetic-hover:hover::before { opacity: 1; }
+@media (hover: hover) {
+  .roycss-vfx-magnetic-hover:hover::before { opacity: 1; }
+}
 .roycss-vfx-magnetic-hover:active {
   transform: translateY(-1px) scale(1.02);
 }
@@ -554,7 +558,9 @@ export const effectsBatch50: CSSEffect[] = [
   pointer-events: none;
   z-index: 1;
 }
-.roycss-vfx-shine-sweep:hover::before { transform: translateX(120%); }
+@media (hover: hover) {
+  .roycss-vfx-shine-sweep:hover::before { transform: translateX(120%); }
+}
 .roycss-vfx-shine-sweep > * { position: relative; z-index: 2; }
 @media (prefers-reduced-motion: reduce) {
   .roycss-vfx-shine-sweep::before { transition: none; }
@@ -585,14 +591,16 @@ export const effectsBatch50: CSSEffect[] = [
   transition: box-shadow 0.35s ease, transform 0.25s ease, background 0.35s ease;
   will-change: box-shadow, transform;
 }
-.roycss-vfx-glow-hover:hover {
-  background: oklch(0.40 0.16 195);
-  transform: translateY(-2px);
-  box-shadow:
-    0 0 8px  oklch(0.85 0.22 195 / 0.75),
-    0 0 18px oklch(0.78 0.24 195 / 0.55),
-    0 0 32px oklch(0.72 0.24 195 / 0.35),
-    0 0 52px oklch(0.66 0.24 195 / 0.18);
+@media (hover: hover) {
+  .roycss-vfx-glow-hover:hover {
+    background: oklch(0.40 0.16 195);
+    transform: translateY(-2px);
+    box-shadow:
+      0 0 8px  oklch(0.85 0.22 195 / 0.75),
+      0 0 18px oklch(0.78 0.24 195 / 0.55),
+      0 0 32px oklch(0.72 0.24 195 / 0.35),
+      0 0 52px oklch(0.66 0.24 195 / 0.18);
+  }
 }
 .roycss-vfx-glow-hover:active { transform: translateY(0); }
 @media (prefers-reduced-motion: reduce) {
@@ -645,7 +653,9 @@ export const effectsBatch50: CSSEffect[] = [
   background: oklch(0.25 0.05 240);
   z-index: -1;
 }
-.roycss-vfx-border-anim:hover::before { animation-duration: 1.2s; }
+@media (hover: hover) {
+  .roycss-vfx-border-anim:hover::before { animation-duration: 1.2s; }
+}
 @keyframes roy-vfx-border-spin {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -696,8 +706,12 @@ export const effectsBatch50: CSSEffect[] = [
   opacity: 0;
   transition: opacity 0.4s ease;
 }
-.roycss-vfx-image-zoom-hover:hover::before { transform: scale(1.18); }
-.roycss-vfx-image-zoom-hover:hover::after  { opacity: 1; }
+@media (hover: hover) {
+  .roycss-vfx-image-zoom-hover:hover::before { transform: scale(1.18); }
+}
+@media (hover: hover) {
+  .roycss-vfx-image-zoom-hover:hover::after { opacity: 1; }
+}
 .roycss-vfx-image-zoom-hover > * {
   position: relative;
   z-index: 1;
@@ -738,11 +752,13 @@ export const effectsBatch50: CSSEffect[] = [
   will-change: transform;
   box-shadow: 0 4px 12px oklch(0.20 0.05 240 / 0.4);
 }
-.roycss-vfx-3d-tilt-hover:hover {
-  transform: perspective(800px) rotateX(-12deg) rotateY(14deg) translateZ(10px);
-  box-shadow:
-    0 16px 28px oklch(0.20 0.05 240 / 0.5),
-    -8px 8px 0 oklch(0.65 0.22 290 / 0.25);
+@media (hover: hover) {
+  .roycss-vfx-3d-tilt-hover:hover {
+    transform: perspective(800px) rotateX(-12deg) rotateY(14deg) translateZ(10px);
+    box-shadow:
+      0 16px 28px oklch(0.20 0.05 240 / 0.5),
+      -8px 8px 0 oklch(0.65 0.22 290 / 0.25);
+  }
 }
 .roycss-vfx-3d-tilt-hover:active {
   transform: perspective(800px) rotateX(-4deg) rotateY(4deg) translateZ(4px);
@@ -779,13 +795,15 @@ export const effectsBatch50: CSSEffect[] = [
               border-color 0.3s ease;
   will-change: transform;
 }
-.roycss-vfx-card-lift:hover {
-  transform: translateY(-8px);
-  border-color: oklch(0.65 0.22 195 / 0.5);
-  box-shadow:
-    0 18px 32px oklch(0.20 0.05 240 / 0.22),
-    0 0 0 1px oklch(0.65 0.22 195 / 0.15),
-    0 0 22px oklch(0.78 0.22 195 / 0.18);
+@media (hover: hover) {
+  .roycss-vfx-card-lift:hover {
+    transform: translateY(-8px);
+    border-color: oklch(0.65 0.22 195 / 0.5);
+    box-shadow:
+      0 18px 32px oklch(0.20 0.05 240 / 0.22),
+      0 0 0 1px oklch(0.65 0.22 195 / 0.15),
+      0 0 22px oklch(0.78 0.22 195 / 0.18);
+  }
 }
 .roycss-vfx-card-lift:active { transform: translateY(-3px); }
 @media (prefers-reduced-motion: reduce) {
@@ -833,9 +851,11 @@ export const effectsBatch50: CSSEffect[] = [
   transition: opacity 0.35s ease, transform 0.35s ease;
   pointer-events: none;
 }
-.roycss-vfx-spotlight-hover:hover::before {
-  opacity: 1;
-  transform: translate(0, 0);
+@media (hover: hover) {
+  .roycss-vfx-spotlight-hover:hover::before {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
 }
 .roycss-vfx-spotlight-hover > * { position: relative; z-index: 1; }
 @media (prefers-reduced-motion: reduce) {
@@ -869,10 +889,12 @@ export const effectsBatch50: CSSEffect[] = [
               box-shadow 0.6s ease;
   will-change: border-radius, transform;
 }
-.roycss-vfx-liquid-hover:hover {
-  border-radius: 70% 30% 30% 70% / 60% 40% 60% 40%;
-  transform: rotate(-6deg) scale(1.05);
-  box-shadow: 0 12px 32px oklch(0.58 0.22 175 / 0.5);
+@media (hover: hover) {
+  .roycss-vfx-liquid-hover:hover {
+    border-radius: 70% 30% 30% 70% / 60% 40% 60% 40%;
+    transform: rotate(-6deg) scale(1.05);
+    box-shadow: 0 12px 32px oklch(0.58 0.22 175 / 0.5);
+  }
 }
 .roycss-vfx-liquid-hover:active {
   border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%;
@@ -927,17 +949,23 @@ export const effectsBatch50: CSSEffect[] = [
   background: linear-gradient(135deg, oklch(0.55 0.28 200 / 0.55), oklch(0.55 0.28 200 / 0.55));
   clip-path: inset(60% 0 0 0);
 }
-.roycss-vfx-glitch-hover:hover {
-  transform: translate(2px, -2px);
-  clip-path: inset(10% 0 12% 0);
+@media (hover: hover) {
+  .roycss-vfx-glitch-hover:hover {
+    transform: translate(2px, -2px);
+    clip-path: inset(10% 0 12% 0);
+  }
 }
-.roycss-vfx-glitch-hover:hover::before {
-  opacity: 1;
-  transform: translate(-3px, 0);
+@media (hover: hover) {
+  .roycss-vfx-glitch-hover:hover::before {
+    opacity: 1;
+    transform: translate(-3px, 0);
+  }
 }
-.roycss-vfx-glitch-hover:hover::after {
-  opacity: 1;
-  transform: translate(3px, 0);
+@media (hover: hover) {
+  .roycss-vfx-glitch-hover:hover::after {
+    opacity: 1;
+    transform: translate(3px, 0);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .roycss-vfx-glitch-hover,

@@ -41,7 +41,14 @@ export const effectsBatch27: CSSEffect[] = [
     transform: scale(1) rotate(0deg);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bounce-rotate {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -60,7 +67,14 @@ export const effectsBatch27: CSSEffect[] = [
   0%, 100% { transform: scale(1); opacity: 0.85; }
   50% { transform: scale(1.08); opacity: 1; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-breathe {
+    animation: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -86,7 +100,14 @@ export const effectsBatch27: CSSEffect[] = [
   font-size: 14px;
   box-shadow: 0 5px 0 oklch(0.648 0.175 131.68), 0 7px 14px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
   transition: transform 0.18s ease, box-shadow 0.18s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-3d-push {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -109,7 +130,14 @@ export const effectsBatch27: CSSEffect[] = [
   align-items: center;
   gap: 8px;
   transition: gap 0.3s ease, background 0.3s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-arrow-slide {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -150,7 +178,14 @@ export const effectsBatch27: CSSEffect[] = [
   font-weight: 600;
   font-size: 14px;
   transition: all 0.3s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-border-glow {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -190,7 +225,14 @@ export const effectsBatch27: CSSEffect[] = [
   font-size: 14px;
   letter-spacing: 0;
   transition: all 0.4s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-expand {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -213,7 +255,14 @@ export const effectsBatch27: CSSEffect[] = [
   font-weight: 600;
   font-size: 14px;
   transition: color 0.4s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-fill-slide {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -234,7 +283,14 @@ export const effectsBatch27: CSSEffect[] = [
   font-size: 14px;
   transform-style: preserve-3d;
   transition: transform 0.6s ease, background 0.3s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-flip {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -254,7 +310,14 @@ export const effectsBatch27: CSSEffect[] = [
   font-weight: 600;
   font-size: 14px;
   transition: all 0.3s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-glow {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -284,7 +347,15 @@ export const effectsBatch27: CSSEffect[] = [
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-gradient {
+    animation: none;
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -307,7 +378,14 @@ export const effectsBatch27: CSSEffect[] = [
   align-items: center;
   gap: 0;
   transition: padding 0.3s ease, gap 0.3s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-icon-slide {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -328,7 +406,14 @@ export const effectsBatch27: CSSEffect[] = [
   font-size: 14px;
   box-shadow: 0 4px 10px color-mix(in oklch, oklch(0.699 0.118 184.7) 25%, transparent);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-lift {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -348,7 +433,14 @@ export const effectsBatch27: CSSEffect[] = [
   font-weight: 600;
   font-size: 14px;
   transition: border-radius 0.4s ease, background 0.4s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-liquid {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -368,7 +460,14 @@ export const effectsBatch27: CSSEffect[] = [
   font-weight: 600;
   font-size: 14px;
   transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-morph {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -392,7 +491,14 @@ export const effectsBatch27: CSSEffect[] = [
   box-shadow: 0 0 5px oklch(0.685 0.131 226.94), inset 0 0 5px color-mix(in oklch, oklch(0.685 0.131 226.94) 40%, transparent);
   text-shadow: 0 0 5px oklch(0.685 0.131 226.94);
   transition: all 0.3s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-neon {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -415,7 +521,14 @@ export const effectsBatch27: CSSEffect[] = [
   overflow: hidden;
   z-index: 1;
   transition: color 0.4s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-outline-fill {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -436,7 +549,14 @@ export const effectsBatch27: CSSEffect[] = [
   font-size: 14px;
   box-shadow: 0 6px 0 oklch(0.491 0.241 292.58), 0 8px 14px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
   transition: transform 0.1s ease, box-shadow 0.1s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-press {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -456,7 +576,14 @@ export const effectsBatch27: CSSEffect[] = [
   font-weight: 600;
   font-size: 14px;
   transition: background 0.3s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-pulse {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -497,7 +624,14 @@ export const effectsBatch27: CSSEffect[] = [
   font-weight: 600;
   font-size: 14px;
   transition: transform 0.3s ease, background 0.3s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-rotate {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -518,7 +652,14 @@ export const effectsBatch27: CSSEffect[] = [
   font-size: 14px;
   box-shadow: 5px 5px 0 oklch(0.396 0.133 25.72);
   transition: transform 0.12s ease, box-shadow 0.12s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-shadow-push {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -559,7 +700,14 @@ export const effectsBatch27: CSSEffect[] = [
   font-weight: 600;
   font-size: 14px;
   transition: transform 0.3s ease, background 0.3s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-skew {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -582,7 +730,14 @@ export const effectsBatch27: CSSEffect[] = [
   font-size: 14px;
   z-index: 1;
   transition: color 0.4s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-slide-bg {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -603,7 +758,14 @@ export const effectsBatch27: CSSEffect[] = [
   font-weight: 600;
   font-size: 14px;
   transition: color 0.3s ease, box-shadow 0.3s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-sparkle {
+    transition: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -655,7 +817,14 @@ export const effectsBatch27: CSSEffect[] = [
   height: 100%;
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   transform-style: preserve-3d;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-card-flip-inner {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -700,13 +869,27 @@ export const effectsBatch27: CSSEffect[] = [
   description: "A card-style container with interactive or animated surface treatment",
   tags: ["card", "container", "card-hover-border", "hover"],
   previewType: "card",
-  cssCode: `.roycss-ferrum-card-hover-border {
+  cssCode: `/* Card Hover Border */
+.roycss-ferrum-card-hover-border {
   position: relative;
   background: oklch(0.27 0.04 260.03);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 12%, transparent);
   border-radius: 16px;
   padding: 24px;
   color: oklch(0.929 0.013 255.51);
-}`,
+  transition: border-color 0.3s ease;
+}
+.roycss-ferrum-card-hover-border:hover {
+  border-color: oklch(0.696 0.149 162.48);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Card Hover Border */
+.roycss-ferrum-card-hover-border {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -716,14 +899,28 @@ export const effectsBatch27: CSSEffect[] = [
   description: "A card-style container with interactive or animated surface treatment",
   tags: ["card", "container", "card-hover-color", "hover"],
   previewType: "card",
-  cssCode: `.roycss-ferrum-card-hover-color {
+  cssCode: `/* Card Hover Color */
+.roycss-ferrum-card-hover-color {
   background: oklch(0.27 0.04 260.03);
   border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
   border-radius: 16px;
   padding: 24px;
   color: oklch(0.929 0.013 255.51);
   transition: background 0.5s ease, color 0.5s ease, border-color 0.5s ease;
-}`,
+}
+.roycss-ferrum-card-hover-color:hover {
+  background: oklch(0.31 0.06 262);
+  color: oklch(0.95 0.05 145);
+  border-color: oklch(0.696 0.149 162.48);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Card Hover Color */
+.roycss-ferrum-card-hover-color {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -733,7 +930,8 @@ export const effectsBatch27: CSSEffect[] = [
   description: "A card-style container with interactive or animated surface treatment",
   tags: ["card", "container", "card-hover-fade", "hover"],
   previewType: "card",
-  cssCode: `.roycss-ferrum-card-hover-fade {
+  cssCode: `/* Card Hover Fade */
+.roycss-ferrum-card-hover-fade {
   position: relative;
   background: oklch(0.27 0.04 260.03);
   border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
@@ -741,7 +939,25 @@ export const effectsBatch27: CSSEffect[] = [
   padding: 24px;
   color: oklch(0.929 0.013 255.51);
   overflow: hidden;
-}`,
+}
+.roycss-ferrum-card-hover-fade::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: oklch(0.696 0.149 162.48);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.roycss-ferrum-card-hover-fade:hover::after {
+  opacity: 0.25;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-card-hover-fade::after {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -751,7 +967,8 @@ export const effectsBatch27: CSSEffect[] = [
   description: "A card-style container with interactive or animated surface treatment",
   tags: ["card", "container", "card-hover-flip", "hover", "3d"],
   previewType: "card",
-  cssCode: `.roycss-ferrum-card-hover-flip {
+  cssCode: `/* Card Hover Flip */
+.roycss-ferrum-card-hover-flip {
   background: oklch(0.27 0.04 260.03);
   border: 1px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent);
   border-radius: 16px;
@@ -759,7 +976,18 @@ export const effectsBatch27: CSSEffect[] = [
   color: oklch(0.929 0.013 255.51);
   transform-style: preserve-3d;
   transition: transform 0.7s ease, background 0.4s ease, color 0.4s ease;
-}`,
+}
+.roycss-ferrum-card-hover-flip:hover {
+  transform: rotateY(8deg) scale(1.02);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Card Hover Flip */
+.roycss-ferrum-card-hover-flip {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -769,14 +997,27 @@ export const effectsBatch27: CSSEffect[] = [
   description: "A card-style container with interactive or animated surface treatment",
   tags: ["card", "container", "card-hover-glow", "hover"],
   previewType: "card",
-  cssCode: `.roycss-ferrum-card-hover-glow {
+  cssCode: `/* Card Hover Glow */
+.roycss-ferrum-card-hover-glow {
   background: oklch(0.21 0.034 264.67);
   border: 1px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 20%, transparent);
   border-radius: 16px;
   padding: 24px;
   color: oklch(0.929 0.013 255.51);
   transition: box-shadow 0.4s ease, border-color 0.4s ease;
-}`,
+}
+.roycss-ferrum-card-hover-glow:hover {
+  box-shadow: 0 0 24px color-mix(in oklch, oklch(0.696 0.149 162.48) 45%, transparent);
+  border-color: oklch(0.696 0.149 162.48);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Card Hover Glow */
+.roycss-ferrum-card-hover-glow {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -786,14 +1027,28 @@ export const effectsBatch27: CSSEffect[] = [
   description: "A card-style container with interactive or animated surface treatment",
   tags: ["card", "container", "card-hover-lift", "hover"],
   previewType: "card",
-  cssCode: `.roycss-ferrum-card-hover-lift {
+  cssCode: `/* Card Hover Lift */
+.roycss-ferrum-card-hover-lift {
   background: oklch(0.27 0.04 260.03);
   border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
   border-radius: 16px;
   padding: 24px;
   color: oklch(0.929 0.013 255.51);
   transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
-}`,
+}
+.roycss-ferrum-card-hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 32px color-mix(in oklch, oklch(0 0 0) 35%, transparent);
+  border-color: oklch(0.696 0.149 162.48);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Card Hover Lift */
+.roycss-ferrum-card-hover-lift {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -803,7 +1058,8 @@ export const effectsBatch27: CSSEffect[] = [
   description: "A card-style container with interactive or animated surface treatment",
   tags: ["card", "container", "card-hover-press", "hover"],
   previewType: "card",
-  cssCode: `.roycss-ferrum-card-hover-press {
+  cssCode: `/* Card Hover Press */
+.roycss-ferrum-card-hover-press {
   background: oklch(0.27 0.04 260.03);
   border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
   border-radius: 16px;
@@ -811,7 +1067,19 @@ export const effectsBatch27: CSSEffect[] = [
   color: oklch(0.929 0.013 255.51);
   box-shadow: 0 12px 22px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
-}`,
+}
+.roycss-ferrum-card-hover-press:hover {
+  transform: translateY(4px) scale(0.99);
+  box-shadow: 0 4px 10px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Card Hover Press */
+.roycss-ferrum-card-hover-press {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -821,7 +1089,8 @@ export const effectsBatch27: CSSEffect[] = [
   description: "A card-style container with interactive or animated surface treatment",
   tags: ["card", "container", "card-hover-push", "hover", "3d"],
   previewType: "card",
-  cssCode: `.roycss-ferrum-card-hover-push {
+  cssCode: `/* Card Hover Push */
+.roycss-ferrum-card-hover-push {
   position: relative;
   background: oklch(0.27 0.04 260.03);
   border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
@@ -830,7 +1099,18 @@ export const effectsBatch27: CSSEffect[] = [
   color: oklch(0.929 0.013 255.51);
   transform-style: preserve-3d;
   transition: transform 0.35s ease;
-}`,
+}
+.roycss-ferrum-card-hover-push:hover {
+  transform: translateY(-6px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Card Hover Push */
+.roycss-ferrum-card-hover-push {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -840,7 +1120,8 @@ export const effectsBatch27: CSSEffect[] = [
   description: "A card-style container with interactive or animated surface treatment",
   tags: ["card", "container", "card-hover-reveal", "hover"],
   previewType: "card",
-  cssCode: `.roycss-ferrum-card-hover-reveal {
+  cssCode: `/* Card Hover Reveal */
+.roycss-ferrum-card-hover-reveal {
   position: relative;
   background: oklch(0.27 0.04 260.03);
   border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
@@ -848,7 +1129,28 @@ export const effectsBatch27: CSSEffect[] = [
   padding: 24px;
   color: oklch(0.929 0.013 255.51);
   overflow: hidden;
-}`,
+}
+.roycss-ferrum-card-hover-reveal::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  block-size: 4px;
+  background: oklch(0.696 0.149 162.48);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.roycss-ferrum-card-hover-reveal:hover::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-card-hover-reveal::after {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -858,7 +1160,8 @@ export const effectsBatch27: CSSEffect[] = [
   description: "A card-style container with interactive or animated surface treatment",
   tags: ["card", "container", "card-hover-rotate", "hover", "3d"],
   previewType: "card",
-  cssCode: `.roycss-ferrum-card-hover-rotate {
+  cssCode: `/* Card Hover Rotate */
+.roycss-ferrum-card-hover-rotate {
   background: oklch(0.27 0.04 260.03);
   border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
   border-radius: 16px;
@@ -867,7 +1170,19 @@ export const effectsBatch27: CSSEffect[] = [
   perspective: 800px;
   transform-style: preserve-3d;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
-}`,
+}
+.roycss-ferrum-card-hover-rotate:hover {
+  transform: rotate(-2.5deg);
+  box-shadow: 0 16px 28px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Card Hover Rotate */
+.roycss-ferrum-card-hover-rotate {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -877,14 +1192,26 @@ export const effectsBatch27: CSSEffect[] = [
   description: "A card-style container with interactive or animated surface treatment",
   tags: ["card", "container", "card-hover-skew", "hover"],
   previewType: "card",
-  cssCode: `.roycss-ferrum-card-hover-skew {
+  cssCode: `/* Card Hover Skew */
+.roycss-ferrum-card-hover-skew {
   background: oklch(0.27 0.04 260.03);
   border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
   border-radius: 16px;
   padding: 24px;
   color: oklch(0.929 0.013 255.51);
   transition: transform 0.35s ease, background 0.35s ease, color 0.35s ease;
-}`,
+}
+.roycss-ferrum-card-hover-skew:hover {
+  transform: skewX(-4deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Card Hover Skew */
+.roycss-ferrum-card-hover-skew {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -894,14 +1221,27 @@ export const effectsBatch27: CSSEffect[] = [
   description: "A card-style container with interactive or animated surface treatment",
   tags: ["card", "container", "card-hover-slide", "hover"],
   previewType: "card",
-  cssCode: `.roycss-ferrum-card-hover-slide {
+  cssCode: `/* Card Hover Slide */
+.roycss-ferrum-card-hover-slide {
   background: oklch(0.27 0.04 260.03);
   border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
   border-radius: 16px;
   padding: 24px;
   color: oklch(0.929 0.013 255.51);
   transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
-}`,
+}
+.roycss-ferrum-card-hover-slide:hover {
+  transform: translateX(8px);
+  box-shadow: -8px 12px 24px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Card Hover Slide */
+.roycss-ferrum-card-hover-slide {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -911,7 +1251,8 @@ export const effectsBatch27: CSSEffect[] = [
   description: "A card-style container with interactive or animated surface treatment",
   tags: ["card", "container", "card-hover-swing", "hover"],
   previewType: "card",
-  cssCode: `.roycss-ferrum-card-hover-swing {
+  cssCode: `/* Card Hover Swing */
+.roycss-ferrum-card-hover-swing {
   background: oklch(0.27 0.04 260.03);
   border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
   border-radius: 16px;
@@ -919,7 +1260,18 @@ export const effectsBatch27: CSSEffect[] = [
   color: oklch(0.929 0.013 255.51);
   transform-origin: top center;
   transition: transform 0.3s ease;
-}`,
+}
+.roycss-ferrum-card-hover-swing:hover {
+  transform: rotate(4deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Card Hover Swing */
+.roycss-ferrum-card-hover-swing {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -929,14 +1281,36 @@ export const effectsBatch27: CSSEffect[] = [
   description: "A card-style container with interactive or animated surface treatment",
   tags: ["card", "container", "card-hover-tada", "hover"],
   previewType: "card",
-  cssCode: `.roycss-ferrum-card-hover-tada {
+  cssCode: `/* Card Hover Tada */
+.roycss-ferrum-card-hover-tada {
   background: oklch(0.27 0.04 260.03);
   border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
   border-radius: 16px;
   padding: 24px;
   color: oklch(0.929 0.013 255.51);
   transition: transform 0.3s ease;
-}`,
+}
+.roycss-ferrum-card-hover-tada:hover {
+  animation: roy-ferrum-card-hover-tada-anim 0.9s ease;
+}
+@keyframes roy-ferrum-card-hover-tada-anim {
+  0%                { transform: scale(1); }
+  10%, 20%          { transform: scale(0.9) rotate(-3deg); }
+  30%, 50%, 70%, 90% { transform: scale(1.08) rotate(3deg); }
+  40%, 60%, 80%     { transform: scale(1.08) rotate(-3deg); }
+  100%              { transform: scale(1) rotate(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Card Hover Tada */
+.roycss-ferrum-card-hover-tada {
+    transition: none;
+  }
+  .roycss-ferrum-card-hover-tada:hover {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -946,14 +1320,37 @@ export const effectsBatch27: CSSEffect[] = [
   description: "A card-style container with interactive or animated surface treatment",
   tags: ["card", "container", "card-hover-wobble", "hover"],
   previewType: "card",
-  cssCode: `.roycss-ferrum-card-hover-wobble {
+  cssCode: `/* Card Hover Wobble */
+.roycss-ferrum-card-hover-wobble {
   background: oklch(0.27 0.04 260.03);
   border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
   border-radius: 16px;
   padding: 24px;
   color: oklch(0.929 0.013 255.51);
   transition: transform 0.3s ease;
-}`,
+}
+.roycss-ferrum-card-hover-wobble:hover {
+  animation: roy-ferrum-card-hover-wobble-anim 0.9s ease;
+}
+@keyframes roy-ferrum-card-hover-wobble-anim {
+  0%   { transform: translateX(0); }
+  15%  { transform: translateX(-8px) rotate(-2deg); }
+  30%  { transform: translateX(6px) rotate(1.5deg); }
+  45%  { transform: translateX(-4px) rotate(-1deg); }
+  60%  { transform: translateX(3px) rotate(0.5deg); }
+  100% { transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Card Hover Wobble */
+.roycss-ferrum-card-hover-wobble {
+    transition: none;
+  }
+  .roycss-ferrum-card-hover-wobble:hover {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -963,14 +1360,27 @@ export const effectsBatch27: CSSEffect[] = [
   description: "A card-style container with interactive or animated surface treatment",
   tags: ["card", "container", "card-hover-zoom", "hover"],
   previewType: "card",
-  cssCode: `.roycss-ferrum-card-hover-zoom {
+  cssCode: `/* Card Hover Zoom */
+.roycss-ferrum-card-hover-zoom {
   background: linear-gradient(135deg, oklch(0.386 0.059 188.42), oklch(0.27 0.04 260.03));
   border: 1px solid color-mix(in oklch, oklch(0.699 0.118 184.7) 25%, transparent);
   border-radius: 16px;
   padding: 24px;
   color: oklch(0.953 0.05 180.8);
   transition: transform 0.4s ease, box-shadow 0.4s ease;
-}`,
+}
+.roycss-ferrum-card-hover-zoom:hover {
+  transform: scale(1.04);
+  box-shadow: 0 16px 32px color-mix(in oklch, oklch(0 0 0) 35%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Card Hover Zoom */
+.roycss-ferrum-card-hover-zoom {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -998,7 +1408,14 @@ export const effectsBatch27: CSSEffect[] = [
     box-shadow: 0 0 22px color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent), 0 0 44px color-mix(in oklch, oklch(0.696 0.149 162.48) 20%, transparent), inset 0 0 22px color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-card-neon {
+    animation: none;
+  }
+}
+`,
 },
 
 {

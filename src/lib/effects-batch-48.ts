@@ -441,6 +441,10 @@ export const effectsBatch48 = [
   box-shadow: 0 0 0 4px oklch(1 0 0 / 0.3);
   animation: roy-cursor-fx-hover-lens-dot 4s ease-in-out infinite;
 }
+.roycss-cursor-fx-hover-lens:hover::before {
+  border-color: oklch(1 0 0);
+  box-shadow: 0 0 0 8px oklch(1 0 0 / 0.45), inset 0 0 24px oklch(0 0 0 / 0.45);
+}
 @keyframes roy-cursor-fx-hover-lens {
   0%, 100% { transform: translate(-50%, -30%) scale(1); }
   50%      { transform: translate(30%, 40%)  scale(1.1); }

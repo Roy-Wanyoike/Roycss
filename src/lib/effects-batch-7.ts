@@ -87,7 +87,15 @@ export const effectsBatch7: CSSEffect[] = [
 @keyframes roy-glass-liquid-refract {
   0%   { backdrop-filter: blur(8px) brightness(1.1) contrast(1.05) hue-rotate(0deg); }
   100% { backdrop-filter: blur(14px) brightness(1.15) contrast(1.1) hue-rotate(25deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Liquid Glass */
+.roycss-glass-liquid {
+    animation: none;
+  }
+}
+`,
   },
 
   // 4. glass-neumorphism
@@ -249,7 +257,15 @@ export const effectsBatch7: CSSEffect[] = [
 @keyframes roy-glass-border-pulse {
   0%   { box-shadow: 0 0 0 1px color-mix(in oklch, oklch(0.889 0.177 169.75) 40%, transparent), 0 0 16px color-mix(in oklch, oklch(0.889 0.177 169.75) 35%, transparent), 0 8px 32px color-mix(in oklch, oklch(0 0 0) 12%, transparent); }
   100% { box-shadow: 0 0 0 1px color-mix(in oklch, oklch(0.73 0.16 237.36) 60%, transparent), 0 0 30px color-mix(in oklch, oklch(0.73 0.16 237.36) 60%, transparent), 0 8px 32px color-mix(in oklch, oklch(0 0 0) 12%, transparent); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Glowing Border Glass */
+.roycss-glass-border-glow {
+    animation: none;
+  }
+}
+`,
   },
 
   // 11. glass-noise-overlay
@@ -326,7 +342,14 @@ export const effectsBatch7: CSSEffect[] = [
 @keyframes roy-glass-reflection-sweep {
   0%, 100% { inset-inline-start: -60%; }
   50%      { inset-inline-start: 130%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass-reflection::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -375,7 +398,38 @@ export const effectsBatch7: CSSEffect[] = [
   10%  { opacity: 1; transform: translateY(-10px) scale(1); }
   90%  { opacity: 1; }
   100% { transform: translateY(-210px) scale(0.3); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-particles-floating-dots span {
+    animation: none;
+  }
+  .roycss-particles-floating-dots span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-particles-floating-dots span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-particles-floating-dots span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-particles-floating-dots span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-particles-floating-dots span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-particles-floating-dots span:nth-child(6) {
+    animation: none;
+  }
+  .roycss-particles-floating-dots span:nth-child(7) {
+    animation: none;
+  }
+  .roycss-particles-floating-dots span:nth-child(8) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 2. particles-confetti-burst
@@ -422,7 +476,14 @@ export const effectsBatch7: CSSEffect[] = [
 @keyframes roy-particle-confetti-burst {
   0%   { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; }
   100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1) rotate(var(--rot)); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-particles-confetti-burst span {
+    animation: none;
+  }
+}
+`,
   },
 
   // 3. particles-snow-fall
@@ -468,7 +529,38 @@ export const effectsBatch7: CSSEffect[] = [
   50%  { transform: translate(15px, 100px); }
   90%  { opacity: 0.9; }
   100% { transform: translate(-10px, 210px); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-particles-snow-fall span {
+    animation: none;
+  }
+  .roycss-particles-snow-fall span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-particles-snow-fall span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-particles-snow-fall span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-particles-snow-fall span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-particles-snow-fall span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-particles-snow-fall span:nth-child(6) {
+    animation: none;
+  }
+  .roycss-particles-snow-fall span:nth-child(7) {
+    animation: none;
+  }
+  .roycss-particles-snow-fall span:nth-child(8) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 4. particles-rain
@@ -509,7 +601,32 @@ export const effectsBatch7: CSSEffect[] = [
   0%   { transform: translate(0, -30px); opacity: 0; }
   10%  { opacity: 0.8; }
   100% { transform: translate(-20px, 230px); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-particles-rain span {
+    animation: none;
+  }
+  .roycss-particles-rain span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-particles-rain span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-particles-rain span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-particles-rain span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-particles-rain span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-particles-rain span:nth-child(6) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 5. particles-fireflies
@@ -551,7 +668,32 @@ export const effectsBatch7: CSSEffect[] = [
   25%      { transform: translate(15px, -10px); opacity: 1; box-shadow: 0 0 12px color-mix(in oklch, oklch(0.943 0.162 124.78) 100%, transparent); }
   50%      { transform: translate(-8px, -20px); opacity: 0.5; box-shadow: 0 0 6px color-mix(in oklch, oklch(0.943 0.162 124.78) 60%, transparent); }
   75%      { transform: translate(12px, -30px); opacity: 1; box-shadow: 0 0 14px color-mix(in oklch, oklch(0.943 0.162 124.78) 100%, transparent); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-particles-fireflies span {
+    animation: none;
+  }
+  .roycss-particles-fireflies span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-particles-fireflies span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-particles-fireflies span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-particles-fireflies span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-particles-fireflies span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-particles-fireflies span:nth-child(6) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 6. particles-bubbles
@@ -594,7 +736,32 @@ export const effectsBatch7: CSSEffect[] = [
   10%  { opacity: 0.85; transform: translate(0, -10px) scale(1); }
   50%  { transform: translate(10px, -100px) scale(1); }
   100% { transform: translate(-8px, -210px) scale(0.7); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-particles-bubbles span {
+    animation: none;
+  }
+  .roycss-particles-bubbles span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-particles-bubbles span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-particles-bubbles span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-particles-bubbles span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-particles-bubbles span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-particles-bubbles span:nth-child(6) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 7. particles-sparks
@@ -640,7 +807,38 @@ export const effectsBatch7: CSSEffect[] = [
   0%   { transform: translate(0, 0) scale(0); opacity: 1; }
   20%  { transform: translate(calc(var(--tx) * 0.4), -40px) scale(1); opacity: 1; }
   100% { transform: translate(var(--tx), -160px) scale(0.2); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-particles-sparks span {
+    animation: none;
+  }
+  .roycss-particles-sparks span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-particles-sparks span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-particles-sparks span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-particles-sparks span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-particles-sparks span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-particles-sparks span:nth-child(6) {
+    animation: none;
+  }
+  .roycss-particles-sparks span:nth-child(7) {
+    animation: none;
+  }
+  .roycss-particles-sparks span:nth-child(8) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 8. particles-dust
@@ -686,7 +884,38 @@ export const effectsBatch7: CSSEffect[] = [
   20%      { opacity: 0.7; }
   80%      { opacity: 0.7; }
   100%     { transform: translate(var(--tx), var(--ty)); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-particles-dust span {
+    animation: none;
+  }
+  .roycss-particles-dust span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-particles-dust span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-particles-dust span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-particles-dust span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-particles-dust span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-particles-dust span:nth-child(6) {
+    animation: none;
+  }
+  .roycss-particles-dust span:nth-child(7) {
+    animation: none;
+  }
+  .roycss-particles-dust span:nth-child(8) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 9. particles-stars-twinkle
@@ -729,7 +958,44 @@ export const effectsBatch7: CSSEffect[] = [
 @keyframes roy-particle-star-twinkle {
   0%, 100% { opacity: 0.2; transform: scale(0.6); box-shadow: 0 0 2px color-mix(in oklch, oklch(1 0 89.88) 30%, transparent); }
   50%      { opacity: 1; transform: scale(1.3); box-shadow: 0 0 8px color-mix(in oklch, oklch(1 0 89.88) 90%, transparent); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-particles-stars-twinkle span {
+    animation: none;
+  }
+  .roycss-particles-stars-twinkle span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-particles-stars-twinkle span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-particles-stars-twinkle span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-particles-stars-twinkle span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-particles-stars-twinkle span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-particles-stars-twinkle span:nth-child(6) {
+    animation: none;
+  }
+  .roycss-particles-stars-twinkle span:nth-child(7) {
+    animation: none;
+  }
+  .roycss-particles-stars-twinkle span:nth-child(8) {
+    animation: none;
+  }
+  .roycss-particles-stars-twinkle span:nth-child(9) {
+    animation: none;
+  }
+  .roycss-particles-stars-twinkle span:nth-child(10) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 10. particles-fire
@@ -771,7 +1037,29 @@ export const effectsBatch7: CSSEffect[] = [
   15%  { opacity: 1; transform: translate(3px, -15px) scale(1); }
   50%  { transform: translate(-4px, -60px) scale(0.9); opacity: 0.9; }
   100% { transform: translate(6px, -140px) scale(0.2); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-particles-fire span {
+    animation: none;
+  }
+  .roycss-particles-fire span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-particles-fire span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-particles-fire span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-particles-fire span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-particles-fire span:nth-child(5) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 11. particles-smoke
@@ -812,7 +1100,26 @@ export const effectsBatch7: CSSEffect[] = [
   0%   { transform: translate(0, 0) scale(0.4); opacity: 0; }
   20%  { opacity: 0.7; }
   100% { transform: translate(var(--tx), -180px) scale(2.2); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-particles-smoke span {
+    animation: none;
+  }
+  .roycss-particles-smoke span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-particles-smoke span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-particles-smoke span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-particles-smoke span:nth-child(4) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 12. particles-orbiting
@@ -865,7 +1172,29 @@ export const effectsBatch7: CSSEffect[] = [
 @keyframes roy-particle-orbit {
   from { transform: rotate(0deg) translateX(var(--r)) rotate(0deg); }
   to   { transform: rotate(360deg) translateX(var(--r)) rotate(-360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-particles-orbiting span {
+    animation: none;
+  }
+  .roycss-particles-orbiting span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-particles-orbiting span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-particles-orbiting span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-particles-orbiting span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-particles-orbiting span:nth-child(5) {
+    animation: none;
+  }
+}
+`,
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -910,7 +1239,18 @@ export const effectsBatch7: CSSEffect[] = [
 @keyframes roy-micro-toggle-slide {
   0%, 45%   { inset-inline-start: 3px; }
   55%, 100% { inset-inline-start: 29px; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Toggle Switch */
+.roycss-micro-toggle-switch {
+    animation: none;
+  }
+  .roycss-micro-toggle-switch::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 2. micro-checkbox-check
@@ -950,7 +1290,14 @@ export const effectsBatch7: CSSEffect[] = [
   10%, 35% { transform: rotate(-45deg) scale(1); }
   80%      { transform: rotate(-45deg) scale(1); }
   95%, 100% { transform: rotate(-45deg) scale(0); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-micro-checkbox-check::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 3. micro-radio-select
@@ -986,7 +1333,14 @@ export const effectsBatch7: CSSEffect[] = [
 @keyframes roy-micro-radio-pulse {
   0%, 100% { transform: scale(0.4); opacity: 0.5; box-shadow: 0 0 0 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent); }
   50%      { transform: scale(1); opacity: 1; box-shadow: 0 0 0 8px color-mix(in oklch, oklch(0.696 0.149 162.48) 0%, transparent); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-micro-radio-select::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 4. micro-accordion-expand
@@ -1039,7 +1393,14 @@ export const effectsBatch7: CSSEffect[] = [
   0%, 20%   { max-block-size: 0; padding-block-start: 0; padding-block-end: 0; opacity: 0; }
   40%, 75%  { max-block-size: 60px; padding-block-start: 8px; padding-block-end: 8px; opacity: 1; }
   95%, 100% { max-block-size: 0; padding-block-start: 0; padding-block-end: 0; opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-micro-accordion-expand::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 5. micro-tooltip-appear
@@ -1088,7 +1449,14 @@ export const effectsBatch7: CSSEffect[] = [
   0%, 30%   { opacity: 0; transform: translateX(-50%) translateY(8px); }
   45%, 75%  { opacity: 1; transform: translateX(-50%) translateY(0); }
   90%, 100% { opacity: 0; transform: translateX(-50%) translateY(8px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-micro-tooltip-appear::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 6. micro-toast-slide
@@ -1127,7 +1495,14 @@ export const effectsBatch7: CSSEffect[] = [
   0%, 10%   { transform: translateY(-100%); }
   20%, 75%  { transform: translateY(0); }
   90%, 100% { transform: translateY(-100%); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-micro-toast-slide::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 7. micro-dropdown-reveal
@@ -1182,7 +1557,14 @@ export const effectsBatch7: CSSEffect[] = [
   0%, 20%   { transform: scaleY(0); opacity: 0; }
   40%, 75%  { transform: scaleY(1); opacity: 1; }
   90%, 100% { transform: scaleY(0); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-micro-dropdown-reveal::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 8. micro-modal-scale
@@ -1235,7 +1617,17 @@ export const effectsBatch7: CSSEffect[] = [
   30%       { transform: translate(-50%, -50%) scale(1.06); opacity: 1; }
   40%, 75%  { transform: translate(-50%, -50%) scale(1); opacity: 1; }
   90%, 100% { transform: translate(-50%, -50%) scale(0.7); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-micro-modal-scale::before {
+    animation: none;
+  }
+  .roycss-micro-modal-scale::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 9. micro-fab-expand
@@ -1297,7 +1689,17 @@ export const effectsBatch7: CSSEffect[] = [
   0%, 30%   { opacity: 0; transform: translateX(20px) scale(0.5); }
   50%, 75%  { opacity: 1; transform: translateX(0) scale(1); }
   95%, 100% { opacity: 0; transform: translateX(20px) scale(0.5); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-micro-fab-expand::before {
+    animation: none;
+  }
+  .roycss-micro-fab-expand::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 10. micro-progress-fill
@@ -1335,7 +1737,14 @@ export const effectsBatch7: CSSEffect[] = [
   0%   { inline-size: 0; background-position: 200% 0; }
   50%  { inline-size: 60%; background-position: 0 0; }
   100% { inline-size: 100%; background-position: -200% 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-micro-progress-fill::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 11. micro-tab-indicator
@@ -1381,7 +1790,14 @@ export const effectsBatch7: CSSEffect[] = [
   35%, 50%  { inset-inline-start: 64px; }
   70%, 85%  { inset-inline-start: 116px; }
   100%      { inset-inline-start: 12px; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-micro-tab-indicator::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 12. micro-badge-bounce
@@ -1434,6 +1850,13 @@ export const effectsBatch7: CSSEffect[] = [
   20%       { transform: scale(0.85); }
   30%, 80%  { transform: scale(1); opacity: 1; }
   95%, 100% { transform: scale(0); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-micro-badge-bounce::after {
+    animation: none;
+  }
+}
+`,
   },
 ];

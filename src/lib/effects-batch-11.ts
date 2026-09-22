@@ -79,7 +79,18 @@ export const effectsBatch11: CSSEffect[] = [
 @keyframes roy-b11-liquid-metal-shine {
   0%, 100% { transform: translate(0,0) scale(1); opacity: 0.85; }
   50%      { transform: translate(60px, 30px) scale(1.3); opacity: 0.4; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Liquid Metal — flowing reflective chrome surface */
+.roycss-liquid-metal {
+    animation: none;
+  }
+  .roycss-liquid-metal::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 2 ─ Oil Slick ─────────────────────────────────────────────────
@@ -133,7 +144,14 @@ export const effectsBatch11: CSSEffect[] = [
   0%   { transform: rotate(0deg)   scale(1.2); background-position: 0% 0%; }
   50%  { transform: rotate(180deg) scale(1.4); background-position: 100% 100%; }
   100% { transform: rotate(360deg) scale(1.2); background-position: 0% 0%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-oil-slick::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 3 ─ Soap Bubble ───────────────────────────────────────────────
@@ -186,7 +204,15 @@ export const effectsBatch11: CSSEffect[] = [
 @keyframes roy-b11-soap-bubble-float {
   0%, 100% { transform: translateY(0) rotate(0deg); filter: saturate(1.2) hue-rotate(0deg); }
   50%      { transform: translateY(-12px) rotate(8deg); filter: saturate(1.4) hue-rotate(40deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Soap Bubble — iridescent film sphere */
+.roycss-soap-bubble {
+    animation: none;
+  }
+}
+`,
   },
 
   // 4 ─ Molten Lava ───────────────────────────────────────────────
@@ -237,7 +263,14 @@ export const effectsBatch11: CSSEffect[] = [
 @keyframes roy-b11-molten-lava-flow {
   0%   { transform: translate(0,0) scale(1); filter: blur(2px) hue-rotate(-8deg) brightness(1); }
   100% { transform: translate(-12px,8px) scale(1.08); filter: blur(2px) hue-rotate(8deg) brightness(1.25); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-molten-lava::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 5 ─ Frozen Ice ────────────────────────────────────────────────
@@ -294,7 +327,14 @@ export const effectsBatch11: CSSEffect[] = [
 @keyframes roy-b11-frozen-ice-sparkle {
   0%, 100% { opacity: 0.7; filter: drop-shadow(0 0 1px color-mix(in oklch, oklch(1 0 89.88) 50%, transparent)); }
   50%      { opacity: 1; filter: drop-shadow(0 0 4px color-mix(in oklch, oklch(1 0 89.88) 90%, transparent)); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-frozen-ice::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 6 ─ Gold Leaf ─────────────────────────────────────────────────
@@ -349,7 +389,15 @@ export const effectsBatch11: CSSEffect[] = [
 @keyframes roy-b11-gold-leaf-shimmer {
   0%, 100% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
   50%      { background-position: 100% 100%, 50% 50%, 80% 30%, 30% 70%, 50% 50%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Gold Leaf — crumpled metallic foil */
+.roycss-gold-leaf {
+    animation: none;
+  }
+}
+`,
   },
 
   // 7 ─ Velvet Fabric ─────────────────────────────────────────────
@@ -407,7 +455,17 @@ export const effectsBatch11: CSSEffect[] = [
 @keyframes roy-b11-velvet-sheen {
   0%, 100% { transform: translateX(-10%); opacity: 0.55; }
   50%      { transform: translateX(20%); opacity: 0.9; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-velvet-fabric::before {
+    animation: none;
+  }
+  .roycss-velvet-fabric::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 8 ─ Stained Glass ─────────────────────────────────────────────
@@ -454,7 +512,14 @@ export const effectsBatch11: CSSEffect[] = [
 @keyframes roy-b11-stained-glass-light {
   0%, 100% { opacity: 0.7; transform: translateY(0); }
   50%      { opacity: 1; transform: translateY(-8%); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-stained-glass::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 9 ─ Neon Sign ─────────────────────────────────────────────────
@@ -516,7 +581,17 @@ export const effectsBatch11: CSSEffect[] = [
 @keyframes roy-b11-neon-glow {
   0%, 19%, 21%, 23%, 25%, 54%, 56%, 64%, 100% { opacity: 0.85; }
   20%, 24%, 55%, 65% { opacity: 0.2; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-neon-sign::before {
+    animation: none;
+  }
+  .roycss-neon-sign::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 10 ─ Origami Fold ─────────────────────────────────────────────
@@ -572,7 +647,14 @@ export const effectsBatch11: CSSEffect[] = [
 @keyframes roy-b11-origami-fold-rotate {
   0%, 100% { filter: hue-rotate(0deg) brightness(1); }
   50%      { filter: hue-rotate(40deg) brightness(1.1); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-origami-fold::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 11 ─ Water Ripple ─────────────────────────────────────────────
@@ -613,7 +695,18 @@ export const effectsBatch11: CSSEffect[] = [
 @keyframes roy-b11-water-ripple {
   0%   { inline-size: 20px; block-size: 20px; opacity: 1; border-inline-size: 2px; }
   100% { inline-size: 220px; block-size: 220px; opacity: 0; border-inline-size: 0.5px; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-water-ripple::before,
+.roycss-water-ripple::after {
+    animation: none;
+  }
+  .roycss-water-ripple::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 12 ─ Prism Rainbow ────────────────────────────────────────────
@@ -665,7 +758,14 @@ export const effectsBatch11: CSSEffect[] = [
 @keyframes roy-b11-prism-rainbow-shift {
   0%, 100% { transform: skewX(-18deg) translateX(-10%); filter: blur(6px) brightness(1); }
   50%      { transform: skewX(-22deg) translateX(8%); filter: blur(8px) brightness(1.2); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-prism-rainbow::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 13 ─ Heat Haze ────────────────────────────────────────────────
@@ -717,7 +817,14 @@ export const effectsBatch11: CSSEffect[] = [
   25%      { transform: translateX(-6px) skewX(3deg); filter: blur(4px); }
   50%      { transform: translateX(4px) skewX(-3deg); filter: blur(2px); }
   75%      { transform: translateX(-3px) skewX(2deg); filter: blur(3px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-heat-haze::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 14 ─ Deep Sea ─────────────────────────────────────────────────
@@ -774,7 +881,17 @@ export const effectsBatch11: CSSEffect[] = [
 @keyframes roy-b11-deep-sea-bubbles {
   0%   { transform: translateY(0); opacity: 0.8; }
   100% { transform: translateY(-30px); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-deep-sea::before {
+    animation: none;
+  }
+  .roycss-deep-sea::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 15 ─ Northern Lights ──────────────────────────────────────────
@@ -830,7 +947,14 @@ export const effectsBatch11: CSSEffect[] = [
   0%, 100% { transform: translateX(-10%) translateY(0) skewX(0deg); opacity: 0.85; }
   33%      { transform: translateX(5%) translateY(-8%) skewX(-6deg); opacity: 1; }
   66%      { transform: translateX(-5%) translateY(5%) skewX(4deg); opacity: 0.95; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-northern-lights::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // ═══════════════════════════════════════════════════════════════════
@@ -1036,7 +1160,14 @@ export const effectsBatch11: CSSEffect[] = [
   0%   { transform: translate(0, 0); }
   50%  { transform: translate(-2px, 1px); }
   100% { transform: translate(1px, -1px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vintage-tv::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 20 ─ Film Grain ───────────────────────────────────────────────
@@ -1097,7 +1228,14 @@ export const effectsBatch11: CSSEffect[] = [
   50%  { transform: translate(10px, -12px); }
   75%  { transform: translate(-8px, -8px); }
   100% { transform: translate(0, 0); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-film-grain::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 21 ─ VHS Glitch ───────────────────────────────────────────────
@@ -1164,7 +1302,17 @@ export const effectsBatch11: CSSEffect[] = [
   92%           { transform: translate(-3px, 1px); }
   94%           { transform: translate(2px, -1px); }
   96%           { transform: translate(-1px, 0); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vhs-glitch::before {
+    animation: none;
+  }
+  .roycss-vhs-glitch::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 22 ─ Pixel Art ────────────────────────────────────────────────
@@ -1265,7 +1413,14 @@ export const effectsBatch11: CSSEffect[] = [
 @keyframes roy-b11-ascii-rain-fall {
   0%   { transform: translateY(-30%); }
   100% { transform: translateY(30%); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ascii-rain::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 24 ─ Blueprint ────────────────────────────────────────────────
@@ -1429,7 +1584,15 @@ export const effectsBatch11: CSSEffect[] = [
     transform: rotate(270deg) scale(1.05);
     background: radial-gradient(circle at 30% 70%, oklch(0.837 0.164 84.43), oklch(0.74 0.198 346.4) 70%);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Morph Blob — continuously morphing organic shape */
+.roycss-morph-blob {
+    animation: none;
+  }
+}
+`,
   },
 
   // 27 ─ Liquid Drop ──────────────────────────────────────────────
@@ -1490,7 +1653,17 @@ export const effectsBatch11: CSSEffect[] = [
   0%, 68% { inline-size: 4px; block-size: 4px; opacity: 0; border: 0 solid color-mix(in oklch, oklch(0.862 0.095 222.67) 80%, transparent); background: transparent; }
   72%     { inline-size: 30px; block-size: 30px; opacity: 1; border: 2px solid color-mix(in oklch, oklch(0.862 0.095 222.67) 90%, transparent); border-radius: 50%; background: transparent; }
   100%    { inline-size: 120px; block-size: 120px; opacity: 0; border: 0.5px solid color-mix(in oklch, oklch(0.862 0.095 222.67) 20%, transparent); border-radius: 50%; background: transparent; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-liquid-drop::before {
+    animation: none;
+  }
+  .roycss-liquid-drop::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 28 ─ Paper Flip ───────────────────────────────────────────────
@@ -1545,7 +1718,14 @@ export const effectsBatch11: CSSEffect[] = [
   0%, 20%   { transform: rotateY(0deg); box-shadow: 0 8px 24px color-mix(in oklch, oklch(0 0 0) 20%, transparent); }
   50%       { transform: rotateY(-160deg); box-shadow: -12px 8px 24px color-mix(in oklch, oklch(0 0 0) 30%, transparent); }
   80%, 100% { transform: rotateY(-360deg); box-shadow: 0 8px 24px color-mix(in oklch, oklch(0 0 0) 20%, transparent); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-paper-flip::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 29 ─ Card Shuffle ─────────────────────────────────────────────
@@ -1610,7 +1790,17 @@ export const effectsBatch11: CSSEffect[] = [
   25%      { transform: translate(-50%, -50%) rotate(14deg) translateX(-10px); }
   50%      { transform: translate(-50%, -50%) rotate(8deg) translateX(30px); }
   75%      { transform: translate(-50%, -50%) rotate(18deg) translateX(-20px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-card-shuffle::before {
+    animation: none;
+  }
+  .roycss-card-shuffle::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 30 ─ Roulette Spin ────────────────────────────────────────────
@@ -1682,7 +1872,15 @@ export const effectsBatch11: CSSEffect[] = [
 @keyframes roy-b11-roulette-spin {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(720deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Roulette Spin — spinning casino wheel */
+.roycss-roulette-spin {
+    animation: none;
+  }
+}
+`,
   },
 
   // 31 ─ Slot Machine ─────────────────────────────────────────────
@@ -1739,7 +1937,18 @@ export const effectsBatch11: CSSEffect[] = [
 @keyframes roy-b11-slot-machine-spin {
   0%   { background-position: 0 0; }
   100% { background-position: 0 -196px; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-slot-machine::before,
+.roycss-slot-machine::after {
+    animation: none;
+  }
+  .roycss-slot-machine::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 32 ─ Fortune Teller ───────────────────────────────────────────
@@ -1799,7 +2008,17 @@ export const effectsBatch11: CSSEffect[] = [
 @keyframes roy-b11-fortune-teller-b {
   0%, 100% { transform: translate(-50%, -50%) rotate(0deg) scale(0.8); opacity: 0.5; }
   50%      { transform: translate(-50%, -50%) rotate(0deg) scale(1.1); opacity: 1; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-fortune-teller::before {
+    animation: none;
+  }
+  .roycss-fortune-teller::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 33 ─ Kaleidoscope ─────────────────────────────────────────────
@@ -1865,7 +2084,17 @@ export const effectsBatch11: CSSEffect[] = [
 @keyframes roy-b11-kaleidoscope-spin {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-kaleidoscope::before {
+    animation: none;
+  }
+  .roycss-kaleidoscope::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 34 ─ Infinity Loop ────────────────────────────────────────────
@@ -1916,7 +2145,14 @@ export const effectsBatch11: CSSEffect[] = [
 @keyframes roy-b11-infinity-loop-trace {
   0%   { offset-distance: 0%; }
   100% { offset-distance: 100%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-infinity-loop::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 35 ─ Spiral Galaxy ────────────────────────────────────────────
@@ -1973,7 +2209,14 @@ export const effectsBatch11: CSSEffect[] = [
 @keyframes roy-b11-spiral-galaxy-spin {
   0%   { transform: rotate(0deg) scale(1); }
   100% { transform: rotate(360deg) scale(1); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-spiral-galaxy::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // ═══════════════════════════════════════════════════════════════════
@@ -2023,7 +2266,15 @@ export const effectsBatch11: CSSEffect[] = [
     opacity: 0.6;
     text-shadow: 0 0 2px oklch(1 0 89.88), 0 0 4px oklch(0.683 0.303 335.86);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text Neon Sign — glowing tube letters */
+.roycss-text-neon-sign {
+    animation: none;
+  }
+}
+`,
   },
 
   // 37 ─ Text Emboss ──────────────────────────────────────────────
@@ -2123,7 +2374,15 @@ export const effectsBatch11: CSSEffect[] = [
 @keyframes roy-b11-text-water-ripple {
   0%, 100% { filter: drop-shadow(0 4px 6px color-mix(in oklch, oklch(0.424 0.119 249.77) 50%, transparent)) hue-rotate(0deg); }
   50%      { filter: drop-shadow(0 4px 8px color-mix(in oklch, oklch(0.424 0.119 249.77) 70%, transparent)) hue-rotate(15deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text Water — transparent rippling water letters */
+.roycss-text-water {
+    animation: none;
+  }
+}
+`,
   },
 
   // 39 ─ Text Fire Flame ──────────────────────────────────────────
@@ -2178,7 +2437,18 @@ export const effectsBatch11: CSSEffect[] = [
 @keyframes roy-b11-text-fire-flame-flicker {
   0%   { transform: scaleY(1) translateY(0); opacity: 0.5; }
   100% { transform: scaleY(1.15) translateY(-4px); opacity: 0.75; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text Fire Flame — burning letterforms */
+.roycss-text-fire-flame {
+    animation: none;
+  }
+  .roycss-text-fire-flame::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 40 ─ Text 3D Cinema ───────────────────────────────────────────
@@ -2235,6 +2505,14 @@ export const effectsBatch11: CSSEffect[] = [
 @keyframes roy-b11-text-3d-cinema-light {
   0%, 100% { filter: drop-shadow(0 0 12px color-mix(in oklch, oklch(0.861 0.147 83.67) 40%, transparent)) brightness(1); }
   50%      { filter: drop-shadow(0 0 24px color-mix(in oklch, oklch(0.861 0.147 83.67) 70%, transparent)) brightness(1.15); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text 3D Cinema — extruded golden 3D typography */
+.roycss-text-3d-cinema {
+    animation: none;
+  }
+}
+`,
   },
 ];

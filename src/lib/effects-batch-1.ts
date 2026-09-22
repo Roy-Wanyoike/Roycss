@@ -33,7 +33,15 @@ export const effectsBatch1: CSSEffect[] = [
                 0 0 40px color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent),
                 0 0 60px color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Pulse Glow */
+.roycss-pulse-glow {
+    animation: none;
+  }
+}
+`,
   },
 
   // 2. bounce-in (existing)
@@ -64,7 +72,15 @@ export const effectsBatch1: CSSEffect[] = [
   100% {
     transform: scale(1);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Bounce In */
+.roycss-bounce-in {
+    animation: none;
+  }
+}
+`,
   },
 
   // 3. fade-in-up (existing)
@@ -89,7 +105,15 @@ export const effectsBatch1: CSSEffect[] = [
     opacity: 1;
     transform: translateY(0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Fade In Up */
+.roycss-fade-in-up {
+    animation: none;
+  }
+}
+`,
   },
 
   // 4. rotate-spin (existing)
@@ -112,7 +136,15 @@ export const effectsBatch1: CSSEffect[] = [
   to {
     transform: rotate(360deg);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Rotate Spin */
+.roycss-rotate-spin {
+    animation: none;
+  }
+}
+`,
   },
 
   // 5. shake (existing)
@@ -132,7 +164,15 @@ export const effectsBatch1: CSSEffect[] = [
   0%, 100% { transform: translateX(0); }
   10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
   20%, 40%, 60%, 80% { transform: translateX(4px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Shake */
+.roycss-shake {
+    animation: none;
+  }
+}
+`,
   },
 
   // 6. float (existing)
@@ -155,7 +195,15 @@ export const effectsBatch1: CSSEffect[] = [
   50% {
     transform: translateY(-12px);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Float */
+.roycss-float {
+    animation: none;
+  }
+}
+`,
   },
 
   // 7. jello (existing)
@@ -179,7 +227,15 @@ export const effectsBatch1: CSSEffect[] = [
   65% { transform: scale3d(0.95, 1.05, 1); }
   75% { transform: scale3d(1.05, 0.95, 1); }
   100% { transform: scale3d(1, 1, 1); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Jello */
+.roycss-jello {
+    animation: none;
+  }
+}
+`,
   },
 
   // 8. heartbeat (existing)
@@ -201,7 +257,15 @@ export const effectsBatch1: CSSEffect[] = [
   28% { transform: scale(1); }
   42% { transform: scale(1.15); }
   70% { transform: scale(1); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Heartbeat */
+.roycss-heartbeat {
+    animation: none;
+  }
+}
+`,
   },
 
   // 9. wobble
@@ -224,7 +288,15 @@ export const effectsBatch1: CSSEffect[] = [
   45% { transform: translateX(-8px) rotate(-3deg); }
   60% { transform: translateX(8px) rotate(3deg); }
   75% { transform: translateX(-5px) rotate(-2deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Wobble */
+.roycss-wobble {
+    animation: none;
+  }
+}
+`,
   },
 
   // 10. tada
@@ -245,7 +317,15 @@ export const effectsBatch1: CSSEffect[] = [
   10%, 20% { transform: scale(0.9) rotate(-3deg); }
   30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); }
   40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Tada */
+.roycss-tada {
+    animation: none;
+  }
+}
+`,
   },
 
   // 11. swing
@@ -268,7 +348,15 @@ export const effectsBatch1: CSSEffect[] = [
   40% { transform: rotate(-10deg); }
   60% { transform: rotate(5deg); }
   80% { transform: rotate(-5deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Swing */
+.roycss-swing {
+    animation: none;
+  }
+}
+`,
   },
 
   // 12. head-shake
@@ -291,7 +379,15 @@ export const effectsBatch1: CSSEffect[] = [
   31.5% { transform: translateX(-3px) rotateY(-5deg); }
   43.5% { transform: translateX(2px) rotateY(3deg); }
   50% { transform: translateX(0); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Head Shake */
+.roycss-head-shake {
+    animation: none;
+  }
+}
+`,
   },
 
   // 13. rubber-band
@@ -314,7 +410,15 @@ export const effectsBatch1: CSSEffect[] = [
   50% { transform: scale3d(1.15, 0.85, 1); }
   65% { transform: scale3d(0.95, 1.05, 1); }
   75% { transform: scale3d(1.05, 0.95, 1); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Rubber Band */
+.roycss-rubber-band {
+    animation: none;
+  }
+}
+`,
   },
 
   // 14. slide-in-left
@@ -339,7 +443,15 @@ export const effectsBatch1: CSSEffect[] = [
     opacity: 1;
     transform: translateX(0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Slide In Left */
+.roycss-slide-in-left {
+    animation: none;
+  }
+}
+`,
   },
 
   // 15. slide-in-right
@@ -364,7 +476,15 @@ export const effectsBatch1: CSSEffect[] = [
     opacity: 1;
     transform: translateX(0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Slide In Right */
+.roycss-slide-in-right {
+    animation: none;
+  }
+}
+`,
   },
 
   // 16. zoom-in
@@ -389,7 +509,15 @@ export const effectsBatch1: CSSEffect[] = [
     opacity: 1;
     transform: scale(1);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Zoom In */
+.roycss-zoom-in {
+    animation: none;
+  }
+}
+`,
   },
 
   // 17. flip-in-x
@@ -424,7 +552,15 @@ export const effectsBatch1: CSSEffect[] = [
   to {
     transform: perspective(400px);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Flip In X */
+.roycss-flip-in-x {
+    animation: none;
+  }
+}
+`,
   },
 
   // 18. flip-in-y
@@ -459,7 +595,15 @@ export const effectsBatch1: CSSEffect[] = [
   to {
     transform: perspective(400px);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Flip In Y */
+.roycss-flip-in-y {
+    animation: none;
+  }
+}
+`,
   },
 
   // 19. light-speed-in
@@ -490,7 +634,15 @@ export const effectsBatch1: CSSEffect[] = [
   to {
     transform: translate3d(0, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Light Speed In */
+.roycss-light-speed-in {
+    animation: none;
+  }
+}
+`,
   },
 
   // 20. roll-in
@@ -515,7 +667,15 @@ export const effectsBatch1: CSSEffect[] = [
     opacity: 1;
     transform: translateX(0) rotate(0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Roll In */
+.roycss-roll-in {
+    animation: none;
+  }
+}
+`,
   },
 
   // 21. jack-in-box
@@ -547,7 +707,15 @@ export const effectsBatch1: CSSEffect[] = [
     opacity: 1;
     transform: scale(1);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Jack In The Box */
+.roycss-jack-in-box {
+    animation: none;
+  }
+}
+`,
   },
 
   // 22. bounce-out
@@ -568,7 +736,15 @@ export const effectsBatch1: CSSEffect[] = [
   20% { transform: scale(0.9); }
   40%, 55% { transform: scale(1.1); opacity: 1; }
   80%, 100% { transform: scale(0.3); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Bounce Out */
+.roycss-bounce-out {
+    animation: none;
+  }
+}
+`,
   },
 
   // 23. fade-out-down
@@ -593,7 +769,15 @@ export const effectsBatch1: CSSEffect[] = [
     opacity: 0;
     transform: translateY(40px);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Fade Out Down */
+.roycss-fade-out-down {
+    animation: none;
+  }
+}
+`,
   },
 
   // 24. rotate-out
@@ -619,7 +803,15 @@ export const effectsBatch1: CSSEffect[] = [
     opacity: 0;
     transform: rotate(200deg);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Rotate Out */
+.roycss-rotate-out {
+    animation: none;
+  }
+}
+`,
   },
 
   // 25. zoom-out
@@ -648,7 +840,15 @@ export const effectsBatch1: CSSEffect[] = [
     opacity: 0;
     transform: scale(0.3);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Zoom Out */
+.roycss-zoom-out {
+    animation: none;
+  }
+}
+`,
   },
 
   // 26. roll-out
@@ -673,7 +873,15 @@ export const effectsBatch1: CSSEffect[] = [
     opacity: 0;
     transform: translateX(100%) rotate(120deg);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Roll Out */
+.roycss-roll-out {
+    animation: none;
+  }
+}
+`,
   },
 
   // 27. flash
@@ -692,7 +900,15 @@ export const effectsBatch1: CSSEffect[] = [
 @keyframes roy-flash {
   0%, 50%, 100% { opacity: 1; }
   25%, 75% { opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Flash */
+.roycss-flash {
+    animation: none;
+  }
+}
+`,
   },
 
   // 28. pulse-soft
@@ -711,7 +927,15 @@ export const effectsBatch1: CSSEffect[] = [
 @keyframes roy-pulse-soft {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Pulse Soft */
+.roycss-pulse-soft {
+    animation: none;
+  }
+}
+`,
   },
 
   // 29. wiggle
@@ -730,7 +954,15 @@ export const effectsBatch1: CSSEffect[] = [
 @keyframes roy-wiggle {
   0%, 100% { transform: rotate(-3deg); }
   50% { transform: rotate(3deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Wiggle */
+.roycss-wiggle {
+    animation: none;
+  }
+}
+`,
   },
 
   // 30. breathe
@@ -749,7 +981,15 @@ export const effectsBatch1: CSSEffect[] = [
 @keyframes roy-breathe {
   0%, 100% { transform: scale(1); opacity: 0.85; }
   50% { transform: scale(1.08); opacity: 1; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Breathe */
+.roycss-breathe {
+    animation: none;
+  }
+}
+`,
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -769,11 +1009,20 @@ export const effectsBatch1: CSSEffect[] = [
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
               box-shadow 0.3s ease;
 }
+@media (hover: hover) {
+  .roycss-hover-scale:hover {
+    transform: scale(1.08);
+    box-shadow: 0 10px 30px -5px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
+  }
+}
 
-.roycss-hover-scale:hover {
-  transform: scale(1.08);
-  box-shadow: 0 10px 30px -5px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Scale Up */
+.roycss-hover-scale {
+    transition: none;
+  }
+}
+`,
   },
 
   // 2. hover-underline-slide (existing, class updated to match id)
@@ -790,7 +1039,6 @@ export const effectsBatch1: CSSEffect[] = [
   display: inline-block;
   text-decoration: none;
 }
-
 .roycss-hover-underline-slide::after {
   content: '';
   position: absolute;
@@ -801,10 +1049,18 @@ export const effectsBatch1: CSSEffect[] = [
   background: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.704 0.123 182.5));
   transition: width 0.3s ease;
 }
+@media (hover: hover) {
+  .roycss-hover-underline-slide:hover::after {
+    inline-size: 100%;
+  }
+}
 
-.roycss-hover-underline-slide:hover::after {
-  inline-size: 100%;
-}`,
+@media (prefers-reduced-motion: reduce) {
+  .roycss-hover-underline-slide::after {
+    transition: none;
+  }
+}
+`,
   },
 
   // 3. hover-glow-border (existing)
@@ -822,7 +1078,6 @@ export const effectsBatch1: CSSEffect[] = [
   position: relative;
   transition: all 0.3s ease;
 }
-
 .roycss-hover-glow-border::before {
   content: '';
   position: absolute;
@@ -834,15 +1089,28 @@ export const effectsBatch1: CSSEffect[] = [
   transition: opacity 0.3s ease;
   filter: blur(8px);
 }
-
-.roycss-hover-glow-border:hover::before {
-  opacity: 1;
+@media (hover: hover) {
+  .roycss-hover-glow-border:hover::before {
+    opacity: 1;
+  }
+}
+@media (hover: hover) {
+  .roycss-hover-glow-border:hover {
+    border-color: color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent);
+    box-shadow: 0 0 20px color-mix(in oklch, oklch(0.696 0.149 162.48) 15%, transparent);
+  }
 }
 
-.roycss-hover-glow-border:hover {
-  border-color: color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent);
-  box-shadow: 0 0 20px color-mix(in oklch, oklch(0.696 0.149 162.48) 15%, transparent);
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Glow Border */
+.roycss-hover-glow-border {
+    transition: none;
+  }
+  .roycss-hover-glow-border::before {
+    transition: none;
+  }
+}
+`,
   },
 
   // 4. hover-shadow-grow (existing)
@@ -859,12 +1127,21 @@ export const effectsBatch1: CSSEffect[] = [
               box-shadow 0.3s ease;
   box-shadow: 0 2px 4px color-mix(in oklch, oklch(0 0 0) 6%, transparent);
 }
+@media (hover: hover) {
+  .roycss-hover-shadow-grow:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px color-mix(in oklch, oklch(0 0 0) 12%, transparent),
+                0 4px 8px color-mix(in oklch, oklch(0 0 0) 6%, transparent);
+  }
+}
 
-.roycss-hover-shadow-grow:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px color-mix(in oklch, oklch(0 0 0) 12%, transparent),
-              0 4px 8px color-mix(in oklch, oklch(0 0 0) 6%, transparent);
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Shadow Grow */
+.roycss-hover-shadow-grow {
+    transition: none;
+  }
+}
+`,
   },
 
   // 5. hover-color-shift (existing)
@@ -882,12 +1159,21 @@ export const effectsBatch1: CSSEffect[] = [
   background-size: 200% 200%;
   background-position: 0% 50%;
 }
+@media (hover: hover) {
+  .roycss-hover-color-shift:hover {
+    background: linear-gradient(135deg, oklch(0.769 0.165 70.08), oklch(0.637 0.208 25.33));
+    background-size: 200% 200%;
+    background-position: 100% 50%;
+  }
+}
 
-.roycss-hover-color-shift:hover {
-  background: linear-gradient(135deg, oklch(0.769 0.165 70.08), oklch(0.637 0.208 25.33));
-  background-size: 200% 200%;
-  background-position: 100% 50%;
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Color Shift */
+.roycss-hover-color-shift {
+    transition: none;
+  }
+}
+`,
   },
 
   // 6. hover-tilt-rotate (existing)
@@ -904,10 +1190,19 @@ export const effectsBatch1: CSSEffect[] = [
   transform-style: preserve-3d;
   perspective: 1000px;
 }
+@media (hover: hover) {
+  .roycss-hover-tilt-rotate:hover {
+    transform: rotateY(8deg) rotateX(-5deg) scale(1.02);
+  }
+}
 
-.roycss-hover-tilt-rotate:hover {
-  transform: rotateY(8deg) rotateX(-5deg) scale(1.02);
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Tilt Rotate */
+.roycss-hover-tilt-rotate {
+    transition: none;
+  }
+}
+`,
   },
 
   // 7. hover-zoom-blur
@@ -922,11 +1217,20 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-hover-zoom-blur {
   transition: transform 0.4s ease, filter 0.4s ease;
 }
+@media (hover: hover) {
+  .roycss-hover-zoom-blur:hover {
+    transform: scale(1.12);
+    filter: blur(0.6px) brightness(1.1);
+  }
+}
 
-.roycss-hover-zoom-blur:hover {
-  transform: scale(1.12);
-  filter: blur(0.6px) brightness(1.1);
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Zoom Blur */
+.roycss-hover-zoom-blur {
+    transition: none;
+  }
+}
+`,
   },
 
   // 8. hover-overlay-reveal
@@ -943,7 +1247,6 @@ export const effectsBatch1: CSSEffect[] = [
   overflow: hidden;
   transition: color 0.3s ease;
 }
-
 .roycss-hover-overlay-reveal::before {
   content: '';
   position: absolute;
@@ -953,15 +1256,26 @@ export const effectsBatch1: CSSEffect[] = [
   transition: transform 0.4s ease;
   z-index: 0;
 }
-
-.roycss-hover-overlay-reveal:hover::before {
-  transform: translateY(0);
+@media (hover: hover) {
+  .roycss-hover-overlay-reveal:hover::before {
+    transform: translateY(0);
+  }
 }
-
 .roycss-hover-overlay-reveal > * {
   position: relative;
   z-index: 1;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Overlay Reveal */
+.roycss-hover-overlay-reveal {
+    transition: none;
+  }
+  .roycss-hover-overlay-reveal::before {
+    transition: none;
+  }
+}
+`,
   },
 
   // 9. hover-push-up
@@ -977,11 +1291,20 @@ export const effectsBatch1: CSSEffect[] = [
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
               box-shadow 0.3s ease;
 }
+@media (hover: hover) {
+  .roycss-hover-push-up:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px -10px color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent);
+  }
+}
 
-.roycss-hover-push-up:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 40px -10px color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent);
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Push Up */
+.roycss-hover-push-up {
+    transition: none;
+  }
+}
+`,
   },
 
   // 10. hover-slide-overlay
@@ -998,7 +1321,6 @@ export const effectsBatch1: CSSEffect[] = [
   overflow: hidden;
   transition: color 0.3s ease;
 }
-
 .roycss-hover-slide-overlay::before {
   content: '';
   position: absolute;
@@ -1010,19 +1332,31 @@ export const effectsBatch1: CSSEffect[] = [
   transition: left 0.4s ease;
   z-index: 0;
 }
-
-.roycss-hover-slide-overlay:hover::before {
-  inset-inline-start: 0;
+@media (hover: hover) {
+  .roycss-hover-slide-overlay:hover::before {
+    inset-inline-start: 0;
+  }
 }
-
-.roycss-hover-slide-overlay:hover {
-  color: oklch(1 0 89.88);
+@media (hover: hover) {
+  .roycss-hover-slide-overlay:hover {
+    color: oklch(1 0 89.88);
+  }
 }
-
 .roycss-hover-slide-overlay > * {
   position: relative;
   z-index: 1;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Slide Overlay */
+.roycss-hover-slide-overlay {
+    transition: none;
+  }
+  .roycss-hover-slide-overlay::before {
+    transition: none;
+  }
+}
+`,
   },
 
   // 11. hover-fade-overlay
@@ -1038,7 +1372,6 @@ export const effectsBatch1: CSSEffect[] = [
   position: relative;
   isolation: isolate;
 }
-
 .roycss-hover-fade-overlay::after {
   content: '';
   position: absolute;
@@ -1049,10 +1382,18 @@ export const effectsBatch1: CSSEffect[] = [
   border-radius: inherit;
   z-index: 0;
 }
+@media (hover: hover) {
+  .roycss-hover-fade-overlay:hover::after {
+    opacity: 1;
+  }
+}
 
-.roycss-hover-fade-overlay:hover::after {
-  opacity: 1;
-}`,
+@media (prefers-reduced-motion: reduce) {
+  .roycss-hover-fade-overlay::after {
+    transition: none;
+  }
+}
+`,
   },
 
   // 12. hover-grayscale-to-color
@@ -1068,10 +1409,19 @@ export const effectsBatch1: CSSEffect[] = [
   filter: grayscale(100%);
   transition: filter 0.5s ease;
 }
+@media (hover: hover) {
+  .roycss-hover-grayscale-to-color:hover {
+    filter: grayscale(0%);
+  }
+}
 
-.roycss-hover-grayscale-to-color:hover {
-  filter: grayscale(0%);
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Grayscale to Color */
+.roycss-hover-grayscale-to-color {
+    transition: none;
+  }
+}
+`,
   },
 
   // 13. hover-hue-rotate
@@ -1086,15 +1436,26 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-hover-hue-rotate {
   transition: filter 0.3s ease;
 }
-
-.roycss-hover-hue-rotate:hover {
-  animation: roy-hue-cycle 2s linear infinite;
+@media (hover: hover) {
+  .roycss-hover-hue-rotate:hover {
+    animation: roy-hue-cycle 2s linear infinite;
+  }
 }
-
 @keyframes roy-hue-cycle {
   from { filter: hue-rotate(0deg); }
   to { filter: hue-rotate(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Hue Rotate */
+.roycss-hover-hue-rotate {
+    transition: none;
+  }
+  .roycss-hover-hue-rotate:hover {
+    animation: none;
+  }
+}
+`,
   },
 
   // 14. hover-drop-shadow
@@ -1109,11 +1470,20 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-hover-drop-shadow {
   transition: filter 0.35s ease, transform 0.35s ease;
 }
+@media (hover: hover) {
+  .roycss-hover-drop-shadow:hover {
+    transform: translateY(-3px);
+    filter: drop-shadow(0 8px 14px color-mix(in oklch, oklch(0.696 0.149 162.48) 55%, transparent));
+  }
+}
 
-.roycss-hover-drop-shadow:hover {
-  transform: translateY(-3px);
-  filter: drop-shadow(0 8px 14px color-mix(in oklch, oklch(0.696 0.149 162.48) 55%, transparent));
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Drop Shadow */
+.roycss-hover-drop-shadow {
+    transition: none;
+  }
+}
+`,
   },
 
   // 15. hover-skew
@@ -1128,10 +1498,19 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-hover-skew {
   transition: transform 0.3s ease;
 }
+@media (hover: hover) {
+  .roycss-hover-skew:hover {
+    transform: skew(-12deg, 4deg);
+  }
+}
 
-.roycss-hover-skew:hover {
-  transform: skew(-12deg, 4deg);
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Skew */
+.roycss-hover-skew {
+    transition: none;
+  }
+}
+`,
   },
 
   // 16. hover-flip
@@ -1148,10 +1527,19 @@ export const effectsBatch1: CSSEffect[] = [
   transform-style: preserve-3d;
   perspective: 800px;
 }
+@media (hover: hover) {
+  .roycss-hover-flip:hover {
+    transform: rotateY(180deg);
+  }
+}
 
-.roycss-hover-flip:hover {
-  transform: rotateY(180deg);
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Flip */
+.roycss-hover-flip {
+    transition: none;
+  }
+}
+`,
   },
 
   // 17. hover-rotate
@@ -1166,10 +1554,19 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-hover-rotate {
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+@media (hover: hover) {
+  .roycss-hover-rotate:hover {
+    transform: rotate(90deg);
+  }
+}
 
-.roycss-hover-rotate:hover {
-  transform: rotate(90deg);
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Rotate */
+.roycss-hover-rotate {
+    transition: none;
+  }
+}
+`,
   },
 
   // 18. hover-scale-down
@@ -1184,10 +1581,19 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-hover-scale-down {
   transition: transform 0.3s ease;
 }
+@media (hover: hover) {
+  .roycss-hover-scale-down:hover {
+    transform: scale(0.9);
+  }
+}
 
-.roycss-hover-scale-down:hover {
-  transform: scale(0.9);
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Scale Down */
+.roycss-hover-scale-down {
+    transition: none;
+  }
+}
+`,
   },
 
   // 19. hover-opacity
@@ -1202,10 +1608,19 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-hover-opacity {
   transition: opacity 0.3s ease;
 }
+@media (hover: hover) {
+  .roycss-hover-opacity:hover {
+    opacity: 0.45;
+  }
+}
 
-.roycss-hover-opacity:hover {
-  opacity: 0.45;
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Opacity Fade */
+.roycss-hover-opacity {
+    transition: none;
+  }
+}
+`,
   },
 
   // 20. hover-border-draw
@@ -1221,7 +1636,6 @@ export const effectsBatch1: CSSEffect[] = [
   position: relative;
   box-sizing: border-box;
 }
-
 .roycss-hover-border-draw::before,
 .roycss-hover-border-draw::after {
   content: '';
@@ -1232,26 +1646,33 @@ export const effectsBatch1: CSSEffect[] = [
   inline-size: 0;
   block-size: 0;
 }
-
 .roycss-hover-border-draw::before {
   inset-block-start: 0;
   inset-inline-start: 0;
   border-inline-end: none;
   border-block-end: none;
 }
-
 .roycss-hover-border-draw::after {
   inset-block-end: 0;
   inset-inline-end: 0;
   border-inline-start: none;
   border-block-start: none;
 }
+@media (hover: hover) {
+  .roycss-hover-border-draw:hover::before,
+  .roycss-hover-border-draw:hover::after {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+}
 
-.roycss-hover-border-draw:hover::before,
-.roycss-hover-border-draw:hover::after {
-  inline-size: 100%;
-  block-size: 100%;
-}`,
+@media (prefers-reduced-motion: reduce) {
+  .roycss-hover-border-draw::before,
+.roycss-hover-border-draw::after {
+    transition: none;
+  }
+}
+`,
   },
 
   // 21. hover-neon-flicker
@@ -1266,11 +1687,11 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-hover-neon-flicker {
   transition: box-shadow 0.2s ease;
 }
-
-.roycss-hover-neon-flicker:hover {
-  animation: roy-neon-flicker 1.2s infinite;
+@media (hover: hover) {
+  .roycss-hover-neon-flicker:hover {
+    animation: roy-neon-flicker 1.2s infinite;
+  }
 }
-
 @keyframes roy-neon-flicker {
   0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
     box-shadow:
@@ -1283,7 +1704,18 @@ export const effectsBatch1: CSSEffect[] = [
   20%, 24%, 55% {
     box-shadow: none;
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Neon Flicker */
+.roycss-hover-neon-flicker {
+    transition: none;
+  }
+  .roycss-hover-neon-flicker:hover {
+    animation: none;
+  }
+}
+`,
   },
 
   // 22. hover-depth
@@ -1301,14 +1733,23 @@ export const effectsBatch1: CSSEffect[] = [
   box-shadow: 0 1px 2px color-mix(in oklch, oklch(0 0 0) 8%, transparent),
               0 2px 4px color-mix(in oklch, oklch(0 0 0) 6%, transparent);
 }
+@media (hover: hover) {
+  .roycss-hover-depth:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 4px 8px color-mix(in oklch, oklch(0.696 0.149 162.48) 12%, transparent),
+      0 12px 24px color-mix(in oklch, oklch(0.696 0.149 162.48) 18%, transparent),
+      0 24px 48px color-mix(in oklch, oklch(0.696 0.149 162.48) 12%, transparent);
+  }
+}
 
-.roycss-hover-depth:hover {
-  transform: translateY(-6px);
-  box-shadow:
-    0 4px 8px color-mix(in oklch, oklch(0.696 0.149 162.48) 12%, transparent),
-    0 12px 24px color-mix(in oklch, oklch(0.696 0.149 162.48) 18%, transparent),
-    0 24px 48px color-mix(in oklch, oklch(0.696 0.149 162.48) 12%, transparent);
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Depth Lift */
+.roycss-hover-depth {
+    transition: none;
+  }
+}
+`,
   },
 
   // 23. hover-press
@@ -1325,11 +1766,20 @@ export const effectsBatch1: CSSEffect[] = [
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   box-shadow: 0 6px 0 oklch(0.508 0.105 165.61), 0 8px 14px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
 }
+@media (hover: hover) {
+  .roycss-hover-press:hover {
+    transform: translateY(3px);
+    box-shadow: 0 3px 0 oklch(0.508 0.105 165.61), 0 5px 10px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+  }
+}
 
-.roycss-hover-press:hover {
-  transform: translateY(3px);
-  box-shadow: 0 3px 0 oklch(0.508 0.105 165.61), 0 5px 10px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Press Down */
+.roycss-hover-press {
+    transition: none;
+  }
+}
+`,
   },
 
   // 24. hover-slide-right
@@ -1345,10 +1795,19 @@ export const effectsBatch1: CSSEffect[] = [
 .roycss-hover-slide-right {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+@media (hover: hover) {
+  .roycss-hover-slide-right:hover {
+    transform: translateX(12px);
+  }
+}
 
-.roycss-hover-slide-inset-inline-end:hover {
-  transform: translateX(12px);
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Slide Right */
+.roycss-hover-slide-right {
+    transition: none;
+  }
+}
+`,
   },
 
   // 25. hover-bounce
@@ -1359,16 +1818,25 @@ export const effectsBatch1: CSSEffect[] = [
     description: "Element performs a springy bounce when hovered",
     tags: ["bounce", "spring", "playful", "hover"],
     previewType: "box",
-    cssCode: `/* Hover Bounce */
-.roycss-hover-bounce:hover {
-  animation: roy-hover-bounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cssCode: `@media (hover: hover) {
+  /* Hover Bounce */
+  .roycss-hover-bounce:hover {
+    animation: roy-hover-bounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
 }
-
 @keyframes roy-hover-bounce {
   0%, 100% { transform: translateY(0); }
   30% { transform: translateY(-18px); }
   60% { transform: translateY(-4px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Bounce */
+  .roycss-hover-bounce:hover {
+    animation: none;
+  }
+}
+`,
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -1448,7 +1916,15 @@ export const effectsBatch1: CSSEffect[] = [
 @keyframes roy-text-blink-cursor {
   0%, 100% { border-color: oklch(0.696 0.149 162.48); }
   50% { border-color: transparent; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Typing Cursor */
+.roycss-text-typing-cursor {
+    animation: none;
+  }
+}
+`,
   },
 
   // 5. text-glitch (existing)
@@ -1503,7 +1979,17 @@ export const effectsBatch1: CSSEffect[] = [
   60% { transform: translate(-3px, -3px); }
   80% { transform: translate(-3px, 3px); }
   100% { transform: translate(0); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-text-glitch::before {
+    animation: none;
+  }
+  .roycss-text-glitch::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 6. text-3d-shadow (existing)
@@ -1554,7 +2040,15 @@ export const effectsBatch1: CSSEffect[] = [
 @keyframes roy-rainbow-flow {
   from { background-position: 0% center; }
   to { background-position: 200% center; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Rainbow Text */
+.roycss-text-rainbow {
+    animation: none;
+  }
+}
+`,
   },
 
   // 8. text-shimmer
@@ -1587,7 +2081,15 @@ export const effectsBatch1: CSSEffect[] = [
 @keyframes roy-shimmer-sweep {
   from { background-position: 200% 0; }
   to { background-position: -200% 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Shimmer Text */
+.roycss-text-shimmer {
+    animation: none;
+  }
+}
+`,
   },
 
   // 9. text-gradient-shift
@@ -1613,7 +2115,15 @@ export const effectsBatch1: CSSEffect[] = [
 @keyframes roy-text-grad-shift {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Gradient Shift Text */
+.roycss-text-gradient-shift {
+    animation: none;
+  }
+}
+`,
   },
 
   // 10. text-blur-reveal
@@ -1634,7 +2144,15 @@ export const effectsBatch1: CSSEffect[] = [
 @keyframes roy-blur-reveal {
   0%, 100% { filter: blur(8px); opacity: 0.4; }
   50% { filter: blur(0); opacity: 1; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Blur Reveal Text */
+.roycss-text-blur-reveal {
+    animation: none;
+  }
+}
+`,
   },
 
   // 11. text-wave
@@ -1668,7 +2186,32 @@ export const effectsBatch1: CSSEffect[] = [
 @keyframes roy-wave {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-text-wave > span {
+    animation: none;
+  }
+  .roycss-text-wave > span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-text-wave > span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-text-wave > span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-text-wave > span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-text-wave > span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-text-wave > span:nth-child(6) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 12. text-bounce-letters
@@ -1703,7 +2246,32 @@ export const effectsBatch1: CSSEffect[] = [
   0%, 100% { transform: translateY(0); }
   40% { transform: translateY(-14px); }
   60% { transform: translateY(-6px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-text-bounce-letters > span {
+    animation: none;
+  }
+  .roycss-text-bounce-letters > span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-text-bounce-letters > span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-text-bounce-letters > span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-text-bounce-letters > span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-text-bounce-letters > span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-text-bounce-letters > span:nth-child(6) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 13. text-flip
@@ -1727,7 +2295,15 @@ export const effectsBatch1: CSSEffect[] = [
 @keyframes roy-text-flip {
   0%, 100% { transform: rotateX(0); }
   50% { transform: rotateX(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Flip Text */
+.roycss-text-flip {
+    animation: none;
+  }
+}
+`,
   },
 
   // 14. text-stretch
@@ -1748,7 +2324,15 @@ export const effectsBatch1: CSSEffect[] = [
 @keyframes roy-text-stretch {
   0%, 100% { letter-spacing: 0px; }
   50% { letter-spacing: 12px; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Stretch Text */
+.roycss-text-stretch {
+    animation: none;
+  }
+}
+`,
   },
 
   // 15. text-underline-draw
@@ -1785,7 +2369,14 @@ export const effectsBatch1: CSSEffect[] = [
   50% { transform: scaleX(1); transform-origin: left; }
   50.01% { transform-origin: right; }
   100% { transform: scaleX(0); transform-origin: right; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-text-underline-draw::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 16. text-highlight-marker
@@ -1896,7 +2487,15 @@ export const effectsBatch1: CSSEffect[] = [
 @keyframes roy-holo-shift {
   from { background-position: 0% 0%; }
   to { background-position: 200% 200%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Holographic Text */
+.roycss-text-holographic {
+    animation: none;
+  }
+}
+`,
   },
 
   // 21. text-chrome
@@ -1952,7 +2551,15 @@ export const effectsBatch1: CSSEffect[] = [
 @keyframes roy-fire-flicker {
   from { filter: brightness(1) hue-rotate(0deg); }
   to { filter: brightness(1.15) hue-rotate(-8deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Fire Text */
+.roycss-text-fire {
+    animation: none;
+  }
+}
+`,
   },
 
   // 23. text-reflection

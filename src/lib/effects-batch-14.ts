@@ -56,7 +56,32 @@ export const effectsBatch14: CSSEffect[] = [
   50%  { transform: translateY(120px) translateX(-10px) rotate(360deg); }
   75%  { transform: translateY(180px) translateX(20px) rotate(540deg); }
   100% { transform: translateY(240px) translateX(0) rotate(720deg); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-falling-leaves span {
+    animation: none;
+  }
+  .roycss-seasonal-falling-leaves span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-seasonal-falling-leaves span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-seasonal-falling-leaves span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-seasonal-falling-leaves span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-seasonal-falling-leaves span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-seasonal-falling-leaves span:nth-child(6) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 2. seasonal-snowfall-gentle
@@ -105,7 +130,38 @@ export const effectsBatch14: CSSEffect[] = [
   75%  { transform: translateY(180px) translateX(10px); }
   90%  { opacity: 1; }
   100% { transform: translateY(240px) translateX(0); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-snowfall-gentle span {
+    animation: none;
+  }
+  .roycss-seasonal-snowfall-gentle span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-seasonal-snowfall-gentle span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-seasonal-snowfall-gentle span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-seasonal-snowfall-gentle span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-seasonal-snowfall-gentle span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-seasonal-snowfall-gentle span:nth-child(6) {
+    animation: none;
+  }
+  .roycss-seasonal-snowfall-gentle span:nth-child(7) {
+    animation: none;
+  }
+  .roycss-seasonal-snowfall-gentle span:nth-child(8) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 3. seasonal-rain-spring
@@ -152,7 +208,44 @@ export const effectsBatch14: CSSEffect[] = [
   10%  { opacity: 1; }
   90%  { opacity: 1; }
   100% { transform: translateY(260px) translateX(-30px); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-rain-spring span {
+    animation: none;
+  }
+  .roycss-seasonal-rain-spring span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-seasonal-rain-spring span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-seasonal-rain-spring span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-seasonal-rain-spring span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-seasonal-rain-spring span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-seasonal-rain-spring span:nth-child(6) {
+    animation: none;
+  }
+  .roycss-seasonal-rain-spring span:nth-child(7) {
+    animation: none;
+  }
+  .roycss-seasonal-rain-spring span:nth-child(8) {
+    animation: none;
+  }
+  .roycss-seasonal-rain-spring span:nth-child(9) {
+    animation: none;
+  }
+  .roycss-seasonal-rain-spring span:nth-child(10) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 4. seasonal-petals-blossom
@@ -200,7 +293,38 @@ export const effectsBatch14: CSSEffect[] = [
   75%  { transform: translate(25px, 180px) rotate(270deg); }
   90%  { opacity: 1; }
   100% { transform: translate(0, 240px) rotate(360deg); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-petals-blossom span {
+    animation: none;
+  }
+  .roycss-seasonal-petals-blossom span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-seasonal-petals-blossom span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-seasonal-petals-blossom span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-seasonal-petals-blossom span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-seasonal-petals-blossom span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-seasonal-petals-blossom span:nth-child(6) {
+    animation: none;
+  }
+  .roycss-seasonal-petals-blossom span:nth-child(7) {
+    animation: none;
+  }
+  .roycss-seasonal-petals-blossom span:nth-child(8) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 5. seasonal-fireworks-newyear
@@ -246,7 +370,38 @@ export const effectsBatch14: CSSEffect[] = [
   0%   { transform: translate(-50%, -50%) scale(0); opacity: 1; }
   60%  { opacity: 1; }
   100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0.4); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-fireworks-newyear span {
+    animation: none;
+  }
+  .roycss-seasonal-fireworks-newyear span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-seasonal-fireworks-newyear span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-seasonal-fireworks-newyear span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-seasonal-fireworks-newyear span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-seasonal-fireworks-newyear span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-seasonal-fireworks-newyear span:nth-child(6) {
+    animation: none;
+  }
+  .roycss-seasonal-fireworks-newyear span:nth-child(7) {
+    animation: none;
+  }
+  .roycss-seasonal-fireworks-newyear span:nth-child(8) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 6. seasonal-hearts-valentine
@@ -303,7 +458,38 @@ export const effectsBatch14: CSSEffect[] = [
   50%  { transform: translateY(-120px) rotate(-45deg) translateX(15px) scale(1.1); }
   90%  { opacity: 1; }
   100% { transform: translateY(-240px) rotate(-45deg) translateX(-10px) scale(0.5); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-hearts-valentine span {
+    animation: none;
+  }
+  .roycss-seasonal-hearts-valentine span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-seasonal-hearts-valentine span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-seasonal-hearts-valentine span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-seasonal-hearts-valentine span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-seasonal-hearts-valentine span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-seasonal-hearts-valentine span:nth-child(6) {
+    animation: none;
+  }
+  .roycss-seasonal-hearts-valentine span:nth-child(7) {
+    animation: none;
+  }
+  .roycss-seasonal-hearts-valentine span:nth-child(8) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 7. seasonal-bubbles-summer
@@ -352,7 +538,38 @@ export const effectsBatch14: CSSEffect[] = [
   75%  { transform: translateY(-180px) translateX(10px); }
   90%  { opacity: 1; }
   100% { transform: translateY(-240px) translateX(0); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-bubbles-summer span {
+    animation: none;
+  }
+  .roycss-seasonal-bubbles-summer span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-seasonal-bubbles-summer span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-seasonal-bubbles-summer span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-seasonal-bubbles-summer span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-seasonal-bubbles-summer span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-seasonal-bubbles-summer span:nth-child(6) {
+    animation: none;
+  }
+  .roycss-seasonal-bubbles-summer span:nth-child(7) {
+    animation: none;
+  }
+  .roycss-seasonal-bubbles-summer span:nth-child(8) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 8. seasonal-sparks-diwali
@@ -402,7 +619,44 @@ export const effectsBatch14: CSSEffect[] = [
   0%   { transform: translate(-50%, 0) scale(1); opacity: 1; }
   70%  { opacity: 1; }
   100% { transform: translate(calc(-50% + var(--tx)), var(--ty)) scale(0.2); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-sparks-diwali span {
+    animation: none;
+  }
+  .roycss-seasonal-sparks-diwali span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-seasonal-sparks-diwali span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-seasonal-sparks-diwali span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-seasonal-sparks-diwali span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-seasonal-sparks-diwali span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-seasonal-sparks-diwali span:nth-child(6) {
+    animation: none;
+  }
+  .roycss-seasonal-sparks-diwali span:nth-child(7) {
+    animation: none;
+  }
+  .roycss-seasonal-sparks-diwali span:nth-child(8) {
+    animation: none;
+  }
+  .roycss-seasonal-sparks-diwali span:nth-child(9) {
+    animation: none;
+  }
+  .roycss-seasonal-sparks-diwali span:nth-child(10) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 9. seasonal-pollen-spring
@@ -452,7 +706,44 @@ export const effectsBatch14: CSSEffect[] = [
   75%  { transform: translate(180px, -8px); }
   90%  { opacity: 0.9; }
   100% { transform: translate(260px, 5px); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-pollen-spring span {
+    animation: none;
+  }
+  .roycss-seasonal-pollen-spring span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-seasonal-pollen-spring span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-seasonal-pollen-spring span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-seasonal-pollen-spring span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-seasonal-pollen-spring span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-seasonal-pollen-spring span:nth-child(6) {
+    animation: none;
+  }
+  .roycss-seasonal-pollen-spring span:nth-child(7) {
+    animation: none;
+  }
+  .roycss-seasonal-pollen-spring span:nth-child(8) {
+    animation: none;
+  }
+  .roycss-seasonal-pollen-spring span:nth-child(9) {
+    animation: none;
+  }
+  .roycss-seasonal-pollen-spring span:nth-child(10) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 10. seasonal-meteor-shower
@@ -513,7 +804,32 @@ export const effectsBatch14: CSSEffect[] = [
   10%  { opacity: 1; }
   90%  { opacity: 1; }
   100% { transform: translate(360px, 240px); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-meteor-shower span {
+    animation: none;
+  }
+  .roycss-seasonal-meteor-shower span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-seasonal-meteor-shower span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-seasonal-meteor-shower span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-seasonal-meteor-shower span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-seasonal-meteor-shower span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-seasonal-meteor-shower span:nth-child(6) {
+    animation: none;
+  }
+}
+`,
   },
 
   /* =========================================================================
@@ -768,7 +1084,14 @@ export const effectsBatch14: CSSEffect[] = [
 @keyframes roy-b14-fw-twinkle {
   0%, 100% { opacity: 0.6; }
   50% { opacity: 1; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-firework-sky::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 16. seasonal-autumn-gradient
@@ -1014,7 +1337,14 @@ export const effectsBatch14: CSSEffect[] = [
 @keyframes roy-b14-fog-drift {
   0%   { transform: translateX(-20px); }
   100% { transform: translateX(20px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-halloween-spooky::before {
+    animation: none;
+  }
+}
+`,
   },
 
   /* =========================================================================
@@ -1076,7 +1406,14 @@ export const effectsBatch14: CSSEffect[] = [
 @keyframes roy-b14-snowflake-shimmer {
   0%, 100% { opacity: 0.7; filter: drop-shadow(0 0 4px color-mix(in oklch, oklch(1 0 89.88) 50%, transparent)); }
   50% { opacity: 1; filter: drop-shadow(0 0 12px color-mix(in oklch, oklch(1 0 89.88) 90%, transparent)); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-snowflake-crystal {
+    animation: none;
+  }
+}
+`,
   },
 
   // 22. seasonal-pumpkin-glow
@@ -1132,7 +1469,15 @@ export const effectsBatch14: CSSEffect[] = [
 @keyframes roy-b14-pumpkin-glow-pulse {
   0%, 100% { box-shadow: 0 0 30px color-mix(in oklch, oklch(0.705 0.187 47.6) 60%, transparent), 0 0 60px color-mix(in oklch, oklch(0.646 0.194 41.12) 40%, transparent), inset 0 -20px 30px color-mix(in oklch, oklch(0 0 0) 40%, transparent); }
   50% { box-shadow: 0 0 45px color-mix(in oklch, oklch(0.705 0.187 47.6) 90%, transparent), 0 0 90px color-mix(in oklch, oklch(0.646 0.194 41.12) 60%, transparent), inset 0 -20px 30px color-mix(in oklch, oklch(0 0 0) 40%, transparent); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Glowing Pumpkin */
+.roycss-seasonal-pumpkin-glow {
+    animation: none;
+  }
+}
+`,
   },
 
   // 23. seasonal-christmas-lights
@@ -1192,7 +1537,32 @@ export const effectsBatch14: CSSEffect[] = [
 @keyframes roy-b14-light-blink {
   0%, 100% { opacity: 1; filter: brightness(1.2); }
   50% { opacity: 0.4; filter: brightness(0.7); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-christmas-lights span {
+    animation: none;
+  }
+  .roycss-seasonal-christmas-lights span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-seasonal-christmas-lights span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-seasonal-christmas-lights span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-seasonal-christmas-lights span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-seasonal-christmas-lights span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-seasonal-christmas-lights span:nth-child(6) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 24. seasonal-heart-pulse-valentine
@@ -1245,7 +1615,18 @@ export const effectsBatch14: CSSEffect[] = [
   15% { transform: rotate(45deg) scale(1.15); box-shadow: 0 0 50px color-mix(in oklch, oklch(0.586 0.222 17.58) 100%, transparent); }
   30% { transform: rotate(45deg) scale(1); }
   45% { transform: rotate(45deg) scale(1.1); box-shadow: 0 0 45px color-mix(in oklch, oklch(0.586 0.222 17.58) 90%, transparent); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-heart-pulse-valentine::before,
+.roycss-seasonal-heart-pulse-valentine::after {
+    animation: none;
+  }
+  .roycss-seasonal-heart-pulse-valentine::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 25. seasonal-firework-burst
@@ -1315,7 +1696,17 @@ export const effectsBatch14: CSSEffect[] = [
   0%   { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
   50%  { transform: translate(-50%, -50%) scale(1.5); }
   100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-firework-burst::before {
+    animation: none;
+  }
+  .roycss-seasonal-firework-burst::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 26. seasonal-ghost-float
@@ -1367,7 +1758,15 @@ export const effectsBatch14: CSSEffect[] = [
 @keyframes roy-b14-ghost-float-up {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-15px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Floating Ghost */
+.roycss-seasonal-ghost-float {
+    animation: none;
+  }
+}
+`,
   },
 
   // 27. seasonal-bat-fly
@@ -1424,7 +1823,18 @@ export const effectsBatch14: CSSEffect[] = [
   50%  { transform: translateX(60px) translateY(0); }
   75%  { transform: translateX(20px) translateY(10px); }
   100% { transform: translateX(-30px) translateY(0); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Flying Bat */
+.roycss-seasonal-bat-fly {
+    animation: none;
+  }
+  .roycss-seasonal-bat-fly::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 28. seasonal-witch-hat
@@ -1479,7 +1889,15 @@ export const effectsBatch14: CSSEffect[] = [
 @keyframes roy-b14-hat-tilt {
   0%, 100% { transform: rotate(-3deg); }
   50% { transform: rotate(3deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Witch Hat */
+.roycss-seasonal-witch-hat {
+    animation: none;
+  }
+}
+`,
   },
 
   // 29. seasonal-sun-summer
@@ -1548,7 +1966,14 @@ export const effectsBatch14: CSSEffect[] = [
 @keyframes roy-b14-sun-pulse {
   0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
   50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-sun-summer::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 30. seasonal-moon-halloween
@@ -1602,7 +2027,14 @@ export const effectsBatch14: CSSEffect[] = [
   50%  { transform: translate(-50px, 10px); opacity: 1; }
   90%  { opacity: 1; }
   100% { transform: translate(-120px, -5px); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-moon-halloween::after {
+    animation: none;
+  }
+}
+`,
   },
 
   /* =========================================================================
@@ -1661,7 +2093,17 @@ export const effectsBatch14: CSSEffect[] = [
   50%  { transform: translateX(120px) translateY(0); }
   75%  { transform: translateX(180px) translateY(-12px); }
   100% { transform: translateX(260px) translateY(-5px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-sleigh-fly::before {
+    animation: none;
+  }
+  .roycss-seasonal-sleigh-fly::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 32. seasonal-ghost-wobble
@@ -1713,7 +2155,15 @@ export const effectsBatch14: CSSEffect[] = [
 @keyframes roy-b14-ghost-wobble-sway {
   0%, 100% { transform: rotate(-8deg) translateY(0); }
   50% { transform: rotate(8deg) translateY(-5px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Ghost Wobble */
+.roycss-seasonal-ghost-wobble {
+    animation: none;
+  }
+}
+`,
   },
 
   // 33. seasonal-pumpkin-bounce
@@ -1770,7 +2220,15 @@ export const effectsBatch14: CSSEffect[] = [
   30% { transform: translateY(-50px) scaleY(1.1) scaleX(0.9); }
   60% { transform: translateY(-50px) scaleY(1.05) scaleX(0.95); }
   80% { transform: translateY(0) scaleY(0.85) scaleX(1.1); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Bouncing Pumpkin */
+.roycss-seasonal-pumpkin-bounce {
+    animation: none;
+  }
+}
+`,
   },
 
   // 34. seasonal-snowman-build
@@ -1828,7 +2286,17 @@ export const effectsBatch14: CSSEffect[] = [
 @keyframes roy-b14-snowman-face {
   0%, 60% { opacity: 0; }
   100% { opacity: 1; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-snowman-build::before {
+    animation: none;
+  }
+  .roycss-seasonal-snowman-build::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 35. seasonal-egg-roll
@@ -1880,7 +2348,14 @@ export const effectsBatch14: CSSEffect[] = [
 @keyframes roy-b14-egg-roll-across {
   0%   { transform: translateX(0) rotate(0deg); }
   100% { transform: translateX(130px) rotate(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-egg-roll::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 36. seasonal-heart-beat
@@ -1932,7 +2407,18 @@ export const effectsBatch14: CSSEffect[] = [
   20% { transform: rotate(45deg) scale(1); }
   30% { transform: rotate(45deg) scale(1.1); background: oklch(0.645 0.215 16.44); }
   40% { transform: rotate(45deg) scale(1); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-heart-beat::before,
+.roycss-seasonal-heart-beat::after {
+    animation: none;
+  }
+  .roycss-seasonal-heart-beat::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 37. seasonal-firework-launch
@@ -2002,7 +2488,17 @@ export const effectsBatch14: CSSEffect[] = [
   75% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
   90% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.8; }
   100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-firework-launch::before {
+    animation: none;
+  }
+  .roycss-seasonal-firework-launch::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 38. seasonal-leaf-swirl
@@ -2054,7 +2550,17 @@ export const effectsBatch14: CSSEffect[] = [
   50%  { transform: translate(calc(-50% + 20px), calc(-50% + 30px)) rotate(180deg); background: oklch(0.769 0.165 70.08); }
   75%  { transform: translate(calc(-50% - 30px), calc(-50% + 20px)) rotate(270deg); background: oklch(0.555 0.146 49); }
   100% { transform: translate(-50%, -50%) rotate(360deg); opacity: 1; background: oklch(0.577 0.215 27.33); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-leaf-swirl::before {
+    animation: none;
+  }
+  .roycss-seasonal-leaf-swirl::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 39. seasonal-snow-accumulate
@@ -2115,7 +2621,17 @@ export const effectsBatch14: CSSEffect[] = [
 @keyframes roy-b14-snow-pile-grow {
   0%   { block-size: 0; }
   100% { block-size: 40px; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-snow-accumulate::before {
+    animation: none;
+  }
+  .roycss-seasonal-snow-accumulate::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 40. seasonal-sun-rotate
@@ -2193,6 +2709,20 @@ export const effectsBatch14: CSSEffect[] = [
 @keyframes roy-b14-sun-core-pulse {
   0%, 100% { box-shadow: 0 0 30px color-mix(in oklch, oklch(0.837 0.164 84.43) 70%, transparent), 0 0 60px color-mix(in oklch, oklch(0.769 0.165 70.08) 40%, transparent); }
   50% { box-shadow: 0 0 45px color-mix(in oklch, oklch(0.837 0.164 84.43) 100%, transparent), 0 0 80px color-mix(in oklch, oklch(0.769 0.165 70.08) 60%, transparent); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Summer Sun Rotate */
+.roycss-seasonal-sun-rotate {
+    animation: none;
+  }
+  .roycss-seasonal-sun-rotate::before {
+    animation: none;
+  }
+  .roycss-seasonal-sun-rotate::after {
+    animation: none;
+  }
+}
+`,
   },
 ];

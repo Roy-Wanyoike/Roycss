@@ -329,7 +329,15 @@ export const effectsBatch18: CSSEffect[] = [
   color: oklch(0.7 0.2 162);
   -webkit-text-stroke: 2px transparent;
   text-shadow: 0 0 20px color-mix(in oklch, oklch(0.7 0.2 162) 40%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Outline to Fill Text */
+.roycss-text-outline-fill-b18 {
+    transition: none;
+  }
+}
+`,
   },
 
   {
@@ -515,14 +523,23 @@ export const effectsBatch18: CSSEffect[] = [
   border: 1px solid oklch(0.4 0.05 250);
   transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
+@media (hover: hover) {
+  .roycss-hover-lift-glow-b18:hover {
+    transform: translateY(-8px);
+    box-shadow:
+      0 12px 30px color-mix(in oklch, oklch(0.6 0.2 162) 30%, transparent),
+      0 0 20px color-mix(in oklch, oklch(0.6 0.2 162) 20%, transparent);
+    border-color: oklch(0.6 0.2 162);
+  }
+}
 
-.roycss-hover-lift-glow-b18:hover {
-  transform: translateY(-8px);
-  box-shadow:
-    0 12px 30px color-mix(in oklch, oklch(0.6 0.2 162) 30%, transparent),
-    0 0 20px color-mix(in oklch, oklch(0.6 0.2 162) 20%, transparent);
-  border-color: oklch(0.6 0.2 162);
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Lift & Glow */
+.roycss-hover-lift-glow-b18 {
+    transition: none;
+  }
+}
+`,
   },
 
   {
@@ -541,10 +558,19 @@ export const effectsBatch18: CSSEffect[] = [
   background: linear-gradient(135deg, oklch(0.6 0.2 162), oklch(0.55 0.25 200));
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+@media (hover: hover) {
+  .roycss-hover-scale-rotate-b18:hover {
+    transform: scale(1.1) rotate(5deg);
+  }
+}
 
-.roycss-hover-scale-rotate-b18:hover {
-  transform: scale(1.1) rotate(5deg);
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Scale & Rotate */
+.roycss-hover-scale-rotate-b18 {
+    transition: none;
+  }
+}
+`,
   },
 
   {
@@ -563,7 +589,6 @@ export const effectsBatch18: CSSEffect[] = [
   border-radius: 1rem;
   background: oklch(0.25 0.03 250);
 }
-
 .roycss-hover-border-trace-b18::before {
   content: "";
   position: absolute;
@@ -579,14 +604,22 @@ export const effectsBatch18: CSSEffect[] = [
   transition: opacity 0.3s ease;
   animation: roy-b18-border-trace 3s linear infinite;
 }
-
-.roycss-hover-border-trace-b18:hover::before {
-  opacity: 1;
+@media (hover: hover) {
+  .roycss-hover-border-trace-b18:hover::before {
+    opacity: 1;
+  }
 }
-
 @keyframes roy-b18-border-trace {
   to { background-position: 300% 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-hover-border-trace-b18::before {
+    animation: none;
+    transition: none;
+  }
+}
+`,
   },
 
   {
@@ -606,7 +639,6 @@ export const effectsBatch18: CSSEffect[] = [
   background: oklch(0.25 0.03 250);
   overflow: hidden;
 }
-
 .roycss-hover-shine-sweep-b18::before {
   content: "";
   position: absolute;
@@ -620,10 +652,18 @@ export const effectsBatch18: CSSEffect[] = [
   transform: translateX(-100%);
   transition: transform 0.6s ease;
 }
+@media (hover: hover) {
+  .roycss-hover-shine-sweep-b18:hover::before {
+    transform: translateX(100%);
+  }
+}
 
-.roycss-hover-shine-sweep-b18:hover::before {
-  transform: translateX(100%);
-}`,
+@media (prefers-reduced-motion: reduce) {
+  .roycss-hover-shine-sweep-b18::before {
+    transition: none;
+  }
+}
+`,
   },
 
   {
@@ -643,13 +683,22 @@ export const effectsBatch18: CSSEffect[] = [
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 10px color-mix(in oklch, oklch(0.2 0.02 250) 50%, transparent);
 }
+@media (hover: hover) {
+  .roycss-hover-depth-shift-b18:hover {
+    transform: perspective(500px) rotateX(10deg) rotateY(-10deg) scale(1.05);
+    box-shadow:
+      -10px 10px 20px color-mix(in oklch, oklch(0.2 0.02 250) 40%, transparent),
+      0 0 30px color-mix(in oklch, oklch(0.6 0.2 162) 20%, transparent);
+  }
+}
 
-.roycss-hover-depth-shift-b18:hover {
-  transform: perspective(500px) rotateX(10deg) rotateY(-10deg) scale(1.05);
-  box-shadow:
-    -10px 10px 20px color-mix(in oklch, oklch(0.2 0.02 250) 40%, transparent),
-    0 0 30px color-mix(in oklch, oklch(0.6 0.2 162) 20%, transparent);
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Depth Shift */
+.roycss-hover-depth-shift-b18 {
+    transition: none;
+  }
+}
+`,
   },
 
   /* ───────────────────────── VISUAL (5) ───────────────────────────── */
@@ -845,7 +894,15 @@ export const effectsBatch18: CSSEffect[] = [
   outline: none;
   border-color: oklch(0.6 0.2 162);
   box-shadow: 0 0 0 3px color-mix(in oklch, oklch(0.6 0.2 162) 20%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Glass Input Field */
+.roycss-glass-input-field-b18 {
+    transition: none;
+  }
+}
+`,
   },
 
   {
@@ -952,7 +1009,15 @@ export const effectsBatch18: CSSEffect[] = [
   box-shadow:
     0 2px 5px color-mix(in oklch, oklch(0.1 0.02 250) 30%, transparent),
     inset 0 1px 2px color-mix(in oklch, oklch(0.1 0.02 250) 30%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Glass Press Button */
+.roycss-btn-glass-press-b18 {
+    transition: none;
+  }
+}
+`,
   },
 
   {
@@ -982,7 +1047,15 @@ export const effectsBatch18: CSSEffect[] = [
 .roycss-btn-gradient-glow-b18:hover {
   transform: translateY(-2px);
   box-shadow: 0 0 25px color-mix(in oklch, oklch(0.6 0.2 162) 50%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Gradient Glow Button */
+.roycss-btn-gradient-glow-b18 {
+    transition: none;
+  }
+}
+`,
   },
 
   {
@@ -1028,7 +1101,18 @@ export const effectsBatch18: CSSEffect[] = [
 
 .roycss-btn-outline-draw-b18:hover::before {
   transform: scaleX(1);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Outline Draw Button */
+.roycss-btn-outline-draw-b18 {
+    transition: none;
+  }
+  .roycss-btn-outline-draw-b18::before {
+    transition: none;
+  }
+}
+`,
   },
 
   {
@@ -1066,7 +1150,15 @@ export const effectsBatch18: CSSEffect[] = [
   box-shadow:
     0 1px 0 oklch(0.4 0.15 162),
     0 2px 5px color-mix(in oklch, oklch(0.1 0.02 250) 40%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* 3D Push Button */
+.roycss-btn-3d-push-b18 {
+    transition: none;
+  }
+}
+`,
   },
 
   {
@@ -1116,7 +1208,18 @@ export const effectsBatch18: CSSEffect[] = [
 
 .roycss-btn-shine-line-b18:hover::after {
   inset-inline-start: 100%;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Shine Line Button */
+.roycss-btn-shine-line-b18 {
+    transition: none;
+  }
+  .roycss-btn-shine-line-b18::after {
+    transition: none;
+  }
+}
+`,
   },
 
   /* ─────────────────── MICROINTERACTIONS (5) ──────────────────────── */
@@ -1243,7 +1346,18 @@ export const effectsBatch18: CSSEffect[] = [
   0% { transform: scale(1); }
   50% { transform: scale(1.4) rotate(-10deg); }
   100% { transform: scale(1); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Thumbs Up Pop */
+.roycss-micro-thumbs-up-b18 {
+    transition: none;
+  }
+  .roycss-micro-thumbs-up-b18:active {
+    animation: none;
+  }
+}
+`,
   },
 
   {

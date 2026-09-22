@@ -31,7 +31,14 @@ export const effectsBatch31: CSSEffect[] = [
   90% { transform: translateY(-8%) scaleY(1.02); }
   100% { transform: translateY(0) scaleY(1); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-natural-drop {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -114,7 +121,14 @@ export const effectsBatch31: CSSEffect[] = [
   0%   { background-position: 0% 0%; }
   100% { background-position: 400% 0%; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-misc-hologram {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -196,7 +210,8 @@ export const effectsBatch31: CSSEffect[] = [
   description: "A decorative visual effect (misc typewriter)",
   tags: ["misc-typewriter", "typewriter", "animated"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-misc-typewriter {
+  cssCode: `/* Misc Typewriter */
+.roycss-ferrum-misc-typewriter {
   display: inline-block;
   font-family: 'Courier New', monospace;
   font-weight: bold;
@@ -208,7 +223,26 @@ export const effectsBatch31: CSSEffect[] = [
   animation:
     roy-misc-typewriter-type 2.5s steps(6) infinite,
     roy-misc-typewriter-cursor 0.6s step-end infinite;
-}`,
+}
+
+@keyframes roy-misc-typewriter-type {
+  0%   { width: 0; }
+  50%  { width: 100%; }
+  100% { width: 0; }
+}
+
+@keyframes roy-misc-typewriter-cursor {
+  0%, 100% { border-right-color: oklch(0.696 0.149 162.48); }
+  50%      { border-right-color: transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Misc Typewriter */
+.roycss-ferrum-misc-typewriter {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -250,7 +284,14 @@ export const effectsBatch31: CSSEffect[] = [
   overflow: hidden;
   transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
               border-color 0.3s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-nav-accordion {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -295,7 +336,14 @@ export const effectsBatch31: CSSEffect[] = [
   overflow: hidden;
   transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
               border-color 0.3s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-nav-dropdown {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -343,7 +391,14 @@ export const effectsBatch31: CSSEffect[] = [
   color: color-mix(in oklch, oklch(1 0 0) 70%, transparent);
   letter-spacing: 0.15em;
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-nav-menu-scale {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -645,7 +700,14 @@ export const effectsBatch31: CSSEffect[] = [
   from { background-position: 0 0, 0 0, 0 0, 0 0; }
   to   { background-position: 0 -60px, 0 -80px, 0 -50px, 0 0; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-misc-bubbles {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -672,7 +734,14 @@ export const effectsBatch31: CSSEffect[] = [
   from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; }
   to   { background-position: 0 40px, 0 55px, 0 45px, 0 60px, 0 50px, 0 0; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-misc-confetti {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -698,7 +767,14 @@ export const effectsBatch31: CSSEffect[] = [
   50%  { filter: brightness(1.5); }
   100% { background-position: 20px -15px, -25px 10px, 15px 20px, 0 0; filter: brightness(0.85); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-misc-fireflies {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -736,7 +812,14 @@ export const effectsBatch31: CSSEffect[] = [
   from { background-position: 0 0, 0 0, 0 0; }
   to   { background-position: 5px 30px, 7px 40px, 0 0; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-misc-rain {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -762,7 +845,14 @@ export const effectsBatch31: CSSEffect[] = [
   from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
   to   { background-position: 5px 30px, -3px 45px, 2px 35px, -2px 25px, 0 0; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-misc-snow {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -788,7 +878,14 @@ export const effectsBatch31: CSSEffect[] = [
   0%   { opacity: 0.4; filter: brightness(0.8); }
   100% { opacity: 1; filter: brightness(1.6); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-misc-sparkles {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -812,7 +909,14 @@ export const effectsBatch31: CSSEffect[] = [
   from { background-position: 0 30%, 0 50%, 0 70%, 0 0; }
   to   { background-position: 40px 30%, -30px 50%, 50px 70%, 0 0; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-misc-wave {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -957,7 +1061,14 @@ export const effectsBatch31: CSSEffect[] = [
     background: radial-gradient(circle at 30% 70%, oklch(0.837 0.164 84.43), oklch(0.74 0.198 346.4) 70%);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-morph-blob {
+    animation: none;
+  }
+}
+`,
 },
 
 {

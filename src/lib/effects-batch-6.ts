@@ -36,7 +36,15 @@ export const effectsBatch6: CSSEffect[] = [
 .roycss-scroll-reveal-up.is-visible {
   opacity: 1;
   transform: translateY(0);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scroll Reveal Up — toggle .is-visible when the element enters the viewport */
+.roycss-scroll-reveal-up {
+    transition: none;
+  }
+}
+`,
   },
 
   // 2. scroll-reveal-left
@@ -58,7 +66,15 @@ export const effectsBatch6: CSSEffect[] = [
   0% { opacity: 0; transform: translateX(-60px); }
   25%, 70% { opacity: 1; transform: translateX(0); }
   100% { opacity: 0; transform: translateX(-60px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scroll Reveal Left */
+.roycss-scroll-reveal-left {
+    animation: none;
+  }
+}
+`,
   },
 
   // 3. scroll-reveal-right
@@ -80,7 +96,15 @@ export const effectsBatch6: CSSEffect[] = [
   0% { opacity: 0; transform: translateX(60px); }
   25%, 70% { opacity: 1; transform: translateX(0); }
   100% { opacity: 0; transform: translateX(60px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scroll Reveal Right */
+.roycss-scroll-reveal-right {
+    animation: none;
+  }
+}
+`,
   },
 
   // 4. scroll-reveal-scale
@@ -102,7 +126,15 @@ export const effectsBatch6: CSSEffect[] = [
   0% { opacity: 0; transform: scale(0.6); }
   25%, 70% { opacity: 1; transform: scale(1); }
   100% { opacity: 0; transform: scale(0.6); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scroll Reveal Scale */
+.roycss-scroll-reveal-scale {
+    animation: none;
+  }
+}
+`,
   },
 
   // 5. scroll-reveal-rotate
@@ -124,7 +156,15 @@ export const effectsBatch6: CSSEffect[] = [
   0% { opacity: 0; transform: rotate(-15deg) scale(0.85); }
   25%, 70% { opacity: 1; transform: rotate(0deg) scale(1); }
   100% { opacity: 0; transform: rotate(-15deg) scale(0.85); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scroll Reveal Rotate */
+.roycss-scroll-reveal-rotate {
+    animation: none;
+  }
+}
+`,
   },
 
   // 6. scroll-progress-bar
@@ -160,7 +200,14 @@ export const effectsBatch6: CSSEffect[] = [
 @keyframes roy-scroll-progress-fill {
   0% { inline-size: 0; }
   70%, 100% { inline-size: 100%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-progress-bar::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 7. scroll-indicator
@@ -217,7 +264,17 @@ export const effectsBatch6: CSSEffect[] = [
 @keyframes roy-scroll-indicator-arrow {
   0%, 100% { opacity: 0; transform: rotate(45deg) translate(-3px, -3px); }
   50% { opacity: 1; transform: rotate(45deg) translate(0, 0); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-indicator::before {
+    animation: none;
+  }
+  .roycss-scroll-indicator::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 8. scroll-parallax-slow
@@ -270,7 +327,17 @@ export const effectsBatch6: CSSEffect[] = [
 @keyframes roy-scroll-parallax-grid {
   0% { background-position: 0 0; }
   100% { background-position: 0 60px; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-parallax-slow::before {
+    animation: none;
+  }
+  .roycss-scroll-parallax-slow::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 9. scroll-sticky-header
@@ -320,7 +387,15 @@ export const effectsBatch6: CSSEffect[] = [
     font-size: 18px;
     padding: 0 22px;
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scroll Sticky Header */
+.roycss-scroll-sticky-header {
+    animation: none;
+  }
+}
+`,
   },
 
   // 10. scroll-fade-out
@@ -341,7 +416,15 @@ export const effectsBatch6: CSSEffect[] = [
 @keyframes roy-scroll-fade-out {
   0%, 25% { opacity: 1; transform: translateY(0); }
   75%, 100% { opacity: 0; transform: translateY(-32px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scroll Fade Out */
+.roycss-scroll-fade-out {
+    animation: none;
+  }
+}
+`,
   },
 
   // 11. scroll-zoom-in
@@ -363,7 +446,15 @@ export const effectsBatch6: CSSEffect[] = [
   0% { opacity: 0.4; transform: scale(0.8); }
   40%, 60% { opacity: 1; transform: scale(1.05); }
   100% { opacity: 0.4; transform: scale(0.8); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scroll Zoom In */
+.roycss-scroll-zoom-in {
+    animation: none;
+  }
+}
+`,
   },
 
   // 12. scroll-horizontal
@@ -415,7 +506,17 @@ export const effectsBatch6: CSSEffect[] = [
 @keyframes roy-scroll-horizontal-move {
   0%, 100% { inset-inline-start: 0; }
   50% { inset-inline-start: calc(100% - 24px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-scroll-horizontal::before {
+    animation: none;
+  }
+  .roycss-scroll-horizontal::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -460,7 +561,14 @@ export const effectsBatch6: CSSEffect[] = [
   50% { transform: translate(22px, -10px); }
   75% { transform: translate(0, 12px); }
   100% { transform: translate(-22px, -10px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-glow-dot::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 2. cursor-trail
@@ -501,7 +609,14 @@ export const effectsBatch6: CSSEffect[] = [
 @keyframes roy-cursor-trail-sweep {
   0%, 100% { transform: translate(-26px, -8px); }
   50% { transform: translate(26px, 8px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-trail::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 3. cursor-blob
@@ -547,7 +662,14 @@ export const effectsBatch6: CSSEffect[] = [
   25% { transform: translate(10px, -16px); }
   50% { transform: translate(16px, 12px); }
   75% { transform: translate(-12px, 14px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-blob::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 4. cursor-ring
@@ -604,7 +726,17 @@ export const effectsBatch6: CSSEffect[] = [
 @keyframes roy-cursor-ring-pulse {
   0% { box-shadow: 0 0 0 0 color-mix(in oklch, oklch(0.797 0.134 211.53) 60%, transparent); }
   100% { box-shadow: 0 0 0 16px color-mix(in oklch, oklch(0.797 0.134 211.53) 0%, transparent); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-ring::before {
+    animation: none;
+  }
+  .roycss-cursor-ring::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 5. cursor-ripple
@@ -645,7 +777,18 @@ export const effectsBatch6: CSSEffect[] = [
 @keyframes roy-cursor-ripple-expand {
   0% { transform: scale(0.4); opacity: 1; }
   100% { transform: scale(3.8); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-ripple::before,
+.roycss-cursor-ripple::after {
+    animation: none;
+  }
+  .roycss-cursor-ripple::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 6. cursor-spotlight
@@ -697,7 +840,17 @@ export const effectsBatch6: CSSEffect[] = [
   25% { transform: translate(24px, -24px); }
   50% { transform: translate(34px, 18px); }
   75% { transform: translate(-24px, 22px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-spotlight::before {
+    animation: none;
+  }
+  .roycss-cursor-spotlight::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 7. cursor-magnetic
@@ -746,7 +899,18 @@ export const effectsBatch6: CSSEffect[] = [
 .roycss-cursor-magnetic:hover::before {
   transform: translateY(-5px) scale(1.12);
   color: oklch(0.797 0.134 211.53);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Cursor Magnetic — hover to feel the magnetic pull */
+.roycss-cursor-magnetic {
+    transition: none;
+  }
+  .roycss-cursor-magnetic::before {
+    transition: none;
+  }
+}
+`,
   },
 
   // 8. cursor-crosshair
@@ -794,7 +958,15 @@ export const effectsBatch6: CSSEffect[] = [
 @keyframes roy-cursor-crosshair-move {
   0%, 100% { transform: translate(-22px, -12px); }
   50% { transform: translate(22px, 14px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-crosshair::before,
+.roycss-cursor-crosshair::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 9. cursor-arrow-bounce
@@ -848,7 +1020,17 @@ export const effectsBatch6: CSSEffect[] = [
 @keyframes roy-cursor-arrow-ring {
   0% { transform: scale(0.6); opacity: 0.85; }
   100% { transform: scale(1.7); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-arrow-bounce::before {
+    animation: none;
+  }
+  .roycss-cursor-arrow-bounce::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 10. cursor-pulse-ring
@@ -902,7 +1084,17 @@ export const effectsBatch6: CSSEffect[] = [
 @keyframes roy-cursor-pulse-ring {
   0%, 100% { transform: translate(-16px, -10px) scale(1); opacity: 0.7; }
   50% { transform: translate(16px, 10px) scale(1.7); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-pulse-ring::before {
+    animation: none;
+  }
+  .roycss-cursor-pulse-ring::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 11. cursor-gradient-trail
@@ -963,7 +1155,17 @@ export const effectsBatch6: CSSEffect[] = [
 @keyframes roy-cursor-gradient-orbit {
   0% { transform: rotate(0deg) translateX(22px); }
   100% { transform: rotate(360deg) translateX(22px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-gradient-trail::before {
+    animation: none;
+  }
+  .roycss-cursor-gradient-trail::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 12. cursor-firefly
@@ -1033,7 +1235,17 @@ export const effectsBatch6: CSSEffect[] = [
 @keyframes roy-cursor-firefly-glow {
   0%, 100% { opacity: 0.35; }
   50% { opacity: 1; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-cursor-firefly::before {
+    animation: none;
+  }
+  .roycss-cursor-firefly::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -1070,7 +1282,14 @@ export const effectsBatch6: CSSEffect[] = [
   0% { opacity: 0; }
   30%, 60% { opacity: 1; }
   100% { opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-page-fade::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 2. page-slide-left
@@ -1089,7 +1308,7 @@ export const effectsBatch6: CSSEffect[] = [
   overflow: hidden;
 }
 
-.roycss-page-slide-inset-inline-start::before {
+.roycss-page-slide-left::before {
   content: "";
   position: absolute;
   inset: 8px;
@@ -1103,7 +1322,14 @@ export const effectsBatch6: CSSEffect[] = [
   0% { transform: translateX(100%); opacity: 0; }
   30%, 60% { transform: translateX(0); opacity: 1; }
   100% { transform: translateX(-100%); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-page-slide-left::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 3. page-slide-up
@@ -1136,7 +1362,14 @@ export const effectsBatch6: CSSEffect[] = [
   0% { transform: translateY(100%); opacity: 0; }
   30%, 60% { transform: translateY(0); opacity: 1; }
   100% { transform: translateY(-100%); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-page-slide-up::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 4. page-curtain
@@ -1187,7 +1420,17 @@ export const effectsBatch6: CSSEffect[] = [
   0%, 25% { transform: translateX(0); }
   50%, 75% { transform: translateX(100%); }
   100% { transform: translateX(0); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-page-curtain::before {
+    animation: none;
+  }
+  .roycss-page-curtain::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 5. page-zoom
@@ -1220,7 +1463,14 @@ export const effectsBatch6: CSSEffect[] = [
   0% { transform: scale(0); opacity: 0; }
   30%, 60% { transform: scale(1); opacity: 1; }
   100% { transform: scale(1.6); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-page-zoom::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 6. page-flip
@@ -1258,7 +1508,14 @@ export const effectsBatch6: CSSEffect[] = [
   50% { transform: rotateY(-180deg); opacity: 0; }
   60% { transform: rotateY(-180deg); opacity: 0; }
   90%, 100% { transform: rotateY(-360deg); opacity: 1; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-page-flip::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 7. page-circle-reveal
@@ -1292,7 +1549,14 @@ export const effectsBatch6: CSSEffect[] = [
   0% { clip-path: circle(0% at 50% 50%); opacity: 0; }
   30%, 60% { clip-path: circle(75% at 50% 50%); opacity: 1; }
   100% { clip-path: circle(0% at 50% 50%); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-page-circle-reveal::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 8. page-mask-reveal
@@ -1326,7 +1590,14 @@ export const effectsBatch6: CSSEffect[] = [
   0% { clip-path: inset(0 100% 0 0); opacity: 0; }
   30%, 60% { clip-path: inset(0 0 0 0); opacity: 1; }
   100% { clip-path: inset(0 0 0 100%); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-page-mask-reveal::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 9. page-cube
@@ -1362,7 +1633,14 @@ export const effectsBatch6: CSSEffect[] = [
   50% { transform: rotateY(-180deg) scale(1); }
   75% { transform: rotateY(-270deg) scale(0.88); }
   100% { transform: rotateY(-360deg) scale(1); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-page-cube::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 10. page-liquid
@@ -1409,7 +1687,14 @@ export const effectsBatch6: CSSEffect[] = [
     opacity: 0.2;
     filter: blur(10px);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-page-liquid::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 11. page-shutter
@@ -1461,7 +1746,17 @@ export const effectsBatch6: CSSEffect[] = [
 @keyframes roy-page-shutter-aperture {
   0%, 35%, 65%, 100% { opacity: 0; transform: scale(0.4); }
   45%, 55% { opacity: 1; transform: scale(1.2); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-page-shutter::before {
+    animation: none;
+  }
+  .roycss-page-shutter::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 12. page-dissolve
@@ -1493,6 +1788,13 @@ export const effectsBatch6: CSSEffect[] = [
 @keyframes roy-page-dissolve {
   0%, 100% { opacity: 1; filter: blur(0px); transform: scale(1); }
   50% { opacity: 0; filter: blur(22px); transform: scale(1.06); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-page-dissolve::before {
+    animation: none;
+  }
+}
+`,
   },
 ];

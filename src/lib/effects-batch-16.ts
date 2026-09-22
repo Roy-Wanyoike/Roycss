@@ -87,7 +87,17 @@ export const effectsBatch16: CSSEffect[] = [
 @keyframes roy-b16-spatial-spec {
   0%   { inset-inline-start: -30%; }
   100% { inset-inline-start: 110%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-spatial-depth-card {
+    animation: none;
+  }
+  .roycss-spatial-depth-card::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "liquid-glass-refract",
@@ -143,7 +153,18 @@ export const effectsBatch16: CSSEffect[] = [
 }
 @keyframes roy-b16-refract-spin {
   to { transform: rotate(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Liquid Glass Refraction */
+.roycss-liquid-glass-refract {
+    animation: none;
+  }
+  .roycss-liquid-glass-refract::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "kinetic-morph-blob",
@@ -184,7 +205,15 @@ export const effectsBatch16: CSSEffect[] = [
 @keyframes roy-b16-morph-scale {
   0%, 100% { transform: scale(1) rotate(0deg); }
   50%      { transform: scale(1.08) rotate(8deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Kinetic Morph Blob */
+.roycss-kinetic-morph-blob {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "holographic-shift",
@@ -241,7 +270,18 @@ export const effectsBatch16: CSSEffect[] = [
 }
 @keyframes roy-b16-holo-spin {
   to { transform: rotate(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Holographic Shift */
+.roycss-holographic-shift {
+    animation: none;
+  }
+  .roycss-holographic-shift::before {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "aurora-flow-2",
@@ -294,7 +334,17 @@ export const effectsBatch16: CSSEffect[] = [
   0%   { transform: translate3d(0,0,0) rotate(0deg); }
   50%  { transform: translate3d(-10%, 8%, 0) rotate(-12deg); }
   100% { transform: translate3d(0,0,0) rotate(0deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-aurora-flow-2::before {
+    animation: none;
+  }
+  .roycss-aurora-flow-2::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "prism-light-split",
@@ -352,7 +402,15 @@ export const effectsBatch16: CSSEffect[] = [
 @keyframes roy-b16-prism-pulse {
   0%, 100% { opacity: 0.85; filter: blur(2px) brightness(1); }
   50%      { opacity: 1;    filter: blur(3px) brightness(1.25); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* prism + refracted rainbow fan */
+.roycss-prism-light-split::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "adaptive-time-color",
@@ -410,7 +468,17 @@ export const effectsBatch16: CSSEffect[] = [
   50%  { transform: translate(170px, 100px); opacity: 0.4; }
   75%  { transform: translate(80px, 100px); opacity: 0.2; }
   100% { transform: translate(0, 100px); opacity: 0.4; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-adaptive-time-color {
+    animation: none;
+  }
+  .roycss-adaptive-time-color::before {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "bento-depth-grid",
@@ -465,7 +533,14 @@ export const effectsBatch16: CSSEffect[] = [
 @keyframes roy-b16-bento-glow {
   0%, 100% { opacity: 0.6; }
   50%      { opacity: 1; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-bento-depth-grid::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "glass-liquid-fill",
@@ -509,7 +584,18 @@ export const effectsBatch16: CSSEffect[] = [
 @keyframes roy-b16-wave-flow {
   0%   { transform: translateX(0); }
   100% { transform: translateX(16.66%); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-glass-liquid-fill::before,
+.roycss-glass-liquid-fill::after {
+    animation: none;
+  }
+  .roycss-glass-liquid-fill::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "mesh-gradient-flow",
@@ -559,7 +645,17 @@ export const effectsBatch16: CSSEffect[] = [
 @keyframes roy-b16-mesh-drift-b {
   0%, 100% { transform: translate3d(0,0,0) scale(1.05); }
   50%      { transform: translate3d(-4%, 3%, 0) scale(1); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-mesh-gradient-flow::before {
+    animation: none;
+  }
+  .roycss-mesh-gradient-flow::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "chromatic-aberration",
@@ -613,7 +709,17 @@ export const effectsBatch16: CSSEffect[] = [
 @keyframes roy-b16-aber-b {
   0%, 100% { transform: translate(2px, 0); opacity: 0.85; }
   50%      { transform: translate(5px, -1px); opacity: 1; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-chromatic-aberration::before {
+    animation: none;
+  }
+  .roycss-chromatic-aberration::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "metallic-flow",
@@ -677,7 +783,18 @@ export const effectsBatch16: CSSEffect[] = [
 @keyframes roy-b16-metal-streak {
   0%   { transform: translateX(-60%) rotate(15deg); }
   100% { transform: translateX(280%) rotate(15deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Metallic Flow */
+.roycss-metallic-flow {
+    animation: none;
+  }
+  .roycss-metallic-flow::before {
+    animation: none;
+  }
+}
+`,
   },
 
   /* =========================================================================
@@ -710,7 +827,15 @@ export const effectsBatch16: CSSEffect[] = [
   70%  { transform: translateY(0) scaleY(1.05); }
   85%  { transform: translateY(0) scaleY(0.97); }
   100% { transform: translateY(-120px) scaleY(0.7); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Spring Physics Bounce */
+.roycss-spring-physics-bounce {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "gravity-drop",
@@ -746,7 +871,15 @@ export const effectsBatch16: CSSEffect[] = [
   72%  { transform: scale(1.05, 0.95); }
   78%  { transform: scale(1, 1); }
   100% { transform: scale(1, 1); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Gravity Drop */
+.roycss-gravity-drop {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "momentum-scroll",
@@ -792,7 +925,14 @@ export const effectsBatch16: CSSEffect[] = [
   45%  { transform: translate(60%, -50%) translateX(0); }
   55%  { transform: translate(60%, -50%) translateX(0); }
   100% { transform: translate(280%, -50%) translateX(0); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-momentum-scroll::before {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "kinetic-typography",
@@ -827,7 +967,15 @@ export const effectsBatch16: CSSEffect[] = [
 @keyframes roy-b16-kinetic-width {
   0%, 100% { font-stretch: 85%;  letter-spacing: 0.02em; }
   50%      { font-stretch: 115%; letter-spacing: 0.08em; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Kinetic Typography */
+.roycss-kinetic-typography {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "morph-shape-cycle",
@@ -873,7 +1021,15 @@ export const effectsBatch16: CSSEffect[] = [
     border-radius: 50%;
     transform: rotate(144deg) scale(1);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Morph Shape Cycle */
+.roycss-morph-shape-cycle {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "parallax-depth-scroll",
@@ -931,7 +1087,17 @@ export const effectsBatch16: CSSEffect[] = [
 @keyframes roy-b16-parallax-near {
   from { transform: translateX(20%); }
   to   { transform: translateX(-20%); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-parallax-depth-scroll::before {
+    animation: none;
+  }
+  .roycss-parallax-depth-scroll::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "elastic-snap",
@@ -962,7 +1128,15 @@ export const effectsBatch16: CSSEffect[] = [
   70%  { transform: translateX(0) scale(1); }
   85%  { transform: translateX(0) scale(1); opacity: 1; }
   100% { transform: translateX(-90px) scale(0.85); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Elastic Snap */
+.roycss-elastic-snap {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "fluid-motion",
@@ -1012,7 +1186,17 @@ export const effectsBatch16: CSSEffect[] = [
   10%  { opacity: 1; }
   90%  { opacity: 1; }
   100% { offset-distance: 100%; opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-fluid-motion::before {
+    animation: none;
+  }
+  .roycss-fluid-motion::after {
+    animation: none;
+  }
+}
+`,
   },
 
   /* =========================================================================
@@ -1054,7 +1238,15 @@ export const effectsBatch16: CSSEffect[] = [
 @keyframes roy-b16-vfm-shift {
   0%   { background-position: 0% 50%; }
   100% { background-position: 200% 50%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Variable Font Morph */
+.roycss-text-variable-font-morph {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "text-kinetic-wave",
@@ -1095,7 +1287,32 @@ export const effectsBatch16: CSSEffect[] = [
 @keyframes roy-b16-kinetic-wave {
   0%, 100% { transform: translateY(0) scale(1); }
   40%      { transform: translateY(-22px) scale(1.08); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-text-kinetic-wave > span {
+    animation: none;
+  }
+  .roycss-text-kinetic-wave > span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-text-kinetic-wave > span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-text-kinetic-wave > span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-text-kinetic-wave > span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-text-kinetic-wave > span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-text-kinetic-wave > span:nth-child(6) {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "text-scramble-decode",
@@ -1153,7 +1370,18 @@ export const effectsBatch16: CSSEffect[] = [
 @keyframes roy-b16-scramble-cursor {
   0%, 100% { opacity: 1; }
   50%      { opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* visible base text stays as the decoded target */
+.roycss-text-scramble-decode::before {
+    animation: none;
+  }
+  .roycss-text-scramble-decode::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "text-gradient-mesh",
@@ -1197,7 +1425,15 @@ export const effectsBatch16: CSSEffect[] = [
   75% {
     background-position: 0% 50%, 50% 100%, 100% 50%, 50% 0%, 50% 50%;
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Mesh Gradient Text */
+.roycss-text-gradient-mesh {
+    animation: none;
+  }
+}
+`,
   },
 
   /* =========================================================================
@@ -1261,7 +1497,19 @@ export const effectsBatch16: CSSEffect[] = [
   10%  { opacity: 1; }
   90%  { opacity: 1; }
   100% { offset-distance: 100%; opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* network grid via repeating gradients */
+.roycss-bg-neural-network::before {
+    animation: none;
+  }
+  /* signal pulses traveling */
+.roycss-bg-neural-network::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "bg-quantum-field",
@@ -1320,7 +1568,19 @@ export const effectsBatch16: CSSEffect[] = [
   50%  { opacity: 0.5; transform: translate(-1px, 2px); }
   75%  { opacity: 1;   transform: translate(1px, 1px); }
   100% { opacity: 0.4; transform: translate(0, 0); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* probability cloud layer */
+.roycss-bg-quantum-field::before {
+    animation: none;
+  }
+  /* flickering particle points */
+.roycss-bg-quantum-field::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "bg-flowing-silk",
@@ -1388,7 +1648,17 @@ export const effectsBatch16: CSSEffect[] = [
   0%   { transform: translateX(-50%) rotate(8deg); opacity: 0.6; }
   50%  { opacity: 1; }
   100% { transform: translateX(220%) rotate(8deg); opacity: 0.6; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-bg-flowing-silk::before {
+    animation: none;
+  }
+  .roycss-bg-flowing-silk::after {
+    animation: none;
+  }
+}
+`,
   },
 
   /* =========================================================================
@@ -1443,22 +1713,40 @@ export const effectsBatch16: CSSEffect[] = [
   pointer-events: none;
   z-index: -1;
 }
-.roycss-hover-magnetic-pull-2:hover {
-  transform: translateY(-8px) translateZ(30px) scale(1.04);
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 0.55),
-    0 22px 50px -12px oklch(0.4 0.18 290 / 0.6),
-    0 0 0 1px oklch(0.80 0.20 280 / 0.3);
-  filter: saturate(1.15) brightness(1.05);
+@media (hover: hover) {
+  .roycss-hover-magnetic-pull-2:hover {
+    transform: translateY(-8px) translateZ(30px) scale(1.04);
+    box-shadow:
+      inset 0 1px 0 oklch(1 0 0 / 0.55),
+      0 22px 50px -12px oklch(0.4 0.18 290 / 0.6),
+      0 0 0 1px oklch(0.80 0.20 280 / 0.3);
+    filter: saturate(1.15) brightness(1.05);
+  }
 }
-.roycss-hover-magnetic-pull-2:hover::after {
-  opacity: 1;
-  animation: roy-b16-magnetic-field 1.2s ease-in-out infinite;
+@media (hover: hover) {
+  .roycss-hover-magnetic-pull-2:hover::after {
+    opacity: 1;
+    animation: roy-b16-magnetic-field 1.2s ease-in-out infinite;
+  }
 }
 @keyframes roy-b16-magnetic-field {
   0%, 100% { transform: scale(1);   opacity: 0.6; }
   50%      { transform: scale(1.15); opacity: 1; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Magnetic Pull Depth — hover */
+.roycss-hover-magnetic-pull-2 {
+    transition: none;
+  }
+  .roycss-hover-magnetic-pull-2::after {
+    transition: none;
+  }
+  .roycss-hover-magnetic-pull-2:hover::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "hover-glass-shatter",
@@ -1521,28 +1809,53 @@ export const effectsBatch16: CSSEffect[] = [
   transition: opacity 0.4s ease;
   pointer-events: none;
 }
-.roycss-hover-glass-shatter:hover {
-  transform: scale(1.02);
+@media (hover: hover) {
+  .roycss-hover-glass-shatter:hover {
+    transform: scale(1.02);
+  }
 }
-.roycss-hover-glass-shatter:hover::before {
-  clip-path: polygon(
-    0 0, 30% -5%, 35% 35%, -5% 30%,
-    0 0,
-    40% 45%, 105% -5%, 95% 40%, 50% 50%,
-    50% 105%, -5% 95%, 45% 55%,
-    55% 50%, 105% 60%, 95% 105%, 50% 95%
-  );
-  transform: scale(1.08);
-  opacity: 0.3;
-  animation: roy-b16-shatter-drift 0.8s ease-out forwards;
+@media (hover: hover) {
+  .roycss-hover-glass-shatter:hover::before {
+    clip-path: polygon(
+      0 0, 30% -5%, 35% 35%, -5% 30%,
+      0 0,
+      40% 45%, 105% -5%, 95% 40%, 50% 50%,
+      50% 105%, -5% 95%, 45% 55%,
+      55% 50%, 105% 60%, 95% 105%, 50% 95%
+    );
+    transform: scale(1.08);
+    opacity: 0.3;
+    animation: roy-b16-shatter-drift 0.8s ease-out forwards;
+  }
 }
-.roycss-hover-glass-shatter:hover::after {
-  opacity: 1;
+@media (hover: hover) {
+  .roycss-hover-glass-shatter:hover::after {
+    opacity: 1;
+  }
 }
 @keyframes roy-b16-shatter-drift {
   0%   { transform: scale(1) translate(0,0); }
   100% { transform: scale(1.08) translate(2px, 2px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Glass Shatter Hover */
+.roycss-hover-glass-shatter {
+    transition: none;
+  }
+  /* shard layer */
+.roycss-hover-glass-shatter::before {
+    transition: none;
+  }
+  /* crack lines */
+.roycss-hover-glass-shatter::after {
+    transition: none;
+  }
+  .roycss-hover-glass-shatter:hover::before {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "hover-liquid-morph",
@@ -1598,18 +1911,22 @@ export const effectsBatch16: CSSEffect[] = [
   box-shadow: inset 0 0 0 1px oklch(1 0 0 / 0.2);
   pointer-events: none;
 }
-.roycss-hover-liquid-morph:hover {
-  border-radius: 60% 40% 55% 45% / 55% 50% 50% 45%;
-  transform: scale(1.06);
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 0.55),
-    0 18px 36px -10px oklch(0.4 0.20 230 / 0.6);
-  filter: saturate(1.2);
-  animation: roy-b16-liquid-wobble 1.6s ease-in-out infinite;
+@media (hover: hover) {
+  .roycss-hover-liquid-morph:hover {
+    border-radius: 60% 40% 55% 45% / 55% 50% 50% 45%;
+    transform: scale(1.06);
+    box-shadow:
+      inset 0 1px 0 oklch(1 0 0 / 0.55),
+      0 18px 36px -10px oklch(0.4 0.20 230 / 0.6);
+    filter: saturate(1.2);
+    animation: roy-b16-liquid-wobble 1.6s ease-in-out infinite;
+  }
 }
-.roycss-hover-liquid-morph:hover::before {
-  opacity: 1;
-  animation: roy-b16-liquid-ripple 1.6s ease-in-out infinite;
+@media (hover: hover) {
+  .roycss-hover-liquid-morph:hover::before {
+    opacity: 1;
+    animation: roy-b16-liquid-ripple 1.6s ease-in-out infinite;
+  }
 }
 @keyframes roy-b16-liquid-wobble {
   0%, 100% { border-radius: 60% 40% 55% 45% / 55% 50% 50% 45%; }
@@ -1619,6 +1936,23 @@ export const effectsBatch16: CSSEffect[] = [
 @keyframes roy-b16-liquid-ripple {
   0%, 100% { transform: translate(0, 0) rotate(0deg); }
   50%      { transform: translate(4%, -3%) rotate(8deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Liquid Morph Hover */
+.roycss-hover-liquid-morph {
+    transition: none;
+  }
+  .roycss-hover-liquid-morph::before {
+    transition: none;
+  }
+  .roycss-hover-liquid-morph:hover {
+    animation: none;
+  }
+  .roycss-hover-liquid-morph:hover::before {
+    animation: none;
+  }
+}
+`,
   },
 ];

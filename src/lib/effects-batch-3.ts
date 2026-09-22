@@ -49,7 +49,14 @@ export const effectsBatch3: CSSEffect[] = [
 
 .roycss-btn-shine-sweep:hover::after {
   inset-inline-start: 120%;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-btn-shine-sweep::after {
+    transition: none;
+  }
+}
+`,
   },
 
   // 2. btn-fill-slide (existing — enhanced with base button styling)
@@ -95,7 +102,18 @@ export const effectsBatch3: CSSEffect[] = [
 
 .roycss-btn-fill-slide:hover::before {
   block-size: 100%;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Fill Slide Button */
+.roycss-btn-fill-slide {
+    transition: none;
+  }
+  .roycss-btn-fill-slide::before {
+    transition: none;
+  }
+}
+`,
   },
 
   // 3. btn-ripple (existing — rewritten as CSS-only ripple)
@@ -141,7 +159,17 @@ export const effectsBatch3: CSSEffect[] = [
   block-size: 320px;
   opacity: 1;
   transition: 0s;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-btn-ripple::after {
+    transition: none;
+  }
+  .roycss-btn-ripple:active::after {
+    transition: none;
+  }
+}
+`,
   },
 
   // 4. btn-border-draw (existing — enhanced with base button styling)
@@ -181,7 +209,14 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-btn-border-draw:hover::before {
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   background: color-mix(in oklch, oklch(0.696 0.149 162.48) 8%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-btn-border-draw::before {
+    transition: none;
+  }
+}
+`,
   },
 
   // 5. btn-glow
@@ -208,7 +243,15 @@ export const effectsBatch3: CSSEffect[] = [
 
 .roycss-btn-glow:hover {
   box-shadow: 0 0 20px color-mix(in oklch, oklch(0.696 0.149 162.48) 60%, transparent), 0 0 40px color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Glow Button */
+.roycss-btn-glow {
+    transition: none;
+  }
+}
+`,
   },
 
   // 6. btn-pulse
@@ -241,7 +284,18 @@ export const effectsBatch3: CSSEffect[] = [
 @keyframes roy-btn-pulse {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.06); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Pulse Button */
+.roycss-btn-pulse {
+    transition: none;
+  }
+  .roycss-btn-pulse:hover {
+    animation: none;
+  }
+}
+`,
   },
 
   // 7. btn-bounce
@@ -275,7 +329,14 @@ export const effectsBatch3: CSSEffect[] = [
   40% { transform: translateY(0); }
   60% { transform: translateY(-6px); }
   80% { transform: translateY(0); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-btn-bounce:hover {
+    animation: none;
+  }
+}
+`,
   },
 
   // 8. btn-press
@@ -304,7 +365,15 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-btn-press:active {
   transform: translateY(6px);
   box-shadow: 0 0 0 oklch(0.491 0.241 292.58), 0 2px 6px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* 3D Press Button */
+.roycss-btn-press {
+    transition: none;
+  }
+}
+`,
   },
 
   // 9. btn-lift
@@ -333,7 +402,15 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-btn-lift:hover {
   transform: translateY(-5px);
   box-shadow: 0 14px 28px color-mix(in oklch, oklch(0.704 0.123 182.5) 45%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Lift Button */
+.roycss-btn-lift {
+    transition: none;
+  }
+}
+`,
   },
 
   // 10. btn-slide-bg
@@ -379,7 +456,18 @@ export const effectsBatch3: CSSEffect[] = [
 
 .roycss-btn-slide-bg:hover::before {
   inset-inline-start: 0;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Slide Background Button */
+.roycss-btn-slide-bg {
+    transition: none;
+  }
+  .roycss-btn-slide-bg::before {
+    transition: none;
+  }
+}
+`,
   },
 
   // 11. btn-flip
@@ -408,7 +496,15 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-btn-flip:hover {
   transform: rotateY(360deg);
   background: oklch(0.645 0.215 16.44);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Flip Button */
+.roycss-btn-flip {
+    transition: none;
+  }
+}
+`,
   },
 
   // 12. btn-3d-push
@@ -443,7 +539,15 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-btn-3d-push:active {
   transform: translateY(5px);
   box-shadow: 0 0 0 oklch(0.648 0.175 131.68), 0 1px 4px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* 3D Push Button */
+.roycss-btn-3d-push {
+    transition: none;
+  }
+}
+`,
   },
 
   // 13. btn-neon
@@ -476,7 +580,15 @@ export const effectsBatch3: CSSEffect[] = [
   color: oklch(1 0 89.88);
   box-shadow: 0 0 20px oklch(0.715 0.126 215.22), 0 0 40px oklch(0.715 0.126 215.22), inset 0 0 15px color-mix(in oklch, oklch(0.715 0.126 215.22) 60%, transparent);
   text-shadow: 0 0 10px oklch(1 0 89.88), 0 0 20px oklch(0.715 0.126 215.22);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Neon Button */
+.roycss-btn-neon {
+    transition: none;
+  }
+}
+`,
   },
 
   // 14. btn-gradient
@@ -511,7 +623,16 @@ export const effectsBatch3: CSSEffect[] = [
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Animated Gradient Button */
+.roycss-btn-gradient {
+    animation: none;
+    transition: none;
+  }
+}
+`,
   },
 
   // 15. btn-outline-fill
@@ -560,7 +681,18 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-btn-outline-fill:hover::before {
   inline-size: 320px;
   block-size: 320px;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Radial Fill Button */
+.roycss-btn-outline-fill {
+    transition: none;
+  }
+  .roycss-btn-outline-fill::before {
+    transition: none;
+  }
+}
+`,
   },
 
   // 16. btn-icon-slide
@@ -608,7 +740,18 @@ export const effectsBatch3: CSSEffect[] = [
   opacity: 1;
   inline-size: 16px;
   transform: translateX(0);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Icon Slide-In Button */
+.roycss-btn-icon-slide {
+    transition: none;
+  }
+  .roycss-btn-icon-slide::after {
+    transition: none;
+  }
+}
+`,
   },
 
   // 17. btn-arrow-slide
@@ -649,7 +792,18 @@ export const effectsBatch3: CSSEffect[] = [
 
 .roycss-btn-arrow-slide:hover::after {
   transform: translateX(4px);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Arrow Slide Button */
+.roycss-btn-arrow-slide {
+    transition: none;
+  }
+  .roycss-btn-arrow-slide::after {
+    transition: none;
+  }
+}
+`,
   },
 
   // 18. btn-border-glow
@@ -678,7 +832,15 @@ export const effectsBatch3: CSSEffect[] = [
   border-color: oklch(0.704 0.123 182.5);
   color: oklch(0.855 0.125 181.07);
   box-shadow: 0 0 18px color-mix(in oklch, oklch(0.704 0.123 182.5) 55%, transparent), inset 0 0 12px color-mix(in oklch, oklch(0.704 0.123 182.5) 20%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Border Glow Button */
+.roycss-btn-border-glow {
+    transition: none;
+  }
+}
+`,
   },
 
   // 19. btn-shadow-push
@@ -712,7 +874,15 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-btn-shadow-push:active {
   transform: translate(5px, 5px);
   box-shadow: 0 0 0 oklch(0.396 0.133 25.72);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Shadow Push Button */
+.roycss-btn-shadow-push {
+    transition: none;
+  }
+}
+`,
   },
 
   // 20. btn-liquid
@@ -747,7 +917,18 @@ export const effectsBatch3: CSSEffect[] = [
   0%, 100% { transform: skew(0); }
   25% { transform: skew(-4deg); }
   75% { transform: skew(4deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Liquid Button */
+.roycss-btn-liquid {
+    transition: none;
+  }
+  .roycss-btn-liquid:hover {
+    animation: none;
+  }
+}
+`,
   },
 
   // 21. btn-morph
@@ -777,7 +958,15 @@ export const effectsBatch3: CSSEffect[] = [
   padding: 18px 28px;
   transform: rotate(8deg);
   background: oklch(0.709 0.159 293.54);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Morph Button */
+.roycss-btn-morph {
+    transition: none;
+  }
+}
+`,
   },
 
   // 22. btn-expand
@@ -807,7 +996,15 @@ export const effectsBatch3: CSSEffect[] = [
   padding: 10px 38px;
   letter-spacing: 4px;
   background: oklch(0.596 0.127 163.23);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Expand Button */
+.roycss-btn-expand {
+    transition: none;
+  }
+}
+`,
   },
 
   // 23. btn-rotate
@@ -835,7 +1032,15 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-btn-rotate:hover {
   transform: rotate(-4deg) scale(1.06);
   background: oklch(0.666 0.157 58.32);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Rotate Button */
+.roycss-btn-rotate {
+    transition: none;
+  }
+}
+`,
   },
 
   // 24. btn-skew
@@ -863,7 +1068,15 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-btn-skew:hover {
   transform: skewX(-15deg);
   background: oklch(0.592 0.218 0.58);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Skew Button */
+.roycss-btn-skew {
+    transition: none;
+  }
+}
+`,
   },
 
   // 25. btn-sparkle
@@ -923,7 +1136,19 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-btn-sparkle:hover::after {
   opacity: 1;
   transform: translateY(10px) rotate(-180deg);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Sparkle Button */
+.roycss-btn-sparkle {
+    transition: none;
+  }
+  .roycss-btn-sparkle::before,
+.roycss-btn-sparkle::after {
+    transition: none;
+  }
+}
+`,
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -976,7 +1201,15 @@ export const effectsBatch3: CSSEffect[] = [
   to {
     box-shadow: 0 0 22px color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent), 0 0 44px color-mix(in oklch, oklch(0.696 0.149 162.48) 20%, transparent), inset 0 0 22px color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Neon Card */
+.roycss-card-neon {
+    animation: none;
+  }
+}
+`,
   },
 
   // 3. card-spotlight (existing — enhanced with base card styling, CSS-only spotlight)
@@ -1016,7 +1249,14 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-card-spotlight:hover::before {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-card-spotlight::before {
+    transition: none;
+  }
+}
+`,
   },
 
   // 4. card-gradient-border (existing — enhanced with @property so it animates)
@@ -1059,7 +1299,14 @@ export const effectsBatch3: CSSEffect[] = [
 
 @keyframes roy-card-gb-rotate {
   to { --roy-gb-angle: 360deg; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-card-gradient-border::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 5. card-hover-lift
@@ -1084,7 +1331,15 @@ export const effectsBatch3: CSSEffect[] = [
   transform: translateY(-10px);
   box-shadow: 0 22px 44px color-mix(in oklch, oklch(0 0 0) 45%, transparent);
   border-color: color-mix(in oklch, oklch(0.696 0.149 162.48) 45%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Lift Card */
+.roycss-card-hover-lift {
+    transition: none;
+  }
+}
+`,
   },
 
   // 6. card-hover-zoom
@@ -1108,7 +1363,15 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-card-hover-zoom:hover {
   transform: scale(1.08);
   box-shadow: 0 16px 32px color-mix(in oklch, oklch(0.704 0.123 182.5) 30%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Zoom Card */
+.roycss-card-hover-zoom {
+    transition: none;
+  }
+}
+`,
   },
 
   // 7. card-hover-flip
@@ -1134,7 +1397,15 @@ export const effectsBatch3: CSSEffect[] = [
   transform: rotateY(360deg);
   background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
   color: oklch(1 0 89.88);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Flip Card */
+.roycss-card-hover-flip {
+    transition: none;
+  }
+}
+`,
   },
 
   // 8. card-hover-reveal
@@ -1174,7 +1445,14 @@ export const effectsBatch3: CSSEffect[] = [
 
 .roycss-card-hover-reveal:hover::after {
   inset-block-end: 0;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-card-hover-reveal::after {
+    transition: none;
+  }
+}
+`,
   },
 
   // 9. card-hover-slide
@@ -1199,7 +1477,15 @@ export const effectsBatch3: CSSEffect[] = [
   transform: translateX(14px);
   border-color: color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent);
   box-shadow: -12px 0 30px color-mix(in oklch, oklch(0.696 0.149 162.48) 25%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Slide Card */
+.roycss-card-hover-slide {
+    transition: none;
+  }
+}
+`,
   },
 
   // 10. card-hover-fade
@@ -1233,7 +1519,14 @@ export const effectsBatch3: CSSEffect[] = [
 
 .roycss-card-hover-fade:hover::before {
   opacity: 1;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-card-hover-fade::before {
+    transition: none;
+  }
+}
+`,
   },
 
   // 11. card-hover-glow
@@ -1257,7 +1550,15 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-card-hover-glow:hover {
   border-color: color-mix(in oklch, oklch(0.696 0.149 162.48) 85%, transparent);
   box-shadow: 0 0 28px color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent), 0 0 56px color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Glow Card */
+.roycss-card-hover-glow {
+    transition: none;
+  }
+}
+`,
   },
 
   // 12. card-hover-border
@@ -1290,7 +1591,14 @@ export const effectsBatch3: CSSEffect[] = [
 
 .roycss-card-hover-border:hover::before {
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-card-hover-border::before {
+    transition: none;
+  }
+}
+`,
   },
 
   // 13. card-hover-color
@@ -1315,7 +1623,15 @@ export const effectsBatch3: CSSEffect[] = [
   background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
   color: oklch(1 0 89.88);
   border-color: color-mix(in oklch, oklch(1 0 89.88) 30%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Color Shift Card */
+.roycss-card-hover-color {
+    transition: none;
+  }
+}
+`,
   },
 
   // 14. card-hover-rotate
@@ -1341,7 +1657,15 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-card-hover-rotate:hover {
   transform: rotateX(14deg) rotateY(-14deg);
   box-shadow: -10px 14px 30px color-mix(in oklch, oklch(0 0 0) 40%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* 3D Rotate Card */
+.roycss-card-hover-rotate {
+    transition: none;
+  }
+}
+`,
   },
 
   // 15. card-hover-skew
@@ -1366,7 +1690,15 @@ export const effectsBatch3: CSSEffect[] = [
   transform: skew(-8deg, 2deg);
   background: linear-gradient(135deg, oklch(0.606 0.219 292.72), oklch(0.656 0.212 354.31));
   color: oklch(1 0 89.88);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Skew Card */
+.roycss-card-hover-skew {
+    transition: none;
+  }
+}
+`,
   },
 
   // 16. card-hover-push
@@ -1406,7 +1738,18 @@ export const effectsBatch3: CSSEffect[] = [
 
 .roycss-card-hover-push:hover::before {
   transform: translateZ(-55px);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Depth Push Card */
+.roycss-card-hover-push {
+    transition: none;
+  }
+  .roycss-card-hover-push::before {
+    transition: none;
+  }
+}
+`,
   },
 
   // 17. card-hover-press
@@ -1433,7 +1776,15 @@ export const effectsBatch3: CSSEffect[] = [
   box-shadow: 0 3px 8px color-mix(in oklch, oklch(0 0 0) 40%, transparent);
   background: oklch(0.696 0.149 162.48);
   color: oklch(1 0 89.88);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Press Card */
+.roycss-card-hover-press {
+    transition: none;
+  }
+}
+`,
   },
 
   // 18. card-hover-swing
@@ -1465,7 +1816,18 @@ export const effectsBatch3: CSSEffect[] = [
   60% { transform: rotate(5deg); }
   80% { transform: rotate(-3deg); }
   100% { transform: rotate(0deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Swing Card */
+.roycss-card-hover-swing {
+    transition: none;
+  }
+  .roycss-card-hover-swing:hover {
+    animation: none;
+  }
+}
+`,
   },
 
   // 19. card-hover-wobble
@@ -1497,7 +1859,18 @@ export const effectsBatch3: CSSEffect[] = [
   45% { transform: translateX(-6px) rotate(-2deg); }
   60% { transform: translateX(5px) rotate(2deg); }
   75% { transform: translateX(-3px) rotate(-1deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Wobble Card */
+.roycss-card-hover-wobble {
+    transition: none;
+  }
+  .roycss-card-hover-wobble:hover {
+    animation: none;
+  }
+}
+`,
   },
 
   // 20. card-hover-tada
@@ -1528,7 +1901,18 @@ export const effectsBatch3: CSSEffect[] = [
   30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); }
   40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); }
   100% { transform: scale(1) rotate(0); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Tada Card */
+.roycss-card-hover-tada {
+    transition: none;
+  }
+  .roycss-card-hover-tada:hover {
+    animation: none;
+  }
+}
+`,
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -1568,7 +1952,15 @@ export const effectsBatch3: CSSEffect[] = [
     border-color: oklch(0.773 0.153 163.22);
     box-shadow: 0 0 18px color-mix(in oklch, oklch(0.696 0.149 162.48) 65%, transparent);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Animated Dash Border */
+.roycss-border-animated-dash {
+    animation: none;
+  }
+}
+`,
   },
 
   // 2. border-marching-ants
@@ -1606,7 +1998,15 @@ export const effectsBatch3: CSSEffect[] = [
   to {
     background-position: 12px 0, -12px 100%, 0 -12px, 100% 12px;
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Marching Ants Border */
+.roycss-border-marching-ants {
+    animation: none;
+  }
+}
+`,
   },
 
   // 3. border-corner-brackets
@@ -1731,7 +2131,14 @@ export const effectsBatch3: CSSEffect[] = [
 
 @keyframes roy-border-gradient {
   to { --roy-bg-angle: 360deg; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-border-gradient-animated::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 6. border-neon-pulse
@@ -1767,7 +2174,15 @@ export const effectsBatch3: CSSEffect[] = [
     border-color: oklch(0.725 0.175 349.76);
     box-shadow: 0 0 22px oklch(0.656 0.212 354.31), 0 0 44px oklch(0.656 0.212 354.31), inset 0 0 16px oklch(0.656 0.212 354.31);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Neon Pulse Border */
+.roycss-border-neon-pulse {
+    animation: none;
+  }
+}
+`,
   },
 
   // 7. border-torn-paper
@@ -2004,7 +2419,14 @@ export const effectsBatch3: CSSEffect[] = [
 
 .roycss-border-dashed-draw:hover::before {
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-border-dashed-draw::before {
+    transition: none;
+  }
+}
+`,
   },
 
   // 15. border-inset-glow

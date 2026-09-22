@@ -87,7 +87,15 @@ export const effectsBatch4: CSSEffect[] = [
   60%  { filter: hue-rotate(270deg) saturate(2.5) contrast(1.1); }
   80%  { filter: hue-rotate(120deg) saturate(1.6); }
   100% { filter: hue-rotate(360deg) saturate(1.5); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Glitch Filter */
+.roycss-filter-glitch {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "filter-duotone",
@@ -148,7 +156,15 @@ export const effectsBatch4: CSSEffect[] = [
 @keyframes roy-filter-blur-focus {
   0%, 100% { filter: blur(8px) saturate(1.2); }
   50%      { filter: blur(0px) saturate(1.4); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Blur To Focus */
+.roycss-filter-blur-focus {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "filter-grayscale-hover",
@@ -165,7 +181,15 @@ export const effectsBatch4: CSSEffect[] = [
 }
 .roycss-filter-grayscale-hover:hover {
   filter: grayscale(0) brightness(1) saturate(1.3);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Grayscale Hover */
+.roycss-filter-grayscale-hover {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "filter-sepia",
@@ -195,7 +219,15 @@ export const effectsBatch4: CSSEffect[] = [
 @keyframes roy-filter-hue-rotate {
   0%   { filter: hue-rotate(0deg) saturate(1.5); }
   100% { filter: hue-rotate(360deg) saturate(1.5); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hue Rotate Loop */
+.roycss-filter-hue-rotate {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "filter-invert",
@@ -288,7 +320,18 @@ export const effectsBatch4: CSSEffect[] = [
 .roycss-form-focus-glow:hover::after {
   opacity: 1;
   transform: scale(1);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Focus Glow Input */
+.roycss-form-focus-glow {
+    transition: none;
+  }
+  .roycss-form-focus-glow::after {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "form-label-float",
@@ -337,7 +380,18 @@ export const effectsBatch4: CSSEffect[] = [
   color: oklch(0.696 0.149 162.48);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Floating Label */
+.roycss-form-label-float {
+    transition: none;
+  }
+  .roycss-form-label-float::before {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "form-placeholder-shimmer",
@@ -376,7 +430,14 @@ export const effectsBatch4: CSSEffect[] = [
 @keyframes roy-form-shimmer {
   0%   { background-position: 200% 0; }
   100% { background-position: -200% 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-form-placeholder-shimmer::before {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "form-error-shake",
@@ -408,7 +469,15 @@ export const effectsBatch4: CSSEffect[] = [
   40%      { transform: translateX(5px); }
   60%      { transform: translateX(-3px); }
   80%      { transform: translateX(3px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Error Shake */
+.roycss-form-error-shake {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "form-success-check",
@@ -450,7 +519,14 @@ export const effectsBatch4: CSSEffect[] = [
   0%   { transform: rotate(-45deg) scale(0); }
   60%  { transform: rotate(-45deg) scale(1.4); }
   100% { transform: rotate(-45deg) scale(1); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-form-success-check::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "form-toggle-switch",
@@ -487,7 +563,18 @@ export const effectsBatch4: CSSEffect[] = [
 }
 .roycss-form-toggle-switch:hover > div {
   transform: translateX(26px);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Toggle Switch */
+.roycss-form-toggle-switch {
+    transition: none;
+  }
+  .roycss-form-toggle-switch > div {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "form-checkbox-custom",
@@ -522,7 +609,14 @@ export const effectsBatch4: CSSEffect[] = [
   0%   { transform: rotate(-45deg) translate(1px, -1px) scale(0); }
   60%  { transform: rotate(-45deg) translate(1px, -1px) scale(1.3); }
   100% { transform: rotate(-45deg) translate(1px, -1px) scale(1); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-form-checkbox-custom::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "form-radio-custom",
@@ -556,7 +650,14 @@ export const effectsBatch4: CSSEffect[] = [
 @keyframes roy-form-radio {
   0%   { transform: scale(0.5); box-shadow: 0 0 0 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent); }
   100% { transform: scale(1); box-shadow: 0 0 0 4px color-mix(in oklch, oklch(0.696 0.149 162.48) 0%, transparent); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-form-radio-custom::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "form-search-expand",
@@ -605,7 +706,18 @@ export const effectsBatch4: CSSEffect[] = [
   border-color: oklch(0.696 0.149 162.48);
   background: color-mix(in oklch, oklch(0.696 0.149 162.48) 5%, transparent);
 }
-.roycss-form-search-expand:hover::after { opacity: 1; }`,
+.roycss-form-search-expand:hover::after { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* Search Expand */
+.roycss-form-search-expand {
+    transition: none;
+  }
+  .roycss-form-search-expand::after {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "form-underline-draw",
@@ -643,7 +755,14 @@ export const effectsBatch4: CSSEffect[] = [
 .roycss-form-underline-draw:hover {
   color: oklch(0.979 0.021 166.11);
 }
-.roycss-form-underline-draw:hover::after { inline-size: 100%; }`,
+.roycss-form-underline-draw:hover::after { inline-size: 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-form-underline-draw::after {
+    transition: none;
+  }
+}
+`,
   },
 
   /* ═════════════════════════════════════════════════════════════
@@ -688,7 +807,17 @@ export const effectsBatch4: CSSEffect[] = [
   transition: top 0.4s cubic-bezier(0.65, 0, 0.35, 1);
 }
 .roycss-nav-menu-slide:hover::before { transform: translateY(-100%); }
-.roycss-nav-menu-slide:hover::after  { inset-block-start: 50%; transform: translateY(-50%); }`,
+.roycss-nav-menu-slide:hover::after  { inset-block-start: 50%; transform: translateY(-50%); }
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-menu-slide::before {
+    transition: none;
+  }
+  .roycss-nav-menu-slide::after {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "nav-menu-fade",
@@ -737,7 +866,17 @@ export const effectsBatch4: CSSEffect[] = [
 .roycss-nav-menu-fade:hover::after {
   opacity: 1;
   transform: scale(1);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-menu-fade::before {
+    transition: none;
+  }
+  .roycss-nav-menu-fade::after {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "nav-menu-scale",
@@ -784,7 +923,18 @@ export const effectsBatch4: CSSEffect[] = [
   opacity: 1;
   transform: scale(1);
   box-shadow: 0 0 22px color-mix(in oklch, oklch(0.696 0.149 162.48) 35%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Menu Scale */
+.roycss-nav-menu-scale {
+    transition: none;
+  }
+  .roycss-nav-menu-scale::after {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "nav-accordion",
@@ -836,7 +986,21 @@ export const effectsBatch4: CSSEffect[] = [
 .roycss-nav-accordion:hover::after {
   opacity: 1;
   transform: translateY(0);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Accordion Menu */
+.roycss-nav-accordion {
+    transition: none;
+  }
+  .roycss-nav-accordion::before {
+    transition: none;
+  }
+  .roycss-nav-accordion::after {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "nav-tabs-underline",
@@ -874,7 +1038,14 @@ export const effectsBatch4: CSSEffect[] = [
   0%, 100% { inset-inline-start: 24px; }
   33%      { inset-inline-start: 80px; }
   66%      { inset-inline-start: 136px; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-tabs-underline::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "nav-breadcrumb",
@@ -914,7 +1085,14 @@ export const effectsBatch4: CSSEffect[] = [
 @keyframes roy-nav-breadcrumb {
   0%, 100% { transform: translateX(-180%); }
   50%      { transform: translateX(80%); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-breadcrumb::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "nav-pagination",
@@ -956,7 +1134,14 @@ export const effectsBatch4: CSSEffect[] = [
   40%  { transform: translateX(0); }
   60%  { transform: translateX(22px); }
   80%, 100% { transform: translateX(44px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-pagination::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "nav-stepper",
@@ -1058,7 +1243,14 @@ export const effectsBatch4: CSSEffect[] = [
     32px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
     48px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
     64px 0 0 oklch(0.696 0.149 162.48); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-progress-indicator::before {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "nav-dropdown",
@@ -1114,7 +1306,18 @@ export const effectsBatch4: CSSEffect[] = [
 .roycss-nav-dropdown:hover::after {
   opacity: 1;
   transform: translateY(0);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Dropdown Reveal */
+.roycss-nav-dropdown {
+    transition: none;
+  }
+  .roycss-nav-dropdown::after {
+    transition: none;
+  }
+}
+`,
   },
 
   /* ═════════════════════════════════════════════════════════════
@@ -1143,7 +1346,15 @@ export const effectsBatch4: CSSEffect[] = [
 @keyframes roy-misc-confetti {
   from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; }
   to   { background-position: 0 40px, 0 55px, 0 45px, 0 60px, 0 50px, 0 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Confetti Rain */
+.roycss-misc-confetti {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "misc-snow",
@@ -1166,7 +1377,15 @@ export const effectsBatch4: CSSEffect[] = [
 @keyframes roy-misc-snow {
   from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
   to   { background-position: 5px 30px, -3px 45px, 2px 35px, -2px 25px, 0 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Snowfall */
+.roycss-misc-snow {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "misc-rain",
@@ -1187,7 +1406,15 @@ export const effectsBatch4: CSSEffect[] = [
 @keyframes roy-misc-rain {
   from { background-position: 0 0, 0 0, 0 0; }
   to   { background-position: 5px 30px, 7px 40px, 0 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Rain Streaks */
+.roycss-misc-rain {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "misc-bubbles",
@@ -1209,7 +1436,15 @@ export const effectsBatch4: CSSEffect[] = [
 @keyframes roy-misc-bubbles {
   from { background-position: 0 0, 0 0, 0 0, 0 0; }
   to   { background-position: 0 -60px, 0 -80px, 0 -50px, 0 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Rising Bubbles */
+.roycss-misc-bubbles {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "misc-fireflies",
@@ -1232,7 +1467,15 @@ export const effectsBatch4: CSSEffect[] = [
   0%   { background-position: 0 0, 0 0, 0 0, 0 0; filter: brightness(0.6); }
   50%  { filter: brightness(1.5); }
   100% { background-position: 20px -15px, -25px 10px, 15px 20px, 0 0; filter: brightness(0.85); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Fireflies */
+.roycss-misc-fireflies {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "misc-sparkles",
@@ -1255,7 +1498,15 @@ export const effectsBatch4: CSSEffect[] = [
 @keyframes roy-misc-sparkles {
   0%   { opacity: 0.4; filter: brightness(0.8); }
   100% { opacity: 1; filter: brightness(1.6); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Twinkling Sparkles */
+.roycss-misc-sparkles {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "misc-fireworks",
@@ -1309,7 +1560,17 @@ export const effectsBatch4: CSSEffect[] = [
 @keyframes roy-misc-firework2 {
   0%   { transform: scale(0); opacity: 1; }
   100% { transform: scale(2.6); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-misc-fireworks::before {
+    animation: none;
+  }
+  .roycss-misc-fireworks::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "misc-ripple-click",
@@ -1358,7 +1619,14 @@ export const effectsBatch4: CSSEffect[] = [
 @keyframes roy-misc-ripple {
   0%   { transform: scale(0); opacity: 1; }
   100% { transform: scale(12); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-misc-ripple-click:hover::before {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "misc-wave",
@@ -1379,7 +1647,15 @@ export const effectsBatch4: CSSEffect[] = [
 @keyframes roy-misc-wave {
   from { background-position: 0 30%, 0 50%, 0 70%, 0 0; }
   to   { background-position: 40px 30%, -30px 50%, 50px 70%, 0 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Wave Lines */
+.roycss-misc-wave {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "misc-pulse-ring-expand",
@@ -1424,7 +1700,18 @@ export const effectsBatch4: CSSEffect[] = [
 @keyframes roy-misc-pulse-ring {
   0%   { transform: scale(1); opacity: 0.8; }
   100% { transform: scale(5); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-misc-pulse-ring-expand::before,
+.roycss-misc-pulse-ring-expand::after {
+    animation: none;
+  }
+  .roycss-misc-pulse-ring-expand::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "misc-shimmer-overlay",
@@ -1464,7 +1751,14 @@ export const effectsBatch4: CSSEffect[] = [
 @keyframes roy-misc-shimmer {
   0%        { inset-inline-start: -100%; }
   60%, 100% { inset-inline-start: 200%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-misc-shimmer-overlay::before {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "misc-scan-line",
@@ -1506,7 +1800,14 @@ export const effectsBatch4: CSSEffect[] = [
 @keyframes roy-misc-scan {
   0%, 100% { inset-block-start: 0; }
   50%      { inset-block-start: 100%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-misc-scan-line::before {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "misc-hologram",
@@ -1553,7 +1854,15 @@ export const effectsBatch4: CSSEffect[] = [
 @keyframes roy-misc-hologram {
   0%   { background-position: 0% 0%; }
   100% { background-position: 400% 0%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hologram Card */
+.roycss-misc-hologram {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "misc-vhs-effect",
@@ -1600,7 +1909,14 @@ export const effectsBatch4: CSSEffect[] = [
 @keyframes roy-misc-vhs {
   0%   { inset-block-start: -50%; }
   100% { inset-block-start: 100%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-misc-vhs-effect::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "misc-typewriter",
@@ -1631,6 +1947,14 @@ export const effectsBatch4: CSSEffect[] = [
 @keyframes roy-misc-typewriter-cursor {
   0%, 100% { border-color: oklch(0.696 0.149 162.48); }
   50%      { border-color: transparent; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Typewriter */
+.roycss-misc-typewriter {
+    animation: none;
+  }
+}
+`,
   },
 ];

@@ -101,7 +101,14 @@ export const effectsBatch10: CSSEffect[] = [
   .roycss-anchor-tooltip:focus-within::after {
     transform: translate(-50%, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-anchor-tooltip::after {
+    transition: none;
+  }
+}
+`,
   },
 
   // 2 ─ Has Parent Highlight ────────────────────────────────────────
@@ -153,7 +160,18 @@ export const effectsBatch10: CSSEffect[] = [
     border-color: oklch(0.696 0.149 162.48);
     box-shadow: 0 0 0 3px color-mix(in oklch, oklch(0.696 0.149 162.48) 25%, transparent);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Has Parent Highlight — :has() relational selector */
+.roycss-has-parent-highlight {
+    transition: none;
+  }
+  .roycss-has-parent-highlight > span {
+    transition: none;
+  }
+}
+`,
   },
 
   // 3 ─ Container Query Card ────────────────────────────────────────
@@ -219,7 +237,15 @@ export const effectsBatch10: CSSEffect[] = [
   .roycss-container-query-card {
     grid-template-columns: 1fr 1fr;
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Container Query Card — @container queries */
+.roycss-container-query-card {
+    transition: none;
+  }
+}
+`,
   },
 
   // 4 ─ Starting Style Fade ─────────────────────────────────────────
@@ -264,7 +290,16 @@ export const effectsBatch10: CSSEffect[] = [
    still demonstrates the fade-in behavior. */
 @supports not (animation-timeline: --fake) {
   /* no-op — modern browsers handle @starting-style natively */
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Starting Style Fade — @starting-style for first-render transition */
+.roycss-starting-style-fade {
+    animation: none;
+    transition: none;
+  }
+}
+`,
   },
 
   // 5 ─ Auto Height Expand ──────────────────────────────────────────
@@ -317,7 +352,14 @@ export const effectsBatch10: CSSEffect[] = [
     max-block-size: 200px;
     block-size: auto;
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-auto-height-expand::after {
+    transition: none;
+  }
+}
+`,
   },
 
   // 6 ─ View Transition Snapshot ───────────────────────────────────
@@ -367,7 +409,25 @@ export const effectsBatch10: CSSEffect[] = [
    still demonstrates the visual transition. */
 @supports not (view-transition-name: none) {
   /* morph animation above already covers the visual demo */
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* View Transition Snapshot — view-transition-name */
+.roycss-view-transition-snapshot {
+    animation: none;
+  }
+  /* ::view-transition-group pseudo for cross-snapshot morph */
+::view-transition-group(roy-vt-card) {
+    animation: none;
+  }
+  ::view-transition-old(roy-vt-card) {
+    animation: none;
+  }
+  ::view-transition-new(roy-vt-card) {
+    animation: none;
+  }
+}
+`,
   },
 
   // 7 ─ Balanced Text ───────────────────────────────────────────────
@@ -454,7 +514,15 @@ export const effectsBatch10: CSSEffect[] = [
     color: oklch(0.378 0.073 168.94);
     box-shadow: 0 8px 24px color-mix(in oklch, oklch(0.696 0.149 162.48) 45%, transparent);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Relative Color Hover — rgb(from …) syntax */
+.roycss-relative-color-hover {
+    transition: none;
+  }
+}
+`,
   },
 
   // 9 ─ Color Mix Gradient ──────────────────────────────────────────
@@ -509,7 +577,18 @@ export const effectsBatch10: CSSEffect[] = [
   .roycss-color-mix-gradient {
     background: linear-gradient(135deg, oklch(0.645 0.215 16.44), oklch(0.455 0.163 321.86), oklch(0.715 0.126 215.22));
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Color Mix Gradient — color-mix() interpolation */
+.roycss-color-mix-gradient {
+    transition: none;
+  }
+  .roycss-color-mix-gradient::after {
+    transition: none;
+  }
+}
+`,
   },
 
   // 10 ─ Light Dark Auto ───────────────────────────────────────────
@@ -553,7 +632,16 @@ export const effectsBatch10: CSSEffect[] = [
     border-color: oklch(0.372 0.039 257.29);
   }
   .roycss-light-dark-auto::after { color: oklch(0.754 0.139 232.66); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Light Dark Auto — light-dark() + color-scheme cycling */
+.roycss-light-dark-auto {
+    animation: none;
+    transition: none;
+  }
+}
+`,
   },
 
   // ════════════════════════════════════════════════════════════════
@@ -596,7 +684,14 @@ export const effectsBatch10: CSSEffect[] = [
 .roycss-property-angle-rotate > div { display: none; }
 @keyframes roy-b10-par-spin {
   to { --roy-b10-par-angle: 360deg; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-property-angle-rotate {
+    animation: none;
+  }
+}
+`,
   },
 
   // 12 ─ Property Color Shift ───────────────────────────────────────
@@ -631,7 +726,14 @@ export const effectsBatch10: CSSEffect[] = [
 .roycss-property-color-shift > div { display: none; }
 @keyframes roy-b10-pcs-cycle {
   to { --roy-b10-pcs-hue: 360deg; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-property-color-shift {
+    animation: none;
+  }
+}
+`,
   },
 
   // 13 ─ SVG Turbulence Distort ────────────────────────────────────
@@ -671,7 +773,15 @@ export const effectsBatch10: CSSEffect[] = [
 /* Fallback: if SVG filters unsupported, drop the filter */
 @supports not (filter: url(#fake)) {
   .roycss-svg-turbulence-distort { filter: none; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* SVG Turbulence Distort — feTurbulence + feDisplacementMap */
+.roycss-svg-turbulence-distort {
+    animation: none;
+  }
+}
+`,
   },
 
   // 14 ─ SVG Displacement Wave ─────────────────────────────────────
@@ -712,7 +822,15 @@ export const effectsBatch10: CSSEffect[] = [
 }
 @supports not (filter: url(#fake)) {
   .roycss-svg-displacement-wave { filter: none; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* SVG Displacement Wave — animated feDisplacementMap */
+.roycss-svg-displacement-wave {
+    animation: none;
+  }
+}
+`,
   },
 
   // 15 ─ SVG Gooey Merge ───────────────────────────────────────────
@@ -770,7 +888,17 @@ export const effectsBatch10: CSSEffect[] = [
 }
 @supports not (filter: url(#fake)) {
   .roycss-svg-gooey-merge { filter: none; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-svg-gooey-merge::before {
+    animation: none;
+  }
+  .roycss-svg-gooey-merge::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 16 ─ Offset Path Orbit ─────────────────────────────────────────
@@ -822,7 +950,14 @@ export const effectsBatch10: CSSEffect[] = [
     from { transform: rotate(0deg) translateX(70px) rotate(0deg); }
     to   { transform: rotate(360deg) translateX(70px) rotate(-360deg); }
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-offset-path-orbit::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 17 ─ Offset Path Wave ──────────────────────────────────────────
@@ -871,7 +1006,14 @@ export const effectsBatch10: CSSEffect[] = [
     75%  { inset-inline-start: 75%; inset-block-start: 80%; }
     100% { inset-inline-start: 100%; inset-block-start: 50%; }
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-offset-path-wave::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 18 ─ Mask Composite Reveal ─────────────────────────────────────
@@ -921,7 +1063,14 @@ export const effectsBatch10: CSSEffect[] = [
   .roycss-mask-composite-reveal::before {
     -webkit-mask: radial-gradient(circle 60px at 50% 50%, oklch(0 0 0) 80%, transparent);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-mask-composite-reveal::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 19 ─ Mix Blend Difference ──────────────────────────────────────
@@ -970,7 +1119,17 @@ export const effectsBatch10: CSSEffect[] = [
 @keyframes roy-b10-mbd-b {
   0%, 100% { transform: translateX(0); }
   50%      { transform: translateX(-28px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-mix-blend-difference::before {
+    animation: none;
+  }
+  .roycss-mix-blend-difference::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 20 ─ Mix Blend Exclusion ───────────────────────────────────────
@@ -1020,7 +1179,17 @@ export const effectsBatch10: CSSEffect[] = [
 @keyframes roy-b10-mbe-b {
   0%, 100% { transform: translateY(20px) rotate(0deg); }
   50%      { transform: translateY(0) rotate(180deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-mix-blend-exclusion::before {
+    animation: none;
+  }
+  .roycss-mix-blend-exclusion::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 21 ─ Clip Path Hexagon ─────────────────────────────────────────
@@ -1052,7 +1221,15 @@ export const effectsBatch10: CSSEffect[] = [
 }
 @keyframes roy-b10-cph-spin {
   to { transform: rotate(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Clip Path Hexagon — clip-path: polygon() */
+.roycss-clip-path-hexagon {
+    animation: none;
+  }
+}
+`,
   },
 
   // 22 ─ Clip Path Star ────────────────────────────────────────────
@@ -1086,7 +1263,15 @@ export const effectsBatch10: CSSEffect[] = [
 @keyframes roy-b10-cps-twinkle {
   0%, 100% { filter: drop-shadow(0 0 6px color-mix(in oklch, oklch(0.837 0.164 84.43) 50%, transparent)); transform: scale(1); }
   50%      { filter: drop-shadow(0 0 18px color-mix(in oklch, oklch(0.837 0.164 84.43) 95%, transparent)); transform: scale(1.06); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Clip Path Star — 5-point star polygon */
+.roycss-clip-path-star {
+    animation: none;
+  }
+}
+`,
   },
 
   // ════════════════════════════════════════════════════════════════
@@ -1144,7 +1329,14 @@ export const effectsBatch10: CSSEffect[] = [
   60%  { --roy-b10-ppb-progress: 100; }
   80%  { --roy-b10-ppb-progress: 100; }
   100% { --roy-b10-ppb-progress: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-property-progress-bar {
+    animation: none;
+  }
+}
+`,
   },
 
   // 24 ─ Property Conic Loader ─────────────────────────────────────
@@ -1180,7 +1372,14 @@ export const effectsBatch10: CSSEffect[] = [
 }
 @keyframes roy-b10-pcl-spin {
   to { --roy-b10-pcl-angle: 360deg; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-property-conic-loader {
+    animation: none;
+  }
+}
+`,
   },
 
   // 25 ─ Property Gradient Flow ───────────────────────────────────
@@ -1218,7 +1417,14 @@ export const effectsBatch10: CSSEffect[] = [
 .roycss-property-gradient-flow > div { display: none; }
 @keyframes roy-b10-pgf-spin {
   to { --roy-b10-pgf-angle: 360deg; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-property-gradient-flow {
+    animation: none;
+  }
+}
+`,
   },
 
   // 26 ─ Property Shadow Breathe ──────────────────────────────────
@@ -1261,7 +1467,14 @@ export const effectsBatch10: CSSEffect[] = [
 @keyframes roy-b10-psb-breathe {
   0%, 100% { --roy-b10-psb-blur: 0px;   --roy-b10-psb-spread: 0px; }
   50%      { --roy-b10-psb-blur: 40px;  --roy-b10-psb-spread: 8px; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-property-shadow-breathe {
+    animation: none;
+  }
+}
+`,
   },
 
   // 27 ─ Property Hue Cycle ────────────────────────────────────────
@@ -1305,7 +1518,14 @@ export const effectsBatch10: CSSEffect[] = [
   @keyframes roy-b10-phc-fb {
     to { filter: hue-rotate(360deg); }
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-property-hue-cycle {
+    animation: none;
+  }
+}
+`,
   },
 
   // 28 ─ Offset Path Draw ──────────────────────────────────────────
@@ -1360,7 +1580,14 @@ export const effectsBatch10: CSSEffect[] = [
     75%  { inset-inline-start: 160px; inset-block-start: 130px; }
     100% { inset-inline-start: 200px; inset-block-start: 70px; }
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-offset-path-draw::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 29 ─ Scroll Timeline Spin ──────────────────────────────────────
@@ -1403,7 +1630,15 @@ export const effectsBatch10: CSSEffect[] = [
   .roycss-scroll-timeline-spin {
     animation: roy-b10-sts-spin 3s linear infinite;
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scroll Timeline Spin — animation-timeline: scroll() */
+.roycss-scroll-timeline-spin {
+    animation: none;
+  }
+}
+`,
   },
 
   // 30 ─ View Timeline Reveal ──────────────────────────────────────
@@ -1447,7 +1682,15 @@ export const effectsBatch10: CSSEffect[] = [
   .roycss-view-timeline-reveal {
     animation: roy-b10-vtl-reveal 0.8s ease both;
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* View Timeline Reveal — animation-timeline: view() */
+.roycss-view-timeline-reveal {
+    animation: none;
+  }
+}
+`,
   },
 
   // 31 ─ Starting Style Drop In ────────────────────────────────────
@@ -1515,7 +1758,19 @@ export const effectsBatch10: CSSEffect[] = [
 /* Fallback: no @starting-style → animation alone shows the drop-in */
 @supports not (animation-timeline: --fake) {
   /* no-op */
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-starting-style-drop-in::before {
+    animation: none;
+    transition: none;
+  }
+  .roycss-starting-style-drop-in::after {
+    animation: none;
+    transition: none;
+  }
+}
+`,
   },
 
   // 32 ─ Interpolate Size Accordion ───────────────────────────────
@@ -1570,7 +1825,14 @@ export const effectsBatch10: CSSEffect[] = [
     max-block-size: 120px;
     block-size: auto;
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-interpolate-size-accordion::after {
+    transition: none;
+  }
+}
+`,
   },
 
   // ════════════════════════════════════════════════════════════════
@@ -1615,7 +1877,15 @@ export const effectsBatch10: CSSEffect[] = [
       radial-gradient(circle at 75% 80%, oklch(0.606 0.219 292.72), transparent 45%),
       linear-gradient(135deg, oklch(0.208 0.04 265.75), oklch(0.279 0.037 260.03));
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Color Mix Mesh — layered radial gradients via color-mix() */
+.roycss-color-mix-mesh {
+    animation: none;
+  }
+}
+`,
   },
 
   // 34 ─ Relative Color Tint ───────────────────────────────────────
@@ -1656,7 +1926,15 @@ export const effectsBatch10: CSSEffect[] = [
       radial-gradient(circle at 70% 70%, color-mix(in oklch, oklch(0.457 0.215 277.02) 70%, transparent), transparent 55%),
       linear-gradient(135deg, oklch(0.585 0.204 277.12), oklch(0.257 0.086 281.29));
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Relative Color Tint — derived shades via rgb(from …) */
+.roycss-relative-color-tint {
+    animation: none;
+  }
+}
+`,
   },
 
   // 35 ─ Conic Gradient Clock ─────────────────────────────────────
@@ -1721,7 +1999,14 @@ export const effectsBatch10: CSSEffect[] = [
 }
 @keyframes roy-b10-cgc-tick {
   to { --roy-b10-cgc-sweep: 360deg; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-conic-gradient-clock::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 36 ─ Double Conic Spinner ─────────────────────────────────────
@@ -1779,7 +2064,14 @@ export const effectsBatch10: CSSEffect[] = [
     --roy-b10-dcs-a: 360deg;
     --roy-b10-dcs-b: -270deg;
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-double-conic-spinner::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 37 ─ Mask Radial Reveal ───────────────────────────────────────
@@ -1839,7 +2131,14 @@ export const effectsBatch10: CSSEffect[] = [
     0%, 100% { opacity: 1; }
     60%, 80% { opacity: 0; }
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-mask-radial-reveal::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 38 ─ Mask Linear Wipe ─────────────────────────────────────────
@@ -1895,7 +2194,14 @@ export const effectsBatch10: CSSEffect[] = [
     0%, 100% { clip-path: inset(0 100% 0 0); }
     50%      { clip-path: inset(0 0 0 0); }
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-mask-linear-wipe::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 39 ─ Backdrop Multi Filter ────────────────────────────────────
@@ -1948,7 +2254,14 @@ export const effectsBatch10: CSSEffect[] = [
     backdrop-filter: none;
     animation: none;
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-backdrop-multi-filter::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 40 ─ Scrollbar Gutter Stable ──────────────────────────────────

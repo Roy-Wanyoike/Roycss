@@ -27,7 +27,15 @@ export const effectsBatch5: CSSEffect[] = [
 @keyframes roy-fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Fade In */
+.roycss-fade-in {
+    animation: none;
+  }
+}
+`,
   },
 
   // 2. fade-in-down
@@ -52,7 +60,15 @@ export const effectsBatch5: CSSEffect[] = [
     opacity: 1;
     transform: translate3d(0, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Fade In Down */
+.roycss-fade-in-down {
+    animation: none;
+  }
+}
+`,
   },
 
   // 3. fade-in-left
@@ -77,7 +93,15 @@ export const effectsBatch5: CSSEffect[] = [
     opacity: 1;
     transform: translate3d(0, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Fade In Left */
+.roycss-fade-in-left {
+    animation: none;
+  }
+}
+`,
   },
 
   // 4. fade-in-right
@@ -102,7 +126,15 @@ export const effectsBatch5: CSSEffect[] = [
     opacity: 1;
     transform: translate3d(0, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Fade In Right */
+.roycss-fade-in-right {
+    animation: none;
+  }
+}
+`,
   },
 
   // 5. fade-out
@@ -121,7 +153,15 @@ export const effectsBatch5: CSSEffect[] = [
 @keyframes roy-fade-out {
   from { opacity: 1; }
   to { opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Fade Out */
+.roycss-fade-out {
+    animation: none;
+  }
+}
+`,
   },
 
   // 6. fade-out-up
@@ -146,7 +186,15 @@ export const effectsBatch5: CSSEffect[] = [
     opacity: 0;
     transform: translate3d(0, -28px, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Fade Out Up */
+.roycss-fade-out-up {
+    animation: none;
+  }
+}
+`,
   },
 
   // 7. fade-out-left
@@ -171,7 +219,15 @@ export const effectsBatch5: CSSEffect[] = [
     opacity: 0;
     transform: translate3d(-32px, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Fade Out Left */
+.roycss-fade-out-left {
+    animation: none;
+  }
+}
+`,
   },
 
   // 8. fade-out-right
@@ -196,7 +252,15 @@ export const effectsBatch5: CSSEffect[] = [
     opacity: 0;
     transform: translate3d(32px, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Fade Out Right */
+.roycss-fade-out-right {
+    animation: none;
+  }
+}
+`,
   },
 
   // 9. fade-in-bl (bottom-left)
@@ -221,7 +285,15 @@ export const effectsBatch5: CSSEffect[] = [
     opacity: 1;
     transform: translate3d(0, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Fade In Bottom-Left */
+.roycss-fade-in-bl {
+    animation: none;
+  }
+}
+`,
   },
 
   // 10. fade-in-br (bottom-right)
@@ -246,7 +318,15 @@ export const effectsBatch5: CSSEffect[] = [
     opacity: 1;
     transform: translate3d(0, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Fade In Bottom-Right */
+.roycss-fade-in-br {
+    animation: none;
+  }
+}
+`,
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -274,7 +354,15 @@ export const effectsBatch5: CSSEffect[] = [
   to {
     transform: translate3d(0, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Slide In Top */
+.roycss-slide-in-top {
+    animation: none;
+  }
+}
+`,
   },
 
   // 12. slide-in-bottom
@@ -298,7 +386,15 @@ export const effectsBatch5: CSSEffect[] = [
   to {
     transform: translate3d(0, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Slide In Bottom */
+.roycss-slide-in-bottom {
+    animation: none;
+  }
+}
+`,
   },
 
   // 13. slide-out-top
@@ -322,7 +418,15 @@ export const effectsBatch5: CSSEffect[] = [
     visibility: hidden;
     transform: translate3d(0, -100%, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Slide Out Top */
+.roycss-slide-out-top {
+    animation: none;
+  }
+}
+`,
   },
 
   // 14. slide-out-bottom
@@ -346,7 +450,15 @@ export const effectsBatch5: CSSEffect[] = [
     visibility: hidden;
     transform: translate3d(0, 100%, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Slide Out Bottom */
+.roycss-slide-out-bottom {
+    animation: none;
+  }
+}
+`,
   },
 
   // 15. slide-out-left
@@ -370,7 +482,15 @@ export const effectsBatch5: CSSEffect[] = [
     visibility: hidden;
     transform: translate3d(-100%, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Slide Out Left */
+.roycss-slide-out-left {
+    animation: none;
+  }
+}
+`,
   },
 
   // 16. slide-out-right
@@ -394,7 +514,15 @@ export const effectsBatch5: CSSEffect[] = [
     visibility: hidden;
     transform: translate3d(100%, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Slide Out Right */
+.roycss-slide-out-right {
+    animation: none;
+  }
+}
+`,
   },
 
   // 17. slide-diagonal
@@ -417,7 +545,15 @@ export const effectsBatch5: CSSEffect[] = [
   100% {
     transform: translate3d(30px, -30px, 0) rotate(3deg);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Slide Diagonal */
+.roycss-slide-diagonal {
+    animation: none;
+  }
+}
+`,
   },
 
   // 18. slide-rotate-in
@@ -445,7 +581,15 @@ export const effectsBatch5: CSSEffect[] = [
   100% {
     transform: translate3d(0, 0, 0) rotate(0deg);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Slide Rotate In */
+.roycss-slide-rotate-in {
+    animation: none;
+  }
+}
+`,
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -479,7 +623,15 @@ export const effectsBatch5: CSSEffect[] = [
     opacity: 1;
     transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Zoom In Left */
+.roycss-zoom-in-left {
+    animation: none;
+  }
+}
+`,
   },
 
   // 20. zoom-in-right
@@ -509,7 +661,15 @@ export const effectsBatch5: CSSEffect[] = [
     opacity: 1;
     transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Zoom In Right */
+.roycss-zoom-in-right {
+    animation: none;
+  }
+}
+`,
   },
 
   // 21. zoom-in-up
@@ -539,7 +699,15 @@ export const effectsBatch5: CSSEffect[] = [
     opacity: 1;
     transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Zoom In Up */
+.roycss-zoom-in-up {
+    animation: none;
+  }
+}
+`,
   },
 
   // 22. zoom-in-down
@@ -569,7 +737,15 @@ export const effectsBatch5: CSSEffect[] = [
     opacity: 1;
     transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Zoom In Down */
+.roycss-zoom-in-down {
+    animation: none;
+  }
+}
+`,
   },
 
   // 23. zoom-out-left
@@ -595,7 +771,15 @@ export const effectsBatch5: CSSEffect[] = [
     opacity: 0;
     transform: scale3d(0.1, 0.1, 0.1) translate3d(-1000px, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Zoom Out Left */
+.roycss-zoom-out-left {
+    animation: none;
+  }
+}
+`,
   },
 
   // 24. zoom-out-up
@@ -621,7 +805,15 @@ export const effectsBatch5: CSSEffect[] = [
     opacity: 0;
     transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -1000px, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Zoom Out Up */
+.roycss-zoom-out-up {
+    animation: none;
+  }
+}
+`,
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -659,7 +851,15 @@ export const effectsBatch5: CSSEffect[] = [
   100% {
     transform: translate3d(0, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Bounce In Left */
+.roycss-bounce-in-left {
+    animation: none;
+  }
+}
+`,
   },
 
   // 26. bounce-in-right
@@ -693,7 +893,15 @@ export const effectsBatch5: CSSEffect[] = [
   100% {
     transform: translate3d(0, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Bounce In Right */
+.roycss-bounce-in-right {
+    animation: none;
+  }
+}
+`,
   },
 
   // 27. bounce-in-up
@@ -727,7 +935,15 @@ export const effectsBatch5: CSSEffect[] = [
   100% {
     transform: translate3d(0, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Bounce In Up */
+.roycss-bounce-in-up {
+    animation: none;
+  }
+}
+`,
   },
 
   // 28. bounce-in-down
@@ -761,7 +977,15 @@ export const effectsBatch5: CSSEffect[] = [
   100% {
     transform: translate3d(0, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Bounce In Down */
+.roycss-bounce-in-down {
+    animation: none;
+  }
+}
+`,
   },
 
   // 29. bounce-rotate
@@ -795,7 +1019,15 @@ export const effectsBatch5: CSSEffect[] = [
   100% {
     transform: scale(1) rotate(0deg);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Bounce Rotate */
+.roycss-bounce-rotate {
+    animation: none;
+  }
+}
+`,
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -826,7 +1058,15 @@ export const effectsBatch5: CSSEffect[] = [
     filter: blur(0px);
     transform: scale(1);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Blur In */
+.roycss-blur-in {
+    animation: none;
+  }
+}
+`,
   },
 
   // 31. blur-in-up
@@ -853,7 +1093,15 @@ export const effectsBatch5: CSSEffect[] = [
     filter: blur(0px);
     transform: translate3d(0, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Blur In Up */
+.roycss-blur-in-up {
+    animation: none;
+  }
+}
+`,
   },
 
   // 32. blur-out
@@ -880,7 +1128,15 @@ export const effectsBatch5: CSSEffect[] = [
     filter: blur(24px);
     transform: scale(0.95);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Blur Out */
+.roycss-blur-out {
+    animation: none;
+  }
+}
+`,
   },
 
   // 33. blur-out-down
@@ -907,7 +1163,15 @@ export const effectsBatch5: CSSEffect[] = [
     filter: blur(18px);
     transform: translate3d(0, 40px, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Blur Out Down */
+.roycss-blur-out-down {
+    animation: none;
+  }
+}
+`,
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -939,7 +1203,15 @@ export const effectsBatch5: CSSEffect[] = [
   100% {
     transform: scale(1);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scale Grow */
+.roycss-scale-grow {
+    animation: none;
+  }
+}
+`,
   },
 
   // 35. scale-shrink
@@ -967,7 +1239,15 @@ export const effectsBatch5: CSSEffect[] = [
   100% {
     transform: scale(1);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scale Shrink */
+.roycss-scale-shrink {
+    animation: none;
+  }
+}
+`,
   },
 
   // 36. scale-expand
@@ -996,7 +1276,15 @@ export const effectsBatch5: CSSEffect[] = [
   100% {
     transform: scaleX(1) scaleY(1);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scale Expand */
+.roycss-scale-expand {
+    animation: none;
+  }
+}
+`,
   },
 
   // 37. scale-compress
@@ -1025,7 +1313,15 @@ export const effectsBatch5: CSSEffect[] = [
   100% {
     transform: scaleY(1) scaleX(1);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scale Compress */
+.roycss-scale-compress {
+    animation: none;
+  }
+}
+`,
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -1064,7 +1360,15 @@ export const effectsBatch5: CSSEffect[] = [
   100% {
     transform: rotate3d(0, 0, 1, 0deg);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Swing In */
+.roycss-swing-in {
+    animation: none;
+  }
+}
+`,
   },
 
   // 39. drop-in
@@ -1099,7 +1403,15 @@ export const effectsBatch5: CSSEffect[] = [
   100% {
     transform: translate3d(0, 0, 0) scaleY(1);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Drop In */
+.roycss-drop-in {
+    animation: none;
+  }
+}
+`,
   },
 
   // 40. pop-in
@@ -1127,7 +1439,15 @@ export const effectsBatch5: CSSEffect[] = [
   100% {
     transform: scale3d(1, 1, 1);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Pop In */
+.roycss-pop-in {
+    animation: none;
+  }
+}
+`,
   },
 
   // 41. pop-out
@@ -1156,7 +1476,15 @@ export const effectsBatch5: CSSEffect[] = [
     opacity: 0;
     transform: scale3d(0, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Pop Out */
+.roycss-pop-out {
+    animation: none;
+  }
+}
+`,
   },
 
   // 42. blink
@@ -1175,7 +1503,15 @@ export const effectsBatch5: CSSEffect[] = [
 @keyframes roy-blink {
   0%, 49% { opacity: 1; }
   50%, 100% { opacity: 0.15; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Blink */
+.roycss-blink {
+    animation: none;
+  }
+}
+`,
   },
 
   // 43. vibrate
@@ -1203,7 +1539,15 @@ export const effectsBatch5: CSSEffect[] = [
   80%  { transform: translate3d(2px, -1px, 0); }
   90%  { transform: translate3d(-1px, 1px, 0); }
   100% { transform: translate3d(0, 0, 0); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Vibrate */
+.roycss-vibrate {
+    animation: none;
+  }
+}
+`,
   },
 
   // 44. jiggle
@@ -1226,7 +1570,15 @@ export const effectsBatch5: CSSEffect[] = [
   40%      { transform: rotate(6deg); }
   60%      { transform: rotate(-4deg); }
   80%      { transform: rotate(3deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Jiggle */
+.roycss-jiggle {
+    animation: none;
+  }
+}
+`,
   },
 
   // 45. sway
@@ -1246,7 +1598,15 @@ export const effectsBatch5: CSSEffect[] = [
 @keyframes roy-sway {
   0%, 100% { transform: rotate(-4deg); }
   50%      { transform: rotate(4deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Sway */
+.roycss-sway {
+    animation: none;
+  }
+}
+`,
   },
 
   // 46. pendulum
@@ -1267,7 +1627,15 @@ export const effectsBatch5: CSSEffect[] = [
   0%   { transform: rotate(28deg); }
   50%  { transform: rotate(-28deg); }
   100% { transform: rotate(28deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Pendulum */
+.roycss-pendulum {
+    animation: none;
+  }
+}
+`,
   },
 
   // 47. snap-in
@@ -1299,7 +1667,15 @@ export const effectsBatch5: CSSEffect[] = [
   100% {
     transform: scale(1) translate3d(0, 0, 0);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Snap In */
+.roycss-snap-in {
+    animation: none;
+  }
+}
+`,
   },
 
   // 48. stretch
@@ -1320,7 +1696,15 @@ export const effectsBatch5: CSSEffect[] = [
   0%, 100% { transform: scaleY(1) scaleX(1); }
   40%      { transform: scaleY(1.4) scaleX(0.75); }
   70%      { transform: scaleY(0.85) scaleX(1.12); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Stretch */
+.roycss-stretch {
+    animation: none;
+  }
+}
+`,
   },
 
   // 49. spring-in
@@ -1355,7 +1739,15 @@ export const effectsBatch5: CSSEffect[] = [
   100% {
     transform: translate3d(0, 0, 0) scale(1);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Spring In */
+.roycss-spring-in {
+    animation: none;
+  }
+}
+`,
   },
 
   // 50. dissolve
@@ -1387,6 +1779,14 @@ export const effectsBatch5: CSSEffect[] = [
     filter: blur(20px);
     transform: scale(0.7);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Dissolve */
+.roycss-dissolve {
+    animation: none;
+  }
+}
+`,
   },
 ];

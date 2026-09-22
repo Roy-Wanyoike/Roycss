@@ -457,7 +457,14 @@ export const effectsBatch13: CSSEffect[] = [
   0%   { transform: translateX(-4%) scaleY(1);   opacity: 0.85; }
   50%  { transform: translateX(2%)  scaleY(1.1); opacity: 1; }
   100% { transform: translateX(4%)  scaleY(0.95); opacity: 0.9; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-css-aurora-landscape::before {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "css-underwater-scene",
@@ -516,7 +523,14 @@ export const effectsBatch13: CSSEffect[] = [
 @keyframes roy-b13-uw-shift {
   0%   { transform: translateX(-6px); opacity: 0.85; }
   100% { transform: translateX(6px);  opacity: 1; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-css-underwater-scene::before {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "css-volcano-eruption",
@@ -584,7 +598,15 @@ export const effectsBatch13: CSSEffect[] = [
   0%   { transform: translateY(-10px); opacity: 0; }
   10%  { opacity: 1; }
   100% { transform: translateY(120px); opacity: 0; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* falling embers layer */
+.roycss-css-volcano-eruption > .embers {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "css-snowy-mountain",
@@ -747,7 +769,14 @@ export const effectsBatch13: CSSEffect[] = [
 }
 @keyframes roy-b13-hypno-spin {
   to { transform: rotate(360deg); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-optical-illusion-hypnosis::before {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "optical-illusion-depth",
@@ -800,7 +829,14 @@ export const effectsBatch13: CSSEffect[] = [
 }
 @keyframes roy-b13-depth-spin {
   to { transform: rotate(-360deg); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-optical-illusion-depth::before {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "optical-illusion-motion",
@@ -952,7 +988,14 @@ export const effectsBatch13: CSSEffect[] = [
 @keyframes roy-b13-barber-up {
   from { background-position: 0 0; }
   to   { background-position: 0 -56px; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-optical-illusion-barber-pole::before {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "optical-illusion-cafe-wall",
@@ -1443,7 +1486,17 @@ export const effectsBatch13: CSSEffect[] = [
 @keyframes roy-b13-hypnotic-pulse {
   0%, 100% { transform: translate(-50%, -50%) scale(1);   opacity: 1; }
   50%      { transform: translate(-50%, -50%) scale(1.4); opacity: 0.7; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-hypnotic-spiral::before {
+    animation: none;
+  }
+  .roycss-hypnotic-spiral::after {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "infinite-zoom-tunnel",
@@ -1495,7 +1548,17 @@ export const effectsBatch13: CSSEffect[] = [
 @keyframes roy-b13-tunnel-glow {
   from { filter: brightness(1) blur(0px); }
   to   { filter: brightness(1.5) blur(2px); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-infinite-zoom-tunnel::before {
+    animation: none;
+  }
+  .roycss-infinite-zoom-tunnel::after {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "matrix-rain-fall",
@@ -1550,7 +1613,14 @@ export const effectsBatch13: CSSEffect[] = [
 @keyframes roy-b13-matrix-fall {
   from { background-position: 0% 0, 25% -80px, 50% -40px, 75% -120px; }
   to   { background-position: 0% 80px, 25% 0px, 50% 40px, 75% -40px; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-matrix-rain-fall::before {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "star-wars-crawl",
@@ -1598,7 +1668,14 @@ export const effectsBatch13: CSSEffect[] = [
   10%  { opacity: 1; }
   90%  { opacity: 1; }
   100% { inset-block-end: 150%; opacity: 0; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-star-wars-crawl::before {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "conveyor-belt",
@@ -1649,7 +1726,14 @@ export const effectsBatch13: CSSEffect[] = [
 @keyframes roy-b13-conveyor-move {
   from { background-position: 0 0; }
   to   { background-position: 40px 0; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-conveyor-belt::before {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "escalator-steps",
@@ -1701,7 +1785,14 @@ export const effectsBatch13: CSSEffect[] = [
 @keyframes roy-b13-escalator-up {
   from { background-position: 0 0, 0 0; }
   to   { background-position: 0 -28px, 0 -28px; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-escalator-steps::before {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "windmill-spin",
@@ -1761,7 +1852,14 @@ export const effectsBatch13: CSSEffect[] = [
 @keyframes roy-b13-windmill-rotate {
   from { transform: translate(-50%, -50%) rotate(0deg); }
   to   { transform: translate(-50%, -50%) rotate(360deg); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-windmill-spin::after {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "ferris-wheel",
@@ -1828,7 +1926,14 @@ export const effectsBatch13: CSSEffect[] = [
 }
 @keyframes roy-b13-ferris-rotate {
   to { transform: translate(-50%, -50%) rotate(360deg); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferris-wheel::before {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "clock-tick",
@@ -1909,7 +2014,20 @@ export const effectsBatch13: CSSEffect[] = [
 }
 @keyframes roy-b13-clock-second { to { transform: translate(-50%, -100%) rotate(360deg); } }
 @keyframes roy-b13-clock-minute { to { transform: translate(-50%, -100%) rotate(360deg); } }
-@keyframes roy-b13-clock-hour   { to { transform: translate(-50%, -100%) rotate(360deg); } }`
+@keyframes roy-b13-clock-hour   { to { transform: translate(-50%, -100%) rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-clock-tick::after {
+    animation: none;
+  }
+  .roycss-clock-tick > .hands {
+    animation: none;
+  }
+  .roycss-clock-tick > .hour {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "pendulum-clock",
@@ -1979,7 +2097,17 @@ export const effectsBatch13: CSSEffect[] = [
 @keyframes roy-b13-pendulum-bob {
   from { transform: translate(-50%, -50%) translateX(-60px); }
   to   { transform: translate(-50%, -50%) translateX(60px); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-pendulum-clock::after {
+    animation: none;
+  }
+  .roycss-pendulum-clock > .bob {
+    animation: none;
+  }
+}
+`
   },
 
   /* =========================================================================
@@ -2018,7 +2146,15 @@ export const effectsBatch13: CSSEffect[] = [
 }
 @keyframes roy-b13-cursor {
   50% { border-color: transparent; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text — Typewriter Type & Erase */
+.roycss-text-typewriter-erase {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "text-scramble",
@@ -2064,7 +2200,18 @@ export const effectsBatch13: CSSEffect[] = [
   25%      { transform: translate(-2px, 1px); }
   50%      { transform: translate(2px, -1px); }
   75%      { transform: translate(-1px, 2px); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text — Scramble Resolve */
+.roycss-text-scramble {
+    animation: none;
+  }
+  .roycss-text-scramble::before {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "text-gradient-flow-3d",
@@ -2103,7 +2250,15 @@ export const effectsBatch13: CSSEffect[] = [
 }
 @keyframes roy-b13-3d-flow {
   to { background-position: 200% 0; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text — 3D Gradient Flow */
+.roycss-text-gradient-flow-3d {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "text-glitch-matrix",
@@ -2169,7 +2324,21 @@ export const effectsBatch13: CSSEffect[] = [
   25% { transform: translate(2px, -2px); }
   50% { transform: translate(-2px, 2px); }
   75% { transform: translate(2px, 1px); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text — Matrix Glitch */
+.roycss-text-glitch-matrix {
+    animation: none;
+  }
+  .roycss-text-glitch-matrix::before {
+    animation: none;
+  }
+  .roycss-text-glitch-matrix::after {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "text-rainbow-breathe",
@@ -2210,7 +2379,15 @@ export const effectsBatch13: CSSEffect[] = [
     transform: scale(1.08);
     filter: drop-shadow(0 0 20px color-mix(in oklch, oklch(0.818 0.094 251.36) 70%, transparent));
   }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text — Rainbow Breathe */
+.roycss-text-rainbow-breathe {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "text-shadow-perspective",

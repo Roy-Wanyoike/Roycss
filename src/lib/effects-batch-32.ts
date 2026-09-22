@@ -22,7 +22,14 @@ export const effectsBatch32: CSSEffect[] = [
   transform: perspective(800px) rotateX(5deg) rotateY(-5deg);
   transition: transform 0.4s ease;
   box-shadow: 8px 8px 20px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-perspective-tilt {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -40,7 +47,14 @@ export const effectsBatch32: CSSEffect[] = [
   transform-style: preserve-3d;
   transition: transform 0.5s ease;
   box-shadow: 0 4px 10px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scale-3d {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -69,7 +83,14 @@ export const effectsBatch32: CSSEffect[] = [
     transform: scaleY(1) scaleX(1);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scale-compress {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -98,7 +119,14 @@ export const effectsBatch32: CSSEffect[] = [
     transform: scaleX(1) scaleY(1);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scale-expand {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -116,7 +144,14 @@ export const effectsBatch32: CSSEffect[] = [
   transform: perspective(800px) skew(-15deg, 5deg);
   transition: transform 0.5s ease;
   box-shadow: 6px 6px 12px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-skew-3d {
+    transition: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -141,7 +176,14 @@ export const effectsBatch32: CSSEffect[] = [
   50%  { transform: rotate(-28deg); }
   100% { transform: rotate(28deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-pendulum {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -167,7 +209,14 @@ export const effectsBatch32: CSSEffect[] = [
   88% { transform: rotate(-3deg); }
   100% { transform: rotate(0deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-pendulum-swing-spring {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -195,7 +244,14 @@ export const effectsBatch32: CSSEffect[] = [
     transform: scale3d(1, 1, 1);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-pop-in {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -224,7 +280,14 @@ export const effectsBatch32: CSSEffect[] = [
     transform: scale3d(0, 0, 0);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-pop-out {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -243,7 +306,14 @@ export const effectsBatch32: CSSEffect[] = [
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-pulse-soft {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -265,7 +335,14 @@ export const effectsBatch32: CSSEffect[] = [
   0% { transform: perspective(800px) rotate3d(1, 1, 1, 0deg); }
   100% { transform: perspective(800px) rotate3d(1, 1, 1, 360deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-rotate-3d {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -288,7 +365,14 @@ export const effectsBatch32: CSSEffect[] = [
     transform: rotate(360deg);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-rotate-spin {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -312,7 +396,14 @@ export const effectsBatch32: CSSEffect[] = [
   0% { transform: perspective(800px) rotateX(0deg); }
   100% { transform: perspective(800px) rotateX(360deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-rotate-x {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -336,7 +427,14 @@ export const effectsBatch32: CSSEffect[] = [
   0% { transform: perspective(800px) rotateY(0deg); }
   100% { transform: perspective(800px) rotateY(360deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-rotate-y {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -387,7 +485,14 @@ export const effectsBatch32: CSSEffect[] = [
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(720deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-roulette-spin {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -410,7 +515,14 @@ export const effectsBatch32: CSSEffect[] = [
   85% { transform: scaleX(0.98) scaleY(1.01); }
   100% { transform: scaleX(1) scaleY(1); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-rubber-snap-back {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -438,7 +550,14 @@ export const effectsBatch32: CSSEffect[] = [
     transform: scale(1);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scale-grow {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -466,7 +585,14 @@ export const effectsBatch32: CSSEffect[] = [
     transform: scale(1);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scale-shrink {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -489,7 +615,14 @@ export const effectsBatch32: CSSEffect[] = [
     transform: translate3d(30px, -30px, 0) rotate(3deg);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-slide-diagonal {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -513,7 +646,14 @@ export const effectsBatch32: CSSEffect[] = [
     transform: translate3d(0, 0, 0);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-slide-in-bottom {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -537,7 +677,14 @@ export const effectsBatch32: CSSEffect[] = [
     transform: translate3d(0, 0, 0);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-slide-in-top {
+    animation: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -678,7 +825,14 @@ export const effectsBatch32: CSSEffect[] = [
   0% { filter: blur(12px); opacity: 0; transform: scale(1.05); }
   100% { filter: blur(0); opacity: 1; transform: scale(1); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scroll-driven-blur {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -700,7 +854,14 @@ export const effectsBatch32: CSSEffect[] = [
   50% { background: oklch(0.566 0.245 278.69); color: oklch(1 0 0); }
   100% { background: oklch(0.652 0.241 354.31); color: oklch(1 0 0); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scroll-driven-color {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -721,7 +882,14 @@ export const effectsBatch32: CSSEffect[] = [
   0% { opacity: 0; }
   100% { opacity: 1; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scroll-driven-fade {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -752,7 +920,14 @@ export const effectsBatch32: CSSEffect[] = [
       conic-gradient(oklch(0.567 0.159 275.21) 0deg, oklch(0.567 0.159 275.21) 360deg, oklch(0.274 0.005 286.03) 360deg, oklch(0.274 0.005 286.03) 360deg);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scroll-driven-progress-ring {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -773,7 +948,14 @@ export const effectsBatch32: CSSEffect[] = [
   0% { transform: rotate(-45deg); }
   100% { transform: rotate(45deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scroll-driven-rotate {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -794,7 +976,14 @@ export const effectsBatch32: CSSEffect[] = [
   0% { transform: scale(0.6); opacity: 0; }
   100% { transform: scale(1); opacity: 1; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scroll-driven-scale {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -821,7 +1010,14 @@ export const effectsBatch32: CSSEffect[] = [
   0% { box-shadow: 0 0 0 color-mix(in oklch, oklch(0 0 0) 0%, transparent); }
   100% { box-shadow: 0 8px 24px color-mix(in oklch, oklch(0 0 0) 40%, transparent); border-color: oklch(0.37 0.012 285.81); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scroll-driven-sticky {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -842,7 +1038,14 @@ export const effectsBatch32: CSSEffect[] = [
   0% { transform: translateX(-80px); opacity: 0; }
   100% { transform: translateX(0); opacity: 1; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scroll-driven-translate {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -862,7 +1065,14 @@ export const effectsBatch32: CSSEffect[] = [
   0%, 25% { opacity: 1; transform: translateY(0); }
   75%, 100% { opacity: 0; transform: translateY(-32px); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scroll-fade-out {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -948,7 +1158,14 @@ export const effectsBatch32: CSSEffect[] = [
   25%, 70% { opacity: 1; transform: translateX(0); }
   100% { opacity: 0; transform: translateX(-60px); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scroll-reveal-left {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -969,7 +1186,14 @@ export const effectsBatch32: CSSEffect[] = [
   25%, 70% { opacity: 1; transform: translateX(0); }
   100% { opacity: 0; transform: translateX(60px); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scroll-reveal-right {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -990,7 +1214,14 @@ export const effectsBatch32: CSSEffect[] = [
   25%, 70% { opacity: 1; transform: rotate(0deg) scale(1); }
   100% { opacity: 0; transform: rotate(-15deg) scale(0.85); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scroll-reveal-rotate {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1011,7 +1242,14 @@ export const effectsBatch32: CSSEffect[] = [
   25%, 70% { opacity: 1; transform: scale(1); }
   100% { opacity: 0; transform: scale(0.6); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scroll-reveal-scale {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1026,7 +1264,14 @@ export const effectsBatch32: CSSEffect[] = [
   transform: translateY(40px);
   transition: opacity 0.6s ease, transform 0.6s ease;
   will-change: opacity, transform;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scroll-reveal-up {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -1075,7 +1320,14 @@ export const effectsBatch32: CSSEffect[] = [
     padding: 0 22px;
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scroll-sticky-header {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1107,7 +1359,14 @@ export const effectsBatch32: CSSEffect[] = [
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scroll-timeline-spin {
+    animation: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════

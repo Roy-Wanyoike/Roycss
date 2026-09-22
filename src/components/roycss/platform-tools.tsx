@@ -5,10 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
   Sparkles,
-  Minimize2,
   Stethoscope,
-  Microscope,
-  Gauge,
   Loader2,
   Copy,
   Check,
@@ -17,65 +14,13 @@ import {
   AlertCircle,
   RefreshCw,
   Play,
-  Dna,
   ArrowLeftRight,
   Trophy,
   GitCompare,
   Flame,
   Star,
-  Calculator,
-  Spline,
-  Layers,
-  Radar,
-  Zap,
-  Globe,
-  Printer,
-  Crosshair,
-  MoonStar,
-  Network,
   Type,
-  ArrowDownUp,
-  LayoutGrid,
-  SquareStack,
-  Grid2x2,
-  Ruler,
-  Box,
-  Rows3,
-  Timer,
   Search,
-  Film,
-  Images,
-  Filter,
-  Disc,
-  Shapes,
-  Move,
-  MousePointer2,
-  ScrollText,
-  Languages,
-  Image,
-  Brush,
-  Blend,
-  TableProperties,
-  Proportions,
-  Frame,
-  MoveVertical,
-  Clapperboard,
-  Droplet,
-  ScanSearch,
-  Layers3,
-  Keyboard,
-  Scale,
-  Palette,
-  Boxes,
-  Target,
-  Grid3x3,
-  ShieldQuestion,
-  CaseSensitive,
-  AlignLeft,
-  FileBox,
-  Split,
-  DoorOpen,
-  SunMoon,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
@@ -145,12 +90,15 @@ import { RelativeColorBuilder } from "@/components/roycss/tools/relative-color-b
 import { StartingStyleStudio } from "@/components/roycss/tools/starting-style-studio";
 import { LightDarkExplorer } from "@/components/roycss/tools/light-dark-explorer";
 import type { CSSEffect } from "@/lib/roycss-types";
+import { TOOL_META, type ToolType } from "@/components/roycss/tool-registry";
+
+export { TOOL_META };
+export type { ToolType };
 
 /* ═══════════════════════════════════════════════════════════════
-   Shared types
+   Shared types — ToolType & TOOL_META now live in tool-registry.ts
+   (issue #185: single source of truth, browsable via <DevToolsGallery/>)
    ═══════════════════════════════════════════════════════════════ */
-
-type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | "gap-spacing" | "writing-mode" | "object-fit" | "positioning" | "property-inspector" | "animation-timeline" | "sprite-sheet" | "text-shadow" | "filter-studio" | "conic-gradient" | "motion-path" | "view-transition" | "mask-studio" | "gradient-mesh" | "table-styler" | "aspect-ratio" | "shape-generator" | "scroll-snap" | "keyframes-studio" | "theming-engine" | "has-selector-tester" | "css-layers" | "input-mode" | "cascade-specificity" | "color-space" | "style-query" | "scope" | "subgrid" | "fallback" | "logical-properties" | "initial-letter" | "text-wrap" | "property-registrar" | "relative-color" | "starting-style" | "light-dark" | "css-lint";
 
 interface PlatformToolsProps {
   tool: ToolType | null;
@@ -1498,82 +1446,6 @@ function DesignDiff() {
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   Main component — routes to the active tool
-   ═══════════════════════════════════════════════════════════════ */
-
-const TOOL_META: Record<ToolType, { title: string; icon: React.ComponentType<{ className?: string }>; description: string }> = {
-  "ai-playground": { title: "AI Playground", icon: Sparkles, description: "Describe an effect in plain English — AI generates production-ready RoyCSS." },
-  "css-doctor": { title: "CSS Doctor", icon: Stethoscope, description: "Paste your CSS — get a health score, diagnostics, and auto-fixes." },
-  "utility-explorer": { title: "Utility Explorer", icon: Microscope, description: "Hover any effect to see its CSS properties, size, and compliance score." },
-  "benchmark": { title: "Benchmark Tool", icon: Gauge, description: "Live-performance test any effect with 100 simultaneous instances." },
-  "genome": { title: "Component Genome", icon: Dna, description: "Inspect any effect's DNA — selectors, keyframes, properties, color system, modern features, and accessibility notes." },
-  "ai-migration": { title: "AI Migration", icon: ArrowLeftRight, description: "Convert Bootstrap, Tailwind, Material, Bulma, or Foundation CSS to RoyCSS (OKLCH + logical properties)." },
-  "challenges": { title: "Community Challenges", icon: Trophy, description: "Complete CSS challenges, earn XP, and climb the leaderboard." },
-  "design-diff": { title: "Design Diff", icon: GitCompare, description: "Compare two CSS blocks — see exactly what properties were added, changed, or removed." },
-  "css-minifier": { title: "CSS Minifier", icon: Minimize2, description: "Paste CSS → get minified output with size savings and gzip estimate." },
-  "specificity": { title: "Specificity Calculator", icon: Calculator, description: "Paste CSS selectors → see each one's (a, b, c) specificity score, ranked." },
-  "easing": { title: "Easing Visualizer", icon: Spline, description: "Design cubic-bezier curves visually — drag control points, compare presets, copy CSS." },
-  "stacking": { title: "Stacking Context Inspector", icon: Layers, description: "Paste HTML → see the stacking-context tree, or sandbox z-index live." },
-  "similarity": { title: "Effect Similarity Finder", icon: Radar, description: `Pick any effect → instantly find the most similar effects in the ${EFFECT_COUNT_FORMATTED}-effect library.` },
-  "perf": { title: "CSS Performance Analyzer", icon: Zap, description: "Paste CSS → get a 0–100 performance score with categorized findings and fixes." },
-  "browser-support": { title: "Browser Support Matrix", icon: Globe, description: "Look up caniuse-style support for 27 modern CSS features across 5 major browsers." },
-  "print": { title: "Print Stylesheet Simulator", icon: Printer, description: "Preview @media print CSS in a live iframe — see exactly what prints, without the print dialog." },
-  "selector-tester": { title: "Selector Tester", icon: Crosshair, description: "Type any CSS selector → instantly see matching elements highlighted in a live HTML sample." },
-  "dark-mode": { title: "Dark Mode Converter", icon: MoonStar, description: "Paste light-mode colors → auto-generate a perceptually-tuned dark palette via OKLCH lightness inversion." },
-  "variable-graph": { title: "Variable Dependency Graph", icon: Network, description: "Paste CSS with var() → visualize the dependency graph, detect cycles, undefined refs, and unused tokens." },
-  "fluid-type": { title: "Fluid Typography Calculator", icon: Type, description: "Generate clamp() fluid type scales with a live multi-viewport preview at 320–1440px." },
-  "scroll-animation": { title: "Scroll-Driven Animation Builder", icon: ArrowDownUp, description: "Build animation-timeline: scroll() / view() CSS with a live scrollable preview that actually scrolls." },
-  "grid-areas": { title: "Grid Template Areas Builder", icon: LayoutGrid, description: "Visually design grid-template-areas maps — paint named regions, get copy-ready CSS with a live layout preview." },
-  "container-query": { title: "Container Query Builder", icon: SquareStack, description: "Build @container queries with a live resizable container preview that responds to its own width, not the viewport." },
-  "nesting": { title: "CSS Nesting Converter", icon: GitCompare, description: "Convert flat CSS to native nesting (with &) and back. Round-trip safe, handles @media, combinators, pseudo-classes." },
-  "contrast-matrix": { title: "Color Contrast Matrix", icon: Grid2x2, description: "Check WCAG contrast for every color pair in your palette at once. AAA/AA/AA-Large/Fail matrix with failing-pair report." },
-  "unit-converter": { title: "Unit Converter Pro", icon: Ruler, description: "Convert between all 16 CSS length units (px, rem, em, vw, vh, pt, cm, Q…) with a root font-size + viewport simulator and batch CSS conversion." },
-  "box-model": { title: "Box Model Visualizer", icon: Box, description: "Interactive box model diagram — tweak margin/border/padding/content with live sliders, toggle box-sizing, get computed dimensions + generated CSS." },
-  "flex-playground": { title: "Flexbox Playground", icon: Rows3, description: "Full flexbox playground — container + per-item controls, live layout preview, add/remove items, generated CSS with flex shorthand." },
-  "transition-studio": { title: "Transition Studio", icon: Timer, description: "Build multi-property CSS transitions with per-property timing/delay/easing, live hover/click trigger, and generated shorthand CSS." },
-  "pattern-generator": { title: "Background Pattern Generator", icon: Shapes, description: "Generate pure-CSS background patterns (stripes, grid, dots, checker, triangles, zigzag) with color + size controls and copy-ready CSS." },
-  "transform-studio": { title: "Transform Studio", icon: Move, description: "Visual builder for CSS transform — combine translate/rotate/scale/skew/3D with live preview, transform-origin picker, and layer reordering." },
-  "cursor-gallery": { title: "Cursor Preview Gallery", icon: MousePointer2, description: "Hover-preview every CSS cursor value (pointer, grab, text, resize…), search by category, and build custom cursors with hotspot." },
-  "scrollbar-styler": { title: "Scrollbar Styler", icon: ScrollText, description: "Design custom CSS scrollbars — width, colors, radius, hover, border. Cross-browser (WebKit + Firefox). Live preview with 6 presets." },
-  "gap-spacing": { title: "Gap & Spacing Calculator", icon: Ruler, description: "Calculate CSS gap, margin, padding with 5 spacing systems (8px grid, 4px grid, modular scale, Tailwind, custom). Smart shorthand output." },
-  "writing-mode": { title: "Writing Mode Playground", icon: Languages, description: "Explore CSS writing-mode, direction, text-orientation for vertical text, RTL, and CJK layouts. Logical properties mapping + RTL flip demo." },
-  "object-fit": { title: "Object Fit Visualizer", icon: Image, description: "Compare object-fit values (fill, contain, cover, none, scale-down) with live preview on different aspect ratios. Side-by-side comparison." },
-  "positioning": { title: "Positioning Playground", icon: Move, description: "Interactive CSS position playground — static/relative/absolute/fixed/sticky. Draggable target, inset controls, z-index, sticky scroll demo." },
-  "property-inspector": { title: "Custom Property Inspector", icon: Search, description: "Extract every --custom-property from your CSS with resolved values, type detection, usage counts, and inheritance chains." },
-  "animation-timeline": { title: "Animation Timeline", icon: Film, description: "Visualize multiple CSS animations on a Gantt-style timeline. See overlaps, play with a scrubber, generate shorthand CSS." },
-  "sprite-sheet": { title: "Sprite Sheet Generator", icon: Images, description: "Combine images into a sprite sheet and generate background-position CSS + steps() animation. Download PNG, copy CSS." },
-  "text-shadow": { title: "Text Shadow Studio", icon: Type, description: "Design multi-layer text-shadows with live preview, 9 curated presets (neon, 3D, fire, retro), and generated CSS." },
-  "filter-studio": { title: "Filter Studio Pro", icon: Filter, description: "Chain multiple CSS filters (blur, brightness, hue-rotate, drop-shadow…) with live preview, before/after comparison, and SVG filter export." },
-  "conic-gradient": { title: "Conic Gradient Generator", icon: Disc, description: "Build conic-gradient() and repeating-conic-gradient() with a draggable angle dial, color stops, center-point pad, and 6 presets." },
-  "motion-path": { title: "Motion Path Animator", icon: Spline, description: "Draw a path and animate an element along it using CSS offset-path. 5 path types, 8 presets, live preview with real offset-path animation." },
-  "view-transition": { title: "View Transition Builder", icon: SquareStack, description: "Build View Transitions API demos — 6 transition types (morph, fade, slide, zoom, flip, custom) with a live startViewTransition() trigger." },
-  "mask-studio": { title: "Mask Studio", icon: Brush, description: "Visual CSS mask builder — gradient masks, image masks (8 SVG presets), text masks. Live preview with -webkit- prefixes. Copy production CSS." },
-  "gradient-mesh": { title: "Gradient Mesh Generator", icon: Blend, description: "Create mesh-gradient backgrounds with multiple overlapping radial-gradients. Drag stops on preview, blend modes, 8 presets, randomize." },
-  "table-styler": { title: "Table Styler", icon: TableProperties, description: "Style HTML tables — borders, headers, striped rows, hover, sticky header, responsive. Live preview with mock data. 6 presets." },
-  "aspect-ratio": { title: "Aspect Ratio Calculator", icon: Proportions, description: "Compute dimensions from aspect ratios, visualize responsive behavior, generate modern + fallback CSS. Reference table of 8 common ratios." },
-  "shape-generator": { title: "Shape Generator", icon: Frame, description: "14 CSS shapes (circle, star, heart, hexagon) with visual clip-path polygon editor and border-radius sliders." },
-  "scroll-snap": { title: "Scroll Snap Builder", icon: MoveVertical, description: "Interactive scroll-snap-type/align builder with live scrollable preview and 4 presets." },
-  "keyframes-studio": { title: "Keyframes Studio", icon: Clapperboard, description: "Visual @keyframes editor with timeline stops, per-stop transform/color controls, live preview, 6 presets." },
-  "theming-engine": { title: "Theming Engine", icon: Droplet, description: "Design token generator from a single primary color — 12 OKLCH tokens, 3 export formats, WCAG contrast checks." },
-  "has-selector-tester": { title: ":has() Selector Tester", icon: ScanSearch, description: "Live DOM tree builder with real querySelectorAll matching, 6 preset scenarios, highlight matching elements." },
-  "css-layers": { title: "CSS Layers Visualizer", icon: Layers3, description: "@layer cascade visualizer with add/reorder layers, live preview via scoped style injection, priority diagram." },
-  "input-mode": { title: "Input Mode Explorer", icon: Keyboard, description: "inputmode + enterkeyhint + autocomplete explorer with stylized keyboard mockups and reference tables." },
-  "cascade-specificity": { title: "Cascade Specificity Explorer", icon: Scale, description: "CSS parser + specificity computer with :where() stripping, cascade resolution visualization, 3 presets." },
-  "color-space": { title: "Color Space Explorer", icon: Palette, description: "Convert colors between sRGB, HSL, OKLCH, OKLab, Display-P3. Gamut visualization, 2D chroma-lightness plane, copy-ready CSS with sRGB fallback." },
-  "style-query": { title: "Container Style Query Builder", icon: Boxes, description: "Build @container style(--foo: value) queries (Baseline 2023) with live container custom-property switching and 3 presets." },
-  "scope": { title: "@scope Rule Tester", icon: Target, description: "Playground for CSS @scope (Baseline 2024) with DOM tree builder, scope-root + scope-limit selectors, donut-scope visualization." },
-  "subgrid": { title: "Subgrid Builder", icon: Grid3x3, description: "Visual builder for grid-template-columns: subgrid (Baseline 2023). Parent track definitions inherited by nested grids with aligned track lines." },
-  "fallback": { title: "Property Fallback Analyzer", icon: ShieldQuestion, description: "Generate progressive-enhancement CSS with @supports feature queries for 20 modern properties. Old syntax → @supports → modern syntax chain." },
-  "logical-properties": { title: "Logical Properties Mapper", icon: ArrowLeftRight, description: "Map physical → logical CSS properties (margin-left → margin-inline-start). RTL/vertical writing-mode demo, paste-physical-get-logical converter." },
-  "initial-letter": { title: "Initial Letter Studio", icon: CaseSensitive, description: "Design CSS initial-letter drop caps (Baseline 2024). Size/sink sliders, raised vs sunken caps, 3-way comparison with legacy float hack, 6 presets." },
-  "text-wrap": { title: "Text Wrap Balance Studio", icon: AlignLeft, description: "Explore text-wrap: balance/pretty, line-break, word-break, hyphens, hanging-punctuation. Before/after comparison with balance score, 6 presets." },
-  "property-registrar": { title: "@property Registrar", icon: FileBox, description: "Register typed CSS custom properties with @property (Houdini). Syntax picker, inheritance toggle, animated transition demo vs untyped var." },
-  "relative-color": { title: "Relative Color Builder", icon: Split, description: "CSS Relative Color Syntax (Baseline 2024) — rgb(from red calc(r + 20) g b). Channel math editors, source→derived preview, 6 presets." },
-  "starting-style": { title: "@starting-style Studio", icon: DoorOpen, description: "Animate elements entering the DOM with @starting-style (Baseline 2024). transition-behavior: allow-discrete for display animations, side-by-side comparison." },
-  "light-dark": { title: "Light-Dark() Explorer", icon: SunMoon, description: "CSS light-dark() function (Baseline 2024) — auto-switch colors by color-scheme. Palette builder, side-by-side vs @media boilerplate, 4 presets." },
-  "css-lint": { title: "Code Health Linter", icon: ScanSearch, description: "Paste CSS or markup → cascade, color, and namespace findings from the same engine that powers roycss lint [--fix]. Safe auto-fixes, rules reference, CLI parity." },
-};
 
 export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformToolsProps) {
   const meta = tool ? TOOL_META[tool] : null;

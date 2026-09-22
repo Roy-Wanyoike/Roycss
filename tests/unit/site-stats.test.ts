@@ -47,20 +47,30 @@ describe("site-stats — single source of truth", () => {
     expect(PRODUCT_COUNT).toBe(62);
   });
 
-  it("TOOL_COUNT matches the ToolType registry in platform-tools.tsx", () => {
-    const src = readFileSync(
+  it("TOOL_COUNT matches the ToolType registry in tool-registry.ts", () => {
+    // Issue #185: the ToolType union + TOOL_META moved to tool-registry.ts
+    // (single source of truth for the sheet AND the browsable gallery).
+    const registry = readFileSync(
+      join(ROOT, "src/components/roycss/tool-registry.ts"),
+      "utf8",
+    );
+    const union = registry.match(/export type ToolType =\n((?:  \| "[a-z0-9-]+";?\n)+)/);
+    expect(union).toBeTruthy();
+    const members = union![1]
+      .split("\n")
+      .map((s) => s.trim())
+      .filter((s) => s.startsWith('| "'))
+      .map((s) => s.replace('| "', "").replace('",', "").replace('"', ""));
+    expect(members.length).toBeGreaterThan(0);
+    // Every registry entry must have TOOL_META metadata.
+    const metaEntries = registry.match(/const TOOL_META: Record<ToolType, ToolMeta>/);
+    expect(metaEntries).toBeTruthy();
+    // The tool sheet still renders one branch per registry entry.
+    const sheet = readFileSync(
       join(ROOT, "src/components/roycss/platform-tools.tsx"),
       "utf8",
     );
-    const union = src.match(/type ToolType = ([^;]+);/);
-    expect(union).toBeTruthy();
-    const members = union![1]
-      .split("|")
-      .map((s) => s.trim())
-      .filter((s) => s.startsWith('"'));
-    expect(members.length).toBeGreaterThan(0);
-    // Every registry entry must render a real component (one === per entry).
-    const rendered = src.match(/\{tool === "/g);
+    const rendered = sheet.match(/\{tool === "/g);
     expect(rendered?.length).toBe(members.length);
     expect(TOOL_COUNT).toBe(members.length);
   });

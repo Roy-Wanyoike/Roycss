@@ -280,25 +280,43 @@ export function TiltCard({
 
 /* ═══════════════════════════════════════════════════════════════
    6. ANIMATED COUNTER — count up from 0 to target on scroll into view
+
+   Progressive enhancement (issue #202): the FINAL value is server-
+   rendered so crawlers, no-JS users, and slow hydrations always see
+   the real number (never "0 Effects"). Once hydrated, if the element
+   has not entered the viewport yet, it swaps to 0 and counts up when
+   scrolled into view. Users with prefers-reduced-motion keep the
+   static final value — no animation at all.
    ═══════════════════════════════════════════════════════════════ */
 export function AnimatedCounter({
   value,
   duration = 2,
   suffix = "",
   prefix = "",
+  format = false,
   className = "",
 }: {
   value: number;
   duration?: number;
   suffix?: string;
   prefix?: string;
+  /** Render thousands separators ("60,421" instead of "60421"). */
+  format?: boolean;
   className?: string;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const [display, setDisplay] = useState(0);
+  // SSR + pre-hydration markup carries the real value (SEO / no-JS safe).
+  const [display, setDisplay] = useState(value);
   const [started, setStarted] = useState(false);
 
+  // After hydration: the observer's initial callback reports whether the
+  // element is already in view (→ start counting immediately) or below
+  // the fold (→ park at 0 so the count-up is still visible on scroll).
   useEffect(() => {
+    if (started) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return; // keep the static final value — respect reduced motion
+    }
     const el = ref.current;
     if (!el) return;
 
@@ -308,6 +326,8 @@ export function AnimatedCounter({
           if (entry.isIntersecting && !started) {
             setStarted(true);
             observer.disconnect();
+          } else if (!entry.isIntersecting) {
+            setDisplay(0);
           }
         });
       },
@@ -344,7 +364,7 @@ export function AnimatedCounter({
   return (
     <span ref={ref} className={className}>
       {prefix}
-      {display}
+      {format ? display.toLocaleString("en-US") : display}
       {suffix}
     </span>
   );
@@ -534,12 +554,15 @@ export function StatCounter({
   label,
   suffix = "",
   prefix = "",
+  format = false,
 }: {
   icon: LucideIcon;
   value: number;
   label: string;
   suffix?: string;
   prefix?: string;
+  /** Thousands separators on the animated value ("1,973"). */
+  format?: boolean;
 }) {
   return (
     <motion.div
@@ -552,7 +575,7 @@ export function StatCounter({
     >
       <Icon className="size-5 text-primary group-hover:scale-110 transition-transform" />
       <div className="font-display text-2xl sm:text-3xl font-bold text-gradient">
-        <AnimatedCounter value={value} prefix={prefix} suffix={suffix} />
+        <AnimatedCounter value={value} prefix={prefix} suffix={suffix} format={format} />
       </div>
       <div className="text-xs text-muted-foreground">{label}</div>
     </motion.div>

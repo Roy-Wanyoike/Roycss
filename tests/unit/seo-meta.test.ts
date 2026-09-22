@@ -143,7 +143,7 @@ describe("sitemap.xml (#188 item 1)", () => {
     const effectUrls = urls.filter((u) =>
       u.startsWith("https://roycss.com/effects/"),
     );
-    expect(effectUrls).toHaveLength(1973 + 29);
+    expect(effectUrls).toHaveLength(1983 + 29);
     expect(
       effectUrls.filter((u) => u.includes("/effects/category/")),
     ).toHaveLength(29);

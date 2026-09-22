@@ -2,7 +2,7 @@
   "id": "/",
   "name": "RoyCSS — AI-Native Frontend Engineering Platform",
   "short_name": "RoyCSS",
-  "description": "1,973 CSS effects, 62 platform products, 70 developer tools, design systems, and AI assistance — design, build, customize, and ship modern interfaces.",
+  "description": "1,983 CSS effects, 62 platform products, 70 developer tools, design systems, and AI assistance — design, build, customize, and ship modern interfaces.",
   "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
@@ -25,7 +25,7 @@
     {
       "name": "Browse Effects",
       "short_name": "Effects",
-      "description": "Explore 1,973 production-ready CSS effects with live demos",
+      "description": "Explore 1,983 production-ready CSS effects with live demos",
       "url": "/?source=pwa#effects",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     },

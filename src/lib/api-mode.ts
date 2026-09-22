@@ -4,7 +4,7 @@
  * The Next.js site can serve the public read-only API in two ways:
  *
  *   - "embedded" — Next.js route handlers answer directly from the embedded
- *     effect catalog (`src/lib/roycss-effects.ts`, 1,973 effects). No
+ *     effect catalog (`src/lib/roycss-effects.ts`, 1,983 effects). No
  *     external process needed. This is the only mode that works on a
  *     standalone Vercel deployment.
  *   - "proxy"    — every `/api/v1/*` request is forwarded to the Express

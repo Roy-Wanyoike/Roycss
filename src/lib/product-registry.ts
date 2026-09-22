@@ -18,6 +18,12 @@
  *   integrations (3) · design (10)
  */
 
+// Dynamic effect count — imported directly from the catalog (NOT from
+// site-stats, which imports this module: a cycle would break both).
+import { effects } from "./roycss-effects";
+
+const EFFECTS_FMT = effects.length.toLocaleString("en-US");
+
 export type ProductCategory =
   | "ai"
   | "components"
@@ -132,7 +138,7 @@ export const PRODUCTS: ProductEntry[] = [
     ["ai", "scaffold", "bootstrap"]),
   entry("roy-search", "RoySearch", "ai", "pro", "ready", "Search",
     "AI semantic search across effects & recipes.",
-    "RoySearch indexes all 1,973 effects and 18 recipes and lets you search by meaning — 'subtle entrance animation' returns the right 5 cards.",
+    `RoySearch indexes all ${EFFECTS_FMT} effects and 18 recipes and lets you search by meaning — 'subtle entrance animation' returns the right 5 cards.`,
     "Search RoyCSS", "@/components/roycss/pro/roy-search",
     ["ai", "search", "semantic"]),
 

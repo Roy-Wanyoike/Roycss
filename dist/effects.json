@@ -30068,5 +30068,165 @@
     "previewType": "box",
     "previewText": null,
     "childCount": null
+  },
+  {
+    "id": "nav-navbar-glass",
+    "name": "Glass Navbar",
+    "category": "navigation",
+    "description": "Sticky navbar with a frosted-glass surface: backdrop blur, translucent OKLCH tint and a hairline border that catches light. Ships an optional scroll-driven elevation via animation-timeline: scroll() where supported.",
+    "tags": [
+      "navbar",
+      "glass",
+      "blur",
+      "sticky",
+      "navigation"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 4
+  },
+  {
+    "id": "nav-hamburger-morph",
+    "name": "Hamburger Morph X",
+    "category": "navigation",
+    "description": "Three-bar hamburger that morphs into a close X. Hover (or [data-open]) transforms the bars with GPU-only rotations and fades the middle bar out — pair it with a hidden checkbox or two lines of JS for a full toggle.",
+    "tags": [
+      "hamburger",
+      "menu",
+      "icon",
+      "morph",
+      "navigation"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 3
+  },
+  {
+    "id": "nav-drawer-slide",
+    "name": "Peek Drawer",
+    "category": "navigation",
+    "description": "Off-canvas drawer that peeks a handle and slides fully open on hover or [data-open]. The scrim-free panel keeps 44px visible so touch users can always reach it; menu items stagger in with GPU transforms.",
+    "tags": [
+      "drawer",
+      "sidebar",
+      "off-canvas",
+      "slide",
+      "navigation"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 3
+  },
+  {
+    "id": "nav-dropdown-caret",
+    "name": "Dropdown Caret Reveal",
+    "category": "navigation",
+    "description": "Dropdown menu with a rotating caret and a clipped reveal. Opens on hover and :focus-within so keyboard users get the same panel; items stagger in and the caret rotates 180° with a springy ease.",
+    "tags": [
+      "dropdown",
+      "menu",
+      "caret",
+      "focus-within",
+      "navigation"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 3
+  },
+  {
+    "id": "nav-pill-indicator",
+    "name": "Sliding Pill Indicator",
+    "category": "navigation",
+    "description": "Segmented nav where the active item wears a pill. Hovering previews the pill (scale-in) and the documented radio-:checked variant makes the selection persist with zero JavaScript — keyboard focus moves the pill too.",
+    "tags": [
+      "pill",
+      "tabs",
+      "segmented",
+      "indicator",
+      "navigation"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 4
+  },
+  {
+    "id": "media-compare-wipe",
+    "name": "Before/After Wipe",
+    "category": "visual",
+    "description": "Auto-cycling before/after comparison: the top layer is clipped with an inset() wipe that sweeps back and forth, and hover pauses the cycle at the current split. Layer any two stacked images — pure CSS, no slider JS.",
+    "tags": [
+      "compare",
+      "before-after",
+      "clip-path",
+      "wipe",
+      "media"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "media-lightbox-zoom",
+    "name": "Target Lightbox",
+    "category": "visual",
+    "description": "Zero-JS lightbox built on :target: the thumbnail zooms slightly on hover, and the documented overlay fades+scales the full image when targeted, with a labelled close link. Progressive — works without JS entirely.",
+    "tags": [
+      "lightbox",
+      "gallery",
+      "target",
+      "zoom",
+      "media"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 1
+  },
+  {
+    "id": "media-caption-reveal",
+    "name": "Caption Reveal Card",
+    "category": "microinteractions",
+    "description": "Image card whose caption slides up over a gradient scrim on hover (and on keyboard focus), with the image zooming a touch underneath. The scrim keeps WCAG-safe contrast for the caption text at every position.",
+    "tags": [
+      "caption",
+      "overlay",
+      "hover",
+      "image",
+      "media"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 1
+  },
+  {
+    "id": "media-tilt-3d",
+    "name": "3D Tilt Frame",
+    "category": "microinteractions",
+    "description": "Static 3D presentation frame: perspective, a resting tilt and a glossy glare pseudo-element. Hover deepens the tilt with a springy ease — the pointer-tracking upgrade is a one-liner with CSS custom properties.",
+    "tags": [
+      "tilt",
+      "3d",
+      "perspective",
+      "frame",
+      "media"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "media-thumb-select",
+    "name": "Thumbnail Gallery",
+    "category": "visual",
+    "description": "Radio-driven gallery: thumbnails act as labels, and the selected thumb lifts with an accent ring while the main view swaps — a complete product-gallery interaction with zero JavaScript and full keyboard support.",
+    "tags": [
+      "gallery",
+      "thumbnails",
+      "radio",
+      "product",
+      "media"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 4
   }
 ]

@@ -1,7 +1,7 @@
 {
   "name": "roycss",
   "version": "2.0.0",
-  "description": "Machine-readable class grammar for the RoyCSS effects framework, derived from the live catalog (1,973 effects / 29 categories).",
+  "description": "Machine-readable class grammar for the RoyCSS effects framework, derived from the live catalog (1,983 effects / 29 categories).",
   "generator": "scripts/generate-ai-artifacts.ts",
   "regenerate": "bun run gen:ai",
   "driftGate": "bun run ai:check (and tests/unit/ai-artifacts.test.ts)",
@@ -9,7 +9,7 @@
     "pattern": "^roycss-[a-z0-9]+(?:-[a-z0-9]+)*$",
     "flags": "",
     "description": "One class namespace: roycss- + lowercase kebab-case effect id. Digits allowed (catalog ids may start with a digit).",
-    "roundTrip": "validated against all 1,983 real class names at generation time",
+    "roundTrip": "validated against all 1,994 real class names at generation time",
     "examples": [
       "roycss-btn-glow",
       "roycss-text-wave",
@@ -143,10 +143,10 @@
       "id": "navigation",
       "label": "Navigation",
       "description": "Menu, tab, and navigation animations",
-      "count": 35,
+      "count": 40,
       "commonIdStems": [
         "ferrum- (20)",
-        "nav- (10)",
+        "nav- (15)",
         "carousel- (5)"
       ]
     },
@@ -206,7 +206,7 @@
       "id": "microinteractions",
       "label": "Microinteractions",
       "description": "Small interactive component animations",
-      "count": 107,
+      "count": 109,
       "commonIdStems": [
         "ferrum- (40)",
         "micro- (25)",
@@ -217,7 +217,7 @@
       "id": "visual",
       "label": "Visual Effects",
       "description": "Holographic, metallic, chrome, and advanced visual styles",
-      "count": 278,
+      "count": 281,
       "commonIdStems": [
         "ferrum- (117)",
         "visual- (28)",
@@ -334,9 +334,10 @@
     "roycss-ferrum-animated",
     "roycss-ferrum-exit",
     "roycss-ferrum-open",
+    "roycss-media-lightbox-zoom-overlay",
     "roycss-vfx-aurora-layer"
   ],
-  "auxiliaryClassNote": "9 selectors that only appear inside their parent effect's own CSS/marker markup — not standalone utilities.",
+  "auxiliaryClassNote": "10 selectors that only appear inside their parent effect's own CSS/marker markup — not standalone utilities.",
   "idToClassRule": {
     "rule": "className = 'roycss-' + effectId",
     "exceptions": [
@@ -383,14 +384,14 @@
     "cdn": "https://unpkg.com/roycss@2/dist/roycss.min.css"
   },
   "counts": {
-    "totalEffects": 1973,
+    "totalEffects": 1983,
     "totalCategories": 29,
-    "primaryClasses": 1973,
-    "auxiliaryClasses": 9,
+    "primaryClasses": 1983,
+    "auxiliaryClasses": 10,
     "baseUtilityClasses": 1,
-    "totalClasses": 1983,
+    "totalClasses": 1994,
     "modifierClasses": 0,
-    "trainingPairs": 385,
+    "trainingPairs": 386,
     "digitLeadingIds": 3
   }
 }

@@ -366,7 +366,7 @@ function RelatedEffects({
 
 /* ═══════════════════════════════════════════════════════════════
    Share Button — copies the effect's real static-page URL
-   (/effects/<id>, prerendered for all 1,973 effects)
+   (/effects/<id>, prerendered for all 1,983 effects)
    ═══════════════════════════════════════════════════════════════ */
 
 function ShareButton({ effectId }: { effectId: string }) {

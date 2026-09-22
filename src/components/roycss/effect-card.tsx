@@ -42,11 +42,12 @@ function BoxPreview({
   effect: CSSEffect;
   className: string;
 }) {
-  // Pattern-based previews (batch 53): marquee strips, carousels and
-  // slider controls are WIDE, windowed layouts the default 80×80 box
-  // can't show. Their CSS sizes itself relative to this wrapper
-  // (width/height 100% or fixed control sizes), and childCount spans
-  // provide the chips/slides the cssCode targets via `> span`.
+  // Pattern-based previews (batches 53–54): marquee strips, carousels,
+  // slider controls, navbars/drawers/menus and media frames are WIDE or
+  // TALL windowed layouts the default 80×80 box can't show. Their CSS
+  // sizes itself relative to this wrapper (width/height 100% or fixed
+  // control sizes), and childCount spans provide the chips/slides/items
+  // the cssCode targets via `> span`.
   if (
     effect.id.startsWith("marquee-") ||
     effect.id.startsWith("carousel-") ||
@@ -58,6 +59,29 @@ function BoxPreview({
         <div className={className}>
           {childCount > 0 &&
             Array.from({ length: childCount }).map((_, i) => (
+              <span key={i} />
+            ))}
+        </div>
+      </div>
+    );
+  }
+
+  // Batch 54 previews: navigation surfaces (navbar, drawer, dropdown,
+  // pill nav) and media frames (compare wipe, lightbox thumb, caption
+  // card, tilt frame, gallery) fill the window; the effect CSS sizes
+  // itself relative to this box (100% + aspect-ratio / fixed controls).
+  if (effect.id.startsWith("nav-") || effect.id.startsWith("media-")) {
+    // Portrait frames get side gutters; strips/galleries span full width.
+    const isPortrait = effect.id.startsWith("media-");
+    return (
+      <div
+        className={`w-full h-full flex items-center justify-center overflow-hidden ${
+          isPortrait ? "px-7 py-2" : "px-2"
+        }`}
+      >
+        <div className={`${className} w-full h-full`}>
+          {(effect.childCount || 0) > 0 &&
+            Array.from({ length: effect.childCount || 0 }).map((_, i) => (
               <span key={i} />
             ))}
         </div>

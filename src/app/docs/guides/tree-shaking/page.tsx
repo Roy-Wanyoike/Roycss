@@ -121,7 +121,7 @@ import "./src/styles/roycss.css";   // your exported subset
         <code>{`$ npx roycss stats
 
 Total usages: 14 across 6 unique effects in 12 source files
-Catalog coverage: 6/1973 effects (0.3%)
+Catalog coverage: 6/${EFFECT_COUNT_FORMATTED} effects (0.3%)
 
 Top 6 effects:
    1. roycss-btn-glow           ×4  — Glow Button

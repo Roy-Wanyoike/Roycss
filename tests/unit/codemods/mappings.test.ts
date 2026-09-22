@@ -31,8 +31,8 @@ const INBOUND_TABLES: ReadonlyArray<[string, Record<string, string | null>]> = [
 ];
 
 describe("catalog validation — mappings can never point outside the library", () => {
-  it("the catalog exposes its full class set (1,973 effects, 1,983 classes)", () => {
-    expect(effects.length).toBe(1973);
+  it("the catalog exposes its full class set (1,983 effects, 1,994 classes)", () => {
+    expect(effects.length).toBe(1983);
     expect(getCatalogClasses().size).toBeGreaterThan(1900);
   });
 

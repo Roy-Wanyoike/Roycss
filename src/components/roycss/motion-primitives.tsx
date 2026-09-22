@@ -561,7 +561,7 @@ export function StatCounter({
   label: string;
   suffix?: string;
   prefix?: string;
-  /** Thousands separators on the animated value ("1,973"). */
+  /** Thousands separators on the animated value ("1,983"). */
   format?: boolean;
 }) {
   return (

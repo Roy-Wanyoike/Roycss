@@ -1,13 +1,13 @@
 /*!
  * RoyCSS v2.0.0
- * 1973 production-ready CSS effects. Zero JavaScript runtime.
+ * 1983 production-ready CSS effects. Zero JavaScript runtime.
  * https://github.com/Roy-Wanyoike/Roycss
  *
  * Author: Royford Wanyoike Wamaitha
  * License: MIT
  *
  * Built: 2026-09-22
- * Effects: 1973
+ * Effects: 1983
  * Categories: 29
  */
 
@@ -31064,7 +31064,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   NAVIGATION (35 effects)
+   NAVIGATION (40 effects)
    ═══════════════════════════════════════════════════════════════ */
 
 /* Menu Slide */
@@ -32204,6 +32204,349 @@
     animation: none;
     transform: none;
     background: oklch(1 0 0 / 0.4);
+  }
+}
+
+/* Navigation Patterns: Glass Navbar */
+.roycss-nav-navbar-glass {
+  position: sticky;
+  inset-inline: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  inline-size: 100%;
+  padding: 0.75rem 1.25rem;
+  border-radius: 16px;
+  background: oklch(0.99 0.005 250 / 0.55);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  backdrop-filter: blur(14px) saturate(1.4);
+  box-shadow:
+    inset 0 -1px 0 oklch(0.6 0.02 250 / 0.18),
+    0 1px 2px oklch(0.2 0.02 250 / 0.08);
+  z-index: 50;
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .roycss-nav-navbar-glass {
+      animation: roy-nav-glass-elevate linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0px 160px;
+    }
+  }
+}
+@keyframes roy-nav-glass-elevate {
+  to {
+    box-shadow:
+      inset 0 -1px 0 oklch(0.6 0.02 250 / 0.22),
+      0 8px 24px oklch(0.2 0.03 250 / 0.18);
+    background: oklch(0.99 0.005 250 / 0.72);
+  }
+}
+.roycss-nav-navbar-glass > span {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: oklch(0.35 0.03 250);
+  padding: 0.375rem 0.625rem;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+@media (hover: hover) {
+  .roycss-nav-navbar-glass > span:hover {
+    color: oklch(0.3 0.09 175);
+    background: oklch(0.9 0.05 175 / 0.35);
+  }
+}
+.roycss-nav-navbar-glass > span:focus-visible {
+  outline: 2px solid oklch(0.6 0.14 175);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-navbar-glass {
+    animation: none;
+  }
+}
+
+/* Navigation Patterns: Hamburger Morph X
+   REQUIRED MARKUP: <button class="roycss-nav-hamburger-morph" aria-expanded="false"
+                     aria-label="Open menu"><span></span><span></span><span></span></button>
+   Toggle [data-open="true"] (or :hover) to morph. */
+.roycss-nav-hamburger-morph {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  inline-size: 44px;
+  block-size: 44px;
+  padding: 10px;
+  border-radius: 12px;
+  background: oklch(0.97 0.01 250 / 0.6);
+  box-shadow: inset 0 0 0 1px oklch(0.7 0.04 250 / 0.3);
+  cursor: pointer;
+}
+.roycss-nav-hamburger-morph > span {
+  display: block;
+  block-size: 2px;
+  inline-size: 100%;
+  border-radius: 2px;
+  background: oklch(0.35 0.05 250);
+  transition:
+    transform 0.32s cubic-bezier(0.34, 1.4, 0.64, 1),
+    opacity 0.22s ease;
+}
+.roycss-nav-hamburger-morph[data-open="true"] > span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.roycss-nav-hamburger-morph[data-open="true"] > span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0.4);
+}
+.roycss-nav-hamburger-morph[data-open="true"] > span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+@media (hover: hover) {
+  .roycss-nav-hamburger-morph:hover > span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .roycss-nav-hamburger-morph:hover > span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0.4);
+  }
+  .roycss-nav-hamburger-morph:hover > span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+}
+.roycss-nav-hamburger-morph:focus-visible {
+  outline: 2px solid oklch(0.6 0.14 175);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-hamburger-morph > span {
+    transition: none;
+  }
+}
+
+/* Navigation Patterns: Peek Drawer
+   REQUIRED MARKUP: <aside class="roycss-nav-drawer-slide" data-open="false">
+                      <span>Home</span><span>Catalog</span><span>About</span>
+                    </aside>
+   Toggle data-open="true" (checkbox :checked sibling selectors also work). */
+.roycss-nav-drawer-slide {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.375rem;
+  inline-size: 220px;
+  block-size: 100%;
+  padding: 1rem 0.875rem;
+  border-radius: 14px;
+  background: linear-gradient(
+    160deg,
+    oklch(0.98 0.015 175 / 0.9),
+    oklch(0.94 0.03 200 / 0.92)
+  );
+  box-shadow:
+    inset -1px 0 0 oklch(0.6 0.08 175 / 0.25),
+    4px 0 16px oklch(0.2 0.03 200 / 0.15);
+  transform: translateX(calc(-100% + 44px));
+  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+}
+.roycss-nav-drawer-slide > span {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: oklch(0.32 0.05 200);
+  padding: 0.5rem 0.625rem;
+  border-radius: 10px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(12px);
+  transition:
+    opacity 0.3s ease 0.08s,
+    transform 0.36s cubic-bezier(0.22, 1, 0.36, 1) 0.06s;
+}
+.roycss-nav-drawer-slide[data-open="true"] {
+  transform: translateX(0);
+}
+.roycss-nav-drawer-slide[data-open="true"] > span {
+  opacity: 1;
+  transform: translateX(0);
+}
+@media (hover: hover) {
+  .roycss-nav-drawer-slide:hover {
+    transform: translateX(0);
+  }
+  .roycss-nav-drawer-slide:hover > span {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.roycss-nav-drawer-slide:focus-within {
+  transform: translateX(0);
+}
+.roycss-nav-drawer-slide > span:focus-visible {
+  outline: 2px solid oklch(0.6 0.14 175);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-drawer-slide,
+  .roycss-nav-drawer-slide > span {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* Navigation Patterns: Dropdown Caret Reveal */
+.roycss-nav-dropdown-caret {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  inline-size: 200px;
+  padding: 0.5rem 0.625rem;
+  border-radius: 14px;
+  background: oklch(0.98 0.008 300 / 0.7);
+  box-shadow: inset 0 0 0 1px oklch(0.7 0.05 300 / 0.3);
+  cursor: pointer;
+}
+.roycss-nav-dropdown-caret::after {
+  content: "";
+  position: absolute;
+  top: 0.875rem;
+  right: 0.875rem;
+  inline-size: 8px;
+  block-size: 8px;
+  border-right: 2px solid oklch(0.45 0.08 300);
+  border-bottom: 2px solid oklch(0.45 0.08 300);
+  transform: rotate(45deg);
+  transition: transform 0.34s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+.roycss-nav-dropdown-caret > span {
+  display: flex;
+  align-items: center;
+  inline-size: calc(100% - 1.75rem);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: oklch(0.34 0.05 300);
+  padding: 0.5rem 0.625rem;
+  border-radius: 10px;
+  max-block-size: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(-6px);
+  transition:
+    max-block-size 0.32s ease,
+    opacity 0.26s ease,
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (hover: hover) {
+  .roycss-nav-dropdown-caret:hover::after {
+    transform: rotate(225deg);
+  }
+  .roycss-nav-dropdown-caret:hover > span {
+    max-block-size: 3rem;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .roycss-nav-dropdown-caret:hover > span:nth-child(2) {
+    transition-delay: 0.04s;
+  }
+  .roycss-nav-dropdown-caret:hover > span:nth-child(3) {
+    transition-delay: 0.08s;
+  }
+}
+.roycss-nav-dropdown-caret:focus-within::after {
+  transform: rotate(225deg);
+}
+.roycss-nav-dropdown-caret:focus-within > span {
+  max-block-size: 3rem;
+  opacity: 1;
+  transform: translateY(0);
+}
+.roycss-nav-dropdown-caret > span:focus-visible {
+  outline: 2px solid oklch(0.6 0.14 175);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-dropdown-caret::after,
+  .roycss-nav-dropdown-caret > span {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* Navigation Patterns: Sliding Pill Indicator
+   REQUIRED MARKUP (persisted selection):
+     <nav class="roycss-nav-pill-indicator">
+       <input type="radio" name="nav-pill" id="pill-1" hidden checked>
+       <label for="pill-1"><span>Home</span></label> … </nav>
+   Demo markup below mirrors the label>span shape so hover previews it. */
+.roycss-nav-pill-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  inline-size: 100%;
+  padding: 0.375rem;
+  border-radius: 999px;
+  background: oklch(0.96 0.012 220 / 0.75);
+  box-shadow: inset 0 0 0 1px oklch(0.7 0.04 220 / 0.28);
+}
+.roycss-nav-pill-indicator > span {
+  position: relative;
+  flex: 1 1 0%;
+  text-align: center;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: oklch(0.38 0.04 220);
+  padding: 0.5rem 0.375rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.roycss-nav-pill-indicator > span::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    oklch(0.75 0.11 190),
+    oklch(0.68 0.13 250)
+  );
+  box-shadow: 0 2px 8px oklch(0.4 0.1 220 / 0.35);
+  transform: scale(0.6);
+  opacity: 0;
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.4, 0.64, 1),
+    opacity 0.22s ease;
+}
+.roycss-nav-pill-indicator > span:active::before {
+  transform: scale(0.92);
+  opacity: 0.7;
+}
+@media (hover: hover) {
+  .roycss-nav-pill-indicator > span:hover::before {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.roycss-nav-pill-indicator > span:focus-visible {
+  outline: 2px solid oklch(0.6 0.14 175);
+  outline-offset: 3px;
+}
+.roycss-nav-pill-indicator:has(input:checked:nth-of-type(1)) label:nth-of-type(1) span::before,
+.roycss-nav-pill-indicator:has(input:checked:nth-of-type(2)) label:nth-of-type(2) span::before,
+.roycss-nav-pill-indicator:has(input:checked:nth-of-type(3)) label:nth-of-type(3) span::before,
+.roycss-nav-pill-indicator:has(input:checked:nth-of-type(4)) label:nth-of-type(4) span::before {
+  transform: scale(1);
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-pill-indicator > span::before {
+    transition: none;
   }
 }
 
@@ -40763,7 +41106,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   MICROINTERACTIONS (107 effects)
+   MICROINTERACTIONS (109 effects)
    ═══════════════════════════════════════════════════════════════ */
 
 /* Toggle Switch */
@@ -44385,8 +44728,146 @@
   .roycss-haptics-magnetic-pull:hover { animation: none; transition: none; transform: none; }
 }
 
+/* Media Patterns: Caption Reveal Card
+   REQUIRED MARKUP: <figure class="roycss-media-caption-reveal" tabindex="0">
+                      <span>Caption text</span>
+                    </figure> */
+.roycss-media-caption-reveal {
+  position: relative;
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 14px;
+  overflow: hidden;
+  isolation: isolate;
+  cursor: pointer;
+  box-shadow:
+    inset 0 0 0 1px oklch(0.6 0.02 250 / 0.25),
+    0 6px 18px oklch(0.2 0.03 250 / 0.14);
+}
+.roycss-media-caption-reveal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(150deg, oklch(0.66 0.14 160), oklch(0.5 0.12 220));
+  transform: scale(1.02);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* gradient scrim for caption contrast */
+.roycss-media-caption-reveal::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 30%;
+  inset-inline: 0;
+  inset-block-end: 0;
+  background: linear-gradient(
+    to top,
+    oklch(0.18 0.02 250 / 0.82),
+    oklch(0.18 0.02 250 / 0)
+  );
+  opacity: 0;
+  transition: opacity 0.32s ease;
+}
+.roycss-media-caption-reveal > span {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  padding: 0.875rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: oklch(0.99 0 0);
+  transform: translateY(calc(100% - 0.5rem));
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (hover: hover) {
+  .roycss-media-caption-reveal:hover::before {
+    transform: scale(1.08);
+  }
+  .roycss-media-caption-reveal:hover::after {
+    opacity: 1;
+  }
+  .roycss-media-caption-reveal:hover > span {
+    transform: translateY(0);
+  }
+}
+.roycss-media-caption-reveal:focus-visible {
+  outline: 2px solid oklch(0.6 0.14 175);
+  outline-offset: 3px;
+}
+.roycss-media-caption-reveal:focus-within::after,
+.roycss-media-caption-reveal:focus-visible::after {
+  opacity: 1;
+}
+.roycss-media-caption-reveal:focus-within > span,
+.roycss-media-caption-reveal:focus-visible > span {
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-media-caption-reveal::before,
+  .roycss-media-caption-reveal::after,
+  .roycss-media-caption-reveal > span {
+    transition: none;
+    transform: none;
+  }
+  .roycss-media-caption-reveal::after {
+    opacity: 1;
+  }
+}
+
+/* Media Patterns: 3D Tilt Frame */
+.roycss-media-tilt-3d {
+  position: relative;
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 14px;
+  background:
+    linear-gradient(145deg, oklch(0.7 0.1 60), oklch(0.55 0.12 300));
+  box-shadow:
+    inset 0 0 0 1px oklch(0.9 0.03 250 / 0.3),
+    0 14px 30px oklch(0.2 0.03 250 / 0.22);
+  transform: perspective(700px) rotateX(6deg) rotateY(-8deg);
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+/* glossy glare */
+.roycss-media-tilt-3d::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    115deg,
+    oklch(1 0 0 / 0.35) 0%,
+    oklch(1 0 0 / 0.05) 38%,
+    oklch(1 0 0 / 0) 60%
+  );
+  transition: opacity 0.4s ease;
+}
+@media (hover: hover) {
+  .roycss-media-tilt-3d:hover {
+    transform: perspective(700px) rotateX(10deg) rotateY(-14deg)
+      translateZ(10px);
+  }
+  .roycss-media-tilt-3d:hover::after {
+    opacity: 0.85;
+  }
+}
+.roycss-media-tilt-3d:focus-visible {
+  outline: 2px solid oklch(0.6 0.14 175);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-media-tilt-3d {
+    transition: none;
+    transform: none;
+  }
+}
+
 /* ═══════════════════════════════════════════════════════════════
-   VISUAL EFFECTS (278 effects)
+   VISUAL EFFECTS (281 effects)
    ═══════════════════════════════════════════════════════════════ */
 
 /* Border Beam */
@@ -53549,6 +54030,216 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .roycss-vfx-mouse-glow::before { animation: none; opacity: 0.7; top: 50%; left: 50%; }
+}
+
+/* Media Patterns: Before/After Wipe
+   REQUIRED MARKUP: <figure class="roycss-media-compare-wipe">
+                      <img src="after.jpg" alt="After">   <!-- bottom -->
+                      <img src="before.jpg" alt="Before"> <!-- top, clipped -->
+                    </figure>
+   Demo below paints the layers with gradients in place of images. */
+.roycss-media-compare-wipe {
+  position: relative;
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow:
+    inset 0 0 0 1px oklch(0.6 0.02 250 / 0.25),
+    0 10px 28px oklch(0.2 0.03 250 / 0.18);
+}
+.roycss-media-compare-wipe::before,
+.roycss-media-compare-wipe::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+/* bottom layer — "after" */
+.roycss-media-compare-wipe::before {
+  background:
+    linear-gradient(120deg, oklch(0.62 0.16 200), oklch(0.55 0.18 300));
+}
+/* top layer — "before", clipped by the wipe */
+.roycss-media-compare-wipe::after {
+  background:
+    repeating-linear-gradient(
+      45deg,
+      oklch(0.85 0.02 250) 0 12px,
+      oklch(0.78 0.02 250) 12px 24px
+    );
+  clip-path: inset(0 50% 0 0);
+  animation: roy-media-compare-wipe 5.5s ease-in-out infinite;
+  /* the split line */
+  border-inline-end: 2px solid oklch(0.99 0 0 / 0.85);
+}
+@keyframes roy-media-compare-wipe {
+  0%, 15%   { clip-path: inset(0 85% 0 0); }
+  45%, 55%  { clip-path: inset(0 15% 0 0); }
+  85%, 100% { clip-path: inset(0 85% 0 0); }
+}
+@media (hover: hover) {
+  .roycss-media-compare-wipe:hover::after {
+    animation-play-state: paused;
+  }
+}
+.roycss-media-compare-wipe:focus-within::after {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-media-compare-wipe::after {
+    animation: none;
+    clip-path: inset(0 50% 0 0);
+  }
+}
+
+/* Media Patterns: Target Lightbox
+   REQUIRED MARKUP:
+     <a href="#img-1" class="roycss-media-lightbox-zoom"><span></span></a>
+     <div class="roycss-media-lightbox-zoom-overlay" id="img-1">
+       <a href="#" class="close" aria-label="Close">Close</a>
+     </div> */
+.roycss-media-lightbox-zoom {
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: zoom-in;
+  box-shadow:
+    inset 0 0 0 1px oklch(0.6 0.02 250 / 0.25),
+    0 6px 18px oklch(0.2 0.03 250 / 0.16);
+}
+.roycss-media-lightbox-zoom > span {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  background:
+    radial-gradient(
+      circle at 30% 30%,
+      oklch(0.8 0.12 90),
+      oklch(0.55 0.14 60)
+    );
+  transform: scale(1);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (hover: hover) {
+  .roycss-media-lightbox-zoom:hover > span {
+    transform: scale(1.08);
+  }
+}
+.roycss-media-lightbox-zoom:focus-visible {
+  outline: 2px solid oklch(0.6 0.14 175);
+  outline-offset: 3px;
+}
+.roycss-media-lightbox-zoom-overlay {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: oklch(0.15 0.01 250 / 0.9);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 100;
+}
+.roycss-media-lightbox-zoom-overlay:target {
+  opacity: 1;
+  visibility: visible;
+}
+.roycss-media-lightbox-zoom-overlay .close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: oklch(0.98 0 0);
+  padding: 0.5rem 0.875rem;
+  border-radius: 10px;
+}
+.roycss-media-lightbox-zoom-overlay .close:focus-visible {
+  outline: 2px solid oklch(0.85 0.14 175);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-media-lightbox-zoom > span {
+    transition: none;
+  }
+  .roycss-media-lightbox-zoom-overlay {
+    transition: none;
+  }
+}
+
+/* Media Patterns: Thumbnail Gallery
+   REQUIRED MARKUP (zero-JS switching):
+     <div class="roycss-media-thumb-select">
+       <input type="radio" name="thumb" id="t1" hidden checked>
+       <label for="t1"><span></span></label> … (x4) </div>
+   :has() promotes the checked thumb to the "selected" state. */
+.roycss-media-thumb-select {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  inline-size: 100%;
+  block-size: 100%;
+  padding: 0.625rem;
+  border-radius: 14px;
+  background: oklch(0.97 0.008 250 / 0.7);
+  box-shadow: inset 0 0 0 1px oklch(0.7 0.04 250 / 0.28);
+}
+.roycss-media-thumb-select > span {
+  position: relative;
+  flex: 1 1 0%;
+  block-size: 34%;
+  border-radius: 9px;
+  cursor: pointer;
+  box-shadow:
+    inset 0 0 0 1px oklch(0.65 0.03 250 / 0.4),
+    0 2px 6px oklch(0.2 0.02 250 / 0.12);
+  transition:
+    transform 0.32s cubic-bezier(0.34, 1.4, 0.64, 1),
+    box-shadow 0.3s ease;
+}
+.roycss-media-thumb-select > span:nth-child(1) {
+  background: linear-gradient(135deg, oklch(0.8 0.1 90), oklch(0.7 0.12 60));
+}
+.roycss-media-thumb-select > span:nth-child(2) {
+  background: linear-gradient(135deg, oklch(0.75 0.11 190), oklch(0.68 0.12 250));
+}
+.roycss-media-thumb-select > span:nth-child(3) {
+  background: linear-gradient(135deg, oklch(0.78 0.1 140), oklch(0.66 0.12 200));
+}
+.roycss-media-thumb-select > span:nth-child(4) {
+  background: linear-gradient(135deg, oklch(0.76 0.12 310), oklch(0.62 0.14 350));
+}
+.roycss-media-thumb-select > span[aria-current],
+.roycss-media-thumb-select:has(input:checked:nth-of-type(1)) > span:nth-of-type(1),
+.roycss-media-thumb-select:has(input:checked:nth-of-type(2)) > span:nth-of-type(2),
+.roycss-media-thumb-select:has(input:checked:nth-of-type(3)) > span:nth-of-type(3),
+.roycss-media-thumb-select:has(input:checked:nth-of-type(4)) > span:nth-of-type(4) {
+  block-size: 46%;
+  box-shadow:
+    inset 0 0 0 2px oklch(0.6 0.14 175),
+    0 6px 14px oklch(0.3 0.08 175 / 0.3);
+}
+@media (hover: hover) {
+  .roycss-media-thumb-select > span:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      inset 0 0 0 2px oklch(0.65 0.1 200),
+      0 8px 16px oklch(0.2 0.04 250 / 0.2);
+  }
+}
+.roycss-media-thumb-select > span:focus-visible {
+  outline: 2px solid oklch(0.6 0.14 175);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-media-thumb-select > span {
+    transition: none;
+    transform: none;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════

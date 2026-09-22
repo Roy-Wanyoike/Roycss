@@ -29,7 +29,7 @@ const TITLE_MAX_LENGTH = 60;
  *
  * Prefers the full "… — Copy-Paste Code" template; falls back to
  * "… CSS Effect | RoyCSS" when the effect name would push the title past
- * 60 characters (81 of 1,973 catalog names are >22 chars, max 36 — the
+ * 60 characters (81 of 1,983 catalog names are >22 chars, max 36 — the
  * fallback keeps every one of them inside the cap), and truncates the name
  * with an ellipsis only in the impossible-for-this-catalog >40-char case so
  * the function can never emit an over-long title for future data.

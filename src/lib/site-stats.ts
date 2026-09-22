@@ -33,9 +33,9 @@ import { PRODUCTS } from "./product-registry";
 import pkg from "../../package.json";
 
 /** Total shipped effects — derived from the real catalog. */
-export const EFFECT_COUNT = effects.length; // 1,973
+export const EFFECT_COUNT = effects.length; // 1,983
 
-/** "1,973" — pre-formatted for display copy. */
+/** "1,983" — pre-formatted for display copy. */
 export const EFFECT_COUNT_FORMATTED =
   EFFECT_COUNT.toLocaleString("en-US");
 
@@ -60,8 +60,8 @@ export const VERSION = pkg.version; // "2.0.0"
 export const VERSION_BADGE = `v${VERSION.split(".")[0]}.${VERSION.split(".")[1]}`;
 
 /** Sizes of the shipped stylesheet, for honest docs/FAQ copy. */
-export const FULL_CSS_MIN_BYTES = 1_469_331; // dist/roycss.min.css (pinned by test)
-export const FULL_CSS_MIN_GZ_KB = 209; // gzip of dist/roycss.min.css (pinned by test)
+export const FULL_CSS_MIN_BYTES = 1_483_550; // dist/roycss.min.css (pinned by test)
+export const FULL_CSS_MIN_GZ_KB = 211; // gzip of dist/roycss.min.css (pinned by test)
 
 /**
  * Line count of the shipped (unminified) dist/roycss.css — hand-pinned
@@ -70,5 +70,5 @@ export const FULL_CSS_MIN_GZ_KB = 209; // gzip of dist/roycss.min.css (pinned by
  * against the real file; bump in lockstep whenever a batch regenerates dist.
  * (The old "~22,000+" hero claim had drifted ~3× low by round 12 — issue #202.)
  */
-export const CSS_LINES = 60_421;
+export const CSS_LINES = 61_112;
 export const CSS_LINES_FORMATTED = CSS_LINES.toLocaleString("en-US");

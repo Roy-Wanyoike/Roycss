@@ -10,7 +10,7 @@
 ## What RoyCSS is
 
 RoyCSS (npm package `roycss`, v2.0.0) is a pure-CSS effects framework:
-1,973 production-ready effect classes across 29 categories —
+1,983 production-ready effect classes across 29 categories —
 zero JavaScript runtime, OKLCH colors, logical properties, container queries, and
 scroll-driven animations. One global stylesheet; no build step required.
 
@@ -21,14 +21,14 @@ Site: https://roycss.com · repo: https://github.com/Roy-Wanyoike/Roycss
 1. **Every effect class is fully prefixed:** `roycss-<effect-id>`. Examples straight
    from the catalog: `.roycss-btn-glow`, `.roycss-hover-push-up`, `.roycss-text-shimmer`.
 2. **Effect ids are lowercase kebab-case**, matching `^roycss-[a-z0-9]+(?:-[a-z0-9]+)*$` (validated
-   against every one of the 1,983 real class names). Digits are allowed —
+   against every one of the 1,994 real class names). Digits are allowed —
    3 catalog ids start with a digit (`3d-book`, `3d-poster`, `3d-gallery`).
 3. **The class is the id.** For every effect except one, the class is exactly `roycss-` + the effect id. The single documented outlier: the effect `card-gradient-border-b19` ships the class `roycss-card-gradient-border-b19-v2`.
 4. **Category-led stems are common but not guaranteed.** Most ids start with a category
    stem — in Animations the top stems are ferrum- (131), fade- (12), anim- (11). Large curated
    sub-families exist: 729 `ferrum-*` effects, 90 `vfx-*` effects,
    and 44 ids with a `-b<number>` batch suffix.
-5. **9 auxiliary selectors** (`.roycss-card-flip-back`, `.roycss-card-flip-front`, `.roycss-card-flip-inner`, `.roycss-cube-face`, …)
+5. **10 auxiliary selectors** (`.roycss-card-flip-back`, `.roycss-card-flip-front`, `.roycss-card-flip-inner`, `.roycss-cube-face`, …)
    only work as part of their parent effect's markup pattern — they are not standalone
    utilities. One base utility class exists: `.roycss-sr-only` (visually-hidden text for a11y).
 6. **Zero modifier suffixes.** No class in the stylesheet contains `--` — there are no
@@ -124,14 +124,14 @@ Three dots bouncing in sequence for a playful loading state
 
 | Fact | Value |
 |---|---|
-| Effects | 1,973 |
+| Effects | 1,983 |
 | Categories | 29 |
-| Effect (primary) classes | 1,973 — one per effect |
-| Auxiliary classes | 9 |
+| Effect (primary) classes | 1,983 — one per effect |
+| Auxiliary classes | 10 |
 | Base utility classes | 1 (`.roycss-sr-only`) |
-| Total classes in the stylesheet | 1,983 |
+| Total classes in the stylesheet | 1,994 |
 | Modifier-suffix classes | 0 (there are none) |
-| Training pairs in `roycss.training-pairs.jsonl` | 385 |
+| Training pairs in `roycss.training-pairs.jsonl` | 386 |
 
 ## Verifying — the ground-truth tools
 
@@ -149,7 +149,7 @@ Three dots bouncing in sequence for a playful loading state
 ### Lookup order (use the first surface available to you)
 
 1. **MCP server** — if the RoyCSS MCP server is connected, query it instead of
-   guessing: `search_effects` (keyword/category/tag search over all 1,973
+   guessing: `search_effects` (keyword/category/tag search over all 1,983
    effects), `get_effect` (full metadata for one id), `validate_class_name`
    (is this class real? — with closest-match suggestions), `suggest_for_intent`
    (UX intent → effects), `list_categories`.

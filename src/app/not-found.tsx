@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Home, Search, Sparkles, Box, Zap, BookOpen } from "lucide-react";
 import { EFFECT_COUNT_FORMATTED, PRODUCT_COUNT } from "@/lib/site-stats";
+import { explorerHref } from "@/lib/search-targets";
 
 export default function NotFound() {
   return (
@@ -60,7 +61,7 @@ export default function NotFound() {
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             <Link
-              href="/#effects"
+              href={explorerHref()}
               className="flex flex-col items-center gap-2 p-4 rounded-xl border border-border bg-card/50 hover:border-primary/40 hover:bg-muted/30 transition-all"
             >
               <Sparkles className="size-5 text-primary" />

@@ -13,16 +13,24 @@ import { collections } from "@/lib/roycss-collections";
 import { PRODUCTS_CATALOG, PRODUCT_TIER_META, type ProductMeta } from "@/lib/products-catalog";
 import { searchDocs, type DocsIndexEntry } from "@/lib/docs-index";
 import { Badge } from "@/components/ui/badge";
-import type { CSSEffect } from "@/lib/roycss-types";
+import { effectDetailHref } from "@/lib/search-targets";
 
 interface SearchOverlayProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSelectEffect: (effect: CSSEffect) => void;
   onJumpToSection: (id: string) => void;
 }
 
-export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSection }: SearchOverlayProps) {
+/**
+ * Result → target mapping contract (issue #161):
+ *   section    → home anchor jump (onJumpToSection)
+ *   effect     → /effects/<id> detail page (effectDetailHref — real route,
+ *                title matches the clicked result, works from any page)
+ *   recipe     → #recipes section · pattern → #patterns · collection → #collections
+ *   product    → #platform section (the surface hosting the products)
+ *   docs       → the entry's real /docs route (docs-index)
+ */
+export function SearchOverlay({ open, onOpenChange, onJumpToSection }: SearchOverlayProps) {
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -106,7 +114,9 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
       let idx = selectedIndex;
       if (idx < sectionResults.length && sectionResults[idx]) { onJumpToSection("#" + sectionResults[idx].id); onOpenChange(false); return; }
       idx -= sectionResults.length;
-      if (idx < effectResults.length && effectResults[idx]) { onSelectEffect(effectResults[idx]); onOpenChange(false); return; }
+      // Effect results navigate to their real /effects/<id> detail page
+      // (issue #161) — same target as clicking the result row.
+      if (idx < effectResults.length && effectResults[idx]) { router.push(effectDetailHref(effectResults[idx].id)); onOpenChange(false); return; }
       idx -= effectResults.length;
       if (idx < recipeResults.length && recipeResults[idx]) { onJumpToSection("#recipes"); onOpenChange(false); return; }
       idx -= recipeResults.length;
@@ -118,7 +128,7 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
       idx -= productResults.length;
       if (idx < docsResults.length && docsResults[idx]) { router.push(docsResults[idx].route); onOpenChange(false); return; }
     }
-  }, [selectedIndex, totalResults, sectionResults, effectResults, recipeResults, patternResults, collectionResults, productResults, docsResults, onJumpToSection, onSelectEffect, onOpenChange, router]);
+  }, [selectedIndex, totalResults, sectionResults, effectResults, recipeResults, patternResults, collectionResults, productResults, docsResults, onJumpToSection, onOpenChange, router]);
 
   return (
     <AnimatePresence>
@@ -201,7 +211,7 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
                   {effectResults.map((effect, i) => {
                     const index = i + sectionResults.length;
                     return (
-                      <button key={effect.id} onClick={() => { onSelectEffect(effect); onOpenChange(false); }}
+                      <Link key={effect.id} href={effectDetailHref(effect.id)} onClick={() => onOpenChange(false)}
                         onMouseEnter={() => setSelectedIndex(index)}
                         className={`w-full flex items-center gap-3 p-2.5 rounded-lg transition-all cursor-pointer text-left ${selectedIndex === index ? "bg-primary/10" : "hover:bg-muted/50"}`}>
                         <div className="flex items-center justify-center size-8 rounded-lg bg-primary/10 text-primary shrink-0">
@@ -209,7 +219,7 @@ export function SearchOverlay({ open, onOpenChange, onSelectEffect, onJumpToSect
                         </div>
                         <div className="min-w-0 flex-1"><p className="text-sm font-medium text-foreground truncate">{effect.name}</p>
                         <p className="text-xs text-muted-foreground truncate">{categoryMeta[effect.category].label} · {effect.tags.slice(0, 2).join(", ")}</p></div>
-                      </button>
+                      </Link>
                     );
                   })}
                   {recipeResults.length > 0 && (sectionResults.length > 0 || effectResults.length > 0) && <div className="h-px bg-border/50 my-1" />}

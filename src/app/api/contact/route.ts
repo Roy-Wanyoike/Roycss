@@ -1,9 +1,15 @@
 import { NextResponse } from "next/server";
+import { API_RATE_TIERS, guardApiWrite } from "@/lib/api-security";
 import { db } from "@/lib/db";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(req: Request) {
+  // #159: same-origin verification (403) + per-IP rate limit (429, 5/min —
+  // mirrors the backend contact tier). Fail-closed on both.
+  const denied = guardApiWrite(req, { route: "contact", ...API_RATE_TIERS.contact });
+  if (denied) return denied;
+
   try {
     const body = await req.json().catch(() => null);
     if (!body || typeof body !== "object") {

@@ -19,3 +19,17 @@ model ContactMessage {
   read      Boolean  @default(false)
   createdAt DateTime @default(now())
 }
+
+/// Per-doc-page feedback ("Was this page helpful?") — issue #127 / PF-014.
+/// One row per submission; `helpful` is the thumbs-up/down verdict,
+/// `comment` is an optional free-text note (capped at 1000 chars).
+model DocsFeedback {
+  id        String   @id @default(cuid())
+  slug      String
+  helpful   Boolean
+  comment   String?
+  createdAt DateTime @default(now())
+
+  @@index([slug])
+  @@index([createdAt])
+}

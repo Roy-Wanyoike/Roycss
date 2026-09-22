@@ -265,3 +265,102 @@ export function getPrevNextPages(
     next: idx < all.length - 1 ? all[idx + 1] : undefined,
   };
 }
+
+/**
+ * Docs versioning (issue #127 / PF-014 acceptance #3).
+ *
+ * `/docs` always serves the CURRENT version. `/docs/<version>` routes to
+ * a per-version snapshot surface: the current version redirects back to
+ * the canonical `/docs`, archived versions render an honest snapshot
+ * notice with the full catalog linked to the live docs. Slugs are
+ * lowercase `v<major>` (optionally `v<major>.<minor>`, e.g. v2.2).
+ */
+export const DOCS_CURRENT_VERSION = "v2";
+
+export interface DocsVersionInfo {
+  /** Version slug, e.g. "v1", "v2", "v2.2". */
+  version: string;
+  /** Whether this slug resolves to the current docs. */
+  current: boolean;
+  /** Release line label, e.g. "RoyCSS 2.x". */
+  label: string;
+  /** Human status shown on the snapshot page. */
+  status: "current" | "archived";
+  /** What changed, shown on the snapshot page. */
+  note: string;
+}
+
+/** Known version lines, newest first. Derived versions keep working. */
+export const DOCS_VERSIONS: DocsVersionInfo[] = [
+  {
+    version: "v2",
+    current: true,
+    label: "RoyCSS 2.x — current",
+    status: "current",
+    note: "1,959 effects, OKLCH tokens, container queries, scroll-driven animations, RoyAI.",
+  },
+  {
+    version: "v1",
+    current: false,
+    label: "RoyCSS 1.x — archived",
+    status: "archived",
+    note: "The original pre-2.0 effect catalog (20-category taxonomy). Superseded by the v2 catalog expansion and token system.",
+  },
+];
+
+/**
+ * Resolve any `/docs/<version>` slug to its snapshot metadata. Unknown
+ * versions still resolve (as archived) so old links never 404 — they
+ * render the snapshot notice pointing at the live docs.
+ */
+export function resolveDocsVersion(
+  version: string,
+): DocsVersionInfo | undefined {
+  const slug = version.toLowerCase().replace(/^v?/, "v");
+  const known = DOCS_VERSIONS.find((v) => v.version === slug);
+  if (known) return known;
+  // Per-minor snapshots (e.g. v2.2) inherit their major line's status.
+  if (/^v\d+(\.\d+)*$/.test(slug)) {
+    const major = DOCS_VERSIONS.find((v) => slug.startsWith(v.version + "."));
+    if (major?.current) {
+      return {
+        version: slug,
+        current: true,
+        label: `RoyCSS ${slug.slice(1)} — current line`,
+        status: "current",
+        note: "Part of the current documentation.",
+      };
+    }
+    return {
+      version: slug,
+      current: false,
+      label: `RoyCSS ${slug.slice(1)} — archived`,
+      status: "archived",
+      note: "Archived documentation snapshot.",
+    };
+  }
+  return undefined;
+}
+
+/** Last full docs review pass (drives the per-page "last updated" stamp). */
+export const DOCS_LAST_REVIEWED = "2026-09-22";
+
+/** GitHub source root for "Edit this page" links (PF-014 acceptance #4). */
+export const DOCS_REPO_EDIT_BASE =
+  "https://github.com/Roy-Wanyoike/Roycss/edit/main";
+
+/**
+ * Map a live docs pathname (e.g. "/docs/getting-started/installation")
+ * to its source file in this repository, or null when the path is not a
+ * known docs page. Doc pages are hand-written route segments under
+ * `src/app/docs/<segments>/page.tsx`.
+ */
+export function getDocSourcePath(pathname: string): string | null {
+  const clean = pathname.replace(/\/+$/, "");
+  // The docs landing page is editable too (not part of the sitemap).
+  if (clean === "/docs") return "src/app/docs/page.tsx";
+  const page = getDocPage(clean);
+  if (!page) return null;
+  const segments = clean.replace(/^\/docs\/?/, "");
+  return `src/app/docs/${segments}/page.tsx`;
+}

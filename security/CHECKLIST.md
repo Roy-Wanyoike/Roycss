@@ -3,12 +3,11 @@
 - **Document owner:** Security Engineering & Supply Chain domain agent
 - **Purpose:** Pre-release checklist for every `npm publish` of the
   `roycss` package, every deploy of the marketing site, and every
-  release of the VS Code extension / Chrome Inspector / CLI / MCP server.
-- **Related:** `docs/adr/security/REVIEW-CHECKLIST.md` (20-item pre-merge
-  review checklist), `docs/checklists/07-security-supply-chain.md`
-  (pre-existing 60-item checklist),
-  `security/SECURITY-POLICY.md`, `security/README.md` (the five
-  harness scripts and their outputs)
+  release of the VS Code extension / CLI / MCP server.
+- **Related:** `security/SECURITY-POLICY.md` (the disclosure policy),
+  `security/CSP.md` (the CSP as shipped — nonces banned per postmortem
+  #54), `security/README.md` (the five harness scripts and their
+  outputs), `docs/SECURITY-SLA.md` (response SLAs)
 
 ---
 
@@ -50,15 +49,15 @@ that are ❌ block the release. Items that are N/A must be explained.
   - ❌ `bun.lock` modified (means `package.json` changed without re-installing)
 
 - [ ] **1.4** No new direct runtime dep in `package.json` without a
-      checklist entry in `docs/checklists/07-security-supply-chain.md`.
+      documented rationale (recorded in the PR that introduced it).
   ```bash
   git diff main -- package.json
   ```
-  - ✅ Every new dep in `dependencies` has a corresponding checklist entry
-  - ❌ Any new dep without a checklist entry
+  - ✅ Every new dep in `dependencies` has a documented rationale
+  - ❌ Any new dep without a rationale
 
-- [ ] **1.5** `overrides` in `package.json` matches the table in
-      `docs/adr/07-security-supply-chain.md` §6 (no drift).
+- [ ] **1.5** Every `overrides` entry in `package.json` carries a
+      documented rationale (inline comment or PR note) — no drift.
   - ✅ Every override documented with rationale
   - ❌ Any override without rationale, or any rationale without override
 
@@ -99,16 +98,20 @@ that are ❌ block the release. Items that are N/A must be explained.
   - ✅ All 8 headers present
   - ❌ Any header missing
 
-- [ ] **3.3** `src/middleware.ts` generates a per-request nonce and
-      overrides the dev CSP in production with
-      `script-src 'self' 'nonce-{nonce}' 'strict-dynamic'`.
-  - ✅ Nonce generated via `crypto.getRandomValues(16)`, prod CSP overrides dev
-  - ❌ Nonce missing, or prod CSP not overriding dev
+- [ ] **3.3** `src/proxy.ts` (Next.js 16 middleware) sets the production
+      CSP on every response: `script-src 'self' 'unsafe-inline'` — static-safe,
+      **no per-request nonces and no `strict-dynamic`** (both banned by the
+      #54 postmortem; see `security/CSP.md`).
+  - ✅ Prod CSP overrides the dev policy from `next.config.ts` and is identical
+    for prerendered and dynamic responses
+  - ❌ Nonce/`strict-dynamic` reintroduced, or prod CSP not applied
 
 - [ ] **3.4** Agent-browser smoke test verifies the CSP header is present
-      on `https://roycss.com/` and contains `nonce-` + `'strict-dynamic'`.
-  - ✅ Both substrings present in the response header
-  - ❌ Either missing
+      on `https://roycss.com/` and matches the static-safe policy
+      (`script-src 'self' 'unsafe-inline'`, `frame-ancestors 'none'`) —
+      and contains **no** `nonce-` / `strict-dynamic`.
+  - ✅ Header present, static-safe, no nonce/strict-dynamic
+  - ❌ Header missing, nonce-based, or dev policy served in prod
 
 - [ ] **3.5** No CSP violations in the browser console during the smoke
       test.
@@ -202,10 +205,14 @@ that are ❌ block the release. Items that are N/A must be explained.
 
 ---
 
-## 7. Contact form (3 items)
+## 7. Contact form (5 items)
+
+(Constraints folded from the retired `security/CONTACT-FORM-SECURITY.md`
+audit — its still-valid requirements live here now.)
 
 - [ ] **7.1** Contact form input validation is in place (4 layers:
-      JSON parse, type check, field validation, length truncation).
+      JSON parse, type check, field validation, length truncation —
+      name 120 / email 160 / subject 160 / message 5000 caps).
   - File: `src/app/api/contact/route.ts`
   - ✅ All 4 layers present
   - ❌ Any layer missing
@@ -225,11 +232,27 @@ that are ❌ block the release. Items that are N/A must be explained.
   - ✅ 0 hits
   - ❌ Any hit
 
+- [ ] **7.4** The contact write path is **rate-limited** (5 requests/min
+      per IP, sliding window). The backend-node contact tier
+      (Redis-backed limiter with in-memory fallback, wired in
+      `backend-node/src/server/app.ts`) covers the `/api/v1` surface;
+      confirm the Next.js `/api/contact` route is behind an equivalent
+      limit or is a documented, tracked gap.
+  - ✅ Every contact write path throttled (or the gap is tracked with an issue)
+  - ❌ An unthrottled contact write path ships to production
+
+- [ ] **7.5** Spam protections per the audit's layered plan: honeypot
+      field (return 200 without persisting when filled) or an equivalent
+      documented anti-spam control; CAPTCHA stays deferred until spam
+      volume warrants it (hCaptcha preferred for privacy).
+  - ✅ Honeypot/equivalent present, CAPTCHA decision recorded
+  - ❌ Only client-side HTML validation stands between bots and the DB
+
 ---
 
-## 8. Tier A artifacts (4 items)
+## 8. Tier A artifacts (3 items)
 
-(For npm package, VS Code ext, Inspector, CLI, MCP server)
+(For npm package, VS Code extension, CLI, MCP server)
 
 - [ ] **8.1** Tier A artifacts have **zero runtime dependencies**
       (`dependencies: {}` in their `package.json`).
@@ -250,18 +273,12 @@ that are ❌ block the release. Items that are N/A must be explained.
   - ✅ CSP present, no `unsafe-inline`
   - ❌ `unsafe-inline` present, or CSP missing
 
-- [ ] **8.4** Inspector extension's content script uses only
-      `createElement` + `textContent` (no `innerHTML`).
-  - File: `inspector/src/content.ts`
-  - ✅ 0 `innerHTML` uses
-  - ❌ Any `innerHTML` use
-
 ---
 
 ## 9. Documentation (2 items)
 
-- [ ] **9.1** `docs/adr/security/THREAT-MODEL.md` `Last reviewed` date
-      is within the last 6 months, OR a review note explains why it's
+- [ ] **9.1** `security/SECURITY-POLICY.md` `Last updated` date is
+      within the last 6 months, OR a review note explains why it's
       still current.
   - ✅ Date recent, or review note present
   - ❌ Date stale, no review note
@@ -292,21 +309,23 @@ that are ❌ block the release. Items that are N/A must be explained.
 | 4. XSS and CSS exfiltration | 3 | All ✅ |
 | 5. Lint and build | 3 | All ✅ |
 | 6. Supply chain | 4 | All ✅ |
-| 7. Contact form | 3 | All ✅ |
-| 8. Tier A artifacts | 4 | All ✅ (or N/A if not releasing a Tier A artifact) |
+| 7. Contact form | 5 | All ✅ |
+| 8. Tier A artifacts | 3 | All ✅ (or N/A if not releasing a Tier A artifact) |
 | 9. Documentation | 2 | All ✅ |
 | 10. Sign-off | 3 | All ✅ |
-| **Total** | **34** | — |
+| **Total** | **35** | — |
 
 ---
 
 ## References
 
-- `docs/adr/security/REVIEW-CHECKLIST.md` — 20-item pre-merge checklist
-- `docs/checklists/07-security-supply-chain.md` — pre-existing 60-item checklist
 - `security/SECURITY-POLICY.md` — responsible disclosure policy
 - `security/README.md` — the five harness scripts (`audit.ts`, `sbom.ts`,
   `csp.ts`, `css-exfiltration-check.ts`, `xss-scan.ts`)
-- `security/CSP.md` — CSP recommendation
-- `security/CONTACT-FORM-SECURITY.md` — contact form audit
+- `security/CSP.md` — the CSP as shipped (static-safe; nonces banned per
+  postmortem #54)
+- `docs/SECURITY-SLA.md` — binding security-response SLAs
 - `security/results/*` — harness outputs (regenerated on demand, gitignored)
+
+> Note: the former point-in-time contact-form audit (removed 2026-09) was
+> folded into §7 above; its full text remains recoverable from git history.

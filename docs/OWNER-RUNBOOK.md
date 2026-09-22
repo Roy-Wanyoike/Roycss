@@ -1,6 +1,7 @@
-# Roycss — Session 4 Owner Runbook (push, publish, reclaim, storage)
+# RoyCSS Owner Runbook (push, publish, reclaim, storage)
 
-**Local main @ `bf44656`** — **53 session commits** over origin/main (the 280-commit divergence count is the history rewrite re-hashing everything), all gates green.
+**Repo `main` @ `dd7897d`** — all gates green (1,651/1,651 tests · `tsc` 0
+errors · API/manifest/token/AI drift gates),
 **This file is the single handoff.** Everything below needs the repo owner; everything an agent
 could do is already done and verified.
 
@@ -10,7 +11,7 @@ could do is already done and verified.
 
 | Dimension | State |
 |---|---|
-| Test suite | **1,268/1,268** (548 frontend unit + 720 backend integration/unit/security) |
+| Test suite | **1,651/1,651** (712 frontend unit + 939 backend integration/unit/contract/security) |
 | Type / lint | `tsc` 0 errors · `eslint` 0 |
 | API truth | api:check in sync (289 routes) · OpenAPI in sync (268 paths) · **api-surface gate green** (new) |
 | npm package | Tarball **969.8 KB / 13 files**, consumer install **empirically verified** (no `--ignore-scripts`, zero runtime deps, require/import both → 1,959 effects, all subpaths resolve) |
@@ -21,9 +22,9 @@ could do is already done and verified.
 ## 1. Push (needs a GitHub token with repo scope)
 
 ```bash
-cd /home/z/my-project/work/roycss
-export GITHUB_TOKEN=ghp_...            # or a fine-grained token with repo scope
-git remote set-url origin https://$GITHUB_TOKEN@github.com/Roy-Wanyoike/Roycss.git
+cd Roycss   # your local clone of the repository
+# Authenticate with `gh auth login` (or a git credential helper) —
+# never embed the token in the remote URL.
 git push --force-with-lease origin main
 ```
 
@@ -32,7 +33,7 @@ git push --force-with-lease origin main
 `public/roycss-source.zip` ×4 = 16.6 MB, `RoyCSS.zip`, 2 × `.vsix`). Current files are
 **byte-identical**; only dead history objects were removed. `.git`: 107 MB → 34 MB.
 
-- The pre-rewrite history is preserved at `work/roycss-full` (delete once the push is confirmed).
+- The pre-rewrite history is preserved in a full pre-rewrite clone (delete it once the push is confirmed).
 - After the push: refresh/rebase the open dependabot PRs (divergence is total), and delete the
   38 stale remote branches (Agent A audit: all ancestry-merged or content-identical:
   `Roy-Wanyoike-patch-{1,2,3}`, `version1.0.1`, the vercel bot branch, session-era squashes,
@@ -41,7 +42,7 @@ git push --force-with-lease origin main
 ## 2. File the 28-issue backlog (needs the same token)
 
 ```bash
-cd /home/z/my-project/work/roycss
+cd Roycss   # your local clone of the repository
 ./scripts/github/file-issues.sh --dry-run   # preview
 ./scripts/github/file-issues.sh             # creates 28 issues (idempotent)
 ```
@@ -88,32 +89,3 @@ The production redeploy is blocked on this — everything code-side is merged an
 
 `roycss.com` (used by sitemap/canonicals/JSON-LD) vs `roycss.space-z.ai` (metadataBase).
 Pick one, unify, 301 the other. Filed as an owner-action issue.
-
----
-
-## What shipped this session (43 commits, 4 waves, 13 agents + principal)
-
-**Session totals: 53 commits across 4 waves (13 agents + principal integrations).**
-
-**Wave 1 (session-3 rebuild):** 27 generated artifacts removed from git + 12 .gitignore
-rules + snapshot-freshness gate (PF-049) · npm publish unblocked (postinstall removed,
-deps → devDeps, pipeline repaired; tarball proven) · Vercel slimming (.vercelignore, lazy
-DocsViewer, 7 dead components = 2,210 lines, render.yaml gone) · docs truth pass (PF-051:
-honest States, PF-048–051 authored, mailbox unified, sandbox leaks 0).
-
-**Wave 2 (features + UI truth):** PF-004 code half (per-effect a11y tags, 431/1,528/1,692/90,
-Motion-safe filter, 25 tests) · PF-048 favorites+collections (10 routes, 48 tests, 281→289
-routes) · PF-016 8/8 bundler adapters (85 tests, 3 real bundler-contract bugs pre-fixed) ·
-UI truth: docs teach the REAL import paths + classes (20 pages codemodded, CI gate test),
-site-stats single source of truth, 2,012 static pages linked into the UI, sitemap+robots
-fixed, 404 honest · legal: /terms + /privacy + honest pricing waitlist + clear-all confirm.
-
-**Wave 3 (production hardening):** prisma migrations baseline + auth-lifecycle migration
-(fresh-db deploy verified: 50 tables) · production Dockerfile + deploy env wiring +
-post-deploy auth smoke · CORS X-API-Key · JWT prod-grade secret policy · full auth
-lifecycle (email verification, password reset, refresh rotation + revocation, logout-all,
-account export/delete) · authz hardening (themes IDOR, attribution spoofing in
-challenges/certifications/live; 29 tests) · CI: lighthouse trigger fix, backend suites,
-e2e job, **api-surface stability gate (PF-013)** · next-auth (critical CVE) removed.
-
-**Cross-cutting:** 950 → 1,268 tests (+318) · repo 143 → 35 MB · every wave integrated + re-gated by the principal.

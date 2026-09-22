@@ -119,19 +119,23 @@ if scope expands.
 ## Summary counts
 - **P0: 8** · **P1: 10** · **P2: 16** · **P3: 17** — **Total: 51**
   (47 existing + 4 new: PF-048..PF-051, added 2026-09-12)
-- **State distribution (recounted at the 2026-09-12 triage, arithmetic
-  shown so the next recount can be checked the same way):**
-  - **11 done** — PF-001, PF-002, PF-005, PF-006, PF-007, PF-009, PF-012,
-    PF-013, PF-015, PF-049, PF-051
-  - **29 partial** — PF-004, PF-008, PF-010, PF-011, PF-014, PF-016,
-    PF-017, PF-018, PF-019, PF-020, PF-021, PF-022, PF-023, PF-024,
-    PF-025, PF-026, PF-027, PF-029, PF-030, PF-031, PF-035, PF-036,
-    PF-037, PF-040, PF-041, PF-042, PF-043, PF-044, PF-045
-  - **9 not started** — PF-003, PF-028, PF-032, PF-033, PF-034, PF-038,
-    PF-039, PF-046, PF-048
+- **State distribution (recounted after the 2026-09-13 item-state updates
+  and the #123/#125/#130 merges; arithmetic shown so the next recount can
+  be checked the same way):**
+  - **17 done** — PF-001, PF-002, PF-005, PF-006, PF-007, PF-009,
+    PF-011 (code; owner residual #140), PF-012, PF-013, PF-015,
+    PF-016 (code; owner residual: npm publish), PF-030 (#123),
+    PF-042 (#125), PF-045 (#130), PF-048 (code; residual: frontend
+    localStorage → HTTP endpoints), PF-049, PF-051
+  - **24 partial** — PF-004, PF-008, PF-010, PF-014, PF-017, PF-018,
+    PF-019, PF-020, PF-021, PF-022, PF-023, PF-024, PF-025, PF-026,
+    PF-027, PF-029, PF-031, PF-035, PF-036, PF-037, PF-040, PF-041,
+    PF-043, PF-044
+  - **8 not started** — PF-003, PF-028, PF-032, PF-033, PF-034, PF-038,
+    PF-039, PF-046
   - **1 decision** — PF-047
   - **1 proposed** — PF-050
-  - Check: 11 + 29 + 9 + 1 + 1 = **51** ✓ ("Done" here means the item's
+  - Check: 17 + 24 + 8 + 1 + 1 = **51** ✓ ("Done" here means the item's
     core acceptance is met; several carry explicit residual bullets.)
 
 ---
@@ -139,7 +143,7 @@ if scope expands.
 ## P0 — Go-live blockers (next production / paid-tier launch)
 
 > The current public marketing/demo site at `/` is live and has **zero**
-> remaining P0 blockers (AUDIT-1 F1/F2/F8 are DONE). The 7 P0 items below
+> remaining P0 blockers (AUDIT-1 F1/F2/F8 are DONE). The 8 P0 items below
 > block the next meaningful launch: paid-tier (Roy Cloud, Roy Marketplace
 > payments, Roy Pro Components, Roy Enterprise) and any production GA
 > where the backend is exposed publicly beyond the read-only marketing
@@ -1128,9 +1132,11 @@ if scope expands.
 
 ### PF-030: Token Type System (`@property`-registered tokens + TS types emitted + static check + W3C DTCG JSON)
 - **Area:** tokens / tooling
-- **State:** partial — `src/lib/design-tokens.ts` exports typed tokens;
-  `@property` used in CSS; no W3C DTCG JSON emission, no static compiler
-  check. (F9, Tier 2 #36, LABS-34 §5.4.)
+- **State:** **DONE (PR #149 / issue #123, 2026-09)** — `scripts/emit-tokens.ts`
+  emits `dist/tokens.d.ts` + `dist/tokens.dtcg.json` from the token source,
+  drift-gated by `bun run tokens:check` (124 tokens in sync). Residual:
+  `docs/TOKEN-STABILITY.md` (acceptance 5) not yet published. (F9, Tier 2
+  #36, LABS-34 §5.4.)
 - **Acceptance:**
   1. Every token registered with `@property` (syntax, inherits, initial
      value).
@@ -1433,11 +1439,12 @@ if scope expands.
 
 ### PF-042: Component Genome + `/roycss.manifest.json` + Effect maturity tags + `API.md` public API surface + CI gate
 - **Area:** data / docs / CI
-- **State:** partial — `dist/effects.json`, `dist/class-index.json`,
-  `dist/pro-components.json`, `dist/version-manifest.json` exist but
-  are not unified; no maturity tags; `API.md` shipped via PF-013 (the
-  per-effect/class `stable` marking is this item's half). (PLATFORM-VISION
-  §4.3, LABS-30 §4.1/§7.1/§3.2, LABS-35 §2/§4.4, Tier 1 #6/19/21.)
+- **State:** **DONE (PR #152 / issue #125, 2026-09-13)** — unified
+  `dist/roycss.manifest.json` (1,959 effects, ~274 KB) with maturity tags +
+  per-effect quality scores, drift-gated by `bun run gen:manifest:check`.
+  Residual (follow-ups): `dist/roycss.manifest.d.ts` declarations + the
+  per-effect diff surface. (PLATFORM-VISION §4.3, LABS-30 §4.1/§7.1/§3.2,
+  LABS-35 §2/§4.4, Tier 1 #6/19/21.)
   **Audit-fold notes (2026-09):** (a) the per-effect quality score
   (`src/lib/effect-quality.ts` exists but is not populated per effect)
   belongs here; (b) per-effect semver + diff — registry version stamping
@@ -1511,11 +1518,12 @@ if scope expands.
 
 ### PF-045: RoyCSS Conf + Sponsorship program polish + Community / contributors / marketing
 - **Area:** community / marketing
-- **State:** partial — `pricing-section.tsx` + `featured-companies.tsx`
-  sponsorship modal exists (says "Stripe coming soon" — wired in
-  PF-010); no RoyCSS Conf; no contributor ladder beyond
-  `docs/CONTRIBUTING.md`. (PLATFORM-VISION §5 + §6.4, LABS-28 §3,
-  Tier 1 #46/47.)
+- **State:** **DONE (PR #143 / issue #130, 2026-09)** — public 12-month
+  roadmap at `src/app/roadmap/page.tsx` + contributor ladder (acceptance 2
+  and 4); sponsorship modal existed (Stripe wired in PF-010). Residual
+  (deferred, non-launch-blocking): RoyCSS Conf event (acceptance 1) +
+  starter-template gallery (acceptance 5). (PLATFORM-VISION §5 + §6.4,
+  LABS-28 §3, Tier 1 #46/47.)
 - **Acceptance:**
   1. RoyCSS Conf — first annual conference (Month 32 of GTM,
      PLATFORM-VISION §6.4): 500 attendees, virtual + hybrid, sponsored

@@ -108,27 +108,29 @@ a11y/
 ├── reduced-motion.ts          CSS reduced-motion audit
 ├── aria-coverage.ts           ARIA coverage % per file
 ├── audit.ts                   (Existing) axe-core audit against live site
-├── results/                   JSON output (regenerated each run)
-│   ├── contrast.json
-│   ├── keyboard-nav.json
-│   ├── reduced-motion.json
-│   └── aria-coverage.json
-└── fixes/
-    └── README.md              Log of every source fix applied during audit
+└── results/                   JSON output (regenerated each run)
+    ├── contrast.json
+    ├── keyboard-nav.json
+    ├── reduced-motion.json
+    └── aria-coverage.json
 ```
+
+The per-fix audit log from the Task 06 audit was retired (2026-09): its
+durable decisions are folded into
+[`docs/EFFECT-A11Y-TIERS.md`](../docs/EFFECT-A11Y-TIERS.md) §6; the file
+itself remains recoverable from git history.
 
 ## CI integration
 
 All four scripts are designed to run in CI on every PR that touches
 `src/components/roycss/` or `src/app/globals.css`. A failure blocks
-merge. See `docs/plans/06-accessibility-architecture.md` §5 for the
-GitHub Actions workflow.
+merge. The release pipeline also runs the axe-core harness in
+[`tests/a11y/`](../tests/a11y).
 
 ## References
 
-- ADR: `docs/adr/06-accessibility-architecture.md`
-- Threat Model: `docs/threat-models/06-accessibility-architecture.md`
-- Benchmarks: `docs/benchmarks/06-accessibility-architecture.md`
-- Plan: `docs/plans/06-accessibility-architecture.md`
-- Checklist: `docs/checklists/06-accessibility-architecture.md`
+- Effect-level accessibility data + folded audit decisions:
+  [`docs/EFFECT-A11Y-TIERS.md`](../docs/EFFECT-A11Y-TIERS.md)
+- axe-core harness: [`tests/a11y/`](../tests/a11y) (axe audit, keyboard
+  navigation, visual checks)
 - WCAG 2.1: https://www.w3.org/TR/WCAG21/

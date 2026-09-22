@@ -1,7 +1,8 @@
 # RoyCSS Performance Engineering
 
 This directory owns **performance measurement, regression testing, and
-optimization** for the RoyCSS catalog (1,569 effects, 1.18 MB CSS bundle).
+optimization** for the RoyCSS catalog (1,959 effects, 1.35 MB CSS bundle —
+`dist/roycss.min.css` = 1,352,590 B).
 
 ## Layout
 
@@ -47,8 +48,8 @@ bun run perf/optimize/extract-critical-css.ts
 | `roycss.min.css` size | <1.1 MB | `<` |
 | `effects.json` size | <700 KB | `<` |
 | `effects.js` loader | <10 KB | `<` |
-| Total effects | =1569 | `eq` |
-| Distinct categories | =20 | `eq` |
+| Total effects | =1959 | `eq` |
+| Distinct categories | =29 | `eq` |
 | Per-effect CSS avg | <1 KB | `<` |
 | Per-effect JSON avg | <0.4 KB | `<` |
 | Duplicate cssCode blocks | =0 | `<` (i.e. `< 1`) |
@@ -60,7 +61,7 @@ bun run perf/optimize/extract-critical-css.ts
 | Inject 10 effects | <2 ms | `<` |
 | Inject 100 effects | <20 ms | `<` |
 | Render 100 cards | <0.5 ms | `<` |
-| Render 1569 cards | <8 ms | `<` |
+| Render 1959 cards | <8 ms | `<` |
 | GPU-accelerated ratio (top 20) | ≥80% | `gte` |
 | Catalog heap | <1 MB | `<` |
 | Per-effect metadata heap | <2 KB | `<` |
@@ -106,7 +107,7 @@ Each `BenchmarkResult` is:
 
 `perf/regression.test.ts` (run with `bun test`) asserts:
 
-- `dist/effects.json` has exactly 1,569 effects.
+- `dist/effects.json` has exactly 1,959 effects.
 - `dist/roycss.css` is <1.5 MB.
 - `dist/roycss.min.css` is <1.1 MB.
 - Every effect has a non-empty `cssCode` (no broken exports).
@@ -126,7 +127,7 @@ These run independently of the benchmark harness and do not require
 - The base CSS (reset, sr-only, global prefers-reduced-motion block).
 - The first 50 effect cssCodes (the above-the-fold set).
 
-Measured size: ~40–60 KB (vs 1.18 MB full bundle = 95% reduction). Inline
+Measured size: ~40–60 KB (vs 1.35 MB full bundle = 95% reduction). Inline
 this in `<head>` for sub-200ms first paint; lazy-load the full bundle
 after `DOMContentLoaded`.
 

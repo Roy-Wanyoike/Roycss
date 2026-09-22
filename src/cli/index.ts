@@ -1891,7 +1891,7 @@ function cmdPlugin(positional: string[], flags: Record<string, string | boolean>
       log(`\n${c.dim}Plugins are NOT auto-executed. They run only when explicitly invoked.${c.reset}`);
       log(`${c.dim}Enable:${c.reset}  ${c.cyan}roycss plugin enable --name <plugin>${c.reset}`);
       log(`${c.dim}Disable:${c.reset} ${c.cyan}roycss plugin disable --name <plugin>${c.reset}`);
-      log(`${c.dim}Docs:${c.reset}    ${c.cyan}docs/adr/cli-platform-v2/DESIGN.md${c.reset}`);
+      log(`${c.dim}Docs:${c.reset}    ${c.cyan}packages/plugins/README.md${c.reset}`);
       break;
     }
 
@@ -1970,7 +1970,7 @@ function cmdPlugin(positional: string[], flags: Record<string, string | boolean>
       log(`  ${c.gray}1. Edit:${c.reset}     ${c.cyan}${samplePath}${c.reset}`);
       log(`  ${c.gray}2. List:${c.reset}     ${c.cyan}roycss plugin list${c.reset}`);
       log(`  ${c.gray}3. Disable:${c.reset}  ${c.cyan}roycss plugin disable --name sample${c.reset}`);
-      log(`\n${c.dim}Plugin contract & safety: ${c.reset}${c.cyan}docs/adr/cli-platform-v2/THREAT-MODEL.md${c.reset}`);
+      log(`\n${c.dim}Plugin contract & safety: ${c.reset}${c.cyan}packages/plugins/README.md${c.reset}`);
       break;
     }
 
@@ -2133,7 +2133,7 @@ function cmdHelp() {
   log(`  ${c.gray}roycss migrate to-vanilla-css src/ --write --out roycss-vanilla.css${c.reset}`);
 
   log(`\n${c.dim}Learn more: https://github.com/Roy-Wanyoike/roycss${c.reset}`);
-  log(`${c.dim}Docs: docs/adr/cli-platform-v2/${c.reset}`);
+  log(`${c.dim}Docs: docs/PENDING-FEATURES.md · docs/codemods.md${c.reset}`);
 }
 
 // ═══════════════════════════════════════════════════════════════

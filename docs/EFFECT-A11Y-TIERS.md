@@ -6,8 +6,11 @@
   source tree and are surfaced by the platform frontend
 - **Related:** [`PENDING-FEATURES.md`](PENDING-FEATURES.md) PF-004 (this
   document + the code it documents are the *code half* of that item) ·
-  [`tests/a11y/WCAG-REPORT.md`](../tests/a11y/WCAG-REPORT.md) (the build-time
-  audits) · [`scripts/generate-effect-a11y.ts`](../scripts/generate-effect-a11y.ts)
+  [`tests/a11y/`](../tests/a11y) (the build-time axe audits — axe audit,
+  keyboard navigation, visual checks) and the [`a11y/`](../a11y)
+  static-analysis harness (contrast, keyboard-nav, reduced-motion,
+  aria-coverage — see its README) ·
+  [`scripts/generate-effect-a11y.ts`](../scripts/generate-effect-a11y.ts)
   (the generator) · `src/lib/effect-a11y.ts` (the generated data)
 
 ---
@@ -147,3 +150,39 @@ certification:
   the ARIA you add (or deliberately omit) around hidden text, remains your
   accessibility decision — the `requiresAria` guidance tells you where one
   is needed.
+
+## 6. Site-level a11y decisions (folded from the retired Task 06 per-fix audit log)
+
+The per-effect tags above cover the catalog; the site chrome around them was
+hardened in the Task 06 accessibility audit. That audit's working log
+(removed 2026-09 — recoverable from git history) was folded here so the
+durable decisions survive without a task log in the tree:
+
+- **Color presets are Tailwind 600/700 shades, not 500 — on purpose.** The
+  12 `COLOR_PRESETS` in `src/components/roycss/color-customizer.tsx` were
+  re-pinned from Tailwind 500 to 600/700 variants so white-on-swatch clears
+  the WCAG 1.4.11 non-text threshold (≥ 3:1) and preset-as-text clears
+  1.4.3 on white and on the dark hero background. The 500 shades failed
+  (e.g. emerald `#10b981` = 2.54:1, amber `#f59e0b` = 2.15:1, lime
+  `#84cc16` = 1.98:1); the 600/700 shades pass. Migration: emerald
+  `#10b981→#059669`, blue `#3b82f6→#2563eb`, violet `#8b5cf6→#7c3aed`,
+  rose `#f43f5e→#e11d48`, amber `#f59e0b→#b45309`, cyan `#06b6d4→#0891b2`,
+  orange `#f97316→#c2410c`, pink `#ec4899→#db2777`, lime `#84cc16→#4d7c0f`,
+  red `#ef4444→#dc2626`, indigo `#6366f1` (kept), teal `#14b8a6→#0f766e`.
+  Don't "lighten" them back to 500 — `a11y/contrast-check.ts` (36 checks)
+  pins the decision.
+- **Placeholder text is not an accessible name.** Every icon-only button
+  and every unlabeled input got an explicit `aria-label` during the audit
+  (favorites-sheet effect-preview button, search-clear button, ⌘K search
+  input, effect-detail CSS editor textarea) — the `K1`/`K3` rules in the
+  [`a11y/keyboard-nav.ts`](../a11y/keyboard-nav.ts) scanner enforce this
+  class of regression.
+- **Escape closes the ⌘K overlay from inside the input (defense in
+  depth).** The parent page's global Escape listener is not relied on
+  alone: the search input's own `onKeyDown` handles `Escape` too
+  (WCAG 2.1.2 No Keyboard Trap), so the overlay can never trap keyboard
+  users even if the parent listener regresses.
+- **Verification gates.** The four-script harness — `a11y/contrast-check.ts`,
+  `a11y/keyboard-nav.ts`, `a11y/reduced-motion.ts`, `a11y/aria-coverage.ts`
+  (see the [`a11y/README.md`](../a11y/README.md)) — is the executable form
+  of these decisions; all four must exit 0.

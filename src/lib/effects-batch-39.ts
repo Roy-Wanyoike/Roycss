@@ -904,7 +904,6 @@ export const effectsBatch39: CSSEffect[] = [
   position: absolute;
   border-radius: 50%;
   border: 2px solid #6366f1;
-  animation: roy-dataviz-bubble-pulse 2s ease-out infinite;
 }
 .roycss-dataviz-bubble-pulse::before {
   width: 36px;

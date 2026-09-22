@@ -29,7 +29,15 @@ export const effectsBatch2: CSSEffect[] = [
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Animated Gradient Background */
+.roycss-bg-animated-gradient {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "bg-dot-pattern",
@@ -146,7 +154,14 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-aurora {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-bg-aurora::before {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "bg-stripes",
@@ -190,7 +205,15 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-diagonal-shift {
   from { background-position: 0 0; }
   to { background-position: 48px 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Animated Diagonal Stripes Background */
+.roycss-bg-diagonal-stripes {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "bg-checkerboard",
@@ -342,7 +365,14 @@ export const effectsBatch2: CSSEffect[] = [
 
 @keyframes roy-sunburst-rotate {
   to { transform: rotate(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-bg-sunburst::before {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "bg-plaid",
@@ -384,7 +414,15 @@ export const effectsBatch2: CSSEffect[] = [
 
 @keyframes roy-conic-hue {
   to { filter: hue-rotate(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Conic Gradient Hue Cycle Background */
+.roycss-bg-conic-gradient {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "bg-starfield",
@@ -412,7 +450,15 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-starfield-twinkle {
   from { opacity: 0.6; }
   to { opacity: 1; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Starfield Background */
+.roycss-bg-starfield {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "bg-gradient-sweep",
@@ -438,7 +484,15 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-gradient-sweep {
   from { background-position: 200% 0; }
   to { background-position: -200% 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Gradient Sweep Background */
+.roycss-bg-gradient-sweep {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "bg-gradient-pulse",
@@ -460,7 +514,15 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-gradient-pulse {
   0%, 100% { opacity: 0.7; }
   50% { opacity: 1; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Gradient Pulse Background */
+.roycss-bg-gradient-pulse {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "bg-lava-lamp",
@@ -510,7 +572,17 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-lava-2 {
   0% { transform: translate(0, 0) scale(1.2); }
   100% { transform: translate(-30px, 40px) scale(0.9); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-bg-lava-lamp::before {
+    animation: none;
+  }
+  .roycss-bg-lava-lamp::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "bg-plasma",
@@ -535,7 +607,15 @@ export const effectsBatch2: CSSEffect[] = [
   0%, 100% { background-position: 0% 0%, 100% 100%, 50% 50%, 0 0; }
   33% { background-position: 50% 30%, 50% 0%, 0% 100%, 0 0; }
   66% { background-position: 100% 100%, 0% 50%, 100% 0%, 0 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Plasma Background */
+.roycss-bg-plasma {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "bg-smoke",
@@ -569,7 +649,14 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-smoke-drift {
   0%, 100% { transform: translate(0, 0) rotate(0deg); }
   50% { transform: translate(20px, -20px) rotate(5deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-bg-smoke::before {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "bg-sunset",
@@ -595,7 +682,15 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-sunset-shift {
   0%, 100% { background-position: 0% 0%; }
   50% { background-position: 0% 50%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Sunset Background */
+.roycss-bg-sunset {
+    animation: none;
+  }
+}
+`,
   },
 
   // ─── LOADERS (25) ───────────────────────────────────────────────
@@ -618,7 +713,15 @@ export const effectsBatch2: CSSEffect[] = [
 
 @keyframes roy-spin {
   to { transform: rotate(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Ring Spinner */
+.roycss-loader-spinner {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-dots",
@@ -655,7 +758,20 @@ export const effectsBatch2: CSSEffect[] = [
     transform: scale(1);
     opacity: 1;
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-loader-dots span {
+    animation: none;
+  }
+  .roycss-loader-dots span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-loader-dots span:nth-child(3) {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-bars",
@@ -689,7 +805,29 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-eq-bar {
   0%, 100% { block-size: 8px; }
   50% { block-size: 28px; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-loader-bars span {
+    animation: none;
+  }
+  .roycss-loader-bars span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-loader-bars span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-loader-bars span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-loader-bars span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-loader-bars span:nth-child(5) {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-orbit",
@@ -712,7 +850,7 @@ export const effectsBatch2: CSSEffect[] = [
   border-radius: 50%;
   border: 2px solid transparent;
   border-top-color: oklch(0.696 0.149 162.48);
-  animation: roy-spin 1s linear infinite;
+  animation: roy-orbit-ring 1s linear infinite;
 }
 
 .roycss-loader-orbit::after {
@@ -729,10 +867,24 @@ export const effectsBatch2: CSSEffect[] = [
   animation: roy-orbit-move 1s linear infinite;
 }
 
+@keyframes roy-orbit-ring {
+  to { transform: rotate(360deg); }
+}
+
 @keyframes roy-orbit-move {
   0% { transform: rotate(0deg) translateX(20px) rotate(0deg); }
   100% { transform: rotate(360deg) translateX(20px) rotate(-360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-loader-orbit::before {
+    animation: none;
+  }
+  .roycss-loader-orbit::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-pulse-ring",
@@ -771,7 +923,18 @@ export const effectsBatch2: CSSEffect[] = [
     transform: scale(1.5);
     opacity: 0;
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-loader-pulse-ring::before,
+.roycss-loader-pulse-ring::after {
+    animation: none;
+  }
+  .roycss-loader-pulse-ring::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-dual-ring",
@@ -793,7 +956,15 @@ export const effectsBatch2: CSSEffect[] = [
 
 @keyframes roy-dual-ring-spin {
   to { transform: rotate(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Dual Ring Loader */
+.roycss-loader-dual-ring {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-cube",
@@ -831,7 +1002,15 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-loader-cube-rotate {
   0% { transform: perspective(400px) rotateX(0deg) rotateY(0deg); }
   100% { transform: perspective(400px) rotateX(360deg) rotateY(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* 3D Cube Loader */
+.roycss-loader-cube {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-folding-cube",
@@ -880,7 +1059,23 @@ export const effectsBatch2: CSSEffect[] = [
   0%, 10% { transform: perspective(140px) rotateX(-180deg); opacity: 0; }
   25%, 75% { transform: perspective(140px) rotateX(0deg); opacity: 1; }
   90%, 100% { transform: perspective(140px) rotateY(180deg); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-loader-folding-cube span::before {
+    animation: none;
+  }
+  .roycss-loader-folding-cube span:nth-child(2)::before {
+    animation: none;
+  }
+  .roycss-loader-folding-cube span:nth-child(3)::before {
+    animation: none;
+  }
+  .roycss-loader-folding-cube span:nth-child(4)::before {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-chasing-dots",
@@ -922,7 +1117,21 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-chasing-bounce {
   0%, 100% { transform: scale(0); }
   50% { transform: scale(1); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Chasing Dots Loader */
+.roycss-loader-chasing-dots {
+    animation: none;
+  }
+  .roycss-loader-chasing-dots span {
+    animation: none;
+  }
+  .roycss-loader-chasing-dots span:nth-child(2) {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-fading-dots",
@@ -957,7 +1166,29 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-fading-dots {
   0%, 80%, 100% { transform: scale(0); opacity: 0; }
   40% { transform: scale(1); opacity: 1; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-loader-fading-dots span {
+    animation: none;
+  }
+  .roycss-loader-fading-dots span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-loader-fading-dots span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-loader-fading-dots span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-loader-fading-dots span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-loader-fading-dots span:nth-child(5) {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-grid",
@@ -996,7 +1227,41 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-grid-fade {
   0%, 70%, 100% { transform: scale(1); opacity: 1; }
   35% { transform: scale(0); opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-loader-grid span {
+    animation: none;
+  }
+  .roycss-loader-grid span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-loader-grid span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-loader-grid span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-loader-grid span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-loader-grid span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-loader-grid span:nth-child(6) {
+    animation: none;
+  }
+  .roycss-loader-grid span:nth-child(7) {
+    animation: none;
+  }
+  .roycss-loader-grid span:nth-child(8) {
+    animation: none;
+  }
+  .roycss-loader-grid span:nth-child(9) {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-ripple",
@@ -1026,7 +1291,17 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-ripple {
   0% { inset-block-start: 28px; inset-inline-start: 28px; inline-size: 0; block-size: 0; opacity: 1; }
   100% { inset-block-start: 0; inset-inline-start: 0; inline-size: 56px; block-size: 56px; opacity: 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-loader-ripple span {
+    animation: none;
+  }
+  .roycss-loader-ripple span:nth-child(2) {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-square-spin",
@@ -1049,7 +1324,15 @@ export const effectsBatch2: CSSEffect[] = [
   50% { transform: perspective(100px) rotateX(180deg) rotateY(180deg); }
   75% { transform: perspective(100px) rotateX(0) rotateY(180deg); }
   100% { transform: perspective(100px) rotateX(0) rotateY(0); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Square Spin Loader */
+.roycss-loader-square-spin {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-bouncing-grid",
@@ -1088,7 +1371,41 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-bouncing-grid {
   0%, 100% { transform: scale(0.7); opacity: 0.6; }
   50% { transform: scale(1.1); opacity: 1; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-loader-bouncing-grid span {
+    animation: none;
+  }
+  .roycss-loader-bouncing-grid span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-loader-bouncing-grid span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-loader-bouncing-grid span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-loader-bouncing-grid span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-loader-bouncing-grid span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-loader-bouncing-grid span:nth-child(6) {
+    animation: none;
+  }
+  .roycss-loader-bouncing-grid span:nth-child(7) {
+    animation: none;
+  }
+  .roycss-loader-bouncing-grid span:nth-child(8) {
+    animation: none;
+  }
+  .roycss-loader-bouncing-grid span:nth-child(9) {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-line-scale",
@@ -1123,7 +1440,29 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-line-scale {
   0%, 40%, 100% { transform: scaleY(0.4); }
   20% { transform: scaleY(1); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-loader-line-scale span {
+    animation: none;
+  }
+  .roycss-loader-line-scale span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-loader-line-scale span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-loader-line-scale span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-loader-line-scale span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-loader-line-scale span:nth-child(5) {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-pacman",
@@ -1170,7 +1509,14 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-pacman-chomp {
   from { clip-path: polygon(100% 35%, 50% 50%, 100% 65%, 50% 100%, 0% 50%, 50% 0%); }
   to { clip-path: polygon(100% 50%, 50% 50%, 100% 50%, 50% 100%, 0% 50%, 50% 0%); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-loader-pacman::before {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-circle-fade",
@@ -1199,7 +1545,15 @@ export const effectsBatch2: CSSEffect[] = [
 
 @keyframes roy-circle-fade-spin {
   to { transform: rotate(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Circle Fade Loader */
+.roycss-loader-circle-fade {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-circle-notch",
@@ -1223,7 +1577,15 @@ export const effectsBatch2: CSSEffect[] = [
   0% { transform: rotate(0deg); }
   60% { transform: rotate(280deg); }
   100% { transform: rotate(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Circle Notch Loader */
+.roycss-loader-circle-notch {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-three-bounce",
@@ -1255,7 +1617,20 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-three-bounce {
   0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
   40% { transform: scale(1); opacity: 1; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-loader-three-bounce span {
+    animation: none;
+  }
+  .roycss-loader-three-bounce span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-loader-three-bounce span:nth-child(2) {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-progress-bar",
@@ -1290,7 +1665,14 @@ export const effectsBatch2: CSSEffect[] = [
   0% { inset-inline-start: -40%; }
   50% { inset-inline-start: 50%; }
   100% { inset-inline-start: 100%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-loader-progress-bar::before {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-indeterminate",
@@ -1338,7 +1720,17 @@ export const effectsBatch2: CSSEffect[] = [
   0% { inset-inline-start: -40%; }
   50% { inset-inline-start: 60%; }
   100% { inset-inline-start: 100%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-loader-indeterminate::before {
+    animation: none;
+  }
+  .roycss-loader-indeterminate::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-skeleton",
@@ -1373,7 +1765,14 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-skeleton-shimmer {
   0% { transform: translateX(-100%); }
   100% { transform: translateX(100%); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-loader-skeleton::before {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-typing",
@@ -1408,7 +1807,23 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-typing {
   0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
   30% { transform: translateY(-6px); opacity: 1; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-loader-typing span {
+    animation: none;
+  }
+  .roycss-loader-typing span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-loader-typing span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-loader-typing span:nth-child(3) {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-whale",
@@ -1458,7 +1873,17 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-whale-spout {
   0%, 100% { transform: translateX(-50%) scaleY(0); opacity: 0; }
   50% { transform: translateX(-50%) scaleY(1); opacity: 1; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-loader-whale::before {
+    animation: none;
+  }
+  .roycss-loader-whale::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "loader-clock",
@@ -1506,7 +1931,17 @@ export const effectsBatch2: CSSEffect[] = [
 
 @keyframes roy-clock-minute {
   to { transform: rotate(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-loader-clock::before {
+    animation: none;
+  }
+  .roycss-loader-clock::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // ─── 3D TRANSFORMS (20) ────────────────────────────────────────
@@ -1549,7 +1984,14 @@ export const effectsBatch2: CSSEffect[] = [
 
 .roycss-card-flip-back {
   transform: rotateY(180deg);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-card-flip-inner {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "perspective-tilt",
@@ -1568,7 +2010,15 @@ export const effectsBatch2: CSSEffect[] = [
 
 .roycss-perspective-tilt:hover {
   transform: perspective(800px) rotateX(-5deg) rotateY(5deg);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Perspective Tilt */
+.roycss-perspective-tilt {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "cube-rotate",
@@ -1597,7 +2047,15 @@ export const effectsBatch2: CSSEffect[] = [
   border: 2px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent);
   background: color-mix(in oklch, oklch(0.696 0.149 162.48) 8%, transparent);
   border-radius: 4px;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Cube Rotate */
+.roycss-cube-rotate {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "depth-shadow",
@@ -1631,7 +2089,15 @@ export const effectsBatch2: CSSEffect[] = [
     8px 8px 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent),
     9px 9px 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 20%, transparent),
     10px 10px 30px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Depth Shadow Layers */
+.roycss-depth-shadow {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "flip-x",
@@ -1651,7 +2117,15 @@ export const effectsBatch2: CSSEffect[] = [
 
 .roycss-flip-x:hover {
   transform: rotateX(180deg);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Flip X */
+.roycss-flip-x {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "flip-y",
@@ -1671,7 +2145,15 @@ export const effectsBatch2: CSSEffect[] = [
 
 .roycss-flip-y:hover {
   transform: rotateY(180deg);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Flip Y */
+.roycss-flip-y {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "rotate-3d",
@@ -1691,7 +2173,15 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-rotate-3d {
   0% { transform: perspective(800px) rotate3d(1, 1, 1, 0deg); }
   100% { transform: perspective(800px) rotate3d(1, 1, 1, 360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Rotate 3D */
+.roycss-rotate-3d {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "book-open",
@@ -1740,7 +2230,15 @@ export const effectsBatch2: CSSEffect[] = [
 
 .roycss-book-open:hover::after {
   transform: rotateY(160deg);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-book-open::before,
+.roycss-book-open::after {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "door-open",
@@ -1772,7 +2270,14 @@ export const effectsBatch2: CSSEffect[] = [
 
 .roycss-door-open:hover::before {
   transform: rotateY(-80deg);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-door-open::before {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "drawer-slide",
@@ -1808,7 +2313,14 @@ export const effectsBatch2: CSSEffect[] = [
 
 .roycss-drawer-slide:hover::before {
   transform: translateY(-50%) rotateX(60deg);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-drawer-slide::before {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "fold",
@@ -1830,7 +2342,15 @@ export const effectsBatch2: CSSEffect[] = [
 
 .roycss-fold:hover {
   transform: rotateX(90deg);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Fold */
+.roycss-fold {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "accordion-3d",
@@ -1878,7 +2398,15 @@ export const effectsBatch2: CSSEffect[] = [
 
 .roycss-accordion-3d:hover::after {
   transform: rotateX(55deg);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-accordion-3d::before,
+.roycss-accordion-3d::after {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "3d-book",
@@ -1922,7 +2450,15 @@ export const effectsBatch2: CSSEffect[] = [
 
 .roycss-3d-book:hover {
   transform: rotateY(-45deg);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* 3D Book */
+.roycss-3d-book {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "3d-poster",
@@ -1949,7 +2485,15 @@ export const effectsBatch2: CSSEffect[] = [
 
 .roycss-3d-poster:hover {
   transform: perspective(1000px) rotateY(15deg) rotateX(-5deg);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* 3D Poster */
+.roycss-3d-poster {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "3d-gallery",
@@ -1989,7 +2533,15 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-3d-gallery-rotate {
   0% { transform: rotateY(0deg); }
   100% { transform: rotateY(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* 3D Gallery */
+.roycss-3d-gallery {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "transform-origin-spin",
@@ -2011,7 +2563,15 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-origin-spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Transform Origin Spin */
+.roycss-transform-origin-spin {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "scale-3d",
@@ -2033,7 +2593,15 @@ export const effectsBatch2: CSSEffect[] = [
 
 .roycss-scale-3d:hover {
   transform: perspective(800px) scale3d(1.2, 1.2, 1.2) translateZ(40px);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scale 3D */
+.roycss-scale-3d {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "skew-3d",
@@ -2055,7 +2623,15 @@ export const effectsBatch2: CSSEffect[] = [
 
 .roycss-skew-3d:hover {
   transform: perspective(800px) skew(15deg, -5deg) rotateY(20deg);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Skew 3D */
+.roycss-skew-3d {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "rotate-x",
@@ -2077,7 +2653,15 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-rotate-x {
   0% { transform: perspective(800px) rotateX(0deg); }
   100% { transform: perspective(800px) rotateX(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Rotate X */
+.roycss-rotate-x {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "rotate-y",
@@ -2099,6 +2683,14 @@ export const effectsBatch2: CSSEffect[] = [
 @keyframes roy-rotate-y {
   0% { transform: perspective(800px) rotateY(0deg); }
   100% { transform: perspective(800px) rotateY(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Rotate Y */
+.roycss-rotate-y {
+    animation: none;
+  }
+}
+`,
   },
 ];

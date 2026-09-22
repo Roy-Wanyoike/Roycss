@@ -106,7 +106,9 @@ const KEBAB_CASE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const KEYFRAMES_NAME = /^roy-[a-z0-9]+(-[a-z0-9]+)*$/;
 /** The generator's ratchet baseline, pinned here in lockstep. */
 const KNOWN_NAMING_VIOLATIONS: Record<string, number> = {
-  "ferrum-loader-heartbeat": 127, // unprefixed .btn-* demo suite (see the gate's PR)
+  // History: ferrum-loader-heartbeat carried 127 prefixed-compounds
+  // violations (unprefixed .btn-* demo suite) until the #189 catalog-quality
+  // repair rewrote it as a valid self-contained loader — ratchet now at zero.
 };
 
 const stripComments = (css: string) => css.replace(/\/\*[\s\S]*?\*\//g, "");
@@ -367,9 +369,9 @@ describe("roycss.manifest.json (PF-042 — unified index)", () => {
 
   it("pins the distributions (lockstep: generator output · this test · the PR)", () => {
     // Bump all three together when the catalog changes — never one alone.
-    expect(manifest.counts.maturity).toEqual({ stable: 483, beta: 1430, experimental: 46 });
-    expect(manifest.counts.quality).toEqual({ A: 88, B: 423, C: 1149, D: 274, F: 25 });
-    expect(manifest.counts.a11y).toEqual({ "motion-safe": 431, "motion-caution": 1528, "aria-required": 90 });
+    expect(manifest.counts.maturity).toEqual({ stable: 1254, beta: 664, experimental: 41 });
+    expect(manifest.counts.quality).toEqual({ A: 135, B: 1173, C: 522, D: 109, F: 20 });
+    expect(manifest.counts.a11y).toEqual({ "motion-safe": 1578, "motion-caution": 381, "aria-required": 89 });
 
     // counts must equal the entries they summarize (no stale summary).
     const maturity = { stable: 0, beta: 0, experimental: 0 } as Record<Maturity, number>;

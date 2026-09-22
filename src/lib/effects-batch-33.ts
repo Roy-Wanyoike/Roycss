@@ -31,7 +31,14 @@ export const effectsBatch33: CSSEffect[] = [
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-transform-origin-spin {
+    animation: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -59,7 +66,14 @@ export const effectsBatch33: CSSEffect[] = [
     transform: translate3d(0, 100%, 0);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-slide-out-bottom {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -83,7 +97,14 @@ export const effectsBatch33: CSSEffect[] = [
     transform: translate3d(0, -100%, 0);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-slide-out-top {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -111,7 +132,14 @@ export const effectsBatch33: CSSEffect[] = [
     transform: translate3d(0, 0, 0) rotate(0deg);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-slide-rotate-in {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -165,7 +193,14 @@ export const effectsBatch33: CSSEffect[] = [
     transform: scale(1) translate3d(0, 0, 0);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-snap-in {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -200,7 +235,14 @@ export const effectsBatch33: CSSEffect[] = [
     transform: translate3d(0, 0, 0) scale(1);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-spring-in {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -221,7 +263,14 @@ export const effectsBatch33: CSSEffect[] = [
   40%      { transform: scaleY(1.4) scaleX(0.75); }
   70%      { transform: scaleY(0.85) scaleX(1.12); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-stretch {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -241,7 +290,14 @@ export const effectsBatch33: CSSEffect[] = [
   0%, 100% { transform: rotate(-4deg); }
   50%      { transform: rotate(4deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-sway {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -276,7 +332,14 @@ export const effectsBatch33: CSSEffect[] = [
     transform: rotate3d(0, 0, 1, 0deg);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-swing-in {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -304,7 +367,14 @@ export const effectsBatch33: CSSEffect[] = [
   90%  { transform: translate3d(-1px, 1px, 0); }
   100% { transform: translate3d(0, 0, 0); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-vibrate {
+    animation: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -350,7 +420,14 @@ export const effectsBatch33: CSSEffect[] = [
   0%, 100% { filter: drop-shadow(0 0 12px color-mix(in oklch, oklch(0.861 0.147 83.67) 40%, transparent)) brightness(1); }
   50%      { filter: drop-shadow(0 0 24px color-mix(in oklch, oklch(0.861 0.147 83.67) 70%, transparent)) brightness(1.15); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-3d-cinema {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -391,7 +468,14 @@ export const effectsBatch33: CSSEffect[] = [
   0%, 100% { filter: blur(8px); opacity: 0.4; }
   50% { filter: blur(0); opacity: 1; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-blur-reveal {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -488,7 +572,14 @@ export const effectsBatch33: CSSEffect[] = [
   from { filter: brightness(1) hue-rotate(0deg); }
   to { filter: brightness(1.15) hue-rotate(-8deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-fire {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -523,7 +614,14 @@ export const effectsBatch33: CSSEffect[] = [
   0%   { text-shadow: 0 -2px 4px oklch(1 0 0), 0 -4px 8px oklch(0.908 0.157 96.48), 0 -8px 14px oklch(0.751 0.179 58.28), 0 -14px 22px oklch(0.644 0.243 32.25), 0 -22px 32px oklch(0.527 0.211 30.14), 0 2px 4px color-mix(in oklch, oklch(0.527 0.211 30.14) 80%, transparent); transform: translateY(0); }
   100% { text-shadow: 0 -2px 6px oklch(1 0 0), 0 -6px 10px oklch(0.908 0.157 96.48), 0 -12px 18px oklch(0.751 0.179 58.28), 0 -20px 28px oklch(0.644 0.243 32.25), 0 -30px 42px oklch(0.527 0.211 30.14), 0 2px 6px color-mix(in oklch, oklch(0.527 0.211 30.14) 90%, transparent); transform: translateY(-2px); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-fire-flame {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -547,7 +645,14 @@ export const effectsBatch33: CSSEffect[] = [
   0%, 100% { transform: rotateX(0); }
   50% { transform: rotateX(360deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-flip {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -573,7 +678,14 @@ export const effectsBatch33: CSSEffect[] = [
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-gradient-shift {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -618,7 +730,14 @@ export const effectsBatch33: CSSEffect[] = [
   from { background-position: 0% 0%; }
   to { background-position: 200% 200%; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-holographic {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -695,7 +814,14 @@ export const effectsBatch33: CSSEffect[] = [
     text-shadow: 0 0 2px oklch(1 0 0), 0 0 4px oklch(0.683 0.303 335.86);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-neon-sign {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -801,7 +927,14 @@ export const effectsBatch33: CSSEffect[] = [
   from { background-position: 200% 0; }
   to { background-position: -200% 0; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-shimmer {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -843,7 +976,14 @@ export const effectsBatch33: CSSEffect[] = [
   0%, 100% { letter-spacing: 0px; }
   50% { letter-spacing: 12px; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-stretch {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -864,7 +1004,14 @@ export const effectsBatch33: CSSEffect[] = [
   0%, 100% { border-color: oklch(0.696 0.149 162.48); }
   50% { border-color: transparent; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-typing-cursor {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -917,7 +1064,14 @@ export const effectsBatch33: CSSEffect[] = [
   0%, 100% { filter: drop-shadow(0 4px 6px color-mix(in oklch, oklch(0.424 0.119 249.77) 50%, transparent)) hue-rotate(0deg); }
   50%      { filter: drop-shadow(0 4px 8px color-mix(in oklch, oklch(0.424 0.119 249.77) 70%, transparent)) hue-rotate(15deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-water {
+    animation: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -963,7 +1117,14 @@ export const effectsBatch33: CSSEffect[] = [
   0%, 100% { transform: translateY(0) rotate(0deg); filter: saturate(1.2) hue-rotate(0deg); }
   50%      { transform: translateY(-12px) rotate(8deg); filter: saturate(1.4) hue-rotate(40deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-soap-bubble {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1241,7 +1402,14 @@ export const effectsBatch33: CSSEffect[] = [
   from { filter: hue-rotate(0deg); }
   to   { filter: hue-rotate(360deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-visual-color-shift {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1293,7 +1461,14 @@ export const effectsBatch33: CSSEffect[] = [
   0%, 100% { filter: hue-rotate(0deg); }
   50%      { filter: hue-rotate(70deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-visual-foil {
+    animation: none;
+  }
+}
+`,
 },
 
 ];

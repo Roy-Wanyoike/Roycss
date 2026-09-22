@@ -26,7 +26,14 @@ export const effectsBatch21: CSSEffect[] = [
   50%      { opacity: 1; }
   75%      { opacity: 0; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-flash {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -45,7 +52,14 @@ export const effectsBatch21: CSSEffect[] = [
   50%      { opacity: 1; }
   75%      { opacity: 0; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-strobe {
+    animation: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -71,7 +85,14 @@ export const effectsBatch21: CSSEffect[] = [
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-gradient-shift {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -100,7 +121,14 @@ export const effectsBatch21: CSSEffect[] = [
   50% { background-position: 100% 0%, 0% 50%, 100% 50%, 0% 100%, 100% 100%, 0% 0%; }
   100% { background-position: 0% 0%, 100% 0%, 0% 50%, 100% 50%, 0% 100%, 100% 100%; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-mesh {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -141,7 +169,14 @@ export const effectsBatch21: CSSEffect[] = [
   0% { background-position: 0 0; }
   100% { background-position: 28.28px 0; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-striped {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -179,7 +214,14 @@ export const effectsBatch21: CSSEffect[] = [
   0%, 100% { background-size: 100% 100%; }
   50% { background-size: 150% 150%; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-radial-pulse {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -219,9 +261,18 @@ export const effectsBatch21: CSSEffect[] = [
   cssCode: `.roycss-ferrum-hover-glow {
   transition: box-shadow 0.3s ease;
 }
-.roycss-ferrum-hover-glow:hover {
-  box-shadow: 0 0 15px color-mix(in oklch, oklch(0.876 0.228 152.55) 60%, transparent), 0 0 30px color-mix(in oklch, oklch(0.876 0.228 152.55) 30%, transparent), 0 0 45px color-mix(in oklch, oklch(0.876 0.228 152.55) 15%, transparent);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-glow:hover {
+    box-shadow: 0 0 15px color-mix(in oklch, oklch(0.876 0.228 152.55) 60%, transparent), 0 0 30px color-mix(in oklch, oklch(0.876 0.228 152.55) 30%, transparent), 0 0 45px color-mix(in oklch, oklch(0.876 0.228 152.55) 15%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-glow {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -234,9 +285,18 @@ export const effectsBatch21: CSSEffect[] = [
   cssCode: `.roycss-ferrum-hover-scale-up {
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.roycss-ferrum-hover-scale-up:hover {
-  transform: scale(1.1);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-scale-up:hover {
+    transform: scale(1.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-scale-up {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -249,9 +309,18 @@ export const effectsBatch21: CSSEffect[] = [
   cssCode: `.roycss-ferrum-hover-scale-down {
   transition: transform 0.3s ease;
 }
-.roycss-ferrum-hover-scale-down:hover {
-  transform: scale(0.9);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-scale-down:hover {
+    transform: scale(0.9);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-scale-down {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -264,9 +333,18 @@ export const effectsBatch21: CSSEffect[] = [
   cssCode: `.roycss-ferrum-hover-rotate {
   transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.roycss-ferrum-hover-rotate:hover {
-  transform: rotate(10deg);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-rotate:hover {
+    transform: rotate(10deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-rotate {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -279,9 +357,18 @@ export const effectsBatch21: CSSEffect[] = [
   cssCode: `.roycss-ferrum-hover-skew {
   transition: transform 0.3s ease;
 }
-.roycss-ferrum-hover-skew:hover {
-  transform: skewX(-5deg);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-skew:hover {
+    transform: skewX(-5deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-skew {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -295,10 +382,19 @@ export const effectsBatch21: CSSEffect[] = [
   border: 2px solid transparent;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-.roycss-ferrum-hover-border-glow:hover {
-  border-color: oklch(0.905 0.155 194.77);
-  box-shadow: 0 0 12px color-mix(in oklch, oklch(0.905 0.155 194.77) 50%, transparent), inset 0 0 12px color-mix(in oklch, oklch(0.905 0.155 194.77) 10%, transparent);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-border-glow:hover {
+    border-color: oklch(0.905 0.155 194.77);
+    box-shadow: 0 0 12px color-mix(in oklch, oklch(0.905 0.155 194.77) 50%, transparent), inset 0 0 12px color-mix(in oklch, oklch(0.905 0.155 194.77) 10%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-border-glow {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -311,10 +407,19 @@ export const effectsBatch21: CSSEffect[] = [
   cssCode: `.roycss-ferrum-hover-shadow-lift {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.roycss-ferrum-hover-shadow-lift:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-shadow-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-shadow-lift {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -327,10 +432,19 @@ export const effectsBatch21: CSSEffect[] = [
   cssCode: `.roycss-ferrum-hover-float {
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
-.roycss-ferrum-hover-float:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 14px 28px color-mix(in oklch, oklch(0 0 0) 12%, transparent);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-float:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 14px 28px color-mix(in oklch, oklch(0 0 0) 12%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-float {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -344,9 +458,18 @@ export const effectsBatch21: CSSEffect[] = [
   transition: transform 0.3s ease;
   transform-style: preserve-3d;
 }
-.roycss-ferrum-hover-tilt:hover {
-  transform: perspective(600px) rotateX(5deg) rotateY(-5deg);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-tilt:hover {
+    transform: perspective(600px) rotateX(5deg) rotateY(-5deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-tilt {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -373,11 +496,20 @@ export const effectsBatch21: CSSEffect[] = [
   transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
   z-index: 1;
 }
-.roycss-ferrum-hover-ripple:hover::before {
-  width: 300%;
-  height: 300%;
-  opacity: 0;
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-ripple:hover::before {
+    width: 300%;
+    height: 300%;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-ripple::before {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -400,10 +532,19 @@ export const effectsBatch21: CSSEffect[] = [
   background: linear-gradient(90deg, oklch(0.627 0.164 271.53), oklch(0.501 0.138 304.73));
   transition: width 0.35s ease, left 0.35s ease;
 }
-.roycss-ferrum-hover-underline-grow:hover::after {
-  width: 100%;
-  left: 0;
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-underline-grow:hover::after {
+    width: 100%;
+    left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-underline-grow::after {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -428,9 +569,18 @@ export const effectsBatch21: CSSEffect[] = [
   transition: inset-inline-start 0.4s ease;
   z-index: 1;
 }
-.roycss-ferrum-hover-overlay-slide:hover::before {
-  inset-inline-start: 0;
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-overlay-slide:hover::before {
+    inset-inline-start: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-overlay-slide::before {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -456,9 +606,18 @@ export const effectsBatch21: CSSEffect[] = [
   transition: height 0.4s ease;
   z-index: -1;
 }
-.roycss-ferrum-hover-bg-slide:hover::before {
-  height: 100%;
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-bg-slide:hover::before {
+    height: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-bg-slide::before {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -472,10 +631,19 @@ export const effectsBatch21: CSSEffect[] = [
   box-shadow: 0 0 0 3px oklch(0.627 0.164 271.53);
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
-.roycss-ferrum-hover-shrink-border:hover {
-  box-shadow: 0 0 0 1px oklch(0.627 0.164 271.53);
-  transform: scale(1.02);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-shrink-border:hover {
+    box-shadow: 0 0 0 1px oklch(0.627 0.164 271.53);
+    transform: scale(1.02);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-shrink-border {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -488,10 +656,19 @@ export const effectsBatch21: CSSEffect[] = [
   cssCode: `.roycss-ferrum-hover-expand {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.roycss-ferrum-hover-expand:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 0 5px color-mix(in oklch, oklch(0.627 0.164 271.53) 25%, transparent);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-expand:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 5px color-mix(in oklch, oklch(0.627 0.164 271.53) 25%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-expand {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -505,11 +682,20 @@ export const effectsBatch21: CSSEffect[] = [
   border: 2px solid transparent;
   transition: border-color 0.3s ease, box-shadow 0.3s ease, text-shadow 0.3s ease;
 }
-.roycss-ferrum-hover-neon-pulse:hover {
-  border-color: oklch(0.866 0.295 142.5);
-  box-shadow: 0 0 8px oklch(0.866 0.295 142.5), 0 0 20px oklch(0.866 0.295 142.5), 0 0 40px oklch(0.866 0.295 142.5), 0 0 80px color-mix(in oklch, oklch(0.866 0.295 142.5) 40%, transparent);
-  text-shadow: 0 0 8px oklch(0.866 0.295 142.5), 0 0 20px oklch(0.866 0.295 142.5);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-neon-pulse:hover {
+    border-color: oklch(0.866 0.295 142.5);
+    box-shadow: 0 0 8px oklch(0.866 0.295 142.5), 0 0 20px oklch(0.866 0.295 142.5), 0 0 40px oklch(0.866 0.295 142.5), 0 0 80px color-mix(in oklch, oklch(0.866 0.295 142.5) 40%, transparent);
+    text-shadow: 0 0 8px oklch(0.866 0.295 142.5), 0 0 20px oklch(0.866 0.295 142.5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-neon-pulse {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -538,12 +724,26 @@ export const effectsBatch21: CSSEffect[] = [
   transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
   z-index: -1;
 }
-.roycss-ferrum-hover-fill:hover::before {
-  transform: scaleX(1);
+@media (hover: hover) {
+  .roycss-ferrum-hover-fill:hover::before {
+    transform: scaleX(1);
+  }
 }
-.roycss-ferrum-hover-fill:hover {
-  color: oklch(1 0 0);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-fill:hover {
+    color: oklch(1 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-fill {
+    transition: none;
+  }
+  .roycss-ferrum-hover-fill::before {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -571,12 +771,26 @@ export const effectsBatch21: CSSEffect[] = [
   transition: inset-inline-start 0.5s cubic-bezier(0.65, 0, 0.35, 1);
   z-index: -1;
 }
-.roycss-ferrum-hover-swipe:hover::before {
-  inset-inline-start: 0;
+@media (hover: hover) {
+  .roycss-ferrum-hover-swipe:hover::before {
+    inset-inline-start: 0;
+  }
 }
-.roycss-ferrum-hover-swipe:hover {
-  color: oklch(1 0 0);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-swipe:hover {
+    color: oklch(1 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-swipe {
+    transition: none;
+  }
+  .roycss-ferrum-hover-swipe::before {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -589,15 +803,24 @@ export const effectsBatch21: CSSEffect[] = [
   cssCode: `.roycss-ferrum-hover-shadow {
   transition: box-shadow 0.4s ease;
 }
-.roycss-ferrum-hover-shadow:hover {
-  box-shadow:
-    0 1px 2px color-mix(in oklch, oklch(0 0 0) 7%, transparent),
-    0 2px 4px color-mix(in oklch, oklch(0 0 0) 7%, transparent),
-    0 4px 8px color-mix(in oklch, oklch(0 0 0) 7%, transparent),
-    0 8px 16px color-mix(in oklch, oklch(0 0 0) 7%, transparent),
-    0 16px 32px color-mix(in oklch, oklch(0 0 0) 7%, transparent),
-    0 32px 64px color-mix(in oklch, oklch(0 0 0) 7%, transparent);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-shadow:hover {
+    box-shadow:
+      0 1px 2px color-mix(in oklch, oklch(0 0 0) 7%, transparent),
+      0 2px 4px color-mix(in oklch, oklch(0 0 0) 7%, transparent),
+      0 4px 8px color-mix(in oklch, oklch(0 0 0) 7%, transparent),
+      0 8px 16px color-mix(in oklch, oklch(0 0 0) 7%, transparent),
+      0 16px 32px color-mix(in oklch, oklch(0 0 0) 7%, transparent),
+      0 32px 64px color-mix(in oklch, oklch(0 0 0) 7%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-shadow {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -610,9 +833,18 @@ export const effectsBatch21: CSSEffect[] = [
   cssCode: `.roycss-ferrum-hover-blur {
   transition: filter 0.3s ease;
 }
-.roycss-ferrum-hover-blur:hover {
-  filter: blur(2px) brightness(1.2) contrast(1.1);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-blur:hover {
+    filter: blur(2px) brightness(1.2) contrast(1.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-blur {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -626,9 +858,18 @@ export const effectsBatch21: CSSEffect[] = [
   transform: skewX(10deg);
   transition: transform 0.35s ease;
 }
-.roycss-ferrum-hover-skew-reverse:hover {
-  transform: skewX(-10deg);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-skew-reverse:hover {
+    transform: skewX(-10deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-skew-reverse {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -644,11 +885,20 @@ export const effectsBatch21: CSSEffect[] = [
   backface-visibility: hidden;
   transition: transform 0.6s ease;
 }
-.roycss-ferrum-hover-flip:hover {
-  transform: rotateY(180deg);
-  background: linear-gradient(135deg, oklch(0.627 0.164 271.53), oklch(0.501 0.138 304.73));
-  color: oklch(1 0 0);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-flip:hover {
+    transform: rotateY(180deg);
+    background: linear-gradient(135deg, oklch(0.627 0.164 271.53), oklch(0.501 0.138 304.73));
+    color: oklch(1 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-flip {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -661,10 +911,19 @@ export const effectsBatch21: CSSEffect[] = [
   cssCode: `.roycss-ferrum-hover-slide-right {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.roycss-ferrum-hover-slide-right:hover {
-  transform: translateX(8px);
-  box-shadow: -4px 2px 12px color-mix(in oklch, oklch(0 0 0) 18%, transparent);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-slide-right:hover {
+    transform: translateX(8px);
+    box-shadow: -4px 2px 12px color-mix(in oklch, oklch(0 0 0) 18%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-slide-right {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -677,10 +936,19 @@ export const effectsBatch21: CSSEffect[] = [
   cssCode: `.roycss-ferrum-hover-slide-up {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.roycss-ferrum-hover-slide-up:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 14px color-mix(in oklch, oklch(0 0 0) 18%, transparent);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-slide-up:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 14px color-mix(in oklch, oklch(0 0 0) 18%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-slide-up {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -690,26 +958,25 @@ export const effectsBatch21: CSSEffect[] = [
   description: "A hover-triggered effect that responds to pointer interaction",
   tags: ["hover", "interactive", "hover-morph", "morph", "animated"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-hover-morph {
+  cssCode: `/* Hover Morph */
+.roycss-ferrum-hover-morph {
   border-radius: 8px;
   transition: border-radius 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.5s ease;
 }
-.roycss-ferrum-hover-morph:hover {
-  border-radius: 50%;
-  transform: scale(0.95);
+@media (hover: hover) {
+  .roycss-ferrum-hover-morph:hover {
+    border-radius: 50%;
+    transform: scale(0.95);
+  }
 }
 
-.roycss-ferrum-hover-shake:hover {
-  animation: roy-ferrum-hover-shake-anim 0.5s ease;
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Morph */
+.roycss-ferrum-hover-morph {
+    transition: none;
+  }
 }
-
-@keyframes roy-ferrum-hover-shake-anim {
-
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
-  20%, 40%, 60%, 80% { transform: translateX(4px); }
-
-}`,
+`,
 },
 
 {
@@ -722,10 +989,19 @@ export const effectsBatch21: CSSEffect[] = [
   cssCode: `.roycss-ferrum-hover-glow-text {
   transition: text-shadow 0.3s ease, color 0.3s ease;
 }
-.roycss-ferrum-hover-glow-text:hover {
-  text-shadow: 0 0 8px oklch(0.905 0.155 194.77), 0 0 16px oklch(0.905 0.155 194.77), 0 0 32px oklch(0.905 0.155 194.77), 0 0 64px color-mix(in oklch, oklch(0.905 0.155 194.77) 40%, transparent);
-  color: oklch(1 0 0);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-glow-text:hover {
+    text-shadow: 0 0 8px oklch(0.905 0.155 194.77), 0 0 16px oklch(0.905 0.155 194.77), 0 0 32px oklch(0.905 0.155 194.77), 0 0 64px color-mix(in oklch, oklch(0.905 0.155 194.77) 40%, transparent);
+    color: oklch(1 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-glow-text {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -739,12 +1015,21 @@ export const effectsBatch21: CSSEffect[] = [
   transition: transform 0.4s ease, box-shadow 0.4s ease;
   transform-style: preserve-3d;
 }
-.roycss-ferrum-hover-3d-lift:hover {
-  transform: perspective(800px) rotateX(3deg) translateY(-8px);
-  box-shadow:
-    0 20px 40px color-mix(in oklch, oklch(0 0 0) 20%, transparent),
-    0 0 12px color-mix(in oklch, oklch(0.627 0.164 271.53) 15%, transparent);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-hover-3d-lift:hover {
+    transform: perspective(800px) rotateX(3deg) translateY(-8px);
+    box-shadow:
+      0 20px 40px color-mix(in oklch, oklch(0 0 0) 20%, transparent),
+      0 0 12px color-mix(in oklch, oklch(0.627 0.164 271.53) 15%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-3d-lift {
+    transition: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -792,7 +1077,14 @@ export const effectsBatch21: CSSEffect[] = [
     transform: scale(1);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-shadow-pop {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -824,7 +1116,14 @@ export const effectsBatch21: CSSEffect[] = [
   0% { text-shadow: 0 0 5px oklch(0.627 0.164 271.53), 0 0 10px oklch(0.627 0.164 271.53); }
   100% { text-shadow: 0 0 10px oklch(0.627 0.164 271.53), 0 0 20px oklch(0.627 0.164 271.53), 0 0 40px oklch(0.501 0.138 304.73); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-glow {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -834,38 +1133,34 @@ export const effectsBatch21: CSSEffect[] = [
   description: "A text effect that styles and animates letterforms (typewriter)",
   tags: ["text", "typography", "text-typewriter", "typewriter", "animated"],
   previewType: "text",
-  cssCode: `.roycss-ferrum-text-typewriter {
+  cssCode: `/* Typewriter — types out with a blinking caret */
+.roycss-ferrum-text-typewriter {
+  display: inline-block;
   overflow: hidden;
   white-space: nowrap;
+  inline-size: 0;
   border-inline-end: 2px solid oklch(0.627 0.164 271.53);
-  width: 0;
   animation:
     roy-ferrum-text-typewriter-type 3s steps(24) forwards,
     roy-ferrum-text-typewriter-cursor 0.75s step-end infinite;
 }
 
-.roycss-ferrum-text-wave span {
-  display: inline-block;
-  animation: roy-ferrum-text-wave-anim 1.4s ease-in-out infinite;
+@keyframes roy-ferrum-text-typewriter-type {
+  to { inline-size: 100%; }
 }
-.roycss-ferrum-text-wave span:nth-child(2)  { animation-delay: 0.1s; }
-.roycss-ferrum-text-wave span:nth-child(3)  { animation-delay: 0.2s; }
-.roycss-ferrum-text-wave span:nth-child(4)  { animation-delay: 0.3s; }
-.roycss-ferrum-text-wave span:nth-child(5)  { animation-delay: 0.4s; }
-.roycss-ferrum-text-wave span:nth-child(6)  { animation-delay: 0.5s; }
-.roycss-ferrum-text-wave span:nth-child(7)  { animation-delay: 0.6s; }
-.roycss-ferrum-text-wave span:nth-child(8)  { animation-delay: 0.7s; }
-.roycss-ferrum-text-wave span:nth-child(9)  { animation-delay: 0.8s; }
-.roycss-ferrum-text-wave span:nth-child(10) { animation-delay: 0.9s; }
-.roycss-ferrum-text-wave span:nth-child(11) { animation-delay: 1.0s; }
-.roycss-ferrum-text-wave span:nth-child(12) { animation-delay: 1.1s; }
 
-@keyframes roy-ferrum-text-wave-anim {
+@keyframes roy-ferrum-text-typewriter-cursor {
+  0%, 100% { border-inline-end-color: oklch(0.627 0.164 271.53); }
+  50%      { border-inline-end-color: transparent; }
+}
 
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Typewriter — types out with a blinking caret */
+.roycss-ferrum-text-typewriter {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -884,7 +1179,14 @@ export const effectsBatch21: CSSEffect[] = [
   0% { filter: blur(12px); opacity: 0; }
   100% { filter: blur(0); opacity: 1; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-blur-in {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -907,7 +1209,14 @@ export const effectsBatch21: CSSEffect[] = [
   0% { background-position: 100% 0; }
   100% { background-position: 0 0; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-highlight {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -939,7 +1248,14 @@ export const effectsBatch21: CSSEffect[] = [
   0% { transform: scaleX(0); transform-origin: right; }
   100% { transform: scaleX(1); transform-origin: left; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-underline-slide::after {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -949,48 +1265,23 @@ export const effectsBatch21: CSSEffect[] = [
   description: "A text effect that styles and animates letterforms (blink)",
   tags: ["text", "typography", "text-blink", "blink", "animated"],
   previewType: "text",
-  cssCode: `.roycss-ferrum-text-blink {
+  cssCode: `/* Text Blink */
+.roycss-ferrum-text-blink {
   animation: roy-ferrum-text-blink-anim 1s step-end infinite;
 }
 
-.roycss-ferrum-text-scramble span {
-  display: inline-block;
-  opacity: 0;
-  animation: roy-ferrum-text-scramble-anim 0.35s ease forwards;
-}
-.roycss-ferrum-text-scramble span:nth-child(1)  { animation-delay: 0.04s; }
-.roycss-ferrum-text-scramble span:nth-child(2)  { animation-delay: 0.08s; }
-.roycss-ferrum-text-scramble span:nth-child(3)  { animation-delay: 0.12s; }
-.roycss-ferrum-text-scramble span:nth-child(4)  { animation-delay: 0.16s; }
-.roycss-ferrum-text-scramble span:nth-child(5)  { animation-delay: 0.20s; }
-.roycss-ferrum-text-scramble span:nth-child(6)  { animation-delay: 0.24s; }
-.roycss-ferrum-text-scramble span:nth-child(7)  { animation-delay: 0.28s; }
-.roycss-ferrum-text-scramble span:nth-child(8)  { animation-delay: 0.32s; }
-.roycss-ferrum-text-scramble span:nth-child(9)  { animation-delay: 0.36s; }
-.roycss-ferrum-text-scramble span:nth-child(10) { animation-delay: 0.40s; }
-.roycss-ferrum-text-scramble span:nth-child(11) { animation-delay: 0.44s; }
-.roycss-ferrum-text-scramble span:nth-child(12) { animation-delay: 0.48s; }
-.roycss-ferrum-text-scramble span:nth-child(13) { animation-delay: 0.52s; }
-.roycss-ferrum-text-scramble span:nth-child(14) { animation-delay: 0.56s; }
-.roycss-ferrum-text-scramble span:nth-child(15) { animation-delay: 0.60s; }
-.roycss-ferrum-text-scramble span:nth-child(16) { animation-delay: 0.64s; }
-
 @keyframes roy-ferrum-text-blink-anim {
-
   0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-
+  50%      { opacity: 0; }
 }
 
-@keyframes roy-ferrum-text-scramble-anim {
-
-  0%   { opacity: 0; transform: translateY(-8px); }
-  25%  { opacity: 0.6; transform: translateY(2px); }
-  50%  { opacity: 0.2; transform: translateY(-4px); }
-  75%  { opacity: 0.8; transform: translateY(1px); }
-  100% { opacity: 1; transform: translateY(0); }
-
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Text Blink */
+.roycss-ferrum-text-blink {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1039,7 +1330,14 @@ export const effectsBatch21: CSSEffect[] = [
     text-shadow: none;
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-neon-flicker {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1049,7 +1347,8 @@ export const effectsBatch21: CSSEffect[] = [
   description: "A text effect that styles and animates letterforms (rainbow)",
   tags: ["text", "typography", "text-rainbow", "rainbow", "animated"],
   previewType: "text",
-  cssCode: `.roycss-ferrum-text-rainbow {
+  cssCode: `/* Text Rainbow */
+.roycss-ferrum-text-rainbow {
   background: linear-gradient(
     90deg,
     oklch(0.628 0.258 29.23), oklch(0.744 0.181 56.46), oklch(0.968 0.211 109.77),
@@ -1063,44 +1362,18 @@ export const effectsBatch21: CSSEffect[] = [
   animation: roy-ferrum-text-rainbow-anim 3s linear infinite;
 }
 
-.roycss-ferrum-text-slide-up span {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(100%);
-  animation: roy-ferrum-text-slide-up-anim 0.5s ease forwards;
-}
-.roycss-ferrum-text-slide-up span:nth-child(1)  { animation-delay: 0.05s; }
-.roycss-ferrum-text-slide-up span:nth-child(2)  { animation-delay: 0.10s; }
-.roycss-ferrum-text-slide-up span:nth-child(3)  { animation-delay: 0.15s; }
-.roycss-ferrum-text-slide-up span:nth-child(4)  { animation-delay: 0.20s; }
-.roycss-ferrum-text-slide-up span:nth-child(5)  { animation-delay: 0.25s; }
-.roycss-ferrum-text-slide-up span:nth-child(6)  { animation-delay: 0.30s; }
-.roycss-ferrum-text-slide-up span:nth-child(7)  { animation-delay: 0.35s; }
-.roycss-ferrum-text-slide-up span:nth-child(8)  { animation-delay: 0.40s; }
-.roycss-ferrum-text-slide-up span:nth-child(9)  { animation-delay: 0.45s; }
-.roycss-ferrum-text-slide-up span:nth-child(10) { animation-delay: 0.50s; }
-.roycss-ferrum-text-slide-up span:nth-child(11) { animation-delay: 0.55s; }
-.roycss-ferrum-text-slide-up span:nth-child(12) { animation-delay: 0.60s; }
-
 @keyframes roy-ferrum-text-rainbow-anim {
-
   0%   { background-position: 0% center; }
   100% { background-position: 200% center; }
-
 }
 
-@keyframes roy-ferrum-text-slide-up-anim {
-
-  0% {
-    opacity: 0;
-    transform: translateY(100%);
+@media (prefers-reduced-motion: reduce) {
+  /* Text Rainbow */
+.roycss-ferrum-text-rainbow {
+    animation: none;
   }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-}`,
+}
+`,
 },
 
 {
@@ -1153,7 +1426,17 @@ export const effectsBatch21: CSSEffect[] = [
   80%  { clip-path: inset(60% 0 10% 0); transform: translate(3px, 0); }
   100% { clip-path: inset(30% 0 40% 0); transform: translate(-3px, 0); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-glitch::before {
+    animation: none;
+  }
+  .roycss-ferrum-text-glitch::after {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1163,7 +1446,8 @@ export const effectsBatch21: CSSEffect[] = [
   description: "A text effect that styles and animates letterforms (reveal)",
   tags: ["text", "typography", "text-reveal", "reveal", "animated"],
   previewType: "text",
-  cssCode: `.roycss-ferrum-text-reveal {
+  cssCode: `/* Text Reveal */
+.roycss-ferrum-text-reveal {
   overflow: hidden;
   display: inline-block;
 }
@@ -1183,44 +1467,47 @@ export const effectsBatch21: CSSEffect[] = [
 .roycss-ferrum-text-reveal span:nth-child(9)  { animation-delay: 0.45s; }
 .roycss-ferrum-text-reveal span:nth-child(10) { animation-delay: 0.50s; }
 
-.roycss-ferrum-text-bounce span {
-  display: inline-block;
-  animation: roy-ferrum-text-bounce-anim 0.6s ease;
-  animation-fill-mode: both;
-}
-.roycss-ferrum-text-bounce span:nth-child(1)  { animation-delay: 0.00s; }
-.roycss-ferrum-text-bounce span:nth-child(2)  { animation-delay: 0.06s; }
-.roycss-ferrum-text-bounce span:nth-child(3)  { animation-delay: 0.12s; }
-.roycss-ferrum-text-bounce span:nth-child(4)  { animation-delay: 0.18s; }
-.roycss-ferrum-text-bounce span:nth-child(5)  { animation-delay: 0.24s; }
-.roycss-ferrum-text-bounce span:nth-child(6)  { animation-delay: 0.30s; }
-.roycss-ferrum-text-bounce span:nth-child(7)  { animation-delay: 0.36s; }
-.roycss-ferrum-text-bounce span:nth-child(8)  { animation-delay: 0.42s; }
-.roycss-ferrum-text-bounce span:nth-child(9)  { animation-delay: 0.48s; }
-.roycss-ferrum-text-bounce span:nth-child(10) { animation-delay: 0.54s; }
-.roycss-ferrum-text-bounce span:nth-child(11) { animation-delay: 0.60s; }
-.roycss-ferrum-text-bounce span:nth-child(12) { animation-delay: 0.66s; }
-
-@keyframes roy-ferrum-text-bounce-anim {
-
-  0%   { transform: translateY(0); }
-  25%  { transform: translateY(-16px); }
-  50%  { transform: translateY(0); }
-  70%  { transform: translateY(-6px); }
-  100% { transform: translateY(0); }
-
-}
-
 @keyframes roy-ferrum-text-reveal-anim {
+  0%   { transform: translateY(110%); }
+  100% { transform: translateY(0); }
+}
 
-  0% {
-    transform: translateY(110%);
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-reveal span {
+    animation: none;
   }
-  100% {
-    transform: translateY(0);
+  .roycss-ferrum-text-reveal span:nth-child(1) {
+    animation: none;
   }
-
-}`,
+  .roycss-ferrum-text-reveal span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-ferrum-text-reveal span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-ferrum-text-reveal span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-ferrum-text-reveal span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-ferrum-text-reveal span:nth-child(6) {
+    animation: none;
+  }
+  .roycss-ferrum-text-reveal span:nth-child(7) {
+    animation: none;
+  }
+  .roycss-ferrum-text-reveal span:nth-child(8) {
+    animation: none;
+  }
+  .roycss-ferrum-text-reveal span:nth-child(9) {
+    animation: none;
+  }
+  .roycss-ferrum-text-reveal span:nth-child(10) {
+    animation: none;
+  }
+}
+`,
 },
 
 ];

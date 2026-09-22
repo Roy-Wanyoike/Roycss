@@ -41,7 +41,14 @@ export const effectsBatch22: CSSEffect[] = [
   66% { transform: translate(-20px, 20px) rotate(-3deg); }
   100% { transform: translate(0, 0) rotate(0deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-aurora::before {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -65,7 +72,14 @@ export const effectsBatch22: CSSEffect[] = [
   75% { background-position: 0% 100%; }
   100% { background-position: 0% 0%; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-liquid {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -91,7 +105,14 @@ export const effectsBatch22: CSSEffect[] = [
   0%, 100% { background-position: 50% 0%, 20% 50%, 80% 50%, 50% 0%, center; }
   50% { background-position: 50% 10%, 30% 40%, 70% 60%, 50% 15%, center; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-waves {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -119,7 +140,14 @@ export const effectsBatch22: CSSEffect[] = [
   66% { filter: hue-rotate(240deg); background-position: 100% 0%, 0% 0%, 100% 100%, center; }
   100% { filter: hue-rotate(360deg); background-position: 0% 0%, 100% 0%, 50% 100%, center; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-plasma {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -174,7 +202,14 @@ export const effectsBatch22: CSSEffect[] = [
   0% { transform: translateY(0); }
   100% { transform: translateY(4px); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-matrix::before {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -219,7 +254,14 @@ export const effectsBatch22: CSSEffect[] = [
   0% { transform: translateY(0); }
   100% { transform: translateY(-100px); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-starfield::before {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -270,7 +312,17 @@ export const effectsBatch22: CSSEffect[] = [
   33% { transform: translate(-50px, -40px) scale(1.15); }
   66% { transform: translate(-30px, -60px) scale(0.95); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-smoke::before {
+    animation: none;
+  }
+  .roycss-ferrum-bg-smoke::after {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -331,7 +383,17 @@ export const effectsBatch22: CSSEffect[] = [
   0% { transform: translateY(0); }
   100% { transform: translateY(20px); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-circuit::before {
+    animation: none;
+  }
+  .roycss-ferrum-bg-circuit::after {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -385,7 +447,17 @@ export const effectsBatch22: CSSEffect[] = [
   80% { transform: translateY(-80px) scaleX(1.1) scaleY(1); opacity: 0.3; }
   100% { transform: translateY(0) scaleX(1) scaleY(1); opacity: 0.7; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-lava::before {
+    animation: none;
+  }
+  .roycss-ferrum-bg-lava::after {
+    animation: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -410,9 +482,18 @@ export const effectsBatch22: CSSEffect[] = [
   height: 100%;
   object-fit: cover;
 }
-.roycss-ferrum-img-zoom-in:hover img {
-  transform: scale(1.1);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-img-zoom-in:hover img {
+    transform: scale(1.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-img-zoom-in img {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -434,9 +515,18 @@ export const effectsBatch22: CSSEffect[] = [
   object-fit: cover;
   transform: scale(1.1);
 }
-.roycss-ferrum-img-zoom-out:hover img {
-  transform: scale(1);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-img-zoom-out:hover img {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-img-zoom-out img {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -458,9 +548,18 @@ export const effectsBatch22: CSSEffect[] = [
   object-fit: cover;
   transform: scale(1.15) translateX(-5%);
 }
-.roycss-ferrum-img-pan-right:hover img {
-  transform: scale(1.15) translateX(5%);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-img-pan-right:hover img {
+    transform: scale(1.15) translateX(5%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-img-pan-right img {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -482,9 +581,18 @@ export const effectsBatch22: CSSEffect[] = [
   object-fit: cover;
   transform: scale(1.15) translateX(5%);
 }
-.roycss-ferrum-img-pan-left:hover img {
-  transform: scale(1.15) translateX(-5%);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-img-pan-left:hover img {
+    transform: scale(1.15) translateX(-5%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-img-pan-left img {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -507,10 +615,19 @@ export const effectsBatch22: CSSEffect[] = [
   filter: blur(5px);
   transform: scale(1.05);
 }
-.roycss-ferrum-img-blur-reveal:hover img {
-  filter: blur(0);
-  transform: scale(1);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-img-blur-reveal:hover img {
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-img-blur-reveal img {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -532,9 +649,18 @@ export const effectsBatch22: CSSEffect[] = [
   object-fit: cover;
   filter: grayscale(100%);
 }
-.roycss-ferrum-img-grayscale:hover img {
-  filter: grayscale(0%);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-img-grayscale:hover img {
+    filter: grayscale(0%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-img-grayscale img {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -556,9 +682,18 @@ export const effectsBatch22: CSSEffect[] = [
   object-fit: cover;
   filter: sepia(100%);
 }
-.roycss-ferrum-img-sepia:hover img {
-  filter: sepia(0%);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-img-sepia:hover img {
+    filter: sepia(0%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-img-sepia img {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -580,9 +715,18 @@ export const effectsBatch22: CSSEffect[] = [
   object-fit: cover;
   filter: brightness(0.7);
 }
-.roycss-ferrum-img-brightness:hover img {
-  filter: brightness(1.2);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-img-brightness:hover img {
+    filter: brightness(1.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-img-brightness img {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -604,9 +748,18 @@ export const effectsBatch22: CSSEffect[] = [
   object-fit: cover;
   filter: contrast(0.7) brightness(0.9);
 }
-.roycss-ferrum-img-contrast:hover img {
-  filter: contrast(1.2) brightness(1);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-img-contrast:hover img {
+    filter: contrast(1.2) brightness(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-img-contrast img {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -627,9 +780,18 @@ export const effectsBatch22: CSSEffect[] = [
   height: 100%;
   object-fit: cover;
 }
-.roycss-ferrum-img-rotate-zoom:hover img {
-  transform: scale(1.1) rotate(3deg);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-img-rotate-zoom:hover img {
+    transform: scale(1.1) rotate(3deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-img-rotate-zoom img {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -650,8 +812,10 @@ export const effectsBatch22: CSSEffect[] = [
   height: 100%;
   object-fit: cover;
 }
-.roycss-ferrum-img-overlay-up:hover img {
-  transform: scale(1.05);
+@media (hover: hover) {
+  .roycss-ferrum-img-overlay-up:hover img {
+    transform: scale(1.05);
+  }
 }
 .roycss-ferrum-img-overlay-up::after {
   content: '';
@@ -662,10 +826,22 @@ export const effectsBatch22: CSSEffect[] = [
   transform: translateY(100%);
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
-.roycss-ferrum-img-overlay-up:hover::after {
-  opacity: 1;
-  transform: translateY(0);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-img-overlay-up:hover::after {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-img-overlay-up img {
+    transition: none;
+  }
+  .roycss-ferrum-img-overlay-up::after {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -686,8 +862,10 @@ export const effectsBatch22: CSSEffect[] = [
   height: 100%;
   object-fit: cover;
 }
-.roycss-ferrum-img-overlay-fade:hover img {
-  filter: brightness(0.7);
+@media (hover: hover) {
+  .roycss-ferrum-img-overlay-fade:hover img {
+    filter: brightness(0.7);
+  }
 }
 .roycss-ferrum-img-overlay-fade::after {
   content: '';
@@ -697,9 +875,21 @@ export const effectsBatch22: CSSEffect[] = [
   opacity: 0;
   transition: opacity 0.4s ease;
 }
-.roycss-ferrum-img-overlay-fade:hover::after {
-  opacity: 1;
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-img-overlay-fade:hover::after {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-img-overlay-fade img {
+    transition: none;
+  }
+  .roycss-ferrum-img-overlay-fade::after {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -721,8 +911,10 @@ export const effectsBatch22: CSSEffect[] = [
   object-fit: cover;
   clip-path: inset(0 0 0 0);
 }
-.roycss-ferrum-img-split-reveal:hover img {
-  clip-path: inset(0 50% 0 50%);
+@media (hover: hover) {
+  .roycss-ferrum-img-split-reveal:hover img {
+    clip-path: inset(0 50% 0 50%);
+  }
 }
 .roycss-ferrum-img-split-reveal::after {
   content: attr(data-label);
@@ -738,9 +930,21 @@ export const effectsBatch22: CSSEffect[] = [
   opacity: 0;
   transition: opacity 0.4s ease 0.15s;
 }
-.roycss-ferrum-img-split-reveal:hover::after {
-  opacity: 1;
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-img-split-reveal:hover::after {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-img-split-reveal img {
+    transition: none;
+  }
+  .roycss-ferrum-img-split-reveal::after {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -762,8 +966,10 @@ export const effectsBatch22: CSSEffect[] = [
   object-fit: cover;
   clip-path: inset(0 0 0 0);
 }
-.roycss-ferrum-img-shutter:hover img {
-  clip-path: inset(48% 48% 48% 48%);
+@media (hover: hover) {
+  .roycss-ferrum-img-shutter:hover img {
+    clip-path: inset(48% 48% 48% 48%);
+  }
 }
 .roycss-ferrum-img-shutter::before,
 .roycss-ferrum-img-shutter::after {
@@ -786,12 +992,27 @@ export const effectsBatch22: CSSEffect[] = [
   inset-inline-start: auto;
   transform: translateX(100%);
 }
-.roycss-ferrum-img-shutter:hover::before {
-  transform: translateX(0);
+@media (hover: hover) {
+  .roycss-ferrum-img-shutter:hover::before {
+    transform: translateX(0);
+  }
 }
-.roycss-ferrum-img-shutter:hover::after {
-  transform: translateX(0);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-img-shutter:hover::after {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-img-shutter img {
+    transition: none;
+  }
+  .roycss-ferrum-img-shutter::before,
+.roycss-ferrum-img-shutter::after {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -814,9 +1035,11 @@ export const effectsBatch22: CSSEffect[] = [
   filter: grayscale(100%) contrast(1.1);
   clip-path: circle(0% at 50% 50%);
 }
-.roycss-ferrum-img-circle-reveal:hover img {
-  clip-path: circle(75% at 50% 50%);
-  filter: grayscale(0%) contrast(1);
+@media (hover: hover) {
+  .roycss-ferrum-img-circle-reveal:hover img {
+    clip-path: circle(75% at 50% 50%);
+    filter: grayscale(0%) contrast(1);
+  }
 }
 .roycss-ferrum-img-circle-reveal::after {
   content: '';
@@ -826,9 +1049,21 @@ export const effectsBatch22: CSSEffect[] = [
   transition: opacity 0.4s ease;
   pointer-events: none;
 }
-.roycss-ferrum-img-circle-reveal:hover::after {
-  opacity: 0;
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-img-circle-reveal:hover::after {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-img-circle-reveal img {
+    transition: none;
+  }
+  .roycss-ferrum-img-circle-reveal::after {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -852,10 +1087,19 @@ export const effectsBatch22: CSSEffect[] = [
   transform: rotateX(0) rotateY(0);
   box-shadow: 0 4px 12px color-mix(in oklch, oklch(0 0 0) 15%, transparent);
 }
-.roycss-ferrum-img-tilt-3d:hover img {
-  transform: rotateX(-3deg) rotateY(3deg) scale(1.03);
-  box-shadow: 8px 12px 28px color-mix(in oklch, oklch(0 0 0) 35%, transparent);
-}`,
+@media (hover: hover) {
+  .roycss-ferrum-img-tilt-3d:hover img {
+    transform: rotateX(-3deg) rotateY(3deg) scale(1.03);
+    box-shadow: 8px 12px 28px color-mix(in oklch, oklch(0 0 0) 35%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-img-tilt-3d img {
+    transition: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -881,7 +1125,14 @@ export const effectsBatch22: CSSEffect[] = [
 
   to { transform: rotate(360deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-spinner {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -908,7 +1159,20 @@ export const effectsBatch22: CSSEffect[] = [
   0%, 80%, 100% { transform: scale(0.4); opacity: 0.3; }
   40% { transform: scale(1); opacity: 1; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-dots span {
+    animation: none;
+  }
+  .roycss-ferrum-loader-dots span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-dots span:nth-child(3) {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -938,7 +1202,29 @@ export const effectsBatch22: CSSEffect[] = [
   0%, 100% { height: 10px; }
   50% { height: 35px; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-bars span {
+    animation: none;
+  }
+  .roycss-ferrum-loader-bars span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-bars span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-bars span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-bars span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-bars span:nth-child(5) {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -960,7 +1246,14 @@ export const effectsBatch22: CSSEffect[] = [
   0%, 100% { transform: scale(0.8); opacity: 0.5; box-shadow: 0 0 0 0 color-mix(in oklch, oklch(0.627 0.233 303.9) 60%, transparent); }
   50% { transform: scale(1); opacity: 1; box-shadow: 0 0 20px 10px color-mix(in oklch, oklch(0.627 0.233 303.9) 0%, transparent); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-pulse {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -997,7 +1290,14 @@ export const effectsBatch22: CSSEffect[] = [
 
   to { transform: rotate(360deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-orbit {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1027,7 +1327,29 @@ export const effectsBatch22: CSSEffect[] = [
   0%, 60%, 100% { transform: translateY(0); }
   30% { transform: translateY(-15px); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-wave span {
+    animation: none;
+  }
+  .roycss-ferrum-loader-wave span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-wave span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-wave span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-wave span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-wave span:nth-child(5) {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1060,7 +1382,35 @@ export const effectsBatch22: CSSEffect[] = [
   0%, 100% { transform: translateY(0) scale(0.6); opacity: 0.4; }
   50% { transform: translateY(-15px) scale(1); opacity: 1; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-dna span {
+    animation: none;
+  }
+  .roycss-ferrum-loader-dna span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-dna span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-dna span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-dna span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-dna span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-dna span:nth-child(6) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-dna span:nth-child(7) {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1096,7 +1446,17 @@ export const effectsBatch22: CSSEffect[] = [
   50% { opacity: 0.5; }
   100% { transform: rotate(360deg); opacity: 1; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-circle-fade span {
+    animation: none;
+  }
+  .roycss-ferrum-loader-circle-fade span:nth-child(2) {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1120,7 +1480,14 @@ export const effectsBatch22: CSSEffect[] = [
   75% { transform: rotate(270deg); border-radius: 0 0 50% 0; }
   100% { transform: rotate(360deg); border-radius: 0; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-square-spin {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1156,7 +1523,17 @@ export const effectsBatch22: CSSEffect[] = [
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-ring span {
+    animation: none;
+  }
+  .roycss-ferrum-loader-ring span:nth-child(2) {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1191,7 +1568,14 @@ export const effectsBatch22: CSSEffect[] = [
   0% { transform: rotateX(0deg) rotateY(0deg); }
   100% { transform: rotateX(360deg) rotateY(360deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-cube {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1231,7 +1615,14 @@ export const effectsBatch22: CSSEffect[] = [
   50%, 90% { transform: rotate(180deg) scale(1); }
   100% { transform: rotate(360deg) scale(1); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-hourglass {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1268,7 +1659,41 @@ export const effectsBatch22: CSSEffect[] = [
   0%, 70%, 100% { transform: scale(0.3); opacity: 0.2; }
   35% { transform: scale(1); opacity: 1; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-grid span {
+    animation: none;
+  }
+  .roycss-ferrum-loader-grid span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-grid span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-grid span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-grid span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-grid span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-grid span:nth-child(6) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-grid span:nth-child(7) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-grid span:nth-child(8) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-grid span:nth-child(9) {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1297,7 +1722,20 @@ export const effectsBatch22: CSSEffect[] = [
   0% { transform: scale(0.2); opacity: 1; }
   100% { transform: scale(1.5); opacity: 0; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-ripple span {
+    animation: none;
+  }
+  .roycss-ferrum-loader-ripple span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-ripple span:nth-child(3) {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1325,7 +1763,23 @@ export const effectsBatch22: CSSEffect[] = [
   0%, 60%, 100% { transform: translateY(0); }
   30% { transform: translateY(-8px); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-typing span {
+    animation: none;
+  }
+  .roycss-ferrum-loader-typing span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-typing span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-typing span:nth-child(3) {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1367,7 +1821,14 @@ export const effectsBatch22: CSSEffect[] = [
   50% { transform: rotate(0deg); }
   75% { transform: rotate(-30deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-pencil {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1434,7 +1895,20 @@ export const effectsBatch22: CSSEffect[] = [
   0% { transform: rotateX(60deg) rotateY(240deg); }
   100% { transform: rotateX(60deg) rotateY(600deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-atom span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-atom span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-atom span:nth-child(3) {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1468,7 +1942,14 @@ export const effectsBatch22: CSSEffect[] = [
   50% { background-position: 100% 0; }
   100% { transform: translateX(100%); background-position: 0% 0; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-bar-progress span {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1509,7 +1990,14 @@ export const effectsBatch22: CSSEffect[] = [
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-clock span {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1543,7 +2031,14 @@ export const effectsBatch22: CSSEffect[] = [
   80% { transform: translateY(0) scaleX(1.15) scaleY(0.85); }
   100% { transform: translateY(0) scaleX(1.1) scaleY(0.9); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-bounce span {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1581,7 +2076,17 @@ export const effectsBatch22: CSSEffect[] = [
   0%, 100% { transform: translateX(-40%); }
   50% { transform: translateX(40%); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-moon {
+    animation: none;
+  }
+  .roycss-ferrum-loader-moon span:nth-child(2) {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1591,1259 +2096,51 @@ export const effectsBatch22: CSSEffect[] = [
   description: "A glassmorphic surface effect with backdrop blur and translucency",
   tags: ["loader", "spinner", "loader-heartbeat", "heartbeat", "animated"],
   previewType: "loader",
-  cssCode: `.roycss-ferrum-loader-heartbeat {
-  width: 30px; height: 30px;
+  cssCode: `/* Heartbeat Loader — a pure-CSS heart that beats */
+.roycss-ferrum-loader-heartbeat {
   position: relative;
+  inline-size: 30px;
+  block-size: 30px;
+  background: oklch(0.652 0.241 354.31);
+  transform: rotate(45deg);
   animation: roy-ferrum-heartbeat-pulse 1.2s ease-in-out infinite;
 }
-.roycss-ferrum-loader-heartbeat span {
-  position: absolute;
-  width: 30px; height: 30px;
-  transform: rotate(45deg);
-}
-.roycss-ferrum-loader-heartbeat span::before,
-.roycss-ferrum-loader-heartbeat span::after {
+
+.roycss-ferrum-loader-heartbeat::before,
+.roycss-ferrum-loader-heartbeat::after {
   content: '';
   position: absolute;
-  width: 30px; height: 30px;
+  inline-size: 30px;
+  block-size: 30px;
   border-radius: 50%;
   background: oklch(0.652 0.241 354.31);
 }
-.roycss-ferrum-loader-heartbeat span::before {
-  top: -15px; left: 0;
-}
-.roycss-ferrum-loader-heartbeat span::after {
-  left: -15px; top: 0;
-}
-
-perspective: 800px;
-animation: royFlip 1.2s ease-in-out infinite;
-
-perspective: 600px;
-animation: royCube 2.4s ease-in-out infinite;
-
-perspective: 700px;
-animation: royPrism 3s linear infinite;
-
-perspective: 1000px;
-animation: royCarousel 4s ease-in-out infinite;
-
-perspective: 600px;
-animation: royCardTilt 2s ease-in-out infinite;
-
-perspective: 500px;
-animation: royPerspective 2.5s ease-in-out infinite;
-
-perspective: 600px;
-animation: royDepthFloat 3s ease-in-out infinite;
-
-perspective: 800px;
-animation: royRotate3D 3s linear infinite;
-
-perspective: 800px;
-transform-style: preserve-3d;
-animation: royBookOpen 3s ease-in-out infinite;
-
-perspective: 600px;
-transform-origin: left center;
-animation: royDoorOpen 2.8s ease-in-out infinite;
-
-perspective: 600px;
-animation: royCoinFlip 2s ease-in-out infinite;
-
-perspective: 500px;
-transform-origin: top center;
-animation: roySwing 2s ease-in-out infinite;
-
-perspective: 800px;
-animation: royHelix 3s linear infinite;
-
-perspective: 700px;
-animation: royMorphingCube 4s ease-in-out infinite;
-
-perspective: 600px;
-animation: royOrbit 3s linear infinite;
-
-perspective: 700px;
-animation: royTumble 2.5s ease-in-out infinite;
-
-animation: royMorphCircle 2s ease-in-out infinite;
-
-animation: royMorphDiamond 2.5s ease-in-out infinite;
-
-animation: royRotate90 2s ease-in-out infinite;
-
-animation: royRotate180 2s ease-in-out infinite;
-
-animation: royRotate360 2s linear infinite;
-
-animation: roySkewX 2s ease-in-out infinite;
-
-animation: roySkewY 2s ease-in-out infinite;
-
-animation: royScaleRotate 2s ease-in-out infinite;
-
-animation: royAccordion 2.5s ease-in-out infinite;
-
-transform-origin: bottom center;
-animation: royFan 2.5s ease-in-out infinite;
-
-animation: royStretch 2s ease-in-out infinite;
-
-animation: royCompress 2s ease-in-out infinite;
-
-animation: royWobble 1.5s ease-in-out infinite;
-
-animation: royTwist 2s ease-in-out infinite;
-
-perspective: 500px;
-transform-origin: top center;
-animation: royFold 3s ease-in-out infinite;
-
-perspective: 500px;
-transform-origin: top center;
-animation: royUnfold 3s ease-in-out infinite;
-
-background: linear-gradient(to top, oklch(0.8 0.146 220.71) 0%, oklch(0.8 0.146 220.71) var(--fill, 50%), transparent var(--fill, 50%));
-animation: royLiquidFill 3s ease-in-out infinite;
-
-animation: roySmoke 3s ease-out infinite;
-filter: blur(2px);
-
-animation: royElectric 0.15s linear infinite;
-box-shadow:
-  0 0 5px  oklch(0.844 0.146 209.29),
-  0 0 10px oklch(0.844 0.146 209.29),
-  0 0 20px oklch(0.719 0.126 213.68),
-  0 0 40px oklch(0.719 0.126 213.68);
-
-background: linear-gradient(
-  135deg,
-  oklch(0.645 0.26 2.47) 0%, oklch(0.751 0.179 58.28) 16%, oklch(0.822 0.131 185.09) 33%,
-  oklch(0.604 0.194 285.5) 50%, oklch(0.645 0.26 2.47) 66%, oklch(0.751 0.179 58.28) 83%,
-  oklch(0.822 0.131 185.09) 100%
-);
-background-size: 400% 400%;
-animation: royHolographic 4s ease-in-out infinite;
-
-animation: royBreathing 4s ease-in-out infinite;
-
-perspective: 600px;
-transform-origin: top left;
-animation: royPaperUnfold 3s ease-in-out infinite;
-
-animation: royRippleSpread 2s ease-out infinite;
-
-animation: royConfettiBurst 1.5s ease-out infinite;
-
-animation: royMagneticPull 2.5s ease-in-out infinite;
-filter: drop-shadow(0 0 8px color-mix(in oklch, oklch(0.593 0.224 277.12) 60%, transparent));
-
-animation: royGlassShatter 2s ease-in-out infinite;
-
-animation: royNeonOutline 1.5s ease-in-out infinite alternate;
-
-border: 3px solid transparent;
-background-image: linear-gradient(oklch(0.228 0.038 282.93), oklch(0.228 0.038 282.93)),
-  linear-gradient(135deg, oklch(0.795 0.172 323.15), oklch(0.673 0.193 16.23), oklch(0.724 0.149 248.09), oklch(0.874 0.149 201.21));
-background-origin: border-box;
-background-clip: padding-box, border-box;
-background-size: 100% 100%, 300% 300%;
-animation: royGradBorderSpin 3s linear infinite;
-
-background: linear-gradient(
-  90deg,
-  oklch(0.779 0.149 226.02), oklch(0.909 0.165 146.32), oklch(0.962 0.213 112.08), oklch(0.712 0.181 22.84), oklch(0.694 0.199 311.3), oklch(0.779 0.149 226.02)
-);
-background-size: 400% 100%;
--webkit-background-clip: text;
-background-clip: text;
--webkit-text-fill-color: transparent;
-animation: royAuroraText 5s linear infinite;
-
-background: linear-gradient(
-  to top,
-  oklch(0.66 0.229 35.4) 0%, oklch(0.701 0.201 44.77) 25%, oklch(0.793 0.171 70.67) 50%, oklch(0.899 0.186 97.86) 75%, transparent 100%
-);
-background-size: 100% 250%;
-animation: royFire 1.5s ease-in-out infinite;
-filter: blur(1px) brightness(1.1);
-box-shadow: 0 0 20px 5px color-mix(in oklch, oklch(0.66 0.229 35.4) 40%, transparent), 0 0 60px 10px color-mix(in oklch, oklch(0.701 0.201 44.77) 20%, transparent);
-
-background: linear-gradient(
-  135deg,
-  color-mix(in oklch, oklch(0.856 0.057 237.85) 40%, transparent) 0%,
-  color-mix(in oklch, oklch(0.96 0.024 206.2) 30%, transparent) 30%,
-  color-mix(in oklch, oklch(0.895 0.06 227.77) 50%, transparent) 60%,
-  color-mix(in oklch, oklch(0.91 0.043 238.51) 30%, transparent) 100%
-);
-backdrop-filter: blur(8px) saturate(1.8);
--webkit-backdrop-filter: blur(8px) saturate(1.8);
-border: 1px solid color-mix(in oklch, oklch(1 0 0) 35%, transparent);
-box-shadow:
-  0 0 15px color-mix(in oklch, oklch(0.856 0.057 237.85) 30%, transparent),
-  inset 0 0 30px color-mix(in oklch, oklch(1 0 0) 15%, transparent);
-animation: royIce 3s ease-in-out infinite;
-
-background: oklch(0.756 0.095 74.0);
-border-radius: 4px;
-animation: roySand 2.5s ease-out infinite;
-
-border-radius: 50%;
-animation: royWaterDrop 2s ease-out infinite;
-
-animation: royGlitchMorph 3s step-end infinite;
-position: relative;
-
-background-color: oklch(0.228 0.038 282.93);
-animation: royPixelate 3s steps(8) infinite;
-image-rendering: pixelated;
-
-background-color: oklch(0.155 0.034 281.74);
-background-image:
-  linear-gradient(color-mix(in oklch, oklch(0.905 0.155 194.77) 12%, transparent) 1px, transparent 1px),
-  linear-gradient(90deg, color-mix(in oklch, oklch(0.905 0.155 194.77) 12%, transparent) 1px, transparent 1px),
-  linear-gradient(color-mix(in oklch, oklch(0.702 0.322 328.36) 6%, transparent) 1px, transparent 1px),
-  linear-gradient(90deg, color-mix(in oklch, oklch(0.702 0.322 328.36) 6%, transparent) 1px, transparent 1px);
-background-size: 40px 40px, 40px 40px, 10px 10px, 10px 10px;
-animation: royCyberGrid 4s linear infinite;
-
-animation: royMorphingBlob 8s ease-in-out infinite;
-
-color: oklch(1 0 0);
-animation: royTextShadowStack 3s ease-in-out infinite;
-
-background: linear-gradient(
-  120deg,
-  color-mix(in oklch, oklch(0.628 0.258 29.23) 60%, transparent) 0%,
-  color-mix(in oklch, oklch(0.73 0.186 52.57) 60%, transparent) 17%,
-  color-mix(in oklch, oklch(0.968 0.211 109.77) 60%, transparent) 33%,
-  color-mix(in oklch, oklch(0.866 0.295 142.5) 60%, transparent) 50%,
-  color-mix(in oklch, oklch(0.452 0.313 264.05) 60%, transparent) 67%,
-  color-mix(in oklch, oklch(0.339 0.179 301.68) 60%, transparent) 83%,
-  color-mix(in oklch, oklch(0.515 0.261 309.81) 60%, transparent) 100%
-);
-background-size: 300% 300%;
-animation: royPrismRefraction 4s ease-in-out infinite;
-box-shadow: 0 0 30px color-mix(in oklch, oklch(1 0 0) 15%, transparent);
-
-border-inline-end: 3px solid currentColor;
-padding-inline-end: 4px;
-animation: royTypingCursor 1s step-end infinite;
-
-.btn-shine {
-    position: relative;
-    overflow: hidden;
-    padding: 10px 24px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    color: oklch(1 0 0);
-    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.btn-shine::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -75%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(
-        120deg,
-        transparent,
-        color-mix(in oklch, oklch(1 0 0) 35%, transparent),
-        transparent
-    );
-    transform: skewX(-20deg);
-    transition: none;
-}
-.btn-shine:hover::before {
-    animation: btn-shine-sweep 0.6s ease forwards;
-}
-.btn-shine:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px color-mix(in oklch, oklch(0.551 0.211 277.76) 40%, transparent);
-}
-
-.btn-ripple {
-    position: relative;
-    overflow: hidden;
-    padding: 10px 24px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    color: oklch(1 0 0);
-    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
-    cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-.btn-ripple::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: color-mix(in oklch, oklch(1 0 0) 35%, transparent);
-    transform: translate(-50%, -50%);
-    transition: width 0.5s ease, height 0.5s ease, opacity 0.5s ease;
-    opacity: 0;
-}
-.btn-ripple:active::after {
-    width: 300px;
-    height: 300px;
-    opacity: 1;
-    transition: width 0s, height 0s, opacity 0s;
-}
-.btn-ripple:hover {
-    box-shadow: 0 4px 16px color-mix(in oklch, oklch(0.551 0.211 277.76) 40%, transparent);
-    transform: translateY(-1px);
-}
-
-.btn-fill-left {
-    position: relative;
-    overflow: hidden;
-    padding: 10px 24px;
-    border: 2px solid oklch(0.541 0.247 293.01);
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    color: oklch(0.541 0.247 293.01);
-    background: transparent;
-    cursor: pointer;
-    z-index: 1;
-    transition: color 0.3s ease, transform 0.2s ease;
-}
-.btn-fill-left::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
-    transform: translateX(-101%);
-    transition: transform 0.3s ease;
-    z-index: -1;
-}
-.btn-fill-left:hover::before {
-    transform: translateX(0);
-}
-.btn-fill-left:hover {
-    color: oklch(1 0 0);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px color-mix(in oklch, oklch(0.551 0.211 277.76) 40%, transparent);
-}
-
-.btn-fill-right {
-    position: relative;
-    overflow: hidden;
-    padding: 10px 24px;
-    border: 2px solid oklch(0.541 0.247 293.01);
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    color: oklch(0.541 0.247 293.01);
-    background: transparent;
-    cursor: pointer;
-    z-index: 1;
-    transition: color 0.3s ease, transform 0.2s ease;
-}
-.btn-fill-right::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, oklch(0.551 0.211 277.76), oklch(0.541 0.247 293.01));
-    transform: translateX(101%);
-    transition: transform 0.3s ease;
-    z-index: -1;
-}
-.btn-fill-right:hover::before {
-    transform: translateX(0);
-}
-.btn-fill-right:hover {
-    color: oklch(1 0 0);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px color-mix(in oklch, oklch(0.551 0.211 277.76) 40%, transparent);
-}
-
-.btn-fill-top {
-    position: relative;
-    overflow: hidden;
-    padding: 10px 24px;
-    border: 2px solid oklch(0.541 0.247 293.01);
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    color: oklch(0.541 0.247 293.01);
-    background: transparent;
-    cursor: pointer;
-    z-index: 1;
-    transition: color 0.3s ease, transform 0.2s ease;
-}
-.btn-fill-top::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
-    transform: translateY(-101%);
-    transition: transform 0.3s ease;
-    z-index: -1;
-}
-.btn-fill-top:hover::before {
-    transform: translateY(0);
-}
-.btn-fill-top:hover {
-    color: oklch(1 0 0);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px color-mix(in oklch, oklch(0.551 0.211 277.76) 40%, transparent);
-}
-
-.btn-fill-bottom {
-    position: relative;
-    overflow: hidden;
-    padding: 10px 24px;
-    border: 2px solid oklch(0.541 0.247 293.01);
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    color: oklch(0.541 0.247 293.01);
-    background: transparent;
-    cursor: pointer;
-    z-index: 1;
-    transition: color 0.3s ease, transform 0.2s ease;
-}
-.btn-fill-bottom::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, oklch(0.551 0.211 277.76), oklch(0.541 0.247 293.01));
-    transform: translateY(101%);
-    transition: transform 0.3s ease;
-    z-index: -1;
-}
-.btn-fill-bottom:hover::before {
-    transform: translateY(0);
-}
-.btn-fill-bottom:hover {
-    color: oklch(1 0 0);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px color-mix(in oklch, oklch(0.551 0.211 277.76) 40%, transparent);
-}
-
-.btn-outline-draw {
-    position: relative;
-    padding: 10px 24px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    color: oklch(0.541 0.247 293.01);
-    background: transparent;
-    cursor: pointer;
-    z-index: 1;
-    transition: color 0.4s ease;
-}
-.btn-outline-draw::before,
-.btn-outline-draw::after {
-    content: '';
-    position: absolute;
-    border-radius: 8px;
-    transition: transform 0.4s ease;
-}
-/* top + bottom lines */
-.btn-outline-draw::before {
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    border-top: 2px solid oklch(0.541 0.247 293.01);
-    border-bottom: 2px solid oklch(0.541 0.247 293.01);
-    transform: scaleX(0);
-    transition: transform 0.4s ease, border-color 0.3s ease;
-}
-/* left + right lines */
-.btn-outline-draw::after {
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    border-inline-start: 2px solid oklch(0.541 0.247 293.01);
-    border-inline-end: 2px solid oklch(0.541 0.247 293.01);
-    transform: scaleY(0);
-    transition: transform 0.4s ease 0.15s, border-color 0.3s ease 0.15s;
-}
-.btn-outline-draw:hover::before {
-    transform: scaleX(1);
-    border-color: oklch(0.551 0.211 277.76);
-}
-.btn-outline-draw:hover::after {
-    transform: scaleY(1);
-    border-color: oklch(0.551 0.211 277.76);
-}
-.btn-outline-draw:hover {
-    color: oklch(0.551 0.211 277.76);
-}
-
-.btn-glow-pulse {
-    padding: 10px 24px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    color: oklch(1 0 0);
-    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
-    cursor: pointer;
-    box-shadow: 0 0 0 color-mix(in oklch, oklch(0.541 0.247 293.01) 0%, transparent);
-    transition: transform 0.2s ease;
-}
-.btn-glow-pulse:hover {
-    animation: btn-glow-pulse-anim 1.2s ease-in-out infinite;
-}
-
-.btn-skew-fill {
-    position: relative;
-    overflow: hidden;
-    padding: 10px 24px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    color: oklch(0.541 0.247 293.01);
-    background: transparent;
-    cursor: pointer;
-    z-index: 1;
-    transition: color 0.35s ease, transform 0.2s ease;
-}
-.btn-skew-fill::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 150%;
-    height: 100%;
-    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
-    transform: translateX(-110%) skewX(-15deg);
-    transition: transform 0.45s ease;
-    z-index: -1;
-}
-.btn-skew-fill:hover::before {
-    transform: translateX(-20%) skewX(-15deg);
-}
-.btn-skew-fill:hover {
-    color: oklch(1 0 0);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px color-mix(in oklch, oklch(0.551 0.211 277.76) 40%, transparent);
-}
-
-.btn-slide-icon {
-    position: relative;
-    overflow: hidden;
-    padding: 10px 24px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    color: oklch(1 0 0);
-    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
-    cursor: pointer;
-    padding-inline-end: 48px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.btn-slide-icon::after {
-    content: '\\2192';
-    position: absolute;
-    top: 50%;
-    inset-inline-end: 12px;
-    transform: translateY(-50%) translateX(24px);
-    opacity: 0;
-    font-size: 16px;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    color: oklch(1 0 0);
-}
-.btn-slide-icon:hover::after {
-    transform: translateY(-50%) translateX(0);
-    opacity: 1;
-}
-.btn-slide-icon:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px color-mix(in oklch, oklch(0.551 0.211 277.76) 40%, transparent);
-}
-
-.btn-bounce {
-    padding: 10px 24px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    color: oklch(1 0 0);
-    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
-    cursor: pointer;
-    transition: box-shadow 0.2s ease;
-}
-.btn-bounce:hover {
-    animation: btn-bounce-key 0.5s ease;
-    box-shadow: 0 6px 20px color-mix(in oklch, oklch(0.551 0.211 277.76) 50%, transparent);
-}
-
-.btn-press {
-    padding: 10px 24px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    color: oklch(1 0 0);
-    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
-    cursor: pointer;
-    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
-                box-shadow 0.15s ease;
-    box-shadow: 0 2px 8px color-mix(in oklch, oklch(0.551 0.211 277.76) 30%, transparent);
-}
-.btn-press:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px color-mix(in oklch, oklch(0.551 0.211 277.76) 45%, transparent);
-}
-.btn-press:active {
-    transform: scale(0.95) translateY(0);
-    box-shadow: 0 1px 4px color-mix(in oklch, oklch(0.551 0.211 277.76) 20%, transparent);
-}
-
-.btn-border-sweep {
-    position: relative;
-    padding: 10px 24px;
-    border: 2px solid oklch(0.811 0.101 293.57);
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    color: oklch(0.541 0.247 293.01);
-    background: transparent;
-    cursor: pointer;
-    overflow: hidden;
-    z-index: 1;
-    transition: color 0.4s ease;
-}
-.btn-border-sweep::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -100%;
-    width: 100%;
-    height: calc(100% + 4px);
-    background: linear-gradient(90deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76), oklch(0.68 0.158 276.93));
-    z-index: -2;
-    transition: left 0.5s ease;
-}
-.btn-border-sweep::after {
-    content: '';
-    position: absolute;
-    top: 2px;
-    left: 0;
-    width: calc(100% - 4px);
-    height: calc(100% - 4px);
-    background: transparent;
-    border-radius: 6px;
-    z-index: -1;
-    transition: background 0.4s ease;
-}
-.btn-border-sweep:hover::before {
-    left: 0;
-}
-.btn-border-sweep:hover::after {
-    background: oklch(1 0 0);
-}
-.btn-border-sweep:hover {
-    color: oklch(0.541 0.247 293.01);
-}
-
-.btn-neon-border {
-    padding: 10px 24px;
-    border: 2px solid oklch(0.541 0.247 293.01);
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    color: oklch(0.541 0.247 293.01);
-    background: transparent;
-    cursor: pointer;
-    transition: color 0.3s ease,
-                border-color 0.3s ease,
-                box-shadow 0.3s ease,
-                background 0.3s ease;
-}
-.btn-neon-border:hover {
-    color: oklch(1 0 0);
-    border-color: oklch(0.709 0.159 293.54);
-    background: color-mix(in oklch, oklch(0.541 0.247 293.01) 10%, transparent);
-    box-shadow:
-        0 0 5px color-mix(in oklch, oklch(0.541 0.247 293.01) 50%, transparent),
-        0 0 15px color-mix(in oklch, oklch(0.541 0.247 293.01) 30%, transparent),
-        0 0 30px color-mix(in oklch, oklch(0.551 0.211 277.76) 20%, transparent),
-        inset 0 0 10px color-mix(in oklch, oklch(0.541 0.247 293.01) 15%, transparent);
-}
-
-.btn-gradient-shift {
-    padding: 10px 24px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    color: oklch(1 0 0);
-    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76), oklch(0.566 0.245 278.69));
-    background-size: 200% 200%;
-    background-position: 0% 50%;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.btn-gradient-shift:hover {
-    background-position: 100% 50%;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 20px color-mix(in oklch, oklch(0.551 0.211 277.76) 50%, transparent);
-}
-
-.btn-underline-center {
-    position: relative;
-    padding: 10px 24px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    color: oklch(0.541 0.247 293.01);
-    background: color-mix(in oklch, oklch(0.541 0.247 293.01) 6%, transparent);
-    cursor: pointer;
-    transition: color 0.3s ease, background 0.3s ease;
-}
-.btn-underline-center::after {
-    content: '';
-    position: absolute;
-    bottom: 4px;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
-    border-radius: 2px;
-    transform: translateX(-50%);
-    transition: width 0.3s ease;
-}
-.btn-underline-center:hover::after {
-    width: 70%;
-}
-.btn-underline-center:hover {
-    color: oklch(0.551 0.211 277.76);
-    background: color-mix(in oklch, oklch(0.541 0.247 293.01) 10%, transparent);
-}
-
-.btn-shadow-lift {
-    padding: 10px 24px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    color: oklch(1 0 0);
-    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
-    cursor: pointer;
-    box-shadow: 0 2px 4px color-mix(in oklch, oklch(0.551 0.211 277.76) 20%, transparent);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-.btn-shadow-lift:hover {
-    transform: translateY(-4px);
-    box-shadow:
-        0 4px 8px color-mix(in oklch, oklch(0.551 0.211 277.76) 25%, transparent),
-        0 8px 24px color-mix(in oklch, oklch(0.541 0.247 293.01) 25%, transparent),
-        0 16px 40px color-mix(in oklch, oklch(0.551 0.211 277.76) 15%, transparent);
-}
-
-.btn-ghost-fill {
-    padding: 10px 24px;
-    border: 2px solid oklch(0.541 0.247 293.01);
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    color: oklch(0.541 0.247 293.01);
-    background: transparent;
-    cursor: pointer;
-    transition: background 0.3s ease, color 0.3s ease,
-                border-color 0.3s ease, transform 0.2s ease,
-                box-shadow 0.3s ease;
-}
-.btn-ghost-fill:hover {
-    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
-    color: oklch(1 0 0);
-    border-color: transparent;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px color-mix(in oklch, oklch(0.551 0.211 277.76) 40%, transparent);
-}
-
-.card-lift {
-    background: oklch(1 0 0);
-    border-radius: 12px;
-    padding: 24px;
-    border: 1px solid oklch(0.928 0.006 264.53);
-    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.card-lift:hover {
-    transform: translateY(-8px);
-    box-shadow:
-        0 12px 24px color-mix(in oklch, oklch(0 0 0) 10%, transparent),
-        0 4px 8px color-mix(in oklch, oklch(0 0 0) 6%, transparent);
-}
-
-.card-tilt-3d {
-    background: oklch(1 0 0);
-    border-radius: 12px;
-    padding: 24px;
-    border: 1px solid oklch(0.928 0.006 264.53);
-    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    transform-style: preserve-3d;
-    perspective: 800px;
-}
-.card-tilt-3d:hover {
-    transform: perspective(800px) rotateX(2deg) rotateY(-3deg) translateY(-4px);
-    box-shadow: 0 16px 32px color-mix(in oklch, oklch(0 0 0) 12%, transparent);
-}
-
-.card-flip {
-    perspective: 1000px;
-    background: transparent;
-    border-radius: 12px;
-    padding: 0;
-    border: none;
-    box-shadow: none;
-    min-height: 200px;
-}
-.card-flip .card-flip-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    min-height: 200px;
-    transition: transform 0.6s ease;
-    transform-style: preserve-3d;
-}
-.card-flip:hover .card-flip-inner {
-    transform: rotateY(180deg);
-}
-.card-flip .card-flip-front,
-.card-flip .card-flip-back {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    border-radius: 12px;
-    padding: 24px;
-    box-sizing: border-box;
-    border: 1px solid oklch(0.928 0.006 264.53);
-    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
-}
-.card-flip .card-flip-front {
-    background: oklch(1 0 0);
-}
-.card-flip .card-flip-back {
-    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
-    color: oklch(1 0 0);
-    transform: rotateY(180deg);
-}
-
-.card-spotlight {
-    position: relative;
-    background: oklch(1 0 0);
-    border-radius: 12px;
-    padding: 24px;
-    border: 1px solid oklch(0.928 0.006 264.53);
-    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
-    overflow: hidden;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-.card-spotlight::before {
-    content: '';
-    position: absolute;
-    top: var(--spot-y, 50%);
-    left: var(--spot-x, 50%);
-    width: 250px;
-    height: 250px;
-    background: radial-gradient(circle, color-mix(in oklch, oklch(0.541 0.247 293.01) 15%, transparent) 0%, transparent 70%);
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    z-index: 1;
-}
-.card-spotlight:hover::before {
-    opacity: 1;
-}
-.card-spotlight:hover {
-    border-color: oklch(0.811 0.101 293.57);
-    box-shadow: 0 8px 24px color-mix(in oklch, oklch(0.541 0.247 293.01) 10%, transparent);
-}
-.card-spotlight > * {
-    position: relative;
-    z-index: 2;
-}
-
-.card-reveal {
-    position: relative;
-    background: oklch(1 0 0);
-    border-radius: 12px;
-    padding: 24px;
-    border: 1px solid oklch(0.928 0.006 264.53);
-    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
-    overflow: hidden;
-    transition: box-shadow 0.3s ease;
-}
-.card-reveal .card-reveal-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to top, color-mix(in oklch, oklch(0.541 0.247 293.01) 95%, transparent) 0%, color-mix(in oklch, oklch(0.551 0.211 277.76) 85%, transparent) 100%);
-    color: oklch(1 0 0);
-    padding: 24px;
-    box-sizing: border-box;
-    transform: translateY(101%);
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-}
-.card-reveal:hover .card-reveal-overlay {
-    transform: translateY(0);
-}
-.card-reveal:hover {
-    box-shadow: 0 8px 24px color-mix(in oklch, oklch(0.541 0.247 293.01) 15%, transparent);
-}
-
-.card-border-glow {
-    position: relative;
-    background: oklch(1 0 0);
-    border-radius: 12px;
-    padding: 24px;
-    border: 2px solid oklch(0.928 0.006 264.53);
-    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
-    transition: box-shadow 0.3s ease;
-    background-clip: padding-box;
-}
-.card-border-glow::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76), oklch(0.68 0.158 276.93), oklch(0.709 0.159 293.54), oklch(0.541 0.247 293.01));
-    background-size: 300% 300%;
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    animation: card-border-glow-rotate 3s linear infinite;
-}
-.card-border-glow:hover::before {
-    opacity: 1;
-}
-.card-border-glow:hover {
-    border-color: transparent;
-    box-shadow: 0 8px 24px color-mix(in oklch, oklch(0.541 0.247 293.01) 15%, transparent);
-}
-
-.card-split {
-    position: relative;
-    background: transparent;
-    border-radius: 12px;
-    padding: 0;
-    border: none;
-    box-shadow: none;
-    min-height: 200px;
-}
-.card-split .card-split-top,
-.card-split .card-split-bottom {
-    position: relative;
-    width: 100%;
-    background: oklch(1 0 0);
-    border: 1px solid oklch(0.928 0.006 264.53);
-    box-sizing: border-box;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
-}
-.card-split .card-split-top {
-    border-radius: 12px 12px 0 0;
-    padding: 24px 24px 12px;
-    z-index: 2;
-}
-.card-split .card-split-bottom {
-    border-radius: 0 0 12px 12px;
-    padding: 12px 24px 24px;
-    z-index: 2;
-}
-.card-split .card-split-hidden {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, oklch(0.541 0.247 293.01), oklch(0.551 0.211 277.76));
-    border-radius: 12px;
-    color: oklch(1 0 0);
-    padding: 24px;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
-}
-.card-split:hover .card-split-top {
-    transform: translateY(-20px) rotateX(8deg);
-    transform-origin: bottom center;
-}
-.card-split:hover .card-split-bottom {
-    transform: translateY(20px) rotateX(-8deg);
-    transform-origin: top center;
-}
-
-.card-fold-corner {
-    position: relative;
-    background: oklch(1 0 0);
-    border-radius: 12px;
-    padding: 24px;
-    padding-top: 40px;
-    border: 1px solid oklch(0.928 0.006 264.53);
-    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
-    transition: box-shadow 0.3s ease;
-}
-.card-fold-corner::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 40px 40px 0;
-    border-color: transparent oklch(0.928 0.006 264.53) transparent transparent;
-    border-top-right-radius: 12px;
-    transition: border-width 0.4s ease, border-color 0.4s ease;
-}
-.card-fold-corner::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 40px;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 40px 40px 0 0;
-    border-color: oklch(0.962 0.02 295.19) transparent transparent transparent;
-    transition: right 0.4s ease, border-width 0.4s ease;
-    z-index: 1;
-}
-.card-fold-corner:hover::before {
-    border-width: 0 60px 60px 0;
-    border-color: transparent oklch(0.811 0.101 293.57) transparent transparent;
-}
-.card-fold-corner:hover::after {
-    right: 60px;
-    border-width: 60px 60px 0 0;
-}
-.card-fold-corner:hover {
-    box-shadow: 0 8px 24px color-mix(in oklch, oklch(0.541 0.247 293.01) 12%, transparent);
-}
-
-.card-slide-up {
-    position: relative;
-    background: oklch(1 0 0);
-    border-radius: 12px;
-    padding: 24px;
-    border: 1px solid oklch(0.928 0.006 264.53);
-    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
-    overflow: hidden;
-    transition: box-shadow 0.3s ease;
-}
-.card-slide-up .card-slide-up-content {
-    transform: translateY(30px);
-    opacity: 0;
-    transition: transform 0.4s ease, opacity 0.4s ease;
-}
-.card-slide-up:hover .card-slide-up-content {
-    transform: translateY(0);
-    opacity: 1;
-}
-.card-slide-up:hover {
-    box-shadow: 0 8px 24px color-mix(in oklch, oklch(0 0 0) 10%, transparent);
-}
-
-.card-glass {
-    position: relative;
-    background: oklch(1 0 0);
-    border-radius: 12px;
-    padding: 24px;
-    border: 1px solid oklch(0.928 0.006 264.53);
-    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
-    transition: background 0.4s ease, border-color 0.4s ease,
-                box-shadow 0.4s ease, backdrop-filter 0.4s ease;
-}
-.card-glass::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 12px;
-    background: linear-gradient(135deg, color-mix(in oklch, oklch(1 0 0) 60%, transparent), color-mix(in oklch, oklch(1 0 0) 20%, transparent));
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-    z-index: 0;
-}
-.card-glass:hover {
-    background: color-mix(in oklch, oklch(1 0 0) 15%, transparent);
-    border-color: color-mix(in oklch, oklch(1 0 0) 30%, transparent);
-    box-shadow: 0 8px 32px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-}
-.card-glass:hover::before {
-    opacity: 1;
-}
-.card-glass > * {
-    position: relative;
-    z-index: 1;
-}
-
-.card-expand {
-    background: oklch(1 0 0);
-    border-radius: 12px;
-    padding: 24px;
-    border: 1px solid oklch(0.928 0.006 264.53);
-    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
-}
-.card-expand .card-expand-extra {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease;
-    margin-top: 0;
-}
-.card-expand:hover .card-expand-extra {
-    max-height: 200px;
-    opacity: 1;
-    margin-top: 16px;
-}
-.card-expand:hover {
-    transform: scale(1.02);
-    box-shadow: 0 12px 28px color-mix(in oklch, oklch(0 0 0) 10%, transparent);
-}
-
-.card-skew-reveal {
-    position: relative;
-    background: oklch(1 0 0);
-    border-radius: 12px;
-    padding: 24px;
-    border: 1px solid oklch(0.928 0.006 264.53);
-    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
-    overflow: hidden;
-    transition: box-shadow 0.3s ease;
-}
-.card-skew-reveal .card-skew-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, color-mix(in oklch, oklch(0.541 0.247 293.01) 92%, transparent), color-mix(in oklch, oklch(0.551 0.211 277.76) 88%, transparent));
-    color: oklch(1 0 0);
-    padding: 24px;
-    box-sizing: border-box;
-    transform: translateX(-110%) skewX(-12deg);
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border-radius: 12px;
-}
-.card-skew-reveal:hover .card-skew-overlay {
-    transform: translateX(0) skewX(0);
-}
-.card-skew-reveal:hover {
-    box-shadow: 0 8px 24px color-mix(in oklch, oklch(0.541 0.247 293.01) 15%, transparent);
-}
 
-.card-holographic {
-    position: relative;
-    background: oklch(1 0 0);
-    border-radius: 12px;
-    padding: 24px;
-    border: 1px solid oklch(0.928 0.006 264.53);
-    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
-    overflow: hidden;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-}
-.card-holographic::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        125deg,
-        color-mix(in oklch, oklch(0.645 0.26 2.47) 20%, transparent),
-        color-mix(in oklch, oklch(0.793 0.171 70.67) 20%, transparent),
-        color-mix(in oklch, oklch(0.968 0.211 109.77) 20%, transparent),
-        color-mix(in oklch, oklch(0.727 0.208 148.34) 20%, transparent),
-        color-mix(in oklch, oklch(0.721 0.163 239.29) 20%, transparent),
-        color-mix(in oklch, oklch(0.541 0.247 293.01) 20%, transparent),
-        color-mix(in oklch, oklch(0.645 0.26 2.47) 20%, transparent)
-    );
-    background-size: 400% 400%;
-    border-radius: 12px;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    animation: card-holo-shift 4s ease infinite;
-    pointer-events: none;
-    z-index: 0;
-    mix-blend-mode: overlay;
+.roycss-ferrum-loader-heartbeat::before {
+  inset-block-start: -15px;
+  inset-inline-start: 0;
 }
-.card-holographic:hover::before {
-    opacity: 1;
-}
-.card-holographic:hover {
-    box-shadow: 0 8px 28px color-mix(in oklch, oklch(0.541 0.247 293.01) 18%, transparent);
-    transform: translateY(-4px);
-}
-.card-holographic > * {
-    position: relative;
-    z-index: 1;
-}
 
-.card-pulse-border {
-    background: oklch(1 0 0);
-    border-radius: 12px;
-    padding: 24px;
-    border: 2px solid oklch(0.928 0.006 264.53);
-    box-shadow: 0 1px 3px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
-    transition: border-color 0.3s ease;
-}
-.card-pulse-border:hover {
-    animation: card-pulse-border-anim 1.5s ease-in-out infinite;
+.roycss-ferrum-loader-heartbeat::after {
+  inset-inline-start: -15px;
+  inset-block-start: 0;
 }
 
 @keyframes roy-ferrum-heartbeat-pulse {
+  0%, 100% { transform: rotate(45deg) scale(1); }
+  14%      { transform: rotate(45deg) scale(1.2); }
+  28%      { transform: rotate(45deg) scale(1); }
+  42%      { transform: rotate(45deg) scale(1.2); }
+  56%      { transform: rotate(45deg) scale(1); }
+}
 
-  0%, 100% { transform: scale(1); }
-  14% { transform: scale(1.2); }
-  28% { transform: scale(1); }
-  42% { transform: scale(1.2); }
-  56% { transform: scale(1); }
-
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Heartbeat Loader — a pure-CSS heart that beats */
+.roycss-ferrum-loader-heartbeat {
+    animation: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -2866,7 +2163,14 @@ animation: royTypingCursor 1s step-end infinite;
     0%   { clip-path: circle(0% at 50% 50%); }
     100% { clip-path: circle(75% at 50% 50%); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-circle-reveal-in {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -2885,7 +2189,14 @@ animation: royTypingCursor 1s step-end infinite;
     0%   { clip-path: circle(75% at 50% 50%); }
     100% { clip-path: circle(0% at 50% 50%); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-circle-reveal-out {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -2905,7 +2216,14 @@ animation: royTypingCursor 1s step-end infinite;
     40%  { clip-path: polygon(50% 10%, 90% 50%, 50% 90%, 10% 50%); }
     100% { clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-diamond-reveal {
+    animation: none;
+  }
+}
+`,
 },
 
 ];

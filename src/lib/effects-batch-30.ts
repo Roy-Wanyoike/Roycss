@@ -45,7 +45,14 @@ export const effectsBatch30: CSSEffect[] = [
 
   100% { transform: rotate(360deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-chasing-dots {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -71,7 +78,14 @@ export const effectsBatch30: CSSEffect[] = [
   60% { transform: rotate(280deg); }
   100% { transform: rotate(360deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-circle-notch {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -95,7 +109,14 @@ export const effectsBatch30: CSSEffect[] = [
 
   to { transform: rotate(360deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-dual-ring {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -105,10 +126,40 @@ export const effectsBatch30: CSSEffect[] = [
   description: "A loading indicator with cyclical motion (fading dots)",
   tags: ["loader", "spinner", "loader-fading-dots", "fading"],
   previewType: "loader",
-  cssCode: `.roycss-ferrum-loader-fading-dots {
-  width: 80px;
-  text-align: center;
-}`,
+  childCount: 3,
+  cssCode: `/* Fading Dots Loader — three dots fading in sequence (render 3 <span> children) */
+.roycss-ferrum-loader-fading-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.roycss-ferrum-loader-fading-dots span {
+  inline-size: 10px;
+  block-size: 10px;
+  border-radius: 50%;
+  background: oklch(0.696 0.149 162.48);
+  animation: roy-ferrum-fading-dots 1.2s ease-in-out infinite;
+}
+.roycss-ferrum-loader-fading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.roycss-ferrum-loader-fading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes roy-ferrum-fading-dots {
+  0%, 100% { opacity: 0.25; transform: scale(0.85); }
+  50%      { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-fading-dots span {
+    animation: none;
+  }
+  .roycss-ferrum-loader-fading-dots span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-fading-dots span:nth-child(3) {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -227,10 +278,40 @@ export const effectsBatch30: CSSEffect[] = [
   description: "A loading indicator with cyclical motion (three bounce)",
   tags: ["loader", "spinner", "loader-three-bounce", "three"],
   previewType: "loader",
-  cssCode: `.roycss-ferrum-loader-three-bounce {
-  width: 80px;
-  text-align: center;
-}`,
+  childCount: 3,
+  cssCode: `/* Three Bounce Loader — classic tri-dot bounce (render 3 <span> children) */
+.roycss-ferrum-loader-three-bounce {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.roycss-ferrum-loader-three-bounce span {
+  inline-size: 12px;
+  block-size: 12px;
+  border-radius: 50%;
+  background: oklch(0.696 0.149 162.48);
+  animation: roy-ferrum-three-bounce 1.4s ease-in-out infinite;
+}
+.roycss-ferrum-loader-three-bounce span:nth-child(2) { animation-delay: 0.16s; }
+.roycss-ferrum-loader-three-bounce span:nth-child(3) { animation-delay: 0.32s; }
+
+@keyframes roy-ferrum-three-bounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+  40%           { transform: scale(1);   opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-loader-three-bounce span {
+    animation: none;
+  }
+  .roycss-ferrum-loader-three-bounce span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-ferrum-loader-three-bounce span:nth-child(3) {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -446,7 +527,14 @@ export const effectsBatch30: CSSEffect[] = [
   0%, 45%   { background: oklch(0.869 0.02 252.89); }
   55%, 100% { background: oklch(0.696 0.149 162.48); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-micro-toggle-switch {
+    animation: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -485,7 +573,14 @@ export const effectsBatch30: CSSEffect[] = [
   border-radius: 12px;
   box-shadow: 0 1px 2px color-mix(in oklch, oklch(0 0 0) 40%, transparent);
   transition: box-shadow 0.4s ease, transform 0.4s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-linear-depth-shadow {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -527,7 +622,14 @@ export const effectsBatch30: CSSEffect[] = [
   0%, 100% { background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%; }
   50% { background-position: 30% 30%, 70% 20%, 60% 70%, 20% 80%; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-linear-gradient-mesh-bg {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -561,7 +663,14 @@ export const effectsBatch30: CSSEffect[] = [
   border: 1px solid oklch(0.274 0.005 286.03);
   border-radius: 8px;
   transition: background-color 0.25s ease, border-color 0.25s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-linear-icon-bounce {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -577,7 +686,14 @@ export const effectsBatch30: CSSEffect[] = [
   border-radius: 8px;
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   will-change: transform;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-linear-magnetic-pull {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -604,13 +720,32 @@ export const effectsBatch30: CSSEffect[] = [
   description: "A Linear-inspired design-system effect (linear shimmer hover)",
   tags: ["linear-shimmer-hover", "shimmer"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-linear-shimmer-hover {
+  cssCode: `/* Linear Shimmer Hover */
+.roycss-ferrum-linear-shimmer-hover {
   position: relative;
   background: oklch(0.169 0.002 286.18);
   color: oklch(0.92 0.004 286.32);
   overflow: hidden;
   border: 1px solid oklch(0.274 0.005 286.03);
-}`,
+}
+.roycss-ferrum-linear-shimmer-hover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, oklch(1 0 0 / 0.18) 50%, transparent 60%);
+  transform: translateX(-100%);
+  transition: transform 0.8s ease;
+}
+.roycss-ferrum-linear-shimmer-hover:hover::after {
+  transform: translateX(100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-linear-shimmer-hover::after {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -642,7 +777,14 @@ export const effectsBatch30: CSSEffect[] = [
   font-weight: 600;
   letter-spacing: 0.02em;
   transition: color 0.3s ease, text-shadow 0.3s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-linear-text-glow {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -702,7 +844,14 @@ export const effectsBatch30: CSSEffect[] = [
   33%      { background-position: 100% 50%; border-radius: 55% 45% 50% 50% / 45% 55% 50% 50%; }
   66%      { background-position: 50% 100%; border-radius: 45% 55% 60% 40% / 55% 45% 60% 40%; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-liquid-metal {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -723,7 +872,14 @@ export const effectsBatch30: CSSEffect[] = [
   40% { opacity: 1; transform: scaleX(1.05) scaleY(0.7); border-radius: 18px; }
   100% { opacity: 1; transform: scale(1); border-radius: 8px; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-material-container-transform {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -793,7 +949,14 @@ export const effectsBatch30: CSSEffect[] = [
   0% { opacity: 0; transform: scale(0.85); }
   100% { opacity: 1; transform: scale(1); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-material-emphasized {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -812,7 +975,14 @@ export const effectsBatch30: CSSEffect[] = [
   0% { opacity: 0; transform: translateY(24px) scale(0.92); }
   100% { opacity: 1; transform: translateY(0) scale(1); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-material-emphasized-decel {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -835,7 +1005,14 @@ export const effectsBatch30: CSSEffect[] = [
   60% { opacity: 1; transform: scale(1.1) rotate(5deg); }
   100% { opacity: 1; transform: scale(1) rotate(0); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-material-fab-scale {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -855,7 +1032,14 @@ export const effectsBatch30: CSSEffect[] = [
   40% { opacity: 1; transform: translateY(12px) scale(1.04, 0.96); }
   100% { opacity: 0; transform: translateY(80px) scale(0.7); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-material-spring-down {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -875,7 +1059,14 @@ export const effectsBatch30: CSSEffect[] = [
   60% { opacity: 1; transform: translateY(-8px) scale(1.05); }
   100% { opacity: 1; transform: translateY(0) scale(1); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-material-spring-up {
+    animation: none;
+  }
+}
+`,
 },
 
 {

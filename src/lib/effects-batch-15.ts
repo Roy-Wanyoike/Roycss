@@ -58,7 +58,14 @@ export const effectsBatch15: CSSEffect[] = [
   50% { inline-size: 70%; filter: brightness(0.7); }
   55% { inline-size: 70%; filter: brightness(1.3); }
   60% { inline-size: 78%; filter: brightness(1); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-game-health-bar::before {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "game-mana-bar",
@@ -105,7 +112,14 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-mana-flow {
   0% { background-position: -60px 0; }
   100% { background-position: 160px 0; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-game-mana-bar::after {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "game-exp-bar",
@@ -151,7 +165,14 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-exp-shine {
   0%, 100% { inset-inline-start: -40%; }
   50%, 60% { inset-inline-start: 100%; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-game-exp-bar::after {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "game-shield-icon",
@@ -194,7 +215,15 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-shield-pulse {
   0%, 100% { filter: drop-shadow(0 0 6px color-mix(in oklch, oklch(0.699 0.161 254.31) 50%, transparent)); }
   50% { filter: drop-shadow(0 0 16px color-mix(in oklch, oklch(0.803 0.111 240.15) 90%, transparent)); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Game Shield Icon */
+.roycss-game-shield-icon {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "game-sword-icon",
@@ -239,7 +268,15 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-sword-sway {
   0%, 100% { transform: rotate(-6deg); }
   50% { transform: rotate(6deg); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Game Sword Icon */
+.roycss-game-sword-icon {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "game-coin-spin",
@@ -279,7 +316,15 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-coin-spin {
   0% { transform: rotateY(0deg); }
   100% { transform: rotateY(360deg); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Game Coin Spin */
+.roycss-game-coin-spin {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "game-potion-bubble",
@@ -329,7 +374,17 @@ export const effectsBatch15: CSSEffect[] = [
   0% { transform: translateY(0); opacity: 0; }
   20% { opacity: 1; }
   100% { transform: translateY(-18px); opacity: 0; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-game-potion-bubble::before {
+    animation: none;
+  }
+  .roycss-game-potion-bubble::after {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "game-chest-glow",
@@ -376,7 +431,15 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-chest-aura {
   0%, 100% { filter: drop-shadow(0 0 6px color-mix(in oklch, oklch(0.822 0.154 74.42) 40%, transparent)); }
   50% { filter: drop-shadow(0 0 18px color-mix(in oklch, oklch(0.902 0.143 93.06) 85%, transparent)); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Game Chest Glow */
+.roycss-game-chest-glow {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "game-minimap",
@@ -425,7 +488,14 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-minimap-sweep {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-game-minimap::after {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "game-crosshair",
@@ -473,7 +543,15 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-crosshair-pulse {
   0%, 100% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.08); opacity: 0.75; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Game Crosshair */
+.roycss-game-crosshair {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "game-combo-counter",
@@ -533,7 +611,18 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-combo-flash {
   0% { opacity: 0.6; }
   100% { opacity: 1; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Game Combo Counter */
+.roycss-game-combo-counter {
+    animation: none;
+  }
+  .roycss-game-combo-counter::after {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "game-achievement-badge",
@@ -578,7 +667,18 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-ach-shine {
   0%, 100% { filter: drop-shadow(0 0 4px color-mix(in oklch, oklch(0.9 0.157 94.82) 60%, transparent)); }
   50% { filter: drop-shadow(0 0 14px color-mix(in oklch, oklch(0.944 0.142 102.24) 100%, transparent)); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Game Achievement Badge */
+.roycss-game-achievement-badge {
+    animation: none;
+  }
+  .roycss-game-achievement-badge::after {
+    animation: none;
+  }
+}
+`
   },
 
   /* =========================================================================
@@ -677,7 +777,14 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-synth-grid {
   0% { background-position: 0 0, 0 0, 0 0; }
   100% { background-position: 0 0, 0 0, 0 22px; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-synthwave::after {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "retro-pixel-sky",
@@ -782,7 +889,17 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-term-cursor {
   0%, 50% { opacity: 1; }
   51%, 100% { opacity: 0.4; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-terminal::before {
+    animation: none;
+  }
+  .roycss-retro-terminal::after {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "retro-cassette",
@@ -831,7 +948,14 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-cassette-spin {
   0% { transform: translateX(-50%) rotate(0deg); }
   100% { transform: translateX(-50%) rotate(360deg); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-cassette::after {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "retro-arcade",
@@ -920,7 +1044,14 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-circuit-pulse {
   0%, 100% { opacity: 0.4; }
   50% { opacity: 1; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-tech-circuit-board::after {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "tech-matrix-code",
@@ -964,7 +1095,14 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-matrix-rain {
   0% { background-position: 0 0; }
   100% { background-position: 0 80px; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-tech-matrix-code::before {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "tech-hologram-grid",
@@ -1005,7 +1143,14 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-hologram-scan {
   0% { transform: translateY(0); }
   100% { transform: translateY(4px); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-tech-hologram-grid::after {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "tech-scan-radar",
@@ -1053,7 +1198,14 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-radar-sweep {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-tech-scan-radar::after {
+    animation: none;
+  }
+}
+`
   },
 
   /* =========================================================================
@@ -1100,7 +1252,18 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-walk-shadow {
   0%, 100% { transform: scaleX(1); opacity: 0.5; }
   50% { transform: scaleX(0.85); opacity: 0.3; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Game Pixel Walk */
+.roycss-game-pixel-walk {
+    animation: none;
+  }
+  .roycss-game-pixel-walk::before {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "game-mario-jump",
@@ -1142,7 +1305,18 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-mario-shadow {
   0%, 100% { transform: scaleX(1); opacity: 0.5; }
   50% { transform: scaleX(0.4); opacity: 0.2; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Game Mario Jump */
+.roycss-game-mario-jump {
+    animation: none;
+  }
+  .roycss-game-mario-jump::before {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "game-enemy-bob",
@@ -1187,7 +1361,15 @@ export const effectsBatch15: CSSEffect[] = [
   25% { transform: translateY(-6px) scaleY(1.08) scaleX(0.95); }
   50% { transform: translateY(0) scaleY(0.92) scaleX(1.06); }
   75% { transform: translateY(-6px) scaleY(1.08) scaleX(0.95); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Game Enemy Bob */
+.roycss-game-enemy-bob {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "game-projectile",
@@ -1235,7 +1417,15 @@ export const effectsBatch15: CSSEffect[] = [
   0% { transform: translateX(-60px) scale(0.9); }
   50% { transform: translateX(60px) scale(1.05); }
   100% { transform: translateX(-60px) scale(0.9); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Game Projectile */
+.roycss-game-projectile {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "game-explosion",
@@ -1289,7 +1479,17 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-explosion-debris {
   0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
   100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-game-explosion::before {
+    animation: none;
+  }
+  .roycss-game-explosion::after {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "game-level-up",
@@ -1335,7 +1535,17 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-levelup-ring {
   0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; border-inline-size: 3px; }
   100% { transform: translate(-50%, -50%) scale(4); opacity: 0; border-inline-size: 1px; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-game-level-up::before {
+    animation: none;
+  }
+  .roycss-game-level-up::after {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "game-screen-shake",
@@ -1396,7 +1606,21 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-screen-glow {
   0%, 100% { opacity: 0.3; }
   50% { opacity: 1; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Game Screen Shake */
+.roycss-game-screen-shake {
+    animation: none;
+  }
+  .roycss-game-screen-shake::before {
+    animation: none;
+  }
+  .roycss-game-screen-shake::after {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "game-loading-bar",
@@ -1450,7 +1674,17 @@ export const effectsBatch15: CSSEffect[] = [
   0% { inset-inline-end: 80%; opacity: 0.8; }
   50% { inset-inline-end: 8%; opacity: 1; }
   100% { inset-inline-end: 80%; opacity: 0.8; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-game-loading-bar::before {
+    animation: none;
+  }
+  .roycss-game-loading-bar::after {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "game-cursor-blink",
@@ -1485,7 +1719,14 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-cursor-blink {
   0%, 49% { opacity: 1; }
   50%, 100% { opacity: 0; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-game-cursor-blink::after {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "game-float-bobble",
@@ -1533,7 +1774,18 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-float-shadow {
   0%, 100% { transform: scaleX(1); opacity: 0.5; }
   50% { transform: scaleX(0.6); opacity: 0.25; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Game Float Bobble */
+.roycss-game-float-bobble {
+    animation: none;
+  }
+  .roycss-game-float-bobble::after {
+    animation: none;
+  }
+}
+`
   },
 
   /* =========================================================================
@@ -1602,7 +1854,15 @@ export const effectsBatch15: CSSEffect[] = [
   94% { opacity: 1; }
   95% { opacity: 0.4; }
   96% { opacity: 1; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text Arcade Neon */
+.roycss-text-arcade-neon {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "text-terminal-green",
@@ -1640,7 +1900,15 @@ export const effectsBatch15: CSSEffect[] = [
   0%, 96%, 100% { opacity: 1; }
   97% { opacity: 0.85; }
   98% { opacity: 1; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text Terminal Green */
+.roycss-text-terminal-green {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "text-glitch-cyberpunk",
@@ -1694,7 +1962,17 @@ export const effectsBatch15: CSSEffect[] = [
   25% { transform: translate(3px, 2px); }
   50% { transform: translate(-3px, -1px); }
   75% { transform: translate(2px, 1px); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-text-glitch-cyberpunk::before {
+    animation: none;
+  }
+  .roycss-text-glitch-cyberpunk::after {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "text-rpg-dialogue",
@@ -1736,7 +2014,14 @@ export const effectsBatch15: CSSEffect[] = [
 @keyframes roy-b15-rpg-arrow {
   0%, 100% { transform: translateY(0); opacity: 1; }
   50% { transform: translateY(3px); opacity: 0.5; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-text-rpg-dialogue::before {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "text-score-counter",
@@ -1773,7 +2058,15 @@ export const effectsBatch15: CSSEffect[] = [
   0%, 90%, 100% { transform: translateY(0) scale(1); }
   93% { transform: translateY(-4px) scale(1.08); }
   96% { transform: translateY(0) scale(1); }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text Score Counter */
+.roycss-text-score-counter {
+    animation: none;
+  }
+}
+`
   },
   {
     id: "text-8bit-shadow",
@@ -1868,6 +2161,20 @@ export const effectsBatch15: CSSEffect[] = [
   10% { opacity: 1; }
   90% { opacity: 1; }
   100% { inset-block-start: 100%; opacity: 0; }
-}`
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text Hologram Scan */
+.roycss-text-hologram-scan {
+    animation: none;
+  }
+  .roycss-text-hologram-scan::before {
+    animation: none;
+  }
+  .roycss-text-hologram-scan::after {
+    animation: none;
+  }
+}
+`
   }
 ];

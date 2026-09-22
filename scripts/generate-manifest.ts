@@ -180,14 +180,13 @@ type NamingRule = "id-kebab-case" | "primary-class" | "prefixed-compounds" | "cl
  * effect. Update in lockstep with the catalog — the gate fails when these
  * no longer match reality, in EITHER direction.
  *
- * ferrum-loader-heartbeat (batch 22) embeds a whole unprefixed `.btn-*`
- * demo suite (plus orphan declarations and camelCase keyframe REFERENCES
- * like `royTypingCursor`) after its legitimate rules — reported in the
- * gate's PR; fixing the catalog is deliberately out of scope here.
+ * History: ferrum-loader-heartbeat (batch 22) used to embed a whole
+ * unprefixed `.btn-*` demo suite (127 prefixed-compounds violations) with
+ * orphan declarations and camelCase keyframe references; the catalog-quality
+ * repair (issue #189) rewrote it as a valid self-contained loader, so the
+ * baseline is now empty — the ratchet stays at zero.
  */
-const KNOWN_NAMING_VIOLATIONS: Record<string, Partial<Record<NamingRule, number>>> = {
-  "ferrum-loader-heartbeat": { "prefixed-compounds": 127 },
-};
+const KNOWN_NAMING_VIOLATIONS: Record<string, Partial<Record<NamingRule, number>>> = {};
 
 /** Remove block comments so commented-out CSS cannot flip a rule. */
 function stripCssComments(css: string): string {

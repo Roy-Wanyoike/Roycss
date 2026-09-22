@@ -244,8 +244,8 @@ if scope expands.
 ### PF-004: Third-party WCAG 2.2 AA audit + VPAT 2.4 + per-effect a11y tags
 - **Area:** docs / a11y / frontend
 - **State:** partial — **code half DONE (2026-09-13)**: derived per-effect
-  a11y tags for all 1,959 effects (motionSafe 431 / motion-caution 1,528 /
-  decorative 1,692 / aria-required 90) via `scripts/generate-effect-a11y.ts`
+  a11y tags for all 1,959 effects (motionSafe 1,578 / motion-caution 381 /
+  decorative 1,656 / aria-required 89 — re-pinned post-#189 catalog-quality wave) via `scripts/generate-effect-a11y.ts`
   → generated `src/lib/effect-a11y.ts` + `effect-a11y-badges.ts`; surfaced
   as pills on effect cards + "Motion-safe only" grid filter; tiers
   documented in `docs/EFFECT-A11Y-TIERS.md`; drift-gated by 25 tests.

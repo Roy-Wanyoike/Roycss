@@ -45,7 +45,14 @@ export const effectsBatch29: CSSEffect[] = [
   43.5% { transform: translateX(2px) rotateY(3deg); }
   50% { transform: translateX(0); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-head-shake {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -77,7 +84,14 @@ export const effectsBatch29: CSSEffect[] = [
     transform: scale(1);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-jack-in-box {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -100,7 +114,14 @@ export const effectsBatch29: CSSEffect[] = [
   60%      { transform: rotate(-4deg); }
   80%      { transform: rotate(3deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-jiggle {
+    animation: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -122,7 +143,14 @@ export const effectsBatch29: CSSEffect[] = [
   border: 1px solid color-mix(in oklch, oklch(1 0 0) 18%, transparent);
   border-radius: 10px;
   transition: all 0.3s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-form-label-float {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -189,7 +217,14 @@ export const effectsBatch29: CSSEffect[] = [
   overflow: hidden;
   transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
               border-color 0.4s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-form-search-expand {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -229,7 +264,14 @@ export const effectsBatch29: CSSEffect[] = [
   border: 1px solid color-mix(in oklch, oklch(1 0 0) 20%, transparent);
   border-radius: 14px;
   transition: background 0.3s ease, border-color 0.3s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-form-toggle-switch {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -297,7 +339,14 @@ export const effectsBatch29: CSSEffect[] = [
   0%   { box-shadow: 0 0 0 1px color-mix(in oklch, oklch(0.889 0.177 169.75) 40%, transparent), 0 0 16px color-mix(in oklch, oklch(0.889 0.177 169.75) 35%, transparent), 0 8px 32px color-mix(in oklch, oklch(0 0 0) 12%, transparent); }
   100% { box-shadow: 0 0 0 1px color-mix(in oklch, oklch(0.73 0.16 237.36) 60%, transparent), 0 0 30px color-mix(in oklch, oklch(0.73 0.16 237.36) 60%, transparent), 0 8px 32px color-mix(in oklch, oklch(0 0 0) 12%, transparent); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-glass-border-glow {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -401,7 +450,14 @@ export const effectsBatch29: CSSEffect[] = [
   0%   { backdrop-filter: blur(8px) brightness(1.1) contrast(1.05) hue-rotate(0deg); }
   100% { backdrop-filter: blur(14px) brightness(1.15) contrast(1.1) hue-rotate(25deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-glass-liquid {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -531,10 +587,31 @@ export const effectsBatch29: CSSEffect[] = [
   description: "A hover-triggered effect that responds to pointer interaction",
   tags: ["hover", "interactive", "hover-border-draw", "border"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-hover-border-draw {
+  cssCode: `/* Hover Border Draw */
+.roycss-ferrum-hover-border-draw {
   position: relative;
   box-sizing: border-box;
-}`,
+}
+.roycss-ferrum-hover-border-draw::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid oklch(0.696 0.149 162.48);
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.4s ease;
+}
+@media (hover: hover) {
+  .roycss-ferrum-hover-border-draw:hover::after {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-border-draw::after {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -544,12 +621,26 @@ export const effectsBatch29: CSSEffect[] = [
   description: "A hover-triggered effect that responds to pointer interaction",
   tags: ["hover", "interactive", "hover-color-shift", "color"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-hover-color-shift {
+  cssCode: `/* Hover Color Shift */
+.roycss-ferrum-hover-color-shift {
   background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.596 0.127 163.23));
   transition: all 0.4s ease;
   background-size: 200% 200%;
   background-position: 0% 50%;
-}`,
+}
+@media (hover: hover) {
+  .roycss-ferrum-hover-color-shift:hover {
+    background-position: 100% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Color Shift */
+.roycss-ferrum-hover-color-shift {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -559,12 +650,28 @@ export const effectsBatch29: CSSEffect[] = [
   description: "A hover-triggered effect that responds to pointer interaction",
   tags: ["hover", "interactive", "hover-depth", "depth"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-hover-depth {
+  cssCode: `/* Hover Depth */
+.roycss-ferrum-hover-depth {
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
               box-shadow 0.4s ease;
   box-shadow: 0 1px 2px color-mix(in oklch, oklch(0 0 0) 8%, transparent),
               0 2px 4px color-mix(in oklch, oklch(0 0 0) 6%, transparent);
-}`,
+}
+@media (hover: hover) {
+  .roycss-ferrum-hover-depth:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px color-mix(in oklch, oklch(0 0 0) 18%, transparent),
+                0 4px 8px color-mix(in oklch, oklch(0 0 0) 8%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Depth */
+.roycss-ferrum-hover-depth {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -574,9 +681,24 @@ export const effectsBatch29: CSSEffect[] = [
   description: "A hover-triggered effect that responds to pointer interaction",
   tags: ["hover", "interactive", "hover-drop-shadow", "drop"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-hover-drop-shadow {
+  cssCode: `/* Hover Drop Shadow */
+.roycss-ferrum-hover-drop-shadow {
   transition: filter 0.35s ease, transform 0.35s ease;
-}`,
+}
+@media (hover: hover) {
+  .roycss-ferrum-hover-drop-shadow:hover {
+    filter: drop-shadow(0 8px 12px color-mix(in oklch, oklch(0 0 0) 35%, transparent));
+    transform: translateY(-2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Drop Shadow */
+.roycss-ferrum-hover-drop-shadow {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -586,10 +708,32 @@ export const effectsBatch29: CSSEffect[] = [
   description: "A hover-triggered effect that responds to pointer interaction",
   tags: ["hover", "interactive", "hover-fade-overlay", "fade"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-hover-fade-overlay {
+  cssCode: `/* Hover Fade Overlay */
+.roycss-ferrum-hover-fade-overlay {
   position: relative;
   isolation: isolate;
-}`,
+}
+.roycss-ferrum-hover-fade-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: oklch(0.208 0.04 265.75);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+@media (hover: hover) {
+  .roycss-ferrum-hover-fade-overlay:hover::after {
+    opacity: 0.85;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-fade-overlay::after {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -599,12 +743,27 @@ export const effectsBatch29: CSSEffect[] = [
   description: "A hover-triggered effect that responds to pointer interaction",
   tags: ["hover", "interactive", "hover-glow-border", "glow"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-hover-glow-border {
+  cssCode: `/* Hover Glow Border */
+.roycss-ferrum-hover-glow-border {
   border: 2px solid transparent;
   background-clip: padding-box;
   position: relative;
   transition: all 0.3s ease;
-}`,
+}
+@media (hover: hover) {
+  .roycss-ferrum-hover-glow-border:hover {
+    border-color: oklch(0.696 0.149 162.48);
+    box-shadow: 0 0 18px color-mix(in oklch, oklch(0.696 0.149 162.48) 55%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Glow Border */
+.roycss-ferrum-hover-glow-border {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -614,10 +773,24 @@ export const effectsBatch29: CSSEffect[] = [
   description: "A hover-triggered effect that responds to pointer interaction",
   tags: ["hover", "interactive", "hover-grayscale-to-color", "grayscale"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-hover-grayscale-to-color {
+  cssCode: `/* Hover Grayscale To Color */
+.roycss-ferrum-hover-grayscale-to-color {
   filter: grayscale(100%);
   transition: filter 0.5s ease;
-}`,
+}
+@media (hover: hover) {
+  .roycss-ferrum-hover-grayscale-to-color:hover {
+    filter: grayscale(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Grayscale To Color */
+.roycss-ferrum-hover-grayscale-to-color {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -627,9 +800,23 @@ export const effectsBatch29: CSSEffect[] = [
   description: "A hover-triggered effect that responds to pointer interaction",
   tags: ["hover", "interactive", "hover-hue-rotate", "hue"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-hover-hue-rotate {
+  cssCode: `/* Hover Hue Rotate */
+.roycss-ferrum-hover-hue-rotate {
   transition: filter 0.3s ease;
-}`,
+}
+@media (hover: hover) {
+  .roycss-ferrum-hover-hue-rotate:hover {
+    filter: hue-rotate(90deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Hue Rotate */
+.roycss-ferrum-hover-hue-rotate {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -639,9 +826,38 @@ export const effectsBatch29: CSSEffect[] = [
   description: "A hover-triggered effect that responds to pointer interaction",
   tags: ["hover", "interactive", "hover-neon-flicker", "neon"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-hover-neon-flicker {
+  cssCode: `/* Hover Neon Flicker */
+.roycss-ferrum-hover-neon-flicker {
   transition: box-shadow 0.2s ease;
-}`,
+}
+@media (hover: hover) {
+  .roycss-ferrum-hover-neon-flicker:hover {
+    box-shadow:
+      0 0 6px oklch(0.845 0.199 91.4),
+      0 0 18px oklch(0.795 0.184 86.05),
+      0 0 36px oklch(0.745 0.16 81.05);
+    animation: roy-ferrum-hover-neon-flicker-anim 0.9s ease-in-out infinite;
+  }
+}
+@keyframes roy-ferrum-hover-neon-flicker-anim {
+  0%, 100% { opacity: 1; }
+  45%      { opacity: 1; }
+  50%      { opacity: 0.6; }
+  55%      { opacity: 1; }
+  70%      { opacity: 0.75; }
+  75%      { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Neon Flicker */
+.roycss-ferrum-hover-neon-flicker {
+    transition: none;
+  }
+  .roycss-ferrum-hover-neon-flicker:hover {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -651,9 +867,23 @@ export const effectsBatch29: CSSEffect[] = [
   description: "A hover-triggered effect that responds to pointer interaction",
   tags: ["hover", "interactive", "hover-opacity", "opacity"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-hover-opacity {
+  cssCode: `/* Hover Opacity */
+.roycss-ferrum-hover-opacity {
   transition: opacity 0.3s ease;
-}`,
+}
+@media (hover: hover) {
+  .roycss-ferrum-hover-opacity:hover {
+    opacity: 0.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Opacity */
+.roycss-ferrum-hover-opacity {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -663,11 +893,37 @@ export const effectsBatch29: CSSEffect[] = [
   description: "A hover-triggered effect that responds to pointer interaction",
   tags: ["hover", "interactive", "hover-overlay-reveal", "overlay"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-hover-overlay-reveal {
+  cssCode: `/* Hover Overlay Reveal */
+.roycss-ferrum-hover-overlay-reveal {
   position: relative;
   overflow: hidden;
   transition: color 0.3s ease;
-}`,
+}
+.roycss-ferrum-hover-overlay-reveal::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: oklch(0.696 0.149 162.48);
+  transform: translateY(100%);
+  transition: transform 0.35s ease;
+  z-index: -1;
+}
+@media (hover: hover) {
+  .roycss-ferrum-hover-overlay-reveal:hover::after {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Overlay Reveal */
+.roycss-ferrum-hover-overlay-reveal {
+    transition: none;
+  }
+  .roycss-ferrum-hover-overlay-reveal::after {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -677,10 +933,25 @@ export const effectsBatch29: CSSEffect[] = [
   description: "A hover-triggered effect that responds to pointer interaction",
   tags: ["hover", "interactive", "hover-press", "press"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-hover-press {
+  cssCode: `/* Hover Press */
+.roycss-ferrum-hover-press {
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   box-shadow: 0 6px 0 oklch(0.508 0.105 165.61), 0 8px 14px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
-}`,
+}
+@media (hover: hover) {
+  .roycss-ferrum-hover-press:hover {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 oklch(0.508 0.105 165.61), 0 4px 8px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Press */
+.roycss-ferrum-hover-press {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -690,10 +961,25 @@ export const effectsBatch29: CSSEffect[] = [
   description: "A hover-triggered effect that responds to pointer interaction",
   tags: ["hover", "interactive", "hover-push-up", "push"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-hover-push-up {
+  cssCode: `/* Hover Push Up */
+.roycss-ferrum-hover-push-up {
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
               box-shadow 0.3s ease;
-}`,
+}
+@media (hover: hover) {
+  .roycss-ferrum-hover-push-up:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 14px 24px color-mix(in oklch, oklch(0 0 0) 16%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Push Up */
+.roycss-ferrum-hover-push-up {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -703,10 +989,25 @@ export const effectsBatch29: CSSEffect[] = [
   description: "A hover-triggered effect that responds to pointer interaction",
   tags: ["hover", "interactive", "hover-scale", "scale"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-hover-scale {
+  cssCode: `/* Hover Scale */
+.roycss-ferrum-hover-scale {
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
               box-shadow 0.3s ease;
-}`,
+}
+@media (hover: hover) {
+  .roycss-ferrum-hover-scale:hover {
+    transform: scale(1.08);
+    box-shadow: 0 12px 24px color-mix(in oklch, oklch(0 0 0) 16%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Scale */
+.roycss-ferrum-hover-scale {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -716,11 +1017,26 @@ export const effectsBatch29: CSSEffect[] = [
   description: "A hover-triggered effect that responds to pointer interaction",
   tags: ["hover", "interactive", "hover-shadow-grow", "shadow"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-hover-shadow-grow {
+  cssCode: `/* Hover Shadow Grow */
+.roycss-ferrum-hover-shadow-grow {
   transition: transform 0.3s ease,
               box-shadow 0.3s ease;
   box-shadow: 0 2px 4px color-mix(in oklch, oklch(0 0 0) 6%, transparent);
-}`,
+}
+@media (hover: hover) {
+  .roycss-ferrum-hover-shadow-grow:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Shadow Grow */
+.roycss-ferrum-hover-shadow-grow {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -730,11 +1046,37 @@ export const effectsBatch29: CSSEffect[] = [
   description: "A hover-triggered effect that responds to pointer interaction",
   tags: ["hover", "interactive", "hover-slide-overlay", "slide"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-hover-slide-overlay {
+  cssCode: `/* Hover Slide Overlay */
+.roycss-ferrum-hover-slide-overlay {
   position: relative;
   overflow: hidden;
   transition: color 0.3s ease;
-}`,
+}
+.roycss-ferrum-hover-slide-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: oklch(0.696 0.149 162.48);
+  transform: translateX(-101%);
+  transition: transform 0.35s ease;
+  z-index: -1;
+}
+@media (hover: hover) {
+  .roycss-ferrum-hover-slide-overlay:hover::after {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Slide Overlay */
+.roycss-ferrum-hover-slide-overlay {
+    transition: none;
+  }
+  .roycss-ferrum-hover-slide-overlay::after {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -744,11 +1086,25 @@ export const effectsBatch29: CSSEffect[] = [
   description: "A hover-triggered effect that responds to pointer interaction",
   tags: ["hover", "interactive", "hover-tilt-rotate", "tilt", "3d"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-hover-tilt-rotate {
+  cssCode: `/* Hover Tilt Rotate */
+.roycss-ferrum-hover-tilt-rotate {
   transition: transform 0.3s ease;
   transform-style: preserve-3d;
   perspective: 1000px;
-}`,
+}
+@media (hover: hover) {
+  .roycss-ferrum-hover-tilt-rotate:hover {
+    transform: rotateX(12deg) rotateY(-8deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Tilt Rotate */
+.roycss-ferrum-hover-tilt-rotate {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -758,11 +1114,37 @@ export const effectsBatch29: CSSEffect[] = [
   description: "A hover-triggered effect that responds to pointer interaction",
   tags: ["hover", "interactive", "hover-underline-slide", "underline"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-hover-underline-slide {
+  cssCode: `/* Hover Underline Slide */
+.roycss-ferrum-hover-underline-slide {
   position: relative;
   display: inline-block;
   text-decoration: none;
-}`,
+}
+.roycss-ferrum-hover-underline-slide::after {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  bottom: -2px;
+  inline-size: 100%;
+  block-size: 2px;
+  background: oklch(0.696 0.149 162.48);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+@media (hover: hover) {
+  .roycss-ferrum-hover-underline-slide:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hover-underline-slide::after {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -772,9 +1154,24 @@ export const effectsBatch29: CSSEffect[] = [
   description: "A hover-triggered effect that responds to pointer interaction",
   tags: ["hover", "interactive", "hover-zoom-blur", "zoom"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-hover-zoom-blur {
+  cssCode: `/* Hover Zoom Blur */
+.roycss-ferrum-hover-zoom-blur {
   transition: transform 0.4s ease, filter 0.4s ease;
-}`,
+}
+@media (hover: hover) {
+  .roycss-ferrum-hover-zoom-blur:hover {
+    transform: scale(1.1);
+    filter: blur(1.5px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hover Zoom Blur */
+.roycss-ferrum-hover-zoom-blur {
+    transition: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -847,7 +1244,14 @@ export const effectsBatch29: CSSEffect[] = [
   0%, 100% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
   50%      { background-position: 100% 100%, 50% 50%, 80% 30%, 30% 70%, 50% 50%; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-gold-leaf {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -916,7 +1320,14 @@ export const effectsBatch29: CSSEffect[] = [
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
               box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
               border-color 0.35s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-linear-card-lift {
+    transition: none;
+  }
+}
+`,
 },
 
 ];

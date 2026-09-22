@@ -46,7 +46,14 @@ export const effectsBatch28: CSSEffect[] = [
   0% { transform: rotateX(0deg) rotateY(0deg); }
   100% { transform: rotateX(360deg) rotateY(360deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-cube-rotate {
+    animation: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -93,7 +100,14 @@ export const effectsBatch28: CSSEffect[] = [
     transform: translate3d(0, 0, 0);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-fade-in-bl {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -118,7 +132,14 @@ export const effectsBatch28: CSSEffect[] = [
     transform: translate3d(0, 0, 0);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-fade-in-br {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -143,7 +164,14 @@ export const effectsBatch28: CSSEffect[] = [
     transform: translate3d(0, 0, 0);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-fade-in-right {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -168,7 +196,14 @@ export const effectsBatch28: CSSEffect[] = [
     transform: translateY(40px);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-fade-out-down {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -193,7 +228,14 @@ export const effectsBatch28: CSSEffect[] = [
     transform: translate3d(-32px, 0, 0);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-fade-out-left {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -218,7 +260,14 @@ export const effectsBatch28: CSSEffect[] = [
     transform: translate3d(32px, 0, 0);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-fade-out-right {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -243,7 +292,14 @@ export const effectsBatch28: CSSEffect[] = [
     transform: translate3d(0, -28px, 0);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-fade-out-up {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -259,7 +315,14 @@ export const effectsBatch28: CSSEffect[] = [
   transform-style: preserve-3d;
   background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.685 0.131 226.94));
   border-radius: 12px;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-flip-x {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -275,7 +338,14 @@ export const effectsBatch28: CSSEffect[] = [
   transform-style: preserve-3d;
   background: linear-gradient(135deg, oklch(0.685 0.131 226.94), oklch(0.566 0.245 278.69));
   border-radius: 12px;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-flip-y {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -298,7 +368,14 @@ export const effectsBatch28: CSSEffect[] = [
     transform: translateY(-12px);
   }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-float {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -316,7 +393,14 @@ export const effectsBatch28: CSSEffect[] = [
   border-radius: 6px;
   transition: transform 0.8s ease;
   transform-origin: top center;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-fold {
+    transition: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -452,7 +536,14 @@ export const effectsBatch28: CSSEffect[] = [
     transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
     border-color 0.3s ease,
     box-shadow 0.3s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-cursor-magnetic {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -579,7 +670,14 @@ export const effectsBatch28: CSSEffect[] = [
   60%      { transform: translateX(-3px); }
   80%      { transform: translateX(3px); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-form-error-shake {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -602,7 +700,14 @@ export const effectsBatch28: CSSEffect[] = [
   font: 12px/1 system-ui, sans-serif;
   color: color-mix(in oklch, oklch(1 0 0) 55%, transparent);
   transition: all 0.3s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-form-focus-glow {
+    transition: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -653,7 +758,14 @@ export const effectsBatch28: CSSEffect[] = [
 
   to { transform: rotate(360deg); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-clip-path-hexagon {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -681,7 +793,14 @@ export const effectsBatch28: CSSEffect[] = [
   0%, 100% { filter: drop-shadow(0 0 6px color-mix(in oklch, oklch(0.837 0.164 84.43) 50%, transparent)); transform: scale(1); }
   50%      { filter: drop-shadow(0 0 18px color-mix(in oklch, oklch(0.837 0.164 84.43) 95%, transparent)); transform: scale(1.06); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-clip-path-star {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -719,7 +838,14 @@ export const effectsBatch28: CSSEffect[] = [
     7px 7px 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 20%, transparent),
     8px 8px 20px color-mix(in oklch, oklch(0 0 0) 15%, transparent);
   transition: all 0.3s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-depth-shadow {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -740,7 +866,14 @@ export const effectsBatch28: CSSEffect[] = [
   0%, 100% { filter: blur(8px) saturate(1.2); }
   50%      { filter: blur(0px) saturate(1.4); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-filter-blur-focus {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -844,7 +977,14 @@ export const effectsBatch28: CSSEffect[] = [
   80%  { filter: hue-rotate(120deg) saturate(1.6); }
   100% { filter: hue-rotate(360deg) saturate(1.5); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-filter-glitch {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -854,11 +994,23 @@ export const effectsBatch28: CSSEffect[] = [
   description: "A CSS filter effect (filter grayscale hover)",
   tags: ["filter-grayscale-hover", "grayscale"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-filter-grayscale-hover {
+  cssCode: `/* Filter Grayscale Hover */
+.roycss-ferrum-filter-grayscale-hover {
   background: linear-gradient(135deg, oklch(0.667 0.217 13.9) 0%, oklch(0.56 0.235 268.65) 50%, oklch(0.667 0.217 13.9) 100%);
   filter: grayscale(1) brightness(0.85);
   transition: filter 0.5s ease;
-}`,
+}
+.roycss-ferrum-filter-grayscale-hover:hover {
+  filter: grayscale(0) brightness(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Filter Grayscale Hover */
+.roycss-ferrum-filter-grayscale-hover {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -893,7 +1045,14 @@ export const effectsBatch28: CSSEffect[] = [
   0%   { filter: hue-rotate(0deg) saturate(1.5); }
   100% { filter: hue-rotate(360deg) saturate(1.5); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-filter-hue-rotate {
+    animation: none;
+  }
+}
+`,
 },
 
 {

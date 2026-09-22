@@ -82,7 +82,14 @@ export const effectsBatch8: CSSEffect[] = [
 
 @keyframes roy-visual-border-beam {
   to { --roy-vbb-angle: 360deg; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-visual-border-beam::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 2 ─ Aurora Border ─────────────────────────────────────────────
@@ -144,7 +151,14 @@ export const effectsBatch8: CSSEffect[] = [
   0%   { background-position: 0% 50%; }
   50%  { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-visual-aurora-border::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 3 ─ Inner Glow ────────────────────────────────────────────────
@@ -178,7 +192,15 @@ export const effectsBatch8: CSSEffect[] = [
       inset 0 0 50px color-mix(in oklch, oklch(0.696 0.149 162.48) 70%, transparent),
       inset 0 0 100px color-mix(in oklch, oklch(0.696 0.149 162.48) 35%, transparent);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Inner Glow */
+.roycss-visual-inner-glow {
+    animation: none;
+  }
+}
+`,
   },
 
   // 4 ─ Shadow Pulse ──────────────────────────────────────────────
@@ -210,7 +232,15 @@ export const effectsBatch8: CSSEffect[] = [
     box-shadow: 0 14px 38px color-mix(in oklch, oklch(0.656 0.212 354.31) 60%, transparent);
     transform: scale(1.04);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Shadow Pulse */
+.roycss-visual-shadow-pulse {
+    animation: none;
+  }
+}
+`,
   },
 
   // 5 ─ Holographic ───────────────────────────────────────────────
@@ -268,7 +298,18 @@ export const effectsBatch8: CSSEffect[] = [
 @keyframes roy-visual-holographic-shine {
   from { background-position: 200% 0; }
   to   { background-position: -200% 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Holographic Surface */
+.roycss-visual-holographic {
+    animation: none;
+  }
+  .roycss-visual-holographic::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 6 ─ Metallic ──────────────────────────────────────────────────
@@ -338,7 +379,14 @@ export const effectsBatch8: CSSEffect[] = [
 @keyframes roy-visual-metallic {
   0%, 100% { inset-inline-start: -100%; }
   50%      { inset-inline-start: 200%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-visual-metallic::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 7 ─ Chrome ────────────────────────────────────────────────────
@@ -397,7 +445,14 @@ export const effectsBatch8: CSSEffect[] = [
 @keyframes roy-visual-chrome {
   0%, 100% { inset-inline-start: -50%; }
   50%      { inset-inline-start: 100%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-visual-chrome::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 8 ─ Liquid Fill ───────────────────────────────────────────────
@@ -450,7 +505,17 @@ export const effectsBatch8: CSSEffect[] = [
 @keyframes roy-visual-liquid-wave {
   from { transform: translateX(0); }
   to   { transform: translateX(100px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-visual-liquid-fill::before {
+    animation: none;
+  }
+  .roycss-visual-liquid-fill::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 9 ─ Gradient Text Animated ────────────────────────────────────
@@ -486,7 +551,15 @@ export const effectsBatch8: CSSEffect[] = [
 
 @keyframes roy-visual-gradient-text-animated {
   to { background-position: 200% center; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Animated Gradient Text */
+.roycss-visual-gradient-text-animated {
+    animation: none;
+  }
+}
+`,
   },
 
   // 10 ─ Gradient Mesh ────────────────────────────────────────────
@@ -515,7 +588,15 @@ export const effectsBatch8: CSSEffect[] = [
   25%      { background-position: 100% 50%; }
   50%      { background-position: 50% 100%; }
   75%      { background-position: 0% 50%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Animated Mesh Gradient */
+.roycss-visual-gradient-mesh {
+    animation: none;
+  }
+}
+`,
   },
 
   // 11 ─ Image Distortion ─────────────────────────────────────────
@@ -559,7 +640,15 @@ export const effectsBatch8: CSSEffect[] = [
     filter: blur(0px);
     transform: skew(-1deg, -2deg) scale(1);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Distortion Wobble */
+.roycss-visual-image-distortion {
+    animation: none;
+  }
+}
+`,
   },
 
   // 12 ─ Pixelate ─────────────────────────────────────────────────
@@ -601,7 +690,14 @@ export const effectsBatch8: CSSEffect[] = [
   50%  { background-size: 24px 24px, 24px 24px; }
   75%  { background-size: 4px 4px, 4px 4px; }
   100% { background-size: 12px 12px, 12px 12px; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-visual-pixelate::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 13 ─ Frost Blur ───────────────────────────────────────────────
@@ -713,7 +809,14 @@ export const effectsBatch8: CSSEffect[] = [
   50%  { --roy-vsf-x: 80%; --roy-vsf-y: 70%; }
   75%  { --roy-vsf-x: 20%; --roy-vsf-y: 70%; }
   100% { --roy-vsf-x: 20%; --roy-vsf-y: 30%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-visual-spotlight-follow::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 15 ─ Mask Fade ────────────────────────────────────────────────
@@ -749,7 +852,15 @@ export const effectsBatch8: CSSEffect[] = [
     -webkit-mask-position: 0% 100%;
     mask-position: 0% 100%;
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Mask Fade Reveal */
+.roycss-visual-mask-fade {
+    animation: none;
+  }
+}
+`,
   },
 
   // 16 ─ Blend Mode Overlay ───────────────────────────────────────
@@ -806,7 +917,17 @@ export const effectsBatch8: CSSEffect[] = [
 @keyframes roy-visual-blend-mode-2 {
   0%   { transform: translate(0, 0); }
   100% { transform: translate(-90px, -70px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-visual-blend-mode-overlay::before {
+    animation: none;
+  }
+  .roycss-visual-blend-mode-overlay::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 17 ─ Backdrop Blur Heavy ──────────────────────────────────────
@@ -870,7 +991,15 @@ export const effectsBatch8: CSSEffect[] = [
 @keyframes roy-visual-color-shift {
   from { filter: hue-rotate(0deg); }
   to   { filter: hue-rotate(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Color Shift */
+.roycss-visual-color-shift {
+    animation: none;
+  }
+}
+`,
   },
 
   // 19 ─ Hue Rotate Loop ──────────────────────────────────────────
@@ -907,7 +1036,15 @@ export const effectsBatch8: CSSEffect[] = [
 @keyframes roy-visual-hue-rotate-loop {
   from { filter: hue-rotate(0deg); }
   to   { filter: hue-rotate(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hue Rotate Loop */
+.roycss-visual-hue-rotate-loop {
+    animation: none;
+  }
+}
+`,
   },
 
   // 20 ─ Saturation Pulse ─────────────────────────────────────────
@@ -933,7 +1070,15 @@ export const effectsBatch8: CSSEffect[] = [
 @keyframes roy-visual-saturation-pulse {
   0%, 100% { filter: saturate(0); }
   50%      { filter: saturate(2.6); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Saturation Pulse */
+.roycss-visual-saturation-pulse {
+    animation: none;
+  }
+}
+`,
   },
 
   // 21 ─ Glass Reflection ─────────────────────────────────────────
@@ -991,7 +1136,14 @@ export const effectsBatch8: CSSEffect[] = [
 @keyframes roy-visual-glass-reflection {
   0%, 100% { inset-inline-start: -50%; }
   50%      { inset-inline-start: 120%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-visual-glass-reflection::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 22 ─ Noise Overlay ────────────────────────────────────────────
@@ -1040,7 +1192,14 @@ export const effectsBatch8: CSSEffect[] = [
   50%  { transform: translate(5px, -5px); }
   75%  { transform: translate(-4px, -4px); }
   100% { transform: translate(0, 0); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-visual-noise-overlay::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 23 ─ Shimmer Sweep ────────────────────────────────────────────
@@ -1093,7 +1252,14 @@ export const effectsBatch8: CSSEffect[] = [
 @keyframes roy-visual-shimmer-sweep {
   0%   { inset-inline-start: -100%; }
   100% { inset-inline-start: 100%; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-visual-shimmer-sweep::before {
+    animation: none;
+  }
+}
+`,
   },
 
   // 24 ─ Iridescent ───────────────────────────────────────────────
@@ -1159,7 +1325,18 @@ export const effectsBatch8: CSSEffect[] = [
 @keyframes roy-visual-iridescent-shine {
   from { background-position: 200% 0; }
   to   { background-position: -200% 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Iridescent Shimmer */
+.roycss-visual-iridescent {
+    animation: none;
+  }
+  .roycss-visual-iridescent::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 25 ─ Neon Pulse ───────────────────────────────────────────────
@@ -1201,7 +1378,15 @@ export const effectsBatch8: CSSEffect[] = [
       inset 0 0 36px color-mix(in oklch, oklch(0.656 0.212 354.31) 75%, transparent);
     border-color: oklch(0.725 0.175 349.76);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Neon Pulse */
+.roycss-visual-neon-pulse {
+    animation: none;
+  }
+}
+`,
   },
 
   // 26 ─ Glitch Distort ───────────────────────────────────────────
@@ -1257,7 +1442,17 @@ export const effectsBatch8: CSSEffect[] = [
   25%      { clip-path: inset(40% 0 30% 0); transform: translate(4px, -2px); }
   50%      { clip-path: inset(60% 0 10% 0); transform: translate(-4px, 2px); }
   75%      { clip-path: inset(20% 0 60% 0); transform: translate(3px, -3px); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-visual-glitch-distort::before {
+    animation: none;
+  }
+  .roycss-visual-glitch-distort::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 27 ─ Prism ────────────────────────────────────────────────────
@@ -1322,7 +1517,17 @@ export const effectsBatch8: CSSEffect[] = [
 @keyframes roy-visual-prism {
   from { transform: translate(-50%, -55%) rotate(0deg); }
   to   { transform: translate(-50%, -55%) rotate(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-visual-prism::before {
+    animation: none;
+  }
+  .roycss-visual-prism::after {
+    animation: none;
+  }
+}
+`,
   },
 
   // 28 ─ Foil ─────────────────────────────────────────────────────
@@ -1395,6 +1600,17 @@ export const effectsBatch8: CSSEffect[] = [
 @keyframes roy-visual-foil-shine {
   from { background-position: 200% 0; }
   to   { background-position: -200% 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Foil Mylar */
+.roycss-visual-foil {
+    animation: none;
+  }
+  .roycss-visual-foil::before {
+    animation: none;
+  }
+}
+`,
   },
 ];

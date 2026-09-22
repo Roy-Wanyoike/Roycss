@@ -4,7 +4,7 @@
  * Pure, React-free derivation of the card/filter badges from the generated
  * tags in ./effect-a11y.ts. Keeping this helper free of JSX means it runs
  * in the node vitest environment (this repo has no component/react tests),
- * so the badge logic is unit-tested directly — including the 431
+ * so the badge logic is unit-tested directly — including the 1,578
  * motion-safe filter count that backs the grid's "Motion-safe only" chip
  * in src/components/roycss/roycss-page.tsx.
  *

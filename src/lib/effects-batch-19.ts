@@ -341,7 +341,15 @@ export const effectsBatch19: CSSEffect[] = [
 
 .roycss-text-spaced-tracking:hover {
   letter-spacing: 0.05em;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Spaced Tracking */
+.roycss-text-spaced-tracking {
+    transition: none;
+  }
+}
+`,
   },
 
   /* ───────────────────────── BACKGROUNDS (5) ──────────────────────── */
@@ -479,10 +487,19 @@ export const effectsBatch19: CSSEffect[] = [
   transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   transform-style: preserve-3d;
 }
+@media (hover: hover) {
+  .roycss-hover-tilt-3d:hover {
+    transform: perspective(500px) rotateX(15deg) rotateY(-15deg) scale(1.05);
+  }
+}
 
-.roycss-hover-tilt-3d:hover {
-  transform: perspective(500px) rotateX(15deg) rotateY(-15deg) scale(1.05);
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* 3D Tilt Hover */
+.roycss-hover-tilt-3d {
+    transition: none;
+  }
+}
+`,
   },
 
   {
@@ -503,7 +520,6 @@ export const effectsBatch19: CSSEffect[] = [
   overflow: hidden;
   transition: color 0.3s ease;
 }
-
 .roycss-hover-slide-bg::before {
   content: "";
   position: absolute;
@@ -513,10 +529,22 @@ export const effectsBatch19: CSSEffect[] = [
   transition: transform 0.3s ease;
   z-index: 0;
 }
+@media (hover: hover) {
+  .roycss-hover-slide-bg:hover::before {
+    transform: translateX(0);
+  }
+}
 
-.roycss-hover-slide-bg:hover::before {
-  transform: translateX(0);
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Slide Background */
+.roycss-hover-slide-bg {
+    transition: none;
+  }
+  .roycss-hover-slide-bg::before {
+    transition: none;
+  }
+}
+`,
   },
 
   {
@@ -535,10 +563,19 @@ export const effectsBatch19: CSSEffect[] = [
   background: linear-gradient(135deg, oklch(0.65 0.25 280), oklch(0.6 0.2 330));
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+@media (hover: hover) {
+  .roycss-hover-pop-scale:hover {
+    transform: scale(1.15);
+  }
+}
 
-.roycss-hover-pop-scale:hover {
-  transform: scale(1.15);
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Pop Scale */
+.roycss-hover-pop-scale {
+    transition: none;
+  }
+}
+`,
   },
 
   {
@@ -558,16 +595,27 @@ export const effectsBatch19: CSSEffect[] = [
   border: 1px solid oklch(0.4 0.05 250);
   transition: all 0.3s ease;
 }
-
-.roycss-hover-glow-pulse:hover {
-  border-color: oklch(0.6 0.2 162);
-  animation: roy-hover-glow-pulse 1.5s ease-in-out infinite;
+@media (hover: hover) {
+  .roycss-hover-glow-pulse:hover {
+    border-color: oklch(0.6 0.2 162);
+    animation: roy-hover-glow-pulse 1.5s ease-in-out infinite;
+  }
 }
-
 @keyframes roy-hover-glow-pulse {
   0%, 100% { box-shadow: 0 0 15px color-mix(in oklch, oklch(0.6 0.2 162) 30%, transparent); }
   50% { box-shadow: 0 0 30px color-mix(in oklch, oklch(0.6 0.2 162) 50%, transparent); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Glow Pulse Hover */
+.roycss-hover-glow-pulse {
+    transition: none;
+  }
+  .roycss-hover-glow-pulse:hover {
+    animation: none;
+  }
+}
+`,
   },
 
   {
@@ -584,7 +632,6 @@ export const effectsBatch19: CSSEffect[] = [
   display: inline-block;
   cursor: pointer;
 }
-
 .roycss-hover-underline-grow::after {
   content: "";
   position: absolute;
@@ -596,10 +643,18 @@ export const effectsBatch19: CSSEffect[] = [
   transition: all 0.3s ease;
   transform: translateX(-50%);
 }
+@media (hover: hover) {
+  .roycss-hover-underline-grow:hover::after {
+    inline-size: 100%;
+  }
+}
 
-.roycss-hover-underline-grow:hover::after {
-  inline-size: 100%;
-}`,
+@media (prefers-reduced-motion: reduce) {
+  .roycss-hover-underline-grow::after {
+    transition: none;
+  }
+}
+`,
   },
 
   /* ───────────────────────── VISUAL (5) ───────────────────────────── */
@@ -1087,7 +1142,15 @@ export const effectsBatch19: CSSEffect[] = [
   box-shadow:
     0 12px 30px color-mix(in oklch, oklch(0.1 0.02 250) 30%, transparent),
     0 0 20px color-mix(in oklch, oklch(0.6 0.2 162) 20%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Glass Hover Card */
+.roycss-card-glass-hover {
+    transition: none;
+  }
+}
+`,
   },
 
   {

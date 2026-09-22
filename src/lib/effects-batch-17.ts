@@ -46,7 +46,14 @@ export const effectsBatch17: CSSEffect[] = [
     --roy-bio-hue: 215;
     filter: brightness(1.45) saturate(1.2);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-bio-luminescent-glow {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "neu-soft-raised",
@@ -88,7 +95,15 @@ export const effectsBatch17: CSSEffect[] = [
     0 1px 2px oklch(0.4 0.02 250 / 0.1),
     inset 0 2px 4px oklch(0.5 0.02 250 / 0.18),
     inset 0 -1px 0 oklch(1 0 0 / 0.5);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Neumorphism Soft Raised */
+.roycss-neu-soft-raised {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "neu-soft-inset",
@@ -117,7 +132,15 @@ export const effectsBatch17: CSSEffect[] = [
     inset -7px -7px 18px oklch(1 0 0 / 0.85),
     inset 0 0 0 1px oklch(0.5 0.02 250 / 0.06),
     0 1px 0 oklch(1 0 0 / 0.6);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Neumorphism Soft Inset */
+.roycss-neu-soft-inset {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "glass-tinted-depth",
@@ -156,7 +179,15 @@ export const effectsBatch17: CSSEffect[] = [
     0 8px 24px oklch(0.25 0.12 250 / 0.25),
     0 1px 0 oklch(1 0 0 / 0.6),
     inset 0 1px 0 oklch(1 0 0 / 0.55);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Glass Tinted Depth */
+.roycss-glass-tinted-depth {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "cyber-grid-perspective",
@@ -199,7 +230,15 @@ export const effectsBatch17: CSSEffect[] = [
 @keyframes roy-cyber-grid-scroll {
   from { background-position: 0 0, 0 0; }
   to { background-position: 0 48px, 0 48px; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Cyber Grid Perspective */
+.roycss-cyber-grid-perspective {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "holographic-iridescent",
@@ -248,7 +287,14 @@ export const effectsBatch17: CSSEffect[] = [
 }
 @keyframes roy-holo-spin {
   to { --roy-holo-angle: 360deg; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-holographic-iridescent {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "ambient-breathing-surface",
@@ -282,7 +328,14 @@ export const effectsBatch17: CSSEffect[] = [
 @keyframes roy-breath-cycle {
   0%, 100% { --roy-breath: 0; }
   50% { --roy-breath: 1; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ambient-breathing-surface {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "oklch-gamut-ring",
@@ -326,7 +379,15 @@ export const effectsBatch17: CSSEffect[] = [
 }
 @keyframes roy-gamut-spin {
   to { transform: rotate(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* OKLCH Gamut Ring */
+.roycss-oklch-gamut-ring {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "tactile-press-depth",
@@ -374,7 +435,15 @@ export const effectsBatch17: CSSEffect[] = [
     0 2px 8px oklch(0.3 0.1 250 / 0.35),
     inset 0 1px 0 oklch(1 0 0 / 0.3),
     inset 0 -1px 0 oklch(0.3 0.1 250 / 0.5);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Tactile Press Depth */
+.roycss-tactile-press-depth {
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "organic-noise-grain",
@@ -430,7 +499,17 @@ export const effectsBatch17: CSSEffect[] = [
 }
 @keyframes roy-grain-color {
   to { transform: rotate(360deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-organic-noise-grain::before {
+    animation: none;
+  }
+  .roycss-organic-noise-grain::after {
+    animation: none;
+  }
+}
+`,
   },
 
   /* ───────────────────────────── ANIMATIONS (8) ───────────────────────────── */
@@ -483,7 +562,15 @@ export const effectsBatch17: CSSEffect[] = [
     transform: translate(0, 100px) rotate(720deg) scale(0.8);
     opacity: 0;
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Leaf Fall Spiral */
+.roycss-leaf-fall-spiral {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "water-ripple-expand",
@@ -531,7 +618,18 @@ export const effectsBatch17: CSSEffect[] = [
     opacity: 0;
     border-width: 1px;
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-water-ripple-expand::before,
+.roycss-water-ripple-expand::after {
+    animation: none;
+  }
+  .roycss-water-ripple-expand::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "wind-sway-organic",
@@ -578,7 +676,15 @@ export const effectsBatch17: CSSEffect[] = [
   45% { transform: rotate(-3deg) skewX(-1deg); }
   70% { transform: rotate(6deg) skewX(2deg); }
   85% { transform: rotate(-2deg) skewX(-1deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Wind Sway Organic */
+.roycss-wind-sway-organic {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "scroll-cinematic-zoom",
@@ -629,7 +735,18 @@ export const effectsBatch17: CSSEffect[] = [
     0% { transform: scale(0.85); opacity: 0.7; filter: blur(6px); }
     100% { transform: scale(1); opacity: 1; filter: blur(0); }
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scroll Cinematic Zoom — uses scroll-driven animations */
+.roycss-scroll-cinematic-zoom {
+    animation: none;
+  }
+  .roycss-scroll-cinematic-zoom {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "ambient-pulse-live",
@@ -679,7 +796,22 @@ export const effectsBatch17: CSSEffect[] = [
 @keyframes roy-ambient-core {
   0%, 100% { filter: brightness(1); }
   50% { filter: brightness(1.25); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Ambient Pulse Live */
+.roycss-ambient-pulse-live {
+    animation: none;
+  }
+  .roycss-ambient-pulse-live::before,
+.roycss-ambient-pulse-live::after {
+    animation: none;
+  }
+  .roycss-ambient-pulse-live::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "haptic-bump",
@@ -707,7 +839,15 @@ export const effectsBatch17: CSSEffect[] = [
   94% { transform: translate(2px, -1px); }
   96% { transform: translate(-1px, 1px); }
   98% { transform: translate(1px, 0); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Haptic Bump */
+.roycss-haptic-bump {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "data-flow-stream",
@@ -740,7 +880,15 @@ export const effectsBatch17: CSSEffect[] = [
 @keyframes roy-data-flow {
   from { background-position: 0 0, 0 0; }
   to { background-position: 32px 0, 0 0; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Data Flow Stream */
+.roycss-data-flow-stream {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "breathing-gradient",
@@ -773,7 +921,15 @@ export const effectsBatch17: CSSEffect[] = [
     background-position: 100% 50%;
     filter: hue-rotate(60deg) brightness(1.15) saturate(1.2);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Breathing Gradient */
+.roycss-breathing-gradient {
+    animation: none;
+  }
+}
+`,
   },
 
   /* ───────────────────────────── BACKGROUNDS (5) ───────────────────────────── */
@@ -831,7 +987,14 @@ export const effectsBatch17: CSSEffect[] = [
 @keyframes roy-sun-scan {
   from { background-position: 0 0; }
   to { background-position: 0 10px; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-bg-synthwave-sun::before {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "bg-bioluminescent-deep",
@@ -898,7 +1061,18 @@ export const effectsBatch17: CSSEffect[] = [
 @keyframes roy-bio-twinkle {
   0% { opacity: 0.3; transform: translateY(0) scale(1); }
   100% { opacity: 1; transform: translateY(-6px) scale(1.4); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-bg-bioluminescent-deep::before,
+.roycss-bg-bioluminescent-deep::after {
+    animation: none;
+  }
+  .roycss-bg-bioluminescent-deep::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "bg-neural-mesh",
@@ -963,7 +1137,15 @@ export const effectsBatch17: CSSEffect[] = [
 @keyframes roy-neural-glow {
   0%, 100% { filter: brightness(0.9) saturate(1); }
   50% { filter: brightness(1.35) saturate(1.5); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Neural Mesh */
+.roycss-bg-neural-mesh {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "bg-cyber-rain",
@@ -1025,7 +1207,18 @@ export const effectsBatch17: CSSEffect[] = [
 @keyframes roy-cyber-rain-pink {
   from { background-position: 0 0; }
   to { background-position: 0 50px; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Cyber Rain */
+.roycss-bg-cyber-rain {
+    animation: none;
+  }
+  .roycss-bg-cyber-rain::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "bg-aurora-borealis-2",
@@ -1086,7 +1279,15 @@ export const effectsBatch17: CSSEffect[] = [
     background-position: 100% 50%, 0% 100%, 0% 50%, 100% 40%, 0 0;
     filter: hue-rotate(-15deg) brightness(1.05);
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Aurora Borealis 2.0 */
+.roycss-bg-aurora-borealis-2 {
+    animation: none;
+  }
+}
+`,
   },
 
   /* ───────────────────────────── TEXT (4) ───────────────────────────── */
@@ -1156,7 +1357,21 @@ export const effectsBatch17: CSSEffect[] = [
   92% { transform: translate(-2px, 1px); filter: hue-rotate(90deg); }
   94% { transform: translate(2px, -1px); filter: hue-rotate(180deg); }
   96% { transform: translate(-1px, 0); filter: hue-rotate(270deg) invert(0.1); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Cyber Glitch 2.0 — requires data-text attribute */
+.roycss-text-cyber-glitch-2 {
+    animation: none;
+  }
+  .roycss-text-cyber-glitch-2::before {
+    animation: none;
+  }
+  .roycss-text-cyber-glitch-2::after {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "text-neon-flicker-2",
@@ -1209,7 +1424,15 @@ export const effectsBatch17: CSSEffect[] = [
 @keyframes roy-neon-2-buzz {
   0%, 100% { transform: translate(0, 0); }
   50% { transform: translate(0.3px, 0); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Neon Flicker 2.0 */
+.roycss-text-neon-flicker-2 {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "text-typewriter-stream",
@@ -1248,7 +1471,15 @@ export const effectsBatch17: CSSEffect[] = [
 @keyframes roy-caret-stream {
   0%, 100% { border-inline-end-color: oklch(0.8 0.25 150); }
   50% { border-inline-end-color: transparent; }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Typewriter Stream — single-line streaming text */
+.roycss-text-typewriter-stream {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "text-depth-layered",
@@ -1295,7 +1526,15 @@ export const effectsBatch17: CSSEffect[] = [
 }
 .roycss-text-depth-layered:hover {
   transform: perspective(500px) rotateX(20deg) translateZ(20px);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Layered Depth Text */
+.roycss-text-depth-layered {
+    transition: none;
+  }
+}
+`,
   },
 
   /* ───────────────────────────── MICROINTERACTIONS (3) ───────────────────────────── */
@@ -1382,7 +1621,18 @@ export const effectsBatch17: CSSEffect[] = [
     height: 13px;
     opacity: 1;
   }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Satisfying Checkmark */
+.roycss-micro-satisfying-check {
+    animation: none;
+  }
+  .roycss-micro-satisfying-check::before {
+    animation: none;
+  }
+}
+`,
   },
   {
     id: "micro-toggle-liquid",
@@ -1443,7 +1693,19 @@ export const effectsBatch17: CSSEffect[] = [
 }
 .roycss-micro-toggle-liquid:active {
   background: oklch(0.4 0.2 150);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Liquid Toggle — checkbox driven */
+.roycss-micro-toggle-liquid {
+    transition: none;
+  }
+  .roycss-micro-toggle-liquid::before {
+    animation: none;
+    transition: none;
+  }
+}
+`,
   },
   {
     id: "micro-pull-refresh",
@@ -1522,6 +1784,20 @@ export const effectsBatch17: CSSEffect[] = [
   0% { opacity: 0; transform: rotate(0); }
   10%, 80% { opacity: 1; }
   100% { opacity: 0; transform: rotate(720deg); }
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Pull to Refresh — animated indicator */
+.roycss-micro-pull-refresh {
+    animation: none;
+  }
+  .roycss-micro-pull-refresh::before {
+    animation: none;
+  }
+  .roycss-micro-pull-refresh::after {
+    animation: none;
+  }
+}
+`,
   },
 ];

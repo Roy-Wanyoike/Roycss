@@ -29,10 +29,10 @@ import {
  *      literal-string derivation over cssCode, and a file-level grep of the
  *      52 batch sources on disk (id → source-slice map);
  *   3. decorationOnly / requiresAria full-corpus rule cross-checks with the
- *      methodology numbers pinned (267 interactive · 1,692 decorative · 90
- *      aria-required);
+ *      methodology numbers pinned (303 interactive · 1,656 decorative · 89
+ *      aria-required — post-#189 catalog-quality wave);
  *   4. cssCode-pinned spot checks across five categories;
- *   5. badge-derivation helper logic — including the 431 filter count that
+ *   5. badge-derivation helper logic — including the 1,578 filter count that
  *      backs the grid chip in roycss-page.tsx (no component tests exist in
  *      this repo: node environment, the helper is React-free by design).
  */
@@ -176,10 +176,10 @@ describe("effect-a11y motionSafe (full-corpus cross-checks)", () => {
     }
   });
 
-  it("pins the motion-safe count at 431 (docs §4 + grid chip lockstep)", () => {
+  it("pins the motion-safe count at 1,578 (docs §4 + grid chip lockstep) — the #189 catalog-quality wave added data-level reduced-motion guards to 1,148 unguarded effects", () => {
     expect(effectA11yStats.total).toBe(1959);
-    expect(effectA11yStats.motionSafe).toBe(431);
-    expect(effectA11yStats.motionCaution).toBe(1959 - 431);
+    expect(effectA11yStats.motionSafe).toBe(1578);
+    expect(effectA11yStats.motionCaution).toBe(1959 - 1578);
   });
 });
 
@@ -198,21 +198,21 @@ describe("effect-a11y decorationOnly (full-corpus rule cross-check)", () => {
     }
   });
 
-  it("pins the distribution at 267 interactive / 1,692 decorative", () => {
-    expect(effectA11yStats.interactive).toBe(267);
-    expect(effectA11yStats.decorative).toBe(1692);
+  it("pins the distribution at 303 interactive / 1,656 decorative", () => {
+    expect(effectA11yStats.interactive).toBe(303);
+    expect(effectA11yStats.decorative).toBe(1656);
     expect(effectA11yStats.interactive + effectA11yStats.decorative).toBe(1959);
   });
 
-  it("reproduces the documented methodology: 266 hover/focus/active + 6 form-state → 267 interactive", () => {
+  it("reproduces the documented methodology: 302 hover/focus/active + 1 form-only → 303 interactive", () => {
     const hfa = effects.filter((e) => HOVER_FOCUS_ACTIVE.test(stripComments(e.cssCode)));
     const formOnly = effects.filter((e) => {
       const css = stripComments(e.cssCode);
       return !HOVER_FOCUS_ACTIVE.test(css) && FORM_STATE_PSEUDO.some((p) => css.includes(p));
     });
-    expect(hfa.length).toBe(266);
+    expect(hfa.length).toBe(302);
     expect(formOnly.map((e) => e.id)).toEqual(["ferrum-accordion-slide"]);
-    // 266 + 6 form-state effects (5 of which also match hover/focus/active) = 267.
+    // 302 + 6 form-state effects (5 of which also match hover/focus/active) = 303.
     expect(effectA11yStats.interactive).toBe(hfa.length + formOnly.length);
   });
 });
@@ -232,8 +232,8 @@ describe("effect-a11y requiresAria (full-corpus rule cross-check)", () => {
     }
   });
 
-  it("pins the aria-required count at 90", () => {
-    expect(effectA11yStats.ariaRequired).toBe(90);
+  it("pins the aria-required count at 89", () => {
+    expect(effectA11yStats.ariaRequired).toBe(89);
   });
 
   it("suppresses the redundant transparent-text note under gradient-clipped text", () => {
@@ -243,7 +243,7 @@ describe("effect-a11y requiresAria (full-corpus rule cross-check)", () => {
     const gradientClipped = effects.filter((e) =>
       /background-clip:\s*text\b/.test(stripComments(e.cssCode)),
     );
-    expect(gradientClipped.length).toBe(47);
+    expect(gradientClipped.length).toBe(46);
     for (const e of gradientClipped) {
       const reason = effectA11y[e.id].requiresAria as EffectAriaReason;
       expect(reason).toBeDefined();
@@ -266,23 +266,24 @@ describe("effect-a11y requiresAria (full-corpus rule cross-check)", () => {
    ════════════════════════════════════════════════════════════════ */
 
 describe("effect-a11y cssCode-pinned spot checks", () => {
-  it("pulse-glow (animations) is motion-caution + decorative — cssCode has no guard and no interaction", () => {
+  it("pulse-glow (animations) is motion-safe + decorative — the #189 wave added its data-level reduced-motion guard", () => {
     const effect = effects.find((e) => e.id === "pulse-glow")!;
     expect(effect.category).toBe("animations");
-    expect(effect.cssCode).not.toContain("prefers-reduced-motion");
+    expect(effect.cssCode).toContain("@media (prefers-reduced-motion: reduce)");
     expect(effect.cssCode).not.toMatch(/:(hover|active|focus)\b/);
     expect(effectA11y["pulse-glow"]).toEqual({
-      motionSafe: false,
+      motionSafe: true,
       decorationOnly: true,
     });
   });
 
-  it("hover-scale (hover) is interactive — :hover IS interaction (honest decision #1)", () => {
+  it("hover-scale (hover) is interactive + motion-safe — :hover IS interaction (honest decision #1) and the #189 wave added its reduced-motion guard", () => {
     const effect = effects.find((e) => e.id === "hover-scale")!;
     expect(effect.category).toBe("hover");
     expect(effect.cssCode).toMatch(/:hover\b/);
+    expect(effect.cssCode).toContain("@media (prefers-reduced-motion: reduce)");
     expect(effectA11y["hover-scale"]).toEqual({
-      motionSafe: false,
+      motionSafe: true,
       decorationOnly: false,
     });
   });
@@ -327,24 +328,21 @@ describe("effect-a11y cssCode-pinned spot checks", () => {
    ════════════════════════════════════════════════════════════════ */
 
 describe("effect-a11y badge helper", () => {
-  it("yields no badges for a motion-safe interactive effect (ferrum-curtain-in)", () => {
-    // Ships a reduced-motion guard AND a :focus-visible ring helper.
+  it("yields exactly one muted Decorative badge for a formerly-interactive effect whose foreign focus-ring was stripped (ferrum-curtain-in)", () => {
+    // The #189 catalog-quality repair removed the foreign :focus ring that
+    // shipped inside curtain-in's cssCode — it is now decoration-only.
     expect(effectA11y["ferrum-curtain-in"]).toEqual({
       motionSafe: true,
-      decorationOnly: false,
+      decorationOnly: true,
     });
-    expect(getEffectA11yBadges("ferrum-curtain-in")).toEqual([]);
+    const badges = getEffectA11yBadges("ferrum-curtain-in");
+    expect(badges).toHaveLength(1);
+    expect(badges[0]).toMatchObject({ key: "decorative", label: "Decorative", tone: "muted" });
   });
 
-  it("yields exactly one amber Motion caution badge for an unguarded interactive effect (hover-scale)", () => {
+  it("yields no badges for a motion-safe interactive effect (hover-scale) — guard + interaction cancel both badges", () => {
     const badges = getEffectA11yBadges("hover-scale");
-    expect(badges).toHaveLength(1);
-    expect(badges[0]).toMatchObject({
-      key: "motion-caution",
-      label: "Motion caution",
-      tone: "amber",
-    });
-    expect(badges[0].title).toMatch(/prefers-reduced-motion/);
+    expect(badges).toEqual([]);
   });
 
   it("yields exactly one muted Decorative badge for a guarded decoration-only effect (vfx-crt-effect)", () => {
@@ -368,9 +366,9 @@ describe("effect-a11y badge helper", () => {
     }
   });
 
-  it("filters the catalog to exactly 431 motion-safe effects (backs the grid chip count)", () => {
+  it("filters the catalog to exactly 1,578 motion-safe effects (backs the grid chip count)", () => {
     const motionSafe = effects.filter((e) => isMotionSafeEffect(e.id));
-    expect(motionSafe.length).toBe(431);
+    expect(motionSafe.length).toBe(1578);
     expect(effectA11yStats.motionSafe).toBe(motionSafe.length);
   });
 

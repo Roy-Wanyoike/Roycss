@@ -26,7 +26,14 @@ export const effectsBatch23: CSSEffect[] = [
   0% { filter: blur(12px); }
   100% { filter: blur(0px); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-blur-in {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -45,7 +52,14 @@ export const effectsBatch23: CSSEffect[] = [
   0% { filter: blur(0px); }
   100% { filter: blur(14px); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-blur-out {
+    animation: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -70,7 +84,14 @@ export const effectsBatch23: CSSEffect[] = [
     0%, 100% { opacity: 1; }
     50%      { opacity: 0.4; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-skeleton-pulse {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -100,7 +121,14 @@ export const effectsBatch23: CSSEffect[] = [
     0%   { background-position: 200% 0; }
     100% { background-position: -200% 0; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-skeleton-shimmer {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -139,7 +167,14 @@ export const effectsBatch23: CSSEffect[] = [
     0%   { inset-inline-start: -100%; }
     100% { inset-inline-start: 100%; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-skeleton-wave::after {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -191,7 +226,21 @@ export const effectsBatch23: CSSEffect[] = [
     0%   { background-position: 200% 0; }
     100% { background-position: -200% 0; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-skeleton-text::before,
+.roycss-ferrum-skeleton-text::after {
+    animation: none;
+  }
+  .roycss-ferrum-skeleton-text::after {
+    animation: none;
+  }
+  .roycss-ferrum-skeleton-text > * {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -251,7 +300,14 @@ export const effectsBatch23: CSSEffect[] = [
     0%   { background-position: 200% 0; }
     100% { background-position: -200% 0; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-skeleton-card-avatar {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -292,7 +348,14 @@ export const effectsBatch23: CSSEffect[] = [
     0%   { background-position: 200% 0; }
     100% { background-position: -200% 0; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-skeleton-card-line {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -319,7 +382,14 @@ export const effectsBatch23: CSSEffect[] = [
     0%   { background-position: 200% 0; }
     100% { background-position: -200% 0; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-skeleton-card-body {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -358,7 +428,14 @@ export const effectsBatch23: CSSEffect[] = [
     0%   { inset-inline-start: -100%; }
     100% { inset-inline-start: 100%; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-skeleton-circle::after {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -413,7 +490,14 @@ export const effectsBatch23: CSSEffect[] = [
     0%   { background-position: 200% 0; }
     100% { background-position: -200% 0; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-skeleton-grid-img {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -423,33 +507,30 @@ export const effectsBatch23: CSSEffect[] = [
   description: "A skeleton loading placeholder with shimmer or pulse motion",
   tags: ["skeleton", "loading", "skeleton-grid-line", "grid", "animated"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-skeleton-grid-line {
-    height: 12px;
-    border-radius: 4px;
-    background-color: oklch(0.907 0.0 89.88);
-    background-image: linear-gradient(
-        90deg, oklch(0.907 0.0 89.88) 0%, oklch(0.955 0.0 89.88) 40%, oklch(0.979 0.0 89.88) 50%, oklch(0.955 0.0 89.88) 60%, oklch(0.907 0.0 89.88) 100%
-    );
-    background-size: 200% 100%;
-    animation: roy-ferrum-skeleton-grid 1.8s ease-in-out infinite;
+  cssCode: `/* Skeleton Grid Line */
+.roycss-ferrum-skeleton-grid-line {
+  height: 12px;
+  border-radius: 4px;
+  background-color: oklch(0.907 0.0 89.88);
+  background-image: linear-gradient(
+    90deg, oklch(0.907 0.0 89.88) 0%, oklch(0.955 0.0 89.88) 40%, oklch(0.979 0.0 89.88) 50%, oklch(0.955 0.0 89.88) 60%, oklch(0.907 0.0 89.88) 100%
+  );
+  background-size: 200% 100%;
+  animation: roy-ferrum-skeleton-grid 1.8s ease-in-out infinite;
 }
-.roycss-ferrum-skeleton-grid-item:nth-child(2) .roycss-ferrum-skeleton-grid-img,
-.roycss-ferrum-skeleton-grid-item:nth-child(2) .roycss-ferrum-skeleton-grid-line { animation-delay: 0.15s; }
-.roycss-ferrum-skeleton-grid-item:nth-child(3) .roycss-ferrum-skeleton-grid-img,
-.roycss-ferrum-skeleton-grid-item:nth-child(3) .roycss-ferrum-skeleton-grid-line { animation-delay: 0.3s; }
-.roycss-ferrum-skeleton-grid-item:nth-child(4) .roycss-ferrum-skeleton-grid-img,
-.roycss-ferrum-skeleton-grid-item:nth-child(4) .roycss-ferrum-skeleton-grid-line { animation-delay: 0.1s; }
-.roycss-ferrum-skeleton-grid-item:nth-child(5) .roycss-ferrum-skeleton-grid-img,
-.roycss-ferrum-skeleton-grid-item:nth-child(5) .roycss-ferrum-skeleton-grid-line { animation-delay: 0.25s; }
-.roycss-ferrum-skeleton-grid-item:nth-child(6) .roycss-ferrum-skeleton-grid-img,
-.roycss-ferrum-skeleton-grid-item:nth-child(6) .roycss-ferrum-skeleton-grid-line { animation-delay: 0.4s; }
 
 @keyframes roy-ferrum-skeleton-grid {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
 
-    0%   { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-
-}`,
+@media (prefers-reduced-motion: reduce) {
+  /* Skeleton Grid Line */
+.roycss-ferrum-skeleton-grid-line {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -471,7 +552,14 @@ export const effectsBatch23: CSSEffect[] = [
     0%, 100% { background-position: 0% 50%; }
     50%      { background-position: 100% 50%; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-skeleton-gradient {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -492,7 +580,14 @@ export const effectsBatch23: CSSEffect[] = [
     0%, 100% { opacity: 1; }
     50%      { opacity: 0.2; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-skeleton-blink {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -513,7 +608,14 @@ export const effectsBatch23: CSSEffect[] = [
     0%, 100% { opacity: 1; background-color: oklch(0.907 0.0 89.88); }
     50%      { opacity: 0.3; background-color: oklch(0.858 0.0 89.88); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-skeleton-fade {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -558,7 +660,17 @@ export const effectsBatch23: CSSEffect[] = [
 }
 .roycss-ferrum-toggle-switch:focus-visible {
     box-shadow: 0 0 0 3px color-mix(in oklch, oklch(0.673 0.162 144.21) 30%, transparent);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-toggle-switch {
+    transition: none;
+  }
+  .roycss-ferrum-toggle-switch::before {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -611,7 +723,20 @@ export const effectsBatch23: CSSEffect[] = [
     50%  { transform: scale(1.15); }
     100% { transform: scale(1); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-checkbox-anim {
+    transition: none;
+  }
+  .roycss-ferrum-checkbox-anim:checked {
+    animation: none;
+  }
+  .roycss-ferrum-checkbox-anim::before {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -663,7 +788,20 @@ export const effectsBatch23: CSSEffect[] = [
     70%  { box-shadow: 0 0 0 8px color-mix(in oklch, oklch(0.658 0.169 248.81) 0%, transparent); }
     100% { box-shadow: 0 0 0 0 color-mix(in oklch, oklch(0.658 0.169 248.81) 0%, transparent); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-radio-pulse {
+    transition: none;
+  }
+  .roycss-ferrum-radio-pulse::after {
+    transition: none;
+  }
+  .roycss-ferrum-radio-pulse:checked {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -693,7 +831,17 @@ export const effectsBatch23: CSSEffect[] = [
 }
 .roycss-ferrum-input-focus-glow:focus::placeholder {
     color: oklch(0.845 0.0 89.88);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-input-focus-glow {
+    transition: none;
+  }
+  .roycss-ferrum-input-focus-glow::placeholder {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -703,8 +851,12 @@ export const effectsBatch23: CSSEffect[] = [
   description: "A form input effect with focus or validation feedback",
   tags: ["input", "form", "input-float-label-wrapper", "float"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-input-float-label-wrapper {
-    position: relative;
+  cssCode: `/* Float Label Wrapper — positioning context for the CSS-only float-label input */
+.roycss-ferrum-input-float-label-wrapper {
+  position: relative;
+  display: block;
+  inline-size: 100%;
+  margin-block: 6px;
 }`,
 },
 
@@ -728,7 +880,14 @@ export const effectsBatch23: CSSEffect[] = [
 }
 .roycss-ferrum-input-float-label::placeholder {
     color: transparent;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-input-float-label {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -738,29 +897,35 @@ export const effectsBatch23: CSSEffect[] = [
   description: "A form input effect with focus or validation feedback",
   tags: ["input", "form", "input-float-label-label", "float"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-input-float-label-label {
-    position: absolute;
-    top: 50%;
-    left: 14px;
-    transform: translateY(-50%);
-    font-size: 14px;
-    color: oklch(0.683 0.0 89.88);
-    pointer-events: none;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    background-color: oklch(1 0 0);
-    padding: 0 4px;
+  cssCode: `/* Float Label Label */
+.roycss-ferrum-input-float-label-label {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: oklch(0.683 0.0 89.88);
+  pointer-events: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: oklch(1 0 0);
+  padding: 0 4px;
 }
+
 .roycss-ferrum-input-float-label:focus ~ .roycss-ferrum-input-float-label-label,
 .roycss-ferrum-input-float-label:not(:placeholder-shown) ~ .roycss-ferrum-input-float-label-label {
-    top: 0;
-    font-size: 11px;
-    color: oklch(0.579 0.247 288.24);
-    transform: translateY(-50%);
+  top: 0;
+  font-size: 11px;
+  color: oklch(0.579 0.247 288.24);
+  transform: translateY(-50%);
 }
-.roycss-ferrum-input-float-label:focus {
-    border-color: oklch(0.579 0.247 288.24);
-    box-shadow: 0 0 0 3px color-mix(in oklch, oklch(0.579 0.247 288.24) 15%, transparent);
-}`,
+
+@media (prefers-reduced-motion: reduce) {
+  /* Float Label Label */
+.roycss-ferrum-input-float-label-label {
+    transition: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -817,7 +982,14 @@ export const effectsBatch23: CSSEffect[] = [
     opacity: 1;
     visibility: visible;
     transform: translateX(-50%) translateY(0);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-tooltip-fade {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -865,7 +1037,17 @@ export const effectsBatch23: CSSEffect[] = [
         transform: translateX(100%);
     }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-notification-slide-in {
+    animation: none;
+  }
+  .roycss-ferrum-notification-slide-in.roycss-ferrum-exit {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -926,7 +1108,17 @@ export const effectsBatch23: CSSEffect[] = [
     0%   { background-position: -200% 0; }
     100% { background-position: 200% 0; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-progress-bar-fill {
+    transition: none;
+  }
+  .roycss-ferrum-progress-bar-fill::after {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -964,7 +1156,20 @@ export const effectsBatch23: CSSEffect[] = [
 }
 .roycss-ferrum-ripple-click:not(:active)::after {
     transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-ripple-click::after {
+    transition: none;
+  }
+  .roycss-ferrum-ripple-click:active::after {
+    transition: none;
+  }
+  .roycss-ferrum-ripple-click:not(:active)::after {
+    transition: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -992,7 +1197,14 @@ export const effectsBatch23: CSSEffect[] = [
     max-height: 500px;
     opacity: 1;
     padding: 16px;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-accordion-slide {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -1002,8 +1214,16 @@ export const effectsBatch23: CSSEffect[] = [
   description: "A navigation component with motion or interaction feedback",
   tags: ["accordion", "navigation", "accordion-trigger", "trigger"],
   previewType: "box",
-  cssCode: `.roycss-ferrum-accordion-trigger {
-    display: none;
+  cssCode: `/* Accordion Trigger — visually-hidden checkbox that drives the CSS-only accordion
+   (keep it focusable: opacity 0 + 1px box instead of display: none) */
+.roycss-ferrum-accordion-trigger {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: 0;
+  opacity: 0;
+  appearance: none;
+  pointer-events: none;
 }`,
 },
 
@@ -1041,7 +1261,17 @@ export const effectsBatch23: CSSEffect[] = [
 .roycss-ferrum-accordion-trigger:checked ~ .roycss-ferrum-accordion-trigger-label::after {
     content: '\\2212';
     transform: rotate(180deg);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-accordion-trigger-label {
+    transition: none;
+  }
+  .roycss-ferrum-accordion-trigger-label::after {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -1103,7 +1333,17 @@ export const effectsBatch23: CSSEffect[] = [
 .roycss-ferrum-tab-underline:active::after {
     width: 100%;
     left: 0;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-tab-underline {
+    transition: none;
+  }
+  .roycss-ferrum-tab-underline::after {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -1149,7 +1389,14 @@ export const effectsBatch23: CSSEffect[] = [
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-dropdown-slide {
+    transition: none;
+  }
+}
+`,
 },
 
 {
@@ -1179,7 +1426,14 @@ export const effectsBatch23: CSSEffect[] = [
 }
 .roycss-ferrum-dropdown-slide-item:last-child {
     border-radius: 0 0 8px 8px;
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-dropdown-slide-item {
+    transition: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -1203,7 +1457,14 @@ export const effectsBatch23: CSSEffect[] = [
     50%  { clip-path: polygon(50% 15%, 85% 85%, 15% 85%); }
     100% { clip-path: polygon(50% 0%, 100% 100%, 0% 100%); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-triangle-reveal {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1235,7 +1496,14 @@ export const effectsBatch23: CSSEffect[] = [
         0% 0%, 0% 0%
     ); opacity: 1; }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-cross-reveal {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1258,7 +1526,14 @@ export const effectsBatch23: CSSEffect[] = [
     100% { clip-path: polygon(50% 0%, 100% 25%, 100% 75%,
                               50% 100%, 0% 75%, 0% 25%); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-hexagon-reveal {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1284,7 +1559,14 @@ export const effectsBatch23: CSSEffect[] = [
                               79% 91%, 50% 70%, 21% 91%, 32% 57%,
                               2% 35%, 39% 35%); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-star-reveal {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1303,7 +1585,14 @@ export const effectsBatch23: CSSEffect[] = [
     0%   { clip-path: inset(0 100% 0 0); }
     100% { clip-path: inset(0 0% 0 0); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-slide-left-reveal {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1322,7 +1611,14 @@ export const effectsBatch23: CSSEffect[] = [
     0%   { clip-path: inset(100% 0 0 0); }
     100% { clip-path: inset(0% 0 0 0); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-slide-down-reveal {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1342,7 +1638,14 @@ export const effectsBatch23: CSSEffect[] = [
     50%  { clip-path: polygon(0% 0%, 60% 0%, 40% 100%, 0% 100%); }
     100% { clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-wipe-reveal {
+    animation: none;
+  }
+}
+`,
 },
 
   // ═══════════════════════════════════════════════════════════════
@@ -1365,7 +1668,14 @@ export const effectsBatch23: CSSEffect[] = [
   0% { filter: grayscale(1); }
   100% { filter: grayscale(0); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-grayscale-in {
+    animation: none;
+  }
+}
+`,
 },
 
 {
@@ -1384,7 +1694,14 @@ export const effectsBatch23: CSSEffect[] = [
   0% { filter: grayscale(0); }
   100% { filter: grayscale(1); }
 
-}`,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-grayscale-out {
+    animation: none;
+  }
+}
+`,
 },
 
 ];

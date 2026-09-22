@@ -3,7 +3,7 @@
  *
  * Regenerate with:  bun run gen:a11y   (or: bun run scripts/generate-effect-a11y.ts)
  *
- * Source: the 1,959-effect catalog (src/lib/effects-batch-{1..52}.ts via
+ * Source: the 1,973-effect catalog (src/lib/effects-batch-{1..53}.ts via
  * src/lib/roycss-effects.ts). One derived a11y record per effect id.
  * Consumers: src/lib/effect-a11y-badges.ts (badge derivation),
  *            src/components/roycss/effect-card.tsx (card pills),
@@ -26,8 +26,8 @@
  *     disables every effect's animation when the user opts out. The flag only
  *     means the effect has no guard of its own for standalone copy-paste use.
  *
- * Distribution (pinned by tests/unit/effect-a11y.test.ts): 1959 total · 1578 motion-safe · 381 motion-caution ·
- *   1656 decorative · 303 interactive · 89 aria-required.
+ * Distribution (pinned by tests/unit/effect-a11y.test.ts): 1973 total · 1592 motion-safe · 381 motion-caution ·
+ *   1668 decorative · 305 interactive · 89 aria-required.
  */
 
 /** The known text-hiding reasons (highest priority first). */
@@ -2008,6 +2008,20 @@ export const effectA11y: Record<string, EffectA11y> = {
   "vfx-liquid-distortion": { motionSafe: true, decorationOnly: true },
   "vfx-spotlight-tracking": { motionSafe: true, decorationOnly: true },
   "vfx-mouse-glow": { motionSafe: true, decorationOnly: false },
+  "marquee-loop-seamless": { motionSafe: true, decorationOnly: true },
+  "marquee-rtl-safe": { motionSafe: true, decorationOnly: true },
+  "marquee-pause-hover": { motionSafe: true, decorationOnly: false },
+  "marquee-vertical-ticker": { motionSafe: true, decorationOnly: true },
+  "marquee-ribbon-diagonal": { motionSafe: true, decorationOnly: true },
+  "marquee-news-live": { motionSafe: true, decorationOnly: true },
+  "carousel-scroll-snap": { motionSafe: true, decorationOnly: true },
+  "carousel-fade-cycle": { motionSafe: true, decorationOnly: true },
+  "carousel-slide-cycle": { motionSafe: true, decorationOnly: true },
+  "carousel-3d-coverflow": { motionSafe: true, decorationOnly: true },
+  "carousel-progress": { motionSafe: true, decorationOnly: true },
+  "slider-range-modern": { motionSafe: true, decorationOnly: true },
+  "slider-range-gradient-fill": { motionSafe: true, decorationOnly: true },
+  "slider-toggle-switch": { motionSafe: true, decorationOnly: false },
 };
 
 /** Look up the derived tags for an effect id (undefined for unknown ids). */
@@ -2026,10 +2040,10 @@ export interface EffectA11yStats {
 }
 
 export const effectA11yStats: EffectA11yStats = {
-  total: 1959,
-  motionSafe: 1578,
+  total: 1973,
+  motionSafe: 1592,
   motionCaution: 381,
-  interactive: 303,
-  decorative: 1656,
+  interactive: 305,
+  decorative: 1668,
   ariaRequired: 89,
 };

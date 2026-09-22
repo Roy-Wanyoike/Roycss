@@ -1,8 +1,8 @@
 /**
  * RoyCSS Effect Accessibility Tag Generator (PF-004 — code half)
  *
- * Derives per-effect accessibility tags from the 1,959-effect catalog
- * (src/lib/effects-batch-{1..52}.ts, imported through src/lib/roycss-effects.ts)
+ * Derives per-effect accessibility tags from the 1,973-effect catalog
+ * (src/lib/effects-batch-{1..53}.ts, imported through src/lib/roycss-effects.ts)
  * and emits them as a standalone TypeScript module at src/lib/effect-a11y.ts:
  *
  *   Record<effectId, { motionSafe, decorationOnly, requiresAria? }>
@@ -56,7 +56,7 @@
  * scripts/generate-docs-index.ts → src/lib/docs-data.ts. Drift between the
  * catalog and the generated module is instead gated by
  * tests/unit/effect-a11y.test.ts (id-set equality, per-effect rule
- * re-derivation, and a file-level grep of the 52 batch sources), so CI
+ * re-derivation, and a file-level grep of the 53 batch sources), so CI
  * fails if the catalog changes without a regeneration.
  *
  * See docs/EFFECT-A11Y-TIERS.md for the user-facing tier documentation.
@@ -188,7 +188,7 @@ function main() {
   lines.push(" *");
   lines.push(" * Regenerate with:  bun run gen:a11y   (or: bun run scripts/generate-effect-a11y.ts)");
   lines.push(" *");
-  lines.push(" * Source: the 1,959-effect catalog (src/lib/effects-batch-{1..52}.ts via");
+  lines.push(" * Source: the 1,973-effect catalog (src/lib/effects-batch-{1..53}.ts via");
   lines.push(" * src/lib/roycss-effects.ts). One derived a11y record per effect id.");
   lines.push(" * Consumers: src/lib/effect-a11y-badges.ts (badge derivation),");
   lines.push(" *            src/components/roycss/effect-card.tsx (card pills),");

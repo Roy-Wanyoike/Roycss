@@ -7,12 +7,12 @@
 > `bun run ai:check` and `tests/unit/ai-artifacts.test.ts`.
 > Companion artifacts: `roycss.system-prompt.md` (paste-ready prompt),
 > `roycss.grammar.json` (machine-readable grammar),
-> `roycss.training-pairs.jsonl` (383 instruction→output pairs).
+> `roycss.training-pairs.jsonl` (385 instruction→output pairs).
 
 ## What RoyCSS is
 
 RoyCSS (npm package `roycss`, v2.0.0) is a pure-CSS effects framework:
-1,959 production-ready effect classes across 29 categories —
+1,973 production-ready effect classes across 29 categories —
 zero JavaScript runtime, OKLCH colors, logical properties, container queries, and
 scroll-driven animations. One global stylesheet; no build step required.
 
@@ -23,7 +23,7 @@ Site: https://roycss.com · repo: https://github.com/Roy-Wanyoike/Roycss
 1. **Every effect class is fully prefixed:** `roycss-<effect-id>`. Examples straight
    from the catalog: `.roycss-btn-glow`, `.roycss-hover-push-up`, `.roycss-text-shimmer`.
 2. **Effect ids are lowercase kebab-case**, matching `^roycss-[a-z0-9]+(?:-[a-z0-9]+)*$` (validated
-   against every one of the 1,969 real class names). Digits are allowed —
+   against every one of the 1,983 real class names). Digits are allowed —
    3 catalog ids start with a digit (`3d-book`, `3d-poster`, `3d-gallery`).
 3. **The class is the id.** For every effect except one, the class is exactly `roycss-` + the effect id. The single documented outlier: the effect `card-gradient-border-b19` ships the class `roycss-card-gradient-border-b19-v2`.
 4. **Category-led stems are common but not guaranteed.** Most ids start with a category
@@ -126,14 +126,14 @@ Three dots bouncing in sequence for a playful loading state
 
 | Fact | Value |
 |---|---|
-| Effects | 1,959 |
+| Effects | 1,973 |
 | Categories | 29 |
-| Effect (primary) classes | 1,959 — one per effect |
+| Effect (primary) classes | 1,973 — one per effect |
 | Auxiliary classes | 9 |
 | Base utility classes | 1 (`.roycss-sr-only`) |
-| Total classes in the stylesheet | 1,969 |
+| Total classes in the stylesheet | 1,983 |
 | Modifier-suffix classes | 0 (there are none) |
-| Training pairs in `roycss.training-pairs.jsonl` | 383 |
+| Training pairs in `roycss.training-pairs.jsonl` | 385 |
 
 ## Verifying — the ground-truth tools
 

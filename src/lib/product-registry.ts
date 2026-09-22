@@ -132,7 +132,7 @@ export const PRODUCTS: ProductEntry[] = [
     ["ai", "scaffold", "bootstrap"]),
   entry("roy-search", "RoySearch", "ai", "pro", "ready", "Search",
     "AI semantic search across effects & recipes.",
-    "RoySearch indexes all 1,959 effects and 18 recipes and lets you search by meaning — 'subtle entrance animation' returns the right 5 cards.",
+    "RoySearch indexes all 1,973 effects and 18 recipes and lets you search by meaning — 'subtle entrance animation' returns the right 5 cards.",
     "Search RoyCSS", "@/components/roycss/pro/roy-search",
     ["ai", "search", "semantic"]),
 

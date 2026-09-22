@@ -33,9 +33,9 @@ import { PRODUCTS } from "./product-registry";
 import pkg from "../../package.json";
 
 /** Total shipped effects — derived from the real catalog. */
-export const EFFECT_COUNT = effects.length; // 1,959
+export const EFFECT_COUNT = effects.length; // 1,973
 
-/** "1,959" — pre-formatted for display copy. */
+/** "1,973" — pre-formatted for display copy. */
 export const EFFECT_COUNT_FORMATTED =
   EFFECT_COUNT.toLocaleString("en-US");
 
@@ -60,5 +60,5 @@ export const VERSION = pkg.version; // "2.0.0"
 export const VERSION_BADGE = `v${VERSION.split(".")[0]}.${VERSION.split(".")[1]}`;
 
 /** Sizes of the shipped stylesheet, for honest docs/FAQ copy. */
-export const FULL_CSS_MIN_BYTES = 1_352_590; // dist/roycss.min.css (pinned by test)
-export const FULL_CSS_MIN_GZ_KB = 201; // gzip of dist/roycss.min.css (pinned by test)
+export const FULL_CSS_MIN_BYTES = 1_469_331; // dist/roycss.min.css (pinned by test)
+export const FULL_CSS_MIN_GZ_KB = 209; // gzip of dist/roycss.min.css (pinned by test)

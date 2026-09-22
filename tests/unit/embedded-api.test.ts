@@ -84,16 +84,16 @@ describe("GET /api/v1/effects (list)", () => {
     });
   });
 
-  it("serves the full embedded catalog (1,959 effects)", () => {
+  it("serves the full embedded catalog (1,973 effects)", () => {
     const body = asList(get("/effects", "limit=200"));
-    // 1959 = 9 full pages of 200 + one page of 159
-    expect(body.meta.total).toBe(1959);
+    // 1973 = 9 full pages of 200 + one page of 173
+    expect(body.meta.total).toBe(1973);
     expect(body.meta.totalPages).toBe(10);
     expect(get("/effects", "page=10&limit=200").body).toMatchObject({
-      meta: { page: 10, total: 1959, totalPages: 10 },
+      meta: { page: 10, total: 1973, totalPages: 10 },
     });
     const lastPage = asList(get("/effects", "page=10&limit=200"));
-    expect(lastPage.data.length).toBe(159);
+    expect(lastPage.data.length).toBe(173);
   });
 
   it("respects limit and echoes it in meta", () => {

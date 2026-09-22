@@ -82,15 +82,10 @@ export default function AccessibilityPage() {
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`/* Real code from dist/roycss.css */
-.roycss-ferrum-focus-visible-ring:focus-visible {
-  outline: 3px solid oklch(0.546 0.215 262.88);
-  outline-offset: 2px;
-  border-radius: 4px;
-  transition: outline-color 0.15s ease;
-}
-
-.roycss-ferrum-focus-visible-ring:focus:not(:focus-visible) {
-  outline: none;
+.roycss-ferrum-toggle-switch:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(
+    in oklch, oklch(0.673 0.162 144.21) 30%, transparent
+  );
 }`}</code>
       </pre>
 

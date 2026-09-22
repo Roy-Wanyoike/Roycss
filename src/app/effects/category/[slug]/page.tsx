@@ -319,7 +319,7 @@ export default async function CategoryLandingPage({
                 <kbd className="inline-flex items-center rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-xs text-foreground">
                   ⌘K
                 </kbd>{" "}
-                anywhere to search all 1,959 effects
+                anywhere to search all 1,973 effects
               </span>
             </div>
           </div>

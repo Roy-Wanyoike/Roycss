@@ -22,6 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { authRequest } from "@/lib/auth-request";
 import { useAuth } from "./auth-context";
 import { useAuthSheetStore } from "./auth-sheet-store";
 
@@ -56,7 +57,9 @@ function ForgotPasswordDialog({
     if (!email.trim()) return;
     setSubmitting(true);
     try {
-      const res = await fetch("/api/auth/forgot-password", {
+      // Bounded request (issue #163) — rejects with a safe actionable
+      // message on timeout / network failure instead of hanging.
+      const res = await authRequest("/api/auth/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.trim() }),

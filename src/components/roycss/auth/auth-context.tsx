@@ -10,6 +10,7 @@ import {
   type ReactNode,
 } from "react";
 import type { AuthUser } from "@/lib/auth-client";
+import { authRequest } from "@/lib/auth-request";
 
 /**
  * AuthProvider — client-side context that mirrors the httpOnly cookie
@@ -69,7 +70,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [fetchMe]);
 
   const login = useCallback(async (email: string, password: string) => {
-    const res = await fetch("/api/auth/login", {
+    // Bounded request (issue #163): rejects with a safe, actionable
+    // error on timeout / network failure instead of hanging forever.
+    const res = await authRequest("/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -83,7 +86,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const register = useCallback(async (name: string, email: string, password: string) => {
-    const res = await fetch("/api/auth/register", {
+    const res = await authRequest("/api/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, password }),

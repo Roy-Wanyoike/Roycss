@@ -560,35 +560,41 @@ function ThemeToggle() {
   const [dark, setDark] = useState(true);
 
   useEffect(() => {
-    // Load saved preference on mount (deferred to satisfy set-state-in-effect rule)
+    // Sync the icon with the theme the pre-hydration init script
+    // (src/app/layout.tsx) already applied to <html> before first paint.
+    // The DOM class — not localStorage — is the source of truth here, so a
+    // stored "system" preference resolves exactly like the script does.
+    //
+    // Issue #160 root cause: the old mount effect WROTE `roycss-theme=dark`
+    // on mount, clobbering the stored "light" value before the deferred
+    // read below ran (so the read saw its own write and stayed dark).
+    // This effect must only ever READ; the toggle handler is the writer.
+    // Deferred via rAF to satisfy the set-state-in-effect rule.
     const id = requestAnimationFrame(() => {
-      const saved = localStorage.getItem("roycss-theme");
-      if (saved === "light") {
-        setDark(false);
-        return;
-      }
-      // Respect prefers-color-scheme if no saved preference
-      if (!saved && window.matchMedia("(prefers-color-scheme: light)").matches) {
-        setDark(false);
-      }
+      setDark(document.documentElement.classList.contains("dark"));
     });
     return () => cancelAnimationFrame(id);
   }, []);
 
-  useEffect(() => {
+  const toggleTheme = () => {
+    const next = !dark;
+    setDark(next);
+    // Apply + persist ONLY on explicit user intent (issue #160). Keep the
+    // .dark class and the color-scheme inline style in agreement — the
+    // init script sets both, so the toggle must too.
     const root = document.documentElement;
-    if (dark) {
-      root.classList.add("dark");
-      localStorage.setItem("roycss-theme", "dark");
-    } else {
-      root.classList.remove("dark");
-      localStorage.setItem("roycss-theme", "light");
+    root.classList.toggle("dark", next);
+    root.style.colorScheme = next ? "dark" : "light";
+    try {
+      localStorage.setItem("roycss-theme", next ? "dark" : "light");
+    } catch {
+      /* noop */
     }
-  }, [dark]);
+  };
 
   return (
     <button
-      onClick={() => setDark(!dark)}
+      onClick={toggleTheme}
       className="flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-foreground transition-all hover:-translate-y-0.5 cursor-pointer"
       aria-label="Toggle theme"
     >

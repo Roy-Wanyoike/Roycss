@@ -22,8 +22,15 @@ import {
  *
  * Sets BOTH the `.dark` class AND `color-scheme` inline style so they
  * always agree (prevents the dark-class + light-color-scheme mismatch).
+ *
+ * Issue #160: stored values are validated (light/dark/system); missing,
+ * corrupt, or "system" values fall back to the OS preference. These
+ * semantics are the exact mirror of `resolveInitialDark()` in
+ * src/components/ui-library/foundation/theme-storage.ts and are kept in
+ * lockstep by tests/unit/theme-persistence.test.ts. This script never
+ * WRITES the key — only the user's toggle (ThemeToggle) does.
  */
-const themeInitScript = `(function(){try{var k='roycss-theme';var s=localStorage.getItem(k);var d=s==='dark'||((!s||s==='system')&&window.matchMedia('(prefers-color-scheme: dark)').matches);var r=document.documentElement;r.classList.toggle('dark',d);r.style.colorScheme=d?'dark':'light';}catch(e){}})();`;
+const themeInitScript = `(function(){try{var k='roycss-theme';var s=localStorage.getItem(k);var v=(s==='light'||s==='dark'||s==='system')?s:'system';var d=v==='dark'||(v==='system'&&window.matchMedia('(prefers-color-scheme: dark)').matches);var r=document.documentElement;r.classList.toggle('dark',d);r.style.colorScheme=d?'dark':'light';}catch(e){}})();`;
 
 /**
  * JSON-LD structured data for SEO rich results.

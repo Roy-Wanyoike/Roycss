@@ -16,10 +16,12 @@
  *      never released.
  *
  * TOOL_COUNT is the one hand-maintained number: it counts the tool
- * registry in src/components/roycss/platform-tools.tsx (the `ToolType`
- * union behind the platform Tools sheet). It cannot be imported here
- * (that file is a client component with a heavy import graph), so
- * tests/unit/site-stats.test.ts pins it to the registry source and
+ * registry in src/components/roycss/tool-registry.ts (the `ToolType`
+ * union + TOOL_META behind the platform Tools sheet AND the browsable
+ * <DevToolsGallery/> — single source of truth since issue #185). It
+ * cannot be imported here (that file imports lucide icons — fine for
+ * client bundles, not for metadata-only server code), so
+ * tests/unit/tool-registry.test.ts pins it to the registry source and
  * fails CI when a tool is added without updating this constant.
  *
  * public/manifest.json is static JSON and cannot import this module —

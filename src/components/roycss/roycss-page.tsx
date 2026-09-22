@@ -118,6 +118,7 @@ import {
   VERSION_BADGE,
 } from "@/lib/site-stats";
 import { toast } from "sonner";
+import { TOOL_IDS, type ToolType } from "@/components/roycss/tool-registry";
 import { EffectCard, LivePreview } from "@/components/roycss/effect-card";
 import { EffectDetailDialog } from "@/components/roycss/effect-detail-dialog";
 import { FavoritesSheet } from "@/components/roycss/favorites-sheet";
@@ -216,6 +217,10 @@ const CommunitySpotlight = dynamic(
 );
 const PlatformSectionUnified = dynamic(
   () => import("@/components/roycss/platform-section-unified").then(m => ({ default: m.PlatformSectionUnified })),
+  { loading: () => <div className="h-96" />, ssr: true },
+);
+const DevToolsGallery = dynamic(
+  () => import("@/components/roycss/dev-tools-gallery").then(m => ({ default: m.DevToolsGallery })),
   { loading: () => <div className="h-96" />, ssr: true },
 );
 const RoyMotionShowcase = dynamic(
@@ -1334,7 +1339,7 @@ export default function RoyCSSPage() {
   const [searchOverlayOpen, setSearchOverlayOpen] = useState(false);
   const [compareOpen, setCompareOpen] = useState(false);
   const [compareEffects, setCompareEffects] = useState<CSSEffect[]>([]);
-  const [platformTool, setPlatformTool] = useState<"ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | "gap-spacing" | "writing-mode" | "object-fit" | "positioning" | "property-inspector" | "animation-timeline" | "sprite-sheet" | "text-shadow" | "filter-studio" | "conic-gradient" | "motion-path" | "view-transition" | "mask-studio" | "gradient-mesh" | "table-styler" | "aspect-ratio" | "shape-generator" | "scroll-snap" | "keyframes-studio" | "theming-engine" | "has-selector-tester" | "css-layers" | "input-mode" | "cascade-specificity" | "color-space" | "style-query" | "scope" | "subgrid" | "fallback" | "logical-properties" | "initial-letter" | "text-wrap" | "property-registrar" | "relative-color" | "starting-style" | "light-dark" | "css-lint" | null>(null);
+  const [platformTool, setPlatformTool] = useState<ToolType | null>(null);
   const [recentOpen, setRecentOpen] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const [sponsorModalOpen, setSponsorModalOpen] = useState(false);
@@ -1432,17 +1437,12 @@ export default function RoyCSSPage() {
 
   // Deep-link to a developer tool via #tool=<id> hash (or ?tool=<id> query
   // param — kept for backward compatibility).
-  // Surfaces the dev tools (color-space, gradient-mesh, box-model, ...)
-  // hosted by <PlatformTools/>. Previously these were unreachable from the
-  // UI: PlatformSectionUnified's onLaunchTool only forwards toolIds that
-  // match this list, but its 62 PRO product cards use a disjoint set of
-  // ids (data-grid, kanban, ...). The hash deep-link restores reachability
-  // for QA and shareable URLs.
+  // Surfaces the dev tools hosted by <PlatformTools/>. The allowlist derives
+  // from TOOL_IDS (tool-registry.ts — single source of truth, issue #185);
+  // every tool is also browsable in the <DevToolsGallery/> section.
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const ALLOWED = new Set([
-      "ai-playground","css-doctor","utility-explorer","benchmark","genome","ai-migration","challenges","design-diff","css-minifier","specificity","easing","stacking","similarity","perf","browser-support","print","selector-tester","dark-mode","variable-graph","fluid-type","scroll-animation","grid-areas","container-query","nesting","contrast-matrix","unit-converter","box-model","flex-playground","transition-studio","pattern-generator","transform-studio","cursor-gallery","scrollbar-styler","gap-spacing","writing-mode","object-fit","positioning","property-inspector","animation-timeline","sprite-sheet","text-shadow","filter-studio","conic-gradient","motion-path","view-transition","mask-studio","gradient-mesh","table-styler","aspect-ratio","shape-generator","scroll-snap","keyframes-studio","theming-engine","has-selector-tester","css-layers","input-mode","cascade-specificity","color-space","style-query","scope","subgrid","fallback","logical-properties","initial-letter","text-wrap","property-registrar","relative-color","starting-style","light-dark","css-lint",
-    ]);
+    const ALLOWED = new Set<string>(TOOL_IDS);
     const openFromUrl = () => {
       const hash = window.location.hash;
       const hashMatch = hash.match(/^#tool=([a-z0-9-]+)$/);
@@ -1455,6 +1455,33 @@ export default function RoyCSSPage() {
     openFromUrl();
     window.addEventListener("hashchange", openFromUrl);
     return () => window.removeEventListener("hashchange", openFromUrl);
+  }, []);
+
+  // Scroll to the DevToolsGallery. Lazy sections above the gallery mount as
+  // the scroll passes them, growing the page and pushing the target down —
+  // so re-scroll until the section settles near the viewport top (bounded,
+  // same strategy as the #effects deep link above).
+  const scrollToDevTools = useCallback(() => {
+    if (typeof window === "undefined") return;
+    let lastTop = Number.POSITIVE_INFINITY;
+    let stable = 0;
+    const startedAt = Date.now();
+    const tick = () => {
+      // The gallery's LazySection wrapper is always in the DOM; the inner
+      // #dev-tools section appears once the wrapper mounts near the viewport.
+      const el =
+        document.querySelector("#dev-tools") ??
+        document.querySelector('section[aria-label="Developer tools"]');
+      if (!el) return;
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      const top = el.getBoundingClientRect().top;
+      stable = Math.abs(top) < 160 && Math.abs(top - lastTop) < 60 ? stable + 1 : 0;
+      lastTop = top;
+      if (stable < 2 && Date.now() - startedAt < 4000) {
+        setTimeout(tick, 320);
+      }
+    };
+    tick();
   }, []);
 
   // ⌘K / Ctrl+K to open search overlay, / to focus search, ? for shortcuts
@@ -1829,6 +1856,9 @@ export default function RoyCSSPage() {
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setPlatformTool("css-lint")} className="cursor-pointer gap-2 text-sm">
                     <ScanSearch className="size-4 text-muted-foreground" /> Code Health Linter
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={scrollToDevTools} className="cursor-pointer gap-2 text-sm">
+                    <LayoutGrid className="size-4 text-muted-foreground" /> All developer tools ({TOOL_IDS.length})
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setUnitConverterOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <Ruler className="size-4 text-muted-foreground" /> Unit Converter
@@ -2466,13 +2496,14 @@ export default function RoyCSSPage() {
 
       {/* ─── RoyCSS Platform (unified — 62 products, 6 categories) ─── */}
       <LazySection minHeight={700} ariaLabel="Platform">
-      <PlatformSectionUnified
-        onLaunchTool={(toolId) => {
-          if (toolId === "ai-playground" || toolId === "css-doctor" || toolId === "utility-explorer" || toolId === "benchmark" || toolId === "genome" || toolId === "ai-migration" || toolId === "challenges" || toolId === "design-diff" || toolId === "css-minifier" || toolId === "specificity" || toolId === "easing" || toolId === "stacking" || toolId === "similarity" || toolId === "perf" || toolId === "browser-support" || toolId === "print" || toolId === "selector-tester" || toolId === "dark-mode" || toolId === "variable-graph" || toolId === "fluid-type" || toolId === "scroll-animation" || toolId === "grid-areas" || toolId === "container-query" || toolId === "nesting" || toolId === "contrast-matrix" || toolId === "unit-converter" || toolId === "box-model" || toolId === "flex-playground" || toolId === "transition-studio" || toolId === "pattern-generator" || toolId === "transform-studio" || toolId === "cursor-gallery" || toolId === "scrollbar-styler" || toolId === "gap-spacing" || toolId === "writing-mode" || toolId === "object-fit" || toolId === "positioning" || toolId === "property-inspector" || toolId === "animation-timeline" || toolId === "sprite-sheet" || toolId === "text-shadow" || toolId === "filter-studio" || toolId === "conic-gradient" || toolId === "motion-path" || toolId === "view-transition" || toolId === "mask-studio" || toolId === "gradient-mesh" || toolId === "table-styler" || toolId === "aspect-ratio" || toolId === "shape-generator" || toolId === "scroll-snap" || toolId === "keyframes-studio" || toolId === "theming-engine" || toolId === "has-selector-tester" || toolId === "css-layers" || toolId === "input-mode" || toolId === "cascade-specificity" || toolId === "color-space" || toolId === "style-query" || toolId === "scope" || toolId === "subgrid" || toolId === "fallback" || toolId === "logical-properties" || toolId === "initial-letter" || toolId === "text-wrap" || toolId === "property-registrar" || toolId === "relative-color" || toolId === "starting-style" || toolId === "light-dark" || toolId === "css-lint") {
-            setPlatformTool(toolId);
-          }
-        }}
-      />
+        <PlatformSectionUnified />
+      </LazySection>
+
+      <Separator className="opacity-50" />
+
+      {/* ─── Developer Tools gallery (all 70 tools, browsable — #185) ── */}
+      <LazySection minHeight={700} ariaLabel="Developer tools">
+        <DevToolsGallery onLaunchTool={setPlatformTool} />
       </LazySection>
 
       <Separator className="opacity-50" />

@@ -5,14 +5,16 @@
  *
  * Phase 2 refactor: the inline 600-line grid was replaced with a thin
  * wrapper around <ProductGrid /> (the new single source of truth in
- * src/lib/product-registry.ts). The onLaunchTool prop is preserved
- * for backwards compatibility — it no-ops since ProductGrid renders
- * its own modal with the live component.
+ * src/lib/product-registry.ts).
+ *
+ * Issue #185: the historical no-op onLaunchTool prop (and its 70-id
+ * forwarding chain in roycss-page.tsx) has been removed — the developer
+ * tools are browsable via <DevToolsGallery/> directly below this section.
  */
 
 import { ProductGrid } from "@/components/roycss/product-grid";
 
-export function PlatformSectionUnified(_props: { onLaunchTool?: (toolId: string) => void }) {
+export function PlatformSectionUnified() {
   return (
     <section id="platform" aria-labelledby="platform-heading" className="py-12 sm:py-16 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">

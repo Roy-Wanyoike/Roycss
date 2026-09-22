@@ -32,6 +32,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { toast } from "sonner";
+import {
+  validateContactFields,
+  submitContactMessage,
+  type ContactFieldErrors,
+} from "@/lib/contact-form";
 
 interface ContactFormProps {
   open: boolean;
@@ -56,6 +62,7 @@ export function ContactForm({ open, onOpenChange }: ContactFormProps) {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState<string>("");
+  const [fieldErrors, setFieldErrors] = useState<ContactFieldErrors>({});
 
   // Reset form when sheet closes
   useEffect(() => {
@@ -69,50 +76,62 @@ export function ContactForm({ open, onOpenChange }: ContactFormProps) {
           setMessage("");
           setStatus("idle");
           setErrorMsg("");
+          setFieldErrors({});
         }
       }, 300);
       return () => clearTimeout(t);
     }
   }, [open, status]);
 
+  /** Success: toast + brief success panel, then auto-close (issue #162). */
+  useEffect(() => {
+    if (status !== "success") return;
+    const t = setTimeout(() => onOpenChange(false), 3000);
+    return () => clearTimeout(t);
+  }, [status, onOpenChange]);
+
+  const clearFieldError = (key: keyof ContactFieldErrors) =>
+    setFieldErrors((prev) => {
+      if (!prev[key]) return prev;
+      const next = { ...prev };
+      delete next[key];
+      return next;
+    });
+
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
       if (status === "submitting") return;
 
+      // Inline, announced validation (issue #162): styled errors with
+      // role=alert instead of native bubbles alone.
+      const fields = { name, email, message };
+      const errors = validateContactFields(fields);
+      setFieldErrors(errors);
+      if (Object.keys(errors).length > 0) {
+        return;
+      }
+
       setStatus("submitting");
       setErrorMsg("");
 
       try {
-        const res = await fetch("/api/contact", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: name.trim(),
-            email: email.trim(),
-            subject:
-              SUBJECTS.find((s) => s.value === subject)?.label ??
-              "General Inquiry",
-            message: message.trim(),
-          }),
+        const result = await submitContactMessage({
+          name,
+          email,
+          message,
+          subject: SUBJECTS.find((s) => s.value === subject)?.label,
         });
-
-        const data = await res.json();
-
-        if (!res.ok || !data.ok) {
-          throw new Error(
-            data.error || "Failed to send message. Please try again.",
-          );
-        }
-
         setStatus("success");
+        toast.success(result.message);
       } catch (err) {
-        setStatus("error");
-        setErrorMsg(
+        const message =
           err instanceof Error
             ? err.message
-            : "Something went wrong. Please try again.",
-        );
+            : "Something went wrong. Please try again.";
+        setStatus("error");
+        setErrorMsg(message);
+        toast.error(message);
       }
     },
     [name, email, subject, message, status],
@@ -172,6 +191,7 @@ export function ContactForm({ open, onOpenChange }: ContactFormProps) {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onSubmit={handleSubmit}
+                noValidate
                 className="space-y-4"
               >
                 {/* Name */}
@@ -188,11 +208,20 @@ export function ContactForm({ open, onOpenChange }: ContactFormProps) {
                     maxLength={120}
                     placeholder="Your name"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                      clearFieldError("name");
+                    }}
                     disabled={isSubmitting}
                     className="h-11"
                     autoComplete="name"
+                    aria-invalid={!!fieldErrors.name}
                   />
+                  {fieldErrors.name && (
+                    <p role="alert" className="text-xs text-rose-600 dark:text-rose-400">
+                      {fieldErrors.name}
+                    </p>
+                  )}
                 </div>
 
                 {/* Email */}
@@ -211,11 +240,20 @@ export function ContactForm({ open, onOpenChange }: ContactFormProps) {
                     maxLength={160}
                     placeholder="you@example.com"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      clearFieldError("email");
+                    }}
                     disabled={isSubmitting}
                     className="h-11"
                     autoComplete="email"
+                    aria-invalid={!!fieldErrors.email}
                   />
+                  {fieldErrors.email && (
+                    <p role="alert" className="text-xs text-rose-600 dark:text-rose-400">
+                      {fieldErrors.email}
+                    </p>
+                  )}
                 </div>
 
                 {/* Subject */}
@@ -261,10 +299,20 @@ export function ContactForm({ open, onOpenChange }: ContactFormProps) {
                     maxLength={5000}
                     placeholder="Tell us what's on your mind... (min 10 characters)"
                     value={message}
-                    onChange={(e) => setMessage(e.target.value)}
+                    onChange={(e) => {
+                      setMessage(e.target.value);
+                      clearFieldError("message");
+                    }}
                     disabled={isSubmitting}
                     className="min-h-[120px] resize-y"
+                    aria-invalid={!!fieldErrors.message}
+                    aria-live="polite"
                   />
+                  {fieldErrors.message && (
+                    <p role="alert" className="text-xs text-rose-600 dark:text-rose-400">
+                      {fieldErrors.message}
+                    </p>
+                  )}
                   <p className="text-[11px] text-muted-foreground text-right tabular-nums">
                     {message.length}/5000
                   </p>
@@ -277,6 +325,8 @@ export function ContactForm({ open, onOpenChange }: ContactFormProps) {
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
+                      role="alert"
+                      aria-live="assertive"
                       className="flex items-start gap-2 p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-sm text-rose-600 dark:text-rose-400"
                     >
                       <AlertCircle className="size-4 shrink-0 mt-0.5" />

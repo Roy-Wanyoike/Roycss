@@ -850,7 +850,7 @@ export const effectsBatch2: CSSEffect[] = [
   border-radius: 50%;
   border: 2px solid transparent;
   border-top-color: oklch(0.696 0.149 162.48);
-  animation: roy-spin 1s linear infinite;
+  animation: roy-orbit-ring 1s linear infinite;
 }
 
 .roycss-loader-orbit::after {
@@ -867,7 +867,7 @@ export const effectsBatch2: CSSEffect[] = [
   animation: roy-orbit-move 1s linear infinite;
 }
 
-@keyframes roy-spin {
+@keyframes roy-orbit-ring {
   to { transform: rotate(360deg); }
 }
 

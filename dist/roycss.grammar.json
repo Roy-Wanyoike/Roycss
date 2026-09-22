@@ -9,7 +9,7 @@
     "pattern": "^roycss-[a-z0-9]+(?:-[a-z0-9]+)*$",
     "flags": "",
     "description": "One class namespace: roycss- + lowercase kebab-case effect id. Digits allowed (catalog ids may start with a digit).",
-    "roundTrip": "validated against all 1,977 real class names at generation time",
+    "roundTrip": "validated against all 1,969 real class names at generation time",
     "examples": [
       "roycss-btn-glow",
       "roycss-text-wave",
@@ -331,18 +331,10 @@
     "roycss-ferrum-active",
     "roycss-ferrum-animated",
     "roycss-ferrum-exit",
-    "roycss-ferrum-focus-visible-ring",
-    "roycss-ferrum-hover-shake",
     "roycss-ferrum-open",
-    "roycss-ferrum-text-bounce",
-    "roycss-ferrum-text-scramble",
-    "roycss-ferrum-text-slide-up",
-    "roycss-ferrum-text-wave",
-    "roycss-hover-slide-inset-inline-end",
-    "roycss-page-slide-inset-inline-start",
     "roycss-vfx-aurora-layer"
   ],
-  "auxiliaryClassNote": "17 selectors that only appear inside their parent effect's own CSS/marker markup — not standalone utilities.",
+  "auxiliaryClassNote": "9 selectors that only appear inside their parent effect's own CSS/marker markup — not standalone utilities.",
   "idToClassRule": {
     "rule": "className = 'roycss-' + effectId",
     "exceptions": [
@@ -392,9 +384,9 @@
     "totalEffects": 1959,
     "totalCategories": 29,
     "primaryClasses": 1959,
-    "auxiliaryClasses": 17,
+    "auxiliaryClasses": 9,
     "baseUtilityClasses": 1,
-    "totalClasses": 1977,
+    "totalClasses": 1969,
     "modifierClasses": 0,
     "trainingPairs": 383,
     "digitLeadingIds": 3

@@ -183,6 +183,43 @@ export default function EffectsIndexPage() {
           </Link>
         </div>
       </div>
+
+      {/* Site footer (issue #164): the shared "Site footer" landmark is
+          rendered inline by the home page component, so standalone routes
+          provide their own — /effects never did, which read as "footer
+          missing" on every viewport. Mirrors the minimal footer already
+          used by /roadmap. */}
+      <footer aria-label="Site footer" className="border-t border-border/50">
+        <div className="mx-auto flex w-full max-w-4xl flex-col items-center justify-between gap-2 px-4 py-6 text-xs text-muted-foreground sm:flex-row sm:px-6">
+          <p>&copy; {new Date().getFullYear()} RoyCSS</p>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/docs/getting-started"
+              className="transition-colors hover:text-primary"
+            >
+              Docs
+            </Link>
+            <Link
+              href="/roadmap"
+              className="transition-colors hover:text-primary"
+            >
+              Roadmap
+            </Link>
+            <Link
+              href="/privacy"
+              className="transition-colors hover:text-primary"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/terms"
+              className="transition-colors hover:text-primary"
+            >
+              Terms of Service
+            </Link>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -685,7 +685,11 @@ if scope expands.
 
 ### PF-014: Per-effect static page (`/effects/<id>`) + versioned docs + tested docs samples
 - **Area:** frontend / docs
-- **State:** partial — **per-effect pages SHIPPED (PR #77)**: every
+- **State:** shipped — **per-effect pages SHIPPED (PR #77)**; **versioned
+  docs routing + edit-on-GitHub + feedback widget + docs-surface CI
+  SHIPPED (issue #127, PR #182)**. Residual: full docs-sample
+  extract-and-compile CI remains owner-blocked by Actions billing (#75).
+  Every
   effect has a statically prerendered `/effects/<id>` page with live
   preview, copyable CSS, framework tabs, prev/next, JSON-LD
   (`SoftwareSourceCode` + `BreadcrumbList`) + OG tags; the sitemap lists

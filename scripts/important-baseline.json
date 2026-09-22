@@ -1,0 +1,6 @@
+{
+  "unjustified": 0,
+  "effectInternal": 11,
+  "total": 14,
+  "note": "PF-035 V1 ratchet baseline (issue #128, audit @ 96afbea). Counts may go DOWN via PR; any increase fails scripts/audit-important.ts --check. a11y-guard occurrences (prefers-reduced-motion) are allowed by policy and not ratcheted. effect-internal = component-internal pins inside .roycss-* selectors (toggle-switch/pulse-ring/scan-line/vhs dot+span sizing)."
+}

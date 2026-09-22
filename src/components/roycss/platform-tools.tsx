@@ -129,6 +129,7 @@ import { KeyframesStudio } from "@/components/roycss/tools/keyframes-studio";
 import { ThemingEngine } from "@/components/roycss/tools/theming-engine";
 import { HasSelectorTester } from "@/components/roycss/tools/has-selector-tester";
 import { CSSLayersVisualizer } from "@/components/roycss/tools/css-layers";
+import { CSSHealthLinter } from "@/components/roycss/tools/css-lint";
 import { InputModeExplorer } from "@/components/roycss/tools/input-mode-explorer";
 import { CascadeSpecificityExplorer } from "@/components/roycss/tools/cascade-specificity";
 import { ColorSpaceExplorer } from "@/components/roycss/tools/color-space-explorer";
@@ -149,7 +150,7 @@ import type { CSSEffect } from "@/lib/roycss-types";
    Shared types
    ═══════════════════════════════════════════════════════════════ */
 
-type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | "gap-spacing" | "writing-mode" | "object-fit" | "positioning" | "property-inspector" | "animation-timeline" | "sprite-sheet" | "text-shadow" | "filter-studio" | "conic-gradient" | "motion-path" | "view-transition" | "mask-studio" | "gradient-mesh" | "table-styler" | "aspect-ratio" | "shape-generator" | "scroll-snap" | "keyframes-studio" | "theming-engine" | "has-selector-tester" | "css-layers" | "input-mode" | "cascade-specificity" | "color-space" | "style-query" | "scope" | "subgrid" | "fallback" | "logical-properties" | "initial-letter" | "text-wrap" | "property-registrar" | "relative-color" | "starting-style" | "light-dark";
+type ToolType = "ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | "gap-spacing" | "writing-mode" | "object-fit" | "positioning" | "property-inspector" | "animation-timeline" | "sprite-sheet" | "text-shadow" | "filter-studio" | "conic-gradient" | "motion-path" | "view-transition" | "mask-studio" | "gradient-mesh" | "table-styler" | "aspect-ratio" | "shape-generator" | "scroll-snap" | "keyframes-studio" | "theming-engine" | "has-selector-tester" | "css-layers" | "input-mode" | "cascade-specificity" | "color-space" | "style-query" | "scope" | "subgrid" | "fallback" | "logical-properties" | "initial-letter" | "text-wrap" | "property-registrar" | "relative-color" | "starting-style" | "light-dark" | "css-lint";
 
 interface PlatformToolsProps {
   tool: ToolType | null;
@@ -1571,6 +1572,7 @@ const TOOL_META: Record<ToolType, { title: string; icon: React.ComponentType<{ c
   "relative-color": { title: "Relative Color Builder", icon: Split, description: "CSS Relative Color Syntax (Baseline 2024) — rgb(from red calc(r + 20) g b). Channel math editors, source→derived preview, 6 presets." },
   "starting-style": { title: "@starting-style Studio", icon: DoorOpen, description: "Animate elements entering the DOM with @starting-style (Baseline 2024). transition-behavior: allow-discrete for display animations, side-by-side comparison." },
   "light-dark": { title: "Light-Dark() Explorer", icon: SunMoon, description: "CSS light-dark() function (Baseline 2024) — auto-switch colors by color-scheme. Palette builder, side-by-side vs @media boilerplate, 4 presets." },
+  "css-lint": { title: "Code Health Linter", icon: ScanSearch, description: "Paste CSS or markup → cascade, color, and namespace findings from the same engine that powers roycss lint [--fix]. Safe auto-fixes, rules reference, CLI parity." },
 };
 
 export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformToolsProps) {
@@ -1659,6 +1661,7 @@ export function PlatformTools({ tool, onOpenChange, onSelectEffect }: PlatformTo
               {tool === "relative-color" && <RelativeColorBuilder />}
               {tool === "starting-style" && <StartingStyleStudio />}
               {tool === "light-dark" && <LightDarkExplorer />}
+              {tool === "css-lint" && <CSSHealthLinter />}
             </div>
           </>
         )}

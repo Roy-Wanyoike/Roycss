@@ -1268,7 +1268,18 @@ if scope expands.
 
 ### PF-035: Cascade Constitution + Scope-Encapsulated + Container-Adaptive + Anchor-First Overlay (V2 component layer)
 - **Area:** css / components
-- **State:** partial — `css-layers.tsx` visualizes layers;
+- **State:** partial — **V1 slice SHIPPED (issue #128)**:
+  `scripts/audit-important.ts` audits every `!important` in
+  `dist/roycss.css` by policy (a11y-guard allowed / effect-internal
+  tracked / unjustified must stay at 0) with a ratchet baseline
+  (`scripts/important-baseline.json`) enforced by
+  `bun run audit:important:check`, and validates `@layer` ordering
+  against the recommended cascade skeleton; the shared 5-rule lint
+  engine (`src/lib/css-lint.ts`) powers `roycss lint`, the audit, and
+  the in-browser Code Health Linter. Residual: re-architecting
+  `roycss.css` itself onto the `@layer` skeleton (currently a flat
+  cascade), build-time enforcement, `@roycss-escape` annotation.
+  `css-layers.tsx` visualizes layers;
   `anchor-positioning.tsx` tool exists; `container-query-builder.tsx`
   tool exists; shadcn/ui uses Radix Popover. (F3, F4, F5, F10, LABS-33
   §8.3, LABS-36 §6.1, Tier 1 #25.)
@@ -1295,11 +1306,17 @@ if scope expands.
 
 ### PF-036: Self-healing CSS linter + VS Code LSP + `roycss lint` + auto-fix + community rule API
 - **Area:** tooling / vscode
-- **State:** partial — `roycss doctor` exists;
+- **State:** partial — **V1 slice SHIPPED (issue #128)**: `roycss lint
+  [--fix]` CLI (exit 1 on errors, conservative auto-fixes: a11y guard
+  insertion + `roycss-` prefix repair; `!important` never stripped
+  automatically) + the in-browser Code Health Linter tool, both driven
+  by the shared engine `src/lib/css-lint.ts` (rules: no-important,
+  oklch-colors, roycss-prefix, reduced-motion-guard, layer-order).
+  Residual: AST-based linter package, VS Code LSP with diagnostics,
+  dead-class detection, a11y hints, migration code actions, community
+  rule API. `roycss doctor` exists;
   `vscode-extension/src/completion-provider.ts` + `hover-provider.ts`
-  exist; no LSP, no diagnostics, no dead-class detection, no a11y hints,
-  no migration code actions, no `roycss lint`, no auto-fix, no
-  community rule API. (F14, LABS-32 §8, LABS-36 §6.5, V2 §10.1, R2,
+  exist. (F14, LABS-32 §8, LABS-36 §6.5, V2 §10.1, R2,
   Tier 1 #29.)
 - **Acceptance:**
   1. `packages/@roycss/lint/` — self-healing CSS linter (AST-based,

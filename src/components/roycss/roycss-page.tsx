@@ -83,6 +83,7 @@ import {
   Users,
   Award,
   Tv,
+  ScanSearch,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -1333,7 +1334,7 @@ export default function RoyCSSPage() {
   const [searchOverlayOpen, setSearchOverlayOpen] = useState(false);
   const [compareOpen, setCompareOpen] = useState(false);
   const [compareEffects, setCompareEffects] = useState<CSSEffect[]>([]);
-  const [platformTool, setPlatformTool] = useState<"ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | "gap-spacing" | "writing-mode" | "object-fit" | "positioning" | "property-inspector" | "animation-timeline" | "sprite-sheet" | "text-shadow" | "filter-studio" | "conic-gradient" | "motion-path" | "view-transition" | "mask-studio" | "gradient-mesh" | "table-styler" | "aspect-ratio" | "shape-generator" | "scroll-snap" | "keyframes-studio" | "theming-engine" | "has-selector-tester" | "css-layers" | "input-mode" | "cascade-specificity" | "color-space" | "style-query" | "scope" | "subgrid" | "fallback" | "logical-properties" | "initial-letter" | "text-wrap" | "property-registrar" | "relative-color" | "starting-style" | "light-dark" | null>(null);
+  const [platformTool, setPlatformTool] = useState<"ai-playground" | "css-doctor" | "utility-explorer" | "benchmark" | "genome" | "ai-migration" | "challenges" | "design-diff" | "css-minifier" | "specificity" | "easing" | "stacking" | "similarity" | "perf" | "browser-support" | "print" | "selector-tester" | "dark-mode" | "variable-graph" | "fluid-type" | "scroll-animation" | "grid-areas" | "container-query" | "nesting" | "contrast-matrix" | "unit-converter" | "box-model" | "flex-playground" | "transition-studio" | "pattern-generator" | "transform-studio" | "cursor-gallery" | "scrollbar-styler" | "gap-spacing" | "writing-mode" | "object-fit" | "positioning" | "property-inspector" | "animation-timeline" | "sprite-sheet" | "text-shadow" | "filter-studio" | "conic-gradient" | "motion-path" | "view-transition" | "mask-studio" | "gradient-mesh" | "table-styler" | "aspect-ratio" | "shape-generator" | "scroll-snap" | "keyframes-studio" | "theming-engine" | "has-selector-tester" | "css-layers" | "input-mode" | "cascade-specificity" | "color-space" | "style-query" | "scope" | "subgrid" | "fallback" | "logical-properties" | "initial-letter" | "text-wrap" | "property-registrar" | "relative-color" | "starting-style" | "light-dark" | "css-lint" | null>(null);
   const [recentOpen, setRecentOpen] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const [sponsorModalOpen, setSponsorModalOpen] = useState(false);
@@ -1431,7 +1432,7 @@ export default function RoyCSSPage() {
 
   // Deep-link to a developer tool via #tool=<id> hash (or ?tool=<id> query
   // param — kept for backward compatibility).
-  // Surfaces the 64 dev tools (color-space, gradient-mesh, box-model, ...)
+  // Surfaces the dev tools (color-space, gradient-mesh, box-model, ...)
   // hosted by <PlatformTools/>. Previously these were unreachable from the
   // UI: PlatformSectionUnified's onLaunchTool only forwards toolIds that
   // match this list, but its 62 PRO product cards use a disjoint set of
@@ -1440,7 +1441,7 @@ export default function RoyCSSPage() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     const ALLOWED = new Set([
-      "ai-playground","css-doctor","utility-explorer","benchmark","genome","ai-migration","challenges","design-diff","css-minifier","specificity","easing","stacking","similarity","perf","browser-support","print","selector-tester","dark-mode","variable-graph","fluid-type","scroll-animation","grid-areas","container-query","nesting","contrast-matrix","unit-converter","box-model","flex-playground","transition-studio","pattern-generator","transform-studio","cursor-gallery","scrollbar-styler","gap-spacing","writing-mode","object-fit","positioning","property-inspector","animation-timeline","sprite-sheet","text-shadow","filter-studio","conic-gradient","motion-path","view-transition","mask-studio","gradient-mesh","table-styler","aspect-ratio","shape-generator","scroll-snap","keyframes-studio","theming-engine","has-selector-tester","css-layers","input-mode","cascade-specificity","color-space","style-query","scope","subgrid","fallback","logical-properties","initial-letter","text-wrap","property-registrar","relative-color","starting-style","light-dark",
+      "ai-playground","css-doctor","utility-explorer","benchmark","genome","ai-migration","challenges","design-diff","css-minifier","specificity","easing","stacking","similarity","perf","browser-support","print","selector-tester","dark-mode","variable-graph","fluid-type","scroll-animation","grid-areas","container-query","nesting","contrast-matrix","unit-converter","box-model","flex-playground","transition-studio","pattern-generator","transform-studio","cursor-gallery","scrollbar-styler","gap-spacing","writing-mode","object-fit","positioning","property-inspector","animation-timeline","sprite-sheet","text-shadow","filter-studio","conic-gradient","motion-path","view-transition","mask-studio","gradient-mesh","table-styler","aspect-ratio","shape-generator","scroll-snap","keyframes-studio","theming-engine","has-selector-tester","css-layers","input-mode","cascade-specificity","color-space","style-query","scope","subgrid","fallback","logical-properties","initial-letter","text-wrap","property-registrar","relative-color","starting-style","light-dark","css-lint",
     ]);
     const openFromUrl = () => {
       const hash = window.location.hash;
@@ -1826,6 +1827,9 @@ export default function RoyCSSPage() {
                   <DropdownMenuItem onClick={() => setBeautifierOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <Braces className="size-4 text-muted-foreground" /> CSS Beautifier
                   </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setPlatformTool("css-lint")} className="cursor-pointer gap-2 text-sm">
+                    <ScanSearch className="size-4 text-muted-foreground" /> Code Health Linter
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setUnitConverterOpen(true)} className="cursor-pointer gap-2 text-sm">
                     <Ruler className="size-4 text-muted-foreground" /> Unit Converter
                   </DropdownMenuItem>
@@ -1850,7 +1854,7 @@ export default function RoyCSSPage() {
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => scrollToSection("#platform")} className="cursor-pointer gap-2 text-sm font-medium text-primary">
-                    <Wrench className="size-4" /> Browse All 64 Dev Tools →
+                    <Wrench className="size-4" /> Browse All Dev Tools →
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -2464,7 +2468,7 @@ export default function RoyCSSPage() {
       <LazySection minHeight={700} ariaLabel="Platform">
       <PlatformSectionUnified
         onLaunchTool={(toolId) => {
-          if (toolId === "ai-playground" || toolId === "css-doctor" || toolId === "utility-explorer" || toolId === "benchmark" || toolId === "genome" || toolId === "ai-migration" || toolId === "challenges" || toolId === "design-diff" || toolId === "css-minifier" || toolId === "specificity" || toolId === "easing" || toolId === "stacking" || toolId === "similarity" || toolId === "perf" || toolId === "browser-support" || toolId === "print" || toolId === "selector-tester" || toolId === "dark-mode" || toolId === "variable-graph" || toolId === "fluid-type" || toolId === "scroll-animation" || toolId === "grid-areas" || toolId === "container-query" || toolId === "nesting" || toolId === "contrast-matrix" || toolId === "unit-converter" || toolId === "box-model" || toolId === "flex-playground" || toolId === "transition-studio" || toolId === "pattern-generator" || toolId === "transform-studio" || toolId === "cursor-gallery" || toolId === "scrollbar-styler" || toolId === "gap-spacing" || toolId === "writing-mode" || toolId === "object-fit" || toolId === "positioning" || toolId === "property-inspector" || toolId === "animation-timeline" || toolId === "sprite-sheet" || toolId === "text-shadow" || toolId === "filter-studio" || toolId === "conic-gradient" || toolId === "motion-path" || toolId === "view-transition" || toolId === "mask-studio" || toolId === "gradient-mesh" || toolId === "table-styler" || toolId === "aspect-ratio" || toolId === "shape-generator" || toolId === "scroll-snap" || toolId === "keyframes-studio" || toolId === "theming-engine" || toolId === "has-selector-tester" || toolId === "css-layers" || toolId === "input-mode" || toolId === "cascade-specificity" || toolId === "color-space" || toolId === "style-query" || toolId === "scope" || toolId === "subgrid" || toolId === "fallback" || toolId === "logical-properties" || toolId === "initial-letter" || toolId === "text-wrap" || toolId === "property-registrar" || toolId === "relative-color" || toolId === "starting-style" || toolId === "light-dark") {
+          if (toolId === "ai-playground" || toolId === "css-doctor" || toolId === "utility-explorer" || toolId === "benchmark" || toolId === "genome" || toolId === "ai-migration" || toolId === "challenges" || toolId === "design-diff" || toolId === "css-minifier" || toolId === "specificity" || toolId === "easing" || toolId === "stacking" || toolId === "similarity" || toolId === "perf" || toolId === "browser-support" || toolId === "print" || toolId === "selector-tester" || toolId === "dark-mode" || toolId === "variable-graph" || toolId === "fluid-type" || toolId === "scroll-animation" || toolId === "grid-areas" || toolId === "container-query" || toolId === "nesting" || toolId === "contrast-matrix" || toolId === "unit-converter" || toolId === "box-model" || toolId === "flex-playground" || toolId === "transition-studio" || toolId === "pattern-generator" || toolId === "transform-studio" || toolId === "cursor-gallery" || toolId === "scrollbar-styler" || toolId === "gap-spacing" || toolId === "writing-mode" || toolId === "object-fit" || toolId === "positioning" || toolId === "property-inspector" || toolId === "animation-timeline" || toolId === "sprite-sheet" || toolId === "text-shadow" || toolId === "filter-studio" || toolId === "conic-gradient" || toolId === "motion-path" || toolId === "view-transition" || toolId === "mask-studio" || toolId === "gradient-mesh" || toolId === "table-styler" || toolId === "aspect-ratio" || toolId === "shape-generator" || toolId === "scroll-snap" || toolId === "keyframes-studio" || toolId === "theming-engine" || toolId === "has-selector-tester" || toolId === "css-layers" || toolId === "input-mode" || toolId === "cascade-specificity" || toolId === "color-space" || toolId === "style-query" || toolId === "scope" || toolId === "subgrid" || toolId === "fallback" || toolId === "logical-properties" || toolId === "initial-letter" || toolId === "text-wrap" || toolId === "property-registrar" || toolId === "relative-color" || toolId === "starting-style" || toolId === "light-dark" || toolId === "css-lint") {
             setPlatformTool(toolId);
           }
         }}

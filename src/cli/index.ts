@@ -33,6 +33,8 @@
  *   --out <file>                   Output file path (use with export)
  *   --name <plugin-name>           Plugin name (use with plugin enable/disable)
  *   --write                        Apply a migration codemod in place (use with migrate)
+ *   roycss lint [paths...]         Lint CSS files for cascade/color/namespace issues
+ *   --fix                          Auto-apply safe fixes (use with lint)
  */
 
 import { effects, categoryMeta, categoryOrder } from "../lib/roycss-effects";
@@ -53,6 +55,10 @@ import * as readline from "readline";
 import { codemods, getCodemod } from "../../scripts/codemods/index";
 import { globToFiles, runCodemodOnFiles } from "../../scripts/codemods/lib/engine";
 import { formatFileReport, formatSummary } from "../../scripts/codemods/lib/reporter";
+
+// CSS lint engine (PF-036 V1, issue #128) — shared with the in-browser tool
+import { lintCss, applyFixes } from "../lib/css-lint";
+import type { LintFinding, LintResult } from "../lib/css-lint";
 
 // ═══════════════════════════════════════════════════════════════
 // Terminal colors
@@ -2067,6 +2073,160 @@ function cmdMigrate(positional: string[], flags: Record<string, string | boolean
 }
 
 // ═══════════════════════════════════════════════════════════════
+// lint: CSS cascade / color / namespace linter (PF-036 V1, #128)
+// ═══════════════════════════════════════════════════════════════
+
+const LINTABLE_EXTENSIONS = new Set([".css", ".scss", ".sass", ".less", ".html", ".htm", ".jsx", ".tsx"]);
+
+/** Recursively collect lintable files from paths (files or directories). */
+function collectLintTargets(paths: string[]): string[] {
+  const out: string[] = [];
+  const seen = new Set<string>();
+  const walk = (p: string) => {
+    const abs = resolve(p);
+    if (seen.has(abs)) return;
+    seen.add(abs);
+    if (!existsSync(abs)) return;
+    const st = statSync(abs);
+    if (st.isFile()) {
+      if (LINTABLE_EXTENSIONS.has(extname(abs))) out.push(abs);
+      return;
+    }
+    if (st.isDirectory()) {
+      // Skip dependency / build directories.
+      const base = basenamePath(abs);
+      if (["node_modules", ".next", "dist", ".git", "coverage"].includes(base)) return;
+      for (const entry of readdirSync(abs)) walk(join(abs, entry));
+    }
+  };
+  for (const p of paths) walk(p);
+  return out;
+}
+
+function basenamePath(p: string): string {
+  const parts = p.split("/");
+  return parts[parts.length - 1] || p;
+}
+
+const SEVERITY_COLOR: Record<string, (s: string) => string> = {
+  error: (s) => `${c.red}${s}${c.reset}`,
+  warning: (s) => `${c.yellow}${s}${c.reset}`,
+  info: (s) => `${c.cyan}${s}${c.reset}`,
+};
+
+function fmtFinding(f: LintFinding, maxSeverityWidth: number): string {
+  const sev = SEVERITY_COLOR[f.severity](f.severity.padEnd(maxSeverityWidth));
+  const pos = f.line > 0 ? `${f.line}:${f.column}` : "";
+  return `  ${sev}  ${c.dim}${pos}${c.reset} ${f.message}${f.snippet ? `\n         ${c.dim}${f.snippet.slice(0, 90)}${c.reset}` : ""}`;
+}
+
+function cmdLint(paths: string[], flags: Record<string, boolean | string>) {
+  const targets = paths.length > 0 ? collectLintTargets(paths) : collectLintTargets(["roycss.css", "src", "styles", "public"]);
+  if (targets.length === 0) {
+    warn("No lintable CSS/markup files found.");
+    info("Pass files or directories: roycss lint src/styles.css");
+    return;
+  }
+
+  const fix = Boolean(flags.fix);
+  const json = Boolean(flags.json);
+  const knownEffectIds = effects.map((e) => e.id);
+
+  const results: Array<{ file: string; result: LintResult; fixedApplied: number }> = [];
+  let totalErrors = 0;
+  let totalWarnings = 0;
+  let totalInfos = 0;
+  let totalFixed = 0;
+  let filesFixed = 0;
+
+  for (const file of targets) {
+    let content: string;
+    try {
+      content = readFileSync(file, "utf-8");
+    } catch {
+      continue;
+    }
+    const result = lintCss(content, { knownEffectIds });
+    let fixedApplied = 0;
+    if (fix && result.findings.some((f) => f.fixable)) {
+      const { fixed, appliedFixes } = applyFixes(content, result.findings, { knownEffectIds });
+      if (fixed !== content && appliedFixes.length > 0) {
+        writeFileSync(file, fixed);
+        fixedApplied = appliedFixes.length;
+        totalFixed += fixedApplied;
+        filesFixed++;
+        // Re-lint the fixed content for accurate final counts.
+        const reResult = lintCss(fixed, { knownEffectIds });
+        results.push({ file, result: reResult, fixedApplied });
+        totalErrors += reResult.summary.errors;
+        totalWarnings += reResult.summary.warnings;
+        totalInfos += reResult.summary.infos;
+        continue;
+      }
+    }
+    results.push({ file, result, fixedApplied });
+    totalErrors += result.summary.errors;
+    totalWarnings += result.summary.warnings;
+    totalInfos += result.summary.infos;
+  }
+
+  if (json) {
+    const payload = {
+      files: results.map((r) => ({
+        file: relative(process.cwd(), r.file),
+        summary: r.result.summary,
+        fixedApplied: r.fixedApplied,
+        findings: r.result.findings.map((f) => ({
+          rule: f.rule,
+          severity: f.severity,
+          message: f.message,
+          line: f.line,
+          column: f.column,
+          fixable: f.fixable,
+        })),
+      })),
+      totals: {
+        files: results.length,
+        errors: totalErrors,
+        warnings: totalWarnings,
+        infos: totalInfos,
+        fixesApplied: totalFixed,
+      },
+    };
+    log(JSON.stringify(payload, null, 2));
+  } else {
+    log(`${c.bold}${c.cyan}RoyCSS Lint${c.reset} ${c.gray}v${VERSION}${c.reset}`);
+    log(`${c.dim}${results.length} file(s) · rules: no-important, oklch-colors, roycss-prefix, reduced-motion-guard, layer-order${c.reset}\n`);
+
+    for (const { file, result, fixedApplied } of results) {
+      if (result.findings.length === 0 && fixedApplied === 0) continue;
+      const rel = relative(process.cwd(), file);
+      log(`${c.bold}${rel}${c.reset}${fixedApplied > 0 ? ` ${c.green}(${fixedApplied} fix(es) applied)${c.reset}` : ""}`);
+      const sevWidth = Math.max(...result.findings.map((f) => f.severity.length), 0);
+      const sorted = [...result.findings].sort(
+        (a, b) => ({ error: 0, warning: 1, info: 2 })[a.severity] - ({ error: 0, warning: 1, info: 2 })[b.severity] || a.line - b.line,
+      );
+      for (const f of sorted.slice(0, 40)) log(fmtFinding(f, sevWidth));
+      if (sorted.length > 40) log(`  ${c.dim}… and ${sorted.length - 40} more${c.reset}`);
+      log("");
+    }
+
+    log(`${c.bold}Summary:${c.reset}`);
+    if (totalErrors === 0 && totalWarnings === 0 && totalInfos === 0) {
+      success(`All ${results.length} file(s) clean — no cascade, color, or namespace issues.`);
+    } else {
+      log(`  ${c.red}${totalErrors} error(s)${c.reset}  ${c.yellow}${totalWarnings} warning(s)${c.reset}  ${c.cyan}${totalInfos} info${c.reset}${totalFixed > 0 ? `  ${c.green}${totalFixed} fix(es) applied to ${filesFixed} file(s)${c.reset}` : ""}`);
+      if (!fix) {
+        const fixable = results.reduce((n, r) => n + r.result.findings.filter((f) => f.fixable).length, 0);
+        if (fixable > 0) info(`${fixable} finding(s) auto-fixable — run ${c.cyan}roycss lint --fix${c.reset}`);
+      }
+    }
+  }
+
+  if (totalErrors > 0) process.exit(1);
+}
+
+// ═══════════════════════════════════════════════════════════════
 // Help
 // ═══════════════════════════════════════════════════════════════
 
@@ -2082,6 +2242,7 @@ function cmdHelp() {
   log(`  ${c.cyan}categories${c.reset}                List all effect categories`);
   log(`  ${c.cyan}info${c.reset} <effect-id>          Show details about a specific effect`);
   log(`  ${c.cyan}doctor${c.reset}                    Check project health and get recommendations`);
+  log(`  ${c.cyan}lint${c.reset} [paths...]          Lint CSS files — cascade, color, namespace rules`);
   log(`  ${c.cyan}create${c.reset} <name>             Scaffold a new project with RoyCSS pre-installed`);
   log(`  ${c.cyan}upgrade${c.reset}                   Scan for outdated RoyCSS versions and deprecated patterns`);
   log(`  ${c.cyan}stats${c.reset}                     Report project usage analytics for RoyCSS effects`);
@@ -2104,6 +2265,7 @@ function cmdHelp() {
   log(`  ${c.cyan}--out${c.reset} <file>              Output file path (use with ${c.dim}export${c.reset})`);
   log(`  ${c.cyan}--name${c.reset} <plugin-name>      Plugin name (use with ${c.dim}plugin enable/disable${c.reset})`);
   log(`  ${c.cyan}--write${c.reset}                    Apply a migration codemod in place (use with ${c.dim}migrate${c.reset})`);
+  log(`  ${c.cyan}--fix${c.reset}                      Auto-apply safe fixes (use with ${c.dim}lint${c.reset})`);
 
   log(`\n${c.bold}Examples:${c.reset}`);
   log(`  ${c.gray}roycss init${c.reset}`);
@@ -2177,6 +2339,9 @@ async function main() {
       break;
     case "doctor":
       cmdDoctor();
+      break;
+    case "lint":
+      cmdLint(positional, flags);
       break;
     // ─── v2 commands ───
     case "create":

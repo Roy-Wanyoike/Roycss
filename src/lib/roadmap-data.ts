@@ -151,7 +151,7 @@ export const ROADMAP_ITEMS: RoadmapItem[] = [
     status: "in-progress",
     category: "css",
     description:
-      "Layer visualization, anchor-positioning, and container-query tools exist; the dispatched V1 slice audits !important usage and fixes @layer ordering in roycss.css.",
+      "V1 slice shipped: scripts/audit-important.ts ratchets the !important budget (0 unjustified, gate via bun run audit:important:check) and validates @layer ordering; the 5-rule lint engine is shared with roycss lint. Residual: re-architecting roycss.css itself onto the @layer skeleton.",
   },
   {
     id: "PF-036",
@@ -159,7 +159,7 @@ export const ROADMAP_ITEMS: RoadmapItem[] = [
     status: "in-progress",
     category: "tooling",
     description:
-      "roycss doctor and VS Code completion/hover providers exist; the dispatched slice exposes the inspector engine as a `roycss lint [--fix]` CLI. The full LSP is the follow-on.",
+      "V1 slice shipped: `roycss lint [--fix]` exposes the shared 5-rule engine (no-important, oklch-colors, roycss-prefix, reduced-motion-guard, layer-order) in the CLI and the in-browser Code Health Linter tool. Residual: the full VS Code LSP with diagnostics and community rule API.",
   },
   {
     id: "PF-042",

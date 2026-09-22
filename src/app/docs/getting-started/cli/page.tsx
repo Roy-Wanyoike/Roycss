@@ -3,7 +3,7 @@ import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT, VERSION } from "@/lib/site-stat
 
 export const metadata: Metadata = {
   title: "CLI — RoyCSS Docs",
-  description: "The roycss command-line interface: scaffold projects, add and export effects, search the catalog, and check project health.",
+  description: "The roycss command-line interface: scaffold projects, add and export effects, search the catalog, lint cascade health, and check project health.",
 };
 
 export default function CliPage() {
@@ -46,6 +46,7 @@ Commands:
   categories                List all effect categories
   info <effect-id>          Show details + CSS for a specific effect
   doctor                    Check project health and get recommendations
+  lint [paths...]           Lint CSS files — cascade, color, namespace rules
   create <name>             Scaffold a new project with RoyCSS pre-installed
   upgrade                   Scan for outdated versions and deprecated patterns
   stats                     Report project usage analytics for RoyCSS effects
@@ -132,6 +133,42 @@ Copy to clipboard: roycss add hover-push-up --copy`}</code>
       <p>
         <code>roycss stats</code> takes it further — usage counts,
         catalog coverage, and your most-used effects.
+      </p>
+
+      <h2 id="lint">Linting cascade health</h2>
+      <p>
+        <code>roycss lint</code> finds the patterns RoyCSS v2 wants
+        you to avoid: <code>!important</code> outside a11y guards,
+        hex/rgb/hsl color literals (v2 standardizes on
+        <code>oklch()</code>), known effect ids used without the
+        <code>roycss-</code> prefix, missing
+        <code>prefers-reduced-motion</code> guards, and
+        <code>@layer</code> statements out of the recommended order.
+        It exits <code>1</code> on errors, so it drops straight into
+        CI:
+      </p>
+      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
+        <code>{`$ npx roycss lint src
+
+RoyCSS Lint v${VERSION}
+3 file(s) · rules: no-important, oklch-colors, roycss-prefix, reduced-motion-guard, layer-order
+
+src/styles/theme.css
+  warning  2:28 !important overrides user cascade control — replace with higher specificity or @layer ordering
+  warning  5:16 color literal "#ff5733" — RoyCSS v2 standardizes on oklch() for perceptual uniformity
+
+Summary:
+  0 error(s)  2 warning(s)  0 info
+ℹ 1 finding(s) auto-fixable — run roycss lint --fix`}</code>
+      </pre>
+      <p>
+        <code>--fix</code> applies only conservative, output-safe
+        transforms (inserting a reduced-motion guard, repairing the
+        <code>roycss-</code> prefix). <code>!important</code> is
+        never stripped automatically — cascade changes need human
+        review. The identical engine powers the in-browser
+        <a href="/#tool=css-lint">Code Health Linter</a>, so
+        findings match between the terminal and the site.
       </p>
 
       <h2 id="add-export">Adding and exporting effects</h2>

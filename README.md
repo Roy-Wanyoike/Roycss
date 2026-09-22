@@ -4,7 +4,7 @@
 
 ### AI-Native Frontend Engineering Platform
 
-**1,959 production-ready CSS effects · 62 platform products · 69 developer tools · AI-native**
+**1,959 production-ready CSS effects · 62 platform products · 70 developer tools · AI-native**
 
 [![Live demo](https://img.shields.io/badge/live_demo-roycss.vercel.app-22c55e?style=flat-square&logo=vercel&logoColor=white)](https://roycss.vercel.app)
 [![Effects](https://img.shields.io/badge/effects-1,959-10b981?style=flat-square)](#key-numbers)
@@ -18,7 +18,7 @@
 
 **Live demo: <https://roycss.vercel.app>**
 
-<sub><b>Status:</b> the live site currently serves a build from before the latest wave of fixes — the production redeploy is pending an owner-side account/billing action ([#75](https://github.com/Roy-Wanyoike/Roycss/issues/75)). Everything merged to `main` is verified locally: build ✓ · `tsc` 0 errors · 1,750/1,750 tests ✓.</sub>
+<sub><b>Status:</b> the live site currently serves a build from before the latest wave of fixes — the production redeploy is pending an owner-side account/billing action ([#75](https://github.com/Roy-Wanyoike/Roycss/issues/75)). Everything merged to `main` is verified locally: build ✓ · `tsc` 0 errors · 1,821/1,821 tests ✓.</sub>
 
 </div>
 
@@ -40,7 +40,7 @@ RoyCSS is a **complete frontend engineering platform** — not just a CSS effect
 
 - **1,959 production-ready CSS effects** across 29 categories with live previews and copyable code
 - **62 platform products** (RoyAI, Roy Studio, Roy Inspector, Roy Cloud, Marketplace, Academy, …)
-- **69 developer tools** (CSS generators, visualizers, analyzers, converters)
+- **70 developer tools** (CSS generators, visualizers, analyzers, converters)
 - **AI-native development** (RoyAI assistant, LLM-backed modules for architect, designer, mentor, pair, review)
 - **Design system** (OKLCH color tokens, theme presets, motion library)
 - **Accessibility-first** (WCAG AA target, keyboard navigation, screen reader support, reduced-motion)
@@ -86,7 +86,7 @@ Every number below is verified — most are pinned by tests, so stale docs fail 
 | Backend modules | **75** | `backend-node/src/modules/` (mounted per [`API.md`](API.md) — `api-keys` nests under `/auth/api-keys`) |
 | Backend API routes | **289** | documented in [`API.md`](API.md), enforced by the drift gate (`bun run api:check`) |
 | SEO effect pages | **1,959** | statically prerendered at `/effects/<id>` — one page per effect, all in the sitemap |
-| Tests | **1,750** | 811 frontend unit (Vitest) + 939 backend (integration + contract + security + unit) — all passing |
+| Tests | **1,821** | 882 frontend unit (Vitest) + 939 backend (integration + contract + security + unit) — all passing |
 | Typecheck | **0 errors** | `bunx tsc --noEmit` on strict TypeScript |
 
 ---
@@ -99,7 +99,7 @@ Every number below is verified — most are pinned by tests, so stale docs fail 
 | **Backend** | Node: Express 4 + Prisma 6 + Zod 4 (75 modules, 289 routes) — the running source of truth · Go 1.23 (`chi`) port in progress for production |
 | **Runtime** | Bun (install + scripts, `>=1.0`) — Node `>=18.18` compatible (`.nvmrc`: 20) |
 | **Data** | SQLite (dev) → PostgreSQL-ready (Supabase in the prod blueprints) · 47 Prisma models |
-| **Quality** | Vitest (1,750 tests) · Playwright E2E + axe-core a11y audits · `tsc` strict-clean · API drift gate |
+| **Quality** | Vitest (1,821 tests) · Playwright E2E + axe-core a11y audits · `tsc` strict-clean · API drift gate |
 | **Deploy** | Vercel ([`vercel.json`](vercel.json)) + Railway ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) |
 | **Ecosystem** | npm package artifacts ([`dist/`](dist)) · RoyCLI · MCP server · VS Code extension |
 | **Realtime** | Socket.io (Roy Live, port 3003) |
@@ -178,7 +178,7 @@ The inline `JWT_SECRET` / `JWT_REFRESH_SECRET` values aren't ceremony: the backe
 Roycss/
 ├── src/                    # Next.js 16 frontend — routes, 100+ components, effects catalog in lib/
 │   ├── app/                #   Pages + API routes (catch-all /api/v1 proxy, auth, health, og)
-│   ├── components/roycss/  #   pro/ (62 platform products) · tools/ (69 dev tools) · effects/ (9 WebGL) · auth/
+│   ├── components/roycss/  #   pro/ (62 platform products) · tools/ (70 dev tools) · effects/ (9 WebGL) · auth/
 │   └── lib/                #   The 1,959-effect catalog, product registry, design tokens, API client
 ├── backend-node/           # Express + Prisma + Zod API — 75 modules, 289 routes (source of truth today)
 ├── backend-go/             # Go 1.23 + chi port of the same /api/v1 contract (production target, in progress)
@@ -216,7 +216,7 @@ Live Service (Socket.io, port 3003)
 
 Recruiters: every claim here is reproducible from this repo.
 
-- **1,750 tests, all green** — 811 frontend unit (Vitest) + 939 backend (supertest integration, contract sweeps, security suite, unit) against the booted Express app. The catalog size itself is test-pinned: `tests/unit/effects.test.ts` asserts *exactly 1,959 effects*, `tests/unit/categories.test.ts` asserts *exactly 29 categories* — stale docs fail CI, not users.
+- **1,821 tests, all green** — 882 frontend unit (Vitest) + 939 backend (supertest integration, contract sweeps, security suite, unit) against the booted Express app. The catalog size itself is test-pinned: `tests/unit/effects.test.ts` asserts *exactly 1,959 effects*, `tests/unit/categories.test.ts` asserts *exactly 29 categories* — stale docs fail CI, not users.
 - **Typecheck gate** — `bunx tsc --noEmit` passes with **0 errors** on strict TypeScript across the frontend; the backend has its own `bun run typecheck` gate.
 - **Security headers + a static-safe CSP** — every production response carries a Content-Security-Policy that is **identical for prerendered and dynamic pages**, plus `X-Content-Type-Options`, `Referrer-Policy` and `Permissions-Policy`. The CSP was rewritten after a nonce/`strict-dynamic` policy silently broke every script on the statically prerendered site ([#54](https://github.com/Roy-Wanyoike/Roycss/issues/54)) — postmortem-style comments in [`src/proxy.ts`](src/proxy.ts) explain why nonces are permanently banned there.
 - **Auth-enforced API** — all 39 mutating endpoints across 28 modules require Bearer JWT; unauthenticated calls get a consistent `401` envelope, role-gated actions get `403` (PR [#76](https://github.com/Roy-Wanyoike/Roycss/pull/76), fixes #64). Verified end-to-end by 10 dedicated integration tests.

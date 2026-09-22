@@ -4,14 +4,25 @@ import { notFound } from "next/navigation";
 import {
   ArrowLeft,
   ArrowRight,
+  ChevronDown,
   ChevronRight,
+  ClipboardCopy,
+  Layers,
   Tag,
 } from "lucide-react";
 import { effects, categoryMeta } from "@/lib/roycss-effects";
 import type { CSSEffect } from "@/lib/roycss-types";
 import { explorerHref } from "@/lib/search-targets";
+import { effectPageTitle, effectPageDescription } from "@/lib/effect-page-metadata";
+import { getBrowserSupport, formatBrowserSupport } from "@/lib/browser-support";
+import { getRequiredMarkup, getReducedMotionNote } from "@/lib/effect-page-content";
+import { getEffectA11y } from "@/lib/effect-a11y";
+import { getEffectPageA11yBadges, type EffectA11yBadge } from "@/lib/effect-a11y-badges";
+import { getFrameworkExamples } from "@/lib/framework-adapters";
+import { COPY_FORMATS } from "@/lib/copy-formats";
 import { LivePreview } from "@/components/roycss/effect-card";
 import { CodeBlock } from "@/components/docs/CodeBlock";
+import { CopyFormatButton } from "@/components/roycss/copy-format-button";
 import { Badge } from "@/components/ui/badge";
 import {
   SITE_URL,
@@ -86,8 +97,10 @@ export async function generateMetadata({
   if (!effect) notFound();
 
   const url = `${SITE_URL}/effects/${effect.id}`;
-  const title = `${effect.name} — RoyCSS CSS Effect`;
-  const description = `${effect.description} Pure CSS, zero JavaScript. See the live preview and copy the code on RoyCSS.`;
+  // Issue #188 (item 4): keyword-first template + punctuation-safe
+  // description join — both live in src/lib/effect-page-metadata.ts.
+  const title = effectPageTitle(effect.name);
+  const description = effectPageDescription(effect.description);
 
   return {
     title,
@@ -97,7 +110,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      type: "article",
+      type: "website",
       url,
       siteName: "RoyCSS",
       images: [
@@ -172,6 +185,195 @@ function buildJsonLd(effect: CSSEffect): string {
   );
 }
 
+/* ── Shared section chrome ─────────────────────────────────── */
+
+const SECTION_HEADING =
+  "font-display text-sm font-semibold uppercase tracking-wider text-muted-foreground";
+
+/* ── A11y badge row (server-rendered; issue #190) ──────────── */
+
+const BADGE_TONE_CLASS: Record<EffectA11yBadge["tone"], string> = {
+  amber: "border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400",
+  muted: "border-border/60 bg-muted/50 text-muted-foreground",
+  violet: "border-violet-500/30 bg-violet-500/10 text-violet-600 dark:text-violet-400",
+  positive:
+    "border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+};
+
+function A11yRow({ effect }: { effect: CSSEffect }) {
+  const badges = getEffectPageA11yBadges(effect.id);
+  const motionNote = getReducedMotionNote(
+    effect.cssCode,
+    getEffectA11y(effect.id)?.motionSafe ?? false
+  );
+
+  return (
+    <div className="mt-4">
+      <div className="flex flex-wrap items-center gap-1.5">
+        {badges.map((badge) => (
+          <Badge
+            key={badge.key}
+            variant="outline"
+            title={badge.title}
+            className={`text-xs px-2 py-0.5 ${BADGE_TONE_CLASS[badge.tone]}`}
+          >
+            {badge.label}
+          </Badge>
+        ))}
+      </div>
+      {motionNote && (
+        <p className="mt-2 text-xs text-muted-foreground leading-relaxed max-w-2xl">
+          {motionNote}
+        </p>
+      )}
+    </div>
+  );
+}
+
+/* ── Required markup block (server-rendered; issue #190) ───── */
+
+function RequiredMarkupSection({
+  effect,
+  markup,
+}: {
+  effect: CSSEffect;
+  markup: NonNullable<ReturnType<typeof getRequiredMarkup>>;
+}) {
+  return (
+    <section className="mt-6" aria-labelledby="markup-heading">
+      <h2 id="markup-heading" className={SECTION_HEADING}>
+        Required markup
+      </h2>
+      <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+        {markup.exact
+          ? `This effect's CSS expects exactly ${markup.spanCount} child <span> element${
+              markup.spanCount === 1 ? "" : "s"
+            } — paste this markup inside the element that carries the roycss-${effect.id} class:`
+          : `This effect's CSS styles every child <span> inside the element that carries the roycss-${effect.id} class — add one per item (e.g. per letter or dot):`}
+      </p>
+      <CodeBlock
+        code={markup.snippet}
+        language="html"
+        filename={`${effect.id}-markup.html`}
+      />
+    </section>
+  );
+}
+
+/* ── Framework usage (server-rendered tabs; issue #190) ────── */
+
+/**
+ * Crawlable framework tabs: every framework's install/import/usage code is
+ * in the server-rendered HTML (no JS needed to read or switch — plain
+ * <details> panels; the exclusive-accordion `name` attribute makes them
+ * behave like tabs where supported). Each panel's snippets reuse the
+ * client CodeBlock (with its copy button), so all six frameworks have
+ * copyable snippets without any tab state in React.
+ */
+function FrameworkUsageSection({ effect }: { effect: CSSEffect }) {
+  const examples = getFrameworkExamples(effect.id, effect.name);
+
+  return (
+    <section className="mt-6" aria-labelledby="frameworks-heading">
+      <h2 id="frameworks-heading" className={SECTION_HEADING}>
+        Use in your framework
+      </h2>
+      <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+        Every RoyCSS effect is plain CSS — install the package once, then use
+        the{" "}
+        <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-foreground">
+          roycss-{effect.id}
+        </code>{" "}
+        class in any stack.
+      </p>
+      <div className="mt-3 rounded-2xl border border-border bg-card divide-y divide-border/60 overflow-hidden">
+        {examples.map((example, i) => (
+          <details
+            key={example.id}
+            name="framework-usage"
+            open={i === 0}
+            className="group"
+          >
+            <summary className="flex cursor-pointer list-none flex-wrap items-center justify-between gap-x-3 gap-y-1 px-4 py-3 text-sm font-medium text-foreground hover:bg-muted/50 transition-colors [&::-webkit-details-marker]:hidden">
+              <span className="flex items-center gap-2 min-w-0">
+                <Layers className="size-3.5 shrink-0 text-muted-foreground" />
+                {example.label}
+              </span>
+              <span className="hidden sm:block text-xs font-normal text-muted-foreground truncate min-w-0">
+                {example.description}
+              </span>
+              <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
+            </summary>
+            <div className="px-4 pb-4 space-y-3">
+              <CodeBlock code={example.install} filename="Install" />
+              <CodeBlock code={example.import} filename="Import" />
+              <CodeBlock code={example.usage} filename="Usage" />
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ── Copy-as formats (server-rendered list; issue #190) ────── */
+
+/**
+ * The 7 copy-as formats from src/lib/copy-formats.ts. The list markup is
+ * server-rendered (crawlable); each row's copy button is a small client
+ * island sharing the dialog's formatCss logic via useCopyFormat — the
+ * clipboard output is byte-identical to the home dialog's CopyAsDropdown.
+ */
+function CopyAsSection({ effect }: { effect: CSSEffect }) {
+  return (
+    <section className="mt-6" aria-labelledby="copy-as-heading">
+      <h2 id="copy-as-heading" className={SECTION_HEADING}>
+        Copy as
+      </h2>
+      <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+        The same effect, pre-converted to 7 formats — pick your stack:
+      </p>
+      <details className="group mt-3 rounded-2xl border border-border bg-card overflow-hidden">
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-sm font-medium text-foreground hover:bg-muted/50 transition-colors [&::-webkit-details-marker]:hidden">
+          <span className="flex items-center gap-2">
+            <ClipboardCopy className="size-3.5 shrink-0 text-muted-foreground" />
+            Copy as…
+          </span>
+          <span className="flex items-center gap-3 min-w-0">
+            <span className="hidden sm:block text-xs font-normal text-muted-foreground">
+              {COPY_FORMATS.length} formats
+            </span>
+            <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
+          </span>
+        </summary>
+        <ul className="divide-y divide-border/60 border-t border-border/60">
+          {COPY_FORMATS.map((format) => (
+            <li
+              key={format.id}
+              className="flex items-center justify-between gap-3 px-4 py-2.5"
+            >
+              <div className="min-w-0">
+                <span className="block text-sm font-medium text-foreground">
+                  {format.label}
+                </span>
+                <span className="block text-xs text-muted-foreground truncate">
+                  {format.description}
+                </span>
+              </div>
+              <CopyFormatButton
+                css={effect.cssCode}
+                effectId={effect.id}
+                format={format.id}
+                label={format.label}
+              />
+            </li>
+          ))}
+        </ul>
+      </details>
+    </section>
+  );
+}
+
 /* ── Page ──────────────────────────────────────────────────── */
 
 export default async function EffectPage({
@@ -192,6 +394,10 @@ export default async function EffectPage({
 
   const category = categoryMeta[effect.category];
   const jsonLd = buildJsonLd(effect);
+  // Issue #190: required markup, framework tabs, copy-as formats and the
+  // browser-support line — all derived server-side from the catalog data.
+  const requiredMarkup = getRequiredMarkup(effect);
+  const browserSupport = formatBrowserSupport(getBrowserSupport(effect.cssCode));
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -261,13 +467,16 @@ export default async function EffectPage({
           <p className="mt-3 text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl">
             {effect.description}
           </p>
+          {/* A11y badges + reduced-motion note (derived from the generated
+              a11y tags — same source as the card pills, issue #190). */}
+          <A11yRow effect={effect} />
         </header>
 
         {/* Live preview */}
         <section className="mt-8" aria-labelledby="preview-heading">
           <h2
             id="preview-heading"
-            className="font-display text-sm font-semibold uppercase tracking-wider text-muted-foreground"
+            className={SECTION_HEADING}
           >
             Live preview
           </h2>
@@ -282,7 +491,7 @@ export default async function EffectPage({
         <section className="mt-6" aria-labelledby="usage-heading">
           <h2
             id="usage-heading"
-            className="font-display text-sm font-semibold uppercase tracking-wider text-muted-foreground"
+            className={SECTION_HEADING}
           >
             Usage
           </h2>
@@ -304,11 +513,29 @@ export default async function EffectPage({
           />
         </section>
 
+        {/* Required markup (only when the CSS needs child elements) */}
+        {requiredMarkup && (
+          <RequiredMarkupSection effect={effect} markup={requiredMarkup} />
+        )}
+
+        {/* Framework usage — crawlable tabs for all 6 stacks */}
+        <FrameworkUsageSection effect={effect} />
+
+        {/* Copy as — 7 formats, server-rendered list + client copy islands */}
+        <CopyAsSection effect={effect} />
+
+        {/* Browser support one-liner (derived from the cssCode features) */}
+        <section className="mt-6" aria-label="Browser support">
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            {browserSupport}
+          </p>
+        </section>
+
         {/* Tags */}
         <section className="mt-6" aria-labelledby="tags-heading">
           <h2
             id="tags-heading"
-            className="font-display text-sm font-semibold uppercase tracking-wider text-muted-foreground"
+            className={SECTION_HEADING}
           >
             Tags
           </h2>

@@ -227,7 +227,15 @@ Vercel env wiring → `--prod` deploy. If Actions are blocked (issue #75),
 gate locally first — `bunx tsc --noEmit && bunx eslint . && bunx vitest run
 tests/unit && bunx vitest run --root backend-node` — then deploy manually:
 `railway up` (from `backend-node/`) and `npx vercel@latest --prod` (from the
-repo root), and run the two smokes by hand. Promote/rollback (§2.1/§2.2) is
+repo root), and run the two smokes by hand.
+
+> Run vitest with the DEFAULT reporter: `bunx vitest run`, with no
+> `--reporter=…` flag. The old `--reporter=basic` guidance was removed —
+> vitest 4+ dropped the built-in `basic` reporter, so passing it makes
+> vitest try to load a custom reporter module and crash (`ERR_LOAD_URL`).
+> (Issue #192; surfaced by the go-live API QA round 9-b.)
+
+Promote/rollback (§2.1/§2.2) is
 faster than revert+redeploy; prefer it for user-facing breakage and use
 revert+redeploy to make the fix durable.
 

@@ -131,6 +131,12 @@ a:hover{text-decoration:underline}
     headers: {
       "Content-Type": "text/html; charset=utf-8",
       "Cache-Control": "public, max-age=300, s-maxage=3600",
+      // Issue #192: this proxy-crafted response bypasses next.config.ts
+      // headers() — carry the anti-framing + transport-security headers
+      // here too so the security copy's "every response" claim holds.
+      "X-Frame-Options": "DENY",
+      "Strict-Transport-Security":
+        "max-age=63072000; includeSubDomains; preload",
     },
   });
 }

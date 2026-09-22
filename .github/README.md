@@ -20,7 +20,7 @@ Two jobs run in parallel (plus two push-to-`main`-only jobs):
 2. `bun install --frozen-lockfile` — install with the committed lockfile
 3. `bun run lint` — ESLint flat-config (`eslint.config.mjs`)
 4. `bunx tsc --noEmit` — strict TypeScript gate (no `typecheck` script at the root — CI invokes `tsc` directly)
-5. `bunx vitest run --coverage` — the 54 unit-test files / 811 tests in `tests/unit/**`, with the coverage floor from `vitest.config.ts` (80% statements / 70% branches)
+5. `bunx vitest run --coverage` — the 60 unit-test files / 811 tests in `tests/unit/**`, with the coverage floor from `vitest.config.ts` (80% statements / 70% branches)
 6. `bun run build:package` — build `dist/effects.json` + `dist/roycss.css` + `dist/effects.js`
 7. `bunx size-limit` — bundle-size gate for the shipped npm artifacts (`.size-limit.json` ratchet)
 8. Upload `dist/` as a build artifact

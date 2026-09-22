@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { CATEGORY_COUNT, EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/guides/contributing",
   title: "Contributing — RoyCSS Docs",
   description: "How to contribute to RoyCSS: repo layout, effect conventions, PR checklist, and release process.",
-};
+});
 
 export default function ContributingPage() {
   return (

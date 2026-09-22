@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/guides/creating-custom-effects",
   title: "Custom Effects — RoyCSS Docs",
   description: "Build your own RoyCSS-style effect: naming, reduced-motion guards, @property where needed, and keeping the CSS-first discipline.",
-};
+});
 
 export default function CreatingCustomEffectsPage() {
   return (

@@ -33,34 +33,69 @@ import {
 const themeInitScript = `(function(){try{var k='roycss-theme';var s=localStorage.getItem(k);var v=(s==='light'||s==='dark'||s==='system')?s:'system';var d=v==='dark'||(v==='system'&&window.matchMedia('(prefers-color-scheme: dark)').matches);var r=document.documentElement;r.classList.toggle('dark',d);r.style.colorScheme=d?'dark':'light';}catch(e){}})();`;
 
 /**
- * JSON-LD structured data for SEO rich results.
- * Tells search engines this is a SoftwareApplication with feature descriptions.
+ * JSON-LD structured data for SEO rich results (issue #188 item 5).
+ *
+ * A single @graph with three entities:
+ *   - SoftwareApplication — the product (feature descriptions, free offer)
+ *   - WebSite — the site entity (rich-result eligibility)
+ *   - Organization — the publisher/creator entity
+ *
+ * The FAQPage graph lives in src/app/page.tsx (built from
+ * src/lib/faq-data.ts so questions/answers match the rendered FAQ).
  */
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "RoyCSS",
-  applicationCategory: "DeveloperApplication",
-  operatingSystem: "Web",
-  description: `RoyCSS is a modern, AI-native frontend engineering platform — ${EFFECT_COUNT_FORMATTED} CSS effects, ${PRODUCT_COUNT} platform products, ${TOOL_COUNT} developer tools, design systems, and AI assistance.`,
-  url: "https://roycss.com",
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "USD",
-  },
-  creator: {
-    "@type": "Person",
-    name: "Royford Wanyoike Wamaitha",
-  },
-  featureList: [
-    `${EFFECT_COUNT_FORMATTED} CSS effects with live demos`,
-    `${PRODUCT_COUNT} platform products (components, AI, dev tools, enterprise)`,
-    `${TOOL_COUNT} developer tools (CSS generators, visualizers, analyzers)`,
-    "AI-native development (RoyAI, Roy Architect, Roy MCP)",
-    "Design system (OKLCH tokens, 10 theme presets)",
-    "Accessibility-first (WCAG 2.2 AA)",
-    "Framework-agnostic (React, Vue, Angular, Svelte)",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      name: "RoyCSS",
+      applicationCategory: "DeveloperApplication",
+      operatingSystem: "Web",
+      description: `RoyCSS is a modern, AI-native frontend engineering platform — ${EFFECT_COUNT_FORMATTED} CSS effects, ${PRODUCT_COUNT} platform products, ${TOOL_COUNT} developer tools, design systems, and AI assistance.`,
+      url: "https://roycss.com",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      creator: {
+        "@type": "Person",
+        name: "Royford Wanyoike Wamaitha",
+      },
+      featureList: [
+        `${EFFECT_COUNT_FORMATTED} CSS effects with live demos`,
+        `${PRODUCT_COUNT} platform products (components, AI, dev tools, enterprise)`,
+        `${TOOL_COUNT} developer tools (CSS generators, visualizers, analyzers)`,
+        "AI-native development (RoyAI, Roy Architect, Roy MCP)",
+        "Design system (OKLCH tokens, 10 theme presets)",
+        "Accessibility-first (WCAG 2.2 AA)",
+        "Framework-agnostic (React, Vue, Angular, Svelte)",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://roycss.com/#website",
+      name: "RoyCSS",
+      url: "https://roycss.com",
+      description: `${EFFECT_COUNT_FORMATTED} pure-CSS effects with live previews and copy-paste code — plus developer tools, design tokens, and AI assistance.`,
+      inLanguage: "en-US",
+      publisher: { "@id": "https://roycss.com/#organization" },
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://roycss.com/#organization",
+      name: "RoyCSS",
+      url: "https://roycss.com",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://roycss.com/icon-512.png",
+      },
+      founder: {
+        "@type": "Person",
+        name: "Royford Wanyoike Wamaitha",
+      },
+      sameAs: ["https://github.com/Roy-Wanyoike/Roycss"],
+    },
   ],
 };
 
@@ -81,7 +116,12 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "RoyCSS — AI-Native Frontend Engineering Platform",
+  // Home title leads with the primary query "CSS effects library"
+  // (issue #188 item 3). Deliberately a plain string, NOT a
+  // { default, template } pair: every child page (docs, effects,
+  // legal, 404) already exports its own complete title, so a template
+  // would double-suffix them ("CLI — RoyCSS Docs — RoyCSS").
+  title: "RoyCSS — CSS Effects Library & AI-Native Frontend Platform",
   description: `RoyCSS is a modern, AI-native frontend engineering platform — ${EFFECT_COUNT_FORMATTED} CSS effects, ${PRODUCT_COUNT} platform products, ${TOOL_COUNT} developer tools, design systems, and AI assistance. Design, build, customize, and ship modern interfaces in one cohesive ecosystem.`,
   icons: {
     icon: [
@@ -123,12 +163,15 @@ export const metadata: Metadata = {
   // this origin is an owner-side Vercel-domains action tracked in
   // issue #113 (see docs/OWNER-RUNBOOK.md §7). Vercel preview deployments
   // still resolve relative metadata via Next's fallback.
+  //
+  // NO root-level `alternates.canonical` (issue #187): the old
+  // `canonical: "/"` default was inherited by ~40 pages (all docs,
+  // /roadmap, /privacy, /terms), telling Google to fold them into the
+  // homepage. Each page now declares its own self-canonical via the
+  // pageMeta() helper in src/lib/seo.ts.
   metadataBase: new URL("https://roycss.com"),
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
-    title: "RoyCSS — AI-Native Frontend Engineering Platform",
+    title: "RoyCSS — CSS Effects Library & AI-Native Frontend Platform",
     description: `${EFFECT_COUNT_FORMATTED} CSS effects, ${PRODUCT_COUNT} platform products, ${TOOL_COUNT} developer tools, and AI assistance — design, build, customize, and ship modern interfaces in one cohesive ecosystem.`,
     type: "website",
     url: "https://roycss.com",
@@ -146,7 +189,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "RoyCSS — AI-Native Frontend Engineering Platform",
+    title: "RoyCSS — CSS Effects Library & AI-Native Frontend Platform",
     description: `${EFFECT_COUNT_FORMATTED} CSS effects, ${PRODUCT_COUNT} platform products, ${TOOL_COUNT} developer tools, and AI assistance — design, build, and ship modern interfaces.`,
     creator: "@wanyoikeroy",
     images: ["/api/og"],

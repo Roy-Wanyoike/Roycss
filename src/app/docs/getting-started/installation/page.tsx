@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EFFECT_COUNT_FORMATTED, FULL_CSS_MIN_GZ_KB } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/getting-started/installation",
   title: "Installation — RoyCSS Docs",
   description: "Install RoyCSS via npm, pnpm, yarn, bun, or CDN. One global stylesheet, a minified variant, and data subpath exports.",
-};
+});
 
 export default function InstallationPage() {
   return (

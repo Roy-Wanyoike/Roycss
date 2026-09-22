@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EFFECT_COUNT_FORMATTED, FULL_CSS_MIN_GZ_KB } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/getting-started/importing",
   title: "Importing — RoyCSS Docs",
   description: "What the roycss package exports: the global stylesheet, the minified variant, data files, and how to ship only the effects you use.",
-};
+});
 
 export default function ImportingPage() {
   return (

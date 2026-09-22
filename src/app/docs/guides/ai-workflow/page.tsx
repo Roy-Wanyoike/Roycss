@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/guides/ai-workflow",
   title: "AI Workflow — RoyCSS Docs",
   description: "Use RoyCSS with AI assistants: MCP server, prompts, class validation, and review workflow.",
-};
+});
 
 export default function AiWorkflowPage() {
   return (

@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/api/effects/backgrounds",
   title: "Background Effects — RoyCSS Docs",
   description: "RoyCSS background effect classes: aurora, mesh gradient, starfield, gradient sweep, grid lines. Pure CSS.",
-};
+});
 
 export default function BackgroundsPage() {
   return (

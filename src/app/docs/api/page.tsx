@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { pageMeta } from "@/lib/seo";
 import { type Metadata } from "next";
 import {
   EFFECT_COUNT_FORMATTED,
@@ -6,11 +7,12 @@ import {
   FULL_CSS_MIN_GZ_KB,
 } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/api",
   title: "API Reference — RoyCSS Docs",
   description:
     `The RoyCSS class system: the .roycss-* namespace, OKLCH colors, and zero-runtime conventions across ${EFFECT_COUNT_FORMATTED} effects in ${CATEGORY_COUNT} categories.`,
-};
+});
 
 export default function Page() {
   return (

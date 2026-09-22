@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/guides/theming",
   title: "Theming — RoyCSS Docs",
   description: "A brand-color migration, done honestly: vendor the effects you use, convert your palette to OKLCH, and keep contrast in check.",
-};
+});
 
 export default function ThemingPage() {
   return (

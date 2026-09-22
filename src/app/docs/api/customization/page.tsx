@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/api/customization",
   title: "Customization — RoyCSS Docs",
   description: "Customize RoyCSS honestly: copy an effect's CSS and edit it, override registered @property values, bridge to your design tokens, and disable motion.",
-};
+});
 
 export default function CustomizationPage() {
   return (

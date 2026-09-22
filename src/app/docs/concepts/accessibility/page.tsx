@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/concepts/accessibility",
   title: "Accessibility — RoyCSS Docs",
   description: "RoyCSS accessibility: per-effect reduced-motion guards, focus-visible utilities, sr-only helpers, and how not to encode meaning in motion.",
-};
+});
 
 export default function AccessibilityPage() {
   return (

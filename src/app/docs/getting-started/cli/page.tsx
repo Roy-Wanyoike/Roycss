@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT, VERSION } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/getting-started/cli",
   title: "CLI — RoyCSS Docs",
   description: "The roycss command-line interface: scaffold projects, add and export effects, search the catalog, lint cascade health, and check project health.",
-};
+});
 
 export default function CliPage() {
   return (

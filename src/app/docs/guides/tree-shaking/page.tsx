@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EFFECT_COUNT_FORMATTED, FULL_CSS_MIN_GZ_KB } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/guides/tree-shaking",
   title: "Tree Shaking — RoyCSS Docs",
   description: "CSS doesn't tree-shake — RoyCSS subsets explicitly instead: export hand-picked effects or categories with the CLI, and measure the result.",
-};
+});
 
 export default function TreeShakingPage() {
   return (

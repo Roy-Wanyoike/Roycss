@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/api/effects/hover",
   title: "Hover Effects — RoyCSS Docs",
   description: "RoyCSS hover effect classes: push-up, scale, glow border, tilt, underline. All pure CSS.",
-};
+});
 
 export default function HoverEffectsPage() {
   return (

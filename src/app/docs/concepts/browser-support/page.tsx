@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/concepts/browser-support",
   title: "Browser Support — RoyCSS Docs",
   description: "RoyCSS browser support matrix with automatic @supports fallbacks for older engines.",
-};
+});
 
 export default function BrowserSupportPage() {
   return (

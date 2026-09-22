@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { FULL_CSS_MIN_GZ_KB } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/guides/performance-optimization",
   title: "Performance Optimization — RoyCSS Docs",
   description: "Advanced optimization: critical-CSS layering, content-visibility, GPU layer budget, and the benchmark harness.",
-};
+});
 
 export default function PerformanceOptimizationPage() {
   return (

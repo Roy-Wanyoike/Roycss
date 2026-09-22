@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/guides/changelog",
   title: "Changelog — RoyCSS Docs",
   description: "RoyCSS version history, from the repo's CHANGELOG.md. Semver, Keep-a-Changelog format.",
-};
+});
 
 export default function ChangelogPage() {
   return (

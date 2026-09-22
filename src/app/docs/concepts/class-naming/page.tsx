@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/concepts/class-naming",
   title: "Class Naming — RoyCSS Docs",
   description: "RoyCSS class naming conventions: the roycss- prefix, kebab-case, category-led names, and variant suffixes.",
-};
+});
 
 export default function ClassNamingPage() {
   return (

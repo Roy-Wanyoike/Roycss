@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EFFECT_COUNT_FORMATTED, CATEGORY_COUNT } from "@/lib/site-stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  path: "/docs/getting-started/vscode-snippets",
   title: "VS Code Snippets — RoyCSS Docs",
   description: "Install the RoyCSS VS Code extension for class autocompletion, snippets, and live preview.",
-};
+});
 
 export default function VscodeSnippetsPage() {
   return (

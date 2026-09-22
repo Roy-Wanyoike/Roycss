@@ -16,14 +16,24 @@
 import { getEffectA11y, type EffectAriaReason } from "./effect-a11y";
 
 /** Badge identifiers, in display order. */
-export type EffectA11yBadgeKey = "motion-caution" | "decorative" | "a11y-note";
+export type EffectA11yBadgeKey =
+  | "motion-caution"
+  | "decorative"
+  | "a11y-note"
+  | "motion-safe"
+  | "interactive";
 
 /** Visual tint for the pill (mapped to Tailwind classes by the card). */
-export type EffectA11yBadgeTone = "amber" | "muted" | "violet";
+export type EffectA11yBadgeTone = "amber" | "muted" | "violet" | "positive";
 
 export interface EffectA11yBadge {
   key: EffectA11yBadgeKey;
-  label: "Motion caution" | "Decorative" | "A11y note";
+  label:
+    | "Motion caution"
+    | "Decorative"
+    | "A11y note"
+    | "Motion-safe"
+    | "Interactive";
   tone: EffectA11yBadgeTone;
   /** Guidance shown as the pill's title tooltip. */
   title: string;
@@ -84,4 +94,51 @@ export function getEffectA11yBadges(id: string): EffectA11yBadge[] {
  */
 export function isMotionSafeEffect(id: string): boolean {
   return getEffectA11y(id)?.motionSafe === true;
+}
+
+/**
+ * Full badge set for the /effects/[id] a11y row (issue #190).
+ *
+ * Unlike the compact card set above (which only surfaces CAUTIONS), the
+ * detail page also earns the positive flags:
+ *   Motion-safe  — the cssCode ships its own reduced-motion guard;
+ *   Interactive  — the effect carries :hover/:focus/:active states and
+ *                  belongs on a real control.
+ * Display order: motion safety, semantics, aria guidance. Unknown ids
+ * return [] — same fail-closed rule as the card set.
+ */
+export function getEffectPageA11yBadges(id: string): EffectA11yBadge[] {
+  const a11y = getEffectA11y(id);
+  if (!a11y) return [];
+
+  // Reuse the card derivation so guidance strings keep a single source.
+  const base = getEffectA11yBadges(id);
+  const badges: EffectA11yBadge[] = [];
+
+  badges.push(
+    a11y.motionSafe
+      ? {
+          key: "motion-safe",
+          label: "Motion-safe",
+          tone: "positive",
+          title:
+            "Ships its own @media (prefers-reduced-motion: reduce) guard — safe to copy-paste standalone.",
+        }
+      : base.find((b) => b.key === "motion-caution")!
+  );
+  badges.push(
+    a11y.decorationOnly
+      ? base.find((b) => b.key === "decorative")!
+      : {
+          key: "interactive",
+          label: "Interactive",
+          tone: "muted",
+          title:
+            "Carries :hover/:focus/:active states — attach it to a real button or link, not a decorative wrapper.",
+        }
+  );
+  const aria = base.find((b) => b.key === "a11y-note");
+  if (aria) badges.push(aria);
+
+  return badges;
 }

@@ -1,17 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import {
-  Copy,
-  Check,
-  ChevronDown,
-  Code2,
-  Braces,
-  Wind,
-  FileCode,
-  Code,
-  type LucideIcon,
-} from "lucide-react";
+import { Copy, Check, ChevronDown, Code2, Braces, Wind, FileCode, Code, type LucideIcon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,8 +9,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { toast } from "sonner";
-import { COPY_FORMATS, formatCss, type CopyFormat } from "@/lib/copy-formats";
+import { COPY_FORMATS, type CopyFormat } from "@/lib/copy-formats";
+import { useCopyFormat } from "./use-copy-format";
 
 const ICON_MAP: Record<string, LucideIcon> = {
   Code2,
@@ -49,9 +38,8 @@ interface CopyAsDropdownProps {
  * SCSS mixin, CSS-in-JS object, Vue SFC scoped style, and HTML snippet.
  *
  * Defaults to the same visual style as the old Copy button but adds a chevron
- * to signal it's now a dropdown. Clicking an item formats the CSS via
- * `formatCss`, writes to the clipboard, fires a success toast, and briefly
- * shows a check on the chosen item.
+ * to signal it's now a dropdown. Clicking an item formats the CSS via the
+ * shared useCopyFormat hook (formatCss → clipboard → toast → 2s check mark).
  */
 export function CopyAsDropdown({
   css,
@@ -59,24 +47,7 @@ export function CopyAsDropdown({
   variant = "compact",
   className,
 }: CopyAsDropdownProps) {
-  const [copiedFormat, setCopiedFormat] = useState<CopyFormat | null>(null);
-
-  const handleCopy = useCallback(
-    async (format: CopyFormat) => {
-      const formatted = formatCss(css, effectId, format);
-      const label =
-        COPY_FORMATS.find((f) => f.id === format)?.label ?? format;
-      try {
-        await navigator.clipboard.writeText(formatted);
-        setCopiedFormat(format);
-        toast.success(`Copied as ${label}!`);
-        setTimeout(() => setCopiedFormat(null), 2000);
-      } catch {
-        toast.error("Failed to copy — please try again");
-      }
-    },
-    [css, effectId]
-  );
+  const { copy: handleCopy, copiedFormat } = useCopyFormat(css, effectId);
 
   const triggerClass =
     variant === "primary"

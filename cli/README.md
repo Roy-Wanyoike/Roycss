@@ -65,6 +65,10 @@ roycss info btn-shine-sweep --framework react
 roycss doctor
 ```
 
+## Data artifacts
+
+`bun run build:package` (repo root) emits **`cli/effects.json`** — a byte-identical snapshot of `dist/effects.json` covering all 1,959 effects (`id`, `name`, `category`, `description`, `tags`, `previewType`, `previewText`, `childCount`). The CLI bundle itself inlines the catalog at build time, so this file is a tooling/parity artifact (PF-049 freshness gate), not a runtime dependency — the published `roycss-cli` package ships only `index.js` and this README.
+
 ## License
 
 MIT — part of the RoyCSS project.

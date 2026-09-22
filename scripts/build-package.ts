@@ -5,6 +5,9 @@
  *   dist/roycss.css       — full source (with comments, formatted)
  *   dist/roycss.min.css   — minified production build
  *   dist/effects.json     — metadata for tooling (id, name, category, tags)
+ *   cli/effects.json      — byte-identical CLI snapshot of the dist catalog
+ *                           (PF-049; tooling/parity artifact — the cli bundle
+ *                           inlines the catalog, no runtime read)
  *   dist/effects.js       — ES module exporting the effects array
  *   dist/effects.cjs      — CommonJS module
  *   dist/roycss.manifest.json — unified lean index (PF-042): per-effect
@@ -21,9 +24,11 @@ import { join } from "path";
 import { spawnSync } from "node:child_process";
 
 const DIST_DIR = join(import.meta.dir, "..", "dist");
+const CLI_DIR = join(import.meta.dir, "..", "cli");
 
-// Ensure dist/ exists
+// Ensure dist/ and cli/ exist
 mkdirSync(DIST_DIR, { recursive: true });
+mkdirSync(CLI_DIR, { recursive: true });
 
 // Version is read from package.json at build time so the shipped banner
 // always matches the manifest (previously hardcoded "v1.0.0 / 1569+" while
@@ -137,8 +142,22 @@ const metadata = effects.map((e) => ({
   childCount: e.childCount || null,
 }));
 
-writeFileSync(join(DIST_DIR, "effects.json"), JSON.stringify(metadata, null, 2), "utf-8");
+// One serialization shared by both snapshot locations below — they must
+// stay byte-identical (PF-049 snapshot-freshness parity).
+const effectsJson = JSON.stringify(metadata, null, 2);
+
+writeFileSync(join(DIST_DIR, "effects.json"), effectsJson, "utf-8");
 console.log(`  ✓ dist/effects.json (${metadata.length} effects)`);
+
+// CLI data snapshot (PF-049 / issue #169): same catalog as
+// dist/effects.json, emitted at cli/effects.json so the documented
+// artifact is reproducible from a clean clone. Sibling of the committed
+// mcp-server/effects.json. NOTE: the cli/index.js bundle INLINES the
+// catalog, so this file is a tooling/parity artifact, not a runtime
+// dependency of the CLI — cli/package.json `files` intentionally does
+// not ship it.
+writeFileSync(join(CLI_DIR, "effects.json"), effectsJson, "utf-8");
+console.log(`  ✓ cli/effects.json (${metadata.length} effects)`);
 
 // ES module
 const esModule = `// RoyCSS effects metadata — auto-generated

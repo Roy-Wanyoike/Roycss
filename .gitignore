@@ -27,6 +27,8 @@ next-env.d.ts
 # backend-node/dist/ is regenerated — don't commit
 backend-node/dist/
 dist/coverage/
+# audit report is machine-generated per run (absolute paths + timestamps) — CI regenerates it
+dist/important-audit.json
 
 # ─── Testing & coverage ────────────────────────────────────────
 coverage/

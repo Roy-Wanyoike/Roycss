@@ -92,6 +92,9 @@ describe("docs class-API truth gate (F-01/F-02)", () => {
       "roycss-buttons",    // exported file name (roycss-buttons.css)
       "roycss-effects",    // src/lib/roycss-effects.ts module
       "roycss-types",      // roycss-types.ts module
+      // Lint rule id shown verbatim in the `roycss lint` banner the CLI
+      // docs quote (issue #128) — a rule name, not a CSS class:
+      "roycss-prefix",
       // Example selector a contributor authors in the contributing guide:
       "roycss-animations-float-card",
       // Custom-effect guide's invented example (the page teaches authoring

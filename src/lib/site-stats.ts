@@ -49,7 +49,7 @@ export const PRODUCT_COUNT = PRODUCTS.length; // 62
  * Developer tools in the platform Tools sheet — hand-maintained mirror
  * of the `ToolType` union in platform-tools.tsx (pinned by unit test).
  */
-export const TOOL_COUNT = 69;
+export const TOOL_COUNT = 70;
 
 /** Package version — same file npm publish reads. */
 export const VERSION = pkg.version; // "2.0.0"

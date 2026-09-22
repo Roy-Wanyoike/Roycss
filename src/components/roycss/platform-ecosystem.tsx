@@ -446,6 +446,12 @@ const DIFFERENTIATORS: Differentiator[] = [
     icon: Zap,
   },
   {
+    id: "css-lint",
+    name: "Code Health Linter",
+    description: "Paste CSS or markup → cascade, color, and namespace findings from the same engine that powers roycss lint [--fix]. Safe auto-fixes, !important policy, reduced-motion guard, @layer order.",
+    icon: ScanSearch,
+  },
+  {
     id: "browser-support",
     name: "Browser Support Matrix",
     description: "caniuse-style lookup for 27 modern CSS features (:has, oklch, nesting, container queries, view-transitions, subgrid…) across Chrome, Firefox, Safari, Edge, Samsung — with Baseline status.",
@@ -1239,6 +1245,7 @@ const INTERACTIVE_TOOLS: Record<string, string> = {
   "relative-color": "relative-color",
   "starting-style": "starting-style",
   "light-dark": "light-dark",
+  "css-lint": "css-lint",
   // Note: mcp-server and inspector are external tools (CLI/Chrome extension),
   // NOT in-browser tools. They should expand to show setup instructions,
   // NOT try to open a panel. So they are intentionally NOT in this map.

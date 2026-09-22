@@ -275,7 +275,7 @@ export default function RoadmapPage() {
       </main>
 
       {/* Minimal footer — matches the legal-page shell */}
-      <footer className="border-t border-border/50">
+      <footer aria-label="Site footer" className="border-t border-border/50">
         <div className="mx-auto flex w-full max-w-3xl flex-col items-center justify-between gap-2 px-4 py-6 text-xs text-muted-foreground sm:flex-row sm:px-6">
           <p>&copy; {new Date().getFullYear()} RoyCSS</p>
           <div className="flex items-center gap-4">

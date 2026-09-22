@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
  * API_MODE (env) selects the strategy:
  *   - "auto" (default): BACKEND_URL set AND reachable → proxy to the full
  *     backend; otherwise serve the embedded read-only API from the
- *     1,973-effect catalog (production default — the site is standalone).
+ *     1,983-effect catalog (production default — the site is standalone).
  *   - "embedded": always serve embedded (read-only catalog surface).
  *   - "proxy": always forward to BACKEND_URL (default localhost:4000) —
  *     the pre-embedded-mode behavior, preserved for self-hosted setups.

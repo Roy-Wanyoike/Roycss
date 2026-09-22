@@ -3,7 +3,7 @@
  *
  * Derives the /effects/[id] "Browser support" one-liner from the effect's
  * own cssCode (issue #190 — the audit found no browser-support info on any
- * of the 1,973 effect pages).
+ * of the 1,983 effect pages).
  *
  * Pure function over the CSS text: scans for modern-platform features and
  * returns (a) the always-true baseline line and (b) per-feature caveats.

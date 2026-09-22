@@ -10,7 +10,7 @@
      • What's different? (CSS-first, component system, AI-native, dev platform)
    ═══════════════════════════════════════════════════════════════ */
 
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment } from "react";
 import { motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -38,9 +38,16 @@ import {
   ScrollReveal,
   StaggerGroup,
   staggerItem,
+  AnimatedCounter,
 } from "@/components/roycss/motion-primitives";
 import { cn } from "@/lib/utils";
-import { EFFECT_COUNT_FORMATTED, PRODUCT_COUNT } from "@/lib/site-stats";
+import {
+  EFFECT_COUNT,
+  EFFECT_COUNT_FORMATTED,
+  PRODUCT_COUNT,
+  TOOL_COUNT,
+  CSS_LINES,
+} from "@/lib/site-stats";
 
 /* ─── Accent palette ───────────────────────────────────────────────
    Deliberately AVOIDS indigo/blue. Uses emerald / amber / rose / teal
@@ -128,8 +135,8 @@ const PILLARS: Pillar[] = [
     icon: Wrench,
     title: "Developer Platform",
     description:
-      "64 developer tools, CLI, MCP server, inspector, sandbox. Everything from scaffolding to deployment.",
-    stat: "64 tools",
+      `${TOOL_COUNT} developer tools, CLI, MCP server, inspector, sandbox. Everything from scaffolding to deployment.`,
+    stat: `${TOOL_COUNT} tools`,
     accent: "teal",
   },
 ];
@@ -181,10 +188,10 @@ interface Stat {
 }
 
 const STATS: Stat[] = [
-  { value: 1569, label: "CSS Effects", format: true },
-  { value: 62, label: "Platform Products" },
-  { value: 64, label: "Developer Tools" },
-  { value: 22000, label: "Lines of CSS", suffix: "+", format: true },
+  { value: EFFECT_COUNT, label: "CSS Effects", format: true },
+  { value: PRODUCT_COUNT, label: "Platform Products" },
+  { value: TOOL_COUNT, label: "Developer Tools" },
+  { value: CSS_LINES, label: "Lines of CSS", suffix: "+", format: true },
 ];
 
 interface Audience {
@@ -220,81 +227,6 @@ const AUDIENCES: Audience[] = [
     accent: "teal",
   },
 ];
-
-/* ─── Local formatted counter ──────────────────────────────────────
-   Mirrors AnimatedCounter from motion-primitives but adds optional
-   toLocaleString() formatting so "22,000+" and formatted counts render with
-   thousands separators exactly as the brief specifies. Kept local so
-   we don't widen the shared component's API for a single use-case.
-   ─────────────────────────────────────────────────────────────────── */
-
-function FormattedCounter({
-  value,
-  duration = 2,
-  prefix = "",
-  suffix = "",
-  format = false,
-  className = "",
-}: {
-  value: number;
-  duration?: number;
-  prefix?: string;
-  suffix?: string;
-  format?: boolean;
-  className?: string;
-}) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const [display, setDisplay] = useState(0);
-  const [started, setStarted] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !started) {
-            setStarted(true);
-            observer.disconnect();
-          }
-        });
-      },
-      { threshold: 0.15 },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [started]);
-
-  useEffect(() => {
-    if (!started) return;
-    const start = performance.now();
-    const ease = (t: number) => 1 - Math.pow(1 - t, 3);
-    let rafId: number;
-    const tick = (now: number) => {
-      const elapsed = (now - start) / 1000;
-      const progress = Math.min(elapsed / duration, 1);
-      const current = Math.round(value * ease(progress));
-      setDisplay(current);
-      if (progress < 1) {
-        rafId = requestAnimationFrame(tick);
-      } else {
-        setDisplay(value);
-      }
-    };
-    rafId = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafId);
-  }, [started, value, duration]);
-
-  const text = format ? display.toLocaleString("en-US") : display.toString();
-
-  return (
-    <span ref={ref} className={className}>
-      {prefix}
-      {text}
-      {suffix}
-    </span>
-  );
-}
 
 /* ─── Scroll helper (self-contained, no external dep) ───────────── */
 
@@ -529,7 +461,7 @@ export function WhatIsRoyCSS() {
                   key={stat.label}
                   className="p-6 sm:p-8 text-center flex flex-col items-center justify-center"
                 >
-                  <FormattedCounter
+                  <AnimatedCounter
                     value={stat.value}
                     suffix={stat.suffix}
                     format={stat.format}

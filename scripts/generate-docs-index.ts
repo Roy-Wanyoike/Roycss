@@ -160,6 +160,15 @@ function main(): void {
 
   for (const abs of pageFiles) {
     const route = routeFromPath(abs);
+
+    // Dynamic-segment routes (e.g. /docs/[version]) use generateMetadata
+    // or resolve per-slug — they are not static content pages and don't
+    // belong in the search index. Skip them (the versioned-docs route is
+    // a redirect/snapshot shell, issue #127).
+    if (/\[[a-z0-9-]+\]/.test(route)) {
+      continue;
+    }
+
     const source = readFileSync(abs, "utf8");
 
     if (!/export const metadata/.test(source)) {

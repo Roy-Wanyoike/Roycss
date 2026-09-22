@@ -10,7 +10,7 @@
  *      `src/components/roycss/quality-badge.tsx`.
  *
  *   2. EFFECT half (PF-042): `computeEffectQualityScore` scores every
- *      effect in the 1,973-effect catalog for `dist/roycss.manifest.json`
+ *      effect in the 1,983-effect catalog for `dist/roycss.manifest.json`
  *      from REAL per-effect signals — a11y tags (src/lib/effect-a11y.ts),
  *      description length (the catalog's per-effect documentation),
  *      tag count, cssCode size, preview presence, and browser-support

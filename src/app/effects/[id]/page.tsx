@@ -37,7 +37,7 @@ import {
    • dynamicParams = true + generateStaticParams() → [] (see
      _lib/static-effects.ts): effect pages render ON DEMAND at request
      time, then are ISR-cached. This replaces the previous build-time
-     enumeration of ALL 1,973 ids, which emitted 1,973 prerendered
+     enumeration of ALL 1,983 ids, which emitted 1,983 prerendered
      page bundles (~210 KB each: HTML + RSC + meta + segments ≈
      370 MB of .next/server/app/effects — over half of the entire
      build output) into every deployment. Same URLs, same canonicals,
@@ -62,7 +62,7 @@ import {
      revalidation window is plenty. TRADE-OFF: the FIRST visit to each
      effect id pays one server render (~0.1–0.8 s measured); every
      visit for the next 24 h is a cache hit. The sitemap still lists
-     all 1,973 ids, so crawlers discover and index exactly the same
+     all 1,983 ids, so crawlers discover and index exactly the same
      URLs as before.
    ═══════════════════════════════════════════════════════════════ */
 export const dynamicParams = true;

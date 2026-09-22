@@ -218,10 +218,10 @@ describe("roycss.manifest.json (PF-042 — unified index)", () => {
     }
   });
 
-  it("has one entry per catalog effect — 1,973, pinned (lockstep with effects.test.ts)", () => {
+  it("has one entry per catalog effect — 1,983, pinned (lockstep with effects.test.ts)", () => {
     expect(rows.length).toBe(effects.length);
-    expect(rows.length).toBe(1973);
-    expect(manifest.counts.effects).toBe(1973);
+    expect(rows.length).toBe(1983);
+    expect(manifest.counts.effects).toBe(1983);
     expect(manifest.counts.categories).toBe(categoryOrder.filter((c) => manifest.effects[c]).length);
   });
 
@@ -369,9 +369,9 @@ describe("roycss.manifest.json (PF-042 — unified index)", () => {
 
   it("pins the distributions (lockstep: generator output · this test · the PR)", () => {
     // Bump all three together when the catalog changes — never one alone.
-    expect(manifest.counts.maturity).toEqual({ stable: 1268, beta: 664, experimental: 41 });
-    expect(manifest.counts.quality).toEqual({ A: 149, B: 1173, C: 522, D: 109, F: 20 });
-    expect(manifest.counts.a11y).toEqual({ "motion-safe": 1592, "motion-caution": 381, "aria-required": 89 });
+    expect(manifest.counts.maturity).toEqual({ stable: 1277, beta: 664, experimental: 42 });
+    expect(manifest.counts.quality).toEqual({ A: 159, B: 1173, C: 522, D: 109, F: 20 });
+    expect(manifest.counts.a11y).toEqual({ "motion-safe": 1602, "motion-caution": 381, "aria-required": 89 });
 
     // counts must equal the entries they summarize (no stale summary).
     const maturity = { stable: 0, beta: 0, experimental: 0 } as Record<Maturity, number>;

@@ -9,7 +9,7 @@ import { categoryOrder } from "@/lib/roycss-effects";
  * #198), one URL per effect page, every /docs route, and the standalone
  * info pages (/roadmap, /privacy, /terms — issue #188 item 1).
  *
- * /effects/<id> pages enumerate the entire catalog (1,973 routes,
+ * /effects/<id> pages enumerate the entire catalog (1,983 routes,
  * statically prerendered — see src/app/effects/_lib/static-effects.ts),
  * and the /docs tree is walked at build time so new docs pages are
  * picked up automatically. Total URL count (~2,029) is far below the

@@ -1,3 +1,7 @@
+import { effects } from "./roycss-effects";
+
+const EFFECTS_FMT = effects.length.toLocaleString("en-US");
+
 export interface DocPage {
   slug: string;
   title: string;
@@ -297,7 +301,7 @@ export const DOCS_VERSIONS: DocsVersionInfo[] = [
     current: true,
     label: "RoyCSS 2.x — current",
     status: "current",
-    note: "1,973 effects, OKLCH tokens, container queries, scroll-driven animations, RoyAI.",
+    note: `${EFFECTS_FMT} effects, OKLCH tokens, container queries, scroll-driven animations, RoyAI.`,
   },
   {
     version: "v1",

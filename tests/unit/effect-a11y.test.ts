@@ -27,12 +27,12 @@ import {
  *   1. id-set equality (both directions) + entry shape;
  *   2. motionSafe cross-checked TWO ways against the catalog — a per-effect
  *      literal-string derivation over cssCode, and a file-level grep of the
- *      52 batch sources on disk (id → source-slice map);
+ *      54 batch sources on disk (id → source-slice map);
  *   3. decorationOnly / requiresAria full-corpus rule cross-checks with the
- *      methodology numbers pinned (303 interactive · 1,656 decorative · 89
+ *      methodology numbers pinned (315 interactive · 1,668 decorative · 89
  *      aria-required — post-#189 catalog-quality wave);
  *   4. cssCode-pinned spot checks across five categories;
- *   5. badge-derivation helper logic — including the 1,578 filter count that
+ *   5. badge-derivation helper logic — including the 1,602 filter count that
  *      backs the grid chip in roycss-page.tsx (no component tests exist in
  *      this repo: node environment, the helper is React-free by design).
  */
@@ -80,7 +80,7 @@ const KNOWN_REASONS: ReadonlySet<string> = new Set<string>([
   "zero-font",
 ]);
 
-/* ── File-level view of the 53 batch sources (id → raw source slice) ── */
+/* ── File-level view of the 54 batch sources (id → raw source slice) ── */
 
 const LIB_DIR = fileURLToPath(new URL("../../src/lib", import.meta.url));
 const BATCH_FILES = readdirSync(LIB_DIR)
@@ -161,14 +161,14 @@ describe("effect-a11y motionSafe (full-corpus cross-checks)", () => {
     }
   });
 
-  it("matches a file-level grep of the 53 batch sources on disk (id → file map)", () => {
+  it("matches a file-level grep of the 54 batch sources on disk (id → file map)", () => {
     // The catalog import could be green while the generated module is stale;
     // reading the raw batch sources on disk closes that hole.
-    expect(BATCH_FILES.length).toBe(53);
+    expect(BATCH_FILES.length).toBe(54);
     expect(EFFECT_SOURCE_SLICES.size).toBe(effects.length);
     for (const e of effects) {
       const slice = EFFECT_SOURCE_SLICES.get(e.id);
-      expect(slice, `${e.id}: no source slice in the 53 batch files`).toBeDefined();
+      expect(slice, `${e.id}: no source slice in the 54 batch files`).toBeDefined();
       expect(
         slice!.includes("prefers-reduced-motion"),
         `${e.id}: batch-file source disagrees with the generated motionSafe flag`,
@@ -176,10 +176,10 @@ describe("effect-a11y motionSafe (full-corpus cross-checks)", () => {
     }
   });
 
-  it("pins the motion-safe count at 1,592 (docs §4 + grid chip lockstep) — 1,578 after the #189 wave + 14 guarded effects from the #200 P1 UI-patterns batch", () => {
-    expect(effectA11yStats.total).toBe(1973);
-    expect(effectA11yStats.motionSafe).toBe(1592);
-    expect(effectA11yStats.motionCaution).toBe(1973 - 1592);
+  it("pins the motion-safe count at 1,602 (docs §4 + grid chip lockstep) — 1,578 after the #189 wave + 14 guarded #200 effects + 10 guarded #203 effects", () => {
+    expect(effectA11yStats.total).toBe(1983);
+    expect(effectA11yStats.motionSafe).toBe(1602);
+    expect(effectA11yStats.motionCaution).toBe(1983 - 1602);
   });
 });
 
@@ -198,21 +198,21 @@ describe("effect-a11y decorationOnly (full-corpus rule cross-check)", () => {
     }
   });
 
-  it("pins the distribution at 305 interactive / 1,668 decorative", () => {
-    expect(effectA11yStats.interactive).toBe(305);
+  it("pins the distribution at 315 interactive / 1,668 decorative", () => {
+    expect(effectA11yStats.interactive).toBe(315);
     expect(effectA11yStats.decorative).toBe(1668);
-    expect(effectA11yStats.interactive + effectA11yStats.decorative).toBe(1973);
+    expect(effectA11yStats.interactive + effectA11yStats.decorative).toBe(1983);
   });
 
-  it("reproduces the documented methodology: 302 hover/focus/active + 1 form-only → 303 interactive", () => {
+  it("reproduces the documented methodology: 314 hover/focus/active + 1 form-only → 315 interactive", () => {
     const hfa = effects.filter((e) => HOVER_FOCUS_ACTIVE.test(stripComments(e.cssCode)));
     const formOnly = effects.filter((e) => {
       const css = stripComments(e.cssCode);
       return !HOVER_FOCUS_ACTIVE.test(css) && FORM_STATE_PSEUDO.some((p) => css.includes(p));
     });
-    expect(hfa.length).toBe(304);
+    expect(hfa.length).toBe(314);
     expect(formOnly.map((e) => e.id)).toEqual(["ferrum-accordion-slide"]);
-    // 302 + 6 form-state effects (5 of which also match hover/focus/active) = 303.
+    // 314 + 1 form-only effect = 315 interactive.
     expect(effectA11yStats.interactive).toBe(hfa.length + formOnly.length);
   });
 });
@@ -366,9 +366,9 @@ describe("effect-a11y badge helper", () => {
     }
   });
 
-  it("filters the catalog to exactly 1,592 motion-safe effects (backs the grid chip count)", () => {
+  it("filters the catalog to exactly 1,602 motion-safe effects (backs the grid chip count)", () => {
     const motionSafe = effects.filter((e) => isMotionSafeEffect(e.id));
-    expect(motionSafe.length).toBe(1592);
+    expect(motionSafe.length).toBe(1602);
     expect(effectA11yStats.motionSafe).toBe(motionSafe.length);
   });
 

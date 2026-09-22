@@ -23,7 +23,7 @@ const VALID_PREVIEW_TYPES: ReadonlySet<PreviewType> = new Set([
  */
 describe("effects corpus", () => {
   it("exposes exactly 1973 effects (the documented catalog size)", () => {
-    expect(effects.length).toBe(1973);
+    expect(effects.length).toBe(1983);
   });
 
   it("exposes a non-empty allEffectCSS string that contains every effect's cssCode", () => {

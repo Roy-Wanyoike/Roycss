@@ -1,7 +1,7 @@
 # RoyCSS Effect Accessibility Tiers
 
 - **Owner:** accessibility / frontend area (see [`MAINTAINERS.md`](../MAINTAINERS.md))
-- **Applies to:** every effect in the 1,973-effect catalog
+- **Applies to:** every effect in the 1,983-effect catalog
   (`src/lib/effects-batch-{1..52}.ts`) — the tags ship in the npm package's
   source tree and are surfaced by the platform frontend
 - **Related:** [`PENDING-FEATURES.md`](PENDING-FEATURES.md) PF-004 (this
@@ -24,7 +24,7 @@ They answer the three questions a builder actually asks before pasting an
 effect into a product: *does it respect `prefers-reduced-motion` on its own?*
 *does it change interactive semantics?* and *does it hide real text?* The
 tags are surfaced as pills on every effect card and as a **Motion-safe only**
-filter chip in the effects grid. The 1,592/381/1,668/305/89 numbers below (post-#189 wave + the #200 P1 UI-patterns batch: 14 new effects, all shipping their own reduced-motion guards)
+filter chip in the effects grid. The 1,602/381/1,668/315/89 numbers below (post-#189 wave + the #200 P1 UI-patterns batch: 14 new effects + the #203 navigation/media batch: 10 new effects, all shipping their own reduced-motion guards)
 are pinned by `tests/unit/effect-a11y.test.ts`, so they cannot silently
 drift from the catalog.
 
@@ -32,10 +32,10 @@ drift from the catalog.
 
 | Tag | Meaning | Count | Shown as |
 |---|---|---|---|
-| `motionSafe: true` | The effect's own CSS ships a `@media (prefers-reduced-motion: reduce)` guard. Safe to copy standalone. | **1,592** | — (drives the Motion-safe filter) |
+| `motionSafe: true` | The effect's own CSS ships a `@media (prefers-reduced-motion: reduce)` guard. Safe to copy standalone. | **1,602** | — (drives the Motion-safe filter) |
 | `motionSafe: false` | No per-effect guard. **Not** unsafe to install — see §4. | **381** | *Motion caution* pill (amber) |
 | `decorationOnly: true` | No interactive pseudo-classes in the CSS — the effect is pure presentation; wrappers can be `aria-hidden` without losing semantics. | **1,668** | *Decorative* pill (muted) |
-| `decorationOnly: false` | The CSS responds to user input (`:hover` / `:focus` / `:active` or form-state pseudo-classes) — interaction, so the element must remain focusable/perceivable. | **305** | — |
+| `decorationOnly: false` | The CSS responds to user input (`:hover` / `:focus` / `:active` or form-state pseudo-classes) — interaction, so the element must remain focusable/perceivable. | **315** | — |
 | `requiresAria: "<reason>"` | The CSS hides real text via a known pattern; the reason names the top-priority match. | **90** | *A11y note* pill (violet) |
 
 The five `requiresAria` reasons, in priority order (one note per effect —
@@ -66,12 +66,12 @@ in the generator source so nobody "fixes" them by accident):
 
 - **Hover IS interaction.** A `:hover` rule changes presentation in response
   to user input, so hover effects are flagged interactive-relevant:
-  **302** effects match `:hover`/`:focus`/`:active`, **6** more match
-  form-state pseudo-classes (5 of those match both), giving **305**
+  **314** effects match `:hover`/`:focus`/`:active`, **1** more matches
+  form-state pseudo-classes only, giving **315**
   interactive effects. The single form-state-only effect is
   `ferrum-accordion-slide` (`:checked`).
 - **No effect uses `[aria-*]` or `[role]` selectors** (verified: zero
-  matches in all 1,973 cssCodes) — so "interactive" rests entirely on the
+  matches in all 1,983 cssCodes) — so "interactive" rests entirely on the
   pseudo-class analysis above.
 - **One effect ships an sr-only helper**: `ferrum-sr-only` (plus
   `ferrum-skip-link`, which uses the same visually-hidden recipe for its
@@ -117,12 +117,12 @@ header · the tests · this table):
 
 | | Count |
 |---|---|
-| Total effects | 1,973 |
-| Motion-safe (`motionSafe: true`) | 1,592 |
+| Total effects | 1,983 |
+| Motion-safe (`motionSafe: true`) | 1,602 |
 | Motion-caution (`motionSafe: false`) | 381 |
-| Interactive (`decorationOnly: false`) | 303 |
-| Decorative (`decorationOnly: true`) | 1,656 |
-| Aria-required (`requiresAria` set) | 90 |
+| Interactive (`decorationOnly: false`) | 315 |
+| Decorative (`decorationOnly: true`) | 1,668 |
+| Aria-required (`requiresAria` set) | 89 |
 
 **The honest caveat (read this before rejecting an effect):**
 `motionSafe: false` does **not** mean "unsafe to install." `dist/roycss.css`

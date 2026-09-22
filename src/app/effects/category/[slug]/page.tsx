@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, ChevronLeft, ChevronRight, Compass } from "lucide-react";
 import { effects, categoryMeta, categoryOrder } from "@/lib/roycss-effects";
+import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 import type { CSSEffect, EffectCategory } from "@/lib/roycss-types";
 import { categoryHref, explorerHref } from "@/lib/search-targets";
 import {
@@ -319,7 +320,7 @@ export default async function CategoryLandingPage({
                 <kbd className="inline-flex items-center rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-xs text-foreground">
                   ⌘K
                 </kbd>{" "}
-                anywhere to search all 1,973 effects
+                {`anywhere to search all ${EFFECT_COUNT_FORMATTED} effects`}
               </span>
             </div>
           </div>

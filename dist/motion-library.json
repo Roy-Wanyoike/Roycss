@@ -12610,5 +12610,39 @@
     "previewText": null,
     "childCount": 4,
     "cssCode": "/* Marquee & Ticker: News Ticker Live */\n.roycss-marquee-news-live {\n  position: relative;\n  display: flex;\n  align-items: center;\n  gap: 0.75rem;\n  width: max-content;\n  padding: 0.5rem 0.75rem 0.5rem 4.5rem;\n  border-radius: 12px;\n  background: oklch(0.22 0.03 260);\n  box-shadow:\n    0 2px 10px oklch(0.15 0.03 260 / 0.5),\n    inset 0 0 0 1px oklch(0.45 0.06 260 / 0.4);\n  animation: roy-marquee-news 20s linear infinite;\n}\n.roycss-marquee-news-live::before {\n  content: \"LIVE\";\n  position: absolute;\n  left: 0.75rem;\n  display: inline-flex;\n  align-items: center;\n  gap: 0.375rem;\n  font-size: 0.6875rem;\n  font-weight: 800;\n  letter-spacing: 0.12em;\n  color: oklch(0.95 0.02 20);\n}\n.roycss-marquee-news-live::after {\n  content: \"\";\n  position: absolute;\n  left: 0.875rem;\n  top: 50%;\n  width: 0.5rem;\n  height: 0.5rem;\n  margin-top: -0.6875rem;\n  border-radius: 999px;\n  background: oklch(0.63 0.24 25);\n  box-shadow: 0 0 8px oklch(0.63 0.24 25 / 0.9);\n  animation: roy-marquee-live-dot 1.6s ease-in-out infinite;\n}\n.roycss-marquee-news-live > span {\n  display: inline-flex;\n  align-items: center;\n  gap: 0.75rem;\n  font-size: 0.8125rem;\n  font-weight: 500;\n  white-space: nowrap;\n  color: oklch(0.92 0.01 260);\n}\n.roycss-marquee-news-live > span::after {\n  content: \"•\";\n  color: oklch(0.63 0.19 25);\n  font-weight: 700;\n}\n@keyframes roy-marquee-news {\n  from { transform: translateX(0); }\n  to   { transform: translateX(-50%); }\n}\n@keyframes roy-marquee-live-dot {\n  0%, 100% { opacity: 1; transform: scale(1); }\n  50%      { opacity: 0.35; transform: scale(0.78); }\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-marquee-news-live {\n    animation: none;\n    transform: none;\n  }\n  .roycss-marquee-news-live::after {\n    animation: none;\n    opacity: 1;\n  }\n}"
+  },
+  {
+    "id": "media-caption-reveal",
+    "name": "Caption Reveal Card",
+    "category": "microinteractions",
+    "description": "Image card whose caption slides up over a gradient scrim on hover (and on keyboard focus), with the image zooming a touch underneath. The scrim keeps WCAG-safe contrast for the caption text at every position.",
+    "tags": [
+      "caption",
+      "overlay",
+      "hover",
+      "image",
+      "media"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 1,
+    "cssCode": "/* Media Patterns: Caption Reveal Card\n   REQUIRED MARKUP: <figure class=\"roycss-media-caption-reveal\" tabindex=\"0\">\n                      <span>Caption text</span>\n                    </figure> */\n.roycss-media-caption-reveal {\n  position: relative;\n  display: block;\n  inline-size: 100%;\n  aspect-ratio: 4 / 3;\n  border-radius: 14px;\n  overflow: hidden;\n  isolation: isolate;\n  cursor: pointer;\n  box-shadow:\n    inset 0 0 0 1px oklch(0.6 0.02 250 / 0.25),\n    0 6px 18px oklch(0.2 0.03 250 / 0.14);\n}\n.roycss-media-caption-reveal::before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  z-index: -1;\n  background:\n    linear-gradient(150deg, oklch(0.66 0.14 160), oklch(0.5 0.12 220));\n  transform: scale(1.02);\n  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);\n}\n/* gradient scrim for caption contrast */\n.roycss-media-caption-reveal::after {\n  content: \"\";\n  position: absolute;\n  inset-block-start: 30%;\n  inset-inline: 0;\n  inset-block-end: 0;\n  background: linear-gradient(\n    to top,\n    oklch(0.18 0.02 250 / 0.82),\n    oklch(0.18 0.02 250 / 0)\n  );\n  opacity: 0;\n  transition: opacity 0.32s ease;\n}\n.roycss-media-caption-reveal > span {\n  position: absolute;\n  inset-inline: 0;\n  inset-block-end: 0;\n  padding: 0.875rem 1rem;\n  font-size: 0.875rem;\n  font-weight: 600;\n  color: oklch(0.99 0 0);\n  transform: translateY(calc(100% - 0.5rem));\n  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);\n}\n@media (hover: hover) {\n  .roycss-media-caption-reveal:hover::before {\n    transform: scale(1.08);\n  }\n  .roycss-media-caption-reveal:hover::after {\n    opacity: 1;\n  }\n  .roycss-media-caption-reveal:hover > span {\n    transform: translateY(0);\n  }\n}\n.roycss-media-caption-reveal:focus-visible {\n  outline: 2px solid oklch(0.6 0.14 175);\n  outline-offset: 3px;\n}\n.roycss-media-caption-reveal:focus-within::after,\n.roycss-media-caption-reveal:focus-visible::after {\n  opacity: 1;\n}\n.roycss-media-caption-reveal:focus-within > span,\n.roycss-media-caption-reveal:focus-visible > span {\n  transform: translateY(0);\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-media-caption-reveal::before,\n  .roycss-media-caption-reveal::after,\n  .roycss-media-caption-reveal > span {\n    transition: none;\n    transform: none;\n  }\n  .roycss-media-caption-reveal::after {\n    opacity: 1;\n  }\n}"
+  },
+  {
+    "id": "media-tilt-3d",
+    "name": "3D Tilt Frame",
+    "category": "microinteractions",
+    "description": "Static 3D presentation frame: perspective, a resting tilt and a glossy glare pseudo-element. Hover deepens the tilt with a springy ease — the pointer-tracking upgrade is a one-liner with CSS custom properties.",
+    "tags": [
+      "tilt",
+      "3d",
+      "perspective",
+      "frame",
+      "media"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null,
+    "cssCode": "/* Media Patterns: 3D Tilt Frame */\n.roycss-media-tilt-3d {\n  position: relative;\n  display: block;\n  inline-size: 100%;\n  aspect-ratio: 4 / 3;\n  border-radius: 14px;\n  background:\n    linear-gradient(145deg, oklch(0.7 0.1 60), oklch(0.55 0.12 300));\n  box-shadow:\n    inset 0 0 0 1px oklch(0.9 0.03 250 / 0.3),\n    0 14px 30px oklch(0.2 0.03 250 / 0.22);\n  transform: perspective(700px) rotateX(6deg) rotateY(-8deg);\n  transform-style: preserve-3d;\n  transition: transform 0.45s cubic-bezier(0.34, 1.3, 0.64, 1);\n}\n/* glossy glare */\n.roycss-media-tilt-3d::after {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  border-radius: inherit;\n  background: linear-gradient(\n    115deg,\n    oklch(1 0 0 / 0.35) 0%,\n    oklch(1 0 0 / 0.05) 38%,\n    oklch(1 0 0 / 0) 60%\n  );\n  transition: opacity 0.4s ease;\n}\n@media (hover: hover) {\n  .roycss-media-tilt-3d:hover {\n    transform: perspective(700px) rotateX(10deg) rotateY(-14deg)\n      translateZ(10px);\n  }\n  .roycss-media-tilt-3d:hover::after {\n    opacity: 0.85;\n  }\n}\n.roycss-media-tilt-3d:focus-visible {\n  outline: 2px solid oklch(0.6 0.14 175);\n  outline-offset: 3px;\n}\n@media (prefers-reduced-motion: reduce) {\n  .roycss-media-tilt-3d {\n    transition: none;\n    transform: none;\n  }\n}"
   }
 ]

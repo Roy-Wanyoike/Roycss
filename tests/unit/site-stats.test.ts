@@ -14,6 +14,7 @@ import {
   VERSION_BADGE,
   FULL_CSS_MIN_BYTES,
   FULL_CSS_MIN_GZ_KB,
+  CSS_LINES,
 } from "@/lib/site-stats";
 
 const ROOT = join(__dirname, "..", "..");
@@ -28,11 +29,11 @@ const ROOT = join(__dirname, "..", "..");
 describe("site-stats — single source of truth", () => {
   it("derives EFFECT_COUNT from the real catalog", () => {
     expect(EFFECT_COUNT).toBe(effects.length);
-    expect(EFFECT_COUNT).toBe(1973);
+    expect(EFFECT_COUNT).toBe(1983);
   });
 
   it("formats the effect count for display copy", () => {
-    expect(EFFECT_COUNT_FORMATTED).toBe("1,973");
+    expect(EFFECT_COUNT_FORMATTED).toBe("1,983");
   });
 
   it("derives CATEGORY_COUNT from the real catalog", () => {
@@ -89,6 +90,15 @@ describe("site-stats — single source of truth", () => {
     const gzKB = Math.round(gzipSync(readFileSync(min)).length / 1024);
     expect(Math.abs(gzKB - FULL_CSS_MIN_GZ_KB)).toBeLessThanOrEqual(2);
   });
+
+  it("pins CSS_LINES to the real dist/roycss.css line count — issue #202", () => {
+    // The hero claimed "~22,000+ lines" while the shipped file has ~60k.
+    const css = join(ROOT, "dist/roycss.css");
+    if (!existsSync(css)) return; // dist not built in this checkout
+    // wc -l semantics: newline-terminated lines.
+    const lines = (readFileSync(css, "utf8").match(/\n/g) ?? []).length;
+    expect(CSS_LINES).toBe(lines);
+  });
 });
 
 describe("site-stats — manifest.json stays pinned to the catalog", () => {
@@ -115,21 +125,17 @@ describe("site-stats — manifest.json stays pinned to the catalog", () => {
 
 describe("site-stats — stale count literals are gone from user-visible copy", () => {
   /**
-   * Files where these numbers are allowed to appear:
-   *  - pricing-section.tsx — owned by the legal/pricing workstream;
-   *    tracked there, out of scope here.
-   *
-   * The retired docs blobs (src/lib/docs-data.ts and
-   * src/components/docs/docs-content.json) used to be excluded here
-   * for historical narrative; they were deleted by issue #112 (the
-   * /docs routes are the single docs source of truth now).
+   * Issue #202: pricing-section.tsx was previously EXCLUDED here ("owned
+   * by the legal/pricing workstream") — that exclusion is exactly how a
+   * stale "All 1,749 CSS effects" survived three catalog expansions.
+   * No files are excluded anymore: all user-visible copy must derive
+   * counts from site-stats.ts.
    */
-  const EXCLUDED = new Set([
-    "src/components/roycss/pricing-section.tsx",
-  ]);
+  const EXCLUDED = new Set<string>([]);
 
   const STALE_COUNT = /\b(?:1,629|1,749|1,869|1,569)\b|1749\+/;
   const STALE_BADGE = /\bv(?:1\.0|2\.1)\b(?![\d.])/;
+  const STALE_ROUNDED = /\b1\.5k\+|\b1\.9k\+ effects\b/;
 
   function collectFiles(dir: string, relDir: string, out: string[]): void {
     for (const entry of readdirSync(dir, { withFileTypes: true })) {
@@ -155,6 +161,46 @@ describe("site-stats — stale count literals are gone from user-visible copy", 
       if (hits) offenders.push(`${rel}: ${hits.join(", ")}`);
     }
     expect(offenders).toEqual([]);
+  });
+
+  it("no stale rounded counts (1.5k+ / 1.9k+ effects) in user-visible copy", () => {
+    const offenders: string[] = [];
+    for (const rel of files) {
+      const hits = readFileSync(join(ROOT, rel), "utf8").match(STALE_ROUNDED);
+      if (hits) offenders.push(`${rel}: ${hits.join(", ")}`);
+    }
+    expect(offenders).toEqual([]);
+  });
+
+  it("no hardcoded tool counts (N developer tools / N tools literals)", () => {
+    // TOOL_COUNT is registry-derived; the pillar copy must interpolate it.
+    const whatIs = readFileSync(
+      join(ROOT, "src/components/roycss/what-is-roycss.tsx"),
+      "utf8",
+    );
+    expect(whatIs).toMatch(/\$\{TOOL_COUNT\} developer tools/);
+    expect(whatIs).toMatch(/stat: `\$\{TOOL_COUNT\} tools`/);
+    expect(whatIs).not.toMatch(/\b\d+ (developer )?tools["`,]/);
+  });
+
+  it("AnimatedCounter server-renders the final value (never 0) — issue #202", () => {
+    // Source-level guard: the counter must initialize from `value` so
+    // crawlers/no-JS users see the real numbers in the raw HTML.
+    const src = readFileSync(
+      join(ROOT, "src/components/roycss/motion-primitives.tsx"),
+      "utf8",
+    );
+    expect(src).toMatch(/const \[display, setDisplay\] = useState\(value\)/);
+    expect(src).toMatch(/prefers-reduced-motion: reduce/);
+  });
+
+  it("pricing free tier interpolates the live effect count", () => {
+    const pricing = readFileSync(
+      join(ROOT, "src/components/roycss/pricing-section.tsx"),
+      "utf8",
+    );
+    expect(pricing).toMatch(/`All \$\{EFFECT_COUNT_FORMATTED\} CSS effects`/);
+    expect(pricing).not.toMatch(/\bAll 1[\d,]{3} CSS effects\b/);
   });
 
   it("no stale version badges (v1.0 / v2.1) outside changelog history", () => {

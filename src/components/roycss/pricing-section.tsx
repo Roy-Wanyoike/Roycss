@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 
 /**
  * Pricing section — honest pre-launch mode (audit UI/UX F-09).
@@ -55,7 +56,7 @@ const pricingTiers: PricingTier[] = [
     period: "/mo",
     description: "Everything you need to explore the full CSS library and start building.",
     features: [
-      "All 1,749 CSS effects",
+      `All ${EFFECT_COUNT_FORMATTED} CSS effects`,
       "13 open-source platform products",
       "Community support",
       "MIT License",

@@ -116,6 +116,7 @@ import {
   TOOL_COUNT,
   VERSION,
   VERSION_BADGE,
+  CSS_LINES,
 } from "@/lib/site-stats";
 import { toast } from "sonner";
 import { TOOL_IDS, type ToolType } from "@/components/roycss/tool-registry";
@@ -2097,9 +2098,9 @@ export default function RoyCSSPage() {
             {/* Animated stats counters */}
             <ScrollReveal delay={0.45}>
               <div className="mt-8 grid grid-cols-3 gap-3 max-w-2xl mx-auto">
-                <StatCounter icon={Sparkles} value={effects.length} label="Effects" />
+                <StatCounter icon={Sparkles} value={effects.length} label="Effects" format />
                 <StatCounter icon={BookOpen} value={categoryOrder.length} label="Categories" />
-                <StatCounter icon={Zap} value={22000} label="Lines of CSS" suffix="+" prefix="~" />
+                <StatCounter icon={Zap} value={CSS_LINES} label="Lines of CSS" suffix="+" prefix="~" format />
               </div>
             </ScrollReveal>
           </div>

@@ -75,6 +75,7 @@ import {
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -197,7 +198,7 @@ const TEMPLATES: readonly TemplateMeta[] = [
   </motion.h1>
 
   <p className="relative mx-auto mt-6 max-w-2xl text-pretty text-base text-white/90 sm:text-lg">
-    RoyCSS ships 1.5k+ production-ready effects, tokens, and recipes.
+    RoyCSS ships ${EFFECT_COUNT_FORMATTED}+ production-ready effects, tokens, and recipes.
     Zero runtime. OKLCH color. Logical properties. Container queries.
   </p>
 
@@ -565,7 +566,7 @@ function HeroPreview({ animate = true }: PreviewProps): ReactNode {
       </motion.h1>
 
       <p className="relative mx-auto mt-5 max-w-2xl text-pretty text-sm text-white/90 sm:text-lg">
-        RoyCSS ships 1.5k+ production-ready effects, tokens, and recipes.
+        {`RoyCSS ships ${EFFECT_COUNT_FORMATTED}+ production-ready effects, tokens, and recipes.`}
         Zero runtime. OKLCH color. Logical properties. Container queries.
       </p>
 
@@ -660,7 +661,7 @@ const TIERS: readonly Tier[] = [
     features: [
       "Unlimited projects",
       "Priority support",
-      "All 1.5k+ effects",
+      `All ${EFFECT_COUNT_FORMATTED}+ effects`,
       "Pro templates",
     ],
   },

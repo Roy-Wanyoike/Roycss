@@ -30,7 +30,7 @@ function uniqueIp(): string {
 }
 
 describe("GET /api/v1/effects", () => {
-  it("1. list + paginate — returns the full catalog (1973)", async () => {
+  it("1. list + paginate — returns the full catalog (1983)", async () => {
     const res = await request(app)
       .get("/api/v1/effects")
       .set("X-Forwarded-For", uniqueIp());
@@ -41,10 +41,10 @@ describe("GET /api/v1/effects", () => {
     // Default limit is 24 per the schema, so the page is bounded.
     expect(res.body.data.length).toBeLessThanOrEqual(24);
     expect(res.body).toHaveProperty("meta");
-    expect(res.body.meta.total).toBe(1973);
+    expect(res.body.meta.total).toBe(1983);
     expect(res.body.meta.page).toBe(1);
     expect(res.body.meta.limit).toBe(24);
-    // 1973 / 24 = 82.2 → 83 pages
+    // 1983 / 24 = 82.6 → 83 pages
     expect(res.body.meta.totalPages).toBe(83);
   });
 
@@ -57,9 +57,9 @@ describe("GET /api/v1/effects", () => {
     expect(res.body.data.length).toBe(10);
     expect(res.body.meta.page).toBe(2);
     expect(res.body.meta.limit).toBe(10);
-    expect(res.body.meta.total).toBe(1973);
-    // 1973 / 10 = 197.3 → 198 pages
-    expect(res.body.meta.totalPages).toBe(198);
+    expect(res.body.meta.total).toBe(1983);
+    // 1983 / 10 = 198.3 → 199 pages
+    expect(res.body.meta.totalPages).toBe(199);
 
     // Each item in the page should have the canonical Effect shape.
     const first = res.body.data[0];

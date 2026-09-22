@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { effects, categoryMeta } from "@/lib/roycss-effects";
 import type { CSSEffect } from "@/lib/roycss-types";
-import { explorerHref } from "@/lib/search-targets";
+import { explorerHref, categoryHref } from "@/lib/search-targets";
 import { effectPageTitle, effectPageDescription } from "@/lib/effect-page-metadata";
 import { getBrowserSupport, formatBrowserSupport } from "@/lib/browser-support";
 import { getRequiredMarkup, getReducedMotionNote } from "@/lib/effect-page-content";
@@ -457,9 +457,9 @@ export default async function EffectPage({
               {effect.name}
             </h1>
             <Link
-              href={explorerHref(effect.category)}
+              href={categoryHref(effect.category)}
               className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-2.5 py-0.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors"
-              title={`Browse ${category.label} in the effects explorer`}
+              title={`Browse all ${category.label.toLowerCase()} — effects landing page`}
             >
               {category.label}
             </Link>

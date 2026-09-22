@@ -11,6 +11,7 @@ import {
   ROADMAP_SYNCED_AT,
   type RoadmapItem,
 } from "@/lib/roadmap-data";
+import { SiteHeader } from "@/components/roycss/site-header";
 
 /**
  * Public product roadmap (issue #130 / PF-045 acceptance #4).
@@ -104,38 +105,11 @@ function RoadmapSection({
 export default function RoadmapPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Sticky header — mirrors the legal-page shell / docs TopBar */}
-      <header className="sticky top-0 z-30 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="mx-auto flex h-14 w-full max-w-4xl items-center justify-between px-4 sm:px-6">
-          <Link
-            href="/"
-            className="flex items-center gap-2 text-sm font-semibold tracking-tight"
-            aria-label="RoyCSS — back to home"
-          >
-            <span className="inline-flex size-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
-              R
-            </span>
-            <span className="hidden sm:inline">RoyCSS</span>
-          </Link>
-          <nav
-            aria-label="Site pages"
-            className="flex items-center gap-4 text-xs text-muted-foreground"
-          >
-            <Link href="/docs" className="transition-colors hover:text-primary">
-              Docs
-            </Link>
-            <Link
-              href="/docs/guides/contributing"
-              className="transition-colors hover:text-primary"
-            >
-              Contributing
-            </Link>
-            <span aria-current="page" className="text-foreground">
-              Roadmap
-            </span>
-          </nav>
-        </div>
-      </header>
+      {/* Sitewide primary nav + theme toggle (issue #191) — replaces the
+          page-local sticky header; brand → home, Effects/Docs/Roadmap
+          links, GitHub, and the shared theme toggle are all covered by the
+          shared SiteHeader. */}
+      <SiteHeader />
 
       {/* Centered prose column */}
       <main className="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6 sm:py-14">

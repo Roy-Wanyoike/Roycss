@@ -36,6 +36,7 @@ import {
 } from "@/lib/docs-sitemap";
 import { DocsFeedback } from "@/components/docs/feedback";
 import { DocsPageMeta } from "@/components/docs/edit-link";
+import { SiteHeader } from "@/components/roycss/site-header";
 
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   Rocket,
@@ -109,8 +110,9 @@ function SidebarInner({ onNavigate }: { onNavigate?: () => void }) {
 }
 
 function TopBar({ onOpenSidebar }: { onOpenSidebar: () => void }) {
+  // top-14: sticks directly below the sitewide SiteHeader (issue #191).
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b bg-background/80 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-14 z-30 flex h-14 items-center gap-3 border-b bg-background/80 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <button
         type="button"
         onClick={onOpenSidebar}
@@ -211,7 +213,8 @@ function TocCard({ pathname }: { pathname: string }) {
   if (!page) return null;
   return (
     <aside className="hidden w-60 shrink-0 xl:block" aria-label="Page metadata">
-      <div className="sticky top-20 space-y-4">
+      {/* top-28: clears the stacked SiteHeader + TopBar (2 × h-14). */}
+      <div className="sticky top-28 space-y-4">
         <div className="rounded-lg border bg-muted/30 p-4 text-sm">
           <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             On this page
@@ -257,6 +260,9 @@ export default function DocsLayout({
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* Sitewide primary nav + theme toggle (issue #191) — sits above the
+          docs-local TopBar, which sticks directly below it (top-14). */}
+      <SiteHeader />
       <TopBar onOpenSidebar={() => setSidebarOpen(true)} />
 
       <div className="mx-auto flex w-full max-w-[1400px] gap-6 px-4 py-6 sm:px-6">
@@ -265,7 +271,8 @@ export default function DocsLayout({
           className="hidden w-[280px] shrink-0 lg:block"
           aria-label="Docs sidebar"
         >
-          <div className="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto pr-1">
+          {/* top-28: clears the stacked SiteHeader + TopBar (2 × h-14). */}
+          <div className="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto pr-1">
             <SidebarInner />
           </div>
         </aside>

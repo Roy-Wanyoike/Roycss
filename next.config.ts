@@ -34,8 +34,11 @@ const nextConfig: NextConfig = {
   // (or support) standalone output — vercel.json intentionally has no
   // buildCommand/outputDirectory overrides so the adapter stays in control.
   output: process.env.SELF_HOST === "1" ? "standalone" : undefined,
+  // Type validation stays ON during `next build` (issue #167): the separate
+  // `bunx tsc --noEmit` gate is not a substitute — a merged build must never
+  // skip type-checking. See docs/CONTRIBUTING.md for the build memory floor.
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   reactStrictMode: false,
   async headers() {

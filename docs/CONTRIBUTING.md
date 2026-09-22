@@ -35,6 +35,8 @@ Thank you for your interest in contributing to RoyCSS!
 
 > **Note**: `prisma generate` is kept as the explicit `bun run db:generate` step above, so the published `roycss` package needs no install scripts.
 
+> **Build memory floor**: Production build requires ≥8 GB RAM; on smaller runners `next build` compiles successfully but can be OOM-killed at the page-data collection stage (exit 137).
+
 ## Adding a New CSS Effect
 
 1. **Determine the category** — see `src/lib/effect-taxonomy.ts` for the 29 category definitions and their boundaries.

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import ZAI from "z-ai-web-dev-sdk";
+import { API_RATE_TIERS, guardApiWrite } from "@/lib/api-security";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
@@ -31,6 +32,11 @@ Example output:
 }`;
 
 export async function POST(req: NextRequest) {
+  // #159: same-origin verification (403) + per-IP rate limit (429, 20/min —
+  // mirrors the backend AI tier) on this paid-LLM route. Fail-closed on both.
+  const denied = guardApiWrite(req, { route: "ai-playground", ...API_RATE_TIERS.ai });
+  if (denied) return denied;
+
   try {
     const { prompt } = await req.json();
     if (!prompt || typeof prompt !== "string") {

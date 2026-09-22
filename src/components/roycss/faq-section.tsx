@@ -93,7 +93,7 @@ const faqEntries: Array<{ question: string; answer: string }> = [
   {
     question: "How does the AI integration work?",
     answer:
-      "RoyCSS includes three AI products: (1) RoyAI — a chat assistant that generates CSS effects, answers questions, and helps with RoyCSS usage. (2) Roy Agents — specialized AI agents for accessibility, performance, documentation, refactoring, design review, migration, and test generation. (3) MCP Hub — structured AI access to all RoyCSS knowledge via the Model Context Protocol. All AI tools use the z-ai-web-dev-sdk and are rate-limited (10 requests/minute per IP) with CSRF protection.",
+      "RoyCSS includes three AI products: (1) RoyAI — a chat assistant that generates CSS effects, answers questions, and helps with RoyCSS usage. (2) Roy Agents — specialized AI agents for accessibility, performance, documentation, refactoring, design review, migration, and test generation. (3) MCP Hub — structured AI access to all RoyCSS knowledge via the Model Context Protocol. All AI tools use the z-ai-web-dev-sdk and are rate-limited per IP (AI routes: 20 requests/minute; contact form: 5 requests/minute) with same-origin request verification on every write endpoint.",
   },
   {
     question: "What are Roy Blocks and Blueprints?",
@@ -103,7 +103,7 @@ const faqEntries: Array<{ question: string; answer: string }> = [
   {
     question: "Is RoyCSS production-ready?",
     answer:
-      "Yes. RoyCSS passes ESLint with 0 errors, TypeScript strict mode with 0 errors, and production builds successfully. The platform includes: strict CSP headers (default-src 'self', frame-ancestors 'none'), X-Frame-Options: DENY, HSTS, rate limiting (AI routes 10/min, contact 5/min), CSRF protection via Origin verification, Prisma ORM with PostgreSQL-ready schema, LRU caching, structured JSON logging, and graceful shutdown. WCAG 2.2 AA contrast verified (primary 5.32:1 in light mode).",
+      "Yes. RoyCSS passes ESLint with 0 errors, TypeScript strict mode with 0 errors, and production builds successfully. The platform includes: strict CSP headers (default-src 'self', frame-ancestors 'none'), X-Frame-Options: DENY, HSTS, rate limiting (AI routes 20/min, contact 5/min per IP), same-origin (Origin) verification on write routes, Prisma ORM with PostgreSQL-ready schema, LRU caching, structured JSON logging, and graceful shutdown. WCAG 2.2 AA contrast verified (primary 5.32:1 in light mode).",
   },
   {
     question: "What is the backend architecture?",

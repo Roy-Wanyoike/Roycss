@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import ZAI from "z-ai-web-dev-sdk";
+import { API_RATE_TIERS, guardApiWrite } from "@/lib/api-security";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
@@ -31,6 +32,11 @@ Example:
 {"score":45,"issues":[{"severity":"warning","category":"color","line":3,"message":"Uses hex color #10b981 instead of OKLCH","fix":"background: oklch(0.696 0.149 162.48);"}],"summary":"Needs OKLCH color migration and reduced-motion support."}`;
 
 export async function POST(req: NextRequest) {
+  // #159: same-origin verification (403) + per-IP rate limit (429, 20/min —
+  // mirrors the backend AI tier) on this paid-LLM route. Fail-closed on both.
+  const denied = guardApiWrite(req, { route: "css-doctor", ...API_RATE_TIERS.ai });
+  if (denied) return denied;
+
   try {
     const { css } = await req.json();
     if (!css || typeof css !== "string") {

@@ -73,15 +73,15 @@ describe("getRequiredMarkup", () => {
     expect(markup.exact).toBe(true);
   });
 
-  it("CATALOG PIN: 57 childCount + 81 span-css effects = 138 with markup", () => {
+  it("CATALOG PIN: 59 childCount + 77 span-css effects = 136 with markup", () => {
     const withChildCount = effects.filter((e) => (e.childCount ?? 0) > 0);
-    expect(withChildCount.length).toBe(57);
+    expect(withChildCount.length).toBe(59);
     const spanNoChildCount = effects.filter(
       (e) => !e.childCount && usesSpanChildren(e.cssCode)
     );
-    expect(spanNoChildCount.length).toBe(81);
+    expect(spanNoChildCount.length).toBe(77);
     const withMarkup = effects.filter((e) => getRequiredMarkup(e) !== null);
-    expect(withMarkup.length).toBe(138);
+    expect(withMarkup.length).toBe(136);
   });
 
   it("every childCount effect yields an exact snippet with that many spans", () => {

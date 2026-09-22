@@ -25,6 +25,21 @@ const securityHeaders = [
     key: "Content-Security-Policy",
     value: "frame-ancestors 'self' *; frame-src https://github.com https://*.github.com;",
   },
+  // Issue #192: the security copy (FAQ, security/SECURITY-POLICY.md,
+  // security/CSP.md) claims X-Frame-Options: DENY + HSTS — these headers
+  // make the claims TRUE. XFO is belt-and-suspenders next to the prod CSP
+  // `frame-ancestors 'none'` (src/proxy.ts); HSTS value matches the
+  // documented claim exactly (browsers ignore it over plain HTTP, so dev
+  // on localhost is unaffected; actual preload-list submission remains an
+  // owner-side domain action).
+  {
+    key: "X-Frame-Options",
+    value: "DENY",
+  },
+  {
+    key: "Strict-Transport-Security",
+    value: "max-age=63072000; includeSubDomains; preload",
+  },
 ];
 
 const nextConfig: NextConfig = {

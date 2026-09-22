@@ -242,45 +242,50 @@ is belt-and-suspenders.
 ## 3. How to implement in `next.config.ts`
 
 The CSP is set via the `headers()` function in `next.config.ts`. The
-current implementation (as of 2026-07-30):
+implementation below matches the shipped `next.config.ts` (as of issue
+#192 — X-Frame-Options and HSTS were added so the security copy in this
+directory and the FAQ match the actually-served headers):
 
 ```typescript
 import type { NextConfig } from "next";
 
-const DEV_CSP = [
-  "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
-  "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob:",
-  "font-src 'self' data:",
-  "connect-src 'self' ws: wss:",
-  "media-src 'self' blob:",
-  "frame-ancestors 'none'",
-  "base-uri 'self'",
-  "form-action 'self'",
-  "object-src 'none'",
-  "upgrade-insecure-requests",
-].join("; ") + ";";
-
 const securityHeaders = [
-  { key: "Content-Security-Policy", value: DEV_CSP },
-  { key: "X-Frame-Options", value: "DENY" },
+  { key: "Cross-Origin-Opener-Policy", value: "same-origin-allow-popups" },
+  { key: "Cross-Origin-Resource-Policy", value: "cross-origin" },
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
-  { key: "X-DNS-Prefetch-Control", value: "on" },
-  { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
-  { key: "Cross-Origin-Opener-Policy", value: "same-origin" },        // added by security audit 2026-07-30
-  { key: "Cross-Origin-Resource-Policy", value: "same-origin" },      // added by security audit 2026-07-30
+  // Dev-oriented CSP — production REPLACES this with the static-safe
+  // policy from src/proxy.ts (§3.1). 'self' * + GitHub frame-src exist
+  // only so local tooling (HMR websockets, GitHub embeds) keeps working.
+  {
+    key: "Content-Security-Policy",
+    value: "frame-ancestors 'self' *; frame-src https://github.com https://*.github.com;",
+  },
+  // Belt-and-suspenders clickjacking defense next to the prod CSP's
+  // `frame-ancestors 'none'` (issue #192).
+  { key: "X-Frame-Options", value: "DENY" },
+  // HSTS — matches the documented claim exactly (2 years, subdomains,
+  // preload). Browsers ignore this header over plain HTTP, so local dev
+  // is unaffected. Preload-list submission is an owner-side domain action.
+  {
+    key: "Strict-Transport-Security",
+    value: "max-age=63072000; includeSubDomains; preload",
+  },
 ];
 
 const nextConfig: NextConfig = {
-  output: "standalone",
-  typescript: { ignoreBuildErrors: true },
+  // Standalone output only for self-hosted (SELF_HOST=1); Vercel keeps
+  // control via its adapter.
+  output: process.env.SELF_HOST === "1" ? "standalone" : undefined,
+  typescript: { ignoreBuildErrors: false },
   reactStrictMode: false,
   async headers() {
     return [
-      { source: "/:path*", headers: securityHeaders },
+      {
+        source: "/(.*)",
+        headers: securityHeaders,
+      },
     ];
   },
 };
@@ -288,12 +293,22 @@ const nextConfig: NextConfig = {
 export default nextConfig;
 ```
 
+Note the two COOP/CORP values: `same-origin-allow-popups` (not
+`same-origin` — the auth/demo flows open popups) and `cross-origin` (the
+embedded-API mode is consumed cross-origin by tooling). These are the
+shipped values; earlier drafts of this document showed `same-origin` /
+`same-origin` aspirationally.
+
 ### 3.1 Production override via `src/proxy.ts`
 
-The dev CSP above is **overridden** in production by `src/proxy.ts`
+The dev-oriented CSP above is **overridden** in production by
+`src/proxy.ts`
 (renamed from `src/middleware.ts` in Next.js 16), which sets the
 static-safe policy from §1.1 on every matched response — including
-prerendered pages served from the static cache:
+prerendered pages served from the static cache. The non-CSP headers from
+`next.config.ts` (X-Frame-Options, HSTS, COOP/CORP, nosniff, …) pass
+through untouched, because the proxy responds with `NextResponse.next()`
+and only replaces the CSP value:
 
 ```typescript
 // src/proxy.ts (excerpt — the real file carries a long postmortem comment)
@@ -325,6 +340,12 @@ config at the bottom of `src/proxy.ts`). Because the policy is a plain
 host-source allowlist, it is byte-identical for dynamically rendered AND
 build-time prerendered responses — the browser validates the same HTML
 either way.
+
+One bypass to know about: unknown `/effects/<slug>` requests never reach
+routing — the proxy answers them directly with a hard-404
+(`unknownEffect404()`). That response carries its own headers, so it
+explicitly sets `X-Frame-Options: DENY` and the HSTS value itself (issue
+#192) to keep the header claims true on every response.
 
 ---
 

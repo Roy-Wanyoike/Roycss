@@ -8,7 +8,7 @@
  *
  * Since the ISR switch (see getFeaturedEffectPageIds below) the page set
  * and the sitemap set are intentionally different: the sitemap lists
- * EVERY catalog id (all 1,959 URLs stay indexable), while build-time
+ * EVERY catalog id (all 1,973 URLs stay indexable), while build-time
  * pages are only the featured set. Both still derive from the single
  * `effects` catalog below, so ids can never drift between them.
  */
@@ -44,7 +44,7 @@ export function getEffect(id: string): CSSEffect | undefined {
 
 /**
  * Every effect id in the catalog, in catalog order — used by the SITEMAP
- * (src/app/sitemap.ts) so all 1,959 /effects/<id> URLs stay listed.
+ * (src/app/sitemap.ts) so all 1,973 /effects/<id> URLs stay listed.
  *
  * The page set and the sitemap set are deliberately DIFFERENT now:
  *
@@ -53,7 +53,7 @@ export function getEffect(id: string): CSSEffect | undefined {
  *     them from the sitemap would be an SEO regression, so nothing
  *     changes here.
  *   • Build-time pages: only the featured set below (empty today).
- *     Enumerating all 1,959 ids here previously produced 1,959
+ *     Enumerating all 1,973 ids here previously produced 1,959
  *     prerendered page bundles (~370 MB of .next/server/app/effects —
      * over half of the entire build output) on every deploy. That
      * enumeration was this repo's single biggest deployment-size cost.

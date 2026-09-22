@@ -232,7 +232,7 @@ export default async function RootLayout({
   // 'unsafe-inline' scripts, so nonce attributes are neither needed nor set.
 
   return (
-    <html lang="en" suppressHydrationWarning className="dark">
+    <html lang="en" suppressHydrationWarning className="dark" data-scroll-behavior="smooth">
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <script

@@ -1,7 +1,7 @@
 {
   "name": "roycss",
   "version": "2.0.0",
-  "description": "Machine-readable class grammar for the RoyCSS effects framework, derived from the live catalog (1,959 effects / 29 categories).",
+  "description": "Machine-readable class grammar for the RoyCSS effects framework, derived from the live catalog (1,973 effects / 29 categories).",
   "generator": "scripts/generate-ai-artifacts.ts",
   "regenerate": "bun run gen:ai",
   "driftGate": "bun run ai:check (and tests/unit/ai-artifacts.test.ts)",
@@ -9,7 +9,7 @@
     "pattern": "^roycss-[a-z0-9]+(?:-[a-z0-9]+)*$",
     "flags": "",
     "description": "One class namespace: roycss- + lowercase kebab-case effect id. Digits allowed (catalog ids may start with a digit).",
-    "roundTrip": "validated against all 1,969 real class names at generation time",
+    "roundTrip": "validated against all 1,983 real class names at generation time",
     "examples": [
       "roycss-btn-glow",
       "roycss-text-wave",
@@ -26,7 +26,7 @@
       "id": "animations",
       "label": "Animations",
       "description": "Keyframe animations that bring elements to life",
-      "count": 322,
+      "count": 328,
       "commonIdStems": [
         "ferrum- (131)",
         "fade- (12)",
@@ -132,20 +132,22 @@
       "id": "forms",
       "label": "Forms & Inputs",
       "description": "Form input effects and validations",
-      "count": 45,
+      "count": 48,
       "commonIdStems": [
         "ferrum- (35)",
-        "form- (10)"
+        "form- (10)",
+        "slider- (3)"
       ]
     },
     {
       "id": "navigation",
       "label": "Navigation",
       "description": "Menu, tab, and navigation animations",
-      "count": 30,
+      "count": 35,
       "commonIdStems": [
         "ferrum- (20)",
-        "nav- (10)"
+        "nav- (10)",
+        "carousel- (5)"
       ]
     },
     {
@@ -381,14 +383,14 @@
     "cdn": "https://unpkg.com/roycss@2/dist/roycss.min.css"
   },
   "counts": {
-    "totalEffects": 1959,
+    "totalEffects": 1973,
     "totalCategories": 29,
-    "primaryClasses": 1959,
+    "primaryClasses": 1973,
     "auxiliaryClasses": 9,
     "baseUtilityClasses": 1,
-    "totalClasses": 1969,
+    "totalClasses": 1983,
     "modifierClasses": 0,
-    "trainingPairs": 383,
+    "trainingPairs": 385,
     "digitLeadingIds": 3
   }
 }

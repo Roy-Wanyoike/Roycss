@@ -35,7 +35,7 @@ export const DOCS_INDEX: DocsIndexEntry[] = [
     title: "Overview",
     section: "getting-started",
     sectionLabel: "Getting Started",
-    description: "What is RoyCSS and how to get started — 1,959 production-ready CSS effects with zero JS runtime and OKLCH colors.",
+    description: "What is RoyCSS and how to get started — 1,973 production-ready CSS effects with zero JS runtime and OKLCH colors.",
     keywords: ["getting","started","overview"],
   },
   {
@@ -155,7 +155,7 @@ export const DOCS_INDEX: DocsIndexEntry[] = [
     title: "API Reference",
     section: "api",
     sectionLabel: "API Reference",
-    description: "The RoyCSS class system: the .roycss-* namespace, OKLCH colors, and zero-runtime conventions across 1,959 effects in 29 categories.",
+    description: "The RoyCSS class system: the .roycss-* namespace, OKLCH colors, and zero-runtime conventions across 1,973 effects in 29 categories.",
     keywords: ["api","reference"],
   },
   {

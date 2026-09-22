@@ -297,7 +297,7 @@ export const DOCS_VERSIONS: DocsVersionInfo[] = [
     current: true,
     label: "RoyCSS 2.x — current",
     status: "current",
-    note: "1,959 effects, OKLCH tokens, container queries, scroll-driven animations, RoyAI.",
+    note: "1,973 effects, OKLCH tokens, container queries, scroll-driven animations, RoyAI.",
   },
   {
     version: "v1",

@@ -28,11 +28,11 @@ const ROOT = join(__dirname, "..", "..");
 describe("site-stats — single source of truth", () => {
   it("derives EFFECT_COUNT from the real catalog", () => {
     expect(EFFECT_COUNT).toBe(effects.length);
-    expect(EFFECT_COUNT).toBe(1959);
+    expect(EFFECT_COUNT).toBe(1973);
   });
 
   it("formats the effect count for display copy", () => {
-    expect(EFFECT_COUNT_FORMATTED).toBe("1,959");
+    expect(EFFECT_COUNT_FORMATTED).toBe("1,973");
   });
 
   it("derives CATEGORY_COUNT from the real catalog", () => {

@@ -30,7 +30,7 @@ function uniqueIp(): string {
 }
 
 describe("GET /api/v1/effects", () => {
-  it("1. list + paginate — returns the full catalog (1959)", async () => {
+  it("1. list + paginate — returns the full catalog (1973)", async () => {
     const res = await request(app)
       .get("/api/v1/effects")
       .set("X-Forwarded-For", uniqueIp());
@@ -41,11 +41,11 @@ describe("GET /api/v1/effects", () => {
     // Default limit is 24 per the schema, so the page is bounded.
     expect(res.body.data.length).toBeLessThanOrEqual(24);
     expect(res.body).toHaveProperty("meta");
-    expect(res.body.meta.total).toBe(1959);
+    expect(res.body.meta.total).toBe(1973);
     expect(res.body.meta.page).toBe(1);
     expect(res.body.meta.limit).toBe(24);
-    // 1749 / 24 = 72.875 → 73 pages
-    expect(res.body.meta.totalPages).toBe(82);
+    // 1973 / 24 = 82.2 → 83 pages
+    expect(res.body.meta.totalPages).toBe(83);
   });
 
   it("2. page + limit — ?page=2&limit=10 returns the second 10-item page", async () => {
@@ -57,9 +57,9 @@ describe("GET /api/v1/effects", () => {
     expect(res.body.data.length).toBe(10);
     expect(res.body.meta.page).toBe(2);
     expect(res.body.meta.limit).toBe(10);
-    expect(res.body.meta.total).toBe(1959);
-    // 1749 / 10 = 174.9 → 175 pages
-    expect(res.body.meta.totalPages).toBe(196);
+    expect(res.body.meta.total).toBe(1973);
+    // 1973 / 10 = 197.3 → 198 pages
+    expect(res.body.meta.totalPages).toBe(198);
 
     // Each item in the page should have the canonical Effect shape.
     const first = res.body.data[0];

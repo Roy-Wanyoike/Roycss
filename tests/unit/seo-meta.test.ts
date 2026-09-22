@@ -138,12 +138,12 @@ describe("sitemap.xml (#188 item 1)", () => {
   });
 
   it("still enumerates the effect catalog and docs routes", () => {
-    // 1,959 effect pages + 29 category landing pages (issue #198), all
+    // 1,973 effect pages + 29 category landing pages (issue #198), all
     // under /effects/ — the catalog enumeration must not shrink.
     const effectUrls = urls.filter((u) =>
       u.startsWith("https://roycss.com/effects/"),
     );
-    expect(effectUrls).toHaveLength(1959 + 29);
+    expect(effectUrls).toHaveLength(1973 + 29);
     expect(
       effectUrls.filter((u) => u.includes("/effects/category/")),
     ).toHaveLength(29);

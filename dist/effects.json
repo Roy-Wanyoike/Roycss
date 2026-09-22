@@ -20227,7 +20227,7 @@
     ],
     "previewType": "loader",
     "previewText": null,
-    "childCount": null
+    "childCount": 3
   },
   {
     "id": "ferrum-loader-folding-cube",
@@ -20347,7 +20347,7 @@
     ],
     "previewType": "loader",
     "previewText": null,
-    "childCount": null
+    "childCount": 3
   },
   {
     "id": "ferrum-loader-whale",
@@ -29841,6 +29841,231 @@
       "vfx"
     ],
     "previewType": "background",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "marquee-loop-seamless",
+    "name": "Seamless Loop Marquee",
+    "category": "animations",
+    "description": "Infinite scrolling content strip with mask-fade edges. The track is width:max-content and loops via a -50% translate, so duplicating the content once yields a perfectly seamless loop.",
+    "tags": [
+      "marquee",
+      "ticker",
+      "loop",
+      "infinite",
+      "mask"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 6
+  },
+  {
+    "id": "marquee-rtl-safe",
+    "name": "RTL-Safe Marquee",
+    "category": "animations",
+    "description": "Direction-aware marquee whose scroll direction follows the document writing direction. Under dir=\"rtl\" the animation reverses automatically, so Arabic/Hebrew/Persian pages scroll the natural way.",
+    "tags": [
+      "marquee",
+      "rtl",
+      "i18n",
+      "direction",
+      "logical"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 6
+  },
+  {
+    "id": "marquee-pause-hover",
+    "name": "Pause-on-Hover Marquee",
+    "category": "animations",
+    "description": "Marquee that pauses on hover and while any interactive child has keyboard focus, satisfying WCAG 2.2.2 pause/stop/hide. Pointer and keyboard users both get a stopped strip they can actually read.",
+    "tags": [
+      "marquee",
+      "pause",
+      "hover",
+      "focus",
+      "wcag",
+      "a11y"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 6
+  },
+  {
+    "id": "marquee-vertical-ticker",
+    "name": "Vertical Ticker",
+    "category": "animations",
+    "description": "Fixed-height vertical ticker that scrolls items upward in an endless loop, like a stock or news feed. Overflow is clipped to the window and items are evenly cycled.",
+    "tags": [
+      "marquee",
+      "ticker",
+      "vertical",
+      "feed",
+      "loop"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 5
+  },
+  {
+    "id": "marquee-ribbon-diagonal",
+    "name": "Diagonal Ribbon Marquee",
+    "category": "animations",
+    "description": "Bold rotated ribbon that scrolls across the corner of a hero or promo section — sale banners, announcement strips, event headers. Two stacked ribbons cross for a wrapped-ribbon look.",
+    "tags": [
+      "marquee",
+      "ribbon",
+      "banner",
+      "diagonal",
+      "promo"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 5
+  },
+  {
+    "id": "marquee-news-live",
+    "name": "News Ticker Live",
+    "category": "animations",
+    "description": "Broadcast-style news ticker: a pulsing LIVE badge anchors the strip while headlines scroll past with dot separators. The badge stays put, only the headlines move.",
+    "tags": [
+      "marquee",
+      "news",
+      "ticker",
+      "live",
+      "broadcast"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 4
+  },
+  {
+    "id": "carousel-scroll-snap",
+    "name": "Scroll-Snap Carousel",
+    "category": "navigation",
+    "description": "Production-grade pure-CSS carousel: horizontal scroll container with mandatory snap points, center-aligned slides, edge fade masks and a styled slim scrollbar. Fully touch, wheel and keyboard scrollable with zero JS.",
+    "tags": [
+      "carousel",
+      "slider",
+      "scroll-snap",
+      "gallery",
+      "no-js"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 4
+  },
+  {
+    "id": "carousel-fade-cycle",
+    "name": "Crossfade Carousel",
+    "category": "navigation",
+    "description": "Auto-advancing crossfade slideshow: four stacked slides each take a quarter of the cycle, fading in over their predecessor with a subtle scale settle. A single keyframes rule drives every slide via delays.",
+    "tags": [
+      "carousel",
+      "slideshow",
+      "crossfade",
+      "fade",
+      "auto"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 4
+  },
+  {
+    "id": "carousel-slide-cycle",
+    "name": "Sliding Track Carousel",
+    "category": "navigation",
+    "description": "Track-style carousel that advances one slide at a time with pauses between steps, then jumps back to the start — the classic hero-slider rhythm implemented in a single keyframes rule.",
+    "tags": [
+      "carousel",
+      "slider",
+      "track",
+      "steps",
+      "hero"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 4
+  },
+  {
+    "id": "carousel-3d-coverflow",
+    "name": "3D Coverflow Carousel",
+    "category": "navigation",
+    "description": "Music-player coverflow: the center slide faces forward while neighbors rotate away in 3D with depth-ordered shadows, all inside a perspective container. A gentle sway makes the depth readable.",
+    "tags": [
+      "carousel",
+      "3d",
+      "coverflow",
+      "perspective",
+      "gallery"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 5
+  },
+  {
+    "id": "carousel-progress",
+    "name": "Carousel with Progress",
+    "category": "navigation",
+    "description": "Auto-advancing carousel whose progress bar fills in lockstep with the slide cycle — the ::after bar reuses the same duration, so progress and slide position never drift apart.",
+    "tags": [
+      "carousel",
+      "progress",
+      "auto",
+      "indicator",
+      "slideshow"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": 3
+  },
+  {
+    "id": "slider-range-modern",
+    "name": "Modern Range Slider",
+    "category": "forms",
+    "description": "Contemporary range-slider visual: slim rounded track, filled value portion, and an oversized glowing thumb that eases back and forth. The demo animates the thumb; in production the same styles target input[type=range].",
+    "tags": [
+      "slider",
+      "range",
+      "input",
+      "form",
+      "thumb"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "slider-range-gradient-fill",
+    "name": "Gradient Fill Slider",
+    "category": "forms",
+    "description": "Range-slider variant where the filled portion is a flowing animated gradient and the thumb carries a hue-matched ring — great for volume, color-picking or brightness controls that deserve personality.",
+    "tags": [
+      "slider",
+      "range",
+      "gradient",
+      "fill",
+      "animated"
+    ],
+    "previewType": "box",
+    "previewText": null,
+    "childCount": null
+  },
+  {
+    "id": "slider-toggle-switch",
+    "name": "Spring Toggle Switch",
+    "category": "forms",
+    "description": "Toggle switch with a springy knob that overshoots on hover and settles into its state — a microinteraction-quality control. Hover to preview the knob travel; the track recolors to signal the target state.",
+    "tags": [
+      "toggle",
+      "switch",
+      "form",
+      "control",
+      "microinteraction"
+    ],
+    "previewType": "box",
     "previewText": null,
     "childCount": null
   }

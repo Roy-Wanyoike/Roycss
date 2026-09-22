@@ -76,8 +76,8 @@ describe("static-effects — page set vs sitemap set", () => {
     }
   });
 
-  it("sitemap set still enumerates the entire catalog (1,959 URLs)", () => {
-    expect(getEffectPageIds().length).toBe(1959);
+  it("sitemap set still enumerates the entire catalog (1,973 URLs)", () => {
+    expect(getEffectPageIds().length).toBe(1973);
   });
 
   it("sitemap keeps deriving effect URLs from getEffectPageIds", () => {

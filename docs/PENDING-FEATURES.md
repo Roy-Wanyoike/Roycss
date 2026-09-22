@@ -57,7 +57,7 @@ if scope expands.
 ## Current state (read before dispatching)
 - The **public marketing/demo site at `/`** serves a pre-fix build — the
   production redeploy is pending the owner-side account/billing action
-  (issue #75). Everything on `main` is verified locally: **1,959 effects /
+  (issue #75). Everything on `main` is verified locally: **1,973 effects /
   29 categories / 62 platform products / 68 dev tools**, `tsc` 0 errors,
   1,268/1,268 tests (548 frontend unit + 720 backend).
 - The three original go-live blockers from AUDIT-1 — **F1** (37 product
@@ -93,7 +93,7 @@ if scope expands.
   toolchain.** Per task instructions, the 64 stubs are ONE batched P1
   item (PF-008), NOT 64 separate items.
 - **Snapshot freshness:** `dist/effects.json` and `mcp-server/effects.json`
-  serve the current 1,959-effect catalog (MCP was fixed in PR #82);
+  serve the current 1,973-effect catalog (MCP was fixed in PR #82);
   `cli/effects.json` still serves the stale 1,569-entry snapshot
   (PF-049).
 - The 96 HIGH-priority NOT-STARTED items from
@@ -219,7 +219,7 @@ if scope expands.
   ROYCSS_DEPLOYMENT, ROYCSS_PERFORMANCE_REPORT §3, BACKEND-COMPLETION-REQUIREMENTS §2.5.)
 - **Acceptance:**
   1. PostgreSQL 15+ provisioned; all 14 `database/sql/*.sql` migrations
-     applied; `psql roycss -c "SELECT count(*) FROM effects;"` returns 1959
+     applied; `psql roycss -c "SELECT count(*) FROM effects;"` returns 1973
      after `999_seed.sql`.
   2. Redis 7+ provisioned; cache + rate-limit + job queue wired through
      it; TTL + invalidation rules per ROYCSS_DATABASE_ARCHITECTURE §4.
@@ -244,7 +244,7 @@ if scope expands.
 ### PF-004: Third-party WCAG 2.2 AA audit + VPAT 2.4 + per-effect a11y tags
 - **Area:** docs / a11y / frontend
 - **State:** partial — **code half DONE (2026-09-13)**: derived per-effect
-  a11y tags for all 1,959 effects (motionSafe 1,578 / motion-caution 381 /
+  a11y tags for all 1,973 effects (motionSafe 1,592 / motion-caution 381 /
   decorative 1,656 / aria-required 89 — re-pinned post-#189 catalog-quality wave) via `scripts/generate-effect-a11y.ts`
   → generated `src/lib/effect-a11y.ts` + `effect-a11y-badges.ts`; surfaced
   as pills on effect cards + "Motion-safe only" grid filter; tiers
@@ -254,7 +254,7 @@ if scope expands.
 - **Acceptance:**
   1. `docs/ACCESSIBILITY-AUDIT.md` published — third-party WCAG 2.2 AA
      audit report signed by an external auditor (scope: live
-     `roycss.dev`, all 1,959 effects, 62 product cards, docs site).
+     `roycss.dev`, all 1,973 effects, 62 product cards, docs site).
   2. `docs/VPAT-2.4.md` published — VPAT 2.4 EU edition, fully populated
      against the live site (per-criterion: Supports / Partially Supports
      / Does Not Support / Not Applicable, with remarks).
@@ -1403,7 +1403,7 @@ if scope expands.
   3. Token editor — visual OKLCH palette generation, contrast checking
      against WCAG 2.2 AA/AAA in real time, automatic tint/shade via
      `color-mix()`.
-  4. Effect picker — drag any of the 1,959 RoyCSS effects onto an
+  4. Effect picker — drag any of the 1,973 RoyCSS effects onto an
      element; tune duration/easing/delay/iteration via sliders.
   5. Component composer — compose Pro Components visually; Studio
      writes framework-specific bindings (React/JSX, Vue/SFC, Svelte,
@@ -1461,7 +1461,7 @@ if scope expands.
 ### PF-042: Component Genome + `/roycss.manifest.json` + Effect maturity tags + `API.md` public API surface + CI gate
 - **Area:** data / docs / CI
 - **State:** **DONE (PR #152 / issue #125, 2026-09-13)** — unified
-  `dist/roycss.manifest.json` (1,959 effects, ~274 KB) with maturity tags +
+  `dist/roycss.manifest.json` (1,973 effects, ~281 KB) with maturity tags +
   per-effect quality scores, drift-gated by `bun run gen:manifest:check`.
   Residual (follow-ups): `dist/roycss.manifest.d.ts` declarations + the
   per-effect diff surface. (PLATFORM-VISION §4.3, LABS-30 §4.1/§7.1/§3.2,
@@ -1601,7 +1601,7 @@ if scope expands.
   fork, deleting the CLI, deleting the color customizer UI, deleting
   the favorites system, deleting framework adapters, deleting VS Code
   snippets, deleting the section scrollbar, deleting the scroll-to-top
-  button. The current codebase ships 1,959 effects across 29
+  button. The current codebase ships 1,973 effects across 29
   categories (grew, not shrunk). (LABS-28, Tier 3 #45.) Note:
   `docs/LABS-28-DELETE-HALF.md` and the strategic docs it referenced
   were **already deleted from the repo** (pre-2026-09) — the decision
@@ -1625,7 +1625,7 @@ if scope expands.
 - **State:** proposed — decision required. The deleted 2026-09 audit
   carried a market/competitor analysis that is **not backlog
   material** and was deliberately NOT folded into the items above:
-  competitor read (Animate.css ~80 effects vs this catalog's 1,959;
+  competitor read (Animate.css ~80 effects vs this catalog's 1,973;
   GSAP/Motion are JS runtimes where this is a zero-JS catalog;
   Tailwind complementarity via copy formats; shadcn as the layer
   above), four theses (AI-native retrieval, zero-JS, completeness

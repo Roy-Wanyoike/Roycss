@@ -73,8 +73,8 @@ describe("snapshot freshness (PF-049)", () => {
     expect(md5(MCP_EFFECTS_PATH)).toBe(md5(DIST_EFFECTS_PATH));
   });
 
-  it("pins the total catalog size at 1959 (lockstep with effects.test.ts)", () => {
-    expect(effects.length).toBe(1959);
-    expect(distEffects.length).toBe(1959);
+  it("pins the total catalog size at 1973 (lockstep with effects.test.ts)", () => {
+    expect(effects.length).toBe(1973);
+    expect(distEffects.length).toBe(1973);
   });
 });

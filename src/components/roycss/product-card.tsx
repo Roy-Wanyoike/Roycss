@@ -92,6 +92,14 @@ interface ProductCardProps {
  *
  * Visual: icon + name + tier badge + status dot + description + CTA.
  * Hover: lift + primary border glow (via `hover:-translate-y-1` + `ring-primary/40`).
+ *
+ * A11y (issue #165): the card was a `<motion.button>` wrapping the CTA
+ * `<Button>` — invalid nested interactive elements (React DOM nesting
+ * error + WCAG 4.1.2). The card is now a `motion.div` carrying the
+ * `button` role, keyboard activation (Enter/Space) and focus ring, so
+ * click + keyboard behavior is unchanged with a single interactive
+ * element. The inner CTA is decorative (tabIndex -1, click bubbles to
+ * the card).
  */
 export function ProductCard({ product, onOpen }: ProductCardProps) {
   // Resolve the lucide icon dynamically. Falls back to "Sparkle".
@@ -100,12 +108,14 @@ export function ProductCard({ product, onOpen }: ProductCardProps) {
   const moduleKey = PRODUCT_MODULE[product.id];
 
   return (
-    <motion.button
+    <motion.div
       layout
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -4 }}
       transition={{ duration: 0.18 }}
+      role="button"
+      tabIndex={0}
       onClick={() => onOpen?.(product)}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
@@ -166,12 +176,13 @@ export function ProductCard({ product, onOpen }: ProductCardProps) {
         <Button
           size="sm"
           variant="ghost"
-          className="h-7 px-2 text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+          className="h-7 px-2 text-xs opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity pointer-events-none"
           tabIndex={-1}
+          aria-hidden
         >
           {product.cta}
         </Button>
       </div>
-    </motion.button>
+    </motion.div>
   );
 }

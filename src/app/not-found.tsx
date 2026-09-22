@@ -3,6 +3,14 @@ import { Home, Search, Sparkles, Box, Zap, BookOpen } from "lucide-react";
 import { EFFECT_COUNT_FORMATTED, PRODUCT_COUNT } from "@/lib/site-stats";
 import { explorerHref } from "@/lib/search-targets";
 
+/**
+ * Issue #165: the 404 surface must not inherit the generic home
+ * <title>. Next.js 16 supports `metadata` on `not-found.tsx`, which
+ * overrides the root layout title for this boundary (matches the
+ * `export const metadata` convention used by every page).
+ */
+export const metadata = { title: "Page not found — RoyCSS" };
+
 export default function NotFound() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4 py-16">

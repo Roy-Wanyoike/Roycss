@@ -2,7 +2,7 @@
 
 The public HTTP surface of the platform: the Express backend (`/api/v1/*`, `backend-node/`) and the Next.js frontend routes (`/api/*`, `src/app/api/`).
 
-**Coverage:** 72 backend modules · 289 backend routes (GET 203, POST 73, PUT 2, DELETE 10) · 19 frontend endpoints.
+**Coverage:** 75 backend modules · 289 backend routes (GET 203, POST 73, PUT 2, DELETE 10) · 25 frontend endpoints.
 
 > **Drift gate:** `cd backend-node && bun run api:check` walks `src/server/app.ts`, every module's `routes.ts` and `src/app/api/**` and fails when a route here is missing or stale. Regenerate the tables with `bun run api:gen` (curated prose lives in `backend-node/scripts/gen-api-md.ts` — edit there, not in API.md).
 

@@ -8,7 +8,9 @@
  *   - The `scoreEffect`, `normalizeTags`, `findDuplicates` entry points
  *   - The submission guide for new effects (`SUBMISSION_GUIDE`)
  *
- * Design docs: docs/adr/effect-curation/{DESIGN,ADR,IMPLEMENTATION-PLAN,REVIEW-CHECKLIST}.md
+ * Design docs: the effect-curation model lives in this module
+ * (SUBMISSION_GUIDE) and docs/PENDING-FEATURES.md (PF-009 / PF-042); the
+ * per-tree design docs were never committed to the docs directory.
  *
  * The module is intentionally dependency-free so it can be imported from:
  *   - The curation script (Bun, scripts/curate-effects.ts)

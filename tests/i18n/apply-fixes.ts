@@ -12,9 +12,9 @@
  *
  * NOTE: A parallel agent process appears to periodically run `git reset --hard HEAD`
  * which discards tracked-file changes. This script exists so the fixes can be
- * re-applied quickly if they get reverted. The design docs in
- * `docs/adr/i18n-rtl/` and the audit scripts in `tests/i18n/` are untracked
- * files and survive the reset.
+ * re-applied quickly if they get reverted. The i18n-rtl design notes were
+ * never committed to the docs tree (only the audit scripts in `tests/i18n/`
+ * are tracked, so they survive resets).
  */
 
 import * as fs from "node:fs";

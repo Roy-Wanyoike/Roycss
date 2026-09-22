@@ -7,9 +7,9 @@ marketing site. Established from scratch by the Quality Engineering agent.
 
 ```
 tests/
-├── unit/                          # Vitest — pure-TS, no DOM
-│   ├── effects.test.ts            # 1,569-effect corpus invariants
-│   ├── categories.test.ts         # 20-category taxonomy
+├── unit/                          # Vitest — pure-TS, no DOM (54 files; a few shown)
+│   ├── effects.test.ts            # 1,959-effect corpus invariants
+│   ├── categories.test.ts         # 29-category taxonomy
 │   ├── recipes.test.ts            # 12 recipes + searchRecipes()
 │   ├── patterns.test.ts           # 10 patterns + searchPatterns()
 │   ├── design-tokens.test.ts      # OKLCH-only / color-mix / generators

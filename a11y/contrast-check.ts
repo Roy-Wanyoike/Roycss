@@ -52,7 +52,9 @@ interface ColorPreset {
  *   - The preset as a text color on the dark hero bg clears 3:1.
  *
  * The visual identity of each preset is preserved — only the lightness is
- * nudged. See `a11y/fixes/README.md` for the full migration table.
+ * nudged. The full migration table + the Task 06 audit decisions are
+ * folded into `docs/EFFECT-A11Y-TIERS.md` §6 (the per-fix audit log was
+ * retired 2026-09).
  */
 const COLOR_PRESETS: ColorPreset[] = [
   { id: "emerald", name: "Emerald", hue: 162.48, hex: "#059669", oklch: { L: 0.49, C: 0.12, H: 162.48 } },

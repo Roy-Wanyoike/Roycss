@@ -25,7 +25,7 @@ bun run security/xss-scan.ts
 |---|---|---|---|
 | `audit.ts` | Run `bun audit --json`, count vulnerabilities by severity, fail on any high/critical. | `results/audit-report.json` | 0 if 0 high+critical, 1 otherwise |
 | `sbom.ts` | Generate a CycloneDX 1.4 SBOM from `package.json` and every dep's `package.json` (name, version, license). | `results/sbom.json` | 0 always (informational) |
-| `csp.ts` | Emit the dev CSP (with `'unsafe-inline'` for Next.js HMR) and the production CSP (with per-request nonces + `'strict-dynamic'`). | `results/csp.txt`, `results/csp-production.txt` | 0 always |
+| `csp.ts` | Emit the dev CSP (with `'unsafe-inline'` + `'unsafe-eval'` for Next.js HMR) and the production CSP reference string (static-safe, matching `src/proxy.ts`). The **enforcing** prod CSP lives in `src/proxy.ts` — nonces/`strict-dynamic` are banned per postmortem #54. | `results/csp.txt`, `results/csp-production.txt` | 0 always |
 | `css-exfiltration-check.ts` | Scan `dist/roycss.css`, `dist/effects.json`, and `src/lib/effects-batch-*.ts` for external `url()`, `@import`, `@font-face` with external `src`, and attribute-selector + `url()` exfiltration vectors. | `results/css-exfiltration-report.json` | 0 if 0 issues, 1 otherwise |
 | `xss-scan.ts` | Scan `src/components/**/*.tsx` and `src/app/**/*.tsx` for `dangerouslySetInnerHTML` (without a `// SECURITY:` comment), `.innerHTML =`, `eval(`, `new Function(`, `document.write`. | `results/xss-report.json` | 0 if 0 unsanitized uses, 1 otherwise |
 
@@ -35,8 +35,8 @@ bun run security/xss-scan.ts
 security/results/
 ├── audit-report.json              # bun audit summary (severity counts + advisories)
 ├── sbom.json                      # CycloneDX 1.4 SBOM
-├── csp.txt                        # Dev CSP (with 'unsafe-inline' for Next.js HMR)
-├── csp-production.txt             # Production CSP (with nonce placeholder + 'strict-dynamic')
+├── csp.txt                        # Dev CSP (with 'unsafe-inline' + 'unsafe-eval' for HMR)
+├── csp-production.txt             # Production CSP (static-safe, as served by src/proxy.ts)
 ├── css-exfiltration-report.json   # CSS exfil scan results
 └── xss-report.json                # XSS scan results
 ```
@@ -61,11 +61,10 @@ they write only to `security/results/`.
 
 | Doc | Purpose |
 |---|---|
-| `docs/adr/07-security-supply-chain.md` | Decision: zero runtime deps for publishable packages, strict CSP, no `dangerouslySetInnerHTML` for user content |
-| `docs/threat-models/07-security-supply-chain.md` | STRIDE + 6 CSS-specific attack vectors |
-| `docs/benchmarks/07-security-supply-chain.md` | 36 KPIs with targets and measured values |
-| `docs/plans/07-security-supply-chain.md` | 8-phase implementation plan |
-| `docs/checklists/07-security-supply-chain.md` | 12-section review checklist (~60 binary checks) |
+| `security/SECURITY-POLICY.md` | Disclosure policy, supported versions, response SLAs pointer |
+| `security/CSP.md` | The CSP as shipped (static-safe; nonces banned per postmortem #54) |
+| `security/CHECKLIST.md` | Pre-release checklist consuming all five scripts |
+| `docs/SECURITY-SLA.md` | The binding security-response SLA |
 
 ## CI integration
 
@@ -93,9 +92,8 @@ and attached to the GitHub release.
    - Returns 0 on success, 1 on failure.
    - Prints a human-readable summary to stdout.
 2. Add a row to the table above.
-3. Add a KPI to `docs/benchmarks/07-security-supply-chain.md` §1.
-4. Add a checklist item to `docs/checklists/07-security-supply-chain.md`.
-5. Add the script to the CI integration block above.
+3. Add a checklist item to `security/CHECKLIST.md`.
+4. Add the script to the CI integration block above.
 
 ## License
 

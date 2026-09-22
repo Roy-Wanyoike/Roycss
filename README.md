@@ -4,21 +4,21 @@
 
 ### AI-Native Frontend Engineering Platform
 
-**1,959 production-ready CSS effects · 62 platform products · 68 developer tools · AI-native**
+**1,959 production-ready CSS effects · 62 platform products · 69 developer tools · AI-native**
 
 [![Live demo](https://img.shields.io/badge/live_demo-roycss.vercel.app-22c55e?style=flat-square&logo=vercel&logoColor=white)](https://roycss.vercel.app)
 [![Effects](https://img.shields.io/badge/effects-1,959-10b981?style=flat-square)](#key-numbers)
 [![Categories](https://img.shields.io/badge/categories-29-06b6d4?style=flat-square)](#key-numbers)
 [![Products](https://img.shields.io/badge/platform_products-62-8b5cf6?style=flat-square)](#key-numbers)
-[![Backend modules](https://img.shields.io/badge/backend_modules-72-f59e0b?style=flat-square)](#key-numbers)
-[![Tests](https://img.shields.io/badge/tests-950_passing-22d3ee?style=flat-square)](#engineering-practices)
+[![Backend modules](https://img.shields.io/badge/backend_modules-75-f59e0b?style=flat-square)](#key-numbers)
+[![Tests](https://img.shields.io/badge/tests-1%2C651_passing-22d3ee?style=flat-square)](#engineering-practices)
 [![TypeScript](https://img.shields.io/badge/tsc-strict_clean-3178c6?style=flat-square)](#engineering-practices)
 [![License](https://img.shields.io/badge/license-MIT-ec4899?style=flat-square)](LICENSE)
 [![Runtime](https://img.shields.io/badge/bun-%E2%89%A51.0_%7C_node_%E2%89%A518.18-f472b6?style=flat-square)](#quick-start)
 
 **Live demo: <https://roycss.vercel.app>**
 
-<sub><b>Status:</b> the live site currently serves a build from before the latest wave of fixes — the production redeploy is pending an owner-side account/billing action ([#75](https://github.com/Roy-Wanyoike/Roycss/issues/75)). Everything merged to `main` is verified locally: build ✓ · `tsc` 0 errors · 1,268/1,268 tests ✓.</sub>
+<sub><b>Status:</b> the live site currently serves a build from before the latest wave of fixes — the production redeploy is pending an owner-side account/billing action ([#75](https://github.com/Roy-Wanyoike/Roycss/issues/75)). Everything merged to `main` is verified locally: build ✓ · `tsc` 0 errors · 1,750/1,750 tests ✓.</sub>
 
 </div>
 
@@ -40,7 +40,7 @@ RoyCSS is a **complete frontend engineering platform** — not just a CSS effect
 
 - **1,959 production-ready CSS effects** across 29 categories with live previews and copyable code
 - **62 platform products** (RoyAI, Roy Studio, Roy Inspector, Roy Cloud, Marketplace, Academy, …)
-- **68 developer tools** (CSS generators, visualizers, analyzers, converters)
+- **69 developer tools** (CSS generators, visualizers, analyzers, converters)
 - **AI-native development** (RoyAI assistant, LLM-backed modules for architect, designer, mentor, pair, review)
 - **Design system** (OKLCH color tokens, theme presets, motion library)
 - **Accessibility-first** (WCAG AA target, keyboard navigation, screen reader support, reduced-motion)
@@ -83,10 +83,10 @@ Every number below is verified — most are pinned by tests, so stale docs fail 
 | CSS effects | **1,959** | `src/lib/roycss-effects.ts` — asserted by [`tests/unit/effects.test.ts`](tests/unit/effects.test.ts) |
 | Effect categories | **29** | asserted by [`tests/unit/categories.test.ts`](tests/unit/categories.test.ts), rendered live on the homepage |
 | Platform products | **62** | `src/lib/product-registry.ts` (`PRODUCT_COUNT`) |
-| Backend modules | **72** | `backend-node/src/modules/` (70 mounted per the API.md header — `api-keys` nests under `/auth/api-keys`) |
-| Backend API routes | **271** | documented in [`API.md`](API.md), enforced by the drift gate (`bun run api:check`) |
+| Backend modules | **75** | `backend-node/src/modules/` (mounted per [`API.md`](API.md) — `api-keys` nests under `/auth/api-keys`) |
+| Backend API routes | **289** | documented in [`API.md`](API.md), enforced by the drift gate (`bun run api:check`) |
 | SEO effect pages | **1,959** | statically prerendered at `/effects/<id>` — one page per effect, all in the sitemap |
-| Tests | **950** | 384 frontend unit (Vitest) + 566 backend (integration + contract + security + unit) — all passing |
+| Tests | **1,750** | 811 frontend unit (Vitest) + 939 backend (integration + contract + security + unit) — all passing |
 | Typecheck | **0 errors** | `bunx tsc --noEmit` on strict TypeScript |
 
 ---
@@ -96,10 +96,10 @@ Every number below is verified — most are pinned by tests, so stale docs fail 
 | Layer | Stack |
 |---|---|
 | **Frontend** | [Next.js 16](https://nextjs.org) (App Router, Turbopack) · React 19 · TypeScript 5 (strict) · Tailwind CSS 4 · shadcn/ui |
-| **Backend** | Node: Express 4 + Prisma 6 + Zod 4 (72 modules, 271 routes) — the running source of truth · Go 1.23 (`chi`) port in progress for production |
+| **Backend** | Node: Express 4 + Prisma 6 + Zod 4 (75 modules, 289 routes) — the running source of truth · Go 1.23 (`chi`) port in progress for production |
 | **Runtime** | Bun (install + scripts, `>=1.0`) — Node `>=18.18` compatible (`.nvmrc`: 20) |
 | **Data** | SQLite (dev) → PostgreSQL-ready (Supabase in the prod blueprints) · 47 Prisma models |
-| **Quality** | Vitest (1,268 tests) · Playwright E2E + axe-core a11y audits · `tsc` strict-clean · API drift gate |
+| **Quality** | Vitest (1,750 tests) · Playwright E2E + axe-core a11y audits · `tsc` strict-clean · API drift gate |
 | **Deploy** | Vercel ([`vercel.json`](vercel.json)) + Railway ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) |
 | **Ecosystem** | npm package artifacts ([`dist/`](dist)) · RoyCLI · MCP server · VS Code extension |
 | **Realtime** | Socket.io (Roy Live, port 3003) |
@@ -142,7 +142,7 @@ import { effects } from "roycss";        // 1,959 CSSEffect records
 
 The `prisma generate` step above is a repo-dev concern only — it is kept as an explicit step in the dev setup so the published package needs no install scripts.
 
-**Optional: the backend API** (`http://localhost:4000`, 72 modules — the frontend proxies `/api/v1/*` to it automatically):
+**Optional: the backend API** (`http://localhost:4000`, 75 modules — the frontend proxies `/api/v1/*` to it automatically):
 
 ```bash
 cd backend-node
@@ -164,9 +164,9 @@ The inline `JWT_SECRET` / `JWT_REFRESH_SECRET` values aren't ceremony: the backe
 | `bun run lint` | ESLint |
 | `bun run build` | Production build (`prisma generate` + `next build`) |
 | `bun run build:package` | Rebuild the npm artifacts in `dist/` |
-| `bunx vitest run` | 384 frontend unit tests |
+| `bunx vitest run` | 811 frontend unit tests |
 | `bunx tsc --noEmit` | Typecheck gate (0 errors) |
-| `cd backend-node && bun run test` | 566 backend tests (integration + contract + security + unit) |
+| `cd backend-node && bun run test` | 939 backend tests (integration + contract + security + unit) |
 | `cd backend-node && bun run api:check` | API docs drift gate (code vs `API.md`) |
 | `cd backend-node && bun run typecheck` | Backend typecheck gate |
 
@@ -178,9 +178,9 @@ The inline `JWT_SECRET` / `JWT_REFRESH_SECRET` values aren't ceremony: the backe
 Roycss/
 ├── src/                    # Next.js 16 frontend — routes, 100+ components, effects catalog in lib/
 │   ├── app/                #   Pages + API routes (catch-all /api/v1 proxy, auth, health, og)
-│   ├── components/roycss/  #   pro/ (62 platform products) · tools/ (68 dev tools) · effects/ (9 WebGL) · auth/
+│   ├── components/roycss/  #   pro/ (62 platform products) · tools/ (69 dev tools) · effects/ (9 WebGL) · auth/
 │   └── lib/                #   The 1,959-effect catalog, product registry, design tokens, API client
-├── backend-node/           # Express + Prisma + Zod API — 72 modules, 271 routes (source of truth today)
+├── backend-node/           # Express + Prisma + Zod API — 75 modules, 289 routes (source of truth today)
 ├── backend-go/             # Go 1.23 + chi port of the same /api/v1 contract (production target, in progress)
 ├── mcp-server/             # MCP server — effects, patterns & tokens for AI assistants (Claude, Cursor, …)
 ├── cli/                    # RoyCLI — search and copy effects from the terminal
@@ -188,7 +188,7 @@ Roycss/
 ├── mini-services/          # Roy Live — Socket.io realtime service (port 3003)
 ├── docs/                   # CONTRIBUTING.md, screenshots/, architecture notes
 ├── docs/PENDING-FEATURES.md  # Roadmap — 51 triaged items, priority-tagged, state-distribution with arithmetic
-├── API.md                  # Full public API reference — 271 backend routes, drift-gate-checked
+├── API.md                  # Full public API reference — 289 backend routes, drift-gate-checked
 ├── dist/                   # npm package artifacts — roycss.css, effects.json, ESM/CJS builds
 ├── tests/                  # Unit (Vitest) · E2E (Playwright) · a11y (axe) · load (k6) · i18n
 ├── a11y/ security/ perf/   # Audit harnesses — WCAG, CSP/XSS/SBOM, benchmarks
@@ -208,7 +208,7 @@ Backend-node (Express + Prisma, Railway)  ⇄  Backend-go (Go, Cloud Run — pro
 Live Service (Socket.io, port 3003)
 ```
 
-`backend-node` is the running source of truth (all 72 modules live today). `backend-go` registers the same `/api/v1` route surface; modules not yet ported return `501` so clients fall back to `backend-node`. The port plan is batched in [`docs/PENDING-FEATURES.md`](docs/PENDING-FEATURES.md) (PF-008).
+`backend-node` is the running source of truth (all 75 modules live today). `backend-go` registers the same `/api/v1` route surface; modules not yet ported return `501` so clients fall back to `backend-node`. The port plan is batched in [`docs/PENDING-FEATURES.md`](docs/PENDING-FEATURES.md) (PF-008).
 
 ---
 
@@ -216,12 +216,12 @@ Live Service (Socket.io, port 3003)
 
 Recruiters: every claim here is reproducible from this repo.
 
-- **950 tests, all green** — 384 frontend unit (Vitest) + 566 backend (supertest integration, contract sweeps, security suite, unit) against the booted Express app. The catalog size itself is test-pinned: `tests/unit/effects.test.ts` asserts *exactly 1,959 effects*, `tests/unit/categories.test.ts` asserts *exactly 29 categories* — stale docs fail CI, not users.
+- **1,750 tests, all green** — 811 frontend unit (Vitest) + 939 backend (supertest integration, contract sweeps, security suite, unit) against the booted Express app. The catalog size itself is test-pinned: `tests/unit/effects.test.ts` asserts *exactly 1,959 effects*, `tests/unit/categories.test.ts` asserts *exactly 29 categories* — stale docs fail CI, not users.
 - **Typecheck gate** — `bunx tsc --noEmit` passes with **0 errors** on strict TypeScript across the frontend; the backend has its own `bun run typecheck` gate.
 - **Security headers + a static-safe CSP** — every production response carries a Content-Security-Policy that is **identical for prerendered and dynamic pages**, plus `X-Content-Type-Options`, `Referrer-Policy` and `Permissions-Policy`. The CSP was rewritten after a nonce/`strict-dynamic` policy silently broke every script on the statically prerendered site ([#54](https://github.com/Roy-Wanyoike/Roycss/issues/54)) — postmortem-style comments in [`src/proxy.ts`](src/proxy.ts) explain why nonces are permanently banned there.
 - **Auth-enforced API** — all 39 mutating endpoints across 28 modules require Bearer JWT; unauthenticated calls get a consistent `401` envelope, role-gated actions get `403` (PR [#76](https://github.com/Roy-Wanyoike/Roycss/pull/76), fixes #64). Verified end-to-end by 10 dedicated integration tests.
 - **Accessibility** — WCAG AA is the target: the automated axe-core harness ([`tests/a11y/`](tests/a11y) — axe audit, keyboard navigation, visual checks — plus the [`a11y/`](a11y) scripts) reports **0 violations across 88 applicable rules**, `prefers-reduced-motion` is honored app-wide, and keyboard navigation is audited (harness outputs are regenerated on demand and gitignored).
-- **API docs with a drift gate** — [`API.md`](API.md) documents all 271 backend routes + 15 frontend endpoints; `bun run api:check` statically walks `app.ts` + module routers and **fails if code and docs disagree** in either direction.
+- **API docs with a drift gate** — [`API.md`](API.md) documents all 289 backend routes + 25 frontend endpoints; `bun run api:check` statically walks `app.ts` + module routers and **fails if code and docs disagree** in either direction.
 - **SEO done properly** — each of the 1,959 effects has a statically prerendered page at `/effects/<id>` with JSON-LD, OG tags and prev/next links (PR [#77](https://github.com/Roy-Wanyoike/Roycss/pull/77)); unknown IDs return **hard 404s** (no soft-fail blank pages), and every URL is in the sitemap.
 - **Fail-fast backend** — environment is validated with Zod at boot (`process.exit(1)` with a readable error list instead of a mystery crash mid-request).
 - **Security posture in-repo** — CSP/XSS/SBOM scans and a vulnerability reporting policy live in [`security/`](security) (see [`security/SECURITY-POLICY.md`](security/SECURITY-POLICY.md)).
@@ -265,7 +265,7 @@ One repo, two deploys: the frontend deploys from the root, the backend from the 
 
 ## Contribute
 
-Issues and PRs are welcome! Start with [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md) — it covers the dev workflow, commands, and the contribution checklist (WCAG AA compliance included). The live backlog of planned work is [`docs/PENDING-FEATURES.md`](docs/PENDING-FEATURES.md) (47 items, priority-tagged, ready for per-item dispatch).
+Issues and PRs are welcome! Start with [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md) — it covers the dev workflow, commands, and the contribution checklist (WCAG AA compliance included). The live backlog of planned work is [`docs/PENDING-FEATURES.md`](docs/PENDING-FEATURES.md) (51 items, priority-tagged, ready for per-item dispatch).
 
 ## Contact
 

@@ -71,7 +71,9 @@ const ACCEPTED_ADVISORIES: AcceptedAdvisory[] = [
   //   top-level `brace-expansion: ^5.0.9` override. minimatch@10 exports
   //   `expand` as a named ESM/CJS export, fixing the `balanced is not a
   //   function` regression that previously blocked the upgrade from
-  //   brace-expansion@2.x. See docs/adr/07-security-supply-chain.md §6.
+  //   brace-expansion@2.x. See the `overrides` table in `package.json`
+  //   (every entry carries a documented rationale — security/CHECKLIST.md
+  //   item 1.5).
 ];
 
 interface Advisory {
@@ -274,7 +276,7 @@ function main(): number {
     const parts: string[] = [];
     if (summary.critical > 0) parts.push(`${summary.critical} critical`);
     if (summary.high > 0) parts.push(`${summary.high} high`);
-    explanation = `FAIL: ${parts.join(", ")}. See docs/adr/07-security-supply-chain.md §6 for override guidance.`;
+    explanation = `FAIL: ${parts.join(", ")}. Document any override with a rationale in package.json (see security/CHECKLIST.md item 1.5).`;
   }
 
   const report: AuditReport = {

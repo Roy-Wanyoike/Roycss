@@ -1,23 +1,25 @@
 # Content Security Policy — RoyCSS Marketing Site
 
 - **Document owner:** Security Engineering & Supply Chain domain agent
-- **Status:** Implemented (dev policy in `next.config.ts`, prod policy in
-  `src/middleware.ts`)
-- **Last reviewed:** 2026-07-30
-- **Related:** `docs/adr/security/ADR.md` ADR-S1,
-  `docs/adr/07-security-supply-chain.md` §2.2,
-  `security/results/csp.txt` (dev), `security/results/csp-production.txt` (prod),
-  `src/middleware.ts`, `next.config.ts`
+- **Status:** Implemented — production policy in `src/proxy.ts`
+  (static-safe), dev policy in `next.config.ts`
+- **Last reviewed:** 2026-09-22
+- **Related:** `src/proxy.ts` (the prod CSP — read its header comment
+  before touching anything), `next.config.ts` (dev CSP + companion
+  headers), `security/csp.ts` (emits the policy strings to
+  `security/results/`), `security/CHECKLIST.md` §3 (release gate)
 
 ---
 
-## 1. Recommended CSP header
+## 1. The shipped CSP header
 
-### 1.1 Production (enforcing, per-request nonce)
+### 1.1 Production (enforcing, static-safe)
+
+Served by `src/proxy.ts` (Next.js 16 middleware) on every response:
 
 ```
 default-src 'self';
-script-src 'self' 'nonce-{RANDOM_PER_REQUEST_NONCE}' 'strict-dynamic';
+script-src 'self' 'unsafe-inline';
 style-src 'self' 'unsafe-inline';
 img-src 'self' data: blob:;
 font-src 'self' data:;
@@ -29,6 +31,16 @@ form-action 'self';
 object-src 'none';
 upgrade-insecure-requests;
 ```
+
+**There are no per-request nonces and no `strict-dynamic` — by design,
+permanently.** Postmortem [#54](https://github.com/Roy-Wanyoike/Roycss/issues/54):
+a nonce-based policy (`script-src 'self' 'nonce-…' 'strict-dynamic'`) served
+full prerendered HTML while the browser executed ZERO scripts — build-time
+baked `<script>` tags can never carry a per-request nonce, and React 19
+streaming emits unnonced inline scripts (`$RC` swaps, `__next_f` bootstrap).
+The site was stuck on its loading fallback. Nonces cannot work on an app
+with statically prerendered pages; do not reintroduce them. See the
+block-comment at the top of `src/proxy.ts` for the full failure analysis.
 
 ### 1.2 Development (relaxed for Next.js HMR)
 
@@ -63,29 +75,29 @@ the site (no images, no styles, no fonts).
 
 ---
 
-### `script-src 'self' 'nonce-{random}' 'strict-dynamic'` (prod)
-### `script-src 'self' 'unsafe-inline' 'unsafe-eval'` (dev)
+### `script-src 'self' 'unsafe-inline'` (prod and dev; dev adds `'unsafe-eval'`)
 
 **Why:** Controls which scripts can execute. This is the single most
 important CSP directive for XSS prevention.
 
 - `'self'` — allows same-origin scripts (Next.js bundles).
-- `'nonce-{random}'` (prod only) — allows inline scripts bearing a
-  per-request nonce. Next.js generates some inline scripts (e.g. the
-  bootstrap script that hydrates server components); the nonce lets
-  these execute without allowing attacker-injected inline scripts.
-- `'strict-dynamic'` (prod only) — allows scripts loaded by nonce-bearing
-  scripts to also execute, without listing every hash. This is needed
-  because Next.js's bootstrap script dynamically loads chunks.
-- `'unsafe-inline'` (dev only) — Next.js HMR (Hot Module Replacement)
-  injects inline scripts without nonces during development. This is
-  a dev-only relaxation.
-- `'unsafe-eval'` (dev only) — some dev tooling (e.g. source maps, eval-
-  based HMR) requires eval. Not needed in prod.
+- `'unsafe-inline'` — **the accepted, documented tradeoff** (see
+  `src/proxy.ts` header + postmortem #54). Next.js App Router apps that
+  serve statically prerendered pages ship framework-generated inline
+  scripts (React streaming `$RC` swaps, the `__next_f` flight-data
+  bootstrap) that CANNOT be nonced or hashed by application code. A
+  stricter `script-src` silently breaks hydration on every prerendered
+  route — the exact #54 outage. The compensating controls stay tight:
+  `object-src 'none'`, `base-uri 'self'`, `frame-ancestors 'none'`,
+  `form-action 'self'`, and — most importantly — `connect-src 'self'`,
+  so even injected inline script cannot phone home to a third party.
+  Revisit ONLY with a hash-based policy for the known inline scripts;
+  per-request nonces are permanently off the table for this app.
+- `'unsafe-eval'` (dev only) — some dev tooling (source maps, eval-based
+  HMR) requires eval. Not needed in prod.
 
 **RoyCSS-specific:** RoyCSS ships **zero** inline scripts in its library
-CSS. The marketing site's inline scripts are all Next.js-generated
-(bootstrap, hydration data) and bear the per-request nonce in prod.
+CSS. The marketing site's inline scripts are all framework-generated.
 
 ---
 
@@ -276,55 +288,43 @@ const nextConfig: NextConfig = {
 export default nextConfig;
 ```
 
-### 3.1 Production override via middleware
+### 3.1 Production override via `src/proxy.ts`
 
-The dev CSP above is **overridden** in production by `src/middleware.ts`,
-which generates a per-request nonce and replaces the `script-src`
-directive:
+The dev CSP above is **overridden** in production by `src/proxy.ts`
+(renamed from `src/middleware.ts` in Next.js 16), which sets the
+static-safe policy from §1.1 on every matched response — including
+prerendered pages served from the static cache:
 
 ```typescript
-// src/middleware.ts (excerpt)
+// src/proxy.ts (excerpt — the real file carries a long postmortem comment)
 
-function buildProductionCsp(nonce: string): string {
-  return [
-    "default-src 'self'",
-    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'`,  // ← nonce here
-    "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' data: blob:",
-    "font-src 'self' data:",
-    "connect-src 'self'",
-    "media-src 'self' blob:",
-    "frame-ancestors 'none'",
-    "base-uri 'self'",
-    "form-action 'self'",
-    "object-src 'none'",
-    "upgrade-insecure-requests",
-  ].join("; ") + ";";
+function buildProductionCsp(): string {
+  return (
+    [
+      "default-src 'self'",
+      // 'unsafe-inline' is required for React streaming ($RC swaps) and the
+      // __next_f bootstrap scripts on prerendered pages — see header comment.
+      "script-src 'self' 'unsafe-inline'",
+      // … the rest of §1.1 …
+    ].join("; ") + ";"
+  );
 }
 
-function generateNonce(): string {
-  const bytes = new Uint8Array(16);
-  crypto.getRandomValues(bytes);
-  if (typeof Buffer !== "undefined") {
-    return Buffer.from(bytes).toString("base64");
-  }
-  let bin = "";
-  for (const b of bytes) bin += String.fromCharCode(b);
-  return btoa(bin);
-}
-
-export function middleware(request: NextRequest): NextResponse {
+export function proxy(request: NextRequest): NextResponse {
   if (process.env.NODE_ENV !== "production") {
-    return NextResponse.next();
+    return NextResponse.next();   // dev: the next.config.ts CSP applies
   }
-  const nonce = generateNonce();
-  const csp = buildProductionCsp(nonce);
-  // ... set headers on response, override the dev CSP ...
+  const response = NextResponse.next();
+  response.headers.set("Content-Security-Policy", buildProductionCsp());
+  return response;
 }
 ```
 
-The middleware runs on every request except static assets (see the
-`matcher` config in `src/middleware.ts`).
+The proxy runs on every route except static assets (see the `matcher`
+config at the bottom of `src/proxy.ts`). Because the policy is a plain
+host-source allowlist, it is byte-identical for dynamically rendered AND
+build-time prerendered responses — the browser validates the same HTML
+either way.
 
 ---
 
@@ -373,14 +373,15 @@ curl -I http://localhost:3000/ | grep -i content-security-policy
 
 # Verify the prod CSP is set (after `bun run build && bun run start`)
 curl -I http://localhost:3000/ | grep -i content-security-policy
-# Should contain: nonce-... 'strict-dynamic'
+# Should contain: script-src 'self' 'unsafe-inline' — and NO nonce-/strict-dynamic
 ```
 
 ### 5.2 CSP Evaluator
 
-Paste the prod CSP (with a sample nonce) into
+Paste the prod CSP into
 [Google's CSP Evaluator](https://csp-evaluator.withgoogle.com/). The
-current policy passes with zero warnings.
+`'unsafe-inline'` finding for `script-src` is the documented, accepted
+tradeoff (§2 and `src/proxy.ts`) — everything else passes clean.
 
 ### 5.3 Agent-browser smoke test
 
@@ -388,7 +389,9 @@ The release pipeline runs an agent-browser smoke test that:
 
 1. Loads `https://roycss.com/`
 2. Verifies the `Content-Security-Policy` header is present
-3. Verifies the CSP contains `nonce-` and `'strict-dynamic'`
+3. Verifies the CSP matches the static-safe policy (`script-src 'self'
+   'unsafe-inline'`, `frame-ancestors 'none'`) and contains **no**
+   `nonce-` / `strict-dynamic`
 4. Verifies no CSP violations appear in the browser console
 5. Verifies the contact form submits successfully (CSP doesn't block
    `/api/contact`)
@@ -400,14 +403,14 @@ The release pipeline runs an agent-browser smoke test that:
 To add a new CSP directive (e.g. `worker-src 'self'`):
 
 1. Add the directive to **both** the dev CSP in `next.config.ts` and the
-   prod CSP in `src/middleware.ts`. (Divergence is a known risk; keep
+   prod CSP in `src/proxy.ts`. (Divergence is a known risk; keep
    them in sync.)
 2. Update `security/csp.ts` to emit the new directive to
    `security/results/csp.txt` and `csp-production.txt`.
-3. Update this document (`security/CSP.md`) §1 and §2.
-4. Update `docs/adr/security/ADR.md` ADR-S1 if the change is material.
-5. Run the agent-browser smoke test to verify no violations.
-6. Run `bun run lint` to verify the config still parses.
+3. Update this document (`security/CSP.md`) §1 and §2, and the §3 rows of
+   `security/CHECKLIST.md`.
+4. Run the agent-browser smoke test to verify no violations.
+5. Run `bun run lint` to verify the config still parses.
 
 ---
 
@@ -415,14 +418,16 @@ To add a new CSP directive (e.g. `worker-src 'self'`):
 
 If a third-party script (e.g. analytics) is added:
 
-1. **Do not** add the origin to `script-src 'unsafe-inline'`. Instead,
-   add the specific origin: `script-src 'self' 'nonce-...' 'strict-dynamic' https://analytics.example.com`.
+1. **Do not** loosen `script-src` beyond adding the specific origin:
+   `script-src 'self' 'unsafe-inline' https://analytics.example.com`
+   (and remember postmortem #54: never trade `'unsafe-inline'` away for
+   nonces — they break prerendered pages).
 2. Add the origin to `connect-src` if it makes `fetch()` calls:
    `connect-src 'self' https://analytics.example.com`.
 3. Add the origin to `img-src` if it loads pixels:
    `img-src 'self' data: blob: https://analytics.example.com`.
 4. Add a `Report-Only` period (see §4) to verify no real-user breakage.
-5. Update this document and the ADR.
+5. Update this document and `security/CHECKLIST.md` §3.
 6. Re-evaluate the threat model — a third-party script expands the
    supply chain.
 
@@ -430,15 +435,18 @@ If a third-party script (e.g. analytics) is added:
 
 ## 8. References
 
-- `docs/adr/security/ADR.md` ADR-S1 — CSP decision rationale
-- `docs/adr/07-security-supply-chain.md` §2.2 — pre-existing CSP ADR
+- `src/proxy.ts` — the prod CSP as served + the #54 postmortem comment
+  (read before touching the CSP)
 - `security/results/csp.txt` — dev CSP string (regenerated by
   `security/csp.ts`; outputs are gitignored)
-- `security/results/csp-production.txt` — prod CSP string (with nonce
-  placeholder; regenerated by `security/csp.ts`; gitignored)
-- `src/middleware.ts` — prod CSP nonce generation
+- `security/results/csp-production.txt` — production CSP string
+  (regenerated by `security/csp.ts`; gitignored)
 - `next.config.ts` — dev CSP + companion security headers
+- `security/CHECKLIST.md` §3 — the release gate for these headers
+- Postmortem: [#54](https://github.com/Roy-Wanyoike/Roycss/issues/54)
+  (P0 outage — nonce/`strict-dynamic` on statically prerendered pages)
 - Next.js CSP guide: <https://nextjs.org/docs/app/guides/content-security-policy>
+  (its nonce guidance assumes fully dynamic rendering — not our case)
 - Google CSP Evaluator: <https://csp-evaluator.withgoogle.com/>
 - MDN CSP reference: <https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP>
 - OWASP CSP Cheat Sheet: <https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html>

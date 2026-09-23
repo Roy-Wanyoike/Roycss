@@ -4,8 +4,14 @@ import {
   REFRESH_COOKIE,
   BACKEND_AUTH_URL,
   cookieOptions,
+  extractErrorMessage,
   type AuthUser,
 } from "@/lib/auth-client";
+import {
+  backendFetch,
+  backendTimeoutResponse,
+  isBackendTimeoutError,
+} from "@/lib/backend-fetch";
 
 /**
  * GET /api/auth/me
@@ -18,46 +24,56 @@ export async function GET() {
   const access = c.get(ACCESS_COOKIE)?.value;
   if (!access) return Response.json({ error: "Not authenticated" }, { status: 401 });
 
-  const fetchMe = async (token: string): Promise<{ ok: boolean; status: number; user?: AuthUser }> => {
-    const res = await fetch(`${BACKEND_AUTH_URL}/me`, {
-      headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
-      cache: "no-store",
-    });
-    if (!res.ok) return { ok: false, status: res.status };
-    const json = (await res.json().catch(() => null)) as { data?: AuthUser } | null;
-    return { ok: true, status: 200, user: json?.data };
-  };
+  // Bounded end-to-end (#245): a hung backend used to reject out of this
+  // handler entirely (no catch → framework 500). Now every proxied fetch
+  // carries a 15 s deadline and a TimeoutError maps to a clean 503.
+  try {
+    const fetchMe = async (token: string): Promise<{ ok: boolean; status: number; user?: AuthUser }> => {
+      const res = await backendFetch(`${BACKEND_AUTH_URL}/me`, {
+        headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
+        cache: "no-store",
+      });
+      if (!res.ok) return { ok: false, status: res.status };
+      const json = (await res.json().catch(() => null)) as { data?: AuthUser } | null;
+      return { ok: true, status: 200, user: json?.data };
+    };
 
-  let result = await fetchMe(access);
+    let result = await fetchMe(access);
 
-  // ONE refresh+retry on 401 from the access token.
-  if (!result.ok && result.status === 401) {
-    const refresh = c.get(REFRESH_COOKIE)?.value;
-    if (!refresh) return Response.json({ error: "Session expired" }, { status: 401 });
+    // ONE refresh+retry on 401 from the access token.
+    if (!result.ok && result.status === 401) {
+      const refresh = c.get(REFRESH_COOKIE)?.value;
+      if (!refresh) return Response.json({ error: "Session expired" }, { status: 401 });
 
-    const refreshRes = await fetch(`${BACKEND_AUTH_URL}/refresh`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify({ refreshToken: refresh }),
-      cache: "no-store",
-    });
-    const refreshJson = (await refreshRes.json().catch(() => null)) as
-      | { data?: { accessToken?: string; refreshToken?: string } }
-      | null;
-    if (!refreshRes.ok || !refreshJson?.data?.accessToken) {
-      c.delete(ACCESS_COOKIE);
-      c.delete(REFRESH_COOKIE);
-      return Response.json({ error: "Session expired" }, { status: 401 });
+      const refreshRes = await backendFetch(`${BACKEND_AUTH_URL}/refresh`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ refreshToken: refresh }),
+        cache: "no-store",
+      });
+      const refreshJson = (await refreshRes.json().catch(() => null)) as
+        | { data?: { accessToken?: string; refreshToken?: string } }
+        | null;
+      if (!refreshRes.ok || !refreshJson?.data?.accessToken) {
+        c.delete(ACCESS_COOKIE);
+        c.delete(REFRESH_COOKIE);
+        return Response.json({ error: "Session expired" }, { status: 401 });
+      }
+      const newAccess = refreshJson.data.accessToken;
+      const newRefresh = refreshJson.data.refreshToken;
+      c.set(ACCESS_COOKIE, newAccess, { ...cookieOptions, maxAge: 60 * 15 });
+      if (newRefresh) c.set(REFRESH_COOKIE, newRefresh, { ...cookieOptions, maxAge: 60 * 60 * 24 * 30 });
+      result = await fetchMe(newAccess);
     }
-    const newAccess = refreshJson.data.accessToken;
-    const newRefresh = refreshJson.data.refreshToken;
-    c.set(ACCESS_COOKIE, newAccess, { ...cookieOptions, maxAge: 60 * 15 });
-    if (newRefresh) c.set(REFRESH_COOKIE, newRefresh, { ...cookieOptions, maxAge: 60 * 60 * 24 * 30 });
-    result = await fetchMe(newAccess);
-  }
 
-  if (!result.ok || !result.user) {
-    return Response.json({ error: "Not authenticated" }, { status: 401 });
+    if (!result.ok || !result.user) {
+      return Response.json({ error: "Not authenticated" }, { status: 401 });
+    }
+    return Response.json({ data: result.user });
+  } catch (err) {
+    // Hung backend (deadline abort) → clean 503 — never a framework 500
+    // with no JSON body (#245; #163 covers the client side).
+    if (isBackendTimeoutError(err)) return backendTimeoutResponse();
+    return Response.json({ error: extractErrorMessage(err) }, { status: 500 });
   }
-  return Response.json({ data: result.user });
 }

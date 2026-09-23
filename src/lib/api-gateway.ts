@@ -24,6 +24,12 @@
  * Authorization header always wins and is forwarded verbatim (CLI/SDK
  * callers keep full control); a cookie-derived 401 gets exactly ONE
  * refresh+retry, the same policy as /api/auth/me.
+ *
+ * Bounded proxy (#245): the proxied fetches (including the refresh call)
+ * go through src/lib/backend-fetch.ts's 15 s deadline — a backend that
+ * accepts the connection but never answers lands in the same 503
+ * BACKEND_UNAVAILABLE envelope as a refused connection, instead of
+ * hanging the route handler forever.
  */
 
 import { NextRequest, NextResponse } from "next/server";
@@ -31,6 +37,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { API_PROBE_HEADER, getProxyTargetUrl, resolveApiMode } from "./api-mode";
 import { handleEmbeddedApi, type EmbeddedApiResponse } from "./embedded-api";
 import { ACCESS_COOKIE, REFRESH_COOKIE, cookieOptions } from "./auth-client";
+import { backendFetch } from "./backend-fetch";
 import { accessCookieValue, refreshCookieValue } from "./session-bearer";
 
 export interface GatewayOptions {
@@ -102,7 +109,7 @@ async function refreshSession(
   const refreshToken = refreshCookieValue(cookieHeader);
   if (!refreshToken) return null;
   try {
-    const res = await fetch(`${backendUrl}/api/v1/auth/refresh`, {
+    const res = await backendFetch(`${backendUrl}/api/v1/auth/refresh`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
       body: JSON.stringify({ refreshToken }),
@@ -207,7 +214,9 @@ async function proxyToBackend(
       fetchOptions.body = await req.text();
     }
 
-    let backendRes = await fetch(targetUrl, fetchOptions);
+    // Bounded fetch (15 s deadline, src/lib/backend-fetch.ts) — a hung
+    // backend rejects like a refused one and lands in the catch below.
+    let backendRes = await backendFetch(targetUrl, fetchOptions);
 
     // One refresh+retry when a cookie-derived token was rejected (expired
     // access token) — mirrors /api/auth/me. Explicit Authorization headers
@@ -218,7 +227,7 @@ async function proxyToBackend(
       const refreshed = await refreshSession(backendUrl, cookie);
       if (refreshed) {
         headers["Authorization"] = `Bearer ${refreshed.accessToken}`;
-        backendRes = await fetch(targetUrl, fetchOptions);
+        backendRes = await backendFetch(targetUrl, fetchOptions);
         const response = await toProxyResponse(backendRes);
         setRotatedCookies(response, refreshed);
         return response;
@@ -227,6 +236,8 @@ async function proxyToBackend(
 
     return await toProxyResponse(backendRes);
   } catch {
+    // Includes the 15 s deadline abort (TimeoutError) from backendFetch —
+    // a hung backend must degrade to the documented 503, not hang the route.
     return NextResponse.json(
       { error: { code: "BACKEND_UNAVAILABLE", message: "Backend service is not running." } },
       { status: 503, headers: { "Cache-Control": "no-store" } },

@@ -6,6 +6,11 @@ import {
   cookieOptions,
   extractErrorMessage,
 } from "@/lib/auth-client";
+import {
+  backendFetch,
+  backendTimeoutResponse,
+  isBackendTimeoutError,
+} from "@/lib/backend-fetch";
 
 /**
  * POST /api/auth/refresh
@@ -20,7 +25,7 @@ export async function POST() {
   }
 
   try {
-    const res = await fetch(`${BACKEND_AUTH_URL}/refresh`, {
+    const res = await backendFetch(`${BACKEND_AUTH_URL}/refresh`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
       body: JSON.stringify({ refreshToken }),
@@ -44,6 +49,9 @@ export async function POST() {
     if (newRefresh) c.set(REFRESH_COOKIE, newRefresh, { ...cookieOptions, maxAge: 60 * 60 * 24 * 30 });
     return Response.json({ data: { ok: true } });
   } catch (err) {
+    // Hung backend (deadline abort) → clean 503 in this route's error
+    // envelope — never an indefinite hang (#245; #163 covers the client side).
+    if (isBackendTimeoutError(err)) return backendTimeoutResponse();
     return Response.json({ error: extractErrorMessage(err) }, { status: 500 });
   }
 }

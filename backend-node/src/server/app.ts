@@ -100,13 +100,19 @@ export function createApp(): Express {
   // ─── Security & parsing ────────────────────────────────────────────────
   app.disable("x-powered-by");
   app.use(helmet());
+
+  // ─── Request identity + logging ────────────────────────────────────────
+  // requestIdMiddleware runs BEFORE corsMiddleware (issue #209): a
+  // prod-mode CORS rejection is answered by the error middleware with
+  // the standard envelope, and the requestId must already exist — both
+  // for the response body and the X-Request-Id header. Mounting it here
+  // also means CORS-rejected (and otherwise early-rejected) requests
+  // finally land in the request log.
+  app.use(requestIdMiddleware);
+  app.use(requestLogger);
   app.use(corsMiddleware);
   app.use(express.json({ limit: "256kb" }));
   app.use(express.urlencoded({ extended: true, limit: "256kb" }));
-
-  // ─── Request identity + logging ────────────────────────────────────────
-  app.use(requestIdMiddleware);
-  app.use(requestLogger);
   // Per-route latency histograms (issue #94 A9) — finish-hook based,
   // mounted before routing so every route is measured.
   app.use(routeMetricsMiddleware);

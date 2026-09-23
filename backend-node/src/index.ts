@@ -20,11 +20,16 @@ import { createServer } from "node:http";
 // must boot from a copied `.env.example`; shell env always wins).
 import "./config/dotenv.js";
 import { env } from "./config/env.js";
-import { APP_NAME, APP_VERSION } from "./config/constants.js";
+import {
+  APP_NAME,
+  APP_VERSION,
+  IS_PROD,
+} from "./config/constants.js";
 import { closeDatabase } from "./lib/db.js";
 import { logger } from "./lib/logger.js";
 import { initSentry } from "./lib/sentry.js";
 import { createApp } from "./server/app.js";
+import { corsPosture } from "./server/middleware/cors.js";
 import { initRedisRateLimiting } from "./server/rate-limit-redis.js";
 import { loadEffects } from "./modules/effects/service.js";
 
@@ -56,6 +61,15 @@ async function main(): Promise<void> {
       apiPrefix: "/api/v1",
     });
     logger.info("CORS origins", { origins: config.CORS_ORIGINS });
+
+    // CORS posture line (issue #209): dev reflection is now GATED to
+    // localhost-family origins (the reflect-ANY-origin landmine is
+    // gone) and rejected origins answer 403 in every mode. Log the
+    // posture at boot so operators can see it without reading source.
+    logger.info("CORS posture", {
+      env: config.NODE_ENV,
+      posture: corsPosture(IS_PROD),
+    });
   });
 
   // Keep the server from keeping the process alive on test shutdown.

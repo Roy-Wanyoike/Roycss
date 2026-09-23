@@ -104,8 +104,15 @@ export class InMemoryApiKeyRateLimiter implements ApiKeyRateLimiter {
       allowed,
       limit: tier.limit,
       remaining: Math.max(0, tier.limit - fresh.length),
-      // Worst case wait = a full window; rounded up to whole seconds.
-      retryAfterSec: Math.max(1, Math.ceil(tier.windowMs / 1000)),
+      // Retry-After computed from the window (issue #209 P3): when
+      // denied, a slot frees when the OLDEST hit leaves the window.
+      // Worst case (allowed / fresh bucket) = a full window; floored
+      // at 1 s. Same-instant denies keep the historical value, so the
+      // existing header pins are unchanged.
+      retryAfterSec:
+        !allowed && fresh.length > 0
+          ? Math.max(1, Math.ceil((fresh[0]! + tier.windowMs - now) / 1000))
+          : Math.max(1, Math.ceil(tier.windowMs / 1000)),
     };
   }
 

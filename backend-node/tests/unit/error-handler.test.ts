@@ -216,3 +216,33 @@ describe("errorHandler — details.stack invariant (issue #207)", () => {
     expect(body.error.details?.stack).toBeTruthy();
   });
 });
+
+describe("errorHandler — 401 client details invariant (issue #209)", () => {
+  it("drops details from a 401 response body (jwt reason stays server-side)", () => {
+    const err = new AppError(ErrorCode.UNAUTHORIZED, "Invalid or expired access token", 401, {
+      reason: "jwt malformed",
+    });
+    const { req, res, status, json } = fakeReqRes("req-401");
+
+    errorHandler(err, req, res, vi.fn());
+
+    expect(status).toHaveBeenCalledWith(401);
+    const body = (json as Mock).mock.calls[0]![0] as {
+      error: { code: ErrorCode; message: string; details?: unknown };
+    };
+    expect(body.error.code).toBe(ErrorCode.UNAUTHORIZED);
+    expect(body.error.details).toBeUndefined();
+    // The wire body carries no verification vocabulary at all.
+    expect(JSON.stringify(body)).not.toContain("jwt malformed");
+  });
+
+  it("non-401 4xx details are unaffected (400 details still flow)", () => {
+    const err = new AppError(ErrorCode.CONFLICT, "clash", 409, { field: "email" });
+    const { req, res, json } = fakeReqRes();
+
+    errorHandler(err, req, res, vi.fn());
+
+    const body = (json as Mock).mock.calls[0]![0] as { error: { details?: unknown } };
+    expect(body.error.details).toEqual({ field: "email" });
+  });
+});

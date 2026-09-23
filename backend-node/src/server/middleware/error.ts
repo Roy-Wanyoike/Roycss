@@ -265,13 +265,19 @@ export function errorHandler(
  * What the CLIENT may see in `error.details`.
  *
  * Server logs always receive the full `details` (see logAndSend); the
- * response body is stricter — the invariant from issue #207:
+ * response body is stricter — the invariants from issues #207/#209:
  *   - a 4xx response never carries a top-level `stack` details key
  *     (client errors need no server frames);
+ *   - a 401 response carries NO details at all (issue #209): the JWT
+ *     verify path used to attach `{ reason: "jwt malformed" }` etc.,
+ *     letting attackers distinguish token failure modes (malformed vs
+ *     expired vs wrong signature). The precise reason stays in the
+ *     server log; the body stays uniform.
  *   - 5xx details (the dev-only stack) are attached at the throw site
  *     and only when !IS_PROD, so they pass through unchanged here.
  */
 function clientErrorDetails(err: AppError): unknown {
+  if (err.statusCode === 401) return undefined;
   if (err.statusCode < 500) return stripStackDetails(err.details);
   return err.details;
 }

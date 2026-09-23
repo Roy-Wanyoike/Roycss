@@ -18,6 +18,9 @@ import { join } from "node:path";
  *      (layout), /roadmap (page),
  *   4. respect the typography minimum (issue #115 F-17: no text-[9px]/
  *      text-[10px]) and the docs accent-token rule (no -emerald-).
+ *   5. mount the site-wide PauseAnimationsToggle (issue #214) with its
+ *      APG toggle-button contract intact and the #214-tail persistence
+ *      wired through the shared animation-pause-storage module.
  *
  * Source-level assertions mirror tests/unit/theme-persistence.test.ts and
  * tests/unit/legal-pages.test.ts — the vitest environment is node (no DOM).
@@ -38,6 +41,11 @@ const docsLayoutSrc = readFileSync(
   "utf8",
 );
 const roadmapSrc = readFileSync(join(ROOT, "src/app/roadmap/page.tsx"), "utf8");
+
+const pauseToggleSrc = readFileSync(
+  join(ROOT, "src/components/roycss/pause-animations-toggle.tsx"),
+  "utf8",
+);
 
 describe("site-header: nav landmarks (issue #191)", () => {
   it("is a client component exporting SiteHeader", () => {
@@ -101,6 +109,40 @@ describe("site-header: theme toggle reuses the exact home mechanism (#160)", () 
 
   it("the toggle has an accessible name", () => {
     expect(headerSrc).toContain('aria-label="Toggle theme"');
+  });
+});
+
+describe("site-header: pause toggle reuses the shared #214 mechanism", () => {
+  it("SiteHeader mounts PauseAnimationsToggle (secondary surfaces keep the control)", () => {
+    expect(headerSrc).toContain("<PauseAnimationsToggle />");
+    // Home's mega-header mounts its own instance (guarded in
+    // animation-pause-storage.test.ts via the shared component).
+    expect(headerSrc).not.toContain("aria-label=\"Pause animations\"");
+  });
+
+  it("the toggle keeps its constant accessible name + aria-pressed state", () => {
+    expect(pauseToggleSrc).toContain('aria-label="Pause animations"');
+    expect(pauseToggleSrc).toContain("aria-pressed={paused}");
+  });
+
+  it("persisted writes go through the shared animation-pause-storage module", () => {
+    expect(pauseToggleSrc).toContain(
+      'from "@/components/ui-library/foundation/animation-pause-storage"',
+    );
+    const calls =
+      pauseToggleSrc.split("writeStoredAnimationPause(window.localStorage").length - 1;
+    expect(calls).toBe(1);
+  });
+
+  it("no mount-time localStorage writes (write-on-user-intent-only, #214 tail)", () => {
+    expect(pauseToggleSrc).not.toContain("localStorage.setItem");
+    const effectStart = pauseToggleSrc.indexOf("useEffect(");
+    const effectEnd = pauseToggleSrc.indexOf("}, []);", effectStart);
+    const mountEffect = pauseToggleSrc.slice(effectStart, effectEnd);
+    expect(mountEffect).toContain("requestAnimationFrame");
+    expect(mountEffect).toContain("hasAttribute");
+    expect(mountEffect).not.toContain("writeStoredAnimationPause");
+    expect(mountEffect).not.toContain("setItem");
   });
 });
 

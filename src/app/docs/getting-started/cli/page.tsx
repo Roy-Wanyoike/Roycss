@@ -13,26 +13,29 @@ export default function CliPage() {
     <>
       <h1>CLI</h1>
       <p className="text-lg text-muted-foreground">
-        The <code>roycss</code> CLI ships with the npm package. Use
-        it to scaffold projects, add or export effects, search the
-        catalog, and check project health — all offline, against
-        the same catalog the stylesheet is built from.
+        The <code>roycss</code> CLI ships as the separate{" "}
+        <code>roycss-cli</code> npm package — the <code>roycss</code>{" "}
+        package itself is the stylesheet plus its data exports and
+        deliberately has no <code>bin</code>. Use the CLI to scaffold
+        projects, add or export effects, search the catalog, and check
+        project health — all offline, against the same catalog the
+        stylesheet is built from.
       </p>
 
       <h2 id="install">Install</h2>
       <p>
-        If you already installed RoyCSS, the CLI is already on your
-        path via <code>npx</code>:
+        Run it ad-hoc via <code>npx</code>:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`npx roycss version
+        <code>{`npx roycss-cli version
 # RoyCSS CLI v${VERSION}`}</code>
       </pre>
       <p>
-        Or install globally for a stable path:
+        Or install globally for a stable path (the package installs a
+        <code>roycss</code> command):
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`npm install -g roycss
+        <code>{`npm install -g roycss-cli
 roycss version`}</code>
       </pre>
 
@@ -69,10 +72,10 @@ Commands:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`# React template, starting with the pulse-glow effect
-npx roycss create my-app --template react
+npx roycss-cli create my-app --template react
 
 # Next.js template, starting with bounce-in
-npx roycss create my-app --template nextjs --effect bounce-in
+npx roycss-cli create my-app --template nextjs --effect bounce-in
 
 # Templates: react | vue | svelte | vanilla | nextjs | html`}</code>
       </pre>
@@ -89,7 +92,7 @@ npx roycss create my-app --template nextjs --effect bounce-in
         exactly what an effect does — without opening DevTools:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss info hover-push-up
+        <code>{`$ npx roycss-cli info hover-push-up
 
 Push Up (roycss-hover-push-up)
 
@@ -124,7 +127,7 @@ Copy to clipboard: roycss add hover-push-up --copy`}</code>
         exist in the catalog (typos):
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss doctor
+        <code>{`$ npx roycss-cli doctor
 
 ✓ roycss package found in node_modules
 ✓ RoyCSS import found in src/app/globals.css
@@ -150,7 +153,7 @@ Copy to clipboard: roycss add hover-push-up --copy`}</code>
         CI:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss lint src
+        <code>{`$ npx roycss-cli lint src
 
 RoyCSS Lint v${VERSION}
 3 file(s) · rules: no-important, oklch-colors, roycss-prefix, reduced-motion-guard, layer-order
@@ -180,25 +183,25 @@ Summary:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`# Single effect to clipboard
-npx roycss add btn-glow --copy
+npx roycss-cli add btn-glow --copy
 
 # Hand-picked set → one file
-npx roycss export btn-glow hover-push-up text-shimmer --out src/styles/roycss.css
+npx roycss-cli export btn-glow hover-push-up text-shimmer --out src/styles/roycss.css
 
 # A whole category
-npx roycss export --category buttons --out src/styles/roycss.css
+npx roycss-cli export --category buttons --out src/styles/roycss.css
 
 # By tag
-npx roycss export --tag attention --out src/styles/roycss.css`}</code>
+npx roycss-cli export --tag attention --out src/styles/roycss.css`}</code>
       </pre>
 
       <h2 id="search">Searching the catalog</h2>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`npx roycss search "glass card"
-npx roycss search loading --tag spinner
-npx roycss list animations      # everything in one category
-npx roycss categories           # all ${CATEGORY_COUNT} categories
-npx roycss browse               # interactive TUI browser`}</code>
+        <code>{`npx roycss-cli search "glass card"
+npx roycss-cli search loading --tag spinner
+npx roycss-cli list animations      # everything in one category
+npx roycss-cli categories           # all ${CATEGORY_COUNT} categories
+npx roycss-cli browse               # interactive TUI browser`}</code>
       </pre>
 
       <h2 id="help">Help</h2>
@@ -207,7 +210,7 @@ npx roycss browse               # interactive TUI browser`}</code>
         the top-level help:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`npx roycss help`}</code>
+        <code>{`npx roycss-cli help`}</code>
       </pre>
       <p>
         The catalog the CLI searches is the same data that builds{" "}

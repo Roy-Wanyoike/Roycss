@@ -60,7 +60,7 @@ export const VERSION = pkg.version; // "2.0.0"
 export const VERSION_BADGE = `v${VERSION.split(".")[0]}.${VERSION.split(".")[1]}`;
 
 /** Sizes of the shipped stylesheet, for honest docs/FAQ copy. */
-export const FULL_CSS_MIN_BYTES = 1_483_999; // dist/roycss.min.css (pinned by test)
+export const FULL_CSS_MIN_BYTES = 1_486_452; // dist/roycss.min.css (pinned by test)
 export const FULL_CSS_MIN_GZ_KB = 211; // gzip of dist/roycss.min.css (pinned by test)
 
 /**
@@ -70,5 +70,5 @@ export const FULL_CSS_MIN_GZ_KB = 211; // gzip of dist/roycss.min.css (pinned by
  * against the real file; bump in lockstep whenever a batch regenerates dist.
  * (The old "~22,000+" hero claim had drifted ~3× low by round 12 — issue #202.)
  */
-export const CSS_LINES = 61_132;
+export const CSS_LINES = 61_253;
 export const CSS_LINES_FORMATTED = CSS_LINES.toLocaleString("en-US");

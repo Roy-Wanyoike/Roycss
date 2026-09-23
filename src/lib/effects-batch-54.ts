@@ -29,6 +29,10 @@ import type { CSSEffect } from "./roycss-types";
  *     cssCode itself AND mirrored as a structured `requiredMarkup` string
  *     on the effect (issue #215) so the effect page renders the exact
  *     markup instead of the span-derived default.
+ *   • Every `:has()` selector ships an `@supports not selector(:has(*))`
+ *     fallback (issue #217 guard-consistency policy, batch-10 exemplar) so
+ *     the documented markup still reacts on engines without `:has()`.
+ *     Corpus-wide migration of older batches is a separate decision.
  *   • No JavaScript, no external dependencies — pure CSS only.
  */
 export const effectsBatch54: CSSEffect[] = [
@@ -438,6 +442,18 @@ export const effectsBatch54: CSSEffect[] = [
 .roycss-nav-pill-indicator:has(input:checked:nth-of-type(4)) label:nth-of-type(4) span::before {
   transform: scale(1);
   opacity: 1;
+}
+/* Issue #217 policy — no-:has() fallback (batch-10 exemplar): the radios
+   precede their labels in the required markup, so the same selected-state
+   pill is reachable with the plain general-sibling combinator. */
+@supports not selector(:has(*)) {
+  .roycss-nav-pill-indicator > input:checked:nth-of-type(1) ~ label:nth-of-type(1) span::before,
+  .roycss-nav-pill-indicator > input:checked:nth-of-type(2) ~ label:nth-of-type(2) span::before,
+  .roycss-nav-pill-indicator > input:checked:nth-of-type(3) ~ label:nth-of-type(3) span::before,
+  .roycss-nav-pill-indicator > input:checked:nth-of-type(4) ~ label:nth-of-type(4) span::before {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .roycss-nav-pill-indicator > span::before {
@@ -861,6 +877,20 @@ export const effectsBatch54: CSSEffect[] = [
   box-shadow:
     inset 0 0 0 2px oklch(0.6 0.14 175),
     0 6px 14px oklch(0.3 0.08 175 / 0.3);
+}
+/* Issue #217 policy — no-:has() fallback (batch-10 exemplar): the checked
+   radio precedes its thumbnail spans, so the selected state also works via
+   the general-sibling combinator. */
+@supports not selector(:has(*)) {
+  .roycss-media-thumb-select > input:checked:nth-of-type(1) ~ span:nth-of-type(1),
+  .roycss-media-thumb-select > input:checked:nth-of-type(2) ~ span:nth-of-type(2),
+  .roycss-media-thumb-select > input:checked:nth-of-type(3) ~ span:nth-of-type(3),
+  .roycss-media-thumb-select > input:checked:nth-of-type(4) ~ span:nth-of-type(4) {
+    block-size: 46%;
+    box-shadow:
+      inset 0 0 0 2px oklch(0.6 0.14 175),
+      0 6px 14px oklch(0.3 0.08 175 / 0.3);
+  }
 }
 @media (hover: hover) {
   .roycss-media-thumb-select > span:hover {

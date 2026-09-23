@@ -44,7 +44,7 @@ $ bun run scripts/migrate-colors.ts src/styles/brand.css
         with your brand color:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss export btn-glow hover-push-up text-shimmer \\
+        <code>{`$ npx roycss-cli export btn-glow hover-push-up text-shimmer \\
     --out src/styles/roycss.css
 
 /* then edit src/styles/roycss.css */
@@ -129,7 +129,7 @@ $ bun run scripts/migrate-colors.ts src/styles/brand.css
         keep you honest about color format:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss doctor
+        <code>{`$ npx roycss-cli doctor
 
 ⚠ Found 6 hex/rgba color literals in user CSS — RoyCSS v2 recommends oklch()
   Run: bun run scripts/migrate-colors.ts`}</code>

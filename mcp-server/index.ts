@@ -76,8 +76,13 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 // ═══════════════════════════════════════════════════════════════
 
 function loadEffects(): any[] {
+  // Candidate order covers: dev (bun index.ts from mcp-server/), the
+  // committed dist bundle (node dist/index.js from mcp-server/), and the
+  // PUBLISHED package layout (issue #217 — dist/index.js + effects.json
+  // at the package root shipped via the `files` field).
   const paths = [
     join(__dirname, "effects.json"),
+    join(__dirname, "..", "effects.json"),
     join(__dirname, "..", "dist", "effects.json"),
     join(__dirname, "..", "..", "dist", "effects.json"),
   ];
@@ -136,8 +141,10 @@ const FALLBACK_PATTERNS_DATA: PatternsFile = {
 };
 
 function loadPatterns(): PatternsFile {
+  // Same candidate order as loadEffects() (see issue #217 note there).
   const paths = [
     join(__dirname, "patterns.json"),
+    join(__dirname, "..", "patterns.json"),
   ];
   for (const p of paths) {
     try {

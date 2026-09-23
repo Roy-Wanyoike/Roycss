@@ -107,7 +107,7 @@ roycss-shake       → <div class="roycss-shake">…</div>`}</code>
         your editor’s class-name completion plugin of choice:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`npx roycss classes --out .vscode/classes.json`}</code>
+        <code>{`npx roycss-cli classes --out .vscode/classes.json`}</code>
       </pre>
       <p>
         Drop that into Neovim’s <code>tailwindcss.nvim</code>, Sublime’s

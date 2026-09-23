@@ -20,6 +20,7 @@
 import { effects } from "../src/lib/roycss-effects";
 import { categoryMeta, categoryOrder } from "../src/lib/roycss-types";
 import { writeFileSync, mkdirSync, readFileSync } from "fs";
+import { createHash } from "crypto";
 import { join } from "path";
 import { spawnSync } from "node:child_process";
 
@@ -110,20 +111,110 @@ for (const cat of categoryOrder) {
 writeFileSync(join(DIST_DIR, "roycss.css"), fullCSS, "utf-8");
 console.log(`  ✓ dist/roycss.css (${(fullCSS.length / 1024).toFixed(1)}KB)`);
 
-// Minify CSS
-function minifyCSS(css: string): string {
+// Minify CSS. The `header` is re-prepended after stripping (the /*! banner
+// survives comment-stripping, but re-prepending keeps ONE header code path
+// for the monolith and the per-category splits).
+function minifyCSS(css: string, header: string): string {
   return css
     .replace(/\/\*(?!\!)[\s\S]*?\*\//g, "")
     .replace(/\s+/g, " ")
     .replace(/\s*([{}:;,>])\s*/g, "$1")
     .replace(/;}/g, "}")
     .trim()
-    .replace(/^/, HEADER.replace(/\n/g, "\n").trim() + "\n");
+    .replace(/^/, header.replace(/\n/g, "\n").trim() + "\n");
 }
 
-const minified = minifyCSS(fullCSS);
+const minified = minifyCSS(fullCSS, HEADER);
 writeFileSync(join(DIST_DIR, "roycss.min.css"), minified, "utf-8");
 console.log(`  ✓ dist/roycss.min.css (${(minified.length / 1024).toFixed(1)}KB)`);
+
+// ─── Per-category CSS splits (issue #217a) ──────────────────────
+// One stylesheet (+ min twin) per category: roycss.<slug>.css lets
+// consumers ship only the categories they use, exposed via the
+// ./category/<slug> and ./category/<slug>/min package exports. Each
+// split carries the shared BASE_CSS (box-sizing, .roycss-sr-only and
+// the corpus-wide reduced-motion safety net) so a single-category
+// install keeps the same a11y guarantees as the monolith — the base is
+// idempotent when several splits are co-imported.
+console.log("Building per-category splits...");
+for (const cat of categoryOrder) {
+  const catEffects = byCategory[cat];
+  if (!catEffects || catEffects.length === 0) continue;
+  const meta = categoryMeta[cat];
+  const catHeader = `/*!
+ * RoyCSS v${pkg.version} — ${meta.label} (${catEffects.length} effects)
+ * Category split of dist/roycss.css — import "roycss/css" for all
+ * ${categoryOrder.length} categories. https://github.com/Roy-Wanyoike/Roycss
+ * License: MIT
+ */
+
+`;
+  let catCSS = catHeader + BASE_CSS;
+  for (const effect of catEffects) {
+    catCSS += effect.cssCode + "\n\n";
+  }
+  writeFileSync(join(DIST_DIR, `roycss.${cat}.css`), catCSS, "utf-8");
+  writeFileSync(
+    join(DIST_DIR, `roycss.${cat}.min.css`),
+    minifyCSS(catCSS, catHeader),
+    "utf-8"
+  );
+}
+console.log(`  ✓ dist/roycss.<slug>.css (+ .min) × ${categoryOrder.length} categories`);
+
+// ─── Tailwind v4 integration stylesheet (issue #217b) ───────────
+// Plain effect classes are NOT Tailwind-generated utilities, so an
+// @utility transform would require rewriting every descendant selector,
+// @keyframes and @supports block into &-nested form — unreliable across
+// 2,000 effects. The honest recipe instead: a stylesheet that composes
+// WITH Tailwind v4 via a single @import. Unlayered effect rules beat
+// Tailwind's layered preflight/utilities on shared properties, so
+// resets never punch holes in effects. The full recipe lives in the
+// banner and in /docs/getting-started/frameworks#tailwind.
+const TAILWIND_CSS = `/*!
+ * RoyCSS v${pkg.version} — Tailwind v4 integration stylesheet
+ * ${effects.length} production-ready CSS effects that compose with Tailwind v4.
+ *
+ * Usage (Tailwind v4 — in your main CSS entry):
+ *
+ *   @import "tailwindcss";
+ *   @import "roycss/tailwind";
+ *
+ * That is the whole recipe. This file pulls in the full effect
+ * stylesheet (dist/roycss.css). RoyCSS classes are plain, unlayered
+ * CSS — they never collide with Tailwind utility names (roycss-* is a
+ * reserved namespace) and, being unlayered, they deterministically win
+ * over Tailwind's layered preflight resets without a single !important.
+ *
+ * Want Tailwind utilities to be able to OVERRIDE effect properties?
+ * Declare the layer order before the imports:
+ *
+ *   @layer theme, base, roycss, components, utilities;
+ *   @import "tailwindcss";
+ *   @import "roycss/tailwind";
+ *
+ * Why not @utility for every effect? Registering a class as a Tailwind
+ * utility requires anchoring each rule to its root class with &-nesting
+ * and hoisting every @keyframes/@supports block — a lossy transform
+ * across ${effects.length} effects with descendant selectors, state
+ * variants and shared keyframes. The @import recipe keeps the authored
+ * CSS byte-identical to the tested dist/roycss.css.
+ *
+ * https://github.com/Roy-Wanyoike/Roycss — License: MIT
+ */
+
+@import "./roycss.css";
+`;
+writeFileSync(join(DIST_DIR, "roycss.tailwind.css"), TAILWIND_CSS, "utf-8");
+console.log(`  ✓ dist/roycss.tailwind.css (Tailwind v4 recipe)`);
+
+// ─── SRI hash for CDN usage (issue #217c) ────────────────────────
+// sha384 integrity attribute for dist/roycss.min.css, emitted next to
+// the file it fingerprints and re-generated on every build so it can
+// never drift. Documented in /docs/getting-started/installation#cdn.
+const sri = `sha384-${createHash("sha384").update(minified, "utf8").digest("base64")}`;
+writeFileSync(join(DIST_DIR, "roycss.min.css.sri.txt"), sri + "\n", "utf-8");
+console.log(`  ✓ dist/roycss.min.css.sri.txt (${sri.slice(0, 20)}…)`);
 
 // No source map is emitted: we have no real per-rule mappings (the old
 // dist/roycss.min.css.map was a 76-byte empty-mappings stub) and the
@@ -267,6 +358,7 @@ try {
   }
 } catch (err) {
   console.warn("  ⚠ generate-ai-artifacts failed:", err instanceof Error ? err.message : String(err));
+}
 
 // ─── Unified manifest (PF-042 — dist/roycss.manifest.json) ──────
 // The lean per-effect index (maturity, quality score, a11y tier,
@@ -275,6 +367,9 @@ try {
 // failure ABORTS the build: its naming gate is a policy gate, and the
 // generator's ratchet baseline only lets it fail on NEW violations or
 // a stale baseline — both demand human attention before publishing.
+// (Previously this block sat INSIDE the catch above, so on the normal
+// success path generate-manifest never ran — fixed while wiring the
+// #217 distribution formats.)
 console.log("");
 console.log("Generating unified manifest...");
 const manifestResult = spawnSync("bun", ["run", "scripts/generate-manifest.ts"], {
@@ -284,5 +379,4 @@ const manifestResult = spawnSync("bun", ["run", "scripts/generate-manifest.ts"],
 if (manifestResult.status !== 0) {
   console.error("  ✗ generate-manifest failed (naming gate / catalog mismatch) — aborting build.");
   process.exit(1);
-}
 }

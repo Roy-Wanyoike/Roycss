@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
-import { EFFECT_COUNT_FORMATTED, FULL_CSS_MIN_GZ_KB } from "@/lib/site-stats";
+import { EFFECT_COUNT_FORMATTED, FULL_CSS_MIN_GZ_KB, CATEGORY_COUNT } from "@/lib/site-stats";
 
 export const metadata: Metadata = pageMeta({
   path: "/docs/getting-started/installation",
   title: "Installation — RoyCSS Docs",
-  description: "Install RoyCSS via npm, pnpm, yarn, bun, or CDN. One global stylesheet, a minified variant, and data subpath exports.",
+  description: "Install RoyCSS via npm, pnpm, yarn, bun, or CDN. One global stylesheet, a minified variant, per-category splits, a Tailwind v4 entry, and data subpath exports.",
 });
 
 export default function InstallationPage() {
@@ -41,15 +41,26 @@ bun add roycss`}</code>
       <h2 id="cdn">CDN</h2>
       <p>
         For prototyping, demos, or sites without a build step, load
-        the minified stylesheet from a public CDN:
+        the minified stylesheet from a public CDN. Pin the integrity
+        attribute to the published sha384 hash (shipped as
+        <code>dist/roycss.min.css.sri.txt</code> in every release) so
+        a tampered CDN response can never execute:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`<link
   rel="stylesheet"
   href="https://unpkg.com/roycss@2/dist/roycss.min.css"
-  crossorigin
+  integrity="sha384-…"
+  crossorigin="anonymous"
 />`}</code>
       </pre>
+      <p>
+        The exact hash for each release lives in the repo at
+        <code>dist/roycss.min.css.sri.txt</code> and is regenerated on
+        every build so it can never drift from the artifact it
+        fingerprints. You can also fetch it for the pinned version:
+        <code>https://unpkg.com/roycss@2/dist/roycss.min.css.sri.txt</code>.
+      </p>
 
       <h2 id="import-styles">Importing the styles</h2>
       <p>
@@ -75,6 +86,36 @@ import "roycss/css/min";
         <code>roycss/critical.css</code> (a curated critical-effects
         subset), and <code>roycss/fallbacks</code> (an optional
         progressive-enhancement layer for older browsers).
+      </p>
+
+      <h2 id="category-splits">Per-category imports</h2>
+      <p>
+        Shipping only part of the catalog? Every one of the{" "}
+        {CATEGORY_COUNT} categories has its own stylesheet (+ a minified
+        twin) exposed under <code>roycss/category/&lt;slug&gt;</code>.
+        Each split carries the shared base (box-sizing, the sr-only
+        helper and the corpus-wide reduced-motion safety net), so a
+        single-category install keeps the same a11y guarantees as the
+        monolith:
+      </p>
+      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
+        <code>{`/* Buttons only */
+import "roycss/category/buttons";
+
+/* Glass + navigation, minified */
+import "roycss/category/glass-ui/min";
+import "roycss/category/navigation/min";`}</code>
+      </pre>
+
+      <h2 id="tailwind">Tailwind v4</h2>
+      <p>
+        Using Tailwind v4? <code>roycss/tailwind</code> is a single
+        import that layers the full effect catalog into your Tailwind
+        build — details on the{" "}
+        <a className="text-primary hover:underline" href="/docs/getting-started/frameworks#tailwind">
+          frameworks page
+        </a>
+        .
       </p>
 
       <h2 id="verify-install">Verify the install</h2>

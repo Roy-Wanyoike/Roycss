@@ -78,7 +78,7 @@ Show me the CSS for the ring-spin variant and explain it."`}</code>
 is fully prefixed roycss-* (e.g. roycss-btn-glow,
 roycss-hover-push-up, roycss-text-shimmer). There are no r-*
 short forms and no --modifier classes. If you're unsure a class
-exists, run \`npx roycss info <effect-id>\` before writing it."`}</code>
+exists, run \`npx roycss-cli info <effect-id>\` before writing it."`}</code>
       </pre>
 
       <h2 id="review-workflow">Review workflow</h2>
@@ -89,7 +89,7 @@ exists, run \`npx roycss info <effect-id>\` before writing it."`}</code>
       <ul className="list-disc pl-6 space-y-1">
         <li>
           <strong>Class names are real</strong> — run{" "}
-          <code>npx roycss doctor</code>: it scans your source and
+          <code>npx roycss-cli doctor</code>: it scans your source and
           reports unknown <code>roycss-*</code> classes (typos).
         </li>
         <li>
@@ -126,13 +126,13 @@ roycss-btn-glow, and roycss-text-gradient classes."
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`# Does the class exist? (fuzzy-matches + suggests)
-$ npx roycss info text-shimer
+$ npx roycss-cli info text-shimer
 Effect "text-shimer" not found.
   Did you mean?
     roycss-text-shimmer — Shimmer Text
 
 # Scan the whole project for unknown classes
-$ npx roycss doctor`}</code>
+$ npx roycss-cli doctor`}</code>
       </pre>
     </>
   );

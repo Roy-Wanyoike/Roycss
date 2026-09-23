@@ -42,7 +42,7 @@ export default function PerformanceOptimizationPage() {
         export is even smaller:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss export btn-glow hover-push-up text-shimmer --out critical-site.css
+        <code>{`$ npx roycss-cli export btn-glow hover-push-up text-shimmer --out critical-site.css
 ✓ Exported 3 effects to critical-site.css (1.6KB)  /* ~0.7 KB gz */`}</code>
       </pre>
 
@@ -146,7 +146,7 @@ $ bun run scripts/perf-budget.ts    # bundle budgets from perf/budget.json`}</co
       </pre>
       <p>
         For usage inside your own app,{" "}
-        <code>npx roycss stats</code> tells you which effects you
+        <code>npx roycss-cli stats</code> tells you which effects you
         actually use (and which to stop shipping).
       </p>
     </>

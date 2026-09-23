@@ -106,6 +106,9 @@ describe("docs class-API truth gate (F-01/F-02)", () => {
       // VS Code extension identifiers (publisher.name) and user-chosen
       // snippet prefixes — not CSS classes:
       "roycss-vscode",
+      // The CLI package name (`npx roycss-cli add ...`) — a binary/package
+      // identifier, not a CSS class (per-category exports docs, #217):
+      "roycss-cli",
       "roycss-cta",
     ]);
     for (const page of pages) {

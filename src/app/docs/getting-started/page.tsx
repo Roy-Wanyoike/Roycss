@@ -81,7 +81,7 @@ bun add roycss`}</code>
 import "roycss/css/min";
 
 /* Or a hand-picked subset, via the CLI */
-$ npx roycss export btn-glow hover-push-up --out src/styles/roycss.css`}</code>
+$ npx roycss-cli export btn-glow hover-push-up --out src/styles/roycss.css`}</code>
       </pre>
 
       <h2 id="philosophy">Philosophy</h2>

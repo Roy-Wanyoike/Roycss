@@ -1,0 +1,5355 @@
+/*!
+ * RoyCSS v2.0.0 — Backgrounds (160 effects)
+ * Category split of dist/roycss.css — import "roycss/css" for all
+ * 29 categories. https://github.com/Roy-Wanyoike/Roycss
+ * License: MIT
+ */
+
+/* ─── Base ────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.roycss-sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [class^="roycss-"],
+  [class*=" roycss-"] {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Animated Gradient Background */
+.roycss-bg-animated-gradient {
+  background: linear-gradient(-45deg, oklch(0.432 0.086 166.91), oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22), oklch(0.606 0.219 292.72));
+  background-size: 400% 400%;
+  animation: roy-gradient-shift 8s ease infinite;
+}
+
+@keyframes roy-gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Animated Gradient Background */
+.roycss-bg-animated-gradient {
+    animation: none;
+  }
+}
+
+
+/* Dot Grid Pattern */
+.roycss-bg-dot-pattern {
+  background-color: oklch(0.208 0.04 265.75);
+  background-image: radial-gradient(circle, oklch(0.696 0.149 162.48) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Mesh Gradient Background */
+.roycss-bg-mesh-gradient {
+  background-color: oklch(0.208 0.04 265.75);
+  position: relative;
+  overflow: hidden;
+}
+
+.roycss-bg-mesh-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(at 20% 30%, color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent) 0, transparent 50%),
+    radial-gradient(at 80% 20%, color-mix(in oklch, oklch(0.715 0.126 215.22) 25%, transparent) 0, transparent 50%),
+    radial-gradient(at 50% 80%, color-mix(in oklch, oklch(0.606 0.219 292.72) 20%, transparent) 0, transparent 50%);
+  filter: blur(60px);
+}
+
+/* Grid Lines Background */
+.roycss-bg-grid-lines {
+  background-color: oklch(0.208 0.04 265.75);
+  background-image:
+    linear-gradient(color-mix(in oklch, oklch(0.696 0.149 162.48) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklch, oklch(0.696 0.149 162.48) 6%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Noise Texture Background */
+.roycss-bg-noise {
+  position: relative;
+  background-color: oklch(0.208 0.04 265.75);
+}
+
+.roycss-bg-noise::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.15'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Aurora Background */
+.roycss-bg-aurora {
+  background: linear-gradient(135deg, oklch(0.208 0.04 265.75) 0%, oklch(0.228 0.039 247.3) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.roycss-bg-aurora::before {
+  content: '';
+  position: absolute;
+  inset-block-start: -50%;
+  inset-inline-start: -50%;
+  inline-size: 200%;
+  block-size: 200%;
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    transparent 0deg,
+    color-mix(in oklch, oklch(0.696 0.149 162.48) 15%, transparent) 60deg,
+    transparent 120deg,
+    color-mix(in oklch, oklch(0.715 0.126 215.22) 10%, transparent) 180deg,
+    transparent 240deg,
+    color-mix(in oklch, oklch(0.606 0.219 292.72) 10%, transparent) 300deg,
+    transparent 360deg
+  );
+  animation: roy-aurora 12s linear infinite;
+}
+
+@keyframes roy-aurora {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-bg-aurora::before {
+    animation: none;
+  }
+}
+
+
+/* Diagonal Stripes Background */
+.roycss-bg-stripes {
+  background: repeating-linear-gradient(
+    45deg,
+    oklch(0.696 0.149 162.48),
+    oklch(0.696 0.149 162.48) 10px,
+    oklch(0.208 0.04 265.75) 10px,
+    oklch(0.208 0.04 265.75) 20px
+  );
+}
+
+/* Animated Diagonal Stripes Background */
+.roycss-bg-diagonal-stripes {
+  background-color: oklch(0.208 0.04 265.75);
+  background-image: repeating-linear-gradient(
+    -60deg,
+    oklch(0.715 0.126 215.22) 0,
+    oklch(0.715 0.126 215.22) 12px,
+    oklch(0.52 0.094 223.13) 12px,
+    oklch(0.52 0.094 223.13) 24px
+  );
+  background-size: 200% 200%;
+  animation: roy-diagonal-shift 6s linear infinite;
+}
+
+@keyframes roy-diagonal-shift {
+  from { background-position: 0 0; }
+  to { background-position: 48px 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Animated Diagonal Stripes Background */
+.roycss-bg-diagonal-stripes {
+    animation: none;
+  }
+}
+
+
+/* Checkerboard Background */
+.roycss-bg-checkerboard {
+  background-color: oklch(0.208 0.04 265.75);
+  background-image:
+    linear-gradient(45deg, oklch(0.696 0.149 162.48) 25%, transparent 25%),
+    linear-gradient(-45deg, oklch(0.696 0.149 162.48) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, oklch(0.696 0.149 162.48) 75%),
+    linear-gradient(-45deg, transparent 75%, oklch(0.696 0.149 162.48) 75%);
+  background-size: 32px 32px;
+  background-position: 0 0, 0 16px, 16px -16px, -16px 0;
+}
+
+/* Hexagon Honeycomb Background */
+.roycss-bg-hexagon {
+  background-color: oklch(0.208 0.04 265.75);
+  background-image: url("data:image/svg+xml,%3Csvg width='56' height='100' viewBox='0 0 56 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M28 0L56 16.18V50.5L28 66.68L0 50.5V16.18L28 0z' fill='none' stroke='%2310b981' stroke-width='1' opacity='0.5'/%3E%3Cpath d='M28 33.32L56 49.5V83.82L28 100L0 83.82V49.5L28 33.32z' fill='none' stroke='%2310b981' stroke-width='1' opacity='0.5'/%3E%3C/svg%3E");
+  background-size: 56px 100px;
+}
+
+/* Triangle Mosaic Background */
+.roycss-bg-triangles {
+  background-color: oklch(0.208 0.04 265.75);
+  background-image:
+    linear-gradient(45deg, oklch(0.696 0.149 162.48) 25%, transparent 25%),
+    linear-gradient(-45deg, oklch(0.715 0.126 215.22) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, oklch(0.715 0.126 215.22) 75%),
+    linear-gradient(-45deg, transparent 75%, oklch(0.696 0.149 162.48) 75%);
+  background-size: 40px 40px;
+  background-position: 0 0, 0 20px, 20px -20px, -20px 0;
+}
+
+/* Zigzag Background */
+.roycss-bg-zigzag {
+  background-color: oklch(0.208 0.04 265.75);
+  background-image:
+    linear-gradient(135deg, oklch(0.696 0.149 162.48) 25%, transparent 25%) -10px 0,
+    linear-gradient(225deg, oklch(0.696 0.149 162.48) 25%, transparent 25%) -10px 0,
+    linear-gradient(315deg, oklch(0.696 0.149 162.48) 25%, transparent 25%),
+    linear-gradient(45deg, oklch(0.696 0.149 162.48) 25%, transparent 25%);
+  background-size: 20px 20px;
+}
+
+/* Wave Pattern Background */
+.roycss-bg-waves {
+  background-color: oklch(0.228 0.039 247.3);
+  background-image: url("data:image/svg+xml,%3Csvg width='120' height='40' viewBox='0 0 120 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20 Q 30 0 60 20 T 120 20' stroke='%2310b981' stroke-width='1.5' fill='none' opacity='0.55'/%3E%3Cpath d='M0 30 Q 30 10 60 30 T 120 30' stroke='%2306b6d4' stroke-width='1.5' fill='none' opacity='0.45'/%3E%3C/svg%3E");
+  background-size: 120px 40px;
+}
+
+/* Concentric Rings Background */
+.roycss-bg-concentric {
+  background: repeating-radial-gradient(
+    circle at center,
+    oklch(0.696 0.149 162.48) 0,
+    oklch(0.696 0.149 162.48) 8px,
+    oklch(0.208 0.04 265.75) 8px,
+    oklch(0.208 0.04 265.75) 16px
+  );
+}
+
+/* Radial Rays Background */
+.roycss-bg-radial-rays {
+  background-color: oklch(0.208 0.04 265.75);
+  background-image: repeating-conic-gradient(
+    from 0deg at 50% 50%,
+    oklch(0.696 0.149 162.48) 0deg 4deg,
+    transparent 4deg 12deg
+  );
+}
+
+/* Sunburst Background */
+.roycss-bg-sunburst {
+  background-color: oklch(0.189 0.028 79.8);
+  position: relative;
+  overflow: hidden;
+}
+
+.roycss-bg-sunburst::before {
+  content: '';
+  position: absolute;
+  inset-block-start: -50%;
+  inset-inline-start: -50%;
+  inline-size: 200%;
+  block-size: 200%;
+  background: repeating-conic-gradient(
+    from 0deg at 50% 50%,
+    oklch(0.837 0.164 84.43) 0deg 6deg,
+    oklch(0.769 0.165 70.08) 6deg 12deg
+  );
+  animation: roy-sunburst-rotate 20s linear infinite;
+}
+
+@keyframes roy-sunburst-rotate {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-bg-sunburst::before {
+    animation: none;
+  }
+}
+
+
+/* Plaid Background */
+.roycss-bg-plaid {
+  background-color: oklch(0.208 0.04 265.75);
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 18px, color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent) 18px, color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent) 20px),
+    repeating-linear-gradient(90deg, transparent, transparent 18px, color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent) 18px, color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent) 20px),
+    repeating-linear-gradient(45deg, transparent, transparent 24px, color-mix(in oklch, oklch(0.715 0.126 215.22) 30%, transparent) 24px, color-mix(in oklch, oklch(0.715 0.126 215.22) 30%, transparent) 26px),
+    repeating-linear-gradient(-45deg, transparent, transparent 24px, color-mix(in oklch, oklch(0.715 0.126 215.22) 30%, transparent) 24px, color-mix(in oklch, oklch(0.715 0.126 215.22) 30%, transparent) 26px);
+}
+
+/* Conic Gradient Hue Cycle Background */
+.roycss-bg-conic-gradient {
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    oklch(0.696 0.149 162.48),
+    oklch(0.715 0.126 215.22),
+    oklch(0.606 0.219 292.72),
+    oklch(0.656 0.212 354.31),
+    oklch(0.769 0.165 70.08),
+    oklch(0.696 0.149 162.48)
+  );
+  animation: roy-conic-hue 6s linear infinite;
+}
+
+@keyframes roy-conic-hue {
+  to { filter: hue-rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Conic Gradient Hue Cycle Background */
+.roycss-bg-conic-gradient {
+    animation: none;
+  }
+}
+
+
+/* Starfield Background */
+.roycss-bg-starfield {
+  background-color: oklch(0.135 0.019 264.32);
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 40px 70px, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 90px 40px, oklch(1 0 89.88), transparent),
+    radial-gradient(2px 2px at 130px 80px, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 160px 30px, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 50px 120px, oklch(1 0 89.88), transparent),
+    radial-gradient(2px 2px at 180px 100px, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 220px 60px, oklch(1 0 89.88), transparent);
+  background-size: 250px 150px;
+  animation: roy-starfield-twinkle 3s ease-in-out infinite alternate;
+}
+
+@keyframes roy-starfield-twinkle {
+  from { opacity: 0.6; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Starfield Background */
+.roycss-bg-starfield {
+    animation: none;
+  }
+}
+
+
+/* Gradient Sweep Background */
+.roycss-bg-gradient-sweep {
+  background: linear-gradient(
+    90deg,
+    oklch(0.208 0.04 265.75) 0%,
+    oklch(0.696 0.149 162.48) 25%,
+    oklch(0.715 0.126 215.22) 50%,
+    oklch(0.696 0.149 162.48) 75%,
+    oklch(0.208 0.04 265.75) 100%
+  );
+  background-size: 200% 100%;
+  animation: roy-gradient-sweep 4s linear infinite;
+}
+
+@keyframes roy-gradient-sweep {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Gradient Sweep Background */
+.roycss-bg-gradient-sweep {
+    animation: none;
+  }
+}
+
+
+/* Gradient Pulse Background */
+.roycss-bg-gradient-pulse {
+  background-color: oklch(0.208 0.04 265.75);
+  background-image:
+    radial-gradient(circle at 50% 50%, oklch(0.696 0.149 162.48) 0%, color-mix(in oklch, oklch(0.696 0.149 162.48) 0%, transparent) 40%),
+    radial-gradient(circle at 30% 70%, oklch(0.715 0.126 215.22) 0%, color-mix(in oklch, oklch(0.715 0.126 215.22) 0%, transparent) 40%),
+    radial-gradient(circle at 70% 30%, oklch(0.606 0.219 292.72) 0%, color-mix(in oklch, oklch(0.606 0.219 292.72) 0%, transparent) 40%);
+  animation: roy-gradient-pulse 4s ease-in-out infinite;
+}
+
+@keyframes roy-gradient-pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Gradient Pulse Background */
+.roycss-bg-gradient-pulse {
+    animation: none;
+  }
+}
+
+
+/* Lava Lamp Background */
+.roycss-bg-lava-lamp {
+  background-color: oklch(0.195 0.067 299.87);
+  position: relative;
+  overflow: hidden;
+}
+
+.roycss-bg-lava-lamp::before,
+.roycss-bg-lava-lamp::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(30px);
+}
+
+.roycss-bg-lava-lamp::before {
+  inline-size: 120px;
+  block-size: 120px;
+  background: radial-gradient(circle, oklch(0.656 0.212 354.31), transparent);
+  inset-block-start: 15%;
+  inset-inline-start: 15%;
+  animation: roy-lava-1 6s ease-in-out infinite alternate;
+}
+
+.roycss-bg-lava-lamp::after {
+  inline-size: 150px;
+  block-size: 150px;
+  background: radial-gradient(circle, oklch(0.769 0.165 70.08), transparent);
+  inset-block-end: 15%;
+  inset-inline-end: 15%;
+  animation: roy-lava-2 7s ease-in-out infinite alternate;
+}
+
+@keyframes roy-lava-1 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(40px, -30px) scale(1.3); }
+}
+
+@keyframes roy-lava-2 {
+  0% { transform: translate(0, 0) scale(1.2); }
+  100% { transform: translate(-30px, 40px) scale(0.9); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-bg-lava-lamp::before {
+    animation: none;
+  }
+  .roycss-bg-lava-lamp::after {
+    animation: none;
+  }
+}
+
+
+/* Plasma Background */
+.roycss-bg-plasma {
+  background-color: oklch(0.208 0.04 265.75);
+  background-image:
+    radial-gradient(circle at 20% 30%, color-mix(in oklch, oklch(0.606 0.219 292.72) 40%, transparent) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, color-mix(in oklch, oklch(0.656 0.212 354.31) 40%, transparent) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent) 0%, transparent 50%),
+    linear-gradient(135deg, oklch(0.208 0.04 265.75), oklch(0.195 0.067 299.87));
+  background-size: 150% 150%, 150% 150%, 200% 200%, 100% 100%;
+  animation: roy-plasma-flow 12s ease-in-out infinite;
+}
+
+@keyframes roy-plasma-flow {
+  0%, 100% { background-position: 0% 0%, 100% 100%, 50% 50%, 0 0; }
+  33% { background-position: 50% 30%, 50% 0%, 0% 100%, 0 0; }
+  66% { background-position: 100% 100%, 0% 50%, 100% 0%, 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Plasma Background */
+.roycss-bg-plasma {
+    animation: none;
+  }
+}
+
+
+/* Smoke Background */
+.roycss-bg-smoke {
+  background-color: oklch(0.208 0.04 265.75);
+  position: relative;
+  overflow: hidden;
+}
+
+.roycss-bg-smoke::before {
+  content: '';
+  position: absolute;
+  inset-block-start: -50%;
+  inset-inline-start: -50%;
+  inline-size: 200%;
+  block-size: 200%;
+  background:
+    radial-gradient(ellipse at 30% 50%, color-mix(in oklch, oklch(1 0 89.88) 6%, transparent) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 60%, color-mix(in oklch, oklch(1 0 89.88) 4%, transparent) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 40%, color-mix(in oklch, oklch(1 0 89.88) 5%, transparent) 0%, transparent 50%);
+  filter: blur(20px);
+  animation: roy-smoke-drift 15s ease-in-out infinite;
+}
+
+@keyframes roy-smoke-drift {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(20px, -20px) rotate(5deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-bg-smoke::before {
+    animation: none;
+  }
+}
+
+
+/* Sunset Background */
+.roycss-bg-sunset {
+  background: linear-gradient(
+    180deg,
+    oklch(0.228 0.039 247.3) 0%,
+    oklch(0.387 0.119 314.64) 25%,
+    oklch(0.531 0.202 5.62) 50%,
+    oklch(0.769 0.165 70.08) 75%,
+    oklch(0.924 0.115 95.75) 100%
+  );
+  background-size: 100% 200%;
+  animation: roy-sunset-shift 8s ease-in-out infinite;
+}
+
+@keyframes roy-sunset-shift {
+  0%, 100% { background-position: 0% 0%; }
+  50% { background-position: 0% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Sunset Background */
+.roycss-bg-sunset {
+    animation: none;
+  }
+}
+
+
+/* Color Mix Mesh — layered radial gradients via color-mix() */
+.roycss-color-mix-mesh {
+  --a: oklch(0.645 0.215 16.44);
+  --b: oklch(0.715 0.126 215.22);
+  --c: oklch(0.606 0.219 292.72);
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 200px;
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 15% 25%, var(--a), transparent 40%),
+    radial-gradient(circle at 85% 15%, var(--b), transparent 40%),
+    radial-gradient(circle at 75% 80%, var(--c), transparent 45%),
+    radial-gradient(circle at 25% 75%, color-mix(in oklab, var(--a) 50%, var(--c)), transparent 45%),
+    radial-gradient(circle at 50% 50%, color-mix(in oklab, var(--b) 50%, var(--c)), transparent 50%),
+    linear-gradient(135deg, oklch(0.208 0.04 265.75), oklch(0.279 0.037 260.03));
+  animation: roy-b10-cmm-shift 8s ease-in-out infinite;
+}
+@keyframes roy-b10-cmm-shift {
+  0%, 100% { filter: hue-rotate(0deg); }
+  50%      { filter: hue-rotate(40deg) saturate(1.2); }
+}
+@supports not (background: color-mix(in oklab, red, blue)) {
+  .roycss-color-mix-mesh {
+    background:
+      radial-gradient(circle at 15% 25%, oklch(0.645 0.215 16.44), transparent 40%),
+      radial-gradient(circle at 85% 15%, oklch(0.715 0.126 215.22), transparent 40%),
+      radial-gradient(circle at 75% 80%, oklch(0.606 0.219 292.72), transparent 45%),
+      linear-gradient(135deg, oklch(0.208 0.04 265.75), oklch(0.279 0.037 260.03));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Color Mix Mesh — layered radial gradients via color-mix() */
+.roycss-color-mix-mesh {
+    animation: none;
+  }
+}
+
+
+/* Relative Color Tint — derived shades via rgb(from …) */
+.roycss-relative-color-tint {
+  --base: oklch(0.585 0.204 277.12);
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 200px;
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 30% 30%,
+      rgb(from var(--base) calc(r + 80) calc(g + 80) calc(b + 80) / 0.6),
+      transparent 50%),
+    radial-gradient(circle at 70% 70%,
+      rgb(from var(--base) calc(r - 60) calc(g - 30) calc(b - 30) / 0.7),
+      transparent 55%),
+    linear-gradient(135deg,
+      rgb(from var(--base) r g b / 0.85),
+      rgb(from var(--base) calc(r * 0.3) calc(g * 0.3) calc(b * 0.3)));
+  animation: roy-b10-rct-pan 6s ease-in-out infinite alternate;
+}
+@keyframes roy-b10-rct-pan {
+  from { background-position: 0% 0%, 100% 100%, 0 0; }
+  to   { background-position: 20% 30%, 80% 70%, 0 0; }
+}
+@supports not (background: rgb(from red r g b)) {
+  .roycss-relative-color-tint {
+    background:
+      radial-gradient(circle at 30% 30%, color-mix(in oklch, oklch(0.785 0.104 274.71) 60%, transparent), transparent 50%),
+      radial-gradient(circle at 70% 70%, color-mix(in oklch, oklch(0.457 0.215 277.02) 70%, transparent), transparent 55%),
+      linear-gradient(135deg, oklch(0.585 0.204 277.12), oklch(0.257 0.086 281.29));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Relative Color Tint — derived shades via rgb(from …) */
+.roycss-relative-color-tint {
+    animation: none;
+  }
+}
+
+
+/* Conic Gradient Clock — conic-gradient sweep + @property */
+@property --roy-b10-cgc-sweep {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+.roycss-conic-gradient-clock {
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 220px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: oklch(0.208 0.04 265.75);
+  position: relative;
+}
+.roycss-conic-gradient-clock::before {
+  content: "";
+  inline-size: 180px;
+  block-size: 180px;
+  border-radius: 50%;
+  background:
+    conic-gradient(from var(--roy-b10-cgc-sweep),
+      color-mix(in oklch, oklch(0.696 0.149 162.48) 35%, transparent) 0deg,
+      color-mix(in oklch, oklch(0.696 0.149 162.48) 0%, transparent) 6deg,
+      color-mix(in oklch, oklch(0.696 0.149 162.48) 0%, transparent) 360deg),
+    conic-gradient(from 0deg,
+      oklch(0.279 0.037 260.03) 0deg, oklch(0.279 0.037 260.03) 30deg,
+      oklch(0.372 0.039 257.29) 30deg, oklch(0.372 0.039 257.29) 60deg,
+      oklch(0.279 0.037 260.03) 60deg, oklch(0.279 0.037 260.03) 90deg,
+      oklch(0.372 0.039 257.29) 90deg, oklch(0.372 0.039 257.29) 120deg,
+      oklch(0.279 0.037 260.03) 120deg, oklch(0.279 0.037 260.03) 150deg,
+      oklch(0.372 0.039 257.29) 150deg, oklch(0.372 0.039 257.29) 180deg,
+      oklch(0.279 0.037 260.03) 180deg, oklch(0.279 0.037 260.03) 210deg,
+      oklch(0.372 0.039 257.29) 210deg, oklch(0.372 0.039 257.29) 240deg,
+      oklch(0.279 0.037 260.03) 240deg, oklch(0.279 0.037 260.03) 270deg,
+      oklch(0.372 0.039 257.29) 270deg, oklch(0.372 0.039 257.29) 300deg,
+      oklch(0.279 0.037 260.03) 300deg, oklch(0.279 0.037 260.03) 330deg,
+      oklch(0.372 0.039 257.29) 330deg, oklch(0.372 0.039 257.29) 360deg);
+  --roy-b10-cgc-sweep: 0deg;
+  animation: roy-b10-cgc-tick 6s linear infinite;
+  box-shadow: inset 0 0 0 4px oklch(0.696 0.149 162.48), 0 12px 30px color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent);
+}
+.roycss-conic-gradient-clock::after {
+  content: "";
+  position: absolute;
+  inline-size: 12px;
+  block-size: 12px;
+  border-radius: 50%;
+  background: oklch(0.773 0.153 163.22);
+  box-shadow: 0 0 12px oklch(0.696 0.149 162.48);
+}
+@keyframes roy-b10-cgc-tick {
+  to { --roy-b10-cgc-sweep: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-conic-gradient-clock::before {
+    animation: none;
+  }
+}
+
+
+/* Double Conic Spinner — two counter-rotating conic layers */
+@property --roy-b10-dcs-a {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@property --roy-b10-dcs-b {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+.roycss-double-conic-spinner {
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 220px;
+  border-radius: 12px;
+  background: oklch(0.208 0.04 265.75);
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+.roycss-double-conic-spinner::before {
+  content: "";
+  inline-size: 180px;
+  block-size: 180px;
+  border-radius: 50%;
+  background:
+    conic-gradient(from var(--roy-b10-dcs-a),
+      transparent 0deg, oklch(0.715 0.126 215.22) 40deg, transparent 80deg,
+      transparent 180deg, oklch(0.715 0.126 215.22) 220deg, transparent 260deg,
+      transparent 360deg),
+    conic-gradient(from var(--roy-b10-dcs-b),
+      transparent 0deg, oklch(0.656 0.212 354.31) 40deg, transparent 80deg,
+      transparent 180deg, oklch(0.656 0.212 354.31) 220deg, transparent 260deg,
+      transparent 360deg),
+    radial-gradient(circle, oklch(0.279 0.037 260.03) 40%, oklch(0.208 0.04 265.75) 41%);
+  -webkit-mask: radial-gradient(circle, transparent 50px, oklch(0 0 0) 51px);
+          mask: radial-gradient(circle, transparent 50px, oklch(0 0 0) 51px);
+  --roy-b10-dcs-a: 0deg;
+  --roy-b10-dcs-b: 90deg;
+  animation: roy-b10-dcs-spin 3s linear infinite;
+}
+@keyframes roy-b10-dcs-spin {
+  to {
+    --roy-b10-dcs-a: 360deg;
+    --roy-b10-dcs-b: -270deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-double-conic-spinner::before {
+    animation: none;
+  }
+}
+
+
+/* Mask Radial Reveal — mask: radial-gradient with @property radius */
+@property --roy-b10-mrr-radius {
+  syntax: '<percentage>';
+  initial-value: 0%;
+  inherits: false;
+}
+.roycss-mask-radial-reveal {
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 220px;
+  border-radius: 12px;
+  background:
+    repeating-linear-gradient(45deg,
+      oklch(0.656 0.212 354.31) 0 10px, oklch(0.606 0.219 292.72) 10px 20px, oklch(0.715 0.126 215.22) 20px 30px),
+    oklch(0.208 0.04 265.75);
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+.roycss-mask-radial-reveal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: oklch(0.208 0.04 265.75);
+  -webkit-mask: radial-gradient(circle at center,
+      transparent 0,
+      transparent var(--roy-b10-mrr-radius),
+      oklch(0 0 0) calc(var(--roy-b10-mrr-radius) + 2px));
+          mask: radial-gradient(circle at center,
+      transparent 0,
+      transparent var(--roy-b10-mrr-radius),
+      oklch(0 0 0) calc(var(--roy-b10-mrr-radius) + 2px));
+  --roy-b10-mrr-radius: 0%;
+  animation: roy-b10-mrr-grow 4s ease-in-out infinite;
+}
+@keyframes roy-b10-mrr-grow {
+  0%, 100% { --roy-b10-mrr-radius: 0%; }
+  60%      { --roy-b10-mrr-radius: 100%; }
+  80%      { --roy-b10-mrr-radius: 100%; }
+}
+@supports not (mask: radial-gradient(circle, transparent, black)) {
+  .roycss-mask-radial-reveal::before {
+    animation: roy-b10-mrr-fb 4s ease-in-out infinite;
+  }
+  @keyframes roy-b10-mrr-fb {
+    0%, 100% { opacity: 1; }
+    60%, 80% { opacity: 0; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-mask-radial-reveal::before {
+    animation: none;
+  }
+}
+
+
+/* Mask Linear Wipe — linear-gradient mask sweep */
+@property --roy-b10-mlw-pos {
+  syntax: '<percentage>';
+  initial-value: 0%;
+  inherits: false;
+}
+.roycss-mask-linear-wipe {
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 220px;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, oklch(0.769 0.165 70.08), oklch(0.637 0.208 25.33));
+}
+.roycss-mask-linear-wipe::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, oklch(0.715 0.126 215.22), oklch(0.585 0.204 277.12));
+  -webkit-mask: linear-gradient(110deg,
+      oklch(0 0 0) 0,
+      oklch(0 0 0) var(--roy-b10-mlw-pos),
+      transparent calc(var(--roy-b10-mlw-pos) + 4px),
+      transparent 100%);
+          mask: linear-gradient(110deg,
+      oklch(0 0 0) 0,
+      oklch(0 0 0) var(--roy-b10-mlw-pos),
+      transparent calc(var(--roy-b10-mlw-pos) + 4px),
+      transparent 100%);
+  --roy-b10-mlw-pos: 0%;
+  animation: roy-b10-mlw-sweep 4s ease-in-out infinite;
+}
+@keyframes roy-b10-mlw-sweep {
+  0%, 100% { --roy-b10-mlw-pos: -10%; }
+  50%      { --roy-b10-mlw-pos: 110%; }
+}
+@supports not (mask: linear-gradient(110deg, oklch(0 0 0), transparent)) {
+  .roycss-mask-linear-wipe::before {
+    animation: roy-b10-mlw-fb 4s ease-in-out infinite;
+  }
+  @keyframes roy-b10-mlw-fb {
+    0%, 100% { clip-path: inset(0 100% 0 0); }
+    50%      { clip-path: inset(0 0 0 0); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-mask-linear-wipe::before {
+    animation: none;
+  }
+}
+
+
+/* Backdrop Multi Filter — layered backdrop-filter chain */
+.roycss-backdrop-multi-filter {
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 220px;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 20%, oklch(0.645 0.215 16.44), transparent 40%),
+    radial-gradient(circle at 80% 30%, oklch(0.797 0.134 211.53), transparent 40%),
+    radial-gradient(circle at 50% 80%, oklch(0.627 0.233 303.9), transparent 45%),
+    repeating-linear-gradient(45deg,
+      color-mix(in oklch, oklch(1 0 89.88) 5%, transparent) 0 8px,
+      transparent 8px 16px),
+    oklch(0.208 0.04 265.75);
+  display: grid;
+  place-items: center;
+}
+.roycss-backdrop-multi-filter::before {
+  content: "Multi backdrop-filter";
+  padding: 26px 36px;
+  border-radius: 16px;
+  background: color-mix(in oklch, oklch(1 0 89.88) 8%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 20%, transparent);
+  color: oklch(1 0 89.88);
+  font: 700 16px/1 system-ui, sans-serif;
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(14px) saturate(180%) hue-rotate(30deg) brightness(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(180%) hue-rotate(30deg) brightness(1.1);
+  box-shadow: 0 8px 30px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+  animation: roy-b10-bmf-rotate 6s linear infinite;
+}
+@keyframes roy-b10-bmf-rotate {
+  to { backdrop-filter: blur(14px) saturate(180%) hue-rotate(390deg) brightness(1.1); }
+}
+@supports not (backdrop-filter: blur(10px)) {
+  .roycss-backdrop-multi-filter::before {
+    background: color-mix(in oklch, oklch(1 0 89.88) 25%, transparent);
+    backdrop-filter: none;
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-backdrop-multi-filter::before {
+    animation: none;
+  }
+}
+
+
+/* Scrollbar Gutter Stable — scrollbar-gutter: stable */
+.roycss-scrollbar-gutter-stable {
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 220px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, oklch(0.279 0.037 260.03), oklch(0.208 0.04 265.75));
+  scrollbar-gutter: stable;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: oklch(0.929 0.013 255.51);
+  font: 500 12px/1.4 system-ui, sans-serif;
+}
+.roycss-scrollbar-gutter-stable::before {
+  content: "Scrollbar gutter reserved → no layout shift when content grows.";
+  display: block;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 12%, transparent);
+  border-inline-start: 3px solid oklch(0.696 0.149 162.48);
+  color: oklch(0.845 0.13 164.98);
+  font-weight: 600;
+}
+.roycss-scrollbar-gutter-stable::after {
+  content: "1. Stable layout block A\A2. Stable layout block B\A3. Stable layout block C\A4. Stable layout block D\A5. Stable layout block E";
+  white-space: pre;
+  display: block;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: oklch(0.208 0.04 265.75);
+  border: 1px solid oklch(0.372 0.039 257.29);
+  color: oklch(0.711 0.035 256.79);
+}
+@supports not (scrollbar-gutter: stable) {
+  .roycss-scrollbar-gutter-stable {
+    padding-inline-end: 22px;
+  }
+}
+
+/* Oil Painting — thick brush stroke texture */
+.roycss-painting-oil {
+  inline-size: 100%;
+  min-block-size: 240px;
+  background:
+    repeating-linear-gradient(35deg,
+      oklch(0.416 0.148 26.59) 0 20px, oklch(0.567 0.173 24.5) 20px 38px, oklch(0.301 0.113 27.53) 38px 60px,
+      oklch(0.628 0.151 32.43) 60px 80px, oklch(0.347 0.121 26.21) 80px 102px),
+    repeating-linear-gradient(-25deg,
+      oklch(0.427 0.109 260.69) 0 24px, oklch(0.585 0.13 259.1) 24px 48px, oklch(0.304 0.076 263.41) 48px 72px),
+    linear-gradient(135deg, oklch(0.567 0.173 24.5) 0%, oklch(0.427 0.109 260.69) 50%, oklch(0.416 0.148 26.59) 100%);
+  background-blend-mode: overlay, overlay, normal;
+  filter: contrast(1.2) saturate(1.3);
+  position: relative;
+  border-radius: 8px;
+}
+
+.roycss-painting-oil::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, color-mix(in oklch, oklch(0.861 0.147 83.67) 35%, transparent), transparent 30%),
+    radial-gradient(circle at 75% 70%, color-mix(in oklch, oklch(0.983 0.094 108.02) 25%, transparent), transparent 35%),
+    radial-gradient(circle at 50% 50%, color-mix(in oklch, oklch(0 0 0) 30%, transparent), transparent 60%);
+  mix-blend-mode: overlay;
+  border-radius: inherit;
+}
+
+.roycss-painting-oil::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(90deg, transparent 0 3px, color-mix(in oklch, oklch(0 0 0) 8%, transparent) 3px 4px),
+    repeating-linear-gradient(0deg, transparent 0 3px, color-mix(in oklch, oklch(1 0 89.88) 6%, transparent) 3px 4px);
+  mix-blend-mode: overlay;
+  border-radius: inherit;
+}
+
+/* Watercolor — soft bleeding wash on paper */
+.roycss-watercolor {
+  inline-size: 100%;
+  min-block-size: 240px;
+  background:
+    radial-gradient(ellipse 50% 40% at 25% 35%, color-mix(in oklch, oklch(0.791 0.13 2.1) 70%, transparent), transparent 60%),
+    radial-gradient(ellipse 45% 35% at 70% 30%, color-mix(in oklch, oklch(0.818 0.094 251.36) 65%, transparent), transparent 65%),
+    radial-gradient(ellipse 55% 40% at 60% 75%, color-mix(in oklch, oklch(0.904 0.126 90.5) 60%, transparent), transparent 60%),
+    radial-gradient(ellipse 35% 30% at 30% 80%, color-mix(in oklch, oklch(0.932 0.125 144.49) 55%, transparent), transparent 65%),
+    radial-gradient(ellipse 30% 25% at 85% 65%, color-mix(in oklch, oklch(0.78 0.161 313.74) 55%, transparent), transparent 65%),
+    linear-gradient(135deg, oklch(0.974 0.011 84.58) 0%, oklch(0.933 0.023 84.59) 100%);
+  background-blend-mode: multiply, multiply, multiply, multiply, multiply, normal;
+  filter: blur(0.5px) contrast(0.95);
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.roycss-watercolor::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-radial-gradient(circle at 30% 40%, transparent 0 3px, color-mix(in oklch, oklch(0.626 0.093 53.89) 5%, transparent) 3px 4px),
+    repeating-radial-gradient(circle at 70% 60%, transparent 0 4px, color-mix(in oklch, oklch(0.326 0.067 45.91) 4%, transparent) 4px 5px);
+  mix-blend-mode: multiply;
+}
+
+.roycss-watercolor::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 20% 8% at 50% 50%, color-mix(in oklch, oklch(0.326 0.067 45.91) 15%, transparent), transparent 70%);
+  mix-blend-mode: multiply;
+}
+
+/* Pencil Sketch — cross-hatched graphite */
+.roycss-pencil-sketch {
+  inline-size: 100%;
+  min-block-size: 240px;
+  background:
+    repeating-linear-gradient(45deg,
+      transparent 0 2px,
+      color-mix(in oklch, oklch(0.277 0 89.88) 35%, transparent) 2px 2.4px,
+      transparent 2.4px 5px),
+    repeating-linear-gradient(-45deg,
+      transparent 0 2px,
+      color-mix(in oklch, oklch(0.277 0 89.88) 25%, transparent) 2px 2.4px,
+      transparent 2.4px 5px),
+    repeating-linear-gradient(90deg,
+      transparent 0 3px,
+      color-mix(in oklch, oklch(0.277 0 89.88) 12%, transparent) 3px 3.4px,
+      transparent 3.4px 7px),
+    linear-gradient(180deg, oklch(0.956 0.014 84.58) 0%, oklch(0.922 0.022 89.8) 100%);
+  background-blend-mode: multiply, multiply, multiply, normal;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.roycss-pencil-sketch::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 50% 40% at 50% 50%, color-mix(in oklch, oklch(0.277 0 89.88) 18%, transparent), transparent 65%),
+    radial-gradient(circle at 25% 30%, color-mix(in oklch, oklch(0.277 0 89.88) 25%, transparent), transparent 8%),
+    radial-gradient(circle at 75% 60%, color-mix(in oklch, oklch(0.277 0 89.88) 20%, transparent), transparent 10%);
+  mix-blend-mode: multiply;
+}
+
+.roycss-pencil-sketch::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 1px, color-mix(in oklch, oklch(1 0 89.88) 4%, transparent) 1px 2px);
+  mix-blend-mode: overlay;
+}
+
+/* Vintage TV — CRT screen with scanlines */
+.roycss-vintage-tv {
+  inline-size: 100%;
+  min-block-size: 240px;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 50%, oklch(0.342 0.071 251.85) 0%, oklch(0.214 0.042 252.78) 70%, oklch(0 0 0) 100%);
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow:
+    inset 0 0 60px color-mix(in oklch, oklch(0 0 0) 80%, transparent),
+    inset 0 0 120px color-mix(in oklch, oklch(0.626 0.111 250.01) 30%, transparent);
+}
+
+.roycss-vintage-tv::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg,
+      transparent 0 2px,
+      color-mix(in oklch, oklch(0 0 0) 35%, transparent) 2px 3px),
+    radial-gradient(ellipse 80% 60% at 50% 50%, transparent 40%, color-mix(in oklch, oklch(0 0 0) 60%, transparent) 100%);
+  mix-blend-mode: multiply;
+}
+
+.roycss-vintage-tv::after {
+  content: '';
+  position: absolute;
+  inset-block-start: -20%; inset-inline-start: -20%;
+  inline-size: 140%; block-size: 140%;
+  background:
+    radial-gradient(ellipse 30% 20% at 30% 30%, color-mix(in oklch, oklch(1 0 89.88) 15%, transparent), transparent 70%),
+    repeating-linear-gradient(0deg,
+      transparent 0 1px,
+      color-mix(in oklch, oklch(1 0 89.88) 4%, transparent) 1px 2px);
+  animation: roy-b11-vintage-tv-static 0.15s steps(2) infinite;
+}
+
+@keyframes roy-b11-vintage-tv-static {
+  0%   { transform: translate(0, 0); }
+  50%  { transform: translate(-2px, 1px); }
+  100% { transform: translate(1px, -1px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vintage-tv::after {
+    animation: none;
+  }
+}
+
+
+/* Film Grain — animated cinematic grain */
+.roycss-film-grain {
+  inline-size: 100%;
+  min-block-size: 240px;
+  background:
+    radial-gradient(ellipse 60% 50% at 30% 30%, oklch(0.781 0.127 57.86) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 70% 70%, oklch(0.678 0.156 35.18) 0%, transparent 60%),
+    linear-gradient(135deg, oklch(0.375 0.044 226.2) 0%, oklch(0.63 0.101 183.03) 50%, oklch(0.834 0.117 87.43) 100%);
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  filter: contrast(1.1) saturate(0.9);
+}
+
+.roycss-film-grain::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  background-image:
+    radial-gradient(circle 1px at 10% 20%, color-mix(in oklch, oklch(1 0 89.88) 50%, transparent), transparent),
+    radial-gradient(circle 1px at 30% 60%, color-mix(in oklch, oklch(0 0 0) 50%, transparent), transparent),
+    radial-gradient(circle 1px at 50% 30%, color-mix(in oklch, oklch(1 0 89.88) 40%, transparent), transparent),
+    radial-gradient(circle 1px at 70% 80%, color-mix(in oklch, oklch(0 0 0) 40%, transparent), transparent),
+    radial-gradient(circle 1px at 85% 25%, color-mix(in oklch, oklch(1 0 89.88) 60%, transparent), transparent),
+    radial-gradient(circle 1px at 15% 75%, color-mix(in oklch, oklch(0 0 0) 50%, transparent), transparent),
+    radial-gradient(circle 1px at 90% 60%, color-mix(in oklch, oklch(1 0 89.88) 40%, transparent), transparent),
+    radial-gradient(circle 1px at 45% 90%, color-mix(in oklch, oklch(0 0 0) 40%, transparent), transparent),
+    radial-gradient(circle 1px at 60% 15%, color-mix(in oklch, oklch(1 0 89.88) 50%, transparent), transparent),
+    radial-gradient(circle 1px at 25% 45%, color-mix(in oklch, oklch(0 0 0) 30%, transparent), transparent);
+  background-size: 80px 80px, 90px 90px, 100px 100px, 70px 70px, 110px 110px, 85px 85px, 95px 95px, 75px 75px, 105px 105px, 80px 80px;
+  mix-blend-mode: overlay;
+  opacity: 0.7;
+  animation: roy-b11-film-grain-shift 0.4s steps(4) infinite;
+}
+
+.roycss-film-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 100% 100% at 50% 50%, transparent 50%, color-mix(in oklch, oklch(0 0 0) 50%, transparent) 100%);
+  pointer-events: none;
+}
+
+@keyframes roy-b11-film-grain-shift {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(-15px, 10px); }
+  50%  { transform: translate(10px, -12px); }
+  75%  { transform: translate(-8px, -8px); }
+  100% { transform: translate(0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-film-grain::before {
+    animation: none;
+  }
+}
+
+
+/* VHS Glitch — chromatic aberration and tracking noise */
+.roycss-vhs-glitch {
+  inline-size: 100%;
+  min-block-size: 240px;
+  background:
+    linear-gradient(180deg, oklch(0.179 0.095 301.47) 0%, oklch(0.336 0.177 301.82) 50%, oklch(0.235 0.096 259.91) 100%);
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  filter: contrast(1.2) saturate(1.3);
+}
+
+.roycss-vhs-glitch::before {
+  content: 'PLAY ▶';
+  position: absolute;
+  inset-block-start: 12px; inset-inline-start: 16px;
+  color: color-mix(in oklch, oklch(0.676 0.212 24.81) 80%, transparent);
+  font: 700 16px/1 'Courier New', monospace;
+  text-shadow: 2px 0 0 color-mix(in oklch, oklch(0.914 0.139 195) 80%, transparent), -2px 0 0 color-mix(in oklch, oklch(0.971 0.186 109.42) 80%, transparent);
+  letter-spacing: 0.2em;
+  animation: roy-b11-vhs-glitch-text 2s steps(20) infinite;
+}
+
+.roycss-vhs-glitch::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg,
+      transparent 0 3px,
+      color-mix(in oklch, oklch(1 0 89.88) 4%, transparent) 3px 4px),
+    linear-gradient(0deg,
+      transparent 0 30%,
+      color-mix(in oklch, oklch(0.628 0.258 29.23) 15%, transparent) 30% 32%,
+      transparent 32% 50%,
+      color-mix(in oklch, oklch(0.905 0.155 194.77) 15%, transparent) 50% 51%,
+      transparent 51% 70%,
+      color-mix(in oklch, oklch(0.702 0.322 328.36) 12%, transparent) 70% 71%,
+      transparent 71%);
+  mix-blend-mode: screen;
+  animation: roy-b11-vhs-glitch-track 1.5s steps(6) infinite;
+}
+
+@keyframes roy-b11-vhs-glitch-track {
+  0%   { transform: translateY(0); }
+  20%  { transform: translateY(-10px); }
+  40%  { transform: translateY(15px); }
+  60%  { transform: translateY(-5px); }
+  80%  { transform: translateY(8px); }
+  100% { transform: translateY(0); }
+}
+@keyframes roy-b11-vhs-glitch-text {
+  0%, 90%, 100% { transform: translate(0); }
+  92%           { transform: translate(-3px, 1px); }
+  94%           { transform: translate(2px, -1px); }
+  96%           { transform: translate(-1px, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vhs-glitch::before {
+    animation: none;
+  }
+  .roycss-vhs-glitch::after {
+    animation: none;
+  }
+}
+
+
+/* Pixel Art — 8-bit blocky grid */
+.roycss-pixel-art {
+  inline-size: 100%;
+  min-block-size: 240px;
+  background:
+    conic-gradient(from 0deg at 50% 50%,
+      oklch(0.634 0.254 17.63) 0deg 45deg,
+      oklch(0.789 0.171 69.64) 45deg 90deg,
+      oklch(0.93 0.189 103.28) 90deg 135deg,
+      oklch(0.798 0.257 144.26) 135deg 180deg,
+      oklch(0.718 0.16 242.66) 180deg 225deg,
+      oklch(0.592 0.059 300.27) 225deg 270deg,
+      oklch(0.742 0.172 359.48) 270deg 315deg,
+      oklch(0.634 0.254 17.63) 315deg 360deg);
+  background-size: 32px 32px;
+  image-rendering: pixelated;
+  position: relative;
+  border-radius: 0;
+  filter: contrast(1.1) saturate(1.3);
+}
+
+.roycss-pixel-art::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 15px, color-mix(in oklch, oklch(0 0 0) 25%, transparent) 15px 16px),
+    repeating-linear-gradient(90deg, transparent 0 15px, color-mix(in oklch, oklch(0 0 0) 25%, transparent) 15px 16px);
+  mix-blend-mode: multiply;
+}
+
+.roycss-pixel-art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle 8px at 25% 25%, oklch(0 0 0) 0 6px, transparent 6px 8px),
+    radial-gradient(circle 8px at 75% 25%, oklch(0 0 0) 0 6px, transparent 6px 8px),
+    radial-gradient(ellipse 30px 12px at 50% 70%, oklch(0 0 0) 0 28px, transparent 28px 30px);
+}
+
+/* ASCII Rain — Matrix digital rain */
+.roycss-ascii-rain {
+  inline-size: 100%;
+  min-block-size: 240px;
+  background:
+    radial-gradient(ellipse at 50% 0%, oklch(0.191 0.047 154.77) 0%, oklch(0.09 0.017 224.61) 100%);
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.roycss-ascii-rain::before {
+  content: '0 1 0 1 1 0 1 0 0 1 1 0 1 0 1 1 0 0 1 0\A 1 0 1 0 0 1 0 1 1 0 1 0 0 1 0 1 1 0 0 1\A 0 1 1 0 1 0 0 1 1 0 1 0 1 0 0 1 1 0 1 0\A 1 0 0 1 0 1 1 0 0 1 0 1 1 0 1 0 0 1 0 1\A 0 1 0 1 1 0 1 0 0 1 1 0 1 0 1 1 0 0 1 0\A 1 0 1 0 0 1 0 1 1 0 1 0 0 1 0 1 1 0 0 1\A 0 1 1 0 1 0 0 1 1 0 1 0 1 0 0 1 1 0 1 0\A 1 0 0 1 0 1 1 0 0 1 0 1 1 0 1 0 0 1 0 1';
+  white-space: pre;
+  position: absolute;
+  inset-block-start: 0; inset-inline-start: 0;
+  inline-size: 100%; block-size: 100%;
+  color: oklch(0.872 0.255 147.64);
+  font: 12px/1.4 'Courier New', monospace;
+  letter-spacing: 0.2em;
+  text-shadow: 0 0 6px color-mix(in oklch, oklch(0.872 0.256 147.41) 80%, transparent);
+  opacity: 0.85;
+  animation: roy-b11-ascii-rain-fall 4s linear infinite;
+  overflow: hidden;
+}
+
+.roycss-ascii-rain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, color-mix(in oklch, oklch(0.206 0.054 151.99) 30%, transparent) 0%, transparent 40%, transparent 60%, color-mix(in oklch, oklch(0.206 0.054 151.99) 60%, transparent) 100%),
+    repeating-linear-gradient(0deg, transparent 0 2px, color-mix(in oklch, oklch(0 0 0) 30%, transparent) 2px 3px);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+@keyframes roy-b11-ascii-rain-fall {
+  0%   { transform: translateY(-30%); }
+  100% { transform: translateY(30%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ascii-rain::before {
+    animation: none;
+  }
+}
+
+
+/* Blueprint — engineering technical drawing */
+.roycss-blueprint {
+  inline-size: 100%;
+  min-block-size: 240px;
+  background:
+    linear-gradient(0deg,
+      transparent 0 calc(100% - 1px), color-mix(in oklch, oklch(0.878 0.064 245.03) 40%, transparent) calc(100% - 1px) 100%),
+    linear-gradient(90deg,
+      transparent 0 calc(100% - 1px), color-mix(in oklch, oklch(0.878 0.064 245.03) 40%, transparent) calc(100% - 1px) 100%),
+    repeating-linear-gradient(0deg, transparent 0 19px, color-mix(in oklch, oklch(0.878 0.064 245.03) 18%, transparent) 19px 20px),
+    repeating-linear-gradient(90deg, transparent 0 19px, color-mix(in oklch, oklch(0.878 0.064 245.03) 18%, transparent) 19px 20px),
+    repeating-linear-gradient(0deg, transparent 0 99px, color-mix(in oklch, oklch(0.878 0.064 245.03) 35%, transparent) 99px 100px),
+    repeating-linear-gradient(90deg, transparent 0 99px, color-mix(in oklch, oklch(0.878 0.064 245.03) 35%, transparent) 99px 100px),
+    oklch(0.366 0.116 256.33);
+  background-size: 20px 20px, 20px 20px, 20px 20px, 20px 20px, 100px 100px, 100px 100px, 100% 100%;
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  color: oklch(0.92 0.041 246.02);
+}
+
+.roycss-blueprint::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 30px; inset-inline-start: 30px;
+  inline-size: 140px; block-size: 100px;
+  border: 1.5px solid oklch(0.92 0.041 246.02);
+  background:
+    linear-gradient(45deg, transparent 49%, color-mix(in oklch, oklch(0.92 0.041 246.02) 40%, transparent) 49% 51%, transparent 51%);
+  box-shadow:
+    0 0 0 8px color-mix(in oklch, oklch(0 0 0) 10%, transparent),
+    inset 0 0 0 5px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
+}
+
+.roycss-blueprint::after {
+  content: 'DWG-001\A SCALE 1:50\A REV. A';
+  white-space: pre;
+  position: absolute;
+  inset-block-end: 16px; inset-inline-end: 20px;
+  color: oklch(0.92 0.041 246.02);
+  font: 11px/1.5 'Courier New', monospace;
+  letter-spacing: 0.15em;
+  text-align: end;
+  text-shadow: 0 0 4px color-mix(in oklch, oklch(0.515 0.174 255.79) 60%, transparent);
+  border: 1px solid oklch(0.92 0.041 246.02);
+  padding: 6px 10px;
+}
+
+/* Topographic — contour map lines */
+.roycss-topographic {
+  inline-size: 100%;
+  min-block-size: 240px;
+  background:
+    repeating-radial-gradient(circle at 30% 40%,
+      transparent 0,
+      transparent 14px,
+      color-mix(in oklch, oklch(0.466 0.084 68.78) 50%, transparent) 14px,
+      color-mix(in oklch, oklch(0.466 0.084 68.78) 50%, transparent) 15px),
+    repeating-radial-gradient(circle at 70% 60%,
+      transparent 0,
+      transparent 18px,
+      color-mix(in oklch, oklch(0.396 0.077 61.8) 45%, transparent) 18px,
+      color-mix(in oklch, oklch(0.396 0.077 61.8) 45%, transparent) 19px),
+    repeating-radial-gradient(circle at 50% 80%,
+      transparent 0,
+      transparent 12px,
+      color-mix(in oklch, oklch(0.325 0.072 53.1) 40%, transparent) 12px,
+      color-mix(in oklch, oklch(0.325 0.072 53.1) 40%, transparent) 13px),
+    radial-gradient(ellipse at 30% 40%, oklch(0.923 0.049 86.35) 0%, oklch(0.795 0.071 80.81) 50%, oklch(0.549 0.078 76.6) 100%);
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.roycss-topographic::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-radial-gradient(circle at 80% 20%,
+      transparent 0 22px,
+      color-mix(in oklch, oklch(0.271 0.063 61.1) 30%, transparent) 22px 23px),
+    repeating-linear-gradient(45deg,
+      transparent 0 80px,
+      color-mix(in oklch, oklch(0.271 0.063 61.1) 5%, transparent) 80px 81px);
+  mix-blend-mode: multiply;
+}
+
+.roycss-topographic::after {
+  content: '▲ 1245m';
+  position: absolute;
+  inset-block-start: 30%; inset-inline-start: 28%;
+  color: oklch(0.357 0.075 54.3);
+  font: 700 11px/1 'Courier New', monospace;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 2px color-mix(in oklch, oklch(0.957 0.054 89.91) 70%, transparent);
+}
+
+/* CSS Painting — Sunset over Mountains */
+.roycss-css-painting-sunset {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 62%, color-mix(in oklch, oklch(0.904 0.126 90.5) 90%, transparent) 0%, color-mix(in oklch, oklch(0.788 0.147 58.19) 50%, transparent) 8%, transparent 18%),
+    linear-gradient(to bottom,
+      oklch(0.206 0.061 294.87) 0%,
+      oklch(0.293 0.087 313.4) 18%,
+      oklch(0.385 0.114 344.27) 32%,
+      oklch(0.535 0.166 1.27) 48%,
+      oklch(0.68 0.174 40) 62%,
+      oklch(0.814 0.136 64.09) 74%,
+      oklch(0.901 0.106 84.68) 84%,
+      oklch(0.242 0.07 310.4) 95%,
+      oklch(0.158 0.049 289.38) 100%);
+}
+.roycss-css-painting-sunset::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  inset-block-end: 0;
+  block-size: 55%;
+  background:
+    linear-gradient(to top, oklch(0.118 0.03 286.18) 0%, oklch(0.118 0.03 286.18) 35%, transparent 100%),
+    oklch(0.118 0.03 286.18);
+  clip-path: polygon(
+    0% 100%,
+    0% 70%, 8% 55%, 14% 65%, 22% 40%, 30% 60%, 38% 35%,
+    46% 58%, 55% 30%, 62% 50%, 70% 38%, 78% 55%, 86% 45%,
+    94% 60%, 100% 50%, 100% 100%
+  );
+}
+.roycss-css-painting-sunset::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  inset-block-end: 0;
+  block-size: 35%;
+  background: oklch(0.083 0.03 289.57);
+  clip-path: polygon(
+    0% 100%,
+    0% 60%, 10% 75%, 20% 55%, 32% 78%, 45% 60%, 58% 80%,
+    70% 65%, 82% 82%, 92% 70%, 100% 80%, 100% 100%
+  );
+}
+
+/* CSS Painting — Misty Forest */
+.roycss-css-painting-forest {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 30%, color-mix(in oklch, oklch(0.809 0.047 135.12) 25%, transparent) 0%, transparent 55%),
+    linear-gradient(to bottom, oklch(0.314 0.027 140.77) 0%, oklch(0.257 0.018 158.51) 40%, oklch(0.197 0.019 157.78) 75%, oklch(0.137 0.012 160.16) 100%);
+}
+.roycss-css-painting-forest::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(90deg,
+      transparent 0px, transparent 38px,
+      color-mix(in oklch, oklch(0.148 0.011 144.99) 95%, transparent) 38px, color-mix(in oklch, oklch(0.148 0.011 144.99) 95%, transparent) 44px,
+      transparent 44px, transparent 50px,
+      color-mix(in oklch, oklch(0.19 0.018 144.85) 85%, transparent) 50px, color-mix(in oklch, oklch(0.19 0.018 144.85) 85%, transparent) 53px),
+    repeating-linear-gradient(90deg,
+      transparent 0px, transparent 70px,
+      color-mix(in oklch, oklch(0.127 0.013 153.48) 100%, transparent) 70px, color-mix(in oklch, oklch(0.127 0.013 153.48) 100%, transparent) 78px);
+  clip-path: polygon(
+    0% 100%, 0% 45%,
+    3% 30%, 5% 50%, 7% 25%, 9% 48%, 12% 35%, 14% 52%, 17% 28%, 20% 50%,
+    23% 33%, 26% 55%, 29% 30%, 32% 50%, 35% 38%, 38% 55%, 41% 30%, 44% 52%,
+    47% 35%, 50% 55%, 53% 30%, 56% 50%, 59% 35%, 62% 55%, 65% 28%, 68% 50%,
+    71% 35%, 74% 55%, 77% 30%, 80% 50%, 83% 35%, 86% 55%, 89% 30%, 92% 50%,
+    95% 35%, 98% 55%, 100% 45%, 100% 100%
+  );
+}
+.roycss-css-painting-forest::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  inset-block-end: 0;
+  block-size: 40%;
+  background: linear-gradient(to top, color-mix(in oklch, oklch(0.812 0.035 145.24) 18%, transparent) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* CSS Painting — Ocean Horizon */
+.roycss-css-painting-ocean {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background:
+    linear-gradient(to bottom,
+      oklch(0.891 0.069 77.45) 0%,
+      oklch(0.831 0.095 56.11) 18%,
+      oklch(0.725 0.111 45.1) 35%,
+      oklch(0.568 0.062 248.97) 50%,
+      oklch(0.457 0.065 249.41) 55%,
+      oklch(0.384 0.064 253.51) 70%,
+      oklch(0.302 0.056 255.33) 100%);
+}
+.roycss-css-painting-ocean::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  inset-block-start: 48%;
+  inset-block-end: 0;
+  background:
+    repeating-linear-gradient(0deg,
+      transparent 0px, transparent 6px,
+      color-mix(in oklch, oklch(0.957 0.054 89.91) 18%, transparent) 6px, color-mix(in oklch, oklch(0.957 0.054 89.91) 18%, transparent) 7px,
+      transparent 7px, transparent 14px,
+      color-mix(in oklch, oklch(1 0 89.88) 10%, transparent) 14px, color-mix(in oklch, oklch(1 0 89.88) 10%, transparent) 15px),
+    repeating-linear-gradient(0deg,
+      transparent 0px, transparent 22px,
+      color-mix(in oklch, oklch(0.848 0.043 237.22) 15%, transparent) 22px, color-mix(in oklch, oklch(0.848 0.043 237.22) 15%, transparent) 24px);
+  mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, oklch(0 0 0) 0%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, oklch(0 0 0) 0%, transparent 80%);
+}
+.roycss-css-painting-ocean::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 50%;
+  inset-block-start: 38%;
+  transform: translateX(-50%);
+  inline-size: 80px;
+  block-size: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(0.969 0.049 94.61) 0%, oklch(0.872 0.124 80.7) 40%, transparent 70%);
+  box-shadow: 0 0 80px 30px color-mix(in oklch, oklch(0.865 0.116 75.55) 60%, transparent);
+}
+
+/* CSS Painting — Desert Dunes */
+.roycss-css-painting-desert {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 75% 25%, color-mix(in oklch, oklch(0.963 0.083 100.4) 95%, transparent) 0%, color-mix(in oklch, oklch(0.905 0.116 88.79) 50%, transparent) 4%, transparent 9%),
+    linear-gradient(to bottom,
+      oklch(0.736 0.087 230.25) 0%,
+      oklch(0.808 0.05 223.14) 22%,
+      oklch(0.873 0.099 83.32) 42%,
+      oklch(0.777 0.121 69.78) 58%,
+      oklch(0.648 0.127 56.39) 75%,
+      oklch(0.479 0.103 51.38) 100%);
+}
+.roycss-css-painting-desert::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  inset-block-end: 0;
+  block-size: 50%;
+  background:
+    radial-gradient(ellipse 80% 100% at 20% 100%, oklch(0.579 0.129 50.52) 0%, transparent 60%),
+    radial-gradient(ellipse 90% 100% at 80% 100%, oklch(0.683 0.124 53.39) 0%, transparent 55%),
+    linear-gradient(to bottom, oklch(0.648 0.127 56.39) 0%, oklch(0.479 0.103 51.38) 100%);
+  clip-path: polygon(
+    0% 100%, 0% 55%,
+    12% 35%, 22% 50%, 35% 25%, 48% 45%, 60% 20%, 72% 42%, 85% 28%, 100% 38%,
+    100% 100%
+  );
+}
+.roycss-css-painting-desert::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  inset-block-end: 0;
+  block-size: 30%;
+  background:
+    linear-gradient(to top, oklch(0.345 0.081 47.67) 0%, transparent 100%);
+  clip-path: polygon(
+    0% 100%, 0% 70%,
+    15% 45%, 30% 65%, 45% 35%, 60% 60%, 75% 40%, 90% 65%, 100% 50%,
+    100% 100%
+  );
+}
+
+/* CSS Painting — City Skyline at Night */
+.roycss-css-painting-city-night {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 30% 25%, color-mix(in oklch, oklch(0.928 0.103 92.71) 35%, transparent) 0%, transparent 18%),
+    radial-gradient(circle at 70% 30%, color-mix(in oklch, oklch(0.891 0.053 261.66) 25%, transparent) 0%, transparent 12%),
+    linear-gradient(to bottom, oklch(0.17 0.063 277.28) 0%, oklch(0.251 0.087 278.11) 30%, oklch(0.267 0.086 295.38) 55%, oklch(0.144 0.026 290.84) 100%);
+}
+.roycss-css-painting-city-night::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  inset-block-end: 0;
+  block-size: 70%;
+  background:
+    repeating-linear-gradient(0deg,
+      transparent 0px, transparent 8px,
+      color-mix(in oklch, oklch(0.902 0.143 93.06) 90%, transparent) 8px, color-mix(in oklch, oklch(0.902 0.143 93.06) 90%, transparent) 11px,
+      transparent 11px, transparent 20px,
+      color-mix(in oklch, oklch(0.953 0.078 95.74) 70%, transparent) 20px, color-mix(in oklch, oklch(0.953 0.078 95.74) 70%, transparent) 22px),
+    repeating-linear-gradient(90deg,
+      transparent 0px, transparent 6px,
+      color-mix(in oklch, oklch(0.144 0.026 290.84) 98%, transparent) 6px, color-mix(in oklch, oklch(0.144 0.026 290.84) 98%, transparent) 9px);
+  clip-path: polygon(
+    0% 100%, 0% 75%,
+    3% 75%, 3% 40%, 8% 40%, 8% 55%, 12% 55%, 12% 30%, 16% 30%, 16% 60%,
+    20% 60%, 20% 45%, 24% 45%, 24% 25%, 30% 25%, 30% 50%, 34% 50%, 34% 35%,
+    40% 35%, 40% 20%, 44% 20%, 44% 55%, 50% 55%, 50% 40%, 56% 40%, 56% 28%,
+    60% 28%, 60% 50%, 66% 50%, 66% 38%, 72% 38%, 72% 22%, 76% 22%, 76% 48%,
+    82% 48%, 82% 32%, 88% 32%, 88% 55%, 94% 55%, 94% 42%, 100% 42%, 100% 100%
+  );
+}
+.roycss-css-painting-city-night::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  inset-block-end: 0;
+  block-size: 20%;
+  background: linear-gradient(to top, color-mix(in oklch, oklch(0.861 0.147 83.67) 18%, transparent) 0%, transparent 100%);
+}
+
+/* CSS Painting — Spiral Galaxy */
+.roycss-css-painting-galaxy {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 50%, color-mix(in oklch, oklch(1 0 89.88) 15%, transparent) 0%, transparent 0.5%),
+    radial-gradient(2px 2px at 12% 18%, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 28% 72%, oklch(1 0 89.88), transparent),
+    radial-gradient(1.5px 1.5px at 78% 22%, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 88% 65%, oklch(0.89 0.03 248.16), transparent),
+    radial-gradient(1px 1px at 18% 88%, oklch(1 0 89.88), transparent),
+    radial-gradient(2px 2px at 65% 12%, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 8% 50%, oklch(0.926 0.038 17.85), transparent),
+    radial-gradient(1.5px 1.5px at 92% 42%, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 45% 88%, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 38% 12%, oklch(1 0 89.88), transparent),
+    radial-gradient(circle at 50% 50%,
+      oklch(1 0 89.88) 0%, oklch(1 0 89.88) 1%,
+      oklch(0.942 0.058 83) 3%, oklch(0.82 0.123 58.93) 6%,
+      oklch(0.673 0.137 351.26) 12%, oklch(0.539 0.17 300.58) 22%,
+      oklch(0.403 0.172 281.93) 35%, oklch(0.257 0.131 277.4) 50%,
+      oklch(0.136 0.06 277.26) 75%, oklch(0.086 0.034 286.5) 100%);
+}
+.roycss-css-painting-galaxy::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    conic-gradient(from 0deg at 50% 50%,
+      transparent 0deg,
+      color-mix(in oklch, oklch(0.674 0.155 310.51) 35%, transparent) 30deg,
+      transparent 60deg,
+      color-mix(in oklch, oklch(0.76 0.125 254.62) 30%, transparent) 90deg,
+      transparent 120deg,
+      color-mix(in oklch, oklch(0.757 0.106 337.66) 30%, transparent) 180deg,
+      transparent 210deg,
+      color-mix(in oklch, oklch(0.805 0.059 224.53) 30%, transparent) 240deg,
+      transparent 270deg,
+      color-mix(in oklch, oklch(0.745 0.112 316.05) 30%, transparent) 300deg,
+      transparent 330deg);
+  mix-blend-mode: screen;
+  filter: blur(8px);
+}
+.roycss-css-painting-galaxy::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 12% at 50% 50%,
+      color-mix(in oklch, oklch(0.957 0.054 89.91) 40%, transparent) 0%, transparent 70%);
+  transform: rotate(35deg);
+  filter: blur(4px);
+}
+
+/* CSS Painting — Rainbow Arc */
+.roycss-css-rainbow-arc {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 100% 60% at 50% 100%, oklch(0.912 0.038 224.27) 0%, oklch(0.795 0.069 229.87) 40%, oklch(0.667 0.094 239.47) 100%);
+}
+.roycss-css-rainbow-arc::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 50%;
+  inset-block-end: 0;
+  inline-size: 140%;
+  aspect-ratio: 2 / 1;
+  transform: translateX(-50%);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  background:
+    radial-gradient(ellipse at 50% 100%,
+      transparent 0%,
+      transparent 56%,
+      oklch(0.632 0.254 20.85) 57%, oklch(0.632 0.254 20.85) 60%,
+      oklch(0.732 0.186 52.98) 61%, oklch(0.732 0.186 52.98) 64%,
+      oklch(0.905 0.188 99.07) 65%, oklch(0.905 0.188 99.07) 68%,
+      oklch(0.788 0.247 145.08) 69%, oklch(0.788 0.247 145.08) 72%,
+      oklch(0.685 0.177 246.21) 73%, oklch(0.685 0.177 246.21) 76%,
+      oklch(0.506 0.277 266.24) 77%, oklch(0.506 0.277 266.24) 80%,
+      oklch(0.485 0.226 306.28) 81%, oklch(0.485 0.226 306.28) 84%,
+      transparent 85%);
+  filter: drop-shadow(0 0 8px color-mix(in oklch, oklch(1 0 89.88) 40%, transparent));
+}
+.roycss-css-rainbow-arc::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  inset-block-end: 0;
+  block-size: 25%;
+  background:
+    radial-gradient(ellipse 50% 100% at 15% 100%, color-mix(in oklch, oklch(1 0 89.88) 85%, transparent) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 100% at 85% 100%, color-mix(in oklch, oklch(1 0 89.88) 75%, transparent) 0%, transparent 55%);
+  filter: blur(3px);
+}
+
+/* CSS Painting — Aurora over Mountains */
+.roycss-css-aurora-landscape {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background:
+    linear-gradient(to bottom, oklch(0.118 0.053 285.18) 0%, oklch(0.182 0.089 274.97) 35%, oklch(0.245 0.105 279.83) 55%, oklch(0.141 0.036 271.01) 80%, oklch(0.113 0.017 250.78) 100%);
+}
+.roycss-css-aurora-landscape::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 35% at 30% 35%, color-mix(in oklch, oklch(0.889 0.194 154.94) 55%, transparent) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 30% at 70% 30%, color-mix(in oklch, oklch(0.64 0.249 306.76) 50%, transparent) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 25% at 50% 45%, color-mix(in oklch, oklch(0.803 0.111 240.15) 40%, transparent) 0%, transparent 60%);
+  filter: blur(12px);
+  mix-blend-mode: screen;
+  animation: roy-b13-aurora-wave 8s ease-in-out infinite alternate;
+}
+.roycss-css-aurora-landscape::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  inset-block-end: 0;
+  block-size: 45%;
+  background:
+    linear-gradient(to top, oklch(0.135 0.019 264.32) 0%, transparent 100%),
+    oklch(0.135 0.019 264.32);
+  clip-path: polygon(
+    0% 100%, 0% 60%,
+    10% 35%, 18% 55%, 28% 20%, 38% 50%, 48% 25%, 55% 45%,
+    65% 15%, 75% 50%, 85% 30%, 95% 55%, 100% 40%, 100% 100%
+  );
+}
+@keyframes roy-b13-aurora-wave {
+  0%   { transform: translateX(-4%) scaleY(1);   opacity: 0.85; }
+  50%  { transform: translateX(2%)  scaleY(1.1); opacity: 1; }
+  100% { transform: translateX(4%)  scaleY(0.95); opacity: 0.9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-css-aurora-landscape::before {
+    animation: none;
+  }
+}
+
+
+/* CSS Painting — Underwater Rays */
+.roycss-css-underwater-scene {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background:
+    linear-gradient(to bottom,
+      oklch(0.665 0.102 232.98) 0%,
+      oklch(0.515 0.095 239.63) 25%,
+      oklch(0.41 0.091 245.4) 55%,
+      oklch(0.279 0.067 249.45) 80%,
+      oklch(0.168 0.037 246.64) 100%);
+}
+.roycss-css-underwater-scene::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(165deg,
+      transparent 8%,
+      color-mix(in oklch, oklch(0.945 0.029 240.18) 22%, transparent) 10%, transparent 13%,
+      transparent 22%,
+      color-mix(in oklch, oklch(0.945 0.029 240.18) 18%, transparent) 24%, transparent 28%,
+      transparent 40%,
+      color-mix(in oklch, oklch(0.945 0.029 240.18) 25%, transparent) 42%, transparent 47%,
+      transparent 60%,
+      color-mix(in oklch, oklch(0.945 0.029 240.18) 15%, transparent) 62%, transparent 66%,
+      transparent 78%,
+      color-mix(in oklch, oklch(0.945 0.029 240.18) 20%, transparent) 80%, transparent 84%);
+  filter: blur(2px);
+  mix-blend-mode: screen;
+  animation: roy-b13-uw-shift 7s ease-in-out infinite alternate;
+}
+.roycss-css-underwater-scene::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  inset-block-end: 0;
+  block-size: 30%;
+  background:
+    radial-gradient(ellipse 30% 100% at 20% 100%, color-mix(in oklch, oklch(0.225 0.053 241.61) 70%, transparent) 0%, transparent 70%),
+    radial-gradient(ellipse 25% 100% at 80% 100%, color-mix(in oklch, oklch(0.225 0.053 241.61) 70%, transparent) 0%, transparent 70%),
+    linear-gradient(to top, oklch(0.168 0.037 246.64) 0%, transparent 100%);
+}
+@keyframes roy-b13-uw-shift {
+  0%   { transform: translateX(-6px); opacity: 0.85; }
+  100% { transform: translateX(6px);  opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-css-underwater-scene::before {
+    animation: none;
+  }
+}
+
+
+/* CSS Painting — Volcano Eruption */
+.roycss-css-volcano-eruption {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 75%, color-mix(in oklch, oklch(0.721 0.185 46.37) 50%, transparent) 0%, transparent 25%),
+    linear-gradient(to bottom, oklch(0.164 0.032 21.21) 0%, oklch(0.213 0.043 21.38) 30%, oklch(0.289 0.078 38.29) 55%, oklch(0.176 0.042 22.37) 80%, oklch(0.107 0.023 21.77) 100%);
+}
+.roycss-css-volcano-eruption::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  inset-block-end: 0;
+  block-size: 55%;
+  background:
+    linear-gradient(to top, oklch(0.164 0.032 21.21) 0%, oklch(0.207 0.049 33.76) 60%, transparent 100%),
+    oklch(0.164 0.032 21.21);
+  clip-path: polygon(
+    0% 100%, 0% 80%,
+    15% 75%, 25% 35%, 32% 45%, 38% 20%, 45% 50%, 50% 30%,
+    55% 50%, 62% 20%, 68% 45%, 75% 35%, 85% 75%, 100% 80%, 100% 100%
+  );
+}
+.roycss-css-volcano-eruption::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 35%;
+  inset-block-start: 8%;
+  inline-size: 30%;
+  block-size: 60%;
+  background:
+    radial-gradient(ellipse 100% 70% at 50% 100%,
+      color-mix(in oklch, oklch(0.695 0.201 39.3) 85%, transparent) 0%,
+      color-mix(in oklch, oklch(0.583 0.164 40.41) 60%, transparent) 25%,
+      color-mix(in oklch, oklch(0.429 0.09 39) 40%, transparent) 55%,
+      color-mix(in oklch, oklch(0.328 0.014 17.91) 25%, transparent) 80%,
+      transparent 100%);
+  filter: blur(8px);
+  transform: skewX(-3deg);
+}
+/* falling embers layer */
+.roycss-css-volcano-eruption > .embers {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(2px 2px at 20% 30%, oklch(0.689 0.206 39.23), transparent),
+    radial-gradient(1px 1px at 60% 40%, oklch(0.803 0.16 70.19), transparent),
+    radial-gradient(2px 2px at 80% 25%, oklch(0.735 0.173 45.09), transparent),
+    radial-gradient(1px 1px at 35% 50%, oklch(0.689 0.206 39.23), transparent),
+    radial-gradient(1.5px 1.5px at 75% 60%, oklch(0.816 0.143 68.42), transparent);
+  animation: roy-b13-ember-fall 3s linear infinite;
+}
+@keyframes roy-b13-ember-fall {
+  0%   { transform: translateY(-10px); opacity: 0; }
+  10%  { opacity: 1; }
+  100% { transform: translateY(120px); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* falling embers layer */
+.roycss-css-volcano-eruption > .embers {
+    animation: none;
+  }
+}
+
+
+/* CSS Painting — Snowy Mountain Peak */
+.roycss-css-snowy-mountain {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background:
+    linear-gradient(to bottom, oklch(0.826 0.029 248.17) 0%, oklch(0.903 0.014 247.98) 35%, oklch(0.937 0.007 268.55) 60%, oklch(0.854 0.014 247.99) 100%);
+}
+.roycss-css-snowy-mountain::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  inset-block-end: 0;
+  block-size: 75%;
+  background:
+    linear-gradient(to top, oklch(0.487 0.015 255.57) 0%, oklch(0.597 0.014 255.55) 30%, oklch(0.753 0.015 248.02) 60%, oklch(0.96 0.003 247.86) 90%);
+  clip-path: polygon(
+    0% 100%, 0% 70%,
+    10% 60%, 20% 50%, 30% 30%, 38% 15%, 45% 25%, 52% 10%,
+    60% 28%, 70% 45%, 80% 55%, 90% 65%, 100% 70%, 100% 100%
+  );
+}
+.roycss-css-snowy-mountain::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  inset-block-end: 0;
+  block-size: 50%;
+  background:
+    linear-gradient(to top, oklch(1 0 89.88) 0%, oklch(0.965 0.007 247.9) 40%, transparent 100%);
+  clip-path: polygon(
+    0% 100%, 0% 75%,
+    15% 65%, 25% 55%, 32% 40%, 36% 50%, 42% 30%, 48% 45%,
+    54% 25%, 60% 45%, 68% 55%, 78% 62%, 88% 70%, 100% 75%, 100% 100%
+  );
+}
+
+/* CSS Painting — Tropical Beach */
+.roycss-css-tropical-beach {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background:
+    linear-gradient(to bottom,
+      oklch(0.771 0.099 231.11) 0%,
+      oklch(0.822 0.074 223.09) 35%,
+      oklch(0.685 0.112 218.3) 45%,
+      oklch(0.584 0.102 223.83) 55%,
+      oklch(0.833 0.075 94.06) 65%,
+      oklch(0.882 0.075 94.05) 80%,
+      oklch(0.781 0.085 95.79) 100%);
+}
+.roycss-css-tropical-beach::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  inset-block-start: 55%;
+  inset-block-end: 25%;
+  background:
+    repeating-linear-gradient(0deg,
+      transparent 0px, transparent 4px,
+      color-mix(in oklch, oklch(1 0 89.88) 25%, transparent) 4px, color-mix(in oklch, oklch(1 0 89.88) 25%, transparent) 5px,
+      transparent 5px, transparent 12px);
+}
+.roycss-css-tropical-beach::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 12%;
+  inset-block-end: 28%;
+  inline-size: 8px;
+  block-size: 45%;
+  background: linear-gradient(to top, oklch(0.274 0.048 51.17) 0%, oklch(0.374 0.067 61.54) 100%);
+  transform: rotate(-4deg);
+  transform-origin: bottom center;
+  box-shadow:
+    18px -10px 0 -2px oklch(0.274 0.048 51.17),
+    -2px -38px 0 -1px oklch(0.274 0.048 51.17);
+  border-radius: 4px;
+}
+/* palm fronds */
+.roycss-css-tropical-beach > .fronds {
+  position: absolute;
+  inset-inline-start: 8%;
+  inset-block-end: 70%;
+  inline-size: 18%;
+  block-size: 14%;
+  background:
+    radial-gradient(ellipse 60% 100% at 50% 100%, oklch(0.364 0.095 142.69) 0%, oklch(0.364 0.095 142.69) 30%, transparent 60%);
+  clip-path: polygon(
+    0% 100%, 0% 70%, 15% 50%, 30% 30%, 50% 10%, 70% 30%, 85% 50%, 100% 70%, 100% 100%
+  );
+  transform: rotate(-10deg);
+}
+
+/* Christmas Tree Scene */
+.roycss-seasonal-christmas-tree {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background: linear-gradient(to bottom, oklch(0.23 0.063 263.86) 0%, oklch(0.305 0.07 261.27) 50%, oklch(0.373 0.086 265.39) 100%);
+}
+.roycss-seasonal-christmas-tree::before {
+  content: "";
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  block-size: 25%;
+  background: linear-gradient(to top, oklch(1 0 89.88) 0%, oklch(0.93 0.033 272.79) 60%, transparent 100%);
+  border-radius: 50% 50% 0 0 / 30% 30% 0 0;
+}
+.roycss-seasonal-christmas-tree::after {
+  content: "";
+  position: absolute;
+  inset-block-end: 20%;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  inline-size: 0;
+  block-size: 0;
+  border-inline-start: 80px solid transparent;
+  border-inline-end: 80px solid transparent;
+  border-block-end: 200px solid oklch(0.527 0.137 150.07);
+  box-shadow:
+    0 -60px 0 -20px oklch(0.627 0.17 149.21),
+    0 -120px 0 -45px oklch(0.723 0.192 149.58);
+  background:
+    radial-gradient(circle at 40% 30%, oklch(0.837 0.164 84.43) 4px, transparent 5px),
+    radial-gradient(circle at 60% 50%, oklch(0.637 0.208 25.33) 4px, transparent 5px),
+    radial-gradient(circle at 30% 70%, oklch(0.623 0.188 259.81) 4px, transparent 5px),
+    radial-gradient(circle at 70% 80%, oklch(0.656 0.212 354.31) 4px, transparent 5px);
+}
+.roycss-seasonal-christmas-tree > .star {
+  position: absolute;
+  inset-block-start: 8%;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  inline-size: 20px;
+  block-size: 20px;
+  background: oklch(0.837 0.164 84.43);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  filter: drop-shadow(0 0 8px oklch(0.837 0.164 84.43));
+}
+
+/* Jack-o'-Lantern */
+.roycss-seasonal-pumpkin-jackolantern {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, oklch(0.263 0.065 306.93) 0%, oklch(0.131 0.027 306.06) 80%);
+}
+.roycss-seasonal-pumpkin-jackolantern::before {
+  content: "";
+  position: absolute;
+  inset-block-end: 15%;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  inline-size: 180px;
+  block-size: 140px;
+  background:
+    radial-gradient(ellipse at 30% 50%, color-mix(in oklch, oklch(0 0 0) 40%, transparent) 0%, transparent 35%),
+    radial-gradient(ellipse at 70% 50%, color-mix(in oklch, oklch(0 0 0) 40%, transparent) 0%, transparent 35%),
+    linear-gradient(to right, oklch(0.555 0.146 49) 0%, oklch(0.646 0.194 41.12) 30%, oklch(0.705 0.187 47.6) 50%, oklch(0.646 0.194 41.12) 70%, oklch(0.555 0.146 49) 100%);
+  border-radius: 50% 50% 45% 45% / 55% 55% 45% 45%;
+  box-shadow: 0 0 60px color-mix(in oklch, oklch(0.705 0.187 47.6) 50%, transparent);
+}
+.roycss-seasonal-pumpkin-jackolantern::after {
+  content: "";
+  position: absolute;
+  inset-block-end: 18%;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  inline-size: 160px;
+  block-size: 100px;
+  background:
+    radial-gradient(ellipse at 25% 30%, oklch(0.837 0.164 84.43) 0%, oklch(0.837 0.164 84.43) 12px, transparent 13px),
+    radial-gradient(ellipse at 75% 30%, oklch(0.837 0.164 84.43) 0%, oklch(0.837 0.164 84.43) 12px, transparent 13px),
+    radial-gradient(ellipse at 50% 70%, oklch(0.837 0.164 84.43) 0%, oklch(0.837 0.164 84.43) 25px, transparent 26px);
+  filter: drop-shadow(0 0 8px oklch(0.837 0.164 84.43));
+}
+
+/* Easter Egg Pattern */
+.roycss-seasonal-easter-egg {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 30px 40px at 20% 30%, oklch(0.899 0.059 343.23) 0%, oklch(0.899 0.059 343.23) 70%, transparent 71%),
+    radial-gradient(ellipse 30px 40px at 70% 60%, oklch(0.925 0.081 155.99) 0%, oklch(0.925 0.081 155.99) 70%, transparent 71%),
+    radial-gradient(ellipse 30px 40px at 40% 80%, oklch(0.882 0.057 254.13) 0%, oklch(0.882 0.057 254.13) 70%, transparent 71%),
+    radial-gradient(ellipse 30px 40px at 90% 25%, oklch(0.945 0.124 101.54) 0%, oklch(0.945 0.124 101.54) 70%, transparent 71%),
+    radial-gradient(ellipse 30px 40px at 10% 70%, oklch(0.894 0.055 293.28) 0%, oklch(0.894 0.055 293.28) 70%, transparent 71%),
+    linear-gradient(135deg, oklch(0.974 0.013 347.94) 0%, oklch(0.982 0.018 155.83) 50%, oklch(0.97 0.014 254.6) 100%);
+  background-size: 180px 180px;
+}
+.roycss-seasonal-easter-egg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(45deg, transparent 0px, transparent 6px, color-mix(in oklch, oklch(0.656 0.212 354.31) 15%, transparent) 6px, color-mix(in oklch, oklch(0.656 0.212 354.31) 15%, transparent) 8px),
+    repeating-linear-gradient(-45deg, transparent 0px, transparent 6px, color-mix(in oklch, oklch(0.623 0.188 259.81) 15%, transparent) 6px, color-mix(in oklch, oklch(0.623 0.188 259.81) 15%, transparent) 8px);
+}
+.roycss-seasonal-easter-egg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle 3px at 25% 25%, color-mix(in oklch, oklch(1 0 89.88) 60%, transparent), transparent),
+    radial-gradient(circle 3px at 75% 75%, color-mix(in oklch, oklch(1 0 89.88) 60%, transparent), transparent),
+    radial-gradient(circle 3px at 50% 50%, color-mix(in oklch, oklch(1 0 89.88) 60%, transparent), transparent);
+  background-size: 90px 90px;
+}
+
+/* Valentine Heart Pattern */
+.roycss-seasonal-heart-valentine {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 25% 25%, oklch(0.586 0.222 17.58) 6px, transparent 7px),
+    radial-gradient(circle at 75% 75%, oklch(0.586 0.222 17.58) 6px, transparent 7px),
+    radial-gradient(circle at 75% 25%, oklch(0.656 0.212 354.31) 5px, transparent 6px),
+    radial-gradient(circle at 25% 75%, oklch(0.656 0.212 354.31) 5px, transparent 6px),
+    linear-gradient(135deg, oklch(0.97 0.016 358.03) 0%, oklch(0.943 0.031 357.83) 50%, oklch(0.904 0.054 359.42) 100%);
+  background-size: 80px 80px;
+}
+.roycss-seasonal-heart-valentine::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 50%, oklch(0.514 0.198 16.93) 8px, transparent 9px);
+  background-size: 80px 80px;
+  background-position: 40px 40px;
+}
+.roycss-seasonal-heart-valentine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(45deg, transparent 0px, transparent 40px, color-mix(in oklch, oklch(0.586 0.222 17.58) 5%, transparent) 40px, color-mix(in oklch, oklch(0.586 0.222 17.58) 5%, transparent) 42px);
+}
+
+/* Firework Night Sky */
+.roycss-seasonal-firework-sky {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(1px 1px at 10% 20%, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 25% 60%, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 50% 25%, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 75% 70%, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 90% 35%, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 35% 85%, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 60% 90%, oklch(1 0 89.88), transparent),
+    radial-gradient(circle at 22% 35%, color-mix(in oklch, oklch(0.837 0.164 84.43) 50%, transparent) 0%, transparent 8%),
+    radial-gradient(circle at 75% 30%, color-mix(in oklch, oklch(0.637 0.208 25.33) 50%, transparent) 0%, transparent 8%),
+    radial-gradient(circle at 50% 55%, color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent) 0%, transparent 8%),
+    radial-gradient(circle at 30% 70%, color-mix(in oklch, oklch(0.623 0.188 259.81) 50%, transparent) 0%, transparent 8%),
+    radial-gradient(circle at 85% 75%, color-mix(in oklch, oklch(0.656 0.212 354.31) 50%, transparent) 0%, transparent 8%),
+    linear-gradient(to bottom, oklch(0.131 0.043 278.66) 0%, oklch(0.184 0.064 277.97) 50%, oklch(0.131 0.043 278.66) 100%);
+}
+.roycss-seasonal-firework-sky::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle 2px at 22% 35%, oklch(0.837 0.164 84.43), transparent),
+    radial-gradient(circle 2px at 75% 30%, oklch(0.637 0.208 25.33), transparent),
+    radial-gradient(circle 2px at 50% 55%, oklch(0.696 0.149 162.48), transparent),
+    radial-gradient(circle 2px at 30% 70%, oklch(0.623 0.188 259.81), transparent),
+    radial-gradient(circle 2px at 85% 75%, oklch(0.656 0.212 354.31), transparent);
+  animation: roy-b14-fw-twinkle 2s ease-in-out infinite;
+}
+.roycss-seasonal-firework-sky::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle 1px at 15% 45%, color-mix(in oklch, oklch(1 0 89.88) 60%, transparent), transparent),
+    radial-gradient(circle 1px at 65% 15%, color-mix(in oklch, oklch(1 0 89.88) 60%, transparent), transparent),
+    radial-gradient(circle 1px at 45% 65%, color-mix(in oklch, oklch(1 0 89.88) 60%, transparent), transparent);
+  background-size: 100px 100px;
+}
+@keyframes roy-b14-fw-twinkle {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-firework-sky::before {
+    animation: none;
+  }
+}
+
+
+/* Autumn Gradient Scene */
+.roycss-seasonal-autumn-gradient {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background:
+    linear-gradient(to bottom,
+      oklch(0.905 0.166 98.11) 0%,
+      oklch(0.758 0.159 55.93) 20%,
+      oklch(0.705 0.187 47.6) 40%,
+      oklch(0.577 0.215 27.33) 60%,
+      oklch(0.408 0.116 38.17) 85%,
+      oklch(0.266 0.076 36.26) 100%);
+}
+.roycss-seasonal-autumn-gradient::before {
+  content: "";
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  block-size: 40%;
+  background: oklch(0.163 0.042 45.01);
+  clip-path: polygon(
+    0% 100%,
+    0% 70%, 5% 75%, 8% 30%, 12% 78%, 15% 50%, 18% 80%, 22% 25%, 25% 75%,
+    28% 40%, 32% 78%, 36% 20%, 40% 75%, 44% 45%, 48% 80%, 52% 30%, 56% 76%,
+    60% 50%, 64% 78%, 68% 25%, 72% 75%, 76% 40%, 80% 78%, 84% 35%, 88% 76%,
+    92% 45%, 96% 80%, 100% 50%, 100% 100%
+  );
+}
+.roycss-seasonal-autumn-gradient::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 25%;
+  inset-inline-start: 30%;
+  inline-size: 80px;
+  block-size: 80px;
+  background: radial-gradient(circle, color-mix(in oklch, oklch(0.945 0.124 101.54) 70%, transparent) 0%, transparent 60%);
+  border-radius: 50%;
+  filter: blur(2px);
+}
+
+/* Winter Snow Scene */
+.roycss-seasonal-winter-snow-scene {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background: linear-gradient(to bottom, oklch(0.856 0.041 239.08) 0%, oklch(0.921 0.024 234.43) 40%, oklch(0.972 0.009 232.36) 70%, oklch(1 0 89.88) 100%);
+}
+.roycss-seasonal-winter-snow-scene::before {
+  content: "";
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  block-size: 50%;
+  background:
+    radial-gradient(ellipse 30px 50px at 15% 70%, oklch(0.527 0.137 150.07) 0%, oklch(0.527 0.137 150.07) 60%, transparent 61%),
+    radial-gradient(ellipse 30px 50px at 80% 75%, oklch(0.448 0.108 151.33) 0%, oklch(0.448 0.108 151.33) 60%, transparent 61%),
+    linear-gradient(to top, oklch(1 0 89.88) 0%, oklch(0.972 0.009 232.36) 50%, transparent 100%);
+  clip-path: polygon(
+    0% 100%, 0% 60%, 10% 55%, 20% 70%, 35% 45%, 50% 65%, 65% 40%, 80% 60%, 100% 50%, 100% 100%
+  );
+}
+.roycss-seasonal-winter-snow-scene::after {
+  content: "";
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  block-size: 30%;
+  background: linear-gradient(to top, oklch(1 0 89.88) 0%, oklch(0.95 0.014 238.01) 60%, transparent 100%);
+  clip-path: polygon(
+    0% 100%, 0% 70%, 15% 60%, 30% 80%, 45% 50%, 60% 75%, 75% 55%, 90% 75%, 100% 65%, 100% 100%
+  );
+}
+
+/* Spring Meadow */
+.roycss-seasonal-spring-meadow {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background: linear-gradient(to bottom, oklch(0.815 0.082 225.75) 0%, oklch(0.885 0.051 230.93) 40%, oklch(0.92 0.053 158.85) 65%, oklch(0.871 0.136 154.45) 100%);
+}
+.roycss-seasonal-spring-meadow::before {
+  content: "";
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  block-size: 55%;
+  background:
+    radial-gradient(circle 4px at 20% 50%, oklch(0.837 0.164 84.43), transparent),
+    radial-gradient(circle 4px at 35% 65%, oklch(0.656 0.212 354.31), transparent),
+    radial-gradient(circle 4px at 55% 55%, oklch(0.837 0.164 84.43), transparent),
+    radial-gradient(circle 4px at 70% 70%, oklch(0.656 0.212 354.31), transparent),
+    radial-gradient(circle 4px at 85% 60%, oklch(0.837 0.164 84.43), transparent),
+    radial-gradient(circle 4px at 25% 80%, oklch(0.656 0.212 354.31), transparent),
+    radial-gradient(circle 4px at 50% 85%, oklch(0.837 0.164 84.43), transparent),
+    radial-gradient(circle 4px at 80% 85%, oklch(0.656 0.212 354.31), transparent),
+    linear-gradient(to top, oklch(0.723 0.192 149.58) 0%, oklch(0.8 0.182 151.71) 60%, transparent 100%);
+  clip-path: polygon(
+    0% 100%, 0% 50%, 15% 40%, 30% 55%, 50% 35%, 70% 50%, 85% 40%, 100% 55%, 100% 100%
+  );
+}
+.roycss-seasonal-spring-meadow::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 15%;
+  inset-inline-start: 70%;
+  inline-size: 70px;
+  block-size: 70px;
+  background: radial-gradient(circle, oklch(0.962 0.058 95.62) 0%, oklch(0.924 0.115 95.75) 50%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(1px);
+}
+
+/* Beach Ball Pattern */
+.roycss-seasonal-summer-beach-ball {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 30% 30%, oklch(1 0 89.88) 0%, oklch(1 0 89.88) 8%, transparent 9%),
+    conic-gradient(from 0deg at 50% 50%,
+      oklch(0.637 0.208 25.33) 0deg, oklch(0.637 0.208 25.33) 60deg,
+      oklch(1 0 89.88) 60deg, oklch(1 0 89.88) 120deg,
+      oklch(0.623 0.188 259.81) 120deg, oklch(0.623 0.188 259.81) 180deg,
+      oklch(1 0 89.88) 180deg, oklch(1 0 89.88) 240deg,
+      oklch(0.837 0.164 84.43) 240deg, oklch(0.837 0.164 84.43) 300deg,
+      oklch(1 0 89.88) 300deg, oklch(1 0 89.88) 360deg),
+    oklch(0.973 0.069 103.19);
+  background-size: 100px 100px, 80px 80px, 100% 100%;
+  background-position: 30px 30px, 30px 30px, 0 0;
+  background-repeat: repeat, repeat, repeat;
+}
+.roycss-seasonal-summer-beach-ball::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 80% 20%, color-mix(in oklch, oklch(1 0 89.88) 40%, transparent) 0%, transparent 30%),
+    radial-gradient(circle at 20% 80%, color-mix(in oklch, oklch(1 0 89.88) 40%, transparent) 0%, transparent 30%);
+}
+
+/* Halloween Spooky Night */
+.roycss-seasonal-halloween-spooky {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 75% 25%, oklch(0.962 0.058 95.62) 0%, oklch(0.924 0.115 95.75) 4%, transparent 12%),
+    radial-gradient(circle at 75% 25%, color-mix(in oklch, oklch(1 0 89.88) 10%, transparent) 0%, transparent 20%),
+    linear-gradient(to bottom, oklch(0.193 0.069 300.44) 0%, oklch(0.263 0.065 306.93) 40%, oklch(0.193 0.069 300.44) 70%, oklch(0.131 0.027 306.06) 100%);
+}
+.roycss-seasonal-halloween-spooky::before {
+  content: "";
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  block-size: 50%;
+  background:
+    linear-gradient(to top,
+      color-mix(in oklch, oklch(0.395 0.07 306.43) 40%, transparent) 0%,
+      color-mix(in oklch, oklch(0.395 0.07 306.43) 30%, transparent) 30%,
+      transparent 100%);
+  filter: blur(8px);
+  animation: roy-b14-fog-drift 12s ease-in-out infinite alternate;
+}
+.roycss-seasonal-halloween-spooky::after {
+  content: "";
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  block-size: 40%;
+  background: oklch(0.131 0.027 306.06);
+  clip-path: polygon(
+    0% 100%,
+    0% 60%, 4% 70%, 6% 20%, 8% 75%, 12% 30%, 16% 70%, 20% 60%, 24% 15%, 28% 75%,
+    32% 50%, 36% 70%, 40% 25%, 44% 75%, 48% 55%, 52% 70%, 56% 20%, 60% 75%,
+    64% 45%, 68% 70%, 72% 30%, 76% 75%, 80% 50%, 84% 70%, 88% 25%, 92% 75%,
+    96% 55%, 100% 70%, 100% 100%
+  );
+}
+@keyframes roy-b14-fog-drift {
+  0%   { transform: translateX(-20px); }
+  100% { transform: translateX(20px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-seasonal-halloween-spooky::before {
+    animation: none;
+  }
+}
+
+
+/* Retro Grid Sun */
+.roycss-retro-grid-sun {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background: linear-gradient(to bottom, oklch(0.186 0.081 301.44) 0%, oklch(0.312 0.134 316.76) 30%, oklch(0.506 0.196 352.2) 55%, oklch(0.676 0.232 0.48) 70%, oklch(0.805 0.144 64.53) 82%, oklch(0.233 0.097 307.34) 100%);
+}
+.roycss-retro-grid-sun::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 18%;
+  inset-inline-start: 50%;
+  inline-size: 140px;
+  block-size: 140px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: linear-gradient(to bottom, oklch(0.907 0.17 97.66) 0%, oklch(0.689 0.206 39.23) 50%, oklch(0.526 0.205 2.6) 100%);
+  box-shadow: 0 0 60px color-mix(in oklch, oklch(0.723 0.18 42.59) 70%, transparent);
+  background-image:
+    linear-gradient(to bottom, transparent 0%, transparent 45%, oklch(0.186 0.081 301.44) 45%, oklch(0.186 0.081 301.44) 50%, transparent 50%, transparent 60%, oklch(0.186 0.081 301.44) 60%, oklch(0.186 0.081 301.44) 65%, transparent 65%, transparent 75%, oklch(0.186 0.081 301.44) 75%, oklch(0.186 0.081 301.44) 80%, transparent 80%);
+}
+.roycss-retro-grid-sun::after {
+  content: "";
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  block-size: 50%;
+  background:
+    linear-gradient(to bottom, transparent 0%, oklch(0.186 0.081 301.44) 30%, oklch(0.127 0.053 299.49) 100%),
+    repeating-linear-gradient(90deg, color-mix(in oklch, oklch(0.694 0.261 342.23) 50%, transparent) 0, color-mix(in oklch, oklch(0.694 0.261 342.23) 50%, transparent) 1px, transparent 1px, transparent 32px),
+    repeating-linear-gradient(0deg, color-mix(in oklch, oklch(0.694 0.261 342.23) 50%, transparent) 0, color-mix(in oklch, oklch(0.694 0.261 342.23) 50%, transparent) 1px, transparent 1px, transparent 24px);
+  transform: perspective(280px) rotateX(60deg);
+  transform-origin: bottom;
+}
+
+/* Retro Synthwave Sunset */
+.roycss-retro-synthwave {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background: linear-gradient(to bottom, oklch(0.231 0.1 307.81) 0%, oklch(0.399 0.167 317.69) 30%, oklch(0.661 0.241 4.49) 55%, oklch(0.692 0.2 33.25) 70%, oklch(0.312 0.141 314.93) 100%);
+}
+.roycss-retro-synthwave::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 20%;
+  inset-inline-start: 50%;
+  inline-size: 120px;
+  block-size: 120px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: linear-gradient(to bottom, oklch(0.909 0.149 95.64) 0%, oklch(0.711 0.201 358.6) 60%, oklch(0.559 0.226 338.31) 100%);
+  box-shadow: 0 0 50px color-mix(in oklch, oklch(0.702 0.229 349.48) 70%, transparent);
+  background-image:
+    linear-gradient(to bottom, transparent 0%, transparent 35%, oklch(0.231 0.1 307.81) 35%, oklch(0.231 0.1 307.81) 38%, transparent 38%, transparent 48%, oklch(0.231 0.1 307.81) 48%, oklch(0.231 0.1 307.81) 52%, transparent 52%, transparent 62%, oklch(0.231 0.1 307.81) 62%, oklch(0.231 0.1 307.81) 67%, transparent 67%, transparent 78%, oklch(0.231 0.1 307.81) 78%, oklch(0.231 0.1 307.81) 84%, transparent 84%);
+}
+.roycss-retro-synthwave::after {
+  content: "";
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  block-size: 45%;
+  background:
+    linear-gradient(to bottom, transparent 0%, oklch(0.176 0.073 309.31) 40%, oklch(0.094 0.05 301.85) 100%),
+    repeating-linear-gradient(90deg, color-mix(in oklch, oklch(0.87 0.148 202.88) 60%, transparent) 0, color-mix(in oklch, oklch(0.87 0.148 202.88) 60%, transparent) 1px, transparent 1px, transparent 28px),
+    repeating-linear-gradient(0deg, color-mix(in oklch, oklch(0.694 0.261 342.23) 60%, transparent) 0, color-mix(in oklch, oklch(0.694 0.261 342.23) 60%, transparent) 1px, transparent 1px, transparent 22px);
+  transform: perspective(260px) rotateX(62deg);
+  transform-origin: bottom;
+  animation: roy-b15-synth-grid 1.4s linear infinite;
+}
+@keyframes roy-b15-synth-grid {
+  0% { background-position: 0 0, 0 0, 0 0; }
+  100% { background-position: 0 0, 0 0, 0 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-synthwave::after {
+    animation: none;
+  }
+}
+
+
+/* Retro Pixel Sky */
+.roycss-retro-pixel-sky {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background:
+    linear-gradient(to bottom,
+      oklch(0.602 0.161 262.57) 0%, oklch(0.602 0.161 262.57) 18%,
+      oklch(0.654 0.145 261.95) 18%, oklch(0.654 0.145 261.95) 38%,
+      oklch(0.733 0.113 262.59) 38%, oklch(0.733 0.113 262.59) 60%,
+      oklch(0.83 0.069 262.9) 60%, oklch(0.83 0.069 262.9) 78%,
+      oklch(0.917 0.033 262.69) 78%, oklch(0.917 0.033 262.69) 100%);
+  image-rendering: pixelated;
+}
+.roycss-retro-pixel-sky::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 8%;
+  inset-inline-end: 12%;
+  inline-size: 50px;
+  block-size: 50px;
+  background: oklch(0.965 0.109 104.33);
+  box-shadow:
+    -8px 0 0 oklch(0.965 0.109 104.33), 8px 0 0 oklch(0.965 0.109 104.33),
+    0 -8px 0 oklch(0.965 0.109 104.33), 0 8px 0 oklch(0.965 0.109 104.33),
+    -8px -8px 0 oklch(0.965 0.109 104.33), 8px -8px 0 oklch(0.965 0.109 104.33),
+    -8px 8px 0 oklch(0.965 0.109 104.33), 8px 8px 0 oklch(0.965 0.109 104.33),
+    -16px 0 0 oklch(0.965 0.109 104.33), 16px 0 0 oklch(0.965 0.109 104.33),
+    0 -16px 0 oklch(0.965 0.109 104.33), 0 16px 0 oklch(0.965 0.109 104.33),
+    -24px 0 0 oklch(0.965 0.109 104.33), 24px 0 0 oklch(0.965 0.109 104.33),
+    -16px 16px 0 oklch(0.909 0.149 95.64), 16px 16px 0 oklch(0.909 0.149 95.64),
+    -24px 16px 0 oklch(0.909 0.149 95.64), 24px 16px 0 oklch(0.909 0.149 95.64),
+    -32px 16px 0 oklch(0.909 0.149 95.64), 32px 16px 0 oklch(0.909 0.149 95.64);
+}
+.roycss-retro-pixel-sky::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 28%;
+  inset-inline-start: 12%;
+  inline-size: 16px;
+  block-size: 16px;
+  background: oklch(1 0 89.88);
+  box-shadow:
+    16px 0 0 oklch(1 0 89.88), 32px 0 0 oklch(1 0 89.88),
+    -16px 0 0 oklch(1 0 89.88), 48px 0 0 oklch(1 0 89.88),
+    0 16px 0 oklch(1 0 89.88), 16px 16px 0 oklch(1 0 89.88), 32px 16px 0 oklch(1 0 89.88),
+    200px -8px 0 oklch(1 0 89.88), 216px -8px 0 oklch(1 0 89.88), 232px -8px 0 oklch(1 0 89.88),
+    208px 8px 0 oklch(1 0 89.88), 224px 8px 0 oklch(1 0 89.88), 240px 8px 0 oklch(1 0 89.88), 256px 8px 0 oklch(1 0 89.88);
+}
+
+/* Retro Terminal CRT */
+.roycss-retro-terminal {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, oklch(0.191 0.05 152.04) 0%, oklch(0.116 0.04 142.5) 75%, oklch(0.073 0.025 142.5) 100%);
+  font-family: "Courier New", monospace;
+}
+.roycss-retro-terminal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent 0, transparent 2px, color-mix(in oklch, oklch(0 0 0) 40%, transparent) 2px, color-mix(in oklch, oklch(0 0 0) 40%, transparent) 4px),
+    radial-gradient(ellipse at center, transparent 40%, color-mix(in oklch, oklch(0 0 0) 70%, transparent) 100%);
+  pointer-events: none;
+  animation: roy-b15-term-flicker 0.15s steps(2) infinite;
+}
+.roycss-retro-terminal::after {
+  content: "> _";
+  position: absolute;
+  inset-block-start: 14px;
+  inset-inline-start: 16px;
+  color: oklch(0.872 0.255 147.64);
+  font-size: 14px;
+  text-shadow: 0 0 6px color-mix(in oklch, oklch(0.872 0.256 147.41) 90%, transparent), 0 0 12px color-mix(in oklch, oklch(0.872 0.256 147.41) 50%, transparent);
+  animation: roy-b15-term-cursor 1s steps(2) infinite;
+}
+@keyframes roy-b15-term-flicker {
+  0% { opacity: 1; }
+  100% { opacity: 0.96; }
+}
+@keyframes roy-b15-term-cursor {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.4; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-terminal::before {
+    animation: none;
+  }
+  .roycss-retro-terminal::after {
+    animation: none;
+  }
+}
+
+
+/* Retro Cassette Tape */
+.roycss-retro-cassette {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background: linear-gradient(135deg, oklch(0.234 0.039 67.22) 0%, oklch(0.335 0.053 62.08) 50%, oklch(0.234 0.039 67.22) 100%);
+}
+.roycss-retro-cassette::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 20%;
+  inset-inline-start: 10%;
+  inset-inline-end: 10%;
+  block-size: 55%;
+  background: linear-gradient(to bottom, oklch(0.796 0.09 83.94) 0%, oklch(0.676 0.102 80.27) 50%, oklch(0.531 0.091 75.75) 100%);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px color-mix(in oklch, oklch(0 0 0) 60%, transparent), inset 0 2px 0 color-mix(in oklch, oklch(0.933 0.07 84.43) 40%, transparent), inset 0 -2px 0 color-mix(in oklch, oklch(0 0 0) 40%, transparent);
+}
+.roycss-retro-cassette::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 30%;
+  inset-inline-start: 50%;
+  inline-size: 30px;
+  block-size: 30px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(0.184 0.023 59.82) 25%, oklch(0.335 0.053 62.08) 30%, oklch(0.229 0.039 60.62) 60%);
+  border: 2px solid oklch(0.229 0.039 60.62);
+  box-shadow:
+    -90px 0 0 -2px oklch(0.184 0.023 59.82),
+    -90px 0 0 0 oklch(0.335 0.053 62.08),
+    -90px 0 0 2px oklch(0.229 0.039 60.62);
+  animation: roy-b15-cassette-spin 4s linear infinite;
+}
+@keyframes roy-b15-cassette-spin {
+  0% { transform: translateX(-50%) rotate(0deg); }
+  100% { transform: translateX(-50%) rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-retro-cassette::after {
+    animation: none;
+  }
+}
+
+
+/* Retro Arcade Screen */
+.roycss-retro-arcade {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, oklch(0.153 0.091 281.56) 0%, oklch(0.078 0.054 264.05) 80%);
+}
+.roycss-retro-arcade::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(2px 2px at 20% 30%, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 60% 20%, oklch(0.748 0.129 266.73), transparent),
+    radial-gradient(2px 2px at 80% 60%, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 30% 70%, oklch(0.813 0.111 42.56), transparent),
+    radial-gradient(1px 1px at 50% 50%, oklch(0.919 0.174 137.37), transparent),
+    radial-gradient(2px 2px at 75% 30%, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 15% 80%, oklch(0.931 0.108 195.46), transparent),
+    radial-gradient(1px 1px at 90% 85%, oklch(1 0 89.88), transparent);
+  background-size: 100% 100%;
+}
+.roycss-retro-arcade::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent 0, transparent 3px, color-mix(in oklch, oklch(0 0 0) 50%, transparent) 3px, color-mix(in oklch, oklch(0 0 0) 50%, transparent) 4px),
+    radial-gradient(ellipse at center, transparent 50%, color-mix(in oklch, oklch(0 0 0) 80%, transparent) 100%);
+  pointer-events: none;
+}
+
+/* Tech Circuit Board */
+.roycss-tech-circuit-board {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 30% 40%, color-mix(in oklch, oklch(0.847 0.114 130.13) 15%, transparent) 0%, transparent 12%),
+    radial-gradient(circle at 70% 70%, color-mix(in oklch, oklch(0.847 0.114 130.13) 15%, transparent) 0%, transparent 14%),
+    repeating-linear-gradient(90deg, transparent 0, transparent 24px, color-mix(in oklch, oklch(0.663 0.109 82.12) 40%, transparent) 24px, color-mix(in oklch, oklch(0.663 0.109 82.12) 40%, transparent) 26px, transparent 26px, transparent 60px),
+    repeating-linear-gradient(0deg, transparent 0, transparent 24px, color-mix(in oklch, oklch(0.663 0.109 82.12) 40%, transparent) 24px, color-mix(in oklch, oklch(0.663 0.109 82.12) 40%, transparent) 26px, transparent 26px, transparent 60px),
+    linear-gradient(135deg, oklch(0.308 0.078 148.82) 0%, oklch(0.327 0.087 148) 50%, oklch(0.245 0.059 149.6) 100%);
+}
+.roycss-tech-circuit-board::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 24px 24px, oklch(0.737 0.127 79.61) 0, oklch(0.737 0.127 79.61) 2px, transparent 2px),
+    radial-gradient(circle at 84px 84px, oklch(0.737 0.127 79.61) 0, oklch(0.737 0.127 79.61) 2px, transparent 2px),
+    radial-gradient(circle at 144px 24px, oklch(0.737 0.127 79.61) 0, oklch(0.737 0.127 79.61) 2px, transparent 2px);
+  background-size: 180px 180px;
+  opacity: 0.8;
+}
+.roycss-tech-circuit-board::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 40%, oklch(0.875 0.234 151.18) 0, oklch(0.875 0.234 151.18) 2px, transparent 2px),
+    radial-gradient(circle at 70% 70%, oklch(0.875 0.234 151.18) 0, oklch(0.875 0.234 151.18) 2px, transparent 2px);
+  background-size: 180px 180px;
+  filter: drop-shadow(0 0 4px color-mix(in oklch, oklch(0.874 0.241 149.96) 90%, transparent));
+  animation: roy-b15-circuit-pulse 1.8s ease-in-out infinite;
+}
+@keyframes roy-b15-circuit-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-tech-circuit-board::after {
+    animation: none;
+  }
+}
+
+
+/* Tech Matrix Code Rain */
+.roycss-tech-matrix-code {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background: oklch(0 0 0);
+}
+.roycss-tech-matrix-code::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background:
+    repeating-linear-gradient(0deg,
+      color-mix(in oklch, oklch(0.868 0.28 144.17) 90%, transparent) 0, color-mix(in oklch, oklch(0.868 0.28 144.17) 90%, transparent) 12px,
+      color-mix(in oklch, oklch(0.723 0.231 144.56) 70%, transparent) 12px, color-mix(in oklch, oklch(0.723 0.231 144.56) 70%, transparent) 24px,
+      color-mix(in oklch, oklch(0.556 0.178 144.34) 50%, transparent) 24px, color-mix(in oklch, oklch(0.556 0.178 144.34) 50%, transparent) 36px,
+      color-mix(in oklch, oklch(0.375 0.115 145.8) 30%, transparent) 36px, color-mix(in oklch, oklch(0.375 0.115 145.8) 30%, transparent) 48px,
+      transparent 48px, transparent 80px);
+  background-size: 22px 100%;
+  filter: blur(0.6px) drop-shadow(0 0 4px color-mix(in oklch, oklch(0.87 0.269 145.52) 60%, transparent));
+  animation: roy-b15-matrix-rain 1.6s linear infinite;
+}
+.roycss-tech-matrix-code::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at center, transparent 30%, color-mix(in oklch, oklch(0 0 0) 80%, transparent) 100%),
+    repeating-linear-gradient(0deg, transparent 0, transparent 2px, color-mix(in oklch, oklch(0 0 0) 35%, transparent) 2px, color-mix(in oklch, oklch(0 0 0) 35%, transparent) 3px);
+}
+@keyframes roy-b15-matrix-rain {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 80px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-tech-matrix-code::before {
+    animation: none;
+  }
+}
+
+
+/* Tech Hologram Grid */
+.roycss-tech-hologram-grid {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at center, color-mix(in oklch, oklch(0.761 0.131 207.5) 18%, transparent) 0%, color-mix(in oklch, oklch(0.4 0.074 222.02) 40%, transparent) 50%, color-mix(in oklch, oklch(0.187 0.05 247.94) 90%, transparent) 100%);
+}
+.roycss-tech-hologram-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(90deg, color-mix(in oklch, oklch(0.87 0.148 202.88) 40%, transparent) 0, color-mix(in oklch, oklch(0.87 0.148 202.88) 40%, transparent) 1px, transparent 1px, transparent 24px),
+    repeating-linear-gradient(0deg, color-mix(in oklch, oklch(0.87 0.148 202.88) 40%, transparent) 0, color-mix(in oklch, oklch(0.87 0.148 202.88) 40%, transparent) 1px, transparent 1px, transparent 24px);
+  transform: perspective(400px) rotateX(50deg);
+  transform-origin: center bottom;
+  mask-image: linear-gradient(to bottom, transparent 0%, color-mix(in oklch, oklch(0 0 0) 90%, transparent) 40%, color-mix(in oklch, oklch(0 0 0) 40%, transparent) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, color-mix(in oklch, oklch(0 0 0) 90%, transparent) 40%, color-mix(in oklch, oklch(0 0 0) 40%, transparent) 100%);
+}
+.roycss-tech-hologram-grid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent 0, transparent 3px, color-mix(in oklch, oklch(0.87 0.148 202.88) 8%, transparent) 3px, color-mix(in oklch, oklch(0.87 0.148 202.88) 8%, transparent) 4px);
+  animation: roy-b15-hologram-scan 4s linear infinite;
+}
+@keyframes roy-b15-hologram-scan {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-tech-hologram-grid::after {
+    animation: none;
+  }
+}
+
+
+/* Tech Scan Radar */
+.roycss-tech-scan-radar {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background: radial-gradient(circle, oklch(0.22 0.042 150.52) 0%, oklch(0.136 0.016 144.61) 80%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.roycss-tech-scan-radar::before {
+  content: "";
+  position: absolute;
+  inline-size: 86%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, transparent 0%, transparent 24%, color-mix(in oklch, oklch(0.736 0.184 148.81) 30%, transparent) 24%, color-mix(in oklch, oklch(0.736 0.184 148.81) 30%, transparent) 25%, transparent 25%),
+    radial-gradient(circle, transparent 0%, transparent 49%, color-mix(in oklch, oklch(0.736 0.184 148.81) 30%, transparent) 49%, color-mix(in oklch, oklch(0.736 0.184 148.81) 30%, transparent) 50%, transparent 50%),
+    radial-gradient(circle, transparent 0%, transparent 74%, color-mix(in oklch, oklch(0.736 0.184 148.81) 30%, transparent) 74%, color-mix(in oklch, oklch(0.736 0.184 148.81) 30%, transparent) 75%, transparent 75%),
+    linear-gradient(0deg, transparent 49.5%, color-mix(in oklch, oklch(0.736 0.184 148.81) 40%, transparent) 49.5%, color-mix(in oklch, oklch(0.736 0.184 148.81) 40%, transparent) 50.5%, transparent 50.5%),
+    linear-gradient(90deg, transparent 49.5%, color-mix(in oklch, oklch(0.736 0.184 148.81) 40%, transparent) 49.5%, color-mix(in oklch, oklch(0.736 0.184 148.81) 40%, transparent) 50.5%, transparent 50.5%);
+  border: 2px solid color-mix(in oklch, oklch(0.736 0.184 148.81) 60%, transparent);
+  box-shadow: 0 0 24px color-mix(in oklch, oklch(0.736 0.184 148.81) 30%, transparent), inset 0 0 30px color-mix(in oklch, oklch(0.311 0.089 148.55) 60%, transparent);
+}
+.roycss-tech-scan-radar::after {
+  content: "";
+  position: absolute;
+  inline-size: 86%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, color-mix(in oklch, oklch(0.883 0.228 147.32) 70%, transparent) 0deg, color-mix(in oklch, oklch(0.883 0.228 147.32) 20%, transparent) 40deg, transparent 70deg, transparent 360deg);
+  animation: roy-b15-radar-sweep 3.2s linear infinite;
+}
+@keyframes roy-b15-radar-sweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-tech-scan-radar::after {
+    animation: none;
+  }
+}
+
+
+/* Neural Network Field */
+.roycss-bg-neural-network {
+  inline-size: 100%;
+  block-size: 240px;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 50%, oklch(0.10 0.05 260), oklch(0.05 0.02 270));
+  isolation: isolate;
+}
+/* network grid via repeating gradients */
+.roycss-bg-neural-network::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, oklch(0.80 0.20 200 / 0.9) 1.5px, transparent 2px),
+    radial-gradient(circle, oklch(0.80 0.20 200 / 0.7) 1.5px, transparent 2px),
+    radial-gradient(circle, oklch(0.80 0.20 200 / 0.8) 1.5px, transparent 2px),
+    linear-gradient(90deg, transparent 49.5%, oklch(0.60 0.18 220 / 0.18) 49.5%, oklch(0.60 0.18 220 / 0.18) 50.5%, transparent 50.5%),
+    linear-gradient(0deg,  transparent 49.5%, oklch(0.60 0.18 220 / 0.18) 49.5%, oklch(0.60 0.18 220 / 0.18) 50.5%, transparent 50.5%);
+  background-size: 60px 60px, 60px 60px, 60px 60px, 60px 60px, 60px 60px;
+  background-position: 0 0, 30px 30px, 0 30px, 0 0, 0 0;
+  mask-image: radial-gradient(ellipse at center, oklch(1 0 0) 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, oklch(1 0 0) 30%, transparent 80%);
+  animation: roy-b16-neural-pulse 3s ease-in-out infinite;
+}
+/* signal pulses traveling */
+.roycss-bg-neural-network::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 0;
+  inline-size: 12px;
+  block-size: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(0.95 0.22 180), oklch(0.70 0.22 200 / 0.5));
+  filter: drop-shadow(0 0 8px oklch(0.85 0.22 180 / 0.9));
+  offset-path: path("M 0,120 C 80,40 160,200 240,80 S 360,160 440,100");
+  animation: roy-b16-neural-signal 3.5s linear infinite;
+}
+@keyframes roy-b16-neural-pulse {
+  0%, 100% { opacity: 0.7; filter: brightness(0.9); }
+  50%      { opacity: 1;   filter: brightness(1.3); }
+}
+@keyframes roy-b16-neural-signal {
+  0%   { offset-distance: 0%;   opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* network grid via repeating gradients */
+.roycss-bg-neural-network::before {
+    animation: none;
+  }
+  /* signal pulses traveling */
+.roycss-bg-neural-network::after {
+    animation: none;
+  }
+}
+
+
+/* Quantum Probability Field */
+.roycss-bg-quantum-field {
+  inline-size: 100%;
+  block-size: 240px;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 50%, oklch(0.12 0.04 270), oklch(0.05 0.02 280));
+  isolation: isolate;
+}
+/* probability cloud layer */
+.roycss-bg-quantum-field::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background-image:
+    radial-gradient(circle at 20% 30%, oklch(0.75 0.24 280 / 0.55) 0%, transparent 8%),
+    radial-gradient(circle at 70% 20%, oklch(0.70 0.22 200 / 0.5) 0%, transparent 6%),
+    radial-gradient(circle at 50% 70%, oklch(0.80 0.20 320 / 0.5) 0%, transparent 7%),
+    radial-gradient(circle at 85% 80%, oklch(0.70 0.24 260 / 0.5) 0%, transparent 8%),
+    radial-gradient(circle at 30% 85%, oklch(0.78 0.22 180 / 0.5) 0%, transparent 6%);
+  filter: blur(8px);
+  mix-blend-mode: screen;
+  animation: roy-b16-quantum-cloud 6s ease-in-out infinite;
+}
+/* flickering particle points */
+.roycss-bg-quantum-field::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, oklch(0.95 0.10 280 / 1) 1px, transparent 1.5px),
+    radial-gradient(circle, oklch(0.90 0.18 200 / 0.9) 1px, transparent 1.5px),
+    radial-gradient(circle, oklch(1 0 0 / 0.8) 1px, transparent 1.5px);
+  background-size: 35px 35px, 55px 55px, 80px 80px;
+  background-position: 0 0, 12px 18px, 28px 8px;
+  mix-blend-mode: screen;
+  animation: roy-b16-quantum-flicker 1.6s steps(4, end) infinite;
+}
+@keyframes roy-b16-quantum-cloud {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.8; }
+  50%      { transform: scale(1.08) rotate(4deg); opacity: 1; }
+}
+@keyframes roy-b16-quantum-flicker {
+  0%   { opacity: 0.4; transform: translate(0, 0); }
+  25%  { opacity: 0.9; transform: translate(2px, -1px); }
+  50%  { opacity: 0.5; transform: translate(-1px, 2px); }
+  75%  { opacity: 1;   transform: translate(1px, 1px); }
+  100% { opacity: 0.4; transform: translate(0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* probability cloud layer */
+.roycss-bg-quantum-field::before {
+    animation: none;
+  }
+  /* flickering particle points */
+.roycss-bg-quantum-field::after {
+    animation: none;
+  }
+}
+
+
+/* Flowing Silk Texture */
+.roycss-bg-flowing-silk {
+  inline-size: 100%;
+  block-size: 240px;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, oklch(0.62 0.18 350), oklch(0.50 0.20 290));
+  isolation: isolate;
+}
+.roycss-bg-flowing-silk::before {
+  /* silk weave sheen layer */
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background:
+    repeating-linear-gradient(115deg,
+      oklch(1 0 0 / 0.10) 0px,
+      oklch(1 0 0 / 0.18) 2px,
+      oklch(0 0 0 / 0.10) 4px,
+      oklch(1 0 0 / 0.05) 6px,
+      transparent 8px),
+    repeating-linear-gradient(65deg,
+      oklch(1 0 0 / 0.08) 0px,
+      oklch(1 0 0 / 0.14) 3px,
+      oklch(0 0 0 / 0.06) 6px,
+      transparent 9px);
+  mix-blend-mode: overlay;
+  animation: roy-b16-silk-drape 9s ease-in-out infinite;
+}
+.roycss-bg-flowing-silk::after {
+  /* drifting highlight streak */
+  content: "";
+  position: absolute;
+  inset-block-start: -20%;
+  inset-inline-start: -30%;
+  inline-size: 80%;
+  block-size: 140%;
+  background: linear-gradient(105deg,
+    transparent 30%,
+    oklch(1 0 0 / 0.32) 45%,
+    oklch(1 0 0 / 0.45) 50%,
+    oklch(1 0 0 / 0.32) 55%,
+    transparent 70%);
+  filter: blur(6px);
+  mix-blend-mode: soft-light;
+  animation: roy-b16-silk-shimmer 5s ease-in-out infinite;
+  transform: rotate(8deg);
+}
+@keyframes roy-b16-silk-drape {
+  0%, 100% { transform: translate3d(0,0,0) scale(1) skewX(0deg); }
+  33%      { transform: translate3d(2%, -2%, 0) scale(1.03) skewX(1deg); }
+  66%      { transform: translate3d(-2%, 1%, 0) scale(0.98) skewX(-1deg); }
+}
+@keyframes roy-b16-silk-shimmer {
+  0%   { transform: translateX(-50%) rotate(8deg); opacity: 0.6; }
+  50%  { opacity: 1; }
+  100% { transform: translateX(220%) rotate(8deg); opacity: 0.6; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-bg-flowing-silk::before {
+    animation: none;
+  }
+  .roycss-bg-flowing-silk::after {
+    animation: none;
+  }
+}
+
+
+/* Synthwave Sun */
+.roycss-bg-synthwave-sun {
+  background:
+    linear-gradient(180deg,
+      oklch(0.82 0.28 35) 0%,
+      oklch(0.78 0.32 5) 35%,
+      oklch(0.6 0.32 340) 65%,
+      oklch(0.35 0.28 320) 100%);
+  border-radius: 50% 50% 0 0 / 75% 75% 0 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 0 80px oklch(0.7 0.3 15 / 0.6),
+    0 0 160px oklch(0.5 0.3 340 / 0.4);
+}
+.roycss-bg-synthwave-sun::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg,
+    transparent 0 7px,
+    oklch(0.08 0.18 295 / 0.85) 7px 10px);
+  -webkit-mask: linear-gradient(180deg,
+    transparent 25%,
+    black 50%,
+    black 85%,
+    transparent 100%);
+  mask: linear-gradient(180deg,
+    transparent 25%,
+    black 50%,
+    black 85%,
+    transparent 100%);
+  animation: roy-sun-scan 3.5s linear infinite;
+}
+.roycss-bg-synthwave-sun::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 25%,
+    oklch(1 0.1 50 / 0.4),
+    transparent 40%);
+  pointer-events: none;
+}
+@keyframes roy-sun-scan {
+  from { background-position: 0 0; }
+  to { background-position: 0 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-bg-synthwave-sun::before {
+    animation: none;
+  }
+}
+
+
+/* Bioluminescent Deep Sea */
+.roycss-bg-bioluminescent-deep {
+  background:
+    radial-gradient(circle at 20% 70%,
+      oklch(0.55 0.25 200 / 0.55) 0%,
+      transparent 25%),
+    radial-gradient(circle at 80% 30%,
+      oklch(0.5 0.3 280 / 0.45) 0%,
+      transparent 30%),
+    radial-gradient(circle at 50% 50%,
+      oklch(0.4 0.22 180 / 0.35) 0%,
+      transparent 40%),
+    radial-gradient(circle at 70% 80%,
+      oklch(0.45 0.28 220 / 0.4) 0%,
+      transparent 30%),
+    linear-gradient(180deg,
+      oklch(0.08 0.08 240) 0%,
+      oklch(0.04 0.05 250) 100%);
+  border-radius: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.roycss-bg-bioluminescent-deep::before,
+.roycss-bg-bioluminescent-deep::after {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: oklch(0.9 0.3 180);
+  box-shadow:
+    20px 40px 0 oklch(0.85 0.3 200),
+    60px 90px 0 oklch(0.85 0.3 180),
+    120px 60px 0 oklch(0.85 0.3 220),
+    180px 110px 0 oklch(0.85 0.3 200),
+    240px 30px 0 oklch(0.85 0.3 180),
+    300px 80px 0 oklch(0.85 0.3 220),
+    360px 130px 0 oklch(0.85 0.3 200),
+    50px 150px 0 oklch(0.85 0.3 180);
+  animation: roy-bio-twinkle 3s ease-in-out infinite alternate;
+  filter: blur(0.5px);
+}
+.roycss-bg-bioluminescent-deep::after {
+  animation-delay: -1.5s;
+  box-shadow:
+    40px 20px 0 oklch(0.9 0.3 200),
+    100px 70px 0 oklch(0.9 0.3 180),
+    160px 100px 0 oklch(0.9 0.3 220),
+    220px 50px 0 oklch(0.9 0.3 200),
+    280px 90px 0 oklch(0.9 0.3 180),
+    340px 40px 0 oklch(0.9 0.3 220),
+    80px 130px 0 oklch(0.9 0.3 200),
+    200px 160px 0 oklch(0.9 0.3 180);
+}
+@keyframes roy-bio-twinkle {
+  0% { opacity: 0.3; transform: translateY(0) scale(1); }
+  100% { opacity: 1; transform: translateY(-6px) scale(1.4); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-bg-bioluminescent-deep::before,
+.roycss-bg-bioluminescent-deep::after {
+    animation: none;
+  }
+  .roycss-bg-bioluminescent-deep::after {
+    animation: none;
+  }
+}
+
+
+/* Neural Mesh */
+.roycss-bg-neural-mesh {
+  background:
+    radial-gradient(circle at 20% 30%,
+      oklch(0.85 0.3 200) 0 3px,
+      transparent 4px),
+    radial-gradient(circle at 70% 20%,
+      oklch(0.75 0.3 220) 0 3px,
+      transparent 4px),
+    radial-gradient(circle at 50% 50%,
+      oklch(0.9 0.3 180) 0 4px,
+      transparent 5px),
+    radial-gradient(circle at 30% 75%,
+      oklch(0.75 0.3 220) 0 3px,
+      transparent 4px),
+    radial-gradient(circle at 80% 80%,
+      oklch(0.85 0.3 200) 0 3px,
+      transparent 4px),
+    radial-gradient(circle at 10% 60%,
+      oklch(0.7 0.3 240) 0 2px,
+      transparent 3px),
+    radial-gradient(circle at 90% 50%,
+      oklch(0.7 0.3 240) 0 2px,
+      transparent 3px),
+    linear-gradient(135deg,
+      oklch(0.1 0.05 250),
+      oklch(0.15 0.1 220));
+  border-radius: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  animation: roy-neural-glow 3s ease-in-out infinite;
+}
+.roycss-bg-neural-mesh::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(45deg,
+      transparent 49.4%,
+      oklch(0.5 0.25 200 / 0.25) 49.4% 50.6%,
+      transparent 50.6%),
+    linear-gradient(-45deg,
+      transparent 49.4%,
+      oklch(0.5 0.25 220 / 0.2) 49.4% 50.6%,
+      transparent 50.6%),
+    linear-gradient(90deg,
+      transparent 49.5%,
+      oklch(0.5 0.25 200 / 0.15) 49.5% 50.5%,
+      transparent 50.5%);
+  background-size: 100% 100%;
+  pointer-events: none;
+}
+@keyframes roy-neural-glow {
+  0%, 100% { filter: brightness(0.9) saturate(1); }
+  50% { filter: brightness(1.35) saturate(1.5); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Neural Mesh */
+.roycss-bg-neural-mesh {
+    animation: none;
+  }
+}
+
+
+/* Cyber Rain */
+.roycss-bg-cyber-rain {
+  background-image: repeating-linear-gradient(180deg,
+    oklch(0.88 0.4 180 / 0.75) 0px,
+    oklch(0.88 0.4 180 / 0.75) 2px,
+    transparent 2px,
+    transparent 42px);
+  background-size: 2px 42px;
+  background-color: oklch(0.07 0.12 280);
+  background-position: 0 0;
+  border-radius: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  animation: roy-cyber-rain-fall 0.55s linear infinite;
+}
+.roycss-bg-cyber-rain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 30% at 50% 100%,
+      oklch(0.55 0.32 320 / 0.55),
+      transparent 60%),
+    radial-gradient(ellipse 40% 20% at 20% 100%,
+      oklch(0.45 0.3 200 / 0.4),
+      transparent 60%),
+    radial-gradient(ellipse 40% 20% at 80% 100%,
+      oklch(0.45 0.3 200 / 0.4),
+      transparent 60%);
+  pointer-events: none;
+}
+.roycss-bg-cyber-rain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(180deg,
+    oklch(0.95 0.5 320 / 0.5) 0px,
+    oklch(0.95 0.5 320 / 0.5) 1px,
+    transparent 1px,
+    transparent 50px);
+  background-size: 2px 50px;
+  animation: roy-cyber-rain-pink 0.7s linear infinite;
+  mix-blend-mode: screen;
+  opacity: 0.6;
+}
+@keyframes roy-cyber-rain-fall {
+  from { background-position: 0 0; }
+  to { background-position: 0 42px; }
+}
+@keyframes roy-cyber-rain-pink {
+  from { background-position: 0 0; }
+  to { background-position: 0 50px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Cyber Rain */
+.roycss-bg-cyber-rain {
+    animation: none;
+  }
+  .roycss-bg-cyber-rain::after {
+    animation: none;
+  }
+}
+
+
+/* Aurora Borealis 2.0 */
+.roycss-bg-aurora-borealis-2 {
+  background:
+    radial-gradient(ellipse 80% 50% at 30% 30%,
+      oklch(0.6 0.3 150 / 0.6),
+      transparent 60%),
+    radial-gradient(ellipse 60% 40% at 70% 40%,
+      oklch(0.55 0.3 200 / 0.55),
+      transparent 60%),
+    radial-gradient(ellipse 50% 30% at 50% 60%,
+      oklch(0.5 0.35 280 / 0.45),
+      transparent 60%),
+    radial-gradient(ellipse 70% 40% at 80% 70%,
+      oklch(0.55 0.32 170 / 0.4),
+      transparent 60%),
+    linear-gradient(180deg,
+      oklch(0.04 0.04 250),
+      oklch(0.1 0.1 230));
+  background-size: 200% 200%, 220% 200%, 180% 200%, 240% 200%, 100% 100%;
+  background-position: 0% 0%, 100% 50%, 50% 100%, 0% 80%, 0 0;
+  border-radius: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  animation: roy-aurora-flow 14s ease-in-out infinite;
+}
+.roycss-bg-aurora-borealis-2::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle 1px at 15% 12%, oklch(0.95 0.05 60) 100%, transparent),
+    radial-gradient(circle 1px at 35% 8%, oklch(0.95 0.05 60) 100%, transparent),
+    radial-gradient(circle 1px at 60% 15%, oklch(0.95 0.05 60) 100%, transparent),
+    radial-gradient(circle 1px at 85% 10%, oklch(0.95 0.05 60) 100%, transparent),
+    radial-gradient(circle 1px at 25% 20%, oklch(0.95 0.05 60) 100%, transparent);
+  opacity: 0.7;
+  pointer-events: none;
+}
+@keyframes roy-aurora-flow {
+  0%, 100% {
+    background-position: 0% 0%, 100% 50%, 50% 100%, 0% 80%, 0 0;
+    filter: hue-rotate(0deg) brightness(1);
+  }
+  33% {
+    background-position: 50% 30%, 50% 0%, 100% 50%, 60% 60%, 0 0;
+    filter: hue-rotate(25deg) brightness(1.1);
+  }
+  66% {
+    background-position: 100% 50%, 0% 100%, 0% 50%, 100% 40%, 0 0;
+    filter: hue-rotate(-15deg) brightness(1.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Aurora Borealis 2.0 */
+.roycss-bg-aurora-borealis-2 {
+    animation: none;
+  }
+}
+
+
+/* Mesh Gradient */
+.roycss-bg-mesh-gradient-b18 {
+  inline-size: 100%;
+  block-size: 100%;
+  background:
+    radial-gradient(at 20% 30%, oklch(0.7 0.2 162) 0%, transparent 50%),
+    radial-gradient(at 80% 20%, oklch(0.65 0.25 280) 0%, transparent 50%),
+    radial-gradient(at 40% 80%, oklch(0.7 0.2 30) 0%, transparent 50%),
+    radial-gradient(at 90% 90%, oklch(0.65 0.25 200) 0%, transparent 50%),
+    oklch(0.2 0.02 250);
+  border-radius: 1rem;
+}
+
+/* Perspective Grid */
+.roycss-bg-grid-perspective-b18 {
+  inline-size: 100%;
+  block-size: 100%;
+  background:
+    linear-gradient(oklch(0.6 0.2 320) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.6 0.2 320) 1px, transparent 1px),
+    oklch(0.15 0.05 290);
+  background-size: 40px 40px;
+  background-position: center bottom;
+  transform: perspective(400px) rotateX(60deg);
+  transform-origin: center bottom;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+/* Noise Texture */
+.roycss-bg-noise-texture-b18 {
+  inline-size: 100%;
+  block-size: 100%;
+  background: oklch(0.3 0.05 250);
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.roycss-bg-noise-texture-b18::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E");
+  opacity: 0.4;
+}
+
+/* Aurora Waves Background */
+.roycss-bg-aurora-waves-b18 {
+  inline-size: 100%;
+  block-size: 100%;
+  background:
+    radial-gradient(ellipse at 20% 50%, color-mix(in oklch, oklch(0.6 0.2 150) 40%, transparent), transparent),
+    radial-gradient(ellipse at 80% 50%, color-mix(in oklch, oklch(0.5 0.25 280) 40%, transparent), transparent),
+    radial-gradient(ellipse at 50% 100%, color-mix(in oklch, oklch(0.55 0.2 200) 30%, transparent), transparent),
+    oklch(0.1 0.02 250);
+  border-radius: 1rem;
+  animation: roy-b18-bg-aurora-waves 12s ease-in-out infinite;
+}
+
+@keyframes roy-b18-bg-aurora-waves {
+  0%, 100% { background-position: 0% 50%, 100% 50%, 50% 100%; }
+  50% { background-position: 30% 30%, 70% 70%, 60% 80%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-bg-aurora-waves-b18 { animation: none; }
+}
+
+/* Animated Mesh Gradient */
+@property --roy-b18-mg-x1 { syntax: "<percentage>"; initial-value: 20%; inherits: false; }
+@property --roy-b18-mg-x2 { syntax: "<percentage>"; initial-value: 80%; inherits: false; }
+
+.roycss-bg-gradient-mesh-animated-b18 {
+  inline-size: 100%;
+  block-size: 100%;
+  background:
+    radial-gradient(at var(--roy-b18-mg-x1) 30%, oklch(0.7 0.2 162) 0%, transparent 50%),
+    radial-gradient(at var(--roy-b18-mg-x2) 70%, oklch(0.65 0.25 280) 0%, transparent 50%),
+    oklch(0.15 0.02 250);
+  border-radius: 1rem;
+  animation: roy-b18-mg-shift 8s ease-in-out infinite alternate;
+}
+
+@keyframes roy-b18-mg-shift {
+  to {
+    --roy-b18-mg-x1: 80%;
+    --roy-b18-mg-x2: 20%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-bg-gradient-mesh-animated-b18 { animation: none; }
+}
+
+/* Cyber Grid */
+.roycss-bg-cyber-grid {
+  inline-size: 100%;
+  block-size: 100%;
+  background-color: oklch(0.1 0.02 250);
+  background-image:
+    linear-gradient(color-mix(in oklch, oklch(0.6 0.25 180) 30%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklch, oklch(0.6 0.25 180) 30%, transparent) 1px, transparent 1px);
+  background-size: 30px 30px;
+  border-radius: 1rem;
+}
+
+/* Conic Gradient */
+.roycss-bg-gradient-conic {
+  inline-size: 100%;
+  block-size: 100%;
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    oklch(0.7 0.2 0),
+    oklch(0.7 0.2 60),
+    oklch(0.7 0.2 120),
+    oklch(0.7 0.2 180),
+    oklch(0.7 0.2 240),
+    oklch(0.7 0.2 300),
+    oklch(0.7 0.2 360)
+  );
+  border-radius: 1rem;
+}
+
+/* Dot Pattern */
+.roycss-bg-dot-pattern-b19 {
+  inline-size: 100%;
+  block-size: 100%;
+  background-color: oklch(0.15 0.02 250);
+  background-image: radial-gradient(
+    oklch(0.5 0.05 250) 1px,
+    transparent 1px
+  );
+  background-size: 16px 16px;
+  border-radius: 1rem;
+}
+
+/* Diagonal Stripes */
+.roycss-bg-stripe-diagonal {
+  inline-size: 100%;
+  block-size: 100%;
+  background: repeating-linear-gradient(
+    45deg,
+    oklch(0.6 0.2 162),
+    oklch(0.6 0.2 162) 10px,
+    oklch(0.15 0.02 250) 10px,
+    oklch(0.15 0.02 250) 20px
+  );
+  border-radius: 1rem;
+}
+
+/* Radial Spotlight */
+.roycss-bg-radial-spotlight {
+  inline-size: 100%;
+  block-size: 100%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    oklch(0.3 0.05 250) 0%,
+    oklch(0.15 0.02 250) 70%,
+    oklch(0.05 0.01 250) 100%
+  );
+  border-radius: 1rem;
+}
+
+.roycss-ferrum-bg-gradient-shift {
+  background: linear-gradient(-45deg, oklch(0.627 0.233 303.9), oklch(0.652 0.241 354.31), oklch(0.705 0.213 51.16), oklch(0.685 0.131 226.94));
+  background-size: 400% 400%;
+  animation: roy-ferrum-bg-gradient-shift 8s ease infinite;
+}
+
+@keyframes roy-ferrum-bg-gradient-shift {
+
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-gradient-shift {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-bg-mesh {
+  background:
+    radial-gradient(at 40% 20%, oklch(0.627 0.233 303.9) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, oklch(0.652 0.241 354.31) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, oklch(0.685 0.131 226.94) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, oklch(0.705 0.213 51.16) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, oklch(0.696 0.149 162.48) 0px, transparent 50%),
+    radial-gradient(at 80% 100%, oklch(0.637 0.237 25.77) 0px, transparent 50%);
+  background-color: oklch(0.228 0.038 282.93);
+  background-size: 200% 200%;
+  animation: roy-ferrum-mesh-bg 10s ease infinite;
+}
+
+@keyframes roy-ferrum-mesh-bg {
+
+  0% { background-position: 0% 0%, 100% 0%, 0% 50%, 100% 50%, 0% 100%, 100% 100%; }
+  50% { background-position: 100% 0%, 0% 50%, 100% 50%, 0% 100%, 100% 100%, 0% 0%; }
+  100% { background-position: 0% 0%, 100% 0%, 0% 50%, 100% 50%, 0% 100%, 100% 100%; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-mesh {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-bg-dots {
+  background-color: oklch(0.228 0.038 282.93);
+  background-image: radial-gradient(oklch(0.627 0.233 303.9) 1.5px, transparent 1.5px);
+  background-size: 20px 20px;
+}
+
+.roycss-ferrum-bg-striped {
+  background: repeating-linear-gradient(
+    -45deg,
+    oklch(0.228 0.038 282.93),
+    oklch(0.228 0.038 282.93) 10px,
+    oklch(0.27 0.091 293.53) 10px,
+    oklch(0.27 0.091 293.53) 20px
+  );
+  background-size: 28.28px 28.28px;
+  animation: roy-ferrum-bg-stripes-move 1s linear infinite;
+}
+
+@keyframes roy-ferrum-bg-stripes-move {
+
+  0% { background-position: 0 0; }
+  100% { background-position: 28.28px 0; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-striped {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-bg-checkerboard {
+  background-color: oklch(0.228 0.038 282.93);
+  background-image:
+    linear-gradient(45deg, oklch(0.27 0.091 293.53) 25%, transparent 25%, transparent 75%, oklch(0.27 0.091 293.53) 75%),
+    linear-gradient(45deg, oklch(0.27 0.091 293.53) 25%, transparent 25%, transparent 75%, oklch(0.27 0.091 293.53) 75%);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
+}
+
+.roycss-ferrum-bg-radial-pulse {
+  background: radial-gradient(circle at center, oklch(0.627 0.233 303.9) 0%, oklch(0.327 0.096 283.81) 50%, oklch(0.179 0.057 283.68) 100%);
+  background-size: 100% 100%;
+  animation: roy-ferrum-bg-radial-pulse 3s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-bg-radial-pulse {
+
+  0%, 100% { background-size: 100% 100%; }
+  50% { background-size: 150% 150%; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-radial-pulse {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-bg-noise-texture {
+  background-color: oklch(0.228 0.038 282.93);
+  position: relative;
+}
+.roycss-ferrum-bg-noise-texture::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.08;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  pointer-events: none;
+}
+
+.roycss-ferrum-bg-aurora {
+  background: linear-gradient(135deg, oklch(0.179 0.057 283.68), oklch(0.327 0.096 283.81), oklch(0.274 0.048 282.79));
+  position: relative;
+  overflow: hidden;
+}
+.roycss-ferrum-bg-aurora::before {
+  content: '';
+  position: absolute;
+  top: -50%; inset-inline-start: -50%;
+  width: 200%; height: 200%;
+  background:
+    radial-gradient(ellipse at center, color-mix(in oklch, oklch(0.627 0.233 303.9) 30%, transparent) 0%, transparent 50%),
+    radial-gradient(ellipse at 30% 50%, color-mix(in oklch, oklch(0.685 0.131 226.94) 20%, transparent) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 50%, color-mix(in oklch, oklch(0.652 0.241 354.31) 20%, transparent) 0%, transparent 50%);
+  animation: roy-ferrum-aurora-bg 8s ease infinite;
+}
+
+@keyframes roy-ferrum-aurora-bg {
+
+  0% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(30px, -30px) rotate(5deg); }
+  66% { transform: translate(-20px, 20px) rotate(-3deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-aurora::before {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-bg-liquid {
+  background: linear-gradient(135deg, oklch(0.627 0.233 303.9), oklch(0.685 0.131 226.94), oklch(0.652 0.241 354.31), oklch(0.627 0.233 303.9));
+  background-size: 200% 200%;
+  animation: roy-ferrum-bg-liquid 6s ease infinite;
+}
+
+@keyframes roy-ferrum-bg-liquid {
+
+  0% { background-position: 0% 0%; }
+  25% { background-position: 100% 0%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+  100% { background-position: 0% 0%; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-liquid {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-bg-waves {
+  background:
+    radial-gradient(ellipse at 50% 80%, color-mix(in oklch, oklch(0.627 0.233 303.9) 15%, transparent) 0%, transparent 60%),
+    radial-gradient(ellipse at 30% 60%, color-mix(in oklch, oklch(0.685 0.131 226.94) 10%, transparent) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 70%, color-mix(in oklch, oklch(0.652 0.241 354.31) 10%, transparent) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 90%, color-mix(in oklch, oklch(0.627 0.233 303.9) 20%, transparent) 0%, transparent 55%),
+    linear-gradient(180deg, oklch(0.179 0.057 283.68) 0%, oklch(0.255 0.093 277.48) 100%);
+  background-size: 100% 200%, 80% 150%, 80% 150%, 100% 200%, 100% 100%;
+  animation: roy-ferrum-bg-waves 5s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-bg-waves {
+
+  0%, 100% { background-position: 50% 0%, 20% 50%, 80% 50%, 50% 0%, center; }
+  50% { background-position: 50% 10%, 30% 40%, 70% 60%, 50% 15%, center; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-waves {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-bg-plasma {
+  background:
+    radial-gradient(circle at 20% 50%, oklch(0.627 0.233 303.9) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, oklch(0.652 0.241 354.31) 0%, transparent 50%),
+    radial-gradient(circle at 50% 80%, oklch(0.685 0.131 226.94) 0%, transparent 50%),
+    linear-gradient(135deg, oklch(0.228 0.038 282.93), oklch(0.179 0.057 283.68));
+  background-size: 100% 100%;
+  animation: roy-ferrum-bg-plasma 4s linear infinite;
+  filter: hue-rotate(0deg);
+}
+
+@keyframes roy-ferrum-bg-plasma {
+
+  0% { filter: hue-rotate(0deg); background-position: 0% 0%, 100% 0%, 50% 100%, center; }
+  33% { filter: hue-rotate(120deg); background-position: 100% 100%, 0% 100%, 0% 0%, center; }
+  66% { filter: hue-rotate(240deg); background-position: 100% 0%, 0% 0%, 100% 100%, center; }
+  100% { filter: hue-rotate(360deg); background-position: 0% 0%, 100% 0%, 50% 100%, center; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-plasma {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-bg-matrix {
+  background-color: oklch(0.145 0.0 89.88);
+  position: relative;
+  overflow: hidden;
+}
+.roycss-ferrum-bg-matrix::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      color-mix(in oklch, oklch(0.696 0.149 162.48) 3%, transparent) 2px,
+      color-mix(in oklch, oklch(0.696 0.149 162.48) 3%, transparent) 4px
+    );
+  animation: roy-ferrum-matrix-scroll 20s linear infinite;
+}
+.roycss-ferrum-bg-matrix::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 24px,
+      color-mix(in oklch, oklch(0.696 0.149 162.48) 6%, transparent) 24px,
+      color-mix(in oklch, oklch(0.696 0.149 162.48) 6%, transparent) 25px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 24px,
+      color-mix(in oklch, oklch(0.696 0.149 162.48) 6%, transparent) 24px,
+      color-mix(in oklch, oklch(0.696 0.149 162.48) 6%, transparent) 25px
+    );
+}
+
+@keyframes roy-ferrum-matrix-scroll {
+
+  0% { transform: translateY(0); }
+  100% { transform: translateY(4px); }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-matrix::before {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-bg-starfield {
+  background: oklch(0.155 0.034 281.74);
+  position: relative;
+  overflow: hidden;
+}
+.roycss-ferrum-bg-starfield::before {
+  content: '';
+  position: absolute;
+  width: 2px; height: 2px;
+  background: transparent;
+  box-shadow:
+    25px 15px 0 0 color-mix(in oklch, oklch(1 0 0) 80%, transparent),
+    80px 40px 0 0 color-mix(in oklch, oklch(1 0 0) 50%, transparent),
+    150px 10px 0 0 color-mix(in oklch, oklch(0.627 0.233 303.9) 70%, transparent),
+    200px 60px 0 0 color-mix(in oklch, oklch(1 0 0) 60%, transparent),
+    50px 90px 0 0 color-mix(in oklch, oklch(0.685 0.131 226.94) 70%, transparent),
+    120px 70px 0 0 color-mix(in oklch, oklch(1 0 0) 40%, transparent),
+    180px 30px 0 0 color-mix(in oklch, oklch(0.652 0.241 354.31) 60%, transparent),
+    30px 50px 0 0 color-mix(in oklch, oklch(1 0 0) 90%, transparent),
+    90px 85px 0 0 color-mix(in oklch, oklch(1 0 0) 50%, transparent),
+    160px 95px 0 0 color-mix(in oklch, oklch(0.627 0.233 303.9) 80%, transparent),
+    70px 25px 0 0 color-mix(in oklch, oklch(1 0 0) 60%, transparent),
+    220px 50px 0 0 color-mix(in oklch, oklch(0.685 0.131 226.94) 50%, transparent),
+    10px 70px 0 0 color-mix(in oklch, oklch(1 0 0) 70%, transparent),
+    140px 45px 0 0 color-mix(in oklch, oklch(0.652 0.241 354.31) 60%, transparent),
+    190px 80px 0 0 color-mix(in oklch, oklch(1 0 0) 40%, transparent),
+    60px 100px 0 0 color-mix(in oklch, oklch(1 0 0) 80%, transparent);
+  animation: roy-ferrum-starfield-move 8s linear infinite;
+}
+
+@keyframes roy-ferrum-starfield-move {
+
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-100px); }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-starfield::before {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-bg-smoke {
+  background: linear-gradient(135deg, oklch(0.228 0.038 282.93), oklch(0.179 0.057 283.68));
+  position: relative;
+  overflow: hidden;
+}
+.roycss-ferrum-bg-smoke::before,
+.roycss-ferrum-bg-smoke::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.4;
+}
+.roycss-ferrum-bg-smoke::before {
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, color-mix(in oklch, oklch(0.627 0.233 303.9) 50%, transparent) 0%, transparent 70%);
+  top: -50px; inset-inline-start: -50px;
+  animation: roy-ferrum-smoke-drift1 10s ease-in-out infinite;
+}
+.roycss-ferrum-bg-smoke::after {
+  width: 250px; height: 250px;
+  background: radial-gradient(circle, color-mix(in oklch, oklch(0.652 0.241 354.31) 40%, transparent) 0%, transparent 70%);
+  bottom: -70px; inset-inline-end: -70px;
+  animation: roy-ferrum-smoke-drift2 12s ease-in-out infinite;
+}
+
+@keyframes roy-ferrum-smoke-drift1 {
+
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(60px, 30px) scale(1.2); }
+  50% { transform: translate(20px, 60px) scale(1); }
+  75% { transform: translate(80px, 20px) scale(1.1); }
+
+}
+
+@keyframes roy-ferrum-smoke-drift2 {
+
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-50px, -40px) scale(1.15); }
+  66% { transform: translate(-30px, -60px) scale(0.95); }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-smoke::before {
+    animation: none;
+  }
+  .roycss-ferrum-bg-smoke::after {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-bg-circuit {
+  background-color: oklch(0.169 0.025 265.16);
+  position: relative;
+  overflow: hidden;
+}
+.roycss-ferrum-bg-circuit::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 19px,
+      color-mix(in oklch, oklch(0.685 0.131 226.94) 12%, transparent) 19px,
+      color-mix(in oklch, oklch(0.685 0.131 226.94) 12%, transparent) 20px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 39px,
+      color-mix(in oklch, oklch(0.685 0.131 226.94) 12%, transparent) 39px,
+      color-mix(in oklch, oklch(0.685 0.131 226.94) 12%, transparent) 40px
+    );
+  animation: roy-ferrum-circuit-scan 3s linear infinite;
+}
+.roycss-ferrum-bg-circuit::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 40px 20px, color-mix(in oklch, oklch(0.685 0.131 226.94) 25%, transparent) 3px, transparent 3px),
+    radial-gradient(circle at 120px 60px, color-mix(in oklch, oklch(0.627 0.233 303.9) 25%, transparent) 3px, transparent 3px),
+    radial-gradient(circle at 200px 40px, color-mix(in oklch, oklch(0.685 0.131 226.94) 25%, transparent) 3px, transparent 3px),
+    radial-gradient(circle at 80px 80px, color-mix(in oklch, oklch(0.627 0.233 303.9) 25%, transparent) 3px, transparent 3px),
+    radial-gradient(circle at 160px 100px, color-mix(in oklch, oklch(0.685 0.131 226.94) 25%, transparent) 3px, transparent 3px);
+  animation: roy-ferrum-circuit-nodes 4s ease-in-out infinite alternate;
+}
+
+@keyframes roy-ferrum-circuit-nodes {
+
+  0% { opacity: 0.5; }
+  100% { opacity: 1; }
+
+}
+
+@keyframes roy-ferrum-circuit-scan {
+
+  0% { transform: translateY(0); }
+  100% { transform: translateY(20px); }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-circuit::before {
+    animation: none;
+  }
+  .roycss-ferrum-bg-circuit::after {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-bg-lava {
+  background: linear-gradient(180deg, oklch(0.193 0.069 300.44), oklch(0.179 0.057 283.68));
+  position: relative;
+  overflow: hidden;
+}
+.roycss-ferrum-bg-lava::before,
+.roycss-ferrum-bg-lava::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+}
+.roycss-ferrum-bg-lava::before {
+  width: 80px; height: 120px;
+  background: radial-gradient(ellipse, color-mix(in oklch, oklch(0.652 0.241 354.31) 60%, transparent) 0%, color-mix(in oklch, oklch(0.627 0.233 303.9) 20%, transparent) 60%, transparent 100%);
+  inset-inline-start: 30%; bottom: -20%;
+  animation: roy-ferrum-lava-rise1 5s ease-in-out infinite;
+}
+.roycss-ferrum-bg-lava::after {
+  width: 60px; height: 100px;
+  background: radial-gradient(ellipse, color-mix(in oklch, oklch(0.705 0.213 51.16) 50%, transparent) 0%, color-mix(in oklch, oklch(0.652 0.241 354.31) 20%, transparent) 60%, transparent 100%);
+  inset-inline-start: 60%; bottom: -20%;
+  animation: roy-ferrum-lava-rise2 6s ease-in-out infinite;
+  animation-delay: -2s;
+}
+
+@keyframes roy-ferrum-lava-rise1 {
+
+  0% { transform: translateY(0) scaleX(1) scaleY(1); opacity: 0.8; }
+  25% { transform: translateY(-80px) scaleX(1.3) scaleY(0.8); opacity: 1; }
+  50% { transform: translateY(-160px) scaleX(0.7) scaleY(1.2); opacity: 0.6; }
+  75% { transform: translateY(-120px) scaleX(1.2) scaleY(0.9); opacity: 0.4; }
+  100% { transform: translateY(0) scaleX(1) scaleY(1); opacity: 0.8; }
+
+}
+
+@keyframes roy-ferrum-lava-rise2 {
+
+  0% { transform: translateY(0) scaleX(1) scaleY(1); opacity: 0.7; }
+  30% { transform: translateY(-100px) scaleX(1.4) scaleY(0.7); opacity: 1; }
+  60% { transform: translateY(-180px) scaleX(0.6) scaleY(1.3); opacity: 0.5; }
+  80% { transform: translateY(-80px) scaleX(1.1) scaleY(1); opacity: 0.3; }
+  100% { transform: translateY(0) scaleX(1) scaleY(1); opacity: 0.7; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-lava::before {
+    animation: none;
+  }
+  .roycss-ferrum-bg-lava::after {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-bg-animated-gradient {
+  background: linear-gradient(-45deg, oklch(0.432 0.086 166.91), oklch(0.696 0.149 162.48), oklch(0.685 0.131 226.94), oklch(0.566 0.245 278.69));
+  background-size: 400% 400%;
+  animation: roy-gradient-shift 8s ease infinite;
+}
+
+@keyframes roy-gradient-shift {
+
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-animated-gradient {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-bg-concentric {
+  background: repeating-radial-gradient(
+    circle at center,
+    oklch(0.696 0.149 162.48) 0,
+    oklch(0.696 0.149 162.48) 8px,
+    oklch(0.21 0.034 264.67) 8px,
+    oklch(0.21 0.034 264.67) 16px
+  );
+}
+
+.roycss-ferrum-bg-conic-gradient {
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    oklch(0.696 0.149 162.48),
+    oklch(0.685 0.131 226.94),
+    oklch(0.566 0.245 278.69),
+    oklch(0.652 0.241 354.31),
+    oklch(0.769 0.188 70.08),
+    oklch(0.696 0.149 162.48)
+  );
+  animation: roy-conic-hue 6s linear infinite;
+}
+
+@keyframes roy-conic-hue {
+
+  to { filter: hue-rotate(360deg); }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-conic-gradient {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-bg-diagonal-stripes {
+  background-color: oklch(0.21 0.034 264.67);
+  background-image: repeating-linear-gradient(
+    -60deg,
+    oklch(0.685 0.131 226.94) 0,
+    oklch(0.685 0.131 226.94) 12px,
+    oklch(0.52 0.094 223.13) 12px,
+    oklch(0.52 0.094 223.13) 24px
+  );
+  background-size: 200% 200%;
+  animation: roy-diagonal-shift 6s linear infinite;
+}
+
+@keyframes roy-diagonal-shift {
+
+  from { background-position: 0 0; }
+  to { background-position: 48px 0; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-diagonal-stripes {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-bg-dot-pattern {
+  background-color: oklch(0.21 0.034 264.67);
+  background-image: radial-gradient(circle, oklch(0.696 0.149 162.48) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.roycss-ferrum-bg-gradient-pulse {
+  background-color: oklch(0.21 0.034 264.67);
+  background-image:
+    radial-gradient(circle at 50% 50%, oklch(0.696 0.149 162.48) 0%, color-mix(in oklch, oklch(0.696 0.149 162.48) 0%, transparent) 40%),
+    radial-gradient(circle at 30% 70%, oklch(0.685 0.131 226.94) 0%, color-mix(in oklch, oklch(0.685 0.131 226.94) 0%, transparent) 40%),
+    radial-gradient(circle at 70% 30%, oklch(0.566 0.245 278.69) 0%, color-mix(in oklch, oklch(0.566 0.245 278.69) 0%, transparent) 40%);
+  animation: roy-gradient-pulse 4s ease-in-out infinite;
+}
+
+@keyframes roy-gradient-pulse {
+
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-gradient-pulse {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-bg-gradient-sweep {
+  background: linear-gradient(
+    90deg,
+    oklch(0.21 0.034 264.67) 0%,
+    oklch(0.696 0.149 162.48) 25%,
+    oklch(0.685 0.131 226.94) 50%,
+    oklch(0.696 0.149 162.48) 75%,
+    oklch(0.21 0.034 264.67) 100%
+  );
+  background-size: 200% 100%;
+  animation: roy-gradient-sweep 4s linear infinite;
+}
+
+@keyframes roy-gradient-sweep {
+
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-gradient-sweep {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-bg-grid-lines {
+  background-color: oklch(0.21 0.034 264.67);
+  background-image:
+    linear-gradient(color-mix(in oklch, oklch(0.696 0.149 162.48) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklch, oklch(0.696 0.149 162.48) 6%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.roycss-ferrum-bg-hexagon {
+  background-color: oklch(0.21 0.034 264.67);
+  background-image: url("data:image/svg+xml,%3Csvg width='56' height='100' viewBox='0 0 56 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M28 0L56 16.18V50.5L28 66.68L0 50.5V16.18L28 0z' fill='none' stroke='%2310b981' stroke-width='1' opacity='0.5'/%3E%3Cpath d='M28 33.32L56 49.5V83.82L28 100L0 83.82V49.5L28 33.32z' fill='none' stroke='%2310b981' stroke-width='1' opacity='0.5'/%3E%3C/svg%3E");
+  background-size: 56px 100px;
+}
+
+.roycss-ferrum-bg-lava-lamp {
+  background-color: oklch(0.195 0.067 299.87);
+  position: relative;
+  overflow: hidden;
+}
+
+.roycss-ferrum-bg-mesh-gradient {
+  background-color: oklch(0.21 0.034 264.67);
+  position: relative;
+  overflow: hidden;
+}
+
+.roycss-ferrum-bg-noise {
+  position: relative;
+  background-color: oklch(0.21 0.034 264.67);
+}
+
+.roycss-ferrum-bg-plaid {
+  background-color: oklch(0.21 0.034 264.67);
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 18px, color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent) 18px, color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent) 20px),
+    repeating-linear-gradient(90deg, transparent, transparent 18px, color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent) 18px, color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent) 20px),
+    repeating-linear-gradient(45deg, transparent, transparent 24px, color-mix(in oklch, oklch(0.685 0.131 226.94) 30%, transparent) 24px, color-mix(in oklch, oklch(0.685 0.131 226.94) 30%, transparent) 26px),
+    repeating-linear-gradient(-45deg, transparent, transparent 24px, color-mix(in oklch, oklch(0.685 0.131 226.94) 30%, transparent) 24px, color-mix(in oklch, oklch(0.685 0.131 226.94) 30%, transparent) 26px);
+}
+
+.roycss-ferrum-bg-radial-rays {
+  background-color: oklch(0.21 0.034 264.67);
+  background-image: repeating-conic-gradient(
+    from 0deg at 50% 50%,
+    oklch(0.696 0.149 162.48) 0deg 4deg,
+    transparent 4deg 12deg
+  );
+}
+
+.roycss-ferrum-bg-stripes {
+  background: repeating-linear-gradient(
+    45deg,
+    oklch(0.696 0.149 162.48),
+    oklch(0.696 0.149 162.48) 10px,
+    oklch(0.21 0.034 264.67) 10px,
+    oklch(0.21 0.034 264.67) 20px
+  );
+}
+
+.roycss-ferrum-bg-sunburst {
+  background-color: oklch(0.189 0.028 79.8);
+  position: relative;
+  overflow: hidden;
+}
+
+.roycss-ferrum-bg-sunset {
+  background: linear-gradient(
+    180deg,
+    oklch(0.228 0.039 247.3) 0%,
+    oklch(0.387 0.119 314.64) 25%,
+    oklch(0.531 0.202 5.62) 50%,
+    oklch(0.769 0.188 70.08) 75%,
+    oklch(0.924 0.115 95.75) 100%
+  );
+  background-size: 100% 200%;
+  animation: roy-sunset-shift 8s ease-in-out infinite;
+}
+
+@keyframes roy-sunset-shift {
+
+  0%, 100% { background-position: 0% 0%; }
+  50% { background-position: 0% 50%; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-bg-sunset {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-bg-triangles {
+  background-color: oklch(0.21 0.034 264.67);
+  background-image:
+    linear-gradient(45deg, oklch(0.696 0.149 162.48) 25%, transparent 25%),
+    linear-gradient(-45deg, oklch(0.685 0.131 226.94) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, oklch(0.685 0.131 226.94) 75%),
+    linear-gradient(-45deg, transparent 75%, oklch(0.696 0.149 162.48) 75%);
+  background-size: 40px 40px;
+  background-position: 0 0, 0 20px, 20px -20px, -20px 0;
+}
+
+.roycss-ferrum-bg-zigzag {
+  background-color: oklch(0.21 0.034 264.67);
+  background-image:
+    linear-gradient(135deg, oklch(0.696 0.149 162.48) 25%, transparent 25%) -10px 0,
+    linear-gradient(225deg, oklch(0.696 0.149 162.48) 25%, transparent 25%) -10px 0,
+    linear-gradient(315deg, oklch(0.696 0.149 162.48) 25%, transparent 25%),
+    linear-gradient(45deg, oklch(0.696 0.149 162.48) 25%, transparent 25%);
+  background-size: 20px 20px;
+}
+
+/* Nature: Day to Night */
+.roycss-nature-day-night {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.7 0.15 240), oklch(0.55 0.18 220) 60%, oklch(0.45 0.12 200));
+  border-radius: 12px;
+  overflow: hidden;
+  animation: roy-nature-day-night 12s ease-in-out infinite;
+}
+.roycss-nature-day-night::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 25% 30%, oklch(1 0 0 / 0.9) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 60% 50%, oklch(1 0 0 / 0.7) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 80% 20%, oklch(1 0 0 / 0.8) 0 1.5px, transparent 2px),
+    radial-gradient(circle at 45% 70%, oklch(1 0 0 / 0.7) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 15% 80%, oklch(1 0 0 / 0.6) 0 1px, transparent 1.5px);
+  background-size: 100% 100%;
+  opacity: 0;
+  animation: roy-nature-day-night-stars 12s ease-in-out infinite;
+}
+@keyframes roy-nature-day-night {
+  0%, 100% { background: linear-gradient(180deg, oklch(0.7 0.15 240), oklch(0.55 0.18 220) 60%, oklch(0.45 0.12 200)); }
+  50%      { background: linear-gradient(180deg, oklch(0.12 0.04 250), oklch(0.16 0.06 260) 50%, oklch(0.08 0.02 240)); }
+}
+@keyframes roy-nature-day-night-stars {
+  0%, 100% { opacity: 0; }
+  50%      { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-day-night,
+  .roycss-nature-day-night::before { animation: none; }
+}
+
+/* Nature: Cloud Drift */
+.roycss-nature-cloud-drift {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.65 0.12 230), oklch(0.85 0.05 220) 60%, oklch(0.78 0.04 200));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-cloud-drift::before,
+.roycss-nature-cloud-drift::after {
+  content: "";
+  position: absolute;
+  width: 60%; height: 30%;
+  background:
+    radial-gradient(ellipse 50% 100% at 30% 50%, oklch(1 0 0 / 0.95) 0 50%, transparent 70%),
+    radial-gradient(ellipse 40% 90% at 60% 40%, oklch(1 0 0 / 0.9) 0 50%, transparent 70%),
+    radial-gradient(ellipse 35% 80% at 80% 60%, oklch(1 0 0 / 0.85) 0 50%, transparent 70%);
+  filter: blur(2px);
+  top: 20%;
+  left: -60%;
+  animation: roy-nature-cloud-drift 18s linear infinite;
+}
+.roycss-nature-cloud-drift::after {
+  width: 45%; height: 22%;
+  top: 55%;
+  opacity: 0.7;
+  animation-duration: 26s;
+  animation-delay: -8s;
+}
+@keyframes roy-nature-cloud-drift {
+  0%   { left: -60%; }
+  100% { left: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-cloud-drift::before,
+  .roycss-nature-cloud-drift::after { animation: none; left: 10%; }
+}
+
+/* Nature: Sunrise Gradient */
+.roycss-nature-sunrise-gradient {
+  background: linear-gradient(180deg,
+    oklch(0.78 0.16 30) 0%,
+    oklch(0.82 0.18 50) 25%,
+    oklch(0.88 0.13 70) 50%,
+    oklch(0.85 0.08 200) 75%,
+    oklch(0.7 0.12 230) 100%);
+  background-size: 100% 200%;
+  border-radius: 12px;
+  animation: roy-nature-sunrise-gradient 8s ease-in-out infinite;
+}
+@keyframes roy-nature-sunrise-gradient {
+  0%, 100% { background-position: 0% 0%; }
+  50%      { background-position: 0% 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-sunrise-gradient { animation: none; }
+}
+
+/* Nature: Plant Growth */
+.roycss-nature-plant-growth {
+  background: linear-gradient(180deg, oklch(0.7 0.16 140), oklch(0.55 0.18 150));
+  border-radius: 14px 14px 8px 8px;
+  transform-origin: bottom center;
+  animation: roy-nature-plant-growth 2.4s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+}
+@keyframes roy-nature-plant-growth {
+  0%   { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+  40%  { transform: scaleY(0.4); opacity: 0.6; }
+  70%  { transform: scaleY(1.05); opacity: 1; }
+  85%  { transform: scaleY(0.97); }
+  100% { transform: scaleY(1); transform-origin: bottom; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-plant-growth { animation: none; transform: none; }
+}
+
+/* Nature: Water Reflection */
+.roycss-nature-water-reflection {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.7 0.12 220) 50%, oklch(0.4 0.1 240) 50%);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-water-reflection::before {
+  content: "";
+  position: absolute;
+  top: 50%; left: 0; right: 0; height: 50%;
+  background: linear-gradient(180deg, oklch(0.85 0.08 220 / 0.4), oklch(0.3 0.1 240 / 0.6));
+  filter: blur(0.5px);
+  transform: scaleY(-1);
+  opacity: 0.6;
+}
+.roycss-nature-water-reflection::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 0; right: 0; height: 50%;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 12px, oklch(1 0 0 / 0.12) 12px 14px);
+  animation: roy-nature-water-reflection 4s linear infinite;
+}
+@keyframes roy-nature-water-reflection {
+  0%   { background-position: 0 0; transform: scaleX(1); }
+  50%  { transform: scaleX(1.02); }
+  100% { background-position: 30px 0; transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-water-reflection::after { animation: none; }
+}
+
+/* Nature: Firefly Ambient */
+.roycss-nature-firefly-ambient {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.1 0.05 250), oklch(0.18 0.08 280));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-firefly-ambient::before,
+.roycss-nature-firefly-ambient::after {
+  content: "";
+  position: absolute;
+  width: 100%; height: 100%;
+  background:
+    radial-gradient(circle at 15% 30%, oklch(0.9 0.18 100) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 70% 20%, oklch(0.9 0.18 100) 0 1px, transparent 2px),
+    radial-gradient(circle at 40% 70%, oklch(0.9 0.18 100) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 85% 80%, oklch(0.9 0.18 100) 0 1px, transparent 2px),
+    radial-gradient(circle at 25% 85%, oklch(0.9 0.18 100) 0 1.2px, transparent 2.2px),
+    radial-gradient(circle at 60% 50%, oklch(0.9 0.18 100) 0 1px, transparent 2px);
+  animation: roy-nature-firefly-glow 3s ease-in-out infinite alternate;
+}
+.roycss-nature-firefly-ambient::after {
+  background:
+    radial-gradient(circle at 35% 40%, oklch(0.95 0.16 90) 0 1px, transparent 2px),
+    radial-gradient(circle at 80% 60%, oklch(0.95 0.16 90) 0 1.2px, transparent 2.2px),
+    radial-gradient(circle at 20% 70%, oklch(0.95 0.16 90) 0 1px, transparent 2px),
+    radial-gradient(circle at 55% 25%, oklch(0.95 0.16 90) 0 1.5px, transparent 2.5px);
+  animation: roy-nature-firefly-float 6s ease-in-out infinite alternate;
+}
+@keyframes roy-nature-firefly-glow {
+  0%   { opacity: 0.3; transform: translate(0, 0); }
+  50%  { opacity: 1; }
+  100% { opacity: 0.5; transform: translate(8px, -10px); }
+}
+@keyframes roy-nature-firefly-float {
+  0%   { opacity: 0.4; transform: translate(0, 0); }
+  100% { opacity: 0.9; transform: translate(-12px, 8px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-firefly-ambient::before,
+  .roycss-nature-firefly-ambient::after { animation: none; opacity: 0.8; }
+}
+
+/* Nature: Seasons Switcher */
+.roycss-nature-seasons-switcher {
+  background: linear-gradient(135deg, oklch(0.78 0.13 140), oklch(0.65 0.12 160));
+  background-size: 400% 400%;
+  border-radius: 12px;
+  animation: roy-nature-seasons-switcher 16s ease-in-out infinite;
+}
+@keyframes roy-nature-seasons-switcher {
+  0%      { background: linear-gradient(135deg, oklch(0.78 0.13 140), oklch(0.65 0.12 160)); }
+  25%     { background: linear-gradient(135deg, oklch(0.85 0.14 220), oklch(0.72 0.16 240)); }
+  50%     { background: linear-gradient(135deg, oklch(0.7 0.16 40), oklch(0.55 0.18 30)); }
+  75%     { background: linear-gradient(135deg, oklch(0.92 0.02 240), oklch(0.82 0.04 220)); }
+  100%    { background: linear-gradient(135deg, oklch(0.78 0.13 140), oklch(0.65 0.12 160)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-seasons-switcher { animation: none; }
+}
+
+/* Nature: Rain Drops */
+.roycss-nature-rain-drops {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.4 0.06 240), oklch(0.3 0.06 250));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-rain-drops::before,
+.roycss-nature-rain-drops::after {
+  content: "";
+  position: absolute;
+  inset: -10% 0;
+  background:
+    repeating-linear-gradient(80deg, transparent 0 14px, oklch(0.8 0.04 220 / 0.45) 14px 15px, transparent 15px 28px),
+    repeating-linear-gradient(80deg, transparent 0 36px, oklch(0.85 0.04 220 / 0.35) 36px 36.5px, transparent 36.5px 60px);
+  background-size: 60px 60px, 80px 80px;
+  animation: roy-nature-rain-drops 0.7s linear infinite;
+}
+.roycss-nature-rain-drops::after {
+  background:
+    repeating-linear-gradient(80deg, transparent 0 22px, oklch(0.85 0.04 220 / 0.4) 22px 22.5px, transparent 22.5px 44px);
+  background-size: 70px 70px;
+  animation-duration: 0.5s;
+  animation-delay: -0.2s;
+}
+@keyframes roy-nature-rain-drops {
+  0%   { transform: translateY(-60px); }
+  100% { transform: translateY(60px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-rain-drops::before,
+  .roycss-nature-rain-drops::after { animation: none; opacity: 0.3; }
+}
+
+/* Nature: Snow Falling */
+.roycss-nature-snow-falling {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.7 0.04 230), oklch(0.85 0.02 220));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-snow-falling::before,
+.roycss-nature-snow-falling::after {
+  content: "";
+  position: absolute;
+  inset: -10% 0;
+  background:
+    radial-gradient(circle at 10% 0%, oklch(1 0 0 / 0.95) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 35% 0%, oklch(1 0 0 / 0.85) 0 1.5px, transparent 2px),
+    radial-gradient(circle at 60% 0%, oklch(1 0 0 / 0.9) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 85% 0%, oklch(1 0 0 / 0.8) 0 1.5px, transparent 2px),
+    radial-gradient(circle at 22% 0%, oklch(1 0 0 / 0.85) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 72% 0%, oklch(1 0 0 / 0.9) 0 1px, transparent 1.5px);
+  background-size: 80px 80px, 100px 100px, 90px 90px, 110px 110px, 60px 60px, 70px 70px;
+  background-repeat: repeat;
+  animation: roy-nature-snow-falling 6s linear infinite;
+}
+.roycss-nature-snow-falling::after {
+  background-size: 60px 60px, 80px 80px, 70px 70px, 90px 90px, 50px 50px, 60px 60px;
+  animation-duration: 9s;
+  animation-delay: -3s;
+  opacity: 0.7;
+}
+@keyframes roy-nature-snow-falling {
+  0%   { transform: translateY(-60px); background-position: 0 0; }
+  100% { transform: translateY(60px); background-position: 14px 60px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-snow-falling::before,
+  .roycss-nature-snow-falling::after { animation: none; opacity: 0.5; }
+}
+
+/* Nature: Autumn Leaves */
+.roycss-nature-autumn-leaves {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.7 0.08 60), oklch(0.55 0.1 40));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-autumn-leaves::before,
+.roycss-nature-autumn-leaves::after {
+  content: "";
+  position: absolute;
+  inset: -20% 0;
+  background:
+    radial-gradient(ellipse 8px 12px at 10% 0%, oklch(0.6 0.18 35) 0 6px, transparent 7px),
+    radial-gradient(ellipse 6px 10px at 30% 0%, oklch(0.65 0.18 25) 0 5px, transparent 6px),
+    radial-gradient(ellipse 10px 14px at 50% 0%, oklch(0.55 0.17 45) 0 7px, transparent 8px),
+    radial-gradient(ellipse 7px 11px at 75% 0%, oklch(0.62 0.18 30) 0 6px, transparent 7px),
+    radial-gradient(ellipse 9px 13px at 90% 0%, oklch(0.58 0.18 40) 0 7px, transparent 8px);
+  background-size: 110px 110px, 130px 130px, 120px 120px, 100px 100px, 115px 115px;
+  animation: roy-nature-autumn-leaves 7s linear infinite;
+}
+.roycss-nature-autumn-leaves::after {
+  background-size: 90px 90px, 110px 110px, 100px 100px, 80px 80px, 95px 95px;
+  animation-duration: 9s;
+  animation-delay: -3s;
+  opacity: 0.7;
+}
+@keyframes roy-nature-autumn-leaves {
+  0%   { transform: translate(0, -80px) rotate(0deg); }
+  50%  { transform: translate(20px, 30px) rotate(180deg); }
+  100% { transform: translate(-10px, 80px) rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-autumn-leaves::before,
+  .roycss-nature-autumn-leaves::after { animation: none; opacity: 0.5; }
+}
+
+/* Nature: Thunder Flash */
+.roycss-nature-thunder-flash {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.2 0.06 250), oklch(0.12 0.04 240));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-thunder-flash::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, oklch(0.85 0.04 220 / 0.9), transparent 60%);
+  opacity: 0;
+  animation: roy-nature-thunder-flash 4s ease-out infinite;
+}
+.roycss-nature-thunder-flash::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 50%;
+  width: 2px; height: 60%;
+  background: linear-gradient(180deg, oklch(0.95 0.02 220 / 0.9), transparent);
+  transform: translateX(-50%) scaleY(0);
+  transform-origin: top;
+  animation: roy-nature-thunder-bolt 4s ease-out infinite;
+  filter: drop-shadow(0 0 8px oklch(0.85 0.04 220 / 0.9));
+}
+@keyframes roy-nature-thunder-flash {
+  0%, 88%, 92%, 100% { opacity: 0; }
+  90%                { opacity: 1; }
+  91%                { opacity: 0.4; }
+}
+@keyframes roy-nature-thunder-bolt {
+  0%, 88%, 100% { transform: translateX(-50%) scaleY(0); }
+  90%           { transform: translateX(-50%) scaleY(1); }
+  92%           { transform: translateX(-50%) scaleY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-thunder-flash::before,
+  .roycss-nature-thunder-flash::after { animation: none; opacity: 0; }
+}
+
+/* Nature: Fog Drift */
+.roycss-nature-fog-drift {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.55 0.05 220), oklch(0.45 0.06 240));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-fog-drift::before,
+.roycss-nature-fog-drift::after {
+  content: "";
+  position: absolute;
+  inset: -10% -20%;
+  background:
+    radial-gradient(ellipse 40% 25% at 30% 60%, oklch(0.85 0.02 220 / 0.4), transparent 70%),
+    radial-gradient(ellipse 35% 22% at 70% 40%, oklch(0.85 0.02 220 / 0.45), transparent 70%),
+    radial-gradient(ellipse 45% 28% at 50% 80%, oklch(0.85 0.02 220 / 0.4), transparent 70%);
+  filter: blur(8px);
+  animation: roy-nature-fog-drift 12s linear infinite;
+}
+.roycss-nature-fog-drift::after {
+  animation-duration: 18s;
+  animation-direction: reverse;
+  opacity: 0.7;
+}
+@keyframes roy-nature-fog-drift {
+  0%   { transform: translateX(-20%); }
+  100% { transform: translateX(20%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-fog-drift::before,
+  .roycss-nature-fog-drift::after { animation: none; opacity: 0.5; }
+}
+
+/* Nature: Spring Bloom */
+.roycss-nature-spring-bloom {
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, oklch(0.9 0.1 350), oklch(0.78 0.13 140));
+  border-radius: 50%;
+  animation: roy-nature-spring-bloom 2.4s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+}
+.roycss-nature-spring-bloom::before,
+.roycss-nature-spring-bloom::after {
+  content: "";
+  position: absolute;
+  inset: 20%;
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(0.85 0.16 60), oklch(0.7 0.18 30));
+  animation: roy-nature-spring-bloom-petals 2.4s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+}
+.roycss-nature-spring-bloom::after {
+  inset: 35%;
+  background: radial-gradient(circle, oklch(0.95 0.18 50), oklch(0.78 0.16 80));
+  animation-delay: 200ms;
+}
+@keyframes roy-nature-spring-bloom {
+  0%   { transform: scale(0); opacity: 0; }
+  60%  { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); }
+}
+@keyframes roy-nature-spring-bloom-petals {
+  0%   { transform: scale(0) rotate(0deg); opacity: 0; }
+  60%  { transform: scale(1.15) rotate(40deg); opacity: 1; }
+  100% { transform: scale(1) rotate(30deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-spring-bloom,
+  .roycss-nature-spring-bloom::before,
+  .roycss-nature-spring-bloom::after { animation: none; transform: none; }
+}
+
+/* Nature: Ocean Tide */
+.roycss-nature-ocean-tide {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.7 0.14 220), oklch(0.4 0.12 240));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-ocean-tide::before,
+.roycss-nature-ocean-tide::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: -10%; right: -10%;
+  height: 50%;
+  background:
+    radial-gradient(ellipse 30% 100% at 30% 100%, oklch(0.78 0.1 200 / 0.8), transparent 70%),
+    radial-gradient(ellipse 35% 100% at 70% 100%, oklch(0.85 0.08 200 / 0.7), transparent 70%),
+    linear-gradient(180deg, transparent, oklch(0.45 0.14 220 / 0.8));
+  animation: roy-nature-ocean-tide 5s ease-in-out infinite;
+}
+.roycss-nature-ocean-tide::after {
+  height: 35%;
+  animation-duration: 7s;
+  animation-delay: -2s;
+  opacity: 0.7;
+}
+@keyframes roy-nature-ocean-tide {
+  0%, 100% { transform: translateY(20%) scaleX(1); }
+  50%      { transform: translateY(-8%) scaleX(1.05); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-ocean-tide::before,
+  .roycss-nature-ocean-tide::after { animation: none; }
+}
+
+/* Nature: Desert Dune */
+.roycss-nature-desert-dune {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.85 0.13 60), oklch(0.7 0.14 50) 50%, oklch(0.55 0.15 40));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-desert-dune::before,
+.roycss-nature-desert-dune::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: -10%; right: -10%;
+  height: 50%;
+  background:
+    radial-gradient(ellipse 50% 100% at 50% 100%, oklch(0.6 0.16 40), transparent 70%),
+    radial-gradient(ellipse 40% 100% at 80% 100%, oklch(0.55 0.16 35), transparent 70%);
+  animation: roy-nature-desert-dune 8s ease-in-out infinite;
+}
+.roycss-nature-desert-dune::after {
+  height: 35%;
+  animation-duration: 12s;
+  animation-delay: -3s;
+  opacity: 0.6;
+}
+@keyframes roy-nature-desert-dune {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(-8%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-desert-dune::before,
+  .roycss-nature-desert-dune::after { animation: none; }
+}
+
+/* Nature: Aurora Sky */
+.roycss-nature-aurora-sky {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.08 0.04 250), oklch(0.16 0.06 240));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-aurora-sky::before,
+.roycss-nature-aurora-sky::after {
+  content: "";
+  position: absolute;
+  inset: -20% -10%;
+  background:
+    radial-gradient(ellipse 50% 30% at 30% 30%, oklch(0.7 0.22 150 / 0.6), transparent 70%),
+    radial-gradient(ellipse 40% 25% at 70% 50%, oklch(0.6 0.25 280 / 0.5), transparent 70%),
+    radial-gradient(ellipse 45% 28% at 50% 70%, oklch(0.65 0.22 170 / 0.55), transparent 70%);
+  filter: blur(12px);
+  animation: roy-nature-aurora-sky 10s ease-in-out infinite;
+}
+.roycss-nature-aurora-sky::after {
+  animation-duration: 14s;
+  animation-direction: reverse;
+  opacity: 0.7;
+}
+@keyframes roy-nature-aurora-sky {
+  0%, 100% { transform: translate(0, 0) skewX(0deg); }
+  50%      { transform: translate(8%, -4%) skewX(6deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-aurora-sky::before,
+  .roycss-nature-aurora-sky::after { animation: none; opacity: 0.6; }
+}
+
+/* Nature: Morning Mist */
+.roycss-nature-mist-morning {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.85 0.1 60), oklch(0.7 0.08 80) 50%, oklch(0.55 0.06 200));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-mist-morning::before,
+.roycss-nature-mist-morning::after {
+  content: "";
+  position: absolute;
+  inset: -10% -20%;
+  background:
+    radial-gradient(ellipse 50% 20% at 30% 70%, oklch(0.95 0.02 60 / 0.55), transparent 70%),
+    radial-gradient(ellipse 40% 18% at 70% 80%, oklch(0.92 0.04 80 / 0.5), transparent 70%),
+    radial-gradient(ellipse 55% 22% at 50% 60%, oklch(0.9 0.03 60 / 0.45), transparent 70%);
+  filter: blur(10px);
+  animation: roy-nature-mist-morning 14s ease-in-out infinite;
+}
+.roycss-nature-mist-morning::after {
+  animation-duration: 18s;
+  animation-direction: reverse;
+  opacity: 0.7;
+}
+@keyframes roy-nature-mist-morning {
+  0%, 100% { transform: translateY(10%); }
+  50%      { transform: translateY(-6%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-mist-morning::before,
+  .roycss-nature-mist-morning::after { animation: none; }
+}
+
+/* Nature: Rainbow Arc */
+.roycss-nature-rainbow-arc {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.75 0.1 220), oklch(0.6 0.12 240));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-rainbow-arc::before {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 50%;
+  width: 0; height: 0;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  background:
+    radial-gradient(ellipse at center,
+      transparent 60%,
+      oklch(0.7 0.25 0 / 0.7) 62% 66%,
+      oklch(0.75 0.23 40 / 0.7) 66% 70%,
+      oklch(0.78 0.22 80 / 0.7) 70% 74%,
+      oklch(0.72 0.2 140 / 0.7) 74% 78%,
+      oklch(0.7 0.22 200 / 0.7) 78% 82%,
+      oklch(0.68 0.24 280 / 0.7) 82% 86%,
+      oklch(0.65 0.22 320 / 0.7) 86% 90%,
+      transparent 92%);
+  transform: translateX(-50%) scale(0);
+  transform-origin: bottom center;
+  transition: transform 800ms cubic-bezier(0.34, 1.2, 0.64, 1);
+  opacity: 0;
+}
+.roycss-nature-rainbow-arc:hover::before {
+  width: 140%; height: 140%;
+  transform: translateX(-50%) scale(1);
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-rainbow-arc:hover::before { transition: none; opacity: 1; transform: translateX(-50%) scale(1); width: 140%; height: 140%; }
+}
+
+/* Nature: Tornado Spin */
+.roycss-nature-tornado-spin {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.4 0.06 240), oklch(0.3 0.05 250));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-tornado-spin::before,
+.roycss-nature-tornado-spin::after {
+  content: "";
+  position: absolute;
+  top: 10%; left: 50%;
+  width: 60%; height: 80%;
+  background:
+    repeating-conic-gradient(from 0deg at 50% 50%,
+      oklch(0.7 0.06 220 / 0.6) 0deg 12deg,
+      transparent 12deg 30deg);
+  clip-path: polygon(20% 0, 80% 0, 100% 100%, 0% 100%);
+  transform: translateX(-50%);
+  animation: roy-nature-tornado-spin 1.5s linear infinite;
+  filter: blur(1px);
+}
+.roycss-nature-tornado-spin::after {
+  width: 40%;
+  background:
+    repeating-conic-gradient(from 0deg at 50% 50%,
+      oklch(0.85 0.04 220 / 0.5) 0deg 15deg,
+      transparent 15deg 30deg);
+  animation-duration: 0.9s;
+  animation-direction: reverse;
+  opacity: 0.7;
+}
+@keyframes roy-nature-tornado-spin {
+  0%   { transform: translateX(-50%) rotate(0deg); }
+  100% { transform: translateX(-50%) rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-tornado-spin::before,
+  .roycss-nature-tornado-spin::after { animation: none; opacity: 0.4; }
+}
+
+/* Nature: Volcano Erupt */
+.roycss-nature-volcano-erupt {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.1 0.04 30), oklch(0.2 0.06 30) 50%, oklch(0.05 0.02 30));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.roycss-nature-volcano-erupt::before {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 50%;
+  width: 40%; height: 30%;
+  background: radial-gradient(ellipse at top, oklch(0.7 0.22 30), oklch(0.4 0.2 20));
+  border-radius: 50% 50% 0 0;
+  transform: translateX(-50%);
+  box-shadow: 0 -8px 24px oklch(0.7 0.22 30 / 0.6);
+}
+.roycss-nature-volcano-erupt::after {
+  content: "";
+  position: absolute;
+  bottom: 30%; left: 50%;
+  width: 80%; height: 70%;
+  background:
+    radial-gradient(circle at 30% 100%, oklch(0.8 0.22 40) 0 3px, transparent 4px),
+    radial-gradient(circle at 50% 90%, oklch(0.7 0.22 30) 0 4px, transparent 5px),
+    radial-gradient(circle at 70% 95%, oklch(0.75 0.22 35) 0 3px, transparent 4px),
+    radial-gradient(circle at 40% 80%, oklch(0.8 0.22 50) 0 2px, transparent 3px),
+    radial-gradient(circle at 60% 75%, oklch(0.7 0.22 30) 0 2.5px, transparent 3.5px);
+  background-size: 100% 100%;
+  transform: translateX(-50%);
+  animation: roy-nature-volcano-erupt 1.6s ease-out infinite;
+  filter: drop-shadow(0 0 4px oklch(0.7 0.22 40 / 0.7));
+}
+@keyframes roy-nature-volcano-erupt {
+  0%   { transform: translate(-50%, 0) scale(0.6); opacity: 0.9; }
+  60%  { opacity: 1; }
+  100% { transform: translate(-50%, -60%) scale(1.2); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nature-volcano-erupt::before,
+  .roycss-nature-volcano-erupt::after { animation: none; }
+  .roycss-nature-volcano-erupt::after { opacity: 0.5; }
+}
+
+/* VFX Animated Gradient Background */
+.roycss-vfx-animated-gradient-bg {
+  background:
+    linear-gradient(
+      135deg,
+      oklch(0.72 0.22 35) 0%,
+      oklch(0.70 0.20 290) 25%,
+      oklch(0.74 0.18 195) 50%,
+      oklch(0.72 0.22 145) 75%,
+      oklch(0.72 0.22 35) 100%
+    );
+  background-size: 200% 200%;
+  background-position: 0% 0%;
+  animation: roy-vfx-bg-gradient-shift 8s ease-in-out infinite;
+}
+@keyframes roy-vfx-bg-gradient-shift {
+  0%   { background-position: 0% 0%; }
+  25%  { background-position: 100% 0%; }
+  50%  { background-position: 100% 100%; }
+  75%  { background-position: 0% 100%; }
+  100% { background-position: 0% 0%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-animated-gradient-bg { animation: none; }
+}
+
+/* VFX Aurora Background */
+.roycss-vfx-aurora-bg {
+  position: relative;
+  background: oklch(0.10 0.04 250);
+  overflow: hidden;
+}
+.roycss-vfx-aurora-bg::before,
+.roycss-vfx-aurora-bg::after,
+.roycss-vfx-aurora-bg > .roycss-vfx-aurora-layer {
+  content: "";
+  position: absolute;
+  inset: -25%;
+  pointer-events: none;
+  filter: blur(48px);
+  opacity: 0.7;
+  mix-blend-mode: screen;
+}
+.roycss-vfx-aurora-bg::before {
+  background:
+    radial-gradient(closest-side, oklch(0.72 0.24 195), transparent 70%);
+  animation: roy-vfx-bg-aurora-1 14s ease-in-out infinite;
+}
+.roycss-vfx-aurora-bg::after {
+  background:
+    radial-gradient(closest-side, oklch(0.72 0.24 145), transparent 70%);
+  animation: roy-vfx-bg-aurora-2 18s ease-in-out infinite;
+}
+.roycss-vfx-aurora-bg > .roycss-vfx-aurora-layer {
+  background:
+    radial-gradient(closest-side, oklch(0.70 0.24 290), transparent 70%);
+  animation: roy-vfx-bg-aurora-3 22s ease-in-out infinite;
+}
+@keyframes roy-vfx-bg-aurora-1 {
+  0%, 100% { transform: translate(-12%, -8%) scale(1); }
+  50%      { transform: translate(20%, 18%)  scale(1.18); }
+}
+@keyframes roy-vfx-bg-aurora-2 {
+  0%, 100% { transform: translate(15%, 12%)  scale(1.1); }
+  50%      { transform: translate(-18%, -10%) scale(0.9); }
+}
+@keyframes roy-vfx-bg-aurora-3 {
+  0%, 100% { transform: translate(-6%, 14%)  scale(1.05); }
+  50%      { transform: translate(10%, -16%) scale(1.22); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-aurora-bg::before,
+  .roycss-vfx-aurora-bg::after,
+  .roycss-vfx-aurora-bg > .roycss-vfx-aurora-layer { animation: none; }
+}
+
+/* VFX Mesh Gradient Background */
+.roycss-vfx-mesh-gradient-bg {
+  background-color: oklch(0.18 0.06 290);
+  background-image:
+    radial-gradient(at 18% 22%, oklch(0.72 0.24 35)   0px, transparent 50%),
+    radial-gradient(at 82% 18%, oklch(0.72 0.24 195)  0px, transparent 50%),
+    radial-gradient(at 22% 82%, oklch(0.72 0.24 290)  0px, transparent 50%),
+    radial-gradient(at 80% 84%, oklch(0.72 0.24 145)  0px, transparent 50%);
+  background-blend-mode: screen, screen, screen, screen;
+  background-size: 200% 200%;
+  animation: roy-vfx-bg-mesh-shift 18s ease-in-out infinite;
+}
+@keyframes roy-vfx-bg-mesh-shift {
+  0%   { background-position: 0% 0%, 100% 0%, 0% 100%, 100% 100%; }
+  50%  { background-position: 20% 30%, 80% 20%, 30% 80%, 70% 70%; }
+  100% { background-position: 0% 0%, 100% 0%, 0% 100%, 100% 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-mesh-gradient-bg { animation: none; }
+}
+
+/* VFX Gradient Blob Morph */
+.roycss-vfx-gradient-blob-anim {
+  position: relative;
+  background:
+    linear-gradient(
+      135deg,
+      oklch(0.72 0.22 195) 0%,
+      oklch(0.72 0.24 290) 50%,
+      oklch(0.72 0.22 35) 100%
+    );
+  border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
+  filter: blur(2px);
+  animation: roy-vfx-bg-blob-morph 12s ease-in-out infinite;
+}
+@keyframes roy-vfx-bg-blob-morph {
+  0%, 100% {
+    border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    border-radius: 58% 42% 38% 62% / 63% 37% 63% 37%;
+    transform: translate(4%, -6%) rotate(120deg);
+  }
+  66% {
+    border-radius: 37% 63% 56% 44% / 47% 52% 48% 53%;
+    transform: translate(-4%, 5%) rotate(240deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-gradient-blob-anim { animation: none; }
+}
+
+/* VFX Moving Blob */
+.roycss-vfx-moving-blob {
+  position: relative;
+  background: oklch(0.18 0.04 250);
+  overflow: hidden;
+}
+.roycss-vfx-moving-blob::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40%;
+  aspect-ratio: 1 / 1;
+  background:
+    radial-gradient(closest-side, oklch(0.78 0.22 35), transparent 70%);
+  border-radius: 50%;
+  filter: blur(20px);
+  transform: translate(-50%, -50%);
+  animation: roy-vfx-bg-blob-move 14s linear infinite;
+  pointer-events: none;
+}
+@keyframes roy-vfx-bg-blob-move {
+  0%   { transform: translate(-120%, -50%) scale(1); }
+  25%  { transform: translate(-20%, -150%) scale(1.15); }
+  50%  { transform: translate(80%, -50%)  scale(0.9); }
+  75%  { transform: translate(-20%, 50%)  scale(1.1); }
+  100% { transform: translate(-120%, -50%) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-moving-blob::before { animation: none; }
+}
+
+/* VFX Noise Grain Overlay */
+.roycss-vfx-noise-grain {
+  position: relative;
+  background: oklch(0.18 0.04 250);
+}
+.roycss-vfx-noise-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.7'/></svg>");
+  background-repeat: repeat;
+  animation: roy-vfx-bg-grain 0.6s steps(6, end) infinite;
+}
+@keyframes roy-vfx-bg-grain {
+  0%   { transform: translate(0, 0); }
+  16%  { transform: translate(-5%, 3%); }
+  33%  { transform: translate(4%, -4%); }
+  50%  { transform: translate(-3%, 5%); }
+  66%  { transform: translate(5%, 2%); }
+  83%  { transform: translate(-4%, -3%); }
+  100% { transform: translate(0, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-noise-grain::after { animation: none; opacity: 0.12; }
+}
+
+/* VFX Animated Perspective Grid */
+.roycss-vfx-grid-bg-anim {
+  position: relative;
+  background: oklch(0.10 0.06 290);
+  overflow: hidden;
+  perspective: 400px;
+}
+.roycss-vfx-grid-bg-anim::before {
+  content: "";
+  position: absolute;
+  inset: -50% 0 0 0;
+  background-image:
+    repeating-linear-gradient(0deg,
+      transparent 0,
+      transparent 38px,
+      oklch(0.78 0.20 195 / 0.55) 38px,
+      oklch(0.78 0.20 195 / 0.55) 40px),
+    repeating-linear-gradient(90deg,
+      transparent 0,
+      transparent 38px,
+      oklch(0.78 0.20 195 / 0.35) 38px,
+      oklch(0.78 0.20 195 / 0.35) 40px);
+  background-size: 100% 100%, 100% 100%;
+  transform-origin: 50% 0%;
+  transform: rotateX(72deg);
+  animation: roy-vfx-bg-grid-pan 4s linear infinite;
+}
+@keyframes roy-vfx-bg-grid-pan {
+  0%   { background-position: 0 0, 0 0; }
+  100% { background-position: 0 40px, 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-grid-bg-anim::before { animation: none; }
+}
+
+/* VFX Dot Pattern Background */
+.roycss-vfx-dot-pattern-bg {
+  background-color: oklch(0.16 0.04 250);
+  background-image:
+    radial-gradient(oklch(0.86 0.06 240) 1.4px, transparent 1.6px);
+  background-size: 22px 22px;
+  background-position: 0 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-dot-pattern-bg { /* static — no motion to disable */ }
+}
+
+/* VFX Cyberpunk Grid Background */
+.roycss-vfx-cyberpunk-bg {
+  position: relative;
+  background:
+    linear-gradient(oklch(0.10 0.10 290) 0%, oklch(0.18 0.16 320) 70%, oklch(0.10 0.10 290) 100%);
+  overflow: hidden;
+}
+.roycss-vfx-cyberpunk-bg::before {
+  content: "";
+  position: absolute;
+  inset: 50% 0 0 0;
+  background-image:
+    repeating-linear-gradient(90deg,
+      transparent 0,
+      transparent 38px,
+      oklch(0.85 0.20 195 / 0.7) 38px,
+      oklch(0.85 0.20 195 / 0.7) 40px),
+    repeating-linear-gradient(0deg,
+      transparent 0,
+      transparent 38px,
+      oklch(0.85 0.20 320 / 0.5) 38px,
+      oklch(0.85 0.20 320 / 0.5) 40px);
+  background-size: 100% 100%, 100% 100%;
+  transform-origin: 50% 0%;
+  transform: perspective(420px) rotateX(70deg);
+  animation: roy-vfx-bg-cyber-grid 3.5s linear infinite;
+  filter: drop-shadow(0 0 6px oklch(0.85 0.20 195 / 0.6));
+}
+@keyframes roy-vfx-bg-cyber-grid {
+  0%   { background-position: 0 0, 0 0; }
+  100% { background-position: 0 40px, 0 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-cyberpunk-bg::before { animation: none; }
+}
+
+/* VFX Spotlight Background */
+.roycss-vfx-spotlight-bg {
+  background:
+    radial-gradient(circle at 50% 40%,
+      oklch(0.92 0.08 240) 0%,
+      oklch(0.30 0.08 240) 28%,
+      oklch(0.12 0.04 250) 70%);
+  animation: roy-vfx-bg-spotlight-breathe 6s ease-in-out infinite;
+}
+@keyframes roy-vfx-bg-spotlight-breathe {
+  0%, 100% {
+    background-size: 100% 100%;
+    filter: brightness(1) saturate(1);
+  }
+  50% {
+    background-size: 130% 130%;
+    filter: brightness(1.15) saturate(1.18);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-spotlight-bg { animation: none; }
+}
+
+/* VFX Radial Glow Pulse */
+.roycss-vfx-radial-glow {
+  position: relative;
+  background: oklch(0.10 0.04 250);
+  overflow: hidden;
+}
+.roycss-vfx-radial-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 50%,
+      oklch(0.85 0.20 35 / 0.55) 0%,
+      oklch(0.70 0.20 35 / 0.18) 25%,
+      transparent 60%);
+  animation: roy-vfx-bg-glow-pulse 4s ease-in-out infinite;
+}
+@keyframes roy-vfx-bg-glow-pulse {
+  0%, 100% { transform: scale(0.85); opacity: 0.6; }
+  50%      { transform: scale(1.15); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-radial-glow::before { animation: none; }
+}
+
+/* VFX Holographic Background */
+.roycss-vfx-holographic-bg {
+  background:
+    conic-gradient(
+      from 0deg,
+      oklch(0.80 0.18 35),
+      oklch(0.80 0.18 145),
+      oklch(0.80 0.18 195),
+      oklch(0.80 0.18 290),
+      oklch(0.80 0.18 35)
+    );
+  background-blend-mode: normal;
+  animation: roy-vfx-bg-holo-rotate 10s linear infinite;
+  filter: saturate(1.3) contrast(1.05);
+}
+@keyframes roy-vfx-bg-holo-rotate {
+  0%   { filter: saturate(1.3) contrast(1.05) hue-rotate(0deg); }
+  100% { filter: saturate(1.3) contrast(1.05) hue-rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-holographic-bg { animation: none; }
+}
+

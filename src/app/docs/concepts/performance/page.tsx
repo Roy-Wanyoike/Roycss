@@ -103,7 +103,7 @@ Hand-picked via roycss export      ~0.7 KB gz    3 effects (see below)`}</code>
         The CLI reports the exact size of any subset you export:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss export btn-glow hover-push-up text-shimmer --out src/styles/roycss.css
+        <code>{`$ npx roycss-cli export btn-glow hover-push-up text-shimmer --out src/styles/roycss.css
 
 ✓ Exported 3 effects to src/styles/roycss.css (1.6KB)
 

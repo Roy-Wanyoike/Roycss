@@ -141,6 +141,44 @@ function logLevelFor(statusCode: number): LogLevel {
   return "info";
 }
 
+/**
+ * Recognize body-parser request-parsing failures that must surface as
+ * 4xx client errors instead of 500s (issue #207):
+ *
+ *   - `type === "entity.parse.failed"` — a malformed JSON/urlencoded
+ *     payload. body-parser raises these as SyntaxError subclasses with
+ *     `status = 400`; letting them reach the unknown-error branch turned
+ *     bad client input into `500 INTERNAL_ERROR` with the raw parser
+ *     message and (in dev) a full stack of absolute paths.
+ *   - `status === 400` with a body-parser `type` tag (e.g.
+ *     `request.aborted`, `request.size.invalid`) — same class of
+ *     client-side body problems.
+ *   - a bare SyntaxError with status 400 — defensive: body-parser's
+ *     JSON errors are SyntaxError instances; a raw `JSON.parse` failure
+ *     on user-supplied strings deserves 400 too, not 500.
+ *
+ * Deliberately NOT remapped: `entity.too.large` (413),
+ * `encoding.unsupported`/`charset.unsupported` (415) — they keep their
+ * historical handling; widening the ErrorCode surface is follow-up work.
+ */
+function isBodyParserParseError(err: unknown): boolean {
+  if (!(err instanceof Error)) return false;
+  const e = err as Error & {
+    type?: unknown;
+    status?: unknown;
+    statusCode?: unknown;
+  };
+  const status =
+    typeof e.status === "number"
+      ? e.status
+      : typeof e.statusCode === "number"
+        ? e.statusCode
+        : undefined;
+  if (e.type === "entity.parse.failed") return true;
+  if (err instanceof SyntaxError && status === 400) return true;
+  return status === 400 && typeof e.type === "string";
+}
+
 /** Centralized Express error middleware — must have 4 args. */
 export function errorHandler(
   err: unknown,
@@ -163,6 +201,25 @@ export function errorHandler(
   // ─── Our own operational errors ───────────────────────────────────────
   if (err instanceof AppError) {
     logAndSend(res, err, requestId);
+    return;
+  }
+
+  // ─── Body-parser errors — malformed request payloads (issue #207) ────
+  // Bad client input must never surface as a 500 with parser internals
+  // or a dev stack trace. The parser message stays server-side (debug
+  // log); the client gets a clean 400 envelope with no details.
+  if (isBodyParserParseError(err)) {
+    logger.debug("Malformed request body rejected by the body parser", {
+      requestId,
+      parserMessage: err instanceof Error ? err.message : String(err),
+    });
+    logAndSend(
+      res,
+      AppError.badRequest(
+        "Malformed request body — the payload could not be parsed",
+      ),
+      requestId,
+    );
     return;
   }
 
@@ -189,9 +246,12 @@ export function errorHandler(
   // ─── Unknown / programmer errors ──────────────────────────────────────
   const message = err instanceof Error ? err.message : "Unknown error";
   const stack = err instanceof Error ? err.stack : undefined;
+  // details.stack is a DEV-ONLY, 5xx-ONLY diagnostic (issue #207):
+  // 4xx bodies must never carry it, whatever the throw site does.
+  const unknownStatus = 500;
   const appErr = AppError.internal(
     IS_PROD ? "Internal server error" : message,
-    IS_PROD ? undefined : { stack },
+    !IS_PROD && unknownStatus >= 500 ? { stack } : undefined,
   );
   logger.error("Unhandled error", {
     requestId,
@@ -199,6 +259,35 @@ export function errorHandler(
     stack,
   });
   logAndSend(res, appErr, requestId);
+}
+
+/**
+ * What the CLIENT may see in `error.details`.
+ *
+ * Server logs always receive the full `details` (see logAndSend); the
+ * response body is stricter — the invariant from issue #207:
+ *   - a 4xx response never carries a top-level `stack` details key
+ *     (client errors need no server frames);
+ *   - 5xx details (the dev-only stack) are attached at the throw site
+ *     and only when !IS_PROD, so they pass through unchanged here.
+ */
+function clientErrorDetails(err: AppError): unknown {
+  if (err.statusCode < 500) return stripStackDetails(err.details);
+  return err.details;
+}
+
+/** Drop a top-level `stack` key from object-shaped details. */
+function stripStackDetails(details: unknown): unknown {
+  if (
+    details !== null &&
+    typeof details === "object" &&
+    !Array.isArray(details) &&
+    "stack" in (details as Record<string, unknown>)
+  ) {
+    const { stack: _stack, ...rest } = details as Record<string, unknown>;
+    return Object.keys(rest).length > 0 ? rest : undefined;
+  }
+  return details;
 }
 
 function logAndSend(
@@ -214,11 +303,12 @@ function logAndSend(
     ...(err.details ? { details: err.details } : {}),
   });
 
+  const clientDetails = clientErrorDetails(err);
   const body: ErrorResponseBody = {
     error: {
       code: err.code,
       message: err.message,
-      ...(err.details ? { details: err.details } : {}),
+      ...(clientDetails !== undefined ? { details: clientDetails } : {}),
     },
     requestId,
   };

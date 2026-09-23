@@ -23,7 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { effects } from "@/lib/roycss-effects";
 import type { CSSEffect } from "@/lib/roycss-types";
-import { LivePreview } from "@/components/roycss/effect-card";
+import { DecorativePreview, LivePreview } from "@/components/roycss/effect-card";
 
 const MAX_COMPARE = 4;
 const MIN_COMPARE = 2;
@@ -124,7 +124,8 @@ function EffectPicker({
           >
             <div className="flex items-center justify-center size-10 rounded-lg bg-muted/40 border border-border/50 overflow-hidden shrink-0">
               <div className="scale-[0.45] origin-center">
-                <LivePreview effect={effect} />
+                {/* Decorative — sits inside this picker <button> (issue #216 item 9) */}
+                <DecorativePreview effect={effect} />
               </div>
             </div>
             <div className="min-w-0 flex-1">

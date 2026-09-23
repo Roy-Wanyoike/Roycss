@@ -30,6 +30,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Github, Menu, Moon, Sun, X } from "lucide-react";
 import { writeStoredTheme } from "@/components/ui-library/foundation/theme-storage";
+import { PauseAnimationsToggle } from "@/components/roycss/pause-animations-toggle";
 
 const GITHUB_URL = "https://github.com/Roy-Wanyoike/Roycss";
 
@@ -151,6 +152,8 @@ export function SiteHeader() {
             <Github className="size-4" />
           </a>
           <SiteThemeToggle />
+          {/* Issue #214: site-wide animation pause (WCAG 2.2.2) */}
+          <PauseAnimationsToggle />
           {/* Mobile hamburger — primary links live in the panel below */}
           <button
             type="button"

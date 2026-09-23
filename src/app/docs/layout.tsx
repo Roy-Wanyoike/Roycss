@@ -32,6 +32,7 @@ import {
   DOCS_CATEGORIES,
   getPrevNextPages,
   getDocPage,
+  DOCS_CURRENT_VERSION,
   type DocCategory,
 } from "@/lib/docs-sitemap";
 import { DocsFeedback } from "@/components/docs/feedback";
@@ -130,6 +131,9 @@ function TopBar({ onOpenSidebar }: { onOpenSidebar: () => void }) {
         </span>
         <span className="hidden sm:inline">RoyCSS Docs</span>
       </Link>
+      {/* Issue #216 item 8: persistent version indicator. Archived version
+          snapshots (/docs/v1 etc.) show their own version honestly. */}
+      <VersionPill />
       <div className="ml-auto flex items-center gap-1">
         <Link
           href="/#search"
@@ -156,6 +160,35 @@ function TopBar({ onOpenSidebar }: { onOpenSidebar: () => void }) {
         </Link>
       </div>
     </header>
+  );
+}
+
+/* Issue #216 item 8 — version pill in the docs header. Canonical docs
+   always show the current version (DOCS_CURRENT_VERSION); archived
+   version snapshots (/docs/vN) show their own slug with an "archived"
+   suffix so the pill is never a lie on snapshot pages. */
+function VersionPill() {
+  const pathname = usePathname();
+  const archivedMatch = /\/docs\/(v\d+)$/.exec(pathname);
+  const isArchived = Boolean(archivedMatch) && archivedMatch?.[1] !== DOCS_CURRENT_VERSION;
+  const label = isArchived ? `${archivedMatch?.[1]} · archived` : DOCS_CURRENT_VERSION;
+
+  return (
+    <span
+      className={
+        "inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold whitespace-nowrap " +
+        (isArchived
+          ? "border-border/60 bg-muted/60 text-muted-foreground"
+          : "border-primary/30 bg-primary/10 text-primary")
+      }
+      title={
+        isArchived
+          ? "You are viewing an archived docs snapshot"
+          : "Current docs version"
+      }
+    >
+      {label}
+    </span>
   );
 }
 
@@ -259,7 +292,15 @@ export default function DocsLayout({
   const current = useMemo(() => getDocPage(pathname), [pathname]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-svh flex flex-col bg-background text-foreground">
+      {/* Skip to docs content — keyboard accessibility (issue #216 item 10;
+          parity with the home + /effects skip links). */}
+      <a
+        href="#docs-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-primary focus:text-primary-foreground focus:shadow-lg"
+      >
+        Skip to docs
+      </a>
       {/* Sitewide primary nav + theme toggle (issue #191) — sits above the
           docs-local TopBar, which sticks directly below it (top-14). */}
       <SiteHeader />
@@ -277,8 +318,9 @@ export default function DocsLayout({
           </div>
         </aside>
 
-        {/* Main content */}
-        <main className="min-w-0 flex-1">
+        {/* Main content — skip-link target (tabIndex=-1 = programmatic
+            focus without entering the tab order). */}
+        <main id="docs-content" tabIndex={-1} className="min-w-0 flex-1 focus:outline-none">
           {current ? (
             <div className="mb-3 text-xs text-muted-foreground">
               <nav aria-label="Breadcrumb" className="flex items-center gap-1">
@@ -334,10 +376,13 @@ export default function DocsLayout({
       ) : null}
 
       {/* Docs footer — contentinfo landmark on every docs page (parity
-          with /effects + /roadmap; issue #164 follow-through). */}
+          with /effects + /roadmap; issue #164 follow-through).
+          Issue #216 item 1: `mt-auto` inside the min-h-svh flex-col root
+          pins the footer to the viewport bottom on short pages (e.g.
+          /docs/v1 at tall viewports) while long pages push it naturally. */}
       <footer
         aria-label="Site footer"
-        className="mt-16 border-t border-border/60 px-4 py-6 sm:px-6"
+        className="mt-auto border-t border-border/60 px-4 py-6 sm:px-6"
       >
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3">
           <p className="text-xs text-muted-foreground">

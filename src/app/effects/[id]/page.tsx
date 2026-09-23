@@ -193,11 +193,15 @@ const SECTION_HEADING =
 /* ── A11y badge row (server-rendered; issue #190) ──────────── */
 
 const BADGE_TONE_CLASS: Record<EffectA11yBadge["tone"], string> = {
-  amber: "border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400",
+  // Issue #213 (extended): amber-600 measured 2.88:1 in light mode on the
+  // 10%-tint pill — amber-700 = 4.56:1 (dark keeps amber-400 at 10.2:1).
+  amber: "border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-400",
   muted: "border-border/60 bg-muted/50 text-muted-foreground",
   violet: "border-violet-500/30 bg-violet-500/10 text-violet-600 dark:text-violet-400",
+  // Issue #213 (extended): emerald-600 measured 3.25:1 in light mode on the
+  // 10%-tint pill — emerald-700 = 4.76:1 (dark keeps emerald-400 at 9.1:1).
   positive:
-    "border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+    "border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
 };
 
 function A11yRow({ effect }: { effect: CSSEffect }) {

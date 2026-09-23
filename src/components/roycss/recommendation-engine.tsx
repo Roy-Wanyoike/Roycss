@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Wand2, Sparkles, ArrowRight, RefreshCw } from "lucide-react";
 import { effects } from "@/lib/roycss-effects";
 import type { CSSEffect } from "@/lib/roycss-types";
-import { LivePreview } from "@/components/roycss/effect-card";
+import { DecorativePreview, LivePreview } from "@/components/roycss/effect-card";
 import { Badge } from "@/components/ui/badge";
 import { getRecentEffectIds } from "@/components/roycss/recent-effects-sheet";
 import { getTopRatedEffects } from "@/components/roycss/star-rating";
@@ -122,7 +122,7 @@ export function EffectRecommendationEngine({ onSelectEffect }: RecommendationEng
                 className="group flex flex-col items-center gap-1.5 p-2 rounded-xl border border-border/50 bg-card hover:border-primary/40 hover:shadow-md transition-all cursor-pointer"
               >
                 <div className="flex items-center justify-center size-12 rounded-lg bg-muted/40 border border-border/50 overflow-hidden">
-                  <div className="scale-[0.5] origin-center"><LivePreview effect={effect} /></div>
+                  <div className="scale-[0.5] origin-center"><DecorativePreview effect={effect} /></div>
                 </div>
                 <p className="text-xs font-medium text-foreground truncate w-full text-center">{effect.name}</p>
                 <Badge variant="secondary" className="text-[11px] px-1 py-0 capitalize">{effect.category.replace("-", " ")}</Badge>

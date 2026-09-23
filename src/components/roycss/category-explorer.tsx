@@ -6,7 +6,7 @@ import { Grid3x3, ChevronRight, X } from "lucide-react";
 import { effects, categoryMeta, categoryOrder } from "@/lib/roycss-effects";
 import { CATEGORY_COUNT } from "@/lib/site-stats";
 import type { EffectCategory } from "@/lib/roycss-types";
-import { LivePreview } from "@/components/roycss/effect-card";
+import { DecorativePreview, LivePreview } from "@/components/roycss/effect-card";
 import { ScrollReveal } from "@/components/roycss/motion-primitives";
 import { Badge } from "@/components/ui/badge";
 
@@ -84,7 +84,8 @@ export function CategoryExplorer({ onCategorySelect }: { onCategorySelect: (cat:
                   <div className="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity pointer-events-none">
                     <div className="flex items-center justify-center h-full">
                       <div className="scale-150 origin-center">
-                        <LivePreview effect={preview} />
+                        {/* Decorative — sits inside this tile's <button> (issue #216 item 9: no nested buttons) */}
+                        <DecorativePreview effect={preview} />
                       </div>
                     </div>
                   </div>

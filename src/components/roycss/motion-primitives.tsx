@@ -379,17 +379,27 @@ export function Marquee({
   direction = "left",
   className = "",
   pauseOnHover = true,
+  label = "Animated marquee",
 }: {
   children: ReactNode;
   speed?: number;
   direction?: "left" | "right";
   className?: string;
   pauseOnHover?: boolean;
+  /** Accessible name for the focusable pause-on-focus region (issue #214). */
+  label?: string;
 }) {
   return (
     <div
       className={`roycss-marquee-wrapper relative flex overflow-hidden ${className}`}
       data-pause-on-hover={pauseOnHover ? "true" : "false"}
+      // Issue #214 (WCAG 2.2.2): keyboard users must be able to stop the
+      // motion. The wrapper is a focusable region — focusing it triggers the
+      // `:focus-within` pause rule in roycss.css. The global :focus-visible
+      // outline (globals.css) makes the focus state visible.
+      tabIndex={0}
+      role="region"
+      aria-label={label}
     >
       <div
         className="roycss-marquee-track flex shrink-0 items-center gap-4 pr-4"

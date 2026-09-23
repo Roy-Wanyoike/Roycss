@@ -120,7 +120,7 @@ import {
 } from "@/lib/site-stats";
 import { toast } from "sonner";
 import { TOOL_IDS, type ToolType } from "@/components/roycss/tool-registry";
-import { EffectCard, LivePreview } from "@/components/roycss/effect-card";
+import { EffectCard, DecorativePreview } from "@/components/roycss/effect-card";
 import { EffectDetailDialog } from "@/components/roycss/effect-detail-dialog";
 import { FavoritesSheet } from "@/components/roycss/favorites-sheet";
 import { ScrollToTop } from "@/components/roycss/scroll-to-top";
@@ -130,6 +130,7 @@ import { SectionScrollbar } from "@/components/roycss/section-scrollbar";
 import { DynamicEffectCSS } from "@/components/roycss/dynamic-effect-css";
 import { VirtualScrollGrid } from "@/components/roycss/virtual-scroll-grid";
 import { AnimationPauser } from "@/components/roycss/animation-pauser";
+import { PauseAnimationsToggle } from "@/components/roycss/pause-animations-toggle";
 import { RoyCSSLogo, RoyCSSHeroLogo } from "@/components/roycss/roycss-logo";
 import { GetStarted } from "@/components/roycss/get-started";
 import { WhatIsRoyCSS } from "@/components/roycss/what-is-roycss";
@@ -1280,7 +1281,9 @@ function FeaturedCard({
       >
         {/* Preview */}
         <div className="relative h-56 sm:h-full min-h-[14rem] bg-gradient-to-br from-muted/60 to-muted/20 flex items-center justify-center p-6">
-          <LivePreview effect={effect} />
+          {/* Decorative — the card itself is the role="button" trigger
+              (issue #216 item 9: no interactive inside interactive). */}
+          <DecorativePreview effect={effect} />
         </div>
         {/* Info */}
         <div className="p-6 flex flex-col">
@@ -1889,6 +1892,8 @@ export default function RoyCSSPage() {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
+              {/* Issue #214: site-wide animation pause (WCAG 2.2.2) */}
+              <PauseAnimationsToggle size="lg" />
               <ThemeToggle />
               <button
                 onClick={() => setFavoritesOpen(true)}
@@ -2122,7 +2127,8 @@ export default function RoyCSSPage() {
       <section aria-label="Featured highlights" className="border-b border-border/40">
         {/* ─── Marquee Strip ──────────────────────────────────── */}
         <div className="py-6 border-y border-border/40 bg-card/30 backdrop-blur-sm overflow-hidden">
-          <Marquee speed={35}>
+          {/* Issue #214: focusable region — Tab pauses the marquee */}
+          <Marquee speed={35} label="RoyCSS effect categories">
             {categoryOrder.map((cat) => (
               <MarqueeItem
                 key={cat}

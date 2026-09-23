@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { effects } from "@/lib/roycss-effects";
 import type { CSSEffect } from "@/lib/roycss-types";
-import { LivePreview } from "@/components/roycss/effect-card";
+import { DecorativePreview, LivePreview } from "@/components/roycss/effect-card";
 
 const STORAGE_KEY = "roycss-custom-collections";
 
@@ -220,7 +220,7 @@ export function CustomCollectionsSheet({ open, onOpenChange, onSelectEffect }: C
                                     className={`w-full flex items-center gap-2 p-1.5 rounded-lg transition-all cursor-pointer text-left ${inCol ? "bg-primary/10" : "hover:bg-muted/50"}`}
                                   >
                                     <div className="flex items-center justify-center size-6 rounded bg-muted/40 border border-border/50 overflow-hidden shrink-0">
-                                      <div className="scale-[0.3] origin-center"><LivePreview effect={e} /></div>
+                                      <div className="scale-[0.3] origin-center"><DecorativePreview effect={e} /></div>
                                     </div>
                                     <span className="text-xs text-foreground truncate flex-1">{e.name}</span>
                                     <div className={`flex items-center justify-center size-5 rounded-full shrink-0 ${inCol ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}>

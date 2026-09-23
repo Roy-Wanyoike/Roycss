@@ -161,7 +161,9 @@ export function ThreeWaveGrid({ className, height = 360 }: ThreeWaveGridProps) {
       renderer.setSize(width, heightPx)
     }
 
-    const clock = new THREE.Clock()
+    // THREE.Timer replaces the deprecated THREE.Clock (issue #216 item 7 —
+    // same migration as three-tubes-cursor.tsx).
+    const timer = new THREE.Timer()
 
     const renderFrame = (time: number) => {
       updateGeometry(time)
@@ -172,7 +174,8 @@ export function ThreeWaveGrid({ className, height = 360 }: ThreeWaveGridProps) {
 
     let animationFrame = 0
     const animate = () => {
-      const t = clock.getElapsedTime()
+      timer.update()
+      const t = timer.getElapsed()
       renderFrame(t)
       animationFrame = requestAnimationFrame(animate)
     }

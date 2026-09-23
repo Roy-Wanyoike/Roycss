@@ -105,6 +105,7 @@ function buildProductionCsp(): string {
  * acceptable for junk URLs while preserving the SEO contract.
  */
 function unknownEffect404(): NextResponse {
+  const year = new Date().getFullYear();
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -112,19 +113,32 @@ function unknownEffect404(): NextResponse {
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Effect not found — RoyCSS</title>
 <style>
-body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0a0a0a;color:#fafafa;font-family:system-ui,sans-serif}
-.card{text-align:center;padding:2rem}
+body{margin:0;min-height:100svh;display:flex;flex-direction:column;background:#0a0a0a;color:#fafafa;font-family:system-ui,sans-serif}
+.card{text-align:center;padding:2rem;margin:auto}
 h1{font-size:1.5rem;margin:0 0 .5rem}
 p{color:#a1a1aa;margin:0 0 1.5rem}
 a{color:#10b981;text-decoration:none;font-weight:600}
 a:hover{text-decoration:underline}
+.site-footer{border-top:1px solid #27272a;padding:1.25rem 1rem;display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;align-items:center;justify-content:center;color:#a1a1aa;font-size:.8rem}
+.site-footer nav{display:flex;gap:1.25rem}
 </style>
 </head>
 <body><div class="card">
 <h1>Effect not found</h1>
 <p>The effect you're looking for doesn't exist in the RoyCSS catalog.</p>
 <a href="/effects">Browse all effects</a>
-</div></body>
+</div>
+<!-- Issue #216 item 2: contentinfo parity — the effect 404 previously had
+     no footer at all (browser-QA P2). -->
+<footer class="site-footer">
+<span>© ${year} RoyCSS — MIT License</span>
+<nav aria-label="Footer">
+<a href="/effects">Effects</a>
+<a href="/docs">Docs</a>
+<a href="https://github.com/Roy-Wanyoike/Roycss">GitHub</a>
+</nav>
+</footer>
+</body>
 </html>`;
   return new NextResponse(html, {
     status: 404,

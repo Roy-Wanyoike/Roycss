@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { Check, Copy, RotateCcw, Palette, Eye } from "lucide-react";
+import { copyTextToClipboard } from "@/lib/clipboard";
 
 /* ─── Color palette presets ────────────────────────────────── */
 export interface ColorPreset {
@@ -98,30 +99,46 @@ export function applyColorToCSS(
 }
 
 /* ─── Tiny inline copy button ──────────────────────────────── */
+/**
+ * Issue #216 item 5: this button previously swallowed clipboard failures
+ * (`catch { /* noop *\/ }`) — a silent no-op. It now uses the shared
+ * copyTextToClipboard helper (async API + execCommand fallback) and shows
+ * an explicit failure state when both paths fail.
+ */
 function CopyButton({ text }: { text: string }) {
-  const [copied, setCopied] = useState(false);
+  const [status, setStatus] = useState<"idle" | "copied" | "failed">("idle");
   const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      /* noop */
-    }
+    const ok = await copyTextToClipboard(text);
+    setStatus(ok ? "copied" : "failed");
+    setTimeout(() => setStatus("idle"), ok ? 2000 : 4000);
   };
   return (
     <button
       type="button"
       onClick={handleCopy}
       aria-label="Copy recolored CSS"
+      title={
+        status === "failed"
+          ? "Clipboard unavailable — select the CSS below and copy manually"
+          : undefined
+      }
       className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${
-        copied
+        status === "copied"
           ? "bg-emerald-500/15 text-emerald-500"
-          : "bg-muted text-muted-foreground hover:text-foreground"
+          : status === "failed"
+            ? "bg-rose-500/15 text-rose-500"
+            : "bg-muted text-muted-foreground hover:text-foreground"
       }`}
     >
-      {copied ? <Check className="size-2.5" /> : <Copy className="size-2.5" />}
-      {copied ? "Copied" : "Copy CSS"}
+      {status === "copied" ? <Check className="size-2.5" /> : <Copy className="size-2.5" />}
+      {status === "copied" ? "Copied" : status === "failed" ? "Copy failed" : "Copy CSS"}
+      <span role="status" aria-live="polite" className="sr-only">
+        {status === "copied"
+          ? "Copied to clipboard"
+          : status === "failed"
+            ? "Copy failed — clipboard unavailable. Select the CSS below and copy manually."
+            : ""}
+      </span>
     </button>
   );
 }

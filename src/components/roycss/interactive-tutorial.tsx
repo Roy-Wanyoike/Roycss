@@ -336,7 +336,10 @@ export function InteractiveTutorial() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -24 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed top-3 inset-x-3 sm:top-4 sm:left-1/2 sm:right-auto sm:-translate-x-1/2 z-[90] w-auto sm:w-max max-w-[calc(100vw-1.5rem)]"
+            /* Issue #216 item 3: top-16 (64px) clears the 56px sticky
+               SiteHeader on small screens — at top-3 the banner sat ON the
+               header and intercepted hamburger taps at 390px. */
+            className="fixed top-16 inset-x-3 sm:top-4 sm:left-1/2 sm:right-auto sm:-translate-x-1/2 z-[90] w-auto sm:w-max max-w-[calc(100vw-1.5rem)]"
           >
             <div className="flex items-center gap-3 rounded-2xl border border-primary/30 bg-card/90 backdrop-blur-xl px-3 py-2 sm:px-4 sm:py-2.5 shadow-xl shadow-primary/5">
               <span aria-hidden className="text-lg leading-none">

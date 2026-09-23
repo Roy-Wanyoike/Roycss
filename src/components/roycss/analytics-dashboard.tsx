@@ -6,7 +6,7 @@ import { BarChart3, Eye, Copy, Star, Heart, Clock, TrendingUp, Trash2 } from "lu
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { effects } from "@/lib/roycss-effects";
 import type { CSSEffect } from "@/lib/roycss-types";
-import { LivePreview } from "@/components/roycss/effect-card";
+import { DecorativePreview, LivePreview } from "@/components/roycss/effect-card";
 import { getTopRatedEffects } from "@/components/roycss/star-rating";
 import { getRecentEffectIds } from "@/components/roycss/recent-effects-sheet";
 
@@ -110,7 +110,7 @@ export function UserAnalyticsDashboard({ open, onOpenChange, favoritesCount, onS
                     className="w-full flex items-center gap-2 p-2 rounded-lg hover:bg-muted/50 transition-all cursor-pointer text-left"
                   >
                     <div className="flex items-center justify-center size-8 rounded bg-muted/40 border border-border/50 overflow-hidden shrink-0">
-                      <div className="scale-[0.35] origin-center"><LivePreview effect={effect!} /></div>
+                      <div className="scale-[0.35] origin-center"><DecorativePreview effect={effect!} /></div>
                     </div>
                     <span className="text-xs font-medium text-foreground truncate flex-1">{effect!.name}</span>
                     <div className="flex items-center gap-0.5 shrink-0">

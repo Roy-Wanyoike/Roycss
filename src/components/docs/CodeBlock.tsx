@@ -75,7 +75,9 @@ export function CodeBlock({
             {label}
           </span>
           {language && filename && (
-            <span className="text-[11px] uppercase tracking-wider text-zinc-500 shrink-0">
+            // Issue #213: zinc-500 measured 3.78:1 on the zinc-900/80 header
+            // (WCAG AA needs 4.5:1 for 11px text) — zinc-400 gives 6.93:1.
+            <span className="text-[11px] uppercase tracking-wider text-zinc-400 shrink-0">
               {language}
             </span>
           )}

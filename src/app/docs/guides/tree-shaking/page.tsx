@@ -32,7 +32,7 @@ import "roycss/critical.css";
 
 /* 3. Your own subset — export exactly what you use */
 /*    (one CLI command, see below) */
-$ npx roycss export btn-glow hover-push-up --out src/styles/roycss.css`}</code>
+$ npx roycss-cli export btn-glow hover-push-up --out src/styles/roycss.css`}</code>
       </pre>
 
       <h2 id="per-category">Whole categories</h2>
@@ -42,11 +42,11 @@ $ npx roycss export btn-glow hover-push-up --out src/styles/roycss.css`}</code>
         with the real CLI:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss export --category buttons --out roycss-buttons.css
+        <code>{`$ npx roycss-cli export --category buttons --out roycss-buttons.css
 ✓ Exported 55 effects to roycss-buttons.css (27.2KB)
                                           (~3.7 KB gzipped)
 
-$ npx roycss export --category hover --out roycss-hover.css
+$ npx roycss-cli export --category hover --out roycss-hover.css
 ✓ Exported 120 effects to roycss-hover.css (55.8KB)
                                           (~8.7 KB gzipped)`}</code>
       </pre>
@@ -58,7 +58,7 @@ $ npx roycss export --category hover --out roycss-hover.css
         bytes gzipped:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss export btn-glow hover-push-up text-shimmer \\
+        <code>{`$ npx roycss-cli export btn-glow hover-push-up text-shimmer \\
     --out src/styles/roycss.css
 
 ✓ Exported 3 effects to src/styles/roycss.css (1.6KB)
@@ -118,7 +118,7 @@ import "./src/styles/roycss.css";   // your exported subset
         export:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss stats
+        <code>{`$ npx roycss-cli stats
 
 Total usages: 14 across 6 unique effects in 12 source files
 Catalog coverage: 6/${EFFECT_COUNT_FORMATTED} effects (0.3%)

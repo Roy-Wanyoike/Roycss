@@ -1,0 +1,3230 @@
+/*!
+ * RoyCSS v2.0.0 — Text Effects (111 effects)
+ * Category split of dist/roycss.css — import "roycss/css" for all
+ * 29 categories. https://github.com/Roy-Wanyoike/Roycss
+ * License: MIT
+ */
+
+/* ─── Base ────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.roycss-sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [class^="roycss-"],
+  [class*=" roycss-"] {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Gradient Text */
+.roycss-text-gradient {
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48) 0%, oklch(0.704 0.123 182.5) 40%, oklch(0.715 0.126 215.22) 70%, oklch(0.606 0.219 292.72) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 700;
+}
+
+/* Neon Glow Text */
+.roycss-text-neon-glow {
+  color: oklch(0.696 0.149 162.48);
+  text-shadow:
+    0 0 7px color-mix(in oklch, oklch(0.696 0.149 162.48) 80%, transparent),
+    0 0 10px color-mix(in oklch, oklch(0.696 0.149 162.48) 60%, transparent),
+    0 0 21px color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent),
+    0 0 42px color-mix(in oklch, oklch(0.696 0.149 162.48) 20%, transparent),
+    0 0 82px color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent);
+}
+
+/* Text Stroke */
+.roycss-text-stroke {
+  -webkit-text-stroke: 2px oklch(0.696 0.149 162.48);
+  color: transparent;
+  font-weight: 700;
+}
+
+/* Typing Cursor */
+.roycss-text-typing-cursor {
+  border-inline-end: 3px solid oklch(0.696 0.149 162.48);
+  animation: roy-text-blink-cursor 1s step-end infinite;
+  padding-inline-end: 4px;
+}
+
+@keyframes roy-text-blink-cursor {
+  0%, 100% { border-color: oklch(0.696 0.149 162.48); }
+  50% { border-color: transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Typing Cursor */
+.roycss-text-typing-cursor {
+    animation: none;
+  }
+}
+
+
+/* Glitch Text */
+.roycss-text-glitch {
+  position: relative;
+  font-weight: 700;
+}
+
+.roycss-text-glitch::before,
+.roycss-text-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.roycss-text-glitch::before {
+  animation: roy-glitch-1 2s infinite linear alternate-reverse;
+  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+  color: oklch(0.637 0.208 25.33);
+}
+
+.roycss-text-glitch::after {
+  animation: roy-glitch-2 3s infinite linear alternate-reverse;
+  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+  color: oklch(0.715 0.126 215.22);
+}
+
+@keyframes roy-glitch-1 {
+  0% { transform: translate(0); }
+  20% { transform: translate(-3px, 3px); }
+  40% { transform: translate(-3px, -3px); }
+  60% { transform: translate(3px, 3px); }
+  80% { transform: translate(3px, -3px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes roy-glitch-2 {
+  0% { transform: translate(0); }
+  20% { transform: translate(3px, -3px); }
+  40% { transform: translate(3px, 3px); }
+  60% { transform: translate(-3px, -3px); }
+  80% { transform: translate(-3px, 3px); }
+  100% { transform: translate(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-text-glitch::before {
+    animation: none;
+  }
+  .roycss-text-glitch::after {
+    animation: none;
+  }
+}
+
+
+/* 3D Text Shadow */
+.roycss-text-3d-shadow {
+  color: oklch(0.982 0.018 155.83);
+  text-shadow:
+    1px 1px 0 oklch(0.432 0.086 166.91),
+    2px 2px 0 oklch(0.508 0.105 165.61),
+    3px 3px 0 oklch(0.596 0.127 163.23),
+    4px 4px 0 oklch(0.696 0.149 162.48),
+    5px 5px 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent),
+    6px 6px 10px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+  font-weight: 700;
+}
+
+/* Rainbow Text */
+.roycss-text-rainbow {
+  background: linear-gradient(
+    90deg,
+    oklch(0.637 0.208 25.33), oklch(0.769 0.165 70.08), oklch(0.795 0.162 86.05), oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22), oklch(0.606 0.219 292.72), oklch(0.656 0.212 354.31), oklch(0.637 0.208 25.33)
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 700;
+  animation: roy-rainbow-flow 4s linear infinite;
+}
+
+@keyframes roy-rainbow-flow {
+  from { background-position: 0% center; }
+  to { background-position: 200% center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Rainbow Text */
+.roycss-text-rainbow {
+    animation: none;
+  }
+}
+
+
+/* Shimmer Text */
+.roycss-text-shimmer {
+  background: linear-gradient(
+    110deg,
+    oklch(0.446 0.037 257.28) 0%,
+    oklch(0.446 0.037 257.28) 35%,
+    oklch(0.968 0.007 247.9) 50%,
+    oklch(0.446 0.037 257.28) 65%,
+    oklch(0.446 0.037 257.28) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 700;
+  animation: roy-shimmer-sweep 3s linear infinite;
+}
+
+@keyframes roy-shimmer-sweep {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Shimmer Text */
+.roycss-text-shimmer {
+    animation: none;
+  }
+}
+
+
+/* Gradient Shift Text */
+.roycss-text-gradient-shift {
+  background: linear-gradient(45deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22), oklch(0.606 0.219 292.72), oklch(0.656 0.212 354.31), oklch(0.696 0.149 162.48));
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 700;
+  animation: roy-text-grad-shift 6s ease infinite;
+}
+
+@keyframes roy-text-grad-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Gradient Shift Text */
+.roycss-text-gradient-shift {
+    animation: none;
+  }
+}
+
+
+/* Blur Reveal Text */
+.roycss-text-blur-reveal {
+  color: oklch(0.696 0.149 162.48);
+  font-weight: 700;
+  animation: roy-blur-reveal 4s ease-in-out infinite;
+}
+
+@keyframes roy-blur-reveal {
+  0%, 100% { filter: blur(8px); opacity: 0.4; }
+  50% { filter: blur(0); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Blur Reveal Text */
+.roycss-text-blur-reveal {
+    animation: none;
+  }
+}
+
+
+/* Wave Text */
+.roycss-text-wave {
+  display: inline-flex;
+  font-weight: 700;
+  color: oklch(0.696 0.149 162.48);
+}
+
+.roycss-text-wave > span {
+  animation: roy-wave 1.5s ease-in-out infinite;
+  display: inline-block;
+}
+
+.roycss-text-wave > span:nth-child(1) { animation-delay: 0s; }
+.roycss-text-wave > span:nth-child(2) { animation-delay: 0.1s; }
+.roycss-text-wave > span:nth-child(3) { animation-delay: 0.2s; }
+.roycss-text-wave > span:nth-child(4) { animation-delay: 0.3s; }
+.roycss-text-wave > span:nth-child(5) { animation-delay: 0.4s; }
+.roycss-text-wave > span:nth-child(6) { animation-delay: 0.5s; }
+
+@keyframes roy-wave {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-text-wave > span {
+    animation: none;
+  }
+  .roycss-text-wave > span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-text-wave > span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-text-wave > span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-text-wave > span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-text-wave > span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-text-wave > span:nth-child(6) {
+    animation: none;
+  }
+}
+
+
+/* Bounce Letters Text */
+.roycss-text-bounce-letters {
+  display: inline-flex;
+  font-weight: 700;
+  color: oklch(0.715 0.126 215.22);
+}
+
+.roycss-text-bounce-letters > span {
+  display: inline-block;
+  animation: roy-bounce-letters 1.6s ease-in-out infinite;
+}
+
+.roycss-text-bounce-letters > span:nth-child(1) { animation-delay: 0s; }
+.roycss-text-bounce-letters > span:nth-child(2) { animation-delay: 0.1s; }
+.roycss-text-bounce-letters > span:nth-child(3) { animation-delay: 0.2s; }
+.roycss-text-bounce-letters > span:nth-child(4) { animation-delay: 0.3s; }
+.roycss-text-bounce-letters > span:nth-child(5) { animation-delay: 0.4s; }
+.roycss-text-bounce-letters > span:nth-child(6) { animation-delay: 0.5s; }
+
+@keyframes roy-bounce-letters {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-14px); }
+  60% { transform: translateY(-6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-text-bounce-letters > span {
+    animation: none;
+  }
+  .roycss-text-bounce-letters > span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-text-bounce-letters > span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-text-bounce-letters > span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-text-bounce-letters > span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-text-bounce-letters > span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-text-bounce-letters > span:nth-child(6) {
+    animation: none;
+  }
+}
+
+
+/* Flip Text */
+.roycss-text-flip {
+  display: inline-block;
+  font-weight: 700;
+  color: oklch(0.606 0.219 292.72);
+  transform-style: preserve-3d;
+  perspective: 400px;
+  animation: roy-text-flip 3s ease-in-out infinite;
+}
+
+@keyframes roy-text-flip {
+  0%, 100% { transform: rotateX(0); }
+  50% { transform: rotateX(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Flip Text */
+.roycss-text-flip {
+    animation: none;
+  }
+}
+
+
+/* Stretch Text */
+.roycss-text-stretch {
+  font-weight: 700;
+  color: oklch(0.769 0.165 70.08);
+  animation: roy-text-stretch 3s ease-in-out infinite;
+}
+
+@keyframes roy-text-stretch {
+  0%, 100% { letter-spacing: 0px; }
+  50% { letter-spacing: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Stretch Text */
+.roycss-text-stretch {
+    animation: none;
+  }
+}
+
+
+/* Underline Draw Text */
+.roycss-text-underline-draw {
+  position: relative;
+  display: inline-block;
+  font-weight: 700;
+  color: oklch(0.696 0.149 162.48);
+}
+
+.roycss-text-underline-draw::after {
+  content: '';
+  position: absolute;
+  inset-block-end: -4px;
+  inset-inline-start: 0;
+  block-size: 3px;
+  inline-size: 100%;
+  background: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: roy-underline-draw 2.5s ease-in-out infinite;
+}
+
+@keyframes roy-underline-draw {
+  0% { transform: scaleX(0); transform-origin: left; }
+  50% { transform: scaleX(1); transform-origin: left; }
+  50.01% { transform-origin: right; }
+  100% { transform: scaleX(0); transform-origin: right; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-text-underline-draw::after {
+    animation: none;
+  }
+}
+
+
+/* Marker Highlight Text */
+.roycss-text-highlight-marker {
+  font-weight: 700;
+  color: oklch(0.208 0.04 265.75);
+  background: linear-gradient(180deg, transparent 50%, oklch(0.905 0.166 98.11) 50%);
+  padding: 0 4px;
+}
+
+/* Long Shadow Text */
+.roycss-text-shadow-long {
+  color: oklch(0.982 0.018 155.83);
+  font-weight: 700;
+  text-shadow:
+    1px 1px 0 oklch(0.696 0.149 162.48),
+    2px 2px 0 oklch(0.596 0.127 162.48),
+    3px 3px 0 oklch(0.596 0.127 163.23),
+    4px 4px 0 oklch(0.508 0.105 165.61),
+    5px 5px 0 oklch(0.432 0.086 166.91),
+    6px 6px 0 oklch(0.378 0.073 168.94),
+    7px 7px 0 oklch(0.316 0.057 174.79),
+    8px 8px 0 oklch(0.273 0.05 171.23),
+    9px 9px 0 oklch(0.234 0.041 173.33),
+    10px 10px 12px color-mix(in oklch, oklch(0 0 0) 40%, transparent);
+}
+
+/* Soft Shadow Text */
+.roycss-text-shadow-soft {
+  color: oklch(0.984 0.003 247.86);
+  font-weight: 600;
+  text-shadow:
+    0 1px 2px color-mix(in oklch, oklch(0 0 0) 18%, transparent),
+    0 4px 12px color-mix(in oklch, oklch(0.696 0.149 162.48) 25%, transparent),
+    0 8px 24px color-mix(in oklch, oklch(0.696 0.149 162.48) 15%, transparent);
+}
+
+/* Outline Offset Text */
+.roycss-text-outline-offset {
+  font-weight: 700;
+  color: oklch(0.696 0.149 162.48);
+  -webkit-text-stroke: 2px color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent);
+  text-shadow:
+    4px 4px 0 color-mix(in oklch, oklch(0.715 0.126 215.22) 50%, transparent),
+    8px 8px 0 color-mix(in oklch, oklch(0.606 0.219 292.72) 40%, transparent);
+}
+
+/* Holographic Text */
+.roycss-text-holographic {
+  background: conic-gradient(
+    from 0deg,
+    oklch(0.741 0.2 345.28), oklch(0.893 0.167 94.55), oklch(0.774 0.148 148.57), oklch(0.776 0.112 188.54), oklch(0.709 0.159 293.54), oklch(0.741 0.2 345.28)
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 700;
+  filter: drop-shadow(0 0 6px color-mix(in oklch, oklch(0.741 0.2 345.28) 50%, transparent));
+  animation: roy-holo-shift 5s linear infinite;
+}
+
+@keyframes roy-holo-shift {
+  from { background-position: 0% 0%; }
+  to { background-position: 200% 200%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Holographic Text */
+.roycss-text-holographic {
+    animation: none;
+  }
+}
+
+
+/* Chrome Text */
+.roycss-text-chrome {
+  background: linear-gradient(
+    180deg,
+    oklch(0.962 0.058 95.62) 0%,
+    oklch(0.984 0.003 247.86) 25%,
+    oklch(0.711 0.035 256.79) 50%,
+    oklch(0.984 0.003 247.86) 75%,
+    oklch(0.869 0.02 252.89) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 800;
+  letter-spacing: 1px;
+  filter: drop-shadow(0 2px 2px color-mix(in oklch, oklch(0 0 0) 40%, transparent));
+}
+
+/* Fire Text */
+.roycss-text-fire {
+  font-weight: 800;
+  color: oklch(0.905 0.166 98.11);
+  text-shadow:
+    0 -2px 4px oklch(0.945 0.124 101.54),
+    0 -3px 6px oklch(0.905 0.166 98.11),
+    0 -6px 10px oklch(0.861 0.173 91.94),
+    0 -10px 16px oklch(0.769 0.165 70.08),
+    0 -16px 24px oklch(0.646 0.194 41.12),
+    0 -22px 32px oklch(0.577 0.215 27.33);
+  animation: roy-fire-flicker 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes roy-fire-flicker {
+  from { filter: brightness(1) hue-rotate(0deg); }
+  to { filter: brightness(1.15) hue-rotate(-8deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Fire Text */
+.roycss-text-fire {
+    animation: none;
+  }
+}
+
+
+/* Reflection Text */
+.roycss-text-reflection {
+  position: relative;
+  display: inline-block;
+  font-weight: 700;
+  color: oklch(0.715 0.126 215.22);
+}
+
+.roycss-text-reflection::after {
+  content: attr(data-text);
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 100%;
+  transform: scaleY(-1);
+  transform-origin: top;
+  background: linear-gradient(180deg, color-mix(in oklch, oklch(0.715 0.126 215.22) 50%, transparent) 0%, transparent 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Mirror Text */
+.roycss-text-mirror {
+  display: inline-flex;
+  font-weight: 700;
+  color: oklch(0.606 0.219 292.72);
+}
+
+.roycss-text-mirror::after {
+  content: attr(data-text);
+  transform: scaleX(-1);
+  margin-inline-start: 0.5ch;
+  background: linear-gradient(90deg, oklch(0.606 0.219 292.72), oklch(0.656 0.212 354.31));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Skew Text */
+.roycss-text-skew {
+  display: inline-block;
+  font-weight: 800;
+  font-style: italic;
+  color: oklch(0.984 0.003 247.86);
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
+  padding: 4px 14px;
+  transform: skew(-10deg);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  box-shadow: 4px 4px 0 color-mix(in oklch, oklch(0 0 0) 25%, transparent);
+}
+
+/* Text Neon Sign — glowing tube letters */
+.roycss-text-neon-sign {
+  display: inline-block;
+  font: 900 72px/1 'Arial Black', sans-serif;
+  letter-spacing: 0.08em;
+  color: oklch(1 0 89.88);
+  text-shadow:
+    0 0 4px oklch(1 0 89.88),
+    0 0 10px oklch(0.683 0.303 335.86),
+    0 0 22px oklch(0.683 0.303 335.86),
+    0 0 40px oklch(0.683 0.303 335.86),
+    0 0 70px oklch(0.683 0.303 335.86),
+    0 0 100px oklch(0.683 0.303 335.86);
+  padding: 20px 30px;
+  background: radial-gradient(ellipse at 50% 50%, oklch(0.194 0.08 297.65) 0%, oklch(0.096 0.051 300.12) 100%);
+  border-radius: 12px;
+  animation: roy-b11-text-neon-flicker 4s linear infinite;
+}
+
+@keyframes roy-b11-text-neon-flicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    opacity: 1;
+    text-shadow:
+      0 0 4px oklch(1 0 89.88),
+      0 0 10px oklch(0.683 0.303 335.86),
+      0 0 22px oklch(0.683 0.303 335.86),
+      0 0 40px oklch(0.683 0.303 335.86),
+      0 0 70px oklch(0.683 0.303 335.86),
+      0 0 100px oklch(0.683 0.303 335.86);
+  }
+  20%, 24%, 55% {
+    opacity: 0.6;
+    text-shadow: 0 0 2px oklch(1 0 89.88), 0 0 4px oklch(0.683 0.303 335.86);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text Neon Sign — glowing tube letters */
+.roycss-text-neon-sign {
+    animation: none;
+  }
+}
+
+
+/* Text Emboss — engraved stone typography */
+.roycss-text-emboss {
+  display: inline-block;
+  font: 900 64px/1 'Georgia', serif;
+  letter-spacing: 0.05em;
+  color: oklch(0.482 0.042 69.22);
+  padding: 24px 36px;
+  background:
+    radial-gradient(ellipse 60% 40% at 30% 30%, color-mix(in oklch, oklch(0.959 0.042 84.58) 30%, transparent), transparent 60%),
+    linear-gradient(135deg, oklch(0.73 0.048 79.93) 0%, oklch(0.587 0.045 81.46) 50%, oklch(0.674 0.06 84.3) 100%);
+  border-radius: 8px;
+  box-shadow:
+    inset 4px 4px 8px color-mix(in oklch, oklch(0.984 0.027 95.33) 40%, transparent),
+    inset -4px -4px 8px color-mix(in oklch, oklch(0.243 0.03 76.73) 40%, transparent),
+    0 6px 20px color-mix(in oklch, oklch(0.243 0.03 76.73) 40%, transparent);
+  text-shadow:
+    1px 1px 1px color-mix(in oklch, oklch(0.971 0.034 88.77) 70%, transparent),
+    -1px -1px 1px color-mix(in oklch, oklch(0.201 0.025 65.66) 80%, transparent),
+    0 4px 6px color-mix(in oklch, oklch(0.201 0.025 65.66) 40%, transparent);
+  background-clip: border-box;
+}
+
+.roycss-text-emboss::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(45deg, transparent 0 2px, color-mix(in oklch, oklch(0.296 0.044 64.71) 6%, transparent) 2px 3px);
+  pointer-events: none;
+}
+
+/* Text Water — transparent rippling water letters */
+.roycss-text-water {
+  display: inline-block;
+  position: relative;
+  font: 900 72px/1 'Arial Black', sans-serif;
+  letter-spacing: 0.08em;
+  color: transparent;
+  background:
+    linear-gradient(180deg,
+      color-mix(in oklch, oklch(1 0 89.88) 90%, transparent) 0%,
+      color-mix(in oklch, oklch(0.898 0.062 229.91) 70%, transparent) 30%,
+      color-mix(in oklch, oklch(0.731 0.117 233.39) 60%, transparent) 55%,
+      color-mix(in oklch, oklch(0.505 0.144 254.88) 80%, transparent) 80%,
+      color-mix(in oklch, oklch(0.289 0.097 260.21) 90%, transparent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  padding: 18px 30px;
+  text-shadow:
+    0 1px 0 color-mix(in oklch, oklch(1 0 89.88) 50%, transparent),
+    0 -1px 0 color-mix(in oklch, oklch(0.233 0.068 251.16) 60%, transparent);
+  filter: drop-shadow(0 4px 6px color-mix(in oklch, oklch(0.424 0.119 249.77) 50%, transparent));
+  animation: roy-b11-text-water-ripple 3s ease-in-out infinite;
+}
+
+.roycss-text-water::before {
+  content: 'WATER';
+  position: absolute;
+  inset-block-start: 4px; inset-inline-start: 30px;
+  font: inherit;
+  letter-spacing: inherit;
+  color: transparent;
+  background:
+    linear-gradient(180deg,
+      color-mix(in oklch, oklch(1 0 89.88) 50%, transparent) 0%,
+      color-mix(in oklch, oklch(0.898 0.062 229.91) 20%, transparent) 50%,
+      transparent 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  transform: scaleY(-1) translateY(-100%);
+  opacity: 0.4;
+  filter: blur(1px);
+  pointer-events: none;
+}
+
+@keyframes roy-b11-text-water-ripple {
+  0%, 100% { filter: drop-shadow(0 4px 6px color-mix(in oklch, oklch(0.424 0.119 249.77) 50%, transparent)) hue-rotate(0deg); }
+  50%      { filter: drop-shadow(0 4px 8px color-mix(in oklch, oklch(0.424 0.119 249.77) 70%, transparent)) hue-rotate(15deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text Water — transparent rippling water letters */
+.roycss-text-water {
+    animation: none;
+  }
+}
+
+
+/* Text Fire Flame — burning letterforms */
+.roycss-text-fire-flame {
+  display: inline-block;
+  position: relative;
+  font: 900 80px/1 'Arial Black', sans-serif;
+  letter-spacing: 0.05em;
+  color: oklch(1 0 89.88);
+  padding: 30px 36px;
+  background: oklch(0.121 0.025 82.32);
+  border-radius: 8px;
+  text-shadow:
+    0 -2px 4px oklch(1 0 89.88),
+    0 -4px 8px oklch(0.908 0.157 96.48),
+    0 -8px 14px oklch(0.751 0.179 58.28),
+    0 -14px 22px oklch(0.644 0.243 32.25),
+    0 -22px 32px oklch(0.527 0.211 30.14),
+    0 2px 4px color-mix(in oklch, oklch(0.527 0.211 30.14) 80%, transparent);
+  animation: roy-b11-text-fire-flame 0.6s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 12px color-mix(in oklch, oklch(0.671 0.221 37.64) 70%, transparent));
+}
+
+.roycss-text-fire-flame::before {
+  content: 'FIRE';
+  position: absolute;
+  inset-block-start: -10px; inset-inline-start: 36px;
+  font: inherit;
+  letter-spacing: inherit;
+  color: transparent;
+  background: linear-gradient(0deg, oklch(0.644 0.243 32.25) 0%, oklch(0.908 0.157 96.48) 50%, oklch(1 0 89.88) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  opacity: 0.6;
+  filter: blur(4px);
+  animation: roy-b11-text-fire-flame-flicker 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes roy-b11-text-fire-flame {
+  0%   { text-shadow: 0 -2px 4px oklch(1 0 89.88), 0 -4px 8px oklch(0.908 0.157 96.48), 0 -8px 14px oklch(0.751 0.179 58.28), 0 -14px 22px oklch(0.644 0.243 32.25), 0 -22px 32px oklch(0.527 0.211 30.14), 0 2px 4px color-mix(in oklch, oklch(0.527 0.211 30.14) 80%, transparent); transform: translateY(0); }
+  100% { text-shadow: 0 -2px 6px oklch(1 0 89.88), 0 -6px 10px oklch(0.908 0.157 96.48), 0 -12px 18px oklch(0.751 0.179 58.28), 0 -20px 28px oklch(0.644 0.243 32.25), 0 -30px 42px oklch(0.527 0.211 30.14), 0 2px 6px color-mix(in oklch, oklch(0.527 0.211 30.14) 90%, transparent); transform: translateY(-2px); }
+}
+@keyframes roy-b11-text-fire-flame-flicker {
+  0%   { transform: scaleY(1) translateY(0); opacity: 0.5; }
+  100% { transform: scaleY(1.15) translateY(-4px); opacity: 0.75; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text Fire Flame — burning letterforms */
+.roycss-text-fire-flame {
+    animation: none;
+  }
+  .roycss-text-fire-flame::before {
+    animation: none;
+  }
+}
+
+
+/* Text 3D Cinema — extruded golden 3D typography */
+.roycss-text-3d-cinema {
+  display: inline-block;
+  position: relative;
+  font: 900 72px/1 'Arial Black', sans-serif;
+  letter-spacing: 0.06em;
+  color: oklch(0.973 0.051 97.64);
+  padding: 30px 40px;
+  background: linear-gradient(180deg, oklch(0.179 0.037 79.02) 0%, oklch(0 0 0) 100%);
+  border-radius: 10px;
+  text-shadow:
+    1px 1px 0 oklch(0.541 0.104 84.45),
+    2px 2px 0 oklch(0.541 0.104 84.45),
+    3px 3px 0 oklch(0.48 0.092 85.67),
+    4px 4px 0 oklch(0.48 0.092 85.67),
+    5px 5px 0 oklch(0.412 0.078 85.41),
+    6px 6px 0 oklch(0.412 0.078 85.41),
+    7px 7px 0 oklch(0.343 0.064 86.93),
+    8px 8px 0 oklch(0.343 0.064 86.93),
+    9px 9px 0 oklch(0.266 0.047 88.38),
+    10px 10px 0 oklch(0.266 0.047 88.38),
+    11px 11px 8px color-mix(in oklch, oklch(0 0 0) 60%, transparent),
+    14px 14px 20px color-mix(in oklch, oklch(0 0 0) 80%, transparent);
+  background-clip: border-box;
+  filter: drop-shadow(0 0 12px color-mix(in oklch, oklch(0.861 0.147 83.67) 40%, transparent));
+  animation: roy-b11-text-3d-cinema-light 4s ease-in-out infinite;
+}
+
+.roycss-text-3d-cinema::before {
+  content: 'CINEMA';
+  position: absolute;
+  inset-block-start: 30px; inset-inline-start: 40px;
+  font: inherit;
+  letter-spacing: inherit;
+  color: transparent;
+  background: linear-gradient(180deg, oklch(1 0 89.88) 0%, oklch(0.932 0.118 96.68) 40%, oklch(0.735 0.146 84.27) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 1px color-mix(in oklch, oklch(0.861 0.147 83.67) 30%, transparent);
+  pointer-events: none;
+}
+
+@keyframes roy-b11-text-3d-cinema-light {
+  0%, 100% { filter: drop-shadow(0 0 12px color-mix(in oklch, oklch(0.861 0.147 83.67) 40%, transparent)) brightness(1); }
+  50%      { filter: drop-shadow(0 0 24px color-mix(in oklch, oklch(0.861 0.147 83.67) 70%, transparent)) brightness(1.15); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text 3D Cinema — extruded golden 3D typography */
+.roycss-text-3d-cinema {
+    animation: none;
+  }
+}
+
+
+/* Text — Typewriter Type & Erase */
+.roycss-text-typewriter-erase {
+  position: relative;
+  display: inline-block;
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  font-size: 2rem;
+  letter-spacing: 2px;
+  color: oklch(0.226 0.031 283.65);
+  overflow: hidden;
+  white-space: nowrap;
+  border-inline-end: 3px solid oklch(0.226 0.031 283.65);
+  inline-size: 0;
+  animation:
+    roy-b13-type 6s steps(6) infinite alternate,
+    roy-b13-cursor 0.7s step-end infinite;
+}
+@keyframes roy-b13-type {
+  0%      { inline-size: 0; }
+  40%, 60% { inline-size: 6ch; }
+  100%    { inline-size: 0; }
+}
+@keyframes roy-b13-cursor {
+  50% { border-color: transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text — Typewriter Type & Erase */
+.roycss-text-typewriter-erase {
+    animation: none;
+  }
+}
+
+
+/* Text — Scramble Resolve */
+.roycss-text-scramble {
+  position: relative;
+  display: inline-block;
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  font-size: 2.4rem;
+  letter-spacing: 4px;
+  color: oklch(0.876 0.228 152.55);
+  text-shadow: 0 0 10px color-mix(in oklch, oklch(0.876 0.228 152.55) 80%, transparent), 0 0 20px color-mix(in oklch, oklch(0.876 0.228 152.55) 40%, transparent);
+  animation: roy-b13-scramble-resolve 4s steps(1) infinite;
+}
+.roycss-text-scramble::before {
+  content: "RoyCSS";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0;
+  color: oklch(0.639 0.255 10.51);
+  text-shadow: 0 0 10px color-mix(in oklch, oklch(0.639 0.255 10.51) 70%, transparent);
+  animation: roy-b13-scramble-shift 4s steps(1) infinite;
+  mix-blend-mode: screen;
+}
+@keyframes roy-b13-scramble-resolve {
+  0%   { content: "#$%X&*"; opacity: 0.6; filter: blur(1px); }
+  20%  { content: "R~$%X*"; opacity: 0.8; }
+  40%  { content: "Ro~$X*"; opacity: 0.9; }
+  60%  { content: "RoyC%*"; opacity: 1; }
+  80%  { content: "RoyCS*"; opacity: 1; filter: blur(0); }
+  100% { content: "RoyCSS"; opacity: 1; filter: blur(0); }
+}
+@keyframes roy-b13-scramble-shift {
+  0%, 100% { transform: translate(0, 0); }
+  25%      { transform: translate(-2px, 1px); }
+  50%      { transform: translate(2px, -1px); }
+  75%      { transform: translate(-1px, 2px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text — Scramble Resolve */
+.roycss-text-scramble {
+    animation: none;
+  }
+  .roycss-text-scramble::before {
+    animation: none;
+  }
+}
+
+
+/* Text — 3D Gradient Flow */
+.roycss-text-gradient-flow-3d {
+  position: relative;
+  display: inline-block;
+  font-family: "Arial Black", sans-serif;
+  font-weight: 900;
+  font-size: 3rem;
+  letter-spacing: 2px;
+  color: oklch(1 0 89.88);
+  background: linear-gradient(90deg,
+    oklch(0.645 0.26 2.47), oklch(0.732 0.186 52.98), oklch(0.905 0.188 99.07), oklch(0.788 0.247 145.08), oklch(0.685 0.177 246.21), oklch(0.485 0.226 306.28), oklch(0.645 0.26 2.47));
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow:
+    1px 1px 0 oklch(0.526 0.205 2.6),
+    2px 2px 0 oklch(0.459 0.181 1.87),
+    3px 3px 0 oklch(0.39 0.155 1.02),
+    4px 4px 0 oklch(0.317 0.129 359.47),
+    5px 5px 0 oklch(0.242 0.099 357.29),
+    6px 6px 0 oklch(0.16 0.066 352.21),
+    7px 7px 8px color-mix(in oklch, oklch(0 0 0) 50%, transparent);
+  animation: roy-b13-3d-flow 4s linear infinite;
+  transform: perspective(400px) rotateX(15deg);
+}
+@keyframes roy-b13-3d-flow {
+  to { background-position: 200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text — 3D Gradient Flow */
+.roycss-text-gradient-flow-3d {
+    animation: none;
+  }
+}
+
+
+/* Text — Matrix Glitch */
+.roycss-text-glitch-matrix {
+  position: relative;
+  display: inline-block;
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  font-size: 2.6rem;
+  letter-spacing: 3px;
+  color: oklch(0.872 0.255 147.64);
+  text-shadow:
+    0 0 5px color-mix(in oklch, oklch(0.872 0.255 147.64) 80%, transparent),
+    0 0 15px color-mix(in oklch, oklch(0.872 0.255 147.64) 50%, transparent);
+  animation: roy-b13-matrix-flicker 2.5s infinite;
+}
+.roycss-text-glitch-matrix::before,
+.roycss-text-glitch-matrix::after {
+  content: "RoyCSS";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  background: oklch(0 0 0);
+  overflow: hidden;
+}
+.roycss-text-glitch-matrix::before {
+  color: oklch(0.632 0.254 20.85);
+  z-index: -1;
+  animation: roy-b13-matrix-glitch-1 2s infinite linear alternate;
+}
+.roycss-text-glitch-matrix::after {
+  color: oklch(0.905 0.155 194.77);
+  z-index: -2;
+  animation: roy-b13-matrix-glitch-2 1.6s infinite linear alternate;
+}
+@keyframes roy-b13-matrix-flicker {
+  0%, 100% { opacity: 1; }
+  3% { opacity: 0.6; }
+  6% { opacity: 1; }
+  72% { opacity: 1; }
+  74% { opacity: 0.4; }
+  76% { opacity: 1; }
+}
+@keyframes roy-b13-matrix-glitch-1 {
+  0%, 100% { transform: translate(0, 0); clip-path: inset(0 0 0 0); }
+  20% { transform: translate(-3px, 1px); clip-path: inset(20% 0 40% 0); }
+  40% { transform: translate(3px, -1px); clip-path: inset(60% 0 10% 0); }
+  60% { transform: translate(-2px, 2px); clip-path: inset(30% 0 50% 0); }
+  80% { transform: translate(2px, -2px); clip-path: inset(10% 0 70% 0); }
+}
+@keyframes roy-b13-matrix-glitch-2 {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(2px, -2px); }
+  50% { transform: translate(-2px, 2px); }
+  75% { transform: translate(2px, 1px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text — Matrix Glitch */
+.roycss-text-glitch-matrix {
+    animation: none;
+  }
+  .roycss-text-glitch-matrix::before {
+    animation: none;
+  }
+  .roycss-text-glitch-matrix::after {
+    animation: none;
+  }
+}
+
+
+/* Text — Rainbow Breathe */
+.roycss-text-rainbow-breathe {
+  display: inline-block;
+  font-family: "Georgia", serif;
+  font-weight: 700;
+  font-size: 2.6rem;
+  letter-spacing: 4px;
+  background: linear-gradient(90deg,
+    oklch(0.66 0.227 26.03), oklch(0.735 0.173 45.09), oklch(0.907 0.17 97.66), oklch(0.798 0.215 146.41), oklch(0.765 0.141 234.8), oklch(0.539 0.263 280.61), oklch(0.639 0.27 311.54), oklch(0.66 0.227 26.03));
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 12px color-mix(in oklch, oklch(0.863 0.133 80.39) 50%, transparent));
+  animation:
+    roy-b13-rb-shift 5s linear infinite,
+    roy-b13-rb-breathe 3s ease-in-out infinite;
+}
+@keyframes roy-b13-rb-shift {
+  to { background-position: 300% 0; }
+}
+@keyframes roy-b13-rb-breathe {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 8px color-mix(in oklch, oklch(0.797 0.138 350.72) 40%, transparent));
+  }
+  50% {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 20px color-mix(in oklch, oklch(0.818 0.094 251.36) 70%, transparent));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text — Rainbow Breathe */
+.roycss-text-rainbow-breathe {
+    animation: none;
+  }
+}
+
+
+/* Text — Perspective Shadow */
+.roycss-text-shadow-perspective {
+  position: relative;
+  display: inline-block;
+  font-family: "Arial Black", sans-serif;
+  font-weight: 900;
+  font-size: 2.8rem;
+  letter-spacing: 3px;
+  color: oklch(0.979 0 89.88);
+  background: linear-gradient(to bottom, oklch(1 0 89.88) 0%, oklch(0.86 0.011 286.17) 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow:
+    0 1px 0 oklch(0.845 0 89.88),
+    0 2px 0 oklch(0.792 0 89.88),
+    0 3px 0 oklch(0.738 0 89.88),
+    0 4px 0 oklch(0.683 0 89.88),
+    0 5px 6px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+  transform: perspective(300px) rotateX(20deg);
+  transform-origin: 50% 100%;
+}
+.roycss-text-shadow-perspective::before {
+  content: "RoyCSS";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0;
+  color: transparent;
+  background: linear-gradient(to bottom, color-mix(in oklch, oklch(0 0 0) 60%, transparent) 0%, transparent 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transform: perspective(300px) rotateX(80deg) scaleY(0.6);
+  transform-origin: 50% 100%;
+  inset-block-start: 100%;
+  filter: blur(2px);
+  z-index: -1;
+}
+.roycss-text-shadow-perspective::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 50%;
+  inset-block-end: -25%;
+  inline-size: 60%;
+  block-size: 8%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse, color-mix(in oklch, oklch(0 0 0) 50%, transparent) 0%, transparent 70%);
+  filter: blur(4px);
+}
+
+/* Text Pixel Font */
+.roycss-text-pixel-font {
+  font-family: "Courier New", monospace;
+  font-size: 36px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: oklch(0.907 0.17 97.66);
+  text-transform: uppercase;
+  text-shadow:
+    0 4px 0 oklch(0.65 0.135 73.03),
+    0 6px 0 oklch(0.412 0.087 66.56),
+    4px 8px 0 oklch(0 0 0),
+    -2px -2px 0 oklch(0 0 0),
+    2px -2px 0 oklch(0 0 0),
+    -2px 2px 0 oklch(0 0 0),
+    2px 2px 0 oklch(0 0 0);
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+  filter: drop-shadow(0 0 6px color-mix(in oklch, oklch(0.858 0.167 87.29) 50%, transparent));
+}
+
+/* Text Arcade Neon */
+.roycss-text-arcade-neon {
+  font-family: "Impact", "Arial Black", sans-serif;
+  font-size: 48px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: oklch(1 0 89.88);
+  text-transform: uppercase;
+  text-shadow:
+    0 0 4px oklch(1 0 89.88),
+    0 0 10px oklch(0.693 0.253 344.73),
+    0 0 20px oklch(0.693 0.253 344.73),
+    0 0 36px oklch(0.648 0.257 2.81),
+    0 0 60px oklch(0.533 0.223 349.29),
+    0 0 80px oklch(0.402 0.172 342.9);
+  animation: roy-b15-arcade-flicker 3s linear infinite;
+}
+@keyframes roy-b15-arcade-flicker {
+  0%, 92%, 100% { opacity: 1; }
+  93% { opacity: 0.6; }
+  94% { opacity: 1; }
+  95% { opacity: 0.4; }
+  96% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text Arcade Neon */
+.roycss-text-arcade-neon {
+    animation: none;
+  }
+}
+
+
+/* Text Terminal Green */
+.roycss-text-terminal-green {
+  font-family: "Courier New", "Lucida Console", monospace;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: oklch(0.872 0.255 147.64);
+  text-shadow:
+    0 0 4px oklch(0.872 0.255 147.64),
+    0 0 8px oklch(0.736 0.224 146.14),
+    0 0 16px color-mix(in oklch, oklch(0.87 0.269 145.52) 60%, transparent),
+    0 0 26px color-mix(in oklch, oklch(0.724 0.225 145.45) 40%, transparent);
+  position: relative;
+  animation: roy-b15-term-green-flicker 4s linear infinite;
+}
+.roycss-text-terminal-green::after {
+  content: "";
+  position: absolute;
+  inset: -4px -8px;
+  background: repeating-linear-gradient(0deg, transparent 0, transparent 2px, color-mix(in oklch, oklch(0 0 0) 40%, transparent) 2px, color-mix(in oklch, oklch(0 0 0) 40%, transparent) 3px);
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+@keyframes roy-b15-term-green-flicker {
+  0%, 96%, 100% { opacity: 1; }
+  97% { opacity: 0.85; }
+  98% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text Terminal Green */
+.roycss-text-terminal-green {
+    animation: none;
+  }
+}
+
+
+/* Text Glitch Cyberpunk */
+.roycss-text-glitch-cyberpunk {
+  font-family: "Impact", "Arial Black", sans-serif;
+  font-size: 44px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: oklch(0.896 0.163 179.66);
+  text-transform: uppercase;
+  position: relative;
+  text-shadow: 0 0 8px color-mix(in oklch, oklch(0.895 0.165 177.88) 60%, transparent);
+}
+.roycss-text-glitch-cyberpunk::before {
+  content: attr(data-text);
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  color: oklch(0.645 0.26 2.47);
+  text-shadow: 0 0 8px color-mix(in oklch, oklch(0.649 0.264 358.73) 60%, transparent);
+  clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%);
+  animation: roy-b15-glitch-top 2s steps(8) infinite;
+}
+.roycss-text-glitch-cyberpunk::after {
+  content: attr(data-text);
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  color: oklch(0.905 0.188 99.07);
+  text-shadow: 0 0 8px color-mix(in oklch, oklch(0.897 0.185 97.44) 60%, transparent);
+  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+  animation: roy-b15-glitch-bottom 1.7s steps(8) infinite;
+}
+@keyframes roy-b15-glitch-top {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-4px, -2px); }
+  40% { transform: translate(3px, 1px); }
+  60% { transform: translate(-2px, 0); }
+  80% { transform: translate(2px, -1px); }
+}
+@keyframes roy-b15-glitch-bottom {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(3px, 2px); }
+  50% { transform: translate(-3px, -1px); }
+  75% { transform: translate(2px, 1px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-text-glitch-cyberpunk::before {
+    animation: none;
+  }
+  .roycss-text-glitch-cyberpunk::after {
+    animation: none;
+  }
+}
+
+
+/* Text RPG Dialogue */
+.roycss-text-rpg-dialogue {
+  font-family: "Georgia", "Times New Roman", serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: oklch(0.908 0.065 91.81);
+  letter-spacing: 0.5px;
+  padding: 14px 18px;
+  background: linear-gradient(to bottom, color-mix(in oklch, oklch(0.296 0.044 64.71) 92%, transparent) 0%, color-mix(in oklch, oklch(0.226 0.035 60.76) 95%, transparent) 100%);
+  border: 2px solid oklch(0.721 0.091 83.65);
+  border-radius: 6px;
+  box-shadow:
+    inset 0 2px 0 color-mix(in oklch, oklch(0.907 0.106 86.69) 30%, transparent),
+    inset 0 -2px 6px color-mix(in oklch, oklch(0 0 0) 60%, transparent),
+    0 4px 0 oklch(0.333 0.059 68.61),
+    0 6px 14px color-mix(in oklch, oklch(0 0 0) 50%, transparent);
+  text-shadow: 1px 1px 0 color-mix(in oklch, oklch(0 0 0) 80%, transparent);
+  position: relative;
+}
+.roycss-text-rpg-dialogue::before {
+  content: "▶";
+  position: absolute;
+  inset-block-end: 8px;
+  inset-inline-end: 14px;
+  color: oklch(0.913 0.121 91.98);
+  font-size: 14px;
+  animation: roy-b15-rpg-arrow 0.8s steps(2) infinite;
+}
+@keyframes roy-b15-rpg-arrow {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(3px); opacity: 0.5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-text-rpg-dialogue::before {
+    animation: none;
+  }
+}
+
+
+/* Text Score Counter */
+.roycss-text-score-counter {
+  font-family: "Impact", "Arial Black", sans-serif;
+  font-size: 42px;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 3px;
+  color: oklch(0.907 0.17 97.66);
+  text-shadow:
+    -2px 0 0 oklch(0 0 0),
+    2px 0 0 oklch(0 0 0),
+    0 -2px 0 oklch(0 0 0),
+    0 2px 0 oklch(0 0 0),
+    -2px -2px 0 oklch(0 0 0),
+    2px -2px 0 oklch(0 0 0),
+    -2px 2px 0 oklch(0 0 0),
+    2px 2px 0 oklch(0 0 0),
+    4px 4px 0 oklch(0.412 0.087 66.56),
+    6px 6px 0 oklch(0.228 0.044 66.83),
+    0 0 16px color-mix(in oklch, oklch(0.858 0.167 87.29) 70%, transparent);
+  animation: roy-b15-score-bounce 1.4s ease-in-out infinite;
+}
+@keyframes roy-b15-score-bounce {
+  0%, 90%, 100% { transform: translateY(0) scale(1); }
+  93% { transform: translateY(-4px) scale(1.08); }
+  96% { transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text Score Counter */
+.roycss-text-score-counter {
+    animation: none;
+  }
+}
+
+
+/* Text 8-bit Shadow */
+.roycss-text-8bit-shadow {
+  font-family: "Courier New", monospace;
+  font-size: 40px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: oklch(1 0 89.88);
+  text-shadow:
+    3px 0 0 oklch(0.361 0.151 298.38),
+    3px 3px 0 oklch(0.361 0.151 298.38),
+    0 3px 0 oklch(0.361 0.151 298.38),
+    6px 6px 0 oklch(0.256 0.109 296.34),
+    6px 6px 0 oklch(0.256 0.109 296.34),
+    9px 9px 0 oklch(0.16 0.071 293.12),
+    9px 9px 0 oklch(0.16 0.071 293.12);
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+  filter: drop-shadow(0 0 8px color-mix(in oklch, oklch(0.551 0.203 291.46) 40%, transparent));
+}
+
+/* Text Hologram Scan */
+.roycss-text-hologram-scan {
+  font-family: "Orbitron", "Impact", sans-serif;
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: oklch(0.894 0.105 206.86);
+  text-shadow:
+    0 0 4px oklch(0.894 0.105 206.86),
+    0 0 10px oklch(0.752 0.118 218.19),
+    0 0 20px color-mix(in oklch, oklch(0.761 0.131 207.5) 60%, transparent),
+    -1px 0 0 color-mix(in oklch, oklch(0.643 0.258 4.97) 50%, transparent),
+    1px 0 0 color-mix(in oklch, oklch(0.889 0.177 169.75) 50%, transparent);
+  position: relative;
+  animation: roy-b15-holo-flicker 3s linear infinite;
+}
+.roycss-text-hologram-scan::before {
+  content: "";
+  position: absolute;
+  inset: -4px -8px;
+  background: repeating-linear-gradient(0deg, transparent 0, transparent 3px, color-mix(in oklch, oklch(0.87 0.148 202.88) 18%, transparent) 3px, color-mix(in oklch, oklch(0.87 0.148 202.88) 18%, transparent) 4px);
+  pointer-events: none;
+  animation: roy-b15-holo-scan 2s linear infinite;
+  mix-blend-mode: screen;
+}
+.roycss-text-hologram-scan::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  block-size: 2px;
+  background: color-mix(in oklch, oklch(0.895 0.165 177.88) 80%, transparent);
+  box-shadow: 0 0 8px color-mix(in oklch, oklch(0.895 0.165 177.88) 90%, transparent);
+  animation: roy-b15-holo-bar 1.6s linear infinite;
+  pointer-events: none;
+}
+@keyframes roy-b15-holo-flicker {
+  0%, 100% { opacity: 1; }
+  90% { opacity: 1; }
+  91% { opacity: 0.4; }
+  92% { opacity: 1; }
+  93% { opacity: 0.7; }
+  94% { opacity: 1; }
+}
+@keyframes roy-b15-holo-scan {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 4px; }
+}
+@keyframes roy-b15-holo-bar {
+  0% { inset-block-start: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { inset-block-start: 100%; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text Hologram Scan */
+.roycss-text-hologram-scan {
+    animation: none;
+  }
+  .roycss-text-hologram-scan::before {
+    animation: none;
+  }
+  .roycss-text-hologram-scan::after {
+    animation: none;
+  }
+}
+
+
+/* Variable Font Morph */
+.roycss-text-variable-font-morph {
+  font-family: "Inter", "Segoe UI Variable", "Roboto Flex", system-ui, sans-serif;
+  font-size: 64px;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-variation-settings: "wght" 400, "wdth" 100, "opsz" 14;
+  color: oklch(0.18 0.04 270);
+  letter-spacing: 0.02em;
+  background: linear-gradient(120deg, oklch(0.25 0.10 270), oklch(0.45 0.20 320), oklch(0.25 0.10 270));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  background-size: 200% 100%;
+  animation:
+    roy-b16-vfm-axes 4.5s ease-in-out infinite,
+    roy-b16-vfm-shift 6s linear infinite;
+}
+@keyframes roy-b16-vfm-axes {
+  0%, 100% { font-variation-settings: "wght" 300, "wdth" 80,  "opsz" 12; }
+  33%      { font-variation-settings: "wght" 700, "wdth" 110, "opsz" 24; }
+  66%      { font-variation-settings: "wght" 500, "wdth" 125, "opsz" 36; }
+}
+@keyframes roy-b16-vfm-shift {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Variable Font Morph */
+.roycss-text-variable-font-morph {
+    animation: none;
+  }
+}
+
+
+/* Kinetic Wave Text — stagger wave across child spans */
+.roycss-text-kinetic-wave {
+  display: inline-flex;
+  gap: 0.02em;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 64px;
+  font-weight: 800;
+  color: oklch(0.18 0.08 250);
+  filter: drop-shadow(0 6px 14px oklch(0.4 0.18 250 / 0.35));
+}
+.roycss-text-kinetic-wave > span {
+  display: inline-block;
+  background: linear-gradient(180deg, oklch(0.85 0.18 280), oklch(0.55 0.25 260));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  transform-origin: center bottom;
+  animation: roy-b16-kinetic-wave 1.8s ease-in-out infinite;
+}
+.roycss-text-kinetic-wave > span:nth-child(1) { animation-delay: 0s;    }
+.roycss-text-kinetic-wave > span:nth-child(2) { animation-delay: 0.12s; }
+.roycss-text-kinetic-wave > span:nth-child(3) { animation-delay: 0.24s; }
+.roycss-text-kinetic-wave > span:nth-child(4) { animation-delay: 0.36s; }
+.roycss-text-kinetic-wave > span:nth-child(5) { animation-delay: 0.48s; }
+.roycss-text-kinetic-wave > span:nth-child(6) { animation-delay: 0.60s; }
+@keyframes roy-b16-kinetic-wave {
+  0%, 100% { transform: translateY(0) scale(1); }
+  40%      { transform: translateY(-22px) scale(1.08); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-text-kinetic-wave > span {
+    animation: none;
+  }
+  .roycss-text-kinetic-wave > span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-text-kinetic-wave > span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-text-kinetic-wave > span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-text-kinetic-wave > span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-text-kinetic-wave > span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-text-kinetic-wave > span:nth-child(6) {
+    animation: none;
+  }
+}
+
+
+/* Scramble Decode Text — pure CSS character cycling */
+.roycss-text-scramble-decode {
+  position: relative;
+  display: inline-block;
+  font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: oklch(0.85 0.22 145);
+  text-shadow:
+    0 0 8px oklch(0.85 0.22 145 / 0.7),
+    0 0 20px oklch(0.70 0.24 160 / 0.5);
+  min-inline-size: 6ch;
+}
+/* visible base text stays as the decoded target */
+.roycss-text-scramble-decode::before {
+  content: "DECODE";
+  position: absolute;
+  inset: 0;
+  color: oklch(0.85 0.22 145);
+  text-shadow: inherit;
+  animation: roy-b16-scramble-cycle 3s steps(1, end) infinite;
+}
+.roycss-text-scramble-decode::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: -10px;
+  inline-size: 3px;
+  block-size: 1em;
+  background: oklch(0.85 0.22 145);
+  box-shadow: 0 0 8px oklch(0.85 0.22 145 / 0.9);
+  animation: roy-b16-scramble-cursor 0.9s steps(2, end) infinite;
+}
+@keyframes roy-b16-scramble-cycle {
+  0%   { content: "01010G"; opacity: 0.7; filter: blur(0.5px); }
+  14%  { content: "X#9@E)"; opacity: 0.85; }
+  28%  { content: "D3C0D3"; opacity: 0.95; }
+  42%  { content: "DE%OD3"; opacity: 1; }
+  57%  { content: "DEC0D3"; opacity: 1; }
+  71%  { content: "DECOD3"; opacity: 1; }
+  85%  { content: "DECODE"; opacity: 1; filter: blur(0); }
+  100% { content: "DECODE"; opacity: 1; }
+}
+@keyframes roy-b16-scramble-cursor {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* visible base text stays as the decoded target */
+.roycss-text-scramble-decode::before {
+    animation: none;
+  }
+  .roycss-text-scramble-decode::after {
+    animation: none;
+  }
+}
+
+
+/* Mesh Gradient Text */
+.roycss-text-gradient-mesh {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 72px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background:
+    radial-gradient(circle at 20% 30%, oklch(0.85 0.22 350), transparent 50%),
+    radial-gradient(circle at 80% 20%, oklch(0.80 0.22 200), transparent 50%),
+    radial-gradient(circle at 70% 80%, oklch(0.85 0.22 140), transparent 50%),
+    radial-gradient(circle at 20% 80%, oklch(0.82 0.22 60), transparent 50%),
+    linear-gradient(135deg, oklch(0.75 0.22 280), oklch(0.70 0.22 180));
+  background-size: 200% 200%, 180% 180%, 220% 220%, 160% 160%, 100% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: roy-b16-mesh-text 8s ease-in-out infinite;
+  filter: drop-shadow(0 4px 14px oklch(0.4 0.18 280 / 0.35));
+}
+@keyframes roy-b16-mesh-text {
+  0%, 100% {
+    background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%;
+  }
+  25% {
+    background-position: 100% 50%, 0% 100%, 0% 50%, 50% 0%, 50% 50%;
+  }
+  50% {
+    background-position: 50% 100%, 50% 0%, 0% 0%, 100% 50%, 100% 100%;
+  }
+  75% {
+    background-position: 0% 50%, 50% 100%, 100% 50%, 50% 0%, 50% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Mesh Gradient Text */
+.roycss-text-gradient-mesh {
+    animation: none;
+  }
+}
+
+
+/* Cyber Glitch 2.0 — requires data-text attribute */
+.roycss-text-cyber-glitch-2 {
+  position: relative;
+  color: oklch(0.92 0.15 200);
+  font-family: "Courier New", monospace;
+  font-weight: 900;
+  font-size: 48px;
+  letter-spacing: 2px;
+  text-shadow:
+    2px 0 oklch(0.75 0.3 0),
+    -2px 0 oklch(0.75 0.3 220);
+  animation: roy-glitch-2-main 3s infinite;
+}
+.roycss-text-cyber-glitch-2::before,
+.roycss-text-cyber-glitch-2::after {
+  content: attr(data-text);
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  pointer-events: none;
+}
+.roycss-text-cyber-glitch-2::before {
+  color: oklch(0.75 0.32 0);
+  text-shadow: 0 0 8px oklch(0.7 0.3 0 / 0.7);
+  animation: roy-glitch-2-red 2s infinite linear alternate;
+  clip-path: inset(0 0 55% 0);
+}
+.roycss-text-cyber-glitch-2::after {
+  color: oklch(0.75 0.32 220);
+  text-shadow: 0 0 8px oklch(0.7 0.3 220 / 0.7);
+  animation: roy-glitch-2-blue 2.4s infinite linear alternate;
+  clip-path: inset(55% 0 0 0);
+  background: repeating-linear-gradient(0deg,
+    transparent 0 3px,
+    oklch(0 0 0 / 0.15) 3px 4px);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+@keyframes roy-glitch-2-red {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-3px, 1px); }
+  40% { transform: translate(3px, -1px); }
+  60% { transform: translate(-2px, -1px); }
+  80% { transform: translate(2px, 1px); }
+}
+@keyframes roy-glitch-2-blue {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(3px, -1px); }
+  40% { transform: translate(-3px, 1px); }
+  60% { transform: translate(2px, 1px); }
+  80% { transform: translate(-2px, -1px); }
+}
+@keyframes roy-glitch-2-main {
+  0%, 90%, 100% { transform: translate(0); filter: none; }
+  92% { transform: translate(-2px, 1px); filter: hue-rotate(90deg); }
+  94% { transform: translate(2px, -1px); filter: hue-rotate(180deg); }
+  96% { transform: translate(-1px, 0); filter: hue-rotate(270deg) invert(0.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Cyber Glitch 2.0 — requires data-text attribute */
+.roycss-text-cyber-glitch-2 {
+    animation: none;
+  }
+  .roycss-text-cyber-glitch-2::before {
+    animation: none;
+  }
+  .roycss-text-cyber-glitch-2::after {
+    animation: none;
+  }
+}
+
+
+/* Neon Flicker 2.0 */
+.roycss-text-neon-flicker-2 {
+  color: oklch(0.95 0.2 195);
+  font-family: "Arial Black", sans-serif;
+  font-weight: 900;
+  font-size: 52px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 4px oklch(0.85 0.25 195),
+    0 0 11px oklch(0.8 0.3 195),
+    0 0 19px oklch(0.7 0.32 195),
+    0 0 40px oklch(0.6 0.35 195),
+    0 0 80px oklch(0.5 0.4 195);
+  animation: roy-neon-2-flicker 3.2s infinite,
+             roy-neon-2-buzz 0.08s infinite;
+}
+@keyframes roy-neon-2-flicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    opacity: 1;
+    text-shadow:
+      0 0 4px oklch(0.85 0.25 195),
+      0 0 11px oklch(0.8 0.3 195),
+      0 0 19px oklch(0.7 0.32 195),
+      0 0 40px oklch(0.6 0.35 195),
+      0 0 80px oklch(0.5 0.4 195);
+  }
+  20%, 24%, 55% {
+    opacity: 0.4;
+    text-shadow:
+      0 0 2px oklch(0.85 0.25 195 / 0.5);
+  }
+  30%, 50% {
+    opacity: 0.85;
+    text-shadow:
+      0 0 4px oklch(0.85 0.25 195),
+      0 0 8px oklch(0.8 0.3 195 / 0.7);
+  }
+}
+@keyframes roy-neon-2-buzz {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(0.3px, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Neon Flicker 2.0 */
+.roycss-text-neon-flicker-2 {
+    animation: none;
+  }
+}
+
+
+/* Typewriter Stream — single-line streaming text */
+.roycss-text-typewriter-stream {
+  display: inline-block;
+  color: oklch(0.85 0.18 150);
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  font-size: 32px;
+  letter-spacing: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  border-inline-end: 3px solid oklch(0.8 0.25 150);
+  width: 0;
+  animation:
+    roy-type-stream 6s steps(11) infinite,
+    roy-caret-stream 0.7s step-end infinite;
+  text-shadow:
+    0 0 8px oklch(0.7 0.25 150 / 0.6),
+    0 0 16px oklch(0.6 0.3 150 / 0.3);
+}
+@keyframes roy-type-stream {
+  0% { width: 0; }
+  40% { width: 11ch; }
+  60% { width: 11ch; }
+  100% { width: 0; }
+}
+@keyframes roy-caret-stream {
+  0%, 100% { border-inline-end-color: oklch(0.8 0.25 150); }
+  50% { border-inline-end-color: transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Typewriter Stream — single-line streaming text */
+.roycss-text-typewriter-stream {
+    animation: none;
+  }
+}
+
+
+/* Layered Depth Text */
+.roycss-text-depth-layered {
+  position: relative;
+  display: inline-block;
+  color: oklch(0.85 0.2 35);
+  font-family: "Impact", "Arial Black", sans-serif;
+  font-weight: 900;
+  font-size: 64px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow:
+    1px 1px 0 oklch(0.7 0.22 30),
+    2px 2px 0 oklch(0.65 0.22 28),
+    3px 3px 0 oklch(0.6 0.22 26),
+    4px 4px 0 oklch(0.55 0.22 24),
+    5px 5px 0 oklch(0.5 0.22 22),
+    6px 6px 0 oklch(0.45 0.22 20),
+    7px 7px 0 oklch(0.4 0.22 18),
+    8px 8px 0 oklch(0.35 0.22 16),
+    9px 9px 0 oklch(0.3 0.2 14),
+    10px 10px 0 oklch(0.25 0.18 12),
+    11px 11px 0 oklch(0.2 0.16 10),
+    12px 12px 0 oklch(0.15 0.14 8),
+    13px 13px 6px oklch(0 0 0 / 0.4);
+  background: linear-gradient(180deg,
+    oklch(0.95 0.15 45) 0%,
+    oklch(0.75 0.22 35) 50%,
+    oklch(0.55 0.25 25) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px oklch(0 0 0 / 0.3));
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.roycss-text-depth-layered:hover {
+  transform: perspective(500px) rotateX(20deg) translateZ(20px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Layered Depth Text */
+.roycss-text-depth-layered {
+    transition: none;
+  }
+}
+
+
+/* Aurora Gradient Text */
+.roycss-text-aurora-gradient-b18 {
+  background: linear-gradient(
+    90deg,
+    oklch(0.7 0.2 150),
+    oklch(0.65 0.25 200),
+    oklch(0.7 0.2 280),
+    oklch(0.65 0.25 330),
+    oklch(0.7 0.2 150)
+  );
+  background-size: 300% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: roy-b18-text-aurora 5s linear infinite;
+}
+
+@keyframes roy-b18-text-aurora {
+  to { background-position: 300% center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-text-aurora-gradient-b18 { animation: none; }
+}
+
+/* Glow Pulse Text */
+.roycss-text-glow-pulse-b18 {
+  color: oklch(0.85 0.15 200);
+  text-shadow: 0 0 10px color-mix(in oklch, oklch(0.6 0.2 200) 50%, transparent);
+  animation: roy-b18-text-glow-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes roy-b18-text-glow-pulse {
+  0%, 100% {
+    text-shadow: 0 0 10px color-mix(in oklch, oklch(0.6 0.2 200) 30%, transparent);
+  }
+  50% {
+    text-shadow:
+      0 0 20px color-mix(in oklch, oklch(0.7 0.25 200) 60%, transparent),
+      0 0 40px color-mix(in oklch, oklch(0.6 0.2 200) 30%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-text-glow-pulse-b18 { animation: none; }
+}
+
+/* Shimmer Sweep Text */
+.roycss-text-shimmer-sweep-b18 {
+  background: linear-gradient(
+    90deg,
+    oklch(0.5 0.1 200) 0%,
+    oklch(0.5 0.1 200) 40%,
+    oklch(0.95 0.05 200) 50%,
+    oklch(0.5 0.1 200) 60%,
+    oklch(0.5 0.1 200) 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: roy-b18-text-shimmer-sweep 3s linear infinite;
+}
+
+@keyframes roy-b18-text-shimmer-sweep {
+  to { background-position: -200% center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-text-shimmer-sweep-b18 { animation: none; }
+}
+
+/* Outline to Fill Text */
+.roycss-text-outline-fill-b18 {
+  color: transparent;
+  -webkit-text-stroke: 2px oklch(0.7 0.2 162);
+  transition: all 0.4s ease;
+}
+
+.roycss-text-outline-fill-b18:hover {
+  color: oklch(0.7 0.2 162);
+  -webkit-text-stroke: 2px transparent;
+  text-shadow: 0 0 20px color-mix(in oklch, oklch(0.7 0.2 162) 40%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Outline to Fill Text */
+.roycss-text-outline-fill-b18 {
+    transition: none;
+  }
+}
+
+
+/* Gradient Mask Text */
+.roycss-text-gradient-mask-b18 {
+  background: linear-gradient(
+    135deg,
+    oklch(0.7 0.2 162) 0%,
+    oklch(0.65 0.25 200) 50%,
+    oklch(0.6 0.2 280) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Neon Sign */
+.roycss-text-neon-sign-b19 {
+  color: oklch(0.85 0.2 330);
+  text-shadow:
+    0 0 5px oklch(0.7 0.25 330),
+    0 0 10px oklch(0.7 0.25 330),
+    0 0 20px oklch(0.6 0.25 330),
+    0 0 40px oklch(0.5 0.25 330);
+  animation: roy-neon-flicker 3s linear infinite;
+}
+
+@keyframes roy-neon-flicker {
+  0%, 100% { opacity: 1; }
+  41% { opacity: 1; }
+  42% { opacity: 0.8; }
+  43% { opacity: 1; }
+  45% { opacity: 0.3; }
+  46% { opacity: 1; }
+  77% { opacity: 1; }
+  78% { opacity: 0.5; }
+  79% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-text-neon-sign-b19 { animation: none; }
+}
+
+/* Retro Outline */
+.roycss-text-retro-outline {
+  color: transparent;
+  -webkit-text-stroke: 2px oklch(0.8 0.2 320);
+  text-shadow: 3px 3px 0 oklch(0.5 0.25 200);
+}
+
+/* Animated Gradient Text */
+.roycss-text-gradient-animated {
+  background: linear-gradient(
+    90deg,
+    oklch(0.7 0.2 162),
+    oklch(0.65 0.25 200),
+    oklch(0.7 0.2 280),
+    oklch(0.65 0.25 330),
+    oklch(0.7 0.2 162)
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: roy-text-gradient-flow 4s linear infinite;
+}
+
+@keyframes roy-text-gradient-flow {
+  to { background-position: 200% center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-text-gradient-animated { animation: none; }
+}
+
+/* 3D Extrude Text */
+.roycss-text-3d-extrude {
+  color: oklch(0.7 0.2 162);
+  text-shadow:
+    1px 1px 0 oklch(0.6 0.18 162),
+    2px 2px 0 oklch(0.5 0.16 162),
+    3px 3px 0 oklch(0.45 0.14 162),
+    4px 4px 0 oklch(0.4 0.12 162),
+    5px 5px 0 oklch(0.35 0.1 162),
+    6px 6px 10px color-mix(in oklch, oklch(0.1 0.02 250) 50%, transparent);
+}
+
+/* Spaced Tracking */
+.roycss-text-spaced-tracking {
+  letter-spacing: 0.5em;
+  transition: letter-spacing 0.5s ease;
+}
+
+.roycss-text-spaced-tracking:hover {
+  letter-spacing: 0.05em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Spaced Tracking */
+.roycss-text-spaced-tracking {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-text-gradient {
+  background: linear-gradient(135deg, oklch(0.627 0.164 271.53), oklch(0.501 0.138 304.73), oklch(0.795 0.172 323.15));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.roycss-ferrum-text-shadow-pop {
+  animation: roy-ferrum-text-shadow-pop-anim 0.5s ease both;
+}
+
+@keyframes roy-ferrum-text-shadow-pop-anim {
+
+  0% {
+    text-shadow: 0 0 0 color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+    transform: scale(1);
+  }
+  50% {
+    text-shadow: 4px 4px 0 color-mix(in oklch, oklch(0.627 0.164 271.53) 40%, transparent);
+    transform: scale(1.06);
+  }
+  100% {
+    text-shadow: 3px 3px 0 color-mix(in oklch, oklch(0 0 0) 20%, transparent);
+    transform: scale(1);
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-shadow-pop {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-text-stroke {
+  -webkit-text-stroke: 2px oklch(0.627 0.164 271.53);
+  -webkit-text-fill-color: transparent;
+}
+
+.roycss-ferrum-text-glow {
+  animation: roy-ferrum-text-glow-anim 2s ease-in-out infinite alternate;
+}
+
+@keyframes roy-ferrum-text-glow-anim {
+
+  0% { text-shadow: 0 0 5px oklch(0.627 0.164 271.53), 0 0 10px oklch(0.627 0.164 271.53); }
+  100% { text-shadow: 0 0 10px oklch(0.627 0.164 271.53), 0 0 20px oklch(0.627 0.164 271.53), 0 0 40px oklch(0.501 0.138 304.73); }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-glow {
+    animation: none;
+  }
+}
+
+
+/* Typewriter — types out with a blinking caret */
+.roycss-ferrum-text-typewriter {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  inline-size: 0;
+  border-inline-end: 2px solid oklch(0.627 0.164 271.53);
+  animation:
+    roy-ferrum-text-typewriter-type 3s steps(24) forwards,
+    roy-ferrum-text-typewriter-cursor 0.75s step-end infinite;
+}
+
+@keyframes roy-ferrum-text-typewriter-type {
+  to { inline-size: 100%; }
+}
+
+@keyframes roy-ferrum-text-typewriter-cursor {
+  0%, 100% { border-inline-end-color: oklch(0.627 0.164 271.53); }
+  50%      { border-inline-end-color: transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Typewriter — types out with a blinking caret */
+.roycss-ferrum-text-typewriter {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-text-blur-in {
+  animation: roy-ferrum-text-blur-in-anim 1.2s ease forwards;
+}
+
+@keyframes roy-ferrum-text-blur-in-anim {
+
+  0% { filter: blur(12px); opacity: 0; }
+  100% { filter: blur(0); opacity: 1; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-blur-in {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-text-highlight {
+  background: linear-gradient(to right, color-mix(in oklch, oklch(0.627 0.164 271.53) 30%, transparent) 50%, transparent 50%);
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  display: inline;
+  animation: roy-ferrum-text-highlight-anim 1.5s ease forwards;
+}
+
+@keyframes roy-ferrum-text-highlight-anim {
+
+  0% { background-position: 100% 0; }
+  100% { background-position: 0 0; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-highlight {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-text-underline-slide {
+  position: relative;
+  display: inline-block;
+}
+.roycss-ferrum-text-underline-slide::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: oklch(0.627 0.164 271.53);
+  transform: scaleX(0);
+  transform-origin: right;
+  animation: roy-ferrum-text-underline-slide-anim 0.8s ease forwards 0.3s;
+}
+
+@keyframes roy-ferrum-text-underline-slide-anim {
+
+  0% { transform: scaleX(0); transform-origin: right; }
+  100% { transform: scaleX(1); transform-origin: left; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-underline-slide::after {
+    animation: none;
+  }
+}
+
+
+/* Text Blink */
+.roycss-ferrum-text-blink {
+  animation: roy-ferrum-text-blink-anim 1s step-end infinite;
+}
+
+@keyframes roy-ferrum-text-blink-anim {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text Blink */
+.roycss-ferrum-text-blink {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-text-3d {
+  color: oklch(0.387 0.0 89.88);
+  text-shadow:
+    1px 1px 0 oklch(0.907 0.0 89.88),
+    2px 2px 0 oklch(0.858 0.0 89.88),
+    3px 3px 0 oklch(0.808 0.0 89.88),
+    4px 4px 0 oklch(0.757 0.0 89.88),
+    5px 5px 0 oklch(0.706 0.0 89.88),
+    6px 6px 0 oklch(0.653 0.0 89.88),
+    7px 7px 5px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
+}
+
+.roycss-ferrum-text-neon-flicker {
+  color: oklch(1 0 0);
+  animation: roy-ferrum-text-neon-flicker-anim 4s infinite alternate;
+}
+
+@keyframes roy-ferrum-text-neon-flicker-anim {
+
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    text-shadow:
+      0 0 4px oklch(0.968 0.211 109.77),
+      0 0 11px oklch(0.968 0.211 109.77),
+      0 0 19px oklch(0.968 0.211 109.77),
+      0 0 40px oklch(0.683 0.303 335.86),
+      0 0 80px oklch(0.683 0.303 335.86);
+  }
+  20%, 24%, 55% {
+    text-shadow: none;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-neon-flicker {
+    animation: none;
+  }
+}
+
+
+/* Text Rainbow */
+.roycss-ferrum-text-rainbow {
+  background: linear-gradient(
+    90deg,
+    oklch(0.628 0.258 29.23), oklch(0.744 0.181 56.46), oklch(0.968 0.211 109.77),
+    oklch(0.866 0.295 142.5), oklch(0.632 0.202 254.09), oklch(0.539 0.294 296.54),
+    oklch(0.648 0.263 359.98), oklch(0.628 0.258 29.23)
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: roy-ferrum-text-rainbow-anim 3s linear infinite;
+}
+
+@keyframes roy-ferrum-text-rainbow-anim {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Text Rainbow */
+.roycss-ferrum-text-rainbow {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-text-glitch {
+  position: relative;
+  display: inline-block;
+}
+.roycss-ferrum-text-glitch::before,
+.roycss-ferrum-text-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  inset-inline-start: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.roycss-ferrum-text-glitch::before {
+  color: oklch(0.968 0.211 109.77);
+  animation: roy-ferrum-text-glitch-1 2s infinite linear alternate-reverse;
+}
+.roycss-ferrum-text-glitch::after {
+  color: oklch(0.905 0.155 194.77);
+  animation: roy-ferrum-text-glitch-2 2s infinite linear alternate-reverse;
+}
+
+@keyframes roy-ferrum-text-glitch-1 {
+
+  0%   { clip-path: inset(20% 0 60% 0); transform: translate(-3px, 0); }
+  20%  { clip-path: inset(60% 0 10% 0); transform: translate(3px, 0); }
+  40%  { clip-path: inset(40% 0 30% 0); transform: translate(-2px, 0); }
+  60%  { clip-path: inset(70% 0 5% 0);  transform: translate(2px, 0); }
+  80%  { clip-path: inset(10% 0 70% 0); transform: translate(-3px, 0); }
+  100% { clip-path: inset(50% 0 20% 0); transform: translate(3px, 0); }
+
+}
+
+@keyframes roy-ferrum-text-glitch-2 {
+
+  0%   { clip-path: inset(70% 0 10% 0); transform: translate(3px, 0); }
+  20%  { clip-path: inset(10% 0 70% 0); transform: translate(-3px, 0); }
+  40%  { clip-path: inset(50% 0 20% 0); transform: translate(2px, 0); }
+  60%  { clip-path: inset(20% 0 60% 0); transform: translate(-2px, 0); }
+  80%  { clip-path: inset(60% 0 10% 0); transform: translate(3px, 0); }
+  100% { clip-path: inset(30% 0 40% 0); transform: translate(-3px, 0); }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-glitch::before {
+    animation: none;
+  }
+  .roycss-ferrum-text-glitch::after {
+    animation: none;
+  }
+}
+
+
+/* Text Reveal */
+.roycss-ferrum-text-reveal {
+  overflow: hidden;
+  display: inline-block;
+}
+.roycss-ferrum-text-reveal span {
+  display: inline-block;
+  transform: translateY(110%);
+  animation: roy-ferrum-text-reveal-anim 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.roycss-ferrum-text-reveal span:nth-child(1)  { animation-delay: 0.05s; }
+.roycss-ferrum-text-reveal span:nth-child(2)  { animation-delay: 0.10s; }
+.roycss-ferrum-text-reveal span:nth-child(3)  { animation-delay: 0.15s; }
+.roycss-ferrum-text-reveal span:nth-child(4)  { animation-delay: 0.20s; }
+.roycss-ferrum-text-reveal span:nth-child(5)  { animation-delay: 0.25s; }
+.roycss-ferrum-text-reveal span:nth-child(6)  { animation-delay: 0.30s; }
+.roycss-ferrum-text-reveal span:nth-child(7)  { animation-delay: 0.35s; }
+.roycss-ferrum-text-reveal span:nth-child(8)  { animation-delay: 0.40s; }
+.roycss-ferrum-text-reveal span:nth-child(9)  { animation-delay: 0.45s; }
+.roycss-ferrum-text-reveal span:nth-child(10) { animation-delay: 0.50s; }
+
+@keyframes roy-ferrum-text-reveal-anim {
+  0%   { transform: translateY(110%); }
+  100% { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-reveal span {
+    animation: none;
+  }
+  .roycss-ferrum-text-reveal span:nth-child(1) {
+    animation: none;
+  }
+  .roycss-ferrum-text-reveal span:nth-child(2) {
+    animation: none;
+  }
+  .roycss-ferrum-text-reveal span:nth-child(3) {
+    animation: none;
+  }
+  .roycss-ferrum-text-reveal span:nth-child(4) {
+    animation: none;
+  }
+  .roycss-ferrum-text-reveal span:nth-child(5) {
+    animation: none;
+  }
+  .roycss-ferrum-text-reveal span:nth-child(6) {
+    animation: none;
+  }
+  .roycss-ferrum-text-reveal span:nth-child(7) {
+    animation: none;
+  }
+  .roycss-ferrum-text-reveal span:nth-child(8) {
+    animation: none;
+  }
+  .roycss-ferrum-text-reveal span:nth-child(9) {
+    animation: none;
+  }
+  .roycss-ferrum-text-reveal span:nth-child(10) {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-text-3d-cinema {
+  display: inline-block;
+  position: relative;
+  font: 900 72px/1 'Arial Black', sans-serif;
+  letter-spacing: 0.06em;
+  color: oklch(0.973 0.051 97.64);
+  padding: 30px 40px;
+  background: linear-gradient(180deg, oklch(0.179 0.037 79.02) 0%, oklch(0 0 0) 100%);
+  border-radius: 10px;
+  text-shadow:
+    1px 1px 0 oklch(0.541 0.104 84.45),
+    2px 2px 0 oklch(0.541 0.104 84.45),
+    3px 3px 0 oklch(0.48 0.092 85.67),
+    4px 4px 0 oklch(0.48 0.092 85.67),
+    5px 5px 0 oklch(0.412 0.078 85.41),
+    6px 6px 0 oklch(0.412 0.078 85.41),
+    7px 7px 0 oklch(0.343 0.064 86.93),
+    8px 8px 0 oklch(0.343 0.064 86.93),
+    9px 9px 0 oklch(0.266 0.047 88.38),
+    10px 10px 0 oklch(0.266 0.047 88.38),
+    11px 11px 8px color-mix(in oklch, oklch(0 0 0) 60%, transparent),
+    14px 14px 20px color-mix(in oklch, oklch(0 0 0) 80%, transparent);
+  background-clip: border-box;
+  filter: drop-shadow(0 0 12px color-mix(in oklch, oklch(0.861 0.147 83.67) 40%, transparent));
+  animation: roy-b11-text-3d-cinema-light 4s ease-in-out infinite;
+}
+
+@keyframes roy-b11-text-3d-cinema-light {
+
+  0%, 100% { filter: drop-shadow(0 0 12px color-mix(in oklch, oklch(0.861 0.147 83.67) 40%, transparent)) brightness(1); }
+  50%      { filter: drop-shadow(0 0 24px color-mix(in oklch, oklch(0.861 0.147 83.67) 70%, transparent)) brightness(1.15); }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-3d-cinema {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-text-3d-shadow {
+  color: oklch(0.982 0.018 155.83);
+  text-shadow:
+    1px 1px 0 oklch(0.432 0.086 166.91),
+    2px 2px 0 oklch(0.508 0.105 165.61),
+    3px 3px 0 oklch(0.596 0.127 163.23),
+    4px 4px 0 oklch(0.696 0.149 162.48),
+    5px 5px 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent),
+    6px 6px 10px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+  font-weight: 700;
+}
+
+.roycss-ferrum-text-blur-reveal {
+  color: oklch(0.696 0.149 162.48);
+  font-weight: 700;
+  animation: roy-blur-reveal 4s ease-in-out infinite;
+}
+
+@keyframes roy-blur-reveal {
+
+  0%, 100% { filter: blur(8px); opacity: 0.4; }
+  50% { filter: blur(0); opacity: 1; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-blur-reveal {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-text-bounce-letters {
+  display: inline-flex;
+  font-weight: 700;
+  color: oklch(0.685 0.131 226.94);
+}
+
+.roycss-ferrum-text-chrome {
+  background: linear-gradient(
+    180deg,
+    oklch(0.962 0.058 95.62) 0%,
+    oklch(0.984 0.003 247.86) 25%,
+    oklch(0.711 0.035 256.79) 50%,
+    oklch(0.984 0.003 247.86) 75%,
+    oklch(0.869 0.02 252.89) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 800;
+  letter-spacing: 1px;
+  filter: drop-shadow(0 2px 2px color-mix(in oklch, oklch(0 0 0) 40%, transparent));
+}
+
+.roycss-ferrum-text-emboss {
+  display: inline-block;
+  font: 900 64px/1 'Georgia', serif;
+  letter-spacing: 0.05em;
+  color: oklch(0.482 0.042 69.22);
+  padding: 24px 36px;
+  background:
+    radial-gradient(ellipse 60% 40% at 30% 30%, color-mix(in oklch, oklch(0.959 0.042 84.58) 30%, transparent), transparent 60%),
+    linear-gradient(135deg, oklch(0.73 0.048 79.93) 0%, oklch(0.587 0.045 81.46) 50%, oklch(0.674 0.06 84.3) 100%);
+  border-radius: 8px;
+  box-shadow:
+    inset 4px 4px 8px color-mix(in oklch, oklch(0.984 0.027 95.33) 40%, transparent),
+    inset -4px -4px 8px color-mix(in oklch, oklch(0.243 0.03 76.73) 40%, transparent),
+    0 6px 20px color-mix(in oklch, oklch(0.243 0.03 76.73) 40%, transparent);
+  text-shadow:
+    1px 1px 1px color-mix(in oklch, oklch(0.971 0.034 88.77) 70%, transparent),
+    -1px -1px 1px color-mix(in oklch, oklch(0.201 0.025 65.66) 80%, transparent),
+    0 4px 6px color-mix(in oklch, oklch(0.201 0.025 65.66) 40%, transparent);
+  background-clip: border-box;
+}
+
+.roycss-ferrum-text-fire {
+  font-weight: 800;
+  color: oklch(0.905 0.166 98.11);
+  text-shadow:
+    0 -2px 4px oklch(0.945 0.124 101.54),
+    0 -3px 6px oklch(0.905 0.166 98.11),
+    0 -6px 10px oklch(0.861 0.173 91.94),
+    0 -10px 16px oklch(0.769 0.188 70.08),
+    0 -16px 24px oklch(0.646 0.194 41.12),
+    0 -22px 32px oklch(0.577 0.215 27.33);
+  animation: roy-fire-flicker 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes roy-fire-flicker {
+
+  from { filter: brightness(1) hue-rotate(0deg); }
+  to { filter: brightness(1.15) hue-rotate(-8deg); }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-fire {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-text-fire-flame {
+  display: inline-block;
+  position: relative;
+  font: 900 80px/1 'Arial Black', sans-serif;
+  letter-spacing: 0.05em;
+  color: oklch(1 0 0);
+  padding: 30px 36px;
+  background: oklch(0.121 0.025 82.32);
+  border-radius: 8px;
+  text-shadow:
+    0 -2px 4px oklch(1 0 0),
+    0 -4px 8px oklch(0.908 0.157 96.48),
+    0 -8px 14px oklch(0.751 0.179 58.28),
+    0 -14px 22px oklch(0.644 0.243 32.25),
+    0 -22px 32px oklch(0.527 0.211 30.14),
+    0 2px 4px color-mix(in oklch, oklch(0.527 0.211 30.14) 80%, transparent);
+  animation: roy-b11-text-fire-flame 0.6s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 12px color-mix(in oklch, oklch(0.671 0.221 37.64) 70%, transparent));
+}
+
+@keyframes roy-b11-text-fire-flame {
+
+  0%   { text-shadow: 0 -2px 4px oklch(1 0 0), 0 -4px 8px oklch(0.908 0.157 96.48), 0 -8px 14px oklch(0.751 0.179 58.28), 0 -14px 22px oklch(0.644 0.243 32.25), 0 -22px 32px oklch(0.527 0.211 30.14), 0 2px 4px color-mix(in oklch, oklch(0.527 0.211 30.14) 80%, transparent); transform: translateY(0); }
+  100% { text-shadow: 0 -2px 6px oklch(1 0 0), 0 -6px 10px oklch(0.908 0.157 96.48), 0 -12px 18px oklch(0.751 0.179 58.28), 0 -20px 28px oklch(0.644 0.243 32.25), 0 -30px 42px oklch(0.527 0.211 30.14), 0 2px 6px color-mix(in oklch, oklch(0.527 0.211 30.14) 90%, transparent); transform: translateY(-2px); }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-fire-flame {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-text-flip {
+  display: inline-block;
+  font-weight: 700;
+  color: oklch(0.566 0.245 278.69);
+  transform-style: preserve-3d;
+  perspective: 400px;
+  animation: roy-text-flip 3s ease-in-out infinite;
+}
+
+@keyframes roy-text-flip {
+
+  0%, 100% { transform: rotateX(0); }
+  50% { transform: rotateX(360deg); }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-flip {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-text-gradient-shift {
+  background: linear-gradient(45deg, oklch(0.696 0.149 162.48), oklch(0.685 0.131 226.94), oklch(0.566 0.245 278.69), oklch(0.652 0.241 354.31), oklch(0.696 0.149 162.48));
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 700;
+  animation: roy-text-grad-shift 6s ease infinite;
+}
+
+@keyframes roy-text-grad-shift {
+
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-gradient-shift {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-text-highlight-marker {
+  font-weight: 700;
+  color: oklch(0.21 0.034 264.67);
+  background: linear-gradient(180deg, transparent 50%, oklch(0.905 0.166 98.11) 50%);
+  padding: 0 4px;
+}
+
+.roycss-ferrum-text-holographic {
+  background: conic-gradient(
+    from 0deg,
+    oklch(0.741 0.2 345.28), oklch(0.893 0.167 94.55), oklch(0.774 0.148 148.57), oklch(0.776 0.112 188.54), oklch(0.709 0.159 293.54), oklch(0.741 0.2 345.28)
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 700;
+  filter: drop-shadow(0 0 6px color-mix(in oklch, oklch(0.741 0.2 345.28) 50%, transparent));
+  animation: roy-holo-shift 5s linear infinite;
+}
+
+@keyframes roy-holo-shift {
+
+  from { background-position: 0% 0%; }
+  to { background-position: 200% 200%; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-holographic {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-text-mirror {
+  display: inline-flex;
+  font-weight: 700;
+  color: oklch(0.566 0.245 278.69);
+}
+
+.roycss-ferrum-text-neon-glow {
+  color: oklch(0.696 0.149 162.48);
+  text-shadow:
+    0 0 7px color-mix(in oklch, oklch(0.696 0.149 162.48) 80%, transparent),
+    0 0 10px color-mix(in oklch, oklch(0.696 0.149 162.48) 60%, transparent),
+    0 0 21px color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent),
+    0 0 42px color-mix(in oklch, oklch(0.696 0.149 162.48) 20%, transparent),
+    0 0 82px color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent);
+}
+
+.roycss-ferrum-text-neon-sign {
+  display: inline-block;
+  font: 900 72px/1 'Arial Black', sans-serif;
+  letter-spacing: 0.08em;
+  color: oklch(1 0 0);
+  text-shadow:
+    0 0 4px oklch(1 0 0),
+    0 0 10px oklch(0.683 0.303 335.86),
+    0 0 22px oklch(0.683 0.303 335.86),
+    0 0 40px oklch(0.683 0.303 335.86),
+    0 0 70px oklch(0.683 0.303 335.86),
+    0 0 100px oklch(0.683 0.303 335.86);
+  padding: 20px 30px;
+  background: radial-gradient(ellipse at 50% 50%, oklch(0.194 0.08 297.65) 0%, oklch(0.096 0.051 300.12) 100%);
+  border-radius: 12px;
+  animation: roy-b11-text-neon-flicker 4s linear infinite;
+}
+
+@keyframes roy-b11-text-neon-flicker {
+
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    opacity: 1;
+    text-shadow:
+      0 0 4px oklch(1 0 0),
+      0 0 10px oklch(0.683 0.303 335.86),
+      0 0 22px oklch(0.683 0.303 335.86),
+      0 0 40px oklch(0.683 0.303 335.86),
+      0 0 70px oklch(0.683 0.303 335.86),
+      0 0 100px oklch(0.683 0.303 335.86);
+  }
+  20%, 24%, 55% {
+    opacity: 0.6;
+    text-shadow: 0 0 2px oklch(1 0 0), 0 0 4px oklch(0.683 0.303 335.86);
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-neon-sign {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-text-outline-offset {
+  font-weight: 700;
+  color: oklch(0.696 0.149 162.48);
+  -webkit-text-stroke: 2px color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent);
+  text-shadow:
+    4px 4px 0 color-mix(in oklch, oklch(0.685 0.131 226.94) 50%, transparent),
+    8px 8px 0 color-mix(in oklch, oklch(0.566 0.245 278.69) 40%, transparent);
+}
+
+.roycss-ferrum-text-reflection {
+  position: relative;
+  display: inline-block;
+  font-weight: 700;
+  color: oklch(0.685 0.131 226.94);
+}
+
+.roycss-ferrum-text-shadow-long {
+  color: oklch(0.982 0.018 155.83);
+  font-weight: 700;
+  text-shadow:
+    1px 1px 0 oklch(0.696 0.149 162.48),
+    2px 2px 0 oklch(0.596 0.127 162.48),
+    3px 3px 0 oklch(0.596 0.127 163.23),
+    4px 4px 0 oklch(0.508 0.105 165.61),
+    5px 5px 0 oklch(0.432 0.086 166.91),
+    6px 6px 0 oklch(0.378 0.073 168.94),
+    7px 7px 0 oklch(0.316 0.057 174.79),
+    8px 8px 0 oklch(0.273 0.05 171.23),
+    9px 9px 0 oklch(0.234 0.041 173.33),
+    10px 10px 12px color-mix(in oklch, oklch(0 0 0) 40%, transparent);
+}
+
+.roycss-ferrum-text-shadow-soft {
+  color: oklch(0.984 0.003 247.86);
+  font-weight: 600;
+  text-shadow:
+    0 1px 2px color-mix(in oklch, oklch(0 0 0) 18%, transparent),
+    0 4px 12px color-mix(in oklch, oklch(0.696 0.149 162.48) 25%, transparent),
+    0 8px 24px color-mix(in oklch, oklch(0.696 0.149 162.48) 15%, transparent);
+}
+
+.roycss-ferrum-text-shimmer {
+  background: linear-gradient(
+    110deg,
+    oklch(0.446 0.037 257.28) 0%,
+    oklch(0.446 0.037 257.28) 35%,
+    oklch(0.968 0.007 247.9) 50%,
+    oklch(0.446 0.037 257.28) 65%,
+    oklch(0.446 0.037 257.28) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 700;
+  animation: roy-shimmer-sweep 3s linear infinite;
+}
+
+@keyframes roy-shimmer-sweep {
+
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-shimmer {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-text-skew {
+  display: inline-block;
+  font-weight: 800;
+  font-style: italic;
+  color: oklch(0.984 0.003 247.86);
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.685 0.131 226.94));
+  padding: 4px 14px;
+  transform: skew(-10deg);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  box-shadow: 4px 4px 0 color-mix(in oklch, oklch(0 0 0) 25%, transparent);
+}
+
+.roycss-ferrum-text-stretch {
+  font-weight: 700;
+  color: oklch(0.769 0.188 70.08);
+  animation: roy-text-stretch 3s ease-in-out infinite;
+}
+
+@keyframes roy-text-stretch {
+
+  0%, 100% { letter-spacing: 0px; }
+  50% { letter-spacing: 12px; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-stretch {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-text-typing-cursor {
+  border-right: 3px solid oklch(0.696 0.149 162.48);
+  animation: roy-text-blink-cursor 1s step-end infinite;
+  padding-right: 4px;
+}
+
+@keyframes roy-text-blink-cursor {
+
+  0%, 100% { border-color: oklch(0.696 0.149 162.48); }
+  50% { border-color: transparent; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-typing-cursor {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-text-underline-draw {
+  position: relative;
+  display: inline-block;
+  font-weight: 700;
+  color: oklch(0.696 0.149 162.48);
+}
+
+.roycss-ferrum-text-water {
+  display: inline-block;
+  position: relative;
+  font: 900 72px/1 'Arial Black', sans-serif;
+  letter-spacing: 0.08em;
+  color: transparent;
+  background:
+    linear-gradient(180deg,
+      color-mix(in oklch, oklch(1 0 0) 90%, transparent) 0%,
+      color-mix(in oklch, oklch(0.898 0.062 229.91) 70%, transparent) 30%,
+      color-mix(in oklch, oklch(0.731 0.117 233.39) 60%, transparent) 55%,
+      color-mix(in oklch, oklch(0.505 0.144 254.88) 80%, transparent) 80%,
+      color-mix(in oklch, oklch(0.289 0.097 260.21) 90%, transparent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  padding: 18px 30px;
+  text-shadow:
+    0 1px 0 color-mix(in oklch, oklch(1 0 0) 50%, transparent),
+    0 -1px 0 color-mix(in oklch, oklch(0.233 0.068 251.16) 60%, transparent);
+  filter: drop-shadow(0 4px 6px color-mix(in oklch, oklch(0.424 0.119 249.77) 50%, transparent));
+  animation: roy-b11-text-water-ripple 3s ease-in-out infinite;
+}
+
+@keyframes roy-b11-text-water-ripple {
+
+  0%, 100% { filter: drop-shadow(0 4px 6px color-mix(in oklch, oklch(0.424 0.119 249.77) 50%, transparent)) hue-rotate(0deg); }
+  50%      { filter: drop-shadow(0 4px 8px color-mix(in oklch, oklch(0.424 0.119 249.77) 70%, transparent)) hue-rotate(15deg); }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-text-water {
+    animation: none;
+  }
+}
+
+
+/* VFX Glitch Text */
+.roycss-vfx-glitch-text {
+  position: relative;
+  display: inline-block;
+  font-weight: 800;
+  color: oklch(0.96 0.02 240);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.06em;
+  text-shadow: 0 0 1px oklch(0.96 0.02 240);
+}
+.roycss-vfx-glitch-text::before,
+.roycss-vfx-glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.roycss-vfx-glitch-text::before {
+  color: oklch(0.65 0.28 25);
+  animation: roy-vfx-glitch-r 2.4s steps(2, end) infinite;
+  clip-path: inset(0 0 60% 0);
+}
+.roycss-vfx-glitch-text::after {
+  color: oklch(0.65 0.28 200);
+  animation: roy-vfx-glitch-b 2.4s steps(2, end) infinite;
+  clip-path: inset(60% 0 0 0);
+}
+/* Fallback content so the chromatic split shows even without data-text */
+.roycss-vfx-glitch-text::before { content: "RoyCSS"; }
+.roycss-vfx-glitch-text::after  { content: "RoyCSS"; }
+@keyframes roy-vfx-glitch-r {
+  0%, 100% { transform: translate(0, 0); }
+  20%      { transform: translate(-3px, 1px); }
+  40%      { transform: translate(2px, -1px); }
+  60%      { transform: translate(-2px, 2px); }
+  80%      { transform: translate(1px, -2px); }
+}
+@keyframes roy-vfx-glitch-b {
+  0%, 100% { transform: translate(0, 0); }
+  20%      { transform: translate(3px, -1px); }
+  40%      { transform: translate(-2px, 1px); }
+  60%      { transform: translate(2px, -2px); }
+  80%      { transform: translate(-1px, 2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-glitch-text::before,
+  .roycss-vfx-glitch-text::after { animation: none; opacity: 0; }
+}
+
+/* VFX Neon Glow Text */
+.roycss-vfx-neon-glow-text {
+  display: inline-block;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: oklch(0.95 0.18 195);
+  text-transform: uppercase;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  animation: roy-vfx-neon-glow 2.5s ease-in-out infinite;
+}
+@keyframes roy-vfx-neon-glow {
+  0%, 100% {
+    text-shadow:
+      0 0 4px oklch(0.95 0.18 195),
+      0 0 12px oklch(0.85 0.22 195 / 0.7),
+      0 0 28px oklch(0.78 0.24 195 / 0.45),
+      0 0 48px oklch(0.72 0.26 195 / 0.25);
+  }
+  50% {
+    text-shadow:
+      0 0 2px oklch(0.95 0.18 195),
+      0 0 6px oklch(0.85 0.22 195 / 0.5),
+      0 0 14px oklch(0.78 0.24 195 / 0.3),
+      0 0 24px oklch(0.72 0.26 195 / 0.15);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-neon-glow-text { animation: none; }
+}
+
+/* VFX Animated Gradient Text */
+.roycss-vfx-gradient-text-animated {
+  display: inline-block;
+  font-weight: 800;
+  background: linear-gradient(
+    90deg,
+    oklch(0.72 0.22 35) 0%,
+    oklch(0.78 0.20 290) 25%,
+    oklch(0.78 0.18 195) 50%,
+    oklch(0.78 0.22 145) 75%,
+    oklch(0.72 0.22 35) 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: roy-vfx-gradient-sweep 4s linear infinite;
+}
+@keyframes roy-vfx-gradient-sweep {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 250% 0%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-gradient-text-animated { animation: none; }
+}
+
+/* VFX Text Distortion */
+.roycss-vfx-text-distortion {
+  display: inline-block;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: oklch(0.92 0.10 290);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  transform-origin: center;
+  animation: roy-vfx-distort 2.6s ease-in-out infinite;
+}
+@keyframes roy-vfx-distort {
+  0%, 100% { transform: skewX(0deg)  scaleX(1)    scaleY(1); }
+  20%      { transform: skewX(-12deg) scaleX(1.08) scaleY(0.92); }
+  40%      { transform: skewX(8deg)   scaleX(0.94) scaleY(1.06); }
+  60%      { transform: skewX(-6deg)  scaleX(1.04) scaleY(0.97); }
+  80%      { transform: skewX(10deg)  scaleX(0.98) scaleY(1.03); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-text-distortion { animation: none; }
+}
+
+/* VFX Wave Text — wrap each character in a <span> */
+.roycss-vfx-wave-text {
+  display: inline-flex;
+  font-weight: 800;
+  color: oklch(0.78 0.18 195);
+  letter-spacing: 0.05em;
+}
+.roycss-vfx-wave-text > span {
+  display: inline-block;
+  animation: roy-vfx-wave 1.6s ease-in-out infinite;
+}
+.roycss-vfx-wave-text > span:nth-child(1) { animation-delay: 0s;    }
+.roycss-vfx-wave-text > span:nth-child(2) { animation-delay: 0.08s; }
+.roycss-vfx-wave-text > span:nth-child(3) { animation-delay: 0.16s; }
+.roycss-vfx-wave-text > span:nth-child(4) { animation-delay: 0.24s; }
+.roycss-vfx-wave-text > span:nth-child(5) { animation-delay: 0.32s; }
+.roycss-vfx-wave-text > span:nth-child(6) { animation-delay: 0.40s; }
+.roycss-vfx-wave-text > span:nth-child(7) { animation-delay: 0.48s; }
+.roycss-vfx-wave-text > span:nth-child(8) { animation-delay: 0.56s; }
+@keyframes roy-vfx-wave {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-0.35em); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-wave-text > span { animation: none; }
+}
+
+/* VFX Layered Text Shadow */
+.roycss-vfx-text-shadow-anim {
+  display: inline-block;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: oklch(0.96 0.02 240);
+  animation: roy-vfx-shadow-drift 3.6s ease-in-out infinite;
+}
+@keyframes roy-vfx-shadow-drift {
+  0% {
+    text-shadow:
+      1px 1px 0 oklch(0.65 0.20 35),
+      2px 2px 0 oklch(0.65 0.20 35 / 0.8),
+      3px 3px 0 oklch(0.65 0.20 35 / 0.6),
+      4px 4px 8px oklch(0.65 0.20 35 / 0.4);
+  }
+  50% {
+    text-shadow:
+      -1px -1px 0 oklch(0.70 0.18 250),
+      -2px -2px 0 oklch(0.70 0.18 250 / 0.8),
+      -3px -3px 0 oklch(0.70 0.18 250 / 0.6),
+      -4px -4px 12px oklch(0.70 0.18 250 / 0.4);
+  }
+  100% {
+    text-shadow:
+      1px 1px 0 oklch(0.65 0.20 35),
+      2px 2px 0 oklch(0.65 0.20 35 / 0.8),
+      3px 3px 0 oklch(0.65 0.20 35 / 0.6),
+      4px 4px 8px oklch(0.65 0.20 35 / 0.4);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-text-shadow-anim { animation: none; }
+}
+
+/* VFX Fire Text */
+.roycss-vfx-fire-text {
+  display: inline-block;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: linear-gradient(
+    0deg,
+    oklch(0.55 0.25 30) 0%,
+    oklch(0.75 0.28 50) 35%,
+    oklch(0.85 0.20 75) 65%,
+    oklch(0.95 0.10 90) 100%
+  );
+  background-size: 100% 220%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 6px oklch(0.75 0.28 50 / 0.55))
+          drop-shadow(0 0 14px oklch(0.65 0.28 30 / 0.35));
+  animation: roy-vfx-fire-flicker 1.2s ease-in-out infinite;
+}
+@keyframes roy-vfx-fire-flicker {
+  0%, 100% { background-position: 0% 100%; opacity: 1; }
+  25%      { background-position: 0% 70%;  opacity: 0.92; }
+  50%      { background-position: 0% 95%;  opacity: 1; }
+  75%      { background-position: 0% 65%;  opacity: 0.88; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-fire-text { animation: none; }
+}
+
+/* VFX Liquid Text */
+.roycss-vfx-liquid-text {
+  display: inline-block;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: linear-gradient(
+    45deg,
+    oklch(0.78 0.18 195) 0%,
+    oklch(0.85 0.16 230) 35%,
+    oklch(0.82 0.20 175) 65%,
+    oklch(0.78 0.18 195) 100%
+  );
+  background-size: 280% 280%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: blur(0.4px);
+  transform-origin: center;
+  animation: roy-vfx-liquid-ripple 4.5s ease-in-out infinite;
+}
+@keyframes roy-vfx-liquid-ripple {
+  0%, 100% {
+    background-position: 0% 50%;
+    transform: skewX(0deg) translateY(0);
+  }
+  25% {
+    background-position: 50% 100%;
+    transform: skewX(-3deg) translateY(-2px);
+  }
+  50% {
+    background-position: 100% 50%;
+    transform: skewX(2deg) translateY(0);
+  }
+  75% {
+    background-position: 50% 0%;
+    transform: skewX(-2deg) translateY(2px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-liquid-text { animation: none; filter: none; }
+}
+
+/* VFX Shimmer Text */
+.roycss-vfx-shimmer-text {
+  display: inline-block;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  background: linear-gradient(
+    100deg,
+    oklch(0.70 0.04 240) 30%,
+    oklch(0.95 0.04 240) 50%,
+    oklch(0.70 0.04 240) 70%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: roy-vfx-shimmer-sweep 2.4s linear infinite;
+}
+@keyframes roy-vfx-shimmer-sweep {
+  0%   { background-position: 130% 0%; }
+  100% { background-position: -130% 0%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-shimmer-text { animation: none; }
+}
+
+/* VFX 3D Extruded Text */
+.roycss-vfx-3d-text-extrude {
+  display: inline-block;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: oklch(0.92 0.18 35);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  text-shadow:
+    1px 1px 0 oklch(0.78 0.20 35),
+    2px 2px 0 oklch(0.70 0.22 35),
+    3px 3px 0 oklch(0.62 0.22 35),
+    4px 4px 0 oklch(0.54 0.22 35),
+    5px 5px 0 oklch(0.46 0.22 35),
+    6px 6px 0 oklch(0.40 0.20 35),
+    7px 7px 0 oklch(0.34 0.18 35),
+    8px 8px 12px oklch(0.30 0.10 35 / 0.45);
+  transform: perspective(500px) rotateX(8deg);
+  transform-origin: center bottom;
+  transition: transform 0.3s ease;
+  animation: roy-vfx-3d-breathe 4s ease-in-out infinite;
+}
+.roycss-vfx-3d-text-extrude:hover {
+  transform: perspective(500px) rotateX(0deg) translateY(-2px);
+}
+@keyframes roy-vfx-3d-breathe {
+  0%, 100% { transform: perspective(500px) rotateX(8deg)  translateY(0); }
+  50%      { transform: perspective(500px) rotateX(12deg) translateY(-1px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-vfx-3d-text-extrude {
+    animation: none;
+    transform: perspective(500px) rotateX(8deg);
+  }
+}
+

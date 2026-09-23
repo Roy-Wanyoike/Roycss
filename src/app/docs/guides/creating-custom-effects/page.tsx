@@ -129,13 +129,13 @@ export default function CreatingCustomEffectsPage() {
         wired up — a good base for building your own on top:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss create my-site --template vanilla --effect pulse-glow
+        <code>{`$ npx roycss-cli create my-site --template vanilla --effect pulse-glow
 
 ✓ Project created at my-site
   roycss.css   ← starts with the pulse-glow effect's CSS
 
 # add more shipped effects as you build:
-$ npx roycss add btn-glow`}</code>
+$ npx roycss-cli add btn-glow`}</code>
       </pre>
 
       <h2 id="share">Share your effect</h2>

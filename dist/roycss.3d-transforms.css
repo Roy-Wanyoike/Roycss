@@ -1,0 +1,860 @@
+/*!
+ * RoyCSS v2.0.0 — 3D & Transforms (31 effects)
+ * Category split of dist/roycss.css — import "roycss/css" for all
+ * 29 categories. https://github.com/Roy-Wanyoike/Roycss
+ * License: MIT
+ */
+
+/* ─── Base ────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.roycss-sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [class^="roycss-"],
+  [class*=" roycss-"] {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Card Flip */
+.roycss-card-flip {
+  perspective: 1000px;
+  inline-size: 200px;
+  block-size: 120px;
+}
+
+.roycss-card-flip-inner {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.roycss-card-flip:hover .roycss-card-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.roycss-card-flip-front,
+.roycss-card-flip-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.roycss-card-flip-back {
+  transform: rotateY(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-card-flip-inner {
+    transition: none;
+  }
+}
+
+
+/* Perspective Tilt */
+.roycss-perspective-tilt {
+  transform-style: preserve-3d;
+  transform: perspective(800px) rotateX(5deg) rotateY(-5deg);
+  transition: transform 0.4s ease;
+  box-shadow: 8px 8px 20px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
+}
+
+.roycss-perspective-tilt:hover {
+  transform: perspective(800px) rotateX(-5deg) rotateY(5deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Perspective Tilt */
+.roycss-perspective-tilt {
+    transition: none;
+  }
+}
+
+
+/* Cube Rotate */
+.roycss-cube-rotate {
+  inline-size: 60px;
+  block-size: 60px;
+  transform-style: preserve-3d;
+  animation: roy-cube-rotate 6s linear infinite;
+}
+
+@keyframes roy-cube-rotate {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg); }
+}
+
+.roycss-cube-face {
+  position: absolute;
+  inline-size: 60px;
+  block-size: 60px;
+  border: 2px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent);
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 8%, transparent);
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Cube Rotate */
+.roycss-cube-rotate {
+    animation: none;
+  }
+}
+
+
+/* Depth Shadow Layers */
+.roycss-depth-shadow {
+  box-shadow:
+    1px 1px 0 oklch(0.432 0.086 166.91),
+    2px 2px 0 oklch(0.596 0.127 163.23),
+    3px 3px 0 oklch(0.508 0.105 165.61),
+    4px 4px 0 oklch(0.696 0.149 162.48),
+    5px 5px 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 60%, transparent),
+    6px 6px 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent),
+    7px 7px 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 20%, transparent),
+    8px 8px 20px color-mix(in oklch, oklch(0 0 0) 15%, transparent);
+  transition: all 0.3s ease;
+}
+
+.roycss-depth-shadow:hover {
+  transform: translate(-2px, -2px);
+  box-shadow:
+    3px 3px 0 oklch(0.432 0.086 166.91),
+    4px 4px 0 oklch(0.596 0.127 163.23),
+    5px 5px 0 oklch(0.508 0.105 165.61),
+    6px 6px 0 oklch(0.696 0.149 162.48),
+    7px 7px 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 60%, transparent),
+    8px 8px 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent),
+    9px 9px 0 color-mix(in oklch, oklch(0.696 0.149 162.48) 20%, transparent),
+    10px 10px 30px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Depth Shadow Layers */
+.roycss-depth-shadow {
+    transition: none;
+  }
+}
+
+
+/* Flip X */
+.roycss-flip-x {
+  perspective: 800px;
+  transition: transform 0.6s ease;
+  transform-style: preserve-3d;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
+  border-radius: 12px;
+}
+
+.roycss-flip-x:hover {
+  transform: rotateX(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Flip X */
+.roycss-flip-x {
+    transition: none;
+  }
+}
+
+
+/* Flip Y */
+.roycss-flip-y {
+  perspective: 800px;
+  transition: transform 0.6s ease;
+  transform-style: preserve-3d;
+  background: linear-gradient(135deg, oklch(0.715 0.126 215.22), oklch(0.606 0.219 292.72));
+  border-radius: 12px;
+}
+
+.roycss-flip-y:hover {
+  transform: rotateY(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Flip Y */
+.roycss-flip-y {
+    transition: none;
+  }
+}
+
+
+/* Rotate 3D */
+.roycss-rotate-3d {
+  transform-style: preserve-3d;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.606 0.219 292.72));
+  border-radius: 12px;
+  animation: roy-rotate-3d 4s linear infinite;
+}
+
+@keyframes roy-rotate-3d {
+  0% { transform: perspective(800px) rotate3d(1, 1, 1, 0deg); }
+  100% { transform: perspective(800px) rotate3d(1, 1, 1, 360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Rotate 3D */
+.roycss-rotate-3d {
+    animation: none;
+  }
+}
+
+
+/* Book Open */
+.roycss-book-open {
+  perspective: 1000px;
+  inline-size: 80px;
+  block-size: 60px;
+  position: relative;
+  transform-style: preserve-3d;
+  background: transparent;
+}
+
+.roycss-book-open::before,
+.roycss-book-open::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 0;
+  inline-size: 50%;
+  block-size: 100%;
+  transition: transform 0.8s ease;
+  border-radius: 2px 8px 8px 2px;
+}
+
+.roycss-book-open::before {
+  inset-inline-start: 0;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
+  transform-origin: right center;
+}
+
+.roycss-book-open::after {
+  inset-inline-end: 0;
+  transform-origin: left center;
+  background: linear-gradient(225deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
+  border-radius: 8px 2px 2px 8px;
+}
+
+.roycss-book-open:hover::before {
+  transform: rotateY(-160deg);
+}
+
+.roycss-book-open:hover::after {
+  transform: rotateY(160deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-book-open::before,
+.roycss-book-open::after {
+    transition: none;
+  }
+}
+
+
+/* Door Open */
+.roycss-door-open {
+  perspective: 800px;
+  inline-size: 60px;
+  block-size: 80px;
+  position: relative;
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 10%, transparent);
+  border: 2px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent);
+  border-radius: 4px;
+}
+
+.roycss-door-open::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.432 0.086 166.91));
+  border-radius: 4px;
+  transform-origin: left center;
+  transition: transform 0.8s ease;
+}
+
+.roycss-door-open:hover::before {
+  transform: rotateY(-80deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-door-open::before {
+    transition: none;
+  }
+}
+
+
+/* Drawer Slide */
+.roycss-drawer-slide {
+  perspective: 800px;
+  inline-size: 80px;
+  block-size: 60px;
+  position: relative;
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 8%, transparent);
+  border: 2px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 25%, transparent);
+  border-radius: 6px;
+}
+
+.roycss-drawer-slide::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 25%;
+  inset-inline-start: 10%;
+  inline-size: 80%;
+  block-size: 50%;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
+  border-radius: 3px;
+  box-shadow: 0 4px 10px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: top center;
+}
+
+.roycss-drawer-slide:hover::before {
+  transform: translateY(-50%) rotateX(60deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-drawer-slide::before {
+    transition: none;
+  }
+}
+
+
+/* Fold */
+.roycss-fold {
+  perspective: 800px;
+  inline-size: 80px;
+  block-size: 60px;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
+  border-radius: 6px;
+  transition: transform 0.8s ease;
+  transform-origin: top center;
+}
+
+.roycss-fold:hover {
+  transform: rotateX(90deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Fold */
+.roycss-fold {
+    transition: none;
+  }
+}
+
+
+/* 3D Accordion */
+.roycss-accordion-3d {
+  perspective: 800px;
+  inline-size: 80px;
+  block-size: 60px;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.roycss-accordion-3d::before,
+.roycss-accordion-3d::after {
+  content: '';
+  position: absolute;
+  inset-inline-start: 50%;
+  inline-size: 60px;
+  block-size: 16px;
+  margin-inline-start: -30px;
+  border-radius: 3px;
+  transition: transform 0.6s ease;
+}
+
+.roycss-accordion-3d::before {
+  inset-block-start: 8px;
+  background: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
+  transform-origin: bottom center;
+}
+
+.roycss-accordion-3d::after {
+  inset-block-end: 8px;
+  background: linear-gradient(90deg, oklch(0.715 0.126 215.22), oklch(0.606 0.219 292.72));
+  transform-origin: top center;
+}
+
+.roycss-accordion-3d:hover::before {
+  transform: rotateX(-55deg);
+}
+
+.roycss-accordion-3d:hover::after {
+  transform: rotateX(55deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-accordion-3d::before,
+.roycss-accordion-3d::after {
+    transition: none;
+  }
+}
+
+
+/* 3D Book */
+.roycss-3d-book {
+  perspective: 800px;
+  inline-size: 60px;
+  block-size: 80px;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateY(-25deg);
+  transition: transform 0.6s ease;
+}
+
+.roycss-3d-book::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.432 0.086 166.91));
+  border-radius: 2px 6px 6px 2px;
+  box-shadow:
+    -5px 5px 0 oklch(0.508 0.105 165.61),
+    -10px 10px 20px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+}
+
+.roycss-3d-book::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 4px;
+  inset-inline-start: 4px;
+  inline-size: calc(100% - 12px);
+  block-size: 4px;
+  background: oklch(0.769 0.165 70.08);
+  border-radius: 1px;
+}
+
+.roycss-3d-book:hover {
+  transform: rotateY(-45deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* 3D Book */
+.roycss-3d-book {
+    transition: none;
+  }
+}
+
+
+/* 3D Poster */
+.roycss-3d-poster {
+  perspective: 1000px;
+  inline-size: 80px;
+  block-size: 100px;
+  background:
+    linear-gradient(135deg, color-mix(in oklch, oklch(1 0 89.88) 10%, transparent), transparent),
+    linear-gradient(135deg, oklch(0.606 0.219 292.72), oklch(0.656 0.212 354.31));
+  border-radius: 6px;
+  box-shadow:
+    0 10px 30px color-mix(in oklch, oklch(0.606 0.219 292.72) 40%, transparent),
+    0 0 0 1px color-mix(in oklch, oklch(1 0 89.88) 10%, transparent);
+  transform: perspective(1000px) rotateY(-15deg) rotateX(5deg);
+  transition: transform 0.5s ease;
+}
+
+.roycss-3d-poster:hover {
+  transform: perspective(1000px) rotateY(15deg) rotateX(-5deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* 3D Poster */
+.roycss-3d-poster {
+    transition: none;
+  }
+}
+
+
+/* 3D Gallery */
+.roycss-3d-gallery {
+  perspective: 1000px;
+  inline-size: 80px;
+  block-size: 60px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: roy-3d-gallery-rotate 8s linear infinite;
+}
+
+.roycss-3d-gallery::before,
+.roycss-3d-gallery::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+}
+
+.roycss-3d-gallery::before {
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
+  transform: rotateY(0deg) translateZ(20px);
+}
+
+.roycss-3d-gallery::after {
+  background: linear-gradient(135deg, oklch(0.656 0.212 354.31), oklch(0.606 0.219 292.72));
+  transform: rotateY(90deg) translateZ(20px);
+}
+
+@keyframes roy-3d-gallery-rotate {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* 3D Gallery */
+.roycss-3d-gallery {
+    animation: none;
+  }
+}
+
+
+/* Transform Origin Spin */
+.roycss-transform-origin-spin {
+  inline-size: 60px;
+  block-size: 60px;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
+  border-radius: 8px;
+  transform-origin: 0% 0%;
+  animation: roy-origin-spin 2s linear infinite;
+}
+
+@keyframes roy-origin-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Transform Origin Spin */
+.roycss-transform-origin-spin {
+    animation: none;
+  }
+}
+
+
+/* Scale 3D */
+.roycss-scale-3d {
+  inline-size: 60px;
+  block-size: 60px;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.432 0.086 166.91));
+  border-radius: 8px;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+  box-shadow: 0 4px 10px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+}
+
+.roycss-scale-3d:hover {
+  transform: perspective(800px) scale3d(1.2, 1.2, 1.2) translateZ(40px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scale 3D */
+.roycss-scale-3d {
+    transition: none;
+  }
+}
+
+
+/* Skew 3D */
+.roycss-skew-3d {
+  inline-size: 60px;
+  block-size: 60px;
+  background: linear-gradient(135deg, oklch(0.715 0.126 215.22), oklch(0.606 0.219 292.72));
+  border-radius: 8px;
+  transform: perspective(800px) skew(-15deg, 5deg);
+  transition: transform 0.5s ease;
+  box-shadow: 6px 6px 12px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+}
+
+.roycss-skew-3d:hover {
+  transform: perspective(800px) skew(15deg, -5deg) rotateY(20deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Skew 3D */
+.roycss-skew-3d {
+    transition: none;
+  }
+}
+
+
+/* Rotate X */
+.roycss-rotate-x {
+  inline-size: 60px;
+  block-size: 60px;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
+  border-radius: 8px;
+  transform-style: preserve-3d;
+  animation: roy-rotate-x 3s linear infinite;
+}
+
+@keyframes roy-rotate-x {
+  0% { transform: perspective(800px) rotateX(0deg); }
+  100% { transform: perspective(800px) rotateX(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Rotate X */
+.roycss-rotate-x {
+    animation: none;
+  }
+}
+
+
+/* Rotate Y */
+.roycss-rotate-y {
+  inline-size: 60px;
+  block-size: 60px;
+  background: linear-gradient(135deg, oklch(0.656 0.212 354.31), oklch(0.606 0.219 292.72));
+  border-radius: 8px;
+  transform-style: preserve-3d;
+  animation: roy-rotate-y 3s linear infinite;
+}
+
+@keyframes roy-rotate-y {
+  0% { transform: perspective(800px) rotateY(0deg); }
+  100% { transform: perspective(800px) rotateY(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Rotate Y */
+.roycss-rotate-y {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-3d-book {
+  perspective: 800px;
+  width: 60px;
+  height: 80px;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateY(-25deg);
+  transition: transform 0.6s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-3d-book {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-3d-gallery {
+  perspective: 1000px;
+  width: 80px;
+  height: 60px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: roy-3d-gallery-rotate 8s linear infinite;
+}
+
+@keyframes roy-3d-gallery-rotate {
+
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-3d-gallery {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-3d-poster {
+  perspective: 1000px;
+  width: 80px;
+  height: 100px;
+  background:
+    linear-gradient(135deg, color-mix(in oklch, oklch(1 0 0) 10%, transparent), transparent),
+    linear-gradient(135deg, oklch(0.566 0.245 278.69), oklch(0.652 0.241 354.31));
+  border-radius: 6px;
+  box-shadow:
+    0 10px 30px color-mix(in oklch, oklch(0.566 0.245 278.69) 40%, transparent),
+    0 0 0 1px color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  transform: perspective(1000px) rotateY(-15deg) rotateX(5deg);
+  transition: transform 0.5s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-3d-poster {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-cube-face {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border: 2px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 50%, transparent);
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 8%, transparent);
+  border-radius: 4px;
+}
+
+.roycss-ferrum-cube-rotate {
+  width: 60px;
+  height: 60px;
+  transform-style: preserve-3d;
+  animation: roy-cube-rotate 6s linear infinite;
+}
+
+@keyframes roy-cube-rotate {
+
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg); }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-cube-rotate {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-perspective-tilt {
+  transform-style: preserve-3d;
+  transform: perspective(800px) rotateX(5deg) rotateY(-5deg);
+  transition: transform 0.4s ease;
+  box-shadow: 8px 8px 20px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-perspective-tilt {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-scale-3d {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.432 0.086 166.91));
+  border-radius: 8px;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+  box-shadow: 0 4px 10px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scale-3d {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-scale-compress {
+  animation: roy-scale-compress 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  transform-origin: center;
+}
+
+@keyframes roy-scale-compress {
+
+  0% {
+    opacity: 0;
+    transform: scaleY(0.2) scaleX(1.4);
+  }
+  60% {
+    opacity: 1;
+    transform: scaleY(1.15) scaleX(0.9);
+  }
+  100% {
+    transform: scaleY(1) scaleX(1);
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scale-compress {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-scale-expand {
+  animation: roy-scale-expand 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: center;
+}
+
+@keyframes roy-scale-expand {
+
+  0% {
+    opacity: 0;
+    transform: scaleX(0.2) scaleY(0.6);
+  }
+  55% {
+    opacity: 1;
+    transform: scaleX(1.1) scaleY(0.85);
+  }
+  100% {
+    transform: scaleX(1) scaleY(1);
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-scale-expand {
+    animation: none;
+  }
+}
+
+
+.roycss-ferrum-skew-3d {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, oklch(0.685 0.131 226.94), oklch(0.566 0.245 278.69));
+  border-radius: 8px;
+  transform: perspective(800px) skew(-15deg, 5deg);
+  transition: transform 0.5s ease;
+  box-shadow: 6px 6px 12px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-skew-3d {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-transform-origin-spin {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.685 0.131 226.94));
+  border-radius: 8px;
+  transform-origin: 0% 0%;
+  animation: roy-origin-spin 2s linear infinite;
+}
+
+@keyframes roy-origin-spin {
+
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-transform-origin-spin {
+    animation: none;
+  }
+}
+
+

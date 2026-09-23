@@ -3,12 +3,13 @@ import type { CSSEffect } from "./roycss-types";
 /**
  * RoyCSS Effects Batch 53 — P1 UI Patterns: Marquee, Carousel & Slider (14 effects)
  *
- * Three thematic groups (issue #200):
+ * Three thematic groups (issues #200 + #214):
  *   • Marquee & Ticker (6)      — content strips: seamless loop, RTL-safe,
- *                                 pause-on-hover (WCAG 2.2.2), vertical,
- *                                 diagonal ribbon, news ticker
- *   • CSS-Only Carousels (5)    — scroll-snap, crossfade, sliding track,
- *                                 3D coverflow, auto-advance with progress
+ *                                 vertical, diagonal ribbon, news ticker —
+ *                                 all with hover/focus pause (WCAG 2.2.2)
+ *   • CSS-Only Carousels (5)    — scroll-snap (keyboard-scrollable region),
+ *                                 crossfade, sliding track, 3D coverflow,
+ *                                 auto-advance with progress
  *   • Range Slider & Controls (3) — modern range visuals, gradient fill,
  *                                 toggle switch
  *
@@ -26,6 +27,10 @@ import type { CSSEffect } from "./roycss-types";
  *   • Every `:hover`/`:focus-within` rule is wrapped in
  *     `@media (hover: hover)` / explicit focus media where appropriate
  *     (the #189 hover-guard convention).
+ *   • Every auto-advancing marquee/carousel pauses on hover (wrapped in
+ *     `(hover: hover)`) AND via `:focus-within` — WCAG 2.2.2
+ *     pause/stop/hide for pointer AND keyboard users (issue #214;
+ *     exemplar: marquee-pause-hover).
  *   • Effects styling `> span` children declare `childCount` so previews
  *     and usage snippets render the exact markup (audit-189 convention).
  *   • No JavaScript, no external dependencies — pure CSS only.
@@ -41,7 +46,7 @@ export const effectsBatch53: CSSEffect[] = [
     name: "Seamless Loop Marquee",
     category: "animations",
     description:
-      "Infinite scrolling content strip with mask-fade edges. The track is width:max-content and loops via a -50% translate, so duplicating the content once yields a perfectly seamless loop.",
+      "Infinite scrolling content strip with mask-fade edges. The track is width:max-content and loops via a -50% translate, so duplicating the content once yields a perfectly seamless loop. Pauses on hover and while keyboard focus is inside the strip (WCAG 2.2.2).",
     tags: ["marquee", "ticker", "loop", "infinite", "mask"],
     previewType: "box",
     childCount: 6,
@@ -82,6 +87,16 @@ export const effectsBatch53: CSSEffect[] = [
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
+/* WCAG 2.2.2 (#214): pause for pointer users… */
+@media (hover: hover) {
+  .roycss-marquee-loop-seamless:hover {
+    animation-play-state: paused;
+  }
+}
+/* …and for keyboard users once focus moves inside the strip. */
+.roycss-marquee-loop-seamless:focus-within {
+  animation-play-state: paused;
+}
 @media (prefers-reduced-motion: reduce) {
   .roycss-marquee-loop-seamless {
     animation: none;
@@ -96,7 +111,7 @@ export const effectsBatch53: CSSEffect[] = [
     name: "RTL-Safe Marquee",
     category: "animations",
     description:
-      "Direction-aware marquee whose scroll direction follows the document writing direction. Under dir=\"rtl\" the animation reverses automatically, so Arabic/Hebrew/Persian pages scroll the natural way.",
+      "Direction-aware marquee whose scroll direction follows the document writing direction. Under dir=\"rtl\" the animation reverses automatically, so Arabic/Hebrew/Persian pages scroll the natural way. Pauses on hover and while keyboard focus is inside the strip (WCAG 2.2.2).",
     tags: ["marquee", "rtl", "i18n", "direction", "logical"],
     previewType: "box",
     childCount: 6,
@@ -137,6 +152,16 @@ export const effectsBatch53: CSSEffect[] = [
 @keyframes roy-marquee-rtl {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
+}
+/* WCAG 2.2.2 (#214): pause for pointer users… */
+@media (hover: hover) {
+  .roycss-marquee-rtl-safe:hover {
+    animation-play-state: paused;
+  }
+}
+/* …and for keyboard users once focus moves inside the strip. */
+.roycss-marquee-rtl-safe:focus-within {
+  animation-play-state: paused;
 }
 @media (prefers-reduced-motion: reduce) {
   .roycss-marquee-rtl-safe {
@@ -220,7 +245,7 @@ export const effectsBatch53: CSSEffect[] = [
     name: "Vertical Ticker",
     category: "animations",
     description:
-      "Fixed-height vertical ticker that scrolls items upward in an endless loop, like a stock or news feed. Overflow is clipped to the window and items are evenly cycled.",
+      "Fixed-height vertical ticker that scrolls items upward in an endless loop, like a stock or news feed. Overflow is clipped to the window and items are evenly cycled. Pauses on hover and while keyboard focus is inside the feed (WCAG 2.2.2).",
     tags: ["marquee", "ticker", "vertical", "feed", "loop"],
     previewType: "box",
     childCount: 5,
@@ -279,6 +304,16 @@ export const effectsBatch53: CSSEffect[] = [
   75%, 93%  { transform: translateY(calc(-75% - 1.4rem)); }
   100%      { transform: translateY(calc(-100% - 1.88rem)); }
 }
+/* WCAG 2.2.2 (#214): pause for pointer users… */
+@media (hover: hover) {
+  .roycss-marquee-vertical-ticker:hover {
+    animation-play-state: paused;
+  }
+}
+/* …and for keyboard users once focus moves inside the feed. */
+.roycss-marquee-vertical-ticker:focus-within {
+  animation-play-state: paused;
+}
 @media (prefers-reduced-motion: reduce) {
   .roycss-marquee-vertical-ticker {
     animation: none;
@@ -294,7 +329,7 @@ export const effectsBatch53: CSSEffect[] = [
     name: "Diagonal Ribbon Marquee",
     category: "animations",
     description:
-      "Bold rotated ribbon that scrolls across the corner of a hero or promo section — sale banners, announcement strips, event headers. Two stacked ribbons cross for a wrapped-ribbon look.",
+      "Bold rotated ribbon that scrolls across the corner of a hero or promo section — sale banners, announcement strips, event headers. Two stacked ribbons cross for a wrapped-ribbon look. Pauses on hover and while keyboard focus is inside the ribbon (WCAG 2.2.2).",
     tags: ["marquee", "ribbon", "banner", "diagonal", "promo"],
     previewType: "box",
     childCount: 5,
@@ -337,6 +372,16 @@ export const effectsBatch53: CSSEffect[] = [
   from { transform: rotate(-3deg) translateX(0); }
   to   { transform: rotate(-3deg) translateX(-50%); }
 }
+/* WCAG 2.2.2 (#214): pause for pointer users… */
+@media (hover: hover) {
+  .roycss-marquee-ribbon-diagonal:hover {
+    animation-play-state: paused;
+  }
+}
+/* …and for keyboard users once focus moves inside the ribbon. */
+.roycss-marquee-ribbon-diagonal:focus-within {
+  animation-play-state: paused;
+}
 @media (prefers-reduced-motion: reduce) {
   .roycss-marquee-ribbon-diagonal {
     animation: none;
@@ -351,7 +396,7 @@ export const effectsBatch53: CSSEffect[] = [
     name: "News Ticker Live",
     category: "animations",
     description:
-      "Broadcast-style news ticker: a pulsing LIVE badge anchors the strip while headlines scroll past with dot separators. The badge stays put, only the headlines move.",
+      "Broadcast-style news ticker: a pulsing LIVE badge anchors the strip while headlines scroll past with dot separators. The badge stays put, only the headlines move. Pauses on hover and while keyboard focus is inside the ticker (WCAG 2.2.2).",
     tags: ["marquee", "news", "ticker", "live", "broadcast"],
     previewType: "box",
     childCount: 4,
@@ -417,6 +462,19 @@ export const effectsBatch53: CSSEffect[] = [
   0%, 100% { opacity: 1; transform: scale(1); }
   50%      { opacity: 0.35; transform: scale(0.78); }
 }
+/* WCAG 2.2.2 (#214): pause the headline scroll — and the LIVE dot pulse —
+   for pointer users… */
+@media (hover: hover) {
+  .roycss-marquee-news-live:hover,
+  .roycss-marquee-news-live:hover::after {
+    animation-play-state: paused;
+  }
+}
+/* …and for keyboard users once focus moves inside the ticker. */
+.roycss-marquee-news-live:focus-within,
+.roycss-marquee-news-live:focus-within::after {
+  animation-play-state: paused;
+}
 @media (prefers-reduced-motion: reduce) {
   .roycss-marquee-news-live {
     animation: none;
@@ -443,6 +501,12 @@ export const effectsBatch53: CSSEffect[] = [
     tags: ["carousel", "slider", "scroll-snap", "gallery", "no-js"],
     previewType: "box",
     childCount: 4,
+    // Issue #214: the scrolling region must be keyboard-reachable —
+    // tabindex="0" lets keyboard users scroll it with the arrow keys
+    // (media-caption-reveal batch-54 does the same for its region).
+    requiredMarkup: `<div class="roycss-carousel-scroll-snap" tabindex="0" aria-label="Scrollable carousel — use arrow keys to browse">
+  <span></span><span></span><span></span><span></span>
+</div>`,
     cssCode: `/* CSS-Only Carousels: Scroll-Snap Carousel */
 .roycss-carousel-scroll-snap {
   display: flex;
@@ -503,7 +567,7 @@ export const effectsBatch53: CSSEffect[] = [
     name: "Crossfade Carousel",
     category: "navigation",
     description:
-      "Auto-advancing crossfade slideshow: four stacked slides each take a quarter of the cycle, fading in over their predecessor with a subtle scale settle. A single keyframes rule drives every slide via delays.",
+      "Auto-advancing crossfade slideshow: four stacked slides each take a quarter of the cycle, fading in over their predecessor with a subtle scale settle. A single keyframes rule drives every slide via delays. Pauses on hover and while keyboard focus is inside the carousel (WCAG 2.2.2).",
     tags: ["carousel", "slideshow", "crossfade", "fade", "auto"],
     previewType: "box",
     childCount: 4,
@@ -551,6 +615,16 @@ export const effectsBatch53: CSSEffect[] = [
   6%, 25%  { opacity: 1; transform: scale(1); }
   31%, 100% { opacity: 0; transform: scale(1); }
 }
+/* WCAG 2.2.2 (#214): pause the auto-advance for pointer users… */
+@media (hover: hover) {
+  .roycss-carousel-fade-cycle:hover > span {
+    animation-play-state: paused;
+  }
+}
+/* …and for keyboard users once focus moves inside the carousel. */
+.roycss-carousel-fade-cycle:focus-within > span {
+  animation-play-state: paused;
+}
 @media (prefers-reduced-motion: reduce) {
   .roycss-carousel-fade-cycle > span {
     animation: none;
@@ -568,7 +642,7 @@ export const effectsBatch53: CSSEffect[] = [
     name: "Sliding Track Carousel",
     category: "navigation",
     description:
-      "Track-style carousel that advances one slide at a time with pauses between steps, then jumps back to the start — the classic hero-slider rhythm implemented in a single keyframes rule.",
+      "Track-style carousel that advances one slide at a time with pauses between steps, then jumps back to the start — the classic hero-slider rhythm implemented in a single keyframes rule. Pauses on hover and while keyboard focus is inside the carousel (WCAG 2.2.2).",
     tags: ["carousel", "slider", "track", "steps", "hero"],
     previewType: "box",
     childCount: 4,
@@ -610,6 +684,16 @@ export const effectsBatch53: CSSEffect[] = [
   78%, 96%   { transform: translateX(calc(-25.5rem - 2.625rem)); }
   100%       { transform: translateX(0); }
 }
+/* WCAG 2.2.2 (#214): pause for pointer users… */
+@media (hover: hover) {
+  .roycss-carousel-slide-cycle:hover {
+    animation-play-state: paused;
+  }
+}
+/* …and for keyboard users once focus moves inside the carousel. */
+.roycss-carousel-slide-cycle:focus-within {
+  animation-play-state: paused;
+}
 @media (prefers-reduced-motion: reduce) {
   .roycss-carousel-slide-cycle {
     animation: none;
@@ -624,7 +708,7 @@ export const effectsBatch53: CSSEffect[] = [
     name: "3D Coverflow Carousel",
     category: "navigation",
     description:
-      "Music-player coverflow: the center slide faces forward while neighbors rotate away in 3D with depth-ordered shadows, all inside a perspective container. A gentle sway makes the depth readable.",
+      "Music-player coverflow: the center slide faces forward while neighbors rotate away in 3D with depth-ordered shadows, all inside a perspective container. A gentle sway makes the depth readable. Pauses on hover and while keyboard focus is inside the coverflow (WCAG 2.2.2).",
     tags: ["carousel", "3d", "coverflow", "perspective", "gallery"],
     previewType: "box",
     childCount: 5,
@@ -684,6 +768,16 @@ export const effectsBatch53: CSSEffect[] = [
   from { transform: rotateY(-5deg); }
   to   { transform: rotateY(5deg); }
 }
+/* WCAG 2.2.2 (#214): pause for pointer users… */
+@media (hover: hover) {
+  .roycss-carousel-3d-coverflow:hover {
+    animation-play-state: paused;
+  }
+}
+/* …and for keyboard users once focus moves inside the coverflow. */
+.roycss-carousel-3d-coverflow:focus-within {
+  animation-play-state: paused;
+}
 @media (prefers-reduced-motion: reduce) {
   .roycss-carousel-3d-coverflow {
     animation: none;
@@ -698,7 +792,7 @@ export const effectsBatch53: CSSEffect[] = [
     name: "Carousel with Progress",
     category: "navigation",
     description:
-      "Auto-advancing carousel whose progress bar fills in lockstep with the slide cycle — the ::after bar reuses the same duration, so progress and slide position never drift apart.",
+      "Auto-advancing carousel whose progress bar fills in lockstep with the slide cycle — the ::after bar reuses the same duration, so progress and slide position never drift apart. Pauses on hover and while keyboard focus is inside the carousel (WCAG 2.2.2).",
     tags: ["carousel", "progress", "auto", "indicator", "slideshow"],
     previewType: "box",
     childCount: 3,
@@ -762,6 +856,18 @@ export const effectsBatch53: CSSEffect[] = [
   0%       { transform: scaleX(0); }
   32%, 34% { transform: scaleX(1); }
   35%, 100% { transform: scaleX(0); }
+}
+/* WCAG 2.2.2 (#214): pause slides AND the progress bar for pointer users… */
+@media (hover: hover) {
+  .roycss-carousel-progress:hover > span,
+  .roycss-carousel-progress:hover::after {
+    animation-play-state: paused;
+  }
+}
+/* …and for keyboard users once focus moves inside the carousel. */
+.roycss-carousel-progress:focus-within > span,
+.roycss-carousel-progress:focus-within::after {
+  animation-play-state: paused;
 }
 @media (prefers-reduced-motion: reduce) {
   .roycss-carousel-progress > span {

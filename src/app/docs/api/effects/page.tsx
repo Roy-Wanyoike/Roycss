@@ -108,7 +108,7 @@ export default function EffectsApiPage() {
         full CSS with the CLI:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss info hover-push-up
+        <code>{`$ npx roycss-cli info hover-push-up
 
 Push Up (roycss-hover-push-up)
 

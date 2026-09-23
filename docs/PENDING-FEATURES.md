@@ -245,7 +245,7 @@ if scope expands.
 - **Area:** docs / a11y / frontend
 - **State:** partial — **code half DONE (2026-09-13)**: derived per-effect
   a11y tags for all 1,983 effects (motionSafe 1,602 / motion-caution 381 /
-  decorative 1,668 / aria-required 89 — re-pinned post-#189 wave, #200 batch and #203 navigation/media batch) via `scripts/generate-effect-a11y.ts`
+  decorative 1,659 / aria-required 89 — re-pinned post-#189 wave, #200 batch, #203 navigation/media batch and the #214 pause variants) via `scripts/generate-effect-a11y.ts`
   → generated `src/lib/effect-a11y.ts` + `effect-a11y-badges.ts`; surfaced
   as pills on effect cards + "Motion-safe only" grid filter; tiers
   documented in `docs/EFFECT-A11Y-TIERS.md`; drift-gated by 25 tests.

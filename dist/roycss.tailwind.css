@@ -1,0 +1,33 @@
+/*!
+ * RoyCSS v2.0.0 — Tailwind v4 integration stylesheet
+ * 1983 production-ready CSS effects that compose with Tailwind v4.
+ *
+ * Usage (Tailwind v4 — in your main CSS entry):
+ *
+ *   @import "tailwindcss";
+ *   @import "roycss/tailwind";
+ *
+ * That is the whole recipe. This file pulls in the full effect
+ * stylesheet (dist/roycss.css). RoyCSS classes are plain, unlayered
+ * CSS — they never collide with Tailwind utility names (roycss-* is a
+ * reserved namespace) and, being unlayered, they deterministically win
+ * over Tailwind's layered preflight resets without a single !important.
+ *
+ * Want Tailwind utilities to be able to OVERRIDE effect properties?
+ * Declare the layer order before the imports:
+ *
+ *   @layer theme, base, roycss, components, utilities;
+ *   @import "tailwindcss";
+ *   @import "roycss/tailwind";
+ *
+ * Why not @utility for every effect? Registering a class as a Tailwind
+ * utility requires anchoring each rule to its root class with &-nesting
+ * and hoisting every @keyframes/@supports block — a lossy transform
+ * across 1983 effects with descendant selectors, state
+ * variants and shared keyframes. The @import recipe keeps the authored
+ * CSS byte-identical to the tested dist/roycss.css.
+ *
+ * https://github.com/Roy-Wanyoike/Roycss — License: MIT
+ */
+
+@import "./roycss.css";

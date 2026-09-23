@@ -29,7 +29,7 @@ import {
  *      literal-string derivation over cssCode, and a file-level grep of the
  *      54 batch sources on disk (id → source-slice map);
  *   3. decorationOnly / requiresAria full-corpus rule cross-checks with the
- *      methodology numbers pinned (315 interactive · 1,668 decorative · 89
+ *      methodology numbers pinned (324 interactive · 1,659 decorative · 89
  *      aria-required — post-#189 catalog-quality wave);
  *   4. cssCode-pinned spot checks across five categories;
  *   5. badge-derivation helper logic — including the 1,602 filter count that
@@ -198,21 +198,23 @@ describe("effect-a11y decorationOnly (full-corpus rule cross-check)", () => {
     }
   });
 
-  it("pins the distribution at 315 interactive / 1,668 decorative", () => {
-    expect(effectA11yStats.interactive).toBe(315);
-    expect(effectA11yStats.decorative).toBe(1668);
+  it("pins the distribution at 324 interactive / 1,659 decorative", () => {
+    expect(effectA11yStats.interactive).toBe(324);
+    expect(effectA11yStats.decorative).toBe(1659);
     expect(effectA11yStats.interactive + effectA11yStats.decorative).toBe(1983);
   });
 
-  it("reproduces the documented methodology: 314 hover/focus/active + 1 form-only → 315 interactive", () => {
+  it("reproduces the documented methodology: 323 hover/focus/active + 1 form-only → 324 interactive", () => {
     const hfa = effects.filter((e) => HOVER_FOCUS_ACTIVE.test(stripComments(e.cssCode)));
     const formOnly = effects.filter((e) => {
       const css = stripComments(e.cssCode);
       return !HOVER_FOCUS_ACTIVE.test(css) && FORM_STATE_PSEUDO.some((p) => css.includes(p));
     });
-    expect(hfa.length).toBe(314);
+    // +9 = the batch-53 WCAG 2.2.2 pause variants (issue #214) — each
+    // auto-advancing marquee/carousel gained a :hover/:focus-within path.
+    expect(hfa.length).toBe(323);
     expect(formOnly.map((e) => e.id)).toEqual(["ferrum-accordion-slide"]);
-    // 314 + 1 form-only effect = 315 interactive.
+    // 323 + 1 form-only effect = 324 interactive.
     expect(effectA11yStats.interactive).toBe(hfa.length + formOnly.length);
   });
 });

@@ -217,9 +217,9 @@ try {
   // ── 4. Benchmark gates (informational + hard fail on tarball) ────
   // Targets are re-baselined at v2.0.0 catalog reality and documented in
   // docs/benchmarks/04-npm-publish-pipeline.md (rationale + headroom notes).
-  const TARGET_TARBALL_KB = 1200;
-  const TARGET_UNPACKED_KB = 8 * 1024;
-  const TARGET_FILE_COUNT = 24;
+  const TARGET_TARBALL_KB = 1650;
+  const TARGET_UNPACKED_KB = 12 * 1024;
+  const TARGET_FILE_COUNT = 88;
 
   console.log(`${C.bold}── Benchmark gates ──${C.reset}`);
   const tarballPass = compressedKB <= TARGET_TARBALL_KB;

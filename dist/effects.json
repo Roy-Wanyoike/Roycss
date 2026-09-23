@@ -29848,7 +29848,7 @@
     "id": "marquee-loop-seamless",
     "name": "Seamless Loop Marquee",
     "category": "animations",
-    "description": "Infinite scrolling content strip with mask-fade edges. The track is width:max-content and loops via a -50% translate, so duplicating the content once yields a perfectly seamless loop.",
+    "description": "Infinite scrolling content strip with mask-fade edges. The track is width:max-content and loops via a -50% translate, so duplicating the content once yields a perfectly seamless loop. Pauses on hover and while keyboard focus is inside the strip (WCAG 2.2.2).",
     "tags": [
       "marquee",
       "ticker",
@@ -29864,7 +29864,7 @@
     "id": "marquee-rtl-safe",
     "name": "RTL-Safe Marquee",
     "category": "animations",
-    "description": "Direction-aware marquee whose scroll direction follows the document writing direction. Under dir=\"rtl\" the animation reverses automatically, so Arabic/Hebrew/Persian pages scroll the natural way.",
+    "description": "Direction-aware marquee whose scroll direction follows the document writing direction. Under dir=\"rtl\" the animation reverses automatically, so Arabic/Hebrew/Persian pages scroll the natural way. Pauses on hover and while keyboard focus is inside the strip (WCAG 2.2.2).",
     "tags": [
       "marquee",
       "rtl",
@@ -29897,7 +29897,7 @@
     "id": "marquee-vertical-ticker",
     "name": "Vertical Ticker",
     "category": "animations",
-    "description": "Fixed-height vertical ticker that scrolls items upward in an endless loop, like a stock or news feed. Overflow is clipped to the window and items are evenly cycled.",
+    "description": "Fixed-height vertical ticker that scrolls items upward in an endless loop, like a stock or news feed. Overflow is clipped to the window and items are evenly cycled. Pauses on hover and while keyboard focus is inside the feed (WCAG 2.2.2).",
     "tags": [
       "marquee",
       "ticker",
@@ -29913,7 +29913,7 @@
     "id": "marquee-ribbon-diagonal",
     "name": "Diagonal Ribbon Marquee",
     "category": "animations",
-    "description": "Bold rotated ribbon that scrolls across the corner of a hero or promo section — sale banners, announcement strips, event headers. Two stacked ribbons cross for a wrapped-ribbon look.",
+    "description": "Bold rotated ribbon that scrolls across the corner of a hero or promo section — sale banners, announcement strips, event headers. Two stacked ribbons cross for a wrapped-ribbon look. Pauses on hover and while keyboard focus is inside the ribbon (WCAG 2.2.2).",
     "tags": [
       "marquee",
       "ribbon",
@@ -29929,7 +29929,7 @@
     "id": "marquee-news-live",
     "name": "News Ticker Live",
     "category": "animations",
-    "description": "Broadcast-style news ticker: a pulsing LIVE badge anchors the strip while headlines scroll past with dot separators. The badge stays put, only the headlines move.",
+    "description": "Broadcast-style news ticker: a pulsing LIVE badge anchors the strip while headlines scroll past with dot separators. The badge stays put, only the headlines move. Pauses on hover and while keyboard focus is inside the ticker (WCAG 2.2.2).",
     "tags": [
       "marquee",
       "news",
@@ -29961,7 +29961,7 @@
     "id": "carousel-fade-cycle",
     "name": "Crossfade Carousel",
     "category": "navigation",
-    "description": "Auto-advancing crossfade slideshow: four stacked slides each take a quarter of the cycle, fading in over their predecessor with a subtle scale settle. A single keyframes rule drives every slide via delays.",
+    "description": "Auto-advancing crossfade slideshow: four stacked slides each take a quarter of the cycle, fading in over their predecessor with a subtle scale settle. A single keyframes rule drives every slide via delays. Pauses on hover and while keyboard focus is inside the carousel (WCAG 2.2.2).",
     "tags": [
       "carousel",
       "slideshow",
@@ -29977,7 +29977,7 @@
     "id": "carousel-slide-cycle",
     "name": "Sliding Track Carousel",
     "category": "navigation",
-    "description": "Track-style carousel that advances one slide at a time with pauses between steps, then jumps back to the start — the classic hero-slider rhythm implemented in a single keyframes rule.",
+    "description": "Track-style carousel that advances one slide at a time with pauses between steps, then jumps back to the start — the classic hero-slider rhythm implemented in a single keyframes rule. Pauses on hover and while keyboard focus is inside the carousel (WCAG 2.2.2).",
     "tags": [
       "carousel",
       "slider",
@@ -29993,7 +29993,7 @@
     "id": "carousel-3d-coverflow",
     "name": "3D Coverflow Carousel",
     "category": "navigation",
-    "description": "Music-player coverflow: the center slide faces forward while neighbors rotate away in 3D with depth-ordered shadows, all inside a perspective container. A gentle sway makes the depth readable.",
+    "description": "Music-player coverflow: the center slide faces forward while neighbors rotate away in 3D with depth-ordered shadows, all inside a perspective container. A gentle sway makes the depth readable. Pauses on hover and while keyboard focus is inside the coverflow (WCAG 2.2.2).",
     "tags": [
       "carousel",
       "3d",
@@ -30009,7 +30009,7 @@
     "id": "carousel-progress",
     "name": "Carousel with Progress",
     "category": "navigation",
-    "description": "Auto-advancing carousel whose progress bar fills in lockstep with the slide cycle — the ::after bar reuses the same duration, so progress and slide position never drift apart.",
+    "description": "Auto-advancing carousel whose progress bar fills in lockstep with the slide cycle — the ::after bar reuses the same duration, so progress and slide position never drift apart. Pauses on hover and while keyboard focus is inside the carousel (WCAG 2.2.2).",
     "tags": [
       "carousel",
       "progress",

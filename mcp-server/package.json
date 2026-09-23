@@ -3,14 +3,20 @@
   "version": "2.0.0",
   "description": "MCP server v2 for RoyCSS — gives AI assistants (Claude, ChatGPT, Cursor, Windsurf) access to 1,959 effects, 10 UI patterns, 12 recipes, framework examples, design tokens, accessibility guidance, and browser-support info. 13 tools, 5 resources, 3 prompt templates.",
   "type": "module",
-  "main": "index.ts",
+  "main": "dist/index.js",
   "bin": {
-    "roycss-mcp": "index.ts"
+    "roycss-mcp": "dist/index.js"
   },
+  "files": [
+    "dist",
+    "effects.json",
+    "patterns.json",
+    "README.md"
+  ],
   "scripts": {
     "dev": "bun --hot index.ts",
     "start": "bun index.ts",
-    "build": "bun build index.ts --outdir dist --target node"
+    "build": "bun build index.ts --outdir dist --target node --outfile index.js && node -e 'const fs=require(\"fs\");const p=\"dist/index.js\";let s=fs.readFileSync(p,\"utf8\");const nl=s.indexOf(\"\\n\");const fixed=s.startsWith(\"#!\")?\"#!/usr/bin/env node\"+s.slice(nl):\"#!/usr/bin/env node\\n\"+s;fs.writeFileSync(p,fixed);console.log(\"dist/index.js shebang ->\",fixed.slice(0,fixed.indexOf(\"\\n\")))'"
   },
   "keywords": [
     "mcp",

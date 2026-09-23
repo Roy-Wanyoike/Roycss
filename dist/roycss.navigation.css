@@ -1,0 +1,1570 @@
+/*!
+ * RoyCSS v2.0.0 — Navigation (40 effects)
+ * Category split of dist/roycss.css — import "roycss/css" for all
+ * 29 categories. https://github.com/Roy-Wanyoike/Roycss
+ * License: MIT
+ */
+
+/* ─── Base ────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.roycss-sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [class^="roycss-"],
+  [class*=" roycss-"] {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Menu Slide */
+.roycss-nav-menu-slide {
+  position: relative;
+  inline-size: 220px;
+  block-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in oklch, oklch(1 0 89.88) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 10%, transparent);
+  border-radius: 10px;
+  font: 11px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 89.88) 70%, transparent);
+  overflow: hidden;
+  letter-spacing: 0.15em;
+}
+.roycss-nav-menu-slide > span { display: none; }
+.roycss-nav-menu-slide::before {
+  content: "HOME   ABOUT   WORK   BLOG";
+  transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.roycss-nav-menu-slide::after {
+  content: "→ HOME   ABOUT   WORK   BLOG";
+  position: absolute;
+  inset-inline-start: 0; inset-inline-end: 0;
+  inset-block-start: 100%;
+  text-align: center;
+  color: oklch(0.696 0.149 162.48);
+  transition: top 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.roycss-nav-menu-slide:hover::before { transform: translateY(-100%); }
+.roycss-nav-menu-slide:hover::after  { inset-block-start: 50%; transform: translateY(-50%); }
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-menu-slide::before {
+    transition: none;
+  }
+  .roycss-nav-menu-slide::after {
+    transition: none;
+  }
+}
+
+
+/* Menu Fade Scale */
+.roycss-nav-menu-fade {
+  position: relative;
+  inline-size: 220px;
+  block-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in oklch, oklch(1 0 89.88) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 10%, transparent);
+  border-radius: 10px;
+  font: 11px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 89.88) 70%, transparent);
+  overflow: hidden;
+  letter-spacing: 0.15em;
+}
+.roycss-nav-menu-fade > span { display: none; }
+.roycss-nav-menu-fade::before {
+  content: "DASHBOARD   PROJECTS   TEAM";
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.roycss-nav-menu-fade::after {
+  content: "▸ DASHBOARD   PROJECTS   TEAM";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: oklch(0.696 0.149 162.48);
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.roycss-nav-menu-fade:hover::before {
+  opacity: 0;
+  transform: scale(1.1);
+}
+.roycss-nav-menu-fade:hover::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-menu-fade::before {
+    transition: none;
+  }
+  .roycss-nav-menu-fade::after {
+    transition: none;
+  }
+}
+
+
+/* Menu Scale */
+.roycss-nav-menu-scale {
+  position: relative;
+  inline-size: 220px;
+  block-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in oklch, oklch(1 0 89.88) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 10%, transparent);
+  border-radius: 10px;
+  font: 11px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 89.88) 70%, transparent);
+  letter-spacing: 0.15em;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.roycss-nav-menu-scale > span { display: none; }
+.roycss-nav-menu-scale::before { content: "HOME  ABOUT  SERVICES  CONTACT"; }
+.roycss-nav-menu-scale::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid oklch(0.696 0.149 162.48);
+  border-radius: 10px;
+  opacity: 0;
+  transform: scale(0.94);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.roycss-nav-menu-scale:hover {
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 8%, transparent);
+  color: oklch(0.696 0.149 162.48);
+  transform: scale(1.06);
+  letter-spacing: 0.22em;
+}
+.roycss-nav-menu-scale:hover::after {
+  opacity: 1;
+  transform: scale(1);
+  box-shadow: 0 0 22px color-mix(in oklch, oklch(0.696 0.149 162.48) 35%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Menu Scale */
+.roycss-nav-menu-scale {
+    transition: none;
+  }
+  .roycss-nav-menu-scale::after {
+    transition: none;
+  }
+}
+
+
+/* Accordion Menu */
+.roycss-nav-accordion {
+  position: relative;
+  inline-size: 180px;
+  block-size: 34px;
+  background: color-mix(in oklch, oklch(1 0 89.88) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 12%, transparent);
+  border-radius: 8px;
+  font: 11px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 89.88) 80%, transparent);
+  overflow: hidden;
+  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s ease;
+}
+.roycss-nav-accordion > span { display: none; }
+.roycss-nav-accordion::before {
+  content: "▸  Menu Item";
+  display: block;
+  padding: 11px 14px;
+  color: color-mix(in oklch, oklch(1 0 89.88) 80%, transparent);
+  transition: color 0.3s ease;
+}
+.roycss-nav-accordion::after {
+  content: "Sub 1  ·  Sub 2  ·  Sub 3";
+  display: block;
+  padding: 0 14px 10px 28px;
+  color: color-mix(in oklch, oklch(0.696 0.149 162.48) 75%, transparent);
+  font-size: 10px;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.roycss-nav-accordion:hover {
+  block-size: 70px;
+  border-color: color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent);
+}
+.roycss-nav-accordion:hover::before {
+  content: "▾  Menu Item";
+  color: oklch(0.696 0.149 162.48);
+}
+.roycss-nav-accordion:hover::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Accordion Menu */
+.roycss-nav-accordion {
+    transition: none;
+  }
+  .roycss-nav-accordion::before {
+    transition: none;
+  }
+  .roycss-nav-accordion::after {
+    transition: none;
+  }
+}
+
+
+/* Tabs Underline */
+.roycss-nav-tabs-underline {
+  position: relative;
+  inline-size: 200px;
+  block-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 11px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 89.88) 60%, transparent);
+  letter-spacing: 0.12em;
+}
+.roycss-nav-tabs-underline > span { display: none; }
+.roycss-nav-tabs-underline::before { content: "TAB 1     TAB 2     TAB 3"; }
+.roycss-nav-tabs-underline::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 24px;
+  inset-block-end: 0;
+  inline-size: 40px;
+  block-size: 2px;
+  background: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.773 0.153 163.22));
+  border-radius: 1px;
+  animation: roy-nav-tabs-underline 3s ease-in-out infinite;
+}
+@keyframes roy-nav-tabs-underline {
+  0%, 100% { inset-inline-start: 24px; }
+  33%      { inset-inline-start: 80px; }
+  66%      { inset-inline-start: 136px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-tabs-underline::after {
+    animation: none;
+  }
+}
+
+
+/* Breadcrumb Path */
+.roycss-nav-breadcrumb {
+  position: relative;
+  inline-size: 240px;
+  block-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 11px/1 system-ui, sans-serif;
+  letter-spacing: 0.05em;
+}
+.roycss-nav-breadcrumb > span { display: none; }
+.roycss-nav-breadcrumb::before {
+  content: "Home  ›  Shop  ›  Electronics  ›  Phones";
+  color: color-mix(in oklch, oklch(1 0 89.88) 50%, transparent);
+}
+.roycss-nav-breadcrumb::after {
+  content: "";
+  position: absolute;
+  inset-block-end: 2px;
+  inset-inline-start: 50%;
+  inline-size: 40px;
+  block-size: 2px;
+  background: oklch(0.696 0.149 162.48);
+  border-radius: 1px;
+  transform: translateX(-50%);
+  animation: roy-nav-breadcrumb 3s ease-in-out infinite;
+}
+@keyframes roy-nav-breadcrumb {
+  0%, 100% { transform: translateX(-180%); }
+  50%      { transform: translateX(80%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-breadcrumb::after {
+    animation: none;
+  }
+}
+
+
+/* Pagination Pulse */
+.roycss-nav-pagination {
+  position: relative;
+  inline-size: 200px;
+  block-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 11px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 89.88) 60%, transparent);
+  letter-spacing: 0.3em;
+}
+.roycss-nav-pagination > span { display: none; }
+.roycss-nav-pagination::before { content: "‹   1   2   3   4   5   ›"; }
+.roycss-nav-pagination::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inline-size: 18px;
+  block-size: 18px;
+  margin: -9px 0 0 -9px;
+  border: 1.5px solid oklch(0.696 0.149 162.48);
+  border-radius: 50%;
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 15%, transparent);
+  animation: roy-nav-pagination 3.5s steps(5, end) infinite;
+}
+@keyframes roy-nav-pagination {
+  0%   { transform: translateX(-44px); }
+  20%  { transform: translateX(-22px); }
+  40%  { transform: translateX(0); }
+  60%  { transform: translateX(22px); }
+  80%, 100% { transform: translateX(44px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-pagination::after {
+    animation: none;
+  }
+}
+
+
+/* Stepper Progress */
+.roycss-nav-stepper {
+  position: relative;
+  inline-size: 220px;
+  block-size: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.roycss-nav-stepper > span { display: none; }
+.roycss-nav-stepper::before {
+  content: "";
+  inline-size: 180px;
+  block-size: 4px;
+  border-radius: 2px;
+  background:
+    linear-gradient(90deg, oklch(0.696 0.149 162.48) 0 66%, color-mix(in oklch, oklch(1 0 89.88) 20%, transparent) 66% 100%),
+    repeating-linear-gradient(90deg,
+      transparent 0 42px,
+      color-mix(in oklch, oklch(1 0 89.88) 60%, transparent) 42px 46px,
+      transparent 46px 88px,
+      color-mix(in oklch, oklch(1 0 89.88) 60%, transparent) 88px 92px,
+      transparent 92px 134px,
+      color-mix(in oklch, oklch(1 0 89.88) 60%, transparent) 134px 138px,
+      transparent 138px 180px);
+}
+.roycss-nav-stepper::after {
+  content: "Step 3 of 4";
+  position: absolute;
+  inset-block-end: 4px;
+  font: 10px/1 system-ui, sans-serif;
+  color: oklch(0.696 0.149 162.48);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Progress Dots */
+.roycss-nav-progress-indicator {
+  position: relative;
+  inline-size: 120px;
+  block-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.roycss-nav-progress-indicator > div { display: none; }
+.roycss-nav-progress-indicator::before {
+  content: "";
+  inline-size: 8px;
+  block-size: 8px;
+  border-radius: 50%;
+  background: color-mix(in oklch, oklch(1 0 89.88) 25%, transparent);
+  box-shadow:
+    16px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    32px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    48px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    64px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent);
+  animation: roy-nav-progress 1.6s steps(5, end) infinite;
+}
+@keyframes roy-nav-progress {
+  0%   { background: oklch(0.696 0.149 162.48); box-shadow:
+    16px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    32px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    48px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    64px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent); }
+  20%  { background: color-mix(in oklch, oklch(1 0 89.88) 25%, transparent); box-shadow:
+    16px 0 0 oklch(0.696 0.149 162.48),
+    32px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    48px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    64px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent); }
+  40%  { background: color-mix(in oklch, oklch(1 0 89.88) 25%, transparent); box-shadow:
+    16px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    32px 0 0 oklch(0.696 0.149 162.48),
+    48px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    64px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent); }
+  60%  { background: color-mix(in oklch, oklch(1 0 89.88) 25%, transparent); box-shadow:
+    16px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    32px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    48px 0 0 oklch(0.696 0.149 162.48),
+    64px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent); }
+  80%, 100% { background: color-mix(in oklch, oklch(1 0 89.88) 25%, transparent); box-shadow:
+    16px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    32px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    48px 0 0 color-mix(in oklch, oklch(1 0 89.88) 25%, transparent),
+    64px 0 0 oklch(0.696 0.149 162.48); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-progress-indicator::before {
+    animation: none;
+  }
+}
+
+
+/* Dropdown Reveal */
+.roycss-nav-dropdown {
+  position: relative;
+  inline-size: 180px;
+  block-size: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  background: color-mix(in oklch, oklch(1 0 89.88) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 12%, transparent);
+  border-radius: 8px;
+  font: 11px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 89.88) 80%, transparent);
+  overflow: hidden;
+  transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s ease;
+}
+.roycss-nav-dropdown > span { display: none; }
+.roycss-nav-dropdown::before {
+  content: "Select option    ▾";
+  white-space: nowrap;
+}
+.roycss-nav-dropdown::after {
+  content: "↳ First choice\A ↳ Second choice\A ↳ Third choice";
+  white-space: pre;
+  position: absolute;
+  inset-block-start: 34px;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  padding: 6px 14px 10px;
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 8%, transparent);
+  color: oklch(0.845 0.13 164.98);
+  font-size: 10px;
+  line-block-size: 1.7;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.roycss-nav-dropdown:hover {
+  block-size: 86px;
+  border-color: color-mix(in oklch, oklch(0.696 0.149 162.48) 40%, transparent);
+}
+.roycss-nav-dropdown:hover::before { color: oklch(0.696 0.149 162.48); }
+.roycss-nav-dropdown:hover::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Dropdown Reveal */
+.roycss-nav-dropdown {
+    transition: none;
+  }
+  .roycss-nav-dropdown::after {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-accordion-slide {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.3s ease,
+                padding 0.3s ease;
+    padding: 0 16px;
+}
+.roycss-ferrum-accordion-trigger:checked ~ .roycss-ferrum-accordion-slide,
+.roycss-ferrum-accordion-slide.roycss-ferrum-open {
+    max-height: 500px;
+    opacity: 1;
+    padding: 16px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-accordion-slide {
+    transition: none;
+  }
+}
+
+
+/* Accordion Trigger — visually-hidden checkbox that drives the CSS-only accordion
+   (keep it focusable: opacity 0 + 1px box instead of display: none) */
+.roycss-ferrum-accordion-trigger {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: 0;
+  opacity: 0;
+  appearance: none;
+  pointer-events: none;
+}
+
+.roycss-ferrum-accordion-trigger-label {
+    display: block;
+    padding: 14px 16px;
+    cursor: pointer;
+    font-weight: 600;
+    background-color: oklch(0.97 0.0 89.88);
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    user-select: none;
+}
+.roycss-ferrum-accordion-trigger-label:hover {
+    background-color: oklch(0.949 0.0 89.88);
+}
+.roycss-ferrum-accordion-trigger:checked ~ .roycss-ferrum-accordion-trigger-label {
+    border-radius: 8px 8px 0 0;
+    background-color: oklch(0.931 0.0 89.88);
+}
+.roycss-ferrum-accordion-trigger-label::after {
+    content: '+';
+    float: right;
+    font-size: 18px;
+    line-height: 1;
+    transition: transform 0.3s ease;
+}
+.roycss-ferrum-accordion-trigger:checked ~ .roycss-ferrum-accordion-trigger-label::after {
+    content: '\2212';
+    transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-accordion-trigger-label {
+    transition: none;
+  }
+  .roycss-ferrum-accordion-trigger-label::after {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-tab-underline-group {
+    position: relative;
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid oklch(0.907 0.0 89.88);
+}
+
+.roycss-ferrum-tab-underline {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: oklch(0.569 0.0 89.88);
+    background: none;
+    border: none;
+    outline: none;
+    position: relative;
+    transition: color 0.3s ease;
+}
+.roycss-ferrum-tab-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    inset-inline-start: 50%;
+    width: 0;
+    height: 2px;
+    background-color: oklch(0.658 0.169 248.81);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), inset-inline-start 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.roycss-ferrum-tab-underline:hover {
+    color: oklch(0.321 0.0 89.88);
+}
+.roycss-ferrum-tab-underline:hover::after {
+    width: 100%;
+    inset-inline-start: 0;
+}
+.roycss-ferrum-tab-underline.roycss-ferrum-active,
+.roycss-ferrum-tab-underline:active {
+    color: oklch(0.658 0.169 248.81);
+}
+.roycss-ferrum-tab-underline.roycss-ferrum-active::after,
+.roycss-ferrum-tab-underline:active::after {
+    width: 100%;
+    left: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-tab-underline {
+    transition: none;
+  }
+  .roycss-ferrum-tab-underline::after {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-dropdown-slide-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.roycss-ferrum-dropdown-slide {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    min-width: 180px;
+    background-color: oklch(1 0 0);
+    border: 1px solid oklch(0.907 0.0 89.88);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px color-mix(in oklch, oklch(0 0 0) 10%, transparent);
+    padding: 6px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.25s ease,
+                transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 0.25s;
+    z-index: 20;
+}
+.roycss-ferrum-dropdown-slide-wrapper:focus-within .roycss-ferrum-dropdown-slide,
+.roycss-ferrum-dropdown-slide-wrapper:hover .roycss-ferrum-dropdown-slide {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-dropdown-slide {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-dropdown-slide-item {
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    border: none;
+    background: none;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+    color: oklch(0.321 0.0 89.88);
+    transition: background-color 0.15s ease;
+}
+.roycss-ferrum-dropdown-slide-item:hover {
+    background-color: oklch(0.967 0.015 269.99);
+}
+.roycss-ferrum-dropdown-slide-item:first-child {
+    border-radius: 8px 8px 0 0;
+}
+.roycss-ferrum-dropdown-slide-item:last-child {
+    border-radius: 0 0 8px 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-dropdown-slide-item {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-accordion-3d {
+  perspective: 800px;
+  width: 80px;
+  height: 60px;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.roycss-ferrum-drawer-slide {
+  perspective: 800px;
+  width: 80px;
+  height: 60px;
+  position: relative;
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 8%, transparent);
+  border: 2px solid color-mix(in oklch, oklch(0.696 0.149 162.48) 25%, transparent);
+  border-radius: 6px;
+}
+
+.roycss-ferrum-nav-accordion {
+  position: relative;
+  width: 180px;
+  height: 34px;
+  background: color-mix(in oklch, oklch(1 0 0) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 12%, transparent);
+  border-radius: 8px;
+  font: 11px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 0) 80%, transparent);
+  overflow: hidden;
+  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-nav-accordion {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-nav-breadcrumb {
+  position: relative;
+  width: 240px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 11px/1 system-ui, sans-serif;
+  letter-spacing: 0.05em;
+}
+
+.roycss-ferrum-nav-dropdown {
+  position: relative;
+  width: 180px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  background: color-mix(in oklch, oklch(1 0 0) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 12%, transparent);
+  border-radius: 8px;
+  font: 11px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 0) 80%, transparent);
+  overflow: hidden;
+  transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-nav-dropdown {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-nav-menu-fade {
+  position: relative;
+  width: 220px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in oklch, oklch(1 0 0) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  border-radius: 10px;
+  font: 11px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 0) 70%, transparent);
+  overflow: hidden;
+  letter-spacing: 0.15em;
+}
+
+.roycss-ferrum-nav-menu-scale {
+  position: relative;
+  width: 220px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in oklch, oklch(1 0 0) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  border-radius: 10px;
+  font: 11px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 0) 70%, transparent);
+  letter-spacing: 0.15em;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-nav-menu-scale {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-nav-menu-slide {
+  position: relative;
+  width: 220px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in oklch, oklch(1 0 0) 4%, transparent);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  border-radius: 10px;
+  font: 11px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 0) 70%, transparent);
+  overflow: hidden;
+  letter-spacing: 0.15em;
+}
+
+.roycss-ferrum-nav-pagination {
+  position: relative;
+  width: 200px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 11px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 0) 60%, transparent);
+  letter-spacing: 0.3em;
+}
+
+.roycss-ferrum-nav-progress-indicator {
+  position: relative;
+  width: 120px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.roycss-ferrum-nav-stepper {
+  position: relative;
+  width: 220px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.roycss-ferrum-nav-tabs-underline {
+  position: relative;
+  width: 200px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 11px/1 system-ui, sans-serif;
+  color: color-mix(in oklch, oklch(1 0 0) 60%, transparent);
+  letter-spacing: 0.12em;
+}
+
+/* CSS-Only Carousels: Scroll-Snap Carousel */
+.roycss-carousel-scroll-snap {
+  display: flex;
+  gap: 0.875rem;
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  padding: 0.75rem 1rem;
+  border-radius: 14px;
+  background: oklch(0.97 0.01 260 / 0.05);
+  box-shadow: inset 0 0 0 1px oklch(0.6 0.08 260 / 0.3);
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 6%,
+    black 94%,
+    transparent
+  );
+  scrollbar-width: thin;
+  scrollbar-color: oklch(0.55 0.15 280) transparent;
+}
+.roycss-carousel-scroll-snap::-webkit-scrollbar {
+  height: 6px;
+}
+.roycss-carousel-scroll-snap::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: oklch(0.55 0.15 280 / 0.6);
+}
+.roycss-carousel-scroll-snap > span {
+  flex: 0 0 42%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scroll-snap-align: center;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: oklch(0.25 0.06 280);
+  background:
+    radial-gradient(circle at 25% 20%, oklch(1 0 0 / 0.5), transparent 55%),
+    linear-gradient(135deg, oklch(0.8 0.12 280), oklch(0.7 0.16 330));
+  box-shadow:
+    0 3px 10px oklch(0.3 0.08 280 / 0.3),
+    inset 0 1px 0 oklch(1 0 0 / 0.4);
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-carousel-scroll-snap {
+    scroll-behavior: auto;
+  }
+}
+
+/* CSS-Only Carousels: Crossfade Carousel */
+.roycss-carousel-fade-cycle {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow:
+    inset 0 0 0 1px oklch(0.6 0.08 200 / 0.35),
+    0 4px 14px oklch(0.3 0.06 200 / 0.25);
+}
+.roycss-carousel-fade-cycle > span {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: oklch(0.98 0.01 220);
+  opacity: 0;
+  animation: roy-carousel-fade 8s linear infinite;
+}
+.roycss-carousel-fade-cycle > span:nth-child(1) {
+  background: linear-gradient(135deg, oklch(0.55 0.16 230), oklch(0.45 0.18 260));
+  animation-delay: 0s;
+}
+.roycss-carousel-fade-cycle > span:nth-child(2) {
+  background: linear-gradient(135deg, oklch(0.55 0.16 160), oklch(0.45 0.16 190));
+  animation-delay: 2s;
+}
+.roycss-carousel-fade-cycle > span:nth-child(3) {
+  background: linear-gradient(135deg, oklch(0.55 0.16 60), oklch(0.48 0.17 30));
+  animation-delay: 4s;
+}
+.roycss-carousel-fade-cycle > span:nth-child(4) {
+  background: linear-gradient(135deg, oklch(0.55 0.16 320), oklch(0.45 0.18 350));
+  animation-delay: 6s;
+}
+@keyframes roy-carousel-fade {
+  0%       { opacity: 0; transform: scale(1.04); }
+  6%, 25%  { opacity: 1; transform: scale(1); }
+  31%, 100% { opacity: 0; transform: scale(1); }
+}
+/* WCAG 2.2.2 (#214): pause the auto-advance for pointer users… */
+@media (hover: hover) {
+  .roycss-carousel-fade-cycle:hover > span {
+    animation-play-state: paused;
+  }
+}
+/* …and for keyboard users once focus moves inside the carousel. */
+.roycss-carousel-fade-cycle:focus-within > span {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-carousel-fade-cycle > span {
+    animation: none;
+    opacity: 1;
+  }
+  .roycss-carousel-fade-cycle > span:nth-child(n + 2) {
+    opacity: 0;
+  }
+}
+
+/* CSS-Only Carousels: Sliding Track Carousel */
+.roycss-carousel-slide-cycle {
+  position: relative;
+  display: flex;
+  gap: 0.875rem;
+  width: max-content;
+  height: 100%;
+  padding: 0.75rem;
+  border-radius: 14px;
+  box-shadow: inset 0 0 0 1px oklch(0.6 0.08 150 / 0.3);
+  background: oklch(0.97 0.01 150 / 0.05);
+  overflow: hidden;
+  animation: roy-carousel-slide 12s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+}
+.roycss-carousel-slide-cycle > span {
+  flex: 0 0 8.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: oklch(0.24 0.06 150);
+  background:
+    radial-gradient(circle at 75% 15%, oklch(1 0 0 / 0.45), transparent 50%),
+    linear-gradient(135deg, oklch(0.82 0.12 150), oklch(0.72 0.14 190));
+  box-shadow:
+    0 3px 10px oklch(0.3 0.07 150 / 0.3),
+    inset 0 1px 0 oklch(1 0 0 / 0.4);
+}
+@keyframes roy-carousel-slide {
+  0%, 22%    { transform: translateX(0); }
+  28%, 47%   { transform: translateX(calc(-8.5rem - 0.875rem)); }
+  53%, 72%   { transform: translateX(calc(-17rem - 1.75rem)); }
+  78%, 96%   { transform: translateX(calc(-25.5rem - 2.625rem)); }
+  100%       { transform: translateX(0); }
+}
+/* WCAG 2.2.2 (#214): pause for pointer users… */
+@media (hover: hover) {
+  .roycss-carousel-slide-cycle:hover {
+    animation-play-state: paused;
+  }
+}
+/* …and for keyboard users once focus moves inside the carousel. */
+.roycss-carousel-slide-cycle:focus-within {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-carousel-slide-cycle {
+    animation: none;
+    transform: none;
+  }
+}
+
+/* CSS-Only Carousels: 3D Coverflow Carousel */
+.roycss-carousel-3d-coverflow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  height: 100%;
+  perspective: 640px;
+  transform-style: preserve-3d;
+  animation: roy-carousel-sway 7s ease-in-out infinite alternate;
+}
+.roycss-carousel-3d-coverflow > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.75rem;
+  height: 5rem;
+  flex: 0 0 auto;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: oklch(0.98 0.01 320);
+  transform-style: preserve-3d;
+}
+.roycss-carousel-3d-coverflow > span:nth-child(1) {
+  background: linear-gradient(160deg, oklch(0.62 0.14 280), oklch(0.5 0.16 300));
+  transform: rotateY(42deg) translateZ(-1.25rem);
+  box-shadow: -4px 4px 12px oklch(0.25 0.08 280 / 0.4);
+}
+.roycss-carousel-3d-coverflow > span:nth-child(2) {
+  background: linear-gradient(160deg, oklch(0.66 0.15 310), oklch(0.54 0.17 330));
+  transform: rotateY(34deg) translateZ(-0.5rem);
+  box-shadow: -3px 4px 12px oklch(0.25 0.08 310 / 0.4);
+}
+.roycss-carousel-3d-coverflow > span:nth-child(3) {
+  background: linear-gradient(160deg, oklch(0.7 0.17 340), oklch(0.58 0.19 0));
+  transform: translateZ(1.5rem) scale(1.12);
+  box-shadow:
+    0 8px 22px oklch(0.28 0.1 340 / 0.5),
+    inset 0 1px 0 oklch(1 0 0 / 0.4);
+}
+.roycss-carousel-3d-coverflow > span:nth-child(4) {
+  background: linear-gradient(160deg, oklch(0.66 0.15 20), oklch(0.54 0.17 40));
+  transform: rotateY(-34deg) translateZ(-0.5rem);
+  box-shadow: 3px 4px 12px oklch(0.25 0.08 20 / 0.4);
+}
+.roycss-carousel-3d-coverflow > span:nth-child(5) {
+  background: linear-gradient(160deg, oklch(0.62 0.14 50), oklch(0.5 0.16 70));
+  transform: rotateY(-42deg) translateZ(-1.25rem);
+  box-shadow: 4px 4px 12px oklch(0.25 0.08 50 / 0.4);
+}
+@keyframes roy-carousel-sway {
+  from { transform: rotateY(-5deg); }
+  to   { transform: rotateY(5deg); }
+}
+/* WCAG 2.2.2 (#214): pause for pointer users… */
+@media (hover: hover) {
+  .roycss-carousel-3d-coverflow:hover {
+    animation-play-state: paused;
+  }
+}
+/* …and for keyboard users once focus moves inside the coverflow. */
+.roycss-carousel-3d-coverflow:focus-within {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-carousel-3d-coverflow {
+    animation: none;
+    transform: none;
+  }
+}
+
+/* CSS-Only Carousels: Carousel with Progress */
+.roycss-carousel-progress {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: calc(100% - 0.5rem);
+  margin-bottom: 0.5rem;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px oklch(0.6 0.08 90 / 0.35);
+}
+.roycss-carousel-progress > span {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: oklch(0.98 0.01 90);
+  opacity: 0;
+  animation: roy-carousel-progress-fade 9s linear infinite;
+}
+.roycss-carousel-progress > span:nth-child(1) {
+  background: linear-gradient(135deg, oklch(0.6 0.17 80), oklch(0.5 0.16 60));
+  animation-delay: 0s;
+}
+.roycss-carousel-progress > span:nth-child(2) {
+  background: linear-gradient(135deg, oklch(0.6 0.16 120), oklch(0.5 0.15 100));
+  animation-delay: 3s;
+}
+.roycss-carousel-progress > span:nth-child(3) {
+  background: linear-gradient(135deg, oklch(0.6 0.15 160), oklch(0.5 0.15 140));
+  animation-delay: 6s;
+}
+/* The progress bar shares the 9s cycle — fill resets exactly when
+   the first slide returns. */
+.roycss-carousel-progress::after {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 0.5rem;
+  height: 0.25rem;
+  border-radius: 999px;
+  background: oklch(1 0 0 / 0.25);
+  transform-origin: left;
+  animation: roy-carousel-progress-fill 9s linear infinite;
+}
+@keyframes roy-carousel-progress-fade {
+  0%        { opacity: 0; }
+  5%, 30%   { opacity: 1; }
+  36%, 100% { opacity: 0; }
+}
+@keyframes roy-carousel-progress-fill {
+  0%       { transform: scaleX(0); }
+  32%, 34% { transform: scaleX(1); }
+  35%, 100% { transform: scaleX(0); }
+}
+/* WCAG 2.2.2 (#214): pause slides AND the progress bar for pointer users… */
+@media (hover: hover) {
+  .roycss-carousel-progress:hover > span,
+  .roycss-carousel-progress:hover::after {
+    animation-play-state: paused;
+  }
+}
+/* …and for keyboard users once focus moves inside the carousel. */
+.roycss-carousel-progress:focus-within > span,
+.roycss-carousel-progress:focus-within::after {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-carousel-progress > span {
+    animation: none;
+    opacity: 1;
+  }
+  .roycss-carousel-progress > span:nth-child(n + 2) {
+    opacity: 0;
+  }
+  .roycss-carousel-progress::after {
+    animation: none;
+    transform: none;
+    background: oklch(1 0 0 / 0.4);
+  }
+}
+
+/* Navigation Patterns: Glass Navbar */
+.roycss-nav-navbar-glass {
+  position: sticky;
+  inset-inline: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  inline-size: 100%;
+  padding: 0.75rem 1.25rem;
+  border-radius: 16px;
+  background: oklch(0.99 0.005 250 / 0.55);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  backdrop-filter: blur(14px) saturate(1.4);
+  box-shadow:
+    inset 0 -1px 0 oklch(0.6 0.02 250 / 0.18),
+    0 1px 2px oklch(0.2 0.02 250 / 0.08);
+  z-index: 50;
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .roycss-nav-navbar-glass {
+      animation: roy-nav-glass-elevate linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0px 160px;
+    }
+  }
+}
+@keyframes roy-nav-glass-elevate {
+  to {
+    box-shadow:
+      inset 0 -1px 0 oklch(0.6 0.02 250 / 0.22),
+      0 8px 24px oklch(0.2 0.03 250 / 0.18);
+    background: oklch(0.99 0.005 250 / 0.72);
+  }
+}
+.roycss-nav-navbar-glass > span {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: oklch(0.35 0.03 250);
+  padding: 0.375rem 0.625rem;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+@media (hover: hover) {
+  .roycss-nav-navbar-glass > span:hover {
+    color: oklch(0.3 0.09 175);
+    background: oklch(0.9 0.05 175 / 0.35);
+  }
+}
+.roycss-nav-navbar-glass > span:focus-visible {
+  outline: 2px solid oklch(0.6 0.14 175);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-navbar-glass {
+    animation: none;
+  }
+}
+
+/* Navigation Patterns: Hamburger Morph X
+   REQUIRED MARKUP: <button class="roycss-nav-hamburger-morph" aria-expanded="false"
+                     aria-label="Open menu"><span></span><span></span><span></span></button>
+   Toggle [data-open="true"] (or :hover) to morph. */
+.roycss-nav-hamburger-morph {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  inline-size: 44px;
+  block-size: 44px;
+  padding: 10px;
+  border-radius: 12px;
+  background: oklch(0.97 0.01 250 / 0.6);
+  box-shadow: inset 0 0 0 1px oklch(0.7 0.04 250 / 0.3);
+  cursor: pointer;
+}
+.roycss-nav-hamburger-morph > span {
+  display: block;
+  block-size: 2px;
+  inline-size: 100%;
+  border-radius: 2px;
+  background: oklch(0.35 0.05 250);
+  transition:
+    transform 0.32s cubic-bezier(0.34, 1.4, 0.64, 1),
+    opacity 0.22s ease;
+}
+.roycss-nav-hamburger-morph[data-open="true"] > span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.roycss-nav-hamburger-morph[data-open="true"] > span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0.4);
+}
+.roycss-nav-hamburger-morph[data-open="true"] > span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+@media (hover: hover) {
+  .roycss-nav-hamburger-morph:hover > span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .roycss-nav-hamburger-morph:hover > span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0.4);
+  }
+  .roycss-nav-hamburger-morph:hover > span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+}
+.roycss-nav-hamburger-morph:focus-visible {
+  outline: 2px solid oklch(0.6 0.14 175);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-hamburger-morph > span {
+    transition: none;
+  }
+}
+
+/* Navigation Patterns: Peek Drawer
+   REQUIRED MARKUP: <aside class="roycss-nav-drawer-slide" data-open="false">
+                      <span>Home</span><span>Catalog</span><span>About</span>
+                    </aside>
+   Toggle data-open="true" (checkbox :checked sibling selectors also work). */
+.roycss-nav-drawer-slide {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.375rem;
+  inline-size: 220px;
+  block-size: 100%;
+  padding: 1rem 0.875rem;
+  border-radius: 14px;
+  background: linear-gradient(
+    160deg,
+    oklch(0.98 0.015 175 / 0.9),
+    oklch(0.94 0.03 200 / 0.92)
+  );
+  box-shadow:
+    inset -1px 0 0 oklch(0.6 0.08 175 / 0.25),
+    4px 0 16px oklch(0.2 0.03 200 / 0.15);
+  transform: translateX(calc(-100% + 44px));
+  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+}
+.roycss-nav-drawer-slide > span {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: oklch(0.32 0.05 200);
+  padding: 0.5rem 0.625rem;
+  border-radius: 10px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(12px);
+  transition:
+    opacity 0.3s ease 0.08s,
+    transform 0.36s cubic-bezier(0.22, 1, 0.36, 1) 0.06s;
+}
+.roycss-nav-drawer-slide[data-open="true"] {
+  transform: translateX(0);
+}
+.roycss-nav-drawer-slide[data-open="true"] > span {
+  opacity: 1;
+  transform: translateX(0);
+}
+@media (hover: hover) {
+  .roycss-nav-drawer-slide:hover {
+    transform: translateX(0);
+  }
+  .roycss-nav-drawer-slide:hover > span {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.roycss-nav-drawer-slide:focus-within {
+  transform: translateX(0);
+}
+.roycss-nav-drawer-slide > span:focus-visible {
+  outline: 2px solid oklch(0.6 0.14 175);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-drawer-slide,
+  .roycss-nav-drawer-slide > span {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* Navigation Patterns: Dropdown Caret Reveal */
+.roycss-nav-dropdown-caret {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  inline-size: 200px;
+  padding: 0.5rem 0.625rem;
+  border-radius: 14px;
+  background: oklch(0.98 0.008 300 / 0.7);
+  box-shadow: inset 0 0 0 1px oklch(0.7 0.05 300 / 0.3);
+  cursor: pointer;
+}
+.roycss-nav-dropdown-caret::after {
+  content: "";
+  position: absolute;
+  top: 0.875rem;
+  right: 0.875rem;
+  inline-size: 8px;
+  block-size: 8px;
+  border-right: 2px solid oklch(0.45 0.08 300);
+  border-bottom: 2px solid oklch(0.45 0.08 300);
+  transform: rotate(45deg);
+  transition: transform 0.34s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+.roycss-nav-dropdown-caret > span {
+  display: flex;
+  align-items: center;
+  inline-size: calc(100% - 1.75rem);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: oklch(0.34 0.05 300);
+  padding: 0.5rem 0.625rem;
+  border-radius: 10px;
+  max-block-size: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(-6px);
+  transition:
+    max-block-size 0.32s ease,
+    opacity 0.26s ease,
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (hover: hover) {
+  .roycss-nav-dropdown-caret:hover::after {
+    transform: rotate(225deg);
+  }
+  .roycss-nav-dropdown-caret:hover > span {
+    max-block-size: 3rem;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .roycss-nav-dropdown-caret:hover > span:nth-child(2) {
+    transition-delay: 0.04s;
+  }
+  .roycss-nav-dropdown-caret:hover > span:nth-child(3) {
+    transition-delay: 0.08s;
+  }
+}
+.roycss-nav-dropdown-caret:focus-within::after {
+  transform: rotate(225deg);
+}
+.roycss-nav-dropdown-caret:focus-within > span {
+  max-block-size: 3rem;
+  opacity: 1;
+  transform: translateY(0);
+}
+.roycss-nav-dropdown-caret > span:focus-visible {
+  outline: 2px solid oklch(0.6 0.14 175);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-dropdown-caret::after,
+  .roycss-nav-dropdown-caret > span {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* Navigation Patterns: Sliding Pill Indicator
+   REQUIRED MARKUP (persisted selection):
+     <nav class="roycss-nav-pill-indicator">
+       <input type="radio" name="nav-pill" id="pill-1" hidden checked>
+       <label for="pill-1"><span>Home</span></label> … </nav>
+   Demo markup below mirrors the label>span shape so hover previews it. */
+.roycss-nav-pill-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  inline-size: 100%;
+  padding: 0.375rem;
+  border-radius: 999px;
+  background: oklch(0.96 0.012 220 / 0.75);
+  box-shadow: inset 0 0 0 1px oklch(0.7 0.04 220 / 0.28);
+}
+.roycss-nav-pill-indicator > span {
+  position: relative;
+  flex: 1 1 0%;
+  text-align: center;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: oklch(0.38 0.04 220);
+  padding: 0.5rem 0.375rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.roycss-nav-pill-indicator > span::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    oklch(0.75 0.11 190),
+    oklch(0.68 0.13 250)
+  );
+  box-shadow: 0 2px 8px oklch(0.4 0.1 220 / 0.35);
+  transform: scale(0.6);
+  opacity: 0;
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.4, 0.64, 1),
+    opacity 0.22s ease;
+}
+.roycss-nav-pill-indicator > span:active::before {
+  transform: scale(0.92);
+  opacity: 0.7;
+}
+@media (hover: hover) {
+  .roycss-nav-pill-indicator > span:hover::before {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.roycss-nav-pill-indicator > span:focus-visible {
+  outline: 2px solid oklch(0.6 0.14 175);
+  outline-offset: 3px;
+}
+.roycss-nav-pill-indicator:has(input:checked:nth-of-type(1)) label:nth-of-type(1) span::before,
+.roycss-nav-pill-indicator:has(input:checked:nth-of-type(2)) label:nth-of-type(2) span::before,
+.roycss-nav-pill-indicator:has(input:checked:nth-of-type(3)) label:nth-of-type(3) span::before,
+.roycss-nav-pill-indicator:has(input:checked:nth-of-type(4)) label:nth-of-type(4) span::before {
+  transform: scale(1);
+  opacity: 1;
+}
+/* Issue #217 policy — no-:has() fallback (batch-10 exemplar): the radios
+   precede their labels in the required markup, so the same selected-state
+   pill is reachable with the plain general-sibling combinator. */
+@supports not selector(:has(*)) {
+  .roycss-nav-pill-indicator > input:checked:nth-of-type(1) ~ label:nth-of-type(1) span::before,
+  .roycss-nav-pill-indicator > input:checked:nth-of-type(2) ~ label:nth-of-type(2) span::before,
+  .roycss-nav-pill-indicator > input:checked:nth-of-type(3) ~ label:nth-of-type(3) span::before,
+  .roycss-nav-pill-indicator > input:checked:nth-of-type(4) ~ label:nth-of-type(4) span::before {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roycss-nav-pill-indicator > span::before {
+    transition: none;
+  }
+}
+

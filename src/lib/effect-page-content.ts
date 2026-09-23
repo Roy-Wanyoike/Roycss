@@ -20,7 +20,14 @@ import type { CSSEffect } from "./roycss-types";
        (e.g. `.roycss-text-wave > span:nth-child(1..6)`) WITHOUT declaring
        childCount — copy-paste users got no hint the spans are required.
    The block below renders the exact HTML snippet (with copy) on the page
-   whenever either applies. */
+   whenever either applies.
+
+   Issue #215 added the third source: STRUCTURAL patterns (aside drawers,
+   figure/img comparisons, :target lightboxes, …) whose CSS needs specific
+   elements, attributes and hierarchy — more than a plain class + spans.
+   Those effects author a `requiredMarkup` string on the CSSEffect itself
+   (the data side of the in-cssCode REQUIRED MARKUP comments) and it wins
+   over the span-derived snippet verbatim. */
 
 /**
  * Default number of <span> children shown when the CSS targets every child
@@ -29,16 +36,32 @@ import type { CSSEffect } from "./roycss-types";
 export const DEFAULT_SPAN_COUNT = 6;
 
 export interface RequiredMarkup {
-  /** Number of <span> children the snippet renders. */
+  /** Number of <span> elements the snippet renders (0 for non-span markup). */
   spanCount: number;
   /**
-   * true  — the count is pinned by the effect (childCount / nth-child scan)
-   *         and the snippet is the exact expected markup;
+   * true  — the snippet is the exact expected markup (authored structured
+   *         markup, childCount, or a pinned nth-child scan);
    * false — the CSS styles every child span, so the count is illustrative.
    */
   exact: boolean;
   /** The HTML snippet shown in the copyable code block. */
   snippet: string;
+  /**
+   * Section intro override for structured (authored) markup — the generic
+   * span copy on the effect page would be wrong for non-span markup.
+   */
+  intro?: string;
+}
+
+/** Intro copy shown above a structured (authored) required-markup block. */
+export const STRUCTURED_MARKUP_INTRO =
+  "This effect's CSS targets specific elements, attributes and hierarchy — paste this markup as-is (the outermost element carries the class):";
+
+/** Count the <span> elements in a snippet (0 for non-span markup).
+ *  HTML comments (e.g. the illustrative-snippet hint) are stripped first. */
+export function countSpanElements(snippet: string): number {
+  const withoutComments = snippet.replace(/<!--[\s\S]*?-->/g, "");
+  return (withoutComments.match(/<span(?=[\s/>])/g) ?? []).length;
 }
 
 /** Strip /* ... *​/ comments (commented examples must not false-positive). */
@@ -115,8 +138,20 @@ function buildSpanSnippet(effectId: string, spanCount: number, illustrative: boo
  * needs no special markup (the plain `.roycss-<id>` class is enough).
  */
 export function getRequiredMarkup(
-  effect: Pick<CSSEffect, "id" | "childCount" | "cssCode">
+  effect: Pick<CSSEffect, "id" | "childCount" | "cssCode" | "requiredMarkup">
 ): RequiredMarkup | null {
+  // Issue #215: authored structured markup wins verbatim — it expresses
+  // elements/attributes/hierarchy the span generator cannot.
+  if (effect.requiredMarkup && effect.requiredMarkup.trim().length > 0) {
+    const snippet = effect.requiredMarkup.trim();
+    return {
+      spanCount: countSpanElements(snippet),
+      exact: true,
+      snippet,
+      intro: STRUCTURED_MARKUP_INTRO,
+    };
+  }
+
   const spansInCss = usesSpanChildren(effect.cssCode);
 
   if (!effect.childCount && !spansInCss) return null;

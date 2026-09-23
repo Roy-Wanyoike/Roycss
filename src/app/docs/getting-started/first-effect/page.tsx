@@ -76,7 +76,7 @@ export default function FirstEffectPage() {
         one command, then you edit freely:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss add btn-glow --copy
+        <code>{`$ npx roycss-cli add btn-glow --copy
 
 /* your edited copy — teal instead of emerald, pill radius */
 .roycss-btn-glow {
@@ -123,7 +123,7 @@ export default function FirstEffectPage() {
           kebab-case, fully prefixed <code>roycss-</code> (e.g.{" "}
           <code>roycss-btn-glow</code>, not <code>roycss-btn-Glow</code>{" "}
           or <code>r-btn-glow</code>). Run{" "}
-          <code>npx roycss info &lt;effect-id&gt;</code> if unsure.
+          <code>npx roycss-cli info &lt;effect-id&gt;</code> if unsure.
         </li>
         <li>
           You are not running <code>prefers-reduced-motion: reduce</code>{" "}

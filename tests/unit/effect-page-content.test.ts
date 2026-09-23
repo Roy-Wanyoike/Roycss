@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { effects } from "@/lib/roycss-effects";
 import {
   DEFAULT_SPAN_COUNT,
+  countSpanElements,
   getReducedMotionNote,
   getRequiredMarkup,
   usesSpanChildren,
@@ -73,26 +74,59 @@ describe("getRequiredMarkup", () => {
     expect(markup.exact).toBe(true);
   });
 
-  it("CATALOG PIN: 78 childCount + 77 span-css effects = 155 with markup", () => {
+  it("honors authored structured requiredMarkup verbatim (issue #215)", () => {
+    // nav-drawer-slide: <aside> + data-open state, NOT a div of bare spans.
+    const drawer = getRequiredMarkup(byId("nav-drawer-slide"))!;
+    expect(drawer.exact).toBe(true);
+    expect(drawer.intro).toBeDefined();
+    expect(drawer.snippet).toContain('<aside class="roycss-nav-drawer-slide" data-open="false">');
+    expect(drawer.snippet).toContain("<span>Home</span>");
+    expect(drawer.snippet).not.toContain("<div");
+
+    // nav-hamburger-morph: a real <button> with aria state.
+    const burger = getRequiredMarkup(byId("nav-hamburger-morph"))!;
+    expect(burger.snippet).toContain('<button class="roycss-nav-hamburger-morph"');
+    expect(burger.snippet).toContain('aria-expanded="false"');
+    expect(burger.snippet).toContain('aria-label="Open menu"');
+    expect(burger.spanCount).toBe(3);
+
+    // media-compare-wipe: <figure> + 2 <img> — no spans at all.
+    const wipe = getRequiredMarkup(byId("media-compare-wipe"))!;
+    expect(wipe.snippet).toContain("<figure");
+    expect(wipe.snippet).toContain('<img src="after.jpg" alt="After">');
+    expect(wipe.snippet).toContain('<img src="before.jpg" alt="Before">');
+    expect(wipe.spanCount).toBe(0);
+
+    // media-lightbox-zoom: the :target overlay is a second element.
+    const lightbox = getRequiredMarkup(byId("media-lightbox-zoom"))!;
+    expect(lightbox.snippet).toContain('class="roycss-media-lightbox-zoom-overlay" id="img-1"');
+    expect(lightbox.snippet).toContain('aria-label="Close"');
+    expect(lightbox.spanCount).toBe(1);
+  });
+
+  it("CATALOG PIN: 78 childCount + 77 span-css + 1 structured = 156 with markup", () => {
     const withChildCount = effects.filter((e) => (e.childCount ?? 0) > 0);
     expect(withChildCount.length).toBe(78);
     const spanNoChildCount = effects.filter(
-      (e) => !e.childCount && usesSpanChildren(e.cssCode)
+      (e) => !e.childCount && !e.requiredMarkup && usesSpanChildren(e.cssCode)
     );
     expect(spanNoChildCount.length).toBe(77);
+    // #215: exactly one structural effect needs markup WITHOUT any spans:
+    const structuredNoSpans = effects.filter(
+      (e) => e.requiredMarkup && (e.childCount ?? 0) === 0 && !usesSpanChildren(e.cssCode)
+    );
+    expect(structuredNoSpans.map((e) => e.id)).toEqual(["media-compare-wipe"]);
     const withMarkup = effects.filter((e) => getRequiredMarkup(e) !== null);
-    expect(withMarkup.length).toBe(155);
+    expect(withMarkup.length).toBe(156);
   });
 
-  it("every childCount effect yields an exact snippet with that many spans", () => {
+  it("every effect with markup yields an exact snippet whose <span> count matches", () => {
     for (const effect of effects) {
       const markup = getRequiredMarkup(effect);
       if (!markup) continue;
       expect(markup.snippet, effect.id).toContain(`roycss-${effect.id}`);
-      expect(
-        markup.snippet.split("<span></span>").length - 1,
-        effect.id
-      ).toBe(markup.spanCount);
+      // Count <span> ELEMENTS (structured snippets carry labelled spans).
+      expect(countSpanElements(markup.snippet), effect.id).toBe(markup.spanCount);
       if (markup.exact) expect(markup.snippet, effect.id).not.toContain("Any number of");
     }
   });

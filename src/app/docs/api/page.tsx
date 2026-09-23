@@ -112,7 +112,7 @@ export default function Page() {
 @import "roycss/css/min";
 
 /* Or a hand-picked subset, via the CLI */
-$ npx roycss export btn-glow hover-push-up text-shimmer --out src/styles/roycss.css`}</code>
+$ npx roycss-cli export btn-glow hover-push-up text-shimmer --out src/styles/roycss.css`}</code>
       </pre>
 
       <h2 className="text-2xl font-semibold mt-10 mb-3">Where to go next</h2>

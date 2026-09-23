@@ -95,7 +95,7 @@ const REQUIRED_PKG_FIELDS = [
   "bugs",
 ] as const;
 
-const TARGET_TARBALL_KB = 1200;
+const TARGET_TARBALL_KB = 1650; // re-baselined for #217: +60 dist artifacts (category splits, tailwind, SRI) measured 1,528.3 KB
 
 let failures = 0;
 

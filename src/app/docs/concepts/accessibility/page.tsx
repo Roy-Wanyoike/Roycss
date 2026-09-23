@@ -142,7 +142,7 @@ export default function AccessibilityPage() {
         motion-safe before you use them:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss doctor`}</code>
+        <code>{`$ npx roycss-cli doctor`}</code>
       </pre>
     </>
   );

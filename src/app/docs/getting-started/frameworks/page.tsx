@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
+import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 
 export const metadata: Metadata = pageMeta({
   path: "/docs/getting-started/frameworks",
@@ -124,17 +125,51 @@ import "roycss/css/min";
         first paint already shows the correct effect states.
       </p>
 
-      <h2 id="tailwind">Using alongside Tailwind</h2>
+      <h2 id="tailwind">Tailwind v4</h2>
       <p>
-        RoyCSS and Tailwind coexist cleanly. RoyCSS class names are
-        prefixed with <code>roycss-</code> and never collide with
-        Tailwind utilities. Compose them in any order:
+        RoyCSS and Tailwind v4 compose in one import. In your main CSS
+        entry (the file that compiles through{" "}
+        <code>@tailwindcss/postcss</code> or the Tailwind CLI), import
+        the integration stylesheet after Tailwind:
+      </p>
+      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
+        <code>{`@import "tailwindcss";
+@import "roycss/tailwind";`}</code>
+      </pre>
+      <p>
+        That is the whole recipe. <code>roycss/tailwind</code> pulls in
+        the full effect stylesheet. Because RoyCSS classes are plain,
+        unlayered CSS while Tailwind v4 puts everything it generates
+        into cascade layers, effect rules deterministically win over
+        Tailwind's preflight resets on shared properties — no{" "}
+        <code>!important</code>, no specificity fights. The{" "}
+        <code>roycss-</code> prefix is a reserved namespace that never
+        collides with a Tailwind utility name, so the two can share
+        class lists freely:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`<button className="roycss-btn-glow px-4 py-2 rounded-md">
   Save
 </button>`}</code>
       </pre>
+      <p>
+        Want Tailwind utilities to be able to override effect
+        properties? Declare the layer order before the imports:
+      </p>
+      <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
+        <code>{`@layer theme, base, roycss, components, utilities;
+@import "tailwindcss";
+@import "roycss/tailwind";`}</code>
+      </pre>
+      <p className="text-sm text-muted-foreground">
+        Why not one <code>@utility</code> per effect? Registering a
+        class as a Tailwind utility requires anchoring every rule to
+        its root class with <code>&amp;</code>-nesting and hoisting the
+        shared <code>@keyframes</code> / <code>@supports</code> blocks
+        — a lossy, error-prone transform across {EFFECT_COUNT_FORMATTED}{" "}
+        effects. The import recipe ships the exact CSS that the dist
+        tests and the browser-support matrix are verified against.
+      </p>
     </>
   );
 }

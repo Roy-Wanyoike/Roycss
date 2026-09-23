@@ -24,7 +24,12 @@ They answer the three questions a builder actually asks before pasting an
 effect into a product: *does it respect `prefers-reduced-motion` on its own?*
 *does it change interactive semantics?* and *does it hide real text?* The
 tags are surfaced as pills on every effect card and as a **Motion-safe only**
-filter chip in the effects grid. The 1,602/381/1,668/315/89 numbers below (post-#189 wave + the #200 P1 UI-patterns batch: 14 new effects + the #203 navigation/media batch: 10 new effects, all shipping their own reduced-motion guards)
+filter chip in the effects grid. The 1,602/381/1,659/324/89 numbers below
+(post-#189 wave + the #200 P1 UI-patterns batch: 14 new effects + the #203
+navigation/media batch: 10 new effects, all shipping their own reduced-motion
+guards; then issue #214, which added `:hover`/`:focus-within` pause variants
+to the 9 batch-53 auto-advance marquees/carousels — decorative → interactive,
+not motion tiers)
 are pinned by `tests/unit/effect-a11y.test.ts`, so they cannot silently
 drift from the catalog.
 
@@ -34,8 +39,8 @@ drift from the catalog.
 |---|---|---|---|
 | `motionSafe: true` | The effect's own CSS ships a `@media (prefers-reduced-motion: reduce)` guard. Safe to copy standalone. | **1,602** | — (drives the Motion-safe filter) |
 | `motionSafe: false` | No per-effect guard. **Not** unsafe to install — see §4. | **381** | *Motion caution* pill (amber) |
-| `decorationOnly: true` | No interactive pseudo-classes in the CSS — the effect is pure presentation; wrappers can be `aria-hidden` without losing semantics. | **1,668** | *Decorative* pill (muted) |
-| `decorationOnly: false` | The CSS responds to user input (`:hover` / `:focus` / `:active` or form-state pseudo-classes) — interaction, so the element must remain focusable/perceivable. | **315** | — |
+| `decorationOnly: true` | No interactive pseudo-classes in the CSS — the effect is pure presentation; wrappers can be `aria-hidden` without losing semantics. | **1,659** | *Decorative* pill (muted) |
+| `decorationOnly: false` | The CSS responds to user input (`:hover` / `:focus` / `:active` or form-state pseudo-classes) — interaction, so the element must remain focusable/perceivable. | **324** | — |
 | `requiresAria: "<reason>"` | The CSS hides real text via a known pattern; the reason names the top-priority match. | **90** | *A11y note* pill (violet) |
 
 The five `requiresAria` reasons, in priority order (one note per effect —
@@ -66,8 +71,8 @@ in the generator source so nobody "fixes" them by accident):
 
 - **Hover IS interaction.** A `:hover` rule changes presentation in response
   to user input, so hover effects are flagged interactive-relevant:
-  **314** effects match `:hover`/`:focus`/`:active`, **1** more matches
-  form-state pseudo-classes only, giving **315**
+  **323** effects match `:hover`/`:focus`/`:active`, **1** more matches
+  form-state pseudo-classes only, giving **324**
   interactive effects. The single form-state-only effect is
   `ferrum-accordion-slide` (`:checked`).
 - **No effect uses `[aria-*]` or `[role]` selectors** (verified: zero
@@ -120,8 +125,8 @@ header · the tests · this table):
 | Total effects | 1,983 |
 | Motion-safe (`motionSafe: true`) | 1,602 |
 | Motion-caution (`motionSafe: false`) | 381 |
-| Interactive (`decorationOnly: false`) | 315 |
-| Decorative (`decorationOnly: true`) | 1,668 |
+| Interactive (`decorationOnly: false`) | 324 |
+| Decorative (`decorationOnly: true`) | 1,659 |
 | Aria-required (`requiresAria` set) | 89 |
 
 **The honest caveat (read this before rejecting an effect):**

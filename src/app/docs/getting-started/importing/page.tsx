@@ -82,10 +82,10 @@ import "roycss/css/min";    /* minified — same rules */`}</code>
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`# Exact effects → one file
-npx roycss export btn-glow hover-push-up text-gradient --out src/styles/roycss.css
+npx roycss-cli export btn-glow hover-push-up text-gradient --out src/styles/roycss.css
 
 # Or a whole category
-npx roycss export --category buttons --out src/styles/roycss.css`}</code>
+npx roycss-cli export --category buttons --out src/styles/roycss.css`}</code>
       </pre>
       <p>
         You can also copy a single effect&apos;s CSS straight from its
@@ -94,7 +94,7 @@ npx roycss export --category buttons --out src/styles/roycss.css`}</code>
           effect catalog
         </a>{" "}
         (every effect page has a copy button), or with{" "}
-        <code>npx roycss add &lt;effect-id&gt; --copy</code>. Each
+        <code>npx roycss-cli add &lt;effect-id&gt; --copy</code>. Each
         effect averages under 1 KB, so a hand-picked landing-page
         bundle is typically 2–5 KB.
       </p>

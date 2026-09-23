@@ -105,7 +105,7 @@ export default function CustomPropertiesPage() {
         walks through the workflow:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss add btn-glow --copy   # CSS on your clipboard`}</code>
+        <code>{`$ npx roycss-cli add btn-glow --copy   # CSS on your clipboard`}</code>
       </pre>
 
       <h2 id="runtime-tweaks">Runtime tweaks</h2>

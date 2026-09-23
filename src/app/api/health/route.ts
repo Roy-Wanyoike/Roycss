@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import { resolveApiModeInfo, type ApiModeInfo, type BackendProbe } from "@/lib/api-mode";
 import { effectsCount } from "@/lib/embedded-api";
+import { VERSION } from "@/lib/site-stats";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -41,7 +42,10 @@ export async function GET() {
       dbStatus: info.mode === "proxy" ? (info.probe?.reachable ? "ok" : "down") : "n/a",
       backendStatus,
       timestamp: new Date().toISOString(),
-      version: "2.1.0",
+      // Issue #217: read from package.json (via site-stats, which pins the
+      // single-source-of-truth import) — was hardcoded to a stale literal while the
+      // package declares 2.0.0.
+      version: VERSION,
     },
     { headers: { "Cache-Control": "no-store" } }
   );

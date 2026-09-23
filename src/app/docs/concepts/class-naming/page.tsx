@@ -131,7 +131,7 @@ roycss-vfx-neon-border             "vfx" family (batch theme)`}</code>
         effects you actually use:
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
-        <code>{`$ npx roycss doctor
+        <code>{`$ npx roycss-cli doctor
 
 ✓ 14 RoyCSS class usages found across 6 unique classes in 12 source files
 ⚠ 1 unknown roycss-* class (possible typos):

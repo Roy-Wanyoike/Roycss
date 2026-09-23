@@ -1,0 +1,1615 @@
+/*!
+ * RoyCSS v2.0.0 — Button Effects (55 effects)
+ * Category split of dist/roycss.css — import "roycss/css" for all
+ * 29 categories. https://github.com/Roy-Wanyoike/Roycss
+ * License: MIT
+ */
+
+/* ─── Base ────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.roycss-sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [class^="roycss-"],
+  [class*=" roycss-"] {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Shine Sweep Button */
+.roycss-btn-shine-sweep {
+  position: relative;
+  overflow: hidden;
+  background: oklch(0.696 0.149 162.48);
+  color: oklch(1 0 89.88);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.roycss-btn-shine-sweep::after {
+  content: '';
+  position: absolute;
+  inset-block-start: -50%;
+  inset-inline-start: -60%;
+  inline-size: 40%;
+  block-size: 200%;
+  background: linear-gradient(90deg, transparent, color-mix(in oklch, oklch(1 0 89.88) 45%, transparent), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+.roycss-btn-shine-sweep:hover::after {
+  inset-inline-start: 120%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-btn-shine-sweep::after {
+    transition: none;
+  }
+}
+
+
+/* Fill Slide Button */
+.roycss-btn-fill-slide {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  background: transparent;
+  color: oklch(0.696 0.149 162.48);
+  border: 2px solid oklch(0.696 0.149 162.48);
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: color 0.4s ease;
+}
+
+.roycss-btn-fill-slide::before {
+  content: '';
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 0%;
+  background: oklch(0.696 0.149 162.48);
+  z-index: -1;
+  transition: height 0.4s ease;
+}
+
+.roycss-btn-fill-slide:hover {
+  color: oklch(1 0 89.88);
+}
+
+.roycss-btn-fill-slide:hover::before {
+  block-size: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Fill Slide Button */
+.roycss-btn-fill-slide {
+    transition: none;
+  }
+  .roycss-btn-fill-slide::before {
+    transition: none;
+  }
+}
+
+
+/* Ripple Button (CSS-only) */
+.roycss-btn-ripple {
+  position: relative;
+  overflow: hidden;
+  background: oklch(0.696 0.149 162.48);
+  color: oklch(1 0 89.88);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.roycss-btn-ripple::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inline-size: 0;
+  block-size: 0;
+  background: color-mix(in oklch, oklch(1 0 89.88) 45%, transparent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: width 0.5s ease, height 0.5s ease, opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.roycss-btn-ripple:active::after {
+  inline-size: 320px;
+  block-size: 320px;
+  opacity: 1;
+  transition: 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-btn-ripple::after {
+    transition: none;
+  }
+  .roycss-btn-ripple:active::after {
+    transition: none;
+  }
+}
+
+
+/* Border Draw Button */
+.roycss-btn-border-draw {
+  position: relative;
+  background: transparent;
+  color: oklch(0.696 0.149 162.48);
+  border: 2px solid transparent;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  z-index: 1;
+}
+
+.roycss-btn-border-draw::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid oklch(0.696 0.149 162.48);
+  border-radius: inherit;
+  clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+  transition: clip-path 0.45s ease;
+  z-index: -1;
+}
+
+.roycss-btn-border-draw:hover::before {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  background: color-mix(in oklch, oklch(0.696 0.149 162.48) 8%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-btn-border-draw::before {
+    transition: none;
+  }
+}
+
+
+/* Glow Button */
+.roycss-btn-glow {
+  background: oklch(0.696 0.149 162.48);
+  color: oklch(1 0 89.88);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.roycss-btn-glow:hover {
+  box-shadow: 0 0 20px color-mix(in oklch, oklch(0.696 0.149 162.48) 60%, transparent), 0 0 40px color-mix(in oklch, oklch(0.696 0.149 162.48) 30%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Glow Button */
+.roycss-btn-glow {
+    transition: none;
+  }
+}
+
+
+/* Pulse Button */
+.roycss-btn-pulse {
+  background: oklch(0.637 0.208 25.33);
+  color: oklch(1 0 89.88);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.roycss-btn-pulse:hover {
+  background: oklch(0.577 0.215 27.33);
+  animation: roy-btn-pulse 0.8s ease-in-out infinite;
+}
+
+@keyframes roy-btn-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Pulse Button */
+.roycss-btn-pulse {
+    transition: none;
+  }
+  .roycss-btn-pulse:hover {
+    animation: none;
+  }
+}
+
+
+/* Bounce Button */
+.roycss-btn-bounce {
+  background: oklch(0.769 0.165 70.08);
+  color: oklch(1 0 89.88);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.roycss-btn-bounce:hover {
+  animation: roy-btn-bounce 0.7s ease;
+}
+
+@keyframes roy-btn-bounce {
+  0%, 100% { transform: translateY(0); }
+  20% { transform: translateY(-12px); }
+  40% { transform: translateY(0); }
+  60% { transform: translateY(-6px); }
+  80% { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-btn-bounce:hover {
+    animation: none;
+  }
+}
+
+
+/* 3D Press Button */
+.roycss-btn-press {
+  background: oklch(0.606 0.219 292.72);
+  color: oklch(1 0 89.88);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 6px 0 oklch(0.491 0.241 292.58), 0 8px 14px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.roycss-btn-press:active {
+  transform: translateY(6px);
+  box-shadow: 0 0 0 oklch(0.491 0.241 292.58), 0 2px 6px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* 3D Press Button */
+.roycss-btn-press {
+    transition: none;
+  }
+}
+
+
+/* Lift Button */
+.roycss-btn-lift {
+  background: oklch(0.704 0.123 182.5);
+  color: oklch(1 0 89.88);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 4px 10px color-mix(in oklch, oklch(0.704 0.123 182.5) 25%, transparent);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.roycss-btn-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 28px color-mix(in oklch, oklch(0.704 0.123 182.5) 45%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Lift Button */
+.roycss-btn-lift {
+    transition: none;
+  }
+}
+
+
+/* Slide Background Button */
+.roycss-btn-slide-bg {
+  position: relative;
+  overflow: hidden;
+  background: oklch(0.208 0.04 265.75);
+  color: oklch(0.769 0.165 70.08);
+  border: 2px solid oklch(0.769 0.165 70.08);
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  z-index: 1;
+  transition: color 0.4s ease;
+}
+
+.roycss-btn-slide-bg::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: -100%;
+  inline-size: 100%;
+  block-size: 100%;
+  background: oklch(0.769 0.165 70.08);
+  z-index: -1;
+  transition: left 0.4s ease;
+}
+
+.roycss-btn-slide-bg:hover {
+  color: oklch(0.208 0.04 265.75);
+}
+
+.roycss-btn-slide-bg:hover::before {
+  inset-inline-start: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Slide Background Button */
+.roycss-btn-slide-bg {
+    transition: none;
+  }
+  .roycss-btn-slide-bg::before {
+    transition: none;
+  }
+}
+
+
+/* Flip Button */
+.roycss-btn-flip {
+  background: oklch(0.656 0.212 354.31);
+  color: oklch(1 0 89.88);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease, background 0.3s ease;
+}
+
+.roycss-btn-flip:hover {
+  transform: rotateY(360deg);
+  background: oklch(0.645 0.215 16.44);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Flip Button */
+.roycss-btn-flip {
+    transition: none;
+  }
+}
+
+
+/* 3D Push Button */
+.roycss-btn-3d-push {
+  position: relative;
+  background: oklch(0.768 0.204 130.85);
+  color: oklch(0.274 0.069 132.11);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 5px 0 oklch(0.648 0.175 131.68), 0 7px 14px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.roycss-btn-3d-push:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 oklch(0.648 0.175 131.68), 0 10px 18px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+}
+
+.roycss-btn-3d-push:active {
+  transform: translateY(5px);
+  box-shadow: 0 0 0 oklch(0.648 0.175 131.68), 0 1px 4px color-mix(in oklch, oklch(0 0 0) 20%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* 3D Push Button */
+.roycss-btn-3d-push {
+    transition: none;
+  }
+}
+
+
+/* Neon Button */
+.roycss-btn-neon {
+  background: oklch(0.145 0 89.88);
+  color: oklch(0.715 0.126 215.22);
+  border: 2px solid oklch(0.715 0.126 215.22);
+  padding: 10px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow: 0 0 5px oklch(0.715 0.126 215.22), inset 0 0 5px color-mix(in oklch, oklch(0.715 0.126 215.22) 40%, transparent);
+  text-shadow: 0 0 5px oklch(0.715 0.126 215.22);
+  transition: all 0.3s ease;
+}
+
+.roycss-btn-neon:hover {
+  color: oklch(1 0 89.88);
+  box-shadow: 0 0 20px oklch(0.715 0.126 215.22), 0 0 40px oklch(0.715 0.126 215.22), inset 0 0 15px color-mix(in oklch, oklch(0.715 0.126 215.22) 60%, transparent);
+  text-shadow: 0 0 10px oklch(1 0 89.88), 0 0 20px oklch(0.715 0.126 215.22);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Neon Button */
+.roycss-btn-neon {
+    transition: none;
+  }
+}
+
+
+/* Animated Gradient Button */
+.roycss-btn-gradient {
+  background: linear-gradient(45deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22), oklch(0.606 0.219 292.72), oklch(0.656 0.212 354.31), oklch(0.696 0.149 162.48));
+  background-size: 300% 300%;
+  color: oklch(1 0 89.88);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  animation: roy-btn-gradient 5s ease infinite;
+  transition: transform 0.3s ease;
+}
+
+.roycss-btn-gradient:hover {
+  transform: scale(1.06);
+}
+
+@keyframes roy-btn-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Animated Gradient Button */
+.roycss-btn-gradient {
+    animation: none;
+    transition: none;
+  }
+}
+
+
+/* Radial Fill Button */
+.roycss-btn-outline-fill {
+  position: relative;
+  background: transparent;
+  color: oklch(0.645 0.215 16.44);
+  border: 2px solid oklch(0.645 0.215 16.44);
+  padding: 10px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  overflow: hidden;
+  z-index: 1;
+  transition: color 0.4s ease;
+}
+
+.roycss-btn-outline-fill::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inline-size: 0;
+  block-size: 0;
+  background: oklch(0.645 0.215 16.44);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  transition: width 0.5s ease, height 0.5s ease;
+}
+
+.roycss-btn-outline-fill:hover {
+  color: oklch(1 0 89.88);
+}
+
+.roycss-btn-outline-fill:hover::before {
+  inline-size: 320px;
+  block-size: 320px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Radial Fill Button */
+.roycss-btn-outline-fill {
+    transition: none;
+  }
+  .roycss-btn-outline-fill::before {
+    transition: none;
+  }
+}
+
+
+/* Icon Slide-In Button */
+.roycss-btn-icon-slide {
+  background: oklch(0.667 0.259 322.15);
+  color: oklch(1 0 89.88);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  transition: padding 0.3s ease, gap 0.3s ease;
+}
+
+.roycss-btn-icon-slide::after {
+  content: '→';
+  display: inline-block;
+  opacity: 0;
+  inline-size: 0;
+  overflow: hidden;
+  transform: translateX(-8px);
+  transition: opacity 0.3s ease, width 0.3s ease, transform 0.3s ease;
+  font-size: 16px;
+}
+
+.roycss-btn-icon-slide:hover {
+  padding-inline-start: 20px;
+  padding-inline-end: 32px;
+}
+
+.roycss-btn-icon-slide:hover::after {
+  opacity: 1;
+  inline-size: 16px;
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Icon Slide-In Button */
+.roycss-btn-icon-slide {
+    transition: none;
+  }
+  .roycss-btn-icon-slide::after {
+    transition: none;
+  }
+}
+
+
+/* Arrow Slide Button */
+.roycss-btn-arrow-slide {
+  background: oklch(0.705 0.187 47.6);
+  color: oklch(1 0 89.88);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: gap 0.3s ease, background 0.3s ease;
+}
+
+.roycss-btn-arrow-slide::after {
+  content: '→';
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.roycss-btn-arrow-slide:hover {
+  gap: 16px;
+  background: oklch(0.646 0.194 41.12);
+}
+
+.roycss-btn-arrow-slide:hover::after {
+  transform: translateX(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Arrow Slide Button */
+.roycss-btn-arrow-slide {
+    transition: none;
+  }
+  .roycss-btn-arrow-slide::after {
+    transition: none;
+  }
+}
+
+
+/* Border Glow Button */
+.roycss-btn-border-glow {
+  background: oklch(0.279 0.037 260.03);
+  color: oklch(0.704 0.123 182.5);
+  border: 2px solid color-mix(in oklch, oklch(0.704 0.123 182.5) 35%, transparent);
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.roycss-btn-border-glow:hover {
+  border-color: oklch(0.704 0.123 182.5);
+  color: oklch(0.855 0.125 181.07);
+  box-shadow: 0 0 18px color-mix(in oklch, oklch(0.704 0.123 182.5) 55%, transparent), inset 0 0 12px color-mix(in oklch, oklch(0.704 0.123 182.5) 20%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Border Glow Button */
+.roycss-btn-border-glow {
+    transition: none;
+  }
+}
+
+
+/* Shadow Push Button */
+.roycss-btn-shadow-push {
+  background: oklch(0.637 0.208 25.33);
+  color: oklch(1 0 89.88);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 5px 5px 0 oklch(0.396 0.133 25.72);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.roycss-btn-shadow-push:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 3px 3px 0 oklch(0.396 0.133 25.72);
+}
+
+.roycss-btn-shadow-push:active {
+  transform: translate(5px, 5px);
+  box-shadow: 0 0 0 oklch(0.396 0.133 25.72);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Shadow Push Button */
+.roycss-btn-shadow-push {
+    transition: none;
+  }
+}
+
+
+/* Liquid Button */
+.roycss-btn-liquid {
+  background: oklch(0.715 0.126 215.22);
+  color: oklch(1 0 89.88);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: border-radius 0.4s ease, background 0.4s ease;
+}
+
+.roycss-btn-liquid:hover {
+  border-radius: 8px;
+  background: oklch(0.609 0.111 221.72);
+  animation: roy-btn-liquid 0.6s ease;
+}
+
+@keyframes roy-btn-liquid {
+  0%, 100% { transform: skew(0); }
+  25% { transform: skew(-4deg); }
+  75% { transform: skew(4deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Liquid Button */
+.roycss-btn-liquid {
+    transition: none;
+  }
+  .roycss-btn-liquid:hover {
+    animation: none;
+  }
+}
+
+
+/* Morph Button */
+.roycss-btn-morph {
+  background: oklch(0.606 0.219 292.72);
+  color: oklch(1 0 89.88);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.roycss-btn-morph:hover {
+  border-radius: 50%;
+  padding: 18px 28px;
+  transform: rotate(8deg);
+  background: oklch(0.709 0.159 293.54);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Morph Button */
+.roycss-btn-morph {
+    transition: none;
+  }
+}
+
+
+/* Expand Button */
+.roycss-btn-expand {
+  background: oklch(0.696 0.149 162.48);
+  color: oklch(1 0 89.88);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0;
+  transition: all 0.4s ease;
+}
+
+.roycss-btn-expand:hover {
+  padding: 10px 38px;
+  letter-spacing: 4px;
+  background: oklch(0.596 0.127 163.23);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Expand Button */
+.roycss-btn-expand {
+    transition: none;
+  }
+}
+
+
+/* Rotate Button */
+.roycss-btn-rotate {
+  background: oklch(0.769 0.165 70.08);
+  color: oklch(1 0 89.88);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.roycss-btn-rotate:hover {
+  transform: rotate(-4deg) scale(1.06);
+  background: oklch(0.666 0.157 58.32);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Rotate Button */
+.roycss-btn-rotate {
+    transition: none;
+  }
+}
+
+
+/* Skew Button */
+.roycss-btn-skew {
+  background: oklch(0.656 0.212 354.31);
+  color: oklch(1 0 89.88);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.roycss-btn-skew:hover {
+  transform: skewX(-15deg);
+  background: oklch(0.592 0.218 0.58);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Skew Button */
+.roycss-btn-skew {
+    transition: none;
+  }
+}
+
+
+/* Sparkle Button */
+.roycss-btn-sparkle {
+  position: relative;
+  background: oklch(0.279 0.037 260.03);
+  color: oklch(0.924 0.115 95.75);
+  border: 1px solid oklch(0.769 0.165 70.08);
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.roycss-btn-sparkle::before,
+.roycss-btn-sparkle::after {
+  content: '✦';
+  position: absolute;
+  color: oklch(0.837 0.164 84.43);
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.5s ease;
+  pointer-events: none;
+}
+
+.roycss-btn-sparkle::before {
+  inset-block-start: -6px;
+  inset-inline-start: 8%;
+}
+
+.roycss-btn-sparkle::after {
+  inset-block-end: -6px;
+  inset-inline-end: 8%;
+}
+
+.roycss-btn-sparkle:hover {
+  color: oklch(0.837 0.164 84.43);
+  box-shadow: 0 0 18px color-mix(in oklch, oklch(0.837 0.164 84.43) 55%, transparent);
+}
+
+.roycss-btn-sparkle:hover::before {
+  opacity: 1;
+  transform: translateY(-10px) rotate(180deg);
+}
+
+.roycss-btn-sparkle:hover::after {
+  opacity: 1;
+  transform: translateY(10px) rotate(-180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Sparkle Button */
+.roycss-btn-sparkle {
+    transition: none;
+  }
+  .roycss-btn-sparkle::before,
+.roycss-btn-sparkle::after {
+    transition: none;
+  }
+}
+
+
+/* Glass Press Button */
+.roycss-btn-glass-press-b18 {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.75rem;
+  background: color-mix(in oklch, oklch(0.6 0.2 162) 20%, transparent);
+  backdrop-filter: blur(12px);
+  border: 1px solid color-mix(in oklch, oklch(0.6 0.2 162) 40%, transparent);
+  color: oklch(0.95 0.02 162);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow:
+    0 4px 10px color-mix(in oklch, oklch(0.1 0.02 250) 30%, transparent),
+    inset 0 1px 1px color-mix(in oklch, white 20%, transparent);
+}
+
+.roycss-btn-glass-press-b18:hover {
+  background: color-mix(in oklch, oklch(0.6 0.2 162) 30%, transparent);
+  transform: translateY(-1px);
+}
+
+.roycss-btn-glass-press-b18:active {
+  transform: translateY(1px);
+  box-shadow:
+    0 2px 5px color-mix(in oklch, oklch(0.1 0.02 250) 30%, transparent),
+    inset 0 1px 2px color-mix(in oklch, oklch(0.1 0.02 250) 30%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Glass Press Button */
+.roycss-btn-glass-press-b18 {
+    transition: none;
+  }
+}
+
+
+/* Gradient Glow Button */
+.roycss-btn-gradient-glow-b18 {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, oklch(0.6 0.2 162), oklch(0.55 0.25 200));
+  border: none;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px color-mix(in oklch, oklch(0.6 0.2 162) 30%, transparent);
+}
+
+.roycss-btn-gradient-glow-b18:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px color-mix(in oklch, oklch(0.6 0.2 162) 50%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Gradient Glow Button */
+.roycss-btn-gradient-glow-b18 {
+    transition: none;
+  }
+}
+
+
+/* Outline Draw Button */
+.roycss-btn-outline-draw-b18 {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.75rem;
+  background: transparent;
+  border: 1px solid oklch(0.5 0.15 250);
+  color: oklch(0.85 0.02 250);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  transition: color 0.3s ease;
+}
+
+.roycss-btn-outline-draw-b18::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: oklch(0.6 0.2 162);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+  z-index: -1;
+}
+
+.roycss-btn-outline-draw-b18:hover {
+  color: white;
+  border-color: oklch(0.6 0.2 162);
+}
+
+.roycss-btn-outline-draw-b18:hover::before {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Outline Draw Button */
+.roycss-btn-outline-draw-b18 {
+    transition: none;
+  }
+  .roycss-btn-outline-draw-b18::before {
+    transition: none;
+  }
+}
+
+
+/* 3D Push Button */
+.roycss-btn-3d-push-b18 {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.75rem;
+  background: oklch(0.6 0.2 162);
+  border: none;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow:
+    0 4px 0 oklch(0.4 0.15 162),
+    0 6px 10px color-mix(in oklch, oklch(0.1 0.02 250) 40%, transparent);
+  transition: all 0.1s ease;
+}
+
+.roycss-btn-3d-push-b18:hover {
+  background: oklch(0.65 0.2 162);
+}
+
+.roycss-btn-3d-push-b18:active {
+  transform: translateY(3px);
+  box-shadow:
+    0 1px 0 oklch(0.4 0.15 162),
+    0 2px 5px color-mix(in oklch, oklch(0.1 0.02 250) 40%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* 3D Push Button */
+.roycss-btn-3d-push-b18 {
+    transition: none;
+  }
+}
+
+
+/* Shine Line Button */
+.roycss-btn-shine-line-b18 {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.5rem;
+  background: oklch(0.25 0.03 250);
+  border: 1px solid oklch(0.4 0.05 250);
+  color: oklch(0.85 0.02 250);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.roycss-btn-shine-line-b18::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-block-end: 0;
+  inset-inline-start: -100%;
+  inline-size: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklch, white 30%, transparent),
+    transparent
+  );
+  transition: inset-inline-start 0.5s ease;
+}
+
+.roycss-btn-shine-line-b18:hover {
+  border-color: oklch(0.6 0.2 162);
+}
+
+.roycss-btn-shine-line-b18:hover::after {
+  inset-inline-start: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Shine Line Button */
+.roycss-btn-shine-line-b18 {
+    transition: none;
+  }
+  .roycss-btn-shine-line-b18::after {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-btn-3d-push {
+  position: relative;
+  background: oklch(0.768 0.178 130.36);
+  color: oklch(0.274 0.069 132.11);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 5px 0 oklch(0.648 0.175 131.68), 0 7px 14px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-3d-push {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-btn-arrow-slide {
+  background: oklch(0.705 0.213 51.16);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: gap 0.3s ease, background 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-arrow-slide {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-btn-border-draw {
+  position: relative;
+  background: transparent;
+  color: oklch(0.696 0.149 162.48);
+  border: 2px solid transparent;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  z-index: 1;
+}
+
+.roycss-ferrum-btn-border-glow {
+  background: oklch(0.27 0.04 260.03);
+  color: oklch(0.699 0.118 184.7);
+  border: 2px solid color-mix(in oklch, oklch(0.699 0.118 184.7) 35%, transparent);
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-border-glow {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-btn-bounce {
+  background: oklch(0.769 0.188 70.08);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.roycss-ferrum-btn-expand {
+  background: oklch(0.696 0.149 162.48);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0;
+  transition: all 0.4s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-expand {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-btn-fill-slide {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  background: transparent;
+  color: oklch(0.696 0.149 162.48);
+  border: 2px solid oklch(0.696 0.149 162.48);
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: color 0.4s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-fill-slide {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-btn-flip {
+  background: oklch(0.652 0.241 354.31);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease, background 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-flip {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-btn-glow {
+  background: oklch(0.696 0.149 162.48);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-glow {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-btn-gradient {
+  background: linear-gradient(45deg, oklch(0.696 0.149 162.48), oklch(0.685 0.131 226.94), oklch(0.566 0.245 278.69), oklch(0.652 0.241 354.31), oklch(0.696 0.149 162.48));
+  background-size: 300% 300%;
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  animation: roy-btn-gradient 5s ease infinite;
+  transition: transform 0.3s ease;
+}
+
+@keyframes roy-btn-gradient {
+
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-gradient {
+    animation: none;
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-btn-icon-slide {
+  background: oklch(0.66 0.235 323.04);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  transition: padding 0.3s ease, gap 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-icon-slide {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-btn-lift {
+  background: oklch(0.699 0.118 184.7);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 4px 10px color-mix(in oklch, oklch(0.699 0.118 184.7) 25%, transparent);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-lift {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-btn-liquid {
+  background: oklch(0.685 0.131 226.94);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: border-radius 0.4s ease, background 0.4s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-liquid {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-btn-morph {
+  background: oklch(0.566 0.245 278.69);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-morph {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-btn-neon {
+  background: oklch(0.145 0.0 89.88);
+  color: oklch(0.685 0.131 226.94);
+  border: 2px solid oklch(0.685 0.131 226.94);
+  padding: 10px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow: 0 0 5px oklch(0.685 0.131 226.94), inset 0 0 5px color-mix(in oklch, oklch(0.685 0.131 226.94) 40%, transparent);
+  text-shadow: 0 0 5px oklch(0.685 0.131 226.94);
+  transition: all 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-neon {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-btn-outline-fill {
+  position: relative;
+  background: transparent;
+  color: oklch(0.645 0.246 16.44);
+  border: 2px solid oklch(0.645 0.246 16.44);
+  padding: 10px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  overflow: hidden;
+  z-index: 1;
+  transition: color 0.4s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-outline-fill {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-btn-press {
+  background: oklch(0.566 0.245 278.69);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 6px 0 oklch(0.491 0.241 292.58), 0 8px 14px color-mix(in oklch, oklch(0 0 0) 25%, transparent);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-press {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-btn-pulse {
+  background: oklch(0.637 0.237 25.77);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-pulse {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-btn-ripple {
+  position: relative;
+  overflow: hidden;
+  background: oklch(0.696 0.149 162.48);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.roycss-ferrum-btn-rotate {
+  background: oklch(0.769 0.188 70.08);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-rotate {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-btn-shadow-push {
+  background: oklch(0.637 0.237 25.77);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 5px 5px 0 oklch(0.396 0.133 25.72);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-shadow-push {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-btn-shine-sweep {
+  position: relative;
+  overflow: hidden;
+  background: oklch(0.696 0.149 162.48);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.roycss-ferrum-btn-skew {
+  background: oklch(0.652 0.241 354.31);
+  color: oklch(1 0 0);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-skew {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-btn-slide-bg {
+  position: relative;
+  overflow: hidden;
+  background: oklch(0.21 0.034 264.67);
+  color: oklch(0.769 0.188 70.08);
+  border: 2px solid oklch(0.769 0.188 70.08);
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  z-index: 1;
+  transition: color 0.4s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-slide-bg {
+    transition: none;
+  }
+}
+
+
+.roycss-ferrum-btn-sparkle {
+  position: relative;
+  background: oklch(0.27 0.04 260.03);
+  color: oklch(0.924 0.115 95.75);
+  border: 1px solid oklch(0.769 0.188 70.08);
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: color 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roycss-ferrum-btn-sparkle {
+    transition: none;
+  }
+}
+
+

@@ -29,14 +29,14 @@ export default function CustomizationPage() {
       </p>
       <pre className="bg-muted/50 rounded-lg p-4 overflow-x-auto text-sm">
         <code>{`# Copy one effect's CSS to your clipboard
-$ npx roycss add hover-push-up --copy
+$ npx roycss-cli add hover-push-up --copy
 
 # Or write it to a file next to your styles
-$ npx roycss add hover-push-up
+$ npx roycss-cli add hover-push-up
 Created roycss-hover-push-up.css
 
 # Or export a hand-picked set into one stylesheet
-$ npx roycss export btn-glow hover-push-up text-shimmer --out src/styles/roycss.css`}</code>
+$ npx roycss-cli export btn-glow hover-push-up text-shimmer --out src/styles/roycss.css`}</code>
       </pre>
       <p>
         Then edit your copy — swap the OKLCH values, resize, or

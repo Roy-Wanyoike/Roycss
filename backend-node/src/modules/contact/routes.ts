@@ -4,8 +4,15 @@
  *   POST  /    submit a contact message
  *
  * Wired with:
- *   - contactRateLimit (5/min per IP)
  *   - validateBody (Zod schema)
+ *   - contactRateLimit (5/min per IP)
+ *
+ * Validation runs BEFORE the contact limiter (issue #209 P3): a
+ * malformed body must not consume form-submission quota. There is no
+ * abuse regression — the GLOBAL general limiter still throttles every
+ * unauthenticated request (100/min/IP), so invalid-payload floods are
+ * bounded by that tier; only real, valid submissions draw the
+ * contact-tier budget.
  *
  * Returns 201 on success, 400 on validation failure, 429 on rate-limit,
  * 503 on DB write failure.
@@ -23,8 +30,8 @@ export const contactRouter = Router();
 
 contactRouter.post(
   "/",
-  contactRateLimit,
   validateBody(ContactInputSchema),
+  contactRateLimit,
   asyncHandler(async (req, res) => {
     const input = req.body as unknown as z.infer<typeof ContactInputSchema>;
     const result = await submitContactMessage(input);

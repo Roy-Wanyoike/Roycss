@@ -13,6 +13,7 @@
  *      a 2xx on ANY mutating route (no access escalation via bad token).
  */
 import { describe, it, expect } from "vitest";
+import jwt from "jsonwebtoken";
 
 import { createApp } from "../../src/server/app.js";
 import { listRoutes, MUTATING_METHODS } from "../helpers/route-walker.js";
@@ -106,5 +107,60 @@ describe("security/authn: mutating routes reject anonymous misuse", () => {
     expect(res.status).toBe(401);
     expect(typeof res.headers["x-request-id"]).toBe("string");
     expect(res.body.requestId).toBe(res.headers["x-request-id"]);
+  });
+});
+
+/**
+ * Issue #209 — JWT 401s must NOT leak the `jwt.verify` reason string
+ * (`details.reason: "jwt malformed" | "invalid signature" | …`) to the
+ * client: those distinctions let an attacker fingerprint the failure
+ * mode. The client body is uniform (no details at all); the precise
+ * reason stays in the server log.
+ */
+describe("security/authn: 401 bodies carry no jwt reason details (issue #209)", () => {
+  const ME = "/api/v1/auth/me";
+
+  it("garbage bearer token → 401 UNAUTHORIZED with NO error.details", async () => {
+    const res = await hit(app, "get", ME, {
+      headers: { Authorization: "Bearer not.a.real.jwt.token" },
+    });
+
+    expect(res.status).toBe(401);
+    expect(res.body.error.code).toBe("UNAUTHORIZED");
+    expect(res.body.error).not.toHaveProperty("details");
+    // Uniform message — no parser vocabulary.
+    expect(res.body.error.message).toBe("Invalid or expired access token");
+    expect(JSON.stringify(res.body)).not.toContain("jwt");
+  });
+
+  it("structurally valid token with a WRONG signature → same uniform 401", async () => {
+    // Signed with a different secret: verifies to "invalid signature",
+    // which used to surface as details.reason. The client must see the
+    // exact same body shape as the garbage-token case.
+    const wrongSigner = jwt.sign(
+      { sub: "user-1", email: "attacker@example.com", type: "access" },
+      "an-entirely-different-secret-32-chars-x",
+      { issuer: "roycss-backend", audience: "roycss-client" },
+    );
+    const res = await hit(app, "get", ME, {
+      headers: { Authorization: `Bearer ${wrongSigner}` },
+    });
+
+    expect(res.status).toBe(401);
+    expect(res.body.error.code).toBe("UNAUTHORIZED");
+    expect(res.body.error).not.toHaveProperty("details");
+    expect(res.body.error.message).toBe("Invalid or expired access token");
+  });
+
+  it("refresh endpoint leaks nothing either (details dropped client-side)", async () => {
+    const res = await hit(app, "post", "/api/v1/auth/refresh", {
+      body: { refreshToken: "garbage-refresh-token" },
+    });
+
+    expect(res.status).toBe(401);
+    expect(res.body.error.code).toBe("UNAUTHORIZED");
+    expect(res.body.error).not.toHaveProperty("details");
+    expect(JSON.stringify(res.body)).not.toContain("malformed");
+    expect(JSON.stringify(res.body)).not.toContain("jwt");
   });
 });

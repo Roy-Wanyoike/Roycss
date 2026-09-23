@@ -63,6 +63,24 @@ describe("InMemoryRateLimiter sliding window (issue #94 A5)", () => {
     expect((await limiter.consume("ip-2")).allowed).toBe(true);
   });
 
+  it("2b. Retry-After reflects the oldest hit, not the full window (#209)", async () => {
+    const limiter = new InMemoryRateLimiter("contact", { max: 2, windowMs: 60_000 });
+    await limiter.consume("ip-2b"); // t=0
+    await limiter.consume("ip-2b"); // t=0
+
+    // 5 s later the bucket is full — a slot frees when the OLDEST hit
+    // (t=0) leaves the window, i.e. in 55 s, not the fixed 60.
+    vi.advanceTimersByTime(5_000);
+    const denied = await limiter.consume("ip-2b");
+    expect(denied.allowed).toBe(false);
+    expect(denied.retryAfterSec).toBe(55);
+
+    // A second later, the horizon shrinks accordingly (54 s left).
+    vi.advanceTimersByTime(1_000);
+    const deniedAgain = await limiter.consume("ip-2b");
+    expect(deniedAgain.retryAfterSec).toBe(54);
+  });
+
   it("3. reset(key) and reset() drop counters", async () => {
     const limiter = new InMemoryRateLimiter("contact", { max: 1, windowMs: 60_000 });
     await limiter.consume("ip-3");

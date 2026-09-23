@@ -287,7 +287,7 @@ Account lifecycle (JWT), the caller's saved content (favorites + collections), a
 
 #### `contact` — Contact form intake (Prisma `ContactMessage`; 5 submissions/min/IP).
 
-> Prisma-backed (`ContactMessage`). The POST stays public by design — anonymous form intake (rate-limited 5/min/IP).
+> Prisma-backed (`ContactMessage`). The POST stays public by design — anonymous form intake (rate-limited 5/min/IP). A one-time confirmation email goes to the submitter through the shared mailer seam (mock transport in dev, Resend when RESEND_API_KEY is set — issue #209); validation runs before the contact limiter, so a 400 does not consume quota.
 > Extra rate limit: **contact 5/min/IP**.
 
 | Method | Path | Auth | Request | Response | Errors |

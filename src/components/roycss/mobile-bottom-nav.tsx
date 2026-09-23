@@ -23,6 +23,7 @@
  */
 
 import { Home, Sparkles, Box, BookOpen, Search, type LucideIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
 interface MobileBottomNavProps {
@@ -46,16 +47,19 @@ export function MobileBottomNav({
   onOpenDocs,
   onOpenSearch,
 }: MobileBottomNavProps) {
+  // Issue #129 PR-A: labels live in the MobileBottomNav catalog
+  // (messages/en.json — identical strings).
+  const t = useTranslations("MobileBottomNav");
   const items: NavItem[] = [
     {
       id: "hero",
-      label: "Home",
+      label: t("home"),
       icon: Home,
       action: () => window.scrollTo({ top: 0, behavior: "smooth" }),
     },
     {
       id: "effects",
-      label: "Effects",
+      label: t("effects"),
       icon: Sparkles,
       action: () =>
         document
@@ -64,20 +68,20 @@ export function MobileBottomNav({
     },
     {
       id: "platform",
-      label: "Platform",
+      label: t("platform"),
       icon: Box,
       action: () =>
         document
           .querySelector("#platform")
           ?.scrollIntoView({ behavior: "smooth" }),
     },
-    { id: "docs", label: "Docs", icon: BookOpen, action: onOpenDocs },
-    { id: "search", label: "Search", icon: Search, action: onOpenSearch },
+    { id: "docs", label: t("docs"), icon: BookOpen, action: onOpenDocs },
+    { id: "search", label: t("search"), icon: Search, action: onOpenSearch },
   ];
 
   return (
     <nav
-      aria-label="Mobile bottom navigation"
+      aria-label={t("navAria")}
       className="fixed inset-x-0 bottom-0 z-40 md:hidden border-t border-border/60 bg-background/80 backdrop-blur-xl pb-[env(safe-area-inset-bottom)]"
     >
       <ul className="flex justify-around">

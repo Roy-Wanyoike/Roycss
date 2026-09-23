@@ -68,7 +68,9 @@ describe("site-header: nav landmarks (issue #191)", () => {
   });
 
   it("mobile hamburger is announced and collapses into a panel", () => {
-    expect(headerSrc).toContain('aria-label={menuOpen ? "Close menu" : "Open menu"}');
+    // Issue #129 PR-A: the labels live in the SiteHeader catalog
+    // (messages/en.json "Open menu"/"Close menu" — identical strings).
+    expect(headerSrc).toContain('aria-label={menuOpen ? t("menuClose") : t("menuOpen")}');
     expect(headerSrc).toContain("aria-expanded={menuOpen}");
     expect(headerSrc).toContain('aria-controls="site-header-menu"');
   });
@@ -108,7 +110,9 @@ describe("site-header: theme toggle reuses the exact home mechanism (#160)", () 
   });
 
   it("the toggle has an accessible name", () => {
-    expect(headerSrc).toContain('aria-label="Toggle theme"');
+    // Issue #129 PR-A: resolved from the SiteHeader catalog
+    // (messages/en.json "Toggle theme" — identical string).
+    expect(headerSrc).toContain('aria-label={t("themeToggleAria")}');
   });
 });
 

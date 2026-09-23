@@ -2,37 +2,46 @@
 
 import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { Search, SlidersHorizontal, GitCompare, Heart, Clock, BookOpen, Moon, Sun, Command, X } from "lucide-react";
 
-const SHORTCUTS = [
-  { keys: ["⌘", "K"], description: "Open search overlay", icon: Search },
-  { keys: ["⌘", "K"], description: "Close search (press Escape)", icon: Search, alt: true },
-  { keys: ["?"], description: "Show this shortcuts panel", icon: Command },
-  { keys: ["Esc"], description: "Close any open dialog/sheet", icon: Command },
-  { keys: ["↑", "↓"], description: "Navigate search results", icon: Search },
-  { keys: ["↵"], description: "Select search result", icon: Search },
-  { keys: ["Tab"], description: "Navigate between elements", icon: Command },
-  { keys: ["Shift", "Tab"], description: "Navigate backwards", icon: Command },
-];
-
-const NAV_SHORTCUTS = [
-  { label: "Search", icon: Search, hint: "⌘K" },
-  { label: "Playground", icon: SlidersHorizontal, hint: "Navbar" },
-  { label: "Compare", icon: GitCompare, hint: "Navbar" },
-  { label: "Favorites", icon: Heart, hint: "Navbar" },
-  { label: "Recently Used", icon: Clock, hint: "Navbar" },
-  { label: "Docs", icon: BookOpen, hint: "Navbar" },
-  { label: "Theme Toggle", icon: Moon, hint: "Navbar" },
-];
+/**
+ * Issue #129 PR-A: shortcut descriptions/labels moved to the
+ * KeyboardShortcutsOverlay catalog (messages/en.json — identical
+ * strings). The arrays are built INSIDE the component because they now
+ * depend on the useTranslations hook.
+ */
 
 /**
  * KeyboardShortcutsOverlay — press ? to show all available keyboard shortcuts.
  * Also accessible via a button.
  */
 export function KeyboardShortcutsOverlay({ open, onOpenChange }: { open: boolean; onOpenChange: (o: boolean) => void }) {
+  const t = useTranslations("KeyboardShortcutsOverlay");
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
+
+  const SHORTCUTS = [
+    { keys: ["⌘", "K"], description: t("openSearch"), icon: Search },
+    { keys: ["⌘", "K"], description: t("closeSearch"), icon: Search, alt: true },
+    { keys: ["?"], description: t("showPanel"), icon: Command },
+    { keys: ["Esc"], description: t("closeDialog"), icon: Command },
+    { keys: ["↑", "↓"], description: t("navigateResults"), icon: Search },
+    { keys: ["↵"], description: t("selectResult"), icon: Search },
+    { keys: ["Tab"], description: t("navigateElements"), icon: Command },
+    { keys: ["Shift", "Tab"], description: t("navigateBackwards"), icon: Command },
+  ];
+
+  const NAV_SHORTCUTS = [
+    { label: t("navSearch"), icon: Search, hint: "⌘K" },
+    { label: t("navPlayground"), icon: SlidersHorizontal, hint: "Navbar" },
+    { label: t("navCompare"), icon: GitCompare, hint: "Navbar" },
+    { label: t("navFavorites"), icon: Heart, hint: "Navbar" },
+    { label: t("navRecentlyUsed"), icon: Clock, hint: "Navbar" },
+    { label: t("navDocs"), icon: BookOpen, hint: "Navbar" },
+    { label: t("navThemeToggle"), icon: Moon, hint: "Navbar" },
+  ];
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -103,7 +112,7 @@ export function KeyboardShortcutsOverlay({ open, onOpenChange }: { open: boolean
           onClick={() => onOpenChange(false)}
           role="dialog"
           aria-modal="true"
-          aria-label="Keyboard shortcuts"
+          aria-label={t("dialogAria")}
           onKeyDown={handleTab}
         >
           <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
@@ -120,17 +129,21 @@ export function KeyboardShortcutsOverlay({ open, onOpenChange }: { open: boolean
             <div className="p-5 border-b border-border/50 relative">
               <div className="flex items-center gap-2 mb-1">
                 <Command className="size-5 text-primary" />
-                <h2 className="font-display text-lg font-bold text-foreground">Keyboard Shortcuts</h2>
+                <h2 className="font-display text-lg font-bold text-foreground">{t("title")}</h2>
               </div>
               <p className="text-xs text-muted-foreground">
-                Press <kbd className="px-1.5 py-0.5 rounded bg-muted border border-border/50 text-[11px] font-mono">?</kbd> anytime to toggle this panel.
+                {t.rich("hint", {
+                  key: (chunks) => (
+                    <kbd className="px-1.5 py-0.5 rounded bg-muted border border-border/50 text-[11px] font-mono">{chunks}</kbd>
+                  ),
+                })}
               </p>
               {/* Visible close button — keyboard-accessible (Esc also closes) */}
               <button
                 ref={closeButtonRef}
                 onClick={() => onOpenChange(false)}
                 className="absolute top-4 right-4 flex items-center justify-center size-8 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                aria-label="Close keyboard shortcuts"
+                aria-label={t("closeAria")}
               >
                 <X className="size-4" />
               </button>
@@ -140,7 +153,7 @@ export function KeyboardShortcutsOverlay({ open, onOpenChange }: { open: boolean
             <div className="p-5 space-y-4">
               {/* Keyboard shortcuts */}
               <div>
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Keyboard</p>
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">{t("sectionKeyboard")}</p>
                 <div className="space-y-2">
                   {SHORTCUTS.map((s, i) => (
                     <div key={i} className="flex items-center justify-between gap-3">
@@ -162,7 +175,7 @@ export function KeyboardShortcutsOverlay({ open, onOpenChange }: { open: boolean
 
               {/* Navbar shortcuts */}
               <div>
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Quick Access (Navbar)</p>
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">{t("sectionQuickAccess")}</p>
                 <div className="grid grid-cols-2 gap-2">
                   {NAV_SHORTCUTS.map((s, i) => (
                     <div key={i} className="flex items-center gap-2 p-2 rounded-lg bg-muted/30">
@@ -178,7 +191,7 @@ export function KeyboardShortcutsOverlay({ open, onOpenChange }: { open: boolean
             {/* Footer */}
             <div className="px-5 py-3 border-t border-border/50 bg-muted/20">
               <p className="text-xs text-muted-foreground text-center">
-                All shortcuts work on desktop. Mobile users can access features via the navbar.
+                {t("footerNote")}
               </p>
             </div>
           </motion.div>

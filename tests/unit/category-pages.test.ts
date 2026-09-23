@@ -102,8 +102,8 @@ describe("category landing pages — sitemap + crawl graph", () => {
     }
   });
 
-  it("sitemap total grew to 2,053 (29 categories + 24 #200/#203 batch effects, none lost)", () => {
-    expect(urls.length).toBe(2053);
+  it("sitemap total grew to 2,052 (29 categories + 24 #200/#203 batch effects, none lost)", () => {
+    expect(urls.length).toBe(2052);
   });
 
   it("every effect belongs to exactly one category page (no orphan listings)", () => {

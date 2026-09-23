@@ -148,7 +148,8 @@ describe("sitemap.xml (#188 item 1)", () => {
       effectUrls.filter((u) => u.includes("/effects/category/")),
     ).toHaveLength(29);
     expect(urls.filter((u) => u.startsWith("https://roycss.com/docs/")))
-      .toHaveLength(36); // 37 docs pages minus the redirecting /docs itself
+      .toHaveLength(35); // 36 real docs pages minus redirecting /docs —
+    // [version] dynamic segment is noindex, excluded since #205
   });
 
   it("never lists the redirecting /docs URL (#187)", () => {

@@ -211,6 +211,14 @@ export const metadata: Metadata = {
     title: "RoyCSS",
     statusBarStyle: "black-translucent",
   },
+  // Issue #206 item 7 (owner-side #113): Search Console verification is
+  // an env hook, not a hardcoded token — set GOOGLE_SITE_VERIFICATION in
+  // the deployment env and the <meta name="google-site-verification">
+  // tag appears; unset, nothing renders. (Not at page level: this is
+  // site-wide owner verification.)
+  ...(process.env.GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } }
+    : {}),
 };
 
 export const viewport: Viewport = {

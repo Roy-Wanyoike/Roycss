@@ -1,0 +1,43 @@
+# RoyCSS
+
+> RoyCSS is an AI-native CSS effects library and frontend engineering platform: 1,983 copy-paste CSS effects across 29 categories, 62 platform products, 70 developer tools, an MCP server for AI assistants, and 35+ documentation pages. Pure CSS — zero JavaScript runtime required.
+
+## Install
+
+- npm: `npm install roycss` (also `pnpm add roycss`, `bun add roycss`, `deno add npm:roycss`)
+- CDN (no install): `<link rel="stylesheet" href="https://unpkg.com/roycss/dist/roycss.min.css" />`
+- CLI: `npx roycss init` scaffolds a project; `npx roycss search "glass"` finds effects; `npx roycss add <id>` copies an effect's CSS
+
+## Machine-readable artifacts (npm package `roycss`, v2.0.0)
+
+- `roycss/dist/roycss.css` and `roycss/dist/roycss.min.css` — the full stylesheet
+- `roycss/dist/effects.json` — full effect metadata (id, name, category, tags, CSS)
+- `roycss/dist/class-index.json` — class → effect index
+- `roycss/dist/motion-library.json` — motion/animation primitives
+- `roycss/dist/roycss.rules.md` — authoring rules for generating RoyCSS markup
+- `roycss/dist/roycss.system-prompt.md` — system-prompt guidance for AI code generation
+- `roycss/dist/tokens.dtcg.json` — design tokens in DTCG format (OKLCH color system)
+- `roycss/dist/roycss.grammar.json` and `roycss/dist/pro-components.json` — class grammar and platform-product components
+
+## Catalog (crawlable)
+
+- Effects directory: https://roycss.com/effects
+- Effect pages: https://roycss.com/effects/<id> (e.g. https://roycss.com/effects/pulse-glow) — live preview, vanilla CSS, and React/Vue/Angular/Svelte/Next.js usage examples
+- Category landing pages: https://roycss.com/effects/category/<slug> (e.g. https://roycss.com/effects/category/glass-ui, .../animations, .../hover) — 29 categories
+- Sitemap: https://roycss.com/sitemap.xml
+
+## Docs
+
+- Getting started: https://roycss.com/docs/getting-started (https://roycss.com/docs 308-redirects here)
+- Docs cover installation, the OKLCH design-token system, theming, accessibility (reduced motion, focus states), and per-effect usage
+
+## AI integrations
+
+- MCP server (13 tools, 5 resources, 3 prompt templates): source in the GitHub repo under `mcp-server/` — https://github.com/Roy-Wanyoike/Roycss
+- robots.txt explicitly allows AI crawlers (GPTBot, ClaudeBot, CCBot, PerplexityBot); the private JSON API under /api/ is disallowed
+- This file: https://roycss.com/llms.txt
+
+## Notes
+
+- Effects are self-contained CSS classes (`.roycss-*`); no build step, no dependencies, no JavaScript at runtime
+- Motion respects `prefers-reduced-motion`; reduced-motion variants ship per effect

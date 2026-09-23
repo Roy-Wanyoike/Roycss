@@ -30,13 +30,14 @@ export function categoryPageDescription(category: EffectCategory, count: number)
 }
 
 /**
- * og:image for a category landing page. The /api/og route currently models
- * per-effect cards only (issue #116); category pages use the static brand
- * card, same as the /effects index — extending /api/og with a `category`
- * param is a tracked follow-up, not a blocker (OG URLs are absolute and
- * valid either way).
+ * og:image for a category landing page (issue #206). /api/og accepts a
+ * `category` param and renders a dedicated 1200×630 card (label + effect
+ * count + description) — the same contract as the #116 `effect` param.
+ * URL stays relative so metadataBase keeps origin control (#113).
  */
-export const CATEGORY_OG_IMAGE = "/api/og";
+export function categoryOgImage(category: EffectCategory): string {
+  return `/api/og?category=${category}`;
+}
 
 /** Keywords for a category page, mirroring the effect-page keyword strategy. */
 export function categoryPageKeywords(category: EffectCategory, count: number): string[] {

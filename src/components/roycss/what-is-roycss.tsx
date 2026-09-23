@@ -423,9 +423,9 @@ export function WhatIsRoyCSS() {
             >
               The RoyCSS workflow
             </Badge>
-            <h3 className="font-display text-2xl sm:text-3xl font-bold text-foreground">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground">
               From idea to production in four steps
-            </h3>
+            </h2>
             <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
               A frictionless path from discovery to deployment — no build
               config, no lock-in, no JavaScript required.
@@ -482,9 +482,9 @@ export function WhatIsRoyCSS() {
             <Badge variant="secondary" className="mb-3 font-medium">
               Built for everyone
             </Badge>
-            <h3 className="font-display text-2xl sm:text-3xl font-bold text-foreground">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground">
               Who is it for?
-            </h3>
+            </h2>
             <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
               Whether you ship a single landing page or manage a fleet of
               enterprise apps, RoyCSS meets you where you are.

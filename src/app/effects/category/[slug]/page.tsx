@@ -11,7 +11,7 @@ import {
   categoryPageDescription,
   categoryPageKeywords,
   categoryLabel,
-  CATEGORY_OG_IMAGE,
+  categoryOgImage,
 } from "@/lib/category-seo";
 import { Badge } from "@/components/ui/badge";
 import { SITE_URL } from "../../_lib/static-effects";
@@ -82,7 +82,7 @@ export async function generateMetadata({
       siteName: "RoyCSS",
       images: [
         {
-          url: `${SITE_URL}${CATEGORY_OG_IMAGE}`,
+          url: `${SITE_URL}${categoryOgImage(category)}`,
           width: 1200,
           height: 630,
           alt: `${categoryLabel(category)} — RoyCSS`,
@@ -94,7 +94,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: [`${SITE_URL}${CATEGORY_OG_IMAGE}`],
+      images: [`${SITE_URL}${categoryOgImage(category)}`],
     },
   };
 }

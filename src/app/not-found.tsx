@@ -8,8 +8,17 @@ import { explorerHref } from "@/lib/search-targets";
  * <title>. Next.js 16 supports `metadata` on `not-found.tsx`, which
  * overrides the root layout title for this boundary (matches the
  * `export const metadata` convention used by every page).
+ *
+ * Issue #206: without an explicit page-level robots directive the 404
+ * emitted TWO conflicting robots metas — Next's automatic `noindex`
+ * for not-found plus the root layout's `index, follow`. Declaring
+ * `robots: { index: false }` here collapses them to exactly one
+ * noindex tag.
  */
-export const metadata = { title: "Page not found — RoyCSS" };
+export const metadata = {
+  title: "Page not found — RoyCSS",
+  robots: { index: false, follow: false },
+};
 
 export default function NotFound() {
   return (

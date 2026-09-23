@@ -7,7 +7,6 @@ import {
   ChevronDown,
   ChevronRight,
   ClipboardCopy,
-  Layers,
   Tag,
 } from "lucide-react";
 import { effects, categoryMeta } from "@/lib/roycss-effects";
@@ -23,6 +22,7 @@ import { COPY_FORMATS } from "@/lib/copy-formats";
 import { LivePreview } from "@/components/roycss/effect-card";
 import { CodeBlock } from "@/components/docs/CodeBlock";
 import { CopyFormatButton } from "@/components/roycss/copy-format-button";
+import { FrameworkTabs } from "@/components/roycss/framework-tabs";
 import { Badge } from "@/components/ui/badge";
 import {
   SITE_URL,
@@ -271,18 +271,34 @@ function RequiredMarkupSection({
   );
 }
 
-/* ── Framework usage (server-rendered tabs; issue #190) ────── */
+/* ── Framework usage (ARIA tabs; issues #190 + #246) ───── */
 
 /**
- * Crawlable framework tabs: every framework's install/import/usage code is
- * in the server-rendered HTML (no JS needed to read or switch — plain
- * <details> panels; the exclusive-accordion `name` attribute makes them
- * behave like tabs where supported). Each panel's snippets reuse the
- * client CodeBlock (with its copy button), so all six frameworks have
- * copyable snippets without any tab state in React.
+ * Crawlable framework switcher with proper tab semantics: the shared
+ * client FrameworkTabs (issue #246) renders role=tablist/tab/tabpanel with
+ * aria-selected + roving tabindex + arrow-key navigation, and mounts ALL
+ * tabpanels — inactive ones carry the `hidden` attribute — so every
+ * framework's install/import/usage code is still in the server-rendered
+ * HTML exactly as the <details> accordion provided (no JS needed to READ
+ * the snippets; switching is the JS tabs interaction). Each panel's
+ * snippets reuse the client CodeBlock (with its copy button), so all six
+ * frameworks stay copyable without any tab state in React.
  */
 function FrameworkUsageSection({ effect }: { effect: CSSEffect }) {
   const examples = getFrameworkExamples(effect.id, effect.name);
+
+  const panels = examples.map((example) => (
+    <div key={example.id}>
+      <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
+        {example.description}
+      </p>
+      <div className="space-y-3">
+        <CodeBlock code={example.install} filename="Install" />
+        <CodeBlock code={example.import} filename="Import" />
+        <CodeBlock code={example.usage} filename="Usage" />
+      </div>
+    </div>
+  ));
 
   return (
     <section className="mt-6" aria-labelledby="frameworks-heading">
@@ -297,31 +313,8 @@ function FrameworkUsageSection({ effect }: { effect: CSSEffect }) {
         </code>{" "}
         class in any stack.
       </p>
-      <div className="mt-3 rounded-2xl border border-border bg-card divide-y divide-border/60 overflow-hidden">
-        {examples.map((example, i) => (
-          <details
-            key={example.id}
-            name="framework-usage"
-            open={i === 0}
-            className="group"
-          >
-            <summary className="flex cursor-pointer list-none flex-wrap items-center justify-between gap-x-3 gap-y-1 px-4 py-3 text-sm font-medium text-foreground hover:bg-muted/50 transition-colors [&::-webkit-details-marker]:hidden">
-              <span className="flex items-center gap-2 min-w-0">
-                <Layers className="size-3.5 shrink-0 text-muted-foreground" />
-                {example.label}
-              </span>
-              <span className="hidden sm:block text-xs font-normal text-muted-foreground truncate min-w-0">
-                {example.description}
-              </span>
-              <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
-            </summary>
-            <div className="px-4 pb-4 space-y-3">
-              <CodeBlock code={example.install} filename="Install" />
-              <CodeBlock code={example.import} filename="Import" />
-              <CodeBlock code={example.usage} filename="Usage" />
-            </div>
-          </details>
-        ))}
+      <div className="mt-3 rounded-2xl border border-border bg-card p-3">
+        <FrameworkTabs examples={examples} panels={panels} />
       </div>
     </section>
   );
@@ -529,7 +522,7 @@ export default async function EffectPage({
           <RequiredMarkupSection effect={effect} markup={requiredMarkup} />
         )}
 
-        {/* Framework usage — crawlable tabs for all 6 stacks */}
+        {/* Framework usage — ARIA tabs for all 6 stacks (crawlable panels) */}
         <FrameworkUsageSection effect={effect} />
 
         {/* Copy as — 7 formats, server-rendered list + client copy islands */}

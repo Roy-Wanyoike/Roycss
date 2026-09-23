@@ -35,6 +35,7 @@
   "files": [
     "dist",
     "!dist/pro-components.json",
+    "!dist/important-audit.json",
     "dist/tokens.d.ts",
     "dist/tokens.dtcg.json",
     "dist/roycss.rules.md",

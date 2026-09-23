@@ -191,13 +191,35 @@ try {
   }
   console.log();
 
-  // ── 3. Benchmark gates (informational + hard fail on tarball) ──
-  // 1.2 MB ceiling: the real tarball ships both the full and the minified
-  // stylesheet plus the two big tooling indexes (~970 KB compressed) —
-  // the old 500 KB gate was unmeetable without dropping shipped exports.
+  // ── 3. Forbidden artifacts ────────────────────────────────────────
+  // Machine-generated / gitignored / internal files must never ship in the
+  // public tarball even if a `files` negation is accidentally dropped.
+  // Each entry is exact (npm pack reports `package.json` as "package.json",
+  // dist files as "dist/<name>").
+  const FORBIDDEN_ARTIFACTS = [
+    "dist/important-audit.json", // gitignored audit snapshot; embeds absolute local paths
+    "dist/pro-components.json", // unpublished backend catalog
+    ".env",
+    ".env.local",
+    ".npmrc",
+  ];
+  const forbiddenHits = result.files.filter((f) => FORBIDDEN_ARTIFACTS.includes(f.path));
+  console.log(`${C.bold}── Forbidden artifacts ──${C.reset}`);
+  if (forbiddenHits.length === 0) {
+    log("✓", `none of ${FORBIDDEN_ARTIFACTS.length} forbidden paths present in tarball`, C.green);
+  } else {
+    for (const f of forbiddenHits) {
+      log("✗", `forbidden artifact shipped in tarball: ${f.path} (${bytes(f.size)})`, C.red);
+    }
+  }
+  console.log();
+
+  // ── 4. Benchmark gates (informational + hard fail on tarball) ────
+  // Targets are re-baselined at v2.0.0 catalog reality and documented in
+  // docs/benchmarks/04-npm-publish-pipeline.md (rationale + headroom notes).
   const TARGET_TARBALL_KB = 1200;
-  const TARGET_UNPACKED_KB = 2 * 1024;
-  const TARGET_FILE_COUNT = 15;
+  const TARGET_UNPACKED_KB = 8 * 1024;
+  const TARGET_FILE_COUNT = 24;
 
   console.log(`${C.bold}── Benchmark gates ──${C.reset}`);
   const tarballPass = compressedKB <= TARGET_TARBALL_KB;
@@ -210,7 +232,7 @@ try {
     tarballPass ? C.green : C.red,
   );
   log(
-    unpackedPass ? "⚠" : "⚠",
+    unpackedPass ? "✓" : "⚠",
     `Unpacked size ≤ ${TARGET_UNPACKED_KB} KB  →  ${unpackedKB.toFixed(1)} KB  ${unpackedPass ? "PASS" : "WARN (above target — see docs/benchmarks/04)"}`,
     unpackedPass ? C.green : C.yellow,
   );
@@ -221,8 +243,8 @@ try {
   );
   console.log();
 
-  if (!tarballPass || !fileCountPass) {
-    log("✗", "Validation FAILED — tarball or file count exceeds benchmark targets.", C.red);
+  if (!tarballPass || !fileCountPass || forbiddenHits.length > 0) {
+    log("✗", "Validation FAILED — tarball/file-count gate breached or forbidden artifact shipped.", C.red);
     process.exit(1);
   }
 

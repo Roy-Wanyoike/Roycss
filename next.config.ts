@@ -1,4 +1,10 @@
 import type { NextConfig } from "next";
+// Issue #129 PR-A: next-intl in "without i18n routing" mode. The plugin
+// compiles src/i18n/request.ts (the default location) into the build —
+// mechanical wiring only; all config below is untouched.
+import createNextIntlPlugin from "next-intl/plugin";
+
+const withNextIntl = createNextIntlPlugin();
 
 const securityHeaders = [
   {
@@ -81,4 +87,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

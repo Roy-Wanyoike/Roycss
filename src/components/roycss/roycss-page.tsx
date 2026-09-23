@@ -185,6 +185,8 @@ import { CSSVariableManager } from "@/components/roycss/variable-manager";
 import { ResponsivePreview } from "@/components/roycss/responsive-preview";
 import { useFavorites } from "@/hooks/use-favorites";
 import { motion, AnimatePresence, MotionConfig } from "framer-motion";
+import { useTranslations } from "next-intl";
+import { LanguageToggle } from "@/components/roycss/language-toggle";
 import {
   ScrollReveal,
   StaggerGroup,
@@ -1327,6 +1329,12 @@ function FeaturedCard({
    MAIN PAGE
    ═══════════════════════════════════════════════════════════════ */
 export default function RoyCSSPage() {
+  // Issue #129 PR-A: skip link + home footer strings moved to the catalog
+  // (messages/en.json — identical strings). The rest of the home copy is
+  // PR-B scope. Client component, so useTranslations (NextIntlClientProvider
+  // mounts in the root layout) — NOT getTranslations.
+  const tSkip = useTranslations("SkipLink");
+  const tFooter = useTranslations("HomeFooter");
   /* Router — used for real route navigation (Docs → /docs/getting-started,
      issue #112: the /docs routes are the single docs source of truth). */
   const router = useRouter();
@@ -1593,7 +1601,7 @@ export default function RoyCSSPage() {
         href="#effects"
         className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-primary focus:text-primary-foreground focus:shadow-lg"
       >
-        Skip to effects
+        {tSkip("skipToEffects")}
       </a>
 
       {/* Cursor glow follower (desktop only) */}
@@ -1894,6 +1902,8 @@ export default function RoyCSSPage() {
               </DropdownMenu>
               {/* Issue #214: site-wide animation pause (WCAG 2.2.2) */}
               <PauseAnimationsToggle size="lg" />
+              {/* Issue #129 PR-A: locale switcher — parity with SiteHeader */}
+              <LanguageToggle variant="lg" />
               <ThemeToggle />
               <button
                 onClick={() => setFavoritesOpen(true)}
@@ -2623,7 +2633,7 @@ export default function RoyCSSPage() {
                 <RoyCSSLogo size="sm" animated={false} />
               </button>
               <p className="text-xs text-muted-foreground leading-relaxed mb-4 max-w-xs">
-                AI-Native Frontend Engineering Platform — {EFFECT_COUNT_FORMATTED} CSS effects, {PRODUCT_COUNT} platform products, {TOOL_COUNT} developer tools.
+                {tFooter("tagline", { effects: EFFECT_COUNT_FORMATTED, products: PRODUCT_COUNT, tools: TOOL_COUNT })}
               </p>
               <div className="flex items-center gap-2">
                 <a
@@ -2631,7 +2641,7 @@ export default function RoyCSSPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center size-9 rounded-lg glass text-muted-foreground hover:text-foreground transition-colors"
-                  aria-label="GitHub repository"
+                  aria-label={tFooter("githubAria")}
                 >
                   <Github className="size-4" />
                 </a>
@@ -2640,7 +2650,7 @@ export default function RoyCSSPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center size-9 rounded-lg glass text-muted-foreground hover:text-foreground transition-colors"
-                  aria-label="LinkedIn profile"
+                  aria-label={tFooter("linkedinAria")}
                 >
                   <Linkedin className="size-4" />
                 </a>
@@ -2649,14 +2659,14 @@ export default function RoyCSSPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center size-9 rounded-lg glass text-muted-foreground hover:text-foreground transition-colors"
-                  aria-label="Twitter / X profile"
+                  aria-label={tFooter("twitterAria")}
                 >
                   <Twitter className="size-4" />
                 </a>
                 <button
                   onClick={() => setSponsorModalOpen(true)}
                   className="flex items-center justify-center size-9 rounded-lg glass text-primary hover:text-primary/80 transition-colors cursor-pointer"
-                  aria-label="Sponsor RoyCSS"
+                  aria-label={tFooter("sponsorAria")}
                 >
                   <Heart className="size-4" />
                 </button>
@@ -2665,45 +2675,45 @@ export default function RoyCSSPage() {
 
             {/* Explore column */}
             <div>
-              <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">Explore</h3>
+              <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">{tFooter("colExplore")}</h3>
               <ul className="space-y-2">
-                <li><button onClick={() => scrollToSection("#effects")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Effects Gallery</button></li>
-                <li><button onClick={() => scrollToSection("#recipes")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Recipes</button></li>
-                <li><button onClick={() => scrollToSection("#patterns")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Patterns</button></li>
-                <li><button onClick={() => scrollToSection("#collections")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Collections</button></li>
-                <li><button onClick={() => scrollToSection("#webgl-effects")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">WebGL Effects</button></li>
+                <li><button onClick={() => scrollToSection("#effects")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("effectsGallery")}</button></li>
+                <li><button onClick={() => scrollToSection("#recipes")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("recipes")}</button></li>
+                <li><button onClick={() => scrollToSection("#patterns")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("patterns")}</button></li>
+                <li><button onClick={() => scrollToSection("#collections")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("collections")}</button></li>
+                <li><button onClick={() => scrollToSection("#webgl-effects")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("webglEffects")}</button></li>
               </ul>
             </div>
 
             {/* Platform column */}
             <div>
-              <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">Platform</h3>
+              <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">{tFooter("colPlatform")}</h3>
               <ul className="space-y-2">
-                <li><button onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">All Products</button></li>
-                <li><button onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Build Tools</button></li>
-                <li><button onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">AI Tools</button></li>
-                <li><button onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Enterprise</button></li>
-                <li><button onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Dev Tools</button></li>
+                <li><button onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("allProducts")}</button></li>
+                <li><button onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("buildTools")}</button></li>
+                <li><button onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("aiTools")}</button></li>
+                <li><button onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("enterprise")}</button></li>
+                <li><button onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("devTools")}</button></li>
               </ul>
             </div>
 
             {/* Resources column */}
             <div>
-              <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">Resources</h3>
+              <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">{tFooter("colResources")}</h3>
               <ul className="space-y-2">
-                <li><button onClick={() => scrollToSection("#get-started")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Get Started</button></li>
-                <li><Link href="/docs/getting-started" className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Documentation</Link></li>
-                <li><button onClick={() => scrollToSection("#faq")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">FAQ</button></li>
-                <li><button onClick={() => setContactOpen(true)} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Contact</button></li>
-                <li><button onClick={() => setSponsorModalOpen(true)} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">Sponsor</button></li>
+                <li><button onClick={() => scrollToSection("#get-started")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("getStarted")}</button></li>
+                <li><Link href="/docs/getting-started" className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("documentation")}</Link></li>
+                <li><button onClick={() => scrollToSection("#faq")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("faq")}</button></li>
+                <li><button onClick={() => setContactOpen(true)} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("contact")}</button></li>
+                <li><button onClick={() => setSponsorModalOpen(true)} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("sponsor")}</button></li>
               </ul>
             </div>
 
             {/* Newsletter column */}
             <div className="col-span-2 sm:col-span-1">
-              <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">Stay Updated</h3>
+              <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">{tFooter("colNewsletter")}</h3>
               <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
-                Get notified about new effects, tools, and platform updates.
+                {tFooter("newsletterBlurb")}
               </p>
               <form
                 onSubmit={async (e) => {
@@ -2730,10 +2740,10 @@ export default function RoyCSSPage() {
                     if (!res.ok || (data && data.ok === false)) {
                       throw new Error("failed");
                     }
-                    toast.success("Subscribed! We'll keep you updated.");
+                    toast.success(tFooter("subscribedToast"));
                     form.reset();
                   } catch {
-                    toast.error("Couldn't subscribe right now. Please try again.");
+                    toast.error(tFooter("subscribeError"));
                   }
                 }}
                 className="flex gap-2"
@@ -2742,15 +2752,15 @@ export default function RoyCSSPage() {
                   type="email"
                   required
                   name="newsletter-email"
-                  placeholder="you@example.com"
-                  aria-label="Email address for newsletter"
+                  placeholder={tFooter("emailPlaceholder")}
+                  aria-label={tFooter("emailAria")}
                   className="flex-1 min-w-0 px-3 py-2 rounded-lg bg-background border border-border text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40"
                 />
                 <button
                   type="submit"
                   className="shrink-0 px-3 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-medium hover:bg-primary/90 transition-colors cursor-pointer"
                 >
-                  Subscribe
+                  {tFooter("subscribe")}
                 </button>
               </form>
             </div>
@@ -2759,7 +2769,7 @@ export default function RoyCSSPage() {
           {/* Bottom bar */}
           <div className="pt-6 border-t border-border/50 flex flex-col sm:flex-row items-center justify-between gap-3">
             <p className="text-xs text-muted-foreground text-center sm:text-left">
-              &copy; {new Date().getFullYear()} RoyCSS. Crafted by{" "}
+              {tFooter("copyright", { year: new Date().getFullYear() })}{" "}
               <a
                 href="https://www.linkedin.com/in/roywanyoike/"
                 target="_blank"
@@ -2769,26 +2779,26 @@ export default function RoyCSSPage() {
                 Royford Wanyoike Wamaitha
               </a>
               {" "}&middot;{" "}
-              MIT License
+              {tFooter("mitLicense")}
               {" "}&middot;{" "}
               <a href="/privacy" className="hover:text-primary transition-colors">
-                Privacy
+                {tFooter("privacy")}
               </a>
               {" "}&middot;{" "}
               <a href="/terms" className="hover:text-primary transition-colors">
-                Terms
+                {tFooter("terms")}
               </a>
               {" "}&middot;{" "}
               <a href="/roadmap" className="hover:text-primary transition-colors">
-                Roadmap
+                {tFooter("roadmap")}
               </a>
               {" "}&middot;{" "}
               <a
                 href={`mailto:${SUPPORT_EMAIL}`}
                 className="hover:text-primary transition-colors"
-                aria-label={`Support — email ${SUPPORT_EMAIL}`}
+                aria-label={tFooter("supportAria", { email: SUPPORT_EMAIL })}
               >
-                Support
+                {tFooter("support")}
               </a>
             </p>
             <div className="flex items-center gap-4 text-xs text-muted-foreground">

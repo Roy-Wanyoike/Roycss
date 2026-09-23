@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Pause, Play } from "lucide-react";
 import { writeStoredAnimationPause } from "@/components/ui-library/foundation/animation-pause-storage";
 
@@ -36,6 +37,7 @@ export function PauseAnimationsToggle({
   /** "sm" fits the compact SiteHeader; "lg" fits the home mega-header. */
   size?: "sm" | "lg";
 }) {
+  const t = useTranslations("SiteHeader");
   const [paused, setPaused] = useState(false);
 
   useEffect(() => {
@@ -71,13 +73,13 @@ export function PauseAnimationsToggle({
       type="button"
       onClick={toggle}
       aria-pressed={paused}
-      aria-label="Pause animations"
-      title={paused ? "Resume animations" : "Pause animations"}
+      aria-label={t("pauseAnimations")}
+      title={paused ? t("resumeAnimations") : t("pauseAnimations")}
       className={className}
     >
       {paused ? <Play className="size-4" /> : <Pause className="size-4" />}
       <span role="status" aria-live="polite" className="sr-only">
-        {paused ? "Site animations paused" : ""}
+        {paused ? t("pausedStatus") : ""}
       </span>
     </button>
   );

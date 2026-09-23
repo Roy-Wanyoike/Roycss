@@ -1,5 +1,6 @@
 import { type Metadata, type Viewport } from "next";
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
 import "./globals.css";
 import "./roycss.css";
 import "./roymotion.css";
@@ -52,6 +53,30 @@ const themeInitScript = `(function(){try{var k='roycss-theme';var s=localStorage
  * by tests/unit/theme-persistence.test.ts) stays byte-identical.
  */
 const pauseInitScript = `(function(){try{var k='roycss-animations-paused';var s=localStorage.getItem(k);if(s==='true'){document.documentElement.setAttribute('data-animations-paused','true');}}catch(e){}})();`;
+
+/**
+ * Pre-hydration locale script (issue #129 PR-A — i18n scaffolding).
+ *
+ * Runs synchronously in <head> BEFORE React hydrates and applies the
+ * user's stored locale to documentElement as lang/dir attributes — the
+ * same pre-paint contract as themeInitScript above, so the document
+ * direction is correct for the very first paint (essential for RTL in
+ * PR-B: dir="rtl" must be on <html> before any CSS layout runs).
+ *
+ * T is the locale → [lang, dir] table. It is the exact mirror of
+ * LOCALES + localeDirection() in
+ * src/components/ui-library/foundation/locale-storage.ts and is kept in
+ * lockstep by tests/unit/locale-persistence.test.ts. Unknown/corrupt
+ * values fall back to en/ltr (T[s] is validated before use). PR-B adds
+ * "ar" to the table (['ar','rtl']) and to messages/.
+ *
+ * The request locale itself is STATIC "en" for every render
+ * (src/i18n/request.ts — no cookies()/headers() read, keeping every page
+ * statically prerendered per the #54 architecture constraint); this
+ * script is the client-side complement. It never WRITES the key — only
+ * the LanguageToggle does.
+ */
+const localeInitScript = `(function(){try{var T={en:['en','ltr']};var s=localStorage.getItem('roycss-locale');var c=(s&&T[s]&&T[s].length===2)?T[s]:T.en;var r=document.documentElement;r.lang=c[0];r.dir=c[1];}catch(e){}})();`;
 
 /**
  * JSON-LD structured data for SEO rich results (issue #188 item 5).
@@ -267,6 +292,9 @@ export default async function RootLayout({
         {/* Issue #214: re-apply the persisted "Pause animations" preference
             before first paint. Read-only — see pauseInitScript above. */}
         <script dangerouslySetInnerHTML={{ __html: pauseInitScript }} />
+        {/* Issue #129 PR-A: apply the persisted locale as html lang/dir before
+            first paint. Read-only — see localeInitScript above. */}
+        <script dangerouslySetInnerHTML={{ __html: localeInitScript }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -276,7 +304,12 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} antialiased bg-background text-foreground`}
       >
         <AuthProvider>
-          {children}
+          {/* next-intl "without i18n routing" (issue #129 PR-A): the provider
+              inherits the STATIC en config from src/i18n/request.ts so client
+              components (chrome) can consume useTranslations. Server
+              components use getTranslations from next-intl/server. No locale
+              segment, no middleware — every route stays static. */}
+          <NextIntlClientProvider>{children}</NextIntlClientProvider>
         </AuthProvider>
         {/* Single toast system (issue #114): sonner only — theme-aware via
             next-themes, bottom-right, richColors + closeButton to match the

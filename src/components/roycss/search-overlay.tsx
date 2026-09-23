@@ -4,6 +4,7 @@ import { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { Search, X, ArrowRight, Boxes, SearchX, BookOpen } from "lucide-react";
 import { effects, categoryMeta } from "@/lib/roycss-effects";
 import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
@@ -31,6 +32,10 @@ interface SearchOverlayProps {
  *   docs       → the entry's real /docs route (docs-index)
  */
 export function SearchOverlay({ open, onOpenChange, onJumpToSection }: SearchOverlayProps) {
+  // Issue #129 PR-A: representative subset moved to the SearchOverlay
+  // catalog (placeholder + aria labels + empty state; the full 83-string
+  // extraction is deferred to PR-B).
+  const t = useTranslations("SearchOverlay");
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -138,7 +143,7 @@ export function SearchOverlay({ open, onOpenChange, onJumpToSection }: SearchOve
           onClick={() => onOpenChange(false)}
           role="dialog"
           aria-modal="true"
-          aria-label="Search RoyCSS"
+          aria-label={t("dialogAria")}
           onKeyDown={(e) => {
             if (e.key !== "Tab") return;
             const overlay = e.currentTarget.querySelector(".relative.w-full.max-w-xl");
@@ -159,16 +164,16 @@ export function SearchOverlay({ open, onOpenChange, onJumpToSection }: SearchOve
               <Search className="size-5 text-muted-foreground shrink-0" />
               <input ref={inputRef} type="search" value={query} onChange={(e) => { setQuery(e.target.value); setSelectedIndex(0); }}
                 onKeyDown={handleKeyDown}
-                aria-label="Search effects, recipes, patterns, products, docs, and sections"
-                placeholder="Search effects, recipes, patterns, products, docs, sections... (⌘K)"
+                aria-label={t("inputAria")}
+                placeholder={t("placeholder")}
                 className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none" autoComplete="off" spellCheck={false} />
-              <button onClick={() => onOpenChange(false)} className="flex items-center justify-center size-7 rounded-md bg-muted text-muted-foreground hover:text-foreground transition-colors cursor-pointer shrink-0" aria-label="Close search">
+              <button onClick={() => onOpenChange(false)} className="flex items-center justify-center size-7 rounded-md bg-muted text-muted-foreground hover:text-foreground transition-colors cursor-pointer shrink-0" aria-label={t("closeAria")}>
                 <X className="size-3.5" />
               </button>
             </div>
             <div className="max-h-[50vh] overflow-y-auto scrollbar-thin">
               {query.trim() === "" ? (
-                <div className="p-8 text-center"><p className="text-sm text-muted-foreground">Search effects, recipes, patterns, products, docs, or sections.</p>
+                <div className="p-8 text-center"><p className="text-sm text-muted-foreground">{t("emptyState")}</p>
                 <p className="text-xs text-muted-foreground/60 mt-2">Try: "glass", "loader", "neon", "kanban", "hero", "oklch", "loading"</p></div>
               ) : totalResults === 0 ? (
                 <div className="p-8 text-center">

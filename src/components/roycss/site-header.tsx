@@ -28,22 +28,31 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Github, Menu, Moon, Sun, X } from "lucide-react";
 import { writeStoredTheme } from "@/components/ui-library/foundation/theme-storage";
 import { PauseAnimationsToggle } from "@/components/roycss/pause-animations-toggle";
+import { LanguageToggle } from "@/components/roycss/language-toggle";
 
 const GITHUB_URL = "https://github.com/Roy-Wanyoike/Roycss";
 
-/** Primary destinations rendered inside <nav aria-label="Primary">. */
+/**
+ * Primary destinations rendered inside <nav aria-label="Primary">.
+ * Issue #129 PR-A: labels moved to the SiteHeader message catalog
+ * (messages/en.json — identical strings), resolved via useTranslations
+ * at render time. hrefs stay source-level constants (pinned by
+ * tests/unit/site-header.test.ts).
+ */
 const PRIMARY_LINKS = [
-  { href: "/effects", label: "Effects" },
-  { href: "/docs", label: "Docs" },
-  { href: "/roadmap", label: "Roadmap" },
+  { href: "/effects", labelKey: "navEffects" },
+  { href: "/docs", labelKey: "navDocs" },
+  { href: "/roadmap", labelKey: "navRoadmap" },
 ] as const;
 
 /* ─── Theme toggle — exact mechanism of the home ThemeToggle ─────────── */
 
 function SiteThemeToggle() {
+  const t = useTranslations("SiteHeader");
   const [dark, setDark] = useState(true);
 
   useEffect(() => {
@@ -74,7 +83,7 @@ function SiteThemeToggle() {
       type="button"
       onClick={toggleTheme}
       className="inline-flex size-9 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-      aria-label="Toggle theme"
+      aria-label={t("themeToggleAria")}
     >
       {dark ? <Sun className="size-4" /> : <Moon className="size-4" />}
     </button>
@@ -96,6 +105,7 @@ function linkClass(active: boolean) {
 /* ─── SiteHeader ─────────────────────────────────────────────────────── */
 
 export function SiteHeader() {
+  const t = useTranslations("SiteHeader");
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -109,7 +119,7 @@ export function SiteHeader() {
         <Link
           href="/"
           className="flex shrink-0 items-center gap-2 text-sm font-semibold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 rounded-md"
-          aria-label="RoyCSS — back to home"
+          aria-label={t("brandAria")}
         >
           <span className="inline-flex size-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
             R
@@ -129,7 +139,7 @@ export function SiteHeader() {
               className={`${linkClass(isActive(link.href))} px-3`}
               aria-current={isActive(link.href) ? "page" : undefined}
             >
-              {link.label}
+              {t(link.labelKey)}
             </Link>
           ))}
         </nav>
@@ -147,20 +157,22 @@ export function SiteHeader() {
             target="_blank"
             rel="noreferrer"
             className="inline-flex size-9 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-            aria-label="GitHub repository (opens in a new tab)"
+            aria-label={t("githubAria")}
           >
             <Github className="size-4" />
           </a>
           <SiteThemeToggle />
           {/* Issue #214: site-wide animation pause (WCAG 2.2.2) */}
           <PauseAnimationsToggle />
+          {/* Issue #129 PR-A: locale switcher (v1 = en only, menu shape ready for PR-B) */}
+          <LanguageToggle />
           {/* Mobile hamburger — primary links live in the panel below */}
           <button
             type="button"
             onClick={() => setMenuOpen((open) => !open)}
             aria-expanded={menuOpen}
             aria-controls="site-header-menu"
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-label={menuOpen ? t("menuClose") : t("menuOpen")}
             className="inline-flex size-9 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 sm:hidden"
           >
             {menuOpen ? <X className="size-4" /> : <Menu className="size-4" />}
@@ -186,7 +198,7 @@ export function SiteHeader() {
                   className={`${linkClass(isActive(link.href))} px-3 text-base`}
                   aria-current={isActive(link.href) ? "page" : undefined}
                 >
-                  {link.label}
+                  {t(link.labelKey)}
                 </Link>
               </li>
             ))}

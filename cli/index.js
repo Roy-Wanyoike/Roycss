@@ -1,5 +1,4 @@
-#!/usr/bin/env bun
-// @bun
+#!/usr/bin/env node
 
 // src/lib/effects-batch-1.ts
 var effectsBatch1 = [
@@ -75527,7 +75526,12 @@ import {
   renameSync
 } from "fs";
 import { join as join2, resolve as resolve2, extname, relative as relative2 } from "path";
+import { spawnSync } from "child_process";
 import * as readline from "readline";
+
+// scripts/codemods/lib/engine.ts
+import { readFileSync, writeFileSync, readdirSync, statSync, existsSync } from "fs";
+import { join, resolve, relative, sep } from "path";
 
 // scripts/codemods/lib/class-scanner.ts
 var CLASS_ATTR_RE = /\b(?:className|class)(\s*)=(\s*)(["'])([\s\S]*?)\3/g;
@@ -75665,6 +75669,51 @@ function summarize(codemodId, reports, wrote) {
     wrote
   };
 }
+function joinList(classes, max = 12) {
+  const shown = classes.slice(0, max).join(", ");
+  const extra = classes.length - Math.min(classes.length, max);
+  return extra > 0 ? `${shown}, … +${extra} more` : shown;
+}
+function formatFileReport(report, detail = false) {
+  const status = report.changed ? "changed" : "unchanged";
+  const parts = [
+    `${report.replaced.length} replaced`,
+    `${report.kept.length} kept (no equivalent)`,
+    `${report.ignored.length} kept as-is`,
+    `${report.unknown.length} unknown`,
+    `${report.alreadyRoycss.length} already roycss`
+  ];
+  const head = `${report.file} — ${status}: ${parts.join(", ")}`;
+  if (!detail)
+    return head;
+  const lines = [head];
+  for (const r of report.replaced)
+    lines.push(`  ✓ ${r.from} → ${r.to}`);
+  for (const cls of report.approximate)
+    lines.push(`  ~ ${cls} → approximate mapping (review)`);
+  for (const cls of report.kept)
+    lines.push(`  = ${cls} kept — no RoyCSS equivalent`);
+  for (const cls of report.unknown)
+    lines.push(`  ? ${cls} unknown — left untouched`);
+  return lines.join(`
+`);
+}
+function formatSummary(summary) {
+  const lines = [
+    `migrate ${summary.codemod}: ${summary.files} file${summary.files === 1 ? "" : "s"} scanned, ${summary.filesChanged} changed`,
+    `  classes replaced:      ${summary.classesReplaced}`,
+    `  kept (no equivalent):  ${summary.keptClasses.length}${summary.keptClasses.length ? ` — ${joinList(summary.keptClasses)}` : ""}`,
+    `  kept as-is:            ${summary.ignoredClasses.length}${summary.ignoredClasses.length ? ` — ${joinList(summary.ignoredClasses)}` : ""}`,
+    `  unknown:               ${summary.unknownClasses.length}${summary.unknownClasses.length ? ` — ${joinList(summary.unknownClasses)}` : ""}`,
+    `  already roycss:        ${summary.alreadyRoycssClasses.length}${summary.alreadyRoycssClasses.length ? ` — ${joinList(summary.alreadyRoycssClasses)}` : ""}`
+  ];
+  if (summary.approximateClasses.length) {
+    lines.push(`  approximate (review):  ${summary.approximateClasses.length} — ${joinList(summary.approximateClasses)}`);
+  }
+  lines.push(summary.wrote ? "  mode: applied (--write)" : "  mode: dry-run (use --write to apply)");
+  return lines.join(`
+`);
+}
 
 // scripts/codemods/lib/engine.ts
 function defineTableCodemod(config) {
@@ -75703,6 +75752,157 @@ var MIGRATE_EXTENSIONS = new Set([
   ".mdx"
 ]);
 var SKIP_DIRS = new Set(["node_modules", ".git", ".next", "dist", "build", ".cache", "coverage", ".turbo"]);
+function hasMagic(pattern) {
+  return /[*?]/.test(pattern);
+}
+function globToRegexSource(pattern) {
+  let out = "";
+  for (let i = 0;i < pattern.length; i++) {
+    const ch = pattern[i];
+    if (ch === "*") {
+      if (pattern[i + 1] === "*") {
+        i++;
+        if (pattern[i + 1] === "/") {
+          i++;
+          out += "(?:.*/)?";
+        } else {
+          out += ".*";
+        }
+      } else {
+        out += "[^/]*";
+      }
+    } else if (ch === "?") {
+      out += "[^/]";
+    } else if (/[.*+?^${}()|[\]\\]/.test(ch)) {
+      out += "\\" + ch;
+    } else {
+      out += ch;
+    }
+  }
+  return out;
+}
+function walkFiles(dir, base, out) {
+  let entries;
+  try {
+    entries = readdirSync(dir, { withFileTypes: true });
+  } catch {
+    return;
+  }
+  for (const entry of entries) {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      if (entry.name.startsWith(".") || SKIP_DIRS.has(entry.name))
+        continue;
+      walkFiles(full, base, out);
+    } else if (entry.isFile()) {
+      const ext = entry.name.slice(entry.name.lastIndexOf(".")).toLowerCase();
+      if (MIGRATE_EXTENSIONS.has(ext))
+        out.push(full);
+    }
+  }
+}
+function globToFiles(glob, cwd) {
+  const pattern = glob.replace(/^\.\//, "").replace(/\/+$/, "");
+  if (!hasMagic(pattern)) {
+    const literal = resolve(cwd, pattern);
+    if (!existsSync(literal))
+      return [];
+    const st = statSync(literal);
+    if (st.isFile())
+      return [literal];
+    if (st.isDirectory()) {
+      const out = [];
+      walkFiles(literal, literal, out);
+      return out;
+    }
+    return [];
+  }
+  const segments = pattern.split("/");
+  let prefix = "";
+  let i = 0;
+  while (i < segments.length && !hasMagic(segments[i])) {
+    prefix = prefix ? `${prefix}/${segments[i]}` : segments[i];
+    i++;
+  }
+  const baseDir = prefix ? resolve(cwd, prefix) : resolve(cwd);
+  if (!existsSync(baseDir) || !statSync(baseDir).isDirectory())
+    return [];
+  const re = new RegExp(`^${globToRegexSource(pattern)}$`);
+  const collected = [];
+  const walkDir = (dir) => {
+    let entries;
+    try {
+      entries = readdirSync(dir, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const entry of entries) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) {
+        if (entry.name.startsWith(".") || SKIP_DIRS.has(entry.name))
+          continue;
+        walkDir(full);
+      } else if (entry.isFile()) {
+        const rel = relative(resolve(cwd), full).split(sep).join("/");
+        if (re.test(rel))
+          collected.push(full);
+      }
+    }
+  };
+  walkDir(baseDir);
+  return collected.sort();
+}
+function runCodemodOnFiles(def, files, options = {}) {
+  const write = options.write === true && !def.reportOnly;
+  const reports = [];
+  const cssBlocks = [];
+  for (const file of files) {
+    let source;
+    try {
+      source = readFileSync(file, "utf-8");
+    } catch (err) {
+      process.stderr.write(`⚠ skipping unreadable file ${file}: ${err instanceof Error ? err.message : String(err)}
+`);
+      continue;
+    }
+    const result = def.transform(source);
+    const changed = result.output !== source;
+    reports.push({
+      file,
+      changed,
+      replaced: result.replaced,
+      unknown: result.unknown,
+      kept: result.kept,
+      ignored: result.ignored,
+      alreadyRoycss: result.alreadyRoycss,
+      approximate: result.approximate ?? [],
+      css: result.css
+    });
+    for (const block of result.cssBlocks ?? []) {
+      if (!cssBlocks.includes(block))
+        cssBlocks.push(block);
+    }
+    if (write && changed) {
+      writeFileSync(file, result.output, "utf-8");
+    }
+  }
+  const css = cssBlocks.length ? `/* RoyCSS → plain CSS — generated by \`roycss migrate ${def.id}\`
+ * Self-contained: no RoyCSS package required beyond this file.
+ */
+
+${cssBlocks.join(`
+
+`)}
+` : undefined;
+  let cssPath;
+  if (css && write) {
+    cssPath = resolve(options.cwd ?? process.cwd(), options.cssOut ?? "roycss-vanilla.css");
+    writeFileSync(cssPath, css, "utf-8");
+  } else if (css) {
+    cssPath = resolve(options.cwd ?? process.cwd(), options.cssOut ?? "roycss-vanilla.css");
+  }
+  return { reports, summary: summarize(def.id, reports, write), cssPath, css };
+}
 
 // scripts/codemods/from-tailwind.ts
 var IGNORED_TAILWIND_UTILITIES = [
@@ -76204,67 +76404,6 @@ var codemod5 = defineTableCodemod({
 if (false) {}
 var from_chakra_default = codemod5;
 
-// src/lib/roycss-effects.ts
-var effects2 = [
-  ...effectsBatch1,
-  ...effectsBatch2,
-  ...effectsBatch3,
-  ...effectsBatch4,
-  ...effectsBatch5,
-  ...effectsBatch6,
-  ...effectsBatch7,
-  ...effectsBatch8,
-  ...effectsBatch9,
-  ...effectsBatch10,
-  ...effectsBatch11,
-  ...effectsBatch12,
-  ...effectsBatch13,
-  ...effectsBatch14,
-  ...effectsBatch15,
-  ...effectsBatch16,
-  ...effectsBatch17,
-  ...effectsBatch18,
-  ...effectsBatch19,
-  ...effectsBatch20,
-  ...effectsBatch21,
-  ...effectsBatch22,
-  ...effectsBatch23,
-  ...effectsBatch24,
-  ...effectsBatch25,
-  ...effectsBatch26,
-  ...effectsBatch27,
-  ...effectsBatch28,
-  ...effectsBatch29,
-  ...effectsBatch30,
-  ...effectsBatch31,
-  ...effectsBatch32,
-  ...effectsBatch33,
-  ...effectsBatch34,
-  ...effectsBatch35,
-  ...effectsBatch36,
-  ...effectsBatch37,
-  ...effectsBatch38,
-  ...effectsBatch39,
-  ...effectsBatch42,
-  ...effectsBatch43,
-  ...effectsBatch44,
-  ...effectsBatch45,
-  ...effectsBatch46,
-  ...effectsBatch47,
-  ...effectsBatch48,
-  ...effectsBatch49,
-  ...effectsBatch40,
-  ...effectsBatch41,
-  ...effectsBatch50,
-  ...effectsBatch51,
-  ...effectsBatch52,
-  ...effectsBatch53,
-  ...effectsBatch54
-];
-var allEffectCSS2 = effects2.map((e) => e.cssCode).join(`
-
-`);
-
 // scripts/codemods/lib/catalog.ts
 var cachedClasses = null;
 function getCatalogClasses() {
@@ -76272,7 +76411,7 @@ function getCatalogClasses() {
     return cachedClasses;
   const classes = new Set;
   const selectorRe = /\.((?:roycss|roymotion)-[A-Za-z0-9_-]+)/g;
-  for (const effect of effects2) {
+  for (const effect of effects) {
     for (const m of effect.cssCode.matchAll(selectorRe)) {
       classes.add(m[1]);
     }
@@ -76282,7 +76421,7 @@ function getCatalogClasses() {
 }
 function getEffectCssForClass(cls) {
   const re = new RegExp(`\\.${cls.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![A-Za-z0-9_-])`);
-  for (const effect of effects2) {
+  for (const effect of effects) {
     if (re.test(effect.cssCode))
       return effect.cssCode;
   }
@@ -76455,224 +76594,6 @@ var codemods = [
 var codemodIds = codemods.map((c) => c.id);
 function getCodemod(id) {
   return codemods.find((c) => c.id === id);
-}
-
-// scripts/codemods/lib/engine.ts
-import { readFileSync, writeFileSync, readdirSync, statSync, existsSync } from "fs";
-import { join, resolve, relative, sep } from "path";
-var MIGRATE_EXTENSIONS2 = new Set([
-  ".html",
-  ".htm",
-  ".jsx",
-  ".tsx",
-  ".ts",
-  ".js",
-  ".mjs",
-  ".cjs",
-  ".vue",
-  ".svelte",
-  ".astro",
-  ".md",
-  ".mdx"
-]);
-var SKIP_DIRS2 = new Set(["node_modules", ".git", ".next", "dist", "build", ".cache", "coverage", ".turbo"]);
-function hasMagic(pattern) {
-  return /[*?]/.test(pattern);
-}
-function globToRegexSource(pattern) {
-  let out = "";
-  for (let i = 0;i < pattern.length; i++) {
-    const ch = pattern[i];
-    if (ch === "*") {
-      if (pattern[i + 1] === "*") {
-        i++;
-        if (pattern[i + 1] === "/") {
-          i++;
-          out += "(?:.*/)?";
-        } else {
-          out += ".*";
-        }
-      } else {
-        out += "[^/]*";
-      }
-    } else if (ch === "?") {
-      out += "[^/]";
-    } else if (/[.*+?^${}()|[\]\\]/.test(ch)) {
-      out += "\\" + ch;
-    } else {
-      out += ch;
-    }
-  }
-  return out;
-}
-function walkFiles(dir, base, out) {
-  let entries;
-  try {
-    entries = readdirSync(dir, { withFileTypes: true });
-  } catch {
-    return;
-  }
-  for (const entry of entries) {
-    const full = join(dir, entry.name);
-    if (entry.isDirectory()) {
-      if (entry.name.startsWith(".") || SKIP_DIRS2.has(entry.name))
-        continue;
-      walkFiles(full, base, out);
-    } else if (entry.isFile()) {
-      const ext = entry.name.slice(entry.name.lastIndexOf(".")).toLowerCase();
-      if (MIGRATE_EXTENSIONS2.has(ext))
-        out.push(full);
-    }
-  }
-}
-function globToFiles(glob, cwd) {
-  const pattern = glob.replace(/^\.\//, "").replace(/\/+$/, "");
-  if (!hasMagic(pattern)) {
-    const literal = resolve(cwd, pattern);
-    if (!existsSync(literal))
-      return [];
-    const st = statSync(literal);
-    if (st.isFile())
-      return [literal];
-    if (st.isDirectory()) {
-      const out = [];
-      walkFiles(literal, literal, out);
-      return out;
-    }
-    return [];
-  }
-  const segments = pattern.split("/");
-  let prefix = "";
-  let i = 0;
-  while (i < segments.length && !hasMagic(segments[i])) {
-    prefix = prefix ? `${prefix}/${segments[i]}` : segments[i];
-    i++;
-  }
-  const baseDir = prefix ? resolve(cwd, prefix) : resolve(cwd);
-  if (!existsSync(baseDir) || !statSync(baseDir).isDirectory())
-    return [];
-  const re = new RegExp(`^${globToRegexSource(pattern)}$`);
-  const collected = [];
-  const walkDir = (dir) => {
-    let entries;
-    try {
-      entries = readdirSync(dir, { withFileTypes: true });
-    } catch {
-      return;
-    }
-    for (const entry of entries) {
-      const full = join(dir, entry.name);
-      if (entry.isDirectory()) {
-        if (entry.name.startsWith(".") || SKIP_DIRS2.has(entry.name))
-          continue;
-        walkDir(full);
-      } else if (entry.isFile()) {
-        const rel = relative(resolve(cwd), full).split(sep).join("/");
-        if (re.test(rel))
-          collected.push(full);
-      }
-    }
-  };
-  walkDir(baseDir);
-  return collected.sort();
-}
-function runCodemodOnFiles(def, files, options = {}) {
-  const write = options.write === true && !def.reportOnly;
-  const reports = [];
-  const cssBlocks = [];
-  for (const file of files) {
-    let source;
-    try {
-      source = readFileSync(file, "utf-8");
-    } catch (err) {
-      process.stderr.write(`⚠ skipping unreadable file ${file}: ${err instanceof Error ? err.message : String(err)}
-`);
-      continue;
-    }
-    const result = def.transform(source);
-    const changed = result.output !== source;
-    reports.push({
-      file,
-      changed,
-      replaced: result.replaced,
-      unknown: result.unknown,
-      kept: result.kept,
-      ignored: result.ignored,
-      alreadyRoycss: result.alreadyRoycss,
-      approximate: result.approximate ?? [],
-      css: result.css
-    });
-    for (const block of result.cssBlocks ?? []) {
-      if (!cssBlocks.includes(block))
-        cssBlocks.push(block);
-    }
-    if (write && changed) {
-      writeFileSync(file, result.output, "utf-8");
-    }
-  }
-  const css = cssBlocks.length ? `/* RoyCSS → plain CSS — generated by \`roycss migrate ${def.id}\`
- * Self-contained: no RoyCSS package required beyond this file.
- */
-
-${cssBlocks.join(`
-
-`)}
-` : undefined;
-  let cssPath;
-  if (css && write) {
-    cssPath = resolve(options.cwd ?? process.cwd(), options.cssOut ?? "roycss-vanilla.css");
-    writeFileSync(cssPath, css, "utf-8");
-  } else if (css) {
-    cssPath = resolve(options.cwd ?? process.cwd(), options.cssOut ?? "roycss-vanilla.css");
-  }
-  return { reports, summary: summarize(def.id, reports, write), cssPath, css };
-}
-
-// scripts/codemods/lib/reporter.ts
-function joinList(classes, max = 12) {
-  const shown = classes.slice(0, max).join(", ");
-  const extra = classes.length - Math.min(classes.length, max);
-  return extra > 0 ? `${shown}, … +${extra} more` : shown;
-}
-function formatFileReport2(report, detail = false) {
-  const status = report.changed ? "changed" : "unchanged";
-  const parts = [
-    `${report.replaced.length} replaced`,
-    `${report.kept.length} kept (no equivalent)`,
-    `${report.ignored.length} kept as-is`,
-    `${report.unknown.length} unknown`,
-    `${report.alreadyRoycss.length} already roycss`
-  ];
-  const head = `${report.file} — ${status}: ${parts.join(", ")}`;
-  if (!detail)
-    return head;
-  const lines = [head];
-  for (const r of report.replaced)
-    lines.push(`  ✓ ${r.from} → ${r.to}`);
-  for (const cls of report.approximate)
-    lines.push(`  ~ ${cls} → approximate mapping (review)`);
-  for (const cls of report.kept)
-    lines.push(`  = ${cls} kept — no RoyCSS equivalent`);
-  for (const cls of report.unknown)
-    lines.push(`  ? ${cls} unknown — left untouched`);
-  return lines.join(`
-`);
-}
-function formatSummary2(summary) {
-  const lines = [
-    `migrate ${summary.codemod}: ${summary.files} file${summary.files === 1 ? "" : "s"} scanned, ${summary.filesChanged} changed`,
-    `  classes replaced:      ${summary.classesReplaced}`,
-    `  kept (no equivalent):  ${summary.keptClasses.length}${summary.keptClasses.length ? ` — ${joinList(summary.keptClasses)}` : ""}`,
-    `  kept as-is:            ${summary.ignoredClasses.length}${summary.ignoredClasses.length ? ` — ${joinList(summary.ignoredClasses)}` : ""}`,
-    `  unknown:               ${summary.unknownClasses.length}${summary.unknownClasses.length ? ` — ${joinList(summary.unknownClasses)}` : ""}`,
-    `  already roycss:        ${summary.alreadyRoycssClasses.length}${summary.alreadyRoycssClasses.length ? ` — ${joinList(summary.alreadyRoycssClasses)}` : ""}`
-  ];
-  if (summary.approximateClasses.length) {
-    lines.push(`  approximate (review):  ${summary.approximateClasses.length} — ${joinList(summary.approximateClasses)}`);
-  }
-  lines.push(summary.wrote ? "  mode: applied (--write)" : "  mode: dry-run (use --write to apply)");
-  return lines.join(`
-`);
 }
 
 // src/lib/css-lint.ts
@@ -76958,16 +76879,16 @@ function log(msg) {
   console.log(msg);
 }
 function success(msg) {
-  console.log(`${c.green}\u2713${c.reset} ${msg}`);
+  console.log(`${c.green}✓${c.reset} ${msg}`);
 }
 function error(msg) {
-  console.error(`${c.red}\u2717${c.reset} ${msg}`);
+  console.error(`${c.red}✗${c.reset} ${msg}`);
 }
 function info(msg) {
-  console.log(`${c.cyan}\u2139${c.reset} ${msg}`);
+  console.log(`${c.cyan}ℹ${c.reset} ${msg}`);
 }
 function warn(msg) {
-  console.log(`${c.yellow}\u26A0${c.reset} ${msg}`);
+  console.log(`${c.yellow}⚠${c.reset} ${msg}`);
 }
 var VERSION = "2.0.0";
 function parseFlags(args) {
@@ -76992,25 +76913,21 @@ function parseFlags(args) {
 }
 async function copyToClipboard(text) {
   try {
-    const proc = Bun.spawn(["xclip", "-selection", "clipboard"], {
-      stdin: "pipe",
-      stdout: "ignore",
-      stderr: "ignore"
+    const result = spawnSync("xclip", ["-selection", "clipboard"], {
+      input: text,
+      stdio: ["pipe", "ignore", "ignore"]
     });
-    proc.stdin.write(text);
-    proc.stdin.end();
-    await proc.exited;
+    if (result.error)
+      throw result.error;
     return true;
   } catch {
     try {
-      const proc = Bun.spawn(["pbcopy"], {
-        stdin: "pipe",
-        stdout: "ignore",
-        stderr: "ignore"
+      const result = spawnSync("pbcopy", [], {
+        input: text,
+        stdio: ["pipe", "ignore", "ignore"]
       });
-      proc.stdin.write(text);
-      proc.stdin.end();
-      await proc.exited;
+      if (result.error)
+        throw result.error;
       return true;
     } catch {
       return false;
@@ -77021,7 +76938,7 @@ function resolveCategory(arg) {
   return categoryOrder.find((cat) => cat === arg || categoryMeta[cat].label.toLowerCase() === arg.toLowerCase());
 }
 var SOURCE_EXTENSIONS = new Set([".html", ".tsx", ".jsx", ".vue", ".svelte", ".ts", ".js", ".css", ".htm"]);
-var SKIP_DIRS3 = new Set(["node_modules", ".git", ".next", "dist", "build", ".cache", "coverage", ".turbo"]);
+var SKIP_DIRS2 = new Set(["node_modules", ".git", ".next", "dist", "build", ".cache", "coverage", ".turbo"]);
 function scanSourceFiles(dirs) {
   const results = [];
   function walk(dir) {
@@ -77034,7 +76951,7 @@ function scanSourceFiles(dirs) {
     for (const entry of entries) {
       const fullPath = join2(dir, entry.name);
       if (entry.isDirectory()) {
-        if (entry.name.startsWith(".") || SKIP_DIRS3.has(entry.name))
+        if (entry.name.startsWith(".") || SKIP_DIRS2.has(entry.name))
           continue;
         walk(fullPath);
       } else if (entry.isFile()) {
@@ -77062,7 +76979,7 @@ function cmdInit(flags) {
     const allCSS = effects.map((e) => e.cssCode).join(`
 
 `);
-    const header = `/* RoyCSS \u2014 ${effects.length}+ CSS Effects
+    const header = `/* RoyCSS — ${effects.length}+ CSS Effects
  * Generated by: roycss init
  * Framework: ${framework}
  * Learn more: https://github.com/Roy-Wanyoike/roycss
@@ -77125,7 +77042,7 @@ async function cmdAdd(effectId, flags) {
       log(`
   ${c.dim}Did you mean?${c.reset}`);
       fuzzy.slice(0, 5).forEach((e) => {
-        log(`    ${c.cyan}roycss-${e.id}${c.reset} ${c.gray}\u2014${c.reset} ${e.name}`);
+        log(`    ${c.cyan}roycss-${e.id}${c.reset} ${c.gray}—${c.reset} ${e.name}`);
       });
     }
     process.exit(1);
@@ -77153,7 +77070,7 @@ ${c.dim}Usage:${c.reset}`);
   log(`  ${c.cyan}<div class="roycss-${effectId}">${effect.previewText || "Content"}</div>${c.reset}`);
   if (effect.childCount) {
     log(`
-  ${c.yellow}\u26A0 This effect requires ${effect.childCount} child <span> elements:${c.reset}`);
+  ${c.yellow}⚠ This effect requires ${effect.childCount} child <span> elements:${c.reset}`);
     log(`  ${c.cyan}<div class="roycss-${effectId}">${c.reset}`);
     for (let i = 0;i < effect.childCount; i++) {
       log(`    ${c.cyan}<span></span>${c.reset}`);
@@ -77192,7 +77109,7 @@ function cmdSearch(query, flags) {
 `);
   results.slice(0, 20).forEach((e) => {
     const catLabel = categoryMeta[e.category].label;
-    log(`  ${c.cyan}roycss-${e.id}${c.reset} ${c.gray}\u2014${c.reset} ${e.name} ${c.dim}(${catLabel})${c.reset}`);
+    log(`  ${c.cyan}roycss-${e.id}${c.reset} ${c.gray}—${c.reset} ${e.name} ${c.dim}(${catLabel})${c.reset}`);
   });
   if (results.length > 20) {
     log(`
@@ -77234,7 +77151,7 @@ function cmdList(category, flags) {
     log(`${c.bold}${categoryMeta[cat].label} (${items.length}):${c.reset}
 `);
     items.forEach((e) => {
-      log(`  ${c.cyan}roycss-${e.id}${c.reset} ${c.gray}\u2014${c.reset} ${e.description.substring(0, 60)}`);
+      log(`  ${c.cyan}roycss-${e.id}${c.reset} ${c.gray}—${c.reset} ${e.description.substring(0, 60)}`);
     });
   } else {
     log(`${c.bold}All ${effects.length}+ RoyCSS effects across ${categoryOrder.length} categories:${c.reset}
@@ -77243,7 +77160,7 @@ function cmdList(category, flags) {
       const items = effects.filter((e) => e.category === cat);
       log(`  ${c.magenta}${categoryMeta[cat].label}${c.reset} ${c.dim}(${items.length})${c.reset}`);
       items.slice(0, 3).forEach((e) => {
-        log(`    ${c.cyan}roycss-${e.id}${c.reset} ${c.gray}\u2014${c.reset} ${e.name}`);
+        log(`    ${c.cyan}roycss-${e.id}${c.reset} ${c.gray}—${c.reset} ${e.name}`);
       });
       if (items.length > 3) {
         log(`    ${c.dim}...and ${items.length - 3} more${c.reset}`);
@@ -77257,7 +77174,7 @@ function cmdCategories() {
 `);
   for (const cat of categoryOrder) {
     const count = effects.filter((e) => e.category === cat).length;
-    log(`  ${c.magenta}${categoryMeta[cat].label}${c.reset} ${c.dim}(${count})${c.reset} \u2014 ${categoryMeta[cat].description}`);
+    log(`  ${c.magenta}${categoryMeta[cat].label}${c.reset} ${c.dim}(${count})${c.reset} — ${categoryMeta[cat].description}`);
   }
   log(`
 ${c.dim}Total: ${effects.length}+ effects${c.reset}`);
@@ -77273,7 +77190,7 @@ function cmdInfo(effectId, flags) {
       log(`
   ${c.dim}Did you mean?${c.reset}`);
       fuzzy.slice(0, 5).forEach((e) => {
-        log(`    ${c.cyan}roycss-${e.id}${c.reset} ${c.gray}\u2014${c.reset} ${e.name}`);
+        log(`    ${c.cyan}roycss-${e.id}${c.reset} ${c.gray}—${c.reset} ${e.name}`);
       });
     }
     process.exit(1);
@@ -77326,18 +77243,18 @@ function cmdDoctor() {
     if (stat.length > 1000) {
       success(`CSS file size: ${(stat.length / 1024).toFixed(1)}KB`);
       if (stat.length > 1024 * 1024) {
-        warn(`CSS file > 1MB \u2014 consider ${c.cyan}roycss export${c.reset} for tree-shaking`);
+        warn(`CSS file > 1MB — consider ${c.cyan}roycss export${c.reset} for tree-shaking`);
         warnings++;
       }
     } else {
-      warn(`CSS file seems small (${stat.length} bytes) \u2014 may be incomplete`);
+      warn(`CSS file seems small (${stat.length} bytes) — may be incomplete`);
       issues++;
     }
   } else {
     if (existsSync2("node_modules/roycss")) {
       success(`${c.bold}roycss${c.reset} package found in node_modules`);
     } else {
-      warn(`${c.bold}roycss.css${c.reset} not found \u2014 run ${c.cyan}roycss init${c.reset} to create it`);
+      warn(`${c.bold}roycss.css${c.reset} not found — run ${c.cyan}roycss init${c.reset} to create it`);
       issues++;
     }
   }
@@ -77348,7 +77265,7 @@ function cmdDoctor() {
       if (deps.roycss) {
         success(`${c.bold}roycss${c.reset} found in package.json (${deps.roycss})`);
       } else {
-        info(`${c.bold}roycss${c.reset} not in package.json \u2014 using CDN or local file`);
+        info(`${c.bold}roycss${c.reset} not in package.json — using CDN or local file`);
       }
     } catch {}
   }
@@ -77395,7 +77312,7 @@ function cmdDoctor() {
   if (totalUsages > 0) {
     success(`${c.bold}${totalUsages}${c.reset} RoyCSS class usage${totalUsages === 1 ? "" : "es"} found across ${usageMap.size} unique classes in ${srcFiles.length} source files`);
   } else {
-    info(`No RoyCSS classes found in source files \u2014 start using them!`);
+    info(`No RoyCSS classes found in source files — start using them!`);
   }
   const knownIds = new Set(effects.map((e) => `roycss-${e.id}`));
   const unknownClasses = [];
@@ -77432,7 +77349,7 @@ function cmdDoctor() {
     } catch {}
   }
   if (oklchViolations > 0) {
-    warn(`Found ${oklchViolations} hex/rgba color literal${oklchViolations === 1 ? "" : "s"} in user CSS \u2014 RoyCSS v2 recommends ${c.cyan}oklch()${c.reset}`);
+    warn(`Found ${oklchViolations} hex/rgba color literal${oklchViolations === 1 ? "" : "s"} in user CSS — RoyCSS v2 recommends ${c.cyan}oklch()${c.reset}`);
     log(`  ${c.dim}Run: ${c.reset}${c.cyan}bun run scripts/migrate-colors.ts${c.reset}`);
     warnings++;
   } else {
@@ -77453,7 +77370,7 @@ function cmdDoctor() {
   if (hasReducedMotion) {
     success(`Accessibility: ${c.bold}prefers-reduced-motion${c.reset} media query found`);
   } else {
-    warn(`No ${c.bold}prefers-reduced-motion${c.reset} media query in user CSS \u2014 add one for accessibility`);
+    warn(`No ${c.bold}prefers-reduced-motion${c.reset} media query in user CSS — add one for accessibility`);
     log(`  ${c.dim}Example:${c.reset}`);
     log(`  ${c.cyan}@media (prefers-reduced-motion: reduce) { *{ animation: none !important; transition: none !important; } }${c.reset}`);
     warnings++;
@@ -77497,13 +77414,13 @@ function cmdCreate(projectName, flags) {
   const initialEffectId = flags.effect || "pulse-glow";
   const effect = effects.find((e) => e.id === initialEffectId);
   if (!effect) {
-    warn(`Initial effect "${initialEffectId}" not found \u2014 using pulse-glow as fallback`);
+    warn(`Initial effect "${initialEffectId}" not found — using pulse-glow as fallback`);
   }
   const initialEffect = effect || effects.find((e) => e.id === "pulse-glow") || effects[0];
   log(`${c.bold}${c.cyan}RoyCSS${c.reset} ${c.gray}v${VERSION}${c.reset}`);
   log(`${c.dim}Scaffolding ${c.bold}${template}${c.reset}${c.dim} project at ${c.bold}${projectName}${c.reset}${c.dim}...${c.reset}
 `);
-  const cssHeader = `/* RoyCSS \u2014 initial effect
+  const cssHeader = `/* RoyCSS — initial effect
  * Generated by: roycss create
  * Template: ${template}
  * Add more: roycss add <effect-id> OR roycss export <ids...> --out roycss.css
@@ -77535,7 +77452,7 @@ npm run dev
 
 ## RoyCSS
 
-This project uses [RoyCSS](https://github.com/Roy-Wanyoike/roycss) \u2014 ${effects.length}+ production-ready CSS effects, zero JavaScript runtime.
+This project uses [RoyCSS](https://github.com/Roy-Wanyoike/roycss) — ${effects.length}+ production-ready CSS effects, zero JavaScript runtime.
 
 Initial effect: \`roycss-${initialEffect.id}\`
 
@@ -77549,13 +77466,13 @@ roycss export pulse-glow bounce-in --out roycss.css
 
 ## Commands
 
-- \`roycss stats\` \u2014 see which effects you're using
-- \`roycss doctor\` \u2014 check project health
-- \`roycss browse\` \u2014 interactive TUI browser
-- \`roycss help\` \u2014 full command list
+- \`roycss stats\` — see which effects you're using
+- \`roycss doctor\` — check project health
+- \`roycss browse\` — interactive TUI browser
+- \`roycss help\` — full command list
 `);
   log(`
-${c.green}\u2713${c.reset} Project created at ${c.bold}${projectDir}${c.reset}`);
+${c.green}✓${c.reset} Project created at ${c.bold}${projectDir}${c.reset}`);
   log(`
 ${c.bold}Next steps:${c.reset}`);
   log(`  ${c.cyan}cd ${projectName}${c.reset}`);
@@ -77602,7 +77519,7 @@ function writeVanillaTemplate(projectDir, effect) {
 </body>
 </html>
 `);
-  writeFileSync2(join2(projectDir, "main.js"), `// Entry point \u2014 add your JavaScript here
+  writeFileSync2(join2(projectDir, "main.js"), `// Entry point — add your JavaScript here
 console.log("RoyCSS project ready");
 `);
   success(`Created ${c.bold}package.json${c.reset}, ${c.bold}index.html${c.reset}, ${c.bold}main.js${c.reset}`);
@@ -77977,7 +77894,7 @@ function cmdUpgrade() {
         } else if (major === 2) {
           success(`roycss@${versionSpec} is up to date (v2.x)`);
         } else {
-          info(`roycss@${versionSpec} \u2014 newer than v2.0.0 reference`);
+          info(`roycss@${versionSpec} — newer than v2.0.0 reference`);
         }
       } else {
         info(`roycss is not in package.json dependencies`);
@@ -77988,7 +77905,7 @@ function cmdUpgrade() {
       warnings++;
     }
   } else {
-    info(`No package.json found \u2014 skipping version check`);
+    info(`No package.json found — skipping version check`);
   }
   if (existsSync2("roycss.css")) {
     try {
@@ -78044,7 +77961,7 @@ function cmdUpgrade() {
   if (hasReducedMotion) {
     success(`prefers-reduced-motion media query found`);
   } else {
-    warn(`No prefers-reduced-motion media query found \u2014 RoyCSS v2 recommends adding one`);
+    warn(`No prefers-reduced-motion media query found — RoyCSS v2 recommends adding one`);
     log(`  ${c.dim}Add to your CSS:${c.reset}`);
     log(`  ${c.cyan}@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }${c.reset}`);
     warnings++;
@@ -78119,7 +78036,7 @@ ${c.bold}Top ${top10.length} effect${top10.length === 1 ? "" : "s"}:${c.reset}`)
       const id = cls.replace("roycss-", "");
       const effect = effects.find((e) => e.id === id);
       const name = effect ? effect.name : "(unknown)";
-      log(`  ${c.dim}${(i + 1).toString().padStart(2)}. ${c.reset}${c.cyan}${cls}${c.reset} ${c.gray}\xD7${count}${c.reset} ${c.dim}\u2014 ${name}${c.reset}`);
+      log(`  ${c.dim}${(i + 1).toString().padStart(2)}. ${c.reset}${c.cyan}${cls}${c.reset} ${c.gray}×${count}${c.reset} ${c.dim}— ${name}${c.reset}`);
     });
   } else {
     log(`
@@ -78143,12 +78060,12 @@ ${c.bold}Category breakdown:${c.reset}`);
 ${c.bold}Unused effects:${c.reset} ${c.yellow}${unusedEffects.length}${c.reset} ${c.dim}of ${effects.length} catalog effects are not used in this project${c.reset}`);
     if (unusedEffects.length <= 5) {
       unusedEffects.forEach((e) => {
-        log(`  ${c.cyan}roycss-${e.id}${c.reset} ${c.gray}\u2014${c.reset} ${e.name}`);
+        log(`  ${c.cyan}roycss-${e.id}${c.reset} ${c.gray}—${c.reset} ${e.name}`);
       });
     } else {
       log(`  ${c.dim}(use ${c.reset}${c.cyan}roycss stats --json${c.reset}${c.dim} for full list)${c.reset}`);
       unusedEffects.slice(0, 3).forEach((e) => {
-        log(`  ${c.cyan}roycss-${e.id}${c.reset} ${c.gray}\u2014${c.reset} ${e.name}`);
+        log(`  ${c.cyan}roycss-${e.id}${c.reset} ${c.gray}—${c.reset} ${e.name}`);
       });
       log(`  ${c.dim}...and ${unusedEffects.length - 3} more${c.reset}`);
     }
@@ -78180,7 +78097,7 @@ async function cmdBrowse(categoryArg) {
 `);
     const PAGE = 30;
     items.slice(0, PAGE).forEach((e, i) => {
-      log(`  ${c.dim}${(i + 1).toString().padStart(3)}. ${c.reset}${c.cyan}roycss-${e.id}${c.reset} ${c.gray}\u2014${c.reset} ${e.name}`);
+      log(`  ${c.dim}${(i + 1).toString().padStart(3)}. ${c.reset}${c.cyan}roycss-${e.id}${c.reset} ${c.gray}—${c.reset} ${e.name}`);
     });
     if (items.length > PAGE) {
       log(`
@@ -78213,15 +78130,15 @@ ${c.dim}Interactive: ${c.reset}${c.cyan}roycss browse ${categoryArg || "[categor
     console.clear();
     if (mode === "list") {
       log(`${c.bold}${c.cyan}RoyCSS Browser${c.reset} ${c.gray}v${VERSION}${c.reset}`);
-      log(`${c.bold}${title}${c.reset} ${c.dim}\u2014 ${selected + 1}/${items.length}${c.reset}`);
-      log(`${c.dim}\u2191/\u2193 navigate \xB7 Enter view \xB7 c copy \xB7 q quit${c.reset}
+      log(`${c.bold}${title}${c.reset} ${c.dim}— ${selected + 1}/${items.length}${c.reset}`);
+      log(`${c.dim}↑/↓ navigate · Enter view · c copy · q quit${c.reset}
 `);
       const end = Math.min(scrollOffset + PAGE_SIZE, items.length);
       for (let i = scrollOffset;i < end; i++) {
         const e = items[i];
         const isSelected = i === selected;
-        const marker = isSelected ? `${c.cyan}\u276F${c.reset}` : " ";
-        const name = isSelected ? `${c.bold}${c.cyan}roycss-${e.id}${c.reset} \u2014 ${e.name}` : `${c.gray}roycss-${e.id} \u2014 ${e.name}${c.reset}`;
+        const marker = isSelected ? `${c.cyan}❯${c.reset}` : " ";
+        const name = isSelected ? `${c.bold}${c.cyan}roycss-${e.id}${c.reset} — ${e.name}` : `${c.gray}roycss-${e.id} — ${e.name}${c.reset}`;
         log(` ${marker} ${name}`);
       }
       if (items.length > PAGE_SIZE) {
@@ -78242,7 +78159,7 @@ ${c.bold}Category:${c.reset} ${categoryMeta[e.category].label}`);
 ${c.bold}CSS:${c.reset}`);
       log(`${c.gray}${e.cssCode}${c.reset}`);
       log(`
-${c.dim}Enter/Esc: back to list \xB7 c: copy CSS \xB7 q: quit${c.reset}`);
+${c.dim}Enter/Esc: back to list · c: copy CSS · q: quit${c.reset}`);
     }
   };
   render();
@@ -78273,7 +78190,7 @@ ${c.dim}Enter/Esc: back to list \xB7 c: copy CSS \xB7 q: quit${c.reset}`);
         const copied = await copyToClipboard(e.cssCode);
         if (copied) {
           log(`
-${c.green}\u2713${c.reset} Copied ${c.bold}roycss-${e.id}${c.reset} to clipboard`);
+${c.green}✓${c.reset} Copied ${c.bold}roycss-${e.id}${c.reset} to clipboard`);
           setTimeout(render, 800);
         }
       }
@@ -78286,7 +78203,7 @@ ${c.green}\u2713${c.reset} Copied ${c.bold}roycss-${e.id}${c.reset} to clipboard
         const copied = await copyToClipboard(e.cssCode);
         if (copied) {
           log(`
-${c.green}\u2713${c.reset} Copied ${c.bold}roycss-${e.id}${c.reset} to clipboard`);
+${c.green}✓${c.reset} Copied ${c.bold}roycss-${e.id}${c.reset} to clipboard`);
           setTimeout(render, 800);
         }
       }
@@ -78371,7 +78288,7 @@ function cmdExport(effectIds, flags) {
   log(`
 ${c.dim}Effects:${c.reset}`);
   for (const e of toExport) {
-    log(`  ${c.cyan}roycss-${e.id}${c.reset} ${c.gray}\u2014${c.reset} ${e.name} ${c.dim}(${categoryMeta[e.category].label})${c.reset}`);
+    log(`  ${c.cyan}roycss-${e.id}${c.reset} ${c.gray}—${c.reset} ${e.name} ${c.dim}(${categoryMeta[e.category].label})${c.reset}`);
   }
   log(`
 ${c.dim}Import in your project:${c.reset}`);
@@ -78383,7 +78300,7 @@ var PLUGINS_DIR = ".roycss/plugins";
 var SAMPLE_PLUGIN_SOURCE = `/* Sample RoyCSS Plugin
  *
  * Plugins live in .roycss/plugins/ and export a register() function.
- * The CLI never auto-executes plugins \u2014 they run only when explicitly invoked.
+ * The CLI never auto-executes plugins — they run only when explicitly invoked.
  *
  * Plugin contract:
  *   module.exports = {
@@ -78391,7 +78308,7 @@ var SAMPLE_PLUGIN_SOURCE = `/* Sample RoyCSS Plugin
  *     version: string,
  *     description: string,
  *     register(api) {
- *       api.effects           // CSSEffect[] \u2014 read-only catalog
+ *       api.effects           // CSSEffect[] — read-only catalog
  *       api.categoryMeta      // category metadata map
  *       api.log(msg)          // themed log
  *       api.success(msg)      // themed success
@@ -78413,7 +78330,7 @@ var SAMPLE_PLUGIN_SOURCE = `/* Sample RoyCSS Plugin
 module.exports = {
   name: "sample",
   version: "1.0.0",
-  description: "Sample RoyCSS plugin \u2014 replace this with your own logic.",
+  description: "Sample RoyCSS plugin — replace this with your own logic.",
   register(api) {
     api.registerCommand("hello", (args) => {
       api.success("Hello from sample plugin!");
@@ -78487,7 +78404,7 @@ ${c.dim}Plugins are NOT auto-executed. They run only when explicitly invoked.${c
       try {
         renameSync(disabledPath, enabledPath);
         success(`Enabled plugin: ${c.bold}${name}${c.reset}`);
-        log(`  ${c.dim}Renamed: ${name}.disabled.js \u2192 ${name}.js${c.reset}`);
+        log(`  ${c.dim}Renamed: ${name}.disabled.js → ${name}.js${c.reset}`);
       } catch (e) {
         error(`Failed to enable plugin: ${e instanceof Error ? e.message : String(e)}`);
         process.exit(1);
@@ -78512,7 +78429,7 @@ ${c.dim}Plugins are NOT auto-executed. They run only when explicitly invoked.${c
       try {
         renameSync(enabledPath, disabledPath);
         success(`Disabled plugin: ${c.bold}${name}${c.reset}`);
-        log(`  ${c.dim}Renamed: ${name}.js \u2192 ${name}.disabled.js${c.reset}`);
+        log(`  ${c.dim}Renamed: ${name}.js → ${name}.disabled.js${c.reset}`);
       } catch (e) {
         error(`Failed to disable plugin: ${e instanceof Error ? e.message : String(e)}`);
         process.exit(1);
@@ -78531,7 +78448,7 @@ ${c.dim}Plugins are NOT auto-executed. They run only when explicitly invoked.${c
       success(`Created sample plugin at ${c.bold}${samplePath}${c.reset}`);
       log(`
 ${c.dim}Edit the file to add your custom logic.${c.reset}`);
-      log(`${c.dim}Plugins are NOT auto-executed \u2014 they run only when explicitly invoked.${c.reset}`);
+      log(`${c.dim}Plugins are NOT auto-executed — they run only when explicitly invoked.${c.reset}`);
       log(`
 ${c.bold}Next steps:${c.reset}`);
       log(`  ${c.gray}1. Edit:${c.reset}     ${c.cyan}${samplePath}${c.reset}`);
@@ -78551,7 +78468,7 @@ function cmdMigrate(positional, flags) {
   const codemodId = positional[0];
   const def = codemodId ? getCodemod(codemodId) : undefined;
   if (flags.help === true && def) {
-    log(`${c.bold}${c.cyan}roycss migrate ${def.id}${c.reset} \u2014 ${def.label}
+    log(`${c.bold}${c.cyan}roycss migrate ${def.id}${c.reset} — ${def.label}
 `);
     log(`  ${def.description}
 `);
@@ -78561,7 +78478,7 @@ function cmdMigrate(positional, flags) {
       log(`
   mappings: ${def.mappingCount()}`);
     log(`
-${c.dim}Dry-run by default \u2014 --write applies the rewrite in place.${c.reset}`);
+${c.dim}Dry-run by default — --write applies the rewrite in place.${c.reset}`);
     if (def.reportOnly) {
       warn(`report-only: ${def.reportOnlyReason}`);
     }
@@ -78570,7 +78487,7 @@ ${c.dim}Dry-run by default \u2014 --write applies the rewrite in place.${c.reset
   if (!def) {
     if (codemodId)
       error(`Unknown codemod: ${codemodId}`);
-    log(`${c.bold}${c.cyan}roycss migrate${c.reset} \u2014 migration codemods (inbound + outbound)
+    log(`${c.bold}${c.cyan}roycss migrate${c.reset} — migration codemods (inbound + outbound)
 `);
     log(`${c.bold}Usage:${c.reset} roycss migrate ${c.magenta}<codemod>${c.reset} ${c.magenta}<glob>${c.reset} ${c.gray}[--write]${c.reset}
 `);
@@ -78605,18 +78522,18 @@ ${c.dim}Dry-run by default; unknown classes are never transformed, always report
     warn(`${def.id} is report-only: ${def.reportOnlyReason}
 `);
   }
-  log(`migrate ${def.id} \u2014 ${def.label} ` + `(${files.length} file${files.length === 1 ? "" : "s"}, ${write ? "write" : "dry-run"})
+  log(`migrate ${def.id} — ${def.label} ` + `(${files.length} file${files.length === 1 ? "" : "s"}, ${write ? "write" : "dry-run"})
 `);
   const cssOut = typeof flags.out === "string" ? flags.out : undefined;
   const result = runCodemodOnFiles(def, files, { cwd: process.cwd(), write, cssOut });
   for (const report of result.reports) {
-    log(formatFileReport2(report, true));
+    log(formatFileReport(report, true));
   }
   log(`
-${formatSummary2(result.summary)}`);
+${formatSummary(result.summary)}`);
   if (result.cssPath) {
     log(`
-  css artifact: ${result.cssPath}${write ? "" : " (dry-run \u2014 written with --write)"}`);
+  css artifact: ${result.cssPath}${write ? "" : " (dry-run — written with --write)"}`);
   }
   if (write)
     success(`Applied changes to ${result.summary.filesChanged} file(s).`);
@@ -78736,7 +78653,7 @@ function cmdLint(paths, flags) {
     log(JSON.stringify(payload, null, 2));
   } else {
     log(`${c.bold}${c.cyan}RoyCSS Lint${c.reset} ${c.gray}v${VERSION}${c.reset}`);
-    log(`${c.dim}${results.length} file(s) \xB7 rules: no-important, oklch-colors, roycss-prefix, reduced-motion-guard, layer-order${c.reset}
+    log(`${c.dim}${results.length} file(s) · rules: no-important, oklch-colors, roycss-prefix, reduced-motion-guard, layer-order${c.reset}
 `);
     for (const { file, result, fixedApplied } of results) {
       if (result.findings.length === 0 && fixedApplied === 0)
@@ -78748,18 +78665,18 @@ function cmdLint(paths, flags) {
       for (const f of sorted.slice(0, 40))
         log(fmtFinding(f, sevWidth));
       if (sorted.length > 40)
-        log(`  ${c.dim}\u2026 and ${sorted.length - 40} more${c.reset}`);
+        log(`  ${c.dim}… and ${sorted.length - 40} more${c.reset}`);
       log("");
     }
     log(`${c.bold}Summary:${c.reset}`);
     if (totalErrors === 0 && totalWarnings === 0 && totalInfos === 0) {
-      success(`All ${results.length} file(s) clean \u2014 no cascade, color, or namespace issues.`);
+      success(`All ${results.length} file(s) clean — no cascade, color, or namespace issues.`);
     } else {
       log(`  ${c.red}${totalErrors} error(s)${c.reset}  ${c.yellow}${totalWarnings} warning(s)${c.reset}  ${c.cyan}${totalInfos} info${c.reset}${totalFixed > 0 ? `  ${c.green}${totalFixed} fix(es) applied to ${filesFixed} file(s)${c.reset}` : ""}`);
       if (!fix) {
         const fixable = results.reduce((n, r) => n + r.result.findings.filter((f) => f.fixable).length, 0);
         if (fixable > 0)
-          info(`${fixable} finding(s) auto-fixable \u2014 run ${c.cyan}roycss lint --fix${c.reset}`);
+          info(`${fixable} finding(s) auto-fixable — run ${c.cyan}roycss lint --fix${c.reset}`);
       }
     }
   }
@@ -78778,14 +78695,14 @@ function cmdHelp() {
   log(`  ${c.cyan}categories${c.reset}                List all effect categories`);
   log(`  ${c.cyan}info${c.reset} <effect-id>          Show details about a specific effect`);
   log(`  ${c.cyan}doctor${c.reset}                    Check project health and get recommendations`);
-  log(`  ${c.cyan}lint${c.reset} [paths...]          Lint CSS files \u2014 cascade, color, namespace rules`);
+  log(`  ${c.cyan}lint${c.reset} [paths...]          Lint CSS files — cascade, color, namespace rules`);
   log(`  ${c.cyan}create${c.reset} <name>             Scaffold a new project with RoyCSS pre-installed`);
   log(`  ${c.cyan}upgrade${c.reset}                   Scan for outdated RoyCSS versions and deprecated patterns`);
   log(`  ${c.cyan}stats${c.reset}                     Report project usage analytics for RoyCSS effects`);
   log(`  ${c.cyan}browse${c.reset} [category]         Interactive TUI browser for effects`);
   log(`  ${c.cyan}export${c.reset} <id> [id...]       Export a subset of effects to a CSS file`);
   log(`  ${c.cyan}plugin${c.reset} <action>           Manage plugins (list/enable/disable/init)`);
-  log(`  ${c.cyan}migrate${c.reset} <codemod> <glob>    Run a migration codemod \u2014 dry-run by default (see docs/codemods.md)`);
+  log(`  ${c.cyan}migrate${c.reset} <codemod> <glob>    Run a migration codemod — dry-run by default (see docs/codemods.md)`);
   log(`  ${c.cyan}version${c.reset}                   Show CLI version`);
   log(`  ${c.cyan}help${c.reset}                      Show this help message`);
   log(`
@@ -78831,7 +78748,7 @@ ${c.bold}Examples:${c.reset}`);
   log(`  ${c.gray}roycss migrate to-vanilla-css src/ --write --out roycss-vanilla.css${c.reset}`);
   log(`
 ${c.dim}Learn more: https://github.com/Roy-Wanyoike/roycss${c.reset}`);
-  log(`${c.dim}Docs: docs/PENDING-FEATURES.md \xB7 docs/codemods.md${c.reset}`);
+  log(`${c.dim}Docs: docs/PENDING-FEATURES.md · docs/codemods.md${c.reset}`);
 }
 var [command, ...rawArgs] = process.argv.slice(2);
 var { positional, flags } = parseFlags(rawArgs);

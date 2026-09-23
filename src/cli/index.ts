@@ -1,4 +1,4 @@
-#!/usr/bin/env bun
+#!/usr/bin/env node
 /// <reference types="bun-types" />
 /**
  * RoyCSS CLI v2 — Command-line tool for managing CSS effects
@@ -49,6 +49,7 @@ import {
   renameSync,
 } from "fs";
 import { join, dirname, resolve, extname, relative } from "path";
+import { spawnSync } from "child_process";
 import * as readline from "readline";
 
 // Migration codemods (PF-015, issue #95) — registry + shared engine
@@ -119,26 +120,22 @@ function parseFlags(args: string[]): { positional: string[]; flags: Record<strin
 // ═══════════════════════════════════════════════════════════════
 
 async function copyToClipboard(text: string): Promise<boolean> {
+  // Node-compatible clipboard write (issue #131 contract, restored for #231):
+  // spawnSync with input piping — works under plain node >= 18, no Bun APIs.
   try {
-    const proc = Bun.spawn(["xclip", "-selection", "clipboard"], {
-      stdin: "pipe",
-      stdout: "ignore",
-      stderr: "ignore",
+    const result = spawnSync("xclip", ["-selection", "clipboard"], {
+      input: text,
+      stdio: ["pipe", "ignore", "ignore"],
     });
-    proc.stdin.write(text);
-    proc.stdin.end();
-    await proc.exited;
+    if (result.error) throw result.error;
     return true;
   } catch {
     try {
-      const proc = Bun.spawn(["pbcopy"], {
-        stdin: "pipe",
-        stdout: "ignore",
-        stderr: "ignore",
+      const result = spawnSync("pbcopy", [], {
+        input: text,
+        stdio: ["pipe", "ignore", "ignore"],
       });
-      proc.stdin.write(text);
-      proc.stdin.end();
-      await proc.exited;
+      if (result.error) throw result.error;
       return true;
     } catch {
       return false;

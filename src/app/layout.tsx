@@ -76,7 +76,7 @@ const pauseInitScript = `(function(){try{var k='roycss-animations-paused';var s=
  * script is the client-side complement. It never WRITES the key — only
  * the LanguageToggle does.
  */
-const localeInitScript = `(function(){try{var T={en:['en','ltr']};var s=localStorage.getItem('roycss-locale');var c=(s&&T[s]&&T[s].length===2)?T[s]:T.en;var r=document.documentElement;r.lang=c[0];r.dir=c[1];}catch(e){}})();`;
+const localeInitScript = `(function(){try{var T={"en":["en","ltr"]};var s=localStorage.getItem('roycss-locale');var c=(s&&T[s]&&T[s].length===2)?T[s]:T.en;var r=document.documentElement;r.lang=c[0];r.dir=c[1];}catch(e){}})();`;
 
 /**
  * JSON-LD structured data for SEO rich results (issue #188 item 5).

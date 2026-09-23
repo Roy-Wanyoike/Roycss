@@ -81,8 +81,10 @@ export function LanguageToggle({
     // Keep documentElement lang/dir in agreement — the init script sets
     // both, so the toggle must too.
     const root = document.documentElement;
-    root.lang = next;
-    root.dir = localeDirection(next);
+    // setAttribute (not .lang/.dir assignment) — react-compiler forbids
+    // property mutation on values owned outside the component.
+    root.setAttribute("lang", next);
+    root.setAttribute("dir", localeDirection(next));
     writeStoredLocale(window.localStorage, next);
     setLocale(next);
   };

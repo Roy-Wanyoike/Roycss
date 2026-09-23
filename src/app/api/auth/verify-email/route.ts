@@ -1,4 +1,9 @@
 import { BACKEND_AUTH_URL, extractErrorMessage } from "@/lib/auth-client";
+import {
+  backendFetch,
+  backendTimeoutResponse,
+  isBackendTimeoutError,
+} from "@/lib/backend-fetch";
 
 /**
  * POST /api/auth/verify-email
@@ -15,7 +20,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const res = await fetch(`${BACKEND_AUTH_URL}/verify-email`, {
+    const res = await backendFetch(`${BACKEND_AUTH_URL}/verify-email`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
       body: JSON.stringify(body),
@@ -39,6 +44,9 @@ export async function POST(req: Request) {
       },
     });
   } catch (err) {
+    // Hung backend (deadline abort) → clean 503 in this route's error
+    // envelope — never an indefinite hang (#245; #163 covers the client side).
+    if (isBackendTimeoutError(err)) return backendTimeoutResponse();
     return Response.json({ error: extractErrorMessage(err) }, { status: 500 });
   }
 }

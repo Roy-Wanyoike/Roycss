@@ -7,6 +7,11 @@ import {
   extractErrorMessage,
   type AuthUser,
 } from "@/lib/auth-client";
+import {
+  backendFetch,
+  backendTimeoutResponse,
+  isBackendTimeoutError,
+} from "@/lib/backend-fetch";
 
 /**
  * POST /api/auth/register
@@ -22,7 +27,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const res = await fetch(`${BACKEND_AUTH_URL}/register`, {
+    const res = await backendFetch(`${BACKEND_AUTH_URL}/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
       body: JSON.stringify(body),
@@ -44,6 +49,9 @@ export async function POST(req: Request) {
     if (refreshToken) c.set(REFRESH_COOKIE, refreshToken, { ...cookieOptions, maxAge: 60 * 60 * 24 * 30 });
     return Response.json({ data: user });
   } catch (err) {
+    // Hung backend (deadline abort) → clean 503 in this route's error
+    // envelope — never an indefinite hang (#245; #163 covers the client side).
+    if (isBackendTimeoutError(err)) return backendTimeoutResponse();
     return Response.json({ error: extractErrorMessage(err) }, { status: 500 });
   }
 }

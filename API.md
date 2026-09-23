@@ -17,6 +17,7 @@ The public HTTP surface of the platform: the Express backend (`/api/v1/*`, `back
   - [Community & learning](#domain-community)
   - [Infrastructure & operations](#domain-infra)
 - [Frontend routes (Next.js)](#frontend-routes-nextjs)
+- [Embedded mode](#embedded-mode) — standalone behavior: catalog reads, 503 EMBEDDED_MODE_UNSUPPORTED, /api/health apiMode
 
 ## Conventions
 
@@ -61,6 +62,7 @@ Errors always use one shape (see the [error codes](#error-codes) table):
 | 429 | `RATE_LIMITED` | Sliding-window rate limit exceeded |
 | 500 | `INTERNAL_ERROR` | Unexpected failure (message + stack redacted in production) |
 | 503 | `SERVICE_UNAVAILABLE` | `/health` with the DB down; contact DB write failure |
+| 503 | `EMBEDDED_MODE_UNSUPPORTED` | Frontend-only (embedded API mode): a write, auth or unknown-module request the read-only catalog cannot serve — see [Embedded mode](#embedded-mode) |
 
 ### Auth
 
@@ -931,19 +933,19 @@ talks to these same-origin paths only — the CSP pins `connect-src 'self'`.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
-| GET | `/api/health` | Public | — | `{ status, effectsCount, dbStatus, backendStatus, timestamp, version }` · 200 | — (always 200; `status: "degraded"` when the backend probe fails) |
-| ANY | `/api/v1/*` | passthrough | forwarded body/headers | backend response passthrough · 503 `{ error: { code: "BACKEND_UNAVAILABLE" } }` | backend codes · 503 |
+| GET | `/api/health` | Public | — | `{ status, apiMode, effectsCount, dbStatus, backendStatus, timestamp, version }` · 200 | — (always 200; `status: "degraded"` ONLY when a configured backend probe fails — standalone embedded is "ok", see [Embedded mode](#embedded-mode)) |
+| ANY | `/api/v1/*` | mode-aware | forwarded body/headers (proxy) | embedded: read-only catalog envelope · proxy: backend passthrough · 503 `{ error: { code: "EMBEDDED_MODE_UNSUPPORTED" | "BACKEND_UNAVAILABLE" } }` | backend codes · 503 |
 | GET | `/api/contact` | Public | — | `{ ok, message }` · 200 (usage hint) | — |
-| POST | `/api/contact` | Public | body: { `name`, `email`, `subject?`, `message` } (message ≥ 10 chars; truncated to 120/160/160/5000) | `{ ok, message }` · 200 | 400 · 503 (DB write) · 500 |
-| POST | `/api/auth/register` | Public | body: { `email`, `password`, `name?` } | `{ data: user }` · 200 + sets httpOnly cookies | 400 · 409 · 429 · 500 |
-| POST | `/api/auth/login` | Public | body: { `email`, `password` } | `{ data: user }` · 200 + sets httpOnly cookies | 400 · 401 · 429 · 500 |
+| POST | `/api/contact` | same-origin | body: { `name`, `email`, `subject?`, `message` } (message ≥ 10 chars; truncated to 120/160/160/5000) | `{ ok, message }` · 200 | 400 · 403 (origin guard) · 429 (5/min/IP) · 503 (DB write) · 500 |
+| POST | `/api/auth/register` | Public | body: { `email`, `password`, `name?` } | `{ data: user }` · 200 + sets httpOnly cookies | 400 · 409 · 429 · 500 · 503 (backend timeout) |
+| POST | `/api/auth/login` | Public | body: { `email`, `password` } | `{ data: user }` · 200 + sets httpOnly cookies | 400 · 401 · 429 · 500 · 503 (backend timeout) |
 | POST | `/api/auth/logout` | cookie | reads refresh cookie | `{ data: { ok: true } }` · 200 — revokes the backend session, then clears cookies | 500 |
-| POST | `/api/auth/refresh` | cookie | reads refresh cookie | `{ data: { ok: true } }` · 200 + rotated cookies | 401 · 500 |
-| GET | `/api/auth/me` | cookie | reads access cookie (one refresh+retry on 401) | `{ data: user }` · 200 | 401 |
-| POST | `/api/auth/forgot-password` | Public | body: { `email` } | `{ data: { sent: true, message } }` · 200 — always (no enumeration) | 400 · 429 · 500 |
-| POST | `/api/auth/reset-password` | Public | body: { `token`, `password` } | `{ data: { reset: true, message } }` · 200 | 400 · 429 · 500 |
-| POST | `/api/auth/verify-email` | Public | body: { `email` } | `{ data: { sent: true, message } }` · 200 — always (no enumeration) | 400 · 429 · 500 |
-| POST | `/api/auth/verify-email/confirm` | Public | body: { `token` } | `{ data: user (emailVerified: true) }` · 200 | 400 · 429 · 500 |
+| POST | `/api/auth/refresh` | cookie | reads refresh cookie | `{ data: { ok: true } }` · 200 + rotated cookies | 401 · 500 · 503 (backend timeout) |
+| GET | `/api/auth/me` | cookie | reads access cookie (one refresh+retry on 401) | `{ data: user }` · 200 | 401 · 503 (backend timeout) |
+| POST | `/api/auth/forgot-password` | Public | body: { `email` } | `{ data: { sent: true, message } }` · 200 — always (no enumeration) | 400 · 429 · 500 · 503 (backend timeout) |
+| POST | `/api/auth/reset-password` | Public | body: { `token`, `password` } | `{ data: { reset: true, message } }` · 200 | 400 · 429 · 500 · 503 (backend timeout) |
+| POST | `/api/auth/verify-email` | Public | body: { `email` } | `{ data: { sent: true, message } }` · 200 — always (no enumeration) | 400 · 429 · 500 · 503 (backend timeout) |
+| POST | `/api/auth/verify-email/confirm` | Public | body: { `token` } | `{ data: user (emailVerified: true) }` · 200 | 400 · 429 · 500 · 503 (backend timeout) |
 | POST | `/api/ai-playground` | Public | body: { `prompt` } (≤ 500 chars) | `{ css, prompt }` · 200 | 400 · 500 |
 | POST | `/api/ai-migration` | Public | body: { `css` (≤ 10 000 chars), `framework?` } | `{ css, framework }` · 200 | 400 · 500 |
 | POST | `/api/css-doctor` | Public | body: { `css` (≤ 10 000 chars) } | `{ score, issues[], summary }` · 200 | 400 · 500 |
@@ -954,12 +956,17 @@ talks to these same-origin paths only — the CSP pins `connect-src 'self'`.
 
 Notes:
 
-- **`/api/v1/*` proxy** (`src/app/api/v1/[...path]/route.ts`): forwards
-  `GET/POST/PUT/PATCH/DELETE/OPTIONS` to `BACKEND_URL` (default
-  `http://localhost:4000`), passing through the `Authorization` header,
-  cookies, request body, response status, `Content-Type` and
-  `Cache-Control`. When the backend is unreachable it returns
-  503 `{ error: { code: "BACKEND_UNAVAILABLE", message } }`.
+- **`/api/v1/*` gateway** (`src/app/api/v1/[...path]/route.ts`, issue #83):
+  mode-aware. With `BACKEND_URL` set AND reachable (or `API_MODE=proxy`) it
+  forwards `GET/POST/PUT/PATCH/DELETE/OPTIONS` to the backend, passing
+  through the `Authorization` header, cookies, request body, response
+  status, `Content-Type` and `Cache-Control`. When the backend is
+  unreachable — or hangs: every proxied fetch carries a 15 s server-side
+  deadline (`src/lib/backend-fetch.ts`, the server-side twin of the #163
+  browser timeout, issue #245) — it returns
+  503 `{ error: { code: "BACKEND_UNAVAILABLE", message } }`. Without
+  `BACKEND_URL` the request never leaves the site: the embedded API
+  answers — see [Embedded mode](#embedded-mode).
 - **Auth cookies**: `roycss-access` (15 min) and `roycss-refresh`
   (30 days) — httpOnly, `sameSite=lax`, `secure` in production. The
   register/login/refresh/logout/me routes are a cookie shim over the
@@ -967,14 +974,68 @@ Notes:
   email-lifecycle proxies (forgot/reset/verify-email + confirm) stay
   public: the token in the body IS the credential. `/logout` revokes
   the backend `RefreshToken` row before clearing cookies, so signing
-  out is real (audit F-05).
-- **`/api/contact`** writes to the *frontend* Prisma
-  (`ContactMessage` model, root `prisma/schema.prisma`) — distinct from
-  the backend's `POST /api/v1/contact`. No rate limiter on the frontend
-  copy; the backend copy is limited to 5/min/IP.
+  out is real (audit F-05). Every proxied auth fetch is bounded by the
+  same 15 s server-side deadline (`src/lib/backend-fetch.ts`, issue
+  #245) — a hung backend yields a clean 503 `{ error }` (and on
+  `/logout` the cookies still clear), never a hanging route.
+- **`/api/contact` write guard** (issue #159, `src/lib/api-security.ts`):
+  the Origin/CSRF check runs BEFORE the rate limiter, so cross-origin
+  traffic is rejected with 403 `{ ok: false, error, requestId }` without
+  consuming quota, and a missing `Origin` header on a write fails
+  CLOSED with 403 (non-browser clients included). The check reflects the
+  request's own `Host`/`x-forwarded-host` (both schemes) — in dev that
+  means only the site's own loopback origin passes; it is
+  defense-in-depth for browser CSRF, not authentication. Same-origin
+  requests then share a **5/min/IP** sliding window keyed per route + IP:
+  every request that passes the origin check consumes quota — including
+  rejected ones (400 validation, 503 DB) — deliberately, so hammering is
+  priced at the guard, not at the database. Hit #6+ gets 429 with
+  `Retry-After: 60` (the full window — a safe upper bound; the bucket
+  stores hit timestamps, so the oldest in-window hit frees the next
+  slot), `X-RateLimit-Remaining: 0` and `X-RateLimit-Reset` (epoch
+  seconds). 429s are NOT recorded, so a flood never extends the lockout.
+  IP keying uses `x-vercel-forwarded-for` / `x-forwarded-for` /
+  `x-real-ip` — sanitize them at your reverse proxy (spoofable
+  pre-proxy). The backend's own `POST /api/v1/contact` mirrors this
+  5/min/IP tier.
 - **AI routes** (`ai-playground`, `ai-migration`, `css-doctor`) call
   the ZAI LLM SDK (`z-ai-web-dev-sdk`), `maxDuration` 30 s, and return
   `{ error: string }` on failure.
+
+
+## Embedded mode
+
+When `BACKEND_URL` is unset (and `API_MODE` is `auto` — the default —
+or `embedded`), the Next.js site serves `/api/v1/*` ITSELF from the
+**embedded API** (`src/lib/embedded-api.ts`: the read-only effect catalog —
+1,983 effects, recipes, patterns, categories, tags, search). No external
+process is required; this is the mode every standalone/Vercel deployment
+runs. Set `BACKEND_URL` to route `/api/v1/*` to the full Express backend
+instead; `API_MODE=proxy` forces the proxy path even when the backend is
+down (its 503s surface verbatim).
+
+- **Reads** — the catalog endpoints answer with the exact backend envelope
+  (`data`/`meta` + `requestId`, `X-Request-Id` header), including zod
+  `VALIDATION_ERROR` 400s for bad `page`/`limit`/`q` params and 404
+  `NOT_FOUND` for unknown effect/recipe ids.
+- **Writes, auth and unknown modules → 503** `EMBEDDED_MODE_UNSUPPORTED`.
+  Anything the embedded catalog cannot serve (POST/PUT/PATCH/DELETE,
+  `/api/v1/auth/*`, themes, api-keys, …) returns
+  `503 { error: { code: "EMBEDDED_MODE_UNSUPPORTED", message }, requestId }`.
+  Unknown top-level modules (e.g. `GET /api/v1/no-such-module`) return the
+  same 503 — embedded mode does not pretend to know every backend route.
+  This is a DELIBERATE 503-not-404: the route exists on the real backend
+  (which 404s with `Route not found` only for genuinely unknown paths) —
+  the 503 tells you the feature needs a configured backend, and the error
+  message says exactly that (`Set BACKEND_URL and API_MODE=auto|proxy…`).
+- **`GET /api/health`** reports the resolved mode as `apiMode`
+  (`"embedded"` | `"proxy"`). `status` is `"ok"` for a standalone
+  embedded instance — honest `"ok"` even though `backendStatus.status`
+  reads `"down"` with error `BACKEND_URL not configured — serving
+  embedded API` — and flips to `"degraded"` ONLY when a CONFIGURED
+  backend was probed and failed to answer. `effectsCount` always comes
+  from the live embedded catalog; `dbStatus` is `"n/a"` in embedded
+  mode (no database in the request path).
 
 ## Appendix — caveats
 

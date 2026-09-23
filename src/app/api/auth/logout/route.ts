@@ -4,6 +4,7 @@ import {
   REFRESH_COOKIE,
   BACKEND_AUTH_URL,
 } from "@/lib/auth-client";
+import { backendFetch } from "@/lib/backend-fetch";
 
 /**
  * POST /api/auth/logout
@@ -18,7 +19,7 @@ export async function POST() {
   const refreshToken = c.get(REFRESH_COOKIE)?.value;
   if (refreshToken) {
     try {
-      await fetch(`${BACKEND_AUTH_URL}/logout`, {
+      await backendFetch(`${BACKEND_AUTH_URL}/logout`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({ refreshToken }),

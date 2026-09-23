@@ -235,42 +235,11 @@ export default function EffectsIndexPage() {
         </div>
       </div>
 
-      {/* Site footer (issue #164): the shared "Site footer" landmark is
-          rendered inline by the home page component, so standalone routes
-          provide their own — /effects never did, which read as "footer
-          missing" on every viewport. Mirrors the minimal footer already
-          used by /roadmap. */}
-      <footer aria-label="Site footer" className="border-t border-border/50">
-        <div className="mx-auto flex w-full max-w-4xl flex-col items-center justify-between gap-2 px-4 py-6 text-xs text-muted-foreground sm:flex-row sm:px-6">
-          <p>&copy; {new Date().getFullYear()} RoyCSS</p>
-          <div className="flex items-center gap-4">
-            <Link
-              href="/docs/getting-started"
-              className="transition-colors hover:text-primary"
-            >
-              Docs
-            </Link>
-            <Link
-              href="/roadmap"
-              className="transition-colors hover:text-primary"
-            >
-              Roadmap
-            </Link>
-            <Link
-              href="/privacy"
-              className="transition-colors hover:text-primary"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href="/terms"
-              className="transition-colors hover:text-primary"
-            >
-              Terms of Service
-            </Link>
-          </div>
-        </div>
-      </footer>
+      {/* Site footer (issue #164 → issue #242): the shared "Site footer"
+          landmark moved INTO src/app/effects/layout.tsx, which wraps this
+          page AND the detail/category routes that had no footer at all.
+          Rendering it here too would double the contentinfo landmark on
+          /effects — the layout's footer is the single source. */}
     </div>
   );
 }

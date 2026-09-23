@@ -20,8 +20,12 @@ const PAGE_SRC = join(ROOT, "src/app/effects/[id]/page.tsx");
  * modules the page composes.
  *
  * The crawlability requirement: ALL framework panels' code and ALL 7
- * copy-as formats must be in the server-rendered HTML — the page uses
- * plain <details> panels, so no JS is required to render or read them.
+ * copy-as formats must be in the server-rendered HTML. Since issue #246
+ * the framework switcher is an ARIA tabs pattern (shared FrameworkTabs
+ * component, tested in tests/unit/framework-tabs.test.ts) whose tabpanels
+ * ALL stay mounted — inactive ones carry the `hidden` attribute — so the
+ * snippets remain readable without JS, exactly as the old <details>
+ * accordion provided (switching just became a JS tabs interaction).
  */
 describe("effects/[id] framework usage section", () => {
   const page = readFileSync(PAGE_SRC, "utf8");
@@ -31,11 +35,19 @@ describe("effects/[id] framework usage section", () => {
     expect(page).toContain("getFrameworkExamples(effect.id, effect.name)");
   });
 
-  it("uses <details> panels so every framework's code is crawlable", () => {
-    // Plain HTML details — no JS-driven tab state.
+  it("renders the ARIA tab switcher with every stack's code server-rendered", () => {
+    // Issue #246: <details> accordion → shared ARIA tabs (role=tablist/tab/
+    // tabpanel + aria-selected + roving tabindex + arrow-key nav). The page
+    // keeps building the panel content itself, so the CodeBlock copy path
+    // is unchanged, and FrameworkTabs mounts ALL tabpanels (inactive ones
+    // hidden) — the crawlability contract survives the semantic upgrade.
+    expect(page).toContain('from "@/components/roycss/framework-tabs"');
+    expect(page).toContain("<FrameworkTabs");
+    expect(page).toContain("panels={panels}");
+    // The exclusive-accordion name attribute is gone with the accordion.
+    expect(page).not.toContain('name="framework-usage"');
+    // The Copy-as section keeps its native <details> disclosure.
     expect(page).toContain("<details");
-    // Exclusive-accordion behavior (CSS-only tab feel) where supported.
-    expect(page).toContain('name="framework-usage"');
   });
 
   it("renders install, import and usage snippets per framework via CodeBlock", () => {

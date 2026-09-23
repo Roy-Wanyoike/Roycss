@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import { Terminal, PackageOpen, Code2 } from "lucide-react";
 import {
   getFrameworkExamples,
   type FrameworkExample,
-  type FrameworkId,
 } from "@/lib/framework-adapters";
+import { FrameworkTabs } from "./framework-tabs";
 import { CopyButton } from "./copy-button";
 
 /* ─── Code block with a header label + shared copy button ──── */
@@ -36,6 +35,18 @@ function CodeBlock({
 }
 
 /* ─── Main FrameworkUsage component ─────────────────────────── */
+/**
+ * "Use in your framework" for the effect detail DIALOG (issue #190; ARIA
+ * tabs semantics via the shared FrameworkTabs since issue #246).
+ *
+ * The tab bar + panel structure (visual design) and the per-panel copy
+ * buttons are unchanged — the only delta is semantics: the stack buttons
+ * are now role="tab" with aria-selected + roving tabindex + arrow-key
+ * navigation instead of the old pressed-state toggle buttons, and the
+ * active stack's content lives in a role="tabpanel" wired by
+ * aria-labelledby. The React default tab matches the historical
+ * useState("react") seed.
+ */
 export function FrameworkUsage({
   effectId,
   effectName,
@@ -47,9 +58,19 @@ export function FrameworkUsage({
     effectId,
     effectName,
   );
-  const [active, setActive] = useState<FrameworkId>("react");
-  const current =
-    examples.find((e) => e.id === active) ?? examples[0];
+
+  const panels = examples.map((ex) => (
+    <div key={ex.id}>
+      <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
+        {ex.description}
+      </p>
+      <div className="space-y-3">
+        <CodeBlock title="Install" icon={Terminal} code={ex.install} />
+        <CodeBlock title="Import" icon={PackageOpen} code={ex.import} />
+        <CodeBlock title="Usage" icon={Code2} code={ex.usage} />
+      </div>
+    </div>
+  ));
 
   return (
     <div>
@@ -58,34 +79,11 @@ export function FrameworkUsage({
         Use in your framework
       </h4>
 
-      {/* Framework tab bar */}
-      <div className="flex flex-wrap gap-1 mb-3 p-1 rounded-xl bg-muted/60 border border-border/40">
-        {examples.map((ex) => (
-          <button
-            key={ex.id}
-            type="button"
-            onClick={() => setActive(ex.id)}
-            className={`flex-1 min-w-[5.5rem] px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
-              active === ex.id
-                ? "bg-primary text-primary-foreground shadow-sm"
-                : "text-muted-foreground hover:text-foreground hover:bg-muted"
-            }`}
-            aria-pressed={active === ex.id}
-          >
-            {ex.label}
-          </button>
-        ))}
-      </div>
-
-      <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
-        {current.description}
-      </p>
-
-      <div className="space-y-3">
-        <CodeBlock title="Install" icon={Terminal} code={current.install} />
-        <CodeBlock title="Import" icon={PackageOpen} code={current.import} />
-        <CodeBlock title="Usage" icon={Code2} code={current.usage} />
-      </div>
+      <FrameworkTabs
+        examples={examples}
+        panels={panels}
+        initialActiveId="react"
+      />
     </div>
   );
 }

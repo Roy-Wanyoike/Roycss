@@ -143,18 +143,31 @@ export class InMemoryRateLimiter implements RateLimiter {
     // Drop stale hits — keeps the array small and the count accurate.
     bucket.hits = bucket.hits.filter((t) => t > cutoff);
 
+    const allowed = bucket.hits.length < this.max;
     const remaining = Math.max(0, this.max - bucket.hits.length);
+    // Retry-After is computed from the WINDOW, not hard-coded (issue
+    // #209 P3): when denied, a slot frees up when the OLDEST recorded
+    // hit leaves the window — that's when the caller should retry. For
+    // an allowed request the value is irrelevant (the middleware only
+    // sends it on 429); report the full window as the worst case.
+    const retryAfterSec =
+      !allowed && bucket.hits.length > 0
+        ? Math.max(
+            1,
+            Math.ceil((bucket.hits[0]! + this.windowMs - now) / 1000),
+          )
+        : Math.ceil(this.windowMs / 1000);
     const result: RateLimitResult = {
-      allowed: bucket.hits.length < this.max,
+      allowed,
       limit: this.max,
       // Pre-hit remaining — matches the historical header values
       // (first request in a fresh bucket reports `max` remaining).
       remaining,
       resetAt: now + this.windowMs,
-      retryAfterSec: Math.ceil(this.windowMs / 1000),
+      retryAfterSec,
     };
 
-    if (result.allowed) {
+    if (allowed) {
       bucket.hits.push(now);
     }
     return result;

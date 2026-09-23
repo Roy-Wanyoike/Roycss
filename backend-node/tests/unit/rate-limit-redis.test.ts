@@ -523,3 +523,41 @@ describe("enforcement hooks with an async (Redis) limiter installed", () => {
     expect(headers["Retry-After"]).toBe("1");
   });
 });
+
+// ─── Retry-After from the window (issue #209 P3) ──────────────────────────
+
+describe("Retry-After computed from the window (issue #209 P3)", () => {
+  it("tier adapter uses the script's oldest-hit retry_after_ms when denied", async () => {
+    const fake = makeFakeClient({ replies: [[0, 2, 55_000]] });
+    const limiter = new RedisRateLimiter(fake.client, "auth", {
+      max: 2,
+      windowMs: 60_000,
+    });
+    const decision = await limiter.consume("ip-209");
+    expect(decision.allowed).toBe(false);
+    // 55 s until the oldest hit leaves the window — not the fixed 60.
+    expect(decision.retryAfterSec).toBe(55);
+  });
+
+  it("tier adapter falls back to the window-wide value for 2-element replies", async () => {
+    // Older script / test fakes: no third element → worst case.
+    const fake = makeFakeClient({ replies: [[0, 2]] });
+    const limiter = new RedisRateLimiter(fake.client, "auth", {
+      max: 2,
+      windowMs: 60_000,
+    });
+    const decision = await limiter.consume("ip-209b");
+    expect(decision.allowed).toBe(false);
+    expect(decision.retryAfterSec).toBe(60);
+  });
+
+  it("per-key adapter maps the script's retry_after_ms the same way", async () => {
+    const TIER: ApiKeyTier = { limit: 2, windowMs: 1_000 };
+    const fake = makeFakeClient({ replies: [[0, 2, 700]] });
+    const limiter = new RedisApiKeyRateLimiter(fake.client);
+    const decision = await limiter.consume("key-209", TIER);
+    expect(decision.allowed).toBe(false);
+    // Floored at 1 s — sub-second remainder rounds up.
+    expect(decision.retryAfterSec).toBe(1);
+  });
+});

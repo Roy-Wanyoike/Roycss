@@ -18,8 +18,14 @@ export interface EmailMessage {
   html: string;
 }
 
-/** Shared page chrome for both templates. */
-function htmlPage(title: string, bodyHtml: string): string {
+/** Shared page chrome for the transactional templates. */
+function htmlPage(
+  title: string,
+  bodyHtml: string,
+  footerText =
+    "You received this email because a RoyCSS account action was requested for this address. " +
+    "If this wasn't you, you can safely ignore it — the link expires on its own.",
+): string {
   return `<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${title}</title></head>
@@ -31,8 +37,7 @@ function htmlPage(title: string, bodyHtml: string): string {
         <tr><td style="font-size:12px;color:#6b7280;padding-bottom:20px;">1,959 production-ready CSS effects. Zero JavaScript runtime.</td></tr>
         ${bodyHtml}
         <tr><td style="font-size:11px;color:#9ca3af;padding-top:28px;line-height:1.6;">
-          You received this email because a RoyCSS account action was requested for this address.
-          If this wasn't you, you can safely ignore it — the link expires on its own.
+          ${footerText}
         </td></tr>
       </table>
     </td></tr>
@@ -131,5 +136,52 @@ export function resetPasswordTemplate(
       `If you did not request this, ignore this email — your password stays unchanged.\n` +
       `— The RoyCSS team`,
     html: htmlPage("Reset your password", bodyHtml),
+  };
+}
+
+export interface ContactReceivedTemplateInput {
+  to: string;
+  /** Display name the submitter typed (optional — falls back to the email local part). */
+  name: string | null;
+  /** The subject they submitted (already defaulted by the schema). */
+  subject: string;
+}
+
+/**
+ * Contact-form confirmation (issue #209). The contact route persists
+ * the message AND acknowledges it — `.env.example` has always promised
+ * "contact form + auth emails"; this template makes the contact half
+ * true through the same mailer seam (mock transport in dev logs the
+ * message, Resend delivers it when RESEND_API_KEY is set).
+ */
+export function contactReceivedTemplate(
+  input: ContactReceivedTemplateInput,
+): EmailMessage {
+  const greetingName = escapeHtml(input.name ?? input.to.split("@")[0]!);
+  const subject = escapeHtml(input.subject);
+  const bodyHtml = `
+        <tr><td style="font-size:15px;color:#111827;line-height:1.6;padding-bottom:20px;">Hi ${greetingName},</td></tr>
+        <tr><td style="font-size:14px;color:#374151;line-height:1.7;padding-bottom:24px;">
+          Thanks for reaching out — we received your message
+          ${subject ? `about “${subject}”` : ""} and will get back to you at this address.
+          No action is needed from you in the meantime.
+        </td></tr>
+        <tr><td style="font-size:12px;color:#6b7280;line-height:1.7;">
+          You are receiving this one-time confirmation because you submitted the RoyCSS contact form.
+        </td></tr>`;
+  return {
+    to: input.to,
+    subject: "We received your RoyCSS message",
+    text:
+      `Hi ${input.name ?? input.to},\n\n` +
+      `Thanks for reaching out — we received your message` +
+      `${input.subject ? ` about "${input.subject}"` : ""} and will get back to you at this address.\n` +
+      `No action is needed from you in the meantime.\n\n` +
+      `— The RoyCSS team`,
+    html: htmlPage(
+      "We received your message",
+      bodyHtml,
+      "You are receiving this one-time confirmation because you submitted the RoyCSS contact form.",
+    ),
   };
 }

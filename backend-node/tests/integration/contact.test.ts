@@ -14,11 +14,13 @@
  *     for the round-trip test we additionally read via `findUnique`
  *     keyed on a unique email so the assertion is unambiguous.
  */
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, afterEach } from "vitest";
 import request from "supertest";
 
 import { createApp } from "../../src/server/app.js";
 import { db } from "../../src/lib/db.js";
+import { setMailer, _resetMailerForTest, type Mailer } from "../../src/modules/email/mailer.js";
+import type { EmailMessage } from "../../src/modules/email/templates.js";
 
 const app = createApp();
 
@@ -121,5 +123,76 @@ describe("POST /api/v1/contact", () => {
     expect(msgIssue).toBeDefined();
     // The Zod schema's `min(10, ...)` message includes "at least 10 characters".
     expect(msgIssue!.message).toMatch(/at least 10/i);
+  });
+});
+
+/**
+ * Issue #209 — the contact form acknowledges the submitter by email
+ * through the shared mailer seam (mock transport in dev). The email is
+ * best-effort by contract: a transport failure must never fail the
+ * request that already persisted the message.
+ */
+describe("POST /api/v1/contact — confirmation email (issue #209)", () => {
+  afterEach(() => {
+    _resetMailerForTest();
+  });
+
+  it("5. a 201 submission sends one confirmation email to the submitter", async () => {
+    const sent: EmailMessage[] = [];
+    const capture: Mailer = {
+      transport: "mock",
+      send: async (message) => {
+        sent.push(message);
+      },
+    };
+    setMailer(capture);
+
+    const email = uniqueEmail("mailer");
+    const res = await request(app)
+      .post("/api/v1/contact")
+      .set("X-Forwarded-For", uniqueIp())
+      .send({
+        name: "Mailer Capture Sender",
+        email,
+        subject: "Confirmation email check",
+        message: "A long-enough message body for the schema to accept.",
+      });
+
+    expect(res.status).toBe(201);
+    expect(sent).toHaveLength(1);
+    expect(sent[0]!.to).toBe(email);
+    expect(sent[0]!.subject).toBe("We received your RoyCSS message");
+    expect(sent[0]!.text).toContain("we received your message");
+    // The HTML part must not carry raw user text unescaped.
+    expect(sent[0]!.html).toContain("Confirmation email check");
+  });
+
+  it("6. a mailer transport failure still returns 201 (message was saved)", async () => {
+    const failing: Mailer = {
+      transport: "mock",
+      send: async () => {
+        throw new Error("smtp exploded");
+      },
+    };
+    setMailer(failing);
+
+    const email = uniqueEmail("mailerfail");
+    const res = await request(app)
+      .post("/api/v1/contact")
+      .set("X-Forwarded-For", uniqueIp())
+      .send({
+        name: "Mailer Failure Sender",
+        email,
+        subject: "Failure tolerance check",
+        message: "A long-enough message body for the schema to accept.",
+      });
+
+    expect(res.status).toBe(201);
+    // The row was persisted despite the email failure.
+    const row = await db.contactMessage.findUnique({
+      where: { id: res.body.id },
+    });
+    expect(row).not.toBeNull();
+    expect(row!.email).toBe(email);
   });
 });

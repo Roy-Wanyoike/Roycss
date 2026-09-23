@@ -88,7 +88,9 @@ const log = createLogger("rate-limit-redis");
  * ARGV[3] : limit               max requests per window
  * ARGV[4] : nonce               unique-per-call member suffix
  * ARGV[5] : ttl                 bucket TTL in ms (window + grace)
- * Returns : { allowed (0|1), count_after }
+ * Returns : { allowed (0|1), count_after, retry_after_ms }
+ *           retry_after_ms is 0 when allowed; when denied it is the
+ *           time until the OLDEST hit leaves the window (issue #209).
  *
  * Exported for test assertions (the script must carry the key + window
  * parameters and implement the exact sliding-window semantics above).
@@ -121,10 +123,22 @@ if count < limit then
   count = count + 1
 end
 
--- 5. Reap the bucket once it can no longer matter.
+-- 5. When denied, compute Retry-After from the WINDOW (issue #209
+--    P3): a slot frees when the OLDEST surviving hit leaves it —
+--    exactly how the in-memory limiter computes it now. 0 when
+--    allowed (the caller never sends Retry-After on 2xx).
+local retry_after_ms = 0
+if allowed == 0 then
+  local oldest = redis.call('ZRANGE', KEYS[1], 0, 0, 'WITHSCORES')
+  if oldest[2] ~= nil then
+    retry_after_ms = math.max(0, math.ceil(tonumber(oldest[2]) + window - now))
+  end
+end
+
+-- 6. Reap the bucket once it can no longer matter.
 redis.call('PEXPIRE', KEYS[1], ARGV[5])
 
-return {allowed, count}`;
+return {allowed, count, retry_after_ms}`;
 
 // ─── Client seam (dependency-injectable for tests) ────────────────────────
 
@@ -220,15 +234,27 @@ function logRedisFailure(scope: string, err: unknown): void {
   });
 }
 
-/** Parse the script reply `[allowed, count_after]`. */
+/** Parse the script reply `[allowed, count_after, retry_after_ms?]`.
+ *
+ * The third element (issue #209 P3) is optional so fakes and older
+ * script versions that return only `[allowed, count]` keep working —
+ * callers fall back to the window-wide worst case in that case.
+ */
 function parseEvalReply(
   raw: unknown,
   scope: string,
-): { allowed: boolean; countAfter: number } {
+): { allowed: boolean; countAfter: number; retryAfterMs?: number } {
   if (Array.isArray(raw) && raw.length >= 2) {
     const allowed = Number(raw[0]) === 1;
     const countAfter = Number(raw[1]);
-    if (Number.isFinite(countAfter)) return { allowed, countAfter };
+    if (Number.isFinite(countAfter)) {
+      const retryAfterMs = raw.length >= 3 ? Number(raw[2]) : NaN;
+      return {
+        allowed,
+        countAfter,
+        ...(Number.isFinite(retryAfterMs) ? { retryAfterMs } : {}),
+      };
+    }
   }
   throw new Error(
     `Unexpected reply from the Redis rate-limit script (${scope}): ${JSON.stringify(raw)}`,
@@ -314,9 +340,14 @@ export class RedisRateLimiter implements RateLimiter {
         randomUUID(),
         this.windowMs + BUCKET_TTL_GRACE_MS,
       );
-      const { allowed, countAfter } = parseEvalReply(raw, `tier:${this.tier}`);
+      const { allowed, countAfter, retryAfterMs } = parseEvalReply(
+        raw,
+        `tier:${this.tier}`,
+      );
       // Mirrors InMemoryRateLimiter.consume exactly: `allowed` and
       // `remaining` are PRE-hit values; `countAfter` includes this hit.
+      // Retry-After comes from the script (oldest-hit based, issue #209
+      // P3) with the window-wide worst case as the fallback.
       return {
         allowed,
         limit: this.max,
@@ -324,7 +355,10 @@ export class RedisRateLimiter implements RateLimiter {
           ? Math.max(0, this.max - countAfter + 1)
           : Math.max(0, this.max - countAfter),
         resetAt: now + this.windowMs,
-        retryAfterSec: Math.ceil(this.windowMs / 1000),
+        retryAfterSec:
+          !allowed && retryAfterMs !== undefined && retryAfterMs > 0
+            ? Math.max(1, Math.ceil(retryAfterMs / 1000))
+            : Math.max(1, Math.ceil(this.windowMs / 1000)),
       };
     } catch (err) {
       logRedisFailure(`tier:${this.tier}`, err);
@@ -391,14 +425,19 @@ export class RedisApiKeyRateLimiter implements ApiKeyRateLimiter {
         randomUUID(),
         tier.windowMs + BUCKET_TTL_GRACE_MS,
       );
-      const { allowed, countAfter } = parseEvalReply(raw, "apikey");
+      const { allowed, countAfter, retryAfterMs } = parseEvalReply(raw, "apikey");
       // Mirrors InMemoryApiKeyRateLimiter.consume exactly: `countAfter`
       // includes this hit, so `remaining` is the POST-hit value.
+      // Retry-After: oldest-hit based from the script (issue #209 P3),
+      // window-wide worst case as the fallback.
       return {
         allowed,
         limit: tier.limit,
         remaining: Math.max(0, tier.limit - countAfter),
-        retryAfterSec: Math.max(1, Math.ceil(tier.windowMs / 1000)),
+        retryAfterSec:
+          !allowed && retryAfterMs !== undefined && retryAfterMs > 0
+            ? Math.max(1, Math.ceil(retryAfterMs / 1000))
+            : Math.max(1, Math.ceil(tier.windowMs / 1000)),
       };
     } catch (err) {
       logRedisFailure("apikey", err);

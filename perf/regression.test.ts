@@ -7,8 +7,8 @@
  *
  * Each test maps 1:1 to a benchmark or ADR clause:
  *
- *   1. effects count = 1569           — don't drop effects
- *   2. categories count = 20          — don't drop categories
+ *   1. effects count = 1983           — don't drop effects
+ *   2. categories count = 29          — don't drop categories
  *   3. roycss.css < 1.5 MB            — don't bloat the raw bundle
  *   4. roycss.min.css < 1.1 MB        — don't bloat the minified bundle
  *   5. every cssCode non-empty        — no broken exports
@@ -112,15 +112,15 @@ describe("roycss dist artifacts exist", () => {
 });
 
 describe("roycss catalog integrity", () => {
-  test("dist/effects.json has exactly 1569 effects", () => {
+  test("dist/effects.json has exactly 1983 effects", () => {
     const effects = readEffects();
-    expect(effects.length).toBe(1569);
+    expect(effects.length).toBe(1983);
   });
 
-  test("dist/effects.json has exactly 20 categories", () => {
+  test("dist/effects.json has exactly 29 categories", () => {
     const effects = readEffects();
     const cats = new Set(effects.map((e) => e.category));
-    expect(cats.size).toBe(20);
+    expect(cats.size).toBe(29);
   });
 
   test("every effect has a unique id", () => {

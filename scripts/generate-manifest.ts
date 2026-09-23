@@ -1,7 +1,7 @@
 /**
  * Generate dist/roycss.manifest.json — the unified effect index (PF-042).
  *
- * ONE lean, machine-readable index for the whole 1,959-effect catalog,
+ * ONE lean, machine-readable index for the whole 1,983-effect catalog,
  * aggregating per effect: id (entry key), name, category (group key),
  * maturity, quality score, a11y tier, css class name (classPrefix + key,
  * see below), preview type, and browser support. It is an INDEX, not a
@@ -37,7 +37,7 @@
  * CSS class names: every effect's primary class is `roycss-<id>` — a
  * 100% regular mapping, verified per effect by the naming gate below
  * (rule 2) and re-verified by tests. The manifest therefore stores the
- * prefix ONCE (classPrefix) instead of repeating 7 bytes × 1,959
+ * prefix ONCE (classPrefix) instead of repeating 7 bytes × 1,983
  * (~14KB); consumers build class names as `classPrefix + effectId`.
  * Entry keys are effect ids (the repo's canonical identifier — same key
  * convention as src/lib/effect-a11y.ts and dist/class-index.json rows).

@@ -34,7 +34,7 @@ function htmlPage(
     <tr><td align="center">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:480px;background:#ffffff;border-radius:12px;padding:32px;border:1px solid #e5e5e5;">
         <tr><td style="font-size:20px;font-weight:700;color:#111827;padding-bottom:4px;">RoyCSS</td></tr>
-        <tr><td style="font-size:12px;color:#6b7280;padding-bottom:20px;">1,959 production-ready CSS effects. Zero JavaScript runtime.</td></tr>
+        <tr><td style="font-size:12px;color:#6b7280;padding-bottom:20px;">1,983 production-ready CSS effects. Zero JavaScript runtime.</td></tr>
         ${bodyHtml}
         <tr><td style="font-size:11px;color:#9ca3af;padding-top:28px;line-height:1.6;">
           ${footerText}

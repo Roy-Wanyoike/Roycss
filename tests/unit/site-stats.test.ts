@@ -154,6 +154,41 @@ describe("site-stats — stale count literals are gone from user-visible copy", 
   collectFiles(join(ROOT, "src"), "src", files);
   files.push("public/manifest.json");
 
+  /**
+   * Issue #244: the src/-only scan let stale counts survive in the
+   * cross-stack publish surface — the MCP resource descriptions
+   * (mcp-server/index.ts "All 1,569 effects ~120 KB" + the backend mirror
+   * service.ts), the live email footer (templates.ts "1,959"), and the
+   * AI-facing public/llms.txt manifest all escaped both this gate and the
+   * publish count-gate (which only regexes package.json descriptions).
+   * Historical rfcs/changelogs stay UNSCANNED per the allowlist approach:
+   * only explicitly enumerated live files are checked.
+   *
+   * Note: mcp-server has no src/ tree — its source of truth is index.ts
+   * (dist/index.js is a build artifact refreshed by `cd mcp-server &&
+   * bun run build`).
+   */
+  const CROSS_STACK_FILES = [
+    "mcp-server/index.ts",
+    "backend-node/src/modules/mcp/service.ts",
+    "backend-node/src/modules/email/templates.ts",
+    "public/llms.txt",
+  ].filter((rel) => !EXCLUDED.has(rel));
+
+  // Same banned tokens as STALE_COUNT plus the #244 drift set: the two
+  // retired catalog sizes and the retired backend module count.
+  const CROSS_STACK_STALE =
+    /\b(?:1,629|1,749|1,869|1,569|1,959|1,964)\b|1749\+|72 modules/;
+
+  it("no stale counts in cross-stack AI/email-facing copy (mcp-server, backend-node, llms.txt)", () => {
+    const offenders: string[] = [];
+    for (const rel of CROSS_STACK_FILES) {
+      const hits = readFileSync(join(ROOT, rel), "utf8").match(CROSS_STACK_STALE);
+      if (hits) offenders.push(`${rel}: ${hits.join(", ")}`);
+    }
+    expect(offenders).toEqual([]);
+  });
+
   it("no stale effect counts (1,629 / 1,749 / 1,869 / 1,569 / 1749+)", () => {
     const offenders: string[] = [];
     for (const rel of files) {

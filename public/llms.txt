@@ -17,7 +17,7 @@
 - `roycss/dist/roycss.rules.md` — authoring rules for generating RoyCSS markup
 - `roycss/dist/roycss.system-prompt.md` — system-prompt guidance for AI code generation
 - `roycss/dist/tokens.dtcg.json` — design tokens in DTCG format (OKLCH color system)
-- `roycss/dist/roycss.grammar.json` and `roycss/dist/pro-components.json` — class grammar and platform-product components
+- `roycss/dist/roycss.grammar.json` — class grammar for generating RoyCSS markup
 
 ## Catalog (crawlable)
 

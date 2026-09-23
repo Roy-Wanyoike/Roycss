@@ -7,7 +7,8 @@ import { categoryOrder } from "@/lib/roycss-effects";
 /**
  * Sitemap — homepage, /effects index, 29 category landing pages (issue
  * #198), one URL per effect page, every /docs route, and the standalone
- * info pages (/roadmap, /privacy, /terms — issue #188 item 1).
+ * info pages (/roadmap, /privacy, /terms — issue #188 item 1) plus the
+ * indexable /security/hall-of-fame page (issue #244).
  *
  * /effects/<id> pages enumerate the entire catalog (1,983 routes,
  * statically prerendered — see src/app/effects/_lib/static-effects.ts),
@@ -20,7 +21,7 @@ import { categoryOrder } from "@/lib/roycss-effects";
  * meaningless (Google re-crawls on lastmod churn). Bump the constant when
  * content actually changes.
  */
-const LAST_MODIFIED = new Date("2026-09-22T00:00:00.000Z");
+const LAST_MODIFIED = new Date("2026-09-23T00:00:00.000Z");
 
 function listDocsRoutes(dir: string, base = "/docs"): string[] {
   const out: string[] = [];
@@ -72,6 +73,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Standalone info pages (issue #188 item 1) — previously missing.
     {
       url: `${SITE_URL}/roadmap`,
+      lastModified: LAST_MODIFIED,
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
+    // /security/hall-of-fame is indexable (pageMeta canonical, no
+    // noindex) and linked from SECURITY-POLICY.md §7 — it belongs in
+    // the sitemap so security researchers can discover it (issue #244).
+    {
+      url: `${SITE_URL}/security/hall-of-fame`,
       lastModified: LAST_MODIFIED,
       changeFrequency: "monthly",
       priority: 0.5,

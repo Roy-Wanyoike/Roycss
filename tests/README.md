@@ -23,6 +23,7 @@ tests/
 │   ├── playground.spec.ts
 │   ├── navigation.spec.ts
 │   ├── theme-toggle.spec.ts
+│   ├── locale-rtl.spec.ts         # issue #129 PR-B — ar locale + RTL (chromium project)
 │   ├── contact-form.spec.ts
 │   ├── footer.spec.ts
 │   └── cross-browser-smoke.spec.ts # 3-check sanity pass, runs on EVERY project

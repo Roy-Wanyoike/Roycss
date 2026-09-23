@@ -1,5 +1,5 @@
 /**
- * Locale persistence primitives (issue #129 PR-A).
+ * Locale persistence primitives (issue #129 PR-A, extended in PR-B).
  *
  * Mirror of `theme-storage.ts` (issue #160 precedent): pure, DOM-free
  * logic shared by
@@ -10,15 +10,17 @@
  *   "read stored value → validate → apply, write only on an explicit
  *    user toggle" — the init script NEVER writes the key.
  *
- * v1 supports exactly one locale ("en"); the shape is ready for "ar"
- * (RTL) in PR-B: add it to `LOCALES` + `DIRECTIONS` and ship
- * messages/ar.json.
+ * PR-B ships "ar" (RTL): it is in `LOCALES` + `DIRECTIONS` and has
+ * messages/ar.json. Adding a locale means: a message catalog in
+ * messages/, an entry here, and an entry in the T table of the
+ * localeInitScript (layout.tsx) — all three kept in lockstep by
+ * tests/unit/locale-persistence.test.ts.
  */
 
-export type Locale = "en";
+export type Locale = "en" | "ar";
 
 /** Locales with a shipped message catalog (mirrors src/i18n/request.ts). */
-export const LOCALES: readonly Locale[] = ["en"];
+export const LOCALES: readonly Locale[] = ["en", "ar"];
 
 /** Fallback when nothing (or something invalid) is stored. */
 export const DEFAULT_LOCALE: Locale = "en";
@@ -32,9 +34,10 @@ export interface LocaleStorageLike {
   setItem(key: string, value: string): void;
 }
 
-/** Writing direction per locale. PR-B: "ar" → "rtl". */
+/** Writing direction per locale. "ar" is the first RTL locale. */
 const DIRECTIONS: Record<Locale, "ltr" | "rtl"> = {
   en: "ltr",
+  ar: "rtl",
 };
 
 /** The writing direction a locale resolves to (drives documentElement.dir). */

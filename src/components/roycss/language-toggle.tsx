@@ -1,24 +1,30 @@
 "use client";
 
 /**
- * LanguageToggle — locale switcher (issue #129 PR-A, i18n scaffolding).
+ * LanguageToggle — locale switcher (issue #129 PR-A scaffolding, live in
+ * PR-B).
  *
- * v1: shows the current locale code ("EN") and opens a small menu that
- * lists English (checkmark, active). Locales that have no shipped
- * catalog yet (PR-B ships "ar" + RTL) render disabled with a
- * "coming soon" title/aria so the menu shape is stable.
+ * Shows the current locale code ("EN" / "AR") and opens a small menu
+ * listing every shipped locale (English, العربية). PR-B enables the
+ * Arabic item: selecting it
+ *   1. applies lang/dir to documentElement immediately (RTL must not
+ *      wait for a reload),
+ *   2. persists via writeStoredLocale() from the shared locale-storage
+ *      module (localStorage key `roycss-locale`) so the next load
+ *      applies the same locale pre-paint, and
+ *   3. notifies the LocaleProvider (src/i18n/locale-provider.tsx) via
+ *      useLocaleSwitch(), which swaps the NextIntlClientProvider
+ *      catalog client-side — chrome strings re-render in Arabic with
+ *      no navigation and no dynamic server API.
  *
  * Contract — mirrors the theme toggle (issue #160):
  *   - the mount effect only READS documentElement.lang (the pre-hydration
  *     locale init script in src/app/layout.tsx already applied it) —
  *     deferred via rAF, NEVER writes;
- *   - selectLocale is the ONLY writer: it applies lang/dir to
- *     documentElement (immediately — text direction must not wait for a
- *     reload) and persists via writeStoredLocale() from the shared
- *     locale-storage module (localStorage key `roycss-locale`), so the
- *     next load applies the same locale pre-paint;
- *   - the request locale stays STATIC "en" server-side (see
- *     src/i18n/request.ts) — no cookies()/headers(), pages stay static.
+ *   - selectLocale is the ONLY writer of the storage key and the only
+ *     caller of useLocaleSwitch(); the request locale stays STATIC "en"
+ *     server-side (see src/i18n/request.ts) — no cookies()/headers(),
+ *     pages stay static.
  *
  * Two visual variants match the two headers:
  *   "sm" (default) → compact SiteHeader (site-header.tsx)
@@ -35,18 +41,13 @@ import {
   writeStoredLocale,
   type Locale,
 } from "@/components/ui-library/foundation/locale-storage";
+import { useLocaleSwitch } from "@/i18n/locale-provider";
 
 /** Catalog keys for per-locale display labels. */
-const LABEL_KEYS: Record<string, string> = {
+const LABEL_KEYS: Record<Locale, string> = {
   en: "english",
   ar: "arabic",
 };
-
-/**
- * Locales listed in the menu but NOT yet selectable — PR-B ships "ar"
- * (RTL) by moving it into LOCALES in locale-storage + src/i18n/request.ts.
- */
-const UPCOMING_LOCALES = ["ar"] as const;
 
 export function LanguageToggle({
   variant = "sm",
@@ -55,6 +56,7 @@ export function LanguageToggle({
   variant?: "sm" | "lg";
 }) {
   const t = useTranslations("LanguageToggle");
+  const switchLocale = useLocaleSwitch();
   const [open, setOpen] = useState(false);
   const [locale, setLocale] = useState<Locale>(DEFAULT_LOCALE);
 
@@ -77,15 +79,18 @@ export function LanguageToggle({
   const selectLocale = (next: Locale) => {
     setOpen(false);
     if (next === locale) return;
-    // Apply + persist ONLY on explicit user intent (issue #160 contract).
-    // Keep documentElement lang/dir in agreement — the init script sets
-    // both, so the toggle must too.
+    // Apply + persist + notify ONLY on explicit user intent (issue #160
+    // contract). Keep documentElement lang/dir in agreement — the init
+    // script sets both, so the toggle must too.
     const root = document.documentElement;
     // setAttribute (not .lang/.dir assignment) — react-compiler forbids
     // property mutation on values owned outside the component.
     root.setAttribute("lang", next);
     root.setAttribute("dir", localeDirection(next));
     writeStoredLocale(window.localStorage, next);
+    // Swap the provider catalog so every client chrome string re-renders
+    // in the new locale without a reload (PR-B).
+    switchLocale(next);
     setLocale(next);
   };
 
@@ -156,26 +161,6 @@ export function LanguageToggle({
                   aria-hidden="true"
                 />
                 {t(LABEL_KEYS[code] ?? "english")}
-              </button>
-            ))}
-            {UPCOMING_LOCALES.map((code) => (
-              <button
-                key={code}
-                type="button"
-                role="menuitemradio"
-                aria-checked={false}
-                disabled
-                aria-disabled="true"
-                title={t("comingSoon")}
-                aria-label={`${t(LABEL_KEYS[code] ?? code)} — ${t("comingSoon")}`}
-                className={
-                  itemClassName +
-                  "text-muted-foreground/60 cursor-not-allowed"
-                }
-              >
-                <Check className="size-3.5 opacity-0" aria-hidden="true" />
-                {t(LABEL_KEYS[code] ?? code)}
-                <span className="ml-auto text-[11px]">{t("comingSoon")}</span>
               </button>
             ))}
           </div>

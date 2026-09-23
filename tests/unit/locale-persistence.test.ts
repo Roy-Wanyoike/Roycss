@@ -17,7 +17,7 @@ import {
 const ROOT = join(__dirname, "..", "..");
 
 /**
- * Locale persistence (issue #129 PR-A — i18n scaffolding).
+ * Locale persistence (issue #129 PR-A, extended in PR-B with "ar"/RTL).
  *
  * Mirrors tests/unit/theme-persistence.test.ts (issue #160 precedent).
  * Contract under test:
@@ -26,13 +26,15 @@ const ROOT = join(__dirname, "..", "..");
  *      and applies documentElement.lang/dir pre-paint; corrupt/missing
  *      values fall back to en/ltr. It NEVER WRITES the key.
  *   2. The shared module (`locale-storage.ts`) stays behaviorally
- *      equivalent to the script (lockstep guard against drift).
+ *      equivalent to the script (lockstep guard against drift) for EVERY
+ *      shipped locale — en/ltr and ar/rtl.
  *   3. Only the LanguageToggle handler persists a value (source-level
  *      gate) and applies lang/dir in the same order.
  *   4. The static-first architecture constraint holds: src/i18n/request.ts
- *      reads NO dynamic APIs (no cookies()/headers()) and the layout
- *      keeps <html lang="en" suppressHydrationWarning> with the
- *      NextIntlClientProvider mounted.
+ *      reads NO dynamic APIs (no cookies()/headers()), the layout keeps
+ *      <html lang="en" suppressHydrationWarning> and mounts the
+ *      LocaleProvider client wrapper (NextIntlClientProvider lives inside
+ *      it — src/i18n/locale-provider.tsx).
  *
  * The vitest environment is `node` (no DOM, per vitest.config.ts), so the
  * init script is evaluated against mocked `localStorage`/`document` —
@@ -96,6 +98,13 @@ describe("pre-hydration locale init script (layout.tsx)", () => {
     expect(doc.documentElement.dir).toBe("ltr");
   });
 
+  it("stored 'ar' → lang=ar, dir=rtl before paint (PR-B)", () => {
+    const { storage } = makeStorage({ [LOCALE_STORAGE_KEY]: "ar" });
+    const doc = runInitScript({ stored: "ar", storage });
+    expect(doc.documentElement.lang).toBe("ar");
+    expect(doc.documentElement.dir).toBe("rtl");
+  });
+
   it.each([
     ["missing", null],
     ["corrupt value", "banana"],
@@ -123,8 +132,8 @@ describe("pre-hydration locale init script (layout.tsx)", () => {
 /* ─── 2. shared locale-storage module ──────────────────────────── */
 
 describe("locale-storage — read/validate/apply (mock localStorage)", () => {
-  it("LOCALES is exactly the set of shipped catalogs (v1: en only)", () => {
-    expect(LOCALES).toEqual(["en"]);
+  it("LOCALES is exactly the set of shipped catalogs (PR-B: en + ar)", () => {
+    expect(LOCALES).toEqual(["en", "ar"]);
     expect(DEFAULT_LOCALE).toBe("en");
   });
 
@@ -155,9 +164,11 @@ describe("locale-storage — read/validate/apply (mock localStorage)", () => {
   });
 
   it("writeStoredLocale persists, readStoredLocale reads it back", () => {
-    const { storage } = makeStorage();
-    writeStoredLocale(storage, "en");
-    expect(readStoredLocale(storage)).toBe("en");
+    for (const value of LOCALES) {
+      const { storage } = makeStorage();
+      writeStoredLocale(storage, value);
+      expect(readStoredLocale(storage)).toBe(value);
+    }
   });
 
   it("writeStoredLocale tolerates a throwing storage", () => {
@@ -178,6 +189,7 @@ describe("locale-storage — read/validate/apply (mock localStorage)", () => {
       expect(["ltr", "rtl"]).toContain(resolved.dir);
     }
     expect(resolveDocumentLocale("en")).toEqual({ lang: "en", dir: "ltr" });
+    expect(resolveDocumentLocale("ar")).toEqual({ lang: "ar", dir: "rtl" });
   });
 });
 
@@ -209,6 +221,7 @@ describe("init script ⇄ locale-storage equivalence", () => {
     expectDir: string;
   }> = [
     { name: "stored en", stored: { "roycss-locale": "en" }, expectLang: "en", expectDir: "ltr" },
+    { name: "stored ar (PR-B)", stored: { "roycss-locale": "ar" }, expectLang: "ar", expectDir: "rtl" },
     { name: "nothing stored", stored: {}, expectLang: "en", expectDir: "ltr" },
     { name: "corrupt stored", stored: { "roycss-locale": "xx" }, expectLang: "en", expectDir: "ltr" },
     { name: "proto key stored", stored: { "roycss-locale": "__proto__" }, expectLang: "en", expectDir: "ltr" },
@@ -286,11 +299,23 @@ describe("i18n scaffolding — static architecture + provider wiring", () => {
     expect(requestSrc).toContain("getRequestConfig");
   });
 
-  it("layout keeps suppressHydrationWarning + lang=en and mounts NextIntlClientProvider", () => {
+  it("layout keeps suppressHydrationWarning + lang=en and mounts the LocaleProvider client wrapper", () => {
     const layoutSrc = readFileSync(join(ROOT, "src/app/layout.tsx"), "utf8");
     expect(layoutSrc).toContain('<html lang="en" suppressHydrationWarning');
-    expect(layoutSrc).toContain("<NextIntlClientProvider>{children}</NextIntlClientProvider>");
+    expect(layoutSrc).toContain("<LocaleProvider>{children}</LocaleProvider>");
     expect(layoutSrc).toContain("localeInitScript");
+    // PR-B: the provider moved into a client wrapper (locale-provider.tsx).
+    // Pin that it still mounts NextIntlClientProvider and reads NO dynamic
+    // APIs (static-first constraint extends to the wrapper).
+    const providerSrc = readFileSync(
+      join(ROOT, "src/i18n/locale-provider.tsx"),
+      "utf8",
+    );
+    expect(providerSrc).toContain('<NextIntlClientProvider locale={locale}');
+    const providerCode = providerSrc
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .replace(/\/\/.*$/gm, "");
+    expect(providerCode).not.toMatch(/cookies\(|headers\(|draftMode\(/);
   });
 
   it("messages/en.json covers every namespace the chrome consumes", () => {
@@ -323,11 +348,11 @@ describe("i18n scaffolding — static architecture + provider wiring", () => {
     expect(notFound.metaTitle).toBe("Page not found — RoyCSS");
   });
 
-  it("v1 defines only 'en' as a writable Locale type", () => {
+  it("the shipped Locale type covers every catalog locale", () => {
     const mod = readFileSync(
       join(ROOT, "src/components/ui-library/foundation/locale-storage.ts"),
       "utf8",
     );
-    expect(mod).toContain('export type Locale = "en"');
+    expect(mod).toContain('export type Locale = "en" | "ar"');
   });
 });

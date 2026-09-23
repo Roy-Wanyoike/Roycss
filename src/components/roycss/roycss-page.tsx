@@ -270,13 +270,21 @@ const PlatformTools = dynamic(
 
 /* ─── scrollToSection utility ────────────────────────────────
    Navigating to sections BELOW the effects grid is tricky because
-   VirtualScrollGrid lazy-loads cards, shifting the document height
-   during smooth scroll. This function:
+   VirtualScrollGrid lazy-loads cards AND LazySection wrappers below the
+   grid mount their real content (taller than their skeleton) when they
+   enter the viewport mid-scroll, shifting the document height while the
+   smooth scroll is in flight. This function:
    1. If the target is below the effects grid, dispatches a "load all
-      cards" event to stabilize the height.
+      cards" event to stabilize the grid height.
    2. Waits two animation frames for React to flush + DOM to render.
    3. Then smooth-scrolls to the target.
+   4. Once the scroll settles, re-measures the target once and corrects
+      any residual drift (>8px) caused by sections that expanded after
+      the initial measurement — without this, long scrolls (Recipes →
+      FAQ) land hundreds of px short of the section.
    For targets above the grid, it scrolls directly (no height shift). */
+const SCROLL_SECTION_NAV_OFFSET = 72; // px reserved for the sticky header
+
 function scrollToSection(id: string) {
   const target = document.querySelector(id) as HTMLElement | null;
   if (!target) return;
@@ -292,8 +300,43 @@ function scrollToSection(id: string) {
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       const rect = target.getBoundingClientRect();
-      const offset = window.scrollY + rect.top - 72; // 72px for navbar height
+      const offset = window.scrollY + rect.top - SCROLL_SECTION_NAV_OFFSET;
       window.scrollTo({ top: Math.max(0, offset), behavior: "smooth" });
+
+      // Drift correction: wait for the smooth scroll to settle (scrollY
+      // unchanged for ~12 consecutive frames, capped at 4s), then re-measure
+      // the target and apply a corrective scroll. Deep scrolls (Recipes,
+      // Collections) cross MULTIPLE lazy sections, each taller than its
+      // skeleton — so the correction re-arms after every applied fix and
+      // keeps converging (max 8 passes, 12s total). User-initiated scrolling
+      // during a settle window simply delays/forfeits that pass.
+      const start = performance.now();
+      let lastY = window.scrollY;
+      let stableFrames = 0;
+      let corrections = 0;
+      const tick = () => {
+        const y = window.scrollY;
+        stableFrames = Math.abs(y - lastY) < 1 ? stableFrames + 1 : 0;
+        lastY = y;
+        const settled = stableFrames >= 12;
+        const timedOut = performance.now() - start > 12000;
+        if (!settled && !timedOut) {
+          requestAnimationFrame(tick);
+          return;
+        }
+        const drift =
+          target.getBoundingClientRect().top - SCROLL_SECTION_NAV_OFFSET;
+        if (Math.abs(drift) > 8 && corrections < 8 && !timedOut) {
+          corrections += 1;
+          stableFrames = 0;
+          window.scrollTo({
+            top: Math.max(0, window.scrollY + drift),
+            behavior: "smooth",
+          });
+          requestAnimationFrame(tick);
+        }
+      };
+      requestAnimationFrame(tick);
     });
   });
 }
@@ -468,6 +511,13 @@ function NavMegaMenu({
           sideOffset={8}
           onMouseEnter={openMenu}
           onMouseLeave={closeMenu}
+          /* Radix's default close behavior refocuses the trigger — which sits
+             at the very top of the page. With html { scroll-behavior: smooth }
+             that refocus yanks the viewport back to the top AFTER the menu
+             item's section scroll, cancelling it (or fighting it mid-flight).
+             Focus is handled explicitly by MegaMenuRow (target section) or
+             stays put, so suppress the automatic trigger restore. */
+          onCloseAutoFocus={(event) => event.preventDefault()}
           className={cn(
             "backdrop-blur-xl bg-popover/85 border border-border/60 shadow-2xl rounded-xl",
             "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
@@ -483,7 +533,12 @@ function NavMegaMenu({
 }
 
 /* Mega-menu item — icon tile + label + description. Reused by both
-   Explore (single column) and Platform (2-column) dropdowns. */
+   Explore (single column) and Platform (2-column) dropdowns.
+
+   Hash items (#effects, #recipes…) scroll in place; route items
+   (/effects — "Full catalog") navigate with the router. After a hash
+   scroll the target section receives focus (preventScroll) so keyboard
+   focus follows the viewport instead of staying on the unmounted menu. */
 function MegaMenuRow({
   item,
   onSelect,
@@ -492,9 +547,22 @@ function MegaMenuRow({
   onSelect: (href: string) => void;
 }) {
   const Icon = item.icon;
+  const router = useRouter();
+  const handleSelect = () => {
+    if (item.href.startsWith("#")) {
+      onSelect(item.href);
+      const target = document.querySelector(item.href);
+      if (target instanceof HTMLElement) {
+        target.setAttribute("tabindex", "-1");
+        target.focus({ preventScroll: true });
+      }
+    } else {
+      router.push(item.href);
+    }
+  };
   return (
     <DropdownMenuItem
-      onClick={() => onSelect(item.href)}
+      onClick={handleSelect}
       className="cursor-pointer gap-3 rounded-lg p-2 focus:bg-primary/5"
     >
       <span className="flex items-center justify-center size-8 rounded-md bg-primary/10 text-primary shrink-0">
@@ -2242,7 +2310,9 @@ export default function RoyCSSPage() {
               />
               {search ? (
                 <button
+                  type="button"
                   onClick={() => setSearch("")}
+                  aria-label="Clear search"
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground cursor-pointer"
                 >
                   <X className="size-4" />

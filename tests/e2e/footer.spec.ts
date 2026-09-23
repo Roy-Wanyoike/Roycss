@@ -5,12 +5,17 @@ import { test, expect } from "@playwright/test";
  *
  * Golden path:
  *   1. The footer is visible and labeled as a landmark.
- *   2. The GitHub + Sponsor links have correct hrefs and `target="_blank"`.
- *   3. The footer's nav buttons (Get Started / Docs / FAQ) scroll the page.
+ *   2. The GitHub link opens in a new tab with rel=noopener.
+ *   3. The Sponsor control opens the sponsor dialog, whose GitHub Sponsors
+ *      CTA opens in a new tab.
+ *   4. The Resources column exposes Get Started / FAQ scroll buttons and a
+ *      Docs route link (/docs/getting-started).
  */
 test.describe("footer", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
+    // Auth 401 refresh re-navigates the page within ~3s of first load.
+    await page.waitForTimeout(3000);
   });
 
   test("the footer is visible as a landmark", async ({ page }) => {
@@ -33,38 +38,64 @@ test.describe("footer", () => {
     expect(href, "GitHub link should point at github.com").toMatch(/github\.com/i);
   });
 
-  test("the Sponsor link opens in a new tab", async ({ page }) => {
+  test("the Sponsor control opens the sponsor dialog with a GitHub Sponsors CTA", async ({
+    page,
+  }) => {
     const footer = page.getByRole("contentinfo", { name: "Site footer" });
     await footer.scrollIntoViewIfNeeded();
-    const sponsorLink = footer.getByRole("link", { name: "Sponsor RoyCSS" }).first();
-    await expect(sponsorLink).toBeVisible();
-    await expect(sponsorLink).toHaveAttribute("target", "_blank");
-    const href = await sponsorLink.getAttribute("href");
-    expect(href, "Sponsor link should point at github sponsors").toMatch(/github.*sponsor/i);
+    // The footer sponsor control opens a dialog (amounts + tiers); the
+    // outbound GitHub Sponsors link lives inside that dialog.
+    const sponsorBtn = footer.getByRole("button", { name: "Sponsor RoyCSS" }).first();
+    await expect(sponsorBtn).toBeVisible();
+    await sponsorBtn.click();
+
+    const dialog = page.getByRole("dialog", { name: "Sponsor RoyCSS" });
+    await expect(dialog).toBeVisible();
+    const sponsorsLink = dialog.getByRole("link", { name: /GitHub Sponsors/i });
+    await expect(sponsorsLink).toBeVisible();
+    await expect(sponsorsLink).toHaveAttribute("target", "_blank");
+    const href = await sponsorsLink.getAttribute("href");
+    expect(href, "sponsors CTA should point at github sponsors").toMatch(/github\.com\/sponsors/i);
+
+    await page.keyboard.press("Escape");
+    await expect(dialog).toBeHidden();
   });
 
-  test("footer exposes Get Started / Docs / FAQ scroll buttons", async ({ page }) => {
+  test("footer exposes Get Started / FAQ scroll buttons and a Docs link", async ({
+    page,
+  }) => {
     const footer = page.getByRole("contentinfo", { name: "Site footer" });
     await footer.scrollIntoViewIfNeeded();
     await expect(footer.getByRole("button", { name: "Get Started" }).first()).toBeVisible();
-    await expect(footer.getByRole("button", { name: "Docs" }).first()).toBeVisible();
     await expect(footer.getByRole("button", { name: "FAQ" }).first()).toBeVisible();
+    // "Docs" is a route link now — the in-page docs sheet was retired.
+    const docsLink = footer.getByRole("link", { name: "Documentation" });
+    await expect(docsLink).toBeVisible();
+    await expect(docsLink).toHaveAttribute("href", "/docs/getting-started");
   });
 
   test("clicking the FAQ button scrolls the FAQ section into view", async ({ page }) => {
     const footer = page.getByRole("contentinfo", { name: "Site footer" });
     await footer.scrollIntoViewIfNeeded();
     await footer.getByRole("button", { name: "FAQ" }).first().click();
-    await page.waitForTimeout(800);
-    const faq = page.locator("#faq").first();
-    const box = await faq.boundingBox();
-    expect(box).not.toBeNull();
-    expect(box!.y, "FAQ section should be near the top after click").toBeLessThan(300);
+    // The FAQ section sits above the footer; its LazySection content mounts
+    // as it scrolls into view — poll for the settled position.
+    await expect
+      .poll(
+        () =>
+          page.evaluate(() => {
+            const el = document.querySelector("#faq");
+            return el ? Math.round(el.getBoundingClientRect().top) : null;
+          }),
+        { timeout: 15_000 },
+      )
+      .toBeLessThan(300);
   });
 
   test("footer does not overflow horizontally on a mobile viewport", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 720 });
     await page.goto("/");
+    await page.waitForTimeout(3000);
     const footer = page.getByRole("contentinfo", { name: "Site footer" });
     await footer.scrollIntoViewIfNeeded();
     const box = await footer.boundingBox();

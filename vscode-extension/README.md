@@ -1,17 +1,17 @@
 # RoyCSS — VSCode Extension
 
-> **1,959 production-ready CSS effects.** Autocomplete, hover docs, snippets,
+> **1,983 production-ready CSS effects.** Autocomplete, hover docs, snippets,
 > diagnostics, and a browse command — directly in your editor.
 > **Zero runtime dependencies. Zero network calls.**
 
-[![effects: 1959](https://img.shields.io/badge/effects-1959-emerald)](https://roycss.com)
+[![effects: 1983](https://img.shields.io/badge/effects-1983-emerald)](https://roycss.com)
 [![dependencies: 0](https://img.shields.io/badge/dependencies-0-success)](https://github.com/Roy-Wanyoike/roycss/tree/main/vscode-extension)
 [![vscode: ^1.85.0](https://img.shields.io/badge/vscode-%5E1.85.0-blue)](https://code.visualstudio.com)
 [![license: MIT](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 
 ## Features
 
-### 1. Autocomplete for all 1,959 `roycss-*` classes
+### 1. Autocomplete for all 1,983 `roycss-*` classes
 
 Type `roycss-` in any CSS / HTML / JS / TS / JSX / TSX / Vue / Svelte file and
 IntelliSense surfaces the full catalog with class name, effect name, category,
@@ -52,7 +52,7 @@ Tags: `glow` · `pulse` · `attention` · `animate`
 
 ### 3. Snippets that expand to full effect markup
 
-The extension ships 1,959 snippets (one per effect). Type a class name and
+The extension ships 1,983 snippets (one per effect). Type a class name and
 press `Tab` to expand:
 
 ```
@@ -86,7 +86,7 @@ closest known class.
 
 | Command                       | Keybinding (Win/Linux) | Mac            | What it does                                |
 | ----------------------------- | ---------------------- | -------------- | ------------------------------------------- |
-| `RoyCSS: Browse Effects`      | `Ctrl+Shift+Alt+R`     | `Cmd+Shift+Alt+R` | Opens a QuickPick of all 1,959 effects. |
+| `RoyCSS: Browse Effects`      | `Ctrl+Shift+Alt+R`     | `Cmd+Shift+Alt+R` | Opens a QuickPick of all 1,983 effects. |
 | `RoyCSS: Search Effect`       | `Ctrl+Shift+R`         | `Cmd+Shift+R`  | Opens an InputBox for fuzzy substring search. |
 
 Both commands insert the chosen class at the cursor (or copy to clipboard if
@@ -137,7 +137,7 @@ Open VSCode settings (`Ctrl+,`) and search for `roycss`:
 | `roycss.enableHover`           | `true`      | Register the hover provider.                                 |
 | `roycss.enableDiagnostics`     | `true`      | Scan documents for unknown `roycss-*` classes.               |
 | `roycss.enableCodeActions`     | `true`      | Register the quick-fix code-action provider.                 |
-| `roycss.maxCompletionItems`    | `1959`      | Cap the number of completion items (50–1959).                |
+| `roycss.maxCompletionItems`    | `1983`      | Cap the number of completion items (50–1983).                |
 | `roycss.diagnosticSeverity`    | `"warning"` | Severity for unknown-class diagnostics: `error` / `warning` / `information` / `hint` / `none`. |
 
 ---
@@ -236,8 +236,8 @@ bash build.sh
 
 `build.sh`:
 
-1. Runs `node build-data.js` — regenerates `class-data.json` (1,959 effects)
-   and `snippets.json` (1,959 snippets) from `../dist/effects.json` +
+1. Runs `node build-data.js` — regenerates `class-data.json` (1,983 effects)
+   and `snippets.json` (1,983 snippets) from `../dist/effects.json` +
    `../dist/roycss.css`. It also verifies that `data/css-data.json` and
    `src/effects-data.ts` (the TS providers' lazy-loaded CSS map + embedded
    metadata) are in sync with the same catalog; if they are stale, run
@@ -311,8 +311,8 @@ reporting.
 select "RoyCSS" from the dropdown. You should see `[RoyCSS] Activated in Xms`.
 If you see an error loading `class-data.json`, reinstall the extension.
 
-**Completion doesn't show all 1,959 effects.** Check
-`roycss.maxCompletionItems` in settings — it caps the list (default 1,959).
+**Completion doesn't show all 1,983 effects.** Check
+`roycss.maxCompletionItems` in settings — it caps the list (default 1,983).
 
 **Diagnostics are too noisy.** Set `roycss.diagnosticSeverity` to `"none"`
 or `roycss.enableDiagnostics` to `false`.
@@ -330,7 +330,7 @@ snippets are scoped to those language IDs only.
 
 > Placeholders — replace with actual screenshots before marketplace publish.
 
-- `screenshots/completion.png` — typing `roycss-` shows 1,959 completion items.
+- `screenshots/completion.png` — typing `roycss-` shows 1,983 completion items.
 - `screenshots/hover.png` — hovering `roycss-pulse-glow` shows the effect metadata + CSS preview.
 - `screenshots/diagnostics.png` — typo `roycss-pulse-gloww` is flagged with a quick-fix.
 - `screenshots/browse.png` — the Browse Effects QuickPick.

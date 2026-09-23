@@ -81,9 +81,9 @@ function loadClassData(context) {
       classNames.push(e.className);
     }
     // Defensive lower bound — if the data file is corrupt or partial, log.
-    if (effectsList.length < 1959) {
+    if (effectsList.length < 1983) {
       throw new Error(
-        `class-data.json has only ${effectsList.length} effects (expected ≥1959)`,
+        `class-data.json has only ${effectsList.length} effects (expected ≥1983)`,
       );
     }
   } catch (err) {
@@ -162,8 +162,8 @@ const DIAGNOSTICS_DEBOUNCE_MS = 300;
  */
 function getMaxCompletionItems() {
   const cfg = vscode.workspace.getConfiguration("roycss");
-  const n = typeof cfg.get === "function" ? cfg.get("maxCompletionItems", 1959) : 1959;
-  return Math.max(50, Math.min(1959, Number(n) || 1959));
+  const n = typeof cfg.get === "function" ? cfg.get("maxCompletionItems", 1983) : 1983;
+  return Math.max(50, Math.min(1983, Number(n) || 1983));
 }
 
 /**
@@ -571,7 +571,7 @@ async function insertOrCopy(text) {
 }
 
 /**
- * Command: roycss.browseEffects — open a QuickPick of all 1,569 effects.
+ * Command: roycss.browseEffects — open a QuickPick of all 1,983 effects.
  * @returns {Promise<void>}
  */
 async function browseEffects() {

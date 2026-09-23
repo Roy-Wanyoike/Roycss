@@ -70,7 +70,7 @@ area". All commands assume the repo root; the general contribution workflow
 
 - Setup: `bun install` → `bun run dev` (port 3000; no `.env`, no database
   required — the full effect catalog ships in-repo in `src/lib/`).
-- The load-bearing invariant: the catalog is **1,959 effects across 29
+- The load-bearing invariant: the catalog is **1,983 effects across 29
   categories**, pinned by [`tests/unit/effects.test.ts`](tests/unit/effects.test.ts)
   and [`tests/unit/categories.test.ts`](tests/unit/categories.test.ts).
   Any PR that changes those numbers intentionally must update the pinned

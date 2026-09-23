@@ -19588,5 +19588,245 @@
     ],
     "description": "A soft glow blob orbits the surface, simulating a cursor-follow light. Pure CSS — uses a :hover proxy and animated offset.",
     "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Seamless Loop Marquee": {
+    "prefix": "roycss-marquee-loop-seamless",
+    "body": [
+      "<div class=\"roycss-marquee-loop-seamless\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Infinite scrolling content strip with mask-fade edges. The track is width:max-content and loops via a -50% translate, so duplicating the content once yields a perfectly seamless loop.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "RTL-Safe Marquee": {
+    "prefix": "roycss-marquee-rtl-safe",
+    "body": [
+      "<div class=\"roycss-marquee-rtl-safe\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Direction-aware marquee whose scroll direction follows the document writing direction. Under dir=\"rtl\" the animation reverses automatically, so Arabic/Hebrew/Persian pages scroll the natural way.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Pause-on-Hover Marquee": {
+    "prefix": "roycss-marquee-pause-hover",
+    "body": [
+      "<div class=\"roycss-marquee-pause-hover\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Marquee that pauses on hover and while any interactive child has keyboard focus, satisfying WCAG 2.2.2 pause/stop/hide. Pointer and keyboard users both get a stopped strip they can actually read.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Vertical Ticker": {
+    "prefix": "roycss-marquee-vertical-ticker",
+    "body": [
+      "<div class=\"roycss-marquee-vertical-ticker\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Fixed-height vertical ticker that scrolls items upward in an endless loop, like a stock or news feed. Overflow is clipped to the window and items are evenly cycled.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Diagonal Ribbon Marquee": {
+    "prefix": "roycss-marquee-ribbon-diagonal",
+    "body": [
+      "<div class=\"roycss-marquee-ribbon-diagonal\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Bold rotated ribbon that scrolls across the corner of a hero or promo section — sale banners, announcement strips, event headers. Two stacked ribbons cross for a wrapped-ribbon look.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "News Ticker Live": {
+    "prefix": "roycss-marquee-news-live",
+    "body": [
+      "<div class=\"roycss-marquee-news-live\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Broadcast-style news ticker: a pulsing LIVE badge anchors the strip while headlines scroll past with dot separators. The badge stays put, only the headlines move.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Scroll-Snap Carousel": {
+    "prefix": "roycss-carousel-scroll-snap",
+    "body": [
+      "<div class=\"roycss-carousel-scroll-snap\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Production-grade pure-CSS carousel: horizontal scroll container with mandatory snap points, center-aligned slides, edge fade masks and a styled slim scrollbar. Fully touch, wheel and keyboard scrollable with zero JS.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Crossfade Carousel": {
+    "prefix": "roycss-carousel-fade-cycle",
+    "body": [
+      "<div class=\"roycss-carousel-fade-cycle\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Auto-advancing crossfade slideshow: four stacked slides each take a quarter of the cycle, fading in over their predecessor with a subtle scale settle. A single keyframes rule drives every slide via delays.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Sliding Track Carousel": {
+    "prefix": "roycss-carousel-slide-cycle",
+    "body": [
+      "<div class=\"roycss-carousel-slide-cycle\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Track-style carousel that advances one slide at a time with pauses between steps, then jumps back to the start — the classic hero-slider rhythm implemented in a single keyframes rule.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "3D Coverflow Carousel": {
+    "prefix": "roycss-carousel-3d-coverflow",
+    "body": [
+      "<div class=\"roycss-carousel-3d-coverflow\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Music-player coverflow: the center slide faces forward while neighbors rotate away in 3D with depth-ordered shadows, all inside a perspective container. A gentle sway makes the depth readable.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Carousel with Progress": {
+    "prefix": "roycss-carousel-progress",
+    "body": [
+      "<div class=\"roycss-carousel-progress\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Auto-advancing carousel whose progress bar fills in lockstep with the slide cycle — the ::after bar reuses the same duration, so progress and slide position never drift apart.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Modern Range Slider": {
+    "prefix": "roycss-slider-range-modern",
+    "body": [
+      "<div class=\"roycss-slider-range-modern\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Contemporary range-slider visual: slim rounded track, filled value portion, and an oversized glowing thumb that eases back and forth. The demo animates the thumb; in production the same styles target input[type=range].",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Gradient Fill Slider": {
+    "prefix": "roycss-slider-range-gradient-fill",
+    "body": [
+      "<div class=\"roycss-slider-range-gradient-fill\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Range-slider variant where the filled portion is a flowing animated gradient and the thumb carries a hue-matched ring — great for volume, color-picking or brightness controls that deserve personality.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Spring Toggle Switch": {
+    "prefix": "roycss-slider-toggle-switch",
+    "body": [
+      "<div class=\"roycss-slider-toggle-switch\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Toggle switch with a springy knob that overshoots on hover and settles into its state — a microinteraction-quality control. Hover to preview the knob travel; the track recolors to signal the target state.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Glass Navbar": {
+    "prefix": "roycss-nav-navbar-glass",
+    "body": [
+      "<div class=\"roycss-nav-navbar-glass\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Sticky navbar with a frosted-glass surface: backdrop blur, translucent OKLCH tint and a hairline border that catches light. Ships an optional scroll-driven elevation via animation-timeline: scroll() where supported.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Hamburger Morph X": {
+    "prefix": "roycss-nav-hamburger-morph",
+    "body": [
+      "<div class=\"roycss-nav-hamburger-morph\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Three-bar hamburger that morphs into a close X. Hover (or [data-open]) transforms the bars with GPU-only rotations and fades the middle bar out — pair it with a hidden checkbox or two lines of JS for a full toggle.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Peek Drawer": {
+    "prefix": "roycss-nav-drawer-slide",
+    "body": [
+      "<div class=\"roycss-nav-drawer-slide\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Off-canvas drawer that peeks a handle and slides fully open on hover or [data-open]. The scrim-free panel keeps 44px visible so touch users can always reach it; menu items stagger in with GPU transforms.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Dropdown Caret Reveal": {
+    "prefix": "roycss-nav-dropdown-caret",
+    "body": [
+      "<div class=\"roycss-nav-dropdown-caret\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Dropdown menu with a rotating caret and a clipped reveal. Opens on hover and :focus-within so keyboard users get the same panel; items stagger in and the caret rotates 180° with a springy ease.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Sliding Pill Indicator": {
+    "prefix": "roycss-nav-pill-indicator",
+    "body": [
+      "<div class=\"roycss-nav-pill-indicator\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Segmented nav where the active item wears a pill. Hovering previews the pill (scale-in) and the documented radio-:checked variant makes the selection persist with zero JavaScript — keyboard focus moves the pill too.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Before/After Wipe": {
+    "prefix": "roycss-media-compare-wipe",
+    "body": [
+      "<div class=\"roycss-media-compare-wipe\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Auto-cycling before/after comparison: the top layer is clipped with an inset() wipe that sweeps back and forth, and hover pauses the cycle at the current split. Layer any two stacked images — pure CSS, no slider JS.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Target Lightbox": {
+    "prefix": "roycss-media-lightbox-zoom",
+    "body": [
+      "<div class=\"roycss-media-lightbox-zoom\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Zero-JS lightbox built on :target: the thumbnail zooms slightly on hover, and the documented overlay fades+scales the full image when targeted, with a labelled close link. Progressive — works without JS entirely.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Caption Reveal Card": {
+    "prefix": "roycss-media-caption-reveal",
+    "body": [
+      "<div class=\"roycss-media-caption-reveal\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Image card whose caption slides up over a gradient scrim on hover (and on keyboard focus), with the image zooming a touch underneath. The scrim keeps WCAG-safe contrast for the caption text at every position.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "3D Tilt Frame": {
+    "prefix": "roycss-media-tilt-3d",
+    "body": [
+      "<div class=\"roycss-media-tilt-3d\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Static 3D presentation frame: perspective, a resting tilt and a glossy glare pseudo-element. Hover deepens the tilt with a springy ease — the pointer-tracking upgrade is a one-liner with CSS custom properties.",
+    "scope": "html,jsx,tsx,vue,svelte"
+  },
+  "Thumbnail Gallery": {
+    "prefix": "roycss-media-thumb-select",
+    "body": [
+      "<div class=\"roycss-media-thumb-select\">",
+      "  Content",
+      "</div>"
+    ],
+    "description": "Radio-driven gallery: thumbnails act as labels, and the selected thumb lifts with an accent ring while the main view swaps — a complete product-gallery interaction with zero JavaScript and full keyboard support.",
+    "scope": "html,jsx,tsx,vue,svelte"
   }
 }

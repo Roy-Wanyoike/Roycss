@@ -31,7 +31,10 @@ function listDocsRoutes(dir: string, base = "/docs"): string[] {
     return out; // docs dir absent (e.g. trimmed CI checkout) — skip
   }
   for (const entry of entries) {
-    if (entry.startsWith("_")) continue; // _lib co-located helpers
+    // Skip _lib co-located helpers AND [bracket] dynamic segments —
+    // /docs/[version] renders a noindex "Unknown docs version" shell
+    // (soft-404); it must never appear in the sitemap (issue #205).
+    if (entry.startsWith("_") || entry.includes("[")) continue;
     const full = join(dir, entry);
     if (statSync(full).isDirectory()) {
       out.push(...listDocsRoutes(full, `${base}/${entry}`));

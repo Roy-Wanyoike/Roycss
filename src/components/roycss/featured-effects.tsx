@@ -5,18 +5,23 @@
    ─────────────────────────────────────────────────────────────────
    Showing every effect on first scroll is overwhelming. This
    section surfaces 10 hand-picked effects across 10 categories, with
-   a prominent CTA that scrolls to the full #effects gallery.
+   a prominent CTA linking to the full /effects gallery and an SSR
+   "Browse by category" link row (issue #205).
    ═══════════════════════════════════════════════════════════════ */
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import {
   SectionHeading,
   ScrollReveal,
 } from "@/components/roycss/motion-primitives";
 import { EffectCard } from "@/components/roycss/effect-card";
-import { effects } from "@/lib/roycss-effects";
+import {
+  effects,
+  categoryMeta,
+  categoryOrder,
+} from "@/lib/roycss-effects";
 import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 import type { CSSEffect } from "@/lib/roycss-types";
 
@@ -44,6 +49,17 @@ const FEATURED_EFFECTS: CSSEffect[] = FEATURED_IDS.map((id) =>
 
 const TOTAL_EFFECTS = effects.length;
 
+/* Per-category effect counts for the crawlable category link row
+   (issue #205 — home must contribute internal-link equity to the
+   category landing pages, not just the in-page dialog explorer). */
+const CATEGORY_COUNTS = new Map<string, number>();
+for (const effect of effects) {
+  CATEGORY_COUNTS.set(
+    effect.category,
+    (CATEGORY_COUNTS.get(effect.category) ?? 0) + 1,
+  );
+}
+
 /* ─── Per-card stagger delay (caps so the last card doesn't lag) ─── */
 const staggerDelay = (i: number) => Math.min(i * 0.07, 0.5);
 
@@ -52,10 +68,8 @@ const staggerDelay = (i: number) => Math.min(i * 0.07, 0.5);
    ═══════════════════════════════════════════════════════════════ */
 export function FeaturedEffects({
   onSelectEffect,
-  onExploreAll,
 }: {
   onSelectEffect: (effect: CSSEffect) => void;
-  onExploreAll: () => void;
 }) {
   return (
     <section
@@ -91,11 +105,34 @@ export function FeaturedEffects({
               delay={staggerDelay(index)}
               className="h-full"
             >
-              <EffectCard
-                effect={effect}
-                index={index}
-                onClick={onSelectEffect}
-              />
+              {/* SSR anchor — the crawlable route to the effect page
+                  (issue #205). Plain click keeps the quick-view dialog
+                  as the JS enhancement; modifier/middle clicks and
+                  crawlers follow the real href. */}
+              <a
+                href={`/effects/${effect.id}`}
+                onClick={(e) => {
+                  if (
+                    e.metaKey ||
+                    e.ctrlKey ||
+                    e.shiftKey ||
+                    e.altKey ||
+                    e.button !== 0
+                  ) {
+                    return; // let the browser open the real page
+                  }
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onSelectEffect(effect);
+                }}
+                className="block h-full rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              >
+                <EffectCard
+                  effect={effect}
+                  index={index}
+                  onClick={onSelectEffect}
+                />
+              </a>
             </ScrollReveal>
           ))}
         </div>
@@ -112,11 +149,10 @@ export function FeaturedEffects({
               name, and find your perfect effect.
             </p>
 
-            <Button
-              type="button"
-              size="lg"
-              onClick={onExploreAll}
-              className="group cursor-pointer h-12 px-7 text-base font-semibold rounded-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300"
+            {/* Real <Link> — crawlable route to /effects (issue #205) */}
+            <Link
+              href="/effects"
+              className="group inline-flex items-center justify-center h-12 px-7 text-base font-semibold rounded-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300"
             >
               <Sparkles className="size-4 mr-2 shrink-0" />
               <span>Explore all {TOTAL_EFFECTS.toLocaleString()} Effects</span>
@@ -127,9 +163,39 @@ export function FeaturedEffects({
               >
                 <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
               </motion.span>
-            </Button>
+            </Link>
           </div>
         </ScrollReveal>
+
+        {/* Browse by category — SSR link row to all 29 category landing
+            pages (issue #205: home previously contributed zero internal
+            links to the catalog). */}
+        <nav
+          aria-label="Browse effects by category"
+          className="mt-12 sm:mt-14 border-t border-border/40 pt-8"
+        >
+          <h2 className="text-center font-display text-xl sm:text-2xl font-semibold tracking-tight text-foreground">
+            Browse by category
+          </h2>
+          <ul className="mt-5 flex flex-wrap justify-center gap-2">
+            {categoryOrder.map((category) => {
+              const count = CATEGORY_COUNTS.get(category) ?? 0;
+              return (
+                <li key={category}>
+                  <Link
+                    href={`/effects/category/${category}`}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-card px-3 py-1.5 text-xs sm:text-sm text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors"
+                  >
+                    {categoryMeta[category].label}
+                    <span className="text-[11px] tabular-nums text-muted-foreground/70">
+                      {count}
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
       </div>
     </section>
   );

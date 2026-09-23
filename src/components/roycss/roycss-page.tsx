@@ -2113,7 +2113,6 @@ export default function RoyCSSPage() {
       {/* ─── Featured Effects (curated 10, before full gallery) ─── */}
       <FeaturedEffects
         onSelectEffect={(e) => { pushRecentEffect(e.id); setSelectedEffect(e); setDialogOpen(true); }}
-        onExploreAll={() => scrollToSection("#effects")}
       />
 
       {/* ─── WebGL & Canvas Effects Showcase ────────────────── */}

@@ -661,6 +661,7 @@ ${TABLE_HEADER}
 | POST | \`/api/css-doctor\` | Public | body: { \`css\` (≤ 10 000 chars) } | \`{ score, issues[], summary }\` · 200 | 400 · 500 |
 | GET | \`/api/effects/manifest\` | Public | — | \`{ count, effects[] }\` · 200 (metadata only, no \`cssCode\`; 24 h cache) | — |
 | GET | \`/api/effects/:id/css\` | Public | path: \`:id\` | \`text/css\` (the effect's \`cssCode\`) · 200 · 404 | 404 |
+| POST | \`/api/docs-feedback\` | same-origin | body: { \`slug\`, \`helpful\`, \`comment?\` } (slug must be a known docs page; comment ≤ 1000 chars) | \`{ ok, message }\` · 200 | 400 · 403 (cross-origin) · 429 (10/min/IP) · 500 |
 | GET | \`/api/og\` | Public | — | \`image/png\` (static \`public/og.png\`) · 200 | 404 |
 
 Notes:

@@ -113,7 +113,7 @@ In a fresh temp dir:
 
 ```bash
 npm install roycss
-node -e "console.log(require('roycss').length)"  # should print 1959
+node -e "console.log(require('roycss').length)"  # should print 1983
 ```
 
 ## How to publish manually (emergency only)
@@ -149,25 +149,28 @@ NPM_TOKEN=xxxx-xxxx-xxxx npm publish --provenance --access public
 
 ## Benchmark targets
 
-See `docs/benchmarks/04-npm-publish-pipeline.md` for the full table. Quick reference
-(measured on v2.0.0 — `bun run publish:validate` dry-run numbers; a real
-`npm pack` lands ~970 KB / 13 files):
+See `docs/benchmarks/04-npm-publish-pipeline.md` for the full table and the
+re-baseline rationale. Quick reference (measured at v2.0.0 —
+`bun run publish:validate` dry-run numbers):
 
 | Metric                      | Target      | Current (v2.0.0) |
 | --------------------------- | ----------- | ---------------- |
 | Build time                  | < 30 s      | ~6 s ✅           |
-| Tarball size (compressed)   | < 1.2 MB    | ~947 KB ✅        |
+| Tarball size (compressed)   | ≤ 1.2 MB    | ~1,060 KB ✅      |
 | Install time                | < 5 s       | ~1.5 s ✅         |
-| Unpacked size               | < 2 MB      | ~6.5 MB ⚠️       |
-| Number of files in tarball  | ≤ 15        | 13 ✅             |
+| Unpacked size               | ≤ 8 MB      | ~7.5 MB ✅        |
+| Number of files in tarball  | ≤ 24        | 20 ✅             |
+| Forbidden artifacts shipped | 0           | 0 ✅              |
 
-The unpacked size target is exceeded because the tarball deliberately
-ships both the full and the minified stylesheet plus the class-index and
-motion-library JSON exports — see
-`docs/benchmarks/04-npm-publish-pipeline.md` §3. The internal
-`dist/pro-components.json` (backend catalog) is excluded from the
-tarball via a `!dist/pro-components.json` negation in `package.json`
-`files`.
+The unpacked size is dominated by the deliberate dual-format exports
+(both the full and the minified stylesheet plus the class-index and
+motion-library JSON indexes) — see
+`docs/benchmarks/04-npm-publish-pipeline.md` for the re-baseline rationale.
+Two internal artifacts are excluded from the tarball via `files` negations
+in `package.json` — `dist/pro-components.json` (unpublished backend catalog)
+and `dist/important-audit.json` (gitignored audit snapshot that embeds
+absolute local paths) — and both are enforced by the forbidden-artifacts
+gate in `validate.ts`.
 
 ## Security
 

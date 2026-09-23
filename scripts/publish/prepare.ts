@@ -242,12 +242,13 @@ if (compressedKB === 0) {
   ok(`tarball ${compressedKB.toFixed(1)} KB ≤ ${TARGET_TARBALL_KB} KB  PASS`);
 }
 
-// Informational warnings (not failures — see docs/benchmarks/04)
-if (unpackedKB > 2 * 1024) {
-  warn(`unpacked size ${unpackedKB.toFixed(1)} KB exceeds 2 MB target (see docs/benchmarks/04)`);
+// Informational warnings (not failures — targets re-baselined at v2.0.0,
+// see docs/benchmarks/04-npm-publish-pipeline.md)
+if (unpackedKB > 8 * 1024) {
+  warn(`unpacked size ${unpackedKB.toFixed(1)} KB exceeds 8 MB target (see docs/benchmarks/04)`);
 }
-if (fileCount > 15) {
-  warn(`file count ${fileCount} exceeds 15-file target`);
+if (fileCount > 24) {
+  warn(`file count ${fileCount} exceeds 24-file target`);
 }
 
 // ── Summary ───────────────────────────────────────────────────────

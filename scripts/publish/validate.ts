@@ -9,20 +9,28 @@
  *   1. Reads the root `package.json` (the published "roycss" manifest).
  *   2. Checks every non-negated entry in the `files` array exists on disk.
  *   3. Reports the total unpacked size (sum of bytes of all included files).
- *   4. Runs `npm pack --dry-run --json` in a temp dir (package.json copied
+ *   4. Count-drift gate (issue #212): parses the npm description of every
+ *      publishable package.json (root, cli/, mcp-server/, vscode-extension/),
+ *      extracts the advertised effects count and compares it against the
+ *      length of dist/effects.json. Any drift fails validation — this is
+ *      the gate that would have caught the 1,959→1,983 description staleness
+ *      after batches 53/54.
+ *   5. Runs `npm pack --dry-run --json` in a temp dir (package.json copied
  *      over, files array entries copied into temp dir).
- *   5. Reports the compressed tarball size, file count, and full file list.
- *   6. Exits 0 if all file checks pass; 1 otherwise.
+ *   6. Reports the compressed tarball size, file count, and full file list.
+ *   7. Exits 0 if all file checks pass; 1 otherwise.
  *
  * Exit codes:
- *   0 — all required files present, sizes reported
- *   1 — at least one required file missing, or npm pack failed
+ *   0 — all required files present, counts in sync, sizes reported
+ *   1 — at least one required file missing, a description count drifted
+ *       from dist/effects.json, or npm pack failed
  */
 
 import { readFileSync, existsSync, statSync, cpSync, rmSync, mkdirSync, writeFileSync, readdirSync } from "node:fs";
 import { join, resolve, dirname } from "node:path";
 import { execSync } from "node:child_process";
 import { tmpdir } from "node:os";
+import { checkDescriptionCounts, extractEffectsCount } from "./count-gate";
 
 const ROOT = resolve(import.meta.dir, "..", "..");
 const PKG_JSON_PATH = join(ROOT, "package.json");
@@ -122,6 +130,57 @@ if (missingCount > 0) {
   log("✗", `${missingCount} file(s) missing from \`files\` array. Aborting.`, C.red);
   process.exit(1);
 }
+
+// ── 1b. Count-drift gate (issue #212) ─────────────────────────────
+// The npm-facing descriptions advertise the catalog size. If the catalog
+// grows (new effects-batch-*.ts) and the descriptions don't, npm listings
+// go stale. Compare every publishable manifest's stated count against
+// dist/effects.json and fail on drift.
+const PUBLISHABLE_PKG_JSONS = [
+  "package.json", // roycss (npm)
+  "cli/package.json", // roycss-cli
+  "mcp-server/package.json", // roycss-mcp
+  "vscode-extension/package.json", // RoyCSS VS Code extension
+];
+const EFFECTS_JSON_PATH = join(DIST_DIR, "effects.json");
+
+console.log(`${C.bold}── Count-drift gate (descriptions vs dist/effects.json) ──${C.reset}`);
+if (!existsSync(EFFECTS_JSON_PATH)) {
+  log("✗", `dist/effects.json not found at ${EFFECTS_JSON_PATH} — run \`bun run build:package\` first.`, C.red);
+  process.exit(1);
+}
+const actualEffects = JSON.parse(readFileSync(EFFECTS_JSON_PATH, "utf-8")).length as number;
+
+const statedCounts = PUBLISHABLE_PKG_JSONS.map((rel) => {
+  const manifest = JSON.parse(readFileSync(join(ROOT, rel), "utf-8")) as { description?: string };
+  return { path: rel, description: String(manifest.description ?? "") };
+});
+
+for (const s of statedCounts) {
+  const stated = extractEffectsCount(s.description);
+  if (stated === null) {
+    log("•", `${s.path.padEnd(32)} no effects count advertised — skipped`, C.dim);
+  } else {
+    const drifted = stated !== actualEffects;
+    log(
+      drifted ? "✗" : "✓",
+      `${s.path.padEnd(32)} states ${stated} vs catalog ${actualEffects}${drifted ? "  DRIFT" : ""}`,
+      drifted ? C.red : C.green,
+    );
+  }
+}
+
+const countViolations = checkDescriptionCounts(statedCounts, actualEffects);
+console.log();
+if (countViolations.length > 0) {
+  for (const v of countViolations) {
+    log("✗", `${v.path}: description says ${v.stated} effects but dist/effects.json has ${v.actual}.`, C.red);
+  }
+  log("✗", "Count-drift gate FAILED — update the npm descriptions (and README) to the catalog size, then re-run.", C.red);
+  process.exit(1);
+}
+log("✓", `Count-drift gate PASSED — all advertised counts match the ${actualEffects}-effect catalog.`, C.green);
+console.log();
 
 // ── 2. Run `npm pack --dry-run --json` in a temp dir ─────────────
 log("🧪", "Running `npm pack --dry-run --json` in isolated temp dir…", C.cyan);

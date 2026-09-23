@@ -11,7 +11,7 @@ First npm release of RoyCSS v2 (v1 was distributed via the website only).
 
 ### Added
 
-- **1,959 production-ready CSS effects across 29 categories** — OKLCH
+- **1,983 production-ready CSS effects across 29 categories** — OKLCH
   colors, logical properties, container queries, scroll-driven
   animations, and a global `prefers-reduced-motion` kill switch.
 - Dual module builds with TypeScript declarations:

@@ -14,7 +14,18 @@
  * runtime and stamped into the generated header, so this script never
  * needs a manual number bump when new batches land.
  *
- * Usage:  bun run scripts/build-vscode-effects.ts
+ * Regen step (documented, issue #212): run `bun run build:vscode` from the
+ * repo root — the one-shot chain that regenerates ALL FOUR VS Code data
+ * artifacts:
+ *   1. this script → src/effects-data.ts + data/css-data.json, then
+ *   2. vscode-extension/build-data.js → class-data.json + snippets.json
+ *      (reads the tracked dist/effects.json + dist/roycss.css and
+ *      cross-checks this script's output for freshness).
+ * Run it whenever effects-batch-*.ts changes or after `bun run
+ * build:package` refreshes dist/.
+ *
+ * Usage:  bun run build:vscode        (recommended — all four artifacts)
+ *         bun run scripts/build-vscode-effects.ts   (this script only)
  */
 
 import { effects } from "../src/lib/roycss-effects";

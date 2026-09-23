@@ -12,7 +12,7 @@
 
 ## 1. Purpose
 
-RoyCSS is used in production interfaces. Teams that adopt the catalog — 1,959
+RoyCSS is used in production interfaces. Teams that adopt the catalog — 1,983
 effects across 29 categories — need to know **how long the major version they
 build on will keep receiving fixes**, and what happens when the project moves
 on. This document is that commitment. It defines:
@@ -38,7 +38,7 @@ today:
 
 | Surface | Where it lives | Version contract |
 |---|---|---|
-| Effect catalog (1,959 effects, 29 categories) | `src/lib/roycss-effects.ts` aggregating the `effects-batch-*.ts` modules | Size and category count are pinned by tests — see [`tests/unit/effects.test.ts`](../tests/unit/effects.test.ts) and [`tests/unit/categories.test.ts`](../tests/unit/categories.test.ts) |
+| Effect catalog (1,983 effects, 29 categories) | `src/lib/roycss-effects.ts` aggregating the `effects-batch-*.ts` modules | Size and category count are pinned by tests — see [`tests/unit/effects.test.ts`](../tests/unit/effects.test.ts) and [`tests/unit/categories.test.ts`](../tests/unit/categories.test.ts) |
 | Effect schema (`CSSEffect`) | `src/lib/roycss-types.ts` | Field set is part of the compatibility surface consumed by `dist/effects.json` |
 | Class-name namespace (`roycss-<id>`) | every effect's `cssCode` | Renaming or removing a public class is a breaking change |
 | Keyframe namespace (`roy-*`) | every effect's `cssCode` | Same rule as classes |

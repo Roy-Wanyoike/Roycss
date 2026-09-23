@@ -1,7 +1,7 @@
 # RoyCSS Owner Runbook (push, publish, reclaim, storage)
 
-**Repo `main` @ `dd7897d`** — all gates green (1,651/1,651 tests · `tsc` 0
-errors · API/manifest/token/AI drift gates),
+**Repo `main` @ `5f97c35`** — all gates green (1,964/1,964 tests · `tsc` 0
+errors · API/manifest/token/AI drift gates · publish count-drift gate),
 **This file is the single handoff.** Everything below needs the repo owner; everything an agent
 could do is already done and verified.
 
@@ -11,10 +11,10 @@ could do is already done and verified.
 
 | Dimension | State |
 |---|---|
-| Test suite | **1,651/1,651** (712 frontend unit + 939 backend integration/unit/contract/security) |
+| Test suite | **1,964/1,964** (1,015 frontend unit + 949 backend integration/unit/contract/security) |
 | Type / lint | `tsc` 0 errors · `eslint` 0 |
 | API truth | api:check in sync (289 routes) · OpenAPI in sync (268 paths) · **api-surface gate green** (new) |
-| npm package | Tarball **969.8 KB / 13 files**, consumer install **empirically verified** (no `--ignore-scripts`, zero runtime deps, require/import both → 1,959 effects, all subpaths resolve) |
+| npm package | Tarball **969.8 KB / 13 files** (pre-batch-53/54 snapshot — re-verify with `bun run publish:validate`, which also fails on description/catalog count drift), consumer install **empirically verified** (no `--ignore-scripts`, zero runtime deps, require/import both → 1,983 effects, all subpaths resolve) |
 | Repo size | **35 MB total** (was 143 MB) — history rewrite stripped ~600 MB of zip blobs; **tree byte-identical** (`01184c5` both sides) |
 | First-load JS (homepage) | 4,318 → **3,504 kB** (−19%) · Vercel upload 33.7 → **~11.5 MB** (−66%) |
 | Production readiness | CONDITIONAL-GO → the 4 P0 blockers of the audit are FIXED in code (legal pages, email lifecycle, DB migrations, deploy env wiring + smoke). Remaining conditions are owner-side: push + secrets provisioning. |
@@ -58,7 +58,7 @@ inside the issue body). Future work convention: branch per issue → PR linked t
 3. `git tag v2.0.0 && git push origin v2.0.0` → `release.yml` runs the test suite, then
    `npm publish --access public --provenance`
 4. Verify in a fresh project: `npm install roycss` (no `--ignore-scripts` needed), then
-   `node -e "console.log(require('roycss').length)"` → `1959`
+   `node -e "console.log(require('roycss').length)"` → `1983`
 
 ## 4. Vercel 11 GB reclaim (~10 min dashboard work)
 

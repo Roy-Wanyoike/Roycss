@@ -25,7 +25,7 @@ release scripts):
 
 | # | Layer | Where | Version-relevant because |
 |---|---|---|---|
-| 1 | **Effect catalog** — 1,959 effects, 29 categories | `src/lib/roycss-effects.ts` (aggregate of the `effects-batch-*.ts` modules); size and category count pinned by [`tests/unit/effects.test.ts`](../tests/unit/effects.test.ts) and [`tests/unit/categories.test.ts`](../tests/unit/categories.test.ts) | Removing/renaming an effect changes the public class set |
+| 1 | **Effect catalog** — 1,983 effects, 29 categories | `src/lib/roycss-effects.ts` (aggregate of the `effects-batch-*.ts` modules); size and category count pinned by [`tests/unit/effects.test.ts`](../tests/unit/effects.test.ts) and [`tests/unit/categories.test.ts`](../tests/unit/categories.test.ts) | Removing/renaming an effect changes the public class set |
 | 2 | **Effect schema** (`CSSEffect`) | `src/lib/roycss-types.ts` | Downstream tools (backend `effects` service, MCP server, CLI, VS Code extension) parse `dist/effects.json` against this shape |
 | 3 | **Namespace contracts** | classes `roycss-<id>` · keyframes `roy-*` · tokens `--roycss-*` (defaults in `src/lib/design-tokens.ts`) | These names are what users write into markup and stylesheets — the true public API |
 | 4 | **Published artifacts** | `dist/` — `roycss.css`, `effects.json`, `class-index.json`, `motion-library.json` (+ critical/fallbacks CSS), regenerated per release by `scripts/generate-effects-json.ts` and the package build | The npm package *is* these artifacts; their schemas are consumer-facing |
@@ -98,7 +98,7 @@ A minor bump covers:
    sprung in a major (see [`docs/DEPRECATION.md`](DEPRECATION.md)).
 
 Minors never break layers 1–5. The release that changes the pinned catalog
-count (1,959) is additive and therefore a minor, *with* the pinned tests
+count (1,983) is additive and therefore a minor, *with* the pinned tests
 updated in the same PR so CI never disagrees with the README.
 
 ## 4. Patch (X.Y.Z) — fixes only
@@ -145,7 +145,7 @@ The project's answer to "did anything break?" is mechanical, and lives in
 the repo:
 
 1. **Pinned corpus invariants** — [`tests/unit/effects.test.ts`](../tests/unit/effects.test.ts):
-   1,959 effects, unique ids, class-selector/id correspondence, keyframe
+   1,983 effects, unique ids, class-selector/id correspondence, keyframe
    collision locks.
 2. **Category pin** — [`tests/unit/categories.test.ts`](../tests/unit/categories.test.ts):
    exactly 29.

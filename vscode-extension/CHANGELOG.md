@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Data refresh to the 1,983-effect catalog** (issue #212). All four data
+  artifacts (`class-data.json`, `snippets.json`, `data/css-data.json`,
+  `src/effects-data.ts`) were regenerated from the current catalog and now
+  include the batch-53/54 effects; `roycss.maxCompletionItems`
+  default/maximum moved 1959 → 1983 to match. Regenerate with the new
+  one-shot script: `bun run build:vscode` (repo root).
 - **Data refresh to the 1,959-effect catalog** (issue #132). The extension
   data was last generated against the 1,569-effect catalog; all generated
   artifacts now cover all **1,959** effects (29 categories):

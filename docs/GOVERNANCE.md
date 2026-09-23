@@ -21,7 +21,7 @@
    document are defined so they *work at current size* and *scale by filling
    seats*, not by rewriting rules.
 3. **Small, legible contract.** RoyCSS's value is a large but stable
-   versioned surface: 1,959 effects across 29 categories, `roycss-` classes,
+   versioned surface: 1,983 effects across 29 categories, `roycss-` classes,
    `roy-` keyframes, `--roycss-*` tokens, and the `dist/` artifacts. The
    governance system exists to keep that surface predictable — every
    decision tier below ultimately protects
@@ -96,7 +96,7 @@ here.**
    changes, the PR does not merge until resolved — lazy consensus means
    "no one objected after a real look", never "nobody looked".
 4. Hard gates that are *never* lazy: pinned catalog invariants
-   (1,959 effects / 29 categories — see
+   (1,983 effects / 29 categories — see
    [`tests/unit/effects.test.ts`](../tests/unit/effects.test.ts)),
    `bunx tsc --noEmit` clean, the API drift gate, and every "requires an
    RFC" item in §4. CI enforces these; a human waving them through is not a

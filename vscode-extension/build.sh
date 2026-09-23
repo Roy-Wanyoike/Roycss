@@ -101,8 +101,8 @@ echo "  ✓ All JSON files valid."
 
 # Verify class-data count
 EFFECT_COUNT=$(node -e "console.log(require('./class-data.json').effects.length)")
-if [[ $EFFECT_COUNT -lt 1569 ]]; then
-  echo "ERROR: class-data.json has only $EFFECT_COUNT effects (expected ≥1569)." >&2
+if [[ $EFFECT_COUNT -lt 1983 ]]; then
+  echo "ERROR: class-data.json has only $EFFECT_COUNT effects (expected ≥1983)." >&2
   exit 2
 fi
 echo "  ✓ class-data.json has $EFFECT_COUNT effects."

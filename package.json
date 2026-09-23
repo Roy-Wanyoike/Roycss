@@ -1,7 +1,7 @@
 {
   "name": "roycss",
   "version": "2.0.0",
-  "description": "RoyCSS \u2014 1,959 production-ready CSS effects. Zero JavaScript runtime. OKLCH colors, logical properties, container queries, scroll-driven animations.",
+  "description": "RoyCSS \u2014 1,983 production-ready CSS effects. Zero JavaScript runtime. OKLCH colors, logical properties, container queries, scroll-driven animations.",
   "keywords": [
     "css",
     "css-framework",
@@ -140,6 +140,7 @@
     "gen:manifest": "bun run scripts/generate-manifest.ts",
     "gen:manifest:check": "bun run scripts/generate-manifest.ts --check",
     "build:cli": "bun build src/cli/index.ts --outdir cli --target node --outfile index.js",
+    "build:vscode": "bun run scripts/build-vscode-effects.ts && node vscode-extension/build-data.js",
     "prepublishOnly": "bun run build:package",
     "publish:validate": "bun run scripts/publish/validate.ts",
     "publish:prepare": "bun run scripts/publish/prepare.ts",

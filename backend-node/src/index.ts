@@ -15,6 +15,10 @@
  */
 import { createServer } from "node:http";
 
+// MUST stay the first import: applies backend-node/.env to process.env
+// BEFORE any module reads the environment (issue #208 — `bun run dev`
+// must boot from a copied `.env.example`; shell env always wins).
+import "./config/dotenv.js";
 import { env } from "./config/env.js";
 import { APP_NAME, APP_VERSION } from "./config/constants.js";
 import { closeDatabase } from "./lib/db.js";

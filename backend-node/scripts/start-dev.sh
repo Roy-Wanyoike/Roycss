@@ -1,19 +1,22 @@
 #!/usr/bin/env bash
-# Start the RoyCSS backend-node (Express + Prisma) in detached mode.
-cd /home/z/my-project/backend-node
+# Start the RoyCSS backend-node (Express + Prisma) in dev mode.
+#
+# Resolves its own location — the previous version hardcoded
+# /home/z/my-project/backend-node, which broke on every other checkout
+# (issue #208).
+#
+# Configuration comes from backend-node/.env, loaded automatically at
+# boot by src/config/dotenv.ts (issue #208). Precedence follows node's
+# --env-file rule: variables already present in the shell WIN over .env,
+# so an ambient DATABASE_URL (sandbox default) overrides the .env
+# database — run `env -u DATABASE_URL scripts/start-dev.sh` to use the
+# .env value.
+set -euo pipefail
+
+BACKEND_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$BACKEND_DIR"
+
 exec env \
   NODE_ENV=development \
   PORT=4000 \
-  LOG_LEVEL=info \
-  CORS_ORIGINS="http://localhost:3000,http://127.0.0.1:3000" \
-  DATABASE_URL="file:./dev.db" \
-  JWT_SECRET="dev-secret-please-change-this-to-64-char-random-string-aaaa" \
-  JWT_REFRESH_SECRET="dev-refresh-secret-please-change-this-too-64-char-bbbb" \
-  JWT_EXPIRES_IN="15m" \
-  JWT_REFRESH_EXPIRES_IN="7d" \
-  RATE_LIMIT_WINDOW_MS=60000 \
-  RATE_LIMIT_MAX_GENERAL=100 \
-  RATE_LIMIT_MAX_AUTH=10 \
-  RATE_LIMIT_MAX_CONTACT=5 \
-  EFFECTS_DATA_PATH="../dist/effects.json" \
-  bun run dev > /home/z/my-project/backend-node/.backend.log 2>&1
+  bun run dev > "$BACKEND_DIR/.backend.log" 2>&1

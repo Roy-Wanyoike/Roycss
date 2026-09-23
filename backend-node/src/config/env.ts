@@ -7,6 +7,32 @@
  */
 import { z } from "zod";
 
+/**
+ * Blank string → undefined.
+ *
+ * A copied `.env.example` ships empty values for the optional URL vars
+ * (`SUPABASE_URL=`, `SUPABASE_JWKS_URL=`, `REDIS_URL=`). Without this
+ * preprocess a blank value fails `z.string().url()` and hard-exits
+ * boot — `cp .env.example .env` bricked the server (issue #208;
+ * REDIS_URL got the same treatment in #118).
+ */
+function blankToUndefined(v: unknown): unknown {
+  return typeof v === "string" && v.trim() === "" ? undefined : v;
+}
+
+/**
+ * Optional URL env var that tolerates a blank value. Every
+ * `z.string().url().optional()` field in this schema MUST go through
+ * this helper (audit for #208: SUPABASE_URL, SUPABASE_JWKS_URL,
+ * REDIS_URL — APP_URL is `.url()` with a default, not optional).
+ */
+function optionalUrlField(message: string) {
+  return z.preprocess(
+    blankToUndefined,
+    z.string().url(message).optional(),
+  );
+}
+
 const EnvSchema = z.object({
   NODE_ENV: z
     .enum(["development", "test", "production"])
@@ -67,10 +93,12 @@ const EnvSchema = z.object({
   MAIL_FROM: z.string().default("RoyCSS <onboarding@resend.dev>"),
 
   // ─── Supabase (production) ────────────────────────────────────────
-  SUPABASE_URL: z.string().url().optional(),
+  // Optional URL fields tolerate a blank value (`.env.example` ships
+  // them empty) — see blankToUndefined above (issue #208).
+  SUPABASE_URL: optionalUrlField("SUPABASE_URL must be a valid URL"),
   SUPABASE_PUBLISHABLE_KEY: z.string().optional(),
   SUPABASE_SECRET_KEY: z.string().optional(),
-  SUPABASE_JWKS_URL: z.string().url().optional(),
+  SUPABASE_JWKS_URL: optionalUrlField("SUPABASE_JWKS_URL must be a valid URL"),
 
   // ─── Redis rate limiting (issue #118 / PRD-F10) ───────────────────
   // Optional. Unset (or blank) = the default in-process sliding-window
@@ -81,9 +109,8 @@ const EnvSchema = z.object({
   // boot logs and falls back to the in-memory limiter (never crashes).
   // The preprocess maps a blank value to undefined so a copied
   // `.env.example` (`REDIS_URL=`) boots instead of failing `.url()`.
-  REDIS_URL: z.preprocess(
-    (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
-    z.string().url("REDIS_URL must be a valid redis:// or rediss:// URL").optional(),
+  REDIS_URL: optionalUrlField(
+    "REDIS_URL must be a valid redis:// or rediss:// URL",
   ),
 
   // ─── External service keys ────────────────────────────────────────

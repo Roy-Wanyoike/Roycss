@@ -179,8 +179,11 @@ export function RecipesSection() {
     return searchRecipes(search, activeCategory === "all" ? undefined : activeCategory);
   }, [search, activeCategory]);
 
+  // Landmark + anchor live on the LazySection wrapper (roycss-page.tsx
+  // passes id="recipes" + ariaLabel="Recipes") — duplicating them here
+  // created an invalid duplicate id and an ambiguous region name.
   return (
-    <section id="recipes" aria-label="Recipes" className="py-16 sm:py-20 scroll-mt-20">
+    <section className="py-16 sm:py-20 scroll-mt-20">
       <div className="container mx-auto px-4 sm:px-6">
         {/* Heading */}
         <ScrollReveal>

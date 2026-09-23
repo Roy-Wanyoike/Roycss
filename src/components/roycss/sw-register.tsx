@@ -32,9 +32,18 @@ export function ServiceWorkerRegistration() {
 
     const onControllerChange = () => {
       if (refreshing) return;
+      // First-time activation (no controller before this one) is part of
+      // normal registration — reloading there forces a double-load on
+      // every first visit and races any post-load interaction (E2E,
+      // scroll restoration, auth probes). Only a genuine UPDATE over an
+      // already-controlled page needs the reload.
+      if (!hadController) return;
       refreshing = true;
       window.location.reload();
     };
+
+    // Captured BEFORE registration: null on first visit, set on updates.
+    const hadController = Boolean(navigator.serviceWorker.controller);
 
     navigator.serviceWorker.addEventListener("controllerchange", onControllerChange);
 

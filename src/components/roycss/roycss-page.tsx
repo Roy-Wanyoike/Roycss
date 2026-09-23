@@ -1499,8 +1499,9 @@ export default function RoyCSSPage() {
   // ⌘K / Ctrl+K to open search overlay, / to focus search, ? for shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // ⌘K / Ctrl+K → open search
-      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+      // ⌘K / Ctrl+K → open search (case-insensitive: some layouts/IMEs and
+      // synthetic key events deliver uppercase "K" with ctrl/meta held)
+      if ((e.metaKey || e.ctrlKey) && (e.key === "k" || e.key === "K")) {
         e.preventDefault();
         setSearchOverlayOpen(true);
       }
@@ -2412,7 +2413,7 @@ export default function RoyCSSPage() {
       <Separator className="opacity-50" />
 
       {/* ─── Recipes Section ─────────────────────────────────── */}
-      <LazySection minHeight={600} ariaLabel="Recipes">
+      <LazySection minHeight={600} ariaLabel="Recipes" id="recipes">
         <RecipesSection />
       </LazySection>
 
@@ -2487,21 +2488,21 @@ export default function RoyCSSPage() {
       <RoyMotionShowcase />
 
       {/* ─── Content Taxonomy (explains Components vs Effects vs Patterns etc.) ─── */}
-      <LazySection minHeight={500} ariaLabel="Content taxonomy">
+      <LazySection minHeight={500} ariaLabel="Content taxonomy" id="content-taxonomy">
         <ContentTaxonomy />
       </LazySection>
 
       <Separator className="opacity-50" />
 
       {/* ─── Patterns Section (UI state patterns) ─────────────── */}
-      <LazySection minHeight={500} ariaLabel="Patterns">
+      <LazySection minHeight={500} ariaLabel="Patterns" id="patterns">
         <PatternsSection />
       </LazySection>
 
       <Separator className="opacity-50" />
 
       {/* ─── Collections Section (curated themed bundles) ────── */}
-      <LazySection minHeight={500} ariaLabel="Collections">
+      <LazySection minHeight={500} ariaLabel="Collections" id="collections">
         <CollectionsSection onSelectEffect={(effect) => { setSelectedEffect(effect); setDialogOpen(true); }} />
       </LazySection>
 
@@ -2511,14 +2512,14 @@ export default function RoyCSSPage() {
       <Separator className="opacity-50" />
 
       {/* ─── RoyCSS Platform (unified — 62 products, 6 categories) ─── */}
-      <LazySection minHeight={700} ariaLabel="Platform">
+      <LazySection minHeight={700} ariaLabel="Platform" id="platform">
         <PlatformSectionUnified />
       </LazySection>
 
       <Separator className="opacity-50" />
 
       {/* ─── Developer Tools gallery (all 70 tools, browsable — #185) ── */}
-      <LazySection minHeight={700} ariaLabel="Developer tools">
+      <LazySection minHeight={700} ariaLabel="Developer tools" id="tools">
         <DevToolsGallery onLaunchTool={setPlatformTool} />
       </LazySection>
 
@@ -2616,7 +2617,7 @@ export default function RoyCSSPage() {
       <Separator className="opacity-50" />
 
       {/* ─── FAQ Section ────────────────────────────────────── */}
-      <LazySection minHeight={500} ariaLabel="FAQ">
+      <LazySection minHeight={500} ariaLabel="FAQ" id="faq">
         <FAQSection />
       </LazySection>
 

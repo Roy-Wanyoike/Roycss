@@ -125,7 +125,13 @@ describe("site-header: pause toggle reuses the shared #214 mechanism", () => {
   });
 
   it("the toggle keeps its constant accessible name + aria-pressed state", () => {
-    expect(pauseToggleSrc).toContain('aria-label="Pause animations"');
+    // i18n note: the literal lives in messages/en.json (SiteHeader.pauseAnimations)
+    // since #129 PR-A; the catalog value IS the stable accessible name.
+    const en = JSON.parse(
+      readFileSync(join(ROOT, "messages/en.json"), "utf8"),
+    ) as { SiteHeader: Record<string, string> };
+    expect(en.SiteHeader.pauseAnimations).toBe("Pause animations");
+    expect(pauseToggleSrc).toContain('aria-label={t("pauseAnimations")}');
     expect(pauseToggleSrc).toContain("aria-pressed={paused}");
   });
 

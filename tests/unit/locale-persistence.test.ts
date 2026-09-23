@@ -256,9 +256,13 @@ describe("locale writers — only the LanguageToggle persists (source gates)", (
     const handlerStart = toggleSrc.indexOf("const selectLocale");
     const handlerEnd = toggleSrc.indexOf("};", handlerStart);
     const handler = toggleSrc.slice(handlerStart, handlerEnd);
-    expect(handler).toContain("root.lang = next");
-    expect(handler).toContain("root.dir = localeDirection(next)");
-    expect(handler.indexOf("writeStoredLocale")).toBeGreaterThan(handler.indexOf("root.dir"));
+    // setAttribute form: react-compiler forbids .lang/.dir property mutation
+    // on values owned outside the component (lint rule).
+    expect(handler).toContain('root.setAttribute("lang", next)');
+    expect(handler).toContain('root.setAttribute("dir", localeDirection(next))');
+    expect(handler.indexOf("writeStoredLocale")).toBeGreaterThan(
+      handler.indexOf('root.setAttribute("dir"'),
+    );
   });
 
   it("init script and layout never call setItem for the locale key", () => {
@@ -273,7 +277,12 @@ describe("locale writers — only the LanguageToggle persists (source gates)", (
 describe("i18n scaffolding — static architecture + provider wiring", () => {
   it("src/i18n/request.ts reads NO dynamic APIs (static-first constraint, worklog 7-c)", () => {
     const requestSrc = readFileSync(join(ROOT, "src/i18n/request.ts"), "utf8");
-    expect(requestSrc).not.toMatch(/cookies\(|headers\(|draftMode\(/);
+    // Strip comments first: the architecture doc-block legitimately MENTIONS
+    // cookies()/headers() when explaining why they are banned.
+    const code = requestSrc
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .replace(/\/\/.*$/gm, "");
+    expect(code).not.toMatch(/cookies\(|headers\(|draftMode\(/);
     expect(requestSrc).toContain("getRequestConfig");
   });
 

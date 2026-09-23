@@ -4,11 +4,15 @@ import { defineConfig, devices } from "@playwright/test";
  * Playwright configuration for RoyCSS E2E tests.
  *
  * - Specs live in tests/e2e (one .spec.ts file per page section).
- * - Only chromium is enabled for the first pass (see ADR-005).
+ * - Multi-browser matrix: chromium + firefox + webkit (see tests/README.md).
+ *   Browser binaries are a local, one-time install — NOT a package.json dep:
+ *   `bunx playwright install firefox webkit` (~600 MB). WebKit on Linux also
+ *   needs system libraries: `sudo bunx playwright install-deps webkit`.
  * - The dev server is auto-started on port 3000 unless `PLAYWRIGHT_NO_SERVER`
  *   is set (used in CI when a server is already running).
  *
- * Run:    bunx playwright test
+ * Run:    bunx playwright test                      # all 3 projects
+ *         bunx playwright test --project=chromium  # one project
  * UI:     bunx playwright test --ui
  * Debug:  bunx playwright test --debug
  */
@@ -35,9 +39,18 @@ export default defineConfig({
     navigationTimeout: 30_000,
   },
   projects: [
+    // Chromium first: it is the reference engine every spec is written against.
     {
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
+    },
+    {
+      name: "firefox",
+      use: { ...devices["Desktop Firefox"] },
+    },
+    {
+      name: "webkit",
+      use: { ...devices["Desktop Safari"] },
     },
   ],
   ...(shouldStartServer

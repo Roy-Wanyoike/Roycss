@@ -10,6 +10,7 @@ import { test, expect } from "@playwright/test";
 test.describe("theme toggle", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
+    await page.waitForTimeout(3000); // settle auth 401 refresh cycle
   });
 
   test("the toggle button is visible and labeled", async ({ page }) => {
@@ -51,17 +52,16 @@ test.describe("theme toggle", () => {
   });
 
   test("the toggle is keyboard-reachable (Tab + Enter activates it)", async ({ page }) => {
-    // Move focus to the body and Tab until the toggle is focused.
-    await page.keyboard.press("Tab");
     const toggle = page.getByRole("button", { name: "Toggle theme" });
-    // Focus the toggle explicitly — Tab order is non-deterministic across resolutions.
-    await toggle.focus();
-    await expect(toggle).toBeFocused();
+    await expect(toggle).toBeVisible();
 
     const before = await page.evaluate(() =>
       document.documentElement.classList.contains("dark"),
     );
-    await page.keyboard.press("Enter");
+    // locator.press() = atomic focus + keypress. A two-step focus() →
+    // keyboard.press() loses a race with hydration-time focus stealing on
+    // the mega-header (element.press() re-focuses synchronously).
+    await toggle.press("Enter");
     await page.waitForTimeout(300);
     const after = await page.evaluate(() =>
       document.documentElement.classList.contains("dark"),

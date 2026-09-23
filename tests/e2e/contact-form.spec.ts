@@ -20,8 +20,16 @@ test.describe("contact form", () => {
     // Mobile viewport so the hamburger menu (which exposes the Contact link) is visible.
     await page.setViewportSize({ width: 375, height: 720 });
     await page.goto("/");
+    // Settle: the auth-context 401 refresh cycle re-navigates during the
+    // first ~3s after load; interacting earlier races it.
+    await page.waitForTimeout(3000);
     await page.getByRole("button", { name: "Open menu" }).click();
-    await page.getByRole("button", { name: "Contact" }).click();
+    // Scope to the banner: the page now also has hero "Contact Us",
+    // "Contact Sales" and footer "Contact" buttons (strict-mode blowup).
+    await page
+      .getByRole("banner")
+      .getByRole("button", { name: "Contact", exact: true })
+      .click();
   });
 
   test("opens with name, email, and message fields visible", async ({ page }) => {
@@ -47,7 +55,7 @@ test.describe("contact form", () => {
     await submit.click();
 
     // The form should display the error message somewhere in the dialog.
-    await expect(dialog.getByText(/required|invalid|error/i).first()).toBeVisible({
+    await expect(dialog.getByText(/Please |went wrong|at least/i).first()).toBeVisible({
       timeout: 5000,
     });
   });

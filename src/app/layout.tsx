@@ -124,7 +124,7 @@ const jsonLd = {
       name: "RoyCSS",
       url: "https://roycss.com",
       description: `${EFFECT_COUNT_FORMATTED} pure-CSS effects with live previews and copy-paste code — plus developer tools, design tokens, and AI assistance.`,
-      inLanguage: "en-US",
+      inLanguage: "en",
       publisher: { "@id": "https://roycss.com/#organization" },
     },
     {

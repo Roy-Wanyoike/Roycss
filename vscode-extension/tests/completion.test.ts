@@ -25,7 +25,9 @@ const { RecentlyUsed } = require("../src/recently-used") as {
   };
 };
 
-const FAKE_EFFECTS_COUNT = 1959;
+// The generated src/effects-data.ts (scripts/build-vscode-effects.ts) embeds
+// the full catalog — pin the exact count here so stale generated data fails.
+const EXPECTED_EFFECTS_COUNT = 1983;
 
 // ───────────────────────────────────────────────────────────────────────
 // Minimal mocks for the vscode types the tests touch
@@ -132,8 +134,8 @@ runTest('returns >1000 completion items for class="roycss-"', () => {
     `expected >1000 items, got ${result.items.length}`,
   );
   assert.ok(
-    result.items.length <= FAKE_EFFECTS_COUNT,
-    `expected ≤${FAKE_EFFECTS_COUNT} items, got ${result.items.length}`,
+    result.items.length <= EXPECTED_EFFECTS_COUNT,
+    `expected ≤${EXPECTED_EFFECTS_COUNT} items, got ${result.items.length}`,
   );
 });
 
@@ -271,13 +273,13 @@ runTest("returns [] when cursor is not in a class context", () => {
   }
 });
 
-// ─── Test 5: effects-data has 1959 entries (sanity check) ───
-runTest("effects-data has 1959 entries", () => {
+// ─── Test 5: effects-data has 1983 entries (sanity check) ───
+runTest("effects-data has 1983 entries", () => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { effects } = require("../src/effects-data") as {
     effects: Array<{ id: string; name: string }>;
   };
-  assert.strictEqual(effects.length, 1959, "effects must have exactly 1959 entries");
+  assert.strictEqual(effects.length, EXPECTED_EFFECTS_COUNT, `effects must have exactly ${EXPECTED_EFFECTS_COUNT} entries (regenerate via scripts/build-vscode-effects.ts if the catalog changed)`);
   // Verify no duplicate IDs.
   const ids = new Set(effects.map((e) => e.id));
   assert.strictEqual(ids.size, effects.length, "no duplicate IDs allowed");

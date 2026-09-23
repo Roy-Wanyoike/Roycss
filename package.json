@@ -14,7 +14,7 @@
     "utility-first",
     "roycss"
   ],
-  "homepage": "https://github.com/Roy-Wanyoike/Roycss",
+  "homepage": "https://roycss.com",
   "repository": {
     "type": "git",
     "url": "https://github.com/Roy-Wanyoike/Roycss.git"
@@ -59,6 +59,8 @@
     "./css": "./dist/roycss.css",
     "./css/min": "./dist/roycss.min.css",
     "./css/tailwind": "./dist/roycss.tailwind.css",
+    "./tailwind": "./dist/roycss.tailwind.css",
+    "./tailwind.css": "./dist/roycss.tailwind.css",
     "./category/animations": "./dist/roycss.animations.css",
     "./category/animations/min": "./dist/roycss.animations.min.css",
     "./category/hover": "./dist/roycss.hover.css",

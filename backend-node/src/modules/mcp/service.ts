@@ -71,9 +71,9 @@ const SEED_TOOLS: MCPTool[] = [
 
 // ─── Seed: 5 resources ───────────────────────────────────────────────────
 const SEED_RESOURCES: MCPResource[] = [
-  { uri: "roycss://effects", name: "All Effects", description: "All 1,569 effects (compact: id, name, category).", mimeType: "application/json" },
+  { uri: "roycss://effects", name: "All Effects", description: "All 1,983 effects (compact: id, name, category).", mimeType: "application/json" },
   { uri: "roycss://effects/{id}", name: "Effect Detail", description: "Single effect detail (template).", mimeType: "application/json" },
-  { uri: "roycss://categories", name: "Categories", description: "20 categories with counts.", mimeType: "application/json" },
+  { uri: "roycss://categories", name: "Categories", description: "29 categories with counts.", mimeType: "application/json" },
   { uri: "roycss://patterns", name: "Patterns", description: "10 UI patterns (compact).", mimeType: "application/json" },
   { uri: "roycss://recipes", name: "Recipes", description: "12 curated recipes (compact).", mimeType: "application/json" },
 ];

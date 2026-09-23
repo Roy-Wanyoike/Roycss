@@ -46,7 +46,7 @@ updates:
 
   # ─── 2. Backend npm (Express + Prisma + JWT) ──────────────────────────
   - package-ecosystem: npm
-    directory: "/backend"
+    directory: "/backend-node"
     schedule:
       interval: weekly
       day: monday

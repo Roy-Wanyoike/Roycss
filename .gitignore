@@ -58,6 +58,7 @@ db/*.db
 db/*.db-journal
 db/*.db-wal
 db/*.db-shm
+backend-node/prisma/*.db
 backend-node/prisma/dev.db*
 backend-node/prisma/migrations/dev.db*
 prisma/migrations/dev.db*

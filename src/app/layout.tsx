@@ -33,6 +33,27 @@ import {
 const themeInitScript = `(function(){try{var k='roycss-theme';var s=localStorage.getItem(k);var v=(s==='light'||s==='dark'||s==='system')?s:'system';var d=v==='dark'||(v==='system'&&window.matchMedia('(prefers-color-scheme: dark)').matches);var r=document.documentElement;r.classList.toggle('dark',d);r.style.colorScheme=d?'dark':'light';}catch(e){}})();`;
 
 /**
+ * Pre-hydration animation-pause script (issue #214 tail).
+ *
+ * Runs synchronously in <head> BEFORE first paint so a visitor who saved
+ * "Pause animations" (`roycss-animations-paused=true`, written by the
+ * PauseAnimationsToggle toggle handler) never sees a single frame of the
+ * marquee/carousel movement — the pause lands pre-paint, not on mount.
+ *
+ * Contract (mirrors themeInitScript, kept in lockstep by
+ * tests/unit/animation-pause-storage.test.ts):
+ *   - accepts ONLY the exact strings "true"/"false" (anything else —
+ *     missing, corrupt, or a throwing storage — means "running");
+ *   - READ-ONLY: it never WRITES the key. Only the user's toggle handler
+ *     persists, so a stale script can never clobber the stored choice
+ *     (issue #160 regression class).
+ *
+ * Kept as a SEPARATE const so the themeInitScript literal (regex-pinned
+ * by tests/unit/theme-persistence.test.ts) stays byte-identical.
+ */
+const pauseInitScript = `(function(){try{var k='roycss-animations-paused';var s=localStorage.getItem(k);if(s==='true'){document.documentElement.setAttribute('data-animations-paused','true');}}catch(e){}})();`;
+
+/**
  * JSON-LD structured data for SEO rich results (issue #188 item 5).
  *
  * A single @graph with three entities:
@@ -243,6 +264,9 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning className="dark" data-scroll-behavior="smooth">
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        {/* Issue #214: re-apply the persisted "Pause animations" preference
+            before first paint. Read-only — see pauseInitScript above. */}
+        <script dangerouslySetInnerHTML={{ __html: pauseInitScript }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Pause, Play } from "lucide-react";
+import { writeStoredAnimationPause } from "@/components/ui-library/foundation/animation-pause-storage";
 
 /**
  * Site-wide "Pause animations" toggle (issue #214 — WCAG 2.2.2).
@@ -20,6 +21,12 @@ import { Pause, Play } from "lucide-react";
  *    mount), so SSR markup is untouched — no hydration mismatch;
  *  - state survives client-side navigation because both headers (home
  *    mega-header + SiteHeader) re-read the <html> attribute on mount.
+ *  - the choice PERSISTS across reloads (issue #214 tail): the toggle
+ *    handler also writes `roycss-animations-paused` via the shared
+ *    animation-pause-storage module (write-on-user-intent-only), and the
+ *    pre-paint init script in layout.tsx re-applies the attribute from
+ *    storage before the first paint. The mount-time rAF read below picks
+ *    that attribute up — no extra mount logic needed.
  */
 const HTML_ATTR = "data-animations-paused";
 
@@ -48,6 +55,10 @@ export function PauseAnimationsToggle({
     } else {
       document.documentElement.removeAttribute(HTML_ATTR);
     }
+    // Issue #214 tail: persist on USER INTENT only — the same write-once
+    // contract as the theme toggle (#160). The pre-paint init script in
+    // layout.tsx reads this key back on the next load; it never writes.
+    writeStoredAnimationPause(window.localStorage, next);
   };
 
   const className =

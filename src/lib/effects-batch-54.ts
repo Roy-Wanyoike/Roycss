@@ -24,8 +24,11 @@ import type { CSSEffect } from "./roycss-types";
  *     interactive control ships a `:focus-visible` ring (#189 convention).
  *   • Effects styling `> span` children declare `childCount` so previews
  *     and usage snippets render the exact markup (audit-189 convention).
- *   • Structural patterns (:checked / :target) that need extra markup are
- *     documented in a REQUIRED MARKUP comment inside the cssCode itself.
+ *   • Structural patterns (:checked / :target / attribute-state) that need
+ *     extra markup are documented in a REQUIRED MARKUP comment inside the
+ *     cssCode itself AND mirrored as a structured `requiredMarkup` string
+ *     on the effect (issue #215) so the effect page renders the exact
+ *     markup instead of the span-derived default.
  *   • No JavaScript, no external dependencies — pure CSS only.
  */
 export const effectsBatch54: CSSEffect[] = [
@@ -115,6 +118,12 @@ export const effectsBatch54: CSSEffect[] = [
     tags: ["hamburger", "menu", "icon", "morph", "navigation"],
     previewType: "box",
     childCount: 3,
+    // Issue #215: structural — a real <button> with aria state, not a div.
+    requiredMarkup: `<button class="roycss-nav-hamburger-morph" aria-expanded="false" aria-label="Open menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>`,
     cssCode: `/* Navigation Patterns: Hamburger Morph X
    REQUIRED MARKUP: <button class="roycss-nav-hamburger-morph" aria-expanded="false"
                      aria-label="Open menu"><span></span><span></span><span></span></button>
@@ -185,6 +194,12 @@ export const effectsBatch54: CSSEffect[] = [
     tags: ["drawer", "sidebar", "off-canvas", "slide", "navigation"],
     previewType: "box",
     childCount: 3,
+    // Issue #215: structural — the CSS keys on the <aside> + data-open state.
+    requiredMarkup: `<aside class="roycss-nav-drawer-slide" data-open="false">
+  <span>Home</span>
+  <span>Catalog</span>
+  <span>About</span>
+</aside>`,
     cssCode: `/* Navigation Patterns: Peek Drawer
    REQUIRED MARKUP: <aside class="roycss-nav-drawer-slide" data-open="false">
                       <span>Home</span><span>Catalog</span><span>About</span>
@@ -444,6 +459,11 @@ export const effectsBatch54: CSSEffect[] = [
       "Auto-cycling before/after comparison: the top layer is clipped with an inset() wipe that sweeps back and forth, and hover pauses the cycle at the current split. Layer any two stacked images — pure CSS, no slider JS.",
     tags: ["compare", "before-after", "clip-path", "wipe", "media"],
     previewType: "box",
+    // Issue #215: structural — two stacked images the wipe compares.
+    requiredMarkup: `<figure class="roycss-media-compare-wipe">
+  <img src="after.jpg" alt="After">
+  <img src="before.jpg" alt="Before">
+</figure>`,
     cssCode: `/* Media Patterns: Before/After Wipe
    REQUIRED MARKUP: <figure class="roycss-media-compare-wipe">
                       <img src="after.jpg" alt="After">   <!-- bottom -->
@@ -491,16 +511,36 @@ export const effectsBatch54: CSSEffect[] = [
   45%, 55%  { clip-path: inset(0 15% 0 0); }
   85%, 100% { clip-path: inset(0 85% 0 0); }
 }
+/* Real-image mode (issue #215): the two stacked <img> children from the
+   required markup. The images paint over the demo's ::before/::after
+   gradient layers, and the top ("before") image carries the same wipe
+   animation + split line — so the shipped markup works as documented. */
+.roycss-media-compare-wipe > img {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+.roycss-media-compare-wipe > img:last-of-type {
+  clip-path: inset(0 50% 0 0);
+  animation: roy-media-compare-wipe 5.5s ease-in-out infinite;
+  border-inline-end: 2px solid oklch(0.99 0 0 / 0.85);
+}
 @media (hover: hover) {
-  .roycss-media-compare-wipe:hover::after {
+  .roycss-media-compare-wipe:hover::after,
+  .roycss-media-compare-wipe:hover > img:last-of-type {
     animation-play-state: paused;
   }
 }
-.roycss-media-compare-wipe:focus-within::after {
+.roycss-media-compare-wipe:focus-within::after,
+.roycss-media-compare-wipe:focus-within > img:last-of-type {
   animation-play-state: paused;
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-media-compare-wipe::after {
+  .roycss-media-compare-wipe::after,
+  .roycss-media-compare-wipe > img:last-of-type {
     animation: none;
     clip-path: inset(0 50% 0 0);
   }
@@ -517,6 +557,12 @@ export const effectsBatch54: CSSEffect[] = [
     tags: ["lightbox", "gallery", "target", "zoom", "media"],
     previewType: "box",
     childCount: 1,
+    // Issue #215: structural — the :target overlay is a second element the
+    // CSS ships rules for; without it those rules are dead code.
+    requiredMarkup: `<a href="#img-1" class="roycss-media-lightbox-zoom"><span></span></a>
+<div class="roycss-media-lightbox-zoom-overlay" id="img-1">
+  <a href="#" class="close" aria-label="Close">Close</a>
+</div>`,
     cssCode: `/* Media Patterns: Target Lightbox
    REQUIRED MARKUP:
      <a href="#img-1" class="roycss-media-lightbox-zoom"><span></span></a>

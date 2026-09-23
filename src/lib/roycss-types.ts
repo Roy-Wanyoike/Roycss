@@ -49,6 +49,14 @@ export interface CSSEffect {
   childCount?: number;
   /** Text to display for text/button previews. Defaults to "RoyCSS" or "Hover Me". */
   previewText?: string;
+  /**
+   * Structured required markup (issue #215): the exact HTML the effect's CSS
+   * requires — element names, attributes and hierarchy. Authored alongside
+   * the effect (the data side of the REQUIRED MARKUP comments); when present
+   * it replaces the span-derived snippet on the effect page. Effects whose
+   * CSS only needs child <span> elements keep using childCount instead.
+   */
+  requiredMarkup?: string;
 }
 
 export const categoryMeta: Record<

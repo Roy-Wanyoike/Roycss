@@ -6,7 +6,7 @@
  * Author: Royford Wanyoike Wamaitha
  * License: MIT
  *
- * Built: 2026-09-22
+ * Built: 2026-09-23
  * Effects: 1983
  * Categories: 29
  */
@@ -54079,16 +54079,36 @@
   45%, 55%  { clip-path: inset(0 15% 0 0); }
   85%, 100% { clip-path: inset(0 85% 0 0); }
 }
+/* Real-image mode (issue #215): the two stacked <img> children from the
+   required markup. The images paint over the demo's ::before/::after
+   gradient layers, and the top ("before") image carries the same wipe
+   animation + split line — so the shipped markup works as documented. */
+.roycss-media-compare-wipe > img {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+.roycss-media-compare-wipe > img:last-of-type {
+  clip-path: inset(0 50% 0 0);
+  animation: roy-media-compare-wipe 5.5s ease-in-out infinite;
+  border-inline-end: 2px solid oklch(0.99 0 0 / 0.85);
+}
 @media (hover: hover) {
-  .roycss-media-compare-wipe:hover::after {
+  .roycss-media-compare-wipe:hover::after,
+  .roycss-media-compare-wipe:hover > img:last-of-type {
     animation-play-state: paused;
   }
 }
-.roycss-media-compare-wipe:focus-within::after {
+.roycss-media-compare-wipe:focus-within::after,
+.roycss-media-compare-wipe:focus-within > img:last-of-type {
   animation-play-state: paused;
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-media-compare-wipe::after {
+  .roycss-media-compare-wipe::after,
+  .roycss-media-compare-wipe > img:last-of-type {
     animation: none;
     clip-path: inset(0 50% 0 0);
   }

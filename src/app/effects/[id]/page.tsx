@@ -192,6 +192,12 @@ const SECTION_HEADING =
 
 /* ── A11y badge row (server-rendered; issue #190) ──────────── */
 
+/**
+ * Issue #213: light-mode text tones bumped one step so every badge
+ * clears WCAG AA 4.5:1 (amber-600 was 2.88:1, emerald-600 3.25:1 on
+ * their 10%-tint backgrounds; amber-700 = 4.56:1, emerald-700 = 4.76:1).
+ * Dark tones keep the -400 values (9.1:1 / 10.2:1 — verified unchanged).
+ */
 const BADGE_TONE_CLASS: Record<EffectA11yBadge["tone"], string> = {
   // Issue #213 (extended): amber-600 measured 2.88:1 in light mode on the
   // 10%-tint pill — amber-700 = 4.56:1 (dark keeps amber-400 at 10.2:1).
@@ -249,11 +255,12 @@ function RequiredMarkupSection({
         Required markup
       </h2>
       <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-        {markup.exact
-          ? `This effect's CSS expects exactly ${markup.spanCount} child <span> element${
-              markup.spanCount === 1 ? "" : "s"
-            } — paste this markup inside the element that carries the roycss-${effect.id} class:`
-          : `This effect's CSS styles every child <span> inside the element that carries the roycss-${effect.id} class — add one per item (e.g. per letter or dot):`}
+        {markup.intro ??
+          (markup.exact
+            ? `This effect's CSS expects exactly ${markup.spanCount} child <span> element${
+                markup.spanCount === 1 ? "" : "s"
+              } — paste this markup inside the element that carries the roycss-${effect.id} class:`
+            : `This effect's CSS styles every child <span> inside the element that carries the roycss-${effect.id} class — add one per item (e.g. per letter or dot):`)}
       </p>
       <CodeBlock
         code={markup.snippet}

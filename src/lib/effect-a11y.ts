@@ -18,7 +18,7 @@
  *                    sr-only recipe); the value is the top-priority reason.
  *
  * DESIGN DECISIONS (do not undo without updating docs/EFFECT-A11Y-TIERS.md):
- *   - CSSEffect (src/lib/roycss-types.ts) is deliberately UNTOUCHED. The 52
+ *   - CSSEffect (src/lib/roycss-types.ts) is deliberately UNTOUCHED. The 53
  *     batch files construct it; derived data lives beside it and is consumed
  *     by composition (id lookup), not by mutating the catalog type.
  *   - motionSafe: false does NOT mean "unsafe to install": dist/roycss.css

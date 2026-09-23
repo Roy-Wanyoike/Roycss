@@ -1,12 +1,12 @@
 import { type Metadata, type Viewport } from "next";
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
-import { NextIntlClientProvider } from "next-intl";
 import "./globals.css";
 import "./roycss.css";
 import "./roymotion.css";
 import { Toaster } from "@/components/ui/sonner";
 import { ServiceWorkerRegistration } from "@/components/roycss/sw-register";
 import { AuthProvider } from "@/components/roycss/auth/auth-context";
+import { LocaleProvider } from "@/i18n/locale-provider";
 import {
   EFFECT_COUNT_FORMATTED,
   PRODUCT_COUNT,
@@ -76,7 +76,7 @@ const pauseInitScript = `(function(){try{var k='roycss-animations-paused';var s=
  * script is the client-side complement. It never WRITES the key — only
  * the LanguageToggle does.
  */
-const localeInitScript = `(function(){try{var T={"en":["en","ltr"]};var s=localStorage.getItem('roycss-locale');var c=(s&&T[s]&&T[s].length===2)?T[s]:T.en;var r=document.documentElement;r.lang=c[0];r.dir=c[1];}catch(e){}})();`;
+const localeInitScript = `(function(){try{var T={"en":["en","ltr"],"ar":["ar","rtl"]};var s=localStorage.getItem('roycss-locale');var c=(s&&T[s]&&T[s].length===2)?T[s]:T.en;var r=document.documentElement;r.lang=c[0];r.dir=c[1];}catch(e){}})();`;
 
 /**
  * JSON-LD structured data for SEO rich results (issue #188 item 5).
@@ -304,12 +304,14 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} antialiased bg-background text-foreground`}
       >
         <AuthProvider>
-          {/* next-intl "without i18n routing" (issue #129 PR-A): the provider
-              inherits the STATIC en config from src/i18n/request.ts so client
-              components (chrome) can consume useTranslations. Server
-              components use getTranslations from next-intl/server. No locale
-              segment, no middleware — every route stays static. */}
-          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+          {/* next-intl "without i18n routing" (issue #129): LocaleProvider is
+              the PR-B client wrapper around NextIntlClientProvider
+              (src/i18n/locale-provider.tsx). It still serves the STATIC en
+              config from src/i18n/request.ts for every server render and the
+              first client render, and adopts/switches the client-side locale
+              ("en" | "ar") from the pre-paint lang/dir + the LanguageToggle
+              without any dynamic server API — every route stays static. */}
+          <LocaleProvider>{children}</LocaleProvider>
         </AuthProvider>
         {/* Single toast system (issue #114): sonner only — theme-aware via
             next-themes, bottom-right, richColors + closeButton to match the

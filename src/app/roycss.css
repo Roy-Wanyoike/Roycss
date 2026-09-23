@@ -62,6 +62,20 @@
   }
 }
 
+/* Issue #129 PR-B (RTL): reverse the site marquee under dir="rtl" — the
+   exact pattern the batch-53 effect marquee ships
+   (src/lib/effects-batch-53.ts "marquee-rtl-safe"): the translateX
+   keyframes are direction-agnostic, so the scroll direction flips by
+   playing them backwards instead of duplicating keyframes.
+   !important is REQUIRED here: the Marquee primitive
+   (motion-primitives.tsx) always writes animation-direction inline
+   ("normal" for direction="left"), and an author !important declaration
+   is the only thing that beats an inline style. In LTR this rule does
+   not match, so the inline value still applies. */
+[dir="rtl"] .roycss-marquee-track {
+  animation-direction: reverse !important;
+}
+
 /* ─── Animated Gradient Text ────────────────────────────────── */
 @keyframes roycss-gradient-pan {
   0% { background-position: 0% 50%; }

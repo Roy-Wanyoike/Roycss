@@ -65,7 +65,7 @@ jobs:
       # (searches for the marker) instead of spamming new ones.
       - name: Post scores as PR comment
         if: always()
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const fs = require('fs');

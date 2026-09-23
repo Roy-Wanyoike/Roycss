@@ -14,6 +14,7 @@ import { test, expect } from "@playwright/test";
 test.describe("search overlay (⌘K)", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
+    await page.waitForTimeout(3000); // settle auth 401 refresh cycle
   });
 
   test("opens the overlay when the ⌘K button is clicked", async ({ page }) => {
@@ -21,9 +22,7 @@ test.describe("search overlay (⌘K)", () => {
     await expect(searchBtn).toBeVisible();
     await searchBtn.click();
 
-    const input = page.getByRole("textbox", {
-      name: "Search effects, recipes, patterns, and sections",
-    });
+    const input = page.getByRole("dialog").getByRole("searchbox");
     await expect(input).toBeVisible();
     await expect(input).toBeFocused();
   });
@@ -33,17 +32,13 @@ test.describe("search overlay (⌘K)", () => {
     const modifier = isMac ? "Meta" : "Control";
     await page.keyboard.press(`${modifier}+K`);
 
-    const input = page.getByRole("textbox", {
-      name: "Search effects, recipes, patterns, and sections",
-    });
+    const input = page.getByRole("dialog").getByRole("searchbox");
     await expect(input).toBeVisible();
   });
 
   test("typing a query surfaces matching effects", async ({ page }) => {
     await page.getByRole("button", { name: "Search (⌘K)" }).click();
-    const input = page.getByRole("textbox", {
-      name: "Search effects, recipes, patterns, and sections",
-    });
+    const input = page.getByRole("dialog").getByRole("searchbox");
     await input.fill("glow");
 
     // Either results show up, or the "No results for ..." empty state appears.
@@ -55,9 +50,7 @@ test.describe("search overlay (⌘K)", () => {
 
   test("pressing Escape closes the overlay", async ({ page }) => {
     await page.getByRole("button", { name: "Search (⌘K)" }).click();
-    const input = page.getByRole("textbox", {
-      name: "Search effects, recipes, patterns, and sections",
-    });
+    const input = page.getByRole("dialog").getByRole("searchbox");
     await expect(input).toBeVisible();
 
     await page.keyboard.press("Escape");
@@ -70,9 +63,7 @@ test.describe("search overlay (⌘K)", () => {
     await expect(closeBtn).toBeVisible();
     await closeBtn.click();
 
-    const input = page.getByRole("textbox", {
-      name: "Search effects, recipes, patterns, and sections",
-    });
+    const input = page.getByRole("dialog").getByRole("searchbox");
     await expect(input).toBeHidden();
   });
 });

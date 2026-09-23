@@ -4,7 +4,9 @@ import { test, expect } from "@playwright/test";
  * Animation Playground — side panel for tweaking effect parameters.
  *
  * Golden path:
- *   1. The "Open animation playground" button opens the side panel.
+ *   1. The "Developer tools" nav dropdown exposes a "Playground" item that
+ *      opens the side panel (the old dedicated home toolbar button is gone;
+ *      all 70 tools now live under the Developer tools menu).
  *   2. The panel exposes a "Generated CSS" code block (non-empty).
  *   3. The Copy CSS button is present and clickable.
  *   4. The Replay button is present (so users can re-trigger animations).
@@ -16,26 +18,22 @@ import { test, expect } from "@playwright/test";
 test.describe("animation playground", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
+    // Settle: the auth-context 401 refresh cycle re-navigates within ~3s.
+    await page.waitForTimeout(3000);
+    await page.getByRole("button", { name: "Developer tools" }).click();
+    await page.getByRole("menuitem", { name: "Playground" }).click();
   });
 
   test("opens the playground panel from the nav button", async ({ page }) => {
-    const playgroundBtn = page.getByRole("button", { name: "Open animation playground" });
-    // The button is hidden on extra-small viewports; force desktop width.
-    await page.setViewportSize({ width: 1280, height: 800 });
-    await expect(playgroundBtn).toBeVisible();
-    await playgroundBtn.click();
-
     const panel = page.getByRole("dialog");
     await expect(panel).toBeVisible();
     await expect(panel.getByText(/Animation Playground/i)).toBeVisible();
   });
 
   test("shows the Generated CSS code block with non-empty content", async ({ page }) => {
-    await page.setViewportSize({ width: 1280, height: 800 });
-    await page.getByRole("button", { name: "Open animation playground" }).click();
-
     const panel = page.getByRole("dialog");
-    const label = panel.getByText(/Generated CSS/i);
+    // exact: the sheet description also mentions "generated CSS" in passing.
+    const label = panel.getByText("Generated CSS", { exact: true });
     await expect(label).toBeVisible();
 
     const codeBlock = panel.locator("pre code").first();
@@ -46,15 +44,11 @@ test.describe("animation playground", () => {
   });
 
   test("exposes a Copy CSS button", async ({ page }) => {
-    await page.setViewportSize({ width: 1280, height: 800 });
-    await page.getByRole("button", { name: "Open animation playground" }).click();
     const copyBtn = page.getByRole("dialog").getByRole("button", { name: /Copy CSS/i }).first();
     await expect(copyBtn).toBeVisible();
   });
 
   test("exposes at least one slider for adjusting animation parameters", async ({ page }) => {
-    await page.setViewportSize({ width: 1280, height: 800 });
-    await page.getByRole("button", { name: "Open animation playground" }).click();
     const panel = page.getByRole("dialog");
     // Radix Slider exposes role="slider".
     const sliders = panel.getByRole("slider");
@@ -64,15 +58,11 @@ test.describe("animation playground", () => {
   });
 
   test("exposes a Replay button", async ({ page }) => {
-    await page.setViewportSize({ width: 1280, height: 800 });
-    await page.getByRole("button", { name: "Open animation playground" }).click();
     const replayBtn = page.getByRole("dialog").getByRole("button", { name: /Replay animation/i }).first();
     await expect(replayBtn).toBeVisible();
   });
 
   test("closes when Escape is pressed", async ({ page }) => {
-    await page.setViewportSize({ width: 1280, height: 800 });
-    await page.getByRole("button", { name: "Open animation playground" }).click();
     const panel = page.getByRole("dialog");
     await expect(panel).toBeVisible();
     await page.keyboard.press("Escape");

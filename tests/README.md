@@ -14,7 +14,7 @@ tests/
 │   ├── patterns.test.ts           # 10 patterns + searchPatterns()
 │   ├── design-tokens.test.ts      # OKLCH-only / color-mix / generators
 │   └── framework-adapters.test.ts # 6 framework code examples
-├── e2e/                           # Playwright — chromium vs. dev server
+├── e2e/                           # Playwright — chromium + firefox + webkit vs. dev server
 │   ├── home.spec.ts
 │   ├── effects-grid.spec.ts
 │   ├── search-overlay.spec.ts
@@ -24,7 +24,8 @@ tests/
 │   ├── navigation.spec.ts
 │   ├── theme-toggle.spec.ts
 │   ├── contact-form.spec.ts
-│   └── footer.spec.ts
+│   ├── footer.spec.ts
+│   └── cross-browser-smoke.spec.ts # 3-check sanity pass, runs on EVERY project
 ├── a11y/                          # axe-core audits (results/ gitignored)
 ├── i18n/                          # logical-property / RTL audits (results/ gitignored)
 ├── load/                          # k6 load-test scenarios
@@ -48,6 +49,30 @@ If you're bootstrapping a fresh checkout, install everything with:
 bun install
 bunx playwright install chromium        # ~115 MB, one-time
 ```
+
+### Multi-browser matrix (chromium + firefox + webkit)
+
+The Playwright config declares **three projects** — `chromium`, `firefox`,
+`webkit` — so every spec (including `cross-browser-smoke.spec.ts`) runs
+against all three engines. Browser binaries are a local, one-time artifact
+**not** a `package.json` dependency:
+
+```bash
+# One-time: download the firefox + webkit browser binaries (~600 MB total)
+bunx playwright install firefox webkit
+
+# Linux only, one-time: WebKit needs system libraries (GTK4, gstreamer, …)
+sudo bunx playwright install-deps webkit
+```
+
+> **WebKit note:** without the system libraries, `bunx playwright test`
+> fails the webkit project with "Host system is missing dependencies to run
+> browsers" — Playwright reports the exact missing libs. The chromium and
+> firefox projects are unaffected; you can scope a run with
+> `--project=chromium --project=firefox` (see below).
+
+The browser binaries are cached in `~/.cache/ms-playwright`, so this is a
+per-machine step, not a per-clone one.
 
 ## Running unit tests
 
@@ -74,11 +99,15 @@ you run `bunx playwright test`. If you already have a dev server running
 locally, set `PLAYWRIGHT_NO_SERVER=1` to skip the auto-start.
 
 ```bash
-# Full chromium suite (auto-starts dev server)
+# Full matrix (chromium + firefox + webkit; auto-starts dev server)
 bunx playwright test
 
 # Single spec file
 bunx playwright test tests/e2e/home.spec.ts
+
+# Scope the run to specific browser projects
+bunx playwright test --project=chromium
+bunx playwright test --project=chromium --project=firefox
 
 # Headed mode (visible browser)
 bunx playwright test --headed
@@ -97,6 +126,18 @@ PLAYWRIGHT_BASE_URL=https://roycss-preview.example.com bunx playwright test
 ```
 
 **Retry policy:** 1 retry on CI (`CI=true`), 0 retries locally.
+
+**Matrix runs run all three projects by default.** If you only want one
+engine's feedback loop, pass `--project`. The `cross-browser-smoke.spec.ts`
+spec is intentionally cheap (~3 tests/browser) so the full matrix stays
+fast; the per-surface specs carry the deep coverage.
+
+**CI note:** GitHub Actions are owner-blocked for this repo (issue #75), so
+the matrix currently runs **locally** as a pre-merge gate. The config is
+already CI-ready (conditional retries, `forbidOnly`, github reporter) for
+the day Actions unblock — at that point add
+`bunx playwright install --with-deps firefox webkit` next to the existing
+chromium install line in the workflow sketch below.
 
 ## Running both
 
@@ -149,4 +190,5 @@ jobs:
 | Playwright: "webServer timeout"                      | Increase `webServer.timeout` in `playwright.config.ts`; or run `bun run dev` manually and use `PLAYWRIGHT_NO_SERVER=1`. |
 | Coverage < 70 % after adding a new `src/lib/` module | Add unit tests for the new module; if it's pure data (like `effects-batch-*.ts`), add it to `coverage.exclude` only if it's covered transitively. |
 | `bunx playwright test` reports "chromium not found"  | Run `bunx playwright install chromium`.                             |
+| webkit project fails: "Host system is missing dependencies" | Run `sudo bunx playwright install-deps webkit`; until then scope runs with `--project=chromium --project=firefox`. |
 | Contact-form spec fails on submit                    | Confirm `page.route("**/api/contact", …)` mock is still wired; the API contract may have changed. |

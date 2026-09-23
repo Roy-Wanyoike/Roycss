@@ -25,6 +25,9 @@ const ROOT = join(__dirname, "..", "..");
  *      SoftwareApplication; the FAQPage JSON-LD questions/answers match the
  *      rendered FAQ content exactly (same data module).
  *   6. Every docs page carries its own self-canonical path in source.
+ *
+ * Issue #206 additions: home self-canonical (page-level only), AI-crawler
+ * robots rules, /llms.txt presence.
  */
 
 describe("pageMeta helper (#187)", () => {
@@ -112,7 +115,7 @@ describe("home FAQPage JSON-LD (#188 item 5)", () => {
   });
 });
 
-describe("robots.txt (#188 item 2)", () => {
+describe("robots.txt (#188 item 2, #206 AI policy)", () => {
   it("disallows the API surface and auth token pages, allowing /api/og", () => {
     const txt = robots();
     expect(txt.sitemap).toBe("https://roycss.com/sitemap.xml");
@@ -124,6 +127,44 @@ describe("robots.txt (#188 item 2)", () => {
     expect(disallow).toContain("/verify-email");
     expect(disallow).toContain("/reset-password");
     expect(allow).toContain("/api/og");
+  });
+
+  it("explicitly allows the AI crawlers with the same private-surface exclusions (#206)", () => {
+    const raw = robots().rules;
+    const rules = Array.isArray(raw) ? raw : [raw];
+    const uagents = ["GPTBot", "ClaudeBot", "CCBot", "PerplexityBot"];
+    for (const ua of uagents) {
+      const group = rules.find(
+        (r) => Array.isArray(r.userAgent) && r.userAgent.includes(ua),
+      );
+      expect(group, `${ua} has an explicit rule group`).toBeDefined();
+      expect(group!.allow).toContain("/");
+      expect(group!.allow).toContain("/api/og");
+      expect(group!.disallow).toContain("/api/");
+      expect(group!.disallow).toContain("/verify-email");
+      expect(group!.disallow).toContain("/reset-password");
+    }
+  });
+});
+
+describe("home self-canonical + /llms.txt (#206)", () => {
+  it("home declares its own alternates.canonical — at PAGE level only", () => {
+    const pageSrc = readFileSync(join(ROOT, "src/app/page.tsx"), "utf8");
+    expect(pageSrc).toMatch(/alternates:\s*\{\s*canonical:\s*"\/"/);
+    // Never at root layout — that re-created the #187 fold-in bug.
+    const layoutSrc = readFileSync(join(ROOT, "src/app/layout.tsx"), "utf8");
+    expect(layoutSrc).not.toMatch(/alternates:\s*\{[\s\S]*?canonical/);
+  });
+
+  it("ships /llms.txt with the machine-readable entry points", () => {
+    const llms = readFileSync(join(ROOT, "public", "llms.txt"), "utf8");
+    expect(llms.startsWith("# RoyCSS")).toBe(true);
+    expect(llms).toContain("https://roycss.com/docs/getting-started");
+    expect(llms).toContain("https://roycss.com/effects");
+    expect(llms).toContain("https://unpkg.com/roycss/dist/roycss.min.css");
+    expect(llms).toContain("https://roycss.com/sitemap.xml");
+    expect(llms).toContain("npm install roycss");
+    expect(llms).toContain("mcp-server");
   });
 });
 

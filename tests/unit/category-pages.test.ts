@@ -8,7 +8,7 @@ import {
   categoryPageDescription,
   categoryPageKeywords,
   categoryLabel,
-  CATEGORY_OG_IMAGE,
+  categoryOgImage,
 } from "@/lib/category-seo";
 import { SITE_URL } from "@/app/effects/_lib/static-effects";
 
@@ -84,8 +84,10 @@ describe("category landing pages — SEO copy budgets", () => {
     expect(keywords).toContain("RoyCSS");
   });
 
-  it("OG image is the static brand card (absolute URL composition)", () => {
-    expect(CATEGORY_OG_IMAGE).toBe("/api/og");
+  it("OG image is the dedicated /api/og?category= card (issue #206)", () => {
+    for (const category of categoryOrder) {
+      expect(categoryOgImage(category)).toBe(`/api/og?category=${category}`);
+    }
   });
 });
 

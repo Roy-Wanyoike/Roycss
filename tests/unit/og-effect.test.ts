@@ -10,6 +10,12 @@ import {
   oklchToRgb,
   resolveEffectOg,
 } from "@/app/api/og/_lib/og-effect";
+import {
+  CategoryOgImage,
+  buildCategoryOgImage,
+  resolveCategoryOg,
+  categoryEffectCount,
+} from "@/app/api/og/_lib/og-category";
 import { getEffect } from "@/app/effects/_lib/static-effects";
 
 const ROOT = join(__dirname, "..", "..");
@@ -160,6 +166,59 @@ describe("route wiring — /api/og", () => {
 
   it("never 500s a crawler — Satori failures fall back to the brand card", () => {
     expect(route.match(/getOgPng\(\)/g)?.length).toBeGreaterThanOrEqual(3);
+  });
+});
+
+describe("category OG branch — /api/og?category= (#206)", () => {
+  const route = readFileSync(ROUTE_SRC, "utf8");
+
+  it("resolves catalog slugs (same membership check as the landing page)", () => {
+    expect(resolveCategoryOg("glass-ui")).toBe("glass-ui");
+    expect(resolveCategoryOg("animations")).toBe("animations");
+    expect(resolveCategoryOg("not-a-category")).toBeUndefined();
+    expect(resolveCategoryOg("")).toBeUndefined();
+  });
+
+  it("counts are derived from the bundled catalog (no drift)", () => {
+    expect(categoryEffectCount("animations")).toBeGreaterThan(0);
+  });
+
+  it("carries the label, wordmark and category landing URL", () => {
+    const category = resolveCategoryOg("glass-ui");
+    expect(category).toBeDefined();
+    const serialized = JSON.stringify(CategoryOgImage({ category: category! }));
+    expect(serialized).toContain("RoyCSS");
+    expect(serialized).toContain("roycss.com/effects/category/glass-ui");
+    expect(serialized).toContain("copy-paste effects");
+    expect(serialized).not.toContain("undefined");
+  });
+
+  it("buildCategoryOgImage wraps the card for the route (JSX-free entry)", () => {
+    const category = resolveCategoryOg("hover");
+    expect(category).toBeDefined();
+    const element = buildCategoryOgImage(category!);
+    expect(element.type).toBe(CategoryOgImage);
+    expect((element.props as { category: unknown }).category).toBe(category);
+  });
+
+  it("route wires the category param with a 404 contract like the effect branch", () => {
+    expect(route).toContain('searchParams.get("category")');
+    expect(route).toContain("buildCategoryOgImage");
+    expect(route).toContain('"Unknown category slug"');
+  });
+});
+
+describe("brand card dims — declared og:image size is the served PNG (#206)", () => {
+  it("public/og.png is exactly the declared 1200×630", () => {
+    // PNG IHDR: bytes 16-24 are big-endian width/height.
+    const png = readFileSync(join(ROOT, "public", "og.png"));
+    expect(png.readUInt32BE(16)).toBe(OG_WIDTH);
+    expect(png.readUInt32BE(20)).toBe(OG_HEIGHT);
+  });
+
+  it("layout.tsx declares the same dims for the /api/og image", () => {
+    const layoutSrc = readFileSync(join(ROOT, "src/app/layout.tsx"), "utf8");
+    expect(layoutSrc).toMatch(/url: "\/api\/og"[\s\S]{0,200}?width: 1200,\s*height: 630/);
   });
 });
 

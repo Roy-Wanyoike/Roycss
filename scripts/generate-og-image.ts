@@ -40,7 +40,7 @@ const SVG = `<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
 
   <!-- Stats -->
   <text x="80" y="470" font-family="system-ui, sans-serif" font-size="22" fill="#9ca3af">
-    <tspan fill="#00A8FF" font-weight="700">1,959</tspan> Effects · <tspan fill="#00A8FF" font-weight="700">62</tspan> Products · <tspan fill="#00A8FF" font-weight="700">68</tspan> DevTools · <tspan fill="#00A8FF" font-weight="700">AI</tspan> Assistance
+    <tspan fill="#00A8FF" font-weight="700">1,983</tspan> Effects · <tspan fill="#00A8FF" font-weight="700">62</tspan> Products · <tspan fill="#00A8FF" font-weight="700">70</tspan> DevTools · <tspan fill="#00A8FF" font-weight="700">AI</tspan> Assistance
   </text>
 
   <!-- Bottom -->
@@ -50,7 +50,12 @@ const SVG = `<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
 </svg>`;
 
 async function main() {
-  const png = await sharp(Buffer.from(SVG), { density: 144 })
+  /* Issue #206: render at the DECLARED og:image size (1200×630) — the
+     previous density:144 emitted a 2400×1260 PNG while layout.tsx and
+     src/lib/seo.ts pageMeta both declared 1200×630, and /api/og serves
+     this file verbatim for every non-effect page. density:72 = 1× of
+     the 1200×630 SVG canvas, matching the declared dims exactly. */
+  const png = await sharp(Buffer.from(SVG), { density: 72 })
     .png({ quality: 95, compressionLevel: 9 })
     .toBuffer();
   writeFileSync(join(PUBLIC_DIR, "og.png"), png);

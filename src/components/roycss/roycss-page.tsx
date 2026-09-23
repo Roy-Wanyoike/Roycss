@@ -1150,7 +1150,7 @@ function FeaturedCarousel({ onSelectEffect }: { onSelectEffect: (effect: CSSEffe
       <div className="container mx-auto px-4 sm:px-6">
         <SectionHeading
           eyebrow="Rotating showcase"
-          title="Featured Effects"
+          title="Featured Highlights"
           subtitle={`Every effect gets its moment in the spotlight — cycling through all ${effects.length} in an infinite loop.`}
         />
 

@@ -295,7 +295,7 @@ describe("site CSS hooks for the pause mechanism (issue #214)", () => {
 
   it("roycss.css keeps the hover-pause behind @media (hover: hover) (no touch sticky-hover)", () => {
     expect(roycssCss).toMatch(
-      /@media \(hover: hover\) \{[^}]*&\[data-pause-on-hover="true"\]:hover \.roycss-marquee-track \{[^}]*animation-play-state: paused;[^}]*\}/s,
+      /@media \(hover: hover\) \{[^}]*&\[data-pause-on-hover="true"\]:hover \.roycss-marquee-track \{[^}]*animation-play-state: paused;[^}]*\}/,
     );
   });
 

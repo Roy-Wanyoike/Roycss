@@ -261,7 +261,13 @@ describe("pause writers — only the user toggle persists (issue #214 tail)", ()
   });
 
   it("the toggle keeps its constant accessible name + aria-pressed state", () => {
-    expect(toggleSrc).toContain('aria-label="Pause animations"');
+    // i18n note: the literal moved to messages/en.json (SiteHeader.pauseAnimations)
+    // when #129 PR-A extracted chrome strings; the catalog value IS the stable name.
+    const en = JSON.parse(
+      readFileSync(join(ROOT, "messages/en.json"), "utf8"),
+    ) as { SiteHeader: Record<string, string> };
+    expect(en.SiteHeader.pauseAnimations).toBe("Pause animations");
+    expect(toggleSrc).toContain('aria-label={t("pauseAnimations")}');
     expect(toggleSrc).toContain("aria-pressed={paused}");
   });
 

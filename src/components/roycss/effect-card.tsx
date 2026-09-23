@@ -427,8 +427,11 @@ export const EffectCard = memo(function EffectCard({
               title={badge.title}
               className={cn(
                 "text-xs px-1.5 py-0",
+                // Issue #213: amber-600 measured 2.88:1 in light mode on the
+                // 10%-tint pill background — amber-700 = 4.56:1 (dark keeps
+                // amber-400 at 10.2:1).
                 badge.tone === "amber" &&
-                  "border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400",
+                  "border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-400",
                 badge.tone === "muted" &&
                   "border-border/60 bg-muted/50 text-muted-foreground",
                 badge.tone === "violet" &&

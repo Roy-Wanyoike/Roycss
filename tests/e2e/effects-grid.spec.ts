@@ -5,18 +5,37 @@ import { test, expect } from "@playwright/test";
  *
  * Covers the three highest-traffic user flows:
  *   1. Browse: grid renders, count is plausible, cards have visible names.
- *   2. Filter by category: clicking a category pill changes the visible count.
- *   3. Filter by search: typing narrows the visible cards.
+ *   2. Filter by category: clicking a category pill shrinks the summary count.
+ *   3. Filter by search: typing narrows the results; clearing restores them.
  *   4. Detail dialog: clicking a card opens a dialog with the effect name and CSS.
  *
- * Selectors are role/label-based so a Tailwind refactor can't break the suite.
+ * The grid is window-rendered (VirtualScrollGrid renders one BATCH of cards
+ * and loads more on scroll), so the DOM card count is a RENDER WINDOW, not
+ * the result size — the authoritative count is the "Showing N effects"
+ * summary line. Cards are buttons whose accessible name is
+ * "<Name> — <description>. Opens the effect details."
  */
 test.describe("effects grid", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
-    // Scroll the effects section into view so virtualization doesn't hide cards.
+    // Auth 401 refresh re-navigates the page within ~3s of first load.
+    await page.waitForTimeout(3000);
+    // Scroll the effects section into view so the grid window renders cards.
     await page.locator("#effects").scrollIntoViewIfNeeded();
+    await page.waitForTimeout(500);
   });
+
+  /** The "Showing N effects…" summary paragraph — the authoritative count. */
+  function summary(page: import("@playwright/test").Page) {
+    return page.getByText(/Showing \d+ effects?/i).first();
+  }
+
+  async function summaryTotal(page: import("@playwright/test").Page) {
+    const text = await summary(page).innerText();
+    const n = Number(text.match(/Showing (\d+)/i)?.[1]);
+    expect(n, `summary "${text}" should contain a count`).not.toBeNaN();
+    return n;
+  }
 
   test("renders the effects section with the expected heading", async ({ page }) => {
     const heading = page.getByRole("heading", { name: /All Effects/i });
@@ -24,43 +43,48 @@ test.describe("effects grid", () => {
   });
 
   test("renders at least one effect card with a visible name", async ({ page }) => {
-    // Every effect card is a <button> with aria-label "View details for <Name>".
-    const cards = page.getByRole("button", { name: /View details for .+/i });
+    // Every grid card is a <button> named "<Name> — <desc>. Opens the effect details."
+    const cards = page.getByRole("button", { name: /Opens the effect details/ });
     await expect(cards.first()).toBeVisible();
     const count = await cards.count();
-    expect(count, "expected at least 12 visible effect cards").toBeGreaterThanOrEqual(12);
+    expect(count, "the initial render window should hold a batch of cards").toBeGreaterThanOrEqual(12);
+    // …and the summary reports the full (virtualized) catalog size.
+    const total = await summaryTotal(page);
+    expect(total, "catalog should expose the full effect count via the summary").toBeGreaterThanOrEqual(12);
   });
 
   test("shows a result count that matches the visible card count", async ({ page }) => {
-    const cards = page.getByRole("button", { name: /View details for .+/i });
-    const initialCount = await cards.count();
-    expect(initialCount).toBeGreaterThan(0);
-    // The "Showing N effects" text should match (within the visible page).
-    const summary = page.getByText(/Showing \d+ effects/i).first();
-    await expect(summary).toBeVisible();
+    const cards = page.getByRole("button", { name: /Opens the effect details/ });
+    const count = await cards.count();
+    expect(count).toBeGreaterThan(0);
+    await expect(summary(page)).toBeVisible();
   });
 
-  test("clicking a category pill filters the visible card count", async ({ page }) => {
-    const cards = page.getByRole("button", { name: /View details for .+/i });
-    const initialCount = await cards.count();
+  test("clicking a category pill filters the result count", async ({ page }) => {
+    const cards = page.getByRole("button", { name: /Opens the effect details/ });
+    await expect(cards.first()).toBeVisible();
+    const initialTotal = await summaryTotal(page);
 
-    // Pick the "Loaders" pill if present (small enough to filter quickly).
+    // Pick the "Loaders" pill (a mid-size category).
     const loadersPill = page.getByRole("button", { name: /^Loaders/i }).first();
     await expect(loadersPill).toBeVisible();
     await loadersPill.click();
 
-    // Wait for the count summary to update, then re-count visible cards.
-    await expect(page.getByText(/Showing \d+ (?:effect|effects) in/i).first()).toBeVisible();
-    const filteredCount = await cards.count();
-    expect(filteredCount, "filtering by Loaders should reduce the visible count").toBeLessThan(
-      initialCount,
-    );
-    expect(filteredCount, "Loaders category should have at least 1 effect").toBeGreaterThan(0);
+    // The summary flips to "Showing N effects in Loaders" and N shrinks.
+    await expect
+      .poll(() => summary(page).innerText(), { timeout: 10_000 })
+      .toMatch(/Showing \d+ effects? in /i);
+    const filteredTotal = await summaryTotal(page);
+    expect(filteredTotal, "filtering by Loaders should reduce the count").toBeLessThan(initialTotal);
+    expect(filteredTotal, "Loaders category should have at least 1 effect").toBeGreaterThan(0);
+    // The re-rendered grid still shows cards from the filtered window.
+    await expect(cards.first()).toBeVisible();
   });
 
-  test("typing into the search box narrows the visible cards", async ({ page }) => {
-    const cards = page.getByRole("button", { name: /View details for .+/i });
-    const initialCount = await cards.count();
+  test("typing into the search box narrows the results", async ({ page }) => {
+    const cards = page.getByRole("button", { name: /Opens the effect details/ });
+    await expect(cards.first()).toBeVisible();
+    const initialTotal = await summaryTotal(page);
 
     const search = page.getByRole("searchbox", {
       name: "Search CSS effects by name, tag, or category",
@@ -68,38 +92,44 @@ test.describe("effects grid", () => {
     await expect(search).toBeVisible();
     await search.fill("glow");
 
-    // Give the UI a tick to filter.
-    await page.waitForTimeout(400);
-    const filteredCount = await cards.count();
-    expect(filteredCount, "searching 'glow' should narrow results").toBeLessThanOrEqual(
-      initialCount,
-    );
+    // The summary echoes the active query and the result count shrinks.
+    await expect
+      .poll(() => summary(page).innerText(), { timeout: 10_000 })
+      .toMatch(/matching/i);
+    const filteredTotal = await summaryTotal(page);
+    expect(filteredTotal, "searching 'glow' should narrow results").toBeLessThan(initialTotal);
+    await expect(cards.first()).toBeVisible();
   });
 
   test("clearing the search restores the original count", async ({ page }) => {
-    const cards = page.getByRole("button", { name: /View details for .+/i });
-    const baseline = await cards.count();
+    const initialTotal = await summaryTotal(page);
 
     const search = page.getByRole("searchbox", {
       name: "Search CSS effects by name, tag, or category",
     });
     await search.fill("glow");
-    await page.waitForTimeout(300);
+    await expect
+      .poll(() => summary(page).innerText(), { timeout: 10_000 })
+      .toMatch(/matching/i);
 
     const clearBtn = page.getByRole("button", { name: "Clear search" });
+    await expect(clearBtn).toBeVisible();
     await clearBtn.click();
-    await page.waitForTimeout(300);
 
-    const restored = await cards.count();
-    expect(restored, "clearing search should restore the original visible count").toBe(baseline);
+    await expect
+      .poll(() => summary(page).innerText(), { timeout: 10_000 })
+      .not.toMatch(/matching/i);
+    const restored = await summaryTotal(page);
+    expect(restored, "clearing search should restore the original count").toBe(initialTotal);
   });
 
   test("clicking an effect card opens the detail dialog with its name and CSS code", async ({
     page,
   }) => {
-    const firstCard = page.getByRole("button", { name: /View details for .+/i }).first();
+    const firstCard = page.getByRole("button", { name: /Opens the effect details/ }).first();
     const cardLabel = (await firstCard.getAttribute("aria-label")) ?? "";
-    const effectName = cardLabel.replace("View details for ", "").trim();
+    // Accessible name contract: "<Name> — <description>. Opens the effect details."
+    const effectName = cardLabel.split(" — ")[0].trim();
     expect(effectName.length).toBeGreaterThan(0);
 
     await firstCard.click();

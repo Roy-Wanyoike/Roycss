@@ -16,6 +16,7 @@ import {
   Sparkles,
   GitCompare,
   Share2,
+  ExternalLink,
 } from "lucide-react";
 import type { CSSEffect } from "@/lib/roycss-types";
 import { StarRating } from "@/components/roycss/star-rating";
@@ -517,6 +518,19 @@ export function EffectDetailDialog({
                   <span className="hidden sm:inline">Compare</span>
                 </button>
               )}
+              {/* Issue #216 item 4: dialog previously trapped the effect —
+                  no path to the full /effects/<id> page. Real <a> so
+                  cmd/middle-click opens in a new tab. */}
+              <a
+                href={`/effects/${effect.id}`}
+                onClick={() => onOpenChange(false)}
+                aria-label={`Open full page: ${effect.name}`}
+                title={`Open the full ${effect.name} page`}
+                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium bg-muted text-foreground hover:bg-primary hover:text-primary-foreground transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+              >
+                <ExternalLink className="size-3.5 shrink-0" />
+                <span className="hidden sm:inline whitespace-nowrap">Open full page</span>
+              </a>
               {/* Share button — copies shareable URL */}
               <ShareButton effectId={effect.id} />
             </div>

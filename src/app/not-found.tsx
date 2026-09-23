@@ -13,8 +13,8 @@ export const metadata = { title: "Page not found — RoyCSS" };
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4 py-16">
-      <div className="max-w-lg w-full text-center space-y-8">
+    <div className="min-h-svh flex flex-col bg-background px-4 pt-16 pb-8">
+      <div className="max-w-lg w-full mx-auto text-center space-y-8 my-auto">
         {/* 404 big number with glow */}
         <div className="relative inline-block">
           <div className="font-display text-8xl sm:text-9xl font-bold text-primary" style={{ textShadow: "0 0 40px rgba(16, 185, 129, 0.3)" }}>
@@ -113,6 +113,36 @@ export default function NotFound() {
           </div>
         </div>
       </div>
+
+      {/* Issue #216 item 2: contentinfo parity — the 404 surface previously
+          had no footer at all (browser-QA P2). Compact footer: the full home
+          footer lives in roycss-page.tsx; 404 gets nav + legal essentials. */}
+      <footer aria-label="Site footer" className="mt-auto border-t border-border/50 bg-card/50 backdrop-blur-sm">
+        <div className="max-w-5xl mx-auto w-full px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-muted-foreground">
+            © {new Date().getFullYear()} RoyCSS — MIT License
+          </p>
+          <nav aria-label="Footer" className="flex items-center gap-5">
+            <Link href="/effects" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+              Effects
+            </Link>
+            <Link href="/docs/getting-started" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+              Docs
+            </Link>
+            <Link href="/security/hall-of-fame" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+              Security
+            </Link>
+            <a
+              href="https://github.com/Roy-Wanyoike/roycss"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+            >
+              GitHub
+            </a>
+          </nav>
+        </div>
+      </footer>
     </div>
   );
 }

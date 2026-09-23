@@ -794,3 +794,15 @@
 [data-animation-paused="true"] {
   animation-play-state: paused !important;
 }
+
+/* Issue #214: user-facing site-wide "Pause animations" control. The toggle
+   (src/components/roycss/pause-animations-toggle.tsx) sets
+   data-animations-paused="true" on <html>; this freezes every CSS
+   animation on the page using the same !important contract as the
+   off-screen AnimationPauser hook above. Transitions are intentionally
+   left alone — pausing targets continuous/looping animation only. */
+html[data-animations-paused="true"] *,
+html[data-animations-paused="true"] *::before,
+html[data-animations-paused="true"] *::after {
+  animation-play-state: paused !important;
+}

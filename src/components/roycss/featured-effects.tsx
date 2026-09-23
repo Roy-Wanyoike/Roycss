@@ -105,34 +105,19 @@ export function FeaturedEffects({
               delay={staggerDelay(index)}
               className="h-full"
             >
-              {/* SSR anchor — the crawlable route to the effect page
-                  (issue #205). Plain click keeps the quick-view dialog
-                  as the JS enhancement; modifier/middle clicks and
-                  crawlers follow the real href. */}
-              <a
+              {/* Issue #216 item 9: the crawlable SSR anchor (issue #205)
+                  moved INSIDE EffectCard as the full-card trigger link —
+                  the previous wrapper anchor containing the card's
+                  role="button" + nested buttons was invalid
+                  nested-interactive markup. Plain click still opens the
+                  quick-view dialog; modifier/middle-clicks and crawlers
+                  follow the real href. */}
+              <EffectCard
+                effect={effect}
+                index={index}
                 href={`/effects/${effect.id}`}
-                onClick={(e) => {
-                  if (
-                    e.metaKey ||
-                    e.ctrlKey ||
-                    e.shiftKey ||
-                    e.altKey ||
-                    e.button !== 0
-                  ) {
-                    return; // let the browser open the real page
-                  }
-                  e.preventDefault();
-                  e.stopPropagation();
-                  onSelectEffect(effect);
-                }}
-                className="block h-full rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-              >
-                <EffectCard
-                  effect={effect}
-                  index={index}
-                  onClick={onSelectEffect}
-                />
-              </a>
+                onClick={onSelectEffect}
+              />
             </ScrollReveal>
           ))}
         </div>

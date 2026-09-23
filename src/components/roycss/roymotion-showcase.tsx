@@ -10,6 +10,7 @@ import {
   Accessibility,
 } from "lucide-react";
 import { ScrollReveal } from "@/components/roycss/motion-primitives";
+import { copyTextToClipboard } from "@/lib/clipboard";
 
 /* ─── Section wrapper ──────────────────────────────────────── */
 function Section({
@@ -135,28 +136,39 @@ function ReducedMotionBadge() {
 
 /* ─── Spring easing token chip ─────────────────────────────── */
 function TokenChip({ name, value }: { name: string; value: string }) {
-  const [copied, setCopied] = useState(false);
+  // Issue #216 item 5: silent `catch { /* noop *\/ }` replaced with the
+  // shared helper + explicit failure feedback (never a silent no-op).
+  const [status, setStatus] = useState<"idle" | "copied" | "failed">("idle");
   const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(`--${name}: ${value};`);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      /* noop */
-    }
+    const ok = await copyTextToClipboard(`--${name}: ${value};`);
+    setStatus(ok ? "copied" : "failed");
+    setTimeout(() => setStatus("idle"), ok ? 1500 : 4000);
   };
   return (
     <button
       type="button"
       onClick={handleCopy}
-      className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-muted/50 hover:bg-muted border border-border/40 text-left transition-colors cursor-pointer"
-      title="Click to copy"
+      className={`flex items-center gap-2 px-2.5 py-1.5 rounded-lg border text-left transition-colors cursor-pointer ${
+        status === "failed"
+          ? "border-rose-500/40 bg-rose-500/10"
+          : "border-border/40 bg-muted/50 hover:bg-muted"
+      }`}
+      title={
+        status === "failed"
+          ? "Clipboard unavailable — copy failed"
+          : "Click to copy"
+      }
     >
       <code className="text-xs font-mono text-primary">--{name}</code>
       <code className="text-xs font-mono text-muted-foreground truncate">
         {value}
       </code>
-      {copied && <Check className="size-3 text-emerald-500" />}
+      {status === "copied" && <Check className="size-3 text-emerald-500" />}
+      {status === "failed" && (
+        <span role="status" className="text-xs font-medium text-rose-500 shrink-0">
+          Copy failed
+        </span>
+      )}
     </button>
   );
 }

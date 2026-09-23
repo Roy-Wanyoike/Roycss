@@ -6,6 +6,7 @@ import { Shuffle, Copy, Check, ArrowRight, X, Sparkles } from "lucide-react";
 import { effects } from "@/lib/roycss-effects";
 import type { CSSEffect } from "@/lib/roycss-types";
 import { LivePreview } from "@/components/roycss/effect-card";
+import { copyTextToClipboard } from "@/lib/clipboard";
 import { Badge } from "@/components/ui/badge";
 
 /**
@@ -16,6 +17,7 @@ import { Badge } from "@/components/ui/badge";
 export function RandomEffectPicker({ onSelectEffect }: { onSelectEffect: (effect: CSSEffect) => void }) {
   const [randomEffect, setRandomEffect] = useState<CSSEffect | null>(null);
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
   const [spinning, setSpinning] = useState(false);
   // Track the spin interval so we can clear it on unmount (avoids setState
   // on an unmounted component if the user navigates away mid-spin).
@@ -53,12 +55,17 @@ export function RandomEffectPicker({ onSelectEffect }: { onSelectEffect: (effect
     }, 60);
   }, []);
 
+  // Issue #216 item 5: silent `catch { /* noop */ }` replaced with the
+  // shared helper (async API + execCommand fallback) + explicit failure
+  // feedback — never a silent no-op.
   const handleCopy = useCallback(async (effect: CSSEffect) => {
-    try {
-      await navigator.clipboard.writeText(effect.cssCode);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch { /* noop */ }
+    const ok = await copyTextToClipboard(effect.cssCode);
+    setCopied(ok);
+    setCopyFailed(!ok);
+    setTimeout(() => {
+      setCopied(false);
+      setCopyFailed(false);
+    }, ok ? 2000 : 4000);
   }, []);
 
   return (
@@ -110,10 +117,20 @@ export function RandomEffectPicker({ onSelectEffect }: { onSelectEffect: (effect
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => handleCopy(randomEffect)}
-                    className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : "bg-muted text-foreground hover:bg-muted/80"}`}
+                    title={copyFailed ? "Clipboard unavailable — select the CSS on the effect page and copy manually" : undefined}
+                    className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+                      copyFailed
+                        ? "bg-rose-500/15 text-rose-500"
+                        : copied
+                          ? "bg-emerald-500/15 text-emerald-500"
+                          : "bg-muted text-foreground hover:bg-muted/80"
+                    }`}
                   >
                     {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
-                    {copied ? "Copied!" : "Copy CSS"}
+                    {copied ? "Copied!" : copyFailed ? "Copy failed" : "Copy CSS"}
+                    <span role="status" aria-live="polite" className="sr-only">
+                      {copyFailed ? "Copy failed — clipboard unavailable" : ""}
+                    </span>
                   </button>
                   <button
                     onClick={() => onSelectEffect(randomEffect)}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback, memo } from "react";
+import { useState, useRef, useCallback, memo, createContext, useContext } from "react";
 import { motion, useInView } from "framer-motion";
 import { ChevronDown, ChevronUp, Code2, Eye, Heart } from "lucide-react";
 import type { CSSEffect } from "@/lib/roycss-types";
@@ -163,6 +163,31 @@ function TextPreview({
   );
 }
 
+/* ─── Interactive-vs-decorative preview context ───────────────
+ *
+ * A <button> nested inside another <button>/<a>/[role="button"] is
+ * invalid HTML (React 19 hydration failure: "button cannot contain a
+ * nested button") and an axe nested-interactive violation. LivePreview
+ * demos are embedded BOTH as interactive surfaces (EffectCard's own
+ * preview area — e.g. the btn-ripple demo) and as purely decorative
+ * thumbnails inside other interactive containers (category tiles, tool
+ * pickers, list rows). Decorative consumers must wrap their LivePreview
+ * in <DecorativePreview>, which flips this context so ButtonPreview
+ * renders a non-interactive <span> with identical visuals.
+ * (Issue #216 item 9 follow-through — the EffectCard fix surfaced the
+ * nested-button hydration failure on the home category tiles.)
+ */
+export const PreviewInteractiveContext = createContext(true);
+
+/** Decorative preview: identical visuals, zero interactivity. */
+export function DecorativePreview({ effect }: { effect: CSSEffect }) {
+  return (
+    <PreviewInteractiveContext.Provider value={false}>
+      <LivePreview effect={effect} />
+    </PreviewInteractiveContext.Provider>
+  );
+}
+
 /* ─── Button Preview (button effects) ───────────────────────── */
 function ButtonPreview({
   effect,
@@ -173,38 +198,65 @@ function ButtonPreview({
   className: string;
   text: string;
 }) {
-  const btnRef = useRef<HTMLDivElement>(null);
+  const interactive = useContext(PreviewInteractiveContext);
+  const btnRef = useRef<HTMLButtonElement>(null);
+
+  const spawnRipple = useCallback((clientX?: number, clientY?: number) => {
+    const btn = btnRef.current;
+    if (!btn) return;
+    const rect = btn.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    // Pointer clicks ripple from the pointer; keyboard activation
+    // (click event with detail === 0 carries no coordinates) ripples
+    // from the center (issue #216 item 9 — keyboard-operable demo).
+    const originX = clientX ?? rect.left + rect.width / 2;
+    const originY = clientY ?? rect.top + rect.height / 2;
+    const x = originX - rect.left - size / 2;
+    const y = originY - rect.top - size / 2;
+    const ripple = document.createElement("span");
+    ripple.className = "ripple-circle";
+    ripple.style.width = ripple.style.height = `${size}px`;
+    ripple.style.left = `${x}px`;
+    ripple.style.top = `${y}px`;
+    btn.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+  }, []);
 
   const handleClick = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       if (effect.id !== "btn-ripple") return;
-      const btn = btnRef.current;
-      if (!btn) return;
-      const rect = btn.getBoundingClientRect();
-      const size = Math.max(rect.width, rect.height);
-      const x = e.clientX - rect.left - size / 2;
-      const y = e.clientY - rect.top - size / 2;
-      const ripple = document.createElement("span");
-      ripple.className = "ripple-circle";
-      ripple.style.width = ripple.style.height = `${size}px`;
-      ripple.style.left = `${x}px`;
-      ripple.style.top = `${y}px`;
-      btn.appendChild(ripple);
-      setTimeout(() => ripple.remove(), 600);
+      spawnRipple(
+        e.detail === 0 ? undefined : e.clientX,
+        e.detail === 0 ? undefined : e.clientY,
+      );
     },
-    [effect.id]
+    [effect.id, spawnRipple]
   );
+
+  // Decorative embedding (inside another button/link/role="button"):
+  // render a plain span — same visuals, no focus/click/ripple — so the
+  // markup never nests interactive elements (hydration + axe safe).
+  if (!interactive) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <span className={className}>{text}</span>
+      </div>
+    );
+  }
 
   return (
     <div className="flex items-center justify-center h-full">
-      <div
+      {/* Real <button> (was a mouse-only div onClick + role="presentation",
+          issue #216 item 9) — Enter/Space now trigger the ripple, and the
+          global :focus-visible outline applies. */}
+      <button
         ref={btnRef}
+        type="button"
         onClick={handleClick}
         className={className}
-        role="presentation"
       >
         {text}
-      </div>
+      </button>
     </div>
   );
 }
@@ -317,12 +369,20 @@ export const EffectCard = memo(function EffectCard({
   effect,
   index,
   onClick,
+  href,
   isFavorite = false,
   onToggleFavorite,
 }: {
   effect: CSSEffect;
   index: number;
   onClick?: (effect: CSSEffect) => void;
+  /**
+   * Optional crawlable route (/effects/<id>). When provided the full-card
+   * trigger renders as a real link (SSR anchor, issue #205 semantics);
+   * modifier/middle-clicks follow the href while plain clicks open the
+   * quick-view dialog via `onClick`.
+   */
+  href?: string;
   isFavorite?: boolean;
   onToggleFavorite?: (id: string) => void;
 }) {
@@ -340,18 +400,50 @@ export const EffectCard = memo(function EffectCard({
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -6, transition: { duration: 0.25 } }}
       onClick={() => onClick?.(effect)}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          onClick?.(effect);
-        }
-      }}
-      role="button"
-      tabIndex={0}
-      aria-label={`${effect.name} — ${effect.description}. Press Enter to view details.`}
       data-effect-id={effect.id}
-      className="group rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 cursor-pointer perf-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+      className="group relative h-full rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 cursor-pointer perf-auto"
     >
+      {/* Issue #216 item 9: the card container previously carried
+          role="button" + tabIndex + an Enter/Space handler while also
+          containing REAL <button>s (favorite, code toggle) — invalid
+          nested-interactive ARIA (axe violation). The interactive trigger
+          is now a dedicated full-card control (real <button>, or a real
+          link when `href` is set) layered UNDER the sibling controls
+          (z-0 vs z-10), so no interactive element contains another.
+          Keyboard users tab straight to it; the container's own onClick is
+          a mouse-only convenience for clicks that land on non-interactive
+          chrome (badges). */}
+      {href ? (
+        <a
+          href={href}
+          onClick={(e) => {
+            if (
+              e.metaKey ||
+              e.ctrlKey ||
+              e.shiftKey ||
+              e.altKey ||
+              e.button !== 0
+            ) {
+              return; // let the browser open the real page
+            }
+            e.preventDefault();
+            e.stopPropagation();
+            onClick?.(effect);
+          }}
+          aria-label={`${effect.name} — ${effect.description}. Opens the effect details.`}
+          className="absolute inset-0 z-0 rounded-2xl cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+        />
+      ) : (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onClick?.(effect);
+          }}
+          aria-label={`${effect.name} — ${effect.description}. Opens the effect details.`}
+          className="absolute inset-0 z-0 rounded-2xl cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+        />
+      )}
       {/* Preview Area */}
       <div className="relative h-48 bg-gradient-to-br from-muted/50 to-muted/30 overflow-hidden">
         <LivePreview effect={effect} />
@@ -443,13 +535,15 @@ export const EffectCard = memo(function EffectCard({
           ))}
         </div>
 
-        {/* Code Toggle — min-h-7 + py-1.5 ensures ≥ 28px tap target (WCAG 2.5.8 AA ≥ 24px) */}
+        {/* Code Toggle — min-h-7 + py-1.5 ensures ≥ 28px tap target (WCAG 2.5.8 AA ≥ 24px).
+            relative z-10 keeps it above the card's full-card trigger overlay
+            (issue #216 item 9). */}
         <button
           onClick={(e) => {
             e.stopPropagation();
             setShowCode(!showCode);
           }}
-          className="mt-3 inline-flex items-center gap-1.5 px-1.5 py-1.5 min-h-7 -mx-1.5 rounded-md text-xs text-primary hover:text-primary/80 hover:bg-primary/5 transition-colors font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+          className="relative z-10 mt-3 inline-flex items-center gap-1.5 px-1.5 py-1.5 min-h-7 -mx-1.5 rounded-md text-xs text-primary hover:text-primary/80 hover:bg-primary/5 transition-colors font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
         >
           {showCode ? (
             <>

@@ -46,7 +46,18 @@
     animation: roycss-marquee var(--marquee-duration, 30s) linear infinite;
   }
 
-  &[data-pause-on-hover="true"]:hover .roycss-marquee-track {
+  /* Issue #214: hover-pause applies only where a real pointer exists —
+     touch devices keep the marquee running (no sticky hover trap). */
+  @media (hover: hover) {
+    &[data-pause-on-hover="true"]:hover .roycss-marquee-track {
+      animation-play-state: paused;
+    }
+  }
+
+  /* Issue #214 (WCAG 2.2.2): keyboard pause path. The wrapper is a
+     focusable region (Marquee primitive renders tabindex="0"), so focusing
+     it — or any focusable item inside — stops the track. */
+  &:focus-within .roycss-marquee-track {
     animation-play-state: paused;
   }
 }

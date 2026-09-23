@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
-import { LivePreview } from "@/components/roycss/effect-card";
+import { DecorativePreview, LivePreview } from "@/components/roycss/effect-card";
 import { effects } from "@/lib/roycss-effects";
 import { EFFECT_COUNT_FORMATTED } from "@/lib/site-stats";
 import { CSSMinifier } from "@/components/roycss/css-minifier";
@@ -460,7 +460,8 @@ function UtilityExplorer() {
             >
               <div className="flex items-center justify-center size-9 rounded-lg bg-muted/40 border border-border/50 overflow-hidden shrink-0">
                 <div className="scale-[0.4] origin-center">
-                  <LivePreview effect={e} />
+                  {/* Decorative — sits inside this list <button> (issue #216 item 9) */}
+                  <DecorativePreview effect={e} />
                 </div>
               </div>
               <div className="min-w-0 flex-1">

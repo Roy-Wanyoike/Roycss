@@ -299,11 +299,15 @@ export function ThreeTubesCursor({
     };
 
     // --- Animation loop --------------------------------------------------
-    const clock = new THREE.Clock();
+    // THREE.Timer replaces the deprecated THREE.Clock (r170+ deprecation
+    // notice spammed the dev console on every home load — issue #216 item 7).
+    // Timer.update() must be called once per frame before getElapsed().
+    const timer = new THREE.Timer();
     let frameId: number | null = null;
 
     const animate = () => {
-      const time = clock.getElapsedTime();
+      timer.update();
+      const time = timer.getElapsed();
 
       // Smooth cursor follow (lerp factor 0.05 per spec)
       currentNDC.lerp(targetNDC, 0.05);

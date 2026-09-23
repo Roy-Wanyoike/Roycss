@@ -9,7 +9,7 @@ import type { CSSEffect } from "@/lib/roycss-types";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { LivePreview } from "@/components/roycss/effect-card";
+import { DecorativePreview, LivePreview } from "@/components/roycss/effect-card";
 
 /**
  * BundleCalculator — select effects and see the total CSS size in real-time.
@@ -137,7 +137,7 @@ export function BundleCalculator({ open, onOpenChange }: { open: boolean; onOpen
                   className={`w-full flex items-center gap-2 p-2 rounded-lg transition-all cursor-pointer text-left ${isSelected ? "bg-primary/10 border border-primary/30" : "hover:bg-muted/50 border border-transparent"}`}
                 >
                   <div className="flex items-center justify-center size-8 rounded-lg bg-muted/40 border border-border/50 overflow-hidden shrink-0">
-                    <div className="scale-[0.35] origin-center"><LivePreview effect={e} /></div>
+                    <div className="scale-[0.35] origin-center"><DecorativePreview effect={e} /></div>
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="text-xs font-medium text-foreground truncate">{e.name}</p>

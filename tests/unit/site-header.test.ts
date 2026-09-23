@@ -156,6 +156,64 @@ describe("site-header: pause toggle reuses the shared #214 mechanism", () => {
   });
 });
 
+describe("effects footer: exactly one Site footer on every /effects route (#242)", () => {
+  const effectsPageSrc = readFileSync(
+    join(ROOT, "src/app/effects/page.tsx"),
+    "utf8",
+  );
+  const categoryPageSrc = readFileSync(
+    join(ROOT, "src/app/effects/category/[slug]/page.tsx"),
+    "utf8",
+  );
+  const detailPageSrc = readFileSync(
+    join(ROOT, "src/app/effects/[id]/page.tsx"),
+    "utf8",
+  );
+
+  it("the shared effects layout renders the Site footer landmark exactly once", () => {
+    // The layout wraps /effects, /effects/<id> AND /effects/category/<slug>
+    // — one footer here covers all three route types (QA 7-a2 P1).
+    expect(effectsLayoutSrc.match(/<footer/g)?.length).toBe(1);
+    expect(effectsLayoutSrc).toContain('<footer aria-label="Site footer"');
+  });
+
+  it("the layout footer sits after the content wrapper (bottom-of-page chrome)", () => {
+    const contentIdx = effectsLayoutSrc.indexOf('id="effects-content"');
+    const footerIdx = effectsLayoutSrc.indexOf("<footer");
+    expect(contentIdx).toBeGreaterThan(-1);
+    expect(footerIdx).toBeGreaterThan(contentIdx);
+  });
+
+  it("the layout footer mirrors the #164 link set verbatim", () => {
+    for (const href of [
+      "/docs/getting-started",
+      "/roadmap",
+      "/privacy",
+      "/terms",
+    ]) {
+      expect(effectsLayoutSrc).toContain(`href="${href}"`);
+    }
+    expect(effectsLayoutSrc).toContain("RoyCSS</p>");
+  });
+
+  it("/effects index no longer renders its own footer (no double contentinfo)", () => {
+    // The #164 footer was moved into the layout (#242) — the index page
+    // must NOT render a second one.
+    expect(effectsPageSrc).not.toContain("<footer");
+    expect(effectsPageSrc).toContain("Back to RoyCSS");
+  });
+
+  it("/effects/<id> and /effects/category/<slug> render no inline footer", () => {
+    // Neither route may render its own landmark — the layout owns it.
+    expect(detailPageSrc).not.toContain("<footer");
+    expect(categoryPageSrc).not.toContain("<footer");
+  });
+
+  it("the footer adds no dynamic APIs (force-static on /effects preserved)", () => {
+    expect(effectsLayoutSrc).not.toMatch(/headers\(|cookies\(|draftMode\(/);
+  });
+});
+
 describe("site-header: mounted on the secondary surfaces", () => {
   it("/effects layout renders SiteHeader (covers /effects/<id> too)", () => {
     expect(effectsLayoutSrc).toContain("import { SiteHeader }");

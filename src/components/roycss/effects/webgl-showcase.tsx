@@ -8,9 +8,10 @@
  * experiences when CSS alone isn't enough.
  */
 
-import { useState, lazy, Suspense, useEffect, useRef } from "react";
+import { Component, useState, lazy, Suspense, useEffect, useRef } from "react";
+import type { ReactNode } from "react";
 import { motion } from "framer-motion";
-import { Box, Loader2, Sparkles } from "lucide-react";
+import { Box, Loader2, Sparkles, MonitorOff } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SectionHeading, ScrollReveal } from "@/components/roycss/motion-primitives";
@@ -83,6 +84,61 @@ const EffectFallback = () => (
     <Loader2 className="size-8 animate-spin text-primary" />
   </div>
 );
+
+interface WebGLBoundaryState {
+  hasError: boolean;
+  message?: string;
+}
+
+/* A WebGL/Canvas failure (context creation is unavailable on some browsers,
+   VMs and hardened-privacy setups: "Error creating WebGL context") must
+   degrade to a friendly panel — NOT bubble to the global error boundary and
+   take the whole home page down (the Firefox-headless interop round of
+   issue #258 caught exactly that). Scoped to the preview panel only; the
+   tabs, description and CTA around it keep working. `key={active}` on the
+   usage site remounts the boundary per effect, so a failed effect can be
+   retried by switching tabs and coming back. */
+class WebGLErrorBoundary extends Component<{ children: ReactNode }, WebGLBoundaryState> {
+  state: WebGLBoundaryState = { hasError: false };
+
+  static getDerivedStateFromError(error: Error): WebGLBoundaryState {
+    return { hasError: true, message: error.message };
+  }
+
+  componentDidCatch(error: Error) {
+    // Log but never crash the page.
+    console.warn("WebGL showcase effect failed:", error.message);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div
+          role="status"
+          className="flex flex-col items-center justify-center gap-3 h-[360px] rounded-2xl border border-border bg-card/30 text-center px-6"
+        >
+          <MonitorOff className="size-8 text-muted-foreground" aria-hidden="true" />
+          <p className="text-sm font-medium text-foreground">
+            This effect needs hardware graphics acceleration
+          </p>
+          <p className="text-xs text-muted-foreground max-w-sm">
+            Your browser or environment doesn&#39;t provide WebGL, so the live
+            preview can&#39;t run here. The component code itself is pure CSS +
+            Three.js and works in any WebGL-capable browser.
+          </p>
+          <button
+            type="button"
+            onClick={() => this.setState({ hasError: false, message: undefined })}
+            className="text-xs text-primary hover:text-primary/80 cursor-pointer underline underline-offset-4"
+          >
+            Try again
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 export function WebGLShowcase() {
   const [active, setActive] = useState<EffectId>("tubes");
@@ -191,13 +247,15 @@ export function WebGLShowcase() {
             transition={{ duration: 0.3 }}
             className="relative rounded-2xl overflow-hidden border border-border shadow-2xl"
           >
-            <Suspense fallback={<EffectFallback />}>
-              {isVisible && active === "tubes" && <ThreeTubesCursor height={420} />}
-              {isVisible && active === "particles" && <ParticleNetwork height={420} />}
-              {isVisible && active === "wave" && <ThreeWaveGrid height={420} />}
-              {isVisible && active === "aurora" && <AuroraBorealis height={420} />}
-              {!isVisible && <EffectFallback />}
-            </Suspense>
+            <WebGLErrorBoundary key={active}>
+              <Suspense fallback={<EffectFallback />}>
+                {isVisible && active === "tubes" && <ThreeTubesCursor height={420} />}
+                {isVisible && active === "particles" && <ParticleNetwork height={420} />}
+                {isVisible && active === "wave" && <ThreeWaveGrid height={420} />}
+                {isVisible && active === "aurora" && <AuroraBorealis height={420} />}
+                {!isVisible && <EffectFallback />}
+              </Suspense>
+            </WebGLErrorBoundary>
           </motion.div>
         </ScrollReveal>
 

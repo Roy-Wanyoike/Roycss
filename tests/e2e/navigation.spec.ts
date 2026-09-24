@@ -37,12 +37,10 @@ async function expectSectionNearTop(page: Page, anchor: string) {
 }
 
 test.describe("primary navigation", () => {
-  // Firefox interop: the Radix mega-menu's close-on-select and the
-  // smooth-scroll drift correction behave differently on Gecko (menu stays
-  // open after selecting an item; long scrolls land short). Chromium is the
-  // reference engine for these flows; firefox deep-scroll interop is tracked
-  // separately (see issue filed from the Playwright-matrix round).
-  test.skip(() => test.info().project.name === "firefox", "firefox mega-menu/deep-scroll interop is tracked separately");
+  // Firefox interop (#258) was fixed in #263 (deep-scroll convergence via
+  // scrollend settle + instant drift corrections) and #264 (mega-menu
+  // fire-time pointer-zone re-verification + selection latch) — both proven
+  // live on Firefox 155; the suite below now runs on the full matrix.
   test.beforeEach(async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto("/");
@@ -59,8 +57,13 @@ test.describe("primary navigation", () => {
 
     // First scroll PAST the get-started section (it sits ~9k px deep after
     // the featured/category/WebGL/carousel sections) to prove the click
-    // scrolls UPWARD to it.
-    await page.mouse.wheel(0, 20000);
+    // scrolls UPWARD to it. Deterministic instant jump: a 20k-px wheel
+    // gesture is smooth-ANIMATED by Gecko for seconds (Blink finishes far
+    // sooner), so the old wheel+600ms read mid-flight on Firefox and
+    // corrupted the before/after comparison (#258 matrix round-off).
+    await page.evaluate(() =>
+      window.scrollTo({ top: Number.MAX_SAFE_INTEGER, behavior: "instant" }),
+    );
     await page.waitForTimeout(600);
     const beforeScrollY = await page.evaluate(() => window.scrollY);
     expect(beforeScrollY).toBeGreaterThan(0);

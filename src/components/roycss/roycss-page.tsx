@@ -278,12 +278,28 @@ const PlatformTools = dynamic(
       cards" event to stabilize the grid height.
    2. Waits two animation frames for React to flush + DOM to render.
    3. Then smooth-scrolls to the target.
-   4. Once the scroll settles, re-measures the target once and corrects
+   4. Once the scroll settles (the "scrollend" event where supported —
+      Firefox 109+/Chromium 127+ — with a rAF stable-frame fallback),
+      re-measures the target and applies a corrective INSTANT scroll for
       any residual drift (>8px) caused by sections that expanded after
       the initial measurement — without this, long scrolls (Recipes →
       FAQ) land hundreds of px short of the section.
-   For targets above the grid, it scrolls directly (no height shift). */
+   For targets above the grid, it scrolls directly (no height shift).
+
+   Gecko interop (issue #258): while Chromium cancels-and-restarts a
+   smooth scroll when a second one is issued mid-flight, Gecko DROPS the
+   second call — so corrective passes never applied on Firefox and deep
+   scrolls landed short. Corrective scrolls are therefore always
+   behavior:"instant" (they cannot be dropped or interrupted, and the
+   converged position is reached within a frame), and settle detection
+   prefers "scrollend" over counting rAF frames, whose cadence on Gecko
+   false-triggers during compositor-driven smooth scrolls. A newer nav
+   click supersedes any in-flight correction loop (scrollSectionEpoch). */
 const SCROLL_SECTION_NAV_OFFSET = 72; // px reserved for the sticky header
+
+/* Bumped on every scrollToSection call; in-flight correction loops from a
+   previous call check it and bail instead of fighting the new scroll. */
+let scrollSectionEpoch = 0;
 
 function scrollToSection(id: string) {
   const target = document.querySelector(id) as HTMLElement | null;
@@ -296,6 +312,8 @@ function scrollToSection(id: string) {
     window.dispatchEvent(new CustomEvent("roycss-load-all-cards"));
   }
 
+  const epoch = ++scrollSectionEpoch;
+
   // Use requestAnimationFrame to ensure DOM is updated after any card loading
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
@@ -303,40 +321,83 @@ function scrollToSection(id: string) {
       const offset = window.scrollY + rect.top - SCROLL_SECTION_NAV_OFFSET;
       window.scrollTo({ top: Math.max(0, offset), behavior: "smooth" });
 
-      // Drift correction: wait for the smooth scroll to settle (scrollY
-      // unchanged for ~12 consecutive frames, capped at 4s), then re-measure
-      // the target and apply a corrective scroll. Deep scrolls (Recipes,
-      // Collections) cross MULTIPLE lazy sections, each taller than its
-      // skeleton — so the correction re-arms after every applied fix and
-      // keeps converging (max 8 passes, 12s total). User-initiated scrolling
-      // during a settle window simply delays/forfeits that pass.
+      // Drift correction: wait for the smooth scroll to settle, then
+      // re-measure the target and apply a corrective INSTANT scroll. Deep
+      // scrolls (Recipes, Collections) cross MULTIPLE lazy sections, each
+      // taller than its skeleton — so the correction re-arms after every
+      // applied fix and keeps converging (max 8 passes, 12s total).
+      // User-initiated scrolling during a settle window simply
+      // delays/forfeits that pass.
       const start = performance.now();
-      let lastY = window.scrollY;
-      let stableFrames = 0;
       let corrections = 0;
-      const tick = () => {
-        const y = window.scrollY;
-        stableFrames = Math.abs(y - lastY) < 1 ? stableFrames + 1 : 0;
-        lastY = y;
-        const settled = stableFrames >= 12;
+      // Feature-detect scrollend (Firefox 109+, Chromium 127+). Assigned to
+      // a boolean up front — "onscrollend" in window narrows `window` to
+      // never in the negative branch under recent lib.dom typings.
+      const hasScrollEnd = "onscrollend" in window;
+
+      const correctPass = () => {
+        if (epoch !== scrollSectionEpoch) return; // superseded by a newer click
         const timedOut = performance.now() - start > 12000;
-        if (!settled && !timedOut) {
-          requestAnimationFrame(tick);
-          return;
-        }
         const drift =
           target.getBoundingClientRect().top - SCROLL_SECTION_NAV_OFFSET;
-        if (Math.abs(drift) > 8 && corrections < 8 && !timedOut) {
-          corrections += 1;
-          stableFrames = 0;
-          window.scrollTo({
-            top: Math.max(0, window.scrollY + drift),
-            behavior: "smooth",
-          });
+        if (timedOut || Math.abs(drift) <= 8 || corrections >= 8) return;
+        corrections += 1;
+        // INSTANT — never smooth. A second smooth scrollTo issued while a
+        // smooth scroll is in flight is DROPPED by Gecko (Chromium
+        // cancels and restarts), and an instant scroll applies within a
+        // frame and cannot be interrupted by a section expanding mid-fix.
+        window.scrollTo({
+          top: Math.max(0, window.scrollY + drift),
+          behavior: "instant",
+        });
+        awaitSettle(correctPass);
+      };
+
+      const awaitSettle = (onSettled: () => void) => {
+        let armed = true;
+        const finish = () => {
+          if (!armed) return;
+          armed = false;
+          window.removeEventListener("scrollend", finish);
+          onSettled();
+        };
+        if (hasScrollEnd) {
+          // Primary settle signal: scrollend fires when a scrolling
+          // operation REALLY ends (Firefox 109+, Chromium 127+) —
+          // authoritative where the rAF frame counter false-triggers.
+          window.addEventListener("scrollend", finish, { once: true });
+          // Backstop: scrollend does not fire for a no-op scroll (the
+          // viewport was already at the requested position), so declare
+          // settle after 12 stable frames (~200ms) of zero scroll delta.
+          let lastY = window.scrollY;
+          let stableFrames = 0;
+          const backstopTick = () => {
+            if (!armed || epoch !== scrollSectionEpoch) return;
+            const y = window.scrollY;
+            stableFrames = Math.abs(y - lastY) < 1 ? stableFrames + 1 : 0;
+            lastY = y;
+            if (stableFrames >= 12) finish();
+            else requestAnimationFrame(backstopTick);
+          };
+          requestAnimationFrame(backstopTick);
+        } else {
+          // Fallback for engines without scrollend: the original rAF
+          // stable-frame settle detector.
+          let lastY = window.scrollY;
+          let stableFrames = 0;
+          const tick = () => {
+            if (!armed || epoch !== scrollSectionEpoch) return;
+            const y = window.scrollY;
+            stableFrames = Math.abs(y - lastY) < 1 ? stableFrames + 1 : 0;
+            lastY = y;
+            if (stableFrames >= 12) finish();
+            else requestAnimationFrame(tick);
+          };
           requestAnimationFrame(tick);
         }
       };
-      requestAnimationFrame(tick);
+
+      awaitSettle(correctPass);
     });
   });
 }

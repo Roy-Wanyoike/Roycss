@@ -187,7 +187,12 @@ describe("FrameworkTabs source wiring (#246)", () => {
 
   it("the dialog keeps its copy path and its React default tab", () => {
     // Copy behavior unchanged: per-panel CopyButton writing the raw code.
-    expect(USAGE_SRC).toContain("<CopyButton text={code} label={title} />");
+    // (payloadRef added by the clipboard-failure UX round: on a total
+    // clipboard failure the button selects this <code> payload so the user
+    // can copy it manually — pinned in clipboard-fallback.test.ts.)
+    expect(USAGE_SRC).toContain(
+      "<CopyButton text={code} label={title} payloadRef={codeRef} />",
+    );
     // Historical useState("react") seed preserved via initialActiveId.
     expect(USAGE_SRC).toContain('initialActiveId="react"');
     expect(DIALOG_SRC).toContain(

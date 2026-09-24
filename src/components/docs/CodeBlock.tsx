@@ -14,9 +14,15 @@
  * raw code to the clipboard and shows a "Copied!" confirmation for 2s.
  */
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { Check, Copy, FileCode2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  copyTextToClipboard,
+  selectElementText,
+  CLIPBOARD_FAILED_MESSAGE,
+  CLIPBOARD_FAILED_RESET_MS,
+} from "@/lib/clipboard";
 
 interface CodeBlockProps {
   code: string;
@@ -32,30 +38,25 @@ export function CodeBlock({
   className,
 }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
+  // `<code>` maps to plain HTMLElement in the DOM (no HTMLCodeElement).
+  const codeRef = useRef<HTMLElement>(null);
 
+  // Clipboard-failure UX (P3 QA residual): the shared helper tries the
+  // async Clipboard API, then the legacy textarea + execCommand fallback.
+  // If BOTH fail, select the rendered payload so the user can hit
+  // Ctrl+C / ⌘C themselves, flip to an accessible "Copy failed" state
+  // (role=status, aria-live=polite) and auto-reset after 4s. The success
+  // path ("Copied!" + 2s reset) is unchanged.
   const handleCopy = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(code);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // Clipboard API can be unavailable (e.g. insecure context). Fall
-      // back to a hidden textarea + execCommand for legacy paths.
-      try {
-        const ta = document.createElement("textarea");
-        ta.value = code;
-        ta.style.position = "fixed";
-        ta.style.left = "-9999px";
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        document.body.removeChild(ta);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      } catch {
-        // give up silently
-      }
-    }
+    const ok = await copyTextToClipboard(code);
+    setCopied(ok);
+    setCopyFailed(!ok);
+    if (!ok) selectElementText(codeRef.current);
+    setTimeout(() => {
+      setCopied(false);
+      setCopyFailed(false);
+    }, ok ? 2000 : CLIPBOARD_FAILED_RESET_MS);
   }, [code]);
 
   const label = filename ?? language ?? "code";
@@ -88,9 +89,11 @@ export function CodeBlock({
           aria-label={copied ? "Copied" : "Copy code"}
           className={cn(
             "flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium transition-all cursor-pointer shrink-0",
-            copied
-              ? "text-primary bg-primary/10"
-              : "text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800",
+            copyFailed
+              ? "text-rose-500 bg-rose-500/10"
+              : copied
+                ? "text-primary bg-primary/10"
+                : "text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800",
           )}
         >
           {copied ? (
@@ -98,17 +101,25 @@ export function CodeBlock({
               <Check className="size-3.5" />
               Copied!
             </>
+          ) : copyFailed ? (
+            <>
+              <Copy className="size-3.5" />
+              {CLIPBOARD_FAILED_MESSAGE}
+            </>
           ) : (
             <>
               <Copy className="size-3.5" />
               Copy
             </>
           )}
+          <span role="status" aria-live="polite" className="sr-only">
+            {copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}
+          </span>
         </button>
       </div>
       {/* Body: the actual code */}
       <pre className="overflow-x-auto p-4 text-sm leading-relaxed scrollbar-thin">
-        <code className="font-mono whitespace-pre">{code}</code>
+        <code ref={codeRef} className="font-mono whitespace-pre">{code}</code>
       </pre>
     </div>
   );

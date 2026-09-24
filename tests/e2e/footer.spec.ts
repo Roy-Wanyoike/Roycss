@@ -103,3 +103,35 @@ test.describe("footer", () => {
     expect(box!.width, "footer should fit within the mobile viewport").toBeLessThanOrEqual(375);
   });
 });
+
+/**
+ * Footer on /effects routes — regression guard for issue #242.
+ *
+ * The global "Site footer" moved into src/app/effects/layout.tsx, so EVERY
+ * /effects route type must render EXACTLY ONE footer landmark: the index
+ * (not double-rendered), an effect detail page, and a category page
+ * (not missing). The footer lives in the layout, so it must be present
+ * before hydration on all three.
+ */
+test.describe("footer on /effects routes", () => {
+  const effectsRoutes = [
+    { route: "/effects", label: "index" },
+    { route: "/effects/hover-glow-border", label: "detail" },
+    { route: "/effects/category/glass-ui", label: "category" },
+  ] as const;
+
+  for (const { route, label } of effectsRoutes) {
+    test(`exactly one "Site footer" landmark on ${label} (${route})`, async ({ page }) => {
+      await page.goto(route);
+      // Auth 401 refresh re-navigates the page within ~3s of first load.
+      await page.waitForTimeout(3000);
+      // Exactly one footer in the DOM with the shared landmark label.
+      await expect(page.locator('footer[aria-label="Site footer"]')).toHaveCount(1);
+      const footer = page.getByRole("contentinfo", { name: "Site footer" });
+      await footer.scrollIntoViewIfNeeded();
+      await expect(footer).toBeVisible();
+      const box = await footer.boundingBox();
+      expect(box, "footer should have a bounding box").not.toBeNull();
+    });
+  }
+});

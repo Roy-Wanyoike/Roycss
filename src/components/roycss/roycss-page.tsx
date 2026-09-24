@@ -514,6 +514,14 @@ const PLATFORM_GROUPS: MegaMenuGroup[] = [
   },
 ];
 
+/* How long (ms) after a pointerdown inside the open mega-menu content the
+   hover re-open path stays suppressed — covers the Gecko-synthesized
+   mouseenter that fires when the portaled content unmounts under the
+   stationary pointer (issue #258, menu half). Generous enough for slow
+   event delivery, short enough that deliberate re-hover (~0.5s later)
+   re-opens normally. */
+const MEGA_MENU_SELECT_LATCH_MS = 450;
+
 function NavMegaMenu({
   label,
   active,
@@ -529,15 +537,117 @@ function NavMegaMenu({
 }) {
   const [open, setOpen] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  /* Gecko interop (issue #258, menu half) — two proven Firefox failure
+     modes, both driven by the fact that Gecko (unlike Blink) re-synthesizes
+     mouseenter/mouseleave boundary events whenever DOM/layout changes under
+     a STATIONARY pointer:
+
+     1. Open/close oscillation: Radix positions the portaled content after
+        it mounts, so the content flashes over the pointer and then moves
+        below the trigger; each reposition fires a synthetic boundary event
+        that re-armed the OPPOSITE 100ms hover timer — the menu cycled
+        open↔closed forever with no user input.
+
+     2. Close-on-select never observable: after a selection closes the
+        menu, the unmount re-synthesizes a mouseenter on the wrapper and
+        openMenu re-opened the menu.
+
+     Fix: the hover timers RE-VERIFY, at fire time, that the last known
+     pointer position is still inside the hover zone (trigger wrapper ∪
+     open content). Synthetic events carry truthful coordinates, so a
+     close whose pointer is actually still inside the zone is swallowed,
+     and an open whose pointer is outside the zone (former item position
+     after selection, or a reposition flash) is ignored. Real pointer
+     movement always updates the coordinates first, so genuine hover
+     intent is unchanged. A pointerdown inside the open content also
+     latches a timestamp (lastSelectionAtRef) that suppresses re-open for
+     MEGA_MENU_SELECT_LATCH_MS. Chromium never synthesizes these events,
+     so its behavior is byte-for-byte unchanged (the zone re-verification
+     only ever swallows events that would have flapped the menu). */
+  const zoneRef = useRef<HTMLDivElement | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const lastPointerRef = useRef({ x: -1, y: -1 });
+  const lastSelectionAtRef = useRef(0);
+
+  const trackPointer = useCallback((event: React.PointerEvent) => {
+    lastPointerRef.current = { x: event.clientX, y: event.clientY };
+  }, []);
+
+  /* Latched on every pointerdown inside the open menu content (capture
+     phase, so it runs before any item handler). Deliberately does NOT close
+     the menu or clear pending timers — closing stays Radix's onSelect →
+     onOpenChange job; this only arms the re-open suppression window. */
+  const latchSelection = useCallback((event: React.PointerEvent) => {
+    lastPointerRef.current = { x: event.clientX, y: event.clientY };
+    lastSelectionAtRef.current = performance.now();
+  }, []);
+
+  /* Is the last known pointer position inside the hover zone (wrapper ∪
+     content)? No pointer data yet (keyboard-only, touch-before-move, SSR
+     hydration) fails OPEN so the pre-existing behavior is preserved. */
+  const pointerInZone = useCallback(() => {
+    const { x, y } = lastPointerRef.current;
+    if (x < 0 && y < 0) return true;
+    const zone = zoneRef.current?.getBoundingClientRect();
+    if (
+      zone &&
+      x >= zone.left &&
+      x <= zone.right &&
+      y >= zone.top &&
+      y <= zone.bottom
+    ) {
+      return true;
+    }
+    const content = contentRef.current?.getBoundingClientRect();
+    if (
+      content &&
+      content.width > 0 &&
+      content.height > 0 &&
+      x >= content.left &&
+      x <= content.right &&
+      y >= content.top &&
+      y <= content.bottom
+    ) {
+      return true;
+    }
+    return false;
+  }, []);
 
   const openMenu = useCallback(() => {
+    if (
+      performance.now() - lastSelectionAtRef.current <
+      MEGA_MENU_SELECT_LATCH_MS
+    ) {
+      return;
+    }
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => setOpen(true), 100);
-  }, []);
+    timeoutRef.current = setTimeout(() => {
+      if (!pointerInZone()) return;
+      setOpen(true);
+    }, 100);
+  }, [pointerInZone]);
 
   const closeMenu = useCallback(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => setOpen(false), 100);
+    timeoutRef.current = setTimeout(() => {
+      if (pointerInZone()) return;
+      setOpen(false);
+    }, 100);
+  }, [pointerInZone]);
+
+  /* Leaving the DOCUMENT (pointer exits the window) must always close:
+     the coordinates are stale-inside in that case, so the zone guard
+     alone would keep the menu open. documentElement mouseleave fires
+     exactly when the pointer exits the viewport. */
+  useEffect(() => {
+    const forceClose = () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      timeoutRef.current = setTimeout(() => setOpen(false), 100);
+    };
+    document.documentElement.addEventListener("mouseleave", forceClose);
+    return () => {
+      document.documentElement.removeEventListener("mouseleave", forceClose);
+    };
   }, []);
 
   useEffect(
@@ -548,7 +658,14 @@ function NavMegaMenu({
   );
 
   return (
-    <div className="inline-block" onMouseEnter={openMenu} onMouseLeave={closeMenu}>
+    <div
+      ref={zoneRef}
+      className="inline-block"
+      onMouseEnter={openMenu}
+      onMouseLeave={closeMenu}
+      onPointerMove={trackPointer}
+      onPointerDown={trackPointer}
+    >
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
           <button
@@ -568,10 +685,13 @@ function NavMegaMenu({
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
+          ref={contentRef}
           align={align}
           sideOffset={8}
           onMouseEnter={openMenu}
           onMouseLeave={closeMenu}
+          onPointerDownCapture={latchSelection}
+          onPointerMove={trackPointer}
           /* Radix's default close behavior refocuses the trigger — which sits
              at the very top of the page. With html { scroll-behavior: smooth }
              that refocus yanks the viewport back to the top AFTER the menu

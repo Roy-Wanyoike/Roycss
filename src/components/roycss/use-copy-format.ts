@@ -12,6 +12,7 @@
 import { useState, useCallback } from "react";
 import { toast } from "sonner";
 import { COPY_FORMATS, formatCss, type CopyFormat } from "@/lib/copy-formats";
+import { copyTextToClipboard } from "@/lib/clipboard";
 
 export interface UseCopyFormatResult {
   /** Format the CSS and write it to the clipboard. */
@@ -27,12 +28,16 @@ export function useCopyFormat(css: string, effectId: string): UseCopyFormatResul
     async (format: CopyFormat) => {
       const formatted = formatCss(css, effectId, format);
       const label = COPY_FORMATS.find((f) => f.id === format)?.label ?? format;
-      try {
-        await navigator.clipboard.writeText(formatted);
+      // Clipboard-failure UX (P3 QA residual): the shared helper tries the
+      // async Clipboard API, then the legacy execCommand fallback — the
+      // error toast now fires only when BOTH paths fail (previously any
+      // rejection did, even though the fallback could have succeeded).
+      const ok = await copyTextToClipboard(formatted);
+      if (ok) {
         setCopiedFormat(format);
         toast.success(`Copied as ${label}!`);
         setTimeout(() => setCopiedFormat(null), 2000);
-      } catch {
+      } else {
         toast.error("Failed to copy — please try again");
       }
     },

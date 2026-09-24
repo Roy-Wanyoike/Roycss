@@ -14,9 +14,11 @@ import { test, expect } from "@playwright/test";
  *   4. The "Copy HTML" button is present and clickable.
  */
 test.describe("recipes section", () => {
-  // The Copy HTML affordance uses navigator.clipboard.writeText; headless
-  // contexts deny clipboard access by default (the component's failure path
-  // is intentionally silent — clipboard fallback UX is a separate P3).
+  // The Copy HTML affordance copies through the shared clipboard helper
+  // (async API → execCommand fallback); clipboard-write permission keeps
+  // the headless golden path working. The both-paths-fail UX ("Copy failed
+  // — press Ctrl+C / ⌘C" state + payload selection) is pinned at the unit
+  // level in tests/unit/clipboard-fallback.test.ts.
   test.use({ permissions: ["clipboard-write"] });
 
   test.beforeEach(async ({ page }) => {

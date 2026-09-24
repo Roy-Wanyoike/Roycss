@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search,
@@ -21,6 +21,12 @@ import {
   type Recipe,
 } from "@/lib/roycss-recipes";
 import { Badge } from "@/components/ui/badge";
+import {
+  copyTextToClipboard,
+  selectElementText,
+  CLIPBOARD_FAILED_MESSAGE,
+  CLIPBOARD_FAILED_RESET_MS,
+} from "@/lib/clipboard";
 import { ScrollReveal } from "@/components/roycss/motion-primitives";
 
 /* ═══════════════════════════════════════════════════════════════
@@ -30,15 +36,26 @@ import { ScrollReveal } from "@/components/roycss/motion-primitives";
 function RecipeCard({ recipe }: { recipe: Recipe }) {
   const [expanded, setExpanded] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
+  // `<code>` maps to plain HTMLElement in the DOM (no HTMLCodeElement).
+  const codeRef = useRef<HTMLElement>(null);
 
+  // Clipboard-failure UX (P3 QA residual): the async Clipboard API can be
+  // absent or reject (non-secure origin, hardened browser, headless), so
+  // copy through the shared helper (Clipboard API → execCommand fallback).
+  // If BOTH paths fail, select the rendered payload so the user can hit
+  // Ctrl+C / ⌘C themselves, flip to an accessible "Copy failed" state
+  // (role=status, aria-live=polite) and auto-reset after 4s. The success
+  // path ("Copied!" + 2s reset) is unchanged.
   const handleCopy = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(recipe.html);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      /* noop */
-    }
+    const ok = await copyTextToClipboard(recipe.html);
+    setCopied(ok);
+    setCopyFailed(!ok);
+    if (!ok) selectElementText(codeRef.current);
+    setTimeout(() => {
+      setCopied(false);
+      setCopyFailed(false);
+    }, ok ? 2000 : CLIPBOARD_FAILED_RESET_MS);
   }, [recipe.html]);
 
   const difficultyColor =
@@ -129,15 +146,23 @@ function RecipeCard({ recipe }: { recipe: Recipe }) {
                     <Check className="size-3 text-emerald-500" />
                     <span className="text-emerald-500">Copied!</span>
                   </>
+                ) : copyFailed ? (
+                  <>
+                    <Copy className="size-3 text-rose-500" />
+                    <span className="text-rose-500">{CLIPBOARD_FAILED_MESSAGE}</span>
+                  </>
                 ) : (
                   <>
                     <Copy className="size-3" />
                     Copy HTML
                   </>
                 )}
+                <span role="status" aria-live="polite" className="sr-only">
+                  {copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}
+                </span>
               </button>
               <pre className="p-3 overflow-x-auto text-xs leading-relaxed scrollbar-thin max-h-64 overflow-y-auto">
-                <code className="font-mono text-foreground/80 whitespace-pre">
+                <code ref={codeRef} className="font-mono text-foreground/80 whitespace-pre">
                   {recipe.html}
                 </code>
               </pre>

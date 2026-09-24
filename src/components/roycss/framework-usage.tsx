@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import { Terminal, PackageOpen, Code2 } from "lucide-react";
 import {
   getFrameworkExamples,
@@ -18,6 +19,10 @@ function CodeBlock({
   icon: React.ComponentType<{ className?: string }>;
   code: string;
 }) {
+  // When both copy paths fail, CopyButton selects this element so the user
+  // can copy the snippet manually (clipboard-failure UX, P3 QA residual).
+  // `<code>` maps to plain HTMLElement in the DOM (no HTMLCodeElement).
+  const codeRef = useRef<HTMLElement>(null);
   return (
     <div className="rounded-xl border border-border/50 bg-muted/50 overflow-hidden">
       <div className="flex items-center justify-between px-3 py-1.5 border-b border-border/40 bg-muted/30">
@@ -25,10 +30,10 @@ function CodeBlock({
           <Icon className="size-3" />
           {title}
         </span>
-        <CopyButton text={code} label={title} />
+        <CopyButton text={code} label={title} payloadRef={codeRef} />
       </div>
       <pre className="p-3 overflow-x-auto text-xs leading-relaxed scrollbar-thin max-h-72 overflow-y-auto">
-        <code className="font-mono text-foreground whitespace-pre">{code}</code>
+        <code ref={codeRef} className="font-mono text-foreground whitespace-pre">{code}</code>
       </pre>
     </div>
   );

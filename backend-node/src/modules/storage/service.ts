@@ -13,9 +13,30 @@
  * The StorageFile id is the S3 object key when configured (or a
  * synthesized `file-<uuid>` for the mock path). Public type signatures
  * are unchanged regardless of which path is active.
+ *
+ * ─── Ownership model (issue #268 — storage IDOR) ─────────────────────
+ * Every upload is attributed to the authenticated caller (`ownerId`,
+ * required at the service boundary — the route passes `req.user.sub`).
+ * Ownership is the ONE durable fact the module persists: the Prisma
+ * `StorageFileOwner` map (id → ownerId) so deletion rights survive
+ * process restarts; the in-memory rows carry it denormalized for the
+ * fast path. Authorization rules:
+ *
+ *   - READS (list / usage / detail) are owner-scoped — the caller only
+ *     ever sees rows attributed to them. Ownerless rows (the 8 seeded
+ *     legacy files, bucket keys created out-of-band) are invisible
+ *     through the API and read as flat 404s on detail.
+ *   - DELETE is owner-scoped with a flat 404 for foreign ids; ownerless
+ *     objects may only be deleted by a platform ADMIN (the caller
+ *     resolves via `hasPlatformRole` — the boolean form of
+ *     `requirePlatformRole`).
+ *
+ * The global 10 GB quota is unchanged (issue #268 tests pin it): the
+ * quota check still accounts for the whole store, not per-owner usage.
  */
 import { randomUUID, createHmac, createHash } from "node:crypto";
 
+import { db } from "../../lib/db.js";
 import { env } from "../../config/env.js";
 import { CACHE_TTL } from "../../config/constants.js";
 import { cache, cacheWrap } from "../../lib/cache.js";
@@ -44,6 +65,19 @@ function invalidate(id?: string): void {
 }
 
 const QUOTA_BYTES = 10 * 1024 * 1024 * 1024; // 10 GB
+
+/** Internal catalog row — the public StorageFile shape plus the owner
+ *  attribution (`null` for legacy/seed rows and out-of-band objects).
+ *  `ownerId` is stripped from every API response (toPublicFile). */
+interface StoredFile extends StorageFile {
+  ownerId: string | null;
+}
+
+/** Strip the internal owner attribution from a row for API responses. */
+function toPublicFile(f: StoredFile): StorageFile {
+  const { ownerId: _ownerId, ...publicFile } = f;
+  return publicFile;
+}
 
 // ─── Seed: 8 files (totals ~2.3 GB) ──────────────────────────────────────
 const SEED_FILES: StorageFile[] = [
@@ -121,7 +155,44 @@ const SEED_FILES: StorageFile[] = [
   },
 ];
 
-let files: StorageFile[] = SEED_FILES.map((f) => ({ ...f }));
+let files: StoredFile[] = SEED_FILES.map((f) => ({ ...f, ownerId: null }));
+
+/**
+ * Resolve the owner of a storage object: the in-memory catalog first
+ * (fast path), the durable `StorageFileOwner` map second (catalog rows
+ * vanish on restart; S3 bucket keys are listed, not stored). `null` =
+ * ownerless (legacy seed rows, out-of-band bucket keys, unknown ids).
+ */
+async function resolveOwnerId(id: string): Promise<string | null> {
+  const row = files.find((f) => f.id === id);
+  if (row && row.ownerId !== null) return row.ownerId;
+  const tracked = await db.storageFileOwner.findUnique({ where: { id } });
+  return tracked?.ownerId ?? null;
+}
+
+/**
+ * Ownership gate (issue #268): anything the caller does not own reads
+ * as the SAME flat 404 as a missing id — never a 403, so ids don't leak
+ * (the collections/favorites convention).
+ */
+function requireOwned(id: string, ownerId: string | null, callerId: string): void {
+  if (ownerId !== callerId) {
+    throw AppError.notFound(`Storage file '${id}' not found`);
+  }
+}
+
+/** Best-effort cleanup of the durable owner row after a successful
+ *  deletion (a stale row would only ever over-grant to a dead id). */
+async function deleteOwnerRow(id: string): Promise<void> {
+  try {
+    await db.storageFileOwner.deleteMany({ where: { id } });
+  } catch (err) {
+    log.warn("Storage owner-row cleanup failed", {
+      id,
+      err: (err as Error).message,
+    });
+  }
+}
 
 // ─── AWS SigV4 signer (no SDK — pure node:crypto) ──────────────────────────
 
@@ -428,8 +499,26 @@ function mimeTypeToType(name: string): StorageFile["type"] {
 
 // ─── Public API ─────────────────────────────────────────────────────────
 
-/** List all stored files. Cached. Uses S3 ListObjectsV2 when configured. */
-export async function listFiles(): Promise<StorageFile[]> {
+/**
+ * List stored files.
+ *
+ *   - WITH `ownerId` (the only form routes may call — issue #268): the
+ *     caller's own catalog rows, uncached (an in-memory filter is
+ *     cheaper than a per-owner cache key). Ownerless rows are never
+ *     included. In S3 mode this is the caller's API uploads — the
+ *     bucket inventory itself is platform infrastructure and is not
+ *     exposed per-user.
+ *   - WITHOUT `ownerId`: the FULL inventory (S3 ListObjectsV2 when
+ *     configured, else the catalog). Module-internal ONLY — the quota
+ *     check in uploadFile consumes it; no route may call this form.
+ */
+export async function listFiles(ownerId?: string): Promise<StorageFile[]> {
+  if (ownerId !== undefined) {
+    const owned = files
+      .filter((f) => f.ownerId === ownerId)
+      .map(toPublicFile);
+    return owned;
+  }
   return cacheWrap(
     FILES_KEY,
     async () => {
@@ -446,8 +535,18 @@ export async function listFiles(): Promise<StorageFile[]> {
   );
 }
 
-/** Get a single file by id. Cached. Throws 404 if missing. */
-export async function getFileById(id: string): Promise<StorageFile> {
+/**
+ * Get a single file by id, owner-scoped (issue #268): the caller must
+ * own the row (in-memory catalog or the durable StorageFileOwner map) —
+ * foreign, ownerless, and unknown ids all read as the same flat 404
+ * BEFORE any S3 transport is touched. Cached (the ownership gate runs
+ * ahead of the cache; the cached row itself is owner-independent).
+ */
+export async function getFileById(
+  id: string,
+  ownerId: string,
+): Promise<StorageFile> {
+  requireOwned(id, await resolveOwnerId(id), ownerId);
   return cacheWrap(
     detailKey(id),
     async () => {
@@ -468,46 +567,69 @@ export async function getFileById(id: string): Promise<StorageFile> {
       }
       const found = files.find((f) => f.id === id);
       if (!found) throw AppError.notFound(`Storage file '${id}' not found`);
-      return { ...found };
+      return toPublicFile(found);
     },
     CACHE_TTL.storageFileDetail,
   );
 }
 
-/** Storage usage summary. Cached. */
-export async function getUsage(): Promise<StorageUsage> {
+/**
+ * Storage usage summary.
+ *
+ *   - WITH `ownerId` (routes): usage over the caller's own files. The
+ *     quota constant stays the platform-wide 10 GB — per-user quotas
+ *     are explicitly out of scope (issue #268 pins quota behavior).
+ *   - WITHOUT `ownerId`: GLOBAL usage over the whole store (cached).
+ *     Module-internal ONLY — the uploadFile quota check consumes it;
+ *     no route may call this form.
+ */
+export async function getUsage(ownerId?: string): Promise<StorageUsage> {
+  if (ownerId !== undefined) {
+    const list = await listFiles(ownerId);
+    return summarizeUsage(list);
+  }
   return cacheWrap(
     USAGE_KEY,
     async () => {
       const list = await listFiles();
-      const used = list.reduce((sum, f) => sum + f.size, 0);
-      const byTypeMap = new Map<string, number>();
-      for (const f of list) {
-        byTypeMap.set(f.type, (byTypeMap.get(f.type) ?? 0) + f.size);
-      }
-      const byType = [...byTypeMap.entries()]
-        .sort((a, b) => b[1] - a[1])
-        .map(([type, size]) => ({ type, size }));
-      return {
-        used,
-        quota: QUOTA_BYTES,
-        unit: "bytes",
-        fileCount: list.length,
-        byType,
-      };
+      return summarizeUsage(list);
     },
     CACHE_TTL.storageUsage,
   );
 }
 
-/** Upload a new file. Invalidates file list + usage caches.
- *  When S3 is configured, also PUTs the metadata as a JSON manifest so
- *  the upload is durable (the route layer only sends metadata, no body). */
+/** Aggregate a file list into the StorageUsage shape (shared by the
+ *  global + owner-scoped paths). */
+function summarizeUsage(list: StorageFile[]): StorageUsage {
+  const used = list.reduce((sum, f) => sum + f.size, 0);
+  const byTypeMap = new Map<string, number>();
+  for (const f of list) {
+    byTypeMap.set(f.type, (byTypeMap.get(f.type) ?? 0) + f.size);
+  }
+  const byType = [...byTypeMap.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .map(([type, size]) => ({ type, size }));
+  return {
+    used,
+    quota: QUOTA_BYTES,
+    unit: "bytes",
+    fileCount: list.length,
+    byType,
+  };
+}
+
+/** Upload a new file, attributed to `ownerId` (required — issue #268;
+ *  the route passes the Bearer-JWT `sub`). Invalidates file list + usage
+ *  caches. When S3 is configured, also PUTs the metadata as a JSON
+ *  manifest so the upload is durable (the route layer only sends
+ *  metadata, no body). The owner row is persisted STRICTLY — an upload
+ *  that cannot be attributed must not succeed (fail closed). */
 export async function uploadFile(input: {
   name: string;
   type: StorageFile["type"];
   size: number;
   mimeType: string;
+  ownerId: string;
 }): Promise<StorageFile> {
   const usage = await getUsage();
   if (usage.used + input.size > QUOTA_BYTES) {
@@ -516,7 +638,7 @@ export async function uploadFile(input: {
     );
   }
   const id = `file-${randomUUID()}`;
-  const file: StorageFile = {
+  const row: StoredFile = {
     id,
     name: input.name,
     type: input.type,
@@ -526,16 +648,28 @@ export async function uploadFile(input: {
       ? publicUrl(id)
       : `https://storage.roycss.cloud/files/${id}/${input.name}`,
     uploadedAt: new Date().toISOString(),
+    ownerId: input.ownerId,
   };
 
   // Keep the local catalog current in both modes — S3 LIST will return
   // the manifest object too, and the in-memory mock list still works.
-  files.push(file);
+  files.push(row);
+
+  // Durable ownership (issue #268): the Prisma owner map is the source
+  // of truth that lets the creator delete the object after a restart or
+  // from another instance. Upsert keeps a collision a no-op rather than
+  // a P2002 — the first attribution wins.
+  await db.storageFileOwner.upsert({
+    where: { id },
+    create: { id, ownerId: input.ownerId },
+    update: {},
+  });
 
   if (isStorageConfigured) {
     // Record the metadata as a JSON manifest so the bucket has a durable
     // record of the upload (the route layer doesn't ship a file body —
-    // only {name, type, size, mimeType}).
+    // only {name, type, size, mimeType}). The manifest carries the owner
+    // id too, for out-of-band observability.
     const manifestKey = `${id}.meta.json`;
     const manifest = JSON.stringify({
       id,
@@ -543,7 +677,8 @@ export async function uploadFile(input: {
       type: input.type,
       size: input.size,
       mimeType: input.mimeType,
-      uploadedAt: file.uploadedAt,
+      uploadedAt: row.uploadedAt,
+      ownerId: input.ownerId,
     });
     const ok = await s3Put(manifestKey, manifest, "application/json");
     if (ok) {
@@ -552,15 +687,34 @@ export async function uploadFile(input: {
       log.warn("S3 PUT failed — file only in local catalog", { id });
     }
   } else {
-    log.info("File uploaded", { id, name: file.name, size: file.size });
+    log.info("File uploaded", { id, name: row.name, size: row.size });
   }
 
   invalidate(id);
-  return file;
+  return toPublicFile(row);
 }
 
-/** Delete a file by id. Invalidates file list + usage caches. */
-export async function deleteFile(id: string): Promise<void> {
+/**
+ * Delete a file by id — AUTHORIZED (issue #268): the caller must own the
+ * object; ownerless objects (legacy seed rows, out-of-band bucket keys)
+ * are deletable only by a platform ADMIN (`hasPlatformRole("ADMIN")`,
+ * resolved by the route). Foreign and unauthorized ids read as the SAME
+ * flat 404 as a missing id. Invalidates file list + usage caches.
+ */
+export async function deleteFile(
+  id: string,
+  caller: { sub: string; isPlatformAdmin: boolean },
+): Promise<void> {
+  // Authorization BEFORE any destructive transport call.
+  const ownerId = await resolveOwnerId(id);
+  if (ownerId !== caller.sub) {
+    // Foreign-owned AND ownerless both land here: owners pass, admins
+    // pass for ownerless rows, everyone else gets the flat 404.
+    if (!(ownerId === null && caller.isPlatformAdmin)) {
+      throw AppError.notFound(`Storage file '${id}' not found`);
+    }
+  }
+
   const before = files.length;
   files = files.filter((f) => f.id !== id);
   const existedLocally = files.length < before;
@@ -571,12 +725,14 @@ export async function deleteFile(id: string): Promise<void> {
     if (!ok && !existedLocally) {
       throw AppError.notFound(`Storage file '${id}' not found`);
     }
-    log.info("File deleted from S3", { id });
+    log.info("File deleted from S3", { id, actor: caller.sub });
   } else if (!existedLocally) {
     throw AppError.notFound(`Storage file '${id}' not found`);
   } else {
-    log.info("File deleted", { id });
+    log.info("File deleted", { id, actor: caller.sub });
   }
+
+  await deleteOwnerRow(id);
   invalidate(id);
 }
 
@@ -587,8 +743,31 @@ export function filesCount(): number {
 
 /** Test-only: reset to seed. */
 export function _resetStorageForTest(): void {
-  files = SEED_FILES.map((f) => ({ ...f }));
+  files = SEED_FILES.map((f) => ({ ...f, ownerId: null }));
   invalidate();
+}
+
+/** Test-only: stage an owned row in the local catalog without the
+ *  quota check or the DB write (lets the S3-path tests exercise the
+ *  ownership gate against arbitrary bucket keys). */
+export function _stageOwnedRowForTest(row: {
+  id: string;
+  ownerId: string;
+  name: string;
+}): void {
+  files.push({
+    id: row.id,
+    name: row.name,
+    type: mimeTypeToType(row.name),
+    size: 1,
+    mimeType: guessMimeType(row.name),
+    url: isStorageConfigured
+      ? publicUrl(row.id)
+      : `https://storage.roycss.cloud/files/${row.id}/${row.name}`,
+    uploadedAt: new Date().toISOString(),
+    ownerId: row.ownerId,
+  });
+  invalidate(row.id);
 }
 
 log.debug("Storage module loaded", {

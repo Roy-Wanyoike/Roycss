@@ -32,7 +32,10 @@ bun -e 'import { Database } from "bun:sqlite";
 const db = new Database("backend-node/prisma/verify.db", { readonly: true });
 const tables = db.query("SELECT name FROM sqlite_master WHERE type=\"table\"").all();
 console.log(`tables=${tables.length}`);'
-# Expected: tables=48 (47 app tables + _prisma_migrations). Fail otherwise.
+# Expected: tables=51 (50 app tables + _prisma_migrations). Fail otherwise.
+# (Re-count after every migration — `grep -c "^model " prisma/schema.prisma`
+# + 1 for _prisma_migrations; this line was 48 at the 20260912 baseline,
+# +2 auth_lifecycle, +1 storage_owner_map.)
 
 # 3. Confirm the applied schema matches the datamodel (no drift):
 bunx prisma migrate diff \

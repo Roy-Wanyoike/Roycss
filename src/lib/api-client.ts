@@ -1,27 +1,32 @@
 /**
  * apiClient — centralized fetch wrapper for backend (Express + Prisma)
- * API calls routed through the Caddy gateway.
+ * API calls routed through the same-origin gateway route.
  *
  * Why centralized?
- *   - One place to enforce the gateway convention (``)
+ *   - One place to enforce the `/api/v1/` path convention
  *   - One place to normalize the `{ error: { message } }` error envelope
- *     returned by all 68 backend modules (see backend/src/server/middleware/error.ts)
+ *     returned by all backend modules (75 module dirs — envelope built in
+ *     backend-node/src/server/middleware/error.ts)
  *   - One place to apply a request timeout + cancellation (AbortController)
  *   - One place to emit dev-only request logs (console.debug in dev)
  *
  * URL contract:
  *   - If `path` starts with "http" (absolute URL), it is used verbatim.
- *   - Otherwise the path is treated as a backend route segment and is
- *     prefixed with `/api/v1/` and routed to the backend via the gateway
- *     query param `` (Caddy rewrites this to
- *     http://localhost:4000/api/v1/<path>).
+ *   - Otherwise the path is treated as a backend route segment, prefixed
+ *     with `/api/v1/`, and served by the same-origin catch-all gateway
+ *     route (src/app/api/v1/[...path]/route.ts → src/lib/api-gateway.ts).
+ *     The gateway is mode-aware (src/lib/api-mode.ts): with BACKEND_URL
+ *     set and reachable it proxies to the full backend; otherwise it
+ *     serves the embedded read-only API built from the bundled catalog.
+ *     No query-param rewriting happens here — no `?XTransformPort=` is
+ *     added or required.
  *
  * Frontend proxy routes (`/api/auth/*`, `/api/health`, `/api/contact`,
  * `/api/ai-playground`, `/api/css-doctor`, `/api/ai-migration`) are a
  * SEPARATE abstraction — they target Next.js API routes on port 3000
  * (which handle httpOnly cookies, the z-ai-web-dev-sdk, etc.) and must
  * NOT be routed through this client. They are intentionally left as
- * direct `fetch` calls. See `docs/PERFORMANCE-AUDIT.md`.
+ * direct `fetch` calls.
  *
  * Error envelope:
  *   Backend modules return `{ error: { message: string } }` on non-2xx.

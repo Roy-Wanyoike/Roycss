@@ -6,10 +6,12 @@ import { apiClient } from "@/lib/api-client";
 /**
  * useBackendData — fetch + render-as-you-fetch helper for the 38 product
  * cards that wire to backend endpoints. All requests flow through the
- * centralized `apiClient` (`@/lib/api-client`), which handles the
- * `?XTransformPort=4000` gateway convention, a 10s timeout, request
- * cancellation (AbortController), error normalization, and dev-only
- * request logging — so this hook stays focused on React state.
+ * centralized `apiClient` (`@/lib/api-client`), which routes via the
+ * same-origin `/api/v1/` gateway (mode-aware: full backend at BACKEND_URL
+ * or the embedded read-only catalog API — see src/lib/api-mode.ts) and
+ * handles a 10s timeout, request cancellation (AbortController), error
+ * normalization, and dev-only request logging — so this hook stays
+ * focused on React state.
  *
  * State machine:
  *   loading=true initially → after first fetch settles: (data | error)
@@ -34,7 +36,7 @@ export function useBackendData<T>(path: string): {
     let cancelled = false;
     const run = async () => {
       try {
-        // apiClient prepends `/api/v1/` and `?XTransformPort=4000` for us.
+        // apiClient prepends `/api/v1/` (same-origin gateway route) for us.
         const result = await apiClient<T>(path, { cache: "no-store" });
         if (cancelled) return;
         if (result.error) {

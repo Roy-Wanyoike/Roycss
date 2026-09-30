@@ -80,7 +80,9 @@ area". All commands assume the repo root; the general contribution workflow
   `src/lib/roycss-types.ts`. Class prefix `roycss-`, keyframe prefix `roy-`,
   tokens `--roycss-*` (OKLCH — see `src/lib/design-tokens.ts`).
 - Gates before review: `bunx tsc --noEmit` (0 errors) and
-  `bunx vitest run tests/unit` (248 tests).
+  `bunx vitest run tests/unit` (the full frontend unit suite — 88 files,
+  ~1,200 tests; run it for the current count rather than trusting this
+  doc).
 
 ### 3.2 backend-node (Express + Prisma + Zod)
 

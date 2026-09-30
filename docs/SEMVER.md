@@ -150,7 +150,8 @@ the repo:
 2. **Category pin** — [`tests/unit/categories.test.ts`](../tests/unit/categories.test.ts):
    exactly 29.
 3. **Typecheck gate** — `bunx tsc --noEmit`, 0 errors.
-4. **Unit suite** — 248 tests must pass before any release.
+4. **Unit suite** — the frontend Vitest suite (`bunx vitest run tests/unit`,
+   88 files, ~1,200 tests) must pass before any release.
 5. **API drift gate** — for the backend surface ([`API.md`](../API.md)).
 
 A release that cannot pass 1–4 is not released. Semver compliance is

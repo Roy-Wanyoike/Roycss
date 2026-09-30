@@ -56,19 +56,39 @@ test.describe("patterns section", () => {
     await expect(copyBtn).toBeVisible();
   });
 
-  test("filtering by category via the 'All' / category pills changes the visible count", async ({
+  test("filtering by category via the 'States' pill filters the visible count", async ({
     page,
   }) => {
+    // Smell fix (issue #277): this test used to be a vacuous conditional —
+    // when the pill was hidden it asserted NOTHING (and the pill is in fact
+    // deterministic: the patterns corpus always ships states entries). Both
+    // branches now carry real assertions and the conditional is gone.
     const section = page.locator("#patterns");
-    const togglesBefore = await section.getByText(/^View HTML$/i).count();
 
-    // Click the "States" pill if it's visible (it's the first non-All category).
-    const statesPill = section.getByRole("button", { name: /States/i }).first();
-    if (await statesPill.isVisible()) {
-      await statesPill.click();
-      const togglesAfter = await section.getByText(/^View HTML$/i).count();
-      // Either the count changed, or every pattern is a "states" pattern (acceptable).
-      expect(togglesAfter).toBeGreaterThanOrEqual(1);
-    }
+    // The "All" pill advertises the total as its badge count.
+    const allPill = section.getByRole("button", { name: /^All/ }).first();
+    await expect(allPill).toBeVisible();
+    const allText = (await allPill.innerText()).replace(/\D+/g, "");
+    const total = Number(allText);
+    expect(total, "the All pill should advertise the pattern total").toBeGreaterThan(0);
+
+    // The first non-All category pill ("States") is deterministic too.
+    const statesPill = section.getByRole("button", { name: /^States/ }).first();
+    await expect(statesPill).toBeVisible();
+    await statesPill.click();
+
+    // The summary line flips to the filtered count, which must be a strict
+    // subset of the total (feedback + layouts entries exist in the corpus).
+    const summary = section.getByText(/Showing \d+ patterns?/i);
+    await expect(summary).toBeVisible({ timeout: 10_000 });
+    const filtered = Number(((await summary.innerText()).match(/Showing (\d+)/i) ?? [])[1]);
+    expect(filtered, "the summary should carry a count").not.toBeNaN();
+    expect(filtered, "filtering by States should reduce the count").toBeLessThan(total);
+    expect(filtered, "the States category should have at least 1 pattern").toBeGreaterThanOrEqual(1);
+
+    // The filtered grid still renders at least one expandable card.
+    const togglesAfter = section.getByText(/^View HTML$/i);
+    await expect(togglesAfter.first()).toBeVisible();
+    expect(await togglesAfter.count()).toBeGreaterThanOrEqual(1);
   });
 });

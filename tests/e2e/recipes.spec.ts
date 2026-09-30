@@ -33,14 +33,12 @@ test.describe("recipes section", () => {
   });
 
   test("renders the Recipes section with recipe cards", async ({ page }) => {
+    // Smell fix (issue #277): a second test ("renders at least one recipe
+    // card") duplicated this one's assertions verbatim (same toggles count
+    // ≥ 3, no unique check) — deduped into this stronger version, which also
+    // pins the region landmark.
     const region = page.getByRole("region", { name: "Recipes" });
     await expect(region).toBeVisible();
-    const toggles = page.getByText(/^View HTML$/i);
-    const count = await toggles.count();
-    expect(count, "expected multiple recipe cards").toBeGreaterThanOrEqual(3);
-  });
-
-  test("renders at least one recipe card", async ({ page }) => {
     const toggles = page.getByText(/^View HTML$/i);
     await expect(toggles.first()).toBeVisible();
     const count = await toggles.count();

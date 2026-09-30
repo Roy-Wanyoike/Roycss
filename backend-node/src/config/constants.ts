@@ -90,8 +90,8 @@ export const CACHE_TTL = {
   inspectorClassDetail: 10 * 60 * 1000,
   inspectorEffects: 10 * 60 * 1000,
   inspectorScan: 5 * 60 * 1000,
-  studioProjects: 5 * 60 * 1000,
-  studioProjectDetail: 5 * 60 * 1000,
+  // Studio project reads are owner-scoped and uncached (issue #267 —
+  // the collections convention); only the static templates catalog caches.
   studioTemplates: 10 * 60 * 1000,
   proComponents: 10 * 60 * 1000,
   proComponentDetail: 10 * 60 * 1000,

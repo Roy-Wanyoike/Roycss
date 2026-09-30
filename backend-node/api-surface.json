@@ -809,11 +809,11 @@
     },
     "GET /api/v1/studio/projects": {
       "origin": "backend",
-      "auth": "none"
+      "auth": "required"
     },
     "GET /api/v1/studio/projects/:id": {
       "origin": "backend",
-      "auth": "none"
+      "auth": "required"
     },
     "GET /api/v1/studio/templates": {
       "origin": "backend",

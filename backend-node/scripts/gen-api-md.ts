@@ -486,6 +486,17 @@ const MODULE_NOTE_OVERRIDES: Record<string, string> = {
     "The session host and every message author are **the Bearer-JWT `sub`** " +
     "(audit F-07 — no client-supplied `hostId`/`userId`); `hostName` is " +
     "unverified display metadata.",
+  // Issue #267 — the studio store joins the owner-scoped family.
+  studio:
+    "> Prisma-backed (`StudioProject`). **Owner-scoped** (issue #267) — " +
+    "every `/projects` route (reads included) requires a Bearer JWT and " +
+    "only ever touches the caller's own projects; a foreign id (or a " +
+    "legacy owner-`null` seed row) reads as a flat 404. Create persists " +
+    "the caller's `sub` as the owner. The four historical demo seeds " +
+    "(owner-`null`) are discontinued — invisible and immutable through " +
+    "the API; operators can reclaim them with `DELETE FROM " +
+    "\"StudioProject\" WHERE \"userId\" IS NULL`. `GET /templates` stays " +
+    "public (static catalog, no user data).",
 };
 
 // ─── Row rendering ────────────────────────────────────────────────────────

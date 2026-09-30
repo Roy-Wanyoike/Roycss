@@ -562,14 +562,14 @@ AI-assisted generation, review, auditing, profiling and simulation surfaces (LLM
 
 #### `studio` — Project studio — projects CRUD + templates (Prisma).
 
-> Prisma-backed (StudioProject). Mutating routes require a Bearer JWT (`requireAuth` — landed in PR #76, closing issue #64); unauthenticated calls get the 401 envelope.
+> Prisma-backed (`StudioProject`). **Owner-scoped** (issue #267) — every `/projects` route (reads included) requires a Bearer JWT and only ever touches the caller's own projects; a foreign id (or a legacy owner-`null` seed row) reads as a flat 404. Create persists the caller's `sub` as the owner. The four historical demo seeds (owner-`null`) are discontinued — invisible and immutable through the API; operators can reclaim them with `DELETE FROM "StudioProject" WHERE "userId" IS NULL`. `GET /templates` stays public (static catalog, no user data).
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
-| GET | `/api/v1/studio/projects` | Public | — | `{ data, meta }` · 200 | — |
+| GET | `/api/v1/studio/projects` | Bearer JWT | — | `{ data, meta }` · 200 | 401 |
 | POST | `/api/v1/studio/projects` | Bearer JWT | body: { `name`, `description?`, `components?` } | `{ data }` · 201 | 400 · 401 |
 | GET | `/api/v1/studio/templates` | Public | — | `{ data, meta }` · 200 | — |
-| GET | `/api/v1/studio/projects/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
+| GET | `/api/v1/studio/projects/:id` | Bearer JWT | path: `:id` | `{ data }` · 200 | 400 · 404 · 401 |
 | PUT | `/api/v1/studio/projects/:id` | Bearer JWT | body: partial `UpdateStudioProjectSchema` — all fields optional | `{ data }` · 200 | 400 · 404 · 401 |
 | DELETE | `/api/v1/studio/projects/:id` | Bearer JWT | path: `:id` | 204 — no body | 400 · 404 · 401 |
 

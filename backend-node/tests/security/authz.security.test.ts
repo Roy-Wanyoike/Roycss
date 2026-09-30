@@ -9,6 +9,9 @@
  *      user B never sees user A's key id.
  *   3. cross-tenant revoke: DELETE /auth/api-keys/:id for another user's
  *      key id → 404 (the route scopes by owner), never a foreign delete.
+ *   4. studio projects (issue #267): every /projects route is owner-scoped —
+ *      user B's GET/PUT/DELETE against user A's project id are flat 404s
+ *      and B's list never contains A's project.
  */
 import { describe, it, expect } from "vitest";
 
@@ -146,5 +149,66 @@ describe("security/authz: role + ownership enforcement", () => {
     });
     const idsA = (listA.body.data as Array<{ id: string }>).map((k) => k.id);
     expect(idsA).toContain(keyId);
+  });
+
+  it("4. studio projects are owner-scoped — user B's read/PUT/DELETE against A's id are flat 404s (issue #267)", async () => {
+    const userA = await registerUser(app, "authz-studio-a");
+    const userB = await registerUser(app, "authz-studio-b");
+
+    const create = await hit(app, "post", "/api/v1/studio/projects", {
+      body: { name: "A's private project" },
+      headers: bearer(userA),
+    });
+    expect(create.status).toBe(201);
+    const projectId = create.body.data.id as string;
+
+    // B's list is empty — A's project id is not visible in the listing.
+    const listB = await hit(app, "get", "/api/v1/studio/projects", {
+      headers: bearer(userB),
+    });
+    expect(listB.status).toBe(200);
+    const idsB = (listB.body.data as Array<{ id: string }>).map((p) => p.id);
+    expect(idsB).not.toContain(projectId);
+
+    // Read / edit / delete attempts against A's id — flat 404, no 403,
+    // no data in the body (ids don't leak).
+    const getB = await hit(
+      app,
+      "get",
+      `/api/v1/studio/projects/${projectId}`,
+      { headers: bearer(userB) },
+    );
+    expect(getB.status).toBe(404);
+    expectErrorEnvelope(getB);
+    expect(getB.body.error.code).toBe("NOT_FOUND");
+
+    const putB = await hit(
+      app,
+      "put",
+      `/api/v1/studio/projects/${projectId}`,
+      { body: { name: "Tampered" }, headers: bearer(userB) },
+    );
+    expect(putB.status).toBe(404);
+    expectErrorEnvelope(putB);
+
+    const delB = await hit(
+      app,
+      "delete",
+      `/api/v1/studio/projects/${projectId}`,
+      { headers: bearer(userB) },
+    );
+    expect(delB.status).toBe(404);
+    expectErrorEnvelope(delB);
+
+    // A's project survived, intact and still listed for A.
+    const row = await db.studioProject.findUnique({
+      where: { id: projectId },
+    });
+    expect(row!.name).toBe("A's private project");
+    const listA = await hit(app, "get", "/api/v1/studio/projects", {
+      headers: bearer(userA),
+    });
+    const idsA = (listA.body.data as Array<{ id: string }>).map((p) => p.id);
+    expect(idsA).toContain(projectId);
   });
 });

@@ -5,7 +5,7 @@
 //   - backend-go/    — this package (production target: Cloud Run + PG + Redis)
 //
 // Both expose the same /api/v1 surface. Today the Go backend has real
-// implementations for auth, effects, and health; the other 66 modules return
+// implementations for auth, effects, and health; the other 70 modules return
 // 501 so clients fall back to backend-node per the failover design.
 package main
 
@@ -23,7 +23,8 @@ import (
         "github.com/roycss/platform/internal/analytics"
         "github.com/roycss/platform/internal/architect"
         authmod "github.com/roycss/platform/internal/auth"
-        "github.com/roycss/platform/internal/auditcenter"
+        "github.com/roycss/platform/internal/audit"
+        "github.com/roycss/platform/internal/audit-center"
         "github.com/roycss/platform/internal/benchmark"
         "github.com/roycss/platform/internal/blocks"
         "github.com/roycss/platform/internal/blueprints"
@@ -32,57 +33,61 @@ import (
         "github.com/roycss/platform/internal/certifications"
         "github.com/roycss/platform/internal/challenges"
         "github.com/roycss/platform/internal/cloud"
-        "github.com/roycss/platform/internal/colorspace"
+        "github.com/roycss/platform/internal/collections"
+        "github.com/roycss/platform/internal/color-space"
         "github.com/roycss/platform/internal/compliance"
         "github.com/roycss/platform/internal/contact"
         "github.com/roycss/platform/internal/deploy"
         "github.com/roycss/platform/internal/designer"
         "github.com/roycss/platform/internal/devtools"
-        "github.com/roycss/platform/internal/digitaltwin"
+        "github.com/roycss/platform/internal/digital-twin"
         "github.com/roycss/platform/internal/edge"
         "github.com/roycss/platform/internal/effects"
         "github.com/roycss/platform/internal/enterprise"
         "github.com/roycss/platform/internal/fallback"
+        "github.com/roycss/platform/internal/favorites"
         "github.com/roycss/platform/internal/fleet"
         "github.com/roycss/platform/internal/generator"
         "github.com/roycss/platform/internal/governance"
         "github.com/roycss/platform/internal/health"
         "github.com/roycss/platform/internal/icons"
-        "github.com/roycss/platform/internal/initialletter"
+        "github.com/roycss/platform/internal/initial-letter"
         "github.com/roycss/platform/internal/inspector"
-        "github.com/roycss/platform/internal/lightdark"
+        "github.com/roycss/platform/internal/light-dark"
         "github.com/roycss/platform/internal/live"
-        "github.com/roycss/platform/internal/logicalproperties"
+        "github.com/roycss/platform/internal/logical-properties"
         "github.com/roycss/platform/internal/marketplace"
         "github.com/roycss/platform/internal/mcp"
         "github.com/roycss/platform/internal/mentor"
+        "github.com/roycss/platform/internal/metrics"
         "github.com/roycss/platform/internal/motion"
         "github.com/roycss/platform/internal/observatory"
         "github.com/roycss/platform/internal/open"
+        "github.com/roycss/platform/internal/openapi"
         osmod "github.com/roycss/platform/internal/os"
         "github.com/roycss/platform/internal/pair"
         "github.com/roycss/platform/internal/patterns"
-        "github.com/roycss/platform/internal/pluginhub"
+        "github.com/roycss/platform/internal/plugin-hub"
         "github.com/roycss/platform/internal/preview"
-        "github.com/roycss/platform/internal/procomponents"
+        "github.com/roycss/platform/internal/pro-components"
         "github.com/roycss/platform/internal/profiler"
-        "github.com/roycss/platform/internal/propertyregistrar"
+        "github.com/roycss/platform/internal/property-registrar"
         "github.com/roycss/platform/internal/recipes"
         "github.com/roycss/platform/internal/refactor"
         "github.com/roycss/platform/internal/registry"
-        "github.com/roycss/platform/internal/relativecolor"
+        "github.com/roycss/platform/internal/relative-color"
         "github.com/roycss/platform/internal/review"
         "github.com/roycss/platform/internal/scaffold"
         "github.com/roycss/platform/internal/scope"
         "github.com/roycss/platform/internal/search"
         "github.com/roycss/platform/internal/spotlight"
-        "github.com/roycss/platform/internal/startingstyle"
+        "github.com/roycss/platform/internal/starting-style"
         "github.com/roycss/platform/internal/storage"
         "github.com/roycss/platform/internal/studio"
-        "github.com/roycss/platform/internal/stylequery"
+        "github.com/roycss/platform/internal/style-query"
         "github.com/roycss/platform/internal/subgrid"
         syncmod "github.com/roycss/platform/internal/sync"
-        "github.com/roycss/platform/internal/textwrap"
+        "github.com/roycss/platform/internal/text-wrap"
         "github.com/roycss/platform/internal/themes"
         "github.com/roycss/platform/internal/version"
         "github.com/roycss/platform/internal/workspace"
@@ -90,7 +95,7 @@ import (
         "github.com/roycss/platform/pkg/cache"
         "github.com/roycss/platform/pkg/config"
         "github.com/roycss/platform/pkg/database"
-        "github.com/roycss/platform/pkg/httpmw"
+        httpmw "github.com/roycss/platform/pkg/http"
         "github.com/roycss/platform/pkg/logger"
 )
 
@@ -140,12 +145,17 @@ func main() {
         authSvc.RegisterRoutes(mux)
         eff.RegisterRoutes(mux)
 
-        // ── 66 stub modules (return 501 → failover to backend-node) ─────────
+        // ── 70 stub modules (return 501 → failover to backend-node) ─────────
+        // favorites/collections/audit/metrics/openapi were added in issue #270 —
+        // they existed in backend-node but not even as Go stubs, so failover
+        // clients hit a mux 404 instead of the 501 failover signal. inspector
+        // was referenced by main.go but its package was missing from the tree.
         registerStubs(mux,
                 academy.RegisterRoutes,
                 accessibility.RegisterRoutes,
                 analytics.RegisterRoutes,
                 architect.RegisterRoutes,
+                audit.RegisterRoutes,
                 auditcenter.RegisterRoutes,
                 benchmark.RegisterRoutes,
                 blocks.RegisterRoutes,
@@ -155,6 +165,7 @@ func main() {
                 certifications.RegisterRoutes,
                 challenges.RegisterRoutes,
                 cloud.RegisterRoutes,
+                collections.RegisterRoutes,
                 colorspace.RegisterRoutes,
                 compliance.RegisterRoutes,
                 contact.RegisterRoutes,
@@ -165,6 +176,7 @@ func main() {
                 edge.RegisterRoutes,
                 enterprise.RegisterRoutes,
                 fallback.RegisterRoutes,
+                favorites.RegisterRoutes,
                 fleet.RegisterRoutes,
                 generator.RegisterRoutes,
                 governance.RegisterRoutes,
@@ -177,9 +189,11 @@ func main() {
                 marketplace.RegisterRoutes,
                 mcp.RegisterRoutes,
                 mentor.RegisterRoutes,
+                metrics.RegisterRoutes,
                 motion.RegisterRoutes,
                 observatory.RegisterRoutes,
                 open.RegisterRoutes,
+                openapi.RegisterRoutes,
                 osmod.RegisterRoutes,
                 pair.RegisterRoutes,
                 patterns.RegisterRoutes,

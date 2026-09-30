@@ -85,11 +85,11 @@ func (s *Service) RegisterRoutes(mux *http.ServeMux) {
 
 func (s *Service) list(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
-		response.Error(w, http.StatusMethodNotAllowed, "METHOD_NOT_ALLOWED", "use GET")
+		response.Error(w, http.StatusNotFound, response.CodeNotFound, "use GET")
 		return
 	}
 	if err := s.Load(); err != nil {
-		response.Error(w, http.StatusInternalServerError, "INTERNAL", "effects data not loaded")
+		response.Error(w, http.StatusInternalServerError, response.CodeInternal, "effects data not loaded")
 		return
 	}
 	page := atoiDefault(r.URL.Query().Get("page"), 1)
@@ -149,23 +149,23 @@ func (s *Service) list(w http.ResponseWriter, r *http.Request) {
 
 func (s *Service) get(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
-		response.Error(w, http.StatusMethodNotAllowed, "METHOD_NOT_ALLOWED", "use GET")
+		response.Error(w, http.StatusNotFound, response.CodeNotFound, "use GET")
 		return
 	}
 	if err := s.Load(); err != nil {
-		response.Error(w, http.StatusInternalServerError, "INTERNAL", "effects data not loaded")
+		response.Error(w, http.StatusInternalServerError, response.CodeInternal, "effects data not loaded")
 		return
 	}
 	slug := strings.TrimPrefix(r.URL.Path, "/api/v1/effects/")
 	if slug == "" {
-		response.Error(w, http.StatusBadRequest, "VALIDATION", "slug is required")
+		response.Error(w, http.StatusBadRequest, response.CodeValidation, "slug is required")
 		return
 	}
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 	e, ok := s.bySlug[slug]
 	if !ok {
-		response.Error(w, http.StatusNotFound, "NOT_FOUND", "effect not found")
+		response.Error(w, http.StatusNotFound, response.CodeNotFound, "effect not found")
 		return
 	}
 	response.OK(w, e)

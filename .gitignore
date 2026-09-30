@@ -141,6 +141,10 @@ RoyCSS-evolved/
 download/
 portfolio/
 inspector/
+# …except the Go API's inspector stub module: cmd/api/main.go calls
+# inspector.RegisterRoutes (issue #270), so the package must be tracked
+# or a fresh clone cannot compile backend-go.
+!backend-go/internal/inspector/
 
 # ─── Reports (regenerated, not source) ─────────────────────────
 roycss-upgrade-report.md

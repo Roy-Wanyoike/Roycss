@@ -1,4 +1,11 @@
-// Package auth implements the auth domain module: signup, login, refresh, me.
+// Package auth implements the auth domain module: register, login, refresh, me.
+//
+// Path parity with backend-node/src/modules/auth/routes.ts (issue #270):
+// POST /api/v1/auth/register is the CANONICAL registration path; /signup is
+// kept as a legacy alias. Node auth endpoints not yet ported (logout,
+// logout-all, export, account, verify-email, forgot/reset-password,
+// api-keys) are mounted as 501 stubs so failover clients get the
+// documented failover shape, not a mux 404.
 //
 // Dependency direction: handler → service → repository (pgx). Passwords are
 // bcrypt-hashed; tokens are JWT (access 15m + refresh 7d). The repository
@@ -16,7 +23,7 @@ import (
         "github.com/jackc/pgx/v5/pgxpool"
         authpkg "github.com/roycss/platform/pkg/auth"
         "github.com/roycss/platform/pkg/config"
-        "github.com/roycss/platform/pkg/httpmw"
+        httpmw "github.com/roycss/platform/pkg/http"
         "github.com/roycss/platform/pkg/response"
 )
 
@@ -42,10 +49,38 @@ func New(pool *pgxpool.Pool, cfg *config.Config) *Service {
 
 // RegisterRoutes mounts /api/v1/auth/* on the mux.
 func (s *Service) RegisterRoutes(mux *http.ServeMux) {
-        mux.HandleFunc("/api/v1/auth/signup", s.signup)
+        // register is the node-canonical path (backend-node routes.ts:97);
+        // /signup remains mounted as a legacy alias for pre-parity clients.
+        mux.HandleFunc("/api/v1/auth/register", s.register)
+        mux.HandleFunc("/api/v1/auth/signup", s.register)
         mux.HandleFunc("/api/v1/auth/login", s.login)
         mux.HandleFunc("/api/v1/auth/refresh", s.refresh)
         mux.HandleFunc("/api/v1/auth/me", s.me)
+
+        // Node auth surface not yet ported — 501 failover signal (issue #270):
+        // clients must see the documented stub shape, never a mux 404.
+        // Full node surface (backend-node/src/modules/auth/routes.ts):
+        // logout, logout-all, export, account, verify-email(+confirm),
+        // forgot/reset-password, api-keys (api-keys/:id via the subtree).
+        mux.HandleFunc("/api/v1/auth/logout", notImplemented)
+        mux.HandleFunc("/api/v1/auth/logout-all", notImplemented)
+        mux.HandleFunc("/api/v1/auth/export", notImplemented)
+        mux.HandleFunc("/api/v1/auth/account", notImplemented)
+        mux.HandleFunc("/api/v1/auth/verify-email", notImplemented)
+        mux.HandleFunc("/api/v1/auth/verify-email/confirm", notImplemented)
+        mux.HandleFunc("/api/v1/auth/forgot-password", notImplemented)
+        mux.HandleFunc("/api/v1/auth/reset-password", notImplemented)
+        mux.HandleFunc("/api/v1/auth/api-keys", notImplemented)
+        mux.HandleFunc("/api/v1/auth/api-keys/", notImplemented)
+}
+
+// notImplemented responds 501 with the documented stub envelope so clients
+// fail over to backend-node per the dual-backend design (same shape as the
+// module stubs registered in cmd/api/main.go).
+func notImplemented(w http.ResponseWriter, _ *http.Request) {
+        w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusNotImplemented)
+        _, _ = w.Write([]byte(`{"error":{"code":"NOT_IMPLEMENTED","message":"Go stub — use backend-node for this module","module":"auth"}}`))
 }
 
 // --- DTOs ---
@@ -70,25 +105,29 @@ type tokenResp struct {
 
 // --- Handlers ---
 
-func (s *Service) signup(w http.ResponseWriter, r *http.Request) {
+// register creates a new account. Mounted at /auth/register (node-canonical)
+// and /auth/signup (legacy alias).
+func (s *Service) register(w http.ResponseWriter, r *http.Request) {
         if r.Method != http.MethodPost {
-                response.Error(w, http.StatusMethodNotAllowed, "METHOD_NOT_ALLOWED", "use POST")
+                // Node parity: an unmatched method falls through to the node
+                // notFoundHandler, i.e. 404 NOT_FOUND (error.ts:324-331).
+                response.Error(w, http.StatusNotFound, response.CodeNotFound, "use POST")
                 return
         }
         var req signupReq
         if err := decodeJSON(r, &req); err != nil {
-                response.Error(w, http.StatusBadRequest, "BAD_REQUEST", err.Error())
+                response.Error(w, http.StatusBadRequest, response.CodeBadRequest, err.Error())
                 return
         }
         req.Email = strings.TrimSpace(strings.ToLower(req.Email))
         if req.Email == "" {
-                response.Error(w, http.StatusBadRequest, "VALIDATION", "email is required")
+                response.Error(w, http.StatusBadRequest, response.CodeValidation, "email is required")
                 return
         }
 
         hash, err := authpkg.HashPassword(req.Password)
         if err != nil {
-                response.Error(w, http.StatusBadRequest, "VALIDATION", err.Error())
+                response.Error(w, http.StatusBadRequest, response.CodeValidation, err.Error())
                 return
         }
 
@@ -100,16 +139,16 @@ func (s *Service) signup(w http.ResponseWriter, r *http.Request) {
         `, req.Email, hash, req.Name).Scan(&u.ID, &u.Email, &u.Name, &u.CreatedAt, &u.UpdatedAt)
         if err != nil {
                 if isUniqueViolation(err) {
-                        response.Error(w, http.StatusConflict, "DUPLICATE", "email already registered")
+                        response.Error(w, http.StatusConflict, response.CodeConflict, "email already registered")
                         return
                 }
-                response.Error(w, http.StatusInternalServerError, "INTERNAL", "failed to create user")
+                response.Error(w, http.StatusInternalServerError, response.CodeInternal, "failed to create user")
                 return
         }
 
         resp, err := s.issueTokens(u)
         if err != nil {
-                response.Error(w, http.StatusInternalServerError, "INTERNAL", "failed to mint tokens")
+                response.Error(w, http.StatusInternalServerError, response.CodeInternal, "failed to mint tokens")
                 return
         }
         response.Created(w, resp)
@@ -117,12 +156,12 @@ func (s *Service) signup(w http.ResponseWriter, r *http.Request) {
 
 func (s *Service) login(w http.ResponseWriter, r *http.Request) {
         if r.Method != http.MethodPost {
-                response.Error(w, http.StatusMethodNotAllowed, "METHOD_NOT_ALLOWED", "use POST")
+                response.Error(w, http.StatusNotFound, response.CodeNotFound, "use POST")
                 return
         }
         var req loginReq
         if err := decodeJSON(r, &req); err != nil {
-                response.Error(w, http.StatusBadRequest, "BAD_REQUEST", err.Error())
+                response.Error(w, http.StatusBadRequest, response.CodeBadRequest, err.Error())
                 return
         }
         req.Email = strings.TrimSpace(strings.ToLower(req.Email))
@@ -134,21 +173,21 @@ func (s *Service) login(w http.ResponseWriter, r *http.Request) {
                 FROM users WHERE email = $1
         `, req.Email).Scan(&u.ID, &u.Email, &u.Name, &hash, &u.CreatedAt, &u.UpdatedAt)
         if err == pgx.ErrNoRows {
-                response.Error(w, http.StatusUnauthorized, "INVALID_CREDENTIALS", "invalid email or password")
+                response.Error(w, http.StatusUnauthorized, response.CodeUnauthorized, "invalid email or password")
                 return
         }
         if err != nil {
-                response.Error(w, http.StatusInternalServerError, "INTERNAL", "failed to query user")
+                response.Error(w, http.StatusInternalServerError, response.CodeInternal, "failed to query user")
                 return
         }
         if err := authpkg.VerifyPassword(hash, req.Password); err != nil {
-                response.Error(w, http.StatusUnauthorized, "INVALID_CREDENTIALS", "invalid email or password")
+                response.Error(w, http.StatusUnauthorized, response.CodeUnauthorized, "invalid email or password")
                 return
         }
 
         resp, err := s.issueTokens(u)
         if err != nil {
-                response.Error(w, http.StatusInternalServerError, "INTERNAL", "failed to mint tokens")
+                response.Error(w, http.StatusInternalServerError, response.CodeInternal, "failed to mint tokens")
                 return
         }
         response.OK(w, resp)
@@ -156,17 +195,17 @@ func (s *Service) login(w http.ResponseWriter, r *http.Request) {
 
 func (s *Service) refresh(w http.ResponseWriter, r *http.Request) {
         if r.Method != http.MethodPost {
-                response.Error(w, http.StatusMethodNotAllowed, "METHOD_NOT_ALLOWED", "use POST")
+                response.Error(w, http.StatusNotFound, response.CodeNotFound, "use POST")
                 return
         }
         var req refreshReq
         if err := decodeJSON(r, &req); err != nil {
-                response.Error(w, http.StatusBadRequest, "BAD_REQUEST", err.Error())
+                response.Error(w, http.StatusBadRequest, response.CodeBadRequest, err.Error())
                 return
         }
         claims, err := authpkg.VerifyRefresh(s.cfg.JWTRefreshSecret, req.RefreshToken)
         if err != nil {
-                response.Error(w, http.StatusUnauthorized, "INVALID_TOKEN", "refresh token invalid or expired")
+                response.Error(w, http.StatusUnauthorized, response.CodeUnauthorized, "refresh token invalid or expired")
                 return
         }
         var u User
@@ -174,12 +213,12 @@ func (s *Service) refresh(w http.ResponseWriter, r *http.Request) {
                 SELECT id, email, name, created_at, updated_at FROM users WHERE id = $1
         `, claims.Subject).Scan(&u.ID, &u.Email, &u.Name, &u.CreatedAt, &u.UpdatedAt)
         if err != nil {
-                response.Error(w, http.StatusUnauthorized, "INVALID_TOKEN", "user not found")
+                response.Error(w, http.StatusUnauthorized, response.CodeUnauthorized, "user not found")
                 return
         }
         resp, err := s.issueTokens(u)
         if err != nil {
-                response.Error(w, http.StatusInternalServerError, "INTERNAL", "failed to mint tokens")
+                response.Error(w, http.StatusInternalServerError, response.CodeInternal, "failed to mint tokens")
                 return
         }
         response.OK(w, resp)
@@ -187,21 +226,21 @@ func (s *Service) refresh(w http.ResponseWriter, r *http.Request) {
 
 func (s *Service) me(w http.ResponseWriter, r *http.Request) {
         if r.Method != http.MethodGet {
-                response.Error(w, http.StatusMethodNotAllowed, "METHOD_NOT_ALLOWED", "use GET")
+                response.Error(w, http.StatusNotFound, response.CodeNotFound, "use GET")
                 return
         }
         bearer := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
         claims, err := authpkg.VerifyAccess(s.cfg.JWTSecret, bearer)
         if err != nil {
-                response.Error(w, http.StatusUnauthorized, "UNAUTHENTICATED", "missing or invalid token")
+                response.Error(w, http.StatusUnauthorized, response.CodeUnauthorized, "missing or invalid token")
                 return
         }
         var u User
         err = s.pool.QueryRow(r.Context(), `
                 SELECT id, email, name, created_at, updated_at FROM users WHERE id = $1
-        `, claims.UserID).Scan(&u.ID, &u.Email, &u.Name, &u.CreatedAt, &u.UpdatedAt)
+        `, claims.Subject).Scan(&u.ID, &u.Email, &u.Name, &u.CreatedAt, &u.UpdatedAt)
         if err != nil {
-                response.Error(w, http.StatusUnauthorized, "UNAUTHENTICATED", "user not found")
+                response.Error(w, http.StatusUnauthorized, response.CodeUnauthorized, "user not found")
                 return
         }
         ctx := context.WithValue(r.Context(), httpmw.CtxUserID, u.ID)

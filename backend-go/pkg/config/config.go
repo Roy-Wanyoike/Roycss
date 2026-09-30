@@ -39,7 +39,9 @@ type Config struct {
 	// Effects data (seed source)
 	EffectsDataPath string
 
-	// Storage (S3-compatible)
+	// Storage (S3-compatible) — env names MUST match the node backend
+	// (backend-node/src/config/env.ts:123-124, issue #270): the old
+	// STORAGE_ACCESS_KEY / STORAGE_SECRET_KEY names were node-drift.
 	StorageEndpoint  string
 	StorageBucket    string
 	StorageAccessKey string
@@ -67,8 +69,8 @@ func Load() (*Config, error) {
 
 		StorageEndpoint:  env("STORAGE_ENDPOINT", ""),
 		StorageBucket:    env("STORAGE_BUCKET", ""),
-		StorageAccessKey: env("STORAGE_ACCESS_KEY", ""),
-		StorageSecretKey: env("STORAGE_SECRET_KEY", ""),
+		StorageAccessKey: env("STORAGE_ACCESS_KEY_ID", ""),
+		StorageSecretKey: env("STORAGE_SECRET_ACCESS_KEY", ""),
 		StorageRegion:    env("STORAGE_REGION", "auto"),
 	}
 

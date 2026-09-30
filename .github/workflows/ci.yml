@@ -62,26 +62,15 @@ jobs:
       - name: Lint (eslint)
         run: bun run lint
 
-      # REQUIRED gate — do not weaken. Fails on main today for two known
-      # reasons being fixed in parallel (issue #60):
-      #   1. Root tsconfig scope bleed — backend-node/ + mini-services/ have
-      #      their own dependency trees and are compiled by the root tsc run.
-      #   2. recharts v3 ChartTooltip typing (chart.tsx, charts.tsx,
-      #      analytics-dashboard.tsx).
-      # Until #60 lands, this step is expected red; the job correctly fails.
+      # REQUIRED gate — do not weaken.
       - name: Typecheck (tsc --noEmit)
         run: bunx tsc --noEmit
 
-      # `!cancelled()` (not `always()`) so these verification steps still
-      # run and report signal when the typecheck gate above is red (see
-      # #60 note) — but never after a run is cancelled. They do NOT weaken
-      # the gate: any failed step still fails the job.
       # Coverage floor (issue #84 / PF-006): thresholds live in
       # vitest.config.ts (80 % statements / 70 % branches). `--coverage`
       # is REQUIRED for thresholds to be enforced — a plain `vitest run`
       # never evaluates them.
       - name: Unit tests + coverage floor (vitest)
-        if: ${{ !cancelled() }}
         run: bunx vitest run --coverage
         env:
           # RoyCSS lib unit tests are pure TS — no DB, no network — but
@@ -92,11 +81,9 @@ jobs:
       # shipped npm artifacts in dist/ (.size-limit.json). Runs AFTER
       # build:package so dist/ reflects THIS commit, not the last tag.
       - name: Build package (scripts/build-package.ts → dist/)
-        if: ${{ !cancelled() }}
         run: bun run build:package
 
       - name: Bundle-size gate (size-limit)
-        if: ${{ !cancelled() }}
         run: bunx size-limit
 
       - name: Upload dist artifact
@@ -154,34 +141,22 @@ jobs:
       - name: Install backend-node dependencies (frozen lockfile)
         run: bun install --frozen-lockfile
 
-      # REQUIRED gate — do not weaken. Fails on main today because
-      # src/server/app.ts imports ../modules/inspector/routes.js, which
-      # does not exist yet (68 routers, 67 module dirs). Tracked in issue
-      # #57 — a parallel fix is in flight. Until it lands, this step is
-      # expected red; the job correctly fails.
+      # REQUIRED gate — do not weaken.
       - name: Typecheck backend-node (tsc --noEmit)
         run: bun run typecheck
 
-      # `!cancelled()` so the DB provisioning + integration steps still
-      # run and report signal while the typecheck gate above is red (see
-      # #57 note) — but never after a run is cancelled. They do NOT weaken
-      # the gate: any failed step still fails the job.
       - name: Prisma generate
-        if: ${{ !cancelled() }}
         run: bun run db:generate
 
       - name: Prisma db push (test DB)
-        if: ${{ !cancelled() }}
         run: bun run db:push
         env:
           DATABASE_URL: "file:./test.db"
 
       - name: Typecheck integration tests (tsc -p tsconfig.test.json)
-        if: ${{ !cancelled() }}
         run: bun run typecheck:tests
 
       - name: Integration tests (vitest + supertest)
-        if: ${{ !cancelled() }}
         run: bun run test:integration
         env:
           DATABASE_URL: "file:./test.db"
@@ -199,7 +174,6 @@ jobs:
       # throwaway test.db regardless of ambient values. No --coverage: the
       # coverage floor is enforced by the local test:coverage run.
       - name: Unit + contract + security suites (vitest)
-        if: ${{ !cancelled() }}
         run: bunx vitest run tests/unit tests/contract tests/security
 
       - name: Upload test coverage
@@ -235,8 +209,11 @@ jobs:
   #      gateway probes BACKEND_URL and falls back to the embedded
   #      read-only catalog if the backend is slow to boot, so a backend
   #      race can never flake UI specs (src/lib/api-mode.ts).
-  #   4. `bunx playwright test` with PLAYWRIGHT_NO_SERVER=1 (the config
-  #      otherwise auto-starts `next dev`) + PLAYWRIGHT_BASE_URL=:3000.
+  #   4. `bunx playwright test --project=chromium` with
+  #      PLAYWRIGHT_NO_SERVER=1 (the config otherwise auto-starts
+  #      `next dev`) + PLAYWRIGHT_BASE_URL=:3000. Chromium only (issue
+  #      #265): the config's firefox/webkit projects are a local/strategic
+  #      gate, not installed or run in CI (see tests/README.md).
   #
   # Current specs are UI-level and hermetic (the contact-form spec mocks
   # its POST via page.route) — the backend is wired so future specs can
@@ -272,6 +249,9 @@ jobs:
       - name: Install dependencies (frozen lockfile)
         run: bun install --frozen-lockfile
 
+      # Chromium only (issue #265): the e2e step below scopes to
+      # --project=chromium; the config's firefox/webkit projects stay a
+      # local/strategic gate and are NOT installed or run here.
       - name: Install Chromium for Playwright
         run: bunx playwright install chromium --with-deps
 
@@ -327,7 +307,7 @@ jobs:
             || { echo "::error::frontend did not become healthy on :3000"; cat frontend-e2e.log; cat backend-e2e.log; exit 1; }
 
       - name: E2E tests (Playwright, chromium)
-        run: bunx playwright test
+        run: bunx playwright test --project=chromium
 
       - name: Upload Playwright artifacts
         if: always()

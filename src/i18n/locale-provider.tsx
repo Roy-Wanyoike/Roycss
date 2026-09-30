@@ -104,7 +104,15 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
 
   return (
     <LocaleSwitchContext.Provider value={switchLocale}>
-      <NextIntlClientProvider locale={locale} messages={MESSAGES[locale]}>
+      {/* timeZone pinned to UTC (issue #274) to match src/i18n/request.ts —
+          an unset timeZone makes next-intl fall back to the host environment
+          (ENVIRONMENT_FALLBACK warning) and desynchronizes server-prerendered
+          markup from the client catalog. */}
+      <NextIntlClientProvider
+        locale={locale}
+        timeZone="UTC"
+        messages={MESSAGES[locale]}
+      >
         {children}
       </NextIntlClientProvider>
     </LocaleSwitchContext.Provider>

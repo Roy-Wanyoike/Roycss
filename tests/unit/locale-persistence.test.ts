@@ -311,7 +311,13 @@ describe("i18n scaffolding — static architecture + provider wiring", () => {
       join(ROOT, "src/i18n/locale-provider.tsx"),
       "utf8",
     );
-    expect(providerSrc).toContain('<NextIntlClientProvider locale={locale}');
+    // Prop-level pins (formatting-agnostic): the provider still owns
+    // locale + messages (hydration contract, #129 PR-B) and now also
+    // carries the UTC timeZone pin from issue #274.
+    expect(providerSrc).toContain("<NextIntlClientProvider");
+    expect(providerSrc).toContain("locale={locale}");
+    expect(providerSrc).toContain("messages={MESSAGES[locale]}");
+    expect(providerSrc).toContain('timeZone="UTC"');
     const providerCode = providerSrc
       .replace(/\/\*[\s\S]*?\*\//g, "")
       .replace(/\/\/.*$/gm, "");

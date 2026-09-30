@@ -43,11 +43,9 @@ export default defineConfig({
         "src/lib/db.ts",              // Prisma client — out of QE scope
         "src/lib/utils.ts",           // 2-line `cn` helper — exercised by every UI component
         "src/lib/effect-taxonomy.ts", // owned by the effect-curation agent (separate ADR)
-        "src/lib/docs-data.ts",       // auto-generated docs catalog (12k+ lines)
         "src/lib/api-client.ts",      // app-layer fetch client — exercised via e2e, not unit
         "src/lib/api-security.ts",      // app-layer request signing — exercised via e2e
         "src/lib/auth-client.ts",       // client-side auth session glue
-        "src/lib/auth-constants.ts",    // static auth constants
         "src/lib/constants.ts",         // static app constants
         "src/lib/copy-formats.ts",      // clipboard formatters — UI-layer
         "src/lib/docs-sitemap.ts",      // auto-generated sitemap catalog

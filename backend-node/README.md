@@ -181,7 +181,7 @@ Stable error codes: `VALIDATION_ERROR`, `BAD_REQUEST`, `UNAUTHORIZED`,
 ```bash
 cd backend-node
 cp .env.example .env          # adjust secrets for prod
-bun install                    # or: npm install / pnpm install
+bun install                    # bun.lock is the canonical lockfile — do not commit a package-lock.json
 bun run db:generate            # generate Prisma client
 bun run db:push                # create SQLite dev.db with the schema
 bun run dev                    # start dev server with tsx watch

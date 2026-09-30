@@ -50,18 +50,14 @@ const eslintConfig = [...nextCoreWebVitals, ...nextTypescript, {
     "out/**",
     "build/**",
     "next-env.d.ts",
-    "examples/**",
     "skills",
     // Large generated/built files that cause ESLint OOM
-    "src/lib/docs-data.ts",
     "public/__axe.min.js",
     "cli/index.js",
     "cli/index.ts",
     // Standalone platform artifacts (separate packages, linted independently)
-    "inspector/**",
     "vscode-extension/**",
     "mcp-server/**",
-    "backend/**",
     "backend-node/coverage/**",
     "dist/**",
     "tests/coverage/**",
@@ -69,7 +65,6 @@ const eslintConfig = [...nextCoreWebVitals, ...nextTypescript, {
     "tests/i18n/results/**",
     "tests/i18n/screenshots/**",
     "scripts/curate-results/**",
-    "performance/_playwright_bench.py",
     // Test fixtures and results
     "tests/**/*.json",
   ]

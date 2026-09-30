@@ -1,15 +1,56 @@
 :81 {
-	@transform_port_query {
-		query XTransformPort=*
-	}
+	# ── XTransformPort pivot — PORT ALLOWLIST (issue #275) ─────────────
+	#
+	# The query param routes a request to a local service port. Left open
+	# it was an SSRF pivot: ANY localhost port was proxyable by anyone who
+	# could reach this site. It is now allowlisted to the real service set:
+	#
+	#   3000 — Next.js app (also the no-param default below)
+	#   3003 — live-service (socket.io realtime, mini-services/live-service)
+	#   4100 — backend-go API (docker-compose host port 4100 → 4000)
+	#
+	# Requests carrying any OTHER XTransformPort value get 403. Each
+	# allowed port gets its own named matcher + handle with a FIXED
+	# reverse_proxy upstream — the upstream is never derived from user
+	# input, so no matcher expression / dynamic upstream injection surface
+	# exists at all. Add a new service = add one matcher + handle pair here.
+	@pivot_3000 query XTransformPort=3000
+	@pivot_3003 query XTransformPort=3003
+	@pivot_4100 query XTransformPort=4100
 
-	handle @transform_port_query {
-		reverse_proxy localhost:{query.XTransformPort} {
+	# Any XTransformPort value at all (for the 403 fall-through below).
+	@pivot_any query XTransformPort=*
+
+	handle @pivot_3000 {
+		reverse_proxy localhost:3000 {
 			header_up Host {host}
 			header_up X-Forwarded-For {remote_host}
 			header_up X-Forwarded-Proto {scheme}
 			header_up X-Real-IP {remote_host}
 		}
+	}
+
+	handle @pivot_3003 {
+		reverse_proxy localhost:3003 {
+			header_up Host {host}
+			header_up X-Forwarded-For {remote_host}
+			header_up X-Forwarded-Proto {scheme}
+			header_up X-Real-IP {remote_host}
+		}
+	}
+
+	handle @pivot_4100 {
+		reverse_proxy localhost:4100 {
+			header_up Host {host}
+			header_up X-Forwarded-For {remote_host}
+			header_up X-Forwarded-Proto {scheme}
+			header_up X-Real-IP {remote_host}
+		}
+	}
+
+	# An XTransformPort outside the allowlist — refuse, don't fall through.
+	handle @pivot_any {
+		respond "Forbidden" 403
 	}
 
 	handle {

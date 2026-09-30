@@ -18,6 +18,8 @@ import jwt from "jsonwebtoken";
 import { createApp } from "../../src/server/app.js";
 import { listRoutes, MUTATING_METHODS } from "../helpers/route-walker.js";
 import { hit, expectErrorEnvelope } from "../helpers/api-client.js";
+import { verifyAccessToken, verifyRefreshToken } from "../../src/lib/jwt.js";
+import { AppError } from "../../src/server/middleware/error.js";
 
 const app = createApp();
 const mutatingRoutes = listRoutes(app).filter((r) =>
@@ -162,5 +164,86 @@ describe("security/authn: 401 bodies carry no jwt reason details (issue #209)", 
     expect(res.body.error).not.toHaveProperty("details");
     expect(JSON.stringify(res.body)).not.toContain("malformed");
     expect(JSON.stringify(res.body)).not.toContain("jwt");
+  });
+});
+
+/**
+ * Issue #275 — explicit `algorithms: ["HS256"]` pin on every jwt.verify
+ * call (backend-node/src/lib/jwt.ts BASE_VERIFY_OPTS, shared by the access
+ * and refresh verify sites).
+ *
+ * jsonwebtoken v9 with a STRING secret still defaults to accepting the
+ * whole HS family (HS256/384/512), so "not exploitable" is only true for
+ * the `none` algorithm. The canary here is a token signed with the CORRECT
+ * secret, issuer, audience and type claims but an HS512 header: without
+ * the pin it verifies; with the pin it is a uniform 401. This keeps the
+ * pin honest — a test that only ever presented garbage tokens would pass
+ * with or without it.
+ */
+describe("security/authn: JWT algorithm pin — HS256 only (#275)", () => {
+  const SECRET = () => process.env.JWT_SECRET!;
+  const REFRESH_SECRET = () => process.env.JWT_REFRESH_SECRET!;
+  const SIGN_OPTS = { issuer: "roycss-backend", audience: "roycss-client" };
+
+  it("verifyAccessToken rejects an HS512-signed token with fully valid claims", () => {
+    const hs512 = jwt.sign(
+      { sub: "user-1", email: "attacker@example.com", type: "access" },
+      SECRET(),
+      { ...SIGN_OPTS, algorithm: "HS512" },
+    );
+
+    let verified = false;
+    try {
+      verifyAccessToken(hs512);
+      verified = true;
+    } catch (err) {
+      expect(err).toBeInstanceOf(AppError);
+      expect((err as AppError).code).toBe("UNAUTHORIZED");
+      expect((err as AppError).statusCode).toBe(401);
+    }
+    expect(verified, "HS512-signed token must NOT verify under the HS256 pin").toBe(false);
+  });
+
+  it("verifyRefreshToken rejects an HS384-signed refresh token with fully valid claims", () => {
+    const hs384 = jwt.sign(
+      { sub: "user-1", email: "attacker@example.com", jti: "fixed-jti", type: "refresh" },
+      REFRESH_SECRET(),
+      { ...SIGN_OPTS, algorithm: "HS384" },
+    );
+
+    let verified = false;
+    try {
+      verifyRefreshToken(hs384);
+      verified = true;
+    } catch (err) {
+      expect(err).toBeInstanceOf(AppError);
+      expect((err as AppError).statusCode).toBe(401);
+    }
+    expect(verified, "HS384-signed refresh token must NOT verify under the HS256 pin").toBe(false);
+  });
+
+  it("an HS256 token with the same claims still verifies (pin did not over-reject)", () => {
+    const hs256 = jwt.sign(
+      { sub: "user-1", email: "user@example.com", type: "access" },
+      SECRET(),
+      { ...SIGN_OPTS, algorithm: "HS256" },
+    );
+    expect(verifyAccessToken(hs256).sub).toBe("user-1");
+  });
+
+  it("route-level: /auth/me with an HS512 token → uniform 401 (no verification bypass)", async () => {
+    const hs512 = jwt.sign(
+      { sub: "user-1", email: "attacker@example.com", type: "access" },
+      SECRET(),
+      { ...SIGN_OPTS, algorithm: "HS512" },
+    );
+    const res = await hit(app, "get", "/api/v1/auth/me", {
+      headers: { Authorization: `Bearer ${hs512}` },
+    });
+
+    expect(res.status).toBe(401);
+    expect(res.body.error.code).toBe("UNAUTHORIZED");
+    expect(res.body.error.message).toBe("Invalid or expired access token");
+    expect(res.body.error).not.toHaveProperty("details");
   });
 });

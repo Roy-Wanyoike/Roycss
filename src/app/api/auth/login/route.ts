@@ -12,6 +12,7 @@ import {
   backendTimeoutResponse,
   isBackendTimeoutError,
 } from "@/lib/backend-fetch";
+import { API_RATE_TIERS, guardApiWrite } from "@/lib/api-security";
 
 /**
  * POST /api/auth/login
@@ -19,6 +20,13 @@ import {
  * holding the access + refresh JWTs and returns the user to the client.
  */
 export async function POST(req: Request) {
+  // #275: same-origin verification (403) + per-IP rate limit (429, auth
+  // tier 10/min — mirrors the backend authRateLimit tier). Fail-closed
+  // on both; identical wiring to the contact/docs-feedback/css-doctor
+  // routes (see guardApiWrite in src/lib/api-security.ts).
+  const denied = guardApiWrite(req, { route: "auth-login", ...API_RATE_TIERS.auth });
+  if (denied) return denied;
+
   let body: unknown;
   try {
     body = await req.json();

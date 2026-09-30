@@ -52,6 +52,12 @@ const BASE_SIGN_OPTS: SignOptions = {
 const BASE_VERIFY_OPTS: VerifyOptions = {
   issuer: JWT_CONFIG.issuer,
   audience: JWT_CONFIG.audience,
+  // Issue #275 — explicit algorithm pin. jsonwebtoken v9 with a string
+  // secret still accepts the whole HS family by default (HS256/384/512);
+  // every token we SIGN is HS256 (see header), so verify must refuse
+  // anything else. Both verify call sites (access + refresh) share this
+  // options object, so the pin covers all of them.
+  algorithms: ["HS256"],
 };
 
 /** Convert a human-readable duration string ("15m", "7d") to seconds. */

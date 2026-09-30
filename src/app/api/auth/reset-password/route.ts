@@ -4,6 +4,7 @@ import {
   backendTimeoutResponse,
   isBackendTimeoutError,
 } from "@/lib/backend-fetch";
+import { API_RATE_TIERS, guardApiWrite } from "@/lib/api-security";
 
 /**
  * POST /api/auth/reset-password
@@ -15,6 +16,11 @@ import {
  * reset-password page does next.
  */
 export async function POST(req: Request) {
+  // #275: same-origin verification (403) + per-IP rate limit (429, auth
+  // tier 10/min — mirrors the backend authRateLimit tier). Fail-closed.
+  const denied = guardApiWrite(req, { route: "auth-reset-password", ...API_RATE_TIERS.auth });
+  if (denied) return denied;
+
   let body: unknown;
   try {
     body = await req.json();

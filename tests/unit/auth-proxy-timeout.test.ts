@@ -43,7 +43,14 @@ function timeoutRejection(): () => Promise<never> {
 function loginRequest(): Request {
   return new Request(LOGIN_URL, {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    // #275: the route now runs the same-origin guardApiWrite first — a
+    // same-origin browser request (Origin === host) is exactly what this
+    // suite always simulated, so the headers are pinned here explicitly.
+    headers: {
+      "content-type": "application/json",
+      host: "localhost:3000",
+      origin: "http://localhost:3000",
+    },
     body: CREDENTIALS,
   });
 }

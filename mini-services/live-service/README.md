@@ -16,7 +16,15 @@ The service listens on **port 3003** (hardcoded — not from env).
 
 | Method | Path       | Response                                          |
 |--------|-----------|---------------------------------------------------|
-| GET    | `/health` | `{ status: "ok", rooms: <count>, connections: <count> }` |
+| GET    | `/health` | `{ status: "ok", rooms, connections, connected, joined }` |
+
+`/health` field semantics (#275 — additive; no field was removed):
+
+- `connections` — sockets that have **joined a room** (legacy field, same
+  meaning the endpoint always reported — kept for backward compatibility).
+- `connected` — ALL sockets currently connected, joined or not.
+- `joined` — the joined-socket count under an explicit, non-legacy name
+  (same value as `connections`).
 
 ## Socket.io events
 
@@ -44,6 +52,36 @@ The service listens on **port 3003** (hardcoded — not from env).
 | `chat-received`    | `{ username, message, timestamp }` (broadcast to all in room)       |
 | `user-list-response`| `{ roomId, users }`                                                 |
 | `error-msg`        | `{ event, message }`                                                 |
+
+## Hardening (#275)
+
+All limits are constants in `server.ts` (each overridable per-instance via
+`createLiveService()` options — the constants are the documented defaults)
+and pinned by `tests/unit/live-service-hardening.test.ts` in the repo root.
+
+- **`code` payload cap — 20,000 chars.** Playground code is a whole document,
+  so the cap is deliberately larger than chat's 4,000 — but ~50× smaller than
+  socket.io's 1 MB per-message default. Oversize `code-change` payloads are
+  REJECTED with an `error-msg` event; nothing is stored, stashed, or
+  rebroadcast.
+- **Per-IP connection cap — 20 concurrent sockets** per remote address
+  (`socket.handshake.address`). Over-cap handshakes fail with a
+  `connect_error` ("connection limit reached …"). Trust model note: behind
+  the Caddy gateway every address is the gateway's unless the proxy preserves
+  client addresses — this is a memory/CPU bound, not abuse attribution.
+- **Per-socket room cap — 5 joined rooms.** The current client model keeps
+  ONE room per socket, so this is a defensive bound for future multi-room
+  features. Rejected joins answer with an `error-msg` event.
+- **CORS allowlist** — exact-match origin list. `LIVE_ALLOWED_ORIGINS`
+  (comma-separated) REPLACES the default when set; the default keeps the dev
+  flows working: `http://localhost:3000`, `http://localhost:3323`. Production
+  MUST set it, e.g. `LIVE_ALLOWED_ORIGINS=https://roycss.com`. Enforced via
+  engine.io `allowRequest` (covers polling AND websocket handshakes) plus
+  CORS headers; requests without an `Origin` header (non-browser clients) are
+  allowed.
+- **Structured logging** — zero-dependency JSON-lines logger; every line is
+  `{"ts":"…","level":"info|warn|error","msg":"…","scope":"live-service",…}`
+  on stdout. `console.log` is gone.
 
 ## Features
 

@@ -5,6 +5,7 @@ import {
   BACKEND_AUTH_URL,
 } from "@/lib/auth-client";
 import { backendFetch } from "@/lib/backend-fetch";
+import { API_RATE_TIERS, guardApiWrite } from "@/lib/api-security";
 
 /**
  * POST /api/auth/logout
@@ -14,7 +15,12 @@ import { backendFetch } from "@/lib/backend-fetch";
  * clears both cookies. Best-effort — if the backend is unreachable the
  * cookies still clear, and the row dies on its own expiry.
  */
-export async function POST() {
+export async function POST(req: Request) {
+  // #275: same-origin verification (403) + per-IP rate limit (429, auth
+  // tier 10/min — mirrors the backend authRateLimit tier). Fail-closed.
+  const denied = guardApiWrite(req, { route: "auth-logout", ...API_RATE_TIERS.auth });
+  if (denied) return denied;
+
   const c = await cookies();
   const refreshToken = c.get(REFRESH_COOKIE)?.value;
   if (refreshToken) {

@@ -40,7 +40,7 @@ export function Alert({ severity, title, children, dismissible, onDismiss }: Ale
         {children && <div className="text-sm text-muted-foreground mt-0.5">{children}</div>}
       </div>
       {dismissible && (
-        <button
+        <button type="button"
           onClick={() => { setVisible(false); onDismiss?.(); }}
           className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
         >
@@ -223,7 +223,7 @@ export function ToastContainer({ toasts, onDismiss, position = "top-right" }: To
             >
               <Icon className={cn("size-5 shrink-0", config.color)} />
               <p className="text-sm text-foreground flex-1">{toast.message}</p>
-              <button onClick={() => onDismiss(toast.id)} className="text-muted-foreground hover:text-foreground cursor-pointer">
+              <button type="button" onClick={() => onDismiss(toast.id)} className="text-muted-foreground hover:text-foreground cursor-pointer">
                 <X className="size-4" />
               </button>
             </motion.div>

@@ -123,14 +123,14 @@ function EffectPicker({
       </div>
       <div className="max-h-[50vh] overflow-y-auto scrollbar-thin space-y-1">
         {filtered.map((effect) => (
-          <button
+          <button type="button"
             key={effect.id}
             onClick={() => onPick(effect)}
             className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 transition-all cursor-pointer text-left group"
           >
             <div className="flex items-center justify-center size-10 rounded-lg bg-muted/40 border border-border/50 overflow-hidden shrink-0">
               <div className="scale-[0.45] origin-center">
-                {/* Decorative — sits inside this picker <button> (issue #216 item 9) */}
+                {/* Decorative — sits inside this picker <button type="button"> (issue #216 item 9) */}
                 <DecorativePreview effect={effect} />
               </div>
             </div>
@@ -195,7 +195,7 @@ function ComparisonSlot({
               <p className="text-xs text-muted-foreground truncate">{effect.category}</p>
             </div>
             <div className="flex items-center gap-1 shrink-0">
-              <button
+              <button type="button"
                 onClick={handleCopy}
                 className={`flex items-center justify-center size-7 rounded-md hover:bg-muted transition-all cursor-pointer ${copyFailed ? "bg-rose-500/10 text-rose-500" : "text-muted-foreground hover:text-foreground"}`}
                 aria-label={copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy class name"}
@@ -204,7 +204,7 @@ function ComparisonSlot({
                 {copied ? <Check className="size-3.5 text-emerald-500" /> : <Copy className="size-3.5" />}
                 <span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span>
               </button>
-              <button
+              <button type="button"
                 onClick={onReplace}
                 className="flex items-center justify-center size-7 rounded-md text-muted-foreground hover:text-primary hover:bg-muted transition-all cursor-pointer"
                 aria-label="Replace effect"
@@ -212,7 +212,7 @@ function ComparisonSlot({
               >
                 <RotateCcw className="size-3.5" />
               </button>
-              <button
+              <button type="button"
                 onClick={onRemove}
                 className="flex items-center justify-center size-7 rounded-md text-muted-foreground hover:text-rose-500 hover:bg-muted transition-all cursor-pointer"
                 aria-label="Remove from comparison"
@@ -225,7 +225,7 @@ function ComparisonSlot({
         ) : (
           <>
             <p className="text-sm text-muted-foreground flex-1">Empty slot</p>
-            <button
+            <button type="button"
               onClick={onReplace}
               className="flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium text-primary hover:bg-primary/10 transition-all cursor-pointer"
             >
@@ -262,7 +262,7 @@ function ComparisonSlot({
       {/* Footer */}
       {effect && (
         <div className="px-3 py-2 border-t border-border/40 bg-muted/20">
-          <button
+          <button type="button"
             onClick={onSelect}
             className="w-full flex items-center justify-center gap-1 text-xs font-medium text-primary hover:gap-1.5 transition-all cursor-pointer"
           >
@@ -342,14 +342,14 @@ export function ComparisonPanel({ open, onOpenChange, initialEffects, onSelectEf
           {/* Toolbar */}
           <div className="flex items-center justify-between gap-2 flex-wrap">
             <div className="flex items-center gap-2">
-              <button
+              <button type="button"
                 onClick={() => setIsPlaying((p) => !p)}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-muted text-foreground hover:bg-muted/80 transition-all cursor-pointer"
               >
                 {isPlaying ? <Pause className="size-3.5" /> : <Play className="size-3.5" />}
                 {isPlaying ? "Pause" : "Play"}
               </button>
-              <button
+              <button type="button"
                 onClick={handleReplay}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-muted text-foreground hover:bg-muted/80 transition-all cursor-pointer"
               >
@@ -371,7 +371,7 @@ export function ComparisonPanel({ open, onOpenChange, initialEffects, onSelectEf
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <button
+              <button type="button"
                 onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-muted text-foreground hover:bg-muted/80 transition-all cursor-pointer"
               >
@@ -379,7 +379,7 @@ export function ComparisonPanel({ open, onOpenChange, initialEffects, onSelectEf
                 {theme === "dark" ? "Light" : "Dark"}
               </button>
               {canCompare && (
-                <button
+                <button type="button"
                   onClick={() => setShowDiff((d) => !d)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
                     showDiff ? "bg-primary text-primary-foreground" : "bg-muted text-foreground hover:bg-muted/80"
@@ -420,7 +420,7 @@ export function ComparisonPanel({ open, onOpenChange, initialEffects, onSelectEf
               {!canCompare && ` (need at least ${MIN_COMPARE} to compare)`}
             </span>
             {compareList.length > 0 && (
-              <button
+              <button type="button"
                 onClick={() => setCompareList([])}
                 className="flex items-center gap-1 px-2 py-1 rounded-md hover:bg-muted transition-all cursor-pointer text-muted-foreground hover:text-rose-500"
               >
@@ -492,7 +492,7 @@ export function ComparisonPanel({ open, onOpenChange, initialEffects, onSelectEf
               <p className="mt-1 text-sm text-muted-foreground">
                 Add {MIN_COMPARE}–{MAX_COMPARE} effects to see them side-by-side with synchronized controls.
               </p>
-              <button
+              <button type="button"
                 onClick={() => setPickerOpen(0)}
                 className="mt-4 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-all cursor-pointer"
               >
@@ -515,7 +515,7 @@ export function ComparisonPanel({ open, onOpenChange, initialEffects, onSelectEf
                 <h3 className="font-display font-semibold text-foreground">
                   {compareList[pickerOpen] ? "Replace effect" : "Add effect to comparison"}
                 </h3>
-                <button
+                <button type="button"
                   onClick={() => setPickerOpen(null)}
                   className="flex items-center justify-center size-8 rounded-lg bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer"
                   aria-label="Close picker"

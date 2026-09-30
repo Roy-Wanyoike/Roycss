@@ -33,7 +33,7 @@ export function Tabs({ items, variant = "underline", defaultTab, onChange }: Tab
         )}
       >
         {items.map((item) => (
-          <button
+          <button type="button"
             key={item.id}
             onClick={() => handleTabChange(item.id)}
             className={cn(
@@ -117,7 +117,7 @@ export function Pagination({ total, current, onPageChange, siblingCount = 1 }: P
     <nav className="flex items-center gap-1" aria-label="Pagination">
       {range.map((item, i) =>
         typeof item === "number" ? (
-          <button
+          <button type="button"
             key={i}
             onClick={() => onPageChange(item)}
             className={cn(
@@ -161,7 +161,7 @@ export function Menu({ trigger, items, align = "start" }: MenuProps) {
 
   return (
     <div className="relative inline-block">
-      <button onClick={() => setOpen(!open)} className="cursor-pointer">
+      <button type="button" onClick={() => setOpen(!open)} className="cursor-pointer">
         {trigger}
       </button>
       {open && (
@@ -177,7 +177,7 @@ export function Menu({ trigger, items, align = "start" }: MenuProps) {
               item.separator ? (
                 <div key={i} className="h-px bg-border/30 my-1" />
               ) : (
-                <button
+                <button type="button"
                   key={i}
                   onClick={() => {
                     item.onClick?.();

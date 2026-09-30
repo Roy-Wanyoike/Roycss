@@ -104,7 +104,7 @@ export function UserAnalyticsDashboard({ open, onOpenChange, favoritesCount, onS
               <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Your Top Rated</p>
               <div className="space-y-1.5">
                 {topRatedEffects.map(({ id, rating, effect }) => (
-                  <button
+                  <button type="button"
                     key={id}
                     onClick={() => { onSelectEffect(effect!); onOpenChange(false); }}
                     className="w-full flex items-center gap-2 p-2 rounded-lg hover:bg-muted/50 transition-all cursor-pointer text-left"

@@ -167,7 +167,7 @@ export function SearchOverlay({ open, onOpenChange, onJumpToSection }: SearchOve
                 aria-label={t("inputAria")}
                 placeholder={t("placeholder")}
                 className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none" autoComplete="off" spellCheck={false} />
-              <button onClick={() => onOpenChange(false)} className="flex items-center justify-center size-7 rounded-md bg-muted text-muted-foreground hover:text-foreground transition-colors cursor-pointer shrink-0" aria-label={t("closeAria")}>
+              <button type="button" onClick={() => onOpenChange(false)} className="flex items-center justify-center size-7 rounded-md bg-muted text-muted-foreground hover:text-foreground transition-colors cursor-pointer shrink-0" aria-label={t("closeAria")}>
                 <X className="size-3.5" />
               </button>
             </div>
@@ -187,9 +187,9 @@ export function SearchOverlay({ open, onOpenChange, onJumpToSection }: SearchOve
                     Try searching for something else, or browse by category.
                   </p>
                   <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
-                    <span className="text-[11px] text-muted-foreground/70 mr-0.5">Try:</span>
+                    <span className="text-[11px] text-muted-foreground/70 me-0.5">Try:</span>
                     {["glassmorphism", "neon button", "gradient text", "loading animation"].map((suggestion, i) => (
-                      <motion.button
+                      <motion.button type="button"
                         key={suggestion}
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -205,9 +205,9 @@ export function SearchOverlay({ open, onOpenChange, onJumpToSection }: SearchOve
               ) : (
                 <div className="p-2">
                   {sectionResults.map((s, i) => (
-                    <button key={s.id} onClick={() => { onJumpToSection("#" + s.id); onOpenChange(false); }}
+                    <button type="button" key={s.id} onClick={() => { onJumpToSection("#" + s.id); onOpenChange(false); }}
                       onMouseEnter={() => setSelectedIndex(i)}
-                      className={`w-full flex items-center gap-3 p-2.5 rounded-lg transition-all cursor-pointer text-left ${selectedIndex === i ? "bg-primary/10" : "hover:bg-muted/50"}`}>
+                      className={`w-full flex items-center gap-3 p-2.5 rounded-lg transition-all cursor-pointer text-start ${selectedIndex === i ? "bg-primary/10" : "hover:bg-muted/50"}`}>
                       <div className="flex items-center justify-center size-8 rounded-lg bg-muted text-muted-foreground shrink-0"><ArrowRight className="size-3.5" /></div>
                       <div className="min-w-0"><p className="text-sm font-medium text-foreground">{s.label}</p><p className="text-xs text-muted-foreground">{s.desc}</p></div>
                     </button>
@@ -218,7 +218,7 @@ export function SearchOverlay({ open, onOpenChange, onJumpToSection }: SearchOve
                     return (
                       <Link key={effect.id} href={effectDetailHref(effect.id)} onClick={() => onOpenChange(false)}
                         onMouseEnter={() => setSelectedIndex(index)}
-                        className={`w-full flex items-center gap-3 p-2.5 rounded-lg transition-all cursor-pointer text-left ${selectedIndex === index ? "bg-primary/10" : "hover:bg-muted/50"}`}>
+                        className={`w-full flex items-center gap-3 p-2.5 rounded-lg transition-all cursor-pointer text-start ${selectedIndex === index ? "bg-primary/10" : "hover:bg-muted/50"}`}>
                         <div className="flex items-center justify-center size-8 rounded-lg bg-primary/10 text-primary shrink-0">
                           <div className={`roycss-${effect.id} scale-50 origin-center`} style={{ width: 16, height: 16 }} />
                         </div>
@@ -231,9 +231,9 @@ export function SearchOverlay({ open, onOpenChange, onJumpToSection }: SearchOve
                   {recipeResults.map((r, i) => {
                     const index = i + sectionResults.length + effectResults.length;
                     return (
-                      <button key={r.id} onClick={() => { onJumpToSection("#recipes"); onOpenChange(false); }}
+                      <button type="button" key={r.id} onClick={() => { onJumpToSection("#recipes"); onOpenChange(false); }}
                         onMouseEnter={() => setSelectedIndex(index)}
-                        className={`w-full flex items-center gap-3 p-2.5 rounded-lg transition-all cursor-pointer text-left ${selectedIndex === index ? "bg-primary/10" : "hover:bg-muted/50"}`}>
+                        className={`w-full flex items-center gap-3 p-2.5 rounded-lg transition-all cursor-pointer text-start ${selectedIndex === index ? "bg-primary/10" : "hover:bg-muted/50"}`}>
                         <div className="flex items-center justify-center size-8 rounded-lg bg-amber-500/10 text-amber-500 shrink-0 text-xs font-bold">R</div>
                         <div className="min-w-0"><p className="text-sm font-medium text-foreground truncate">{r.name}</p><p className="text-xs text-muted-foreground truncate">Recipe · {r.tags.slice(0, 2).join(", ")}</p></div>
                       </button>
@@ -243,9 +243,9 @@ export function SearchOverlay({ open, onOpenChange, onJumpToSection }: SearchOve
                   {patternResults.map((p, i) => {
                     const index = i + sectionResults.length + effectResults.length + recipeResults.length;
                     return (
-                      <button key={p.id} onClick={() => { onJumpToSection("#patterns"); onOpenChange(false); }}
+                      <button type="button" key={p.id} onClick={() => { onJumpToSection("#patterns"); onOpenChange(false); }}
                         onMouseEnter={() => setSelectedIndex(index)}
-                        className={`w-full flex items-center gap-3 p-2.5 rounded-lg transition-all cursor-pointer text-left ${selectedIndex === index ? "bg-primary/10" : "hover:bg-muted/50"}`}>
+                        className={`w-full flex items-center gap-3 p-2.5 rounded-lg transition-all cursor-pointer text-start ${selectedIndex === index ? "bg-primary/10" : "hover:bg-muted/50"}`}>
                         <div className="flex items-center justify-center size-8 rounded-lg bg-violet-500/10 text-violet-500 shrink-0 text-xs font-bold">P</div>
                         <div className="min-w-0"><p className="text-sm font-medium text-foreground truncate">{p.name}</p><p className="text-xs text-muted-foreground truncate">Pattern · {p.tags.slice(0, 2).join(", ")}</p></div>
                       </button>
@@ -255,9 +255,9 @@ export function SearchOverlay({ open, onOpenChange, onJumpToSection }: SearchOve
                   {collectionResults.map((c, i) => {
                     const index = i + sectionResults.length + effectResults.length + recipeResults.length + patternResults.length;
                     return (
-                      <button key={c.id} onClick={() => { onJumpToSection("#collections"); onOpenChange(false); }}
+                      <button type="button" key={c.id} onClick={() => { onJumpToSection("#collections"); onOpenChange(false); }}
                         onMouseEnter={() => setSelectedIndex(index)}
-                        className={`w-full flex items-center gap-3 p-2.5 rounded-lg transition-all cursor-pointer text-left ${selectedIndex === index ? "bg-primary/10" : "hover:bg-muted/50"}`}>
+                        className={`w-full flex items-center gap-3 p-2.5 rounded-lg transition-all cursor-pointer text-start ${selectedIndex === index ? "bg-primary/10" : "hover:bg-muted/50"}`}>
                         <div className="flex items-center justify-center size-8 rounded-lg bg-teal-500/10 text-teal-500 shrink-0 text-base">{c.icon}</div>
                         <div className="min-w-0"><p className="text-sm font-medium text-foreground truncate">{c.name}</p><p className="text-xs text-muted-foreground truncate">Collection · {c.effectIds.length} effects · {c.tags.slice(0, 2).join(", ")}</p></div>
                       </button>
@@ -274,9 +274,9 @@ export function SearchOverlay({ open, onOpenChange, onJumpToSection }: SearchOve
                         const index = i + sectionResults.length + effectResults.length + recipeResults.length + patternResults.length + collectionResults.length;
                         const tier = PRODUCT_TIER_META[p.tier];
                         return (
-                          <button key={p.id} onClick={() => { onJumpToSection("#platform"); onOpenChange(false); }}
+                          <button type="button" key={p.id} onClick={() => { onJumpToSection("#platform"); onOpenChange(false); }}
                             onMouseEnter={() => setSelectedIndex(index)}
-                            className={`w-full flex items-center gap-3 p-2.5 rounded-lg transition-all cursor-pointer text-left ${selectedIndex === index ? "bg-primary/10" : "hover:bg-muted/50"}`}>
+                            className={`w-full flex items-center gap-3 p-2.5 rounded-lg transition-all cursor-pointer text-start ${selectedIndex === index ? "bg-primary/10" : "hover:bg-muted/50"}`}>
                             <div className="flex items-center justify-center size-8 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shrink-0"><Boxes className="size-4" /></div>
                             <div className="min-w-0 flex-1">
                               <div className="flex items-center gap-2">
@@ -299,7 +299,7 @@ export function SearchOverlay({ open, onOpenChange, onJumpToSection }: SearchOve
                         return (
                           <Link key={d.route} href={d.route} onClick={() => onOpenChange(false)}
                             onMouseEnter={() => setSelectedIndex(index)}
-                            className={`w-full flex items-center gap-3 p-2.5 rounded-lg transition-all cursor-pointer text-left ${selectedIndex === index ? "bg-primary/10" : "hover:bg-muted/50"}`}>
+                            className={`w-full flex items-center gap-3 p-2.5 rounded-lg transition-all cursor-pointer text-start ${selectedIndex === index ? "bg-primary/10" : "hover:bg-muted/50"}`}>
                             <div className="flex items-center justify-center size-8 rounded-lg bg-sky-500/10 text-sky-500 shrink-0"><BookOpen className="size-4" /></div>
                             <div className="min-w-0 flex-1">
                               <p className="text-sm font-medium text-foreground truncate">{d.title}</p>

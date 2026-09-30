@@ -137,7 +137,7 @@ export function LanguageToggle({
           <div
             role="menu"
             aria-label={t("language")}
-            className="absolute right-0 top-full z-50 mt-1 min-w-36 rounded-lg border border-border bg-popover p-1 shadow-md"
+            className="absolute end-0 top-full z-50 mt-1 min-w-36 rounded-lg border border-border bg-popover p-1 shadow-md"
           >
             <p className="px-2 py-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
               {t("language")}

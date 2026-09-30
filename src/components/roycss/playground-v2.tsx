@@ -159,7 +159,7 @@ function computeMetrics(html: string, css: string) {
 function roughA11y(html: string): { pass: string[]; warn: string[] } {
   const pass: string[] = [];
   const warn: string[] = [];
-  if (/<button[^>]*>[\s\S]*?<\/button>/i.test(html)) pass.push("Interactive buttons detected");
+  if (/<button type="button"[^>]*>[\s\S]*?<\/button>/i.test(html)) pass.push("Interactive buttons detected");
   if (/<input/i.test(html) && !/aria-label|<label/i.test(html))
     warn.push("Form inputs should have labels");
   if (/<img[^>]*>/i.test(html) && !/<img[^>]*alt=/i.test(html))

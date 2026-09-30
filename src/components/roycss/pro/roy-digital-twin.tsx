@@ -243,7 +243,7 @@ export function RoyDigitalTwin() {
               <span className="text-muted-foreground text-xs">View:</span>
               <div className="bg-muted rounded-lg p-0.5">
                 {(["before", "after"] as const).map((v) => (
-                  <button
+                  <button type="button"
                     key={v}
                     onClick={() => setView(v)}
                     className={cn(

@@ -668,7 +668,7 @@ function NavMegaMenu({
     >
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
-          <button
+          <button type="button"
             className={cn(
               "flex items-center gap-1 px-4 py-2 min-h-[44px] rounded-lg text-sm font-semibold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
               active
@@ -852,7 +852,7 @@ function ThemeToggle() {
   };
 
   return (
-    <button
+    <button type="button"
       onClick={toggleTheme}
       className="flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-foreground transition-all hover:-translate-y-0.5 cursor-pointer"
       aria-label="Toggle theme"
@@ -877,7 +877,7 @@ function CategoryPill({
   const meta = categoryMeta[category];
   const Icon = catIcons[category];
   return (
-    <button
+    <button type="button"
       onClick={onClick}
       className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all whitespace-nowrap cursor-pointer min-h-[44px] ${
         active
@@ -986,7 +986,7 @@ function DocCard({
   const [expanded, setExpanded] = useState(false);
 
   // The card body is click-to-expand for mouse users, but the inner
-  // <button> below is the only keyboard-accessible control. Removing
+  // <button type="button"> below is the only keyboard-accessible control. Removing
   // role="button" + tabIndex from this outer <div> avoids the axe-core
   // `nested-interactive` violation (WCAG 4.1.2). See ADR-05.
   return (
@@ -1035,7 +1035,7 @@ function DocCard({
               </motion.div>
             )}
           </AnimatePresence>
-          <button
+          <button type="button"
             onClick={(e) => {
               e.stopPropagation();
               setExpanded((e) => !e);
@@ -1223,7 +1223,7 @@ function MigrationTable() {
         {/* Category filter */}
         <div className="flex flex-wrap gap-1.5 mb-4">
           {categories.map((cat) => (
-            <button
+            <button type="button"
               key={cat}
               onClick={() => setActiveCategory(cat)}
               className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${
@@ -1414,7 +1414,7 @@ function FeaturedCarousel({ onSelectEffect }: { onSelectEffect: (effect: CSSEffe
         >
           {/* Prev / counter / Next — size-11 (44px) to meet WCAG 2.5.5 touch target on mobile */}
           <div className="flex items-center gap-2">
-            <button
+            <button type="button"
               onClick={goToPrev}
               aria-label="Previous batch of effects"
               className="flex items-center justify-center size-11 rounded-lg bg-muted/80 border border-border/50 text-muted-foreground hover:text-foreground hover:bg-muted transition-all cursor-pointer"
@@ -1424,7 +1424,7 @@ function FeaturedCarousel({ onSelectEffect }: { onSelectEffect: (effect: CSSEffe
             <span className="text-xs font-mono text-muted-foreground tabular-nums whitespace-nowrap px-1">
               {startIdx}–{endIdx} <span className="opacity-50">/</span> {effects.length}
             </span>
-            <button
+            <button type="button"
               onClick={goToNext}
               aria-label="Next batch of effects"
               className="flex items-center justify-center size-11 rounded-lg bg-muted/80 border border-border/50 text-muted-foreground hover:text-foreground hover:bg-muted transition-all cursor-pointer"
@@ -1456,7 +1456,7 @@ function FeaturedCarousel({ onSelectEffect }: { onSelectEffect: (effect: CSSEffe
 
           {/* Play/Pause + loop badge */}
           <div className="flex items-center gap-3">
-            <button
+            <button type="button"
               onClick={() => setUserPaused(!isPaused)}
               aria-label={isPaused ? "Play carousel" : "Pause carousel"}
               aria-pressed={isPaused}
@@ -1884,7 +1884,7 @@ export default function RoyCSSPage() {
         <div className="container mx-auto px-4 sm:px-6">
           {/* Nav bar */}
           <nav aria-label="Primary navigation" className="flex items-center justify-between mb-8 sm:mb-12">
-            <motion.button
+            <motion.button type="button"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
@@ -1912,7 +1912,7 @@ export default function RoyCSSPage() {
                   (especially Platform ▾ at w-[680px]) have room to render at 768–1023px
                   the user gets the hamburger menu instead. */}
               <div className="hidden lg:flex items-center gap-1 mr-2">
-                <button
+                <button type="button"
                   onClick={() => scrollToSection("#get-started")}
                   className={cn(
                     "px-4 py-2 min-h-[44px] rounded-lg text-sm font-semibold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
@@ -1984,7 +1984,7 @@ export default function RoyCSSPage() {
                     Docs
                   </Link>
                 </div>
-                <button
+                <button type="button"
                   onClick={() => scrollToSection("#faq")}
                   className={cn(
                     "px-4 py-2 min-h-[44px] rounded-lg text-sm font-semibold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
@@ -1998,7 +1998,7 @@ export default function RoyCSSPage() {
               </div>
               {/* Mobile hamburger menu — visible until lg (≥1024px) so the
                   full desktop nav + mega-menus only render when there's room. */}
-              <button
+              <button type="button"
                 onClick={() => setMobileMenuOpen((o) => !o)}
                 className="lg:hidden flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-foreground transition-all cursor-pointer"
                 aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
@@ -2007,7 +2007,7 @@ export default function RoyCSSPage() {
                 {mobileMenuOpen ? <X className="size-4" /> : <Menu className="size-4" />}
               </button>
               {/* Search button (⌘K) — size-11 (44px) to meet WCAG 2.5.5 touch target on mobile */}
-              <button
+              <button type="button"
                 onClick={() => setSearchOverlayOpen(true)}
                 className="flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-foreground transition-all cursor-pointer"
                 aria-label="Search (⌘K)"
@@ -2017,7 +2017,7 @@ export default function RoyCSSPage() {
               </button>
               {/* Keyboard shortcuts hint — visible "?" button.
                   Hidden below xl (≥1280px) to keep the navbar cluster compact on tablets & small desktops. */}
-              <button
+              <button type="button"
                 onClick={() => setShortcutsOpen(true)}
                 className="hidden xl:flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
                 aria-label="Keyboard shortcuts (?)"
@@ -2030,7 +2030,7 @@ export default function RoyCSSPage() {
                   hamburger menu's "Tools" section on smaller viewports. */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button
+                  <button type="button"
                     className="hidden xl:flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-primary transition-all hover:-translate-y-0.5 cursor-pointer"
                     aria-label="Developer tools"
                     title="Tools"
@@ -2155,7 +2155,7 @@ export default function RoyCSSPage() {
               {/* Issue #129 PR-A: locale switcher — parity with SiteHeader */}
               <LanguageToggle variant="lg" />
               <ThemeToggle />
-              <button
+              <button type="button"
                 onClick={() => setFavoritesOpen(true)}
                 className="relative flex items-center justify-center size-11 rounded-xl glass text-muted-foreground hover:text-rose-500 transition-all hover:-translate-y-0.5 cursor-pointer"
                 aria-label="Open favorites"
@@ -2174,7 +2174,7 @@ export default function RoyCSSPage() {
               </button>
               {/* Sponsor button — hidden below xl so the cluster never overflows at md/lg.
                   Reachable from the hamburger menu's "Sponsor" item on smaller viewports. */}
-              <button
+              <button type="button"
                 onClick={() => setSponsorModalOpen(true)}
                 className="hidden xl:inline-flex items-center gap-1.5 h-11 px-4 rounded-xl bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-all font-medium text-xs cursor-pointer"
                 aria-label="Sponsor RoyCSS"
@@ -2219,7 +2219,7 @@ export default function RoyCSSPage() {
                     { label: "Platform", id: "#platform" },
                     { label: "FAQ", id: "#faq" },
                   ].map((item) => (
-                    <button
+                    <button type="button"
                       key={item.id}
                       onClick={() => {
                         scrollToSection(item.id);
@@ -2239,7 +2239,7 @@ export default function RoyCSSPage() {
                     Docs
                     <BookOpen className="size-3.5" />
                   </Link>
-                  <button
+                  <button type="button"
                     onClick={() => {
                       setPlaygroundOpen(true);
                       setMobileMenuOpen(false);
@@ -2249,7 +2249,7 @@ export default function RoyCSSPage() {
                     Playground
                     <SlidersHorizontal className="size-3.5" />
                   </button>
-                  <button
+                  <button type="button"
                     onClick={() => {
                       setCompareEffects([]);
                       setCompareOpen(true);
@@ -2260,7 +2260,7 @@ export default function RoyCSSPage() {
                     Compare
                     <GitCompare className="size-3.5" />
                   </button>
-                  <button
+                  <button type="button"
                     onClick={() => {
                       setContactOpen(true);
                       setMobileMenuOpen(false);
@@ -2270,7 +2270,7 @@ export default function RoyCSSPage() {
                     Contact
                     <Mail className="size-3.5" />
                   </button>
-                  <button
+                  <button type="button"
                     onClick={() => { setSponsorModalOpen(true); setMobileMenuOpen(false); }}
                     className="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium text-primary hover:bg-primary/5 transition-all cursor-pointer min-h-[44px]"
                   >
@@ -2509,7 +2509,7 @@ export default function RoyCSSPage() {
           {/* Category pills */}
           <ScrollReveal delay={0.1} className="mb-8 overflow-x-auto scrollbar-thin pb-2">
             <div className="flex items-center gap-2 min-w-max px-1">
-              <button
+              <button type="button"
                 onClick={() => setActiveCategory("all")}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all whitespace-nowrap cursor-pointer min-h-[44px] ${
                   activeCategory === "all"
@@ -2642,7 +2642,7 @@ export default function RoyCSSPage() {
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-2">
                   {["glow", "spinner", "glass", "card", "text", "button"].map((term) => (
-                    <button
+                    <button type="button"
                       key={term}
                       onClick={() => {
                         setSearch(term);
@@ -2716,7 +2716,7 @@ export default function RoyCSSPage() {
                       Star on GitHub
                       <ChevronRight className="size-3.5" />
                     </a>
-                    <button
+                    <button type="button"
                       onClick={() => setContactOpen(true)}
                       className="inline-flex items-center gap-2 h-11 px-6 rounded-xl glass text-foreground hover:border-primary/30 transition-all font-medium text-sm cursor-pointer"
                     >
@@ -2881,7 +2881,7 @@ export default function RoyCSSPage() {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 mb-10">
             {/* Brand column */}
             <div className="col-span-2 sm:col-span-3 lg:col-span-1 min-w-0">
-              <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center gap-2.5 mb-3 cursor-pointer hover:opacity-80 transition-opacity" aria-label="RoyCSS — scroll to top">
+              <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center gap-2.5 mb-3 cursor-pointer hover:opacity-80 transition-opacity" aria-label="RoyCSS — scroll to top">
                 <RoyCSSLogo size="sm" animated={false} />
               </button>
               <p className="text-xs text-muted-foreground leading-relaxed mb-4 max-w-xs">
@@ -2915,7 +2915,7 @@ export default function RoyCSSPage() {
                 >
                   <Twitter className="size-4" />
                 </a>
-                <button
+                <button type="button"
                   onClick={() => setSponsorModalOpen(true)}
                   className="flex items-center justify-center size-9 rounded-lg glass text-primary hover:text-primary/80 transition-colors cursor-pointer"
                   aria-label={tFooter("sponsorAria")}
@@ -2929,11 +2929,11 @@ export default function RoyCSSPage() {
             <div>
               <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">{tFooter("colExplore")}</h3>
               <ul className="space-y-2">
-                <li><button onClick={() => scrollToSection("#effects")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("effectsGallery")}</button></li>
-                <li><button onClick={() => scrollToSection("#recipes")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("recipes")}</button></li>
-                <li><button onClick={() => scrollToSection("#patterns")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("patterns")}</button></li>
-                <li><button onClick={() => scrollToSection("#collections")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("collections")}</button></li>
-                <li><button onClick={() => scrollToSection("#webgl-effects")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("webglEffects")}</button></li>
+                <li><button type="button" onClick={() => scrollToSection("#effects")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("effectsGallery")}</button></li>
+                <li><button type="button" onClick={() => scrollToSection("#recipes")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("recipes")}</button></li>
+                <li><button type="button" onClick={() => scrollToSection("#patterns")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("patterns")}</button></li>
+                <li><button type="button" onClick={() => scrollToSection("#collections")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("collections")}</button></li>
+                <li><button type="button" onClick={() => scrollToSection("#webgl-effects")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("webglEffects")}</button></li>
               </ul>
             </div>
 
@@ -2941,11 +2941,11 @@ export default function RoyCSSPage() {
             <div>
               <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">{tFooter("colPlatform")}</h3>
               <ul className="space-y-2">
-                <li><button onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("allProducts")}</button></li>
-                <li><button onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("buildTools")}</button></li>
-                <li><button onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("aiTools")}</button></li>
-                <li><button onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("enterprise")}</button></li>
-                <li><button onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("devTools")}</button></li>
+                <li><button type="button" onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("allProducts")}</button></li>
+                <li><button type="button" onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("buildTools")}</button></li>
+                <li><button type="button" onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("aiTools")}</button></li>
+                <li><button type="button" onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("enterprise")}</button></li>
+                <li><button type="button" onClick={() => scrollToSection("#platform")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("devTools")}</button></li>
               </ul>
             </div>
 
@@ -2953,11 +2953,11 @@ export default function RoyCSSPage() {
             <div>
               <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">{tFooter("colResources")}</h3>
               <ul className="space-y-2">
-                <li><button onClick={() => scrollToSection("#get-started")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("getStarted")}</button></li>
+                <li><button type="button" onClick={() => scrollToSection("#get-started")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("getStarted")}</button></li>
                 <li><Link href="/docs/getting-started" className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("documentation")}</Link></li>
-                <li><button onClick={() => scrollToSection("#faq")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("faq")}</button></li>
-                <li><button onClick={() => setContactOpen(true)} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("contact")}</button></li>
-                <li><button onClick={() => setSponsorModalOpen(true)} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("sponsor")}</button></li>
+                <li><button type="button" onClick={() => scrollToSection("#faq")} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("faq")}</button></li>
+                <li><button type="button" onClick={() => setContactOpen(true)} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("contact")}</button></li>
+                <li><button type="button" onClick={() => setSponsorModalOpen(true)} className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer">{tFooter("sponsor")}</button></li>
               </ul>
             </div>
 

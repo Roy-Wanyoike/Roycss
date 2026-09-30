@@ -97,13 +97,13 @@ export function ColorShadeGenerator() {
       <div className="flex items-center gap-2">
         <input type="color" value={baseColor} onChange={(e) => setBaseColor(e.target.value)} aria-label="Base color" className="size-10 rounded-lg border border-border/50 cursor-pointer" />
         <input type="text" value={baseColor} onChange={(e) => setBaseColor(e.target.value)} aria-label="Base color hex value" className="flex-1 h-10 px-3 rounded-lg bg-background border border-border/50 focus:border-primary/50 text-sm font-mono focus:outline-none" />
-        <button onClick={randomColor} aria-label="Randomize base color" className="flex items-center justify-center size-10 rounded-lg bg-muted text-muted-foreground hover:text-primary transition-all cursor-pointer"><Shuffle className="size-4" /></button>
+        <button type="button" onClick={randomColor} aria-label="Randomize base color" className="flex items-center justify-center size-10 rounded-lg bg-muted text-muted-foreground hover:text-primary transition-all cursor-pointer"><Shuffle className="size-4" /></button>
       </div>
 
       {/* Format toggle */}
       <div className="flex items-center gap-1 p-1 rounded-lg bg-muted w-fit">
         {(["hex", "oklch"] as const).map(f => (
-          <button key={f} onClick={() => setFormat(f)} className={`px-3 py-1 rounded-md text-xs font-medium cursor-pointer transition-all ${format === f ? "bg-background text-foreground shadow-sm" : "text-muted-foreground"}`}>{f.toUpperCase()}</button>
+          <button type="button" key={f} onClick={() => setFormat(f)} className={`px-3 py-1 rounded-md text-xs font-medium cursor-pointer transition-all ${format === f ? "bg-background text-foreground shadow-sm" : "text-muted-foreground"}`}>{f.toUpperCase()}</button>
         ))}
       </div>
 
@@ -113,7 +113,7 @@ export function ColorShadeGenerator() {
           const value = format === "hex" ? shade.hex : shade.oklch;
           const textColor = shade.lightness > 0.6 ? "oklch(0.15 0.02 250)" : "oklch(0.98 0.01 250)";
           return (
-            <button key={shade.label} onClick={() => handleCopy(value, idx)}
+            <button type="button" key={shade.label} onClick={() => handleCopy(value, idx)}
               className="flex items-center justify-between gap-2 p-3 rounded-lg transition-all cursor-pointer group relative overflow-hidden"
               style={{ background: shade.hex }}>
               <div className="min-w-0 flex-1 z-10">

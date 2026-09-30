@@ -2,7 +2,7 @@
   "name": "roycss",
   "displayName": "RoyCSS",
   "publisher": "roycss",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "RoyCSS — completion, hover docs, snippets, diagnostics, and commands for all 1,983 production-ready CSS effects. Zero runtime dependencies. Zero network calls.",
   "license": "MIT",
   "author": {

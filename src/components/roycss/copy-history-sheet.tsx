@@ -106,7 +106,7 @@ export function CopyHistorySheet({ open, onOpenChange, onSelectEffect }: CopyHis
             <>
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs text-muted-foreground">{history.length} copies</span>
-                <button onClick={handleClear} className="flex items-center gap-1 text-xs text-muted-foreground hover:text-rose-500 transition-colors cursor-pointer">
+                <button type="button" onClick={handleClear} className="flex items-center gap-1 text-xs text-muted-foreground hover:text-rose-500 transition-colors cursor-pointer">
                   <Trash2 className="size-3" /> Clear
                 </button>
               </div>
@@ -137,7 +137,7 @@ export function CopyHistorySheet({ open, onOpenChange, onSelectEffect }: CopyHis
 
                       {/* Actions */}
                       <div className="flex items-center gap-1 shrink-0">
-                        <button
+                        <button type="button"
                           onClick={() => handleCopy(entry, i)}
                           className={`flex items-center justify-center size-8 rounded-lg transition-all cursor-pointer ${
                             copiedIdx === i ? "bg-emerald-500/15 text-emerald-500" : "bg-muted/60 text-muted-foreground hover:text-primary"
@@ -148,7 +148,7 @@ export function CopyHistorySheet({ open, onOpenChange, onSelectEffect }: CopyHis
                           {copiedIdx === i ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
                         </button>
                         {effect && (
-                          <button
+                          <button type="button"
                             onClick={() => { onSelectEffect(effect); onOpenChange(false); }}
                             className="flex items-center justify-center size-8 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all cursor-pointer"
                             aria-label="View details"

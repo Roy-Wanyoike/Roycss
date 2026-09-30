@@ -62,7 +62,7 @@ export function ClipPathGenerator() {
         <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">Shapes</label>
         <div className="grid grid-cols-3 gap-2">
           {SHAPES.map(s => (
-            <button key={s.name} onClick={() => setClipPath(s.value)}
+            <button type="button" key={s.name} onClick={() => setClipPath(s.value)}
               className={`flex flex-col items-center gap-1.5 p-2 rounded-lg border transition-all cursor-pointer ${clipPath === s.value ? "border-primary bg-primary/5" : "border-border/40 hover:border-primary/30"}`}>
               <div className="size-8" style={{ background: bgColor, clipPath: s.value }} />
               <span className="text-[11px] text-muted-foreground">{s.name}</span>
@@ -83,7 +83,7 @@ export function ClipPathGenerator() {
       <div>
         <div className="flex items-center justify-between mb-1.5">
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">CSS</label>
-          <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
+          <button type="button" onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
             {copied ? <Check className="size-3" /> : <Copy className="size-3" />} {copied ? "Copied!" : copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy"}
             <span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span>
           </button>

@@ -20,7 +20,9 @@ export default function Error({
         <div className="inline-flex items-center justify-center size-16 rounded-2xl bg-primary/10 text-primary">
           <RotateCcw className="size-8" />
         </div>
-        <div className="space-y-2">
+        {/* role="status" (implicit aria-live=polite) — SRs announce the
+            boundary message when the error view mounts (issue #276). */}
+        <div className="space-y-2" role="status">
           <h1 className="font-display text-2xl font-bold text-foreground">
             Something went wrong
           </h1>
@@ -31,6 +33,7 @@ export default function Error({
         </div>
         <div className="flex items-center justify-center gap-3">
           <button
+            type="button"
             onClick={reset}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors cursor-pointer"
           >

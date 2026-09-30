@@ -108,7 +108,7 @@ export function RecentEffectsSheet({ open, onOpenChange, onSelectEffect }: Recen
                 <span className="text-xs text-muted-foreground">
                   {recentEffects.length} of {MAX_RECENT} recent
                 </span>
-                <button
+                <button type="button"
                   onClick={handleClear}
                   className="flex items-center gap-1 text-xs text-muted-foreground hover:text-rose-500 transition-colors cursor-pointer"
                 >
@@ -143,7 +143,7 @@ export function RecentEffectsSheet({ open, onOpenChange, onSelectEffect }: Recen
 
                     {/* Actions */}
                     <div className="flex items-center gap-1 shrink-0">
-                      <button
+                      <button type="button"
                         onClick={() => handleCopy(effect)}
                         className={`flex items-center justify-center size-8 rounded-lg transition-all cursor-pointer ${
                           copiedId === effect.id ? "bg-emerald-500/15 text-emerald-500" : "bg-muted/60 text-muted-foreground hover:text-primary"
@@ -153,7 +153,7 @@ export function RecentEffectsSheet({ open, onOpenChange, onSelectEffect }: Recen
                       >
                         {copiedId === effect.id ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
                       </button>
-                      <button
+                      <button type="button"
                         onClick={() => {
                           onSelectEffect(effect);
                           onOpenChange(false);

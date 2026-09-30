@@ -83,11 +83,11 @@ export function CSSVariableManager() {
     <div className="space-y-4">
       {/* Category filter */}
       <div className="flex items-center gap-1 flex-wrap">
-        <button onClick={() => setFilter("all")} className={`px-2 py-1 rounded-md text-xs font-medium cursor-pointer ${filter === "all" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}>All ({tokens.length})</button>
+        <button type="button" onClick={() => setFilter("all")} className={`px-2 py-1 rounded-md text-xs font-medium cursor-pointer ${filter === "all" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}>All ({tokens.length})</button>
         {CATEGORIES.map(cat => {
           const count = tokens.filter(t => t.category === cat).length;
           if (count === 0) return null;
-          return <button key={cat} onClick={() => setFilter(cat)} className={`px-2 py-1 rounded-md text-xs font-medium capitalize cursor-pointer ${filter === cat ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}>{cat} ({count})</button>;
+          return <button type="button" key={cat} onClick={() => setFilter(cat)} className={`px-2 py-1 rounded-md text-xs font-medium capitalize cursor-pointer ${filter === cat ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}>{cat} ({count})</button>;
         })}
       </div>
 
@@ -104,17 +104,17 @@ export function CSSVariableManager() {
             <select value={token.category} onChange={(e) => updateToken(token.id, "category", e.target.value)} aria-label={`Category for ${token.name}`} className="h-7 px-1 rounded bg-background border border-border/40 text-[11px] cursor-pointer capitalize">
               {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
-            <button onClick={() => removeToken(token.id)} aria-label={`Remove token ${token.name}`} className="text-muted-foreground hover:text-rose-500 cursor-pointer shrink-0"><Minus className="size-3.5" /></button>
+            <button type="button" onClick={() => removeToken(token.id)} aria-label={`Remove token ${token.name}`} className="text-muted-foreground hover:text-rose-500 cursor-pointer shrink-0"><Minus className="size-3.5" /></button>
           </div>
         ))}
       </div>
 
       {/* Add + Copy */}
       <div className="flex items-center gap-2">
-        <button onClick={addToken} className="flex items-center gap-1 px-3 py-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 text-xs font-medium cursor-pointer transition-all">
+        <button type="button" onClick={addToken} className="flex items-center gap-1 px-3 py-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 text-xs font-medium cursor-pointer transition-all">
           <Plus className="size-3.5" /> Add Token
         </button>
-        <button onClick={handleCopy} className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary text-primary-foreground hover:bg-primary/90"}`}>
+        <button type="button" onClick={handleCopy} className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary text-primary-foreground hover:bg-primary/90"}`}>
           {copied ? <Check className="size-4" /> : <Copy className="size-4" />} {copied ? "Copied!" : copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy CSS Variables"}
           <span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span>
         </button>

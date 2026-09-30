@@ -261,7 +261,7 @@ export function PlatformProductsShowcase() {
           </div>
           <div className="flex flex-wrap justify-center gap-2">
             {CATEGORIES.map((cat) => (
-              <button
+              <button type="button"
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
@@ -282,7 +282,7 @@ export function PlatformProductsShowcase() {
               const TierIcon = meta.icon;
               const count = tier === "all" ? PRODUCTS.length : PRODUCTS.filter((p) => p.tier === tier).length;
               return (
-                <button
+                <button type="button"
                   key={tier}
                   onClick={() => setActiveTier(tier)}
                   className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
@@ -314,7 +314,7 @@ export function PlatformProductsShowcase() {
             const Icon = product.icon;
             const statusMeta = STATUS_META[product.status];
             return (
-              <motion.button
+              <motion.button type="button"
                 key={product.id}
                 whileHover={{ y: -4 }}
                 transition={{ duration: 0.2 }}

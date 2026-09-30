@@ -212,7 +212,7 @@ export function RoySpotlight() {
       {/* Filters */}
       <div className="flex flex-wrap gap-2">
         {FILTERS.map((f) => (
-          <button
+          <button type="button"
             key={f.id}
             onClick={() => setFilter(f.id)}
             className={cn(

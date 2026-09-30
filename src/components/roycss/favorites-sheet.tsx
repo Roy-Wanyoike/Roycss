@@ -172,20 +172,20 @@ export function FavoritesSheet({
                     transition={{ duration: 0.2 }}
                     className="group flex items-center gap-3 p-2.5 rounded-xl border border-border bg-card hover:border-primary/30 transition-colors"
                   >
-                    <button
+                    <button type="button"
                       onClick={() => { onSelectEffect(effect); onOpenChange(false); }}
                       className="size-12 rounded-lg bg-gradient-to-br from-muted/60 to-muted/20 flex items-center justify-center shrink-0 hover:ring-2 hover:ring-primary/30 transition-all cursor-pointer"
                     >
                       <div className={`roycss-${effect.id} scale-50 origin-center pointer-events-none`} style={{ width: 24, height: 24 }} />
                     </button>
-                    <button
+                    <button type="button"
                       onClick={() => { onSelectEffect(effect); onOpenChange(false); }}
                       className="flex-1 min-w-0 text-left cursor-pointer"
                     >
                       <p className="text-sm font-medium text-foreground truncate">{effect.name}</p>
                       <p className="text-[11px] text-muted-foreground truncate">{categoryMeta[effect.category].label}</p>
                     </button>
-                    <button
+                    <button type="button"
                       onClick={() => onToggleFavorite(effect.id)}
                       className="flex items-center justify-center size-8 rounded-lg text-muted-foreground hover:text-rose-500 hover:bg-rose-500/10 transition-all cursor-pointer shrink-0"
                       aria-label="Remove from favorites"

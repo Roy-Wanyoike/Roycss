@@ -120,7 +120,7 @@ export function DocsSidebar({ activeSlug, onNavigate }: DocsSidebarProps) {
           const isCollapsed = collapsed.has(category.id);
           return (
             <div key={category.id} className="flex flex-col">
-              <button
+              <button type="button"
                 onClick={() => toggleCategory(category.id)}
                 className="flex items-center gap-2 px-2 py-2 rounded-md text-xs font-semibold uppercase tracking-wider text-muted-foreground hover:text-foreground hover:bg-muted/40 transition-all cursor-pointer w-full"
                 aria-expanded={!isCollapsed}

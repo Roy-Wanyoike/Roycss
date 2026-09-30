@@ -88,7 +88,7 @@ export function BorderRadiusVisualizer() {
       {/* Link toggle */}
       <div className="flex items-center justify-between">
         <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Corner Radius</label>
-        <button
+        <button type="button"
           onClick={() => setLinked(!linked)}
           className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${linked ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"}`}
           title={linked ? "All corners linked" : "Corners independent"}
@@ -142,7 +142,7 @@ export function BorderRadiusVisualizer() {
         <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">Presets</label>
         <div className="grid grid-cols-4 gap-1.5">
           {PRESETS.map(preset => (
-            <button
+            <button type="button"
               key={preset.name}
               onClick={() => setRadius(preset.value)}
               className="flex flex-col items-center gap-1 p-2 rounded-lg border border-border/40 hover:border-primary/40 transition-all cursor-pointer"
@@ -161,7 +161,7 @@ export function BorderRadiusVisualizer() {
       <div>
         <div className="flex items-center justify-between mb-1.5">
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">CSS</label>
-          <button
+          <button type="button"
             onClick={handleCopy}
             className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}
           >

@@ -76,7 +76,7 @@ export function PropertySearch({ onResults }: { onResults: (effectIds: string[])
             const count = propertyCounts[prop] || 0;
             const color = PROPERTY_COLORS[prop] || "bg-muted text-muted-foreground";
             return (
-              <motion.button
+              <motion.button type="button"
                 key={prop}
                 onClick={() => toggleProperty(prop)}
                 whileHover={{ scale: 1.05, y: -1 }}

@@ -71,7 +71,7 @@ export function RandomEffectPicker({ onSelectEffect }: { onSelectEffect: (effect
   return (
     <div className="flex flex-col items-center gap-3">
       {/* Surprise Me button */}
-      <button
+      <button type="button"
         onClick={pickRandom}
         disabled={spinning}
         className="group relative flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary/10 text-primary border border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all font-medium text-sm cursor-pointer disabled:opacity-70"
@@ -115,7 +115,7 @@ export function RandomEffectPicker({ onSelectEffect }: { onSelectEffect: (effect
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button
+                  <button type="button"
                     onClick={() => handleCopy(randomEffect)}
                     title={copyFailed ? "Clipboard unavailable — select the CSS on the effect page and copy manually" : undefined}
                     className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-medium transition-all cursor-pointer ${
@@ -132,13 +132,13 @@ export function RandomEffectPicker({ onSelectEffect }: { onSelectEffect: (effect
                       {copyFailed ? "Copy failed — clipboard unavailable" : ""}
                     </span>
                   </button>
-                  <button
+                  <button type="button"
                     onClick={() => onSelectEffect(randomEffect)}
                     className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-medium hover:bg-primary/90 transition-all cursor-pointer"
                   >
                     View <ArrowRight className="size-3.5" />
                   </button>
-                  <button
+                  <button type="button"
                     onClick={pickRandom}
                     className="flex items-center justify-center size-8 rounded-lg bg-muted text-muted-foreground hover:text-primary transition-all cursor-pointer"
                     aria-label="Pick another"

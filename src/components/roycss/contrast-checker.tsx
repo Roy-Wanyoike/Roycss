@@ -140,7 +140,7 @@ export function ContrastChecker() {
                 <p className="text-xs text-muted-foreground">Contrast Ratio</p>
                 <p className="font-display text-3xl font-bold text-foreground">{result.ratio}<span className="text-lg text-muted-foreground">:1</span></p>
               </div>
-              <button
+              <button type="button"
                 onClick={handleCopy}
                 className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}
               >

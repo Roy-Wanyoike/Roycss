@@ -130,7 +130,7 @@ export function SiteHeader() {
         {/* Desktop primary nav (<nav aria-label="Primary">, issue #191) */}
         <nav
           aria-label="Primary"
-          className="ml-auto hidden items-center gap-1 sm:flex"
+          className="ms-auto hidden items-center gap-1 sm:flex"
         >
           {PRIMARY_LINKS.map((link) => (
             <Link
@@ -147,9 +147,9 @@ export function SiteHeader() {
         <div
           className={
             /* Below sm the nav is display:none, so the cluster takes
-               ml-auto; on sm+ the desktop nav owns the auto margin and the
+               ms-auto; on sm+ the desktop nav owns the auto margin and the
                cluster sits flush after it. */
-            "ml-auto flex items-center gap-1 sm:ml-0"
+            "ms-auto flex items-center gap-1 sm:ms-0"
           }
         >
           <a

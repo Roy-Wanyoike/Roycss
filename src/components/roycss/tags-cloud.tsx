@@ -62,7 +62,7 @@ export function TagsCloud({ onTagSelect }: { onTagSelect: (tag: string) => void 
           {tagData.map(([tag, count]) => {
             const isSelected = selectedTag === tag;
             return (
-              <motion.button
+              <motion.button type="button"
                 key={tag}
                 onClick={() => {
                   if (isSelected) {

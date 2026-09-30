@@ -12,7 +12,7 @@
  * bottom walks the sitemap in declaration order.
  */
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import {
@@ -276,6 +276,10 @@ export default function DocsLayout({
 }) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  // Mobile drawer focus management (issue #276): the drawer is a hand-rolled
+  // role="dialog" (no Radix wrapper), so it owns the dialog a11y contract.
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   // Lock body scroll when mobile sidebar is open.
   useEffect(() => {
@@ -284,6 +288,59 @@ export default function DocsLayout({
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = original;
+    };
+  }, [sidebarOpen]);
+
+  // Drawer dialog focus contract (issue #276): move focus into the
+  // dialog on open (the visible close button), keep Tab cycling INSIDE
+  // the drawer while it is open, close on Escape, and restore focus to
+  // the trigger element on close (cleanup runs whenever sidebarOpen
+  // flips false — including route-change auto-close).
+  useEffect(() => {
+    if (!sidebarOpen) return;
+    const drawer = drawerRef.current;
+    if (!drawer) return;
+    const previouslyFocused =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+
+    const getFocusable = () =>
+      Array.from(
+        drawer.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]), ' +
+            'select:not([disabled]), textarea:not([disabled]), ' +
+            '[tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((el) => el.offsetParent !== null);
+
+    closeButtonRef.current?.focus();
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setSidebarOpen(false);
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const focusable = getFocusable();
+      if (focusable.length === 0) return;
+      const first = focusable[0]!;
+      const last = focusable[focusable.length - 1]!;
+      const active = document.activeElement;
+      if (e.shiftKey) {
+        if (active === first || !drawer.contains(active)) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else if (active === last || !drawer.contains(active)) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onKeyDown, true);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown, true);
+      previouslyFocused?.focus();
     };
   }, [sidebarOpen]);
 
@@ -354,9 +411,10 @@ export default function DocsLayout({
         <TocCard pathname={pathname} />
       </div>
 
-      {/* Mobile sidebar drawer */}
+      {/* Mobile sidebar drawer — role="dialog" with focus trap + Escape
+          close + focus restore (issue #276; see the effect above). */}
       {sidebarOpen ? (
-        <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true" aria-label="Documentation navigation">
+        <div ref={drawerRef} className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true" aria-label="Documentation navigation">
           <div
             className="absolute inset-0 bg-black/50"
             onClick={() => setSidebarOpen(false)}
@@ -366,6 +424,7 @@ export default function DocsLayout({
             <div className="mb-4 flex items-center justify-between">
               <span className="text-sm font-semibold">Documentation</span>
               <button
+                ref={closeButtonRef}
                 type="button"
                 onClick={() => setSidebarOpen(false)}
                 className="inline-flex size-9 items-center justify-center rounded-md text-muted-foreground hover:bg-muted"

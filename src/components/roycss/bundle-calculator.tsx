@@ -101,20 +101,20 @@ export function BundleCalculator({ open, onOpenChange }: { open: boolean; onOpen
                   Selected ({selectedEffects.length})
                 </span>
                 <div className="flex items-center gap-1">
-                  <button onClick={handleCopy} className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
+                  <button type="button" onClick={handleCopy} className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
                     {copied ? <Check className="size-3" /> : <Copy className="size-3" />} Copy
                   </button>
-                  <button onClick={handleExport} className="flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-all cursor-pointer">
+                  <button type="button" onClick={handleExport} className="flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-all cursor-pointer">
                     <Download className="size-3" /> Export
                   </button>
-                  <button onClick={() => setSelected([])} className="flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium bg-muted text-muted-foreground hover:text-rose-500 transition-all cursor-pointer">
+                  <button type="button" onClick={() => setSelected([])} className="flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium bg-muted text-muted-foreground hover:text-rose-500 transition-all cursor-pointer">
                     <Trash2 className="size-3" /> Clear
                   </button>
                 </div>
               </div>
               <div className="flex flex-wrap gap-1 mb-3">
                 {selectedEffects.map(e => (
-                  <button key={e.id} onClick={() => toggle(e.id)} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-xs hover:bg-rose-500/10 hover:text-rose-500 transition-all cursor-pointer group">
+                  <button type="button" key={e.id} onClick={() => toggle(e.id)} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-xs hover:bg-rose-500/10 hover:text-rose-500 transition-all cursor-pointer group">
                     {e.name} <Minus className="size-2.5 group-hover:inline hidden" /><X className="size-2.5 group-hover:hidden" />
                   </button>
                 ))}
@@ -131,7 +131,7 @@ export function BundleCalculator({ open, onOpenChange }: { open: boolean; onOpen
               const isSelected = selected.includes(e.id);
               const size = new Blob([e.cssCode]).size;
               return (
-                <button
+                <button type="button"
                   key={e.id}
                   onClick={() => toggle(e.id)}
                   className={`w-full flex items-center gap-2 p-2 rounded-lg transition-all cursor-pointer text-left ${isSelected ? "bg-primary/10 border border-primary/30" : "hover:bg-muted/50 border border-transparent"}`}

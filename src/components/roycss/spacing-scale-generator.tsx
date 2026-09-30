@@ -70,7 +70,7 @@ export function SpacingScaleGenerator() {
         <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Scale Type</label>
         <div className="grid grid-cols-3 gap-1.5">
           {SCALES.map((s, i) => (
-            <button key={s.name} onClick={() => setScaleIdx(i)} className={`px-2 py-1.5 rounded-lg text-xs font-medium cursor-pointer transition-all ${scaleIdx === i ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}>{s.name}</button>
+            <button type="button" key={s.name} onClick={() => setScaleIdx(i)} className={`px-2 py-1.5 rounded-lg text-xs font-medium cursor-pointer transition-all ${scaleIdx === i ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}>{s.name}</button>
           ))}
         </div>
       </div>
@@ -85,7 +85,7 @@ export function SpacingScaleGenerator() {
       {/* Visual scale */}
       <div className="space-y-1">
         {values.map((v, idx) => (
-          <button key={idx} onClick={() => handleCopy(`--space-${v.step}: ${v.px}px;`, idx)} className="w-full flex items-center gap-2 group cursor-pointer">
+          <button type="button" key={idx} onClick={() => handleCopy(`--space-${v.step}: ${v.px}px;`, idx)} className="w-full flex items-center gap-2 group cursor-pointer">
             <span className="text-xs font-mono text-muted-foreground w-12 text-right">--space-{v.step}</span>
             <div className="flex-1 h-6 rounded bg-muted/30 relative overflow-hidden">
               <div className="h-full bg-primary/40 rounded transition-all group-hover:bg-primary/60" style={{ width: `${Math.min(100, (v.px / values[values.length - 1].px) * 100)}%` }} />
@@ -103,7 +103,7 @@ export function SpacingScaleGenerator() {
       </p>
 
       {/* Copy all */}
-      <button onClick={handleCopyAll} className={`w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer ${copiedIdx === -1 ? "bg-emerald-500/15 text-emerald-500" : copyFailedIdx === -1 ? "bg-rose-500/15 text-rose-500" : "bg-primary text-primary-foreground hover:bg-primary/90"}`}>
+      <button type="button" onClick={handleCopyAll} className={`w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer ${copiedIdx === -1 ? "bg-emerald-500/15 text-emerald-500" : copyFailedIdx === -1 ? "bg-rose-500/15 text-rose-500" : "bg-primary text-primary-foreground hover:bg-primary/90"}`}>
         {copiedIdx === -1 ? <Check className="size-4" /> : <Copy className="size-4" />}
         {copiedIdx === -1 ? "Copied!" : copyFailedIdx === -1 ? CLIPBOARD_FAILED_MESSAGE : "Copy All as CSS Variables"}
       </button>

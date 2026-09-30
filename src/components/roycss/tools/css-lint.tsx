@@ -272,7 +272,7 @@ export function CSSHealthLinter() {
                 ["rules", "Rules reference"],
               ] as Array<[TabId, string]>
             ).map(([id, label]) => (
-              <button
+              <button type="button"
                 key={id}
                 role="tab"
                 aria-selected={tab === id}
@@ -386,7 +386,7 @@ export function CSSHealthLinter() {
       {/* ── Rules footer (collapsed pre-analyze) ──────────── */}
       {!result && (
         <div className="rounded-lg border">
-          <button
+          <button type="button"
             onClick={() => setRulesOpen((v) => !v)}
             aria-expanded={rulesOpen}
             className="flex w-full items-center justify-between px-4 py-3 text-left text-sm font-medium transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-lg"

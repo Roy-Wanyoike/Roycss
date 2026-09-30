@@ -86,7 +86,7 @@ export function BoxShadowGenerator() {
       {/* Presets */}
       <div className="grid grid-cols-3 gap-2">
         {PRESETS.map(p => (
-          <button key={p.name} onClick={() => setLayers(p.layers.map(l => ({ ...l, id: `shadow-${layerId++}` })))}
+          <button type="button" key={p.name} onClick={() => setLayers(p.layers.map(l => ({ ...l, id: `shadow-${layerId++}` })))}
             className="flex flex-col items-center gap-1 p-2 rounded-lg border border-border/40 hover:border-primary/40 transition-all cursor-pointer">
             <div className="size-8 rounded bg-card" style={{ boxShadow: p.layers.map(l => `${l.inset ? "inset " : ""}${l.x}px ${l.y}px ${l.blur}px ${l.spread}px ${l.color}`).join(", ") }} />
             <span className="text-[11px] text-muted-foreground">{p.name}</span>
@@ -100,7 +100,7 @@ export function BoxShadowGenerator() {
           <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1">
             <Layers className="size-3" /> Layers ({layers.length})
           </span>
-          <button onClick={addLayer} className="flex items-center gap-1 px-2 py-1 rounded-md text-xs bg-primary/10 text-primary hover:bg-primary/20 transition-all cursor-pointer">
+          <button type="button" onClick={addLayer} className="flex items-center gap-1 px-2 py-1 rounded-md text-xs bg-primary/10 text-primary hover:bg-primary/20 transition-all cursor-pointer">
             <Plus className="size-3" /> Add Layer
           </button>
         </div>
@@ -110,13 +110,13 @@ export function BoxShadowGenerator() {
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-mono text-muted-foreground">Layer {i + 1}</span>
                 <div className="flex items-center gap-1">
-                  <button onClick={() => updateLayer(layer.id, "inset", !layer.inset)}
+                  <button type="button" onClick={() => updateLayer(layer.id, "inset", !layer.inset)}
                     aria-pressed={layer.inset}
                     aria-label={`Toggle inset on layer ${i + 1}`}
                     className={`px-2 py-0.5 rounded text-[11px] font-medium transition-all cursor-pointer ${layer.inset ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}>
                     inset
                   </button>
-                  <button onClick={() => removeLayer(layer.id)} disabled={layers.length <= 1} aria-label={`Remove layer ${i + 1}`} className="text-muted-foreground hover:text-rose-500 disabled:opacity-30 cursor-pointer">
+                  <button type="button" onClick={() => removeLayer(layer.id)} disabled={layers.length <= 1} aria-label={`Remove layer ${i + 1}`} className="text-muted-foreground hover:text-rose-500 disabled:opacity-30 cursor-pointer">
                     <Minus className="size-3" />
                   </button>
                 </div>
@@ -148,7 +148,7 @@ export function BoxShadowGenerator() {
       <div>
         <div className="flex items-center justify-between mb-1.5">
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">CSS</label>
-          <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
+          <button type="button" onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
             {copied ? <Check className="size-3" /> : <Copy className="size-3" />} {copied ? "Copied!" : copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy"}
             <span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span>
           </button>

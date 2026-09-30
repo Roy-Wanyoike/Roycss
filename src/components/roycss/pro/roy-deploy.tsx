@@ -230,7 +230,7 @@ export function RoyDeploy() {
               const Icon = p.icon;
               const selected = platform === p.id;
               return (
-                <button
+                <button type="button"
                   key={p.id}
                   onClick={() => setPlatform(p.id)}
                   className={cn(

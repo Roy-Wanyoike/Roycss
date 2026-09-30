@@ -18,6 +18,7 @@ duplicating.
 | Database | SQLite file on a Railway volume (prod) / `backend-node/prisma/dev.db` (local) | `backend-node/prisma/schema.prisma`, `backend-node/prisma/migrations/` |
 | Deploy pipeline | GitHub Actions: CI green on `main` → `.github/workflows/deploy.yml` | order is **`bunx prisma migrate deploy` BEFORE `railway up`**, then `GET /api/v1/health` + register/login auth smoke, then Vercel `--prod` with `BACKEND_URL` + `API_MODE=proxy` wired into the Vercel project env |
 | Frontend↔backend | `/api/auth/*` proxy routes (`src/app/api/auth/**` → `src/lib/auth-client.ts` `BACKEND_URL`) | cookies `ACCESS_COOKIE` / `REFRESH_COOKIE` |
+| Roy Live (WebSocket) | mini-service, dev/prod host process (`bun index.ts` in `mini-services/live-service/`) | `mini-services/live-service/server.ts` — CORS is allowlist-only via `LIVE_ALLOWED_ORIGINS` (comma-separated exact origins; unset → dev defaults; MUST be set to the real origin(s) in production, issue #290) |
 
 Two standing constraints to keep in mind during any operation:
 

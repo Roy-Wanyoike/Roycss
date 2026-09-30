@@ -191,6 +191,9 @@ resource "google_cloud_run_service" "api" {
       annotations = {
         # Mounts the Cloud SQL Auth Proxy socket that the
         # `?host=/cloudsql/…` DATABASE_URL dials (issue #266).
+        # OPERATOR PREREQUISITE (issue #290): the Cloud Run runtime service
+        # account needs `roles/cloudsql.client` on the Cloud SQL instance —
+        # Terraform does not grant IAM bindings here.
         "run.googleapis.com/cloudsql-instances" = local.cloudsql_instance
       }
     }

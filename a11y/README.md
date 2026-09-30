@@ -120,12 +120,19 @@ durable decisions are folded into
 [`docs/EFFECT-A11Y-TIERS.md`](../docs/EFFECT-A11Y-TIERS.md) §6; the file
 itself remains recoverable from git history.
 
-## CI integration
+## Running the harness (local / manual)
 
-All four scripts are designed to run in CI on every PR that touches
-`src/components/roycss/` or `src/app/globals.css`. A failure blocks
-merge. The release pipeline also runs the axe-core harness in
-[`tests/a11y/`](../tests/a11y).
+These scripts are **local, manual tools** — no GitHub workflow runs them
+today (re-verified 2026-10, issue #272): no CI job invokes
+`a11y/*.ts` and no release step runs the axe-core harness in
+[`tests/a11y/`](../tests/a11y). The automated a11y signal CI *does*
+produce is the Lighthouse accessibility score in the Lighthouse PR
+workflow. To audit locally, run the four scripts from the Quick start
+above (each exits `0` on pass, `1` on fail; all four are static analysis
+and need no dev server) and treat failures as
+pre-merge blockers by convention. Wiring them into a CI job on PRs that
+touch `src/components/roycss/` or `src/app/globals.css` would be the
+natural follow-up.
 
 ## References
 

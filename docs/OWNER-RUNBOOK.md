@@ -1,7 +1,9 @@
 # RoyCSS Owner Runbook (push, publish, reclaim, storage)
 
-**Repo `main` @ `5f97c35`** — all gates green (1,964/1,964 tests · `tsc` 0
-errors · API/manifest/token/AI drift gates · publish count-drift gate),
+**Repo `main`** — see `git log` for the current HEAD (this file deliberately
+does not pin a commit; the old commit pin rotted). All gates green at the
+last verified round: full frontend + backend test suites · `tsc` 0 errors ·
+`eslint` 0 · API/manifest/token/AI drift gates · publish count-drift gate.
 **This file is the single handoff.** Everything below needs the repo owner; everything an agent
 could do is already done and verified.
 
@@ -11,7 +13,7 @@ could do is already done and verified.
 
 | Dimension | State |
 |---|---|
-| Test suite | **1,964/1,964** (1,015 frontend unit + 949 backend integration/unit/contract/security) |
+| Test suite | frontend Vitest (88 files) + backend (integration/unit/contract/security) — all green at the last verified round; run `bunx vitest run` / `cd backend-node && bun run test` for current counts |
 | Type / lint | `tsc` 0 errors · `eslint` 0 |
 | API truth | api:check in sync (289 routes) · OpenAPI in sync (268 paths) · **api-surface gate green** (new) |
 | npm package | Tarball **969.8 KB / 13 files** (pre-batch-53/54 snapshot — re-verify with `bun run publish:validate`, which also fails on description/catalog count drift), consumer install **empirically verified** (no `--ignore-scripts`, zero runtime deps, require/import both → 1,983 effects, all subpaths resolve) |
@@ -76,7 +78,7 @@ inside the issue body). Future work convention: branch per issue → PR linked t
 | Key | Unlocks | Until then |
 |---|---|---|
 | `RESEND_API_KEY` | Real email for verify/reset (backend) | mock transport logs the links; flows fully work in tests |
-| `SENTRY_DSN` | Error tracking (wiring issue PRD-F11 is filed) | nothing breaks, just unobserved |
+| `SENTRY_DSN` | Error tracking — **wired** (issue #119: `initSentry()` runs at boot in `backend-node/src/index.ts` and a Sentry error middleware is mounted in `src/server/app.ts`; setting the DSN activates 5xx reporting on the next deploy/restart) | unset = Sentry disabled; nothing breaks, just unobserved |
 | `POSTGRES_URL` / `REDIS_URL` | Prod DB + multi-replica rate limiting | SQLite + in-memory limiter; **keep Railway at 1 replica** |
 | Stripe keys (PF-010/020) | Paid tiers | pricing honestly says "waitlist" |
 

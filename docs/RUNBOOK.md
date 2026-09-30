@@ -354,20 +354,28 @@ it.
 
 ### 3.3 `SENTRY_DSN`
 
-Validated at boot by `backend-node/src/config/env.ts` but **not yet wired
-into an SDK** (issue #119 / PRD-F11 — no Sentry init exists in the code
-yet). Today, rotating it is a pure variable swap with no runtime effect:
+**Wired** (issue #119 / PRD-F11): when `SENTRY_DSN` is set,
+`initSentry()` in `backend-node/src/lib/sentry.ts` — called at boot from
+`src/index.ts` — initializes the Sentry Node SDK, and a Sentry error
+middleware is mounted in `src/server/app.ts` right before the JSON error
+handler. Only errors the JSON handler classifies as 5xx are reported
+(validation failures and operational AppErrors stay out of Sentry). While
+the DSN is unset the init no-ops and the middleware is a pure pass-through
+— dev/test behavior is unchanged.
+
+Rotation is **not** a pure variable swap: the DSN is read at boot, so
+activating or rotating it always requires a redeploy — and note that
+setting a DSN *activates* error reporting on the next boot:
 
 1. Sentry dashboard → the project → Settings → Client Keys (DSN) → generate
    the new DSN.
 2. Update `SENTRY_DSN` on the Railway service → redeploy.
-3. After issue #119 wires the SDK: re-verify error ingestion (throw a test
-   error, watch it land in Sentry) — the DSN is read at boot, so a
-   redeploy is always required.
+3. Re-verify error ingestion (throw a test error, watch it land in Sentry).
+4. Revoke the old DSN in the Sentry dashboard only after the new one is
+   verified.
 
-When #119 lands, also revisit this section: Sentry SDKs may hold a second
-auth token (`SENTRY_AUTH_TOKEN` for source-map upload) which follows the
-same rotate-on-redeploy procedure.
+Sentry SDKs may also hold a second auth token (`SENTRY_AUTH_TOKEN` for
+source-map upload) which follows the same rotate-on-redeploy procedure.
 
 ### 3.4 `DATABASE_URL`
 
@@ -416,12 +424,16 @@ disclosure.
 
 ### 4.2 Communications channels
 
-- **Detection (current, honest state):** there is no wired alerting yet —
-  SENTRY_DSN is validated but unwired (#119) and route-metrics are
-  in-memory only. Until #119 and an uptime check on `GET /api/v1/health`
-  exist, detection is: Railway/Vercel deploy failure emails, GitHub Actions
-  failures, and manual checks. Treat wiring alerting as a P1 follow-up of
-  any incident that was detected late.
+- **Detection (current, honest state):** backend 5xx errors are reported
+  to Sentry **when `SENTRY_DSN` is set** — the SDK is wired (#119:
+  `initSentry()` at boot + the Express error middleware in `app.ts`);
+  with the DSN unset the backend is unobserved. There is no wired
+  paging/alerting on top of Sentry and no uptime check on
+  `GET /api/v1/health` yet (route-metrics are in-memory only), so
+  detection today is: Sentry (when enabled), Railway/Vercel deploy
+  failure emails, GitHub Actions failures, and manual checks. Treat
+  wiring alerting as a P1 follow-up of any incident that was detected
+  late.
 - **During a P0/P1:** open a GitHub issue titled `[INCIDENT] <one-liner>`
   on `Roy-Wanyoike/Roycss` immediately — it is the timestamped system of
   record (timeline, impact, decisions). Update the README deployment-status

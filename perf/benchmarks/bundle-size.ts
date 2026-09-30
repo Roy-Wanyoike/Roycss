@@ -2,12 +2,15 @@
  * bundle-size.ts — Measure dist/ artifacts with fs.statSync.
  *
  * Reads:
- *   - dist/roycss.css       (full bundle, 1.18 MB target)
- *   - dist/roycss.min.css   (minified, 990 KB target)
- *   - dist/effects.json     (effect metadata, <700 KB)
- *   - dist/effects.js       (loader module, <10 KB)
- *   - dist/effects.cjs      (CommonJS loader, <10 KB)
+ *   - dist/roycss.css       (full bundle — measured 1.72 MB, budget 1.9 MB)
+ *   - dist/roycss.min.css   (minified — measured 1.42 MB, budget 1.55 MB)
+ *   - dist/effects.json     (effect metadata — measured 692 KB, budget <700 KB)
+ *   - dist/effects.js       (full effects metadata as ESM — measured ≈525 KB)
+ *   - dist/effects.cjs      (CommonJS mirror — same size)
  *
+ * Targets re-based to measured + headroom in issue #272 (the old 1.5/1.1 MB
+ * and 10 KB-loader targets predate catalog batches 35–54). The consumer-
+ * facing ratchet for these same artifacts is `.size-limit.json` (`bun run size`).
  * The minification ratio (min/raw) is also reported as an info row to
  * surface any regression in the CSS minifier's effectiveness.
  */
@@ -37,18 +40,18 @@ export function runBundleSizeBenchmark(distDir: string): BenchmarkResult[] {
       label: "roycss.css (raw)",
       value: raw,
       unit: "bytes",
-      target: 1.5 * 1024 * 1024,
+      target: 1.9 * 1024 * 1024,
       comparator: "lt",
-      details: "Initial CSS bundle (all 1569 effects)",
+      details: "Full CSS bundle (all 1,983 effects; re-based issue #272)",
     },
     {
       id: "bundle-size/roycss.min.css",
       label: "roycss.min.css",
       value: min,
       unit: "bytes",
-      target: 1.1 * 1024 * 1024,
+      target: 1.55 * 1024 * 1024,
       comparator: "lt",
-      details: "Minified production bundle",
+      details: "Minified production bundle (re-based issue #272)",
     },
     {
       id: "bundle-size/effects.json",
@@ -61,21 +64,21 @@ export function runBundleSizeBenchmark(distDir: string): BenchmarkResult[] {
     },
     {
       id: "bundle-size/effects.js",
-      label: "effects.js (ESM loader)",
+      label: "effects.js (ESM metadata)",
       value: js,
       unit: "bytes",
-      target: 10 * 1024,
+      target: 570 * 1024,
       comparator: "lt",
-      details: "ESM loader that reads effects.json at runtime",
+      details: "Full effects metadata bundled as ESM (auto-generated; measured ≈525 KB) — the old <10 KB loader goal predates bundling the corpus",
     },
     {
       id: "bundle-size/effects.cjs",
-      label: "effects.cjs (CJS loader)",
+      label: "effects.cjs (CJS metadata)",
       value: cjs,
       unit: "bytes",
-      target: 10 * 1024,
+      target: 570 * 1024,
       comparator: "lt",
-      details: "CommonJS loader (mirror of effects.js)",
+      details: "CommonJS mirror of effects.js (re-based issue #272)",
     },
     {
       id: "bundle-size/min-ratio",

@@ -11,14 +11,14 @@
 [![Categories](https://img.shields.io/badge/categories-29-06b6d4?style=flat-square)](#key-numbers)
 [![Products](https://img.shields.io/badge/platform_products-62-8b5cf6?style=flat-square)](#key-numbers)
 [![Backend modules](https://img.shields.io/badge/backend_modules-75-f59e0b?style=flat-square)](#key-numbers)
-[![Tests](https://img.shields.io/badge/tests-1%2C964_passing-22d3ee?style=flat-square)](#engineering-practices)
+[![Tests](https://img.shields.io/badge/tests-2%2C200%2B_passing-22d3ee?style=flat-square)](#engineering-practices)
 [![TypeScript](https://img.shields.io/badge/tsc-strict_clean-3178c6?style=flat-square)](#engineering-practices)
 [![License](https://img.shields.io/badge/license-MIT-ec4899?style=flat-square)](LICENSE)
 [![Runtime](https://img.shields.io/badge/bun-%E2%89%A51.0_%7C_node_%E2%89%A518.18-f472b6?style=flat-square)](#quick-start)
 
 **Live demo: <https://roycss.vercel.app>**
 
-<sub><b>Status:</b> the live site currently serves a build from before the latest wave of fixes — the production redeploy is pending an owner-side account/billing action ([#75](https://github.com/Roy-Wanyoike/Roycss/issues/75)). Everything merged to `main` is verified locally: build ✓ · `tsc` 0 errors · 2,115/2,115 tests ✓.</sub>
+<sub><b>Status:</b> the live site currently serves a build from before the latest wave of fixes — the production redeploy is pending an owner-side account/billing action ([#75](https://github.com/Roy-Wanyoike/Roycss/issues/75)). Everything merged to `main` is verified locally: build ✓ · `tsc` 0 errors · 2,200+ tests ✓ (run `bunx vitest run` + `cd backend-node && bun run test` for the current per-suite counts).</sub>
 
 </div>
 
@@ -85,8 +85,8 @@ Every number below is verified — most are pinned by tests, so stale docs fail 
 | Platform products | **62** | `src/lib/product-registry.ts` (`PRODUCT_COUNT`) |
 | Backend modules | **75** | `backend-node/src/modules/` (mounted per [`API.md`](API.md) — `api-keys` nests under `/auth/api-keys`) |
 | Backend API routes | **289** | documented in [`API.md`](API.md), enforced by the drift gate (`bun run api:check`) |
-| SEO effect pages | **1,983** | statically prerendered at `/effects/<id>` — one page per effect, all in the sitemap |
-| Tests | **2,115** | 1,127 frontend unit (Vitest) + 988 backend (integration + contract + security + unit) — all passing |
+| SEO effect pages | **1,983** | rendered on demand and ISR-cached for 24 h at `/effects/<id>` — one page per effect, all in the sitemap |
+| Tests | **2,200+** | frontend unit (Vitest, 88 files) + backend (integration + contract + security + unit) — see `tests/` for current counts |
 | Typecheck | **0 errors** | `bunx tsc --noEmit` on strict TypeScript |
 
 ---
@@ -98,8 +98,8 @@ Every number below is verified — most are pinned by tests, so stale docs fail 
 | **Frontend** | [Next.js 16](https://nextjs.org) (App Router, Turbopack) · React 19 · TypeScript 5 (strict) · Tailwind CSS 4 · shadcn/ui |
 | **Backend** | Node: Express 4 + Prisma 6 + Zod 4 (75 modules, 289 routes) — the running source of truth · Go 1.23 (`chi`) port in progress for production |
 | **Runtime** | Bun (install + scripts, `>=1.0`) — Node `>=18.18` compatible (`.nvmrc`: 20) |
-| **Data** | SQLite (dev) → PostgreSQL-ready (Supabase in the prod blueprints) · 47 Prisma models |
-| **Quality** | Vitest (2,115 tests) · Playwright E2E + axe-core a11y audits · `tsc` strict-clean · API drift gate · publish count-drift gate |
+| **Data** | SQLite (dev) → PostgreSQL-ready (Supabase in the prod blueprints) · 49 Prisma models |
+| **Quality** | Vitest unit suites (frontend + backend) · Playwright E2E + axe-core a11y audits · `tsc` strict-clean · API drift gate · publish count-drift gate |
 | **Deploy** | Vercel ([`vercel.json`](vercel.json)) + Railway ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) |
 | **Ecosystem** | npm package artifacts ([`dist/`](dist)) · RoyCLI · MCP server · VS Code extension |
 | **Realtime** | Socket.io (Roy Live, port 3003) |
@@ -164,9 +164,9 @@ The inline `JWT_SECRET` / `JWT_REFRESH_SECRET` values aren't ceremony: the backe
 | `bun run lint` | ESLint |
 | `bun run build` | Production build (`prisma generate` + `next build`) |
 | `bun run build:package` | Rebuild the npm artifacts in `dist/` |
-| `bunx vitest run` | 1,127 frontend unit tests |
+| `bunx vitest run` | frontend unit test suite (Vitest — 88 files) |
 | `bunx tsc --noEmit` | Typecheck gate (0 errors) |
-| `cd backend-node && bun run test` | 988 backend tests (integration + contract + security + unit) |
+| `cd backend-node && bun run test` | backend test suite (integration + contract + security + unit) |
 | `cd backend-node && bun run api:check` | API docs drift gate (code vs `API.md`) |
 | `cd backend-node && bun run typecheck` | Backend typecheck gate |
 
@@ -216,13 +216,13 @@ Live Service (Socket.io, port 3003)
 
 Recruiters: every claim here is reproducible from this repo.
 
-- **2,115 tests, all green** — 1,127 frontend unit (Vitest) + 988 backend (supertest integration, contract sweeps, security suite, unit) against the booted Express app. The catalog size itself is test-pinned: `tests/unit/effects.test.ts` asserts *exactly 1,983 effects*, `tests/unit/categories.test.ts` asserts *exactly 29 categories* — stale docs fail CI, not users. The npm-facing counts in the four `package.json` descriptions are drift-gated against `dist/effects.json` by `bun run publish:validate`.
+- **2,200+ tests, all green** — frontend unit (Vitest, 88 files) + backend (supertest integration, contract sweeps, security suite, unit) against the booted Express app. Run `bunx vitest run` / `cd backend-node && bun run test` for the current per-suite counts. The catalog size itself is test-pinned: `tests/unit/effects.test.ts` asserts *exactly 1,983 effects*, `tests/unit/categories.test.ts` asserts *exactly 29 categories* — stale docs fail CI, not users. The npm-facing counts in the four `package.json` descriptions are drift-gated against `dist/effects.json` by `bun run publish:validate`.
 - **Typecheck gate** — `bunx tsc --noEmit` passes with **0 errors** on strict TypeScript across the frontend; the backend has its own `bun run typecheck` gate.
 - **Security headers + a static-safe CSP** — every production response carries a Content-Security-Policy that is **identical for prerendered and dynamic pages**, plus `X-Content-Type-Options`, `Referrer-Policy` and `Permissions-Policy`. The CSP was rewritten after a nonce/`strict-dynamic` policy silently broke every script on the statically prerendered site ([#54](https://github.com/Roy-Wanyoike/Roycss/issues/54)) — postmortem-style comments in [`src/proxy.ts`](src/proxy.ts) explain why nonces are permanently banned there.
 - **Auth-enforced API** — all 39 mutating endpoints across 28 modules require Bearer JWT; unauthenticated calls get a consistent `401` envelope, role-gated actions get `403` (PR [#76](https://github.com/Roy-Wanyoike/Roycss/pull/76), fixes #64). Verified end-to-end by 10 dedicated integration tests.
 - **Accessibility** — WCAG AA is the target: the automated axe-core harness ([`tests/a11y/`](tests/a11y) — axe audit, keyboard navigation, visual checks — plus the [`a11y/`](a11y) scripts) reports **0 violations across 88 applicable rules**, `prefers-reduced-motion` is honored app-wide, and keyboard navigation is audited (harness outputs are regenerated on demand and gitignored).
 - **API docs with a drift gate** — [`API.md`](API.md) documents all 289 backend routes + 25 frontend endpoints; `bun run api:check` statically walks `app.ts` + module routers and **fails if code and docs disagree** in either direction.
-- **SEO done properly** — each of the 1,983 effects has a statically prerendered page at `/effects/<id>` with JSON-LD, OG tags and prev/next links (PR [#77](https://github.com/Roy-Wanyoike/Roycss/pull/77)); unknown IDs return **hard 404s** (no soft-fail blank pages), and every URL is in the sitemap.
+- **SEO done properly** — each of the 1,983 effects has a page at `/effects/<id>` with JSON-LD, OG tags and prev/next links (PR [#77](https://github.com/Roy-Wanyoike/Roycss/pull/77)). Pages render on demand on first request and are then ISR-cached for 24 h (`generateStaticParams` returns `[]` — the build ships no per-effect HTML, so the 1,983-page sitemap no longer costs build time; the SEO outcome is identical). Unknown IDs return **hard 404s** (no soft-fail blank pages), and every URL is in the sitemap.
 - **Fail-fast backend** — environment is validated with Zod at boot (`process.exit(1)` with a readable error list instead of a mystery crash mid-request).
 - **Security posture in-repo** — CSP/XSS/SBOM scans and a vulnerability reporting policy live in [`security/`](security) (see [`security/SECURITY-POLICY.md`](security/SECURITY-POLICY.md)).
 - **Operational honesty** — the production deploy path is tracked publicly in [#75](https://github.com/Roy-Wanyoike/Roycss/issues/75): what's merged, what's verified, and exactly which owner-side action unblocks the redeploy.
@@ -253,7 +253,7 @@ Top categories by count (all 29 are rendered live on the homepage):
 
 ## Deployment
 
-**Frontend → Vercel.** Import the repo on [vercel.com](https://vercel.com) — Next.js is auto-detected, [`vercel.json`](vercel.json) applies. Set `BACKEND_URL` (your backend URL) and optionally `LIVE_URL` (WebSocket service). A same-origin catch-all proxy (`src/app/api/v1/[...path]/route.ts`) forwards all `/api/v1/*` traffic to the backend.
+**Frontend → Vercel.** Import the repo on [vercel.com](https://vercel.com) — Next.js is auto-detected, [`vercel.json`](vercel.json) applies. Set `BACKEND_URL` (your backend URL). A same-origin catch-all proxy (`src/app/api/v1/[...path]/route.ts`) forwards all `/api/v1/*` traffic to the backend.
 
 **Backend → Railway.** Pushes to `main` deploy `backend-node/` automatically via the "Deploy backend-node to Railway + migrate + smoke" job in [`deploy.yml`](.github/workflows/deploy.yml) (secrets: `RAILWAY_TOKEN`, `RAILWAY_PROJECT_ID`, `RAILWAY_SERVICE_ID`; Railway sets `DATABASE_URL` on the service and the migration step pulls it back via the Railway CLI). Required runtime secrets: `DATABASE_URL` (Postgres), `JWT_SECRET`, `JWT_REFRESH_SECRET` — everything else has safe defaults or mock fallbacks (see [`backend-node/.env.example`](backend-node/.env.example)). The old Render blueprint (`render.yaml`) was removed — the Render service has been dead since it was first audited.
 

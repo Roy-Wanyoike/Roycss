@@ -50,7 +50,8 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   // `output: "standalone"` is only needed for self-hosted deployments
-  // (Docker / bare metal — see build:standalone + start:standalone scripts).
+  // (Docker / bare metal — see the build:standalone script; the output runs
+  // via `node .next/standalone/server.js`).
   // Vercel deploys with its first-class Next.js adapter and does NOT need
   // (or support) standalone output — vercel.json intentionally has no
   // buildCommand/outputDirectory overrides so the adapter stays in control.

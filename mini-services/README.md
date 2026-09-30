@@ -37,5 +37,6 @@ routing.
 
 ## Reference
 
-See `examples/websocket/` for a complete websocket demo (frontend + server)
-that follows these conventions.
+`live-service/` in this directory is a working mini-service that follows
+these conventions — a WebSocket (socket.io) collaboration backend on port
+3003 with its own `package.json` and `bun --hot` auto-restart.

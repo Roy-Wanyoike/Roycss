@@ -35,6 +35,12 @@ export default getRequestConfig(async () => {
 
   return {
     locale: requestLocale,
+    // Explicit timeZone (issue #274): without it next-intl falls back to the
+    // host environment (ENVIRONMENT_FALLBACK warning in dev logs) and bakes
+    // the server TZ into prerendered markup — a cross-environment mismatch
+    // class the moment any date/number formatting lands. UTC is deterministic
+    // across local dev, CI, and Vercel's build fleet.
+    timeZone: "UTC",
     messages: (await import(`../../messages/${requestLocale}.json`)).default,
   };
 });

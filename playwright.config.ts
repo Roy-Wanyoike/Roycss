@@ -8,8 +8,11 @@ import { defineConfig, devices } from "@playwright/test";
  *   Browser binaries are a local, one-time install — NOT a package.json dep:
  *   `bunx playwright install firefox webkit` (~600 MB). WebKit on Linux also
  *   needs system libraries: `sudo bunx playwright install-deps webkit`.
- * - The dev server is auto-started on port 3000 unless `PLAYWRIGHT_NO_SERVER`
- *   is set (used in CI when a server is already running).
+ * - The dev server is auto-started unless `PLAYWRIGHT_NO_SERVER` is set
+ *   (used in CI when a server is already running). The auto-started server
+ *   listens on the port embedded in `PLAYWRIGHT_BASE_URL` (default
+ *   `http://localhost:3000`) so an overridden base URL never races a
+ *   server stuck on :3000 (issue #274).
  *
  * Run:    bunx playwright test                      # all 3 projects
  *         bunx playwright test --project=chromium  # one project
@@ -17,6 +20,11 @@ import { defineConfig, devices } from "@playwright/test";
  * Debug:  bunx playwright test --debug
  */
 const BASE_URL = process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000";
+// Port the auto-started dev server must listen on — derived from BASE_URL
+// so the health-check below and the server it waits for always agree
+// (issue #274: `bun run dev` hardcodes -p 3000, which deadlocked the
+// health-check whenever PLAYWRIGHT_BASE_URL pointed elsewhere).
+const BASE_PORT = new URL(BASE_URL).port || "3000";
 const shouldStartServer = !process.env.PLAYWRIGHT_NO_SERVER;
 
 export default defineConfig({
@@ -56,7 +64,13 @@ export default defineConfig({
   ...(shouldStartServer
     ? {
         webServer: {
-          command: "bun run dev",
+          // Default port: the canonical `bun run dev` script (teed to
+          // dev.log). Overridden port: next dev directly with -p, because
+          // appending args to the piped script would hit `tee`, not next.
+          command:
+            BASE_PORT === "3000"
+              ? "bun run dev"
+              : `bunx next dev -p ${BASE_PORT}`,
           url: BASE_URL,
           timeout: 120_000,
           reuseExistingServer: !process.env.CI,

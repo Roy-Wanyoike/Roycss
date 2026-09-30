@@ -4,6 +4,7 @@ import {
   backendTimeoutResponse,
   isBackendTimeoutError,
 } from "@/lib/backend-fetch";
+import { API_RATE_TIERS, guardApiWrite } from "@/lib/api-security";
 
 /**
  * POST /api/auth/verify-email
@@ -12,6 +13,11 @@ import {
  * always 200 with the identical shape.
  */
 export async function POST(req: Request) {
+  // #275: same-origin verification (403) + per-IP rate limit (429, auth
+  // tier 10/min — mirrors the backend authRateLimit tier). Fail-closed.
+  const denied = guardApiWrite(req, { route: "auth-verify-email", ...API_RATE_TIERS.auth });
+  if (denied) return denied;
+
   let body: unknown;
   try {
     body = await req.json();

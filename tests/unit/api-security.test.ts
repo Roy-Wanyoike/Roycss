@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
@@ -277,5 +279,98 @@ describe("rateLimitHeaders", () => {
       "X-RateLimit-Remaining": "3",
       "X-RateLimit-Reset": "1700000000",
     });
+  });
+});
+
+// ─── #275 hardening wiring: auth routes + gateway promotion seam ───────────
+
+/**
+ * Issue #275 extended the fail-closed same-origin policy to every MUTATING
+ * /api/auth/* route and to the /api/v1 gateway's cookie→Bearer promotion
+ * seam. The behavioral coverage lives in tests/unit/auth-origin-guard.test.ts
+ * (login route + gateway, representative); these SOURCE PINS make sure none
+ * of the seven sibling routes (or the gateway seam) can silently lose its
+ * guard in a refactor — the exact failure mode #275 closed.
+ */
+describe("#275 wiring — every mutating /api/auth/* route is guarded", () => {
+  const ROOT = join(import.meta.dirname, "..", "..");
+  const src = (rel: string): string => readFileSync(join(ROOT, rel), "utf8");
+
+  const AUTH_ROUTES = [
+    "login",
+    "register",
+    "logout",
+    "refresh",
+    "forgot-password",
+    "reset-password",
+    "verify-email",
+  ] as const;
+
+  it("imports the guard in all seven routes", () => {
+    for (const route of AUTH_ROUTES) {
+      const s = src(`src/app/api/auth/${route}/route.ts`);
+      expect(s, `${route}/route.ts must import guardApiWrite`).toContain(
+        'guardApiWrite } from "@/lib/api-security"',
+      );
+    }
+  });
+
+  it("calls guardApiWrite FIRST in each POST handler, with a per-route bucket name", () => {
+    for (const route of AUTH_ROUTES) {
+      const s = src(`src/app/api/auth/${route}/route.ts`);
+      const guardCall = `guardApiWrite(req, { route: "auth-${route}", ...API_RATE_TIERS.auth });`;
+      expect(s, `${route}/route.ts must pass guardApiWrite(req, …)`).toContain(guardCall);
+      // The guard must be the first statement of the POST handler — before
+      // any cookie read (next/headers) or body parse (req.json()).
+      const handlerStart = s.indexOf("export async function POST");
+      const guardAt = s.indexOf(guardCall);
+      const firstCookieRead = s.indexOf("await cookies()");
+      const firstBodyParse = s.indexOf("req.json()");
+      expect(handlerStart).toBeGreaterThan(-1);
+      expect(guardAt).toBeGreaterThan(handlerStart);
+      if (firstCookieRead > -1) expect(guardAt, `${route}: guard precedes cookies()`).toBeLessThan(firstCookieRead);
+      if (firstBodyParse > -1) expect(guardAt, `${route}: guard precedes req.json()`).toBeLessThan(firstBodyParse);
+    }
+  });
+
+  it("each route has a DISTINCT bucket name (one endpoint's budget can't be exhausted via a sibling)", () => {
+    const buckets = AUTH_ROUTES.map((r) => `auth-${r}`);
+    expect(new Set(buckets).size).toBe(AUTH_ROUTES.length);
+  });
+
+  it("/api/auth/me stays GET-only (no mutating export to guard)", () => {
+    const s = src("src/app/api/auth/me/route.ts");
+    expect(s).toContain("export async function GET");
+    expect(s).not.toMatch(/export async function (POST|PUT|PATCH|DELETE)/);
+  });
+
+  it("the auth rate tier mirrors the backend (10/min)", () => {
+    expect(API_RATE_TIERS.auth).toEqual({ limit: 10, windowMs: expect.any(Number) });
+    expect(API_RATE_TIERS.auth.limit).toBe(10);
+  });
+});
+
+describe("#275 wiring — /api/v1 gateway promotion seam", () => {
+  const ROOT = join(import.meta.dirname, "..", "..");
+  const GATEWAY = "src/lib/api-gateway.ts";
+  const s = () => readFileSync(join(ROOT, GATEWAY), "utf8");
+
+  it("imports verifyOrigin from api-security", () => {
+    expect(s()).toContain('import { verifyOrigin } from "./api-security"');
+  });
+
+  it("gates the PROMOTED-cookie path only: explicit Authorization + GET/HEAD exempt", () => {
+    const src = s();
+    // The gate is keyed on sessionToken !== null (promotion seam), not on
+    // every proxied request — an explicit Authorization header must flow
+    // without an origin veto.
+    expect(src).toMatch(/sessionToken !== null &&\s*\n\s*req\.method !== "GET" &&\s*\n\s*req\.method !== "HEAD" &&\s*\n\s*!verifyOrigin\(req\)/);
+    // Fail-closed 403 with the shared generic message.
+    expect(src).toContain('"Request origin is not allowed."');
+    // The veto must fire BEFORE the header promotion/forwarding block.
+    const gate = src.indexOf("sessionToken !== null");
+    const forward = src.indexOf('headers["Authorization"] = authHeader;');
+    expect(gate).toBeGreaterThan(-1);
+    expect(forward).toBeGreaterThan(gate);
   });
 });

@@ -38,6 +38,7 @@ import { API_PROBE_HEADER, getProxyTargetUrl, resolveApiMode } from "./api-mode"
 import { handleEmbeddedApi, type EmbeddedApiResponse } from "./embedded-api";
 import { ACCESS_COOKIE, REFRESH_COOKIE, cookieOptions } from "./auth-client";
 import { backendFetch } from "./backend-fetch";
+import { verifyOrigin } from "./api-security";
 import { accessCookieValue, refreshCookieValue } from "./session-bearer";
 
 export interface GatewayOptions {
@@ -201,6 +202,28 @@ async function proxyToBackend(
     // Session promotion — only when the caller sent no Authorization header
     // of its own; an explicit header always wins and is forwarded verbatim.
     const sessionToken = authHeader ? null : accessCookieValue(cookie);
+
+    // #275 CSRF defense-in-depth on the promotion seam itself: a
+    // state-changing request that relies on the promoted httpOnly cookie
+    // MUST carry a same-origin Origin header — the same fail-closed policy
+    // as guardApiWrite/verifyOrigin (browsers always attach Origin to
+    // non-GET/HEAD requests; missing or cross-origin fails closed). The
+    // SameSite=Lax cookie is the primary defense; this closes the
+    // defense-in-depth gap the same way the /api/auth/* routes do.
+    // Explicit-Authorization callers (CLI/SDK — no cookie involved) and
+    // GET/HEAD are exempt; embedded mode never promotes cookies.
+    if (
+      sessionToken !== null &&
+      req.method !== "GET" &&
+      req.method !== "HEAD" &&
+      !verifyOrigin(req)
+    ) {
+      return NextResponse.json(
+        { error: { code: "FORBIDDEN", message: "Request origin is not allowed." } },
+        { status: 403, headers: { "Cache-Control": "no-store" } },
+      );
+    }
+
     if (authHeader) {
       headers["Authorization"] = authHeader;
     } else if (sessionToken) {

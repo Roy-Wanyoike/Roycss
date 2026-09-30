@@ -50,6 +50,13 @@ export const API_RATE_TIERS = {
   contact: { limit: 5, windowMs: DEFAULT_WINDOW_MS },
   /** Paid-LLM routes (ai-playground, ai-migration, css-doctor). */
   ai: { limit: 20, windowMs: DEFAULT_WINDOW_MS },
+  /**
+   * Credential endpoints (/api/auth/*, #275) — mirrors the backend auth
+   * tier (backend-node rateLimit "auth": 10/min/IP, RATE_LIMIT_MAX_AUTH).
+   * Each auth route uses its own bucket name ("auth-login", …) so one
+   * endpoint's budget cannot be exhausted by hammering a sibling.
+   */
+  auth: { limit: 10, windowMs: DEFAULT_WINDOW_MS },
 } as const;
 
 /** Buckets above this size trigger a stale-entry sweep (memory bound). */

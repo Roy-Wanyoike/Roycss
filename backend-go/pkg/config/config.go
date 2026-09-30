@@ -97,6 +97,9 @@ func Load() (*Config, error) {
 		if len(c.JWTRefreshSecret) < 16 {
 			return nil, fmt.Errorf("JWT_REFRESH_SECRET must be at least 16 characters")
 		}
+		if c.JWTRefreshSecret == c.JWTSecret {
+			return nil, fmt.Errorf("JWT_REFRESH_SECRET must differ from JWT_SECRET — use an independent random secret")
+		}
 	}
 
 	return c, nil

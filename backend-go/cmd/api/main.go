@@ -12,6 +12,7 @@ package main
 import (
         "context"
         "errors"
+        "fmt"
         "net/http"
         "os"
         "os/signal"
@@ -95,6 +96,15 @@ import (
 )
 
 func main() {
+        // ── Distroless healthcheck subcommand (issue #266) ───────────────
+        // The runtime image (gcr.io/distroless/static-debian12:nonroot) has
+        // NO shell and no wget/curl, so the docker-compose probe execs this
+        // binary itself: ["CMD", "/app/api", "healthcheck"]. Handled before
+        // any config/db init so the probe stays cheap and side-effect free.
+        if len(os.Args) > 1 && os.Args[1] == "healthcheck" {
+                os.Exit(runHealthcheck())
+        }
+
         log := logger.New("info")
 
         cfg, err := config.Load()
@@ -251,4 +261,29 @@ func registerStubs(mux *http.ServeMux, registrations ...func(*http.ServeMux)) {
         for _, reg := range registrations {
                 reg(mux)
         }
+}
+
+// runHealthcheck backs the `api healthcheck` subcommand used by the
+// docker-compose probe (issue #266): it GETs the liveness endpoint on
+// localhost and exits 0 (healthy) or 1 (unhealthy). Liveness — not the
+// full /api/v1/health — is the right probe here: a Redis blip must not
+// flip the container unhealthy and trigger restarts.
+func runHealthcheck() int {
+        port := os.Getenv("PORT")
+        if port == "" {
+                port = "4000"
+        }
+        url := "http://127.0.0.1:" + port + "/api/v1/health/live"
+        client := &http.Client{Timeout: 5 * time.Second}
+        resp, err := client.Get(url)
+        if err != nil {
+                fmt.Fprintf(os.Stderr, "healthcheck: GET %s failed: %v\n", url, err)
+                return 1
+        }
+        defer resp.Body.Close()
+        if resp.StatusCode != http.StatusOK {
+                fmt.Fprintf(os.Stderr, "healthcheck: GET %s returned %s\n", url, resp.Status)
+                return 1
+        }
+        return 0
 }

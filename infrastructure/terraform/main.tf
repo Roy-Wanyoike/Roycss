@@ -5,16 +5,29 @@
 #   - Memorystore Redis 7 instance
 #   - Cloud Run service for the API (from backend-go/Dockerfile)
 #   - Cloud Run service for the worker (same image, CMD override)
-#   - Secret Manager secret for JWT signing
+#   - Secret Manager secrets for JWT signing (access + refresh)
+#
+# IMAGE PROVENANCE — reconciled with .github/workflows/deploy.yml (issue #266):
+#   deploy.yml is the ACTIVE deployment path (Railway CLI for the backend +
+#   Vercel for the frontend) and it builds NO container image. This
+#   Terraform is the GCP ALTERNATIVE path, and NOTHING builds the image
+#   for it: the operator must build + push it before `terraform apply`, e.g.
+#
+#     docker build -f backend-go/Dockerfile -t <REGISTRY>/roycss-api:TAG backend-go/
+#     docker push <REGISTRY>/roycss-api:TAG
+#
+#   then pass the real ref via -var image=<REGISTRY>/roycss-api:TAG. The
+#   `image` variable ships a clearly-marked PLACEHOLDER default so
+#   `terraform plan` succeeds without lying — the placeholder is not a
+#   real artifact and MUST be overridden before apply (a future CI
+#   workflow may take over this build; see issue #138 for the
+#   deploy-platform decision).
 #
 # Usage:
 #   cd infrastructure/terraform
 #   terraform init
-#   terraform plan -var project_id=your-project -var region=us-central1 -var api_image=gcr.io/PROJECT/roycss-api
-#   terraform apply -var project_id=your-project -var region=us-central1 -var api_image=gcr.io/PROJECT/roycss-api
-#
-# The container image is built + pushed by GitHub Actions (see
-# .github/workflows/deploy.yml); Terraform only provisions the infra.
+#   terraform plan -var project_id=your-project -var region=us-central1 -var image=<REGISTRY>/roycss-api:TAG
+#   terraform apply -var project_id=your-project -var region=us-central1 -var image=<REGISTRY>/roycss-api:TAG
 
 variable "project_id" {
   type    = string
@@ -46,9 +59,23 @@ variable "redis_size" {
   default = 1
 }
 
-variable "api_image" {
-  type        = string
-  description = "Container image for the API + worker (e.g. gcr.io/PROJECT/roycss-api)"
+variable "image" {
+  type    = string
+  default = "gcr.io/PROJECT_ID/roycss-api:BUILD_AND_PUSH_ME"
+  description = "Container image for the API + worker. deploy.yml (Railway + Vercel) does NOT build it — build backend-go/Dockerfile, push to a registry, and pass the real ref, e.g. -var image=us-docker.pkg.dev/PROJECT/repo/roycss-api:TAG (issue #266). The default is a PLACEHOLDER so plan does not lie about an artifact nobody built."
+}
+
+# ─── Derived wiring (issue #266) ─────────────────────────────────────
+# DATABASE_URL uses the Cloud SQL unix-socket host form required on
+# Cloud Run: `?host=/cloudsql/<PROJECT>:<REGION>:<INSTANCE>` tells the Go
+# pg driver to dial the Cloud SQL Auth Proxy socket that the
+# run.googleapis.com/cloudsql-instances annotation (wired on BOTH Cloud
+# Run services below) mounts into the container. The bare
+# `postgres://roycss:<pw>@/roycss` form this replaces had no host at all
+# and could never reach the database.
+locals {
+  cloudsql_instance = google_sql_database_instance.roycss.connection_name
+  database_url      = "postgres://roycss:${random_password.db_password.result}@/${google_sql_database.roycss.name}?host=/cloudsql/${local.cloudsql_instance}"
 }
 
 # ─── Enable required APIs ─────────────────────────────────────────────
@@ -130,19 +157,50 @@ resource "random_password" "jwt_secret" {
   special = false
 }
 
+# JWT_REFRESH_SECRET is an INDEPENDENT secret (issue #266): refresh
+# tokens must be signed with a different key than access tokens
+# (backend-node/README.md "Must differ from JWT_SECRET"), enforced at
+# boot by both env validators (backend-node/src/config/env.ts and
+# backend-go/pkg/config/config.go).
+resource "google_secret_manager_secret" "jwt_refresh_secret" {
+  secret_id = "roycss-jwt-refresh-secret"
+  project   = var.project_id
+  replication {
+    auto { disable_on_destroy = false }
+  }
+  depends_on = [google_project_service.apis]
+}
+
+resource "google_secret_manager_secret_version" "jwt_refresh_secret" {
+  secret      = google_secret_manager_secret.jwt_refresh_secret.id
+  secret_data = random_password.jwt_refresh_secret.result
+}
+
+resource "random_password" "jwt_refresh_secret" {
+  length  = 64
+  special = false
+}
+
 # ─── Cloud Run — API ────────────────────────────────────────────────
 resource "google_cloud_run_service" "api" {
   name     = "roycss-api"
   location = var.region
 
   template {
+    metadata {
+      annotations = {
+        # Mounts the Cloud SQL Auth Proxy socket that the
+        # `?host=/cloudsql/…` DATABASE_URL dials (issue #266).
+        "run.googleapis.com/cloudsql-instances" = local.cloudsql_instance
+      }
+    }
     spec {
       containers {
-        image = var.api_image
+        image = var.image
         ports {
           container_port = 4000
         }
-        env { name = "DATABASE_URL", value = "postgres://roycss:${random_password.db_password.result}@/${google_sql_database.roycss.name}" }
+        env { name = "DATABASE_URL", value = local.database_url }
         env { name = "REDIS_URL",    value = "redis://${google_redis_instance.roycss.host}:${google_redis_instance.roycss.port}" }
         env {
           name = "JWT_SECRET"
@@ -150,7 +208,7 @@ resource "google_cloud_run_service" "api" {
         }
         env {
           name = "JWT_REFRESH_SECRET"
-          value_from { secret_ref { name = google_secret_manager_secret.jwt_secret.secret_id } }
+          value_from { secret_ref { name = google_secret_manager_secret.jwt_refresh_secret.secret_id } }
         }
         env { name = "NODE_ENV", value = "production" }
         env { name = "PORT",     value = "4000" }
@@ -175,12 +233,18 @@ resource "google_cloud_run_service" "worker" {
   location = var.region
 
   template {
+    metadata {
+      annotations = {
+        # The worker talks to Postgres too — same Cloud SQL socket (issue #266).
+        "run.googleapis.com/cloudsql-instances" = local.cloudsql_instance
+      }
+    }
     spec {
       containers {
-        image   = var.api_image
+        image   = var.image
         command = ["/app/worker"]
         env { name = "REDIS_URL",    value = "redis://${google_redis_instance.roycss.host}:${google_redis_instance.roycss.port}" }
-        env { name = "DATABASE_URL", value = "postgres://roycss:${random_password.db_password.result}@/${google_sql_database.roycss.name}" }
+        env { name = "DATABASE_URL", value = local.database_url }
         resources {
           limits = { cpu = "1", memory = "512Mi" }
         }

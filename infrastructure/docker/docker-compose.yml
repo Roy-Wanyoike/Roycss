@@ -87,8 +87,14 @@ services:
         condition: service_healthy
       migrate:
         condition: service_completed_successfully
+    # Distroless runtime (gcr.io/distroless/static-debian12:nonroot, see
+    # backend-go/Dockerfile) has NO shell and no wget/curl — the old
+    # `wget --spider` probe could never execute and the api was permanently
+    # "unhealthy" (issue #266). Instead the api binary ships a `healthcheck`
+    # subcommand: it GETs its own liveness endpoint on 127.0.0.1:$PORT
+    # (defaults to 4000) and exits 0/1 — shell-free, works on distroless.
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:4000/api/v1/health/live"]
+      test: ["CMD", "/app/api", "healthcheck"]
       interval: 10s
       timeout: 5s
       retries: 5

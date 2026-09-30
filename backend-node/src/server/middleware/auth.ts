@@ -354,3 +354,32 @@ export function requirePlatformRole(
     next();
   });
 }
+
+/**
+ * Boolean form of `requirePlatformRole`'s authorization decision — same
+ * membership query, same role ranking (`toOrgRole` + `ROLE_RANK` above):
+ * true when the user holds `minimumRole` or higher in AT LEAST ONE
+ * organization.
+ *
+ * Exists for routes whose authorization is OWNERSHIP-DEPENDENT and where
+ * the denial must be a flat 404 (id non-enumeration) rather than
+ * `requirePlatformRole`'s 403: e.g. storage DELETE (issue #268) allows
+ * the owner unconditionally and defers to platform ADMIN only for
+ * ownerless/legacy objects — a static middleware cannot express that
+ * decision, so the route resolves the boolean and lets the service pick
+ * the outcome. Do NOT use this for plain admin gates — prefer
+ * `requirePlatformRole` there (it also attaches `req.membership`).
+ */
+export async function hasPlatformRole(
+  userId: string,
+  minimumRole: OrgRole,
+): Promise<boolean> {
+  const memberships = await db.membership.findMany({
+    where: { userId },
+    select: { role: true },
+  });
+  return memberships.some((m) => {
+    const role = toOrgRole(m.role);
+    return role !== null && ROLE_RANK[role] >= ROLE_RANK[minimumRole];
+  });
+}

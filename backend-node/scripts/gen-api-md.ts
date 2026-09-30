@@ -262,6 +262,7 @@ const MODULE_MODELS: Record<string, string> = {
   audit: "EnterpriseAuditLog",
   search: "SearchIndex",
   spotlight: "SpotlightItem",
+  storage: "StorageFileOwner",
   studio: "StudioProject",
   themes: "Theme",
   workspace: "WorkspaceResource",
@@ -486,6 +487,21 @@ const MODULE_NOTE_OVERRIDES: Record<string, string> = {
     "The session host and every message author are **the Bearer-JWT `sub`** " +
     "(audit F-07 — no client-supplied `hostId`/`userId`); `hostName` is " +
     "unverified display metadata.",
+  // Issue #268 — storage IDOR: destructive mutations owner-scoped, the
+  // public bucket-inventory reads retired. The file catalog itself stays
+  // in-process / S3-inventory-based; only ownership is durable.
+  storage:
+    "> **Owner-scoped (issue #268 — storage IDOR)** — every route (reads " +
+    "included) requires a Bearer JWT. Uploads are attributed to the caller " +
+    "and persisted in the `StorageFileOwner` map so deletion rights survive " +
+    "restarts; list/usage/detail only ever return the caller's own files, " +
+    "and foreign ids read as flat 404s (the collections convention). " +
+    "DELETE of an OWNERLESS object (the 8 seeded legacy rows, bucket keys " +
+    "created out-of-band) requires a **platform ADMIN** (requirePlatformRole's " +
+    "boolean form) — everyone else reads the same flat 404. The 10 GB quota " +
+    "stays global (per-owner usage is reported, the limit is not per-user). " +
+    "Reads expose no bucket inventory: in S3 mode (issue #140) users see " +
+    "their own API uploads only.",
   // Issue #267 — the studio store joins the owner-scoped family.
   studio:
     "> Prisma-backed (`StudioProject`). **Owner-scoped** (issue #267) — " +

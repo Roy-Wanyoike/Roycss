@@ -30,7 +30,26 @@ model User {
   apiKeys         ApiKey[]
   verificationTokens VerificationToken[]
   refreshTokens   RefreshToken[]
+  storageFiles    StorageFileOwner[]
   @@index([email])
+}
+
+// ─── Storage object ownership (issue #268 — storage IDOR) ────────────────
+// Lightweight owner map for Roy Storage objects. The storage module's
+// catalog is in-process (mock mode) / bucket-inventory-based (S3 mode),
+// so ownership is the ONE durable fact we persist: rows are keyed by the
+// StorageFile id — the S3 object key when S3 is configured (issue #140),
+// `file-<uuid>` in mock mode. DELETE /api/v1/storage/files/:id consults
+// this table so a creator's deletion rights survive restarts; objects
+// with NO row (seeded legacy rows, bucket keys uploaded out-of-band) are
+// ownerless and deletable only by platform admins.
+model StorageFileOwner {
+  id        String   @id
+  ownerId   String
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@index([ownerId])
 }
 
 // ─── Email verification + password reset tokens (PF-011 / audit F-02) ────

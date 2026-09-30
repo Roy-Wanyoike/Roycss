@@ -781,14 +781,14 @@ Cloud, deploys, CDN/edge/storage, fleet, workspace, enterprise, governance, anal
 
 #### `storage` — File storage — list, upload, delete, usage.
 
-> No durable persistence — POST output is computed in-process; where an id is returned it is retrievable only for the process lifetime (reset on restart). No auth planned (no durable data).
+> **Owner-scoped (issue #268 — storage IDOR)** — every route (reads included) requires a Bearer JWT. Uploads are attributed to the caller and persisted in the `StorageFileOwner` map so deletion rights survive restarts; list/usage/detail only ever return the caller's own files, and foreign ids read as flat 404s (the collections convention). DELETE of an OWNERLESS object (the 8 seeded legacy rows, bucket keys created out-of-band) requires a **platform ADMIN** (requirePlatformRole's boolean form) — everyone else reads the same flat 404. The 10 GB quota stays global (per-owner usage is reported, the limit is not per-user). Reads expose no bucket inventory: in S3 mode (issue #140) users see their own API uploads only.
 
 | Method | Path | Auth | Request | Response | Errors |
 |--------|------|------|---------|----------|--------|
-| GET | `/api/v1/storage/files` | Public | — | `{ data, meta }` · 200 | — |
+| GET | `/api/v1/storage/files` | Bearer JWT | — | `{ data, meta }` · 200 | 401 |
 | POST | `/api/v1/storage/upload` | Bearer JWT | body: { `name`, `type`, `size`, `mimeType` } | `{ data }` · 201 | 400 · 401 |
-| GET | `/api/v1/storage/usage` | Public | — | `{ data }` · 200 | — |
-| GET | `/api/v1/storage/files/:id` | Public | path: `:id` | `{ data }` · 200 | 400 · 404 |
+| GET | `/api/v1/storage/usage` | Bearer JWT | — | `{ data }` · 200 | 401 |
+| GET | `/api/v1/storage/files/:id` | Bearer JWT | path: `:id` | `{ data }` · 200 | 400 · 404 · 401 |
 | DELETE | `/api/v1/storage/files/:id` | Bearer JWT | path: `:id` | 204 — no body | 400 · 404 · 401 |
 
 #### `edge` — Edge compute — regions, config, deploy, performance.

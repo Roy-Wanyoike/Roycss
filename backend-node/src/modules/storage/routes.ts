@@ -1,15 +1,25 @@
 /**
  * Storage routes — /api/v1/storage
  *
- *   GET    /files         list all stored files
- *   POST   /upload        record a new file upload (auth: Bearer token)
- *   GET    /usage         storage usage summary
- *   GET    /files/:id     single file by id
- *   DELETE /files/:id     delete a file by id     (auth: Bearer token)
+ *   GET    /files         list the caller's own files
+ *   POST   /upload        record a new file upload (attributed to the caller)
+ *   GET    /usage         storage usage over the caller's own files
+ *   GET    /files/:id     one of the caller's files
+ *   DELETE /files/:id     delete one of the caller's files
  *
- * Mutating routes require authentication (issue #64) — uploads write
- * to S3/Supabase storage when configured (in-memory otherwise), and
- * unauthenticated writes would bypass the quota model.
+ * ALL routes require authentication (issue #64) and are OWNER-SCOPED
+ * (issue #268 — storage IDOR): reads only ever return rows attributed
+ * to the caller, and DELETE only touches the caller's own objects.
+ * Foreign and unknown ids read as the same flat 404 (the
+ * collections/favorites convention), and ownerless objects (legacy seed
+ * rows, out-of-band bucket keys) are deletable only by a platform ADMIN
+ * — the route resolves `hasPlatformRole("ADMIN")` (the boolean form of
+ * requirePlatformRole) and the service enforces the decision. Uploads
+ * persist the creator in the Prisma `StorageFileOwner` map so deletion
+ * rights survive restarts.
+ *
+ * The global 10 GB quota is unchanged (issue #268): uploads still count
+ * against the platform-wide store, not per-owner usage.
  *
  * Order matters: static routes (`/files`, `/upload`, `/usage`) are
  * declared before `/files/:id` so the literal paths aren't captured
@@ -18,7 +28,7 @@
 import { Router } from "express";
 import type { z } from "zod";
 
-import { requireAuth } from "../../server/middleware/auth.js";
+import { requireAuth, hasPlatformRole } from "../../server/middleware/auth.js";
 import { asyncHandler } from "../../server/middleware/error.js";
 import {
   validateBody,
@@ -37,8 +47,9 @@ export const storageRouter = Router();
 
 storageRouter.get(
   "/files",
-  asyncHandler(async (_req, res) => {
-    const items = await listFiles();
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const items = await listFiles(req.user!.sub);
     res.json({ data: items, meta: { count: items.length } });
   }),
 );
@@ -54,6 +65,8 @@ storageRouter.post(
       type: input.type,
       size: input.size,
       mimeType: input.mimeType,
+      // Owner attribution — the authenticated caller (issue #268).
+      ownerId: req.user!.sub,
     });
     res.status(201).json({ data: file });
   }),
@@ -61,20 +74,22 @@ storageRouter.post(
 
 storageRouter.get(
   "/usage",
-  asyncHandler(async (_req, res) => {
-    const usage = await getUsage();
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const usage = await getUsage(req.user!.sub);
     res.json({ data: usage });
   }),
 );
 
 storageRouter.get(
   "/files/:id",
+  requireAuth,
   validateParams(StorageFileParamsSchema),
   asyncHandler(async (req, res) => {
     const { id } = req.params as unknown as z.infer<
       typeof StorageFileParamsSchema
     >;
-    const file = await getFileById(id);
+    const file = await getFileById(id, req.user!.sub);
     res.json({ data: file });
   }),
 );
@@ -87,7 +102,11 @@ storageRouter.delete(
     const { id } = req.params as unknown as z.infer<
       typeof StorageFileParamsSchema
     >;
-    await deleteFile(id);
+    // Owner-scoped with an admin escape hatch for ownerless legacy rows
+    // (issue #268). The service turns any denial into the same flat 404,
+    // so the role check here never leaks WHICH case denied the request.
+    const isPlatformAdmin = await hasPlatformRole(req.user!.sub, "ADMIN");
+    await deleteFile(id, { sub: req.user!.sub, isPlatformAdmin });
     res.status(204).end();
   }),
 );

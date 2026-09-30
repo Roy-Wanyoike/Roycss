@@ -465,7 +465,7 @@ export function Example() {
     a11y: {
       role: "img (when image loads)",
       aria: ["AvatarImage renders role=\"img\" with the provided alt.", "When decorative, pass alt=\"\" and supplement with an adjacent visible label.", "AvatarFallback is exposed as the accessible name when no image is present."],
-      keyboard: ["Not focusable on its own — wrap in a <a> or <button> for interactive avatars.", "Tab — moves to the wrapping interactive element."],
+      keyboard: ["Not focusable on its own — wrap in a <a> or <button type=\"button\"> for interactive avatars.", "Tab — moves to the wrapping interactive element."],
     },
   },
 

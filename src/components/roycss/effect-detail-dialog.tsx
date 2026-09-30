@@ -343,7 +343,7 @@ function RelatedEffects({
       </h4>
       <div className="grid grid-cols-2 gap-2">
         {related.map((e) => (
-          <button
+          <button type="button"
             key={e.id}
             onClick={() => onSelect(e)}
             className="flex items-center gap-2 p-2.5 rounded-lg border border-border bg-card hover:border-primary/40 hover:bg-muted/50 transition-all text-left cursor-pointer group"
@@ -383,7 +383,7 @@ function ShareButton({ effectId }: { effectId: string }) {
   }, [effectId]);
 
   return (
-    <button
+    <button type="button"
       onClick={handleShare}
       className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
         copied ? "bg-emerald-500/15 text-emerald-500" : "bg-muted text-foreground hover:bg-primary hover:text-primary-foreground"
@@ -508,7 +508,7 @@ export function EffectDetailDialog({
               {/* Export to CodePen */}
               <ExportToCodePen effect={effect} />
               {onCompare && (
-                <button
+                <button type="button"
                   onClick={() => { onCompare(effect); onOpenChange(false); }}
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-muted text-foreground hover:bg-primary hover:text-primary-foreground transition-all cursor-pointer"
                   aria-label="Compare this effect"
@@ -547,7 +547,7 @@ export function EffectDetailDialog({
                 </span>
                 {/* Background toggle */}
                 <div className="flex items-center gap-1 p-0.5 rounded-lg bg-muted/80">
-                  <button
+                  <button type="button"
                     onClick={() => setBgType("dark")}
                     className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${
                       bgType === "dark" ? "bg-slate-900 text-white" : "text-muted-foreground hover:text-foreground"
@@ -556,7 +556,7 @@ export function EffectDetailDialog({
                     <Moon className="size-2.5" />
                     Dark
                   </button>
-                  <button
+                  <button type="button"
                     onClick={() => setBgType("light")}
                     className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${
                       bgType === "light" ? "bg-white text-slate-900 shadow-sm" : "text-muted-foreground hover:text-foreground"
@@ -565,7 +565,7 @@ export function EffectDetailDialog({
                     <Sun className="size-2.5" />
                     Light
                   </button>
-                  <button
+                  <button type="button"
                     onClick={() => setBgType("gradient")}
                     className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${
                       bgType === "gradient" ? "bg-gradient-to-r from-violet-500 to-cyan-500 text-white" : "text-muted-foreground hover:text-foreground"
@@ -626,7 +626,7 @@ export function EffectDetailDialog({
                   )}
                 </span>
                 <div className="flex items-center gap-1.5">
-                  <button
+                  <button type="button"
                     onClick={() => setIsEditing(!isEditing)}
                     className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${
                       isEditing
@@ -636,7 +636,7 @@ export function EffectDetailDialog({
                   >
                     {isEditing ? "Editing" : "Edit"}
                   </button>
-                  <button
+                  <button type="button"
                     onClick={handleReset}
                     disabled={!isModified}
                     className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium bg-muted text-muted-foreground hover:text-foreground disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"

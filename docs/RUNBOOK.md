@@ -104,9 +104,12 @@ cp <backup>/roycss.db prisma/restore-drill.db
 DATABASE_URL="file:./restore-drill.db" bunx prisma migrate deploy
 
 # 3. VERIFY 50 TABLES — 49 app tables from schema.prisma
-#    (47 from 20260912214858_init + 2 from 20260913120000_auth_lifecycle)
-#    + _prisma_migrations. A count of 49 means a migration did not apply;
-#    anything else means the restore itself is wrong:
+#    (47 from 20260912214858_init + 2 from 20260913120000_auth_lifecycle
+#    + 1 from 20260930153638_storage_owner_map − 1 from
+#    20260930180000_drop_twin_result, which removed the never-wired
+#    TwinResult table — issue #276)
+#    + _prisma_migrations. A count below 50 means a migration did not
+#    apply; anything else means the restore itself is wrong:
 bun -e 'import {Database} from "bun:sqlite";
 const db = new Database("prisma/restore-drill.db", {readonly: true});
 const n = db.query("SELECT count(*) c FROM sqlite_master WHERE type=\"table\"").get();
@@ -114,7 +117,7 @@ console.log("tables=" + n.c);'   # EXPECT tables=50
 
 # 4. Confirm migration bookkeeping is consistent:
 DATABASE_URL="file:./restore-drill.db" bunx prisma migrate status
-#   EXPECT: "2 migrations found" / database schema is up to date
+#   EXPECT: "4 migrations found" / database schema is up to date
 
 # 5. Confirm no drift between the restored schema and the datamodel:
 bunx prisma migrate diff \
@@ -388,7 +391,7 @@ Rotation here means one of two things, both of which touch data:
   data impact.
 - **Moving the SQLite file / switching engines:** changing `DATABASE_URL` on
   Railway does **not** carry data over — a new path starts empty (migrations
-  create the 50 tables, but zero rows). Sequence: snapshot/backup the old
+  create the 49 app tables, but zero rows). Sequence: snapshot/backup the old
   database (§1.2) → restore onto the new location (§1.3) → repoint
   `DATABASE_URL` → redeploy → verify. The Postgres engine switch itself
   additionally requires the schema-provider change and a fresh baseline

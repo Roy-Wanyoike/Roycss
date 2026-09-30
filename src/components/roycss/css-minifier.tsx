@@ -80,7 +80,7 @@ export function CSSMinifier() {
               Minified Output
             </label>
             {output && (
-              <button
+              <button type="button"
                 onClick={handleCopy}
                 className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}
               >
@@ -123,7 +123,7 @@ export function CSSMinifier() {
 
       {/* Clear */}
       {input && (
-        <button
+        <button type="button"
           onClick={() => { setInput(""); setCopied(false); }}
           className="flex items-center gap-1 text-xs text-muted-foreground hover:text-rose-500 transition-colors cursor-pointer"
         >

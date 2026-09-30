@@ -253,9 +253,9 @@ export function ComponentShowcase() {
               <Stack gap="sm" align="center">
                 <Text weight="semibold">Toast Trigger</Text>
                 <Stack direction="row" gap="sm">
-                  <button onClick={() => toast("Saved!", "success")} className="px-3 py-1.5 rounded-lg bg-success/10 text-success text-xs font-medium cursor-pointer hover:bg-success/20 transition-colors">Success</button>
-                  <button onClick={() => toast("Check input", "warning")} className="px-3 py-1.5 rounded-lg bg-warning/10 text-warning text-xs font-medium cursor-pointer hover:bg-warning/20 transition-colors">Warning</button>
-                  <button onClick={() => toast("Failed!", "danger")} className="px-3 py-1.5 rounded-lg bg-danger/10 text-danger text-xs font-medium cursor-pointer hover:bg-danger/20 transition-colors">Danger</button>
+                  <button type="button" onClick={() => toast("Saved!", "success")} className="px-3 py-1.5 rounded-lg bg-success/10 text-success text-xs font-medium cursor-pointer hover:bg-success/20 transition-colors">Success</button>
+                  <button type="button" onClick={() => toast("Check input", "warning")} className="px-3 py-1.5 rounded-lg bg-warning/10 text-warning text-xs font-medium cursor-pointer hover:bg-warning/20 transition-colors">Warning</button>
+                  <button type="button" onClick={() => toast("Failed!", "danger")} className="px-3 py-1.5 rounded-lg bg-danger/10 text-danger text-xs font-medium cursor-pointer hover:bg-danger/20 transition-colors">Danger</button>
                 </Stack>
               </Stack>
             </Card>

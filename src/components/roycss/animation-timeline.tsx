@@ -89,7 +89,7 @@ export function AnimationTimeline() {
 
       {/* Controls */}
       <div className="flex items-center gap-2 flex-wrap">
-        <button onClick={() => setPlaying(!playing)} className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary/10 text-primary text-xs font-medium hover:bg-primary/20 transition-all cursor-pointer">
+        <button type="button" onClick={() => setPlaying(!playing)} className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary/10 text-primary text-xs font-medium hover:bg-primary/20 transition-all cursor-pointer">
           {playing ? <Pause className="size-3.5" /> : <Play className="size-3.5" />} {playing ? "Pause" : "Play"}
         </button>
         <div className="flex items-center gap-1.5">
@@ -103,13 +103,13 @@ export function AnimationTimeline() {
         <select value={iteration} onChange={(e) => setIteration(e.target.value)} aria-label="Iteration count" className="h-7 px-2 rounded bg-background border border-border/40 text-xs cursor-pointer">
           <option value="infinite">infinite</option><option value="1">1x</option><option value="3">3x</option><option value="5">5x</option>
         </select>
-        <button onClick={addFrame} className="flex items-center gap-1 px-2 py-1 rounded-md text-xs bg-muted text-muted-foreground hover:text-primary cursor-pointer"><Plus className="size-3" /> Frame</button>
+        <button type="button" onClick={addFrame} className="flex items-center gap-1 px-2 py-1 rounded-md text-xs bg-muted text-muted-foreground hover:text-primary cursor-pointer"><Plus className="size-3" /> Frame</button>
       </div>
 
       {/* Presets */}
       <div className="grid grid-cols-3 gap-2">
         {PRESETS.map(p => (
-          <button key={p.name} onClick={() => setFrames(p.frames.map(f => ({ ...f, id: `kf-${kfId++}` })))}
+          <button type="button" key={p.name} onClick={() => setFrames(p.frames.map(f => ({ ...f, id: `kf-${kfId++}` })))}
             className="px-2 py-1.5 rounded-lg border border-border/40 hover:border-primary/40 text-xs font-medium text-muted-foreground hover:text-foreground transition-all cursor-pointer">{p.name}</button>
         ))}
       </div>
@@ -137,7 +137,7 @@ export function AnimationTimeline() {
               <span className="text-xs text-muted-foreground">%</span>
               <input type="text" value={f.properties.transform} onChange={(e) => updateFrame(f.id, "transform", e.target.value)} placeholder="transform: translateY(0)" aria-label={`Keyframe ${f.offset}% transform`} className="flex-1 h-7 px-2 rounded bg-background border border-border/40 text-xs font-mono" />
               <input type="text" value={f.properties.opacity} onChange={(e) => updateFrame(f.id, "opacity", e.target.value)} placeholder="1" aria-label={`Keyframe ${f.offset}% opacity`} className="w-12 h-7 px-1.5 rounded bg-background border border-border/40 text-xs font-mono text-center" />
-              <button onClick={() => removeFrame(f.id)} disabled={frames.length <= 2} aria-label={`Remove ${f.offset}% keyframe`} className="text-muted-foreground hover:text-rose-500 disabled:opacity-30 cursor-pointer"><Minus className="size-3.5" /></button>
+              <button type="button" onClick={() => removeFrame(f.id)} disabled={frames.length <= 2} aria-label={`Remove ${f.offset}% keyframe`} className="text-muted-foreground hover:text-rose-500 disabled:opacity-30 cursor-pointer"><Minus className="size-3.5" /></button>
             </div>
           ))}
         </div>
@@ -147,7 +147,7 @@ export function AnimationTimeline() {
       <div>
         <div className="flex items-center justify-between mb-1.5">
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">CSS</label>
-          <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
+          <button type="button" onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
             {copied ? <Check className="size-3" /> : <Copy className="size-3" />} {copied ? "Copied!" : copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy"}
             <span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span>
           </button>

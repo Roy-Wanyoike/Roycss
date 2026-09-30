@@ -107,7 +107,7 @@ export function FlexboxVisualizer() {
         <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Presets</label>
         <div className="grid grid-cols-3 gap-1.5">
           {PRESETS.map(p => (
-            <button key={p.name} onClick={() => applyPreset(p)} className="px-2 py-1.5 rounded-lg border border-border/40 hover:border-primary/40 text-xs font-medium text-muted-foreground hover:text-foreground transition-all cursor-pointer">{p.name}</button>
+            <button type="button" key={p.name} onClick={() => applyPreset(p)} className="px-2 py-1.5 rounded-lg border border-border/40 hover:border-primary/40 text-xs font-medium text-muted-foreground hover:text-foreground transition-all cursor-pointer">{p.name}</button>
           ))}
         </div>
       </div>
@@ -117,7 +117,7 @@ export function FlexboxVisualizer() {
         <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Direction</label>
         <div className="flex flex-wrap gap-1">
           {DIRECTION_OPTIONS.map(o => (
-            <button key={o.value} onClick={() => setDirection(o.value)} className={`px-2.5 py-1 rounded-md text-xs font-medium cursor-pointer transition-all ${direction === o.value ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}>{o.label}</button>
+            <button type="button" key={o.value} onClick={() => setDirection(o.value)} className={`px-2.5 py-1 rounded-md text-xs font-medium cursor-pointer transition-all ${direction === o.value ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}>{o.label}</button>
           ))}
         </div>
       </div>
@@ -128,7 +128,7 @@ export function FlexboxVisualizer() {
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Justify Content</label>
           <div className="flex flex-wrap gap-1">
             {JUSTIFY_OPTIONS.map(o => (
-              <button key={o.value} onClick={() => setJustify(o.value)} className={`px-2 py-1 rounded-md text-xs font-medium cursor-pointer transition-all ${justify === o.value ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}>{o.label}</button>
+              <button type="button" key={o.value} onClick={() => setJustify(o.value)} className={`px-2 py-1 rounded-md text-xs font-medium cursor-pointer transition-all ${justify === o.value ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}>{o.label}</button>
             ))}
           </div>
         </div>
@@ -136,7 +136,7 @@ export function FlexboxVisualizer() {
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Align Items</label>
           <div className="flex flex-wrap gap-1">
             {ALIGN_OPTIONS.map(o => (
-              <button key={o.value} onClick={() => setAlign(o.value)} className={`px-2 py-1 rounded-md text-xs font-medium cursor-pointer transition-all ${align === o.value ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}>{o.label}</button>
+              <button type="button" key={o.value} onClick={() => setAlign(o.value)} className={`px-2 py-1 rounded-md text-xs font-medium cursor-pointer transition-all ${align === o.value ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}>{o.label}</button>
             ))}
           </div>
         </div>
@@ -160,9 +160,9 @@ export function FlexboxVisualizer() {
         <div>
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Items</label>
           <div className="flex items-center gap-1">
-            <button onClick={() => setItemCount(Math.max(1, itemCount - 1))} aria-label="Decrease item count" className="size-7 rounded-lg bg-muted text-muted-foreground hover:text-primary flex items-center justify-center cursor-pointer"><Minus className="size-3" /></button>
+            <button type="button" onClick={() => setItemCount(Math.max(1, itemCount - 1))} aria-label="Decrease item count" className="size-7 rounded-lg bg-muted text-muted-foreground hover:text-primary flex items-center justify-center cursor-pointer"><Minus className="size-3" /></button>
             <span className="text-sm font-mono w-6 text-center">{itemCount}</span>
-            <button onClick={() => setItemCount(Math.min(12, itemCount + 1))} aria-label="Increase item count" className="size-7 rounded-lg bg-muted text-muted-foreground hover:text-primary flex items-center justify-center cursor-pointer"><Plus className="size-3" /></button>
+            <button type="button" onClick={() => setItemCount(Math.min(12, itemCount + 1))} aria-label="Increase item count" className="size-7 rounded-lg bg-muted text-muted-foreground hover:text-primary flex items-center justify-center cursor-pointer"><Plus className="size-3" /></button>
           </div>
         </div>
       </div>
@@ -171,7 +171,7 @@ export function FlexboxVisualizer() {
       <div>
         <div className="flex items-center justify-between mb-1.5">
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">CSS</label>
-          <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
+          <button type="button" onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
             {copied ? <Check className="size-3" /> : <Copy className="size-3" />} {copied ? "Copied!" : copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy"}
             <span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span>
           </button>

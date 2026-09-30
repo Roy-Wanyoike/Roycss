@@ -125,7 +125,7 @@ export function CustomCollectionsSheet({ open, onOpenChange, onSelectEffect }: C
         <div className="p-5 space-y-4">
           {/* Create button */}
           {!creating && (
-            <button
+            <button type="button"
               onClick={() => setCreating(true)}
               className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-dashed border-primary/30 text-primary hover:bg-primary/5 transition-all cursor-pointer text-sm font-medium"
             >
@@ -141,8 +141,8 @@ export function CustomCollectionsSheet({ open, onOpenChange, onSelectEffect }: C
                   <Input placeholder="Collection name (e.g., 'My Landing Page Effects')" value={newName} onChange={(e) => setNewName(e.target.value)} className="h-9" />
                   <Input placeholder="Description (optional)" value={newDesc} onChange={(e) => setNewDesc(e.target.value)} className="h-9" />
                   <div className="flex items-center gap-2">
-                    <button onClick={handleCreate} disabled={!newName.trim()} className="flex-1 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-medium hover:bg-primary/90 disabled:opacity-50 transition-all cursor-pointer">Create</button>
-                    <button onClick={() => { setCreating(false); setNewName(""); setNewDesc(""); }} className="px-3 py-2 rounded-lg bg-muted text-muted-foreground text-xs font-medium hover:bg-muted/80 transition-all cursor-pointer">Cancel</button>
+                    <button type="button" onClick={handleCreate} disabled={!newName.trim()} className="flex-1 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-medium hover:bg-primary/90 disabled:opacity-50 transition-all cursor-pointer">Create</button>
+                    <button type="button" onClick={() => { setCreating(false); setNewName(""); setNewDesc(""); }} className="px-3 py-2 rounded-lg bg-muted text-muted-foreground text-xs font-medium hover:bg-muted/80 transition-all cursor-pointer">Cancel</button>
                   </div>
                 </div>
               </motion.div>
@@ -173,7 +173,7 @@ export function CustomCollectionsSheet({ open, onOpenChange, onSelectEffect }: C
                         <p className="text-sm font-medium text-foreground truncate">{col.name}</p>
                         <p className="text-xs text-muted-foreground truncate">{col.effectIds.length} effects · {col.description}</p>
                       </div>
-                      <button onClick={(e) => { e.stopPropagation(); handleDelete(col.id); }} className="flex items-center justify-center size-7 rounded-lg text-muted-foreground hover:text-rose-500 transition-all cursor-pointer shrink-0" aria-label="Delete collection">
+                      <button type="button" onClick={(e) => { e.stopPropagation(); handleDelete(col.id); }} className="flex items-center justify-center size-7 rounded-lg text-muted-foreground hover:text-rose-500 transition-all cursor-pointer shrink-0" aria-label="Delete collection">
                         <Trash2 className="size-3.5" />
                       </button>
                     </div>
@@ -188,8 +188,8 @@ export function CustomCollectionsSheet({ open, onOpenChange, onSelectEffect }: C
                               <div className="flex flex-wrap gap-1.5 mb-2">
                                 {colEffects.map(e => (
                                   <div key={e.id} className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-xs group">
-                                    <button onClick={() => onSelectEffect(e)} className="cursor-pointer">{e.name}</button>
-                                    <button onClick={() => handleRemoveEffect(col.id, e.id)} className="opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                                    <button type="button" onClick={() => onSelectEffect(e)} className="cursor-pointer">{e.name}</button>
+                                    <button type="button" onClick={() => handleRemoveEffect(col.id, e.id)} className="opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
                                       <X className="size-2.5" />
                                     </button>
                                   </div>
@@ -199,7 +199,7 @@ export function CustomCollectionsSheet({ open, onOpenChange, onSelectEffect }: C
 
                             {/* Export button */}
                             {colEffects.length > 0 && (
-                              <button
+                              <button type="button"
                                 onClick={() => handleExport(col)}
                                 className={`w-full flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${copiedId === col.id ? "bg-emerald-500/15 text-emerald-500" : "bg-muted text-foreground hover:bg-muted/80"}`}
                               >
@@ -214,7 +214,7 @@ export function CustomCollectionsSheet({ open, onOpenChange, onSelectEffect }: C
                               {filteredEffects.map(e => {
                                 const inCol = col.effectIds.includes(e.id);
                                 return (
-                                  <button
+                                  <button type="button"
                                     key={e.id}
                                     onClick={() => inCol ? handleRemoveEffect(col.id, e.id) : handleAddEffect(col.id, e.id)}
                                     className={`w-full flex items-center gap-2 p-1.5 rounded-lg transition-all cursor-pointer text-left ${inCol ? "bg-primary/10" : "hover:bg-muted/50"}`}

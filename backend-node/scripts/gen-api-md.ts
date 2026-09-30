@@ -838,7 +838,7 @@ function generate(): string {
   out.push("");
   out.push("## Contents");
   out.push("");
-  out.push("- [Conventions](#conventions) — base URLs, envelope, errors, auth, rate limits, pagination");
+  out.push("- [Conventions](#conventions) — base URLs, envelope, errors, auth, rate limits, pagination, OpenAPI spec");
   out.push("- [Backend modules](#backend-modules) — grouped by domain");
   for (const d of DOMAINS) {
     out.push(`  - [${d.title}](#${d.anchor})`);
@@ -855,6 +855,27 @@ function generate(): string {
   out.push("| Local backend (direct) | `http://localhost:4000/api/v1` | Express, port from \`PORT\` |");
   out.push("| Local via Next proxy | `http://localhost:3000/api/v1` | same-origin proxy → backend |");
   out.push("| Production | `https://<backend-host>/api/v1` | Railway — deployed by \`.github/workflows/deploy.yml\` |");
+  out.push("");
+  // Issue #276 — the openapi.json endpoint is invisible to the route
+  // walker (its mount segment contains a dot, so parseMounts skips it),
+  // so it can NEVER be a table row here: check-api-docs would flag any
+  // /api/... row as "no such route in code". Document it as prose.
+  out.push("### Machine-readable spec (openapi.json)");
+  out.push("");
+  out.push(
+    "`GET /api/v1/openapi.json` serves the complete generated OpenAPI 3.1 " +
+      "document for the backend surface (`backend-node/api/openapi.json` — " +
+      "regenerate with `bun run gen:openapi`, CI drift gate " +
+      "`gen:openapi:check`; the endpoint also documents itself inside that " +
+      "spec). Public (no auth), mounted **before** the global rate limiter " +
+      "(like `/health`), and a deliberate **non-envelope** route: the raw " +
+      "`application/json` document is sent as-is. It is cached in memory " +
+      "keyed by file mtime, so a regenerated artifact is picked up without " +
+      "a restart. The route is intentionally absent from the module tables " +
+      "above — its dotted mount segment is invisible to the static route " +
+      "walker, and `bun run api:check` therefore neither requires nor " +
+      "tolerates a row for it.",
+  );
   out.push("");
   out.push("### Response envelope");
   out.push("");

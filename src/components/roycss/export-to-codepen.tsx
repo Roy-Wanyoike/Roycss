@@ -69,7 +69,7 @@ ${effect.cssCode}
   }, [effect]);
 
   return (
-    <button
+    <button type="button"
       onClick={handleExport}
       disabled={loading}
       className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-muted text-foreground hover:bg-primary hover:text-primary-foreground transition-all cursor-pointer"

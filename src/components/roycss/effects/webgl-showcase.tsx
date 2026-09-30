@@ -195,7 +195,7 @@ export function WebGLShowcase() {
             aria-label="WebGL effect selector"
           >
             {EFFECTS.map((effect) => (
-              <button
+              <button type="button"
                 key={effect.id}
                 id={`webgl-tab-${effect.id}`}
                 role="tab"

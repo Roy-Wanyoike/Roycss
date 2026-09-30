@@ -165,7 +165,7 @@ function TextPreview({
 
 /* ─── Interactive-vs-decorative preview context ───────────────
  *
- * A <button> nested inside another <button>/<a>/[role="button"] is
+ * A <button type="button"> nested inside another <button type="button">/<a>/[role="button"] is
  * invalid HTML (React 19 hydration failure: "button cannot contain a
  * nested button") and an axe nested-interactive violation. LivePreview
  * demos are embedded BOTH as interactive surfaces (EffectCard's own
@@ -246,7 +246,7 @@ function ButtonPreview({
 
   return (
     <div className="flex items-center justify-center h-full">
-      {/* Real <button> (was a mouse-only div onClick + role="presentation",
+      {/* Real <button type="button"> (was a mouse-only div onClick + role="presentation",
           issue #216 item 9) — Enter/Space now trigger the ripple, and the
           global :focus-visible outline applies. */}
       <button
@@ -405,9 +405,9 @@ export const EffectCard = memo(function EffectCard({
     >
       {/* Issue #216 item 9: the card container previously carried
           role="button" + tabIndex + an Enter/Space handler while also
-          containing REAL <button>s (favorite, code toggle) — invalid
+          containing REAL <button type="button">s (favorite, code toggle) — invalid
           nested-interactive ARIA (axe violation). The interactive trigger
-          is now a dedicated full-card control (real <button>, or a real
+          is now a dedicated full-card control (real <button type="button">, or a real
           link when `href` is set) layered UNDER the sibling controls
           (z-0 vs z-10), so no interactive element contains another.
           Keyboard users tab straight to it; the container's own onClick is
@@ -448,7 +448,7 @@ export const EffectCard = memo(function EffectCard({
       <div className="relative h-48 bg-gradient-to-br from-muted/50 to-muted/30 overflow-hidden">
         <LivePreview effect={effect} />
         {/* Favorite button */}
-        <button
+        <button type="button"
           onClick={(e) => {
             e.stopPropagation();
             onToggleFavorite?.(effect.id);
@@ -538,7 +538,7 @@ export const EffectCard = memo(function EffectCard({
         {/* Code Toggle — min-h-7 + py-1.5 ensures ≥ 28px tap target (WCAG 2.5.8 AA ≥ 24px).
             relative z-10 keeps it above the card's full-card trigger overlay
             (issue #216 item 9). */}
-        <button
+        <button type="button"
           onClick={(e) => {
             e.stopPropagation();
             setShowCode(!showCode);

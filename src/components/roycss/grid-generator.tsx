@@ -135,7 +135,7 @@ export function CSSGridGenerator() {
         <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Columns</label>
         <div className="flex flex-wrap gap-1 mb-2">
           {COL_PRESETS.map(p => (
-            <button key={p.name} onClick={() => setColumns(p.value)} className={`px-2 py-1 rounded-md text-xs font-medium cursor-pointer transition-all ${columns === p.value ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}>{p.name}</button>
+            <button type="button" key={p.name} onClick={() => setColumns(p.value)} className={`px-2 py-1 rounded-md text-xs font-medium cursor-pointer transition-all ${columns === p.value ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}>{p.name}</button>
           ))}
         </div>
         <input type="text" value={columns} onChange={(e) => setColumns(e.target.value)} aria-label="Grid template columns" className="w-full h-8 px-2 rounded bg-background border border-border/40 text-xs font-mono focus:outline-none focus:border-primary/40" />
@@ -146,7 +146,7 @@ export function CSSGridGenerator() {
         <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Rows</label>
         <div className="flex flex-wrap gap-1 mb-2">
           {ROW_PRESETS.map(p => (
-            <button key={p.name} onClick={() => setRows(p.value)} className={`px-2 py-1 rounded-md text-xs font-medium cursor-pointer transition-all ${rows === p.value ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}>{p.name}</button>
+            <button type="button" key={p.name} onClick={() => setRows(p.value)} className={`px-2 py-1 rounded-md text-xs font-medium cursor-pointer transition-all ${rows === p.value ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}>{p.name}</button>
           ))}
         </div>
         <input type="text" value={rows} onChange={(e) => setRows(e.target.value)} aria-label="Grid template rows" className="w-full h-8 px-2 rounded bg-background border border-border/40 text-xs font-mono focus:outline-none focus:border-primary/40" />
@@ -169,7 +169,7 @@ export function CSSGridGenerator() {
           <input type="range" min={0} max={48} value={effectiveRowGap} disabled={linked} onChange={(e) => setRowGap(parseInt(e.target.value))} aria-label="Row Gap (pixels)" className="w-full cursor-pointer disabled:opacity-50" />
         </div>
       </div>
-      <button onClick={() => setLinked(!linked)} className={`text-xs ${linked ? "text-primary" : "text-muted-foreground"} cursor-pointer`}>
+      <button type="button" onClick={() => setLinked(!linked)} className={`text-xs ${linked ? "text-primary" : "text-muted-foreground"} cursor-pointer`}>
         {linked ? "🔗 Gaps linked" : "🔓 Gaps independent"}
       </button>
 
@@ -177,7 +177,7 @@ export function CSSGridGenerator() {
       <div>
         <div className="flex items-center justify-between mb-2">
           <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Items ({items.length})</span>
-          <button onClick={addItem} className="flex items-center gap-1 px-2 py-1 rounded-md text-xs bg-primary/10 text-primary hover:bg-primary/20 cursor-pointer"><Plus className="size-3" /> Add Item</button>
+          <button type="button" onClick={addItem} className="flex items-center gap-1 px-2 py-1 rounded-md text-xs bg-primary/10 text-primary hover:bg-primary/20 cursor-pointer"><Plus className="size-3" /> Add Item</button>
         </div>
         {selectedItem && (
           <div className="p-2.5 rounded-lg bg-primary/5 border border-primary/20 mb-2">
@@ -197,8 +197,8 @@ export function CSSGridGenerator() {
         <div className="flex flex-wrap gap-1">
           {items.map(item => (
             <div key={item.id} className="flex items-center gap-1">
-              <button onClick={() => setSelectedId(item.id)} className={`px-2 py-0.5 rounded text-xs font-medium cursor-pointer transition-all ${selectedId === item.id ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}>{item.label}</button>
-              <button onClick={() => removeItem(item.id)} aria-label={`Remove item ${item.label}`} className="text-muted-foreground hover:text-rose-500 cursor-pointer"><Minus className="size-3" /></button>
+              <button type="button" onClick={() => setSelectedId(item.id)} className={`px-2 py-0.5 rounded text-xs font-medium cursor-pointer transition-all ${selectedId === item.id ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}>{item.label}</button>
+              <button type="button" onClick={() => removeItem(item.id)} aria-label={`Remove item ${item.label}`} className="text-muted-foreground hover:text-rose-500 cursor-pointer"><Minus className="size-3" /></button>
             </div>
           ))}
         </div>
@@ -208,7 +208,7 @@ export function CSSGridGenerator() {
       <div>
         <div className="flex items-center justify-between mb-1.5">
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">CSS</label>
-          <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
+          <button type="button" onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
             {copied ? <Check className="size-3" /> : <Copy className="size-3" />} {copied ? "Copied!" : copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy"}
             <span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span>
           </button>

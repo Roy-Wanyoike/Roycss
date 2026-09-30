@@ -577,15 +577,6 @@ model ProfilerResult {
   createdAt   DateTime @default(now())
   @@index([userId])
 }
-model TwinResult {
-  id              String   @id @default(cuid())
-  userId          String?
-  url             String
-  lighthouseJson  String
-  webVitalsJson   String
-  createdAt       DateTime @default(now())
-  @@index([userId])
-}
 model Theme {
   id          String   @id @default(cuid())
   slug        String   @unique

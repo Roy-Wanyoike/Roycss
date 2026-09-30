@@ -95,7 +95,7 @@ export function FontPreviewTool() {
         <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Font Family</label>
         <div className="flex flex-wrap gap-1">
           {FONT_FAMILIES.map(f => (
-            <button key={f.name} onClick={() => setFontFamily(f.value)}
+            <button type="button" key={f.name} onClick={() => setFontFamily(f.value)}
               className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${fontFamily === f.value ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}
               style={{ fontFamily: f.value }}>{f.name}</button>
           ))}
@@ -139,7 +139,7 @@ export function FontPreviewTool() {
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Style</label>
           <div className="flex gap-1">
             {(["normal", "italic"] as const).map(s => (
-              <button key={s} onClick={() => setFontStyle(s)} className={`flex-1 py-1 rounded-md text-xs font-medium cursor-pointer capitalize ${fontStyle === s ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}>{s}</button>
+              <button type="button" key={s} onClick={() => setFontStyle(s)} className={`flex-1 py-1 rounded-md text-xs font-medium cursor-pointer capitalize ${fontStyle === s ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}>{s}</button>
             ))}
           </div>
         </div>
@@ -161,7 +161,7 @@ export function FontPreviewTool() {
       <div>
         <div className="flex items-center justify-between mb-1.5">
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">CSS</label>
-          <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
+          <button type="button" onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
             {copied ? <Check className="size-3" /> : <Copy className="size-3" />} {copied ? "Copied!" : copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy"}
             <span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span>
           </button>

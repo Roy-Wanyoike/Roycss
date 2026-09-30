@@ -143,7 +143,7 @@ export function ProductGrid() {
       {/* Category tabs */}
       <div role="tablist" aria-label="Product category" className="flex flex-wrap gap-1.5">
         {PRODUCT_CATEGORIES.map((cat) => (
-          <button
+          <button type="button"
             key={cat.id}
             role="tab"
             aria-selected={activeCat === cat.id}
@@ -166,7 +166,7 @@ export function ProductGrid() {
         <div className="flex flex-wrap items-center gap-3">
           <div role="tablist" aria-label="Product tier" className="flex flex-wrap gap-1">
             {[{ id: "all" as const, label: "All" }, ...PRODUCT_TIERS].map((t) => (
-              <button
+              <button type="button"
                 key={t.id}
                 role="tab"
                 aria-selected={activeTier === t.id}
@@ -184,7 +184,7 @@ export function ProductGrid() {
           <span className="hidden sm:block size-px h-4 bg-border" aria-hidden />
           <div role="tablist" aria-label="Product status" className="flex flex-wrap gap-1">
             {STATUS_TABS.map((s) => (
-              <button
+              <button type="button"
                 key={s.id}
                 role="tab"
                 aria-selected={activeStatus === s.id}

@@ -4,6 +4,10 @@ Baseline + incremental schema migrations for the RoyCSS backend.
 
 - `20260912214858_init` — recreates the full 47-table schema from
   `prisma/schema.prisma` as of the baseline commit (audit F-03).
+- `20260930180000_drop_twin_result` — drops the never-wired `TwinResult`
+  table (issue #276): the model shipped in the baseline but had zero
+  `db.twinResult` call sites — the digital-twin module is an in-memory
+  mock over a hand-written interface, not Prisma. No FK dependencies.
 
 ## How a deploy applies them
 
@@ -32,10 +36,10 @@ bun -e 'import { Database } from "bun:sqlite";
 const db = new Database("backend-node/prisma/verify.db", { readonly: true });
 const tables = db.query("SELECT name FROM sqlite_master WHERE type=\"table\"").all();
 console.log(`tables=${tables.length}`);'
-# Expected: tables=51 (50 app tables + _prisma_migrations). Fail otherwise.
+# Expected: tables=50 (49 app tables + _prisma_migrations). Fail otherwise.
 # (Re-count after every migration — `grep -c "^model " prisma/schema.prisma`
 # + 1 for _prisma_migrations; this line was 48 at the 20260912 baseline,
-# +2 auth_lifecycle, +1 storage_owner_map.)
+# +2 auth_lifecycle, +1 storage_owner_map, −1 drop_twin_result.)
 
 # 3. Confirm the applied schema matches the datamodel (no drift):
 bunx prisma migrate diff \

@@ -8,7 +8,7 @@ The public HTTP surface of the platform: the Express backend (`/api/v1/*`, `back
 
 ## Contents
 
-- [Conventions](#conventions) — base URLs, envelope, errors, auth, rate limits, pagination
+- [Conventions](#conventions) — base URLs, envelope, errors, auth, rate limits, pagination, OpenAPI spec
 - [Backend modules](#backend-modules) — grouped by domain
   - [Platform core & registry](#domain-core)
   - [Auth & messaging](#domain-auth)
@@ -28,6 +28,10 @@ The public HTTP surface of the platform: the Express backend (`/api/v1/*`, `back
 | Local backend (direct) | `http://localhost:4000/api/v1` | Express, port from `PORT` |
 | Local via Next proxy | `http://localhost:3000/api/v1` | same-origin proxy → backend |
 | Production | `https://<backend-host>/api/v1` | Railway — deployed by `.github/workflows/deploy.yml` |
+
+### Machine-readable spec (openapi.json)
+
+`GET /api/v1/openapi.json` serves the complete generated OpenAPI 3.1 document for the backend surface (`backend-node/api/openapi.json` — regenerate with `bun run gen:openapi`, CI drift gate `gen:openapi:check`; the endpoint also documents itself inside that spec). Public (no auth), mounted **before** the global rate limiter (like `/health`), and a deliberate **non-envelope** route: the raw `application/json` document is sent as-is. It is cached in memory keyed by file mtime, so a regenerated artifact is picked up without a restart. The route is intentionally absent from the module tables above — its dotted mount segment is invisible to the static route walker, and `bun run api:check` therefore neither requires nor tolerates a row for it.
 
 ### Response envelope
 

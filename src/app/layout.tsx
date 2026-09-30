@@ -193,6 +193,8 @@ export const metadata: Metadata = {
     "3D CSS transforms",
     "CSS filters",
     "CSS borders",
+    "CSS utilities",
+    "CSS utility classes",
     "Roy Wanyoike",
     "CSS library",
     "frontend platform",

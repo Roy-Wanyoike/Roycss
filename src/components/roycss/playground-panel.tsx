@@ -81,7 +81,7 @@ export function PlaygroundPanel({ open, onOpenChange }: PlaygroundPanelProps) {
           <div className="rounded-2xl border border-border/50 bg-gradient-to-br from-muted/60 to-muted/20 overflow-hidden">
             <div className="px-3 py-1.5 border-b border-border/40 bg-muted/30 flex items-center justify-between">
               <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Live Preview</span>
-              <button onClick={() => setReplayKey(k => k + 1)} className="flex items-center gap-1 text-xs text-primary hover:text-primary/80 cursor-pointer" aria-label="Replay animation">
+              <button type="button" onClick={() => setReplayKey(k => k + 1)} className="flex items-center gap-1 text-xs text-primary hover:text-primary/80 cursor-pointer" aria-label="Replay animation">
                 <RotateCcw className="size-3" />Replay
               </button>
             </div>
@@ -109,10 +109,10 @@ export function PlaygroundPanel({ open, onOpenChange }: PlaygroundPanelProps) {
             <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Easing</Label>
             <Select value={easing} onValueChange={setEasing}><SelectTrigger aria-label="Easing" className="h-11 w-full cursor-pointer"><SelectValue /></SelectTrigger><SelectContent>{EASING_OPTIONS.map(o => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent></Select>
           </div>
-          <button onClick={() => { setDuration(2); setDelay(0); setRepeat("infinite"); setEasing("ease-in-out"); }} className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer"><RotateCcw className="size-3" />Reset to defaults</button>
+          <button type="button" onClick={() => { setDuration(2); setDelay(0); setRepeat("infinite"); setEasing("ease-in-out"); }} className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer"><RotateCcw className="size-3" />Reset to defaults</button>
           <div>
             <div className="flex items-center justify-between mb-2"><Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Generated CSS</Label>
-              <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>{copied ? <Check className="size-3" /> : <Copy className="size-3" />}{copied ? "Copied!" : copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy CSS"}<span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span></button>
+              <button type="button" onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>{copied ? <Check className="size-3" /> : <Copy className="size-3" />}{copied ? "Copied!" : copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy CSS"}<span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span></button>
             </div>
             <pre className="p-3 rounded-xl bg-muted/50 border border-border/50 text-xs leading-relaxed font-mono text-foreground/80 overflow-x-auto scrollbar-thin"><code ref={codeRef}>{generatedCSS}</code></pre>
           </div>

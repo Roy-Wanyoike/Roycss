@@ -37,7 +37,7 @@ export function ResponsivePreview() {
           {BREAKPOINTS.map(bp => {
             const Icon = bp.icon;
             return (
-              <button key={bp.name} onClick={() => setSelected(bp)}
+              <button type="button" key={bp.name} onClick={() => setSelected(bp)}
                 className={`flex flex-col items-center gap-1 p-2 rounded-lg border transition-all cursor-pointer ${selected.name === bp.name ? "border-primary bg-primary/5" : "border-border/40 hover:border-primary/30"}`}>
                 <Icon className={`size-4 ${selected.name === bp.name ? "text-primary" : "text-muted-foreground"}`} />
                 <span className="text-[11px] text-muted-foreground">{bp.name}</span>

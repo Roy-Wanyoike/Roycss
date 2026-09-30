@@ -124,7 +124,7 @@ export function CSSGradientGenerator() {
       {/* Type selector */}
       <div className="flex items-center gap-1 p-1 rounded-lg bg-muted">
         {(["linear", "radial", "conic"] as const).map(t => (
-          <button
+          <button type="button"
             key={t}
             onClick={() => setType(t)}
             className={`flex-1 py-1.5 rounded-md text-xs font-medium transition-all cursor-pointer capitalize ${type === t ? "bg-background text-foreground shadow-sm" : "text-muted-foreground"}`}
@@ -158,10 +158,10 @@ export function CSSGradientGenerator() {
         <div className="flex items-center justify-between mb-2">
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Color Stops ({stops.length})</label>
           <div className="flex items-center gap-1">
-            <button onClick={randomize} className="flex items-center gap-1 px-2 py-1 rounded-md text-xs bg-muted text-muted-foreground hover:text-primary transition-all cursor-pointer" title="Randomize">
+            <button type="button" onClick={randomize} className="flex items-center gap-1 px-2 py-1 rounded-md text-xs bg-muted text-muted-foreground hover:text-primary transition-all cursor-pointer" title="Randomize">
               <Shuffle className="size-3" /> Random
             </button>
-            <button onClick={addStop} className="flex items-center gap-1 px-2 py-1 rounded-md text-xs bg-primary/10 text-primary hover:bg-primary/20 transition-all cursor-pointer">
+            <button type="button" onClick={addStop} className="flex items-center gap-1 px-2 py-1 rounded-md text-xs bg-primary/10 text-primary hover:bg-primary/20 transition-all cursor-pointer">
               <Plus className="size-3" /> Add Stop
             </button>
           </div>
@@ -196,7 +196,7 @@ export function CSSGradientGenerator() {
                   className="w-14 h-8 px-2 rounded bg-background border border-border/40 text-xs font-mono text-foreground focus:outline-none focus:border-primary/40"
                 />
                 <span className="text-xs text-muted-foreground">%</span>
-                <button onClick={() => removeStop(stop.id)} disabled={stops.length <= 2} aria-label={`Remove color stop ${stopIdx + 1}`} className="flex items-center justify-center size-7 rounded text-muted-foreground hover:text-rose-500 disabled:opacity-30 transition-all cursor-pointer">
+                <button type="button" onClick={() => removeStop(stop.id)} disabled={stops.length <= 2} aria-label={`Remove color stop ${stopIdx + 1}`} className="flex items-center justify-center size-7 rounded text-muted-foreground hover:text-rose-500 disabled:opacity-30 transition-all cursor-pointer">
                   <Minus className="size-3.5" />
                 </button>
               </div>
@@ -209,7 +209,7 @@ export function CSSGradientGenerator() {
         <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">Presets</label>
         <div className="grid grid-cols-3 gap-2">
           {PRESETS.map(preset => (
-            <button
+            <button type="button"
               key={preset.name}
               onClick={() => applyPreset(preset)}
               className="group flex flex-col items-center gap-1 p-1.5 rounded-lg border border-border/40 hover:border-primary/40 transition-all cursor-pointer"
@@ -228,7 +228,7 @@ export function CSSGradientGenerator() {
       <div>
         <div className="flex items-center justify-between mb-1.5">
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">CSS</label>
-          <button
+          <button type="button"
             onClick={handleCopy}
             className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}
           >

@@ -3,7 +3,7 @@
     "collect": {
       "numberOfRuns": 3,
       "startServerCommand": "bunx next start -p 3310",
-      "url": ["http://localhost:3310/"],
+      "url": ["http://localhost:3310/", "http://localhost:3310/effects"],
       "settings": {
         "preset": "desktop",
         "chromeFlags": "--disable-dev-shm-usage"

@@ -271,7 +271,7 @@ function SponsorModal({ open, onOpenChange }: SponsorModalProps) {
         <div className="px-5 pb-5 space-y-4 overflow-y-auto max-h-[60vh]">
           {/* Frequency toggle */}
           <div className="flex items-center gap-1 p-1 rounded-lg bg-muted">
-            <button
+            <button type="button"
               onClick={() => setFrequency("one-time")}
               className={`flex-1 py-2 rounded-md text-sm font-medium transition-all cursor-pointer ${
                 frequency === "one-time" ? "bg-background text-foreground shadow-sm" : "text-muted-foreground"
@@ -279,7 +279,7 @@ function SponsorModal({ open, onOpenChange }: SponsorModalProps) {
             >
               One-time
             </button>
-            <button
+            <button type="button"
               onClick={() => setFrequency("monthly")}
               className={`flex-1 py-2 rounded-md text-sm font-medium transition-all cursor-pointer ${
                 frequency === "monthly" ? "bg-background text-foreground shadow-sm" : "text-muted-foreground"
@@ -300,7 +300,7 @@ function SponsorModal({ open, onOpenChange }: SponsorModalProps) {
             </div>
             <div className="grid grid-cols-5 gap-1.5 mb-2">
               {SPONSOR_AMOUNTS.map((amt) => (
-                <button
+                <button type="button"
                   key={amt}
                   onClick={() => {
                     setAmount(amt);
@@ -356,7 +356,7 @@ function SponsorModal({ open, onOpenChange }: SponsorModalProps) {
               {PAYMENT_METHODS.map((method) => {
                 const Icon = method.icon;
                 return (
-                  <button
+                  <button type="button"
                     key={method.id}
                     onClick={method.available && method.id === "github" ? handleGithubSponsor : undefined}
                     disabled={!method.available}
@@ -465,7 +465,7 @@ export function FeaturedCompanies() {
 
               {/* Sponsor CTA — a small inline pill so the section still
                   invites new sponsors without pretending the grid is full. */}
-              <button
+              <button type="button"
                 onClick={() => setSponsorOpen(true)}
                 className="inline-flex items-center gap-1.5 rounded-xl border border-dashed border-primary/40 bg-primary/5 px-4 py-2 min-h-[44px] text-xs font-medium text-primary hover:bg-primary/10 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                 aria-label="Become a sponsor"

@@ -53,7 +53,7 @@ function PatternCard({ pattern }: { pattern: typeof patterns[0] }) {
         {expanded && (
           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }} className="overflow-hidden border-t border-border/50">
             <div className="relative">
-              <button onClick={(e) => { e.stopPropagation(); handleCopy(); }} className={`absolute top-2 right-2 z-10 flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-background/90 border border-border/50 text-muted-foreground hover:text-foreground hover:bg-background transition-all cursor-pointer ${copyFailed ? "border-rose-500/50 text-rose-500" : ""}`}>
+              <button type="button" onClick={(e) => { e.stopPropagation(); handleCopy(); }} className={`absolute top-2 right-2 z-10 flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-background/90 border border-border/50 text-muted-foreground hover:text-foreground hover:bg-background transition-all cursor-pointer ${copyFailed ? "border-rose-500/50 text-rose-500" : ""}`}>
                 {copied ? <><Check className="size-3 text-emerald-500" /><span className="text-emerald-500">Copied!</span></> : copyFailed ? <><Copy className="size-3" />{CLIPBOARD_FAILED_MESSAGE}</> : <><Copy className="size-3" />Copy HTML</>}
                 <span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span>
               </button>
@@ -97,11 +97,11 @@ export function PatternsSection() {
         </ScrollReveal>
         <ScrollReveal delay={0.15} className="mb-8 overflow-x-auto scrollbar-thin pb-2">
           <div className="flex items-center gap-2 min-w-max px-1">
-            <button onClick={() => setActiveCategory("all")} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer min-h-[44px] ${activeCategory === "all" ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" : "glass text-muted-foreground hover:text-foreground hover:border-primary/30"}`}>All<span className={`text-xs px-1.5 py-0.5 rounded-md ${activeCategory === "all" ? "bg-primary-foreground/20" : "bg-muted"}`}>{patterns.length}</span></button>
+            <button type="button" onClick={() => setActiveCategory("all")} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer min-h-[44px] ${activeCategory === "all" ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" : "glass text-muted-foreground hover:text-foreground hover:border-primary/30"}`}>All<span className={`text-xs px-1.5 py-0.5 rounded-md ${activeCategory === "all" ? "bg-primary-foreground/20" : "bg-muted"}`}>{patterns.length}</span></button>
             {patternCategoryOrder.map(cat => {
               const count = patterns.filter(p => p.category === cat).length;
               if (count === 0) return null;
-              return <button key={cat} onClick={() => setActiveCategory(cat)} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer min-h-[44px] whitespace-nowrap ${activeCategory === cat ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" : "glass text-muted-foreground hover:text-foreground hover:border-primary/30"}`}>{patternCategoryMeta[cat]?.label || cat}<span className={`text-xs px-1.5 py-0.5 rounded-md ${activeCategory === cat ? "bg-primary-foreground/20" : "bg-muted"}`}>{count}</span></button>;
+              return <button type="button" key={cat} onClick={() => setActiveCategory(cat)} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer min-h-[44px] whitespace-nowrap ${activeCategory === cat ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" : "glass text-muted-foreground hover:text-foreground hover:border-primary/30"}`}>{patternCategoryMeta[cat]?.label || cat}<span className={`text-xs px-1.5 py-0.5 rounded-md ${activeCategory === cat ? "bg-primary-foreground/20" : "bg-muted"}`}>{count}</span></button>;
             })}
           </div>
         </ScrollReveal>
@@ -114,7 +114,7 @@ export function PatternsSection() {
           <div className="text-center py-16"><Layers className="size-12 text-muted-foreground/30 mx-auto mb-3" /><h3 className="font-display text-lg font-semibold text-foreground">No patterns found</h3><p className="mt-1 text-sm text-muted-foreground">Try a different search.</p></div>
         )}
         <ScrollReveal delay={0.2} className="mt-12 text-center">
-          <button onClick={() => document.querySelector("#effects")?.scrollIntoView({ behavior: "smooth" })} className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:gap-2.5 transition-all cursor-pointer">Browse all effects<ArrowRight className="size-3.5" /></button>
+          <button type="button" onClick={() => document.querySelector("#effects")?.scrollIntoView({ behavior: "smooth" })} className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:gap-2.5 transition-all cursor-pointer">Browse all effects<ArrowRight className="size-3.5" /></button>
         </ScrollReveal>
       </div>
     </section>

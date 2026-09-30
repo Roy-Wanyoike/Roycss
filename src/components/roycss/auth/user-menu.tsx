@@ -132,7 +132,7 @@ export function UserMenu() {
       )}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button
+          <button type="button"
             className="flex items-center gap-2 rounded-full size-9 ring-1 ring-border hover:ring-primary/40 transition-all cursor-pointer"
             aria-label="Account menu"
           >
@@ -184,7 +184,7 @@ export function MobileAuthMenuItem() {
   if (loading) return null;
   if (!user) {
     return (
-      <button
+      <button type="button"
         onClick={openLogin}
         className="flex items-center justify-between w-full px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer min-h-[44px]"
       >
@@ -196,7 +196,7 @@ export function MobileAuthMenuItem() {
   return (
     <div className="space-y-1">
       {user.emailVerified === false && (
-        <button
+        <button type="button"
           onClick={() => void resendVerification(user.email)}
           className="flex items-center justify-between w-full px-4 py-3 rounded-xl text-sm font-medium text-primary hover:bg-primary/5 transition-all cursor-pointer min-h-[44px]"
         >
@@ -204,14 +204,14 @@ export function MobileAuthMenuItem() {
           <MailWarning className="size-3.5" />
         </button>
       )}
-      <button
+      <button type="button"
         onClick={openApiKeysSheet}
         className="flex items-center justify-between w-full px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all cursor-pointer min-h-[44px]"
       >
         API Keys
         <KeyRound className="size-3.5" />
       </button>
-      <button
+      <button type="button"
         onClick={async () => { await logout(); toast.success("Signed out"); }}
         className="flex items-center justify-between w-full px-4 py-3 rounded-xl text-sm font-medium text-destructive hover:bg-destructive/5 transition-all cursor-pointer min-h-[44px]"
       >

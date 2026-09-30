@@ -21,7 +21,7 @@ import { categoryOrder } from "@/lib/roycss-effects";
  * meaningless (Google re-crawls on lastmod churn). Bump the constant when
  * content actually changes.
  */
-const LAST_MODIFIED = new Date("2026-09-23T00:00:00.000Z");
+const LAST_MODIFIED = new Date("2026-09-30T00:00:00.000Z");
 
 function listDocsRoutes(dir: string, base = "/docs"): string[] {
   const out: string[] = [];

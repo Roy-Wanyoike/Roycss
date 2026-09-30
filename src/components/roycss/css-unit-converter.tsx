@@ -113,7 +113,7 @@ export function CSSUnitConverter() {
       {/* Results */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         {results.map(({ unit, label, formatted }) => (
-          <button
+          <button type="button"
             key={unit}
             onClick={() => handleCopy(unit, formatted)}
             className={`flex items-center justify-between gap-2 p-3 rounded-xl border transition-all cursor-pointer text-left ${copiedTo === unit ? "border-emerald-500/40 bg-emerald-500/5" : "border-border/50 bg-card hover:border-primary/30"}`}

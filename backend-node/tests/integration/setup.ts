@@ -123,14 +123,20 @@ export default async function globalSetup(): Promise<() => Promise<void>> {
 //            Block, Blueprint, SpotlightItem, ObservatorySite,
 //            LiveSession, GoodFirstIssue, RFC, Roadmap, Contributor,
 //            BenchmarkResult, BundleResult, ProfilerResult,
-//            TwinResult, Theme, OSDashboard, ComplianceStandard,
+//            Theme, OSDashboard, ComplianceStandard,
 //            SearchIndex, ContactMessage
+//            (TwinResult was dropped from the schema by
+//            20260930180000_drop_twin_result — issue #276: the model was
+//            never wired to a route; the digital-twin module is an
+//            in-memory mock over a hand-written interface.)
 //   Tier 4 — parents: User (last, after EffectFavorite + Collection)
 //
-// Total: 47 tables (4 base models + 41 wave-3 models + Membership from
-// issue #64 org-scoped authorization + ApiKey from issue #65 API-key
-// auth). The schema's comment block "41 NEW MODELS (Wave 3)" refers to
-// the wave-3 additions; this file clears all 47 so tests in auth.test.ts
+// Total: 48 wipe entries — every model delegate that existed when this
+// list was maintained, minus TwinResult (dropped, issue #276). The list
+// may trail newly added models (e.g. StorageFileOwner from issue #268):
+// wipeAll skips a delegate it cannot resolve with a loud warning rather
+// than failing, so an unlisted model degrades to "not wiped", never to
+// a crash. This file clears these tables so tests in auth.test.ts
 // (User), contact.test.ts (ContactMessage), and api-keys.test.ts (ApiKey)
 // start clean too.
 const TABLES_IN_FK_SAFE_ORDER = [
@@ -184,7 +190,6 @@ const TABLES_IN_FK_SAFE_ORDER = [
   "benchmarkResult",
   "bundleResult",
   "profilerResult",
-  "twinResult",
   "theme",
   "osDashboard",
   "complianceStandard",

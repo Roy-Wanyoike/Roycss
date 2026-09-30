@@ -200,7 +200,7 @@ export function RoyPreview() {
               const StatusIcon = meta.icon;
               const isSel = p.id === selectedId;
               return (
-                <button
+                <button type="button"
                   key={p.id}
                   onClick={() => setSelectedId(p.id)}
                   className={cn(

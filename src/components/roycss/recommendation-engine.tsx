@@ -91,7 +91,7 @@ export function EffectRecommendationEngine({ onSelectEffect }: RecommendationEng
       </div>
 
       {recommendations.length === 0 ? (
-        <button
+        <button type="button"
           onClick={generateRecommendations}
           disabled={loading}
           className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-dashed border-primary/30 text-primary hover:bg-primary/5 transition-all cursor-pointer text-sm font-medium"
@@ -103,7 +103,7 @@ export function EffectRecommendationEngine({ onSelectEffect }: RecommendationEng
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <p className="text-xs text-muted-foreground italic">{reason}</p>
-            <button
+            <button type="button"
               onClick={generateRecommendations}
               disabled={loading}
               className="flex items-center gap-1 text-xs text-primary hover:text-primary/80 transition-colors cursor-pointer"
@@ -113,7 +113,7 @@ export function EffectRecommendationEngine({ onSelectEffect }: RecommendationEng
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {recommendations.map((effect, i) => (
-              <motion.button
+              <motion.button type="button"
                 key={effect.id}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}

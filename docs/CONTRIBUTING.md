@@ -148,8 +148,11 @@ The bar is the same at every level — the ladder only changes *scope*, never
    three viewports (375 / 768 / 1920), the `prefers-reduced-motion`
    check, and screenshots for visual changes.
 3. **Backend work follows the module conventions:** `requireAuth` on all
-   routes, Zod validation, `AppError` envelopes, owner-scoped queries
-   (foreign ids → flat 404), module loggers, and tests per module.
+   mutating routes — public catalog reads are deliberately unauthed, and the
+   authn security sweep fails any anonymous mutation not on the
+   documented-public list — plus Zod validation, `AppError` envelopes,
+   owner-scoped queries (foreign ids → flat 404), module loggers, and tests
+   per module.
 4. **Contract changes go through the RFC process**
    ([`docs/RFC-PROCESS.md`](RFC-PROCESS.md)): schema changes, removals of
    `stable` names, and policy changes need the 14-day window and

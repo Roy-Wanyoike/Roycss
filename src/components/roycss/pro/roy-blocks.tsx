@@ -1810,11 +1810,12 @@ export function NotificationCenter() {
     <div>
       <div className="mb-3 flex items-center justify-between">
         <h2 className="text-lg font-semibold">Notifications</h2>
-        <button className="text-sm font-medium text-primary">Mark all read</button>
+        <button type="button" className="text-sm font-medium text-primary">Mark all read</button>
       </div>
       <div className="mb-3 flex gap-2">
         {(["all", "unread", "mentions"] as const).map((f) => (
           <button
+            type="button"
             key={f}
             onClick={() => setFilter(f)}
             className={cn(
@@ -1913,6 +1914,7 @@ export function OnboardingWizard() {
             <div className="grid grid-cols-4 gap-2">
               {["1-5", "6-20", "21-50", "50+"].map((size) => (
                 <button
+                  type="button"
                   key={size}
                   onClick={() => setTeamSize(size)}
                   className={cn(
@@ -1986,7 +1988,7 @@ export function EmptyDashboard() {
         <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Quick actions</h3>
         <div className="grid grid-cols-3 gap-3">
           {ACTIONS.map((a) => (
-            <button key={a.label} className="flex flex-col items-start gap-2 rounded-lg border p-4 text-left transition hover:bg-accent">
+            <button type="button" key={a.label} className="flex flex-col items-start gap-2 rounded-lg border p-4 text-left transition hover:bg-accent">
               <div className={cn("flex size-8 items-center justify-center rounded-md", a.tint)}>
                 <a.icon className="size-4" />
               </div>

@@ -134,7 +134,7 @@ function RecipeCard({ recipe }: { recipe: Recipe }) {
             className="overflow-hidden border-t border-border/50"
           >
             <div className="relative">
-              <button
+              <button type="button"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleCopy();
@@ -245,7 +245,7 @@ export function RecipesSection() {
         {/* Category filter pills */}
         <ScrollReveal delay={0.15} className="mb-8 overflow-x-auto scrollbar-thin pb-2">
           <div className="flex items-center gap-2 min-w-max px-1">
-            <button
+            <button type="button"
               onClick={() => setActiveCategory("all")}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer min-h-[44px] ${
                 activeCategory === "all"
@@ -264,7 +264,7 @@ export function RecipesSection() {
               if (count === 0) return null;
               const isActive = activeCategory === cat;
               return (
-                <button
+                <button type="button"
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer min-h-[44px] whitespace-nowrap ${
@@ -322,7 +322,7 @@ export function RecipesSection() {
           <p className="text-sm text-muted-foreground mb-3">
             Want to build your own recipe? Combine any of the 1569+ effects.
           </p>
-          <button
+          <button type="button"
             onClick={() => document.querySelector("#effects")?.scrollIntoView({ behavior: "smooth" })}
             className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:gap-2.5 transition-all cursor-pointer"
           >

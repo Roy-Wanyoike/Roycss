@@ -124,7 +124,7 @@ function CollectionCard({
         )}
 
         {/* Explore button */}
-        <button
+        <button type="button"
           onClick={() => onOpen(collection)}
           className="w-full flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-medium bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all cursor-pointer group/btn"
         >
@@ -263,7 +263,7 @@ function CollectionDetailDialog({
                   </p>
                 </div>
               </div>
-              <button
+              <button type="button"
                 onClick={onClose}
                 className="flex items-center justify-center size-8 rounded-lg bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-colors cursor-pointer shrink-0"
                 aria-label="Close collection"
@@ -332,7 +332,7 @@ function CollectionDetailDialog({
                     </div>
                     {/* Actions */}
                     <div className="flex items-center gap-1 shrink-0">
-                      <button
+                      <button type="button"
                         onClick={() => handleCopy(`roycss-${effect.id}`, effect.id + "-copy")}
                         className="flex items-center justify-center size-8 rounded-lg bg-muted/60 text-muted-foreground hover:text-foreground hover:bg-muted transition-all cursor-pointer"
                         aria-label={`Copy class name for ${effect.name}`}
@@ -344,7 +344,7 @@ function CollectionDetailDialog({
                           <Copy className="size-3.5" />
                         )}
                       </button>
-                      <button
+                      <button type="button"
                         onClick={() => {
                           onSelectEffect(effect);
                           onClose();
@@ -452,7 +452,7 @@ export function CollectionsSection({
         )}
 
         <ScrollReveal delay={0.2} className="mt-12 text-center">
-          <button
+          <button type="button"
             onClick={() =>
               document
                 .querySelector("#effects")

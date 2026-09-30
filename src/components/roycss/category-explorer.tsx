@@ -69,7 +69,7 @@ export function CategoryExplorer({ onCategorySelect }: { onCategorySelect: (cat:
             const isHovered = hoveredCategory === cat;
 
             return (
-              <motion.button
+              <motion.button type="button"
                 key={cat}
                 onClick={() => onCategorySelect(cat)}
                 onHoverStart={() => setHoveredCategory(cat)}
@@ -84,7 +84,7 @@ export function CategoryExplorer({ onCategorySelect }: { onCategorySelect: (cat:
                   <div className="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity pointer-events-none">
                     <div className="flex items-center justify-center h-full">
                       <div className="scale-150 origin-center">
-                        {/* Decorative — sits inside this tile's <button> (issue #216 item 9: no nested buttons) */}
+                        {/* Decorative — sits inside this tile's <button type="button"> (issue #216 item 9: no nested buttons) */}
                         <DecorativePreview effect={preview} />
                       </div>
                     </div>

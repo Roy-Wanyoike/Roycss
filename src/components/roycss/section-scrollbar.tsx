@@ -6,7 +6,8 @@ import { categoryMeta, categoryOrder, type EffectCategory } from "@/lib/roycss-t
 import { effects } from "@/lib/roycss-effects";
 
 /**
- * SectionScrollbar — a vertical scrollbar on the right side that:
+ * SectionScrollbar — a vertical scrollbar pinned to the inline-end side
+ * (right in LTR, left in RTL — logical `end-*` utilities, issue #276) that:
  * 1. Shows scroll progress through the page
  * 2. Has clickable category sections for quick navigation
  * 3. Shows which section is currently active
@@ -70,12 +71,12 @@ export function SectionScrollbar({
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 20 }}
           transition={{ duration: 0.2 }}
-          className="fixed right-3 top-1/2 -translate-y-1/2 z-30 hidden lg:flex flex-col items-center gap-1 max-h-[70vh] overflow-y-auto scrollbar-thin"
+          className="fixed end-3 top-1/2 -translate-y-1/2 z-30 hidden lg:flex flex-col items-center gap-1 max-h-[70vh] overflow-y-auto scrollbar-thin"
         >
           {/* Progress bar track */}
           <div className="relative w-1 h-32 bg-border/30 rounded-full mb-2 shrink-0">
             <div
-              className="absolute top-0 left-0 w-full bg-primary rounded-full transition-all"
+              className="absolute top-0 start-0 w-full bg-primary rounded-full transition-all"
               style={{ height: `${scrollProgress * 100}%` }}
             />
           </div>
@@ -90,7 +91,7 @@ export function SectionScrollbar({
                   : categoryCounts.get(section.cat) ?? 0;
 
               return (
-                <button
+                <button type="button"
                   key={section.id}
                   onClick={() => onCategoryClick(section.cat, section.id)}
                   className="group relative flex items-center justify-end gap-2 cursor-pointer"
@@ -98,7 +99,7 @@ export function SectionScrollbar({
                 >
                   {/* Tooltip label */}
                   <span
-                    className={`absolute right-5 whitespace-nowrap text-[11px] font-medium px-2 py-0.5 rounded-md bg-card border border-border/50 shadow-sm transition-all opacity-0 group-hover:opacity-100 pointer-events-none`}
+                    className={`absolute end-5 whitespace-nowrap text-[11px] font-medium px-2 py-0.5 rounded-md bg-card border border-border/50 shadow-sm transition-all opacity-0 group-hover:opacity-100 pointer-events-none`}
                   >
                     {section.label} ({catCount})
                   </span>

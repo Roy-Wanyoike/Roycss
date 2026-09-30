@@ -139,10 +139,10 @@ export function KeyboardShortcutsOverlay({ open, onOpenChange }: { open: boolean
                 })}
               </p>
               {/* Visible close button — keyboard-accessible (Esc also closes) */}
-              <button
+              <button type="button"
                 ref={closeButtonRef}
                 onClick={() => onOpenChange(false)}
-                className="absolute top-4 right-4 flex items-center justify-center size-8 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="absolute top-4 end-4 flex items-center justify-center size-8 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 aria-label={t("closeAria")}
               >
                 <X className="size-4" />
@@ -181,7 +181,7 @@ export function KeyboardShortcutsOverlay({ open, onOpenChange }: { open: boolean
                     <div key={i} className="flex items-center gap-2 p-2 rounded-lg bg-muted/30">
                       <s.icon className="size-4 text-muted-foreground shrink-0" />
                       <span className="text-xs text-foreground/80 truncate">{s.label}</span>
-                      <span className="text-[11px] text-muted-foreground ml-auto">{s.hint}</span>
+                      <span className="text-[11px] text-muted-foreground ms-auto">{s.hint}</span>
                     </div>
                   ))}
                 </div>

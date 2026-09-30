@@ -28,7 +28,7 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      description: JWT access token from /auth/login or /auth/signup
+      description: JWT access token from /auth/login or /auth/register
     apiKeyAuth:
       type: apiKey
       in: header
@@ -143,10 +143,41 @@ paths:
         '503': { description: Degraded — a dependency is down }
 
   # ── Auth ────────────────────────────────────────────────────────────
-  /auth/signup:
+  /auth/register:
     post:
       tags: [auth]
       summary: Register a new user
+      description: |
+        Canonical registration path (backend-node parity, issue #270).
+        /auth/signup remains mounted as a legacy alias with identical
+        behavior on both backends.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string, minLength: 8 }
+                name: { type: string }
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/TokenResponse' }
+        '409': { description: Email already registered }
+
+  /auth/signup:
+    post:
+      tags: [auth]
+      summary: Register a new user (legacy alias of /auth/register)
       security: []
       requestBody:
         required: true

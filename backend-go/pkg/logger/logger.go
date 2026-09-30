@@ -24,5 +24,5 @@ func New(level string) *slog.Logger {
 	}
 
 	handler := slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: lvl})
-	return slog.New(handler).With("service", "roycss-go-api")
+	return slog.New(handler).With("service", "roycss-backend")
 }

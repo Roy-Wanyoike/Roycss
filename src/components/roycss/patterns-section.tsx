@@ -1,16 +1,36 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Copy, Check, ChevronDown, Layers, ArrowRight } from "lucide-react";
 import { patterns, searchPatterns, patternCategoryMeta, patternCategoryOrder } from "@/lib/roycss-patterns";
 import { Badge } from "@/components/ui/badge";
+import {
+  copyTextToClipboard,
+  selectElementText,
+  CLIPBOARD_FAILED_MESSAGE,
+  CLIPBOARD_FAILED_RESET_MS,
+} from "@/lib/clipboard";
 import { ScrollReveal, StaggerGroup, staggerItem } from "@/components/roycss/motion-primitives";
 
 function PatternCard({ pattern }: { pattern: typeof patterns[0] }) {
   const [expanded, setExpanded] = useState(false);
   const [copied, setCopied] = useState(false);
-  const handleCopy = async () => { try { await navigator.clipboard.writeText(pattern.html); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch {} };
+  const [copyFailed, setCopyFailed] = useState(false);
+  // `<code>` maps to plain HTMLElement in the DOM (no HTMLCodeElement).
+  const codeRef = useRef<HTMLElement>(null);
+  // Clipboard-failure UX (issue #271): shared helper + visible failed state
+  // (select payload, aria-live polite, auto-reset 4s). Success path unchanged.
+  const handleCopy = async () => {
+    const ok = await copyTextToClipboard(pattern.html);
+    setCopied(ok);
+    setCopyFailed(!ok);
+    if (!ok) selectElementText(codeRef.current);
+    setTimeout(() => {
+      setCopied(false);
+      setCopyFailed(false);
+    }, ok ? 2000 : CLIPBOARD_FAILED_RESET_MS);
+  };
 
   return (
     <motion.div layout className="group rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/40 hover:shadow-lg transition-all">
@@ -33,10 +53,11 @@ function PatternCard({ pattern }: { pattern: typeof patterns[0] }) {
         {expanded && (
           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }} className="overflow-hidden border-t border-border/50">
             <div className="relative">
-              <button onClick={(e) => { e.stopPropagation(); handleCopy(); }} className="absolute top-2 right-2 z-10 flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-background/90 border border-border/50 text-muted-foreground hover:text-foreground hover:bg-background transition-all cursor-pointer">
-                {copied ? <><Check className="size-3 text-emerald-500" /><span className="text-emerald-500">Copied!</span></> : <><Copy className="size-3" />Copy HTML</>}
+              <button onClick={(e) => { e.stopPropagation(); handleCopy(); }} className={`absolute top-2 right-2 z-10 flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-background/90 border border-border/50 text-muted-foreground hover:text-foreground hover:bg-background transition-all cursor-pointer ${copyFailed ? "border-rose-500/50 text-rose-500" : ""}`}>
+                {copied ? <><Check className="size-3 text-emerald-500" /><span className="text-emerald-500">Copied!</span></> : copyFailed ? <><Copy className="size-3" />{CLIPBOARD_FAILED_MESSAGE}</> : <><Copy className="size-3" />Copy HTML</>}
+                <span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span>
               </button>
-              <pre className="p-3 overflow-x-auto text-xs leading-relaxed scrollbar-thin max-h-64 overflow-y-auto"><code className="font-mono text-foreground/80 whitespace-pre">{pattern.html}</code></pre>
+              <pre className="p-3 overflow-x-auto text-xs leading-relaxed scrollbar-thin max-h-64 overflow-y-auto"><code ref={codeRef} className="font-mono text-foreground/80 whitespace-pre">{pattern.html}</code></pre>
             </div>
             <div className="px-3 pb-3 pt-2 border-t border-border/30">
               <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1">When to use</p>

@@ -1,7 +1,13 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 import { SlidersHorizontal, Copy, Check, RotateCcw } from "lucide-react";
+import {
+  copyTextToClipboard,
+  selectElementText,
+  CLIPBOARD_FAILED_MESSAGE,
+  CLIPBOARD_FAILED_RESET_MS,
+} from "@/lib/clipboard";
 
 const FILTERS = [
   { key: "blur", label: "Blur", min: 0, max: 20, step: 0.5, unit: "px", default: 0 },
@@ -32,6 +38,9 @@ export function FilterStudio() {
     Object.fromEntries(FILTERS.map(f => [f.key, f.default]))
   );
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
+  // `<code>` maps to plain HTMLElement in the DOM (no HTMLCodeElement).
+  const codeRef = useRef<HTMLElement>(null);
 
   const cssValue = useMemo(() => {
     const parts = FILTERS
@@ -40,8 +49,20 @@ export function FilterStudio() {
     return parts.length > 0 ? parts.join(" ") : "none";
   }, [values]);
 
+  // Clipboard-failure UX (issue #271): copy through the shared helper
+  // (Clipboard API → execCommand fallback). If BOTH paths fail, select the
+  // rendered payload so the user can hit Ctrl+C / ⌘C themselves, flip to an
+  // accessible "Copy failed" state (role=status, aria-live=polite) and
+  // auto-reset after 4s. The success path ("Copied!" + 2s) is unchanged.
   const handleCopy = useCallback(async () => {
-    try { await navigator.clipboard.writeText(`filter: ${cssValue};`); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch {}
+    const ok = await copyTextToClipboard(`filter: ${cssValue};`);
+    setCopied(ok);
+    setCopyFailed(!ok);
+    if (!ok) selectElementText(codeRef.current);
+    setTimeout(() => {
+      setCopied(false);
+      setCopyFailed(false);
+    }, ok ? 2000 : CLIPBOARD_FAILED_RESET_MS);
   }, [cssValue]);
 
   const update = (key: string, value: number) => setValues(prev => ({ ...prev, [key]: value }));
@@ -81,6 +102,7 @@ export function FilterStudio() {
             </div>
             <input type="range" min={f.min} max={f.max} step={f.step} value={values[f.key]}
               onChange={(e) => update(f.key, parseFloat(e.target.value))}
+              aria-label={f.label}
               className="w-full cursor-pointer" />
           </div>
         ))}
@@ -92,12 +114,13 @@ export function FilterStudio() {
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">CSS</label>
           <div className="flex items-center gap-1">
             <button onClick={reset} className="flex items-center gap-1 px-2 py-1 rounded-md text-xs bg-muted text-muted-foreground hover:text-foreground cursor-pointer"><RotateCcw className="size-3" /> Reset</button>
-            <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
-              {copied ? <Check className="size-3" /> : <Copy className="size-3" />} {copied ? "Copied!" : "Copy"}
+            <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
+              {copied ? <Check className="size-3" /> : <Copy className="size-3" />} {copied ? "Copied!" : copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy"}
+              <span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span>
             </button>
           </div>
         </div>
-        <pre className="p-3 rounded-xl bg-muted/30 border border-border/40 text-xs font-mono text-foreground/80 overflow-x-auto scrollbar-thin"><code>filter: {cssValue};</code></pre>
+        <pre className="p-3 rounded-xl bg-muted/30 border border-border/40 text-xs font-mono text-foreground/80 overflow-x-auto scrollbar-thin"><code ref={codeRef}>filter: {cssValue};</code></pre>
       </div>
     </div>
   );

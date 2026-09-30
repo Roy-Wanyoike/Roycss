@@ -11,6 +11,12 @@ function Slider({
   value,
   min = 0,
   max = 100,
+  // Issue #269: Radix renders the actual role="slider" on the THUMB, not on
+  // Root — an aria-label passed to Root lands on a roleless wrapper span and
+  // is never announced to assistive tech. Destructure it here and forward it
+  // to each thumb below (single-value sliders only; multi-value sliders keep
+  // Radix's built-in "Value N of M" fallback so thumbs stay distinguishable).
+  "aria-label": ariaLabel,
   ...props
 }: React.ComponentProps<typeof SliderPrimitive.Root>) {
   const _values = React.useMemo(
@@ -53,6 +59,7 @@ function Slider({
         <SliderPrimitive.Thumb
           data-slot="slider-thumb"
           key={index}
+          aria-label={_values.length === 1 ? ariaLabel : undefined}
           className="border-primary bg-background ring-ring/50 block size-4 shrink-0 rounded-full border shadow-sm transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
         />
       ))}

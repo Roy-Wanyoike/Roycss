@@ -1,7 +1,13 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 import { Move3d, Copy, Check, RotateCcw } from "lucide-react";
+import {
+  copyTextToClipboard,
+  selectElementText,
+  CLIPBOARD_FAILED_MESSAGE,
+  CLIPBOARD_FAILED_RESET_MS,
+} from "@/lib/clipboard";
 
 interface TransformState {
   rotateX: number; rotateY: number; rotateZ: number;
@@ -31,6 +37,9 @@ const PRESETS: { name: string; value: TransformState }[] = [
 export function TransformStudio() {
   const [transform, setTransform] = useState<TransformState>(DEFAULT);
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
+  // `<code>` maps to plain HTMLElement in the DOM (no HTMLCodeElement).
+  const codeRef = useRef<HTMLElement>(null);
 
   const cssValue = useMemo(() => {
     const parts: string[] = [];
@@ -48,8 +57,17 @@ export function TransformStudio() {
     return parts.length > 0 ? parts.join(" ") : "none";
   }, [transform]);
 
+  // Clipboard-failure UX (issue #271): shared helper + visible failed state
+  // (select payload, aria-live polite, auto-reset 4s). Success path unchanged.
   const handleCopy = useCallback(async () => {
-    try { await navigator.clipboard.writeText(`transform: ${cssValue};`); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch {}
+    const ok = await copyTextToClipboard(`transform: ${cssValue};`);
+    setCopied(ok);
+    setCopyFailed(!ok);
+    if (!ok) selectElementText(codeRef.current);
+    setTimeout(() => {
+      setCopied(false);
+      setCopyFailed(false);
+    }, ok ? 2000 : CLIPBOARD_FAILED_RESET_MS);
   }, [cssValue]);
 
   const update = (key: keyof TransformState, value: number) => setTransform(prev => ({ ...prev, [key]: value }));
@@ -103,6 +121,7 @@ export function TransformStudio() {
             </div>
             <input type="range" min={min} max={max} step={step} value={transform[key]}
               onChange={(e) => update(key, parseFloat(e.target.value))}
+              aria-label={label}
               className="w-full cursor-pointer" />
           </div>
         ))}
@@ -116,12 +135,13 @@ export function TransformStudio() {
             <button onClick={() => setTransform(DEFAULT)} className="flex items-center gap-1 px-2 py-1 rounded-md text-xs bg-muted text-muted-foreground hover:text-foreground cursor-pointer">
               <RotateCcw className="size-3" /> Reset
             </button>
-            <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
-              {copied ? <Check className="size-3" /> : <Copy className="size-3" />} {copied ? "Copied!" : "Copy"}
+            <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
+              {copied ? <Check className="size-3" /> : <Copy className="size-3" />} {copied ? "Copied!" : copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy"}
+              <span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span>
             </button>
           </div>
         </div>
-        <pre className="p-3 rounded-xl bg-muted/30 border border-border/40 text-xs font-mono text-foreground/80 overflow-x-auto scrollbar-thin"><code>transform: {cssValue};</code></pre>
+        <pre className="p-3 rounded-xl bg-muted/30 border border-border/40 text-xs font-mono text-foreground/80 overflow-x-auto scrollbar-thin"><code ref={codeRef}>transform: {cssValue};</code></pre>
       </div>
     </div>
   );

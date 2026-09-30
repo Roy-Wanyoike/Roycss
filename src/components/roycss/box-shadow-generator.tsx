@@ -1,8 +1,14 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Box, Copy, Check, Plus, Minus, Trash2, Layers } from "lucide-react";
+import {
+  copyTextToClipboard,
+  selectElementText,
+  CLIPBOARD_FAILED_MESSAGE,
+  CLIPBOARD_FAILED_RESET_MS,
+} from "@/lib/clipboard";
 
 interface ShadowLayer {
   id: string;
@@ -31,7 +37,10 @@ const PRESETS = [
 export function BoxShadowGenerator() {
   const [layers, setLayers] = useState<ShadowLayer[]>([makeLayer()]);
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
   const [bgColor, setBgColor] = useState("#1a1a2e");
+  // `<code>` maps to plain HTMLElement in the DOM (no HTMLCodeElement).
+  const codeRef = useRef<HTMLElement>(null);
 
   const cssValue = useMemo(() => {
     return layers.map(l => {
@@ -40,8 +49,17 @@ export function BoxShadowGenerator() {
     }).join(", ");
   }, [layers]);
 
+  // Clipboard-failure UX (issue #271): shared helper + visible failed state
+  // (select payload, aria-live polite, auto-reset 4s). Success path unchanged.
   const handleCopy = useCallback(async () => {
-    try { await navigator.clipboard.writeText(`box-shadow: ${cssValue};`); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch {}
+    const ok = await copyTextToClipboard(`box-shadow: ${cssValue};`);
+    setCopied(ok);
+    setCopyFailed(!ok);
+    if (!ok) selectElementText(codeRef.current);
+    setTimeout(() => {
+      setCopied(false);
+      setCopyFailed(false);
+    }, ok ? 2000 : CLIPBOARD_FAILED_RESET_MS);
   }, [cssValue]);
 
   const updateLayer = (id: string, field: keyof ShadowLayer, value: string | number | boolean) => {
@@ -61,8 +79,8 @@ export function BoxShadowGenerator() {
       {/* Background color */}
       <div className="flex items-center gap-2">
         <label className="text-xs text-muted-foreground">Preview BG:</label>
-        <input type="color" value={bgColor} onChange={(e) => setBgColor(e.target.value)} className="size-7 rounded border border-border/50 cursor-pointer" />
-        <input type="text" value={bgColor} onChange={(e) => setBgColor(e.target.value)} className="h-7 px-2 rounded bg-background border border-border/40 text-xs font-mono w-20" />
+        <input type="color" value={bgColor} onChange={(e) => setBgColor(e.target.value)} aria-label="Preview BG color" className="size-7 rounded border border-border/50 cursor-pointer" />
+        <input type="text" value={bgColor} onChange={(e) => setBgColor(e.target.value)} aria-label="Preview BG color value" className="h-7 px-2 rounded bg-background border border-border/40 text-xs font-mono w-20" />
       </div>
 
       {/* Presets */}
@@ -93,10 +111,12 @@ export function BoxShadowGenerator() {
                 <span className="text-[11px] font-mono text-muted-foreground">Layer {i + 1}</span>
                 <div className="flex items-center gap-1">
                   <button onClick={() => updateLayer(layer.id, "inset", !layer.inset)}
+                    aria-pressed={layer.inset}
+                    aria-label={`Toggle inset on layer ${i + 1}`}
                     className={`px-2 py-0.5 rounded text-[11px] font-medium transition-all cursor-pointer ${layer.inset ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}>
                     inset
                   </button>
-                  <button onClick={() => removeLayer(layer.id)} disabled={layers.length <= 1} className="text-muted-foreground hover:text-rose-500 disabled:opacity-30 cursor-pointer">
+                  <button onClick={() => removeLayer(layer.id)} disabled={layers.length <= 1} aria-label={`Remove layer ${i + 1}`} className="text-muted-foreground hover:text-rose-500 disabled:opacity-30 cursor-pointer">
                     <Minus className="size-3" />
                   </button>
                 </div>
@@ -106,14 +126,17 @@ export function BoxShadowGenerator() {
                   <div key={prop}>
                     <label className="text-[11px] text-muted-foreground uppercase">{prop}</label>
                     <input type="number" value={layer[prop]} onChange={(e) => updateLayer(layer.id, prop, parseInt(e.target.value) || 0)}
+                      aria-label={`Layer ${i + 1} ${prop} offset (pixels)`}
                       className="w-full h-7 px-1.5 rounded bg-background border border-border/40 text-xs font-mono text-center focus:outline-none focus:border-primary/40" />
                   </div>
                 ))}
               </div>
               <div className="flex items-center gap-2">
                 <input type="color" value="#10b981" onChange={(e) => updateLayer(layer.id, "color", `oklch(0.7 0.2 ${Math.round(parseInt(e.target.value.slice(1, 3), 16) / 255 * 360)} / 0.4)`)}
+                  aria-label={`Layer ${i + 1} accent color`}
                   className="size-7 rounded border border-border/40 cursor-pointer" />
                 <input type="text" value={layer.color} onChange={(e) => updateLayer(layer.id, "color", e.target.value)}
+                  aria-label={`Layer ${i + 1} color value`}
                   className="flex-1 h-7 px-2 rounded bg-background border border-border/40 text-xs font-mono focus:outline-none focus:border-primary/40" />
               </div>
             </div>
@@ -125,11 +148,12 @@ export function BoxShadowGenerator() {
       <div>
         <div className="flex items-center justify-between mb-1.5">
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">CSS</label>
-          <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
-            {copied ? <Check className="size-3" /> : <Copy className="size-3" />} {copied ? "Copied!" : "Copy"}
+          <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
+            {copied ? <Check className="size-3" /> : <Copy className="size-3" />} {copied ? "Copied!" : copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy"}
+            <span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span>
           </button>
         </div>
-        <pre className="p-3 rounded-xl bg-muted/30 border border-border/40 text-xs font-mono text-foreground/80 overflow-x-auto scrollbar-thin"><code>box-shadow: {cssValue};</code></pre>
+        <pre className="p-3 rounded-xl bg-muted/30 border border-border/40 text-xs font-mono text-foreground/80 overflow-x-auto scrollbar-thin"><code ref={codeRef}>box-shadow: {cssValue};</code></pre>
       </div>
     </div>
   );

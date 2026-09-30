@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 import { RotateCcw, Copy, Check, SlidersHorizontal } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,12 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { effects } from "@/lib/roycss-effects";
+import {
+  copyTextToClipboard,
+  selectElementText,
+  CLIPBOARD_FAILED_MESSAGE,
+  CLIPBOARD_FAILED_RESET_MS,
+} from "@/lib/clipboard";
 import { LivePreview } from "@/components/roycss/effect-card";
 
 const EASING_OPTIONS = [
@@ -28,7 +34,10 @@ export function PlaygroundPanel({ open, onOpenChange }: PlaygroundPanelProps) {
   const [repeat, setRepeat] = useState("infinite");
   const [easing, setEasing] = useState("ease-in-out");
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
   const [replayKey, setReplayKey] = useState(0);
+  // `<code>` maps to plain HTMLElement in the DOM (no HTMLCodeElement).
+  const codeRef = useRef<HTMLElement>(null);
 
   const selectedEffect = useMemo(() => effects.find(e => e.id === effectId) || effects[0], [effectId]);
   const animatedEffects = useMemo(() => effects.filter(e => /animation\s*:/.test(e.cssCode)).slice(0, 200), []);
@@ -41,8 +50,17 @@ export function PlaygroundPanel({ open, onOpenChange }: PlaygroundPanelProps) {
     return `/* ${selectedEffect.name} — customized */\n.${cls} {\n  animation: ${animName} ${duration}s ${easing} ${delay}s ${repeat};\n}`;
   }, [selectedEffect, duration, delay, repeat, easing]);
 
+  // Clipboard-failure UX (issue #271): shared helper + visible failed state
+  // (select payload, aria-live polite, auto-reset 4s). Success path unchanged.
   const handleCopy = useCallback(async () => {
-    try { await navigator.clipboard.writeText(generatedCSS); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch {}
+    const ok = await copyTextToClipboard(generatedCSS);
+    setCopied(ok);
+    setCopyFailed(!ok);
+    if (!ok) selectElementText(codeRef.current);
+    setTimeout(() => {
+      setCopied(false);
+      setCopyFailed(false);
+    }, ok ? 2000 : CLIPBOARD_FAILED_RESET_MS);
   }, [generatedCSS]);
 
   return (
@@ -56,7 +74,7 @@ export function PlaygroundPanel({ open, onOpenChange }: PlaygroundPanelProps) {
           <div>
             <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Effect</Label>
             <Select value={effectId} onValueChange={setEffectId}>
-              <SelectTrigger className="h-11 w-full cursor-pointer"><SelectValue /></SelectTrigger>
+              <SelectTrigger aria-label="Effect" className="h-11 w-full cursor-pointer"><SelectValue /></SelectTrigger>
               <SelectContent className="max-h-64">{animatedEffects.map(e => <SelectItem key={e.id} value={e.id}>{e.name}</SelectItem>)}</SelectContent>
             </Select>
           </div>
@@ -77,26 +95,26 @@ export function PlaygroundPanel({ open, onOpenChange }: PlaygroundPanelProps) {
           </div>
           <div>
             <div className="flex items-center justify-between mb-2"><Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Duration</Label><span className="text-xs font-mono text-primary">{duration}s</span></div>
-            <Slider value={[duration]} onValueChange={(v) => setDuration(v[0])} min={0.1} max={10} step={0.1} className="cursor-pointer" />
+            <Slider value={[duration]} onValueChange={(v) => setDuration(v[0])} min={0.1} max={10} step={0.1} aria-label="Duration (seconds)" className="cursor-pointer" />
           </div>
           <div>
             <div className="flex items-center justify-between mb-2"><Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Delay</Label><span className="text-xs font-mono text-primary">{delay}s</span></div>
-            <Slider value={[delay]} onValueChange={(v) => setDelay(v[0])} min={0} max={5} step={0.1} className="cursor-pointer" />
+            <Slider value={[delay]} onValueChange={(v) => setDelay(v[0])} min={0} max={5} step={0.1} aria-label="Delay (seconds)" className="cursor-pointer" />
           </div>
           <div>
             <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Repeat</Label>
-            <Select value={repeat} onValueChange={setRepeat}><SelectTrigger className="h-11 w-full cursor-pointer"><SelectValue /></SelectTrigger><SelectContent>{REPEAT_OPTIONS.map(o => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent></Select>
+            <Select value={repeat} onValueChange={setRepeat}><SelectTrigger aria-label="Repeat" className="h-11 w-full cursor-pointer"><SelectValue /></SelectTrigger><SelectContent>{REPEAT_OPTIONS.map(o => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent></Select>
           </div>
           <div>
             <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Easing</Label>
-            <Select value={easing} onValueChange={setEasing}><SelectTrigger className="h-11 w-full cursor-pointer"><SelectValue /></SelectTrigger><SelectContent>{EASING_OPTIONS.map(o => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent></Select>
+            <Select value={easing} onValueChange={setEasing}><SelectTrigger aria-label="Easing" className="h-11 w-full cursor-pointer"><SelectValue /></SelectTrigger><SelectContent>{EASING_OPTIONS.map(o => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent></Select>
           </div>
           <button onClick={() => { setDuration(2); setDelay(0); setRepeat("infinite"); setEasing("ease-in-out"); }} className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer"><RotateCcw className="size-3" />Reset to defaults</button>
           <div>
             <div className="flex items-center justify-between mb-2"><Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Generated CSS</Label>
-              <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>{copied ? <Check className="size-3" /> : <Copy className="size-3" />}{copied ? "Copied!" : "Copy CSS"}</button>
+              <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>{copied ? <Check className="size-3" /> : <Copy className="size-3" />}{copied ? "Copied!" : copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy CSS"}<span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span></button>
             </div>
-            <pre className="p-3 rounded-xl bg-muted/50 border border-border/50 text-xs leading-relaxed font-mono text-foreground/80 overflow-x-auto scrollbar-thin"><code>{generatedCSS}</code></pre>
+            <pre className="p-3 rounded-xl bg-muted/50 border border-border/50 text-xs leading-relaxed font-mono text-foreground/80 overflow-x-auto scrollbar-thin"><code ref={codeRef}>{generatedCSS}</code></pre>
           </div>
         </div>
       </SheetContent>

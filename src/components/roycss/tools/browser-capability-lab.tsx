@@ -175,6 +175,7 @@ function ContainerQueryDemo(): ReactNode {
           max={520}
           value={width}
           onChange={(e) => setWidth(Number(e.target.value))}
+          aria-label="Container width (pixels)"
           className="flex-1"
         />
         <span className="w-14 text-right tabular-nums">{width}px</span>

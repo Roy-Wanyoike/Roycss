@@ -2,6 +2,11 @@
 
 import { useState, useMemo, useCallback } from "react";
 import { Palette, Copy, Check, Shuffle, Plus, Minus } from "lucide-react";
+import {
+  copyTextToClipboard,
+  CLIPBOARD_FAILED_MESSAGE,
+  CLIPBOARD_FAILED_RESET_MS,
+} from "@/lib/clipboard";
 
 interface PaletteColor {
   oklch: string;
@@ -37,6 +42,10 @@ export function ColorPaletteGenerator() {
   const [harmonyIdx, setHarmonyIdx] = useState(2);
   const [count, setCount] = useState(5);
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
+  // Failed-copy tracking (issue #271): no rendered <code> payload here, so a
+  // rejected copy shows the visible status line under the palette strip
+  // (role=status, aria-live=polite) and auto-resets after 4s.
+  const [copyFailedIdx, setCopyFailedIdx] = useState<number | null>(null);
   const [palette, setPalette] = useState<PaletteColor[]>(() => generatePalette(162, HARMONIES[2], 5));
 
   const regenerate = useCallback(() => {
@@ -44,7 +53,9 @@ export function ColorPaletteGenerator() {
   }, [baseHue, harmonyIdx, count]);
 
   const handleCopy = useCallback(async (color: string, idx: number) => {
-    try { await navigator.clipboard.writeText(color); setCopiedIdx(idx); setTimeout(() => setCopiedIdx(null), 2000); } catch {}
+    const ok = await copyTextToClipboard(color);
+    if (ok) { setCopiedIdx(idx); setTimeout(() => setCopiedIdx(null), 2000); }
+    else { setCopyFailedIdx(idx); setTimeout(() => setCopyFailedIdx(null), CLIPBOARD_FAILED_RESET_MS); }
   }, []);
 
   return (
@@ -53,9 +64,10 @@ export function ColorPaletteGenerator() {
       <div className="flex h-24 rounded-xl overflow-hidden border border-border/50">
         {palette.map((color, i) => (
           <button key={i} onClick={() => handleCopy(color.oklch, i)}
-            className="flex-1 flex items-end justify-center p-2 transition-all hover:flex-[1.5] cursor-pointer group relative"
+            className={`flex-1 flex items-end justify-center p-2 transition-all hover:flex-[1.5] cursor-pointer group relative ${copyFailedIdx === i ? "ring-2 ring-inset ring-rose-500" : ""}`}
             style={{ background: color.oklch }}
             title={color.oklch}
+            aria-label={`Copy ${color.oklch}`}
           >
             <span className="text-[11px] font-mono font-bold opacity-0 group-hover:opacity-100 transition-opacity"
               style={{ color: color.lightness > 0.6 ? "oklch(0.15 0.02 250)" : "oklch(0.98 0.01 250)" }}>
@@ -65,6 +77,12 @@ export function ColorPaletteGenerator() {
         ))}
       </div>
 
+      {/* Clipboard status (issue #271): visible + announced when a copy is
+          rejected by both the Clipboard API and the execCommand fallback. */}
+      <p role="status" aria-live="polite" className={`text-xs font-medium ${copyFailedIdx !== null ? "text-rose-500" : "sr-only"}`}>
+        {copyFailedIdx !== null ? CLIPBOARD_FAILED_MESSAGE : ""}
+      </p>
+
       {/* Controls */}
       <div>
         <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">
@@ -73,6 +91,7 @@ export function ColorPaletteGenerator() {
         <input type="range" min={0} max={360} value={baseHue}
           onChange={(e) => { setBaseHue(parseInt(e.target.value)); }}
           onMouseUp={regenerate}
+          aria-label="Base Hue (degrees)"
           className="w-full cursor-pointer" />
       </div>
 
@@ -91,9 +110,9 @@ export function ColorPaletteGenerator() {
       <div className="flex items-center gap-3">
         <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Count</label>
         <div className="flex items-center gap-1">
-          <button onClick={() => { const c = Math.max(2, count - 1); setCount(c); setPalette(generatePalette(baseHue, HARMONIES[harmonyIdx], c)); }} className="size-7 rounded-lg bg-muted text-muted-foreground hover:text-primary flex items-center justify-center cursor-pointer"><Minus className="size-3" /></button>
+          <button onClick={() => { const c = Math.max(2, count - 1); setCount(c); setPalette(generatePalette(baseHue, HARMONIES[harmonyIdx], c)); }} aria-label="Decrease color count" className="size-7 rounded-lg bg-muted text-muted-foreground hover:text-primary flex items-center justify-center cursor-pointer"><Minus className="size-3" /></button>
           <span className="text-sm font-mono w-8 text-center">{count}</span>
-          <button onClick={() => { const c = Math.min(10, count + 1); setCount(c); setPalette(generatePalette(baseHue, HARMONIES[harmonyIdx], c)); }} className="size-7 rounded-lg bg-muted text-muted-foreground hover:text-primary flex items-center justify-center cursor-pointer"><Plus className="size-3" /></button>
+          <button onClick={() => { const c = Math.min(10, count + 1); setCount(c); setPalette(generatePalette(baseHue, HARMONIES[harmonyIdx], c)); }} aria-label="Increase color count" className="size-7 rounded-lg bg-muted text-muted-foreground hover:text-primary flex items-center justify-center cursor-pointer"><Plus className="size-3" /></button>
         </div>
         <button onClick={regenerate} className="ml-auto flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all text-xs font-medium cursor-pointer">
           <Shuffle className="size-3" /> Randomize
@@ -104,10 +123,11 @@ export function ColorPaletteGenerator() {
       <div className="space-y-1">
         {palette.map((color, i) => (
           <button key={i} onClick={() => handleCopy(color.oklch, i)}
-            className="w-full flex items-center gap-2 p-2 rounded-lg hover:bg-muted/50 transition-all cursor-pointer text-left">
+            className={`w-full flex items-center gap-2 p-2 rounded-lg hover:bg-muted/50 transition-all cursor-pointer text-left ${copyFailedIdx === i ? "bg-rose-500/5" : ""}`}
+            aria-label={`Copy ${color.oklch}`}>
             <div className="size-7 rounded-md border border-border/40 shrink-0" style={{ background: color.oklch }} />
             <code className="text-xs font-mono text-foreground/80 flex-1 truncate">{color.oklch}</code>
-            {copiedIdx === i ? <Check className="size-3.5 text-emerald-500 shrink-0" /> : <Copy className="size-3.5 text-muted-foreground shrink-0" />}
+            {copiedIdx === i ? <Check className="size-3.5 text-emerald-500 shrink-0" /> : <Copy className={`size-3.5 shrink-0 ${copyFailedIdx === i ? "text-rose-500" : "text-muted-foreground"}`} />}
           </button>
         ))}
       </div>

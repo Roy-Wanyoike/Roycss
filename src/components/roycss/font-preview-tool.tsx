@@ -1,7 +1,13 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 import { Type, Copy, Check } from "lucide-react";
+import {
+  copyTextToClipboard,
+  selectElementText,
+  CLIPBOARD_FAILED_MESSAGE,
+  CLIPBOARD_FAILED_RESET_MS,
+} from "@/lib/clipboard";
 
 const FONT_FAMILIES = [
   { name: "System UI", value: "system-ui, sans-serif" },
@@ -39,6 +45,9 @@ export function FontPreviewTool() {
   const [textTransform, setTextTransform] = useState<"none" | "uppercase" | "lowercase" | "capitalize">("none");
   const [textDecoration, setTextDecoration] = useState<"none" | "underline" | "line-through" | "overline">("none");
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
+  // `<code>` maps to plain HTMLElement in the DOM (no HTMLCodeElement).
+  const codeRef = useRef<HTMLElement>(null);
 
   const cssValue = useMemo(() => {
     return [
@@ -53,8 +62,17 @@ export function FontPreviewTool() {
     ].join("\n  ");
   }, [fontFamily, fontSize, fontWeight, lineHeight, letterSpacing, fontStyle, textTransform, textDecoration]);
 
+  // Clipboard-failure UX (issue #271): shared helper + visible failed state
+  // (select payload, aria-live polite, auto-reset 4s). Success path unchanged.
   const handleCopy = useCallback(async () => {
-    try { await navigator.clipboard.writeText(`.my-text {\n  ${cssValue}\n}`); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch {}
+    const ok = await copyTextToClipboard(`.my-text {\n  ${cssValue}\n}`);
+    setCopied(ok);
+    setCopyFailed(!ok);
+    if (!ok) selectElementText(codeRef.current);
+    setTimeout(() => {
+      setCopied(false);
+      setCopyFailed(false);
+    }, ok ? 2000 : CLIPBOARD_FAILED_RESET_MS);
   }, [cssValue]);
 
   return (
@@ -69,7 +87,7 @@ export function FontPreviewTool() {
       </div>
 
       {/* Text input */}
-      <input type="text" value={text} onChange={(e) => setText(e.target.value)} placeholder="Type your text..."
+      <input type="text" value={text} onChange={(e) => setText(e.target.value)} placeholder="Type your text..." aria-label="Preview text"
         className="w-full h-10 px-3 rounded-lg bg-background border border-border/50 focus:border-primary/50 text-sm focus:outline-none" />
 
       {/* Font family */}
@@ -90,26 +108,26 @@ export function FontPreviewTool() {
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Font Size</label>
           <span className="text-xs font-mono text-primary">{fontSize}px</span>
         </div>
-        <input type="range" min={8} max={96} value={fontSize} onChange={(e) => setFontSize(parseInt(e.target.value))} className="w-full cursor-pointer" />
+        <input type="range" min={8} max={96} value={fontSize} onChange={(e) => setFontSize(parseInt(e.target.value))} aria-label="Font Size (pixels)" className="w-full cursor-pointer" />
       </div>
 
       {/* Weight + Line height + Letter spacing */}
       <div className="grid grid-cols-3 gap-3">
         <div>
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Weight</label>
-          <select value={fontWeight} onChange={(e) => setFontWeight(e.target.value)} className="w-full h-8 px-2 rounded bg-background border border-border/40 text-xs cursor-pointer">
+          <select value={fontWeight} onChange={(e) => setFontWeight(e.target.value)} aria-label="Weight" className="w-full h-8 px-2 rounded bg-background border border-border/40 text-xs cursor-pointer">
             {FONT_WEIGHTS.map(w => <option key={w.value} value={w.value}>{w.name}</option>)}
           </select>
         </div>
         <div>
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Line Height</label>
-          <select value={lineHeight} onChange={(e) => setLineHeight(e.target.value)} className="w-full h-8 px-2 rounded bg-background border border-border/40 text-xs cursor-pointer">
+          <select value={lineHeight} onChange={(e) => setLineHeight(e.target.value)} aria-label="Line Height" className="w-full h-8 px-2 rounded bg-background border border-border/40 text-xs cursor-pointer">
             {LINE_HEIGHTS.map(l => <option key={l} value={l}>{l}</option>)}
           </select>
         </div>
         <div>
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Letter Space</label>
-          <select value={letterSpacing} onChange={(e) => setLetterSpacing(e.target.value)} className="w-full h-8 px-2 rounded bg-background border border-border/40 text-xs cursor-pointer">
+          <select value={letterSpacing} onChange={(e) => setLetterSpacing(e.target.value)} aria-label="Letter Space" className="w-full h-8 px-2 rounded bg-background border border-border/40 text-xs cursor-pointer">
             {LETTER_SPACINGS.map(l => <option key={l} value={l}>{l}</option>)}
           </select>
         </div>
@@ -127,13 +145,13 @@ export function FontPreviewTool() {
         </div>
         <div>
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Transform</label>
-          <select value={textTransform} onChange={(e) => setTextTransform(e.target.value as typeof textTransform)} className="w-full h-8 px-2 rounded bg-background border border-border/40 text-xs cursor-pointer capitalize">
+          <select value={textTransform} onChange={(e) => setTextTransform(e.target.value as typeof textTransform)} aria-label="Transform" className="w-full h-8 px-2 rounded bg-background border border-border/40 text-xs cursor-pointer capitalize">
             <option value="none">None</option><option value="uppercase">Upper</option><option value="lowercase">Lower</option><option value="capitalize">Capitalize</option>
           </select>
         </div>
         <div>
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Decoration</label>
-          <select value={textDecoration} onChange={(e) => setTextDecoration(e.target.value as typeof textDecoration)} className="w-full h-8 px-2 rounded bg-background border border-border/40 text-xs cursor-pointer capitalize">
+          <select value={textDecoration} onChange={(e) => setTextDecoration(e.target.value as typeof textDecoration)} aria-label="Decoration" className="w-full h-8 px-2 rounded bg-background border border-border/40 text-xs cursor-pointer capitalize">
             <option value="none">None</option><option value="underline">Underline</option><option value="line-through">Strikethrough</option><option value="overline">Overline</option>
           </select>
         </div>
@@ -143,11 +161,12 @@ export function FontPreviewTool() {
       <div>
         <div className="flex items-center justify-between mb-1.5">
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">CSS</label>
-          <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
-            {copied ? <Check className="size-3" /> : <Copy className="size-3" />} {copied ? "Copied!" : "Copy"}
+          <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
+            {copied ? <Check className="size-3" /> : <Copy className="size-3" />} {copied ? "Copied!" : copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy"}
+            <span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span>
           </button>
         </div>
-        <pre className="p-3 rounded-xl bg-muted/30 border border-border/40 text-xs font-mono text-foreground/80 overflow-x-auto scrollbar-thin"><code>.my-text {`{`}\n  {cssValue}\n{`}`}</code></pre>
+        <pre className="p-3 rounded-xl bg-muted/30 border border-border/40 text-xs font-mono text-foreground/80 overflow-x-auto scrollbar-thin"><code ref={codeRef}>.my-text {`{`}\n  {cssValue}\n{`}`}</code></pre>
       </div>
     </div>
   );

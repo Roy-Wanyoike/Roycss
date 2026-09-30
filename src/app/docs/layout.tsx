@@ -37,6 +37,7 @@ import {
 } from "@/lib/docs-sitemap";
 import { DocsFeedback } from "@/components/docs/feedback";
 import { DocsPageMeta } from "@/components/docs/edit-link";
+import { explorerHref } from "@/lib/search-targets";
 import { SiteHeader } from "@/components/roycss/site-header";
 
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -135,10 +136,13 @@ function TopBar({ onOpenSidebar }: { onOpenSidebar: () => void }) {
           snapshots (/docs/v1 etc.) show their own version honestly. */}
       <VersionPill />
       <div className="ml-auto flex items-center gap-1">
+        {/* Issue #271: /#search has no target on the home page — the honest
+            cross-link is the effects explorer (explorerHref() = /#effects,
+            the home page's searchable/filterable catalog section). */}
         <Link
-          href="/#search"
+          href={explorerHref()}
           className="inline-flex size-9 items-center justify-center rounded-md text-muted-foreground hover:bg-muted"
-          aria-label="Search docs"
+          aria-label="Open effects explorer"
         >
           <Search className="size-4" />
         </Link>

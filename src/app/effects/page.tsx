@@ -10,6 +10,7 @@ import {
   INDEX_SAMPLES_PER_CATEGORY,
 } from "./_lib/static-effects";
 import { Badge } from "@/components/ui/badge";
+import { EffectsSearchShortcuts } from "@/components/roycss/effects-search-shortcuts";
 
 /**
  * Route segment config — see src/app/effects/[id]/page.tsx for the full
@@ -90,6 +91,9 @@ for (const effect of effects) {
 export default function EffectsIndexPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* Issue #271: the ⌘K hint below is now real on /effects — this client
+          mount listens for ⌘K / Ctrl+K and opens the shared SearchOverlay. */}
+      <EffectsSearchShortcuts />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -129,12 +133,12 @@ export default function EffectsIndexPage() {
         <div className="mt-6 flex flex-wrap items-center gap-3 rounded-xl border border-border bg-card p-4">
           <Search className="size-4 shrink-0 text-primary" aria-hidden="true" />
           <p className="text-sm text-muted-foreground flex-1 min-w-[16rem]">
-            Looking for something specific? Open the full effects explorer and
-            press{" "}
+            Looking for something specific? Press{" "}
             <kbd className="inline-flex items-center gap-0.5 rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-xs text-foreground">
               <Command className="size-3" aria-hidden="true" />K
             </kbd>{" "}
-            to search the whole catalog.
+            to search the whole catalog, or open the full effects explorer to
+            browse by category.
           </p>
           <Link
             href={explorerHref()}

@@ -12,6 +12,12 @@ import {
 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
+import {
+  copyTextToClipboard,
+  selectElementText,
+  CLIPBOARD_FAILED_MESSAGE,
+  CLIPBOARD_FAILED_RESET_MS,
+} from "@/lib/clipboard";
 import { cn } from "@/lib/utils";
 
 /**
@@ -229,10 +235,13 @@ export function EasingVisualizer() {
   const [progress, setProgress] = useState(0);
   const [previewPos, setPreviewPos] = useState<0 | 1>(0);
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
   const [dragging, setDragging] = useState<DragTarget | null>(null);
 
   const svgRef = useRef<SVGSVGElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
+  // `<code>` maps to plain HTMLElement in the DOM (no HTMLCodeElement).
+  const codeRef = useRef<HTMLElement>(null);
   const [trackWidth, setTrackWidth] = useState(0);
 
   const rafRef = useRef<number | null>(null);
@@ -304,14 +313,17 @@ export function EasingVisualizer() {
   const cssString = `transition-timing-function: cubic-bezier(${fmt(x1)}, ${fmt(y1)}, ${fmt(x2)}, ${fmt(y2)});`;
   const cubicBezierString = `cubic-bezier(${fmt(x1)}, ${fmt(y1)}, ${fmt(x2)}, ${fmt(y2)})`;
 
+  // Clipboard-failure UX (issue #271): shared helper + visible failed state
+  // (select payload, aria-live polite, auto-reset 4s). Success path unchanged.
   const handleCopy = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(cssString);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
-    } catch {
-      /* clipboard unavailable — silently ignore */
-    }
+    const ok = await copyTextToClipboard(cssString);
+    setCopied(ok);
+    setCopyFailed(!ok);
+    if (!ok) selectElementText(codeRef.current);
+    window.setTimeout(() => {
+      setCopied(false);
+      setCopyFailed(false);
+    }, ok ? 2000 : CLIPBOARD_FAILED_RESET_MS);
   }, [cssString]);
 
   const setVal = useCallback(
@@ -752,6 +764,7 @@ export function EasingVisualizer() {
                   const n = parseInt(e.target.value, 10);
                   if (!Number.isNaN(n)) setDuration(clamp(n, 100, 5000));
                 }}
+                aria-label="Duration (milliseconds)"
                 className="h-7 w-20 text-right font-mono text-xs"
               />
             </div>
@@ -818,7 +831,9 @@ export function EasingVisualizer() {
                   "flex cursor-pointer items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-medium transition-all",
                   copied
                     ? "bg-emerald-500/15 text-emerald-500"
-                    : "bg-primary/10 text-primary hover:bg-primary/20",
+                    : copyFailed
+                      ? "bg-rose-500/15 text-rose-500"
+                      : "bg-primary/10 text-primary hover:bg-primary/20",
                 )}
               >
                 {copied ? (
@@ -826,11 +841,12 @@ export function EasingVisualizer() {
                 ) : (
                   <Copy className="size-3.5" />
                 )}
-                {copied ? "Copied!" : "Copy"}
+                {copied ? "Copied!" : copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy"}
+                <span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span>
               </button>
             </div>
             <pre className="overflow-x-auto rounded-lg border border-border/40 bg-muted/30 p-3 font-mono text-xs text-foreground/80">
-              <code>{cssString}</code>
+              <code ref={codeRef}>{cssString}</code>
             </pre>
             <p className="text-[11px] text-muted-foreground">
               Use inline:{" "}

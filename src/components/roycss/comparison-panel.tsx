@@ -22,6 +22,11 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { effects } from "@/lib/roycss-effects";
+import {
+  copyTextToClipboard,
+  CLIPBOARD_FAILED_MESSAGE,
+  CLIPBOARD_FAILED_RESET_MS,
+} from "@/lib/clipboard";
 import type { CSSEffect } from "@/lib/roycss-types";
 import { DecorativePreview, LivePreview } from "@/components/roycss/effect-card";
 
@@ -109,6 +114,7 @@ function EffectPicker({
         <Input
           type="search"
           placeholder="Search effects to compare..."
+          aria-label="Search effects to compare"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="pl-10 h-10"
@@ -163,13 +169,19 @@ function ComparisonSlot({
   replayKey: number;
 }) {
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
+  // Clipboard-failure UX (issue #271): the class name is not rendered as a
+  // selectable <code> block here, so a rejected copy flips this icon button
+  // to its rose failed state + polite status announcement, auto-reset 4s.
   const handleCopy = useCallback(async () => {
     if (!effect) return;
-    try {
-      await navigator.clipboard.writeText(`roycss-${effect.id}`);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch { /* noop */ }
+    const ok = await copyTextToClipboard(`roycss-${effect.id}`);
+    setCopied(ok);
+    setCopyFailed(!ok);
+    setTimeout(() => {
+      setCopied(false);
+      setCopyFailed(false);
+    }, ok ? 2000 : CLIPBOARD_FAILED_RESET_MS);
   }, [effect]);
 
   return (
@@ -185,11 +197,12 @@ function ComparisonSlot({
             <div className="flex items-center gap-1 shrink-0">
               <button
                 onClick={handleCopy}
-                className="flex items-center justify-center size-7 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-all cursor-pointer"
-                aria-label="Copy class name"
-                title="Copy class name"
+                className={`flex items-center justify-center size-7 rounded-md hover:bg-muted transition-all cursor-pointer ${copyFailed ? "bg-rose-500/10 text-rose-500" : "text-muted-foreground hover:text-foreground"}`}
+                aria-label={copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy class name"}
+                title={copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy class name"}
               >
                 {copied ? <Check className="size-3.5 text-emerald-500" /> : <Copy className="size-3.5" />}
+                <span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span>
               </button>
               <button
                 onClick={onReplace}

@@ -1,8 +1,14 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus, Copy, Check, Shuffle, RotateCcw } from "lucide-react";
+import {
+  copyTextToClipboard,
+  selectElementText,
+  CLIPBOARD_FAILED_MESSAGE,
+  CLIPBOARD_FAILED_RESET_MS,
+} from "@/lib/clipboard";
 
 /**
  * CSSGradientGenerator — visual gradient builder with OKLCH colors.
@@ -45,6 +51,9 @@ export function CSSGradientGenerator() {
   const [angle, setAngle] = useState(135);
   const [type, setType] = useState<"linear" | "radial" | "conic">("linear");
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
+  // `<code>` maps to plain HTMLElement in the DOM (no HTMLCodeElement).
+  const codeRef = useRef<HTMLElement>(null);
 
   const gradientCss = useMemo(() => {
     const stopStr = stops
@@ -57,12 +66,17 @@ export function CSSGradientGenerator() {
     return `conic-gradient(from ${angle}deg, ${stopStr})`;
   }, [stops, angle, type]);
 
+  // Clipboard-failure UX (issue #271): shared helper + visible failed state
+  // (select payload, aria-live polite, auto-reset 4s). Success path unchanged.
   const handleCopy = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(`background: ${gradientCss};`);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch { /* noop */ }
+    const ok = await copyTextToClipboard(`background: ${gradientCss};`);
+    setCopied(ok);
+    setCopyFailed(!ok);
+    if (!ok) selectElementText(codeRef.current);
+    setTimeout(() => {
+      setCopied(false);
+      setCopyFailed(false);
+    }, ok ? 2000 : CLIPBOARD_FAILED_RESET_MS);
   }, [gradientCss]);
 
   const addStop = () => {
@@ -133,6 +147,7 @@ export function CSSGradientGenerator() {
             max={360}
             value={angle}
             onChange={(e) => setAngle(parseInt(e.target.value))}
+            aria-label="Angle (degrees)"
             className="w-full cursor-pointer"
           />
         </div>
@@ -155,18 +170,20 @@ export function CSSGradientGenerator() {
           {stops
             .slice()
             .sort((a, b) => a.position - b.position)
-            .map(stop => (
+            .map((stop, stopIdx) => (
               <div key={stop.id} className="flex items-center gap-2 p-2 rounded-lg bg-muted/30">
                 <input
                   type="color"
                   value={"#10b981"} // Fallback for color picker (OKLCH not supported natively)
                   onChange={(e) => updateStop(stop.id, "color", `oklch(${(0.3 + parseInt(e.target.value.slice(1, 3), 16) / 255 * 0.5).toFixed(2)} 0.2 ${Math.round(parseInt(e.target.value.slice(1, 3), 16) / 255 * 360)})`)}
+                  aria-label={`Color stop ${stopIdx + 1} picker`}
                   className="size-8 rounded border border-border/50 cursor-pointer shrink-0"
                 />
                 <input
                   type="text"
                   value={stop.color}
                   onChange={(e) => updateStop(stop.id, "color", e.target.value)}
+                  aria-label={`Color stop ${stopIdx + 1} value`}
                   className="flex-1 h-8 px-2 rounded bg-background border border-border/40 text-xs font-mono text-foreground focus:outline-none focus:border-primary/40"
                 />
                 <input
@@ -175,10 +192,11 @@ export function CSSGradientGenerator() {
                   max={100}
                   value={stop.position}
                   onChange={(e) => updateStop(stop.id, "position", Math.max(0, Math.min(100, parseInt(e.target.value) || 0)))}
+                  aria-label={`Color stop ${stopIdx + 1} position (percent)`}
                   className="w-14 h-8 px-2 rounded bg-background border border-border/40 text-xs font-mono text-foreground focus:outline-none focus:border-primary/40"
                 />
                 <span className="text-xs text-muted-foreground">%</span>
-                <button onClick={() => removeStop(stop.id)} disabled={stops.length <= 2} className="flex items-center justify-center size-7 rounded text-muted-foreground hover:text-rose-500 disabled:opacity-30 transition-all cursor-pointer">
+                <button onClick={() => removeStop(stop.id)} disabled={stops.length <= 2} aria-label={`Remove color stop ${stopIdx + 1}`} className="flex items-center justify-center size-7 rounded text-muted-foreground hover:text-rose-500 disabled:opacity-30 transition-all cursor-pointer">
                   <Minus className="size-3.5" />
                 </button>
               </div>
@@ -212,14 +230,15 @@ export function CSSGradientGenerator() {
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">CSS</label>
           <button
             onClick={handleCopy}
-            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}
+            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}
           >
             {copied ? <Check className="size-3" /> : <Copy className="size-3" />}
-            {copied ? "Copied!" : "Copy CSS"}
+            {copied ? "Copied!" : copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy CSS"}
+            <span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span>
           </button>
         </div>
         <pre className="p-3 rounded-xl bg-muted/30 border border-border/40 text-xs font-mono text-foreground/80 overflow-x-auto scrollbar-thin">
-          <code>background: {gradientCss};</code>
+          <code ref={codeRef}>background: {gradientCss};</code>
         </pre>
       </div>
     </div>

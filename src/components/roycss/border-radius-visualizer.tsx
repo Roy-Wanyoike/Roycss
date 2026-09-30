@@ -1,7 +1,13 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 import { Copy, Check, RotateCcw, Unlink, Link } from "lucide-react";
+import {
+  copyTextToClipboard,
+  selectElementText,
+  CLIPBOARD_FAILED_MESSAGE,
+  CLIPBOARD_FAILED_RESET_MS,
+} from "@/lib/clipboard";
 
 /**
  * BorderRadiusVisualizer — interactive border-radius editor.
@@ -36,6 +42,9 @@ export function BorderRadiusVisualizer() {
   const [radius, setRadius] = useState<RadiusState>({ tl: 12, tr: 12, br: 12, bl: 12 });
   const [linked, setLinked] = useState(true);
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
+  // `<code>` maps to plain HTMLElement in the DOM (no HTMLCodeElement).
+  const codeRef = useRef<HTMLElement>(null);
 
   const cssValue = useMemo(() => {
     const { tl, tr, br, bl } = radius;
@@ -53,12 +62,17 @@ export function BorderRadiusVisualizer() {
     }
   };
 
+  // Clipboard-failure UX (issue #271): shared helper + visible failed state
+  // (select payload, aria-live polite, auto-reset 4s). Success path unchanged.
   const handleCopy = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(`border-radius: ${cssValue};`);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch { /* noop */ }
+    const ok = await copyTextToClipboard(`border-radius: ${cssValue};`);
+    setCopied(ok);
+    setCopyFailed(!ok);
+    if (!ok) selectElementText(codeRef.current);
+    setTimeout(() => {
+      setCopied(false);
+      setCopyFailed(false);
+    }, ok ? 2000 : CLIPBOARD_FAILED_RESET_MS);
   }, [cssValue]);
 
   return (
@@ -97,6 +111,7 @@ export function BorderRadiusVisualizer() {
             max={100}
             value={Math.min(radius.tl, 100)}
             onChange={(e) => handleSlider("tl", parseInt(e.target.value))}
+            aria-label="All corners"
             className="w-full cursor-pointer"
           />
         </div>
@@ -114,6 +129,7 @@ export function BorderRadiusVisualizer() {
                 max={100}
                 value={Math.min(radius[key], 100)}
                 onChange={(e) => handleSlider(key, parseInt(e.target.value))}
+                aria-label={label}
                 className="w-full cursor-pointer"
               />
             </div>
@@ -147,14 +163,15 @@ export function BorderRadiusVisualizer() {
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">CSS</label>
           <button
             onClick={handleCopy}
-            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}
+            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}
           >
             {copied ? <Check className="size-3" /> : <Copy className="size-3" />}
-            {copied ? "Copied!" : "Copy"}
+            {copied ? "Copied!" : copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy"}
+            <span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span>
           </button>
         </div>
         <pre className="p-3 rounded-xl bg-muted/30 border border-border/40 text-xs font-mono text-foreground/80 overflow-x-auto scrollbar-thin">
-          <code>border-radius: {cssValue};</code>
+          <code ref={codeRef}>border-radius: {cssValue};</code>
         </pre>
       </div>
     </div>

@@ -2,6 +2,11 @@
 
 import { useState, useMemo, useCallback } from "react";
 import { Paintbrush, Copy, Check, Shuffle } from "lucide-react";
+import {
+  copyTextToClipboard,
+  CLIPBOARD_FAILED_MESSAGE,
+  CLIPBOARD_FAILED_RESET_MS,
+} from "@/lib/clipboard";
 
 function hexToRgb(hex: string): [number, number, number] {
   const c = hex.replace("#", "");
@@ -38,6 +43,10 @@ function rgbToOklch(r: number, g: number, b: number): string {
 export function ColorShadeGenerator() {
   const [baseColor, setBaseColor] = useState("#10b981");
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
+  // Failed-copy tracking (issue #271): no rendered <code> payload here, so a
+  // rejected copy shows the visible status line below the grid
+  // (role=status, aria-live=polite) and auto-resets after 4s.
+  const [copyFailedIdx, setCopyFailedIdx] = useState<number | null>(null);
   const [format, setFormat] = useState<"hex" | "oklch">("hex");
 
   const shades = useMemo(() => {
@@ -63,7 +72,9 @@ export function ColorShadeGenerator() {
   }, [baseColor]);
 
   const handleCopy = useCallback(async (value: string, idx: number) => {
-    try { await navigator.clipboard.writeText(value); setCopiedIdx(idx); setTimeout(() => setCopiedIdx(null), 2000); } catch {}
+    const ok = await copyTextToClipboard(value);
+    if (ok) { setCopiedIdx(idx); setTimeout(() => setCopiedIdx(null), 2000); }
+    else { setCopyFailedIdx(idx); setTimeout(() => setCopyFailedIdx(null), CLIPBOARD_FAILED_RESET_MS); }
   }, []);
 
   const randomColor = () => {
@@ -84,9 +95,9 @@ export function ColorShadeGenerator() {
     <div className="space-y-4">
       {/* Base color */}
       <div className="flex items-center gap-2">
-        <input type="color" value={baseColor} onChange={(e) => setBaseColor(e.target.value)} className="size-10 rounded-lg border border-border/50 cursor-pointer" />
-        <input type="text" value={baseColor} onChange={(e) => setBaseColor(e.target.value)} className="flex-1 h-10 px-3 rounded-lg bg-background border border-border/50 focus:border-primary/50 text-sm font-mono focus:outline-none" />
-        <button onClick={randomColor} className="flex items-center justify-center size-10 rounded-lg bg-muted text-muted-foreground hover:text-primary transition-all cursor-pointer"><Shuffle className="size-4" /></button>
+        <input type="color" value={baseColor} onChange={(e) => setBaseColor(e.target.value)} aria-label="Base color" className="size-10 rounded-lg border border-border/50 cursor-pointer" />
+        <input type="text" value={baseColor} onChange={(e) => setBaseColor(e.target.value)} aria-label="Base color hex value" className="flex-1 h-10 px-3 rounded-lg bg-background border border-border/50 focus:border-primary/50 text-sm font-mono focus:outline-none" />
+        <button onClick={randomColor} aria-label="Randomize base color" className="flex items-center justify-center size-10 rounded-lg bg-muted text-muted-foreground hover:text-primary transition-all cursor-pointer"><Shuffle className="size-4" /></button>
       </div>
 
       {/* Format toggle */}
@@ -114,12 +125,18 @@ export function ColorShadeGenerator() {
               {copiedIdx === idx ? (
                 <Check className="size-4 shrink-0 z-10" style={{ color: textColor }} />
               ) : (
-                <Copy className="size-3.5 shrink-0 z-10 opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: textColor }} />
+                <Copy className={`size-3.5 shrink-0 z-10 opacity-0 group-hover:opacity-100 transition-opacity ${copyFailedIdx === idx ? "!text-rose-500" : ""}`} style={{ color: copyFailedIdx === idx ? undefined : textColor }} />
               )}
             </button>
           );
         })}
       </div>
+
+      {/* Clipboard status (issue #271): visible + announced when a copy is
+          rejected by both the Clipboard API and the execCommand fallback. */}
+      <p role="status" aria-live="polite" className={`text-xs font-medium text-center ${copyFailedIdx !== null ? "text-rose-500" : "sr-only"}`}>
+        {copyFailedIdx !== null ? CLIPBOARD_FAILED_MESSAGE : ""}
+      </p>
 
       {/* Info */}
       <p className="text-[11px] text-muted-foreground text-center">

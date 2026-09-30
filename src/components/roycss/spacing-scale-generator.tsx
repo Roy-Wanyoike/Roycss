@@ -2,6 +2,11 @@
 
 import { useState, useMemo, useCallback } from "react";
 import { Ruler, Copy, Check, Shuffle } from "lucide-react";
+import {
+  copyTextToClipboard,
+  CLIPBOARD_FAILED_MESSAGE,
+  CLIPBOARD_FAILED_RESET_MS,
+} from "@/lib/clipboard";
 
 const SCALES = [
   { name: "Linear (4px)", base: 4, ratio: 1, formula: "n * 4px" },
@@ -18,6 +23,11 @@ export function SpacingScaleGenerator() {
   const [scaleIdx, setScaleIdx] = useState(1);
   const [steps, setSteps] = useState(12);
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
+  // Failed-copy tracking (issue #271): rows use their index, "copy all" uses
+  // -1 — mirroring the copiedIdx convention already in this file. There is no
+  // rendered <code> payload here, so failure shows the visible status line
+  // below (role=status, aria-live=polite) instead of auto-selecting text.
+  const [copyFailedIdx, setCopyFailedIdx] = useState<number | null>(null);
 
   const values = useMemo(() => {
     const scale = SCALES[scaleIdx];
@@ -42,11 +52,15 @@ export function SpacingScaleGenerator() {
   }, [values]);
 
   const handleCopy = useCallback(async (text: string, idx: number) => {
-    try { await navigator.clipboard.writeText(text); setCopiedIdx(idx); setTimeout(() => setCopiedIdx(null), 2000); } catch {}
+    const ok = await copyTextToClipboard(text);
+    if (ok) { setCopiedIdx(idx); setTimeout(() => setCopiedIdx(null), 2000); }
+    else { setCopyFailedIdx(idx); setTimeout(() => setCopyFailedIdx(null), CLIPBOARD_FAILED_RESET_MS); }
   }, []);
 
   const handleCopyAll = useCallback(async () => {
-    try { await navigator.clipboard.writeText(`:root {\n${cssVars}\n}`); setCopiedIdx(-1); setTimeout(() => setCopiedIdx(null), 2000); } catch {}
+    const ok = await copyTextToClipboard(`:root {\n${cssVars}\n}`);
+    if (ok) { setCopiedIdx(-1); setTimeout(() => setCopiedIdx(null), 2000); }
+    else { setCopyFailedIdx(-1); setTimeout(() => setCopyFailedIdx(null), CLIPBOARD_FAILED_RESET_MS); }
   }, [cssVars]);
 
   return (
@@ -64,7 +78,7 @@ export function SpacingScaleGenerator() {
       {/* Steps */}
       <div className="flex items-center gap-3">
         <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Steps</label>
-        <input type="range" min={5} max={17} value={steps} onChange={(e) => setSteps(parseInt(e.target.value))} className="flex-1 cursor-pointer" />
+        <input type="range" min={5} max={17} value={steps} onChange={(e) => setSteps(parseInt(e.target.value))} aria-label="Steps" className="flex-1 cursor-pointer" />
         <span className="text-xs font-mono text-primary w-8">{steps}</span>
       </div>
 
@@ -77,15 +91,21 @@ export function SpacingScaleGenerator() {
               <div className="h-full bg-primary/40 rounded transition-all group-hover:bg-primary/60" style={{ width: `${Math.min(100, (v.px / values[values.length - 1].px) * 100)}%` }} />
               <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] font-mono text-muted-foreground">{v.px}px ({v.rem}rem)</span>
             </div>
-            {copiedIdx === idx ? <Check className="size-3.5 text-emerald-500 shrink-0" /> : <Copy className="size-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 shrink-0" />}
+            {copiedIdx === idx ? <Check className="size-3.5 text-emerald-500 shrink-0" /> : <Copy className={`size-3.5 opacity-0 group-hover:opacity-100 shrink-0 ${copyFailedIdx === idx ? "text-rose-500" : "text-muted-foreground"}`} />}
           </button>
         ))}
       </div>
 
+      {/* Clipboard status (issue #271): visible + announced when a copy is
+          rejected by both the Clipboard API and the execCommand fallback. */}
+      <p role="status" aria-live="polite" className={`text-xs font-medium ${copyFailedIdx !== null ? "text-rose-500" : "sr-only"}`}>
+        {copyFailedIdx !== null ? CLIPBOARD_FAILED_MESSAGE : ""}
+      </p>
+
       {/* Copy all */}
-      <button onClick={handleCopyAll} className={`w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer ${copiedIdx === -1 ? "bg-emerald-500/15 text-emerald-500" : "bg-primary text-primary-foreground hover:bg-primary/90"}`}>
+      <button onClick={handleCopyAll} className={`w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer ${copiedIdx === -1 ? "bg-emerald-500/15 text-emerald-500" : copyFailedIdx === -1 ? "bg-rose-500/15 text-rose-500" : "bg-primary text-primary-foreground hover:bg-primary/90"}`}>
         {copiedIdx === -1 ? <Check className="size-4" /> : <Copy className="size-4" />}
-        {copiedIdx === -1 ? "Copied!" : "Copy All as CSS Variables"}
+        {copiedIdx === -1 ? "Copied!" : copyFailedIdx === -1 ? CLIPBOARD_FAILED_MESSAGE : "Copy All as CSS Variables"}
       </button>
 
       {/* Preview */}

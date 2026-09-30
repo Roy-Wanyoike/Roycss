@@ -2,6 +2,11 @@
 
 import { useState, useMemo, useCallback } from "react";
 import { Variable, Copy, Check, Plus, Minus, Trash2, Download } from "lucide-react";
+import {
+  copyTextToClipboard,
+  CLIPBOARD_FAILED_MESSAGE,
+  CLIPBOARD_FAILED_RESET_MS,
+} from "@/lib/clipboard";
 
 interface Token {
   id: string;
@@ -46,6 +51,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 export function CSSVariableManager() {
   const [tokens, setTokens] = useState<Token[]>(DEFAULT_TOKENS);
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
   const [filter, setFilter] = useState<string>("all");
 
   const filtered = useMemo(() => filter === "all" ? tokens : tokens.filter(t => t.category === filter), [tokens, filter]);
@@ -54,8 +60,17 @@ export function CSSVariableManager() {
     return `:root {\n${tokens.map(t => `  ${t.name}: ${t.value};`).join("\n")}\n}`;
   }, [tokens]);
 
+  // Clipboard-failure UX (issue #271): shared helper + visible failed state
+  // (aria-live polite, auto-reset 4s). The CSS output is not rendered as a
+  // selectable <code> block here, so failure feedback is message-only.
   const handleCopy = useCallback(async () => {
-    try { await navigator.clipboard.writeText(cssOutput); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch {}
+    const ok = await copyTextToClipboard(cssOutput);
+    setCopied(ok);
+    setCopyFailed(!ok);
+    setTimeout(() => {
+      setCopied(false);
+      setCopyFailed(false);
+    }, ok ? 2000 : CLIPBOARD_FAILED_RESET_MS);
   }, [cssOutput]);
 
   const addToken = () => setTokens(prev => [...prev, makeToken("--new-token", "", "other")]);
@@ -81,15 +96,15 @@ export function CSSVariableManager() {
         {filtered.map(token => (
           <div key={token.id} className="flex items-center gap-1.5 p-2 rounded-lg bg-muted/20 border border-border/40">
             <span className={`text-[11px] font-bold uppercase px-1.5 py-0.5 rounded ${CATEGORY_COLORS[token.category]}`}>{token.category.slice(0, 3)}</span>
-            <input type="text" value={token.name} onChange={(e) => updateToken(token.id, "name", e.target.value)} className="w-32 h-7 px-2 rounded bg-background border border-border/40 text-xs font-mono focus:outline-none focus:border-primary/40" />
-            <input type="text" value={token.value} onChange={(e) => updateToken(token.id, "value", e.target.value)} className="flex-1 h-7 px-2 rounded bg-background border border-border/40 text-xs font-mono focus:outline-none focus:border-primary/40" />
+            <input type="text" value={token.name} onChange={(e) => updateToken(token.id, "name", e.target.value)} aria-label="Token name" className="w-32 h-7 px-2 rounded bg-background border border-border/40 text-xs font-mono focus:outline-none focus:border-primary/40" />
+            <input type="text" value={token.value} onChange={(e) => updateToken(token.id, "value", e.target.value)} aria-label="Token value" className="flex-1 h-7 px-2 rounded bg-background border border-border/40 text-xs font-mono focus:outline-none focus:border-primary/40" />
             {token.category === "color" && token.value && (
               <div className="size-6 rounded border border-border/40 shrink-0" style={{ background: token.value }} />
             )}
-            <select value={token.category} onChange={(e) => updateToken(token.id, "category", e.target.value)} className="h-7 px-1 rounded bg-background border border-border/40 text-[11px] cursor-pointer capitalize">
+            <select value={token.category} onChange={(e) => updateToken(token.id, "category", e.target.value)} aria-label={`Category for ${token.name}`} className="h-7 px-1 rounded bg-background border border-border/40 text-[11px] cursor-pointer capitalize">
               {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
-            <button onClick={() => removeToken(token.id)} className="text-muted-foreground hover:text-rose-500 cursor-pointer shrink-0"><Minus className="size-3.5" /></button>
+            <button onClick={() => removeToken(token.id)} aria-label={`Remove token ${token.name}`} className="text-muted-foreground hover:text-rose-500 cursor-pointer shrink-0"><Minus className="size-3.5" /></button>
           </div>
         ))}
       </div>
@@ -99,8 +114,9 @@ export function CSSVariableManager() {
         <button onClick={addToken} className="flex items-center gap-1 px-3 py-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 text-xs font-medium cursor-pointer transition-all">
           <Plus className="size-3.5" /> Add Token
         </button>
-        <button onClick={handleCopy} className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : "bg-primary text-primary-foreground hover:bg-primary/90"}`}>
-          {copied ? <Check className="size-4" /> : <Copy className="size-4" />} {copied ? "Copied!" : "Copy CSS Variables"}
+        <button onClick={handleCopy} className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary text-primary-foreground hover:bg-primary/90"}`}>
+          {copied ? <Check className="size-4" /> : <Copy className="size-4" />} {copied ? "Copied!" : copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy CSS Variables"}
+          <span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span>
         </button>
       </div>
 

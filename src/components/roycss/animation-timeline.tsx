@@ -1,7 +1,13 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 import { Film, Copy, Check, Plus, Minus, Play, Pause, RotateCcw } from "lucide-react";
+import {
+  copyTextToClipboard,
+  selectElementText,
+  CLIPBOARD_FAILED_MESSAGE,
+  CLIPBOARD_FAILED_RESET_MS,
+} from "@/lib/clipboard";
 
 interface Keyframe {
   id: string;
@@ -30,6 +36,9 @@ export function AnimationTimeline() {
   const [iteration, setIteration] = useState("infinite");
   const [playing, setPlaying] = useState(true);
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
+  // `<code>` maps to plain HTMLElement in the DOM (no HTMLCodeElement).
+  const codeRef = useRef<HTMLElement>(null);
 
   const css = useMemo(() => {
     const sorted = [...frames].sort((a, b) => a.offset - b.offset);
@@ -41,8 +50,17 @@ export function AnimationTimeline() {
     return `@keyframes ${name} {\n${kfText}\n}\n\n.${name} {\n  animation: ${name} ${duration}s ${easing} ${iteration};\n}`;
   }, [frames, duration, easing, iteration]);
 
+  // Clipboard-failure UX (issue #271): shared helper + visible failed state
+  // (select payload, aria-live polite, auto-reset 4s). Success path unchanged.
   const handleCopy = useCallback(async () => {
-    try { await navigator.clipboard.writeText(css); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch {}
+    const ok = await copyTextToClipboard(css);
+    setCopied(ok);
+    setCopyFailed(!ok);
+    if (!ok) selectElementText(codeRef.current);
+    setTimeout(() => {
+      setCopied(false);
+      setCopyFailed(false);
+    }, ok ? 2000 : CLIPBOARD_FAILED_RESET_MS);
   }, [css]);
 
   const addFrame = () => setFrames(prev => [...prev, makeKf(50)]);
@@ -76,13 +94,13 @@ export function AnimationTimeline() {
         </button>
         <div className="flex items-center gap-1.5">
           <label className="text-xs text-muted-foreground">Duration</label>
-          <input type="number" min={0.1} max={10} step={0.1} value={duration} onChange={(e) => setDuration(parseFloat(e.target.value) || 1)} className="w-14 h-7 px-1.5 rounded bg-background border border-border/40 text-xs font-mono text-center" />
+          <input type="number" min={0.1} max={10} step={0.1} value={duration} onChange={(e) => setDuration(parseFloat(e.target.value) || 1)} aria-label="Duration (seconds)" className="w-14 h-7 px-1.5 rounded bg-background border border-border/40 text-xs font-mono text-center" />
           <span className="text-xs text-muted-foreground">s</span>
         </div>
-        <select value={easing} onChange={(e) => setEasing(e.target.value)} className="h-7 px-2 rounded bg-background border border-border/40 text-xs cursor-pointer">
+        <select value={easing} onChange={(e) => setEasing(e.target.value)} aria-label="Easing" className="h-7 px-2 rounded bg-background border border-border/40 text-xs cursor-pointer">
           <option value="ease">ease</option><option value="ease-in">ease-in</option><option value="ease-out">ease-out</option><option value="ease-in-out">ease-in-out</option><option value="linear">linear</option><option value="cubic-bezier(0.34,1.56,0.64,1)">spring</option>
         </select>
-        <select value={iteration} onChange={(e) => setIteration(e.target.value)} className="h-7 px-2 rounded bg-background border border-border/40 text-xs cursor-pointer">
+        <select value={iteration} onChange={(e) => setIteration(e.target.value)} aria-label="Iteration count" className="h-7 px-2 rounded bg-background border border-border/40 text-xs cursor-pointer">
           <option value="infinite">infinite</option><option value="1">1x</option><option value="3">3x</option><option value="5">5x</option>
         </select>
         <button onClick={addFrame} className="flex items-center gap-1 px-2 py-1 rounded-md text-xs bg-muted text-muted-foreground hover:text-primary cursor-pointer"><Plus className="size-3" /> Frame</button>
@@ -115,11 +133,11 @@ export function AnimationTimeline() {
         <div className="space-y-1.5">
           {sorted.map(f => (
             <div key={f.id} className="flex items-center gap-2 p-2 rounded-lg bg-muted/20">
-              <input type="number" min={0} max={100} value={f.offset} onChange={(e) => updateFrame(f.id, "offset", Math.max(0, Math.min(100, parseInt(e.target.value) || 0)))} className="w-12 h-7 px-1.5 rounded bg-background border border-border/40 text-xs font-mono text-center" />
+              <input type="number" min={0} max={100} value={f.offset} onChange={(e) => updateFrame(f.id, "offset", Math.max(0, Math.min(100, parseInt(e.target.value) || 0)))} aria-label={`Keyframe ${f.offset}% offset`} className="w-12 h-7 px-1.5 rounded bg-background border border-border/40 text-xs font-mono text-center" />
               <span className="text-xs text-muted-foreground">%</span>
-              <input type="text" value={f.properties.transform} onChange={(e) => updateFrame(f.id, "transform", e.target.value)} placeholder="transform: translateY(0)" className="flex-1 h-7 px-2 rounded bg-background border border-border/40 text-xs font-mono" />
-              <input type="text" value={f.properties.opacity} onChange={(e) => updateFrame(f.id, "opacity", e.target.value)} placeholder="1" className="w-12 h-7 px-1.5 rounded bg-background border border-border/40 text-xs font-mono text-center" />
-              <button onClick={() => removeFrame(f.id)} disabled={frames.length <= 2} className="text-muted-foreground hover:text-rose-500 disabled:opacity-30 cursor-pointer"><Minus className="size-3.5" /></button>
+              <input type="text" value={f.properties.transform} onChange={(e) => updateFrame(f.id, "transform", e.target.value)} placeholder="transform: translateY(0)" aria-label={`Keyframe ${f.offset}% transform`} className="flex-1 h-7 px-2 rounded bg-background border border-border/40 text-xs font-mono" />
+              <input type="text" value={f.properties.opacity} onChange={(e) => updateFrame(f.id, "opacity", e.target.value)} placeholder="1" aria-label={`Keyframe ${f.offset}% opacity`} className="w-12 h-7 px-1.5 rounded bg-background border border-border/40 text-xs font-mono text-center" />
+              <button onClick={() => removeFrame(f.id)} disabled={frames.length <= 2} aria-label={`Remove ${f.offset}% keyframe`} className="text-muted-foreground hover:text-rose-500 disabled:opacity-30 cursor-pointer"><Minus className="size-3.5" /></button>
             </div>
           ))}
         </div>
@@ -129,11 +147,12 @@ export function AnimationTimeline() {
       <div>
         <div className="flex items-center justify-between mb-1.5">
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">CSS</label>
-          <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
-            {copied ? <Check className="size-3" /> : <Copy className="size-3" />} {copied ? "Copied!" : "Copy"}
+          <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
+            {copied ? <Check className="size-3" /> : <Copy className="size-3" />} {copied ? "Copied!" : copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy"}
+            <span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span>
           </button>
         </div>
-        <pre className="p-3 rounded-xl bg-muted/30 border border-border/40 text-xs font-mono text-foreground/80 overflow-x-auto scrollbar-thin max-h-48 overflow-y-auto"><code>{css}</code></pre>
+        <pre className="p-3 rounded-xl bg-muted/30 border border-border/40 text-xs font-mono text-foreground/80 overflow-x-auto scrollbar-thin max-h-48 overflow-y-auto"><code ref={codeRef}>{css}</code></pre>
       </div>
     </div>
   );

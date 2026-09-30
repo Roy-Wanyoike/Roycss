@@ -1,7 +1,13 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 import { Rows3, Copy, Check, Plus, Minus } from "lucide-react";
+import {
+  copyTextToClipboard,
+  selectElementText,
+  CLIPBOARD_FAILED_MESSAGE,
+  CLIPBOARD_FAILED_RESET_MS,
+} from "@/lib/clipboard";
 
 const JUSTIFY_OPTIONS = [
   { value: "flex-start", label: "Start" },
@@ -49,6 +55,9 @@ export function FlexboxVisualizer() {
   const [gap, setGap] = useState(8);
   const [itemCount, setItemCount] = useState(3);
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
+  // `<code>` maps to plain HTMLElement in the DOM (no HTMLCodeElement).
+  const codeRef = useRef<HTMLElement>(null);
 
   const css = useMemo(() => {
     return [
@@ -61,8 +70,17 @@ export function FlexboxVisualizer() {
     ].join("\n  ");
   }, [direction, justify, align, wrap, gap]);
 
+  // Clipboard-failure UX (issue #271): shared helper + visible failed state
+  // (select payload, aria-live polite, auto-reset 4s). Success path unchanged.
   const handleCopy = useCallback(async () => {
-    try { await navigator.clipboard.writeText(`.flex-container {\n  ${css}\n}`); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch {}
+    const ok = await copyTextToClipboard(`.flex-container {\n  ${css}\n}`);
+    setCopied(ok);
+    setCopyFailed(!ok);
+    if (!ok) selectElementText(codeRef.current);
+    setTimeout(() => {
+      setCopied(false);
+      setCopyFailed(false);
+    }, ok ? 2000 : CLIPBOARD_FAILED_RESET_MS);
   }, [css]);
 
   const applyPreset = (preset: typeof PRESETS[0]) => {
@@ -128,7 +146,7 @@ export function FlexboxVisualizer() {
       <div className="grid grid-cols-3 gap-3">
         <div>
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Wrap</label>
-          <select value={wrap} onChange={(e) => setWrap(e.target.value)} className="w-full h-8 px-2 rounded bg-background border border-border/40 text-xs cursor-pointer">
+          <select value={wrap} onChange={(e) => setWrap(e.target.value)} aria-label="Wrap" className="w-full h-8 px-2 rounded bg-background border border-border/40 text-xs cursor-pointer">
             {WRAP_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
@@ -137,14 +155,14 @@ export function FlexboxVisualizer() {
             <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Gap</label>
             <span className="text-xs font-mono text-primary">{gap}px</span>
           </div>
-          <input type="range" min={0} max={48} value={gap} onChange={(e) => setGap(parseInt(e.target.value))} className="w-full cursor-pointer" />
+          <input type="range" min={0} max={48} value={gap} onChange={(e) => setGap(parseInt(e.target.value))} aria-label="Gap (pixels)" className="w-full cursor-pointer" />
         </div>
         <div>
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Items</label>
           <div className="flex items-center gap-1">
-            <button onClick={() => setItemCount(Math.max(1, itemCount - 1))} className="size-7 rounded-lg bg-muted text-muted-foreground hover:text-primary flex items-center justify-center cursor-pointer"><Minus className="size-3" /></button>
+            <button onClick={() => setItemCount(Math.max(1, itemCount - 1))} aria-label="Decrease item count" className="size-7 rounded-lg bg-muted text-muted-foreground hover:text-primary flex items-center justify-center cursor-pointer"><Minus className="size-3" /></button>
             <span className="text-sm font-mono w-6 text-center">{itemCount}</span>
-            <button onClick={() => setItemCount(Math.min(12, itemCount + 1))} className="size-7 rounded-lg bg-muted text-muted-foreground hover:text-primary flex items-center justify-center cursor-pointer"><Plus className="size-3" /></button>
+            <button onClick={() => setItemCount(Math.min(12, itemCount + 1))} aria-label="Increase item count" className="size-7 rounded-lg bg-muted text-muted-foreground hover:text-primary flex items-center justify-center cursor-pointer"><Plus className="size-3" /></button>
           </div>
         </div>
       </div>
@@ -153,11 +171,12 @@ export function FlexboxVisualizer() {
       <div>
         <div className="flex items-center justify-between mb-1.5">
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">CSS</label>
-          <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
-            {copied ? <Check className="size-3" /> : <Copy className="size-3" />} {copied ? "Copied!" : "Copy"}
+          <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
+            {copied ? <Check className="size-3" /> : <Copy className="size-3" />} {copied ? "Copied!" : copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy"}
+            <span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span>
           </button>
         </div>
-        <pre className="p-3 rounded-xl bg-muted/30 border border-border/40 text-xs font-mono text-foreground/80 overflow-x-auto scrollbar-thin"><code>.flex-container {`{`}\n  {css}\n{`}`}</code></pre>
+        <pre className="p-3 rounded-xl bg-muted/30 border border-border/40 text-xs font-mono text-foreground/80 overflow-x-auto scrollbar-thin"><code ref={codeRef}>.flex-container {`{`}\n  {css}\n{`}`}</code></pre>
       </div>
     </div>
   );

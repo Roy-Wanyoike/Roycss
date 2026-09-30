@@ -1,7 +1,13 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 import { Scissors, Copy, Check } from "lucide-react";
+import {
+  copyTextToClipboard,
+  selectElementText,
+  CLIPBOARD_FAILED_MESSAGE,
+  CLIPBOARD_FAILED_RESET_MS,
+} from "@/lib/clipboard";
 
 const SHAPES = [
   { name: "Circle", value: "circle(50% at 50% 50%)" },
@@ -20,9 +26,21 @@ export function ClipPathGenerator() {
   const [clipPath, setClipPath] = useState(SHAPES[0].value);
   const [bgColor, setBgColor] = useState("#10b981");
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
+  // `<code>` maps to plain HTMLElement in the DOM (no HTMLCodeElement).
+  const codeRef = useRef<HTMLElement>(null);
 
+  // Clipboard-failure UX (issue #271): shared helper + visible failed state
+  // (select payload, aria-live polite, auto-reset 4s). Success path unchanged.
   const handleCopy = useCallback(async () => {
-    try { await navigator.clipboard.writeText(`clip-path: ${clipPath};`); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch {}
+    const ok = await copyTextToClipboard(`clip-path: ${clipPath};`);
+    setCopied(ok);
+    setCopyFailed(!ok);
+    if (!ok) selectElementText(codeRef.current);
+    setTimeout(() => {
+      setCopied(false);
+      setCopyFailed(false);
+    }, ok ? 2000 : CLIPBOARD_FAILED_RESET_MS);
   }, [clipPath]);
 
   return (
@@ -35,8 +53,8 @@ export function ClipPathGenerator() {
       {/* Background color */}
       <div className="flex items-center gap-2">
         <label className="text-xs text-muted-foreground">Shape color:</label>
-        <input type="color" value={bgColor} onChange={(e) => setBgColor(e.target.value)} className="size-7 rounded border border-border/50 cursor-pointer" />
-        <input type="text" value={bgColor} onChange={(e) => setBgColor(e.target.value)} className="h-7 px-2 rounded bg-background border border-border/40 text-xs font-mono w-20" />
+        <input type="color" value={bgColor} onChange={(e) => setBgColor(e.target.value)} aria-label="Shape color" className="size-7 rounded border border-border/50 cursor-pointer" />
+        <input type="text" value={bgColor} onChange={(e) => setBgColor(e.target.value)} aria-label="Shape color value" className="h-7 px-2 rounded bg-background border border-border/40 text-xs font-mono w-20" />
       </div>
 
       {/* Shape presets */}
@@ -57,6 +75,7 @@ export function ClipPathGenerator() {
       <div>
         <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Custom clip-path</label>
         <input type="text" value={clipPath} onChange={(e) => setClipPath(e.target.value)}
+          aria-label="Custom clip-path"
           className="w-full h-9 px-3 rounded-lg bg-background border border-border/50 focus:border-primary/50 text-xs font-mono focus:outline-none" />
       </div>
 
@@ -64,11 +83,12 @@ export function ClipPathGenerator() {
       <div>
         <div className="flex items-center justify-between mb-1.5">
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">CSS</label>
-          <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
-            {copied ? <Check className="size-3" /> : <Copy className="size-3" />} {copied ? "Copied!" : "Copy"}
+          <button onClick={handleCopy} className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${copied ? "bg-emerald-500/15 text-emerald-500" : copyFailed ? "bg-rose-500/15 text-rose-500" : "bg-primary/10 text-primary hover:bg-primary/20"}`}>
+            {copied ? <Check className="size-3" /> : <Copy className="size-3" />} {copied ? "Copied!" : copyFailed ? CLIPBOARD_FAILED_MESSAGE : "Copy"}
+            <span role="status" aria-live="polite" className="sr-only">{copyFailed ? CLIPBOARD_FAILED_MESSAGE : ""}</span>
           </button>
         </div>
-        <pre className="p-3 rounded-xl bg-muted/30 border border-border/40 text-xs font-mono text-foreground/80 overflow-x-auto scrollbar-thin"><code>clip-path: {clipPath};</code></pre>
+        <pre className="p-3 rounded-xl bg-muted/30 border border-border/40 text-xs font-mono text-foreground/80 overflow-x-auto scrollbar-thin"><code ref={codeRef}>clip-path: {clipPath};</code></pre>
       </div>
     </div>
   );

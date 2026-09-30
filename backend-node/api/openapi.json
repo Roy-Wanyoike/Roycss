@@ -15607,6 +15607,16 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
           "429": {
             "description": "Rate limited (global tier; extra tiers where documented)",
             "content": {
@@ -15617,7 +15627,15 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "apiKeyAuth": []
+          }
+        ]
       },
       "post": {
         "summary": "POST /api/v1/studio/projects",
@@ -15730,6 +15748,16 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Resource not found",
             "content": {
@@ -15759,6 +15787,14 @@
             "schema": {
               "type": "string"
             }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "apiKeyAuth": []
           }
         ]
       },
@@ -15836,7 +15872,18 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "additionalProperties": true
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "components": {
+                    "type": "array",
+                    "items": {}
+                  }
+                }
               }
             }
           }

@@ -46,6 +46,26 @@ export const CreateStudioProjectSchema = z.object({
 });
 export type CreateStudioProjectInput = z.infer<typeof CreateStudioProjectSchema>;
 
-/** Body for PUT /studio/projects/:id — partial update. */
-export const UpdateStudioProjectSchema = CreateStudioProjectSchema.partial();
+/** Body for PUT /studio/projects/:id — partial update.
+ *
+ *  Declared explicitly (the collections convention) instead of via
+ *  `CreateStudioProjectSchema.partial()`: under Zod 4 the create-side
+ *  `.default("")` / `.default([])` still fire for ABSENT keys inside
+ *  `.partial()`, so a partial PUT would silently wipe `description`
+ *  and `components` to empty. Here an absent field stays `undefined`
+ *  and the service preserves the stored value. */
+export const UpdateStudioProjectSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(1, "Project name is required")
+    .max(120, "Name must be at most 120 characters")
+    .optional(),
+  description: z
+    .string()
+    .trim()
+    .max(2000, "Description must be at most 2000 characters")
+    .optional(),
+  components: z.array(StudioComponentSchema).optional(),
+});
 export type UpdateStudioProjectInput = z.infer<typeof UpdateStudioProjectSchema>;

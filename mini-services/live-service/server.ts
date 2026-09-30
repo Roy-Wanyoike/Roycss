@@ -76,7 +76,11 @@ export interface LiveServiceOptions {
  * dropped; a value that parses to nothing falls back to the default.
  */
 export function parseAllowedOrigins(
-  env: Pick<NodeJS.ProcessEnv, 'LIVE_ALLOWED_ORIGINS'> = process.env,
+  // `Record<string, string | undefined>` (not a Pick of ProcessEnv): Pick
+  // over ProcessEnv's index signature yields a REQUIRED property, and an
+  // optional-prop object literal type fails the weak-type check against
+  // ProcessEnv. The record type accepts process.env, partial objects, {}.
+  env: Record<string, string | undefined> = process.env,
 ): string[] {
   const raw = env.LIVE_ALLOWED_ORIGINS?.trim()
   if (!raw) return [...DEFAULT_ALLOWED_ORIGINS]

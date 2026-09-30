@@ -61,7 +61,10 @@ test.describe("WebGL showcase — graceful degradation on firefox", () => {
     const gracefulPanel = page
       .getByRole("status")
       .filter({ hasText: "hardware graphics acceleration" });
-    let outcome: "graceful" | "canvas" | "pending" = "pending";
+    // `string` (not a union): the poll callback assigns through a closure and
+    // TS's control-flow analysis keeps the outer variable narrowed to the
+    // initializer type, which would flag the branch below as impossible.
+    let outcome: string = "pending";
     await expect
       .poll(
         async () => {
@@ -78,7 +81,7 @@ test.describe("WebGL showcase — graceful degradation on firefox", () => {
           }
           return outcome;
         },
-        { timeout: 30_000, interval: 500 },
+        { timeout: 30_000, intervals: [500] },
       )
       .not.toBe("pending");
 

@@ -78,8 +78,20 @@ func Recover(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
 			if rec := recover(); rec != nil {
-				http.Error(w, `{"error":{"code":"INTERNAL","message":"internal server error"}}`,
-					http.StatusInternalServerError)
+				// Node-vocab code (error.ts:34-52) + requestId (set on the
+				// response header by the inner RequestID middleware before
+				// handlers ran, so it survives the panic). The id is echo-safe
+				// only in the charset this middleware generates — a hostile
+				// inbound X-Request-Id must not be inlined into raw JSON
+				// (response.go escapes via json.Marshal; this path does not).
+				body := `{"error":{"code":"INTERNAL_ERROR","message":"internal server error"}`
+				if id := w.Header().Get("X-Request-Id"); isEchoSafeID(id) {
+					body += `,"requestId":"` + id + `"`
+				}
+				body += `}`
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(http.StatusInternalServerError)
+				_, _ = w.Write([]byte(body))
 			}
 		}()
 		next.ServeHTTP(w, r)
@@ -93,4 +105,24 @@ func PathPrefix(mux *http.ServeMux, prefix string, h http.Handler) {
 		prefix += "/"
 	}
 	mux.Handle(prefix, http.StripPrefix(strings.TrimSuffix(prefix, "/"), h))
+}
+
+// isEchoSafeID reports whether id can be inlined into a JSON string
+// literal without escaping: the charset the RequestID middleware itself
+// generates (hex) plus the dot/hyphen/underscore operators commonly used
+// by upstream proxies. Anything else is omitted from the panic envelope.
+func isEchoSafeID(id string) bool {
+	if len(id) == 0 || len(id) > 128 {
+		return false
+	}
+	for i := 0; i < len(id); i++ {
+		c := id[i]
+		switch {
+		case c >= '0' && c <= '9', c >= 'a' && c <= 'f', c >= 'A' && c <= 'F':
+		case c == '.', c == '-', c == '_':
+		default:
+			return false
+		}
+	}
+	return true
 }

@@ -46,7 +46,7 @@ func (s *Service) health(w http.ResponseWriter, r *http.Request) {
 	}
 	response.OK(w, map[string]interface{}{
 		"status":  "ok",
-		"service": "roycss-go-api",
+		"service": "roycss-backend",
 		"version": "0.1.0",
 		"uptime":  map[string]interface{}{"seconds": int(time.Since(s.start).Seconds())},
 		"checks": map[string]interface{}{

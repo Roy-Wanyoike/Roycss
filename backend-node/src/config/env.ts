@@ -158,6 +158,23 @@ function looksLikePlaceholderSecret(value: string): boolean {
 }
 
 const EnvSchemaWithProdRules = EnvSchema.superRefine((env, ctx) => {
+  // ─── JWT secret separation (issue #266) ─────────────────────────────
+  // Refresh tokens must be signed with an INDEPENDENT secret: when the
+  // two secrets are equal, a single leak (log, dump, miswired env)
+  // forges both token families. backend-node/README.md documents the
+  // must-differ invariant, and the Go loader enforces the same check
+  // (backend-go/pkg/config/config.go). Enforced in EVERY environment —
+  // the miswiring this guards against actually shipped in the terraform
+  // path, not just in hand-rolled prod envs.
+  if (env.JWT_SECRET === env.JWT_REFRESH_SECRET) {
+    ctx.addIssue({
+      code: "custom",
+      path: ["JWT_REFRESH_SECRET"],
+      message:
+        "JWT_REFRESH_SECRET must differ from JWT_SECRET — use two independent random secrets (e.g. `openssl rand -base64 48`)",
+    });
+  }
+
   if (env.NODE_ENV !== "production") return;
   for (const key of ["JWT_SECRET", "JWT_REFRESH_SECRET"] as const) {
     const value = env[key];

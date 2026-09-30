@@ -133,12 +133,23 @@ engine's feedback loop, pass `--project`. The `cross-browser-smoke.spec.ts`
 spec is intentionally cheap (~3 tests/browser) so the full matrix stays
 fast; the per-surface specs carry the deep coverage.
 
-**CI note:** GitHub Actions are owner-blocked for this repo (issue #75), so
-the matrix currently runs **locally** as a pre-merge gate. The config is
-already CI-ready (conditional retries, `forbidOnly`, github reporter) for
-the day Actions unblock — at that point add
-`bunx playwright install --with-deps firefox webkit` next to the existing
-chromium install line in the workflow sketch below.
+**CI note (engine matrix policy, issue #265):** the `ci.yml` e2e job runs
+**chromium only** — it installs `chromium --with-deps` and invokes
+`bunx playwright test --project=chromium`. Chromium is the reference engine
+every spec is written against (see `playwright.config.ts`), and scoping
+keeps the job's wall-clock (prod build + backend boot + suite) acceptable.
+**firefox + webkit are a local/strategic gate, NOT a CI gate** — their
+binaries are neither installed nor run in CI:
+
+```bash
+# Local, strategic: run before engine-sensitive changes (navigation, RTL,
+# theme, cross-browser-smoke.spec.ts) — not part of CI (issue #265)
+bunx playwright install firefox webkit   # one-time, ~600 MB
+bunx playwright test                     # full 3-engine matrix, local
+```
+
+GitHub Actions themselves are owner-blocked until issue #75; the config is
+already CI-ready (conditional retries, `forbidOnly`, github reporter).
 
 ## Running both
 
@@ -176,7 +187,7 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
       - run: bunx playwright install --with-deps chromium
-      - run: bunx playwright test
+      - run: bunx playwright test --project=chromium   # CI is chromium-only (issue #265)
         env: { CI: "true" }
       - uses: actions/upload-artifact@v4
         if: failure()

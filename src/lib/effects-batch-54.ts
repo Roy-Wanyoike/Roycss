@@ -325,6 +325,7 @@ export const effectsBatch54: CSSEffect[] = [
   opacity: 0;
   overflow: hidden;
   transform: translateY(-6px);
+  /* non-GPU by design: max-block-size staggered text reveal — true height animation, no transform equivalent without distortion */
   transition:
     max-block-size 0.32s ease,
     opacity 0.26s ease,

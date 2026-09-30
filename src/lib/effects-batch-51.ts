@@ -779,8 +779,8 @@ export const effectsBatch51: CSSEffect[] = [
       oklch(0.80 0.22 145),
       oklch(0.80 0.22 35));
   -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
+    linear-gradient(oklch(0 0 0) 0 0) content-box,
+    linear-gradient(oklch(0 0 0) 0 0);
   -webkit-mask-composite: xor;
           mask-composite: exclude;
   animation: roy-vfx-glass-glow-rotate 6s linear infinite;
@@ -825,8 +825,8 @@ export const effectsBatch51: CSSEffect[] = [
       oklch(0.85 0.22 195),
       oklch(0.85 0.22 35));
   -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
+    linear-gradient(oklch(0 0 0) 0 0) content-box,
+    linear-gradient(oklch(0 0 0) 0 0);
   -webkit-mask-composite: xor;
           mask-composite: exclude;
   animation: roy-vfx-glass-border-spin 4s linear infinite;
@@ -1005,8 +1005,8 @@ export const effectsBatch51: CSSEffect[] = [
       oklch(0.85 0.24 290),
       oklch(0.85 0.24 35));
   -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
+    linear-gradient(oklch(0 0 0) 0 0) content-box,
+    linear-gradient(oklch(0 0 0) 0 0);
   -webkit-mask-composite: xor;
           mask-composite: exclude;
   animation: roy-vfx-bd-electric-flow 3s linear infinite;
@@ -1054,8 +1054,8 @@ export const effectsBatch51: CSSEffect[] = [
       transparent 90deg,
       transparent 360deg);
   -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
+    linear-gradient(oklch(0 0 0) 0 0) content-box,
+    linear-gradient(oklch(0 0 0) 0 0);
   -webkit-mask-composite: xor;
           mask-composite: exclude;
   animation: roy-vfx-bd-laser-spin 2.5s linear infinite;

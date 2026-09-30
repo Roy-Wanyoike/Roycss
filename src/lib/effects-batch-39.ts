@@ -6,6 +6,25 @@ import type { CSSEffect } from "./roycss-types";
  * sparklines, gauges, heatmaps, timelines, count-ups, skeletons.
  * All classes are prefixed `roycss-dataviz-` and keyframes `roy-dataviz-`.
  * Every effect ships a `prefers-reduced-motion: reduce` fallback.
+ *
+ * Color conformance (issue #273): the original indigo/blue cluster
+ * (#6366f1 / #4f46e5 / #818cf8 / #93c5fd and their rgba() alpha forms)
+ * violated CONTRIBUTING rule 7 ("Use OKLCH colors — no indigo or blue as
+ * primary. Reference src/lib/design-tokens.ts"). INTENTIONAL EXCEPTION to
+ * hue-preserving conversion: the cluster is remapped to the nearest
+ * design-token hue that is not blue and keeps the dataviz series
+ * distinguishable — the ACCENT token hue, 200 (design-tokens.ts →
+ * accent: oklch(0.72 0.15 200)). Each color's OKLab L/C is preserved from
+ * the original hex, so the palette's lightness/chroma structure (series
+ * value ramps, contrast) is unchanged — only the hue family moves
+ * indigo→cyan. Mapping produced by scripts/migrate-hex-oklch.ts:
+ *   #6366f1 (0.585 0.204 277.12) → oklch(0.585 0.204 200)
+ *   #4f46e5 (0.511 0.230 276.97) → oklch(0.511 0.23 200)
+ *   #818cf8 (0.680 0.158 276.93) → oklch(0.68 0.158 200)
+ *   #93c5fd (0.809 0.096 251.81) → oklch(0.809 0.096 200)
+ *   rgba(99,102,241,a)           → oklch(0.585 0.204 200 / a)
+ * All other hex colors in this file are straight hue-preserving sRGB→oklch
+ * conversions (e.g. #10b981 → oklch(0.696 0.149 162.48), the primary token).
  */
 export const effectsBatch39: CSSEffect[] = [
   // 1. dataviz-counter-roll
@@ -24,8 +43,8 @@ export const effectsBatch39: CSSEffect[] = [
   font-family: ui-monospace, "Courier New", monospace;
   font-weight: 700;
   font-size: 2rem;
-  color: #0f172a;
-  background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+  color: oklch(0.208 0.04 265.75);
+  background: linear-gradient(180deg, oklch(0.984 0.003 247.86) 0%, oklch(0.929 0.013 255.51) 100%);
   padding: 0.2em 0.5em;
   border-radius: 6px;
   overflow: hidden;
@@ -67,7 +86,7 @@ export const effectsBatch39: CSSEffect[] = [
   height: 80px;
   border-radius: 50%;
   background:
-    conic-gradient(#10b981 0deg, #10b981 252deg, #e2e8f0 252deg, #e2e8f0 360deg);
+    conic-gradient(oklch(0.696 0.149 162.48) 0deg, oklch(0.696 0.149 162.48) 252deg, oklch(0.929 0.013 255.51) 252deg, oklch(0.929 0.013 255.51) 360deg);
   animation: roy-dataviz-ring-fill 1.8s ease-out both;
   display: flex;
   align-items: center;
@@ -77,7 +96,7 @@ export const effectsBatch39: CSSEffect[] = [
   content: "";
   position: absolute;
   inset: 8px;
-  background: #fff;
+  background: oklch(1 0 89.88);
   border-radius: 50%;
   z-index: 1;
 }
@@ -87,12 +106,12 @@ export const effectsBatch39: CSSEffect[] = [
   z-index: 2;
   font-family: ui-monospace, monospace;
   font-weight: 700;
-  color: #10b981;
+  color: oklch(0.696 0.149 162.48);
   font-size: 1rem;
 }
 @keyframes roy-dataviz-ring-fill {
-  0%   { background: conic-gradient(#10b981 0deg, #10b981 0deg, #e2e8f0 0deg, #e2e8f0 360deg); }
-  100% { background: conic-gradient(#10b981 0deg, #10b981 252deg, #e2e8f0 252deg, #e2e8f0 360deg); }
+  0%   { background: conic-gradient(oklch(0.696 0.149 162.48) 0deg, oklch(0.696 0.149 162.48) 0deg, oklch(0.929 0.013 255.51) 0deg, oklch(0.929 0.013 255.51) 360deg); }
+  100% { background: conic-gradient(oklch(0.696 0.149 162.48) 0deg, oklch(0.696 0.149 162.48) 252deg, oklch(0.929 0.013 255.51) 252deg, oklch(0.929 0.013 255.51) 360deg); }
 }
 @media (prefers-reduced-motion: reduce) {
   .roycss-dataviz-progress-ring { animation: none; }
@@ -122,7 +141,7 @@ export const effectsBatch39: CSSEffect[] = [
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  border: 12px solid #e2e8f0;
+  border: 12px solid oklch(0.929 0.013 255.51);
   border-bottom: none;
   border-left-color: transparent;
   border-right-color: transparent;
@@ -137,7 +156,7 @@ export const effectsBatch39: CSSEffect[] = [
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  border: 12px solid #6366f1;
+  border: 12px solid oklch(0.585 0.204 200);
   border-bottom: none;
   border-left-color: transparent;
   border-right-color: transparent;
@@ -171,14 +190,14 @@ export const effectsBatch39: CSSEffect[] = [
   gap: 8px;
   height: 100%;
   padding: 12px;
-  background: #f8fafc;
+  background: oklch(0.984 0.003 247.86);
   border-radius: 6px;
 }
 .roycss-dataviz-bar-grow::before,
 .roycss-dataviz-bar-grow::after {
   content: "";
   width: 14px;
-  background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(180deg, oklch(0.696 0.149 162.48) 0%, oklch(0.596 0.127 163.23) 100%);
   border-radius: 3px 3px 0 0;
   transform-origin: bottom;
   animation: roy-dataviz-bar-grow 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
@@ -191,8 +210,8 @@ export const effectsBatch39: CSSEffect[] = [
 .roycss-dataviz-bar-grow::after {
   height: 45%;
   animation-delay: 0.15s;
-  background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
-  box-shadow: 0 -2px 4px rgba(99, 102, 241, 0.3);
+  background: linear-gradient(180deg, oklch(0.585 0.204 200) 0%, oklch(0.511 0.23 200) 100%);
+  box-shadow: 0 -2px 4px oklch(0.585 0.204 200 / 0.3);
 }
 @keyframes roy-dataviz-bar-grow {
   0%   { transform: scaleY(0); }
@@ -219,7 +238,7 @@ export const effectsBatch39: CSSEffect[] = [
   flex-direction: column;
   gap: 8px;
   padding: 14px;
-  background: #f8fafc;
+  background: oklch(0.984 0.003 247.86);
   border-radius: 6px;
   height: 100%;
 }
@@ -233,12 +252,12 @@ export const effectsBatch39: CSSEffect[] = [
 }
 .roycss-dataviz-bar-horizontal::before {
   width: 85%;
-  background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+  background: linear-gradient(90deg, oklch(0.696 0.149 162.48) 0%, oklch(0.773 0.153 163.22) 100%);
   animation-delay: 0s;
 }
 .roycss-dataviz-bar-horizontal::after {
   width: 60%;
-  background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+  background: linear-gradient(90deg, oklch(0.769 0.165 70.08) 0%, oklch(0.837 0.164 84.43) 100%);
   animation-delay: 0.18s;
 }
 @keyframes roy-dataviz-hbar-grow {
@@ -266,14 +285,14 @@ export const effectsBatch39: CSSEffect[] = [
   height: 90px;
   border-radius: 50%;
   background: conic-gradient(
-    #10b981 0deg 130deg,
-    #6366f1 130deg 240deg,
-    #f59e0b 240deg 320deg,
-    #ef4444 320deg 360deg
+    oklch(0.696 0.149 162.48) 0deg 130deg,
+    oklch(0.585 0.204 200) 130deg 240deg,
+    oklch(0.769 0.165 70.08) 240deg 320deg,
+    oklch(0.637 0.208 25.33) 320deg 360deg
   );
   animation: roy-dataviz-pie-reveal 1.6s ease-out both;
-  mask: radial-gradient(circle, transparent 22px, #000 23px);
-  -webkit-mask: radial-gradient(circle, transparent 22px, #000 23px);
+  mask: radial-gradient(circle, transparent 22px, oklch(0 0 0) 23px);
+  -webkit-mask: radial-gradient(circle, transparent 22px, oklch(0 0 0) 23px);
 }
 @keyframes roy-dataviz-pie-reveal {
   0%   { transform: rotate(-90deg) scale(0.6); opacity: 0; }
@@ -297,7 +316,7 @@ export const effectsBatch39: CSSEffect[] = [
 .roycss-dataviz-sparkline-draw {
   position: relative;
   height: 100%;
-  background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+  background: linear-gradient(180deg, oklch(0.984 0.003 247.86) 0%, oklch(0.962 0.018 272.31) 100%);
   border-radius: 6px;
   overflow: hidden;
 }
@@ -310,18 +329,18 @@ export const effectsBatch39: CSSEffect[] = [
   background:
     linear-gradient(90deg,
       transparent 0%, transparent 5%,
-      #6366f1 5%, #6366f1 12%,
+      oklch(0.585 0.204 200) 5%, oklch(0.585 0.204 200) 12%,
       transparent 12%, transparent 22%,
-      #6366f1 22%, #6366f1 35%,
+      oklch(0.585 0.204 200) 22%, oklch(0.585 0.204 200) 35%,
       transparent 35%, transparent 45%,
-      #6366f1 45%, #6366f1 60%,
+      oklch(0.585 0.204 200) 45%, oklch(0.585 0.204 200) 60%,
       transparent 60%, transparent 72%,
-      #6366f1 72%, #6366f1 88%,
+      oklch(0.585 0.204 200) 72%, oklch(0.585 0.204 200) 88%,
       transparent 88%);
   transform-origin: left center;
   transform: scaleX(0);
   animation: roy-dataviz-sparkline 1.6s ease-out 0.2s forwards;
-  filter: drop-shadow(0 1px 2px rgba(99,102,241,0.4));
+  filter: drop-shadow(0 1px 2px oklch(0.585 0.204 200 / 0.4));
 }
 .roycss-dataviz-sparkline-draw::after {
   content: "";
@@ -329,7 +348,7 @@ export const effectsBatch39: CSSEffect[] = [
   left: 0; right: 0;
   top: 30%;
   height: 4px;
-  background: linear-gradient(90deg, transparent 0%, #6366f1 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, oklch(0.585 0.204 200) 50%, transparent 100%);
   opacity: 0.15;
 }
 @keyframes roy-dataviz-sparkline {
@@ -355,8 +374,8 @@ export const effectsBatch39: CSSEffect[] = [
   font-family: ui-monospace, monospace;
   font-weight: 800;
   font-size: 1.6rem;
-  color: #10b981;
-  background: #f0fdf4;
+  color: oklch(0.696 0.149 162.48);
+  background: oklch(0.982 0.018 155.83);
   padding: 0.3em 0.6em;
   border-radius: 6px;
   animation: roy-dataviz-stat-pulse 2s ease-in-out infinite;
@@ -395,7 +414,7 @@ export const effectsBatch39: CSSEffect[] = [
 .roycss-dataviz-data-flow {
   position: relative;
   height: 100%;
-  background: #f8fafc;
+  background: oklch(0.984 0.003 247.86);
   border-radius: 6px;
   overflow: hidden;
 }
@@ -405,7 +424,7 @@ export const effectsBatch39: CSSEffect[] = [
   left: 12px; right: 12px;
   top: 50%;
   height: 3px;
-  background-image: linear-gradient(90deg, #6366f1 50%, transparent 50%);
+  background-image: linear-gradient(90deg, oklch(0.585 0.204 200) 50%, transparent 50%);
   background-size: 14px 3px;
   background-repeat: repeat-x;
   animation: roy-dataviz-flow-march 0.7s linear infinite;
@@ -419,9 +438,9 @@ export const effectsBatch39: CSSEffect[] = [
   height: 14px;
   transform: translateY(-50%);
   background:
-    radial-gradient(circle at 0% 50%, #6366f1 4px, transparent 5px),
-    radial-gradient(circle at 50% 50%, #10b981 4px, transparent 5px),
-    radial-gradient(circle at 100% 50%, #f59e0b 4px, transparent 5px);
+    radial-gradient(circle at 0% 50%, oklch(0.585 0.204 200) 4px, transparent 5px),
+    radial-gradient(circle at 50% 50%, oklch(0.696 0.149 162.48) 4px, transparent 5px),
+    radial-gradient(circle at 100% 50%, oklch(0.769 0.165 70.08) 4px, transparent 5px);
 }
 @keyframes roy-dataviz-flow-march {
   0%   { background-position: 0 0; }
@@ -455,7 +474,7 @@ export const effectsBatch39: CSSEffect[] = [
   height: 100px;
   border-radius: 100px 100px 0 0;
   border: 12px solid;
-  border-color: #ef4444 #f59e0b #e2e8f0 #e2e8f0;
+  border-color: oklch(0.637 0.208 25.33) oklch(0.769 0.165 70.08) oklch(0.929 0.013 255.51) oklch(0.929 0.013 255.51);
   border-bottom: none;
   box-sizing: border-box;
   transform: rotate(0deg);
@@ -468,7 +487,7 @@ export const effectsBatch39: CSSEffect[] = [
   width: 4px;
   height: 38px;
   margin-left: -2px;
-  background: #0f172a;
+  background: oklch(0.208 0.04 265.75);
   border-radius: 2px;
   transform-origin: bottom center;
   animation: roy-dataviz-gauge-sweep 1.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
@@ -496,7 +515,7 @@ export const effectsBatch39: CSSEffect[] = [
   width: 60px;
   height: 60px;
   border-radius: 6px;
-  background: #e0f2fe;
+  background: oklch(0.951 0.025 236.82);
   animation: roy-dataviz-heat 2.4s ease-in-out infinite;
   box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
   position: relative;
@@ -510,14 +529,14 @@ export const effectsBatch39: CSSEffect[] = [
   pointer-events: none;
 }
 @keyframes roy-dataviz-heat {
-  0%   { background: #e0f2fe; }
-  25%  { background: #93c5fd; }
-  50%  { background: #fbbf24; }
-  75%  { background: #f97316; }
-  100% { background: #dc2626; }
+  0%   { background: oklch(0.951 0.025 236.82); }
+  25%  { background: oklch(0.809 0.096 200); }
+  50%  { background: oklch(0.837 0.164 84.43); }
+  75%  { background: oklch(0.705 0.187 47.6); }
+  100% { background: oklch(0.577 0.215 27.33); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-dataviz-heatmap-cell { animation: none; background: #fbbf24; }
+  .roycss-dataviz-heatmap-cell { animation: none; background: oklch(0.837 0.164 84.43); }
 }`,
   },
 
@@ -533,7 +552,7 @@ export const effectsBatch39: CSSEffect[] = [
 .roycss-dataviz-timeline-progress {
   position: relative;
   height: 100%;
-  background: #f8fafc;
+  background: oklch(0.984 0.003 247.86);
   border-radius: 6px;
   padding: 24px 16px;
 }
@@ -543,7 +562,7 @@ export const effectsBatch39: CSSEffect[] = [
   left: 16px; right: 16px;
   top: 50%;
   height: 3px;
-  background: #e2e8f0;
+  background: oklch(0.929 0.013 255.51);
   border-radius: 2px;
   transform: translateY(-50%);
 }
@@ -554,12 +573,12 @@ export const effectsBatch39: CSSEffect[] = [
   top: 50%;
   width: 60%;
   height: 3px;
-  background: linear-gradient(90deg, #6366f1 0%, #10b981 100%);
+  background: linear-gradient(90deg, oklch(0.585 0.204 200) 0%, oklch(0.696 0.149 162.48) 100%);
   border-radius: 2px;
   transform: translateY(-50%);
   transform-origin: left center;
   animation: roy-dataviz-timeline-draw 1.6s ease-out both;
-  box-shadow: 0 0 8px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 0 8px oklch(0.585 0.204 200 / 0.4);
 }
 @keyframes roy-dataviz-timeline-draw {
   0%   { width: 0; }
@@ -591,8 +610,8 @@ export const effectsBatch39: CSSEffect[] = [
   font-family: ui-monospace, monospace;
   font-weight: 800;
   font-size: 2rem;
-  color: #6366f1;
-  background: #eef2ff;
+  color: oklch(0.585 0.204 200);
+  background: oklch(0.962 0.018 272.31);
   padding: 0.2em 0.5em;
   border-radius: 6px;
   animation: roy-dataviz-count-up 2s ease-out both;
@@ -622,7 +641,7 @@ export const effectsBatch39: CSSEffect[] = [
   position: relative;
   width: 100%;
   height: 24px;
-  background: #e2e8f0;
+  background: oklch(0.929 0.013 255.51);
   border-radius: 12px;
   overflow: hidden;
 }
@@ -636,10 +655,10 @@ export const effectsBatch39: CSSEffect[] = [
   background:
     repeating-linear-gradient(
       45deg,
-      #6366f1 0px,
-      #6366f1 10px,
-      #4f46e5 10px,
-      #4f46e5 20px
+      oklch(0.585 0.204 200) 0px,
+      oklch(0.585 0.204 200) 10px,
+      oklch(0.511 0.23 200) 10px,
+      oklch(0.511 0.23 200) 20px
     );
   background-size: 28px 28px;
   border-radius: 12px 0 0 12px;
@@ -655,7 +674,7 @@ export const effectsBatch39: CSSEffect[] = [
   font-family: ui-monospace, monospace;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #fff;
+  color: oklch(1 0 89.88);
   text-shadow: 0 1px 2px rgba(0,0,0,0.4);
 }
 @keyframes roy-dataviz-pct-stripes {
@@ -685,14 +704,14 @@ export const effectsBatch39: CSSEffect[] = [
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: conic-gradient(from 0deg, #6366f1, #8b5cf6, #ec4899, #f59e0b, #6366f1);
+  background: conic-gradient(from 0deg, oklch(0.585 0.204 200), oklch(0.606 0.219 292.72), oklch(0.656 0.212 354.31), oklch(0.769 0.165 70.08), oklch(0.585 0.204 200));
   animation: roy-dataviz-radial-spin 1.4s linear infinite;
 }
 .roycss-dataviz-radial-progress::before {
   content: "";
   position: absolute;
   inset: 8px;
-  background: #fff;
+  background: oklch(1 0 89.88);
   border-radius: 50%;
 }
 .roycss-dataviz-radial-progress::after {
@@ -705,7 +724,7 @@ export const effectsBatch39: CSSEffect[] = [
   font-family: ui-monospace, monospace;
   font-size: 1.2rem;
   font-weight: 700;
-  color: #6366f1;
+  color: oklch(0.585 0.204 200);
 }
 @keyframes roy-dataviz-radial-spin {
   0%   { transform: rotate(0deg); }
@@ -732,7 +751,7 @@ export const effectsBatch39: CSSEffect[] = [
   justify-content: flex-end;
   height: 100%;
   padding: 14px;
-  background: #f8fafc;
+  background: oklch(0.984 0.003 247.86);
   border-radius: 6px;
 }
 .roycss-dataviz-stacked-bar::before,
@@ -744,12 +763,12 @@ export const effectsBatch39: CSSEffect[] = [
 }
 .roycss-dataviz-stacked-bar::before {
   height: 30%;
-  background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
+  background: linear-gradient(180deg, oklch(0.637 0.208 25.33) 0%, oklch(0.577 0.215 27.33) 100%);
   animation: roy-dataviz-stack-grow 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
 }
 .roycss-dataviz-stacked-bar::after {
   height: 50%;
-  background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(180deg, oklch(0.696 0.149 162.48) 0%, oklch(0.596 0.127 163.23) 100%);
   animation: roy-dataviz-stack-grow 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0s both;
   box-shadow: 0 -2px 4px rgba(16, 185, 129, 0.2);
 }
@@ -776,8 +795,8 @@ export const effectsBatch39: CSSEffect[] = [
   position: relative;
   height: 100%;
   background:
-    linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%),
-    repeating-linear-gradient(0deg, transparent 0, transparent 19px, rgba(99,102,241,0.08) 19px, rgba(99,102,241,0.08) 20px);
+    linear-gradient(180deg, oklch(0.984 0.003 247.86) 0%, oklch(0.962 0.018 272.31) 100%),
+    repeating-linear-gradient(0deg, transparent 0, transparent 19px, oklch(0.585 0.204 200 / 0.08) 19px, oklch(0.585 0.204 200 / 0.08) 20px);
   border-radius: 6px;
   overflow: hidden;
 }
@@ -788,15 +807,15 @@ export const effectsBatch39: CSSEffect[] = [
   top: 60%;
   height: 4px;
   background: linear-gradient(90deg,
-    #6366f1 0%, #6366f1 25%,
+    oklch(0.585 0.204 200) 0%, oklch(0.585 0.204 200) 25%,
     transparent 25%, transparent 40%,
-    #6366f1 40%, #6366f1 65%,
+    oklch(0.585 0.204 200) 40%, oklch(0.585 0.204 200) 65%,
     transparent 65%, transparent 78%,
-    #6366f1 78%, #6366f1 100%);
+    oklch(0.585 0.204 200) 78%, oklch(0.585 0.204 200) 100%);
   transform-origin: left center;
   transform: scaleX(0);
   animation: roy-dataviz-line-draw 1.8s ease-out 0.2s forwards;
-  filter: drop-shadow(0 2px 4px rgba(99,102,241,0.4));
+  filter: drop-shadow(0 2px 4px oklch(0.585 0.204 200 / 0.4));
 }
 .roycss-dataviz-line-chart-draw::after {
   content: "";
@@ -807,10 +826,10 @@ export const effectsBatch39: CSSEffect[] = [
   height: 10px;
   margin-top: -3px;
   margin-left: -5px;
-  background: #fff;
-  border: 3px solid #6366f1;
+  background: oklch(1 0 89.88);
+  border: 3px solid oklch(0.585 0.204 200);
   border-radius: 50%;
-  box-shadow: 0 0 12px rgba(99,102,241,0.6);
+  box-shadow: 0 0 12px oklch(0.585 0.204 200 / 0.6);
   animation: roy-dataviz-line-dot 1.8s ease-out 0.2s both;
 }
 @keyframes roy-dataviz-line-draw {
@@ -841,7 +860,7 @@ export const effectsBatch39: CSSEffect[] = [
 .roycss-dataviz-area-chart-fill {
   position: relative;
   height: 100%;
-  background: #f8fafc;
+  background: oklch(0.984 0.003 247.86);
   border-radius: 6px;
   overflow: hidden;
 }
@@ -852,7 +871,7 @@ export const effectsBatch39: CSSEffect[] = [
   bottom: 0;
   height: 100%;
   background:
-    linear-gradient(180deg, rgba(99,102,241,0.5) 0%, rgba(99,102,241,0.15) 60%, rgba(99,102,241,0.05) 100%);
+    linear-gradient(180deg, oklch(0.585 0.204 200 / 0.5) 0%, oklch(0.585 0.204 200 / 0.15) 60%, oklch(0.585 0.204 200 / 0.05) 100%);
   clip-path: polygon(
     0% 100%, 0% 60%, 15% 50%, 30% 70%, 45% 30%, 60% 45%, 75% 20%, 90% 35%, 100% 15%, 100% 100%
   );
@@ -867,7 +886,7 @@ export const effectsBatch39: CSSEffect[] = [
   top: 0;
   height: 100%;
   background:
-    repeating-linear-gradient(0deg, transparent 0, transparent 19px, rgba(99,102,241,0.06) 19px, rgba(99,102,241,0.06) 20px);
+    repeating-linear-gradient(0deg, transparent 0, transparent 19px, oklch(0.585 0.204 200 / 0.06) 19px, oklch(0.585 0.204 200 / 0.06) 20px);
   pointer-events: none;
 }
 @keyframes roy-dataviz-area-fill {
@@ -895,7 +914,7 @@ export const effectsBatch39: CSSEffect[] = [
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f8fafc;
+  background: oklch(0.984 0.003 247.86);
   border-radius: 50%;
 }
 .roycss-dataviz-bubble-pulse::before,
@@ -903,19 +922,19 @@ export const effectsBatch39: CSSEffect[] = [
   content: "";
   position: absolute;
   border-radius: 50%;
-  border: 2px solid #6366f1;
+  border: 2px solid oklch(0.585 0.204 200);
 }
 .roycss-dataviz-bubble-pulse::before {
   width: 36px;
   height: 36px;
-  background: radial-gradient(circle at 30% 30%, #818cf8, #4f46e5);
-  box-shadow: 0 0 16px rgba(99,102,241,0.6);
+  background: radial-gradient(circle at 30% 30%, oklch(0.68 0.158 200), oklch(0.511 0.23 200));
+  box-shadow: 0 0 16px oklch(0.585 0.204 200 / 0.6);
   animation: roy-dataviz-bubble-bob 2s ease-in-out infinite;
 }
 .roycss-dataviz-bubble-pulse::after {
   width: 36px;
   height: 36px;
-  border-color: #6366f1;
+  border-color: oklch(0.585 0.204 200);
   animation: roy-dataviz-bubble-ring 2s ease-out infinite;
 }
 @keyframes roy-dataviz-bubble-bob {
@@ -948,16 +967,16 @@ export const effectsBatch39: CSSEffect[] = [
   flex-direction: column;
   gap: 10px;
   padding: 16px;
-  background: #fff;
+  background: oklch(1 0 89.88);
   border-radius: 8px;
   overflow: hidden;
-  border: 1px solid #e2e8f0;
+  border: 1px solid oklch(0.929 0.013 255.51);
 }
 .roycss-dataviz-loading-skeleton::before,
 .roycss-dataviz-loading-skeleton::after {
   content: "";
   border-radius: 4px;
-  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+  background: linear-gradient(90deg, oklch(0.929 0.013 255.51) 25%, oklch(0.968 0.007 247.9) 50%, oklch(0.929 0.013 255.51) 75%);
   background-size: 200% 100%;
   animation: roy-dataviz-shimmer 1.6s ease-in-out infinite;
 }
@@ -975,7 +994,7 @@ export const effectsBatch39: CSSEffect[] = [
 }
 @media (prefers-reduced-motion: reduce) {
   .roycss-dataviz-loading-skeleton::before,
-  .roycss-dataviz-loading-skeleton::after { animation: none; background: #e2e8f0; }
+  .roycss-dataviz-loading-skeleton::after { animation: none; background: oklch(0.929 0.013 255.51); }
 }`,
   },
 ];

@@ -478,17 +478,16 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 0;
-  height: 0;
+  width: 300%;
+  height: 300%;
   border-radius: 50%;
   background: radial-gradient(circle, oklch(0.62 0.2 220), oklch(0.55 0.22 280));
-  transform: translate(-50%, -50%);
-  transition: width 0.5s ease, height 0.5s ease;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.5s ease;
   z-index: -1;
 }
 .roycss-liquid-hover-splash:hover::before {
-  width: 300%;
-  height: 300%;
+  transform: translate(-50%, -50%) scale(1);
 }
 @media (prefers-reduced-motion: reduce) {
   .roycss-liquid-hover-splash::before { transition: none; }

@@ -62,14 +62,16 @@
   position: absolute;
   inset-block-end: -2px;
   inset-inline-start: 0;
-  inline-size: 0;
+  inline-size: 100%;
   block-size: 2px;
   background: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.704 0.123 182.5));
-  transition: width 0.3s ease;
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
 }
 @media (hover: hover) {
   .roycss-hover-underline-slide:hover::after {
-    inline-size: 100%;
+    transform: scaleX(1);
   }
 }
 
@@ -271,16 +273,17 @@
   content: '';
   position: absolute;
   inset-block-start: 0;
-  inset-inline-start: -100%;
+  inset-inline-start: 0;
   inline-size: 100%;
   block-size: 100%;
   background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
-  transition: left 0.4s ease;
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
   z-index: 0;
 }
 @media (hover: hover) {
   .roycss-hover-slide-overlay:hover::before {
-    inset-inline-start: 0;
+    transform: translateX(0);
   }
 }
 @media (hover: hover) {
@@ -498,27 +501,29 @@
   position: absolute;
   border: 2px solid oklch(0.696 0.149 162.48);
   box-sizing: border-box;
-  transition: width 0.3s ease, height 0.3s ease;
-  inline-size: 0;
-  block-size: 0;
+  transition: transform 0.3s ease;
+  inline-size: 100%;
+  block-size: 100%;
+  transform: scale(0);
 }
 .roycss-hover-border-draw::before {
   inset-block-start: 0;
   inset-inline-start: 0;
   border-inline-end: none;
   border-block-end: none;
+  transform-origin: 0 0;
 }
 .roycss-hover-border-draw::after {
   inset-block-end: 0;
   inset-inline-end: 0;
   border-inline-start: none;
   border-block-start: none;
+  transform-origin: 100% 100%;
 }
 @media (hover: hover) {
   .roycss-hover-border-draw:hover::before,
   .roycss-hover-border-draw:hover::after {
-    inline-size: 100%;
-    block-size: 100%;
+    transform: scale(1);
   }
 }
 
@@ -659,7 +664,7 @@
   content: "";
   position: absolute;
   inset-block-start: 0;
-  inset-inline-start: -150%;
+  inset-inline-start: 0;
   inline-size: 100%;
   block-size: 100%;
   background: linear-gradient(
@@ -668,12 +673,12 @@
     color-mix(in oklch, oklch(1 0 89.88) 12%, transparent) 50%,
     transparent 80%
   );
-  transform: skewX(-20deg);
-  transition: left 0.7s ease;
+  transform: skewX(-20deg) translateX(-150%);
+  transition: transform 0.7s ease;
 }
 @media (hover: hover) {
   .roycss-linear-shimmer-hover:hover::before {
-    inset-inline-start: 150%;
+    transform: skewX(-20deg) translateX(150%);
   }
 }
 
@@ -1703,18 +1708,17 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 0;
-  height: 0;
+  width: 300%;
+  height: 300%;
   border-radius: 50%;
   background: color-mix(in oklch, oklch(1 0 0) 25%, transparent);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.6s ease, opacity 0.6s ease;
   z-index: 1;
 }
 @media (hover: hover) {
   .roycss-ferrum-hover-ripple:hover::before {
-    width: 300%;
-    height: 300%;
+    transform: translate(-50%, -50%) scale(1);
     opacity: 0;
   }
 }
@@ -1733,16 +1737,16 @@
   content: '';
   position: absolute;
   bottom: 0;
-  left: 50%;
-  width: 0;
+  left: 0;
+  width: 100%;
   height: 2px;
   background: linear-gradient(90deg, oklch(0.627 0.164 271.53), oklch(0.501 0.138 304.73));
-  transition: width 0.35s ease, left 0.35s ease;
+  transform: translateX(-50%) scaleX(0);
+  transition: transform 0.35s ease;
 }
 @media (hover: hover) {
   .roycss-ferrum-hover-underline-grow:hover::after {
-    width: 100%;
-    left: 0;
+    transform: translateX(0) scaleX(1);
   }
 }
 
@@ -1761,16 +1765,17 @@
   content: '';
   position: absolute;
   top: 0;
-  inset-inline-start: -100%;
+  inset-inline-start: 0;
   width: 100%;
   height: 100%;
   background: color-mix(in oklch, oklch(0 0 0) 45%, transparent);
-  transition: inset-inline-start 0.4s ease;
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
   z-index: 1;
 }
 @media (hover: hover) {
   .roycss-ferrum-hover-overlay-slide:hover::before {
-    inset-inline-start: 0;
+    transform: translateX(0);
   }
 }
 
@@ -1792,14 +1797,16 @@
   bottom: 0;
   inset-inline-start: 0;
   width: 100%;
-  height: 0;
+  height: 100%;
   background: linear-gradient(to top, oklch(0.627 0.164 271.53), oklch(0.501 0.138 304.73));
-  transition: height 0.4s ease;
+  transform-origin: bottom;
+  transform: scaleY(0);
+  transition: transform 0.4s ease;
   z-index: -1;
 }
 @media (hover: hover) {
   .roycss-ferrum-hover-bg-slide:hover::before {
-    height: 100%;
+    transform: scaleY(1);
   }
 }
 
@@ -1914,17 +1921,17 @@
   content: '';
   position: absolute;
   top: 0;
-  inset-inline-start: -110%;
+  inset-inline-start: 0;
   width: 100%;
   height: 100%;
   background: linear-gradient(135deg, oklch(0.795 0.172 323.15), oklch(0.673 0.193 16.23));
-  transform: skewX(-15deg);
-  transition: inset-inline-start 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+  transform: skewX(-15deg) translateX(-110%);
+  transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
   z-index: -1;
 }
 @media (hover: hover) {
   .roycss-ferrum-hover-swipe:hover::before {
-    inset-inline-start: 0;
+    transform: skewX(-15deg) translateX(0);
   }
 }
 @media (hover: hover) {

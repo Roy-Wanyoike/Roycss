@@ -26,7 +26,7 @@ export const effectsBatch40: CSSEffect[] = [
     cssCode: `/* Immersive: Parallax Starfield */
 .roycss-immersive-starfield {
   position: relative;
-  background: radial-gradient(ellipse at top, #1b2735 0%, #090a0f 100%);
+  background: radial-gradient(ellipse at top, oklch(0.268 0.031 252.76) 0%, oklch(0.146 0.011 275.82) 100%);
   overflow: hidden;
 }
 .roycss-immersive-starfield::before,
@@ -35,13 +35,13 @@ export const effectsBatch40: CSSEffect[] = [
   position: absolute;
   inset: -50% 0 0 0;
   background-image:
-    radial-gradient(1px 1px at 20px 30px, #fff, transparent),
-    radial-gradient(1px 1px at 80px 120px, #fff, transparent),
-    radial-gradient(1px 1px at 160px 80px, #cfe, transparent),
-    radial-gradient(2px 2px at 240px 200px, #fff, transparent),
-    radial-gradient(1px 1px at 320px 60px, #ffd, transparent),
-    radial-gradient(1px 1px at 60px 220px, #fff, transparent),
-    radial-gradient(2px 2px at 200px 300px, #cff, transparent);
+    radial-gradient(1px 1px at 20px 30px, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 80px 120px, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 160px 80px, oklch(0.96 0.057 172.74), transparent),
+    radial-gradient(2px 2px at 240px 200px, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 320px 60px, oklch(0.991 0.044 107.18), transparent),
+    radial-gradient(1px 1px at 60px 220px, oklch(1 0 89.88), transparent),
+    radial-gradient(2px 2px at 200px 300px, oklch(0.965 0.052 196.33), transparent);
   background-size: 400px 400px;
   background-repeat: repeat;
   animation: roy-immersive-star-drift 60s linear infinite;
@@ -76,7 +76,7 @@ export const effectsBatch40: CSSEffect[] = [
     cssCode: `/* Immersive: Falling Rain */
 .roycss-immersive-rain {
   position: relative;
-  background: linear-gradient(#0a0f14, #1a2a35);
+  background: linear-gradient(oklch(0.166 0.013 248.65), oklch(0.276 0.03 239.25));
   overflow: hidden;
 }
 .roycss-immersive-rain::before {
@@ -126,7 +126,7 @@ export const effectsBatch40: CSSEffect[] = [
     cssCode: `/* Immersive: Snow Drift */
 .roycss-immersive-snow-drift {
   position: relative;
-  background: linear-gradient(#1c2530, #2a3744);
+  background: linear-gradient(oklch(0.261 0.024 253.72), oklch(0.331 0.029 248.72));
   overflow: hidden;
 }
 .roycss-immersive-snow-drift::before,
@@ -135,12 +135,12 @@ export const effectsBatch40: CSSEffect[] = [
   position: absolute;
   inset: -20% 0 0 0;
   background-image:
-    radial-gradient(2px 2px at 20px 30px, #fff, transparent),
-    radial-gradient(2px 2px at 90px 110px, #fff, transparent),
-    radial-gradient(3px 3px at 180px 60px, #fff, transparent),
-    radial-gradient(2px 2px at 250px 180px, #fff, transparent),
-    radial-gradient(3px 3px at 320px 90px, #fff, transparent),
-    radial-gradient(2px 2px at 50px 240px, #fff, transparent);
+    radial-gradient(2px 2px at 20px 30px, oklch(1 0 89.88), transparent),
+    radial-gradient(2px 2px at 90px 110px, oklch(1 0 89.88), transparent),
+    radial-gradient(3px 3px at 180px 60px, oklch(1 0 89.88), transparent),
+    radial-gradient(2px 2px at 250px 180px, oklch(1 0 89.88), transparent),
+    radial-gradient(3px 3px at 320px 90px, oklch(1 0 89.88), transparent),
+    radial-gradient(2px 2px at 50px 240px, oklch(1 0 89.88), transparent);
   background-size: 400px 300px;
   background-repeat: repeat;
   animation: roy-immersive-snow-fall 8s linear infinite;
@@ -176,7 +176,7 @@ export const effectsBatch40: CSSEffect[] = [
     cssCode: `/* Immersive: Layered Flame */
 .roycss-immersive-fire-flame {
   position: relative;
-  background: radial-gradient(ellipse at bottom, #2a0a00 0%, #000 80%);
+  background: radial-gradient(ellipse at bottom, oklch(0.198 0.058 43.29) 0%, oklch(0 0 0) 80%);
   overflow: hidden;
 }
 .roycss-immersive-fire-flame::before,
@@ -188,7 +188,7 @@ export const effectsBatch40: CSSEffect[] = [
   height: 80%;
   transform: translateX(-50%);
   background:
-    radial-gradient(ellipse at 50% 100%, #fff 0%, #ffe66d 12%, #ff8c1a 35%, #ff3d00 60%, transparent 80%);
+    radial-gradient(ellipse at 50% 100%, oklch(1 0 89.88) 0%, oklch(0.922 0.143 97.78) 12%, oklch(0.751 0.176 56.8) 35%, oklch(0.654 0.235 34.04) 60%, transparent 80%);
   border-radius: 50% 50% 20% 20% / 80% 80% 20% 20%;
   filter: blur(6px);
   animation: roy-immersive-fire-flicker 0.9s ease-in-out infinite alternate;
@@ -196,7 +196,7 @@ export const effectsBatch40: CSSEffect[] = [
 }
 .roycss-immersive-fire-flame::after {
   width: 35%; height: 55%;
-  background: radial-gradient(ellipse at 50% 100%, #fff 0%, #ffe066 20%, #ff5e1a 50%, transparent 75%);
+  background: radial-gradient(ellipse at 50% 100%, oklch(1 0 89.88) 0%, oklch(0.91 0.144 95.11) 20%, oklch(0.687 0.208 39.36) 50%, transparent 75%);
   filter: blur(3px);
   animation-duration: 0.6s;
   animation-direction: alternate-reverse;
@@ -227,7 +227,7 @@ export const effectsBatch40: CSSEffect[] = [
     cssCode: `/* Immersive: Drifting Smoke & Fog */
 .roycss-immersive-smoke-fog {
   position: relative;
-  background: linear-gradient(#22252a, #3a3f47);
+  background: linear-gradient(oklch(0.264 0.01 260.7), oklch(0.366 0.015 259.81));
   overflow: hidden;
 }
 .roycss-immersive-smoke-fog::before,
@@ -275,7 +275,7 @@ export const effectsBatch40: CSSEffect[] = [
     cssCode: `/* Immersive: Ocean Waves */
 .roycss-immersive-ocean-waves {
   position: relative;
-  background: linear-gradient(#0a3a5c 0%, #072a44 60%, #04192c 100%);
+  background: linear-gradient(oklch(0.337 0.077 245.23) 0%, oklch(0.276 0.062 245.56) 60%, oklch(0.208 0.047 247.97) 100%);
   overflow: hidden;
 }
 .roycss-immersive-ocean-waves::before,
@@ -324,7 +324,7 @@ export const effectsBatch40: CSSEffect[] = [
     cssCode: `/* Immersive: Matrix Rain */
 .roycss-immersive-matrix-rain {
   position: relative;
-  background: #000;
+  background: oklch(0 0 0);
   overflow: hidden;
 }
 .roycss-immersive-matrix-rain::before,
@@ -370,7 +370,7 @@ export const effectsBatch40: CSSEffect[] = [
     cssCode: `/* Immersive: Hexagon Tessellation */
 .roycss-immersive-geometric-hex {
   position: relative;
-  background: #0d1117;
+  background: oklch(0.176 0.014 258.36);
   overflow: hidden;
 }
 .roycss-immersive-geometric-hex::before {
@@ -418,7 +418,7 @@ export const effectsBatch40: CSSEffect[] = [
     cssCode: `/* Immersive: Topographic Contours */
 .roycss-immersive-topographic {
   position: relative;
-  background: #0f1b14;
+  background: oklch(0.208 0.022 158.19);
   overflow: hidden;
 }
 .roycss-immersive-topographic::before {
@@ -461,7 +461,7 @@ export const effectsBatch40: CSSEffect[] = [
     cssCode: `/* Immersive: Aurora Borealis */
 .roycss-immersive-aurora-bg {
   position: relative;
-  background: linear-gradient(#020617 0%, #0c1d3a 50%, #021024 100%);
+  background: linear-gradient(oklch(0.129 0.041 264.7) 0%, oklch(0.234 0.06 260.37) 50%, oklch(0.173 0.047 254.4) 100%);
   overflow: hidden;
 }
 .roycss-immersive-aurora-bg::before,
@@ -508,12 +508,12 @@ export const effectsBatch40: CSSEffect[] = [
 .roycss-immersive-nebula {
   position: relative;
   background:
-    radial-gradient(1px 1px at 50px 50px, #fff, transparent),
-    radial-gradient(1px 1px at 150px 200px, #fff, transparent),
-    radial-gradient(1px 1px at 250px 80px, #cfe, transparent),
-    radial-gradient(2px 2px at 320px 320px, #fff, transparent),
-    radial-gradient(1px 1px at 90px 280px, #ffd, transparent),
-    #050414;
+    radial-gradient(1px 1px at 50px 50px, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 150px 200px, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 250px 80px, oklch(0.96 0.057 172.74), transparent),
+    radial-gradient(2px 2px at 320px 320px, oklch(1 0 89.88), transparent),
+    radial-gradient(1px 1px at 90px 280px, oklch(0.991 0.044 107.18), transparent),
+    oklch(0.122 0.038 283.29);
   background-size: 400px 400px, 400px 400px, 400px 400px, 400px 400px, 400px 400px, 100% 100%;
   background-repeat: repeat;
   overflow: hidden;
@@ -560,7 +560,7 @@ export const effectsBatch40: CSSEffect[] = [
     cssCode: `/* Immersive: Underwater Caustics */
 .roycss-immersive-underwater {
   position: relative;
-  background: linear-gradient(#0d4a5c 0%, #072430 80%, #04161f 100%);
+  background: linear-gradient(oklch(0.381 0.065 223.04) 0%, oklch(0.245 0.041 229.25) 80%, oklch(0.189 0.031 231.55) 100%);
   overflow: hidden;
 }
 .roycss-immersive-underwater::before,
@@ -609,7 +609,7 @@ export const effectsBatch40: CSSEffect[] = [
     cssCode: `/* Immersive: Glowing Fireflies */
 .roycss-immersive-fireflies {
   position: relative;
-  background: linear-gradient(#0a1410 0%, #1a2a20 100%);
+  background: linear-gradient(oklch(0.18 0.017 167.53) 0%, oklch(0.267 0.029 156.46) 100%);
   overflow: hidden;
 }
 .roycss-immersive-fireflies::before,
@@ -664,7 +664,7 @@ export const effectsBatch40: CSSEffect[] = [
     cssCode: `/* Immersive: Drifting Clouds */
 .roycss-immersive-cloud-drift {
   position: relative;
-  background: linear-gradient(#7cb9e8 0%, #c3e0f0 60%, #e8f4fb 100%);
+  background: linear-gradient(oklch(0.762 0.093 242.57) 0%, oklch(0.891 0.038 231.95) 60%, oklch(0.96 0.016 233.02) 100%);
   overflow: hidden;
 }
 .roycss-immersive-cloud-drift::before,
@@ -714,7 +714,7 @@ export const effectsBatch40: CSSEffect[] = [
     cssCode: `/* Immersive: Rain Bokeh */
 .roycss-immersive-rain-bokeh {
   position: relative;
-  background: linear-gradient(#0e1116 0%, #1a2533 100%);
+  background: linear-gradient(oklch(0.177 0.011 260.64) 0%, oklch(0.261 0.031 254.76) 100%);
   overflow: hidden;
 }
 .roycss-immersive-rain-bokeh::before {
@@ -768,7 +768,7 @@ export const effectsBatch40: CSSEffect[] = [
     cssCode: `/* Immersive: Lightning Flash */
 .roycss-immersive-lightning {
   position: relative;
-  background: linear-gradient(#0a0e1a 0%, #1a2238 60%, #0a0e1a 100%);
+  background: linear-gradient(oklch(0.166 0.026 269.37) 0%, oklch(0.256 0.043 268.07) 60%, oklch(0.166 0.026 269.37) 100%);
   overflow: hidden;
 }
 .roycss-immersive-lightning::before {
@@ -819,7 +819,7 @@ export const effectsBatch40: CSSEffect[] = [
     cssCode: `/* Immersive: Dust in Light Beam */
 .roycss-immersive-dust-particles {
   position: relative;
-  background: linear-gradient(#0a0a0a 0%, #1a1612 100%);
+  background: linear-gradient(oklch(0.145 0 89.88) 0%, oklch(0.203 0.01 67.21) 100%);
   overflow: hidden;
 }
 .roycss-immersive-dust-particles::before {
@@ -867,7 +867,7 @@ export const effectsBatch40: CSSEffect[] = [
     cssCode: `/* Immersive: Animated Mesh Gradient */
 .roycss-immersive-gradient-mesh-bg {
   position: relative;
-  background: #0f0f1a;
+  background: oklch(0.174 0.023 283.8);
   overflow: hidden;
 }
 .roycss-immersive-gradient-mesh-bg::before,
@@ -913,7 +913,7 @@ export const effectsBatch40: CSSEffect[] = [
     cssCode: `/* Immersive: Falling Confetti */
 .roycss-immersive-confetti-bg {
   position: relative;
-  background: linear-gradient(#1a0d2e 0%, #2a1a4a 60%, #1a0d2e 100%);
+  background: linear-gradient(oklch(0.198 0.064 298.59) 0%, oklch(0.267 0.086 295.38) 60%, oklch(0.198 0.064 298.59) 100%);
   overflow: hidden;
 }
 .roycss-immersive-confetti-bg::before,
@@ -922,11 +922,11 @@ export const effectsBatch40: CSSEffect[] = [
   position: absolute;
   inset: -10% 0 0 0;
   background-image:
-    linear-gradient(45deg, #f43f5e 0 8px, transparent 8px),
-    linear-gradient(-45deg, #22d3ee 0 10px, transparent 10px),
-    linear-gradient(90deg, #facc15 0 6px, transparent 6px),
-    linear-gradient(0deg, #a855f7 0 12px, transparent 12px),
-    linear-gradient(45deg, #34d399 0 7px, transparent 7px);
+    linear-gradient(45deg, oklch(0.645 0.215 16.44) 0 8px, transparent 8px),
+    linear-gradient(-45deg, oklch(0.797 0.134 211.53) 0 10px, transparent 10px),
+    linear-gradient(90deg, oklch(0.861 0.173 91.94) 0 6px, transparent 6px),
+    linear-gradient(0deg, oklch(0.627 0.233 303.9) 0 12px, transparent 12px),
+    linear-gradient(45deg, oklch(0.773 0.153 163.22) 0 7px, transparent 7px);
   background-size: 80px 80px, 120px 120px, 100px 100px, 90px 90px, 110px 110px;
   background-position: 0 0, 40px 60px, 80px 30px, 20px 90px, 60px 20px;
   background-repeat: repeat;
@@ -961,7 +961,7 @@ export const effectsBatch40: CSSEffect[] = [
     cssCode: `/* Immersive: Rising Bubbles */
 .roycss-immersive-bubble-rise {
   position: relative;
-  background: linear-gradient(#0a4a6e 0%, #072e48 60%, #04192c 100%);
+  background: linear-gradient(oklch(0.391 0.085 240.52) 0%, oklch(0.29 0.063 243.29) 60%, oklch(0.208 0.047 247.97) 100%);
   overflow: hidden;
 }
 .roycss-immersive-bubble-rise::before,

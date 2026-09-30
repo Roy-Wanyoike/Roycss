@@ -488,18 +488,17 @@ export const effectsBatch21: CSSEffect[] = [
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 0;
-  height: 0;
+  width: 300%;
+  height: 300%;
   border-radius: 50%;
   background: color-mix(in oklch, oklch(1 0 0) 25%, transparent);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.6s ease, opacity 0.6s ease;
   z-index: 1;
 }
 @media (hover: hover) {
   .roycss-ferrum-hover-ripple:hover::before {
-    width: 300%;
-    height: 300%;
+    transform: translate(-50%, -50%) scale(1);
     opacity: 0;
   }
 }
@@ -526,16 +525,16 @@ export const effectsBatch21: CSSEffect[] = [
   content: '';
   position: absolute;
   bottom: 0;
-  left: 50%;
-  width: 0;
+  left: 0;
+  width: 100%;
   height: 2px;
   background: linear-gradient(90deg, oklch(0.627 0.164 271.53), oklch(0.501 0.138 304.73));
-  transition: width 0.35s ease, left 0.35s ease;
+  transform: translateX(-50%) scaleX(0);
+  transition: transform 0.35s ease;
 }
 @media (hover: hover) {
   .roycss-ferrum-hover-underline-grow:hover::after {
-    width: 100%;
-    left: 0;
+    transform: translateX(0) scaleX(1);
   }
 }
 
@@ -562,16 +561,17 @@ export const effectsBatch21: CSSEffect[] = [
   content: '';
   position: absolute;
   top: 0;
-  inset-inline-start: -100%;
+  inset-inline-start: 0;
   width: 100%;
   height: 100%;
   background: color-mix(in oklch, oklch(0 0 0) 45%, transparent);
-  transition: inset-inline-start 0.4s ease;
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
   z-index: 1;
 }
 @media (hover: hover) {
   .roycss-ferrum-hover-overlay-slide:hover::before {
-    inset-inline-start: 0;
+    transform: translateX(0);
   }
 }
 
@@ -601,14 +601,16 @@ export const effectsBatch21: CSSEffect[] = [
   bottom: 0;
   inset-inline-start: 0;
   width: 100%;
-  height: 0;
+  height: 100%;
   background: linear-gradient(to top, oklch(0.627 0.164 271.53), oklch(0.501 0.138 304.73));
-  transition: height 0.4s ease;
+  transform-origin: bottom;
+  transform: scaleY(0);
+  transition: transform 0.4s ease;
   z-index: -1;
 }
 @media (hover: hover) {
   .roycss-ferrum-hover-bg-slide:hover::before {
-    height: 100%;
+    transform: scaleY(1);
   }
 }
 
@@ -763,17 +765,17 @@ export const effectsBatch21: CSSEffect[] = [
   content: '';
   position: absolute;
   top: 0;
-  inset-inline-start: -110%;
+  inset-inline-start: 0;
   width: 100%;
   height: 100%;
   background: linear-gradient(135deg, oklch(0.795 0.172 323.15), oklch(0.673 0.193 16.23));
-  transform: skewX(-15deg);
-  transition: inset-inline-start 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+  transform: skewX(-15deg) translateX(-110%);
+  transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
   z-index: -1;
 }
 @media (hover: hover) {
   .roycss-ferrum-hover-swipe:hover::before {
-    inset-inline-start: 0;
+    transform: skewX(-15deg) translateX(0);
   }
 }
 @media (hover: hover) {

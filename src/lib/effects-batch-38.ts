@@ -19,12 +19,12 @@ export const effectsBatch38: CSSEffect[] = [
     cssCode: `/* Retro: CRT Scanlines */
 .roycss-retro-crt-scanlines {
   position: relative;
-  background: radial-gradient(ellipse at center, #0c3a2a 0%, #021510 100%);
-  color: #7dffb0;
+  background: radial-gradient(ellipse at center, oklch(0.313 0.057 165.58) 0%, oklch(0.177 0.03 174.74) 100%);
+  color: oklch(0.906 0.16 154.78);
   border-radius: 16px;
   overflow: hidden;
   font-family: ui-monospace, monospace;
-  text-shadow: 0 0 4px #7dffb0, 0 0 10px rgba(125,255,176,0.6);
+  text-shadow: 0 0 4px oklch(0.906 0.16 154.78), 0 0 10px rgba(125,255,176,0.6);
 }
 .roycss-retro-crt-scanlines::before {
   content: "";
@@ -75,12 +75,12 @@ export const effectsBatch38: CSSEffect[] = [
     cssCode: `/* Retro: VHS Tracking */
 .roycss-retro-vhs-tracking {
   position: relative;
-  background: #0a0a0f;
-  color: #f4f4f8;
+  background: oklch(0.147 0.011 285.01);
+  color: oklch(0.968 0.005 286.3);
   border-radius: 4px;
   overflow: hidden;
   font-family: ui-monospace, monospace;
-  text-shadow: 2px 0 #ff0050, -2px 0 #00d4ff;
+  text-shadow: 2px 0 oklch(0.635 0.254 16.83), -2px 0 oklch(0.804 0.146 219.52);
   animation: roy-retro-vhs-jitter 0.18s steps(2) infinite;
 }
 .roycss-retro-vhs-tracking::before {
@@ -140,7 +140,7 @@ export const effectsBatch38: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Retro: Pixel Art Transition */
 .roycss-retro-pixel-art-transition {
-  background: linear-gradient(135deg, #ff71ce, #01cdfe, #05ffa1, #b967ff);
+  background: linear-gradient(135deg, oklch(0.747 0.2 342.96), oklch(0.787 0.147 223.22), oklch(0.881 0.206 157.77), oklch(0.674 0.221 306.2));
   border-radius: 0;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
@@ -169,7 +169,7 @@ export const effectsBatch38: CSSEffect[] = [
     previewText: "08:42",
     cssCode: `/* Retro: LCD Display */
 .roycss-retro-lcd-display {
-  background: linear-gradient(180deg, #9ba78d 0%, #828c74 100%);
+  background: linear-gradient(180deg, oklch(0.712 0.039 127.61) 0%, oklch(0.625 0.037 125.88) 100%);
   color: rgba(28, 38, 22, 0.92);
   font-family: ui-monospace, "Courier New", monospace;
   font-weight: 700;
@@ -204,8 +204,8 @@ export const effectsBatch38: CSSEffect[] = [
     cssCode: `/* Retro: Typewriter Ribbon */
 .roycss-retro-typewriter-ribbon {
   font-family: "Courier New", ui-monospace, monospace;
-  color: #2a1d10;
-  background: #f1e7d2;
+  color: oklch(0.243 0.03 65.57);
+  background: oklch(0.93 0.03 85.56);
   padding: 0.5em 0.8em;
   letter-spacing: 0.05em;
   text-shadow:
@@ -239,7 +239,7 @@ export const effectsBatch38: CSSEffect[] = [
     previewType: "card",
     cssCode: `/* Retro: Polaroid Frame */
 .roycss-retro-polaroid-frame {
-  background: #fbf8f1;
+  background: oklch(0.98 0.01 87.47);
   padding: 14px 14px 48px;
   border-radius: 4px;
   box-shadow:
@@ -258,7 +258,7 @@ export const effectsBatch38: CSSEffect[] = [
   background:
     linear-gradient(135deg, rgba(255,140,180,0.5), rgba(140,200,255,0.5)),
     radial-gradient(circle at 30% 30%, rgba(255,220,120,0.7), transparent 60%),
-    linear-gradient(180deg, #6b5a4a 0%, #b08d6a 100%);
+    linear-gradient(180deg, oklch(0.48 0.033 65.17) 0%, oklch(0.667 0.065 66.34) 100%);
   background-blend-mode: screen, screen, normal;
   filter: saturate(0.85) contrast(0.95);
 }
@@ -270,7 +270,7 @@ export const effectsBatch38: CSSEffect[] = [
   text-align: center;
   font-family: "Courier New", monospace;
   font-size: 0.7rem;
-  color: #5a4636;
+  color: oklch(0.411 0.037 60.14);
   letter-spacing: 0.1em;
 }
 .roycss-retro-polaroid-frame:hover {
@@ -293,10 +293,10 @@ export const effectsBatch38: CSSEffect[] = [
 .roycss-retro-film-grain {
   position: relative;
   background:
-    radial-gradient(circle at 30% 20%, #5a3a1a 0%, transparent 50%),
-    radial-gradient(circle at 70% 80%, #2a1a0a 0%, transparent 50%),
-    linear-gradient(135deg, #3a2a1a 0%, #1a1208 100%);
-  color: #f4e8c8;
+    radial-gradient(circle at 30% 20%, oklch(0.379 0.065 63.58) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, oklch(0.234 0.037 64.28) 0%, transparent 50%),
+    linear-gradient(135deg, oklch(0.299 0.036 65.75) 0%, oklch(0.189 0.023 72.29) 100%);
+  color: oklch(0.932 0.044 89.89);
   overflow: hidden;
 }
 .roycss-retro-film-grain::before {
@@ -335,27 +335,27 @@ export const effectsBatch38: CSSEffect[] = [
     previewText: "OPEN",
     cssCode: `/* Retro: Neon Flicker */
 .roycss-retro-neon-flicker {
-  color: #fff;
-  background: #0a0510;
+  color: oklch(1 0 89.88);
+  background: oklch(0.131 0.027 306.06);
   font-family: "Arial Black", sans-serif;
   font-weight: 900;
   letter-spacing: 0.1em;
   text-shadow:
-    0 0 6px #ff2d95,
-    0 0 14px #ff2d95,
-    0 0 30px #ff2d95,
-    0 0 60px #ff007a,
-    0 0 90px #ff007a;
+    0 0 6px oklch(0.665 0.249 357.34),
+    0 0 14px oklch(0.665 0.249 357.34),
+    0 0 30px oklch(0.665 0.249 357.34),
+    0 0 60px oklch(0.644 0.259 4.34),
+    0 0 90px oklch(0.644 0.259 4.34);
   animation: roy-retro-neon-flicker 3.2s infinite;
 }
 @keyframes roy-retro-neon-flicker {
   0%, 18%, 22%, 25%, 53%, 57%, 100% {
     text-shadow:
-      0 0 6px #ff2d95,
-      0 0 14px #ff2d95,
-      0 0 30px #ff2d95,
-      0 0 60px #ff007a,
-      0 0 90px #ff007a;
+      0 0 6px oklch(0.665 0.249 357.34),
+      0 0 14px oklch(0.665 0.249 357.34),
+      0 0 30px oklch(0.665 0.249 357.34),
+      0 0 60px oklch(0.644 0.259 4.34),
+      0 0 90px oklch(0.644 0.259 4.34);
     opacity: 1;
   }
   20%, 24%, 55% {
@@ -381,7 +381,7 @@ export const effectsBatch38: CSSEffect[] = [
   position: relative;
   width: 80px;
   height: 80px;
-  background: linear-gradient(180deg, #d4a017 0%, #8a6210 100%);
+  background: linear-gradient(180deg, oklch(0.735 0.146 84.27) 0%, oklch(0.525 0.104 79) 100%);
   border-radius: 8px;
   box-shadow: inset 0 2px 4px rgba(255,255,255,0.4), inset 0 -4px 8px rgba(0,0,0,0.3), 0 4px 10px rgba(0,0,0,0.3);
 }
@@ -394,8 +394,8 @@ export const effectsBatch38: CSSEffect[] = [
   height: 36px;
   border-radius: 50%;
   background:
-    radial-gradient(circle, #1a1a1a 30%, #3a3a3a 32%, #1a1a1a 50%, #3a3a3a 52%, #1a1a1a 70%);
-  border: 2px solid #2a2a2a;
+    radial-gradient(circle, oklch(0.218 0 89.88) 30%, oklch(0.348 0 89.88) 32%, oklch(0.218 0 89.88) 50%, oklch(0.348 0 89.88) 52%, oklch(0.218 0 89.88) 70%);
+  border: 2px solid oklch(0.285 0 89.88);
   box-shadow: inset 0 0 0 4px rgba(255,255,255,0.1);
 }
 .roycss-retro-cassette-reel::before {
@@ -426,9 +426,9 @@ export const effectsBatch38: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Retro: Game Boy UI */
 .roycss-retro-gameboy-ui {
-  background: #9bbc0f;
-  color: #0f380f;
-  border: 4px solid #0f380f;
+  background: oklch(0.744 0.177 121.59);
+  color: oklch(0.301 0.082 143.22);
+  border: 4px solid oklch(0.301 0.082 143.22);
   border-radius: 4px;
   padding: 12px;
   font-family: ui-monospace, monospace;
@@ -436,8 +436,8 @@ export const effectsBatch38: CSSEffect[] = [
   text-transform: uppercase;
   letter-spacing: 0.08em;
   box-shadow:
-    inset 0 0 0 2px #306230,
-    4px 4px 0 #0f380f;
+    inset 0 0 0 2px oklch(0.448 0.096 143.77),
+    4px 4px 0 oklch(0.301 0.082 143.22);
   position: relative;
 }
 .roycss-retro-gameboy-ui::before {
@@ -445,16 +445,16 @@ export const effectsBatch38: CSSEffect[] = [
   display: block;
   font-size: 0.9rem;
   margin-bottom: 6px;
-  text-shadow: 1px 1px 0 #8bac0f;
+  text-shadow: 1px 1px 0 oklch(0.695 0.166 122.51);
 }
 .roycss-retro-gameboy-ui::after {
   content: "";
   display: block;
   width: 14px;
   height: 14px;
-  background: #0f380f;
+  background: oklch(0.301 0.082 143.22);
   border-radius: 50%;
-  box-shadow: 20px 0 0 #0f380f, -2px 2px 0 #306230, 22px 2px 0 #306230;
+  box-shadow: 20px 0 0 oklch(0.301 0.082 143.22), -2px 2px 0 oklch(0.448 0.096 143.77), 22px 2px 0 oklch(0.448 0.096 143.77);
   margin-top: 8px;
 }
 @media (prefers-reduced-motion: reduce) {
@@ -473,39 +473,39 @@ export const effectsBatch38: CSSEffect[] = [
     previewText: "INSERT COIN",
     cssCode: `/* Retro: Arcade Glow */
 .roycss-retro-arcade-glow {
-  color: #fff;
-  background: #0a0014;
+  color: oklch(1 0 89.88);
+  background: oklch(0.113 0.057 308.75);
   font-family: "Arial Black", sans-serif;
   font-weight: 900;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   text-shadow:
-    0 0 4px #fff,
-    0 0 10px #fff,
-    0 0 20px #ff00ff,
-    0 0 40px #ff00ff,
-    0 0 60px #ff00ff,
-    0 0 80px #ff00ff;
+    0 0 4px oklch(1 0 89.88),
+    0 0 10px oklch(1 0 89.88),
+    0 0 20px oklch(0.702 0.322 328.36),
+    0 0 40px oklch(0.702 0.322 328.36),
+    0 0 60px oklch(0.702 0.322 328.36),
+    0 0 80px oklch(0.702 0.322 328.36);
   animation: roy-retro-arcade-pulse 1.6s ease-in-out infinite;
 }
 @keyframes roy-retro-arcade-pulse {
   0%, 100% {
     text-shadow:
-      0 0 4px #fff,
-      0 0 10px #fff,
-      0 0 20px #ff00ff,
-      0 0 40px #ff00ff,
-      0 0 60px #ff00ff,
-      0 0 80px #ff00ff;
+      0 0 4px oklch(1 0 89.88),
+      0 0 10px oklch(1 0 89.88),
+      0 0 20px oklch(0.702 0.322 328.36),
+      0 0 40px oklch(0.702 0.322 328.36),
+      0 0 60px oklch(0.702 0.322 328.36),
+      0 0 80px oklch(0.702 0.322 328.36);
   }
   50% {
     text-shadow:
-      0 0 6px #fff,
-      0 0 14px #fff,
-      0 0 28px #00ffff,
-      0 0 52px #00ffff,
-      0 0 80px #00ffff,
-      0 0 110px #00ffff;
+      0 0 6px oklch(1 0 89.88),
+      0 0 14px oklch(1 0 89.88),
+      0 0 28px oklch(0.905 0.155 194.77),
+      0 0 52px oklch(0.905 0.155 194.77),
+      0 0 80px oklch(0.905 0.155 194.77),
+      0 0 110px oklch(0.905 0.155 194.77);
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -524,8 +524,8 @@ export const effectsBatch38: CSSEffect[] = [
     cssCode: `/* Retro: VHS Glitch */
 .roycss-retro-vhs-glitch {
   position: relative;
-  background: #1a0a2a;
-  color: #f0f0f5;
+  background: oklch(0.189 0.063 304);
+  color: oklch(0.957 0.007 286.27);
   font-family: ui-monospace, monospace;
   overflow: hidden;
   border-radius: 4px;
@@ -538,10 +538,10 @@ export const effectsBatch38: CSSEffect[] = [
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(90deg, #ff0050 0%, transparent 2%, transparent 98%, #00d4ff 100%);
+  background: linear-gradient(90deg, oklch(0.635 0.254 16.83) 0%, transparent 2%, transparent 98%, oklch(0.804 0.146 219.52) 100%);
   color: rgba(255,255,255,0.7);
   letter-spacing: 0.2em;
-  text-shadow: 2px 0 #ff0050, -2px 0 #00d4ff;
+  text-shadow: 2px 0 oklch(0.635 0.254 16.83), -2px 0 oklch(0.804 0.146 219.52);
   clip-path: polygon(0 30%, 100% 30%, 100% 45%, 0 45%, 0 60%, 100% 60%, 100% 75%, 0 75%);
   animation: roy-retro-vhs-glitch-clip 0.6s steps(3) infinite;
 }
@@ -574,17 +574,17 @@ export const effectsBatch38: CSSEffect[] = [
     previewType: "box",
     cssCode: `/* Retro: 8-Bit Border */
 .roycss-retro-8bit-border {
-  background: #2d1b4e;
-  color: #ffd700;
+  background: oklch(0.276 0.09 296.26);
+  color: oklch(0.887 0.182 95.33);
   font-family: ui-monospace, monospace;
   font-weight: 700;
   padding: 14px;
   position: relative;
-  border: 4px solid #ffd700;
+  border: 4px solid oklch(0.887 0.182 95.33);
   box-shadow:
-    0 0 0 4px #2d1b4e,
-    0 0 0 8px #ffd700,
-    8px 8px 0 8px #1a0f2e;
+    0 0 0 4px oklch(0.276 0.09 296.26),
+    0 0 0 8px oklch(0.887 0.182 95.33),
+    8px 8px 0 8px oklch(0.203 0.06 297.11);
   clip-path: polygon(
     0 8px, 8px 8px, 8px 0,
     calc(100% - 8px) 0, calc(100% - 8px) 8px, 100% 8px,
@@ -609,7 +609,7 @@ export const effectsBatch38: CSSEffect[] = [
 .roycss-retro-synthwave-grid {
   position: relative;
   background:
-    linear-gradient(180deg, #1a0033 0%, #2d0a4e 40%, #ff2d95 60%, #ff6b3d 70%, #1a0033 70.5%, #0a0014 100%);
+    linear-gradient(180deg, oklch(0.179 0.095 301.47) 0%, oklch(0.251 0.114 301.67) 40%, oklch(0.665 0.249 357.34) 60%, oklch(0.705 0.191 37.47) 70%, oklch(0.179 0.095 301.47) 70.5%, oklch(0.113 0.057 308.75) 100%);
   overflow: hidden;
 }
 .roycss-retro-synthwave-grid::before {
@@ -632,7 +632,7 @@ export const effectsBatch38: CSSEffect[] = [
   left: 50%; top: 60%;
   width: 120px; height: 120px;
   transform: translate(-50%, -50%);
-  background: radial-gradient(circle, #ffe066 0%, #ff6b3d 40%, transparent 70%);
+  background: radial-gradient(circle, oklch(0.91 0.144 95.11) 0%, oklch(0.705 0.191 37.47) 40%, transparent 70%);
   border-radius: 50%;
   filter: blur(2px);
 }
@@ -656,7 +656,7 @@ export const effectsBatch38: CSSEffect[] = [
     cssCode: `/* Retro: Retrowave Sun */
 .roycss-retro-retrowave-sun {
   position: relative;
-  background: linear-gradient(180deg, #1a0033 0%, #4a0a6e 50%, #2d0a4e 100%);
+  background: linear-gradient(180deg, oklch(0.179 0.095 301.47) 0%, oklch(0.324 0.154 308.25) 50%, oklch(0.251 0.114 301.67) 100%);
   overflow: hidden;
 }
 .roycss-retro-retrowave-sun::before {
@@ -665,7 +665,7 @@ export const effectsBatch38: CSSEffect[] = [
   left: 50%; top: 45%;
   width: 140px; height: 140px;
   transform: translate(-50%, -50%);
-  background: linear-gradient(180deg, #ffe066 0%, #ff6b3d 35%, #ff2d95 65%, #8a1a8a 100%);
+  background: linear-gradient(180deg, oklch(0.91 0.144 95.11) 0%, oklch(0.705 0.191 37.47) 35%, oklch(0.665 0.249 357.34) 65%, oklch(0.456 0.189 328.14) 100%);
   border-radius: 50%;
   box-shadow: 0 0 60px rgba(255, 107, 61, 0.7), 0 0 100px rgba(255, 45, 149, 0.5);
 }
@@ -679,20 +679,20 @@ export const effectsBatch38: CSSEffect[] = [
     to bottom,
     transparent 0px,
     transparent 14px,
-    #1a0033 14px,
-    #1a0033 18px,
+    oklch(0.179 0.095 301.47) 14px,
+    oklch(0.179 0.095 301.47) 18px,
     transparent 18px,
     transparent 28px,
-    #1a0033 28px,
-    #1a0033 34px,
+    oklch(0.179 0.095 301.47) 28px,
+    oklch(0.179 0.095 301.47) 34px,
     transparent 34px,
     transparent 48px,
-    #1a0033 48px,
-    #1a0033 56px,
+    oklch(0.179 0.095 301.47) 48px,
+    oklch(0.179 0.095 301.47) 56px,
     transparent 56px,
     transparent 76px,
-    #1a0033 76px,
-    #1a0033 90px
+    oklch(0.179 0.095 301.47) 76px,
+    oklch(0.179 0.095 301.47) 90px
   );
   border-radius: 50%;
   mix-blend-mode: multiply;
@@ -716,17 +716,17 @@ export const effectsBatch38: CSSEffect[] = [
   position: relative;
   width: 64px;
   height: 64px;
-  border: 3px solid #2a2a2a;
-  border-top-color: #00ff7f;
+  border: 3px solid oklch(0.285 0 89.88);
+  border-top-color: oklch(0.875 0.235 151.02);
   border-radius: 50%;
-  background: #0a0a0a;
+  background: oklch(0.145 0 89.88);
   animation: roy-retro-dial-spin 1.4s linear infinite;
 }
 .roycss-retro-dial-up-loader::before {
   content: "";
   position: absolute;
   inset: 10px;
-  border: 2px dashed #ff8800;
+  border: 2px dashed oklch(0.744 0.181 56.46);
   border-radius: 50%;
   animation: roy-retro-dial-pulse 0.7s ease-in-out infinite alternate;
 }
@@ -734,9 +734,9 @@ export const effectsBatch38: CSSEffect[] = [
   content: "";
   position: absolute;
   inset: 22px;
-  background: #00ff7f;
+  background: oklch(0.875 0.235 151.02);
   border-radius: 50%;
-  box-shadow: 0 0 12px #00ff7f;
+  box-shadow: 0 0 12px oklch(0.875 0.235 151.02);
   animation: roy-retro-dial-blink 0.4s steps(2) infinite;
 }
 @keyframes roy-retro-dial-spin {
@@ -770,9 +770,9 @@ export const effectsBatch38: CSSEffect[] = [
 .roycss-retro-floppy-disk-save {
   width: 70px;
   height: 70px;
-  background: linear-gradient(180deg, #1a1a2a 0%, #0a0a14 100%);
+  background: linear-gradient(180deg, oklch(0.226 0.031 283.65) 0%, oklch(0.15 0.021 283.53) 100%);
   border-radius: 4px;
-  border: 2px solid #2a2a3a;
+  border: 2px solid oklch(0.292 0.029 284.46);
   position: relative;
   cursor: pointer;
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -783,9 +783,9 @@ export const effectsBatch38: CSSEffect[] = [
   top: 4px;
   left: 12px; right: 12px;
   height: 22px;
-  background: #8a8a8a;
+  background: oklch(0.633 0 89.88);
   border-radius: 2px 2px 0 0;
-  box-shadow: inset 0 -4px 0 #5a5a5a;
+  box-shadow: inset 0 -4px 0 oklch(0.468 0 89.88);
 }
 .roycss-retro-floppy-disk-save::after {
   content: "";
@@ -793,7 +793,7 @@ export const effectsBatch38: CSSEffect[] = [
   top: 30px;
   left: 14px; right: 14px;
   bottom: 6px;
-  background: linear-gradient(180deg, #d4d4d4 0%, #a8a8a8 100%);
+  background: linear-gradient(180deg, oklch(0.87 0 89.88) 0%, oklch(0.732 0 89.88) 100%);
   border-radius: 2px;
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
 }
@@ -821,7 +821,7 @@ export const effectsBatch38: CSSEffect[] = [
     cssCode: `/* Retro: TV Static */
 .roycss-retro-tv-static {
   position: relative;
-  background: #0a0a0a;
+  background: oklch(0.145 0 89.88);
   overflow: hidden;
   border-radius: 8px;
 }
@@ -832,8 +832,8 @@ export const effectsBatch38: CSSEffect[] = [
   background-image:
     repeating-conic-gradient(
       from 0deg at 50% 50%,
-      #ffffff 0deg, #888888 1deg, #ffffff 2deg, #444444 3deg,
-      #cccccc 4deg, #222222 5deg, #eeeeee 6deg, #555555 7deg
+      oklch(1 0 89.88) 0deg, oklch(0.627 0 89.88) 1deg, oklch(1 0 89.88) 2deg, oklch(0.387 0 89.88) 3deg,
+      oklch(0.845 0 89.88) 4deg, oklch(0.252 0 89.88) 5deg, oklch(0.949 0 89.88) 6deg, oklch(0.45 0 89.88) 7deg
     );
   background-size: 4px 4px;
   animation: roy-retro-tv-static 0.18s steps(6) infinite;
@@ -880,10 +880,10 @@ export const effectsBatch38: CSSEffect[] = [
   display: inline-flex;
   gap: 6px;
   padding: 8px 12px;
-  background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+  background: linear-gradient(180deg, oklch(0.285 0 89.88) 0%, oklch(0.218 0 89.88) 100%);
   border-radius: 4px;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 6px rgba(0,0,0,0.5);
-  color: #c8c8c8;
+  color: oklch(0.833 0 89.88);
   font-family: ui-monospace, monospace;
   font-size: 1.1rem;
   letter-spacing: 0.4em;
@@ -891,7 +891,7 @@ export const effectsBatch38: CSSEffect[] = [
   transition: transform 0.1s ease-out, box-shadow 0.1s ease-out, color 0.1s;
 }
 .roycss-retro-tape-deck-buttons:hover {
-  color: #ff6b00;
+  color: oklch(0.702 0.2 45.1);
   text-shadow: 0 0 6px rgba(255, 107, 0, 0.6);
   transform: translateY(1px);
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.6), 0 1px 2px rgba(0,0,0,0.3);
@@ -923,7 +923,7 @@ export const effectsBatch38: CSSEffect[] = [
   position: relative;
   width: 80px;
   height: 80px;
-  background: linear-gradient(180deg, #1a1a2e 0%, #0a0a14 100%);
+  background: linear-gradient(180deg, oklch(0.228 0.038 282.93) 0%, oklch(0.15 0.021 283.53) 100%);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -938,8 +938,8 @@ export const effectsBatch38: CSSEffect[] = [
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 35% 35%, #fff5b0 0%, #ffd700 30%, #c8a000 70%, #8a6a00 100%);
-  color: #8a6a00;
+  background: radial-gradient(circle at 35% 35%, oklch(0.962 0.088 100.88) 0%, oklch(0.887 0.182 95.33) 30%, oklch(0.722 0.148 90.72) 70%, oklch(0.541 0.111 87.71) 100%);
+  color: oklch(0.541 0.111 87.71);
   font-size: 1.1rem;
   font-weight: 900;
   border-radius: 50%;
@@ -954,7 +954,7 @@ export const effectsBatch38: CSSEffect[] = [
   width: 40px;
   height: 4px;
   margin-left: -20px;
-  background: #000;
+  background: oklch(0 0 0);
   border-radius: 2px;
   box-shadow: inset 0 1px 2px rgba(255,255,255,0.1);
 }

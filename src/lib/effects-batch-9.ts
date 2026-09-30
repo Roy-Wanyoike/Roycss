@@ -457,7 +457,7 @@ export const effectsBatch9: CSSEffect[] = [
   content: "";
   position: absolute;
   inset-block-start: 0;
-  inset-inline-start: -150%;
+  inset-inline-start: 0;
   inline-size: 100%;
   block-size: 100%;
   background: linear-gradient(
@@ -466,12 +466,12 @@ export const effectsBatch9: CSSEffect[] = [
     color-mix(in oklch, oklch(1 0 89.88) 12%, transparent) 50%,
     transparent 80%
   );
-  transform: skewX(-20deg);
-  transition: left 0.7s ease;
+  transform: skewX(-20deg) translateX(-150%);
+  transition: transform 0.7s ease;
 }
 @media (hover: hover) {
   .roycss-linear-shimmer-hover:hover::before {
-    inset-inline-start: 150%;
+    transform: skewX(-20deg) translateX(150%);
   }
 }
 

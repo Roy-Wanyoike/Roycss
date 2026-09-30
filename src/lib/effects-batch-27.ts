@@ -129,7 +129,6 @@ export const effectsBatch27: CSSEffect[] = [
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  transition: gap 0.3s ease, background 0.3s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -377,7 +376,6 @@ export const effectsBatch27: CSSEffect[] = [
   display: inline-flex;
   align-items: center;
   gap: 0;
-  transition: padding 0.3s ease, gap 0.3s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {

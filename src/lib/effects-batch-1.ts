@@ -1044,14 +1044,16 @@ export const effectsBatch1: CSSEffect[] = [
   position: absolute;
   inset-block-end: -2px;
   inset-inline-start: 0;
-  inline-size: 0;
+  inline-size: 100%;
   block-size: 2px;
   background: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.704 0.123 182.5));
-  transition: width 0.3s ease;
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
 }
 @media (hover: hover) {
   .roycss-hover-underline-slide:hover::after {
-    inline-size: 100%;
+    transform: scaleX(1);
   }
 }
 
@@ -1325,16 +1327,17 @@ export const effectsBatch1: CSSEffect[] = [
   content: '';
   position: absolute;
   inset-block-start: 0;
-  inset-inline-start: -100%;
+  inset-inline-start: 0;
   inline-size: 100%;
   block-size: 100%;
   background: linear-gradient(135deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
-  transition: left 0.4s ease;
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
   z-index: 0;
 }
 @media (hover: hover) {
   .roycss-hover-slide-overlay:hover::before {
-    inset-inline-start: 0;
+    transform: translateX(0);
   }
 }
 @media (hover: hover) {
@@ -1642,27 +1645,29 @@ export const effectsBatch1: CSSEffect[] = [
   position: absolute;
   border: 2px solid oklch(0.696 0.149 162.48);
   box-sizing: border-box;
-  transition: width 0.3s ease, height 0.3s ease;
-  inline-size: 0;
-  block-size: 0;
+  transition: transform 0.3s ease;
+  inline-size: 100%;
+  block-size: 100%;
+  transform: scale(0);
 }
 .roycss-hover-border-draw::before {
   inset-block-start: 0;
   inset-inline-start: 0;
   border-inline-end: none;
   border-block-end: none;
+  transform-origin: 0 0;
 }
 .roycss-hover-border-draw::after {
   inset-block-end: 0;
   inset-inline-end: 0;
   border-inline-start: none;
   border-block-start: none;
+  transform-origin: 100% 100%;
 }
 @media (hover: hover) {
   .roycss-hover-border-draw:hover::before,
   .roycss-hover-border-draw:hover::after {
-    inline-size: 100%;
-    block-size: 100%;
+    transform: scale(1);
   }
 }
 

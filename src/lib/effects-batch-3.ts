@@ -42,13 +42,13 @@ export const effectsBatch3: CSSEffect[] = [
   inline-size: 40%;
   block-size: 200%;
   background: linear-gradient(90deg, transparent, color-mix(in oklch, oklch(1 0 89.88) 45%, transparent), transparent);
-  transform: skewX(-20deg);
-  transition: left 0.6s ease;
+  transform: skewX(-20deg) translateX(0);
+  transition: transform 0.6s ease;
   pointer-events: none;
 }
 
 .roycss-btn-shine-sweep:hover::after {
-  inset-inline-start: 120%;
+  transform: skewX(-20deg) translateX(450%);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -90,10 +90,12 @@ export const effectsBatch3: CSSEffect[] = [
   inset-block-end: 0;
   inset-inline-start: 0;
   inline-size: 100%;
-  block-size: 0%;
+  block-size: 100%;
   background: oklch(0.696 0.149 162.48);
   z-index: -1;
-  transition: height 0.4s ease;
+  transform-origin: bottom;
+  transform: scaleY(0);
+  transition: transform 0.4s ease;
 }
 
 .roycss-btn-fill-slide:hover {
@@ -101,7 +103,7 @@ export const effectsBatch3: CSSEffect[] = [
 }
 
 .roycss-btn-fill-slide:hover::before {
-  block-size: 100%;
+  transform: scaleY(1);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -144,19 +146,18 @@ export const effectsBatch3: CSSEffect[] = [
   position: absolute;
   inset-block-start: 50%;
   inset-inline-start: 50%;
-  inline-size: 0;
-  block-size: 0;
+  inline-size: 320px;
+  block-size: 320px;
   background: color-mix(in oklch, oklch(1 0 89.88) 45%, transparent);
   border-radius: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(0);
   opacity: 0;
-  transition: width 0.5s ease, height 0.5s ease, opacity 0.5s ease;
+  transition: transform 0.5s ease, opacity 0.5s ease;
   pointer-events: none;
 }
 
 .roycss-btn-ripple:active::after {
-  inline-size: 320px;
-  block-size: 320px;
+  transform: translate(-50%, -50%) scale(1);
   opacity: 1;
   transition: 0s;
 }
@@ -442,12 +443,13 @@ export const effectsBatch3: CSSEffect[] = [
   content: '';
   position: absolute;
   inset-block-start: 0;
-  inset-inline-start: -100%;
+  inset-inline-start: 0;
   inline-size: 100%;
   block-size: 100%;
   background: oklch(0.769 0.165 70.08);
   z-index: -1;
-  transition: left 0.4s ease;
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
 }
 
 .roycss-btn-slide-bg:hover {
@@ -455,7 +457,7 @@ export const effectsBatch3: CSSEffect[] = [
 }
 
 .roycss-btn-slide-bg:hover::before {
-  inset-inline-start: 0;
+  transform: translateX(0);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -665,13 +667,13 @@ export const effectsBatch3: CSSEffect[] = [
   position: absolute;
   inset-block-start: 50%;
   inset-inline-start: 50%;
-  inline-size: 0;
-  block-size: 0;
+  inline-size: 320px;
+  block-size: 320px;
   background: oklch(0.645 0.215 16.44);
   border-radius: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(0);
   z-index: -1;
-  transition: width 0.5s ease, height 0.5s ease;
+  transition: transform 0.5s ease;
 }
 
 .roycss-btn-outline-fill:hover {
@@ -679,8 +681,7 @@ export const effectsBatch3: CSSEffect[] = [
 }
 
 .roycss-btn-outline-fill:hover::before {
-  inline-size: 320px;
-  block-size: 320px;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -717,7 +718,6 @@ export const effectsBatch3: CSSEffect[] = [
   display: inline-flex;
   align-items: center;
   gap: 0;
-  transition: padding 0.3s ease, gap 0.3s ease;
 }
 
 .roycss-btn-icon-slide::after {
@@ -727,6 +727,7 @@ export const effectsBatch3: CSSEffect[] = [
   inline-size: 0;
   overflow: hidden;
   transform: translateX(-8px);
+  /* non-GPU by design: inline-size reveal of an inline icon — scaleX distorts the glyph and a fixed width would shift the rest-state layout */
   transition: opacity 0.3s ease, width 0.3s ease, transform 0.3s ease;
   font-size: 16px;
 }
@@ -775,18 +776,18 @@ export const effectsBatch3: CSSEffect[] = [
   font-size: 14px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  transition: gap 0.3s ease, background 0.3s ease;
+  gap: 16px;
+  transition: background 0.3s ease;
 }
 
 .roycss-btn-arrow-slide::after {
   content: '→';
   display: inline-block;
+  transform: translateX(-8px);
   transition: transform 0.3s ease;
 }
 
 .roycss-btn-arrow-slide:hover {
-  gap: 16px;
   background: oklch(0.646 0.194 41.12);
 }
 
@@ -1430,7 +1431,7 @@ export const effectsBatch3: CSSEffect[] = [
 .roycss-card-hover-reveal::after {
   content: '★ Featured ★';
   position: absolute;
-  inset-block-end: -42px;
+  inset-block-end: 0;
   inset-inline-start: 0;
   inset-inline-end: 0;
   background: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22));
@@ -1440,11 +1441,12 @@ export const effectsBatch3: CSSEffect[] = [
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 1px;
-  transition: bottom 0.4s ease;
+  transform: translateY(100%);
+  transition: transform 0.4s ease;
 }
 
 .roycss-card-hover-reveal:hover::after {
-  inset-block-end: 0;
+  transform: translateY(0);
 }
 
 @media (prefers-reduced-motion: reduce) {

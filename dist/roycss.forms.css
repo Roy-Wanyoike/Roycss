@@ -375,7 +375,8 @@
   font: 12px/1 system-ui, sans-serif;
   color: color-mix(in oklch, oklch(1 0 89.88) 60%, transparent);
   overflow: hidden;
-  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+  /* non-GPU by design: true inline-size growth (search field reveal) — content reflow is the effect, no transform equivalent */
+  transition: inline-size 0.4s cubic-bezier(0.4, 0, 0.2, 1),
               border-color 0.4s ease;
 }
 .roycss-form-search-expand > span { display: none; }
@@ -435,15 +436,17 @@
   position: absolute;
   inset-inline-start: 0;
   inset-block-end: -2px;
-  inline-size: 0;
+  inline-size: 100%;
   block-size: 2px;
   background: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.773 0.153 163.22), oklch(0.696 0.149 162.48));
-  transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .roycss-form-underline-draw:hover {
   color: oklch(0.979 0.021 166.11);
 }
-.roycss-form-underline-draw:hover::after { inline-size: 100%; }
+.roycss-form-underline-draw:hover::after { transform: scaleX(1); }
 
 @media (prefers-reduced-motion: reduce) {
   .roycss-form-underline-draw::after {
@@ -1236,8 +1239,6 @@
   font: 12px/1 system-ui, sans-serif;
   color: color-mix(in oklch, oklch(1 0 0) 60%, transparent);
   overflow: hidden;
-  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 0.4s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {

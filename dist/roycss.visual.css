@@ -8870,8 +8870,8 @@
     transparent 360deg
   );
   -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
+    linear-gradient(oklch(0 0 0) 0 0) content-box,
+    linear-gradient(oklch(0 0 0) 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   animation: roy-vfx-adv-laser 3s linear infinite;
@@ -9042,8 +9042,8 @@
   background:
     linear-gradient(to right, oklch(0.70 0.20 180 / 0.18) 1px, transparent 1px) 0 0 / 24px 24px,
     linear-gradient(to bottom, oklch(0.70 0.20 180 / 0.18) 1px, transparent 1px) 0 0 / 24px 24px;
-  -webkit-mask: radial-gradient(circle at center, #000 60%, transparent 100%);
-  mask: radial-gradient(circle at center, #000 60%, transparent 100%);
+  -webkit-mask: radial-gradient(circle at center, oklch(0 0 0) 60%, transparent 100%);
+  mask: radial-gradient(circle at center, oklch(0 0 0) 60%, transparent 100%);
 }
 .roycss-vfx-sci-fi-hud::after {
   content: "";

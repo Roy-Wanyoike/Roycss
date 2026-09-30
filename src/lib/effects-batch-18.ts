@@ -1191,7 +1191,7 @@ export const effectsBatch18: CSSEffect[] = [
   position: absolute;
   inset-block-start: 0;
   inset-block-end: 0;
-  inset-inline-start: -100%;
+  inset-inline-start: 0;
   inline-size: 100%;
   background: linear-gradient(
     90deg,
@@ -1199,7 +1199,8 @@ export const effectsBatch18: CSSEffect[] = [
     color-mix(in oklch, white 30%, transparent),
     transparent
   );
-  transition: inset-inline-start 0.5s ease;
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
 }
 
 .roycss-btn-shine-line-b18:hover {
@@ -1207,7 +1208,7 @@ export const effectsBatch18: CSSEffect[] = [
 }
 
 .roycss-btn-shine-line-b18:hover::after {
-  inset-inline-start: 100%;
+  transform: translateX(100%);
 }
 
 @media (prefers-reduced-motion: reduce) {

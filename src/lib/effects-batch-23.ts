@@ -1078,8 +1078,10 @@ export const effectsBatch23: CSSEffect[] = [
     height: 100%;
     background: linear-gradient(90deg, oklch(0.673 0.162 144.21), oklch(0.718 0.142 144.89));
     border-radius: 10px;
-    width: 0%;
-    transition: width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    width: 75%;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     position: relative;
     overflow: hidden;
 }
@@ -1100,7 +1102,7 @@ export const effectsBatch23: CSSEffect[] = [
     animation: roy-ferrum-progress-stripe 1s linear infinite;
 }
 .roycss-ferrum-progress-bar-fill.roycss-ferrum-animated {
-    width: 75%;
+    transform: scaleX(1);
 }
 
 @keyframes roy-ferrum-progress-stripe {
@@ -1139,23 +1141,22 @@ export const effectsBatch23: CSSEffect[] = [
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 0;
-    height: 0;
+    width: 300px;
+    height: 300px;
     border-radius: 50%;
     background-color: color-mix(in oklch, oklch(1 0 0) 35%, transparent);
     transform: translate(-50%, -50%) scale(0);
-    transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
+    transition: transform 0.6s ease, opacity 0.6s ease;
     opacity: 0;
     pointer-events: none;
 }
 .roycss-ferrum-ripple-click:active::after {
-    width: 300px;
-    height: 300px;
+    transform: translate(-50%, -50%) scale(1);
     opacity: 1;
-    transition: width 0s, height 0s, opacity 0s;
+    transition: transform 0s, opacity 0s;
 }
 .roycss-ferrum-ripple-click:not(:active)::after {
-    transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
+    transition: transform 0.6s ease, opacity 0.6s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1187,6 +1188,7 @@ export const effectsBatch23: CSSEffect[] = [
     overflow: hidden;
     max-height: 0;
     opacity: 0;
+    /* non-GPU by design: max-height accordion reveal with padding — true content expansion, no transform equivalent without distortion */
     transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                 opacity 0.3s ease,
                 padding 0.3s ease;
@@ -1312,18 +1314,18 @@ export const effectsBatch23: CSSEffect[] = [
     content: '';
     position: absolute;
     bottom: -2px;
-    inset-inline-start: 50%;
-    width: 0;
+    inset-inline-start: 0;
+    width: 100%;
     height: 2px;
     background-color: oklch(0.658 0.169 248.81);
-    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), inset-inline-start 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(-50%) scaleX(0);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .roycss-ferrum-tab-underline:hover {
     color: oklch(0.321 0.0 89.88);
 }
 .roycss-ferrum-tab-underline:hover::after {
-    width: 100%;
-    inset-inline-start: 0;
+    transform: translateX(0) scaleX(1);
 }
 .roycss-ferrum-tab-underline.roycss-ferrum-active,
 .roycss-ferrum-tab-underline:active {
@@ -1331,8 +1333,7 @@ export const effectsBatch23: CSSEffect[] = [
 }
 .roycss-ferrum-tab-underline.roycss-ferrum-active::after,
 .roycss-ferrum-tab-underline:active::after {
-    width: 100%;
-    left: 0;
+    transform: translateX(0) scaleX(1);
 }
 
 @media (prefers-reduced-motion: reduce) {

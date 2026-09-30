@@ -53,13 +53,13 @@
   inline-size: 40%;
   block-size: 200%;
   background: linear-gradient(90deg, transparent, color-mix(in oklch, oklch(1 0 89.88) 45%, transparent), transparent);
-  transform: skewX(-20deg);
-  transition: left 0.6s ease;
+  transform: skewX(-20deg) translateX(0);
+  transition: transform 0.6s ease;
   pointer-events: none;
 }
 
 .roycss-btn-shine-sweep:hover::after {
-  inset-inline-start: 120%;
+  transform: skewX(-20deg) translateX(450%);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -91,10 +91,12 @@
   inset-block-end: 0;
   inset-inline-start: 0;
   inline-size: 100%;
-  block-size: 0%;
+  block-size: 100%;
   background: oklch(0.696 0.149 162.48);
   z-index: -1;
-  transition: height 0.4s ease;
+  transform-origin: bottom;
+  transform: scaleY(0);
+  transition: transform 0.4s ease;
 }
 
 .roycss-btn-fill-slide:hover {
@@ -102,7 +104,7 @@
 }
 
 .roycss-btn-fill-slide:hover::before {
-  block-size: 100%;
+  transform: scaleY(1);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -135,19 +137,18 @@
   position: absolute;
   inset-block-start: 50%;
   inset-inline-start: 50%;
-  inline-size: 0;
-  block-size: 0;
+  inline-size: 320px;
+  block-size: 320px;
   background: color-mix(in oklch, oklch(1 0 89.88) 45%, transparent);
   border-radius: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(0);
   opacity: 0;
-  transition: width 0.5s ease, height 0.5s ease, opacity 0.5s ease;
+  transition: transform 0.5s ease, opacity 0.5s ease;
   pointer-events: none;
 }
 
 .roycss-btn-ripple:active::after {
-  inline-size: 320px;
-  block-size: 320px;
+  transform: translate(-50%, -50%) scale(1);
   opacity: 1;
   transition: 0s;
 }
@@ -363,12 +364,13 @@
   content: '';
   position: absolute;
   inset-block-start: 0;
-  inset-inline-start: -100%;
+  inset-inline-start: 0;
   inline-size: 100%;
   block-size: 100%;
   background: oklch(0.769 0.165 70.08);
   z-index: -1;
-  transition: left 0.4s ease;
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
 }
 
 .roycss-btn-slide-bg:hover {
@@ -376,7 +378,7 @@
 }
 
 .roycss-btn-slide-bg:hover::before {
-  inset-inline-start: 0;
+  transform: translateX(0);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -536,13 +538,13 @@
   position: absolute;
   inset-block-start: 50%;
   inset-inline-start: 50%;
-  inline-size: 0;
-  block-size: 0;
+  inline-size: 320px;
+  block-size: 320px;
   background: oklch(0.645 0.215 16.44);
   border-radius: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(0);
   z-index: -1;
-  transition: width 0.5s ease, height 0.5s ease;
+  transition: transform 0.5s ease;
 }
 
 .roycss-btn-outline-fill:hover {
@@ -550,8 +552,7 @@
 }
 
 .roycss-btn-outline-fill:hover::before {
-  inline-size: 320px;
-  block-size: 320px;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -578,7 +579,6 @@
   display: inline-flex;
   align-items: center;
   gap: 0;
-  transition: padding 0.3s ease, gap 0.3s ease;
 }
 
 .roycss-btn-icon-slide::after {
@@ -588,6 +588,7 @@
   inline-size: 0;
   overflow: hidden;
   transform: translateX(-8px);
+  /* non-GPU by design: inline-size reveal of an inline icon — scaleX distorts the glyph and a fixed width would shift the rest-state layout */
   transition: opacity 0.3s ease, width 0.3s ease, transform 0.3s ease;
   font-size: 16px;
 }
@@ -626,18 +627,18 @@
   font-size: 14px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  transition: gap 0.3s ease, background 0.3s ease;
+  gap: 16px;
+  transition: background 0.3s ease;
 }
 
 .roycss-btn-arrow-slide::after {
   content: '→';
   display: inline-block;
+  transform: translateX(-8px);
   transition: transform 0.3s ease;
 }
 
 .roycss-btn-arrow-slide:hover {
-  gap: 16px;
   background: oklch(0.646 0.194 41.12);
 }
 
@@ -1096,7 +1097,7 @@
   position: absolute;
   inset-block-start: 0;
   inset-block-end: 0;
-  inset-inline-start: -100%;
+  inset-inline-start: 0;
   inline-size: 100%;
   background: linear-gradient(
     90deg,
@@ -1104,7 +1105,8 @@
     color-mix(in oklch, white 30%, transparent),
     transparent
   );
-  transition: inset-inline-start 0.5s ease;
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
 }
 
 .roycss-btn-shine-line-b18:hover {
@@ -1112,7 +1114,7 @@
 }
 
 .roycss-btn-shine-line-b18:hover::after {
-  inset-inline-start: 100%;
+  transform: translateX(100%);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1159,7 +1161,6 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  transition: gap 0.3s ease, background 0.3s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1335,7 +1336,6 @@
   display: inline-flex;
   align-items: center;
   gap: 0;
-  transition: padding 0.3s ease, gap 0.3s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {

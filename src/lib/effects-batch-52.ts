@@ -245,8 +245,8 @@ export const effectsBatch52: CSSEffect[] = [
   position: absolute;
   inset: 0;
   background: linear-gradient(135deg, oklch(0.95 0.01 250), oklch(0.88 0.02 220));
-  -webkit-mask-image: linear-gradient(90deg, #000 50%, transparent 50%);
-  mask-image: linear-gradient(90deg, #000 50%, transparent 50%);
+  -webkit-mask-image: linear-gradient(90deg, oklch(0 0 0) 50%, transparent 50%);
+  mask-image: linear-gradient(90deg, oklch(0 0 0) 50%, transparent 50%);
   -webkit-mask-size: 200% 100%;
   mask-size: 200% 100%;
   -webkit-mask-position: 0% 0%;
@@ -1178,8 +1178,8 @@ export const effectsBatch52: CSSEffect[] = [
     transparent 360deg
   );
   -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
+    linear-gradient(oklch(0 0 0) 0 0) content-box,
+    linear-gradient(oklch(0 0 0) 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   animation: roy-vfx-adv-laser 3s linear infinite;
@@ -1390,8 +1390,8 @@ export const effectsBatch52: CSSEffect[] = [
   background:
     linear-gradient(to right, oklch(0.70 0.20 180 / 0.18) 1px, transparent 1px) 0 0 / 24px 24px,
     linear-gradient(to bottom, oklch(0.70 0.20 180 / 0.18) 1px, transparent 1px) 0 0 / 24px 24px;
-  -webkit-mask: radial-gradient(circle at center, #000 60%, transparent 100%);
-  mask: radial-gradient(circle at center, #000 60%, transparent 100%);
+  -webkit-mask: radial-gradient(circle at center, oklch(0 0 0) 60%, transparent 100%);
+  mask: radial-gradient(circle at center, oklch(0 0 0) 60%, transparent 100%);
 }
 .roycss-vfx-sci-fi-hud::after {
   content: "";

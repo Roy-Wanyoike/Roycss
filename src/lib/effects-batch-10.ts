@@ -334,7 +334,8 @@ export const effectsBatch10: CSSEffect[] = [
   block-size: 0;
   opacity: 0;
   overflow: hidden;
-  transition: height 0.4s ease, opacity 0.4s ease;
+  /* non-GPU by design: block-size: auto interpolation (interpolate-size demo) — true height animation with no transform equivalent */
+  transition: block-size 0.4s ease, opacity 0.4s ease;
   color: oklch(0.711 0.035 256.79);
   font-size: 11px;
 }
@@ -345,7 +346,8 @@ export const effectsBatch10: CSSEffect[] = [
 /* Fallback for browsers without interpolate-size — use max-height */
 @supports not (interpolate-size: allow-keywords) {
   .roycss-auto-height-expand::after {
-    transition: max-height 0.4s ease, opacity 0.4s ease;
+    /* non-GPU by design: max-block-size fallback for block-size: auto — legacy engines have no transform equivalent */
+    transition: max-block-size 0.4s ease, opacity 0.4s ease;
     max-block-size: 0;
   }
   .roycss-auto-height-expand:hover::after {
@@ -1809,7 +1811,8 @@ export const effectsBatch10: CSSEffect[] = [
   color: oklch(0.962 0.058 95.62);
   font: 500 12px/1.4 system-ui, sans-serif;
   overflow: hidden;
-  transition: height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.45s, padding 0.45s;
+  /* non-GPU by design: block-size: auto interpolation (interpolate-size demo) — true height animation with no transform equivalent */
+  transition: block-size 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.45s, padding 0.45s;
 }
 .roycss-interpolate-size-accordion:hover::after {
   block-size: auto;
@@ -1818,7 +1821,8 @@ export const effectsBatch10: CSSEffect[] = [
 }
 @supports not (interpolate-size: allow-keywords) {
   .roycss-interpolate-size-accordion::after {
-    transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.45s, padding 0.45s;
+    /* non-GPU by design: max-block-size fallback for block-size: auto — legacy engines have no transform equivalent */
+    transition: max-block-size 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.45s, padding 0.45s;
     max-block-size: 0;
   }
   .roycss-interpolate-size-accordion:hover::after {

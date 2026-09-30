@@ -1629,7 +1629,7 @@
     "className": "roycss-btn-icon-slide",
     "category": "buttons",
     "effectId": "btn-icon-slide",
-    "properties": "background: oklch(0.667 0.259 322.15);\n  color: oklch(1 0 89.88);\n  border: none;\n  padding: 10px 24px;\n  border-radius: 12px;\n  cursor: pointer;\n  font-weight: 600;\n  font-size: 14px;\n  display: inline-flex;\n  align-items: center;\n  gap: 0;\n  transition: padding 0.3s ease, gap 0.3s ease;"
+    "properties": "background: oklch(0.667 0.259 322.15);\n  color: oklch(1 0 89.88);\n  border: none;\n  padding: 10px 24px;\n  border-radius: 12px;\n  cursor: pointer;\n  font-weight: 600;\n  font-size: 14px;\n  display: inline-flex;\n  align-items: center;\n  gap: 0;"
   },
   {
     "className": "roycss-btn-icon-slide",
@@ -1641,7 +1641,7 @@
     "className": "roycss-btn-arrow-slide",
     "category": "buttons",
     "effectId": "btn-arrow-slide",
-    "properties": "background: oklch(0.705 0.187 47.6);\n  color: oklch(1 0 89.88);\n  border: none;\n  padding: 10px 24px;\n  border-radius: 12px;\n  cursor: pointer;\n  font-weight: 600;\n  font-size: 14px;\n  display: inline-flex;\n  align-items: center;\n  gap: 8px;\n  transition: gap 0.3s ease, background 0.3s ease;"
+    "properties": "background: oklch(0.705 0.187 47.6);\n  color: oklch(1 0 89.88);\n  border: none;\n  padding: 10px 24px;\n  border-radius: 12px;\n  cursor: pointer;\n  font-weight: 600;\n  font-size: 14px;\n  display: inline-flex;\n  align-items: center;\n  gap: 16px;\n  transition: background 0.3s ease;"
   },
   {
     "className": "roycss-btn-arrow-slide",
@@ -2247,7 +2247,7 @@
     "className": "roycss-form-search-expand",
     "category": "forms",
     "effectId": "form-search-expand",
-    "properties": "position: relative;\n  inline-size: 56px;\n  block-size: 40px;\n  background: color-mix(in oklch, oklch(1 0 89.88) 5%, transparent);\n  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 18%, transparent);\n  border-radius: 20px;\n  display: flex;\n  align-items: center;\n  padding: 0 14px;\n  font: 12px/1 system-ui, sans-serif;\n  color: color-mix(in oklch, oklch(1 0 89.88) 60%, transparent);\n  overflow: hidden;\n  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1),\n              border-color 0.4s ease;"
+    "properties": "position: relative;\n  inline-size: 56px;\n  block-size: 40px;\n  background: color-mix(in oklch, oklch(1 0 89.88) 5%, transparent);\n  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 18%, transparent);\n  border-radius: 20px;\n  display: flex;\n  align-items: center;\n  padding: 0 14px;\n  font: 12px/1 system-ui, sans-serif;\n  color: color-mix(in oklch, oklch(1 0 89.88) 60%, transparent);\n  overflow: hidden;\n  /* non-GPU by design: true inline-size growth (search field reveal) — content reflow is the effect, no transform equivalent */\n  transition: inline-size 0.4s cubic-bezier(0.4, 0, 0.2, 1),\n              border-color 0.4s ease;"
   },
   {
     "className": "roycss-form-search-expand",
@@ -2289,7 +2289,7 @@
     "className": "roycss-nav-accordion",
     "category": "navigation",
     "effectId": "nav-accordion",
-    "properties": "position: relative;\n  inline-size: 180px;\n  block-size: 34px;\n  background: color-mix(in oklch, oklch(1 0 89.88) 4%, transparent);\n  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 12%, transparent);\n  border-radius: 8px;\n  font: 11px/1 system-ui, sans-serif;\n  color: color-mix(in oklch, oklch(1 0 89.88) 80%, transparent);\n  overflow: hidden;\n  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1),\n              border-color 0.3s ease;"
+    "properties": "position: relative;\n  inline-size: 180px;\n  block-size: 34px;\n  background: color-mix(in oklch, oklch(1 0 89.88) 4%, transparent);\n  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 12%, transparent);\n  border-radius: 8px;\n  font: 11px/1 system-ui, sans-serif;\n  color: color-mix(in oklch, oklch(1 0 89.88) 80%, transparent);\n  overflow: hidden;\n  /* non-GPU by design: true block-size expansion (accordion reveal) — no transform equivalent without content distortion */\n  transition: block-size 0.4s cubic-bezier(0.4, 0, 0.2, 1),\n              border-color 0.3s ease;"
   },
   {
     "className": "roycss-nav-accordion",
@@ -2331,7 +2331,7 @@
     "className": "roycss-nav-dropdown",
     "category": "navigation",
     "effectId": "nav-dropdown",
-    "properties": "position: relative;\n  inline-size: 180px;\n  block-size: 34px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 0 14px;\n  background: color-mix(in oklch, oklch(1 0 89.88) 4%, transparent);\n  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 12%, transparent);\n  border-radius: 8px;\n  font: 11px/1 system-ui, sans-serif;\n  color: color-mix(in oklch, oklch(1 0 89.88) 80%, transparent);\n  overflow: hidden;\n  transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1),\n              border-color 0.3s ease;"
+    "properties": "position: relative;\n  inline-size: 180px;\n  block-size: 34px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 0 14px;\n  background: color-mix(in oklch, oklch(1 0 89.88) 4%, transparent);\n  border: 1px solid color-mix(in oklch, oklch(1 0 89.88) 12%, transparent);\n  border-radius: 8px;\n  font: 11px/1 system-ui, sans-serif;\n  color: color-mix(in oklch, oklch(1 0 89.88) 80%, transparent);\n  overflow: hidden;\n  /* non-GPU by design: true block-size expansion (dropdown reveal) — no transform equivalent without content distortion */\n  transition: block-size 0.35s cubic-bezier(0.4, 0, 0.2, 1),\n              border-color 0.3s ease;"
   },
   {
     "className": "roycss-nav-dropdown",
@@ -9663,13 +9663,13 @@
     "className": "roycss-ferrum-progress-bar-fill",
     "category": "microinteractions",
     "effectId": "ferrum-progress-bar-fill",
-    "properties": "height: 100%;\n    background: linear-gradient(90deg, oklch(0.673 0.162 144.21), oklch(0.718 0.142 144.89));\n    border-radius: 10px;\n    width: 0%;\n    transition: width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);\n    position: relative;\n    overflow: hidden;"
+    "properties": "height: 100%;\n    background: linear-gradient(90deg, oklch(0.673 0.162 144.21), oklch(0.718 0.142 144.89));\n    border-radius: 10px;\n    width: 75%;\n    transform-origin: left;\n    transform: scaleX(0);\n    transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);\n    position: relative;\n    overflow: hidden;"
   },
   {
     "className": "roycss-ferrum-animated",
     "category": "microinteractions",
     "effectId": "ferrum-progress-bar-fill",
-    "properties": "width: 75%;"
+    "properties": "transform: scaleX(1);"
   },
   {
     "className": "roycss-ferrum-progress-bar-fill",
@@ -9687,7 +9687,7 @@
     "className": "roycss-ferrum-accordion-slide",
     "category": "navigation",
     "effectId": "ferrum-accordion-slide",
-    "properties": "overflow: hidden;\n    max-height: 0;\n    opacity: 0;\n    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),\n                opacity 0.3s ease,\n                padding 0.3s ease;\n    padding: 0 16px;"
+    "properties": "overflow: hidden;\n    max-height: 0;\n    opacity: 0;\n    /* non-GPU by design: max-height accordion reveal with padding — true content expansion, no transform equivalent without distortion */\n    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),\n                opacity 0.3s ease,\n                padding 0.3s ease;\n    padding: 0 16px;"
   },
   {
     "className": "roycss-ferrum-open",
@@ -11349,7 +11349,7 @@
     "className": "roycss-ferrum-btn-arrow-slide",
     "category": "buttons",
     "effectId": "ferrum-btn-arrow-slide",
-    "properties": "background: oklch(0.705 0.213 51.16);\n  color: oklch(1 0 0);\n  border: none;\n  padding: 10px 24px;\n  border-radius: 12px;\n  cursor: pointer;\n  font-weight: 600;\n  font-size: 14px;\n  display: inline-flex;\n  align-items: center;\n  gap: 8px;\n  transition: gap 0.3s ease, background 0.3s ease;"
+    "properties": "background: oklch(0.705 0.213 51.16);\n  color: oklch(1 0 0);\n  border: none;\n  padding: 10px 24px;\n  border-radius: 12px;\n  cursor: pointer;\n  font-weight: 600;\n  font-size: 14px;\n  display: inline-flex;\n  align-items: center;\n  gap: 8px;"
   },
   {
     "className": "roycss-ferrum-btn-arrow-slide",
@@ -11445,7 +11445,7 @@
     "className": "roycss-ferrum-btn-icon-slide",
     "category": "buttons",
     "effectId": "ferrum-btn-icon-slide",
-    "properties": "background: oklch(0.66 0.235 323.04);\n  color: oklch(1 0 0);\n  border: none;\n  padding: 10px 24px;\n  border-radius: 12px;\n  cursor: pointer;\n  font-weight: 600;\n  font-size: 14px;\n  display: inline-flex;\n  align-items: center;\n  gap: 0;\n  transition: padding 0.3s ease, gap 0.3s ease;"
+    "properties": "background: oklch(0.66 0.235 323.04);\n  color: oklch(1 0 0);\n  border: none;\n  padding: 10px 24px;\n  border-radius: 12px;\n  cursor: pointer;\n  font-weight: 600;\n  font-size: 14px;\n  display: inline-flex;\n  align-items: center;\n  gap: 0;"
   },
   {
     "className": "roycss-ferrum-btn-icon-slide",
@@ -12345,7 +12345,7 @@
     "className": "roycss-ferrum-form-search-expand",
     "category": "forms",
     "effectId": "ferrum-form-search-expand",
-    "properties": "position: relative;\n  width: 56px;\n  height: 40px;\n  background: color-mix(in oklch, oklch(1 0 0) 5%, transparent);\n  border: 1px solid color-mix(in oklch, oklch(1 0 0) 18%, transparent);\n  border-radius: 20px;\n  display: flex;\n  align-items: center;\n  padding: 0 14px;\n  font: 12px/1 system-ui, sans-serif;\n  color: color-mix(in oklch, oklch(1 0 0) 60%, transparent);\n  overflow: hidden;\n  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1),\n              border-color 0.4s ease;"
+    "properties": "position: relative;\n  width: 56px;\n  height: 40px;\n  background: color-mix(in oklch, oklch(1 0 0) 5%, transparent);\n  border: 1px solid color-mix(in oklch, oklch(1 0 0) 18%, transparent);\n  border-radius: 20px;\n  display: flex;\n  align-items: center;\n  padding: 0 14px;\n  font: 12px/1 system-ui, sans-serif;\n  color: color-mix(in oklch, oklch(1 0 0) 60%, transparent);\n  overflow: hidden;"
   },
   {
     "className": "roycss-ferrum-form-search-expand",
@@ -13215,7 +13215,7 @@
     "className": "roycss-ferrum-nav-accordion",
     "category": "navigation",
     "effectId": "ferrum-nav-accordion",
-    "properties": "position: relative;\n  width: 180px;\n  height: 34px;\n  background: color-mix(in oklch, oklch(1 0 0) 4%, transparent);\n  border: 1px solid color-mix(in oklch, oklch(1 0 0) 12%, transparent);\n  border-radius: 8px;\n  font: 11px/1 system-ui, sans-serif;\n  color: color-mix(in oklch, oklch(1 0 0) 80%, transparent);\n  overflow: hidden;\n  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1),\n              border-color 0.3s ease;"
+    "properties": "position: relative;\n  width: 180px;\n  height: 34px;\n  background: color-mix(in oklch, oklch(1 0 0) 4%, transparent);\n  border: 1px solid color-mix(in oklch, oklch(1 0 0) 12%, transparent);\n  border-radius: 8px;\n  font: 11px/1 system-ui, sans-serif;\n  color: color-mix(in oklch, oklch(1 0 0) 80%, transparent);\n  overflow: hidden;"
   },
   {
     "className": "roycss-ferrum-nav-accordion",
@@ -13233,7 +13233,7 @@
     "className": "roycss-ferrum-nav-dropdown",
     "category": "navigation",
     "effectId": "ferrum-nav-dropdown",
-    "properties": "position: relative;\n  width: 180px;\n  height: 34px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 0 14px;\n  background: color-mix(in oklch, oklch(1 0 0) 4%, transparent);\n  border: 1px solid color-mix(in oklch, oklch(1 0 0) 12%, transparent);\n  border-radius: 8px;\n  font: 11px/1 system-ui, sans-serif;\n  color: color-mix(in oklch, oklch(1 0 0) 80%, transparent);\n  overflow: hidden;\n  transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1),\n              border-color 0.3s ease;"
+    "properties": "position: relative;\n  width: 180px;\n  height: 34px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 0 14px;\n  background: color-mix(in oklch, oklch(1 0 0) 4%, transparent);\n  border: 1px solid color-mix(in oklch, oklch(1 0 0) 12%, transparent);\n  border-radius: 8px;\n  font: 11px/1 system-ui, sans-serif;\n  color: color-mix(in oklch, oklch(1 0 0) 80%, transparent);\n  overflow: hidden;"
   },
   {
     "className": "roycss-ferrum-nav-dropdown",
@@ -15309,19 +15309,19 @@
     "className": "roycss-retro-crt-scanlines",
     "category": "retro",
     "effectId": "retro-crt-scanlines",
-    "properties": "position: relative;\n  background: radial-gradient(ellipse at center, #0c3a2a 0%, #021510 100%);\n  color: #7dffb0;\n  border-radius: 16px;\n  overflow: hidden;\n  font-family: ui-monospace, monospace;\n  text-shadow: 0 0 4px #7dffb0, 0 0 10px rgba(125,255,176,0.6);"
+    "properties": "position: relative;\n  background: radial-gradient(ellipse at center, oklch(0.313 0.057 165.58) 0%, oklch(0.177 0.03 174.74) 100%);\n  color: oklch(0.906 0.16 154.78);\n  border-radius: 16px;\n  overflow: hidden;\n  font-family: ui-monospace, monospace;\n  text-shadow: 0 0 4px oklch(0.906 0.16 154.78), 0 0 10px rgba(125,255,176,0.6);"
   },
   {
     "className": "roycss-retro-vhs-tracking",
     "category": "retro",
     "effectId": "retro-vhs-tracking",
-    "properties": "position: relative;\n  background: #0a0a0f;\n  color: #f4f4f8;\n  border-radius: 4px;\n  overflow: hidden;\n  font-family: ui-monospace, monospace;\n  text-shadow: 2px 0 #ff0050, -2px 0 #00d4ff;\n  animation: roy-retro-vhs-jitter 0.18s steps(2) infinite;"
+    "properties": "position: relative;\n  background: oklch(0.147 0.011 285.01);\n  color: oklch(0.968 0.005 286.3);\n  border-radius: 4px;\n  overflow: hidden;\n  font-family: ui-monospace, monospace;\n  text-shadow: 2px 0 oklch(0.635 0.254 16.83), -2px 0 oklch(0.804 0.146 219.52);\n  animation: roy-retro-vhs-jitter 0.18s steps(2) infinite;"
   },
   {
     "className": "roycss-retro-pixel-art-transition",
     "category": "retro",
     "effectId": "retro-pixel-art-transition",
-    "properties": "background: linear-gradient(135deg, #ff71ce, #01cdfe, #05ffa1, #b967ff);\n  border-radius: 0;\n  image-rendering: pixelated;\n  image-rendering: crisp-edges;\n  animation: roy-retro-pixel 2.4s steps(8) infinite;"
+    "properties": "background: linear-gradient(135deg, oklch(0.747 0.2 342.96), oklch(0.787 0.147 223.22), oklch(0.881 0.206 157.77), oklch(0.674 0.221 306.2));\n  border-radius: 0;\n  image-rendering: pixelated;\n  image-rendering: crisp-edges;\n  animation: roy-retro-pixel 2.4s steps(8) infinite;"
   },
   {
     "className": "roycss-retro-pixel-art-transition",
@@ -15333,7 +15333,7 @@
     "className": "roycss-retro-lcd-display",
     "category": "retro",
     "effectId": "retro-lcd-display",
-    "properties": "background: linear-gradient(180deg, #9ba78d 0%, #828c74 100%);\n  color: rgba(28, 38, 22, 0.92);\n  font-family: ui-monospace, \"Courier New\", monospace;\n  font-weight: 700;\n  letter-spacing: 0.15em;\n  border-radius: 6px;\n  padding: 0.4em 0.6em;\n  text-shadow: 0 1px 0 rgba(255,255,255,0.3);\n  box-shadow: inset 0 2px 6px rgba(0,0,0,0.35), inset 0 -1px 0 rgba(255,255,255,0.2);\n  position: relative;"
+    "properties": "background: linear-gradient(180deg, oklch(0.712 0.039 127.61) 0%, oklch(0.625 0.037 125.88) 100%);\n  color: rgba(28, 38, 22, 0.92);\n  font-family: ui-monospace, \"Courier New\", monospace;\n  font-weight: 700;\n  letter-spacing: 0.15em;\n  border-radius: 6px;\n  padding: 0.4em 0.6em;\n  text-shadow: 0 1px 0 rgba(255,255,255,0.3);\n  box-shadow: inset 0 2px 6px rgba(0,0,0,0.35), inset 0 -1px 0 rgba(255,255,255,0.2);\n  position: relative;"
   },
   {
     "className": "roycss-retro-lcd-display",
@@ -15345,7 +15345,7 @@
     "className": "roycss-retro-typewriter-ribbon",
     "category": "retro",
     "effectId": "retro-typewriter-ribbon",
-    "properties": "font-family: \"Courier New\", ui-monospace, monospace;\n  color: #2a1d10;\n  background: #f1e7d2;\n  padding: 0.5em 0.8em;\n  letter-spacing: 0.05em;\n  text-shadow:\n    0.5px 0 0 rgba(60,40,20,0.6),\n    -0.5px 0 0 rgba(120,80,40,0.4),\n    1px 0 1px rgba(40,25,10,0.3);\n  border-radius: 2px;\n  position: relative;"
+    "properties": "font-family: \"Courier New\", ui-monospace, monospace;\n  color: oklch(0.243 0.03 65.57);\n  background: oklch(0.93 0.03 85.56);\n  padding: 0.5em 0.8em;\n  letter-spacing: 0.05em;\n  text-shadow:\n    0.5px 0 0 rgba(60,40,20,0.6),\n    -0.5px 0 0 rgba(120,80,40,0.4),\n    1px 0 1px rgba(40,25,10,0.3);\n  border-radius: 2px;\n  position: relative;"
   },
   {
     "className": "roycss-retro-typewriter-ribbon",
@@ -15357,7 +15357,7 @@
     "className": "roycss-retro-polaroid-frame",
     "category": "retro",
     "effectId": "retro-polaroid-frame",
-    "properties": "background: #fbf8f1;\n  padding: 14px 14px 48px;\n  border-radius: 4px;\n  box-shadow:\n    0 1px 1px rgba(0,0,0,0.1),\n    0 10px 24px rgba(0,0,0,0.18),\n    0 18px 40px rgba(0,0,0,0.08);\n  transform: rotate(-3deg);\n  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);\n  position: relative;"
+    "properties": "background: oklch(0.98 0.01 87.47);\n  padding: 14px 14px 48px;\n  border-radius: 4px;\n  box-shadow:\n    0 1px 1px rgba(0,0,0,0.1),\n    0 10px 24px rgba(0,0,0,0.18),\n    0 18px 40px rgba(0,0,0,0.08);\n  transform: rotate(-3deg);\n  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);\n  position: relative;"
   },
   {
     "className": "roycss-retro-polaroid-frame",
@@ -15369,13 +15369,13 @@
     "className": "roycss-retro-film-grain",
     "category": "retro",
     "effectId": "retro-film-grain",
-    "properties": "position: relative;\n  background:\n    radial-gradient(circle at 30% 20%, #5a3a1a 0%, transparent 50%),\n    radial-gradient(circle at 70% 80%, #2a1a0a 0%, transparent 50%),\n    linear-gradient(135deg, #3a2a1a 0%, #1a1208 100%);\n  color: #f4e8c8;\n  overflow: hidden;"
+    "properties": "position: relative;\n  background:\n    radial-gradient(circle at 30% 20%, oklch(0.379 0.065 63.58) 0%, transparent 50%),\n    radial-gradient(circle at 70% 80%, oklch(0.234 0.037 64.28) 0%, transparent 50%),\n    linear-gradient(135deg, oklch(0.299 0.036 65.75) 0%, oklch(0.189 0.023 72.29) 100%);\n  color: oklch(0.932 0.044 89.89);\n  overflow: hidden;"
   },
   {
     "className": "roycss-retro-neon-flicker",
     "category": "retro",
     "effectId": "retro-neon-flicker",
-    "properties": "color: #fff;\n  background: #0a0510;\n  font-family: \"Arial Black\", sans-serif;\n  font-weight: 900;\n  letter-spacing: 0.1em;\n  text-shadow:\n    0 0 6px #ff2d95,\n    0 0 14px #ff2d95,\n    0 0 30px #ff2d95,\n    0 0 60px #ff007a,\n    0 0 90px #ff007a;\n  animation: roy-retro-neon-flicker 3.2s infinite;"
+    "properties": "color: oklch(1 0 89.88);\n  background: oklch(0.131 0.027 306.06);\n  font-family: \"Arial Black\", sans-serif;\n  font-weight: 900;\n  letter-spacing: 0.1em;\n  text-shadow:\n    0 0 6px oklch(0.665 0.249 357.34),\n    0 0 14px oklch(0.665 0.249 357.34),\n    0 0 30px oklch(0.665 0.249 357.34),\n    0 0 60px oklch(0.644 0.259 4.34),\n    0 0 90px oklch(0.644 0.259 4.34);\n  animation: roy-retro-neon-flicker 3.2s infinite;"
   },
   {
     "className": "roycss-retro-neon-flicker",
@@ -15387,13 +15387,13 @@
     "className": "roycss-retro-cassette-reel",
     "category": "retro",
     "effectId": "retro-cassette-reel",
-    "properties": "position: relative;\n  width: 80px;\n  height: 80px;\n  background: linear-gradient(180deg, #d4a017 0%, #8a6210 100%);\n  border-radius: 8px;\n  box-shadow: inset 0 2px 4px rgba(255,255,255,0.4), inset 0 -4px 8px rgba(0,0,0,0.3), 0 4px 10px rgba(0,0,0,0.3);"
+    "properties": "position: relative;\n  width: 80px;\n  height: 80px;\n  background: linear-gradient(180deg, oklch(0.735 0.146 84.27) 0%, oklch(0.525 0.104 79) 100%);\n  border-radius: 8px;\n  box-shadow: inset 0 2px 4px rgba(255,255,255,0.4), inset 0 -4px 8px rgba(0,0,0,0.3), 0 4px 10px rgba(0,0,0,0.3);"
   },
   {
     "className": "roycss-retro-gameboy-ui",
     "category": "retro",
     "effectId": "retro-gameboy-ui",
-    "properties": "background: #9bbc0f;\n  color: #0f380f;\n  border: 4px solid #0f380f;\n  border-radius: 4px;\n  padding: 12px;\n  font-family: ui-monospace, monospace;\n  font-weight: 700;\n  text-transform: uppercase;\n  letter-spacing: 0.08em;\n  box-shadow:\n    inset 0 0 0 2px #306230,\n    4px 4px 0 #0f380f;\n  position: relative;"
+    "properties": "background: oklch(0.744 0.177 121.59);\n  color: oklch(0.301 0.082 143.22);\n  border: 4px solid oklch(0.301 0.082 143.22);\n  border-radius: 4px;\n  padding: 12px;\n  font-family: ui-monospace, monospace;\n  font-weight: 700;\n  text-transform: uppercase;\n  letter-spacing: 0.08em;\n  box-shadow:\n    inset 0 0 0 2px oklch(0.448 0.096 143.77),\n    4px 4px 0 oklch(0.301 0.082 143.22);\n  position: relative;"
   },
   {
     "className": "roycss-retro-gameboy-ui",
@@ -15405,7 +15405,7 @@
     "className": "roycss-retro-arcade-glow",
     "category": "retro",
     "effectId": "retro-arcade-glow",
-    "properties": "color: #fff;\n  background: #0a0014;\n  font-family: \"Arial Black\", sans-serif;\n  font-weight: 900;\n  letter-spacing: 0.12em;\n  text-transform: uppercase;\n  text-shadow:\n    0 0 4px #fff,\n    0 0 10px #fff,\n    0 0 20px #ff00ff,\n    0 0 40px #ff00ff,\n    0 0 60px #ff00ff,\n    0 0 80px #ff00ff;\n  animation: roy-retro-arcade-pulse 1.6s ease-in-out infinite;"
+    "properties": "color: oklch(1 0 89.88);\n  background: oklch(0.113 0.057 308.75);\n  font-family: \"Arial Black\", sans-serif;\n  font-weight: 900;\n  letter-spacing: 0.12em;\n  text-transform: uppercase;\n  text-shadow:\n    0 0 4px oklch(1 0 89.88),\n    0 0 10px oklch(1 0 89.88),\n    0 0 20px oklch(0.702 0.322 328.36),\n    0 0 40px oklch(0.702 0.322 328.36),\n    0 0 60px oklch(0.702 0.322 328.36),\n    0 0 80px oklch(0.702 0.322 328.36);\n  animation: roy-retro-arcade-pulse 1.6s ease-in-out infinite;"
   },
   {
     "className": "roycss-retro-arcade-glow",
@@ -15417,13 +15417,13 @@
     "className": "roycss-retro-vhs-glitch",
     "category": "retro",
     "effectId": "retro-vhs-glitch",
-    "properties": "position: relative;\n  background: #1a0a2a;\n  color: #f0f0f5;\n  font-family: ui-monospace, monospace;\n  overflow: hidden;\n  border-radius: 4px;\n  animation: roy-retro-vhs-glitch-shift 2s infinite;"
+    "properties": "position: relative;\n  background: oklch(0.189 0.063 304);\n  color: oklch(0.957 0.007 286.27);\n  font-family: ui-monospace, monospace;\n  overflow: hidden;\n  border-radius: 4px;\n  animation: roy-retro-vhs-glitch-shift 2s infinite;"
   },
   {
     "className": "roycss-retro-8bit-border",
     "category": "retro",
     "effectId": "retro-8bit-border",
-    "properties": "background: #2d1b4e;\n  color: #ffd700;\n  font-family: ui-monospace, monospace;\n  font-weight: 700;\n  padding: 14px;\n  position: relative;\n  border: 4px solid #ffd700;\n  box-shadow:\n    0 0 0 4px #2d1b4e,\n    0 0 0 8px #ffd700,\n    8px 8px 0 8px #1a0f2e;\n  clip-path: polygon(\n    0 8px, 8px 8px, 8px 0,\n    calc(100% - 8px) 0, calc(100% - 8px) 8px, 100% 8px,\n    100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px), calc(100% - 8px) 100%,\n    8px 100%, 8px calc(100% - 8px), 0 calc(100% - 8px)\n  );"
+    "properties": "background: oklch(0.276 0.09 296.26);\n  color: oklch(0.887 0.182 95.33);\n  font-family: ui-monospace, monospace;\n  font-weight: 700;\n  padding: 14px;\n  position: relative;\n  border: 4px solid oklch(0.887 0.182 95.33);\n  box-shadow:\n    0 0 0 4px oklch(0.276 0.09 296.26),\n    0 0 0 8px oklch(0.887 0.182 95.33),\n    8px 8px 0 8px oklch(0.203 0.06 297.11);\n  clip-path: polygon(\n    0 8px, 8px 8px, 8px 0,\n    calc(100% - 8px) 0, calc(100% - 8px) 8px, 100% 8px,\n    100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px), calc(100% - 8px) 100%,\n    8px 100%, 8px calc(100% - 8px), 0 calc(100% - 8px)\n  );"
   },
   {
     "className": "roycss-retro-8bit-border",
@@ -15435,55 +15435,55 @@
     "className": "roycss-retro-synthwave-grid",
     "category": "retro",
     "effectId": "retro-synthwave-grid",
-    "properties": "position: relative;\n  background:\n    linear-gradient(180deg, #1a0033 0%, #2d0a4e 40%, #ff2d95 60%, #ff6b3d 70%, #1a0033 70.5%, #0a0014 100%);\n  overflow: hidden;"
+    "properties": "position: relative;\n  background:\n    linear-gradient(180deg, oklch(0.179 0.095 301.47) 0%, oklch(0.251 0.114 301.67) 40%, oklch(0.665 0.249 357.34) 60%, oklch(0.705 0.191 37.47) 70%, oklch(0.179 0.095 301.47) 70.5%, oklch(0.113 0.057 308.75) 100%);\n  overflow: hidden;"
   },
   {
     "className": "roycss-retro-retrowave-sun",
     "category": "retro",
     "effectId": "retro-retrowave-sun",
-    "properties": "position: relative;\n  background: linear-gradient(180deg, #1a0033 0%, #4a0a6e 50%, #2d0a4e 100%);\n  overflow: hidden;"
+    "properties": "position: relative;\n  background: linear-gradient(180deg, oklch(0.179 0.095 301.47) 0%, oklch(0.324 0.154 308.25) 50%, oklch(0.251 0.114 301.67) 100%);\n  overflow: hidden;"
   },
   {
     "className": "roycss-retro-dial-up-loader",
     "category": "retro",
     "effectId": "retro-dial-up-loader",
-    "properties": "position: relative;\n  width: 64px;\n  height: 64px;\n  border: 3px solid #2a2a2a;\n  border-top-color: #00ff7f;\n  border-radius: 50%;\n  background: #0a0a0a;\n  animation: roy-retro-dial-spin 1.4s linear infinite;"
+    "properties": "position: relative;\n  width: 64px;\n  height: 64px;\n  border: 3px solid oklch(0.285 0 89.88);\n  border-top-color: oklch(0.875 0.235 151.02);\n  border-radius: 50%;\n  background: oklch(0.145 0 89.88);\n  animation: roy-retro-dial-spin 1.4s linear infinite;"
   },
   {
     "className": "roycss-retro-floppy-disk-save",
     "category": "retro",
     "effectId": "retro-floppy-disk-save",
-    "properties": "width: 70px;\n  height: 70px;\n  background: linear-gradient(180deg, #1a1a2a 0%, #0a0a14 100%);\n  border-radius: 4px;\n  border: 2px solid #2a2a3a;\n  position: relative;\n  cursor: pointer;\n  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);"
+    "properties": "width: 70px;\n  height: 70px;\n  background: linear-gradient(180deg, oklch(0.226 0.031 283.65) 0%, oklch(0.15 0.021 283.53) 100%);\n  border-radius: 4px;\n  border: 2px solid oklch(0.292 0.029 284.46);\n  position: relative;\n  cursor: pointer;\n  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);"
   },
   {
     "className": "roycss-retro-tv-static",
     "category": "retro",
     "effectId": "retro-tv-static",
-    "properties": "position: relative;\n  background: #0a0a0a;\n  overflow: hidden;\n  border-radius: 8px;"
+    "properties": "position: relative;\n  background: oklch(0.145 0 89.88);\n  overflow: hidden;\n  border-radius: 8px;"
   },
   {
     "className": "roycss-retro-tape-deck-buttons",
     "category": "retro",
     "effectId": "retro-tape-deck-buttons",
-    "properties": "display: inline-flex;\n  gap: 6px;\n  padding: 8px 12px;\n  background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);\n  border-radius: 4px;\n  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 6px rgba(0,0,0,0.5);\n  color: #c8c8c8;\n  font-family: ui-monospace, monospace;\n  font-size: 1.1rem;\n  letter-spacing: 0.4em;\n  cursor: pointer;\n  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out, color 0.1s;"
+    "properties": "display: inline-flex;\n  gap: 6px;\n  padding: 8px 12px;\n  background: linear-gradient(180deg, oklch(0.285 0 89.88) 0%, oklch(0.218 0 89.88) 100%);\n  border-radius: 4px;\n  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 6px rgba(0,0,0,0.5);\n  color: oklch(0.833 0 89.88);\n  font-family: ui-monospace, monospace;\n  font-size: 1.1rem;\n  letter-spacing: 0.4em;\n  cursor: pointer;\n  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out, color 0.1s;"
   },
   {
     "className": "roycss-retro-coin-insert",
     "category": "retro",
     "effectId": "retro-coin-insert",
-    "properties": "position: relative;\n  width: 80px;\n  height: 80px;\n  background: linear-gradient(180deg, #1a1a2e 0%, #0a0a14 100%);\n  border-radius: 8px;\n  overflow: hidden;"
+    "properties": "position: relative;\n  width: 80px;\n  height: 80px;\n  background: linear-gradient(180deg, oklch(0.228 0.038 282.93) 0%, oklch(0.15 0.021 283.53) 100%);\n  border-radius: 8px;\n  overflow: hidden;"
   },
   {
     "className": "roycss-dataviz-counter-roll",
     "category": "data-viz",
     "effectId": "dataviz-counter-roll",
-    "properties": "position: relative;\n  display: inline-block;\n  font-family: ui-monospace, \"Courier New\", monospace;\n  font-weight: 700;\n  font-size: 2rem;\n  color: #0f172a;\n  background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);\n  padding: 0.2em 0.5em;\n  border-radius: 6px;\n  overflow: hidden;\n  box-shadow: inset 0 2px 6px rgba(0,0,0,0.15);\n  height: 1.4em;\n  line-height: 1.4;\n  width: 1.2em;\n  text-align: center;"
+    "properties": "position: relative;\n  display: inline-block;\n  font-family: ui-monospace, \"Courier New\", monospace;\n  font-weight: 700;\n  font-size: 2rem;\n  color: oklch(0.208 0.04 265.75);\n  background: linear-gradient(180deg, oklch(0.984 0.003 247.86) 0%, oklch(0.929 0.013 255.51) 100%);\n  padding: 0.2em 0.5em;\n  border-radius: 6px;\n  overflow: hidden;\n  box-shadow: inset 0 2px 6px rgba(0,0,0,0.15);\n  height: 1.4em;\n  line-height: 1.4;\n  width: 1.2em;\n  text-align: center;"
   },
   {
     "className": "roycss-dataviz-progress-ring",
     "category": "data-viz",
     "effectId": "dataviz-progress-ring",
-    "properties": "position: relative;\n  width: 80px;\n  height: 80px;\n  border-radius: 50%;\n  background:\n    conic-gradient(#10b981 0deg, #10b981 252deg, #e2e8f0 252deg, #e2e8f0 360deg);\n  animation: roy-dataviz-ring-fill 1.8s ease-out both;\n  display: flex;\n  align-items: center;\n  justify-content: center;"
+    "properties": "position: relative;\n  width: 80px;\n  height: 80px;\n  border-radius: 50%;\n  background:\n    conic-gradient(oklch(0.696 0.149 162.48) 0deg, oklch(0.696 0.149 162.48) 252deg, oklch(0.929 0.013 255.51) 252deg, oklch(0.929 0.013 255.51) 360deg);\n  animation: roy-dataviz-ring-fill 1.8s ease-out both;\n  display: flex;\n  align-items: center;\n  justify-content: center;"
   },
   {
     "className": "roycss-dataviz-progress-ring",
@@ -15501,19 +15501,19 @@
     "className": "roycss-dataviz-bar-grow",
     "category": "data-viz",
     "effectId": "dataviz-bar-grow",
-    "properties": "position: relative;\n  display: flex;\n  align-items: flex-end;\n  gap: 8px;\n  height: 100%;\n  padding: 12px;\n  background: #f8fafc;\n  border-radius: 6px;"
+    "properties": "position: relative;\n  display: flex;\n  align-items: flex-end;\n  gap: 8px;\n  height: 100%;\n  padding: 12px;\n  background: oklch(0.984 0.003 247.86);\n  border-radius: 6px;"
   },
   {
     "className": "roycss-dataviz-bar-horizontal",
     "category": "data-viz",
     "effectId": "dataviz-bar-horizontal",
-    "properties": "position: relative;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  padding: 14px;\n  background: #f8fafc;\n  border-radius: 6px;\n  height: 100%;"
+    "properties": "position: relative;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  padding: 14px;\n  background: oklch(0.984 0.003 247.86);\n  border-radius: 6px;\n  height: 100%;"
   },
   {
     "className": "roycss-dataviz-pie-reveal",
     "category": "data-viz",
     "effectId": "dataviz-pie-reveal",
-    "properties": "position: relative;\n  width: 90px;\n  height: 90px;\n  border-radius: 50%;\n  background: conic-gradient(\n    #10b981 0deg 130deg,\n    #6366f1 130deg 240deg,\n    #f59e0b 240deg 320deg,\n    #ef4444 320deg 360deg\n  );\n  animation: roy-dataviz-pie-reveal 1.6s ease-out both;\n  mask: radial-gradient(circle, transparent 22px, #000 23px);\n  -webkit-mask: radial-gradient(circle, transparent 22px, #000 23px);"
+    "properties": "position: relative;\n  width: 90px;\n  height: 90px;\n  border-radius: 50%;\n  background: conic-gradient(\n    oklch(0.696 0.149 162.48) 0deg 130deg,\n    oklch(0.585 0.204 200) 130deg 240deg,\n    oklch(0.769 0.165 70.08) 240deg 320deg,\n    oklch(0.637 0.208 25.33) 320deg 360deg\n  );\n  animation: roy-dataviz-pie-reveal 1.6s ease-out both;\n  mask: radial-gradient(circle, transparent 22px, oklch(0 0 0) 23px);\n  -webkit-mask: radial-gradient(circle, transparent 22px, oklch(0 0 0) 23px);"
   },
   {
     "className": "roycss-dataviz-pie-reveal",
@@ -15525,13 +15525,13 @@
     "className": "roycss-dataviz-sparkline-draw",
     "category": "data-viz",
     "effectId": "dataviz-sparkline-draw",
-    "properties": "position: relative;\n  height: 100%;\n  background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);\n  border-radius: 6px;\n  overflow: hidden;"
+    "properties": "position: relative;\n  height: 100%;\n  background: linear-gradient(180deg, oklch(0.984 0.003 247.86) 0%, oklch(0.962 0.018 272.31) 100%);\n  border-radius: 6px;\n  overflow: hidden;"
   },
   {
     "className": "roycss-dataviz-stat-pulse",
     "category": "data-viz",
     "effectId": "dataviz-stat-pulse",
-    "properties": "font-family: ui-monospace, monospace;\n  font-weight: 800;\n  font-size: 1.6rem;\n  color: #10b981;\n  background: #f0fdf4;\n  padding: 0.3em 0.6em;\n  border-radius: 6px;\n  animation: roy-dataviz-stat-pulse 2s ease-in-out infinite;"
+    "properties": "font-family: ui-monospace, monospace;\n  font-weight: 800;\n  font-size: 1.6rem;\n  color: oklch(0.696 0.149 162.48);\n  background: oklch(0.982 0.018 155.83);\n  padding: 0.3em 0.6em;\n  border-radius: 6px;\n  animation: roy-dataviz-stat-pulse 2s ease-in-out infinite;"
   },
   {
     "className": "roycss-dataviz-stat-pulse",
@@ -15543,7 +15543,7 @@
     "className": "roycss-dataviz-data-flow",
     "category": "data-viz",
     "effectId": "dataviz-data-flow",
-    "properties": "position: relative;\n  height: 100%;\n  background: #f8fafc;\n  border-radius: 6px;\n  overflow: hidden;"
+    "properties": "position: relative;\n  height: 100%;\n  background: oklch(0.984 0.003 247.86);\n  border-radius: 6px;\n  overflow: hidden;"
   },
   {
     "className": "roycss-dataviz-gauge-needle",
@@ -15555,25 +15555,25 @@
     "className": "roycss-dataviz-heatmap-cell",
     "category": "data-viz",
     "effectId": "dataviz-heatmap-cell",
-    "properties": "width: 60px;\n  height: 60px;\n  border-radius: 6px;\n  background: #e0f2fe;\n  animation: roy-dataviz-heat 2.4s ease-in-out infinite;\n  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);\n  position: relative;"
+    "properties": "width: 60px;\n  height: 60px;\n  border-radius: 6px;\n  background: oklch(0.951 0.025 236.82);\n  animation: roy-dataviz-heat 2.4s ease-in-out infinite;\n  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);\n  position: relative;"
   },
   {
     "className": "roycss-dataviz-heatmap-cell",
     "category": "data-viz",
     "effectId": "dataviz-heatmap-cell",
-    "properties": "animation: none; background: #fbbf24;"
+    "properties": "animation: none; background: oklch(0.837 0.164 84.43);"
   },
   {
     "className": "roycss-dataviz-timeline-progress",
     "category": "data-viz",
     "effectId": "dataviz-timeline-progress",
-    "properties": "position: relative;\n  height: 100%;\n  background: #f8fafc;\n  border-radius: 6px;\n  padding: 24px 16px;"
+    "properties": "position: relative;\n  height: 100%;\n  background: oklch(0.984 0.003 247.86);\n  border-radius: 6px;\n  padding: 24px 16px;"
   },
   {
     "className": "roycss-dataviz-count-up",
     "category": "data-viz",
     "effectId": "dataviz-count-up",
-    "properties": "--roy-dataviz-count: 0;\n  counter-reset: count var(--roy-dataviz-count);\n  font-family: ui-monospace, monospace;\n  font-weight: 800;\n  font-size: 2rem;\n  color: #6366f1;\n  background: #eef2ff;\n  padding: 0.2em 0.5em;\n  border-radius: 6px;\n  animation: roy-dataviz-count-up 2s ease-out both;"
+    "properties": "--roy-dataviz-count: 0;\n  counter-reset: count var(--roy-dataviz-count);\n  font-family: ui-monospace, monospace;\n  font-weight: 800;\n  font-size: 2rem;\n  color: oklch(0.585 0.204 200);\n  background: oklch(0.962 0.018 272.31);\n  padding: 0.2em 0.5em;\n  border-radius: 6px;\n  animation: roy-dataviz-count-up 2s ease-out both;"
   },
   {
     "className": "roycss-dataviz-count-up",
@@ -15585,13 +15585,13 @@
     "className": "roycss-dataviz-percentage-bar",
     "category": "data-viz",
     "effectId": "dataviz-percentage-bar",
-    "properties": "position: relative;\n  width: 100%;\n  height: 24px;\n  background: #e2e8f0;\n  border-radius: 12px;\n  overflow: hidden;"
+    "properties": "position: relative;\n  width: 100%;\n  height: 24px;\n  background: oklch(0.929 0.013 255.51);\n  border-radius: 12px;\n  overflow: hidden;"
   },
   {
     "className": "roycss-dataviz-radial-progress",
     "category": "data-viz",
     "effectId": "dataviz-radial-progress",
-    "properties": "position: relative;\n  width: 80px;\n  height: 80px;\n  border-radius: 50%;\n  background: conic-gradient(from 0deg, #6366f1, #8b5cf6, #ec4899, #f59e0b, #6366f1);\n  animation: roy-dataviz-radial-spin 1.4s linear infinite;"
+    "properties": "position: relative;\n  width: 80px;\n  height: 80px;\n  border-radius: 50%;\n  background: conic-gradient(from 0deg, oklch(0.585 0.204 200), oklch(0.606 0.219 292.72), oklch(0.656 0.212 354.31), oklch(0.769 0.165 70.08), oklch(0.585 0.204 200));\n  animation: roy-dataviz-radial-spin 1.4s linear infinite;"
   },
   {
     "className": "roycss-dataviz-radial-progress",
@@ -15603,31 +15603,31 @@
     "className": "roycss-dataviz-stacked-bar",
     "category": "data-viz",
     "effectId": "dataviz-stacked-bar",
-    "properties": "position: relative;\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-end;\n  height: 100%;\n  padding: 14px;\n  background: #f8fafc;\n  border-radius: 6px;"
+    "properties": "position: relative;\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-end;\n  height: 100%;\n  padding: 14px;\n  background: oklch(0.984 0.003 247.86);\n  border-radius: 6px;"
   },
   {
     "className": "roycss-dataviz-line-chart-draw",
     "category": "data-viz",
     "effectId": "dataviz-line-chart-draw",
-    "properties": "position: relative;\n  height: 100%;\n  background:\n    linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%),\n    repeating-linear-gradient(0deg, transparent 0, transparent 19px, rgba(99,102,241,0.08) 19px, rgba(99,102,241,0.08) 20px);\n  border-radius: 6px;\n  overflow: hidden;"
+    "properties": "position: relative;\n  height: 100%;\n  background:\n    linear-gradient(180deg, oklch(0.984 0.003 247.86) 0%, oklch(0.962 0.018 272.31) 100%),\n    repeating-linear-gradient(0deg, transparent 0, transparent 19px, oklch(0.585 0.204 200 / 0.08) 19px, oklch(0.585 0.204 200 / 0.08) 20px);\n  border-radius: 6px;\n  overflow: hidden;"
   },
   {
     "className": "roycss-dataviz-area-chart-fill",
     "category": "data-viz",
     "effectId": "dataviz-area-chart-fill",
-    "properties": "position: relative;\n  height: 100%;\n  background: #f8fafc;\n  border-radius: 6px;\n  overflow: hidden;"
+    "properties": "position: relative;\n  height: 100%;\n  background: oklch(0.984 0.003 247.86);\n  border-radius: 6px;\n  overflow: hidden;"
   },
   {
     "className": "roycss-dataviz-bubble-pulse",
     "category": "data-viz",
     "effectId": "dataviz-bubble-pulse",
-    "properties": "position: relative;\n  width: 100px;\n  height: 100px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: #f8fafc;\n  border-radius: 50%;"
+    "properties": "position: relative;\n  width: 100px;\n  height: 100px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: oklch(0.984 0.003 247.86);\n  border-radius: 50%;"
   },
   {
     "className": "roycss-dataviz-loading-skeleton",
     "category": "data-viz",
     "effectId": "dataviz-loading-skeleton",
-    "properties": "position: relative;\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n  padding: 16px;\n  background: #fff;\n  border-radius: 8px;\n  overflow: hidden;\n  border: 1px solid #e2e8f0;"
+    "properties": "position: relative;\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n  padding: 16px;\n  background: oklch(1 0 89.88);\n  border-radius: 8px;\n  overflow: hidden;\n  border: 1px solid oklch(0.929 0.013 255.51);"
   },
   {
     "className": "roycss-state-skeleton-shimmer-gradient",
@@ -16821,139 +16821,139 @@
     "className": "roycss-immersive-starfield",
     "category": "immersive",
     "effectId": "immersive-starfield",
-    "properties": "position: relative;\n  background: radial-gradient(ellipse at top, #1b2735 0%, #090a0f 100%);\n  overflow: hidden;"
+    "properties": "position: relative;\n  background: radial-gradient(ellipse at top, oklch(0.268 0.031 252.76) 0%, oklch(0.146 0.011 275.82) 100%);\n  overflow: hidden;"
   },
   {
     "className": "roycss-immersive-rain",
     "category": "immersive",
     "effectId": "immersive-rain",
-    "properties": "position: relative;\n  background: linear-gradient(#0a0f14, #1a2a35);\n  overflow: hidden;"
+    "properties": "position: relative;\n  background: linear-gradient(oklch(0.166 0.013 248.65), oklch(0.276 0.03 239.25));\n  overflow: hidden;"
   },
   {
     "className": "roycss-immersive-snow-drift",
     "category": "immersive",
     "effectId": "immersive-snow-drift",
-    "properties": "position: relative;\n  background: linear-gradient(#1c2530, #2a3744);\n  overflow: hidden;"
+    "properties": "position: relative;\n  background: linear-gradient(oklch(0.261 0.024 253.72), oklch(0.331 0.029 248.72));\n  overflow: hidden;"
   },
   {
     "className": "roycss-immersive-fire-flame",
     "category": "immersive",
     "effectId": "immersive-fire-flame",
-    "properties": "position: relative;\n  background: radial-gradient(ellipse at bottom, #2a0a00 0%, #000 80%);\n  overflow: hidden;"
+    "properties": "position: relative;\n  background: radial-gradient(ellipse at bottom, oklch(0.198 0.058 43.29) 0%, oklch(0 0 0) 80%);\n  overflow: hidden;"
   },
   {
     "className": "roycss-immersive-smoke-fog",
     "category": "immersive",
     "effectId": "immersive-smoke-fog",
-    "properties": "position: relative;\n  background: linear-gradient(#22252a, #3a3f47);\n  overflow: hidden;"
+    "properties": "position: relative;\n  background: linear-gradient(oklch(0.264 0.01 260.7), oklch(0.366 0.015 259.81));\n  overflow: hidden;"
   },
   {
     "className": "roycss-immersive-ocean-waves",
     "category": "immersive",
     "effectId": "immersive-ocean-waves",
-    "properties": "position: relative;\n  background: linear-gradient(#0a3a5c 0%, #072a44 60%, #04192c 100%);\n  overflow: hidden;"
+    "properties": "position: relative;\n  background: linear-gradient(oklch(0.337 0.077 245.23) 0%, oklch(0.276 0.062 245.56) 60%, oklch(0.208 0.047 247.97) 100%);\n  overflow: hidden;"
   },
   {
     "className": "roycss-immersive-matrix-rain",
     "category": "immersive",
     "effectId": "immersive-matrix-rain",
-    "properties": "position: relative;\n  background: #000;\n  overflow: hidden;"
+    "properties": "position: relative;\n  background: oklch(0 0 0);\n  overflow: hidden;"
   },
   {
     "className": "roycss-immersive-geometric-hex",
     "category": "immersive",
     "effectId": "immersive-geometric-hex",
-    "properties": "position: relative;\n  background: #0d1117;\n  overflow: hidden;"
+    "properties": "position: relative;\n  background: oklch(0.176 0.014 258.36);\n  overflow: hidden;"
   },
   {
     "className": "roycss-immersive-topographic",
     "category": "immersive",
     "effectId": "immersive-topographic",
-    "properties": "position: relative;\n  background: #0f1b14;\n  overflow: hidden;"
+    "properties": "position: relative;\n  background: oklch(0.208 0.022 158.19);\n  overflow: hidden;"
   },
   {
     "className": "roycss-immersive-aurora-bg",
     "category": "immersive",
     "effectId": "immersive-aurora-bg",
-    "properties": "position: relative;\n  background: linear-gradient(#020617 0%, #0c1d3a 50%, #021024 100%);\n  overflow: hidden;"
+    "properties": "position: relative;\n  background: linear-gradient(oklch(0.129 0.041 264.7) 0%, oklch(0.234 0.06 260.37) 50%, oklch(0.173 0.047 254.4) 100%);\n  overflow: hidden;"
   },
   {
     "className": "roycss-immersive-nebula",
     "category": "immersive",
     "effectId": "immersive-nebula",
-    "properties": "position: relative;\n  background:\n    radial-gradient(1px 1px at 50px 50px, #fff, transparent),\n    radial-gradient(1px 1px at 150px 200px, #fff, transparent),\n    radial-gradient(1px 1px at 250px 80px, #cfe, transparent),\n    radial-gradient(2px 2px at 320px 320px, #fff, transparent),\n    radial-gradient(1px 1px at 90px 280px, #ffd, transparent),\n    #050414;\n  background-size: 400px 400px, 400px 400px, 400px 400px, 400px 400px, 400px 400px, 100% 100%;\n  background-repeat: repeat;\n  overflow: hidden;"
+    "properties": "position: relative;\n  background:\n    radial-gradient(1px 1px at 50px 50px, oklch(1 0 89.88), transparent),\n    radial-gradient(1px 1px at 150px 200px, oklch(1 0 89.88), transparent),\n    radial-gradient(1px 1px at 250px 80px, oklch(0.96 0.057 172.74), transparent),\n    radial-gradient(2px 2px at 320px 320px, oklch(1 0 89.88), transparent),\n    radial-gradient(1px 1px at 90px 280px, oklch(0.991 0.044 107.18), transparent),\n    oklch(0.122 0.038 283.29);\n  background-size: 400px 400px, 400px 400px, 400px 400px, 400px 400px, 400px 400px, 100% 100%;\n  background-repeat: repeat;\n  overflow: hidden;"
   },
   {
     "className": "roycss-immersive-underwater",
     "category": "immersive",
     "effectId": "immersive-underwater",
-    "properties": "position: relative;\n  background: linear-gradient(#0d4a5c 0%, #072430 80%, #04161f 100%);\n  overflow: hidden;"
+    "properties": "position: relative;\n  background: linear-gradient(oklch(0.381 0.065 223.04) 0%, oklch(0.245 0.041 229.25) 80%, oklch(0.189 0.031 231.55) 100%);\n  overflow: hidden;"
   },
   {
     "className": "roycss-immersive-fireflies",
     "category": "immersive",
     "effectId": "immersive-fireflies",
-    "properties": "position: relative;\n  background: linear-gradient(#0a1410 0%, #1a2a20 100%);\n  overflow: hidden;"
+    "properties": "position: relative;\n  background: linear-gradient(oklch(0.18 0.017 167.53) 0%, oklch(0.267 0.029 156.46) 100%);\n  overflow: hidden;"
   },
   {
     "className": "roycss-immersive-cloud-drift",
     "category": "immersive",
     "effectId": "immersive-cloud-drift",
-    "properties": "position: relative;\n  background: linear-gradient(#7cb9e8 0%, #c3e0f0 60%, #e8f4fb 100%);\n  overflow: hidden;"
+    "properties": "position: relative;\n  background: linear-gradient(oklch(0.762 0.093 242.57) 0%, oklch(0.891 0.038 231.95) 60%, oklch(0.96 0.016 233.02) 100%);\n  overflow: hidden;"
   },
   {
     "className": "roycss-immersive-rain-bokeh",
     "category": "immersive",
     "effectId": "immersive-rain-bokeh",
-    "properties": "position: relative;\n  background: linear-gradient(#0e1116 0%, #1a2533 100%);\n  overflow: hidden;"
+    "properties": "position: relative;\n  background: linear-gradient(oklch(0.177 0.011 260.64) 0%, oklch(0.261 0.031 254.76) 100%);\n  overflow: hidden;"
   },
   {
     "className": "roycss-immersive-lightning",
     "category": "immersive",
     "effectId": "immersive-lightning",
-    "properties": "position: relative;\n  background: linear-gradient(#0a0e1a 0%, #1a2238 60%, #0a0e1a 100%);\n  overflow: hidden;"
+    "properties": "position: relative;\n  background: linear-gradient(oklch(0.166 0.026 269.37) 0%, oklch(0.256 0.043 268.07) 60%, oklch(0.166 0.026 269.37) 100%);\n  overflow: hidden;"
   },
   {
     "className": "roycss-immersive-dust-particles",
     "category": "immersive",
     "effectId": "immersive-dust-particles",
-    "properties": "position: relative;\n  background: linear-gradient(#0a0a0a 0%, #1a1612 100%);\n  overflow: hidden;"
+    "properties": "position: relative;\n  background: linear-gradient(oklch(0.145 0 89.88) 0%, oklch(0.203 0.01 67.21) 100%);\n  overflow: hidden;"
   },
   {
     "className": "roycss-immersive-gradient-mesh-bg",
     "category": "immersive",
     "effectId": "immersive-gradient-mesh-bg",
-    "properties": "position: relative;\n  background: #0f0f1a;\n  overflow: hidden;"
+    "properties": "position: relative;\n  background: oklch(0.174 0.023 283.8);\n  overflow: hidden;"
   },
   {
     "className": "roycss-immersive-confetti-bg",
     "category": "immersive",
     "effectId": "immersive-confetti-bg",
-    "properties": "position: relative;\n  background: linear-gradient(#1a0d2e 0%, #2a1a4a 60%, #1a0d2e 100%);\n  overflow: hidden;"
+    "properties": "position: relative;\n  background: linear-gradient(oklch(0.198 0.064 298.59) 0%, oklch(0.267 0.086 295.38) 60%, oklch(0.198 0.064 298.59) 100%);\n  overflow: hidden;"
   },
   {
     "className": "roycss-immersive-bubble-rise",
     "category": "immersive",
     "effectId": "immersive-bubble-rise",
-    "properties": "position: relative;\n  background: linear-gradient(#0a4a6e 0%, #072e48 60%, #04192c 100%);\n  overflow: hidden;"
+    "properties": "position: relative;\n  background: linear-gradient(oklch(0.391 0.085 240.52) 0%, oklch(0.29 0.063 243.29) 60%, oklch(0.208 0.047 247.97) 100%);\n  overflow: hidden;"
   },
   {
     "className": "roycss-advtext-typewriter-cursor",
     "category": "advanced-text",
     "effectId": "advtext-typewriter-cursor",
-    "properties": "display: inline-block;\n  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;\n  color: #e2e8f0;\n  white-space: nowrap;\n  overflow: hidden;\n  border-right: 2px solid #38bdf8;\n  width: 0;\n  animation: roy-advtext-typewriter 2.4s steps(6, end) 0.3s both,\n             roy-advtext-caret 0.7s step-end infinite;"
+    "properties": "display: inline-block;\n  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;\n  color: oklch(0.929 0.013 255.51);\n  white-space: nowrap;\n  overflow: hidden;\n  border-right: 2px solid oklch(0.754 0.139 232.66);\n  width: 0;\n  animation: roy-advtext-typewriter 2.4s steps(6, end) 0.3s both,\n             roy-advtext-caret 0.7s step-end infinite;"
   },
   {
     "className": "roycss-advtext-typewriter-cursor",
     "category": "advanced-text",
     "effectId": "advtext-typewriter-cursor",
-    "properties": "width: auto;\n    animation: none;\n    border-right-color: #38bdf8;"
+    "properties": "width: auto;\n    animation: none;\n    border-right-color: oklch(0.754 0.139 232.66);"
   },
   {
     "className": "roycss-advtext-scramble-decrypt",
     "category": "advanced-text",
     "effectId": "advtext-scramble-decrypt",
-    "properties": "display: inline-block;\n  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;\n  color: #34d399;\n  position: relative;\n  letter-spacing: 0.05em;\n  animation: roy-advtext-scramble-settle 2.4s steps(8, end) infinite;\n  filter: blur(0.4px);\n  text-shadow: 0 0 6px rgba(52, 211, 153, 0.6);"
+    "properties": "display: inline-block;\n  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;\n  color: oklch(0.773 0.153 163.22);\n  position: relative;\n  letter-spacing: 0.05em;\n  animation: roy-advtext-scramble-settle 2.4s steps(8, end) infinite;\n  filter: blur(0.4px);\n  text-shadow: 0 0 6px rgba(52, 211, 153, 0.6);"
   },
   {
     "className": "roycss-advtext-scramble-decrypt",
@@ -16965,7 +16965,7 @@
     "className": "roycss-advtext-on-path",
     "category": "advanced-text",
     "effectId": "advtext-on-path",
-    "properties": "display: inline-block;\n  font-weight: 700;\n  color: #f0abfc;\n  offset-path: path(\"M -90,40 C -60,-30 60,-30 90,40 C 60,110 -60,110 -90,40 Z\");\n  offset-rotate: 0deg;\n  animation: roy-advtext-on-path 9s linear infinite;\n  text-shadow: 0 0 10px rgba(240, 171, 252, 0.6);"
+    "properties": "display: inline-block;\n  font-weight: 700;\n  color: oklch(0.833 0.132 321.43);\n  offset-path: path(\"M -90,40 C -60,-30 60,-30 90,40 C 60,110 -60,110 -90,40 Z\");\n  offset-rotate: 0deg;\n  animation: roy-advtext-on-path 9s linear infinite;\n  text-shadow: 0 0 10px rgba(240, 171, 252, 0.6);"
   },
   {
     "className": "roycss-advtext-on-path",
@@ -16977,13 +16977,13 @@
     "className": "roycss-advtext-kinetic-fly",
     "category": "advanced-text",
     "effectId": "advtext-kinetic-fly",
-    "properties": "display: inline-flex;\n  gap: 0.04em;\n  font-weight: 800;\n  font-size: 2rem;\n  color: #fbbf24;\n  font-family: ui-sans-serif, system-ui, sans-serif;\n  perspective: 600px;"
+    "properties": "display: inline-flex;\n  gap: 0.04em;\n  font-weight: 800;\n  font-size: 2rem;\n  color: oklch(0.837 0.164 84.43);\n  font-family: ui-sans-serif, system-ui, sans-serif;\n  perspective: 600px;"
   },
   {
     "className": "roycss-advtext-fill-gradient",
     "category": "advanced-text",
     "effectId": "advtext-fill-gradient",
-    "properties": "display: inline-block;\n  font-weight: 800;\n  font-size: 2rem;\n  background: linear-gradient(90deg, #f43f5e 0%, #f59e0b 25%, #10b981 50%, #06b6d4 75%, #8b5cf6 100%);\n  background-size: 300% 100%;\n  background-position: 100% 0;\n  -webkit-background-clip: text;\n  background-clip: text;\n  -webkit-text-fill-color: transparent;\n  color: transparent;\n  background-repeat: no-repeat;\n  animation: roy-advtext-fill-sweep 2.6s cubic-bezier(0.65, 0, 0.35, 1) 0.2s both;"
+    "properties": "display: inline-block;\n  font-weight: 800;\n  font-size: 2rem;\n  background: linear-gradient(90deg, oklch(0.645 0.215 16.44) 0%, oklch(0.769 0.165 70.08) 25%, oklch(0.696 0.149 162.48) 50%, oklch(0.715 0.126 215.22) 75%, oklch(0.606 0.219 292.72) 100%);\n  background-size: 300% 100%;\n  background-position: 100% 0;\n  -webkit-background-clip: text;\n  background-clip: text;\n  -webkit-text-fill-color: transparent;\n  color: transparent;\n  background-repeat: no-repeat;\n  animation: roy-advtext-fill-sweep 2.6s cubic-bezier(0.65, 0, 0.35, 1) 0.2s both;"
   },
   {
     "className": "roycss-advtext-fill-gradient",
@@ -16995,7 +16995,7 @@
     "className": "roycss-advtext-3d-extruded",
     "category": "advanced-text",
     "effectId": "advtext-3d-extruded",
-    "properties": "display: inline-block;\n  font-weight: 900;\n  font-size: 2.4rem;\n  letter-spacing: 0.02em;\n  color: #fbbf24;\n  text-shadow:\n    1px 1px 0 #d97706,\n    2px 2px 0 #b45309,\n    3px 3px 0 #92400e,\n    4px 4px 0 #78350f,\n    5px 5px 0 #5b2a0c,\n    6px 6px 0 #42200a,\n    7px 7px 0 #2a1407,\n    8px 8px 12px rgba(0, 0, 0, 0.45);\n  animation: roy-advtext-3d-breath 4s ease-in-out infinite;\n  transform-style: preserve-3d;"
+    "properties": "display: inline-block;\n  font-weight: 900;\n  font-size: 2.4rem;\n  letter-spacing: 0.02em;\n  color: oklch(0.837 0.164 84.43);\n  text-shadow:\n    1px 1px 0 oklch(0.666 0.157 58.32),\n    2px 2px 0 oklch(0.555 0.146 49),\n    3px 3px 0 oklch(0.473 0.125 46.2),\n    4px 4px 0 oklch(0.414 0.105 45.9),\n    5px 5px 0 oklch(0.347 0.083 48.23),\n    6px 6px 0 oklch(0.286 0.062 50.58),\n    7px 7px 0 oklch(0.22 0.043 50.18),\n    8px 8px 12px rgba(0, 0, 0, 0.45);\n  animation: roy-advtext-3d-breath 4s ease-in-out infinite;\n  transform-style: preserve-3d;"
   },
   {
     "className": "roycss-advtext-3d-extruded",
@@ -17007,49 +17007,49 @@
     "className": "roycss-advtext-glitch-rgb",
     "category": "advanced-text",
     "effectId": "advtext-glitch-rgb",
-    "properties": "display: inline-block;\n  position: relative;\n  font-weight: 800;\n  font-size: 2.2rem;\n  color: #f8fafc;\n  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;"
+    "properties": "display: inline-block;\n  position: relative;\n  font-weight: 800;\n  font-size: 2.2rem;\n  color: oklch(0.984 0.003 247.86);\n  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;"
   },
   {
     "className": "roycss-advtext-glitch-scanline",
     "category": "advanced-text",
     "effectId": "advtext-glitch-scanline",
-    "properties": "display: inline-block;\n  position: relative;\n  font-weight: 800;\n  font-size: 2.2rem;\n  color: #e2e8f0;\n  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;\n  clip-path: inset(0 0 0 0);\n  animation: roy-advtext-scan-tear 2.4s steps(2, end) infinite;"
+    "properties": "display: inline-block;\n  position: relative;\n  font-weight: 800;\n  font-size: 2.2rem;\n  color: oklch(0.929 0.013 255.51);\n  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;\n  clip-path: inset(0 0 0 0);\n  animation: roy-advtext-scan-tear 2.4s steps(2, end) infinite;"
   },
   {
     "className": "roycss-advtext-glitch-vhs",
     "category": "advanced-text",
     "effectId": "advtext-glitch-vhs",
-    "properties": "display: inline-block;\n  position: relative;\n  font-weight: 700;\n  font-size: 2.2rem;\n  color: #f1f5f9;\n  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;\n  animation: roy-advtext-vhs-wobble 3s ease-in-out infinite;\n  filter: saturate(1.3) contrast(1.05);\n  text-shadow: 1px 0 0 rgba(255, 0, 80, 0.6), -1px 0 0 rgba(0, 200, 255, 0.6);"
+    "properties": "display: inline-block;\n  position: relative;\n  font-weight: 700;\n  font-size: 2.2rem;\n  color: oklch(0.968 0.007 247.9);\n  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;\n  animation: roy-advtext-vhs-wobble 3s ease-in-out infinite;\n  filter: saturate(1.3) contrast(1.05);\n  text-shadow: 1px 0 0 rgba(255, 0, 80, 0.6), -1px 0 0 rgba(0, 200, 255, 0.6);"
   },
   {
     "className": "roycss-advtext-split-flap",
     "category": "advanced-text",
     "effectId": "advtext-split-flap",
-    "properties": "display: inline-flex;\n  gap: 0.15em;\n  font-weight: 800;\n  font-size: 2rem;\n  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;\n  color: #1f2937;\n  padding: 0.25em 0.4em;\n  background: #0f172a;\n  border-radius: 0.4em;"
+    "properties": "display: inline-flex;\n  gap: 0.15em;\n  font-weight: 800;\n  font-size: 2rem;\n  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;\n  color: oklch(0.278 0.03 256.85);\n  padding: 0.25em 0.4em;\n  background: oklch(0.208 0.04 265.75);\n  border-radius: 0.4em;"
   },
   {
     "className": "roycss-advtext-marquee-modern",
     "category": "advanced-text",
     "effectId": "advtext-marquee-modern",
-    "properties": "display: inline-block;\n  position: relative;\n  font-weight: 700;\n  font-size: 1.5rem;\n  color: #f0abfc;\n  max-width: 100%;\n  overflow: hidden;\n  white-space: nowrap;\n  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);\n  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);\n  padding-block: 0.25em;"
+    "properties": "display: inline-block;\n  position: relative;\n  font-weight: 700;\n  font-size: 1.5rem;\n  color: oklch(0.833 0.132 321.43);\n  max-width: 100%;\n  overflow: hidden;\n  white-space: nowrap;\n  -webkit-mask-image: linear-gradient(90deg, transparent, oklch(0 0 0) 12%, oklch(0 0 0) 88%, transparent);\n  mask-image: linear-gradient(90deg, transparent, oklch(0 0 0) 12%, oklch(0 0 0) 88%, transparent);\n  padding-block: 0.25em;"
   },
   {
     "className": "roycss-advtext-outline-draw",
     "category": "advanced-text",
     "effectId": "advtext-outline-draw",
-    "properties": "display: inline-block;\n  font-weight: 900;\n  font-size: 2.6rem;\n  letter-spacing: 0.04em;\n  color: transparent;\n  -webkit-text-stroke: 2px #5eead4;\n  background: linear-gradient(90deg, #14b8a6 0%, #5eead4 50%, #a7f3d0 100%);\n  -webkit-background-clip: text;\n  background-clip: text;\n  -webkit-text-fill-color: transparent;\n  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 var(--p, 0%), transparent var(--p, 0%));\n  mask-image: linear-gradient(90deg, #000 0%, #000 var(--p, 0%), transparent var(--p, 0%));\n  animation: roy-advtext-outline-draw 2.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;"
+    "properties": "display: inline-block;\n  font-weight: 900;\n  font-size: 2.6rem;\n  letter-spacing: 0.04em;\n  color: transparent;\n  -webkit-text-stroke: 2px oklch(0.855 0.125 181.07);\n  background: linear-gradient(90deg, oklch(0.704 0.123 182.5) 0%, oklch(0.855 0.125 181.07) 50%, oklch(0.905 0.089 164.15) 100%);\n  -webkit-background-clip: text;\n  background-clip: text;\n  -webkit-text-fill-color: transparent;\n  -webkit-mask-image: linear-gradient(90deg, oklch(0 0 0) 0%, oklch(0 0 0) var(--p, 0%), transparent var(--p, 0%));\n  mask-image: linear-gradient(90deg, oklch(0 0 0) 0%, oklch(0 0 0) var(--p, 0%), transparent var(--p, 0%));\n  animation: roy-advtext-outline-draw 2.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;"
   },
   {
     "className": "roycss-advtext-outline-draw",
     "category": "advanced-text",
     "effectId": "advtext-outline-draw",
-    "properties": "animation: none;\n    --p: 100%;\n    -webkit-text-fill-color: #5eead4;"
+    "properties": "animation: none;\n    --p: 100%;\n    -webkit-text-fill-color: oklch(0.855 0.125 181.07);"
   },
   {
     "className": "roycss-advtext-neon-sign",
     "category": "advanced-text",
     "effectId": "advtext-neon-sign",
-    "properties": "display: inline-block;\n  font-weight: 800;\n  font-size: 2.6rem;\n  letter-spacing: 0.06em;\n  color: #fff;\n  text-shadow:\n    0 0 4px #fff,\n    0 0 10px #fff,\n    0 0 20px #ff2d95,\n    0 0 38px #ff2d95,\n    0 0 60px #ff2d95,\n    0 0 90px #ff2d95;\n  animation: roy-advtext-neon-flicker 3.2s linear infinite;"
+    "properties": "display: inline-block;\n  font-weight: 800;\n  font-size: 2.6rem;\n  letter-spacing: 0.06em;\n  color: oklch(1 0 89.88);\n  text-shadow:\n    0 0 4px oklch(1 0 89.88),\n    0 0 10px oklch(1 0 89.88),\n    0 0 20px oklch(0.665 0.249 357.34),\n    0 0 38px oklch(0.665 0.249 357.34),\n    0 0 60px oklch(0.665 0.249 357.34),\n    0 0 90px oklch(0.665 0.249 357.34);\n  animation: roy-advtext-neon-flicker 3.2s linear infinite;"
   },
   {
     "className": "roycss-advtext-neon-sign",
@@ -17061,7 +17061,7 @@
     "className": "roycss-advtext-gradient-animated",
     "category": "advanced-text",
     "effectId": "advtext-gradient-animated",
-    "properties": "display: inline-block;\n  font-weight: 900;\n  font-size: 2.4rem;\n  background: linear-gradient(90deg, #f43f5e, #f59e0b, #10b981, #06b6d4, #8b5cf6, #f43f5e);\n  background-size: 300% 100%;\n  -webkit-background-clip: text;\n  background-clip: text;\n  -webkit-text-fill-color: transparent;\n  color: transparent;\n  animation: roy-advtext-gradient-shift 6s linear infinite;"
+    "properties": "display: inline-block;\n  font-weight: 900;\n  font-size: 2.4rem;\n  background: linear-gradient(90deg, oklch(0.645 0.215 16.44), oklch(0.769 0.165 70.08), oklch(0.696 0.149 162.48), oklch(0.715 0.126 215.22), oklch(0.606 0.219 292.72), oklch(0.645 0.215 16.44));\n  background-size: 300% 100%;\n  -webkit-background-clip: text;\n  background-clip: text;\n  -webkit-text-fill-color: transparent;\n  color: transparent;\n  animation: roy-advtext-gradient-shift 6s linear infinite;"
   },
   {
     "className": "roycss-advtext-gradient-animated",
@@ -17073,7 +17073,7 @@
     "className": "roycss-advtext-shadow-layered",
     "category": "advanced-text",
     "effectId": "advtext-shadow-layered",
-    "properties": "display: inline-block;\n  font-weight: 900;\n  font-size: 2.4rem;\n  letter-spacing: 0.04em;\n  color: #fff;\n  background: linear-gradient(135deg, #fb7185, #f59e0b);\n  text-shadow:\n    1px 1px 0 rgba(251, 113, 133, 0.85),\n    2px 2px 0 rgba(245, 158, 11, 0.8),\n    3px 3px 0 rgba(251, 113, 133, 0.75),\n    4px 4px 0 rgba(245, 158, 11, 0.7),\n    5px 5px 0 rgba(251, 113, 133, 0.65),\n    6px 6px 0 rgba(245, 158, 11, 0.6),\n    7px 7px 0 rgba(251, 113, 133, 0.55),\n    8px 8px 0 rgba(245, 158, 11, 0.5),\n    9px 9px 0 rgba(251, 113, 133, 0.45),\n    10px 10px 14px rgba(0, 0, 0, 0.4);\n  animation: roy-advtext-shadow-breathe 4.5s ease-in-out infinite;"
+    "properties": "display: inline-block;\n  font-weight: 900;\n  font-size: 2.4rem;\n  letter-spacing: 0.04em;\n  color: oklch(1 0 89.88);\n  background: linear-gradient(135deg, oklch(0.719 0.169 13.43), oklch(0.769 0.165 70.08));\n  text-shadow:\n    1px 1px 0 rgba(251, 113, 133, 0.85),\n    2px 2px 0 rgba(245, 158, 11, 0.8),\n    3px 3px 0 rgba(251, 113, 133, 0.75),\n    4px 4px 0 rgba(245, 158, 11, 0.7),\n    5px 5px 0 rgba(251, 113, 133, 0.65),\n    6px 6px 0 rgba(245, 158, 11, 0.6),\n    7px 7px 0 rgba(251, 113, 133, 0.55),\n    8px 8px 0 rgba(245, 158, 11, 0.5),\n    9px 9px 0 rgba(251, 113, 133, 0.45),\n    10px 10px 14px rgba(0, 0, 0, 0.4);\n  animation: roy-advtext-shadow-breathe 4.5s ease-in-out infinite;"
   },
   {
     "className": "roycss-advtext-shadow-layered",
@@ -17085,13 +17085,13 @@
     "className": "roycss-advtext-mask-reveal",
     "category": "advanced-text",
     "effectId": "advtext-mask-reveal",
-    "properties": "display: inline-block;\n  position: relative;\n  font-weight: 800;\n  font-size: 2.4rem;\n  color: #94a3b8;\n  letter-spacing: 0.04em;"
+    "properties": "display: inline-block;\n  position: relative;\n  font-weight: 800;\n  font-size: 2.4rem;\n  color: oklch(0.711 0.035 256.79);\n  letter-spacing: 0.04em;"
   },
   {
     "className": "roycss-advtext-stretch-bounce",
     "category": "advanced-text",
     "effectId": "advtext-stretch-bounce",
-    "properties": "display: inline-block;\n  font-weight: 900;\n  font-size: 2.4rem;\n  color: #f472b6;\n  transform-origin: center bottom;\n  animation: roy-advtext-stretch-bounce 1.8s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;"
+    "properties": "display: inline-block;\n  font-weight: 900;\n  font-size: 2.4rem;\n  color: oklch(0.725 0.175 349.76);\n  transform-origin: center bottom;\n  animation: roy-advtext-stretch-bounce 1.8s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;"
   },
   {
     "className": "roycss-advtext-stretch-bounce",
@@ -17103,25 +17103,25 @@
     "className": "roycss-advtext-typewriter-multi",
     "category": "advanced-text",
     "effectId": "advtext-typewriter-multi",
-    "properties": "display: inline-block;\n  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;\n  font-size: 1.5rem;\n  color: #e2e8f0;\n  white-space: pre;\n  overflow: hidden;\n  border-right: 2px solid #4ade80;\n  width: 0;\n  max-width: 12ch;\n  animation: roy-advtext-tw-multi 4s steps(12, end) 0.3s infinite alternate,\n             roy-advtext-tw-caret 0.7s step-end infinite;"
+    "properties": "display: inline-block;\n  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;\n  font-size: 1.5rem;\n  color: oklch(0.929 0.013 255.51);\n  white-space: pre;\n  overflow: hidden;\n  border-right: 2px solid oklch(0.8 0.182 151.71);\n  width: 0;\n  max-width: 12ch;\n  animation: roy-advtext-tw-multi 4s steps(12, end) 0.3s infinite alternate,\n             roy-advtext-tw-caret 0.7s step-end infinite;"
   },
   {
     "className": "roycss-advtext-typewriter-multi",
     "category": "advanced-text",
     "effectId": "advtext-typewriter-multi",
-    "properties": "width: 12ch;\n    animation: none;\n    border-right-color: #4ade80;"
+    "properties": "width: 12ch;\n    animation: none;\n    border-right-color: oklch(0.8 0.182 151.71);"
   },
   {
     "className": "roycss-advtext-wave-bounce",
     "category": "advanced-text",
     "effectId": "advtext-wave-bounce",
-    "properties": "display: inline-flex;\n  gap: 0.04em;\n  font-weight: 800;\n  font-size: 2.2rem;\n  color: #22d3ee;\n  font-family: ui-sans-serif, system-ui, sans-serif;\n  perspective: 500px;"
+    "properties": "display: inline-flex;\n  gap: 0.04em;\n  font-weight: 800;\n  font-size: 2.2rem;\n  color: oklch(0.797 0.134 211.53);\n  font-family: ui-sans-serif, system-ui, sans-serif;\n  perspective: 500px;"
   },
   {
     "className": "roycss-advtext-clip-image",
     "category": "advanced-text",
     "effectId": "advtext-clip-image",
-    "properties": "display: inline-block;\n  font-weight: 900;\n  font-size: 2.6rem;\n  letter-spacing: 0.04em;\n  background-image:\n    linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent),\n    linear-gradient(135deg, #f97316 0%, #ec4899 35%, #8b5cf6 70%, #06b6d4 100%);\n  background-size: 40px 40px, 250% 250%;\n  background-position: 0 0, 0% 0%;\n  -webkit-background-clip: text;\n  background-clip: text;\n  -webkit-text-fill-color: transparent;\n  color: transparent;\n  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));\n  animation: roy-advtext-clip-pan 8s ease-in-out infinite alternate;"
+    "properties": "display: inline-block;\n  font-weight: 900;\n  font-size: 2.6rem;\n  letter-spacing: 0.04em;\n  background-image:\n    linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent),\n    linear-gradient(135deg, oklch(0.705 0.187 47.6) 0%, oklch(0.656 0.212 354.31) 35%, oklch(0.606 0.219 292.72) 70%, oklch(0.715 0.126 215.22) 100%);\n  background-size: 40px 40px, 250% 250%;\n  background-position: 0 0, 0% 0%;\n  -webkit-background-clip: text;\n  background-clip: text;\n  -webkit-text-fill-color: transparent;\n  color: transparent;\n  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));\n  animation: roy-advtext-clip-pan 8s ease-in-out infinite alternate;"
   },
   {
     "className": "roycss-advtext-clip-image",

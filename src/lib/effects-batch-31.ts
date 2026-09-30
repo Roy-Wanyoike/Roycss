@@ -282,8 +282,6 @@ export const effectsBatch31: CSSEffect[] = [
   font: 11px/1 system-ui, sans-serif;
   color: color-mix(in oklch, oklch(1 0 0) 80%, transparent);
   overflow: hidden;
-  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 0.3s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -334,8 +332,6 @@ export const effectsBatch31: CSSEffect[] = [
   font: 11px/1 system-ui, sans-serif;
   color: color-mix(in oklch, oklch(1 0 0) 80%, transparent);
   overflow: hidden;
-  transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 0.3s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {

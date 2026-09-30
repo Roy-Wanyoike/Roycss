@@ -680,7 +680,8 @@ export const effectsBatch4: CSSEffect[] = [
   font: 12px/1 system-ui, sans-serif;
   color: color-mix(in oklch, oklch(1 0 89.88) 60%, transparent);
   overflow: hidden;
-  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+  /* non-GPU by design: true inline-size growth (search field reveal) — content reflow is the effect, no transform equivalent */
+  transition: inline-size 0.4s cubic-bezier(0.4, 0, 0.2, 1),
               border-color 0.4s ease;
 }
 .roycss-form-search-expand > span { display: none; }
@@ -747,15 +748,17 @@ export const effectsBatch4: CSSEffect[] = [
   position: absolute;
   inset-inline-start: 0;
   inset-block-end: -2px;
-  inline-size: 0;
+  inline-size: 100%;
   block-size: 2px;
   background: linear-gradient(90deg, oklch(0.696 0.149 162.48), oklch(0.773 0.153 163.22), oklch(0.696 0.149 162.48));
-  transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .roycss-form-underline-draw:hover {
   color: oklch(0.979 0.021 166.11);
 }
-.roycss-form-underline-draw:hover::after { inline-size: 100%; }
+.roycss-form-underline-draw:hover::after { transform: scaleX(1); }
 
 @media (prefers-reduced-motion: reduce) {
   .roycss-form-underline-draw::after {
@@ -801,13 +804,14 @@ export const effectsBatch4: CSSEffect[] = [
   content: "→ HOME   ABOUT   WORK   BLOG";
   position: absolute;
   inset-inline-start: 0; inset-inline-end: 0;
-  inset-block-start: 100%;
+  inset-block-start: 50%;
   text-align: center;
   color: oklch(0.696 0.149 162.48);
-  transition: top 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+  transform: translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
 }
 .roycss-nav-menu-slide:hover::before { transform: translateY(-100%); }
-.roycss-nav-menu-slide:hover::after  { inset-block-start: 50%; transform: translateY(-50%); }
+.roycss-nav-menu-slide:hover::after  { transform: translateY(-50%); }
 
 @media (prefers-reduced-motion: reduce) {
   .roycss-nav-menu-slide::before {
@@ -954,7 +958,8 @@ export const effectsBatch4: CSSEffect[] = [
   font: 11px/1 system-ui, sans-serif;
   color: color-mix(in oklch, oklch(1 0 89.88) 80%, transparent);
   overflow: hidden;
-  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+  /* non-GPU by design: true block-size expansion (accordion reveal) — no transform equivalent without content distortion */
+  transition: block-size 0.4s cubic-bezier(0.4, 0, 0.2, 1),
               border-color 0.3s ease;
 }
 .roycss-nav-accordion > span { display: none; }
@@ -1274,7 +1279,8 @@ export const effectsBatch4: CSSEffect[] = [
   font: 11px/1 system-ui, sans-serif;
   color: color-mix(in oklch, oklch(1 0 89.88) 80%, transparent);
   overflow: hidden;
-  transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+  /* non-GPU by design: true block-size expansion (dropdown reveal) — no transform equivalent without content distortion */
+  transition: block-size 0.35s cubic-bezier(0.4, 0, 0.2, 1),
               border-color 0.3s ease;
 }
 .roycss-nav-dropdown > span { display: none; }

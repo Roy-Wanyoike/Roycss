@@ -249,17 +249,17 @@ export const effectsBatch44 = [
 .roycss-haptics-texture-metal::after {
   content: "";
   position: absolute;
-  top: 0; left: -60%;
+  top: 0; left: 0;
   width: 40%; height: 100%;
   background: linear-gradient(110deg, transparent, oklch(1 0 0 / 0.6) 50%, transparent);
-  transform: skewX(-20deg);
-  transition: left 700ms ease;
+  transform: skewX(-20deg) translateX(-150%);
+  transition: transform 700ms ease;
 }
 .roycss-haptics-texture-metal:hover::after {
-  left: 120%;
+  transform: skewX(-20deg) translateX(300%);
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-haptics-texture-metal::after { transition: none; left: -60%; }
+  .roycss-haptics-texture-metal::after { transition: none; transform: skewX(-20deg) translateX(-150%); }
 }`,
   },
 

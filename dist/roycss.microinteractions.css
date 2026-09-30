@@ -833,7 +833,8 @@
   block-size: 0;
   opacity: 0;
   overflow: hidden;
-  transition: height 0.4s ease, opacity 0.4s ease;
+  /* non-GPU by design: block-size: auto interpolation (interpolate-size demo) — true height animation with no transform equivalent */
+  transition: block-size 0.4s ease, opacity 0.4s ease;
   color: oklch(0.711 0.035 256.79);
   font-size: 11px;
 }
@@ -844,7 +845,8 @@
 /* Fallback for browsers without interpolate-size — use max-height */
 @supports not (interpolate-size: allow-keywords) {
   .roycss-auto-height-expand::after {
-    transition: max-height 0.4s ease, opacity 0.4s ease;
+    /* non-GPU by design: max-block-size fallback for block-size: auto — legacy engines have no transform equivalent */
+    transition: max-block-size 0.4s ease, opacity 0.4s ease;
     max-block-size: 0;
   }
   .roycss-auto-height-expand:hover::after {
@@ -2307,8 +2309,10 @@
     height: 100%;
     background: linear-gradient(90deg, oklch(0.673 0.162 144.21), oklch(0.718 0.142 144.89));
     border-radius: 10px;
-    width: 0%;
-    transition: width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    width: 75%;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     position: relative;
     overflow: hidden;
 }
@@ -2329,7 +2333,7 @@
     animation: roy-ferrum-progress-stripe 1s linear infinite;
 }
 .roycss-ferrum-progress-bar-fill.roycss-ferrum-animated {
-    width: 75%;
+    transform: scaleX(1);
 }
 
 @keyframes roy-ferrum-progress-stripe {
@@ -2360,23 +2364,22 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 0;
-    height: 0;
+    width: 300px;
+    height: 300px;
     border-radius: 50%;
     background-color: color-mix(in oklch, oklch(1 0 0) 35%, transparent);
     transform: translate(-50%, -50%) scale(0);
-    transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
+    transition: transform 0.6s ease, opacity 0.6s ease;
     opacity: 0;
     pointer-events: none;
 }
 .roycss-ferrum-ripple-click:active::after {
-    width: 300px;
-    height: 300px;
+    transform: translate(-50%, -50%) scale(1);
     opacity: 1;
-    transition: width 0s, height 0s, opacity 0s;
+    transition: transform 0s, opacity 0s;
 }
 .roycss-ferrum-ripple-click:not(:active)::after {
-    transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
+    transition: transform 0.6s ease, opacity 0.6s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3322,17 +3325,17 @@
 .roycss-haptics-texture-metal::after {
   content: "";
   position: absolute;
-  top: 0; left: -60%;
+  top: 0; left: 0;
   width: 40%; height: 100%;
   background: linear-gradient(110deg, transparent, oklch(1 0 0 / 0.6) 50%, transparent);
-  transform: skewX(-20deg);
-  transition: left 700ms ease;
+  transform: skewX(-20deg) translateX(-150%);
+  transition: transform 700ms ease;
 }
 .roycss-haptics-texture-metal:hover::after {
-  left: 120%;
+  transform: skewX(-20deg) translateX(300%);
 }
 @media (prefers-reduced-motion: reduce) {
-  .roycss-haptics-texture-metal::after { transition: none; left: -60%; }
+  .roycss-haptics-texture-metal::after { transition: none; transform: skewX(-20deg) translateX(-150%); }
 }
 
 /* Haptics: Fabric Weave */

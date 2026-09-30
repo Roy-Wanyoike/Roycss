@@ -134,7 +134,7 @@ export const effectsBatch49 = [
   padding: 2px;
   background: conic-gradient(from 0deg,
     oklch(0.85 0.22 60), oklch(0.7 0.24 280), oklch(0.85 0.22 60));
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask: linear-gradient(oklch(0 0 0) 0 0) content-box, linear-gradient(oklch(0 0 0) 0 0);
   -webkit-mask-composite: xor;
           mask-composite: exclude;
   filter: drop-shadow(0 0 8px oklch(0.85 0.22 60 / 0.7));

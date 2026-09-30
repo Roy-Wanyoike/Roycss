@@ -215,8 +215,6 @@ export const effectsBatch29: CSSEffect[] = [
   font: 12px/1 system-ui, sans-serif;
   color: color-mix(in oklch, oklch(1 0 0) 60%, transparent);
   overflow: hidden;
-  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 0.4s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {

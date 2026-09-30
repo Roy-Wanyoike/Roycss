@@ -389,7 +389,7 @@ export const effectsBatch48 = [
       transparent 0deg 80deg,
       oklch(0.85 0.22 60) 90deg,
       transparent 100deg 360deg);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask: linear-gradient(oklch(0 0 0) 0 0) content-box, linear-gradient(oklch(0 0 0) 0 0);
   -webkit-mask-composite: xor;
           mask-composite: exclude;
   animation: roy-cursor-fx-border-follow 4s linear infinite;

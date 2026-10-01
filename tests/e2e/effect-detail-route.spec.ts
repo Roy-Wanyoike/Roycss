@@ -50,9 +50,18 @@ test.describe("effect detail route — /effects/hover-glow-border", () => {
   });
 
   test("the category badge link navigates to the category landing page", async ({ page }) => {
-    // categoryHref("hover") → /effects/category/hover (issue #198 route).
-    const categoryLink = page.locator('a[href="/effects/category/hover"]');
+    // Issue #297: this test was committed (PR #289) with the badge locator
+    // mangled — the element type and opening attribute bracket were eaten,
+    // leaving the invalid selector 'aref="…"]' which can never resolve and
+    // failed the test before any click happened. The product markup is a
+    // real Next <Link> (src/app/effects/[id]/page.tsx, categoryHref from
+    // issue #198); only the test needed repair. The locator is now
+    // role-based (a11y-first) and the href route contract is still pinned
+    // via toHaveAttribute below.
+    const categoryLink = page.getByRole("link", { name: /Hover Effects/i });
     await expect(categoryLink).toBeVisible();
+    // categoryHref("hover") → /effects/category/hover (issue #198 route).
+    await expect(categoryLink).toHaveAttribute("href", "/effects/category/hover");
     // roycss-types.categoryMeta.hover.label
     await expect(categoryLink).toHaveText(/Hover Effects/i);
 

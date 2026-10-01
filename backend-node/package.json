@@ -7,6 +7,10 @@
   "engines": {
     "node": ">=18.18.0"
   },
+  "overrides": {
+    "qs": "^6.16.0",
+    "deepmerge-ts": "^8.0.2"
+  },
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",

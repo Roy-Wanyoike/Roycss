@@ -86,7 +86,7 @@ Every number below is verified — most are pinned by tests, so stale docs fail 
 | Backend modules | **75** | `backend-node/src/modules/` (mounted per [`API.md`](API.md) — `api-keys` nests under `/auth/api-keys`) |
 | Backend API routes | **289** | documented in [`API.md`](API.md), enforced by the drift gate (`bun run api:check`) |
 | SEO effect pages | **1,983** | rendered on demand and ISR-cached for 24 h at `/effects/<id>` — one page per effect, all in the sitemap |
-| Tests | **2,200+** | frontend unit (Vitest, 88 files) + backend (integration + contract + security + unit) — see `tests/` for current counts |
+| Tests | **2,200+** | frontend unit (Vitest, 97 files) + backend (integration + contract + security + unit) — see `tests/` for current counts |
 | Typecheck | **0 errors** | `bunx tsc --noEmit` on strict TypeScript |
 
 ---
@@ -164,7 +164,7 @@ The inline `JWT_SECRET` / `JWT_REFRESH_SECRET` values aren't ceremony: the backe
 | `bun run lint` | ESLint |
 | `bun run build` | Production build (`prisma generate` + `next build`) |
 | `bun run build:package` | Rebuild the npm artifacts in `dist/` |
-| `bunx vitest run` | frontend unit test suite (Vitest — 88 files) |
+| `bunx vitest run` | frontend unit test suite (Vitest — 97 files) |
 | `bunx tsc --noEmit` | Typecheck gate (0 errors) |
 | `cd backend-node && bun run test` | backend test suite (integration + contract + security + unit) |
 | `cd backend-node && bun run api:check` | API docs drift gate (code vs `API.md`) |
@@ -216,7 +216,7 @@ Live Service (Socket.io, port 3003)
 
 Recruiters: every claim here is reproducible from this repo.
 
-- **2,200+ tests, all green** — frontend unit (Vitest, 88 files) + backend (supertest integration, contract sweeps, security suite, unit) against the booted Express app. Run `bunx vitest run` / `cd backend-node && bun run test` for the current per-suite counts. The catalog size itself is test-pinned: `tests/unit/effects.test.ts` asserts *exactly 1,983 effects*, `tests/unit/categories.test.ts` asserts *exactly 29 categories* — stale docs fail CI, not users. The npm-facing counts in the four `package.json` descriptions are drift-gated against `dist/effects.json` by `bun run publish:validate`.
+- **2,200+ tests, all green** — frontend unit (Vitest, 97 files) + backend (supertest integration, contract sweeps, security suite, unit) against the booted Express app. Run `bunx vitest run` / `cd backend-node && bun run test` for the current per-suite counts. The catalog size itself is test-pinned: `tests/unit/effects.test.ts` asserts *exactly 1,983 effects*, `tests/unit/categories.test.ts` asserts *exactly 29 categories* — stale docs fail CI, not users. The npm-facing counts in the four `package.json` descriptions are drift-gated against `dist/effects.json` by `bun run publish:validate`.
 - **Typecheck gate** — `bunx tsc --noEmit` passes with **0 errors** on strict TypeScript across the frontend; the backend has its own `bun run typecheck` gate.
 - **Security headers + a static-safe CSP** — every production response carries a Content-Security-Policy that is **identical for prerendered and dynamic pages**, plus `X-Content-Type-Options`, `Referrer-Policy` and `Permissions-Policy`. The CSP was rewritten after a nonce/`strict-dynamic` policy silently broke every script on the statically prerendered site ([#54](https://github.com/Roy-Wanyoike/Roycss/issues/54)) — postmortem-style comments in [`src/proxy.ts`](src/proxy.ts) explain why nonces are permanently banned there.
 - **Auth-enforced API** — all 39 mutating endpoints across 28 modules require Bearer JWT; unauthenticated calls get a consistent `401` envelope, role-gated actions get `403` (PR [#76](https://github.com/Roy-Wanyoike/Roycss/pull/76), fixes #64). Verified end-to-end by 10 dedicated integration tests.

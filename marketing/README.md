@@ -25,11 +25,9 @@ marketing/
 │   └── social-square.png          # 1024x1024 social post background
 ├── shots/                 # Real product screenshots (dev build, port 3001)
 │   ├── hero.png                   # Homepage hero (clean, no tour popup)
-│   ├── hero-full.png              # Full-page capture (large, reference only)
 │   ├── effects-gallery.png        # /effects catalog
 │   ├── effect-detail.png          # Effect detail + live preview
 │   ├── docs.png                   # Documentation
-│   └── homepage-scroll.png        # Homepage scrolled section
 └── videos/
     ├── roycss-overview.mp4        # 51s narrated product overview (VO + captions)
     ├── roycss-logo-sting-10s.mp4  # 10s silent brand sting (social loops)

@@ -1,7 +1,7 @@
 {
   "name": "roycss",
   "version": "2.0.0",
-  "description": "RoyCSS \u2014 1,983 production-ready CSS effects. Zero JavaScript runtime. OKLCH colors, logical properties, container queries, scroll-driven animations.",
+  "description": "RoyCSS — 1,983 production-ready CSS effects. Zero JavaScript runtime. OKLCH colors, logical properties, container queries, scroll-driven animations.",
   "keywords": [
     "css",
     "css-framework",
@@ -234,6 +234,7 @@
     "recharts": "^3.10.1",
     "sharp": "^0.35.4",
     "size-limit": "^14.0.0",
+    "socket.io": "^4.8.4",
     "socket.io-client": "^4.8.3",
     "sonner": "^2.0.8",
     "tailwind-merge": "^3.7.0",

@@ -408,11 +408,18 @@ export const EffectCard = memo(function EffectCard({
           containing REAL <button type="button">s (favorite, code toggle) — invalid
           nested-interactive ARIA (axe violation). The interactive trigger
           is now a dedicated full-card control (real <button type="button">, or a real
-          link when `href` is set) layered UNDER the sibling controls
-          (z-0 vs z-10), so no interactive element contains another.
-          Keyboard users tab straight to it; the container's own onClick is
-          a mouse-only convenience for clicks that land on non-interactive
-          chrome (badges). */}
+          link when `href` is set).
+          Layering (issue #297): the trigger paints ABOVE the card's
+          non-interactive chrome — the preview area is a positioned
+          (relative) sibling later in the DOM, so at the old z-0-vs-z-auto
+          tie it won paint order, swallowed the trigger's clicks over the
+          preview region and hid the top half of its inset focus ring
+          (modifier-clicks on the href variant opened the dialog instead
+          of following the link). The interactive controls (favorite,
+          code toggle, copy-as) sit at z-20 so they stay clickable above
+          the z-10 trigger. Keyboard users tab straight to the trigger;
+          the container's own onClick is a mouse-only convenience for any
+          future non-interactive chrome that stacks above it. */}
       {href ? (
         <a
           href={href}
@@ -431,7 +438,7 @@ export const EffectCard = memo(function EffectCard({
             onClick?.(effect);
           }}
           aria-label={`${effect.name} — ${effect.description}. Opens the effect details.`}
-          className="absolute inset-0 z-0 rounded-2xl cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+          className="absolute inset-0 z-10 rounded-2xl cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
         />
       ) : (
         <button
@@ -441,7 +448,7 @@ export const EffectCard = memo(function EffectCard({
             onClick?.(effect);
           }}
           aria-label={`${effect.name} — ${effect.description}. Opens the effect details.`}
-          className="absolute inset-0 z-0 rounded-2xl cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+          className="absolute inset-0 z-10 rounded-2xl cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
         />
       )}
       {/* Preview Area */}
@@ -453,7 +460,7 @@ export const EffectCard = memo(function EffectCard({
             e.stopPropagation();
             onToggleFavorite?.(effect.id);
           }}
-          className="absolute top-3 right-3 flex items-center justify-center size-11 rounded-lg bg-background/80 backdrop-blur-sm border border-border/50 hover:bg-background transition-all cursor-pointer z-10"
+          className="absolute top-3 right-3 flex items-center justify-center size-11 rounded-lg bg-background/80 backdrop-blur-sm border border-border/50 hover:bg-background transition-all cursor-pointer z-20"
           aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
         >
           <motion.span
@@ -536,14 +543,14 @@ export const EffectCard = memo(function EffectCard({
         </div>
 
         {/* Code Toggle — min-h-7 + py-1.5 ensures ≥ 28px tap target (WCAG 2.5.8 AA ≥ 24px).
-            relative z-10 keeps it above the card's full-card trigger overlay
-            (issue #216 item 9). */}
+            z-20 keeps it above the card's full-card trigger overlay
+            (issue #216 item 9; tier made explicit in issue #297). */}
         <button type="button"
           onClick={(e) => {
             e.stopPropagation();
             setShowCode(!showCode);
           }}
-          className="relative z-10 mt-3 inline-flex items-center gap-1.5 px-1.5 py-1.5 min-h-7 -mx-1.5 rounded-md text-xs text-primary hover:text-primary/80 hover:bg-primary/5 transition-colors font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+          className="relative z-20 mt-3 inline-flex items-center gap-1.5 px-1.5 py-1.5 min-h-7 -mx-1.5 rounded-md text-xs text-primary hover:text-primary/80 hover:bg-primary/5 transition-colors font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
         >
           {showCode ? (
             <>
@@ -569,7 +576,7 @@ export const EffectCard = memo(function EffectCard({
           >
             <div className="relative rounded-xl bg-muted/80 border border-border/50 overflow-hidden">
               <div
-                className="absolute top-2 right-2 z-10"
+                className="absolute top-2 right-2 z-20"
                 onClick={(e) => e.stopPropagation()}
               >
                 <CopyAsDropdown

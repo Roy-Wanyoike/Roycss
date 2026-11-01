@@ -23,11 +23,17 @@ const PAGE_SRC = join(ROOT, "src/components/roycss/roycss-page.tsx");
  *   - the skip link is the literal FIRST JSX child of the page root div
  *     (before CursorGlow, portals, or any other element);
  *   - it keeps a REAL box (absolute top-4 left-4, standard padding) parked
- *     above the viewport with -translate-y-24 — transforms do not affect
- *     focusability, and there is no clip/zero-size box for heuristics to
- *     trip over — sliding in on :focus;
+ *     INSIDE the viewport with opacity-0 + pointer-events-none (opacity
+ *     never affects focusability, and the box never enters the
+ *     "far offscreen" class Chromium's traversal skips) — revealing
+ *     itself on :focus;
  *   - it is unconditional, unanimated, and carries stable markers
- *     (id="skip-to-effects", data-skip-link) for QA/e2e pinning.
+ *     (id="skip-to-effects", data-skip-link) for QA/e2e pinning; and
+ *   - the FIRST Tab keydown of the session is handed to the link by the
+ *     window keydown guard (once, and only before any pointer
+ *     interaction) — a live Chromium probe showed traversal bypassing the
+ *     DOM-first link entirely when content-visibility:auto grids exist
+ *     below the fold, so the guard makes the contract engine-proof.
  *
  * The vitest environment is `node` (no DOM), so these are source-level
  * pins — the same convention as tests/unit/scroll-section-gecko.test.ts.
@@ -57,7 +63,7 @@ describe("skip link — first element in the page tree (#299)", () => {
 
   it("is the first child of the page root div (no focusable sibling before it)", () => {
     const rootDiv = src.indexOf('<div className="min-h-screen');
-    const skip = src.indexOf('<a\n        href="#effects"');
+    const skip = src.indexOf('<a\n        ref={skipLinkRef}');
     expect(rootDiv).toBeGreaterThan(-1);
     expect(skip).toBeGreaterThan(rootDiv);
     // Slice past the root div's own opening tag before scanning.
@@ -69,14 +75,14 @@ describe("skip link — first element in the page tree (#299)", () => {
   });
 
   it("keeps the #effects target so native anchor semantics work", () => {
-    const skipBlockStart = src.indexOf('<a\n        href="#effects"');
-    const skipBlock = src.slice(skipBlockStart, skipBlockStart + 400);
+    const skipBlockStart = src.indexOf('<a\n        ref={skipLinkRef}');
+    const skipBlock = src.slice(skipBlockStart, skipBlockStart + 620);
     expect(skipBlock).toContain('href="#effects"');
     expect(skipBlock).toContain("tSkip(");
   });
 
   it("is unconditionally rendered (not behind a conditional or dialog)", () => {
-    const skip = src.indexOf('<a\n        href="#effects"');
+    const skip = src.indexOf('<a\n        ref={skipLinkRef}');
     // No ternary/&& immediately before the anchor within the JSX.
     const before = src.slice(skip - 120, skip);
     expect(before).not.toContain("&&");
@@ -88,7 +94,7 @@ describe("skip link — first element in the page tree (#299)", () => {
 
 describe("skip link — real-box off-canvas pattern (no clip heuristics)", () => {
   const src = pageSrc();
-  const skipBlockStart = src.indexOf('<a\n        href="#effects"');
+  const skipBlockStart = src.indexOf('<a\n        ref={skipLinkRef}');
   const skipBlockEnd = src.indexOf("</a>", skipBlockStart);
   const skipBlock = src.slice(skipBlockStart, skipBlockEnd);
 
@@ -96,10 +102,16 @@ describe("skip link — real-box off-canvas pattern (no clip heuristics)", () =>
     expect(skipBlock).not.toContain("sr-only");
   });
 
-  it("parks a real box above the viewport via transform", () => {
-    expect(skipBlock).toContain("-translate-y-24");
-    expect(skipBlock).toContain("focus:translate-y-0");
+  it("parks a real box inside the viewport (opacity-parked, not offscreen)", () => {
     expect(skipBlock).toContain("absolute top-4 left-4");
+    expect(skipBlock).toContain("opacity-0");
+    expect(skipBlock).toContain("pointer-events-none");
+    expect(skipBlock).toContain("focus:opacity-100");
+    expect(skipBlock).toContain("focus:pointer-events-auto");
+    // The off-viewport translate parking put the box entirely ABOVE the
+    // viewport (rect.bottom < 0) — live probes showed Chromium's traversal
+    // skipping that class entirely. It must stay gone.
+    expect(skipBlock).not.toContain("-translate-y-24");
     // A z-index above every overlay so the focused link is never covered.
     expect(skipBlock).toContain("z-[200]");
   });
@@ -111,7 +123,38 @@ describe("skip link — real-box off-canvas pattern (no clip heuristics)", () =>
 
   it("the sr-only clip pattern is gone from the skip link entirely", () => {
     // The old pattern relied on focus:not-sr-only to reveal on focus —
-    // replaced by the transform slide-in.
+    // replaced by the opacity reveal.
     expect(src).not.toContain("focus:not-sr-only");
+  });
+});
+
+/* ─── 3. First-Tab guard contract (QA round 2) ───────────────────────── */
+
+describe("skip link — first-Tab keydown guard (#299 QA round 2)", () => {
+  const src = pageSrc();
+
+  it("hands the session's first Tab to the skip link", () => {
+    // The guard runs inside the existing window keydown handler, BEFORE the
+    // ⌘K///? shortcuts, so a Tab can never be swallowed by them.
+    const guardIdx = src.indexOf("!firstTabTakenRef.current");
+    const cmdKIdx = src.indexOf("⌘K / Ctrl+K → open search");
+    expect(guardIdx).toBeGreaterThan(-1);
+    expect(cmdKIdx).toBeGreaterThan(guardIdx);
+  });
+
+  it("fires exactly once per session and only before pointer interaction", () => {
+    expect(src).toContain("firstTabTakenRef.current = true");
+    expect(src).toContain("!pointerInteractedRef.current");
+    // A pointerdown establishes the user's own traversal starting point —
+    // the guard must never hijack it (capture-phase, one-shot listener).
+    expect(src).toContain('window.addEventListener("pointerdown", markPointer');
+    expect(src).toContain("{ capture: true, once: true }");
+  });
+
+  it("only hijacks when focus is truly at the document start", () => {
+    expect(src).toContain("active === document.body");
+    expect(src).toContain("active === document.documentElement");
+    // The handoff focuses the real anchor element.
+    expect(src).toContain("skipLinkRef.current.focus()");
   });
 });

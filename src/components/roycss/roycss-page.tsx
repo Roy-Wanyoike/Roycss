@@ -1668,6 +1668,22 @@ export default function RoyCSSPage() {
   const [favoritesOpen, setFavoritesOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
+  // Issue #299 (QA round 2) — deterministic first-Tab stop for the skip link.
+  // A live Chromium probe (Playwright, channel chromium) showed sequential-focus
+  // traversal bypassing the DOM-first skip link — and the entire page top —
+  // and starting inside the effects grid whenever content-visibility:auto
+  // cards exist below the fold (no positive tabindex, no inert/aria-hidden
+  // ancestors, no transient focus: pure engine traversal derangement).
+  // Layer 1: the skip link's parked box now stays INSIDE the viewport bounds
+  // (opacity-parked instead of translate-parked above the top edge) so it
+  // never falls into a "far offscreen" skip class.
+  // Layer 2: the first Tab keydown of the session is handed to the skip link
+  // explicitly — once, and only before any pointer interaction (after a
+  // pointerdown the traversal starting point belongs to the user's click and
+  // must not be hijacked). Subsequent Tabs traverse naturally.
+  const skipLinkRef = useRef<HTMLAnchorElement | null>(null);
+  const firstTabTakenRef = useRef(false);
+  const pointerInteractedRef = useRef(false);
   const [playgroundOpen, setPlaygroundOpen] = useState(false);
   const [searchOverlayOpen, setSearchOverlayOpen] = useState(false);
   const [compareOpen, setCompareOpen] = useState(false);
@@ -1820,6 +1836,29 @@ export default function RoyCSSPage() {
   // ⌘K / Ctrl+K to open search overlay, / to focus search, ? for shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Issue #299 (QA round 2): the FIRST Tab of the session lands on the
+      // skip link, deterministically (see the refs block for rationale).
+      if (
+        e.key === "Tab" &&
+        !e.shiftKey &&
+        !e.altKey &&
+        !e.metaKey &&
+        !e.ctrlKey &&
+        !firstTabTakenRef.current &&
+        !pointerInteractedRef.current
+      ) {
+        firstTabTakenRef.current = true;
+        const active = document.activeElement;
+        const atStart =
+          !active ||
+          active === document.body ||
+          active === document.documentElement;
+        if (atStart && skipLinkRef.current) {
+          e.preventDefault();
+          skipLinkRef.current.focus();
+          return;
+        }
+      }
       // ⌘K / Ctrl+K → open search (case-insensitive: some layouts/IMEs and
       // synthetic key events deliver uppercase "K" with ctrl/meta held)
       if ((e.metaKey || e.ctrlKey) && (e.key === "k" || e.key === "K")) {
@@ -1851,6 +1890,17 @@ export default function RoyCSSPage() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [searchOverlayOpen, shortcutsOpen]);
+
+  // Issue #299 (QA round 2): a pointerdown establishes the user's own focus
+  // traversal starting point — the first-Tab guard must never fight it.
+  useEffect(() => {
+    const markPointer = () => {
+      pointerInteractedRef.current = true;
+    };
+    window.addEventListener("pointerdown", markPointer, { capture: true, once: true });
+    return () =>
+      window.removeEventListener("pointerdown", markPointer, { capture: true });
+  }, []);
 
   // Active section highlighting via IntersectionObserver
   const [activeSection, setActiveSection] = useState("");
@@ -1921,21 +1971,30 @@ export default function RoyCSSPage() {
       {/* Skip to main content — keyboard accessibility (issue #299).
           MUST stay the literal first JSX child of the page root: it is the
           first DOM element after the app root and therefore the first
-          sequential-focus (Tab) stop. Hardened against the two headless
-          failure mechanisms observed in the #299 QA run:
+          sequential-focus (Tab) stop. Hardened against the three failure
+          mechanisms observed across the #299 QA runs:
             1. sr-only's 1px/clip:rect(0,0,0,0) box — visibility heuristics
                in tab-order dumps can treat a clipped zero-size box as
-               unfocusable. The link now uses a REAL box parked above
-               the viewport with -translate-y-24 (transform does not affect
-               focusability) and slides in on :focus.
-            2. Portals/focus theft — nothing renders before it in the tree;
-               it stays outside the header, outside conditional branches,
-               and is never mounted late. */}
+               unfocusable. The link uses a REAL box (standard padding).
+            2. Off-viewport parking (-translate-y-24) put the box entirely
+               ABOVE the viewport (rect.bottom < 0) — live probes showed
+               Chromium's traversal skip that class entirely. The box is now
+               parked INSIDE the viewport at top-4/left-4 and hidden with
+               opacity-0 + pointer-events-none (opacity never affects
+               focusability), revealing itself on :focus.
+            3. Engine traversal derangement with content-visibility:auto
+               grids (see the refs block): the first Tab keydown of the
+               session is handed to this link by the keydown guard — once,
+               and only before any pointer interaction.
+            Portals/focus theft — nothing renders before it in the tree;
+            it stays outside the header, outside conditional branches, and
+            is never mounted late. */}
       <a
+        ref={skipLinkRef}
         href="#effects"
         id="skip-to-effects"
         data-skip-link="true"
-        className="absolute top-4 left-4 z-[200] -translate-y-24 rounded-lg bg-primary px-4 py-2 text-primary-foreground shadow-lg transition-transform focus:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground/60"
+        className="absolute top-4 left-4 z-[200] rounded-lg bg-primary px-4 py-2 text-primary-foreground opacity-0 shadow-lg pointer-events-none transition-opacity focus:opacity-100 focus:pointer-events-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground/60"
       >
         {tSkip("skipToEffects")}
       </a>

@@ -50,7 +50,18 @@ export default defineConfig({
     // Chromium first: it is the reference engine every spec is written against.
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      use: {
+        ...devices["Desktop Chrome"],
+        // Sandbox (issue #299 QA): the chromium_headless_shell-1243 artifact
+        // is CDN-blocked and the cache only holds the stale -1200 shell, so
+        // the default headless launch fails with "Executable doesn't exist".
+        // The full chromium-1243 binary IS present — `channel: "chromium"`
+        // pins this project to it. Same engine; no-op on CI hosts with all
+        // browsers installed. Launch args are container hygiene (/dev/shm is
+        // 64MB here, no GPU) and are no-ops on normal CI machines.
+        channel: "chromium",
+        launchOptions: { args: ["--disable-dev-shm-usage", "--disable-gpu"] },
+      },
     },
     {
       name: "firefox",

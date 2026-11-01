@@ -159,6 +159,10 @@ import { UserAnalyticsDashboard } from "@/components/roycss/analytics-dashboard"
 import { PWAInstallPrompt } from "@/components/roycss/pwa-install-prompt";
 import { SWUpdateBanner } from "@/components/roycss/sw-update-banner";
 import { LazySection } from "@/components/roycss/lazy-section";
+import {
+  LAZY_SECTION_MOUNTED_EVENT,
+  type LazySectionMountedDetail,
+} from "@/components/roycss/lazy-section-mount-queue";
 import { EngineStatus } from "@/components/roycss/engine-status";
 import { CSSBeautifier } from "@/components/roycss/css-beautifier";
 import { CustomCollectionsSheet } from "@/components/roycss/custom-collections";
@@ -294,12 +298,29 @@ const PlatformTools = dynamic(
    converged position is reached within a frame), and settle detection
    prefers "scrollend" over counting rAF frames, whose cadence on Gecko
    false-triggers during compositor-driven smooth scrolls. A newer nav
-   click supersedes any in-flight correction loop (scrollSectionEpoch). */
+   click supersedes any in-flight correction loop (scrollSectionEpoch).
+
+   Issue #299 — anchor jumps into unmounted LazySections: the initial
+   measurement is the SKELETON layout (by design — scroll to the
+   placeholder immediately, never wait for content). Sections crossed
+   mid-flight expand as they mount and push the target down; beyond the
+   settle-then-correct loop, a dedicated one-shot listener re-runs the
+   bounded correction the moment the TARGET section itself mounts
+   (roycss-lazy-section-mounted), so the final landing is corrected
+   against real content height without relying on the
+   pause-animations crutch. Combined with the LazySection mount budget
+   (lazy-section-mount-queue.ts) the correction passes now converge
+   instead of starving behind a GPU peg. */
 const SCROLL_SECTION_NAV_OFFSET = 72; // px reserved for the sticky header
 
 /* Bumped on every scrollToSection call; in-flight correction loops from a
    previous call check it and bail instead of fighting the new scroll. */
 let scrollSectionEpoch = 0;
+
+/* Detaches the previous nav's target-mounted listener (issue #299). Rapid
+   menu clicks must not accumulate {once:true} listeners for targets that
+   may never fire (already-mounted sections never dispatch the event). */
+let detachTargetMountedListener: (() => void) | null = null;
 
 function scrollToSection(id: string) {
   const target = document.querySelector(id) as HTMLElement | null;
@@ -313,6 +334,34 @@ function scrollToSection(id: string) {
   }
 
   const epoch = ++scrollSectionEpoch;
+
+  // Issue #299 — a previous nav's target-mounted listener is superseded:
+  // detach it so stale listeners never accumulate across rapid clicks.
+  detachTargetMountedListener?.();
+  detachTargetMountedListener = null;
+
+  // Issue #299 — the target is frequently an UNMOUNTED LazySection
+  // (skeleton only). The initial scroll uses the skeleton measurement;
+  // when the target mounts and expands to real content, correct
+  // immediately (bounded by the same loop budget) instead of waiting for
+  // the settle detector to notice the shift several frames later.
+  let correctPassImpl: (() => void) | null = null;
+  if (id.startsWith("#")) {
+    const targetId = id.slice(1);
+    const onTargetMounted = (event: Event) => {
+      if (epoch !== scrollSectionEpoch) return; // superseded by a newer click
+      const detail = (event as CustomEvent<LazySectionMountedDetail>).detail;
+      if (!detail || detail.id !== targetId) return;
+      correctPassImpl?.();
+    };
+    window.addEventListener(LAZY_SECTION_MOUNTED_EVENT, onTargetMounted, {
+      once: true,
+    });
+    detachTargetMountedListener = () => {
+      window.removeEventListener(LAZY_SECTION_MOUNTED_EVENT, onTargetMounted);
+      detachTargetMountedListener = null;
+    };
+  }
 
   // Use requestAnimationFrame to ensure DOM is updated after any card loading
   requestAnimationFrame(() => {
@@ -340,7 +389,12 @@ function scrollToSection(id: string) {
         const timedOut = performance.now() - start > 12000;
         const drift =
           target.getBoundingClientRect().top - SCROLL_SECTION_NAV_OFFSET;
-        if (timedOut || Math.abs(drift) <= 8 || corrections >= 8) return;
+        if (timedOut || Math.abs(drift) <= 8 || corrections >= 8) {
+          // Loop finished (converged, budget spent, or timed out) — release
+          // the target-mounted listener so nothing lingers (issue #299).
+          detachTargetMountedListener?.();
+          return;
+        }
         corrections += 1;
         // INSTANT — never smooth. A second smooth scrollTo issued while a
         // smooth scroll is in flight is DROPPED by Gecko (Chromium
@@ -397,6 +451,7 @@ function scrollToSection(id: string) {
         }
       };
 
+      correctPassImpl = correctPass;
       awaitSettle(correctPass);
     });
   });
@@ -729,7 +784,14 @@ function MegaMenuRow({
 }) {
   const Icon = item.icon;
   const router = useRouter();
-  const handleSelect = () => {
+  const handleSelect = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // Modifier-clicks (middle / ⌘ / ctrl / shift) keep the native anchor
+    // behavior — open in new tab/window, copy-link — real link semantics
+    // (issue #299 semantics item). Plain left-clicks navigate in place.
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) {
+      return;
+    }
+    e.preventDefault();
     if (item.href.startsWith("#")) {
       onSelect(item.href);
       const target = document.querySelector(item.href);
@@ -742,21 +804,31 @@ function MegaMenuRow({
     }
   };
   return (
-    <DropdownMenuItem
-      onClick={handleSelect}
-      className="cursor-pointer gap-3 rounded-lg p-2 focus:bg-primary/5"
-    >
-      <span className="flex items-center justify-center size-8 rounded-md bg-primary/10 text-primary shrink-0">
-        <Icon className="size-4" />
-      </span>
-      <span className="flex flex-col min-w-0">
-        <span className="text-sm font-medium leading-tight text-foreground">
-          {item.label}
+    /* Issue #299 (semantics): the mega-menu configs carry real hrefs
+       (#effects, #platform, /effects) but the items rendered as DIV
+       menuitems — in-page anchor navigation had no semantic link, and
+       keyboard/AT link roving, middle-click and copy-link never worked.
+       DropdownMenuItem asChild promotes the config's own <a href> to the
+       menuitem: Radix keeps role="menuitem", arrow-key roving focus and
+       Enter/Space activation, while the DOM gains a genuine anchor. */
+    <DropdownMenuItem asChild>
+      <a
+        href={item.href}
+        onClick={handleSelect}
+        className="cursor-pointer gap-3 rounded-lg p-2 focus:bg-primary/5"
+      >
+        <span className="flex items-center justify-center size-8 rounded-md bg-primary/10 text-primary shrink-0">
+          <Icon className="size-4" />
         </span>
-        <span className="text-xs text-muted-foreground leading-tight mt-0.5 truncate">
-          {item.description}
+        <span className="flex flex-col min-w-0">
+          <span className="text-sm font-medium leading-tight text-foreground">
+            {item.label}
+          </span>
+          <span className="text-xs text-muted-foreground leading-tight mt-0.5 truncate">
+            {item.description}
+          </span>
         </span>
-      </span>
+      </a>
     </DropdownMenuItem>
   );
 }
@@ -1846,10 +1918,24 @@ export default function RoyCSSPage() {
   return (
     <MotionConfig reducedMotion="user">
     <div className="min-h-screen flex flex-col bg-background text-foreground relative">
-      {/* Skip to main content — keyboard accessibility */}
+      {/* Skip to main content — keyboard accessibility (issue #299).
+          MUST stay the literal first JSX child of the page root: it is the
+          first DOM element after the app root and therefore the first
+          sequential-focus (Tab) stop. Hardened against the two headless
+          failure mechanisms observed in the #299 QA run:
+            1. sr-only's 1px/clip:rect(0,0,0,0) box — visibility heuristics
+               in tab-order dumps can treat a clipped zero-size box as
+               unfocusable. The link now uses a REAL box parked above
+               the viewport with -translate-y-24 (transform does not affect
+               focusability) and slides in on :focus.
+            2. Portals/focus theft — nothing renders before it in the tree;
+               it stays outside the header, outside conditional branches,
+               and is never mounted late. */}
       <a
         href="#effects"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-primary focus:text-primary-foreground focus:shadow-lg"
+        id="skip-to-effects"
+        data-skip-link="true"
+        className="absolute top-4 left-4 z-[200] -translate-y-24 rounded-lg bg-primary px-4 py-2 text-primary-foreground shadow-lg transition-transform focus:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground/60"
       >
         {tSkip("skipToEffects")}
       </a>

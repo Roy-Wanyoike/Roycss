@@ -6,6 +6,12 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import {
+  LAZY_SECTION_MOUNTED_EVENT,
+  sharedLazySectionMountQueue,
+  viewportDistancePriority,
+  type LazySectionMountedDetail,
+} from "@/components/roycss/lazy-section-mount-queue";
 
 /**
  * LazySection — wraps below-the-fold sections so they only mount when
@@ -20,6 +26,13 @@ import {
  *
  * Pass `minHeight` matching the section's typical rendered height
  * (in px). Default 480.
+ *
+ * Issue #299 — bounded mount budget: mounts are granted by the shared
+ * LazySectionMountQueue (module-level, page-wide) at a capped rate,
+ * closest-to-viewport first. An anchor jump that crosses the whole page
+ * no longer force-mounts every section's animated previews in a single
+ * frame (GPU peg / correction-loop starvation); bursts spread over
+ * MOUNT_BUDGET_PER_DRAIN-per-DRAIN_INTERVAL_MS ticks instead.
  */
 export interface LazySectionProps {
   children: ReactNode;
@@ -48,14 +61,31 @@ export function LazySection({
 }: LazySectionProps) {
   const ref = useRef<HTMLElement | null>(null);
   const [mounted, setMounted] = useState(false);
+  // Queue slot for the in-flight mount request — cancelled on unmount so a
+  // section that leaves the tree never mounts posthumously.
+  const requestIdRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (mounted) return;
     const node = ref.current;
     if (!node) return;
 
+    // Issue #299 — the actual mount flip goes through the shared queue so
+    // simultaneous intersections (e.g. a fast anchor jump crossing several
+    // sections) drain at a bounded rate instead of mounting all at once.
+    const requestMount = (priority: number) => {
+      if (requestIdRef.current !== null) return; // already queued
+      requestIdRef.current = sharedLazySectionMountQueue.request(
+        () => {
+          requestIdRef.current = null;
+          setMounted(true);
+        },
+        priority,
+      );
+    };
+
     if (typeof IntersectionObserver === "undefined") {
-      queueMicrotask(() => setMounted(true));
+      requestMount(0);
       return;
     }
 
@@ -63,7 +93,7 @@ export function LazySection({
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            setMounted(true);
+            requestMount(viewportDistancePriority(entry.boundingClientRect.top));
             observer.disconnect();
             break;
           }
@@ -72,8 +102,28 @@ export function LazySection({
       { rootMargin, threshold: 0 },
     );
     observer.observe(node);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      if (requestIdRef.current !== null) {
+        sharedLazySectionMountQueue.cancel(requestIdRef.current);
+        requestIdRef.current = null;
+      }
+    };
   }, [mounted, rootMargin]);
+
+  // Issue #299 — announce the mount so anchor correction loops can apply a
+  // bounded fix as soon as the TARGET section expands from skeleton to real
+  // content (see scrollToSection in roycss-page.tsx), instead of waiting
+  // for the settle detector to notice the layout shift.
+  useEffect(() => {
+    if (!mounted) return;
+    const node = ref.current;
+    const detail: LazySectionMountedDetail = {
+      id,
+      height: node?.firstElementChild?.getBoundingClientRect().height,
+    };
+    window.dispatchEvent(new CustomEvent(LAZY_SECTION_MOUNTED_EVENT, { detail }));
+  }, [mounted, id]);
 
   // Default skeleton — subtle shimmer + gradient block sized to minHeight
   const defaultSkeleton = (

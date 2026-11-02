@@ -30,12 +30,18 @@
  * invoked at the end of `scripts/build-package.ts`.
  */
 import { writeFileSync, readdirSync, existsSync } from "node:fs";
-import { join, basename, extname } from "node:path";
+import { dirname, join, basename, extname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { effects } from "../src/lib/roycss-effects";
 import type { EffectCategory } from "../src/lib/roycss-types";
 
-const ROOT = import.meta.dir.replace(/\/scripts$/, "");
+// Same cross-platform resolution as generate-manifest.ts (#309):
+// import.meta.dir is Bun-only and the /\/scripts$/ regex never matched
+// Windows backslash paths, leaving ROOT inside scripts/.
+const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
+
+const ROOT = resolve(SCRIPT_DIR, "..");
 const DIST_DIR = join(ROOT, "dist");
 const PRO_DIR = join(ROOT, "src", "components", "roycss", "pro");
 

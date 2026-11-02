@@ -151,14 +151,22 @@
  */
 
 import { writeFileSync, readFileSync, mkdirSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { effects } from "../src/lib/roycss-effects";
 import { categoryOrder, type EffectCategory } from "../src/lib/roycss-types";
 import { effectA11y, type EffectAriaReason } from "../src/lib/effect-a11y";
 import { computeEffectQualityScore, scoreToGrade, type EffectGrade } from "../src/lib/effect-quality";
 
-const ROOT = import.meta.dir.replace(/\/scripts$/, "");
+// Resolve paths correctly on Windows, Linux and macOS. The previous
+// `import.meta.dir.replace(/\/scripts$/, "")` was Bun-only AND failed to
+// match backslash Windows paths, leaving ROOT pointed at scripts/ (which
+// made the generator look for scripts/package.json). fileURLToPath works
+// under both Bun and Node on every OS.
+const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
+
+const ROOT = resolve(SCRIPT_DIR, "..");
 const OUT_FILE = join(ROOT, "dist", "roycss.manifest.json");
 const CHECK_MODE = process.argv.includes("--check");
 

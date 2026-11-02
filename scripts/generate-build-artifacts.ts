@@ -196,9 +196,12 @@ function buildProComponents(): ProComponentEntry[] {
     return [];
   }
 
-  const files = readdirSync(PRO_DIR).filter(
-    (file) => extname(file) === ".tsx"
-  );
+  // Sort for byte-stable output: readdirSync order is filesystem-dependent
+  // (ext4 hash order), so unsorted output differs across machines and makes
+  // dist/pro-components.json churn on every regeneration.
+  const files = readdirSync(PRO_DIR)
+    .filter((file) => extname(file) === ".tsx")
+    .sort();
 
   return files.map((file) => {
     const base = basename(file, ".tsx");

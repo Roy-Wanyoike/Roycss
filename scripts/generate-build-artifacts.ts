@@ -1,43 +1,70 @@
+
 /**
- * Generate build artifacts.
+ * Generate RoyCSS build artifacts.
  *
- * Reads the RoyCSS effects source (from `src/lib/roycss-effects`)
- * and produces three derived JSON artifacts in `dist/`:
+ * Reads effects from src/lib/roycss-effects and generates:
  *
- *   1. dist/class-index.json
- *      Array of `{ className, category, effectId, properties }`. Each
- *      effect's `cssCode` is scanned for top-level class selectors of
- *      the form `.foo { ... }` and one row is emitted per match.
+ * 1. dist/class-index.json
+ *    Class names, categories, effect IDs and CSS properties.
  *
- *   2. dist/motion-library.json
- *      Array of effects whose `category` is in the motion-related set
- *      `"animations", "hover", "scroll", "page-transitions",
- *      "particles", "microinteractions", "status-state", "cursor"`.
- *      The output shape matches `dist/effects.json`'s metadata format.
+ * 2. dist/motion-library.json
+ *    Motion-related effects and their metadata.
  *
- *   3. dist/pro-components.json
- *      Array of `{ id, name, path }` rows derived from listing
- *      `src/components/roycss/pro/*.tsx`. INTERNAL — read at runtime by
- *      the backend-node pro-components service; excluded from the npm
- *      tarball via the `!dist/pro-components.json` negation in
- *      package.json `files`.
+ * 3. dist/pro-components.json
+ *    Internal Pro component metadata.
  *
- * (dist/version-manifest.json is intentionally NOT generated anymore:
- * nothing reads it — the backend version service degrades gracefully
- * to its defaults when the artifact is absent.)
- *
- * Usage: `bun run scripts/generate-build-artifacts.ts` — typically
- * invoked at the end of `scripts/build-package.ts`.
+ * Usage:
+ * bun run scripts/generate-build-artifacts.ts
  */
-import { writeFileSync, readdirSync, existsSync } from "node:fs";
-import { join, basename, extname } from "node:path";
+
+// --------------------------------------------------
+// Imports
+// --------------------------------------------------
+
+import {
+  writeFileSync,
+  readdirSync,
+  existsSync,
+  mkdirSync,
+} from "node:fs";
+
+import {
+  join,
+  basename,
+  extname,
+  dirname,
+  resolve,
+} from "node:path";
+
+import { fileURLToPath } from "node:url";
 
 import { effects } from "../src/lib/roycss-effects";
 import type { EffectCategory } from "../src/lib/roycss-types";
 
-const ROOT = import.meta.dir.replace(/\/scripts$/, "");
+// --------------------------------------------------
+// Project paths
+// --------------------------------------------------
+
+// Resolve the actual script directory.
+// Compatible with Windows, Linux and macOS.
+
+const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
+
+const ROOT = resolve(SCRIPT_DIR, "..");
+
 const DIST_DIR = join(ROOT, "dist");
-const PRO_DIR = join(ROOT, "src", "components", "roycss", "pro");
+
+const PRO_DIR = join(
+  ROOT,
+  "src",
+  "components",
+  "roycss",
+  "pro"
+);
+
+// --------------------------------------------------
+// Motion categories
+// --------------------------------------------------
 
 const MOTION_CATEGORIES: EffectCategory[] = [
   "animations",
@@ -49,6 +76,10 @@ const MOTION_CATEGORIES: EffectCategory[] = [
   "status-state",
   "cursor",
 ];
+
+// --------------------------------------------------
+// Types
+// --------------------------------------------------
 
 interface ClassIndexEntry {
   className: string;
@@ -63,22 +94,58 @@ interface ProComponentEntry {
   path: string;
 }
 
-/** Parse `\.([\w-]+)\s*\{([^}]*)\}` from a CSS string. */
-function parseClassRules(css: string): Array<{ className: string; properties: string }> {
+// --------------------------------------------------
+// CSS class parser
+// --------------------------------------------------
+
+/**
+ * Extract CSS class rules.
+ *
+ * Matches selectors such as:
+ *
+ * .foo {
+ *   color: red;
+ * }
+ *
+ * Returns the class name and its CSS properties.
+ */
+function parseClassRules(
+  css: string
+): Array<{
+  className: string;
+  properties: string;
+}> {
   const re = /\.([\w-]+)\s*\{([^}]*)\}/g;
-  const out: Array<{ className: string; properties: string }> = [];
-  let m: RegExpExecArray | null;
-  while ((m = re.exec(css)) !== null) {
-    out.push({ className: m[1]!, properties: m[2]!.trim() });
+
+  const out: Array<{
+    className: string;
+    properties: string;
+  }> = [];
+
+  let match: RegExpExecArray | null;
+
+  while ((match = re.exec(css)) !== null) {
+    out.push({
+      className: match[1]!,
+      properties: match[2]!.trim(),
+    });
   }
+
   return out;
 }
 
+// --------------------------------------------------
+// Class index generator
+// --------------------------------------------------
+
 function buildClassIndex(): ClassIndexEntry[] {
   const entries: ClassIndexEntry[] = [];
+
   for (const effect of effects) {
     if (!effect.cssCode) continue;
+
     const rules = parseClassRules(effect.cssCode);
+
     for (const rule of rules) {
       entries.push({
         className: rule.className,
@@ -88,68 +155,191 @@ function buildClassIndex(): ClassIndexEntry[] {
       });
     }
   }
+
   return entries;
 }
 
+// --------------------------------------------------
+// Motion library generator
+// --------------------------------------------------
+
 function buildMotionLibrary() {
   return effects
-    .filter((e) => MOTION_CATEGORIES.includes(e.category))
-    .map((e) => ({
-      id: e.id,
-      name: e.name,
-      category: e.category,
-      description: e.description,
-      tags: e.tags,
-      previewType: e.previewType,
-      previewText: e.previewText || null,
-      childCount: e.childCount || null,
-      // Include the raw cssCode so downstream consumers (Roy Motion
-      // service) can extract duration / easing / keyframes via regex
-      // without re-reading the TypeScript source.
-      cssCode: e.cssCode,
+    .filter((effect) =>
+      MOTION_CATEGORIES.includes(effect.category)
+    )
+    .map((effect) => ({
+      id: effect.id,
+      name: effect.name,
+      category: effect.category,
+      description: effect.description,
+      tags: effect.tags,
+      previewType: effect.previewType,
+      previewText: effect.previewText || null,
+      childCount: effect.childCount || null,
+
+      // Include raw CSS for downstream motion services.
+      cssCode: effect.cssCode,
     }));
 }
 
+// --------------------------------------------------
+// Pro components generator
+// --------------------------------------------------
+
 function buildProComponents(): ProComponentEntry[] {
-  if (!existsSync(PRO_DIR)) return [];
-  const files = readdirSync(PRO_DIR).filter((f) => extname(f) === ".tsx");
-  return files.map((f) => {
-    const base = basename(f, ".tsx");
-    // Convert kebab-case to Title Case for the human-readable name.
+  if (!existsSync(PRO_DIR)) {
+    console.warn(
+      `⚠ Pro components directory not found: ${PRO_DIR}`
+    );
+
+    return [];
+  }
+
+  const files = readdirSync(PRO_DIR).filter(
+    (file) => extname(file) === ".tsx"
+  );
+
+  return files.map((file) => {
+    const base = basename(file, ".tsx");
+
+    // Convert kebab-case to Title Case.
     const name = base
       .split("-")
-      .map((part) => (part.length === 0 ? part : part[0]!.toUpperCase() + part.slice(1)))
+      .map((part) =>
+        part.length === 0
+          ? part
+          : part[0]!.toUpperCase() + part.slice(1)
+      )
       .join(" ");
+
     return {
       id: base,
       name,
-      path: `src/components/roycss/pro/${f}`,
+      path: `src/components/roycss/pro/${file}`,
     };
   });
 }
 
-function writeJson(filename: string, data: unknown): void {
-  const path = join(DIST_DIR, filename);
-  writeFileSync(path, JSON.stringify(data, null, 2), "utf-8");
-  const sizeKb = (Buffer.byteLength(JSON.stringify(data)) / 1024).toFixed(1);
-  const count = Array.isArray(data) ? data.length : 1;
-  console.log(`  ✓ dist/${filename} (${count} entries, ${sizeKb}KB)`);
+// --------------------------------------------------
+// JSON writer
+// --------------------------------------------------
+
+function writeJson(
+  filename: string,
+  data: unknown
+): void {
+  const outputPath = join(DIST_DIR, filename);
+
+  const json = JSON.stringify(data, null, 2);
+
+  writeFileSync(outputPath, json, "utf-8");
+
+  const sizeKb = (
+    Buffer.byteLength(json, "utf-8") / 1024
+  ).toFixed(1);
+
+  const count = Array.isArray(data)
+    ? data.length
+    : 1;
+
+  console.log(
+    `  ✓ dist/${filename} (${count} entries, ${sizeKb}KB)`
+  );
 }
+
+// --------------------------------------------------
+// Build validation
+// --------------------------------------------------
+
+function validateBuild(): void {
+  if (!Array.isArray(effects) || effects.length === 0) {
+    throw new Error(
+      "RoyCSS effects catalog is empty. Cannot generate build artifacts."
+    );
+  }
+
+  console.log(`  Effects loaded: ${effects.length}`);
+
+  if (!existsSync(ROOT)) {
+    throw new Error(
+      `Project root does not exist: ${ROOT}`
+    );
+  }
+
+  console.log(`  Project root: ${ROOT}`);
+  console.log(`  Output directory: ${DIST_DIR}`);
+}
+
+// --------------------------------------------------
+// Main
+// --------------------------------------------------
 
 function main(): void {
-  console.log("Generating build artifacts...");
+  console.log("");
+  console.log("Generating RoyCSS build artifacts...");
+  console.log("--------------------------------------");
+
+  validateBuild();
+
+  // Ensure the root dist directory exists.
+  mkdirSync(DIST_DIR, { recursive: true });
+
+  // 1. Generate class index.
+  console.log("");
+  console.log("Generating class index...");
 
   const classIndex = buildClassIndex();
+
   writeJson("class-index.json", classIndex);
 
+  // 2. Generate motion library.
+  console.log("");
+  console.log("Generating motion library...");
+
   const motionLibrary = buildMotionLibrary();
+
   writeJson("motion-library.json", motionLibrary);
 
+  // 3. Generate Pro components.
+  console.log("");
+  console.log("Generating Pro components...");
+
   const proComponents = buildProComponents();
+
   writeJson("pro-components.json", proComponents);
 
+  // Completion summary.
   console.log("");
-  console.log("✅ Build artifacts generated!");
+  console.log("--------------------------------------");
+  console.log("✅ RoyCSS build artifacts generated!");
+  console.log("");
+  console.log(`  Effects: ${effects.length}`);
+  console.log(`  Class index entries: ${classIndex.length}`);
+  console.log(`  Motion effects: ${motionLibrary.length}`);
+  console.log(`  Pro components: ${proComponents.length}`);
+  console.log("");
+  console.log(`  Output: ${DIST_DIR}`);
+  console.log("");
 }
 
-main();
+// --------------------------------------------------
+// Execute
+// --------------------------------------------------
+
+try {
+  main();
+} catch (error) {
+  console.error("");
+  console.error("❌ RoyCSS build artifact generation failed.");
+  console.error("");
+
+  if (error instanceof Error) {
+    console.error(error.message);
+    console.error(error.stack);
+  } else {
+    console.error(error);
+  }
+
+  process.exitCode = 1;
+}

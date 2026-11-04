@@ -1,16 +1,18 @@
-﻿<div align="center">
+<div align="center">
 
 # RoyCSS
 
-### The AI native frontend engineering platform
+### The AI-native frontend engineering platform
 
-Building the operating system for design to code execution, UI systems, and product velocity.
+Building the operating system for design-to-code execution, UI systems, and product velocity.
+
+**This README doubles as the company blueprint — thesis, product, moat, model, and roadmap in one place.**
 
 [![Live demo](https://img.shields.io/badge/live_demo-roycss.vercel.app-22c55e?style=flat-square&logo=vercel&logoColor=white)](https://roycss.vercel.app)
 [![Effects](https://img.shields.io/badge/effects-1,983-10b981?style=flat-square)](#key-metrics)
 [![Categories](https://img.shields.io/badge/categories-29-06b6d4?style=flat-square)](#key-metrics)
-[![Products](https://img.shields.io/badge/platform_products-62-8b5cf6?style=flat-square)](#platform-overview)
-[![Tests](https://img.shields.io/badge/tests-2%2C200%2B-22d3ee?style=flat-square)](#quality-and-governance)
+[![Products](https://img.shields.io/badge/platform_products-62-8b5cf6?style=flat-square)](#product-suite)
+[![Tests](https://img.shields.io/badge/tests-2,200+-22d3ee?style=flat-square)](#key-metrics)
 [![TypeScript](https://img.shields.io/badge/tsc-strict_clean-3178c6?style=flat-square)](#quality-and-governance)
 [![License](https://img.shields.io/badge/license-MIT-ec4899?style=flat-square)](LICENSE)
 
@@ -20,49 +22,66 @@ Live demo: <https://roycss.vercel.app>
 
 ---
 
-## Why RoyCSS exists
+## The blueprint at a glance
 
-Frontend teams are still forced to stitch together disconnected tools: component libraries, animation snippets, design tokens, AI copilots, and production quality gates. RoyCSS brings these into one system.
-
-RoyCSS is a complete frontend engineering platform designed to help teams ship polished interfaces faster without sacrificing quality, accessibility, or maintainability.
-
-At the center of the platform is a large, production oriented catalog of CSS effects and UI patterns, but the real value is broader:
-
-- 1,983 production-ready effects across 29 categories
-- 62 platform products spanning AI, studio tooling, inspection, cloud, academy, and marketplace workflows
-- 70 developer tools for generation, analysis, conversion, and QA
-- AI native workflows for design, implementation, mentoring, and review
-- A design system built around tokens, themes, motion, and accessibility defaults
-- Framework-agnostic output across CSS, inline styles, Tailwind, SCSS, CSS-in-JS, Vue, and HTML
+- **What** — an AI-native platform that turns frontend design execution into a governed system: a 1,983-effect CSS catalog, 62 platform products, 70 developer tools, and an AI-assisted workflow layer, wired into one codebase.
+- **Who it serves** — product teams, agencies, and the developers who ship interfaces but should not be hand-rolling motion, theming, and accessibility every sprint.
+- **Why it wins** — the catalog is *versioned, machine-readable data*. A byte-stable, CI-gated artifact pipeline means AI agents can consume it safely and humans can trust it. That data layer is the moat.
+- **How it monetizes** — open core. The library and catalog stay free (distribution engine); platform products, team workflows, and AI services form the commercial layer.
+- **Where it is today** — live public console, 2,200+ automated tests, strict TypeScript gate, deterministic manifest pipeline, and a programmatically produced brand/video asset kit.
+- **The ask** — early capital to convert a working platform into a distribution machine: npm launch, docs and SEO growth loops, and the paid tier.
 
 ---
 
-## Platform overview
+## The problem
 
-RoyCSS is positioned as a full stack frontend operating layer rather than a single library.
+Modern frontend teams lose velocity in four compounding ways:
 
-### Core pillars
+1. **Fragmented tooling.** Component libraries, animation snippets, design tokens, AI copilots, and QA gates are stitched together by hand.
+2. **Repetitive UI work.** The same hover states, reveals, loaders, and themes get rebuilt across every project and platform.
+3. **Quality that does not scale.** Accessibility and performance standards depend on individual vigilance instead of system defaults.
+4. **AI amplifies the chaos.** Code generation ships interfaces faster than ever — and ships inconsistency just as fast. Models need structured, trustworthy UI data to generate quality output.
 
-- Design execution at scale: a broad catalog of reusable UI effects and patterns
-- AI-assisted frontend work: RoyAI and LLM-backed modules for architecture, design, mentorship, review, and pairing
-- Developer productivity: generators, visualizers, analyzers, and conversion tools
-- Quality and governance: automated tests, type safety, accessibility checks, API drift checks, and secure deployment patterns
-- Ecosystem expansion: marketplace, cloud services, platform products, and developer-facing tooling
+---
 
-### Product architecture
+## The solution
 
-RoyCSS combines a live catalog, frontend tooling, backend APIs, AI modules, and platform products into a unified developer experience.
+RoyCSS consolidates the frontend execution layer into one platform:
 
-- Frontend: Next.js 16, React 19, TypeScript, Tailwind CSS, shadcn/ui
-- Backend: Express + Prisma + Zod, with Go-based production target architecture underway
-- Runtime: Bun-first development flow with Node compatibility
-- Deploy model: Vercel for the frontend and Railway for the backend API stack
+- UI patterns that are searchable, previewable, and copyable — not buried in gist threads
+- A production-ready effect catalog with automated quality and accessibility tiering
+- AI-native assistance across ideation, architecture, implementation, mentorship, and review
+- Platform-level standards so consistency, speed, and UX quality are enforced by default
+
+The result is a compounding advantage: better UX, faster delivery, and a frontend system that gets more valuable with every effect added.
+
+---
+
+## Product suite
+
+| Layer | What it delivers | Scale today |
+|---|---|---|
+| Effect catalog | Production-ready CSS effects and UI patterns | 1,983 effects across 29 categories |
+| Live console + Effects Lab | Interactive, shareable demos — holo foil, liquid glass, glitch, pointer-tracked 3D tilt, glyph decoder, sonar radar | 8 signature live tiles |
+| Platform products | Studio tooling, AI surfaces, inspection, cloud, academy, marketplace workflows | 62 products |
+| Developer tools | Generation, analysis, conversion, and QA utilities | 70 tools |
+| RoyAI layer | LLM-backed modules for architecture, design, mentorship, review, pairing | Modular, in-repo |
+| Backend API | Modular services with documented, drift-checked APIs | 289 routes, 75 modules |
+| Distribution | npm package, CLI, MCP server, VS Code extension | Artifacts in repo |
+
+---
+
+## Why now
+
+1. **Modern CSS crossed the threshold.** `@property`, `oklch()`, `color-mix()`, `:has()`, container queries, and scroll-driven animations now deliver what previously required JavaScript libraries — with zero runtime cost.
+2. **AI code generation went mainstream.** Models are only as good as the structured data they can consume. Catalogs-as-data become the supply chain for AI-driven UI generation.
+3. **Polish became a conversion lever.** Product surfaces compete on experience quality. Teams need systemized motion and accessibility defaults, not one-off snippets.
 
 ---
 
 ## Key metrics
 
-These are not marketing placeholders; the repo includes test assertions and CI gates that keep the numbers aligned with reality.
+These are not marketing placeholders — the repo includes test assertions and CI gates that keep the numbers aligned with reality.
 
 | Metric | Value | Source |
 |---|---:|---|
@@ -74,78 +93,140 @@ These are not marketing placeholders; the repo includes test assertions and CI g
 | Developer tools | 70 | platform tool registry |
 | Tests | 2,200+ | frontend + backend automated suites |
 | Typecheck | 0 errors | strict TypeScript gate |
+| Manifest maturity | 1,277 stable · 664 beta · 42 experimental | generated `dist/roycss.manifest.json` |
+| Quality distribution | A 159 · B 1,173 · C 522 · D 109 · F 20 | quality-tier gate |
+| Core payload | 12 kB core CSS, zero runtime dependencies | distribution artifacts |
 
 ---
 
-## Why this matters
+## Technology moat
 
-### Problem
-Modern frontend teams lose time in three ways:
+1. **Effects as data.** Every effect is described in a generated, byte-stable manifest (a 275.7 KB JSON artifact) with maturity, quality, accessibility, and browser-tier metadata. If artifacts and catalog ever disagree, CI fails.
+2. **Deterministic pipeline.** Regeneration is reproducible byte-for-byte on any machine — verified across repeated runs with zero inter-run churn. Safe for automation; safe for AI consumption.
+3. **Governance by default.** 2,200+ tests, strict TypeScript, naming-convention gates, API drift detection, and accessibility tiers with motion-safe defaults.
+4. **Distribution-native.** Framework-agnostic output across CSS, Tailwind, SCSS, CSS-in-JS, Vue, and HTML — plus CLI, MCP, and VS Code surfaces that meet developers where they already work.
+5. **Compounding catalog.** Every new effect increases the value of search, preview, and AI retrieval across the entire system.
 
-1. Fragmented design and implementation tooling
-2. Repetitive UI work across projects and platforms
-3. Hard-to-scale quality and accessibility standards
+---
 
-### Solution
-RoyCSS turns that work into a reusable system:
+## Business model
 
-- UI patterns are searchable, previewable, and copyable
-- Production-ready components are available in a rich effect catalog
-- AI native assistance reduces friction during ideation and implementation
-- Platform-level standards improve consistency, speed, and UX quality
+Open core, four ladders:
 
-This creates a compounding advantage: better UX, faster delivery, and more reusable frontend systems across product teams.
+| Tier | What is included | Model |
+|---|---|---|
+| Free forever | Core CSS library, full effect catalog, docs, Effects Lab | MIT — the growth engine |
+| Pro | Platform products: studio tooling, inspection, cloud workflows | Per-seat SaaS (planned) |
+| Team and enterprise | Shared workspaces, governance controls, SSO, priority support | Annual contracts (planned) |
+| AI services | RoyAI generation and review API, integrations | Usage-based (planned) |
+
+The free tier is deliberate: a zero-friction catalog is the cheapest possible distribution in a market where developers choose tools individually and bring them to work.
+
+---
+
+## Go-to-market
+
+Developer-led growth loops:
+
+1. Open-source adoption of the free core
+2. Docs and SEO capture high-intent effect queries
+3. Shareable Effects Lab demos turn users into promoters
+4. GitHub community and stars compound discovery
+5. Platform products convert individuals into team accounts
+
+Launch sequence: npm publish, developer-community launches, short-form video (assets already produced — a 51-second narrated product overview and a 10-second brand sting in `marketing/videos/`), and marketplace listings.
+
+---
+
+## Competitive positioning
+
+| Approach | Pattern | The gap RoyCSS fills |
+|---|---|---|
+| Component libraries | shadcn/ui, MUI | Ship components, not a governed effect system or an AI-consumable data layer |
+| Animation libraries | GSAP, Framer Motion, Animate.css | JavaScript runtime cost; no catalog governance or accessibility tiering |
+| AI page builders | Prompt-to-site tools | Opaque output, no reuse system, no engineering-grade pipeline |
+| In-house design systems | Custom token pipelines | Expensive to build and maintain; RoyCSS ships the defaults prebuilt |
+
+RoyCSS is designed to complement the stack teams already have — it runs alongside Tailwind, shadcn/ui, and any framework — rather than demanding a migration.
+
+---
+
+## Proof of execution
+
+- Live public console with the full catalog, Effects Lab, and docs: <https://roycss.vercel.app>
+- Deterministic artifact pipeline verified green end-to-end (manifest and package build reproduced twice with zero inter-run churn)
+- Marketing engine produced programmatically: logo suite, banners, product screenshots, narrated overview video — with regeneration scripts committed
+- Dual backend strategy in motion (Express + Prisma today, Go-based production target underway) with 289 documented routes
+- CI enforcement: tests, strict typecheck, naming gates, artifact drift gates, deploy previews
+
+---
+
+## Roadmap
+
+| Horizon | Focus | Markers |
+|---|---|---|
+| Now | Distribution unlock | npm publish, docs polish, launch content |
+| Next | Monetization surfaces | Pro tier wiring, marketplace, AI service endpoints |
+| Later | Platform scale | Go backend cutover, cloud workflows, enterprise governance |
+
+---
+
+## What capital unlocks
+
+| Allocation | Investment |
+|---:|---|
+| 50% | Engineering — catalog expansion, Pro productization, AI features |
+| 25% | Growth — docs and SEO, launch campaigns, developer relations |
+| 15% | Infrastructure — cloud, AI inference, telemetry |
+| 10% | Partnerships and enterprise pilots |
+
+---
+
+## Risks and mitigations
+
+A blueprint should be honest about risk:
+
+| Risk | Mitigation |
+|---|---|
+| Adoption | Free core and shareable demos reduce the trial cost to zero |
+| Platform and framework shifts | Framework-agnostic output — CSS is the most durable layer of the stack |
+| AI commoditization | The moat is governed data and pipeline, not the model itself |
+| Solo-founder execution | Modular codebase, documented runbooks, governance docs; capital buys the team |
 
 ---
 
 ## Quality and governance
 
-RoyCSS is designed for teams that need both speed and trust.
+RoyCSS is built for teams that need both speed and trust.
 
 - 2,200+ automated tests across frontend and backend systems
 - Strict TypeScript validation with zero type errors in the current gate
-- WCAG AA oriented accessibility practices and automated axe audits
+- WCAG AA-oriented accessibility practices and automated axe audits
 - API documentation with drift detection so docs and code stay aligned
-- Secure response headers and static safe CSP setup for production deployments
-- Fail fast backend validation using environment checks before runtime drift
+- Secure response headers and a static safe CSP for production deployments
+- Fail-fast backend validation using environment checks before runtime drift
 
-This matters because product velocity is only durable when quality is enforced by default.
+Product velocity is only durable when quality is enforced by default.
 
 ---
 
 ## Technical foundation
 
-RoyCSS is built to be usable as a product, a library, and an ecosystem.
-
 ### Frontend
-- Next.js 16 App Router
-- React 19
-- TypeScript 5 strict mode
+- Next.js 16 App Router, React 19, TypeScript 5 strict mode
 - Tailwind CSS 4 and shadcn/ui patterns
-- PWA ready architecture with service worker support
+- PWA-ready architecture with service worker support
 
 ### Backend
 - Express + Prisma + Zod
-- Route level API organization with modular backend services
-- SQLite in development, PostgreSQL ready production path
+- Route-level API organization with modular backend services
+- SQLite in development, PostgreSQL-ready production path
 - Dual backend strategy with an incremental Go migration target
 
 ### Distribution
 - npm package artifacts for consumer usage
 - CLI and MCP tooling for automation and AI assistant workflows
 - VS Code extension support for in-editor development
-
----
-
-## Roadmap
-
-The roadmap is organized around compounding platform value:
-
-- Expand the frontend design and UI intelligence layer
-- Improve AI powered generation, review, and workflow automation
-- Extend platform products beyond the catalog into broader product operations
-- Mature the backend and production infrastructure for scale
-- Continue quality, security, and accessibility investments as the platform grows
 
 ---
 
@@ -166,15 +247,7 @@ bun install
 bun run dev
 ```
 
-The frontend can run standalone because the full catalog ships in-repo. For the backend API and full platform stack, follow the repo setup in the development instructions and backend configuration guide.
-
----
-
-## Project status
-
-RoyCSS is actively evolving as a productized frontend platform with a live demo, a strong engineering foundation, and a growing ecosystem of developer tooling.
-
-The public facing platform and repo reflect a deliberate build toward a broader design to code operating system for modern product teams.
+The frontend runs standalone because the full catalog ships in-repo. For the backend API and the full platform stack, follow the development instructions and backend configuration guide in the docs.
 
 ---
 
@@ -182,26 +255,12 @@ The public facing platform and repo reflect a deliberate build toward a broader 
 
 We welcome issue reports, bug fixes, UI improvements, and feature proposals.
 
-### Raise an issue
-
-Before opening a new issue, check whether a similar report already exists. Include:
-
-- problem summary
-- steps to reproduce
-- expected vs actual behavior
-- browser, OS, and device details
-- screenshots or a minimal reproduction if possible
-
-Open an issue here: [GitHub issues](https://github.com/Roy-Wanyoike/Roycss/issues)
-
-### Contribute code
-
-1. Fork the repo and create a feature branch.
-2. Follow the local setup in the project docs.
+1. Check existing issues before opening a new one.
+2. Fork the repo and create a feature branch.
 3. Keep changes focused and validate with the relevant checks.
 4. Open a pull request with a clear explanation of the change and its impact.
 
-See the full contribution guide: [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md)
+Full guide: [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md)
 
 ## License
 

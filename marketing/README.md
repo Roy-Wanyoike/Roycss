@@ -2,6 +2,21 @@
 
 Brand, imagery, and video produced 2026-10-01. Regeneration scripts included.
 
+This directory doubles as the **press and investor asset kit**. Everything an
+article, pitch deck, or social launch needs is here — no design tool required:
+
+- **Product story in 51 seconds** — `videos/roycss-overview.mp4` (narrated, captioned)
+- **Social-ready loops** — `videos/roycss-logo-sting-10s.mp4` (silent, seamless)
+- **Banners per narrative** — effects (`banner-effects.png`), AI-native
+  (`banner-ai.png`), performance (`banner-speed.png`), square social
+  (`social-square.png`)
+- **Real product proof** — `shots/` captures straight from the running platform
+- **Marks for every surface** — icon, favicon, light/dark/transparent lockups
+
+Companion blueprint: the root [`README.md`](../README.md) carries the full
+investment thesis — problem, solution, moat, business model, roadmap, and use
+of funds.
+
 ## Layout
 
 ```

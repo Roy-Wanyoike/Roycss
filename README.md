@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="marketing/images/banner-effects.png" alt="RoyCSS — flowing emerald, cyan, and violet effect waves with floating glass UI cards on deep navy" />
+
 # RoyCSS
 
 ### The AI-native frontend engineering platform
@@ -158,6 +160,14 @@ RoyCSS is designed to complement the stack teams already have — it runs alongs
 - Marketing engine produced programmatically: logo suite, banners, product screenshots, narrated overview video — with regeneration scripts committed
 - Dual backend strategy in motion (Express + Prisma today, Go-based production target underway) with 289 documented routes
 - CI enforcement: tests, strict typecheck, naming gates, artifact drift gates, deploy previews
+
+<div align="center">
+
+<img src="marketing/shots/effects-gallery.png" alt="The RoyCSS live console — CSS Effects Library page showing all 1,983 effects across 29 categories, searchable and copyable" />
+
+<p><sub>The live console — every effect previewable and copyable at <a href="https://roycss.vercel.app">roycss.vercel.app</a></sub></p>
+
+</div>
 
 ---
 

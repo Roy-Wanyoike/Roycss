@@ -180,7 +180,28 @@ The public facing platform and repo reflect a deliberate build toward a broader 
 
 ## Contribute
 
-Issues, pull requests, and collaboration are welcome. Start with the project docs and workflow guides in the repository.
+We welcome issue reports, bug fixes, UI improvements, and feature proposals.
+
+### Raise an issue
+
+Before opening a new issue, check whether a similar report already exists. Include:
+
+- problem summary
+- steps to reproduce
+- expected vs actual behavior
+- browser, OS, and device details
+- screenshots or a minimal reproduction if possible
+
+Open an issue here: [GitHub issues](https://github.com/Roy-Wanyoike/Roycss/issues)
+
+### Contribute code
+
+1. Fork the repo and create a feature branch.
+2. Follow the local setup in the project docs.
+3. Keep changes focused and validate with the relevant checks.
+4. Open a pull request with a clear explanation of the change and its impact.
+
+See the full contribution guide: [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md)
 
 ## License
 

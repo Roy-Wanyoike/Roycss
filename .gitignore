@@ -122,6 +122,8 @@ worklog.md
 !public/roycss.zip
 *.tgz
 *.tar.gz
+# Local output from package inspection / packing commands
+pack-output.json
 
 # ─── backend-go (Go modular monolith skeleton) ─────────────────────
 # Go build artifacts (regenerated, not source)

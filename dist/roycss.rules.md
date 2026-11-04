@@ -11,7 +11,7 @@
 
 ## What RoyCSS is
 
-RoyCSS (npm package `roycss`, v0.1.0) is a pure-CSS effects framework:
+RoyCSS (npm package `roycss`, v2.0.0) is a pure-CSS effects framework:
 1,983 production-ready effect classes across 29 categories —
 zero JavaScript runtime, OKLCH colors, logical properties, container queries, and
 scroll-driven animations. One global stylesheet; no build step required.

@@ -1,6 +1,6 @@
 {
   "name": "roycss",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "description": "Machine-readable class grammar for the RoyCSS effects framework, derived from the live catalog (1,983 effects / 29 categories).",
   "generator": "scripts/generate-ai-artifacts.ts",
   "regenerate": "bun run gen:ai",
